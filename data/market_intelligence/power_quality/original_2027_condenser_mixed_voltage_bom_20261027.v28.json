@@ -1,0 +1,104 @@
+{
+  "schema_version": "pq-original-bom-corrected-voltage-class/1.0",
+  "data_version": "v28",
+  "as_of": "2026-10-27",
+  "parent_manifest": "verified_public_leads_20261027.v27.manifest.json",
+  "existing_notices_enriched": 1,
+  "new_notices": 0,
+  "patches": [
+    {
+      "canonical_id": "223fz:32616474682:lot1",
+      "notice": "32616474682",
+      "procurement_lot": "27-000090",
+      "organizers": "АО БЭСК",
+      "end_buyers": [
+        "ООО «БСК»",
+        "ООО «Башкирэнерго»"
+      ],
+      "notice_subject": "Поставка конденсаторов КЭП для ООО «Башкирэнерго», ООО «БСК»",
+      "original_published": "2026-10-15",
+      "bid_deadline": "2026-10-27",
+      "results_not_later": "2026-12-03",
+      "original_item_unit_count": 27,
+      "original_initial_price_ex_vat_rub": "2452650.41",
+      "procurement_price_relevance": "LOT PRICE FOR MIXED 0.66kV / 1.05kV / 11.55kV. 2,452,650.41 RUB is NOT the price of the ONE medium-voltage 11.55kV filter capacitor.",
+      "original_signed_contract_verified": false,
+      "original_winner_verified": false,
+      "bill_of_materials": [
+        {
+          "item_no": 1,
+          "model": "КЭП2-0,66-80-2У1",
+          "quantity": 11,
+          "original_split_rows": [
+            1,
+            10
+          ],
+          "voltage_kv": 0.66,
+          "each_kvar": 80,
+          "buyer": "ООО «БСК»",
+          "delivery": "ПС Аксаково",
+          "deadlines": [
+            "2027-03-01",
+            "2027-04-01"
+          ],
+          "in_strict_6_35kV_scope": false
+        },
+        {
+          "item_no": 2,
+          "model": "КЭП2-1,05-120-2У1",
+          "quantity": 15,
+          "voltage_kv": 1.05,
+          "each_kvar": 120,
+          "buyer": "ООО «Башкирэнерго»",
+          "delivery": "г. Октябрьский, ул. Северная, 54",
+          "deadline": "2027-09-30",
+          "in_strict_6_35kV_scope": false
+        },
+        {
+          "item_no": 3,
+          "model": "КЭПФ-11,55-430 2УХЛ1",
+          "quantity": 1,
+          "voltage_kv": 11.55,
+          "each_kvar": 430,
+          "buyer": "ООО «Башкирэнерго»",
+          "delivery": "г. Октябрьский, ул. Северная, 54",
+          "deadline": "2027-09-30",
+          "in_strict_6_35kV_scope": true
+        }
+      ],
+      "total_low_voltage_piece_count": 26,
+      "total_medium_voltage_piece_count": 1,
+      "medium_voltage_nominal_kvar_total": 430,
+      "strict_PQ_nominal_voltage_relevance": "one source BOM line with 11.55kV 430kvar; delivery pending 2027",
+      "winner_offer_price_rub": null,
+      "actual_medium_voltage_component_price_rub": null,
+      "payment": "45 calendar days from delivery for non-SME; 7 business days after goods acceptance for SME (from original tender specification)",
+      "warranty": "minimum 60 months from commissioning or 66 months from warehouse receipt",
+      "data_quality_inference": "Do not treat 27 units as 27 mid-voltage PQ components nor allocate total tender budget to 11.55kV one-unit line. Earlier secondary cards did not disaggregate voltage; new original spreadsheet does.",
+      "original_sources": [
+        {
+          "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=BA786DC8B0DA40A0BB27D80D1C38BC38",
+          "tier": "primary_EIS_lot_ZIP_archive_SHA_verified",
+          "sha256": "44adb9865dd71b666d5481782816907ba8968b5b7c1c4acc49426c335c3316a7",
+          "bytes": 2886312,
+          "locator": "9 zip entries including original price specification and 3 ordering questionnaires"
+        },
+        {
+          "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=BA786DC8B0DA40A0BB27D80D1C38BC38",
+          "tier": "primary_technical_TZ_inside_archive_sha_verified",
+          "sha256": "3e24adc4a5366a1afe6afac4533b24b4ad0d35309e25486b98f6c6ec71881dd6",
+          "bytes": 59904,
+          "locator": "Приложение №1 ТЗ для ТМЦ.doc, source tender technical conditions, two recipients, 2027 delivery, warranty/payment"
+        },
+        {
+          "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=BA786DC8B0DA40A0BB27D80D1C38BC38",
+          "tier": "primary_original_xlsx_price_bid_template",
+          "locator": "Приложение №2 Ценовое предложение.xlsx, sheet1, product rows 12–15: 11 pcs 0.66kV 80kvar, 15 pcs 1.05kV 120kvar, 1 pc 11.55kV 430kvar; original template price columns are BLANK, no bids."
+        }
+      ]
+    }
+  ],
+  "source_discovery_count": 0,
+  "original_signed_rd223_verified_count_delta": 0,
+  "new_named_protocol_participants": 0
+}
