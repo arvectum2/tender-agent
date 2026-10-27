@@ -44,7 +44,7 @@ def test_corporate_archive_dates_are_deadlines_and_no_winners_guessed() -> None:
 
 def test_materializer_never_adds_context_as_procurements() -> None:
     corpus = get_materializer().materialize()
-    context = json.loads((DATA / "market_context_20261027.v2.json").read_text())
+    context = json.loads((DATA / "market_context_20261027.v3.json").read_text())
     assert len(context["records"]) == 4
     assert all(x["id"] not in {r["id"] for r in corpus["records"]} for x in context["records"])
     assert corpus["data_version"] == "v8"
