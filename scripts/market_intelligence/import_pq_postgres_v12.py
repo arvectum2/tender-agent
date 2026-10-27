@@ -78,7 +78,12 @@ def inspect_target() -> dict:
         "WHERE collection_id='arvectum-market-pq-6-35kv');\n"
         "COMMIT;\n"
     )
-    values = [x.strip() for x in query(sql).splitlines() if x.strip()]
+    # psql prints BEGIN and COMMIT command tags even with -A -t.
+    # They are not query-result rows, so exclude them before checking counts.
+    values = [
+        x.strip() for x in query(sql).splitlines()
+        if x.strip() and x.strip() not in {"BEGIN", "COMMIT"}
+    ]
     if len(values) != 4 or values[0] != DATABASE or values[1] != "3":
         raise RuntimeError("Data Platform target schema not verified")
     return {
