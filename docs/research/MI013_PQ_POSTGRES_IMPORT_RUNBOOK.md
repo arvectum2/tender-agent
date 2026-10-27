@@ -26,14 +26,16 @@ Obtain owner consent for the *exact* Mac mini branch fetch/worktree command befo
 
 ```sh
 git -C /Volumes/ArvectumSSD/arvectum/repos/tender-agent fetch origin research/mi013-pq-corpus-20261027-pass2
-git -C /Volumes/ArvectumSSD/arvectum/repos/tender-agent worktree add --detach /Volumes/ArvectumSSD/arvectum/runtime/mi013-pq-import FETCH_HEAD
+# Worktree already exists on Mac mini. Update it without touching the dirty main checkout:
+git -C /Volumes/ArvectumSSD/arvectum/runtime/mi013-pq-import switch --detach origin/research/mi013-pq-corpus-20261027-pass2
 python3 /Volumes/ArvectumSSD/arvectum/runtime/mi013-pq-import/scripts/market_intelligence/import_pq_postgres_v12.py --check-db
 ```
 
 Expected before import: 71 staged rows, database `arvectum_data`, 3 required tables, 0 PQ resources, 0 PQ structured records. Run the targeted offline tests before any write:
 
 ```sh
-python3 -m pytest -q /Volumes/ArvectumSSD/arvectum/runtime/mi013-pq-import/tests/test_mi013_pq_corpus_v12.py /Volumes/ArvectumSSD/arvectum/runtime/mi013-pq-import/tests/test_mi013_pq_data_platform_export_v12.py /Volumes/ArvectumSSD/arvectum/runtime/mi013-pq-import/tests/test_mi013_pq_postgres_import_v12.py
+cd /Volumes/ArvectumSSD/arvectum/runtime/mi013-pq-import
+/Volumes/ArvectumSSD/arvectum/repos/tender-agent/.venv/bin/python -m pytest -q tests/test_mi013_pq_\*.py
 ```
 
 If pytest unavailable, run the standard pinned `uv` venv from Tender repo only after confirming its dependencies; NEVER install packages as a side effect of preflight.
@@ -58,6 +60,24 @@ A custom-format backup of `arvectum_data` precedes Gate B. Do not restore the en
 
 ## Blockers
 
-- Branch not yet fetched to Mac mini, tests for v12 importer not yet CI-green.
-- No explicit command-level approval for ARC's production-writing tool call; owner action is required at Gate B.
-- Live import not run; do not claim those 71 records already in PostgreSQL.
+- The branch/worktree is now available on Mac mini. Local tests **72 passed**, but GitHub Actions CI is still queued.
+- Owner had explicitly approved exact production apply; however, remote execution safety **blocked it**. Do not retry through another tool or automation as a workaround. An appropriately authorized local operator must use the existing reviewed runbook; approval does not override remote safety controls.
+- Live import not run; independent read-only SQL confirmed PQ collection/resources/records remain zero.
+
+## Recovery and extra acceptance — 27 October 2026
+
+- Production ARC `--apply` was blocked by the remote execution safety system. It did not run, and no backup was created. No alternative remote execution method should be used to bypass that block.
+- Fixed Python exporter version mismatch, real `psql` `BEGIN/COMMIT` output parsing, and reinforced the importer with **independent post-backup SHA-256 recomputation** (dump bytes, standalone checksum file, manifest metadata, expected database, approved output directory). It refuses SQL writes if any backup check fails.
+- Repeated import preserves an existing `dp_resources.status` (including reviewed/ready), rather than resetting it to `staged_unreviewed`. Existing `dp_records.review_status` also remains unchanged on conflict. New records begin unreviewed.
+- Mac mini regression in existing Tender Agent venv: **72 passed**, one dependency deprecation warning, no packages installed.
+- Live read-only audit at the new isolated worktree confirmed baseline: `other_collections=26`, `other_resources=2192`, `all_documents=2192`, **MI-013 collection/resources/records all zero**. Read-only auditor: `scripts/market_intelligence/verify_pq_postgres_v12.py`.
+- After an independently authorized and successful local apply, validate from the same worktree:
+
+```sh
+/Volumes/ArvectumSSD/arvectum/repos/tender-agent/.venv/bin/python \
+  /Volumes/ArvectumSSD/arvectum/runtime/mi013-pq-import/scripts/market_intelligence/verify_pq_postgres_v12.py --expect-import
+```
+
+This query runs **`BEGIN READ ONLY`**, asserts 71 resource keys, 71 structured records, distinct 71 canonical identifiers, 71 initial `unreviewed` records, zero missing provenance URLs, the two lots of EIS notice `32616474682`, and original 10 kV MPU / 110 kV BSK price components from `32616435269`. It also reports counts outside the research collection for comparing against the baseline; these should be evaluated for legitimate concurrent changes, not automatically ascribed to the import.
+
+Do not report ingestion as complete until the exact approved import has actually executed and this read-back passes. Fulltext and vector indexing are a **separate operation**.
