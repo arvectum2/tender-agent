@@ -377,3 +377,33 @@ visual_ocr_provisional_review_32616280467:
     - "Find original signed contract and final supplier/contract price independently; do not infer from commission decision."
     - "Resolve canonical commission-fact promotion policy for OCR+visual proof, retaining provisional flag; do not count design works as equipment-only supply."
   resume_instruction: "Use already reviewed OCR packet 32616280467-2c28b41f95ccecad34e79229 and SHA-bound visual candidate; do not rerun OCR or re-review. Continue signed contract recovery for 32616280467 and other v20 leads, and review new native ETP sources. Keep original unreadable packet unchanged and OCR provisional."
+
+run_20261028_0232_final_checkpoint:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  branch: "fix/mi-etp-source-status-20261028"
+  pr: 519
+  last_verified_commit: "aacfb6283a861420bf34d2eba0d86baa8c2204a8"
+  last_test_results: "30 bounded focused tests PASS, Ruff PASS, YAML parse PASS, git diff check PASS; 1 inherited Starlette warning."
+  coverage:
+    v20_known_leads: 100
+    source_urls_discovered: 100
+    case_specific_local_documents: 31
+    cases_with_reviewed_packets: 31
+    reviewed_queue_packets: 52
+    unreadable_native_packets_preserved: 1
+    original_signed_contracts_verified_this_run: 0
+    etp_direct_source_attempts: 12
+    etp_sha_verified_secondary_html: 9
+  completed:
+    - "Fixed 2 inventory bugs: missing v20 source URL schema variants and false manifest inheritance for unnumbered leads; actual local source coverage corrected 48 to 31."
+    - "Recovered 9 secondary public ETP HTML sources with verified TLS/SHA and source-bound quotes; no signed award inferred."
+    - "Implemented guarded direct TLS ETP fallback on transport errors only, preserving 403/404 and retry evidence; no insecure bypass."
+    - "Visually reviewed 5-page original scanned EIS commission protocol 32616280467; accepted separate OCR-provisional source packet with signed-contract flags false."
+    - "Reviewed last available original OOXML file 32616435269 through SHA-identical extension alias, classified document uncertain; no technical or financial inference."
+    - "Persisted exact source SHA, per-case receipts, review decisions, and non-promoted OCR/visual commission candidate."
+  blockers:
+    - "Exact-head CI and Company AM-4 authority not cleared for automatic merge; existing pq_dp_ingest.py direct Data Platform import fails architecture audit; PR #519 stays DRAFT/REVIEW."
+    - "Native original B2B-Center/RAD/Roseltorg/PhosAgro signed contracts, awards and supplier prices still missing for commercial cases; official 223 signed registry inaccessible/limited."
+    - "UDS corporate archive TLS trust failure; recko.ru original PDF HTTP403; do not bypass certificate or access controls."
+  resume_instruction: "First inspect main and PR #519 exact-head CI, then runtime lease and checkpoint. Continue from 100-row v20 gap inventory (31 case-specific local docs/31 reviewed, 100 source URLs) and etp-native-source-attempts.json; do not repeat 9 SHA-verified public HTML fetches or OCR review 32616280467. Prioritize lawful original signed contracts and native ETP attachments for 4559984, 4561228, 4561243, 4565274, COM20082600016, 231994-2 and original EIS 32616280467. Keep source-tier and provisional distinctions; never promote committee selection, price sounding, maintenance, mixed EPC or OCR as signed supply. Repair cross-product import only via approved SDK/service boundary; no audit bypass, no merge without current Company authority, queue auto_merge and exact-head green CI. Preserve unrelated current-task and the one existing hourly Watchdog."
