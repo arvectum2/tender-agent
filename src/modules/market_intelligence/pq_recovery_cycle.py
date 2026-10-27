@@ -16,6 +16,7 @@ from .pq_zip_dp_resume import run as resume_zip_ingest
 from .pq_etp_card_audit import audit as audit_etp
 from .pq_contract_xml_index import scan as scan_contracts
 from .pq_contract_outcome_audit import audit as audit_contracts
+from .pq_commission_candidate_audit import extract as extract_commission_candidates
 
 
 def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
@@ -86,6 +87,17 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
             contract_root=contract_root, day_scan_path=contract_day_scan)
         contract_audit_path.write_text(
             json.dumps(contract_audit, ensure_ascii=False, indent=2), encoding="utf-8")
+        candidates = extract_commission_candidates(
+            outcome_path=contract_audit_path, queue_dir=queue)
+        candidate_path = runtime / "commission-candidates.json"
+        candidate_path.write_text(
+            json.dumps(candidates, ensure_ascii=False, indent=2), encoding="utf-8")
+        report["commission_candidates"] = {
+            "source_quote_candidates": candidates["candidate_mentions"],
+            "review_packets_examined": candidates["review_packets_examined"],
+            "candidate_artifact": str(candidate_path),
+            "supplier_verified": 0,
+        }
         report["contract_register"] = {
             "records_matched": contract_audit["distinct_contract_lots_matched"],
             "rub_prices_verified": contract_audit["contract_lots_with_rub_price"],
