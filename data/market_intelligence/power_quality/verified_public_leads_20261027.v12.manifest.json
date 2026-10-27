@@ -1,0 +1,18 @@
+{
+  "schema_version": "power-quality-enrichment-manifest/1.0",
+  "as_of": "2026-10-27",
+  "data_version": "v12",
+  "base_manifest": "verified_public_leads_20261027.v11.manifest.json",
+  "base_lot_level_records": 71,
+  "amendment_file": "primary_archive_enrichment_v12.json",
+  "target_existing_records": 3,
+  "added_lot_level_records": 0,
+  "total_lot_level_records": 71,
+  "total_new_procurement_notices": 0,
+  "verified_primary_original_document_archives_new_count": 1,
+  "primary_original_archive_sha256": "5f9e406c56254891514dec2e9f8689417782bce298e5e4cb433375d1806cbb65",
+  "project_group": "TYAZHINSKAYA-SKRM52-2025-2026",
+  "context_dataset": "market_context_20261027.v3.json",
+  "source_document": "verified_32616435269_original_archive_20261027.json",
+  "note": "No new IDs, this is source-quality enrichment: primary original BoQ shows 10 kV converter at 335351974.38 RUB net, BSK110 at 33723435.46 RUB net, supervision 1429508.20 RUB net and total 452016000.01 RUB VAT22 gross. Neither amount is awarded contract; design procedures 2025/26 relate to same project."
+}
