@@ -99,3 +99,33 @@ def save_packet(packet: dict, target: Path) -> None:
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(packet, ensure_ascii=False, indent=2) + "\n",
                       encoding="utf-8")
+
+
+def validate_review(*, packet: dict, review: dict) -> dict:
+    """Accept ChatGPT's classification only with exact source-backed quotations."""
+    if review.get("registry_number") != packet.get("registry_number"):
+        raise ValueError("Review registry mismatch")
+    classification = review.get("classification")
+    if classification not in ("relevant", "irrelevant", "uncertain"):
+        raise ValueError("Invalid review classification")
+    evidence = review.get("evidence")
+    if not isinstance(evidence, list) or not evidence:
+        raise ValueError("Review requires evidence")
+    sources = {d["sha256"]: d["text"] for d in packet["documents"]}
+    for item in evidence:
+        sha = item.get("sha256")
+        quote = item.get("quote")
+        if sha not in sources or not isinstance(quote, str) or len(quote) < 12:
+            raise ValueError("Unbound review evidence")
+        if " ".join(quote.split()) not in " ".join(sources[sha].split()):
+            raise ValueError("Review quote absent from original text")
+    return {
+        "schema_version": "pq-chatgpt-source-review/1",
+        "registry_number": packet["registry_number"],
+        "classification": classification,
+        "evidence": evidence,
+        "reasoning": str(review.get("reasoning", ""))[:1500],
+        "signed_contract_verified": False,
+        "winner_verified": False,
+        "market_total_rub": None,
+    }
