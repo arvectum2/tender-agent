@@ -86,3 +86,14 @@ continuation_source_audit_20261027:
   tests: "31 passed: PQ source audit, autonomous MI-013, EIS history plan, original source ledger"
   remaining: original annex downloads and PQ-specific evidence, signed contract/winner verification, commercial ETP acquisition, wider source coverage and final evidence-backed market report
   resume_instruction: Inspect 2024 official ZIP receipts and extract candidate PQ notices with source SHA, then attach original technical annexes; resolve official contract outcomes; continue bounded live source acquisition, update independent coverage audit, and never infer market TAM from XML counts.
+
+automated_methodology_alignment_20261027:
+  status: in_progress
+  last_verified_commit: 08b9fde2ba4709bbfe5eef03539c5a71a82b14e9
+  method: "MI-013 source-grade research: source SHA, ontology search, notice/protocol linkage, annex reference audit, then original technical documents and signed outcomes"
+  new_module: src/modules/market_intelligence/pq_evidence_pipeline.py
+  runtime_output: /Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/autonomous-mi013-20261027/pq_primary_evidence_triage_2024.json
+  verified_run: "30 original ZIP, 2698 XML source records, 12603 attachment reference occurrences, 0 metadata lexical PQ candidates"
+  tests: "19 passed with mounted v20 corpus"
+  remaining: "download original technical annexes, text/OCR if required, classify 6-35kV equipment demand, dedup rebids, verify signed contracts and bidder roles, commercial ETP coverage, end-to-end report"
+  resume_instruction: "Implement bounded secure original attachment acquisition from 12603 source-bound references; extract native PDF/DOCX/XLSX technical text, match ontology and preserve source SHA and exact location; then join contracts and review results."
