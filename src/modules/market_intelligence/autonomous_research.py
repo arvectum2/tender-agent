@@ -113,8 +113,31 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--corpus", type=Path, default=DEFAULT_CORPUS)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--eis-root", type=Path)
+    parser.add_argument("--ontology", type=Path)
+    parser.add_argument("--date-from", type=lambda x: __import__("datetime").date.fromisoformat(x))
+    parser.add_argument("--date-to", type=lambda x: __import__("datetime").date.fromisoformat(x))
+    parser.add_argument("--region", action="append")
+    parser.add_argument("--subsystem", action="append")
+    parser.add_argument("--max-calls", type=int, default=2)
+    parser.add_argument("--execute-eis", action="store_true")
     args = parser.parse_args()
-    print(json.dumps(run(corpus=args.corpus, output=args.output), ensure_ascii=False, indent=2))
+    result = run(corpus=args.corpus, output=args.output)
+    eis_args = (args.eis_root, args.ontology, args.date_from, args.date_to,
+                args.region, args.subsystem)
+    if any(eis_args):
+        if not all(eis_args):
+            parser.error("EIS batch requires root, ontology, dates, regions and subsystems")
+        batch = run_eis_batch(root=args.eis_root, ontology=args.ontology,
+                              first=args.date_from, last=args.date_to,
+                              regions=args.region, subsystems=args.subsystem,
+                              max_calls=args.max_calls, execute=args.execute_eis)
+        result["eis_batch"] = batch
+        target = args.output.resolve() / "eis_batch.json"
+        if target.exists() and json.loads(target.read_text(encoding="utf-8")) != batch:
+            raise ValueError("EIS batch differs from previous run; use another output directory")
+        target.write_text(json.dumps(batch, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(json.dumps(result, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
