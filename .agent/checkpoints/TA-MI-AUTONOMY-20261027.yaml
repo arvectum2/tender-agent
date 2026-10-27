@@ -194,3 +194,25 @@ v20_source_recovery_acceptance_20261027:
   last_test_results: "13 targeted pytest passed on Mac mini, 1 external Starlette deprecation warning. Full 100-row offline cycle: 8 official case folders, 19 staged documents, 16 extracted + 3 unverified OCR, no staging errors."
   source_quality: "Selection/recommendation in original commission protocol is NOT a verified signed contract; OCR winner/amount remains provisional pending original visual and contract check."
   resume_instruction: "Inspect git main and this checkpoint. Use isolated MI worktree, v20 leads at runtime/market-intelligence/pq-agent-pilot-live/leads-v20-materialized.json and docs/market_intelligence/PQ_RECOVERY_RUNBOOK_20261027.md. Extract safe source-bound ZIP children, index into Data Platform and ChatGPT queue. Then search EIS+ETP, retrieve original signed outcomes and cite exact source bytes. Preserve per-stage receipts, watchdog and worktree isolation; mark completed only after E2E report and tests."
+
+verified_v29_cycle_20261028:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  goal: "Complete evidence-backed PQ procurement outcomes with official EIS, ETP and Data Platform"
+  definition_of_done: "Audited original evidence, signed contract linkage, deduplicated roles and prices, verified final report and tests"
+  completed:
+    - "Ran both offline and online unified recovery cycles on latest 101-record v29 corpus in isolated worktree."
+    - "Verified 8 official receipt-backed case folders, 19 staged originals and 64 ZIP members with zero staging errors."
+    - "Data Platform extracted 16 native texts; 3 scanned PDFs remain OCR-unverified."
+    - "Inventory: 101 cases, 26 with local evidence, 11 with reviewed packets."
+    - "Indexed ZIP extraction cursor already complete at 64/64; did not repeat completed batches."
+    - "9 relevant pytest passed; 1 upstream StarletteDeprecationWarning."
+  current_step: "Acquire signed-contract and protocol originals and expand historical/corporate ETP coverage."
+  remaining:
+    - "Identify original contract registry XML and bind supplier, lot, signed sum, and source SHA without conflating proposal/contract."
+    - "Build ETP-native attachment acquisition from verified primary URLs; retain bounded retries and receipts."
+    - "Review 3 OCR-unverified cases and remaining original source packets using ChatGPT via ARC."
+    - "Publish audited deduplicated 2024-2026 report; maintain unknown fields where source is missing."
+  last_verified_commit: "5ba573f7 test(mi): SHA-gated ZIP member extraction and resumed Data Platform batches (worktree at start of run)"
+  last_test_results: "9 passed, 1 third-party warning; offline and online 101-case cycles successful; no new EIS searches (journal 33) and no new downloads."
+  resume_instruction: "Start by checking current main/worktree SHA, then inspect official RD223 and 44-FZ contract original ZIP archives under pq-official-contracts and reconcile with v29 lead numbers using exact XML source SHA. Add tests, run bounded source acquisition, update checkpoint. Preserve exactly one Tender Agent Watchdog."
