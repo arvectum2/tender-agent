@@ -18,24 +18,27 @@ completed:
   - Found secondary aggregator 6kV UKRL 1.8-UKRL (identifier 2418411721); no source-platform ID.
   - Added six source-backed records to versioned corpus v4, retained 48 unchanged.
   - Local Mac mini noproxy probe returned ЕИС HTTP404, B2B 404 on guessed generic URL, Kontur 403; do not assert original protocols.
-current: Research dataset v6 (55 records) committed, based on v5: after v4's six, 223-FZ Mелеуз notice 32616296475 (NMC 3 904 773.73 RUB) added, secondary source reports a signed contract but not supplier/actual price/voltage; primary protocol verification and canonical database ingestion remain pending.
+current: 'v7 expanded example corpus 55→58 procedures; separate installed-base/plan/vendor context (3 non-procurement records); 58-case evidence-quality snapshot and tests authored. Previous GitHub CI quality failed at v6 Python test collection caused by escaped literal backslash-n; fixed in 8d496002; exact-head CI rerun pending. First-party EIS/ETP award verification and production DB import remain open.'
 pending:
   - Acquire EIS registry/protocol using the actual source endpoint, not deprecated guessed notice paths.
   - Determine buyer/winner/contract/voltage for Bashkirenergo, Sagan-Nur, UKRL, MGOK.
   - Resolve MGOK 4538400→4565274 and possible overlap 4561228 before volume statistics.
   - Expand discovery into 2024-2025 and hidden EPC attachments, not just title hits.
   - Review existing PostgreSQL ingestion schema and obtain exact-command authorization before ARC remote DB mutation.
-  - Execute QA tests against checked-out branch and review CI.
-last_verified_commit: e9fbd96e8f9023c2fb378e6a701ff281edcf681b
+  - Execute exact-head CI rerun after fixing escaped newline in v6 test (previous quality failed at pytest collection).
+last_verified_commit: 48d8ad0e83c2d2748bd5384ced81a590a9148fa6
 test_results:
   - In-memory 54 unique canonical IDs, 48 unchanged v3 and 6 new source-linked leads.
   - All six new entries have secondary public URLs; no suppliers attributed.
   - V4 added one NMC 5880000 RUB including VAT; v5 added another NMC 3904773.73 RUB; zero newly confirmed signed contract prices.
   - Explicit MGOK re-tender/related-demand grouping; no claimed award on this source set.
-resume_instruction: Read data/market_intelligence/power_quality/verified_public_leads_20261027.v6.json; run tests/test_mi013_pq_corpus_v4.py, tests/test_mi013_pq_corpus_v5.py and tests/test_mi013_pq_corpus_v6.py; fetch original 223-FZ contract registry for 32515582393, original B2B notices 4535313/4561228/4561243/4565274; resolve repeated equipment demand before estimating market. Keep existing TA-ROADMAP-EXEC-20261012 current-task checkpoint intact; this is a child market-intelligence task in a separate branch.
+resume_instruction: Review v7 at data/market_intelligence/power_quality/verified_public_leads_20261027.v7.json, context and evidence snapshot. Check exact-head CI after v6 newline fix, then run all MI-013 regressions. Continue acquisition of first-party GP630876/32515218366/5747901 protocols and resolve repeat equipment demand; review PostgreSQL schema and obtain exact-command ARC consent before production import. Preserve parent TA-ROADMAP-EXEC checkpoint.
 execution:
   branch: research/mi013-pq-corpus-20261027-pass2
   source_branch: research/mi013-pq-source-expansion-20261025
-  dataset: data/market_intelligence/power_quality/verified_public_leads_20261027.v6.json
+  dataset: data/market_intelligence/power_quality/verified_public_leads_20261027.v7.json
   current_task_main_parent_untouched: true
   database_postgresql_import_executed: false
+
+  quality_snapshot: data/market_intelligence/power_quality/evidence_quality_snapshot_20261027.json
+  context_dataset: data/market_intelligence/power_quality/market_context_20261027.json
