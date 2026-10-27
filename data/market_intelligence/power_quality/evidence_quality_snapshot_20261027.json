@@ -1,0 +1,36 @@
+{
+  "schema_version": "pq-market-evidence-metrics/0.1",
+  "as_of": "2026-10-27",
+  "dataset": "verified_public_leads_20261027.v7.json",
+  "description": "QUALITY OF EXAMPLE CORPUS, NOT MARKET SIZING OR AN ESTIMATE OF UNIQUE EQUIPMENT SALES",
+  "procurement_records": 58,
+  "canonical_ids_unique": 58,
+  "regime_counts": {
+    "223-fz": 15,
+    "commercial": 43
+  },
+  "family_counts": {
+    "filter_compensation": 1,
+    "harmonic_filter": 2,
+    "power_quality_system": 1,
+    "pq_components": 1,
+    "statcom": 5,
+    "ukrm": 48
+  },
+  "scope_counts": {
+    "adjacent_epc": 1,
+    "design": 4,
+    "epc": 8,
+    "maintenance": 6,
+    "supply": 37,
+    "supply_candidate": 1,
+    "supply_with_mixed_work": 1
+  },
+  "nmck_any_non_null_count": 13,
+  "explicit_structured_voltage_6_to_35_kv_count": 7,
+  "with_primary_platform_evidence_count": 11,
+  "registered_contract_primary_verified_count": 4,
+  "lack_primary_platform_evidence_count": 47,
+  "contextual_non_procurement_records": 3,
+  "metrics_caveat": "Only numeric equipment_voltage_kv fields are counted as explicit normalized voltage; many older verified descriptions contain 6-35kV text but lack numeric normalization, so this is a completeness KPI not real PQ market share. Mixed/adjacent tenders and survey requests remain in denominator of research examples; do not use NMC total as market value."
+}
