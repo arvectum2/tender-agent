@@ -1,0 +1,16 @@
+{
+  "schema_version": "power-quality-append-manifest/0.1",
+  "as_of": "2026-10-27",
+  "data_version": "v8",
+  "base_dataset": "verified_public_leads_20261027.v7.json",
+  "append_dataset": "udsgroup_archive_2024_2025.json",
+  "base_record_count": 58,
+  "append_record_count": 2,
+  "total_procedure_count": 60,
+  "ordered_dedup_key": "canonical_id",
+  "provenance_policy": "Preserve all 58 v7 records in their original ordering; append new records with source URL and explicit deadline-only date_basis. Do not infer winners, prices or market size.",
+  "materializer": "scripts/market_intelligence/materialize_pq_research.py",
+  "quality_limit": "Original UDS corporate archive surfaced via indexed snapshot; no primary procurement attachments or awards checked. 60 research IDs are not 60 contracts.",
+  "context_dataset": "market_context_20261027.v2.json",
+  "context_record_count": 4
+}
