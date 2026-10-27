@@ -1,0 +1,182 @@
+{
+  "schema_version": "mi013-primary-original-meles-v36/1.0",
+  "as_of": "2026-10-28",
+  "data_version": "v36",
+  "base_manifest": "verified_public_leads_20261027.v35.manifest.json",
+  "existing_canonical_procurement_cases_enriched": 1,
+  "new_notices": 0,
+  "new_registered_signed_contracts": 0,
+  "source_kind": "original_first_party_ETP_buyer_cost_comparison_XLSX_original_demand_specification_DOCX_and_template",
+  "source_verified": true,
+  "patches": [
+    {
+      "canonical_id": "223fz:32616296475:lot1",
+      "procedure_id": "32616296475",
+      "customer_name": "ООО «Водоканал», г. Мелеуз",
+      "customer_inn": "0263017332",
+      "procedure_platform": "ЭТП Регион",
+      "procedure_original_url": "https://torgi.etp-region.ru/app/OfferCard/page?OfferCard.offerUUID=Scorebofs002080000q03ju2cimtcd2js",
+      "publication_date": "2026-08-17",
+      "equipment_order_type": "new_compensator_with_separate_buyer_staff_assembly_and_supplier_supervision",
+      "original_technical": {
+        "nominal_network_voltage_max_kv": 6.3,
+        "requested_bus_voltage_kv": 6,
+        "system_max_operating_voltage_kv": 12,
+        "nominal_reactive_power_min_kvar": 500,
+        "qty_requested": 1,
+        "regulation": "continuous thyristor+controlled_shunt_reactor",
+        "discrete_control_step_max_kvar": 50,
+        "management_time_response_max_ms": 5,
+        "actual_reaction_to_load_change_max_ms": 10,
+        "power_factor_cos_min": 0.98,
+        "power_factor_control_precision_abs": 0.02,
+        "cabinet_IP_min": "IP54",
+        "network_hz": 50,
+        "air_cooling_forced": true,
+        "includes": [
+          "thyristor_valves_with_cooling",
+          "controlled_shunt_reactor",
+          "higher_harmonics_filter",
+          "disconnectors_and_earthing",
+          "microprocessor_control_and_protection",
+          "CT_and_VT",
+          "monitoring_analyzer_class_A",
+          "remote_supervision_capable_monitoring"
+        ],
+        "manufacturer": null,
+        "origin_not_proved": true,
+        "pre_commissioning_measurement_min_days": 7,
+        "THD_harmonic_order_max": 50,
+        "manufacture_and_delivery_deadline_working_days": 55,
+        "full_delivery_contract_deadline_working_days": 70,
+        "assembly_by": "BUYER SELF (not supplier's full erection)",
+        "supervisory_installation_after_buyer_assembly_days": 7,
+        "warranty_min_months_after_commissioning": 24
+      },
+      "original_price_justification": {
+        "original_tender_initial_total_rub": "3904773.73",
+        "three_original_commercial_offer_references": [
+          "№01907 от 27.07.2026",
+          "№02113 от 30.07.2026",
+          "№124 от 31.07.2026"
+        ],
+        "offer_role": "three external market price quotes submitted to buyer during NMCD justification; bidder suppliers' legal identities not shown. These are NOT actual tenders' contract bids or signed prices.",
+        "units_and_article_quantities": [
+          {
+            "description": "УКРМ высоковольтный, 500 квар",
+            "quantity": 1,
+            "unit": "шт",
+            "offers_rub": [
+              "3577711.20",
+              "3493410.00",
+              "3501200.00"
+            ],
+            "buyer_line_average_rub": "3524107.07",
+            "class": "strict_6_35kv_equipment_only_benchmark"
+          },
+          {
+            "description": "Шеф-монтаж УКРМ",
+            "quantity": 1,
+            "unit": "шт",
+            "offers_rub": [
+              "250000.00",
+              "300000.00",
+              "207000.00"
+            ],
+            "buyer_line_average_rub": "252333.33",
+            "class": "separate_supervisory_installation_service"
+          },
+          {
+            "description": "Пусконаладочные работы",
+            "quantity": 1,
+            "unit": "шт",
+            "offers_rub": [
+              "130000.00",
+              "140000.00",
+              "115000.00"
+            ],
+            "buyer_line_average_rub": "128333.33",
+            "class": "separate_commissioning_service"
+          }
+        ],
+        "total_per_reference_rub": [
+          "3957711.20",
+          "3933410.00",
+          "3823200.00"
+        ],
+        "equipment_only_reference_mean_rub": "3524107.07",
+        "services_reference_mean_rub": "380666.66",
+        "equipment_share_of_initial_total_pct_approx": 90.25,
+        "estimate_vat_inclusion": "NOT DETERMINABLE from standalone raw original budget XLSX; buyer template price blank in contract requires VAT/no VAT selection",
+        "price_basis": "3 non-awarded market quotations, statistical arithmetic mean based on dated source letters, not final registered contract actual equipment sale",
+        "contract_registered_final_equipment_price": null,
+        "actual_paid_price": null
+      },
+      "national_origin_procurement_restriction": {
+        "okpd2_code": "28.99.39.190",
+        "product_label": "УКРМ высоковольтный",
+        "government_decree_number": "1875",
+        "original_word_table_columns": [
+          "1875 (Запрет)",
+          "1875 (Ограничение)",
+          "1875 (Преимущество)"
+        ],
+        "original_table_cell_tick_location": "Ограничение",
+        "is_checkbox_under_prohibition": false,
+        "is_checkbox_under_limitation": true,
+        "legal_interpretation": "This confirms BUYER tick-box in original ТЗ only; not a self-contained legal assessment of FGI's eligibility, 2026 provisions or actual product origin/registry.",
+        "independent_legal_reference": "https://www.consultant.ru/document/cons_doc_LAW_494318/"
+      },
+      "contractual_scope": {
+        "original_agreement_is_draft_only": true,
+        "actual_supplier_identified": false,
+        "delivery_to_location": "Республика Башкортостан, Мелеузовский район, деревня Кутушево, ул. Кутуша Муртазина, 2В",
+        "initial_protocol_previous_anonymized_selected_application_id": "79410",
+        "initial_protocol_previous_winning_bid_total_rub": "3865725.99",
+        "status": "bid selection/contracting stage, supplier/signature remains unverified, no registered signed supplier proof",
+        "original_signed_contract_verified": false,
+        "actual_signed_contract_total_rub": null
+      },
+      "original_source_files": [
+        {
+          "tier": "first_party_original_ETP_Excel_pricing",
+          "label": "НМЦД (41).xlsx",
+          "url": "https://zakaz.etp-region.ru/fx/gpms/etpGetFileServlet?fileUUID=dbfilefs002080000q03kmh4c7au8vf4",
+          "bytes": 34673,
+          "sha256": "fc342d5bfb6cdffdf4fa459f77cbd3ab957c78bce400fbc3d3c0141af18be218",
+          "locator": "sheet1 source rows 8,11,13,14,15,27: line item 3 quotes and mean; external identities not provided"
+        },
+        {
+          "tier": "first_party_original_ETP_DOCX_technical",
+          "label": "Техническое задание на оборудование 14.08 (2) (1).docx",
+          "url": "https://zakaz.etp-region.ru/fx/gpms/etpGetFileServlet?fileUUID=dbfilefs002080000q03kmh4j5tmvv6g",
+          "bytes": 28240,
+          "sha256": "ca9a840c69bce647287c4571b675d57f401f89a20ae3d24f3842d8e24485b781",
+          "locator": "original buyer TЗ paragraphs: thyristor-reactor, bus 6.3kV, 500kvar, 50kvar control, IP54, 5ms, buyer itself assembles, National Regime 1875 original TABLE0 row1 check mark is in limitation column not prohibition"
+        },
+        {
+          "tier": "first_party_original_ETP_DRAFT_contract_NOT_signed",
+          "label": "Проект договора (2495).docx",
+          "url": "https://zakaz.etp-region.ru/fx/gpms/etpGetFileServlet?fileUUID=dbfilefs002080000q03kmh4i38vumuc",
+          "bytes": 43444,
+          "sha256": "0360f92c4b701319af60c53a8f1c911a3b0cb5b4e7cda79f2c857a23babaade4",
+          "locator": "contract template original draft supplier, supplier INN and price blank. NOT a signed original awarded deal"
+        },
+        {
+          "tier": "first_party_original_ETP_notice_DOCX",
+          "label": "АД (1 часть).docx",
+          "url": "https://zakaz.etp-region.ru/fx/gpms/etpGetFileServlet?fileUUID=dbfilefs002080000q03kmh42ma2rdlk",
+          "bytes": 101591,
+          "sha256": "9949b25a7b693651ea89dc6ffedc0cb94899aedc8fd315af216d54d3f79e5bc7",
+          "locator": "customer Meleuz 223-FZ original tender bidding schedule, 17Aug2026"
+        }
+      ],
+      "corpus_classification": "ONE original existing 6kV500kvar notice enriched, do not make 3 commercial quotes 3 independent original procurement notices; separately record equipment initial NMCD as market quotation average, not 3 completed sales.",
+      "open_tasks": [
+        "Recover actual contract registry RD223 entry after Sep2026 original selected anonymous bid no.79410; identify awarded legal supplier and original signed line price separately from 3 estimated quotes",
+        "Find manufacturer of physical 500kvar thyristor-reactor harmonic filtering installation and whether installation and supervised startup completed",
+        "Assess if decree 1875 limitation requires register certificate / country origin and exceptions for actual model; original tick does NOT say prohibition"
+      ]
+    }
+  ]
+}
