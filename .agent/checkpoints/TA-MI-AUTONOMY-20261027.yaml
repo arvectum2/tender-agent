@@ -19,7 +19,7 @@ completed:
   - "2026-10-27: Published AUTONOMOUS_RESEARCH_PROTOCOL.md (S0-S11), PQ_CASEBOOK_20261027.md, RESEARCH_EVENT_SCHEMA.json and 3 example records in PQ_TRAINING_CANDIDATES.jsonl."
   - "2026-10-27: Fetched all 4 new files back from GitHub; parsed JSON Schema and all 3 example JSONL entries; verified required fields and all examples marked non-gold."
   - "2026-10-27: Added a stable Market Intelligence README index."
-current_step: "Implement durable runtime research event recorder and a fixture-driven one-shot orchestrator after inspecting existing MI-013 v20 canonical datasets and task queues."
+current_step: "Offline runner is connected and executed against existing MI-013 v20 on Mac mini. Implement live EIS/ETP source orchestration, outcome evidence checks and repeatable integration tests."
 remaining:
   - "Locate and confirm MI-013 v20 canonical corpus and actual source provenance; avoid restoring previously deleted parallel study CSV/Markdown."
   - "Build event recorder for source attempts/decisions, immutable evidence references, coverage matrix and fail-closed gold labels."
@@ -35,3 +35,11 @@ resume_instruction: >-
   without disturbing the existing unrelated .agent/current-task.yaml or
   the dirty local Mac mini checkout. After each milestone update this
   checkpoint with actual verified commit and test outcomes.
+
+implementation_update_20261027:
+  commit: 344738aec8e9d992b3988d37f9f7fd1f725a3624
+  existing_corpus: /Volumes/ArvectumSSD/arvectum/runtime/mi013-pq-import/data/market_intelligence/power_quality
+  runtime_output: /tmp/ta-mi013-autonomous-20261027
+  execution: offline MI-013 v20 successful; 12 stage event records; source checksums recorded
+  tests: 19 existing PQ pilot passed; 1 new guard passed; 1 corpus-dependent test skipped in clean checkout
+  remaining: live source acquisition, actual S0-S11 execution, audited reporting, corpus-mounted regression, durable runtime storage
