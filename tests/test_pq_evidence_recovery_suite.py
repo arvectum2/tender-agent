@@ -110,3 +110,34 @@ def test_etp_http_outcomes_are_distinct_and_do_not_prove_award(tmp_path):
                and row["winner_verified"] is False for row in result["results"])
     assert audit(queue_file=queue, journal=tmp_path / "journal.json",
                  max_tasks=4, fetch=fetch)["probes"] == 0
+
+
+def test_gap_inventory_preserves_all_v20_source_delta_variants(tmp_path):
+    from src.modules.market_intelligence.pq_gap_recovery import inventory
+    leads = tmp_path / "leads.json"
+    leads.write_text(json.dumps({"records": [{
+        "procedure_id": "4559984", "canonical_id": "commercial:4559984:lot1",
+        "evidence": [{"url": "https://example.org/notice"}],
+        "sources": [{"url": "https://example.org/original"},
+                    {"url": "https://example.org/notice"}],
+        "source_url": "https://example.org/registry",
+        "source": "https://example.org/market",
+        "supporting_source": "https://example.org/secondary",
+    }, {
+        "procedure_id": "4561228", "canonical_id": "commercial:4561228:lot1",
+        "sources": [{"url": "https://example.org/other"}],
+        "source": "file:///etc/passwd",
+        "supporting_source": "https://user:password@example.org/private",
+    }]}))
+    root = tmp_path / "sources"
+    root.mkdir()
+    result = inventory(leads_file=leads, source_roots=[root],
+                       queue_dir=tmp_path / "queue", output=tmp_path / "gaps.json")
+    assert result["lead_count"] == 2
+    rows = json.loads((tmp_path / "gaps.json").read_text())["cases"]
+    assert rows[0]["evidence_urls"] == [
+        "https://example.org/notice", "https://example.org/original",
+        "https://example.org/registry", "https://example.org/market",
+        "https://example.org/secondary"]
+    assert rows[1]["evidence_urls"] == ["https://example.org/other"]
+    assert "signed_contract" in rows[0]["missing_or_unverified"]
