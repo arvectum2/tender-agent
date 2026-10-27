@@ -216,3 +216,24 @@ verified_v29_cycle_20261028:
   last_verified_commit: "5ba573f7 test(mi): SHA-gated ZIP member extraction and resumed Data Platform batches (worktree at start of run)"
   last_test_results: "9 passed, 1 third-party warning; offline and online 101-case cycles successful; no new EIS searches (journal 33) and no new downloads."
   resume_instruction: "Start by checking current main/worktree SHA, then inspect official RD223 and 44-FZ contract original ZIP archives under pq-official-contracts and reconcile with v29 lead numbers using exact XML source SHA. Add tests, run bounded source acquisition, update checkpoint. Preserve exactly one Tender Agent Watchdog."
+
+contract_register_xml_20261028:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  goal: "Reconcile source-backed Power Quality procurement outcomes and avoid duplicate contract editions"
+  definition_of_done: "Signed outcome, supplier and lot evidence verified for each relevant case; complete tested report"
+  completed:
+    - "Completed both offline and online recovery cycles against v29 101-case corpus."
+    - "Audited 3 local 223-FZ contract ZIP archives with exact procurement identifiers."
+    - "Matched 4 original XML records to 3 distinct contracts, preserving SHA-256 and revision source references."
+    - "Preserved price data as contract-register XML fields; signed status and supplier remain unverified."
+    - "Deduplicated one price-identical revision without doubling contract volume."
+  current_step: "Reconcile original signed outcomes and supplier records from original contract/protocol sources."
+  remaining:
+    - "Expand contract archives and 44-FZ source records across the 101-case corpus."
+    - "Join exact notice/lot/contract keys, resolve signed supplier and final price from first-party primary proof."
+    - "Implement platform-native commercial ETP original-document retrieval and 2024-2026 gap coverage."
+    - "Verify OCR-provisional evidence and publish audited market result without invented outcomes."
+  last_verified_commit: "7d5b7a77b9491010f167badf8f1eb2c6e49554f2"
+  last_test_results: "12 tests passed; one upstream Starlette deprecation warning; 3 contract archives, 4 revisions, 3 unique contract records, zero parse errors."
+  resume_instruction: "Extend pq_contract_xml_index to actual verified signature/supplier and 44-FZ sources, but never infer signed contract from a status code or contract date. Add exact notice+lot+contract dedup tests and run against 101 v29 cases; preserve the single hourly Watchdog and unrelated current-task checkpoint."
