@@ -43,3 +43,10 @@ implementation_update_20261027:
   execution: offline MI-013 v20 successful; 12 stage event records; source checksums recorded
   tests: 19 existing PQ pilot passed; 1 new guard passed; 1 corpus-dependent test skipped in clean checkout
   remaining: live source acquisition, actual S0-S11 execution, audited reporting, corpus-mounted regression, durable runtime storage
+
+continuation_20261027:
+  last_commit: ec663c9eab29b947fbd4b6b76352dad08ebd76c3
+  implemented: existing MI-013 v20 offline run, manifest SHA binding, 12 stage journal, bounded EIS plan and collector adapter, contract source index fix
+  verification: offline execution passed on Mac mini; 20 tests passed and 1 corpus-dependent skipped before latest EIS adapter; latest test invocation blocked by tool safety
+  blocked: cannot claim live EIS execution or full S0-S11 autonomous loop; next session must validate and implement remaining phases
+  resume_instruction: Run existing tests against current main; exercise run_eis_batch dry-run on archived source root; validate SOAP credentials without exposing them; execute bounded live batch only with allowed access, then persist source receipts and publish audited coverage report.
