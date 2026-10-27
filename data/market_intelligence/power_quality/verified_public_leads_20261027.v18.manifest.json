@@ -1,0 +1,27 @@
+{
+  "schema_version": "pq-research-notice-manifest/1.1",
+  "as_of": "2026-10-27",
+  "data_version": "v18",
+  "period": {
+    "from": "2023-10-27",
+    "to": "2026-10-27"
+  },
+  "base_manifest": "verified_public_leads_20261027.v17.manifest.json",
+  "base_rows": 99,
+  "delta_file": "discovery_2023_2026_v18_delta.json",
+  "delta_rows": 2,
+  "total_rows": 101,
+  "original_signed_contract_xml_known_count": 4,
+  "initial_price_documented_cases": 36,
+  "production_db_v12_imported_rows": 71,
+  "research_only_not_yet_imported": 30,
+  "year_distribution_publication_only": {
+    "2023": 3,
+    "2024": 17,
+    "2025": 23,
+    "2026": 55,
+    "undated": 3
+  },
+  "census_complete": false,
+  "notes": "101 lot-level observed research cards, not 101 distinct formal tenders nor 101 contracts. v17 includes nine price-sounding notices, one quote and one final-price-only Samara listing without publication date. v18 adds an exact nominal 6.3kV UKRM model inside mixed-price survey, plus a 10kV filter reactor whose Rostender index is not EIS ID."
+}
