@@ -1,0 +1,104 @@
+{
+  "schema_version": "pq-original-spec-and-protocol-enrichment/1.0",
+  "as_of": "2026-10-27",
+  "data_version": "v21",
+  "parent_manifest": "verified_public_leads_20261027.v20.manifest.json",
+  "existing_records_enriched": 1,
+  "new_records": 0,
+  "patches": [
+    {
+      "canonical_id": "223fz:32616296475:lot1",
+      "procurement_number": "32616296475",
+      "etp_procedure_number": "0052026007DP",
+      "buyer": "ООО «Водоканал», Мелеуз",
+      "buyer_inn": "0263017332",
+      "original_notice_price_rub": "3904773.73",
+      "object_type": "high_voltage_thyristor_reactor_UKRM_with_harmonic_filter_and_supervised_installation",
+      "technical_requirements": {
+        "nominal_grid_voltage_max_kv": "6.3",
+        "nominal_reactive_power_min_kvar": "500",
+        "setpoint_range": "0-100% of nominal, continuous",
+        "regulation_step_max_kvar": "50",
+        "controller_response_max_ms": "5",
+        "load_change_response_max_ms": "10",
+        "cos_phi_min": "0.98",
+        "cos_phi_maintenance_accuracy": "±0.02",
+        "enclosure_min_ip": "IP54",
+        "ambient_temperature_min_c": -40,
+        "ambient_temperature_max_c": 45,
+        "climate": "indoor with heating and forced-air cooling",
+        "main_components": [
+          "thyristor switches",
+          "controllable shunt reactor",
+          "higher harmonic filter",
+          "disconnector and earth switch",
+          "industrial power quality analyser",
+          "SCADA-ready controller"
+        ],
+        "onboard_monitoring_archive_min_days": 14,
+        "pre_energisation_pq_measurement_min_days": 7,
+        "post_energisation_pq_measurement_min_days": 7,
+        "harmonic_measurement_up_to_order": 50,
+        "delivery_in_workdays_max": 55,
+        "total_performance_in_workdays_max": 70,
+        "onsite_supervised_installation_in_days_max": 7
+      },
+      "scope_price_warning": "Total package includes high-voltage device, transport, supervised installation, commissioning and power-quality testing before and after; it is not standalone OEM equipment price.",
+      "original_final_protocol": {
+        "date": "2026-09-04",
+        "published_at_etp": "2026-09-07",
+        "original_scanned_pages": 4,
+        "admitted_bids_count": 2,
+        "rejected_bids_count": 0,
+        "ranked_bidder_one": {
+          "application_number": "79410",
+          "bid_rub": "3865725.99",
+          "legal_entity_name": null,
+          "inn": null
+        },
+        "ranked_bidder_two": {
+          "application_number": "79376",
+          "bid_rub": "3885249.86",
+          "legal_entity_name": null,
+          "inn": null
+        },
+        "final_offer_reduction_rub": "39047.74",
+        "award_signed_contract_verified": false,
+        "actual_signed_contract_price_rub": null,
+        "supplier_legal_identity_verified": false,
+        "interpretation": "Original final protocol identifies winner only by anonymised application no 79410 and proposal 3,865,725.99 RUB; not by verified legal name or signed contract. No double counting; one existing lot in original 100-row corpus."
+      },
+      "evidence": [
+        {
+          "tier": "original_etp_docx_sha256_verified",
+          "url": "https://zakaz.etp-region.ru/fx/gpms/etpGetFileServlet?fileUUID=dbfilefs002080000q03kmh4j5tmvv6g",
+          "sha256": "ca9a840c69bce647287c4571b675d57f401f89a20ae3d24f3842d8e24485b781",
+          "bytes": 28240,
+          "locator": "Техническое задание на оборудование 14.08 (2) (1).docx: tables for 1 UKRM 6.3kV ≥500kvar and 1 shеф-монтаж, 11,030 extracted text chars"
+        },
+        {
+          "tier": "original_etp_scanned_final_protocol_sha256_verified",
+          "url": "https://zakaz.etp-region.ru/fx/gpms/etpGetFileServlet?fileUUID=dbfilefs002080000q0qrilg879gm7mk",
+          "sha256": "9e2812d778f3e4534a3fcc02dec65d04df999d8d9ca11032fd1c8ff5000eb3d0",
+          "bytes": 1655628,
+          "locator": "Протокол подведения итогов pto04427920260904115554.pdf, pp.2-3; macOS Vision Russian OCR with direct human visual confirmation of p.3 pricing and application rank"
+        },
+        {
+          "tier": "official_public_etp_listing",
+          "url": "https://torgi.etp-region.ru/app/OfferCard/page?OfferCard.offerUUID=Scorebofs002080000q03ju2cimtcd2js",
+          "locator": "Procedure dates, published file list and initial budget 3,904,773.73 RUB"
+        }
+      ],
+      "manufacturer_fit": {
+        "fgi_substitutability": "not_proven",
+        "reason": "Buyer explicitly demands thyristor-controlled reactor plus harmonic filter and controlled 50kvar steps; a generic SVG/STATCOM is not presumed equivalent, and climatic IP54 limits require exact model documentation.",
+        "national_regime": "The original document includes a restriction marker referencing RF decree 1875; legal impact on imported equipment requires independent procurement-law interpretation, not automatically considered a ban."
+      }
+    }
+  ],
+  "quality_notes": [
+    "Original protocol is image-only PDF: `pdftotext` had no content; Russian OCR was last-resort and winning prices/ranks were cross-checked against a rendered source page.",
+    "NMC/offer/signed contract kept separate.",
+    "No extra candidate rows or assumed supplier identities."
+  ]
+}
