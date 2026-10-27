@@ -35,6 +35,23 @@
       "signed_contract_verified": false,
       "supplier_of_signed_contract_verified": false,
       "market_category": "filter_capacitor_supply"
+    },
+    {
+      "procedure_id": "32514476448",
+      "lot": "25-000705",
+      "queue_id": "32514476448-3036b81abe14207e49c7a81b",
+      "source_sha256": "6aad26d79ae29136cca5214b44f2aae9fdd4fe45dd0cd3f8ab2fe0e74d524554",
+      "source_quote": "ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ «УРАЛЬСКАЯ ЭЛЕКТРОИНЖЕНЕРНАЯ КОМПАНИЯ ТЭЛПРО»",
+      "amount_quote": "2 922 405,35",
+      "nmck_quote": "3 176 527,55",
+      "proposed_or_selected_participant": "ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ «УРАЛЬСКАЯ ЭЛЕКТРОИНЖЕНЕРНАЯ КОМПАНИЯ ТЭЛПРО»",
+      "decision_type": "failed_tender_commission_direct_single_eligible_supplier",
+      "price_kind": "commission_selected_single_offer_vat_excluded",
+      "offer_rub": "2922405.35",
+      "nmck_rub": "3176527.55",
+      "signed_contract_verified": false,
+      "supplier_of_signed_contract_verified": false,
+      "market_category": "mixed_epc_10kv_capacitor_bank"
     }
   ]
 }
