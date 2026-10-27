@@ -4,6 +4,7 @@ Only probes URLs present in the source retrieval queue. No guessed URLs,
 automatic bidding or claim that aggregator pricing is a signed award.
 """
 from __future__ import annotations
+
 import argparse
 import hashlib
 import json
@@ -12,7 +13,7 @@ import tempfile
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import datetime, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 ALLOW = frozenset({"poisktenderov.ru","zakupki.tochka.com","synapsenet.ru",
@@ -60,7 +61,7 @@ def audit(*, queue_file: Path, journal: Path, max_tasks: int = 5,
     tasks = json.loads(queue_file.read_text(encoding="utf-8"))["tasks"]
     state = json.loads(journal.read_text(encoding="utf-8")) if journal.exists() else {
         "schema_version": "pq-etp-card-attempts/1", "attempts": []}
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     new = []
     for task in tasks:
         if len(new) >= max_tasks:
@@ -82,10 +83,23 @@ def audit(*, queue_file: Path, journal: Path, max_tasks: int = 5,
             result["identity_mentioned"] = identity.casefold() in html.casefold()
             result["pq_term_mentioned"] = any(t in html.casefold() for t in
                                                ("укрм","компенсац","статком","конденсатор","фильтр гармоник"))
-        except (OSError, ValueError, urllib.error.URLError) as exc:
+        except urllib.error.HTTPError as exc:
+            code = int(exc.code)
+            status = ("inaccessible" if code in (401, 403) else
+                      "not_found" if code == 404 else
+                      "retryable_http_error" if code in (408, 429, 500, 502, 503, 504) else
+                      "http_error")
+            result = {"status": status, "http_status": code, "error_type": "HTTPError"}
+        except urllib.error.URLError:
+            result = {"status": "retryable_network_error", "error_type": "URLError"}
+        except (OSError, ValueError) as exc:
             result = {"status": "fetch_error", "error_type": type(exc).__name__}
+        previous_count = sum(a["procedure_id"] == identity and a["url"] == url
+                             for a in state["attempts"])
         record = {"timestamp": now.isoformat(), "procedure_id": identity, "url": url,
                   "host": host, "source_tier": "original_corporate" if host in PRIMARY else "secondary_index",
+                  "retry_count": previous_count + 1,
+                  "next_eligible_retry_at": (now + timedelta(hours=retry_hours)).isoformat(),
                   **result, "signed_contract_verified": False, "winner_verified": False}
         state["attempts"].append(record)
         new.append(record)

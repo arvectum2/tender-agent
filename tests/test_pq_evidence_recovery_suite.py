@@ -7,10 +7,10 @@ from unittest.mock import patch
 
 import pytest
 
-from src.modules.market_intelligence.pq_materialize_v20 import materialize
-from src.modules.market_intelligence.pq_verified_stage import stage
-from src.modules.market_intelligence.pq_scan_ocr import ocr_pdf
 from src.modules.market_intelligence.pq_etp_card_audit import audit
+from src.modules.market_intelligence.pq_materialize_v20 import materialize
+from src.modules.market_intelligence.pq_scan_ocr import ocr_pdf
+from src.modules.market_intelligence.pq_verified_stage import stage
 
 
 def test_materializer_missing_corpus_fails_closed(tmp_path):
@@ -83,3 +83,30 @@ def test_etp_retry_and_no_contract_inference(tmp_path):
     assert second["probes"] == 0
     assert len(count) == 1
     assert first["results"][0]["signed_contract_verified"] is False
+
+
+def test_etp_http_outcomes_are_distinct_and_do_not_prove_award(tmp_path):
+    from urllib.error import HTTPError, URLError
+    urls = ["https://synapsenet.ru/zakupki/b2b/403",
+            "https://synapsenet.ru/zakupki/b2b/404",
+            "https://synapsenet.ru/zakupki/b2b/503",
+            "https://synapsenet.ru/zakupki/b2b/network"]
+    queue = tmp_path / "queue.json"
+    queue.write_text(json.dumps({"tasks": [
+        {"procedure_id": str(i), "mirror": url}
+        for i, url in enumerate(urls)]}))
+    def fetch(url):
+        suffix = url.rsplit("/", 1)[-1]
+        if suffix == "network":
+            raise URLError("temporary failure")
+        raise HTTPError(url, int(suffix), "error", {}, None)
+    result = audit(queue_file=queue, journal=tmp_path / "journal.json",
+                   max_tasks=4, fetch=fetch)
+    assert [row["status"] for row in result["results"]] == [
+        "inaccessible", "not_found", "retryable_http_error", "retryable_network_error"]
+    assert [row.get("http_status") for row in result["results"]] == [403, 404, 503, None]
+    assert all(row["retry_count"] == 1 and row["next_eligible_retry_at"]
+               and row["signed_contract_verified"] is False
+               and row["winner_verified"] is False for row in result["results"])
+    assert audit(queue_file=queue, journal=tmp_path / "journal.json",
+                 max_tasks=4, fetch=fetch)["probes"] == 0
