@@ -5,7 +5,9 @@ from pathlib import Path
 import pytest
 
 from src.modules.market_intelligence.pq_safe_7z import (
-    _checked_entries, _valid_signature, stage_case,
+    _checked_entries,
+    _valid_signature,
+    stage_case,
 )
 
 LISTING = """
