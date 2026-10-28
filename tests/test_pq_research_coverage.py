@@ -146,3 +146,37 @@ def test_two_lots_share_one_223_notice_but_remain_two_rows(tmp_path: Path):
     assert result["commercial_or_nonstandard_candidate_rows"] == 2
     assert result["candidate_rows_with_primary_original"] == 3
     assert result["unique_notice_or_etp_numbers_with_primary_original"] == 2
+
+
+def test_month_search_journal_counts_only_query_samples(tmp_path: Path):
+    sources = _fixture(tmp_path)
+    journal = tmp_path / "month.json"
+    journal.write_text(json.dumps({
+        "schema_version": "pq-month-scoped-eis/1",
+        "attempts": [
+            {"month": "2025-05", "law": "223fz", "date_bounds_verified": True,
+             "query_scoped_not_exhaustive": True, "query": "УКРМ",
+             "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&publishDateFrom=01.05.2025&publishDateTo=31.05.2025&searchString=%D0%A3%D0%9A%D0%A0%D0%9C"},
+            {"month": "2025-05", "law": "44fz", "date_bounds_verified": False,
+             "query_scoped_not_exhaustive": True},
+        ]}))
+    result = build(**sources, month_journal=journal)
+    month = next(x for x in result["period_search_coverage"] if x["month"] == "2025-05")
+    assert month["source_queries_with_verified_month_bounds"] == 1
+    assert month["coverage_state"] == "query_scoped_first_page_only"
+    assert month["zero_procurements_claimed"] is False
+    assert result["completeness"] == "partial_period_discovery_not_established"
+    assert result["search_attempt_log"]["official_month_scoped_first_page_attempts"] == 2
+
+
+def test_month_source_receipt_rejects_forged_date_bound(tmp_path: Path):
+    sources = _fixture(tmp_path)
+    journal = tmp_path / "month.json"
+    journal.write_text(json.dumps({
+        "schema_version": "pq-month-scoped-eis/1",
+        "attempts": [{"month": "2025-05", "law": "223fz", "query": "УКРМ",
+                      "date_bounds_verified": True,
+                      "query_scoped_not_exhaustive": True,
+                      "source_url": "https://example.com/forged"}]}))
+    with pytest.raises(ValueError, match="Invalid official month-bound"):
+        build(**sources, month_journal=journal)

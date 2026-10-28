@@ -16,6 +16,8 @@ from datetime import date
 from pathlib import Path
 
 from .pq_b2b_primary_audit import verify as verify_b2b
+from .pq_month_discovery import _bound as verify_month_url
+from .pq_month_discovery import _window as month_window
 from .pq_primary_etp_audit import verify as verify_etp
 from .pq_verified_market_report import (
     exact_filestore_sha_receipts,
@@ -74,6 +76,7 @@ def build(*, leads: Path, public223: Path, filestore: Path,
           eis_journal: Path | None = None,
           public_journal: Path | None = None,
           primary_etp_journal: Path | None = None,
+          month_journal: Path | None = None,
           start: str = "2024-01-01", end: str = "2026-10-28") -> dict:
     data = json.loads(leads.read_text(encoding="utf-8"))
     if not isinstance(data.get("records"), list) or len(data["records"]) > 20000:
@@ -90,6 +93,7 @@ def build(*, leads: Path, public223: Path, filestore: Path,
     downloads = _journal(public_journal, "pq-223-public-page-attempts/1")
     native = _journal(primary_etp_journal, "pq-etp-primary-attempts/1")
     b2b_attempts = _journal(b2b_journal, "pq-original-b2b-capture-attempts/1")
+    month_attempts = _journal(month_journal, "pq-month-scoped-eis/1")
     found_ids = {str(r.get("procedure_id")) for r in found
                  if r.get("source") == "official_eis_search"
                  and r.get("status") == "success"
@@ -193,10 +197,29 @@ def build(*, leads: Path, public223: Path, filestore: Path,
         "original_eis_documents_verified",
         "original_commercial_card_html_sha_verified",
         "original_commercial_b2b_html_sha_verified") for c in cases)
+    bounded_months = Counter()
+    for attempt in month_attempts:
+        if attempt.get("date_bounds_verified") is not True:
+            continue
+        month = attempt.get("month")
+        law = attempt.get("law")
+        query = attempt.get("query")
+        try:
+            start_date, end_date = month_window(month)
+            verified = (law in ("223fz", "44fz")
+                        and isinstance(query, str)
+                        and verify_month_url(attempt.get("source_url") or "",
+                                             law, start_date, end_date, query))
+        except (TypeError, ValueError):
+            verified = False
+        if not verified or attempt.get("query_scoped_not_exhaustive") is not True:
+            raise ValueError("Invalid official month-bound search receipt")
+        bounded_months[month] += 1
     periods = [
         {"month": m,
-         "source_queries_with_verified_month_bounds": 0,
-         "coverage_state": "not_demonstrated",
+         "source_queries_with_verified_month_bounds": bounded_months[m],
+         "coverage_state": ("query_scoped_first_page_only" if bounded_months[m]
+                            else "not_demonstrated"),
          "zero_procurements_claimed": False}
         for m in _months(start, end)
     ]
@@ -228,6 +251,7 @@ def build(*, leads: Path, public223: Path, filestore: Path,
             "public_223_download_attempts": len(downloads),
             "original_commercial_etp_capture_attempts": len(native),
             "original_b2b_center_capture_attempts": len(b2b_attempts),
+            "official_month_scoped_first_page_attempts": len(month_attempts),
         },
         "completeness": "partial_period_discovery_not_established",
         "cases": cases,
@@ -244,6 +268,7 @@ def main() -> None:
     p.add_argument("--b2b-originals", type=Path)
     p.add_argument("--b2b-journal", type=Path)
     p.add_argument("--eis-journal", type=Path)
+    p.add_argument("--month-journal", type=Path)
     p.add_argument("--public-journal", type=Path)
     p.add_argument("--etp-journal", type=Path)
     p.add_argument("--start", default="2024-01-01")
@@ -253,7 +278,7 @@ def main() -> None:
     result = build(leads=a.leads, public223=a.public223, filestore=a.filestore,
                    etp_facts=a.etp_facts, etp_originals=a.etp_originals,
                    b2b_originals=a.b2b_originals, b2b_journal=a.b2b_journal,
-                   eis_journal=a.eis_journal,
+                   eis_journal=a.eis_journal, month_journal=a.month_journal,
                    public_journal=a.public_journal,
                    primary_etp_journal=a.etp_journal,
                    start=a.start, end=a.end)

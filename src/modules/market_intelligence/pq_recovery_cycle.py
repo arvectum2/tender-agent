@@ -248,6 +248,7 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
             b2b_originals=b2b_source,
             b2b_journal=runtime / "primary-b2b-attempts.json",
             eis_journal=runtime / "source-attempts.json",
+            month_journal=runtime / "month-eis-search-attempts.json",
             public_journal=runtime / "public223-attempts.json",
             primary_etp_journal=runtime / "primary-etp-attempts.json")
         resolved = resolve_projects(leads=leads, links=project_links, queue=queue)

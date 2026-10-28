@@ -382,3 +382,24 @@ spec_kit_phase2_etp_coverage_20261028:
   runtime_root: "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live"
   branch: "feature/pq-etp-provenance-ledger-20261028"
   resume_instruction: "Inspect this section, feature PR status and actual main SHA. Do not repeat SHA-verified EIS/Bidzaar/B2B downloads. If CI/review permits, merge feature branch with governance then update source logs. Resume source-native ETP signed outcomes and month-bounded 44/223/ETP coverage. Data Platform 15 pending sources must remain blocked until authorized service API key is supplied via normal environment. Preserve one hourly Tender Agent Watchdog and unrelated .agent/current-task.yaml."
+
+month_scoped_official_eis_20261028:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  scope: "First-page exact month-bound EIS 223/44 source searches, not exhaustive market discovery"
+  completed:
+    - "14 actual official date-bound queries (12 topical + 2 exact-ID) across 2024-04, 2025-05, 2026-09; two PQ terms and two laws per month"
+    - "6 nonempty first pages, 17 unverified candidate metadata rows, 8 parsed empty pages"
+    - "5 May-2025 and 2 Sep-2026 44-FZ results are visibly medical equipment repair false positives; no PQ supplier or price promoted"
+    - "v29 101 rows, 39 original-source-backed rows, 62 without; all 34 months still lack exhaustive discovery proof"
+    - "Gap inventory refreshed for all 101 v29 leads; S10 source checks passed; 15 DP extractions remain blocked by missing authorized SDK key"
+  evidence:
+    journal_sha256: 27949492f0bc2727bb11cdc034b46709ed8f1905563e688c134ced00e4d357b5
+    coverage_sha256: 2238cdb939462d2ee09832df09c33ad56882fff699b622497128b1420332b016
+    quality_sha256: 930d83abf7bbf10ef730020eda9dbc3ed6c23fa6ade29f93eb924c2fe1673205
+    report: docs/market_intelligence/PQ_EIS_MONTH_BOUND_SEARCH_20261028.md
+  remaining:
+    - "31 months without even bounded sampled official month search; 34 months without exhaustive proof"
+    - "Original ETP awards, signed contracts, verified suppliers and equipment-only prices remain open"
+    - "15 Data Platform files blocked pending authorized service API key"
+  resume_instruction: "Inspect PR #521 exact-head CI and this checkpoint. Continue bounded new calendar windows and originating ETP source retrieval; do not repeat 14 journaled exact month/law/query combinations before cooldown. Source-verify candidate technical specs and signed contracts, never promote search metadata or commission offers to executed sales. Keep MI in REVIEW, preserve one Watchdog and unrelated current-task.yaml."
