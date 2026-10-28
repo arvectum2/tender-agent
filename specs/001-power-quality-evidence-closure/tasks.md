@@ -9,6 +9,7 @@
 - [x] T004 Reconcile count warnings in `pq_verified_market_report.py` to exact computed source counts; never hardcode 101/69.
 - [x] T005 Add tests for 3/2/1 and 101/33/68 corpora; assert no TAM or signed-supplier inference.
 - [x] T006 Validate lint, unit/regression and source snapshot consistency, then cross-review documentation/code/test diff.
+- [x] T006a Repair existing CI architecture failure without relaxing audit: PQ extraction now uses the shared Data Platform consumer SDK facade, not a cross-repo Python import; source SHA, read-only extraction, selective resume, failure receipt and PDF fallback regression tested with a real synthetic authorized HTTP request.
 - [ ] T007 Prepare reviewed commit/PR, check CI and merge before AES canonical closure; synchronize existing roadmap and Watchdog checkpoint as needed (do not silently overwrite).
 
 ## Phase 2 — audited original sources (US2)
