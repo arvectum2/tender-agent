@@ -82,3 +82,19 @@ def test_batch_resumes_without_repeated_card_download(tmp_path: Path):
     assert next_run["attempts"] == 0
     assert len(calls) == 1
     assert len(json.loads(journal.read_text())["attempts"]) == 1
+
+
+def test_active_harmonic_filters_are_primary_pq_evidence(tmp_path: Path):
+    number = "358-830"
+    url = URL.replace("019ce668", "019fb323")
+    body = (
+        "<!DOCTYPE html><html><head>"
+        f"<title>Тендер {number} — Поставка активных фильтров гармоник | Bidzaar</title>"
+        f'<meta property="og:url" content="{url}">'
+        '<meta name="description" content="ВАЙЛДБЕРРИЗ — поставка фильтров гармоник">'
+        "</head></html>"
+    ).encode()
+    captured = capture(number=number, url=url, source_root=tmp_path,
+                       fetch=lambda _: (body, url))
+    assert captured["source_evidence_verified"] is True
+    assert captured["signed_contract_amount_rub"] is None
