@@ -519,3 +519,26 @@ etp_corpus_source_queue_expansion_20261028_0430:
     attempt journals, and process any new native originals via SHA-bound
     ChatGPT/ARC reviews. Preserve unrelated current-task, lease discipline
     and exactly one hourly Watchdog.
+
+etp_html_sha_snapshot_20261028_0435:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  last_verified_code_commit: bc1db8b7b77757311c498c9e7395fc37047819e3
+  scope: "Optional SHA-verified public HTML snapshot retention in existing ETP audit and recovery cycle."
+  snapshot_runtime: /Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live/etp-source-snapshots
+  prior_source_retrievals_repeated: 0
+  original_signed_contracts_newly_verified: 0
+  snapshot_source_tier: public_etp_or_secondary_html_not_signed_award
+  last_test_results: "70 tests/test_pq_*.py PASS; Ruff PASS; git diff --check PASS; one inherited Starlette warning."
+  blockers:
+    - "Exact-head CI remains pending for this PR; earlier CI failed pre-existing architecture audit on direct Data Platform import in pq_dp_ingest.py."
+    - "No new primary signed contracts/suppliers in this run; public HTML snapshots begin only on next eligible URL requests, not retroactively."
+  resume_instruction: >-
+    Keep PR #519 draft/review until exact-head CI and sanctioned Data Platform
+    SDK/service boundary issue are resolved; never weaken audit. At next eligible
+    12-hour ETP retry, pass snapshot_dir to audit and review only exact SHA-bound
+    public source bytes, without promoting secondary HTML to original signed
+    contract. Prioritize native original award/contract files and independently
+    verified supplier/price, then source-bound ChatGPT/ARC review. Preserve
+    existing 100-lead v20 corpus, task-specific checkpoint, other current-task
+    and single hourly Watchdog.
