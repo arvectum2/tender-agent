@@ -64,6 +64,45 @@ def source_receipts(root: Path, *, max_cases: int = 100) -> list[dict]:
     return result
 
 
+
+def exact_filestore_sha_receipts(root: Path) -> list[dict]:
+    """Verify original filestore bytes independently of EIS public page HTML."""
+    if root.is_symlink() or not root.is_dir():
+        raise ValueError("Missing exact-SHA EIS source directory")
+    result = []
+    for case in sorted(root.iterdir()):
+        if not case.is_dir() or case.is_symlink() or not re.fullmatch(r"[0-9]{11}", case.name):
+            continue
+        receipt = case / "official-sha-receipt.json"
+        if not receipt.is_file() or receipt.is_symlink():
+            continue
+        data = json.loads(receipt.read_text(encoding="utf-8"))
+        if (data.get("schema_version") != "pq-official-filestore-sha-receipt/1"
+                or data.get("registry_number") != case.name
+                or len(data.get("verified", [])) > 30):
+            raise ValueError("Invalid official EIS direct SHA receipt")
+        files = data["verified"]
+        for record in files:
+            name = record.get("stored_name")
+            digest = record.get("sha256")
+            if (not isinstance(name, str) or Path(name).name != name
+                    or not isinstance(digest, str)
+                    or not re.fullmatch(r"[0-9a-f]{64}", digest)):
+                raise ValueError("Unsafe original URL-SHA receipt")
+            path = case / name
+            if (path.is_symlink() or not path.is_file()
+                    or path.stat().st_size > 70_000_000
+                    or hashlib.sha256(path.read_bytes()).hexdigest() != digest):
+                raise ValueError("Official EIS direct original SHA mismatch")
+        result.append({
+            "registry_number": case.name,
+            "verified_file_instances": len(files),
+            "status": "official_filestore_exact_sha_verified",
+            "source_page_sha256": None,
+        })
+    return result
+
+
 def summarize(*, leads: list[dict], eis: list[dict],
               commissions: dict, etp: dict, contracts: dict) -> dict:
     ids = {str(x.get("procedure_id")) for x in leads
@@ -178,9 +217,19 @@ def markdown(report: dict) -> str:
 def run(*, leads: Path, eis_originals: Path,
         commission_facts: Path, review_queue: Path,
         etp_facts: Path, etp_originals: Path,
-        contract_root: Path, day_scan: Path | None = None) -> dict:
+        contract_root: Path, day_scan: Path | None = None,
+        official_filestore_root: Path | None = None) -> dict:
     corpus = json.loads(leads.read_text(encoding="utf-8"))["records"]
     eis = source_receipts(eis_originals)
+    if official_filestore_root is not None:
+        existing = {x["registry_number"]: x for x in eis}
+        for source in exact_filestore_sha_receipts(official_filestore_root):
+            matched = existing.get(source["registry_number"])
+            if matched is not None:
+                matched["verified_file_instances"] += source["verified_file_instances"]
+                matched["status"] = "public_page_plus_original_sha_url"
+            else:
+                eis.append(source)
     commission = verify_commission(facts=commission_facts, queue=review_queue)
     etp = verify_etp(facts=etp_facts, source_root=etp_originals)
     with TemporaryDirectory(prefix="pq-market-source-") as temporary:
@@ -203,13 +252,15 @@ def main() -> None:
     p.add_argument("--etp-originals", type=Path, required=True)
     p.add_argument("--contract-root", type=Path, required=True)
     p.add_argument("--day-scan", type=Path)
+    p.add_argument("--official-filestore-originals", type=Path)
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--markdown", type=Path)
     args = p.parse_args()
     result = run(leads=args.leads, eis_originals=args.eis_originals,
                  commission_facts=args.commission_facts, review_queue=args.queue,
                  etp_facts=args.etp_facts, etp_originals=args.etp_originals,
-                 contract_root=args.contract_root, day_scan=args.day_scan)
+                 contract_root=args.contract_root, day_scan=args.day_scan,
+                 official_filestore_root=args.official_filestore_originals)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     if args.markdown:
