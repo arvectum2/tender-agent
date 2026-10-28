@@ -1,0 +1,63 @@
+{
+  "schema_version": "mi013-production-original-signed-12kv-contract/1.0",
+  "as_of": "2026-10-28",
+  "data_version": "v38",
+  "database": "arvectum_data",
+  "collection": "arvectum-market-pq-6-35kv",
+  "new_canonical_id": "223fz:32616181358:lot1",
+  "original_notice_number": "32616181358",
+  "original_registry_contract_number": "57724646338260000460000",
+  "original_contract_date": "2026-08-19",
+  "original_signed_contract_total_rub": "3050000.00",
+  "original_equipment_items": [
+    {
+      "name": "КЭПФ-12-450-2УХЛ1",
+      "nominal_kv": 12,
+      "quantity": 5,
+      "unit_rub": "292000.00"
+    },
+    {
+      "name": "КЭПФ-12-600-2УХЛ1",
+      "nominal_kv": 12,
+      "quantity": 5,
+      "unit_rub": "318000.00"
+    }
+  ],
+  "original_manufacturer_registration_country": "Казахстан",
+  "original_supplier_name_publicly_verified": false,
+  "actual_payment_or_delivery_verified": false,
+  "source_grade": "first_party_original_EIS_signed_RD223_and_itemized_contract_subject",
+  "first_party_urls": [
+    "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=57724646338260000460000",
+    "https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=57724646338260000460000"
+  ],
+  "source_primary_sha256": [
+    "94170a4d9314d78307300f410c2e71fc3ee8ab4a3c9ea86633e48d1809b390aa",
+    "76d050d1fd3f65a6a5eb2f58358fa376b5cc280abe6ff1207122698d73c5f6cf"
+  ],
+  "importer": "scripts/market_intelligence/import_pq_signed_reto_v38.py",
+  "source_materializer": "scripts/market_intelligence/materialize_pq_research_v38.py",
+  "before": {
+    "resources": 103,
+    "records": 103
+  },
+  "after": {
+    "resources": 104,
+    "records": 104,
+    "unique_external_ids": 104,
+    "other_resources": 2192,
+    "other_records": 0,
+    "all_documents": 2192
+  },
+  "backup": {
+    "file": "data-platform-arvectum_data-20261028T050150Z.dump",
+    "directory": "/Volumes/ArvectumSSD/Arvectum/runtime/data-platform-backups",
+    "bytes": 37477663,
+    "sha256": "24ac83fd5b84073d08b41547a4a5318f494ec1ad43e2705e969a76aa99d642e3",
+    "validated_before_sql": true
+  },
+  "new_source_content_hash": "f7fd3e8c57c357ba1ffb979329693ff69984eda2ee0e474a25d64da3c7a3e40f",
+  "transaction": "guarded preinsert original sources ID and count, official verified backup, one atomic COMMIT, source identity and signed value independent readback PASS",
+  "full_sha_replay": "not yet executed; new script tests also not executed because remote security policy blocked execution of new verification commands",
+  "non_PQ_collections_unchanged": true
+}
