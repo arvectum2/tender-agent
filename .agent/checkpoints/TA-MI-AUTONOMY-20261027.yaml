@@ -821,3 +821,41 @@ run_20261028_0750_irkutsk_capacitor_bank:
     Preserve the existing DRAFT PR #519 and main-divergence review gate,
     continue independent source-bound 6-35 kV cases and deduplicate
     supplemental packets by original SHA/provenance.
+
+run_20261028_0835_static_compensator_originals:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  branch: fix/mi-etp-source-status-20261028
+  pr: 519
+  report: docs/market_intelligence/PQ_STATIC_COMPENSATOR_ORIGINALS_20261028.md
+  overlay: docs/market_intelligence/PQ_STATIC_COMPENSATOR_ORIGINALS_20261028.json
+  overlay_sha256: cd5061df15406944a76da2f15a6e9221d15ea28995bf533a14af5be57a816b27
+  actual_new_eis_223_searches: 6
+  new_notice_ids:
+  - '32515257631'
+  - '32414141662'
+  - '32413297739'
+  original_files_downloaded: 20
+  sha_verified_zip_members_staged: 15
+  chatgpt_arc_reviews_accepted: 2
+  v20_inventory:
+    leads: 100
+    with_local_documents: 33
+    with_reviewed_packets: 31
+  new_signed_contracts: 0
+  new_verified_suppliers: 0
+  new_executed_equipment_prices: 0
+  findings:
+  - '32414141662: original technical specification 110kV; 235m RUB ex VAT NMCK, excluded
+    from 6-35kV.'
+  - '32515257631: 2025 static compensator tender, two bids rejected, procurement unsuccessful,
+    412.5m RUB ex VAT NMCK; rated voltage not independently verified.'
+  - '32413297739: 8 native 7z originals retained opaque, 21 official links, source outcome
+    unresolved.'
+  resume_instruction: 'Keep PR #519 DRAFT/REVIEW and unrelated current-task unchanged.
+    Exact-head CI last observed green but GitHub mergeable CONFLICTING; reconcile the
+    two overlapping files without weakening audit/ETP safeguards, no PR merge absent
+    queue auto_merge and Company AM-4. Continue bounded original technical/award/signed
+    contract recovery for 32413297739 and 32515257631, safely handle 7z or retain opaque;
+    avoid duplicate SHA reviews and preserve 12h ETP cooldown. Do not promote 235m/412.5m
+    NMCK or rejected bidder identities to signed market sales.'
