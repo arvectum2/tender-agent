@@ -681,3 +681,32 @@ watchdog_primary_44_doc_review_20261028_1627:
     00:41 Moscow. New 44-FZ 0372100049624002318 remains uncertain until
     voltage and signed outcome independently verified. Keep existing Watchdog,
     unrelated current-task.yaml untouched, PR REVIEW, no auto-merge.
+
+watchdog_second_44_originals_20261028_1642:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  run_start_issue_comment_id: 6470248715
+  cumulative_new_official_searches_this_invocation: 25
+  cumulative_new_official_notice_page_requests: 4
+  cumulative_new_sha_verified_originals: 8
+  cumulative_new_arc_reviews_accepted: 2
+  new_first_party_44_notice_ids: ["0372100049624002318", "0373200087824000460"]
+  confirmed_new_6_35_kv_equipment_projects: 0
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_executed_prices: 0
+  second_notice_classification: uncertain_service_existing_ukrm_voltage_unknown
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_44FZ_SERVICE_ORIGINALS_20261028_1627.json
+  source_ledger_sha256: "105d157caaa59ec65fb3832fb7e61f4146d384d872d5a63e7239e03ee1ddc6a3"
+  last_tested_code_commit: "79f03ad6d420e17f9272364f7d1796debe52a56b"
+  last_test_results: "6 focused tests PASS; Ruff PASS; YAML/JSON PASS; diff PASS"
+  resume_instruction: >-
+    Keep v29 101 unchanged and preserve both new private original 44-FZ
+    receipts and two SHA-quoted ARC reviews. 0372100049624002318 has unknown
+    voltage; 0373200087824000460 is service of existing UKRM, not a sale.
+    No 44 signed contracts verified. Do not replay 24 calendar query combos
+    until 2026-10-29 04:35 Moscow; exact-number 0373200087824000460
+    search retry no earlier than 2026-10-29 04:41 Moscow.
+    Continue signed supplier recovery 32413764701 and linked
+    32514720691/32514754857, GP630876 after 00:41 Moscow.
+    Leave unrelated current-task.yaml and existing hourly Watchdog unchanged.
