@@ -58,3 +58,16 @@ def test_receipt_identity_required(tmp_path: Path):
     }))
     with pytest.raises(ValueError, match="Mismatched"):
         stage_case(source, tmp_path / "output")
+
+
+def test_case_output_symlink_refused(tmp_path: Path):
+    source = tmp_path / "32413297739"
+    source.mkdir()
+    (source / "public-page-receipt.json").write_text(json.dumps({
+        "registry_number": source.name, "files": [],
+    }))
+    output = tmp_path / "output"
+    output.mkdir()
+    (output / source.name).symlink_to(tmp_path, target_is_directory=True)
+    with pytest.raises(ValueError, match="symlink"):
+        stage_case(source, output)

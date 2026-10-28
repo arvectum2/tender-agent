@@ -117,6 +117,8 @@ def stage_case(source_dir: Path, output_root: Path, *, executable: str = "7z") -
     if shutil.which(executable) is None:
         raise ValueError("7z binary unavailable")
     case_output = output_root / source_dir.name
+    if case_output.is_symlink():
+        raise ValueError("Unsafe case output symlink")
     staged, refused = [], []
     for item in files:
         if item.get("observed_file_format") != "opaque_7z":
