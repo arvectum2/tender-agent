@@ -443,8 +443,8 @@ run_20261028_0335_opaque_7z_recovery:
   status: in_progress_review_required
   branch: fix/mi-etp-source-status-20261028
   pr: 519
-  last_verified_code_commit: ed9cc81583ce9e4f3270f8500bcf5f8f82d315b8
-  last_test_results: "48 focused pytest PASS; Ruff PASS; diff check PASS; one inherited Starlette warning"
+  last_verified_code_commit: 79c01fcc2da2ba529262635618b6dd2fe7a76b26
+  last_test_results: "49 focused pytest PASS; Ruff PASS; diff check PASS; one inherited Starlette warning"
   coverage:
     immutable_v20_leads: 100
     v20_cases_with_local_originals: 31
@@ -465,7 +465,7 @@ run_20261028_0335_opaque_7z_recovery:
     - "Recovered four original EIS public-page-bound 7z archives with narrow opaque-only signature/SHA/provenance gate, plus four source-SHA-bound DOCX children."
     - "ChatGPT/ARC accepted two quote-bound packets; technical specification proves 0.4kV UAB100/PKS, excludes candidate from target 6-35kV market."
     - "Preserved initial uncertain review and later irrelevant technical review; no supplier, signed contract, equipment-only sale or final price inferred."
-    - "Published PQ_7Z_SOURCE_RECOVERY_20261028.md and code/tests in existing DRAFT PR #519, code commit ed9cc815."
+    - "Published PQ_7Z_SOURCE_RECOVERY_20261028.md and code/tests in existing DRAFT PR #519, code commits ed9cc815 and 79c01fcc."
   blockers:
     - "Previous CI 40606724054 failed one preexisting architecture audit on direct Data Platform import; 5355 tests passed. New exact-head CI pending."
     - "Public EIS page does not prove SOAP-XML revision binding; native ETP originals and signed contracts remain missing."
