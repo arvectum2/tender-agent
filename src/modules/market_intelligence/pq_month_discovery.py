@@ -5,6 +5,7 @@ import argparse
 import calendar
 import json
 import os
+import re
 import tempfile
 from datetime import UTC, date, datetime
 from pathlib import Path
@@ -53,6 +54,13 @@ def _atomic(path: Path, state: dict) -> None:
         stream.flush()
         os.fsync(stream.fileno())
     os.replace(temp, path)
+
+
+def _query_in_title(query: str, title: str) -> bool:
+    """Do not count «остатком/недостатком» as a STATCOM title hit."""
+    if query.casefold() == "статком":
+        return bool(re.search(r"(?<![\w])статком(?![\w])", title, flags=re.IGNORECASE))
+    return query.casefold() in title.casefold()
 
 
 def run(*, journal: Path, months: list[str], laws: list[str], queries: list[str],
@@ -104,8 +112,8 @@ def run(*, journal: Path, months: list[str], laws: list[str], queries: list[str]
                                    "customer_unverified": (getattr(item, "customer_name", None) or "")[:200],
                                    "publication": item.publication_date.isoformat()
                                    if item.publication_date else None,
-                                   "query_in_visible_title": query.casefold() in (
-                                       getattr(item, "title", None) or "").casefold(),
+                                   "query_in_visible_title": _query_in_title(
+                                       query, getattr(item, "title", None) or ""),
                                    "pq_relevance_verified": False,
                                    "date_in_window": bool(item.publication_date)
                                    and start <= item.publication_date.date() <= end}

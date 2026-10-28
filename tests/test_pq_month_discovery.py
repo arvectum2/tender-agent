@@ -4,7 +4,11 @@ from pathlib import Path
 
 import pytest
 
-from src.modules.market_intelligence.pq_month_discovery import _window, run
+from src.modules.market_intelligence.pq_month_discovery import (
+    _query_in_title,
+    _window,
+    run,
+)
 
 
 class Provider:
@@ -74,3 +78,10 @@ def test_bounded_budget(tmp_path: Path):
     with pytest.raises(ValueError, match="Unbounded"):
         run(journal=tmp_path / "j.json", months=["2024-01"],
             laws=["223fz"], queries=["УКРМ"], max_requests=100)
+
+
+def test_statcom_title_boundary_rejects_leftover_word_false_positive():
+    assert not _query_in_title("СТАТКОМ", "вывоз порубочных остатков")
+    assert not _query_in_title("СТАТКОМ", "устранение недостатком")
+    assert _query_in_title("СТАТКОМ", "Поставка СТАТКОМ-10 на подстанцию")
+    assert _query_in_title("УКРМ", "Поставка АУКРМ-10")

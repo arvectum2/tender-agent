@@ -532,3 +532,26 @@ native_rad_223_nikitskaya_20261028:
   runtime_root: "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live"
   source_manifest: "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live/primary-rad-originals/32615966040/original-source-manifest.json"
   resume_instruction: "Read this newest RAD subsection and last actual remote main/PR #521; do not re-download four SHA-verified RAD archives. Verify signed contract from first-party registry, not aggregator. Integrate three additional original commercial ETP cases already recovered and reviewed by current hourly Watchdog (see watchdog_mi_primary_etp_recovery_20261028_1423), source-audit 0.4kV and owner-furnished 35kV separately. Resume remaining 58 v29 rows in 42-source-ID baseline. Keep existing single hourly Tender Agent Watchdog, leave unrelated .agent/current-task.yaml intact."
+
+watchdog_new_2024_primary_20261028_1436:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  source_dataset: v29_101_unchanged
+  new_official_month_searches: 52
+  new_2024_notice_ids: ["32413195287", "32413631624", "32413764701"]
+  sha_verified_original_files: 24
+  chatgpt_arc_reviews_accepted: 2
+  visually_reviewed_original_protocols: 2
+  commission_named_winners: 1
+  signed_suppliers_verified: 0
+  executed_prices_verified: 0
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_2024_ORIGINALS_20261028_1436.json
+  source_ledger_sha256: "0981cc8c7844a8f0fa90b2284bb0b09b05b58aa181733b1355e60fccb0dc5940"
+  current_step: "Recover independently signed 10kV UKRM supply and linked 6kV project outcomes"
+  resume_instruction: >-
+    Keep v29 101 unchanged; resume PR #521. Read private watchdog-20261028-1436
+    original SHA receipts, 52 month queries and two accepted ARC reviews. Do not
+    replay 24 originals or exact month-law-query searches before 12h cooldown.
+    Verify signed contract for 32413764701 and 32514720691/32514754857,
+    then native GP630876 after legal access. Preserve 0.4kV exclusion,
+    6.3kV repair vs equipment supply, one existing Watchdog and unrelated current-task.
