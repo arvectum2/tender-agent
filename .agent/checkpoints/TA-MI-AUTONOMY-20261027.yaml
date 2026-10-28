@@ -479,3 +479,43 @@ run_20261028_0335_opaque_7z_recovery:
     or four verified 7z archives/two reviewed packets. Keep 32616247401
     as separate 0.4kV false positive, never add its 16.708m NMCK to target
     market. Preserve unrelated current-task and the single Watchdog.
+
+etp_corpus_source_queue_expansion_20261028_0430:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  source_corpus: leads-v20-materialized.json
+  source_leads: 100
+  new_queue_module: src/modules/market_intelligence/pq_etp_queue_expand.py
+  queue_runtime: /Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live/etp-v20-all-supported-source-queue.json
+  queue_sha256: 213197b40adf97f75b09126b0910530b0291e560a1e6ef7f07e9add906210e36
+  unique_allowlisted_specific_urls: 68
+  previously_unattempted_urls_probed: 21
+  actual_network_attempt_results:
+    html_fetched: 17
+    http_403_inaccessible: 4
+    html_mentions_candidate_id: 13
+  evidence_gap_inventory: /Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live/evidence-gaps-watchdog-20261028-0430.json
+  inventory_leads: 100
+  inventory_local_original_cases: 31
+  inventory_reviewed_cases: 31
+  review_queue_verified_count_before_new_source_attempts: 67
+  newly_verified_original_awards: 0
+  newly_verified_signed_contracts: 0
+  newly_verified_suppliers: 0
+  notes:
+    - "All 68 source URLs are now represented in the cross-journal attempted set; 200 HTML is secondary evidence only, not native award/contract proof."
+    - "Original native PDF 32616280467 remains unreadable in its original review packet; separate OCR-provisional review is retained."
+    - "Existing PR #519 exact-head CI quality failed on baseline direct Data Platform import in pq_dp_ingest.py; no architectural rule bypass or automatic merge."
+    - "No OpenAI API, local LLM, ETP mutation, signature, supplier contact or production Data Platform mutation."
+  last_verified_code_commit: d197f502070079af3c535d78849331c82a9886e5
+  last_test_results: "17 focused pytest passed, Ruff passed, git diff --check passed; one inherited Starlette warning."
+  resume_instruction: >-
+    On latest main and existing PR #519, verify CI and reconcile only within
+    permitted SDK/service boundary (do not bypass architecture audit). Continue
+    recovery of original signed contracts/winner protocols and 44-FZ/commercial
+    source evidence for 100 v20 cases; do not re-probe any of 68 already
+    attempted URL receipts before its 12-hour retry eligibility. Use
+    pq_etp_queue_expand to refresh deterministic source queue, check both ETP
+    attempt journals, and process any new native originals via SHA-bound
+    ChatGPT/ARC reviews. Preserve unrelated current-task, lease discipline
+    and exactly one hourly Watchdog.
