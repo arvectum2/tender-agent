@@ -101,3 +101,29 @@ accepted review packets: **70**, with one older unreadable packet.
 The 2025 lot still lacks verified 6–35 kV rating, signed contract,
 contract supplier and executed contract amount. All 17/17 official
 notice links have now been attempted; no need to re-download them.
+
+## Third bounded recovery: direct ChatGPT visual verification of scanned originals
+
+The two original 2025 technical questionnaires have no native PDF text.
+Their first pages were rendered as PNG and **visually read by ChatGPT**
+without OCR. The source PDF bytes and page renders were independently
+SHA-256 checked; a separate immutable original-to-image-to-manual-text
+receipt is retained under
+`public223-alias-visual-transcriptions/32514720691/visual-receipt.json`,
+SHA-256 `956bc61b6e4ea9d43c3f1290dbee8cf375d569e97491ec7286811d4462e1dc97`.
+The manual transcriptions are explicitly **not native PDF text**.
+
+| Source / asset | Original PDF SHA-256 | Rendered page-1 PNG SHA-256 | Visually confirmed rating |
+|---|---|---|---|
+| OL 3564, PS Andreevka | `758b0afa6a84c1bff72963ac41a18393002fb6800d88535f95ddac801affdaa5` | `36acbc1a845a0c66ac55d84ec884bf6298f544293160b784d79b2627cdfd3839` | **6.3 kV; 1200 kvar per bus section; two planned sets (sections 1 and 2); steps 450+450+300 kvar** |
+| OL 3565, PS Igrovka | `35b6f999f330f188d943d96a6682e5d6f6ea2652fc1de8a0aeebbe98166f2fa1` | `2461629e5281b756ba797423f990a18037a33547a88adfc0ee972f9835b10161` | **6.3 kV; 550 kvar per bus section; two planned sets (sections 1 and 2); steps 300+250 kvar** |
+
+This **resolves the 6–35 kV technical-scope uncertainty** in the
+earlier 2025 review, without rewriting its immutable decision. A
+separate SHA/quote-bound visual review
+`32514720691-b4deb27d837d392858e5a9a3` is now
+**relevant** for the target equipment market. It does **not** prove
+delivery, the actual contracted number of physical units, a signed
+contract, a supplier under that contract or its executed price.
+The earlier commission-selected bidder and 14.79m RUB offer remain
+a **precontract fact only**. Total ARC reviews now **71**.

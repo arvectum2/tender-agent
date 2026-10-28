@@ -668,3 +668,33 @@ run_20261028_0645_223_clarifications:
     evidence. Preserve 100-row v20 and 12h ETP cooldown, no repeat of
     33 previously successful exact EIS searches. Do not touch unrelated
     current-task, production or single Watchdog.
+
+run_20261028_0650_visual_ukrm_rating:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  notice: '32514720691'
+  original_scanned_pdfs_visually_checked: 2
+  source_pages_visually_checked: [1, 1]
+  ocr_used: false
+  visual_receipt_sha256: 956bc61b6e4ea9d43c3f1290dbee8cf375d569e97491ec7286811d4462e1dc97
+  new_chatgpt_arc_review_id: 32514720691-b4deb27d837d392858e5a9a3
+  new_chatgpt_arc_review_classification: relevant
+  reviewed_queue_total: 71
+  confirmed_equipment:
+    - 'PS Andreevka OL3564: UKRM 6.3kV, 1200 kvar per bus section, two planned sets.'
+    - 'PS Igrovka OL3565: UKRM 6.3kV, 550 kvar per bus section, two planned sets.'
+  original_signed_contracts_verified_new: 0
+  supplier_contract_parties_verified_new: 0
+  executed_contract_prices_verified_new: 0
+  source_report: docs/market_intelligence/PQ_EIS_ALIAS_ORIGINALS_20261028.md
+  resume_instruction: >-
+    Keep PR #519 DRAFT/REVIEW pending exact-head CI and Company/queue gates.
+    Original EIS page 32514720691 is now fully acquired (17/17 links);
+    two scanned questionnaire first pages are visually verified by ChatGPT
+    with original PDF/image SHA: 6.3kV UKRM 1200 kvar per section at PS
+    Andreevka and 550 kvar per section at PS Igrovka. Do not repeat these
+    verified stages or conflate planned equipment with deliveries.
+    Next seek independently verified signed contract/supplier/price and
+    further source cases. Do not promote 14.79m RUB precontract offer.
+    Preserve immutable v20, 12h ETP cooldown, unrelated current-task and
+    exactly one Tender Agent Watchdog. No production mutation.
