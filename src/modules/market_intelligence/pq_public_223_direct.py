@@ -15,11 +15,27 @@ ALLOWED = frozenset({".pdf", ".doc", ".docx", ".xls", ".xlsx", ".txt"})
 
 
 def merge_direct(*, source_root: Path, canonical: Path,
-                 max_cases: int = 35, max_files: int = 200) -> dict:
+                 max_cases: int = 80, max_files: int = 500) -> dict:
     if (source_root.is_symlink() or canonical.is_symlink()
             or not source_root.is_dir()
             or not 1 <= max_cases <= 100 or not 1 <= max_files <= 500):
         raise ValueError("Invalid public EIS receipt staging scope")
+    eligible = [
+        p for p in source_root.iterdir()
+        if p.is_dir() and not p.is_symlink()
+        and re.fullmatch(r"[0-9]{11}", p.name)
+        and (p / "public-page-receipt.json").is_file()
+    ]
+    if len(eligible) > max_cases:
+        raise ValueError("Source-case budget would truncate direct EIS evidence")
+    maximum_direct = 0
+    for case in eligible:
+        receipt = json.loads((case / "public-page-receipt.json").read_text(encoding="utf-8"))
+        maximum_direct += sum(
+            Path(str(x.get("filename") or "")).suffix.lower() in ALLOWED
+            for x in receipt.get("files", []))
+    if maximum_direct > max_files:
+        raise ValueError("File budget would truncate original direct EIS receipts")
     manifest_file = canonical / "canonical-manifest.json"
     manifest = json.loads(manifest_file.read_text(encoding="utf-8"))
     if manifest.get("schema_version") != "pq-public-canonical/1":
