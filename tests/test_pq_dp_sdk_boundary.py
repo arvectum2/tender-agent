@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
@@ -18,7 +17,7 @@ def _settings(url: str = "http://127.0.0.1:8094"):
 def test_local_sdk_processes_source_with_sha_and_no_dp_checkout(tmp_path, monkeypatch):
     source = tmp_path / "originals"
     source.mkdir()
-    original = "УКРМ 10 кВ: проверенный исходный документ".encode("utf-8")
+    original = "УКРМ 10 кВ: проверенный исходный документ".encode()
     (source / "evidence.txt").write_bytes(original)
     calls = []
 
