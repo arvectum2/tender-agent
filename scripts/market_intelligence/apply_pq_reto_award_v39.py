@@ -68,7 +68,7 @@ DO $guard$ BEGIN
  OR (SELECT owner FROM dp_collections WHERE collection_id='{COLLECTION}')<>'tender-agent'
  OR (SELECT count(*) FROM dp_resources WHERE collection_id='{COLLECTION}')<>104
  OR (SELECT count(*) FROM dp_records WHERE resource_id IN (SELECT resource_id FROM dp_resources WHERE collection_id='{COLLECTION}'))<>104
- OR (SELECT count(*) FROM dp_resources r JOIN dp_records d USING(resource_id) WHERE r.external_id='{CID}' AND r.resource_id='{old["rid"]}' AND r.content_hash='{old["hash"]}' AND NOT(d.data->'mi013_source_enrichments'?'v39'))<>1
+ OR (SELECT count(*) FROM dp_resources r JOIN dp_records d USING(resource_id) WHERE r.external_id='{CID}' AND r.resource_id='{old["rid"]}' AND r.content_hash='{old["hash"]}' AND NOT COALESCE(d.data->'mi013_source_enrichments'?'v39',false))<>1
  THEN RAISE EXCEPTION 'signed source count/identity changed'; END IF;
 END $guard$;
 UPDATE dp_resources SET content_hash='{s["hash"]}',metadata=convert_from(decode('{hexjson(s["meta"])}','hex'),'UTF8')::jsonb,updated_at=now(),last_seen_at=now() WHERE resource_id='{old["rid"]}';
