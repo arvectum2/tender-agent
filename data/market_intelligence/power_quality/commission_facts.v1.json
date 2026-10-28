@@ -1,6 +1,6 @@
 {
   "schema_version": "pq-commission-facts/1",
-  "source_scope": "original_eis_public_223_protocol_documents_sha",
+  "source_scope": "sha_bound_original_eis_and_first_party_223_etp_commission_protocol_documents",
   "facts": [
     {
       "procedure_id": "32514947144",
@@ -156,6 +156,25 @@
       "signed_contract_verified": false,
       "supplier_of_signed_contract_verified": false,
       "market_category": "adjacent_epc_500kv_substation_bsk_voltage_unknown"
+    },
+    {
+      "procedure_id": "32615966040",
+      "lot": "RAD260020676",
+      "queue_id": "32615966040-26fad6b664141900a39c3a1c",
+      "source_sha256": "c4259db4db81d2d0af153acf2fc56ac6e3ac354999c84b9248431bb6814338d6",
+      "source_quote": "с Участником № 490997, ООО \"ЭНЕРГОСЕТЬ\"",
+      "amount_quote": "5 273 763,77 руб.",
+      "nmck_quote": "5 273 763,77 руб. с НДС",
+      "proposed_or_selected_participant": "ООО \"ЭНЕРГОСЕТЬ\"",
+      "decision_type": "failed_single_application_commission_instructs_contract_not_signed",
+      "price_kind": "commission_mixed_epc_offer_vat_included_22_percent_not_signed",
+      "offer_rub": "5273763.77",
+      "nmck_rub": "5273763.77",
+      "signed_contract_verified": false,
+      "supplier_of_signed_contract_verified": false,
+      "market_category": "mixed_epc_10kv_reactive_compensation_ps110kv",
+      "source_etp": "RAD260020676",
+      "equipment_only_price_verified": false
     }
   ]
 }
