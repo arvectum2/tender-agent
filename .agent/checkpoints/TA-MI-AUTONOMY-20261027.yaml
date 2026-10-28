@@ -33,8 +33,8 @@ remaining:
   - "Deduplicate repeated projects/lots and exclude adjacent EPC, design-only, future price studies, and equipment already installed."
   - "Extend earlier 2024 and commercial 44-FZ evidence and produce complete source-audited market report; until then only partial verified snapshot."
   - "Re-run complete relevant tests/E2E and mark completed only on satisfaction of all Definition of Done items."
-last_verified_commit: "f8bd27a32fa5b0236f7528a6e27bc8fc940740a5"
-last_test_results: "51 passing focused pytest tests (one external Starlette warning), offline unified 101-case cycle complete; 247 SHA-distinct canonical EIS files processed; 2 exact-filestore SHA originals; 33 primary 223 cases with 31 downloadable, 3 Bidzaar, 6 commission facts, 3 public-contract register records; 0 validated signed suppliers."
+last_verified_commit: "259cb715121617216c57cd35f5ef600278174f05"
+last_test_results: "51 passing focused pytest tests (one external Starlette warning); market report Markdown regenerated with source-verified 3 public register prices, offline unified 101-case cycle complete; 247 SHA-distinct canonical EIS files processed; 2 exact-filestore SHA originals; 33 primary 223 cases with 31 downloadable, 3 Bidzaar, 6 commission facts, 3 public-contract register records; 0 validated signed suppliers."
 resume_instruction: >-
   Read this checkpoint and actual main HEAD, inspect verified-market-snapshot.json and
   pq-agent-pilot-live/last-recovery-cycle.json. Do NOT repeat SHA-verified batches.
@@ -342,6 +342,6 @@ native_etp_and_market_snapshot_20261028:
     - "Verify actual signed award/contract data and separate EPC vs equipment economics."
     - "Broaden 2024 and primary commercial platform source coverage."
     - "Produce full auditable 2024–2026 market report only after source completeness checks."
-  last_verified_commit: "f8bd27a32fa5b0236f7528a6e27bc8fc940740a5"
+  last_verified_commit: "259cb715121617216c57cd35f5ef600278174f05"
   last_test_results: "51 passed, 1 external deprecation warning; 33/33 numeric 223 leads with source receipts, 31 with originals; 3 primary ETP cards, 6 commission facts, 3 registry lots"
   resume_instruction: "Use latest top-level resume_instruction; do not duplicate Tender Agent Watchdog."
