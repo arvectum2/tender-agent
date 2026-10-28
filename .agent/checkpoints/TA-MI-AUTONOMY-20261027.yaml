@@ -854,3 +854,59 @@ watchdog_primary_recovery_20261028_1934:
     Do not repeat 36 new exact month/law/query combinations until
     2026-10-29 07:41 Europe/Moscow. Preserve unrelated current-task,
     original SHA receipts, review gate and sole hourly Watchdog.
+
+watchdog_primary_bsk_20261028_2029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  run_start_issue_comment_id: 6475982890
+  corpus: v29_101_unchanged
+  logical_first_party_source_operations: 60
+  new_calendar_scoped_searches: 40
+  months_with_new_query_combinations: 10
+  exhaustive_months_new: 0
+  metadata_candidates_unverified: 43
+  calendar_search_statuses: {empty: 26, success: 10, network_error: 4}
+  new_official_223_notices: ['32414185676', '32515407502']
+  new_lots: 2
+  new_sha_verified_original_files: 10
+  new_unique_original_sha256: 7
+  new_original_protocol_with_named_best_bidder: 1
+  new_original_protocol_with_zero_bids: 1
+  new_signed_supplier_verified: 0
+  new_executed_price_verified: 0
+  new_core_6_35kv_sales_verified: 0
+  new_arc_reviews_accepted: 2
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_PRIMARY_RECOVERY_20261028_2029.json
+  source_ledger_sha256: b6d102289d31f99be0cf5c41c00efe4897df5457624ba545fc579285e6fbfd42
+  source_journal_sha256: f1c79c9b90ef5db3635b6f0f7d9e84f63eb4d01bf7225cd2aaa7975752996029
+  evidence_commit: 24ff35d05a4d18ef6d4070d290b5be0ad3eaffa0
+  last_tested_code_commit: 09d72a6574ce097be043affdbc438ae8ea8a9eb3
+  validation: >-
+    Original 223 notice page and 10 original file URL hashes reconciled;
+    10 SHA-verified native files (7 unique); 2 source-quote ARC reviews
+    accepted; source ledger JSON parsed. No source code changed in this run.
+  findings: >-
+    32414185676: 2024 Rossseti Nizhny Novgorod PMES 30 capacitor elements
+    KEP1 1.05kV, NMCK 1,428,192 RUB VAT-inclusive, zero bids, no award.
+    32515407502: 2025 63 KEP1 1.05kV elements, commission best bid
+    OOO TD UK KONDENSATOR 3,012,660 RUB VAT-inclusive, second place
+    OOO SKZ KVAR 4,827,816 RUB VAT-inclusive; signed supplier unverified.
+    Both for 500kV substations Luch/Arzamasskaya; battery bus 6-35kV
+    unverified, therefore neither counted as core PQ sales.
+  blockers: >-
+    223-FZ contract-register exact search returned HTTP 404 both direct
+    and default; no signed contract/supplier or executed price.
+    Four new calendar searches returned network_error; 15 Data Platform
+    files remain blocked on authorized SDK credentials.
+  resume_instruction: >-
+    Preserve v29 101-row dataset, original receipts, immutable SHA reviews,
+    unrelated .agent/current-task.yaml and sole hourly Watchdog.
+    Continue independent signed supplier/payment recovery for 32413764701
+    (10kV) and 32515582393 (6kV) using legal first-party alternatives;
+    avoid prior exact 223 registry URL retry until 2026-10-29 06:46 MSK.
+    Retry GP630876 original ETP evidence only after 2026-10-29 00:41 MSK.
+    Newly found 32515407502 and 32414185676 are two separate lots with
+    shared facilities but no proven project merge; new contract-register
+    exact URL 404 should not be repeated before 2026-10-29 08:40 MSK.
+    Do not repeat the 40 exact month/law/query combinations before
+    2026-10-29 08:35 MSK. PR #521 stays REVIEW; no auto-merge or production.
