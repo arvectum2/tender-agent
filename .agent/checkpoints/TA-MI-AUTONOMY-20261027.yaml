@@ -739,14 +739,14 @@ watchdog_223_registry_20261028_1844:
   status: in_progress
   run_start_issue_comment_id: 6473303869
   dataset: v29_101_unchanged
-  actual_new_first_party_source_requests: 46
-  observed_http_200: 45
+  actual_new_first_party_source_requests: 59
+  observed_http_200: 58
   observed_timeout: 1
-  official_223_registry_searches: 18
+  official_223_registry_searches: 22
   new_sha_verified_original_attachments: 3
   new_official_223_notice_with_originals: "32615810535"
   new_primary_protocol_with_named_participant: 1
-  new_public_223_registry_contract_entries: 7
+  new_public_223_registry_contract_entries: 8
   previously_xml_verified_registry_entries_corroborated: 2
   registered_6kv_ukrm_supply_contract:
     notice: "32515582393"
@@ -761,15 +761,30 @@ watchdog_223_registry_20261028_1844:
     signed_supplier_verified: false
     executed_or_paid_verified: false
     equipment_only_allocation_verified: false
+  registered_10kv_ukrm_supply_contract:
+    notice: "32413764701"
+    contract_register_number: "58601033125240001550000"
+    registered_contract_price_rub: "4077120.00"
+    registered_status: "Исполнение завершено"
+    date: "2024-08-09"
+    original_technical_pdf_sha256: "731f9ce22329ee8d35aa151caf3a714db0d7e2eff34c7060b0b51e8eb63a0349"
+    nominal_voltage_kv: 10
+    reactive_power_kvar: 150
+    commission_offer_rub: "3397600.00"
+    vat_status: not_independently_verified
+    signed_supplier_verified: false
+    executed_payment_verified: false
   newly_confirmed_signed_supplier_identities: 0
   newly_verified_executed_prices: 0
   newly_exhaustively_covered_months: 0
+  new_date_bounded_223_registry_searches: 1
+  new_core_6_35kv_registered_supply_contracts: 2
   v29_primary_original_gaps_unchanged: 54
-  arc_source_reviews_accepted_this_run: 7
-  latest_review_queue: {reviewed: 102, pending_review: 4, other: 4}
+  arc_source_reviews_accepted_this_run: 8
+  latest_review_queue: {reviewed: 103, pending_review: 4, other: 4}
   public_evidence_ledger: docs/market_intelligence/PQ_WATCHDOG_223_REGISTER_CONTRACTS_20261028_1834.json
-  private_reconciliation_sha256: "6e42380e5f317e8e96e6efcd2cb8c0c44cbe24619e27328ae44e05909b44d315"
-  evidence_ledger_commit: "4c2737b7f4621393b709a427df4f7d1d46946f61"
+  private_reconciliation_sha256: "c0ad2a297a761210a738a76b985b78db814620e5e185030edda4fb105df25744"
+  evidence_ledger_commit: "e5f784eac4433b25d6c1b41c8079e5125dd80c44"
   last_tested_code_commit: "09d72a6574ce097be043affdbc438ae8ea8a9eb3"
   last_test_results: >-
     No source code changed in this run. New public JSON evidence report parsed
@@ -783,15 +798,19 @@ watchdog_223_registry_20261028_1844:
     SDK source files still await authorized credentials. Full-market S10
     acceptance remains false.
   resume_instruction: >-
-    Resume PR #521 without touching unrelated current-task or the sole hourly
-    Watchdog. First reconcile 32515582393 6kV UKRM registered contract with
-    original commission candidate ООО УК КОНДЕНСАТОР, but do not infer signed
-    supplier, execution or PQ-only price. Verify whether Nagornaya supply
-    32515582393 and reconstruction 32615614821 concern one physical project
-    using original object identifiers, not name matching alone. Next inspect
-    original signed/public outcomes for 32616280467 10kV design and
-    32615852898 PИР. Existing exact 223 registry URLs should not be replayed
-    before 2026-10-29 06:42 Moscow; GP630876 ETP retry after
+    Resume PR #521 and v29 101-row corpus without changing unrelated
+    current-task or the sole hourly Watchdog. Two target 6-35kV UKRM supply
+    contracts now have public 223-FZ registry prices: 32413764701 (10kV,
+    150kvar, 4,077,120 RUB, registry execution completed) and 32515582393
+    (6kV, 200kvar, 4,850,000 RUB, status execution). Neither has publicly
+    verified signed supplier, original signed contract copy or independently
+    confirmed paid amount; equipment-only allocation and VAT require care.
+    Recover legal public supplier/contract outcomes without equating commission
+    bidder with signed contractor. Independently establish whether Nagornaya
+    32515582393 and reconstruction 32615614821 are one project; do not merge
+    on name alone. Continue 32616280467 10kV design and 32615852898 PИР
+    outcomes; do not count design/EPC as equipment sales. No exact 223 registry
+    URL replay before 2026-10-29 06:46 Moscow; GP630876 ETP retry after
     2026-10-29 00:41 Moscow; earlier 44-FZ filestore retry after
-    2026-10-29 05:40 Moscow. Preserve source SHA, scope distinctions,
-    private originals, v29 101 rows and PR REVIEW; do not auto-merge.
+    2026-10-29 05:40 Moscow. Preserve original SHA, public source ledgers,
+    private documents, PR REVIEW and no auto-merge.
