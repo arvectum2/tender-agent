@@ -419,3 +419,23 @@ arc_review_queue_source_sha_dedup_20261028:
     - "Two unreadable originals require separate source-bound visual review; do not promote OCR"
     - "Original ETP award and signed supplier/contract prices still unverified"
   resume_instruction: "Inspect current PR #521 exact-head CI and task checkpoint; continue fresh source recovery, not exact-SHA duplicate ChatGPT reviews. Two unreadable original-text packets need visual verification. Preserve source hashes, 12h cooldown, unrelated current-task and single Watchdog."
+
+visual_source_review_bashkortostan_20261028:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  completed:
+    - "ChatGPT visually inspected two pages each of original EIS scanned protocols 32515481065 and 32515523596; source PDF and rendered JPEG SHA recorded"
+    - "32515481065: 3 Dec 2025 procurement for reactive compensation installation had no bids, failed"
+    - "32515523596: 12 Dec 2025 protocol lists sole bidder ООО РНБ ГРУПП at 326990 RUB ex VAT / 392388 RUB incl VAT, but procedure failed with one bid; not a signed supplier or executed price"
+    - "Same buyer and similar need may be a repeat procurement, but dedup project identity not proven; nominal voltage remains unknown"
+    - "Visual receipts are provisional manual transcriptions, not native-text accepted ARC reviews or OCR promotion"
+  evidence:
+    original_pdf_sha_32515481065: c388c94b673fcbd051426ad0af814ec8fc0ebd8b9087707f2df209f76a7d4ab3
+    original_pdf_sha_32515523596: bf9e6c2f67274b2b10ceaef248a8bdea286d9f138eee327a8985b301f1838382
+    visual_receipt_sha_32515481065: 16da58ac6dcae6ce62f25de92d8f7539409cd479820da9e864a2e976c669b909
+    visual_receipt_sha_32515523596: d7f2545da3bb9d2354970f510d923ee94d96bab255b6f8eebfe124c4a7f95ff5
+    report: docs/market_intelligence/PQ_2025_BASHKORTOSTAN_VISUAL_PROTOCOLS_20261028.md
+  remaining:
+    - "Verify equipment nominal voltage and project/lot reissue identity from original specifications"
+    - "No signed supplier/contract amount independently confirmed"
+  resume_instruction: "Continue lawful source retrieval of voltage-bearing technical specifications and signed outcomes; do not count failed Bashkortostan tenders as sales. Keep visual receipts provisional, original native queue packets intact and 6–35 kV relevance uncertain. Preserve single Watchdog and unrelated current-task.yaml."
