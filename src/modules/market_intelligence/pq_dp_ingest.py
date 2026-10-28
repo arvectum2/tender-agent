@@ -8,9 +8,10 @@ import argparse
 import hashlib
 import json
 import os
-import sys
 import tempfile
 from pathlib import Path
+
+from src.shared.document_processing import process_document_bytes
 
 from .pq_dp_fallback import pdf_text_fallback
 from .pq_scan_ocr import ocr_pdf
@@ -24,10 +25,10 @@ def ingest(*, sources: Path, output: Path, dp_source: Path,
            include_relative_paths: frozenset[str] | None = None) -> dict:
     if not 1 <= max_files <= 500 or not 0 <= start_offset <= 10000 or sources.is_symlink() or not sources.is_dir():
         raise ValueError("Invalid source scope")
-    if not (dp_source / "arvectum_data" / "documents" / "ingest.py").is_file():
-        raise ValueError("Data Platform source tree not found")
-    sys.path.insert(0, str(dp_source))
-    from arvectum_data.documents.ingest import ingest_file
+    # Keep the legacy dp_source parameter for existing CLI/cycle callers.
+    # Extraction is served through the versioned Data Platform API/SDK;
+    # never import code from another repository or mutate sys.path.
+    _ = dp_source
     records = []
     files = sorted(p for p in sources.rglob("*") if p.is_file() and not p.is_symlink()
                    and p.suffix.lower() in SUPPORTED)
@@ -40,14 +41,19 @@ def ingest(*, sources: Path, output: Path, dp_source: Path,
         if path.stat().st_size > max_bytes:
             records.append({"path": str(path), "status": "oversized"})
             continue
-        sha = hashlib.sha256(path.read_bytes()).hexdigest()
+        source_bytes = path.read_bytes()
+        sha = hashlib.sha256(source_bytes).hexdigest()
         try:
-            result = ingest_file(path, collection_id="arvectum-pq-evidence",
-                                 source_type="official_local_document",
-                                 max_chars=100000)
+            result = process_document_bytes(
+                content=source_bytes,
+                filename=path.name,
+                collection_id="arvectum-pq-evidence",
+                canonical_uri=f"content-sha256://{sha}",
+                max_chars=100000,
+            )
             fallback = (pdf_text_fallback(path) if path.suffix.lower() == ".pdf"
-                        and not result.document.text.strip() else None)
-            extracted_text = fallback["text"] if fallback and fallback["status"] == "extracted" else result.document.text
+                        and not result.text.strip() else None)
+            extracted_text = fallback["text"] if fallback and fallback["status"] == "extracted" else result.text
             ocr = None
             if ocr_empty and path.suffix.lower() == ".pdf" and not extracted_text.strip():
                 cache = output.parent / "ocr-cache" / (sha + ".json")
@@ -62,13 +68,13 @@ def ingest(*, sources: Path, output: Path, dp_source: Path,
                 if ocr.get("status") == "ocr_unverified":
                     extracted_text = ocr["text"]
             records.append({"path": str(path), "sha256": sha,
-                            "document_id": result.document.document_id,
-                            "extraction_status": ("ocr_unverified" if ocr and ocr.get("status") == "ocr_unverified" else "extracted" if extracted_text.strip() else result.document.extraction_status),
+                            "document_id": result.document_id,
+                            "extraction_status": ("ocr_unverified" if ocr and ocr.get("status") == "ocr_unverified" else "extracted" if extracted_text.strip() else result.extraction_status),
                             "extraction_method": ocr.get("method") if ocr and ocr.get("status") == "ocr_unverified" else fallback["method"] if fallback else "data_platform",
                             "characters": len(extracted_text),
                             "chunks": len(result.chunks),
                             "text_excerpt": extracted_text[:2500]})
-        except Exception as exc:
+        except Exception as exc:  # noqa: BLE001 - per-document failure isolation and receipt
             records.append({"path": str(path), "sha256": sha,
                             "status": "extraction_error",
                             "error_type": type(exc).__name__})
@@ -92,7 +98,10 @@ def ingest(*, sources: Path, output: Path, dp_source: Path,
 def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--sources", type=Path, required=True)
-    p.add_argument("--dp-source", type=Path, required=True)
+    p.add_argument(
+        "--dp-source", type=Path, required=True,
+        help="Deprecated compatibility flag: processing uses the authorized Data Platform SDK.",
+    )
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--max-files", type=int, default=30)
     p.add_argument("--ocr-empty", action="store_true")
