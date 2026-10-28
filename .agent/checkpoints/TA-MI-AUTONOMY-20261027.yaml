@@ -753,3 +753,36 @@ run_20261028_0740_new_eis_lots:
     production write, supplier contact, signatures, procurement applications,
     local LLM or OpenAI API. Preserve unrelated current-task and the single
     hourly Watchdog.
+
+run_20261028_0746_mergeability_audit:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  pr: 519
+  branch: fix/mi-etp-source-status-20261028
+  latest_main_observed: b89a491a948b80175965ba1b3d8de09c408337c9
+  merge_base: 4f175d489751acccb21c2dcad94d93e4c9706d89
+  github_mergeable_state: dirty
+  conflict_inspection: read_only_git_merge_tree
+  overlapping_files:
+    - src/modules/market_intelligence/pq_recovery_cycle.py
+    - src/modules/market_intelligence/pq_public_223_expand.py
+  analysis: >-
+    pq_recovery_cycle has overlapping import rearrangements: main already
+    imports audit/source modules in a consolidated block while the feature
+    branch repeats them and adds primary ETP audit imports. Preserve both
+    feature sets, remove duplicate imports and retain prior-journal and
+    SHA-snapshot parameters when preparing a future branch sync. The
+    pq_public_223_expand overlap is only import formatting/unused import.
+    No branch/main merge, rebase, conflict resolution, force push or PR
+    auto-merge was performed in this run.
+  exact_head_ci_before_new_metadata: >-
+    GitHub Actions run 40633815401 queued for d2913bdc; a parallel run
+    40633815412 cancelled. Earlier c257484a exact-head CI 40628803856
+    completed success. New head is not yet CI-green.
+  resume_instruction: >-
+    Continue safe independent MI source work while PR #519 is DRAFT/REVIEW.
+    First check exact-head CI and current main, then reconcile only the two
+    observed overlapping files in an isolated branch after verifying all
+    applicable authority; preserve audit/lease/ETP dedup and source provenance.
+    No automatic PR merge without queue auto_merge:true, fresh Company AM-4
+    and exact-head CI green. Do not alter unrelated current-task or Watchdog.
