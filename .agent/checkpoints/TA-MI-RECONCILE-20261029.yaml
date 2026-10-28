@@ -1,0 +1,27 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-MI-RECONCILE-20261029
+status: in_progress
+goal: Consolidate all parallel MI research and evidence into one auditable supplier-profile-driven research lane, piloted on FGI/PQ.
+definition_of_done:
+  - One active MI research PR and exactly one existing Watchdog, shared canonical MI checkpoint and issue #57
+  - Audit and preserve unique code, evidence and history of MI PRs #515-519 without copying unverified metrics into current corpus
+  - Retain safe recoveries with tested regressions and a reusable supplier study intake
+  - Canonical runbook, inventory of unresolved historical versions and single escalation/resume policy
+  - Verify tests, CI, final commit, synchronized Watchdog scope; no destructive branch/history rewrite
+completed:
+  - Inspected main, dirty unrelated APR-07 checkout, active PR #521 and overlapping MI PRs #515-519
+  - Established PR #521 as sole active MI code/research branch; runbook is source of coordination
+  - Restored safe public 7z and allowlisted ETP queue modules plus gap-inventory original-vs-receipt protection from PR #519
+  - Restored 11 original-source report/ledger files from #519 as historical evidence, not promoted to current v29 market totals
+  - Implemented deterministic S0 ResearchBrief for a generic supplier profile, FGI example unverified
+  - Initial targeted tests 24 passed, Ruff passed and diff check passed
+current_step: Commit and publish consolidation to existing #521; verify CI; then disposition superseded draft PRs only after full historical provenance review.
+remaining:
+  - Integrate/review remaining unique #519 tests and documentary overlays before closing #519
+  - Audit #515 v20-v40 historical files and identify unique cases vs current v29 with SHA-level reconciliation; do not replace current v29 blindly
+  - Verify overlapping #516-518 code coverage and close superseded PRs with exact transfer pointers
+  - Continue real 44/223-FZ/commercial ETP evidence acquisition and S0-S11 E2E acceptance
+last_verified_commit: aca475560e5fd19615324961eb3159ef505942fc
+test_results: 24 targeted tests passed, Ruff passed, one inherited Starlette deprecation warning
+resume_instruction: Start from the head of existing PR #521 and this checkpoint, compare current CI and outstanding historical PRs; do not open a second active MI PR. Verify restored original-source overlays against private source SHA before promotion. Check original signed contractor/price and 6-35kV first. Preserve unrelated current-task.yaml and source originals. Report through single #57 Watchdog.

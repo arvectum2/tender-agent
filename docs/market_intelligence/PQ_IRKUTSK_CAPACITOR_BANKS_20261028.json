@@ -1,0 +1,52 @@
+{
+  "schema_version": "pq-extra-original-irkutsk-20261028/1",
+  "notice_id": "32514842313",
+  "public_page_sha256": "a4705a08849c994a112f52712980345780716b0c1ffa5777b581bf8683c669ed",
+  "source_level": "verified_public_page_not_original_soap_xml",
+  "original_files": [
+    {
+      "sha256": "cfc5e5c6d12217dc687af9a9e1fdfe17b3d006055e5b446e18553c4a197e2db3",
+      "filename": "01-attachment-1.pdf"
+    },
+    {
+      "sha256": "183d6e73492e8fe1b6a969c7f4806eb64204c14225c4ff07085d6dcd6bdfc312",
+      "filename": "03-attachment-3.pdf"
+    }
+  ],
+  "skipped": [
+    {
+      "name": "Документация.7z",
+      "reason": "file_too_large"
+    }
+  ],
+  "review_id": "32514842313-9d6286036ac5317c2931804c",
+  "classification": "uncertain",
+  "evidence": [
+    {
+      "sha256": "cfc5e5c6d12217dc687af9a9e1fdfe17b3d006055e5b446e18553c4a197e2db3",
+      "quote": "конденсаторов 4 шт. по 50 МВАр, установка дополнительных батарей"
+    },
+    {
+      "sha256": "cfc5e5c6d12217dc687af9a9e1fdfe17b3d006055e5b446e18553c4a197e2db3",
+      "quote": "112 201 596,67 рублей без учета НДС"
+    },
+    {
+      "sha256": "cfc5e5c6d12217dc687af9a9e1fdfe17b3d006055e5b446e18553c4a197e2db3",
+      "quote": "Заключить договор с единственным участником закупки АО \"ЭНЕРГЕТИЧЕСКИЕ ТЕХНОЛОГИИ\""
+    },
+    {
+      "sha256": "cfc5e5c6d12217dc687af9a9e1fdfe17b3d006055e5b446e18553c4a197e2db3",
+      "quote": "111 079 600,00 рублей без учета НДС"
+    }
+  ],
+  "commission_nominal_bank_count": 6,
+  "commission_nominal_bank_mvar_each": 50,
+  "rated_voltage_kv": null,
+  "nmck_rub_ex_vat": "112201596.67",
+  "commission_offer_rub_ex_vat": "111079600.00",
+  "commission_selected_participant": "АО ЭНЕРГЕТИЧЕСКИЕ ТЕХНОЛОГИИ",
+  "signed_contract_verified": false,
+  "contractual_supplier_verified": false,
+  "executed_contract_price_verified": false,
+  "equipment_only_price_verified": false
+}
