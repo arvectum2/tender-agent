@@ -93,8 +93,13 @@ def build(*, leads: Path, public223: Path, filestore: Path,
     cases = []
     seen = set()
     source_hosts = Counter()
-    yearly = defaultdict(lambda: {"223_number_candidates": 0,
-                                  "original_file_cases": 0})
+    yearly = defaultdict(lambda: {"223_candidate_lot_rows": 0,
+                                  "distinct_223_notices": 0,
+                                  "distinct_223_notices_with_files": 0})
+    year_numbers = defaultdict(set)
+    year_originals = defaultdict(set)
+    unique_source_223_with_files = set()
+    unique_native_etp = set()
     statuses = Counter()
     for row in corpus:
         canonical = row.get("canonical_id")
@@ -135,12 +140,15 @@ def build(*, leads: Path, public223: Path, filestore: Path,
                 state = "primary_source_not_verified"
             year = _source_year(number)
             year_key = str(year) if year is not None else "unknown"
-            yearly[year_key]["223_number_candidates"] += 1
+            yearly[year_key]["223_candidate_lot_rows"] += 1
+            year_numbers[year_key].add(number)
             if count:
-                yearly[year_key]["original_file_cases"] += 1
+                year_originals[year_key].add(number)
+                unique_source_223_with_files.add(number)
         elif number in etp:
             state = "original_commercial_card_html_sha_verified"
             proof.append("primary_bidzaar_html_sha_receipt")
+            unique_native_etp.add(number)
         else:
             state = "secondary_or_unverified_source_only"
         statuses[state] += 1
@@ -161,8 +169,13 @@ def build(*, leads: Path, public223: Path, filestore: Path,
             "publication_month_source_verified": None,
             "signed_contract_supplier_verified": False,
         })
+    for year_key in yearly:
+        yearly[year_key]["distinct_223_notices"] = len(year_numbers[year_key])
+        yearly[year_key]["distinct_223_notices_with_files"] = len(year_originals[year_key])
     observed = len(corpus)
     by_kind = Counter(c["source_category"] for c in cases)
+    all_223_numbers = {c["procedure_id"] for c in cases if c["source_category"] == "223fz"}
+    numbered_223_rows = by_kind["223fz"]
     confirmed_primary = sum(c["primary_source_state"] in (
         "original_eis_documents_verified",
         "original_commercial_card_html_sha_verified") for c in cases)
@@ -180,12 +193,17 @@ def build(*, leads: Path, public223: Path, filestore: Path,
         "study_end": end,
         "candidate_denominator": observed,
         "source_category_counts": dict(sorted(by_kind.items())),
+        "numbered_223_candidate_lot_rows": numbered_223_rows,
+        "distinct_223_notice_numbers": len(all_223_numbers),
+        "additional_lot_rows_sharing_223_notice": numbered_223_rows - len(all_223_numbers),
+        "commercial_or_nonstandard_candidate_rows": by_kind["commercial_or_unresolved"] + by_kind["44fz_candidate_unverified"],
         "source_state_counts": dict(sorted(statuses.items())),
-        "primary_source_bound_cases": confirmed_primary,
-        "cases_without_verified_primary_original": observed - confirmed_primary,
+        "candidate_rows_with_primary_original": confirmed_primary,
+        "candidate_rows_without_verified_primary_original": observed - confirmed_primary,
+        "unique_notice_or_etp_numbers_with_primary_original": len(unique_source_223_with_files) + len(unique_native_etp),
         "primary_original_source_types": {
-            "official_223_with_files": statuses["original_eis_documents_verified"],
-            "original_commercial_etp_html": statuses["original_commercial_card_html_sha_verified"],
+            "official_223_unique_notices_with_files": len(unique_source_223_with_files),
+            "original_commercial_etp_unique_cards": len(unique_native_etp),
         },
         "source_223_year_hint_not_publication_date": dict(sorted(yearly.items())),
         "period_search_coverage": periods,
