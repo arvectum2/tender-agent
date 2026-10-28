@@ -498,3 +498,37 @@ watchdog_mi_primary_etp_recovery_20261028_1423:
     writes.'
 
 # Same 35kV Pograniсhnaya project, separate RAD260047641 procedure (outside v29), original DOCX SHA f69882741567ee3b53421eb12ef87db4926fab41751623d494166f0d521f66c0; text similarity 0.9808 to RAD260049805. Do not double count.
+
+native_rad_223_nikitskaya_20261028:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  goal: "Recover original 223-FZ native ETP source and validated commission price without inventing signed execution"
+  definition_of_done:
+    - "Match first-party RAD page and original download URLs to each of four real RAR SHA-256 bytes"
+    - "Cross-verify original RAR DOCX member SHA against accepted ChatGPT/ARC packet and commission facts"
+    - "Link source evidence to v29 coverage, report and S10 without double-counting original EIS receipts"
+    - "Test source integrity, no signed-contract inference and update Spec Kit and task checkpoint"
+  completed:
+    - "Official RAD 223 notice 32615966040 native tender RAD260020676: 4 RAR originals SHA/live URL match, 16,860,711 original archive bytes; original first-party public card saved"
+    - "RAR source hashes notice-approval 0e202143ee43ec1cae9ff7034eae89f0741f10644235e19b37d4b5b483f47ec0, technical 0d1b4730cf2ce43237c79ad7175063a528a40e611a6d8c2caa50264e346f42e3, review 92676bcfcd00a25cc3d90b9a5d29ba97ca0a9b6b6cefa5b9a28203a02bf66db7, final 86a6d2605f575465feebfb5cb84eae1d90f7f4ed56bd178588061dc200273744"
+    - "Final 19 May 2026 DOCX protocol SHA c4259db4db81d2d0af153acf2fc56ac6e3ac354999c84b9248431bb6814338d6 matches reviewed packet 32615966040-26fad6b664141900a39c3a1c and private original RAR"
+    - "Source confirms 10kV compensating works in mixed EPC PS110 Nikitskaya, one admitted applicant OOO Energoset; procurement failed for one application, commission instructed contract at 5273763.77 RUB VAT 22% included; no signed contract, supplier-of-signed-contract or PQ equipment-only price"
+    - "Earlier 12 May protocol lists initial price 5564090.57 RUB VAT included whereas final 19 May protocol lists 5273763.77 RUB; preserve stage difference, no double counting"
+    - "New pq_rad_primary_audit with 4 synthetic fail-closed source tests; integrated alternate 223 primary proof into pq_research_coverage, pq_verified_market_report, pq_quality_gate and pq_recovery_cycle"
+    - "Actual offline Spec Kit cycle: 101 candidate rows, 34 223 lot rows/33 distinct notices; 31 EIS original notice IDs + 1 native RAD; 32 of 33 223 notices with primary originals from any platform; 42 unique all-platform source IDs, 43 sourced candidate rows, 58 unsourced rows"
+    - "10 exact-quote/SHA-backed commission decisions, 3 public contract-register entries, zero verified signed suppliers; 15 Data Platform docs still blocked by authorized SDK key"
+    - "129 test_pq*.py and Spec Kit tests passed; Ruff PASS, git diff --check PASS; one external Starlette warning"
+    - "Spec Kit T009a3/T011b/T014f and research report docs/market_intelligence/PQ_RAD_NIKITSKAYA_PRIMARY_20261028.md updated"
+  current_step: "Verify original signed supplier/contract registry for RAD260020676 and source-grade integrate Watchdog native Roseltorg/RAD commercial overlay"
+  remaining:
+    - "Follow exact 223 contract registry/award XML for notice 32615966040; aggregator 03 June 2026 signed-contract signal remains secondary and not proof of counterpart or executed price"
+    - "Integrate watchdog SHA-backed 3 new v29 native ETP case IDs COM07102500074, COM16012600053, RAD260049805 with original evidence, preserving 0.4kV out-of-scope and 35kV owner-furnished distinctions"
+    - "Investigate 32616400421, the last v29 223 notice without original files from either EIS or native ETP"
+    - "Broaden 2024–2026 exact-month 44/223/EТP primary sources, winner and executed price validation; full market study remains incomplete"
+    - "Resolve 15 pending Data Platform SDK extracts in authorized service context without exposing credentials"
+    - "Reconfirm PR #521 exact-head required CI, review and merge governance; do not merge without permitted authority"
+  last_verified_commit: "bcbc364a2d1c71d8d8a80029fb898575225d62b1"
+  last_test_results: "129 passed, Ruff pass, git diff check pass; real RAD original 4 SHA verified and source rehashed, S10 source consistency pass, full market acceptance false, Data Platform SDK 15 blocked"
+  runtime_root: "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live"
+  source_manifest: "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live/primary-rad-originals/32615966040/original-source-manifest.json"
+  resume_instruction: "Read this newest RAD subsection and last actual remote main/PR #521; do not re-download four SHA-verified RAD archives. Verify signed contract from first-party registry, not aggregator. Integrate three additional original commercial ETP cases already recovered and reviewed by current hourly Watchdog (see watchdog_mi_primary_etp_recovery_20261028_1423), source-audit 0.4kV and owner-furnished 35kV separately. Resume remaining 58 v29 rows in 42-source-ID baseline. Keep existing single hourly Tender Agent Watchdog, leave unrelated .agent/current-task.yaml intact."
