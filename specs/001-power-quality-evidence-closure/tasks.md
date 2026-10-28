@@ -29,6 +29,10 @@
 - [x] T014b Isolate corrupt RTF-with-DOCX extension and Data Platform missing-key condition; preserve all original SHA and pending 15 extraction tasks. *Do not* claim fully extracted corpus.
 - [x] T008b Perform 20 actual first-page (18 topical + 2 exact-ID), date-bound official EIS searches across six sample months (2024-04, 2024-10, 2025-05, 2025-11, 2026-06, 2026-09), journal exact source/status and seven false-positive medical results. Keep 34 months **not exhaustively verified**; this does not complete T008 or T014c.
 
+- [x] T009a2 Acquire three additional in-corpus original B2B-Center cards 4256170, 4526968, 4535313 and one out-of-v29 predecessor 4538400, using exact first-party SHA receipts; 41 distinct primary IDs now covered in v29.
+- [x] T013b Cross-verify original organizer cancellation of B2B 4538400 and explicit successor 4565274 in both original HTML sources; account for outside-v29 predecessor without inflating v29 denominator.
+- [x] T011a Verify three more native EIS commission decisions for 32514720691 (UKRM supply), 32514754857 (mixed reconstruction with UKRM 6 kV), 32514842313 (adjacent PS 500 kV BSK); source quote/SHA and price kind checks pass, total 9 committee decisions and 0 signed contracts.
+
 ### Source-grade blockers (not closure)
 - [ ] T009b Obtain primary commercial award protocol/supplier and prices for remaining unverified commercial leads (including four B2B cards with hidden outcomes).
 - [ ] T014c Run official month-scoped ЕИС 44/223/ETP discovery; verify all 34 source months, 2024–2026.

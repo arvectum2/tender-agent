@@ -439,3 +439,35 @@ visual_source_review_bashkortostan_20261028:
     - "Verify equipment nominal voltage and project/lot reissue identity from original specifications"
     - "No signed supplier/contract amount independently confirmed"
   resume_instruction: "Continue lawful source retrieval of voltage-bearing technical specifications and signed outcomes; do not count failed Bashkortostan tenders as sales. Keep visual receipts provisional, original native queue packets intact and 6–35 kV relevance uncertain. Preserve single Watchdog and unrelated current-task.yaml."
+
+watchdog_mi_search_priority_reset_20261028:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  objective: "One existing hourly Watchdog prioritizes original procurement and signed-outcome research over metadata-only roadmap/CI work"
+  definition_of_done:
+    - "Keep the original enabled hourly scheduled task ID; prioritize live 2024-2026 PQ primary source research over unrelated roadmap"
+    - "Acquire original native ETP records with exact source SHA and source-visible outcomes"
+    - "Preserve correct lot-vs-notice-vs-project-vs-signed contract distinctions, no unsupported equipment turnover"
+    - "Produce consistent versioned 101-row v29 private report with source gaps and restart instructions"
+    - "Run code QA, publish reviewed PR and continue signed supplier and ETP award recovery"
+  completed:
+    - "Updated EXISTING Tender Agent Watchdog automation ID 6aa7ef95fc9c8191beaa71fea17dc372 prompt in-place; enabled hourly schedule unchanged; explicitly overrides stale 100-row v20 task-selection instructions"
+    - "New Watchdog priority: actual original 6-35kV PQ procurements, signed suppliers/contracts, 2024-2026 month-and-source coverage, 70 percent of productive actions toward evidence acquisition instead of metadata-only repetition"
+    - "Captured B2B exact native original HTML for v29 4256170, 4526968, 4535313 (additional 3 source-backed v29 cases) and predecessor 4538400 (outside-v29) with SHA checks"
+    - "Independently verified original B2B organizer cancellation of tender 4538400 on 2026-08-17, replacement 4565274 from both source cards with same buyer/organizer and original SHA; no double count"
+    - "Market reporter now excludes cancelled predecessor original outside-v29 from candidate-source denominator, retains its source-verified replacement relation"
+    - "Original EIS reviewed packets yield 3 newly SHA/source-quote-audited committee offers: 32514720691, 32514754857 and 32514842313; 9 commission decisions now verified in total, 0 signed contracts inferred"
+    - "Latest actual offline Spec Kit source cycle generated report.md, coverage.json, project_register.json, quality_report.json: 101 rows, 41 distinct first-party source case IDs, 59 still missing primary originals, 9 commission facts, 8 B2B original HTML including 1 outside-v29"
+    - "123 relevant pytest cases passed, Ruff and git diff --check passed, one external Starlette deprecation warning; 15 Data Platform originals remain pending an authorized SDK API key"
+  current_step: "Confirm exact-head CI and PR #521 review; execute actual original ETP award and 223/44 signed contract searches, no inventory-only claim"
+  remaining:
+    - "Record fresh Watchdog run after prompt change and verify that evidence metrics include newly acquired primary documents, not only inventory/PR stats"
+    - "Recover 59 in-corpus primary source gaps, 2024-2026 representative historical coverage, original ETP outcomes and signed suppliers where public"
+    - "Find authorized service context for 15 pending Data Platform source extractions; never disclose or bypass credential"
+    - "Run release-safe review and green CI before PR merge, leave unrelated current-task and original hourly Watchdog untouched"
+    - "Do not mark full market study complete while 34 months lack exhaustive source coverage and signed values remain unverified"
+  last_verified_commit: "8d136ae2"
+  last_test_results: "123 passed, Ruff pass, diff check pass; live first-party originals SHA 41 in v29; 9 committee facts source-audited; Data Platform 247/262 checkpointed and 15 blocked"
+  runtime_root: "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live"
+  branch: "feature/pq-etp-provenance-ledger-20261028"
+  resume_instruction: "Read THIS newest checkpoint and PR #521 head. Continue acquiring native B2B/ETP/44+223 originals for 59 missing v29 rows and source-verified signed contract supplier/outcome evidence (NOT v20). Do not repeat 41 already verified original case IDs or create duplicate Watchdog. Prioritize new actual sources before CI, metadata and docs. Record per-run requests, SHA, URLs, citations, award and signed supplier distinctions. Keep blocked Data Platform files as blocked until authorized service environment available. Update canonical checkpoint on new evidence; maintain exactly one hourly Tender Agent Watchdog and unrelated current-task.yaml."
