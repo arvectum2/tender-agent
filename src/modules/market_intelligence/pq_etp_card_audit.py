@@ -81,7 +81,8 @@ def _fetch_direct_verified_tls(url: str, *, timeout: int = 10) -> dict:
         raw = body.read_bytes()
         return {"status": "html_fetched", "http_status": code,
                 "html_sha256": hashlib.sha256(raw).hexdigest(),
-                "text": raw.decode("utf-8", errors="replace")}
+                "text": raw.decode("utf-8", errors="replace"),
+                "raw_html": raw}
 
 
 def _fetch(url: str, timeout: int = 10) -> dict:
@@ -105,7 +106,7 @@ def _fetch(url: str, timeout: int = 10) -> dict:
             text = raw.decode("utf-8", errors="replace")
             return {"status": "html_fetched", "http_status": response.status,
                     "html_sha256": hashlib.sha256(raw).hexdigest(),
-                    "text": text}
+                    "text": text, "raw_html": raw}
     except urllib.error.HTTPError:
         # Access controls and explicit HTTP errors are never bypassed.
         raise
@@ -115,7 +116,10 @@ def _fetch(url: str, timeout: int = 10) -> dict:
 
 def audit(*, queue_file: Path, journal: Path, max_tasks: int = 5,
           retry_hours: int = 12, fetch=None,
-          prior_journals: list[Path] | None = None) -> dict:
+          prior_journals: list[Path] | None = None,
+          snapshot_dir: Path | None = None) -> dict:
+    if snapshot_dir is not None and snapshot_dir.is_symlink():
+        raise ValueError("Unsafe HTML snapshot directory")
     if not 1 <= max_tasks <= 30 or not 1 <= retry_hours <= 720:
         raise ValueError("Invalid probe limits")
     fetcher = fetch or _fetch
@@ -157,6 +161,27 @@ def audit(*, queue_file: Path, journal: Path, max_tasks: int = 5,
         try:
             result = fetcher(url)
             html = result.pop("text", "")
+            raw_html = result.pop("raw_html", None)
+            if raw_html is not None:
+                if (not isinstance(raw_html, bytes) or len(raw_html) > MAX_HTML_BYTES
+                        or hashlib.sha256(raw_html).hexdigest() != result.get("html_sha256")):
+                    raise ValueError("HTML source SHA mismatch")
+                if snapshot_dir is not None and result.get("status") == "html_fetched":
+                    snapshot_dir.mkdir(parents=True, exist_ok=True)
+                    path = snapshot_dir / (result["html_sha256"] + ".html")
+                    if path.exists():
+                        if path.is_symlink() or hashlib.sha256(path.read_bytes()).digest() != hashlib.sha256(raw_html).digest():
+                            raise ValueError("Existing HTML snapshot SHA mismatch")
+                    else:
+                        with tempfile.NamedTemporaryFile("wb", dir=snapshot_dir,
+                                                         prefix=".html-", delete=False) as f:
+                            temp = Path(f.name)
+                            f.write(raw_html)
+                            f.flush()
+                            os.fsync(f.fileno())
+                        os.replace(temp, path)
+                    result["snapshot_path"] = str(path)
+                    result["snapshot_sha256"] = result["html_sha256"]
             result["identity_mentioned"] = identity.casefold() in html.casefold()
             result["pq_term_mentioned"] = any(t in html.casefold() for t in
                                                ("укрм","компенсац","статком","конденсатор","фильтр гармоник"))
@@ -200,9 +225,11 @@ def main():
     p.add_argument("--journal", type=Path, required=True)
     p.add_argument("--max-tasks", type=int, default=5)
     p.add_argument("--prior-journal", type=Path, action="append")
+    p.add_argument("--snapshot-dir", type=Path)
     args = p.parse_args()
     result = audit(queue_file=args.queue_file, journal=args.journal,
-                   max_tasks=args.max_tasks, prior_journals=args.prior_journal)
+                   max_tasks=args.max_tasks, prior_journals=args.prior_journal,
+                   snapshot_dir=args.snapshot_dir)
     print(json.dumps(result, ensure_ascii=False))
 
 

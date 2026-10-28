@@ -300,3 +300,40 @@ def test_unnumbered_lead_never_inherits_source_root_manifests(tmp_path):
     assert row["evidence_urls"] == ["https://example.org/lead"]
     assert row["source_documents_local"] == []
     assert "original_notice" in row["missing_or_unverified"]
+
+
+def test_etp_source_html_snapshot_is_exact_sha_and_idempotent(tmp_path):
+    url = "https://synapsenet.ru/zakupki/b2b/4565274"
+    raw = b"<html>4565274 UKRM 10kV</html>"
+    sha = hashlib.sha256(raw).hexdigest()
+    queue = tmp_path / "queue.json"
+    queue.write_text(json.dumps({"tasks": [{"procedure_id": "4565274",
+                                           "mirror": url}]}))
+    journal = tmp_path / "journal.json"
+    snapshots = tmp_path / "snapshots"
+    def fetched(_):
+        return {"status": "html_fetched", "http_status": 200,
+                "html_sha256": sha, "text": raw.decode(), "raw_html": raw}
+    first = audit(queue_file=queue, journal=journal, snapshot_dir=snapshots,
+                  fetch=fetched)
+    assert first["probes"] == 1
+    assert first["results"][0]["snapshot_sha256"] == sha
+    assert (snapshots / (sha + ".html")).read_bytes() == raw
+    assert first["results"][0]["signed_contract_verified"] is False
+    assert audit(queue_file=queue, journal=journal, snapshot_dir=snapshots,
+                 fetch=fetched)["probes"] == 0
+
+
+def test_etp_html_snapshot_rejects_sha_mismatch(tmp_path):
+    url = "https://synapsenet.ru/zakupki/b2b/4565274"
+    queue = tmp_path / "queue.json"
+    queue.write_text(json.dumps({"tasks": [{"procedure_id": "4565274",
+                                           "mirror": url}]}))
+    snapshots = tmp_path / "snapshots"
+    result = audit(queue_file=queue, journal=tmp_path / "journal.json",
+                   snapshot_dir=snapshots, fetch=lambda _: {
+                       "status": "html_fetched", "http_status": 200,
+                       "html_sha256": "0" * 64, "text": "4565274",
+                       "raw_html": b"not matching"})
+    assert result["results"][0]["status"] == "fetch_error"
+    assert not snapshots.exists()

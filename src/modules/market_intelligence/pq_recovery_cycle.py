@@ -70,6 +70,7 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
         report["etp_cards"] = (audit_etp(queue_file=etp_queue,
             journal=runtime / "etp-source-attempts.json",
             prior_journals=[runtime / "etp-native-source-attempts.json"],
+            snapshot_dir=runtime / "etp-source-snapshots",
             max_tasks=min(max_cases, 3)) if network else {"status": "skipped_offline"})
     report["review_queues"] = []
     for root in roots:
