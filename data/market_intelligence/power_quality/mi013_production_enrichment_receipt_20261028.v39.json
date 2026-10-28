@@ -1,0 +1,55 @@
+{
+  "schema_version": "mi013-v39-original-auction-enrichment-pg/1.0",
+  "as_of": "2026-10-28",
+  "database": "arvectum_data",
+  "collection": "arvectum-market-pq-6-35kv",
+  "source_version": "v39",
+  "existing_notice": "223fz:32616181358:lot1",
+  "new_procurement_notices": 0,
+  "registered_original_signed_contracts_total": 6,
+  "primary_source": "https://tender.lot-online.ru/etp/downloadppf?uuid=dbfile19718u80000pvkg89is0k0tsd4",
+  "primary_protocol_pdf_bytes": 263719,
+  "primary_protocol_pdf_sha256": "92874d098feb7dc6c283bd7b66c5218e11e472f27eddffc75edd6613fb5b21ef",
+  "original_award_winner": {
+    "name": "ООО ЭКСПЕРТ ГРУПП",
+    "inn": "7720494275",
+    "original_offer_with_vat22": "3050000.00"
+  },
+  "other_bidders": [
+    {
+      "inn": "7721814062",
+      "offer_rub": "3078500.00",
+      "status": "qualified_second"
+    },
+    {
+      "inn": "5043061102",
+      "offer_rub": "1960906.00",
+      "status": "rejected_cert_missing_and_37.5A_vs_required_50A"
+    }
+  ],
+  "original_registry_card": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=57724646338260000460000",
+  "legal_signed_supplier_named_in_public_registry": false,
+  "transaction": "guarded one-existing-row JSONB source overlay, source identity hash checked, atomic SQL COMMIT and independently re-read",
+  "first_attempt": "rolled back safely: NULL guard on absent evidence overlay; code fix committed before successful rerun",
+  "successful_backup": {
+    "file": "data-platform-arvectum_data-20261028T051230Z.dump",
+    "directory": "/Volumes/ArvectumSSD/Arvectum/runtime/data-platform-backups",
+    "bytes": 37479021,
+    "sha256": "8758fd9bef5786946da0942744b7197308a67b1516d76cbaabbdf9cb0f33083f",
+    "verified_before_SQL": true
+  },
+  "new_target_content_hash": "e9d550ac68c870ad8f579ea9925bf5bc6793a18d8f7d47810a22abb72422864b",
+  "after": {
+    "resources": 104,
+    "records": 104,
+    "unique_external_ids": 104,
+    "source_enriched_cases": 18,
+    "other_resources": 2192,
+    "other_records": 0,
+    "all_documents": 2192
+  },
+  "independent_full_source_replay": "104/104 SHA256 matched PostgreSQL, 0 drift",
+  "importer": "scripts/market_intelligence/apply_pq_reto_award_v39.py",
+  "materializer": "scripts/market_intelligence/materialize_pq_research_v39.py",
+  "quantity_and_signed_value_remains": "10 individual 12kV capacitor units in original signed contract 3050000 rub; supplier legal signed registry name redacted, actual shipping not confirmed"
+}
