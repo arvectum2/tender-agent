@@ -960,3 +960,34 @@ native_etp_and_market_snapshot_20261028:
   last_verified_commit: "259cb715121617216c57cd35f5ef600278174f05"
   last_test_results: "51 passed, 1 external deprecation warning; 33/33 numeric 223 leads with source receipts, 31 with originals; 3 primary ETP cards, 6 commission facts, 3 registry lots"
   resume_instruction: "Use latest top-level resume_instruction; do not duplicate Tender Agent Watchdog."
+
+run_20261028_0945_2024_screening_and_main_reconcile:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  timestamp_moscow: '2026-10-28T09:39:06.741200+03:00'
+  branch: fix/mi-etp-source-status-20261028
+  pr: 519
+  merged_main_into_pr_branch_commit: 21394ddb813cd9f5270a7a7c7c471b1f47fc39e9
+  pr_mergeable_after_reconcile: MERGEABLE
+  pr_draft: true
+  preserved_main_snapshot_and_branch_checkpoint: true
+  focused_tests_after_main_reconcile: '45 PASS; Ruff PASS; one inherited Starlette warning'
+  new_2024_screening_protocol_sha256: cc86863f029ab7a8d236cbe536a14235df0a3c4a971e15b1491e357498f78eb5
+  source_2024_commission_result: unsuccessful_all_two_bids_rejected
+  prior_amendment_nmck_rub_ex_vat: 218810250
+  screening_protocol_nmck_rub_ex_vat: 235000000
+  rejected_proposals_rub_ex_vat: [234500000, 235000000]
+  new_chatgpt_arc_reviews_total: 3
+  review_queue_reviewed_total: 82
+  signed_contracts_verified: 0
+  executed_equipment_prices_verified: 0
+  resume_instruction: >-
+    PR #519 branch is now reconciled with origin/main 36181694, but stays
+    DRAFT/REVIEW: do not merge into main absent queue auto_merge:true,
+    exact-head CI and Company AM-4 authority. The original 2024 screening
+    protocol 32413297739 rejected both bids and declared the procedure
+    unsuccessful. Do not include 218810250/235000000 RUB NMCK or rejected
+    proposals in executed market volume. Seek independently rated equipment
+    voltage and possible separate later procurement or signed contract,
+    without inventing one. Continue v20/ETP signed-contract evidence recovery,
+    preserve 12h cooldown, source SHA, single Watchdog, unrelated current-task.
