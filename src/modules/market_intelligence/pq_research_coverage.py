@@ -19,6 +19,7 @@ from .pq_b2b_primary_audit import verify as verify_b2b
 from .pq_month_discovery import _bound as verify_month_url
 from .pq_month_discovery import _window as month_window
 from .pq_primary_etp_audit import verify as verify_etp
+from .pq_rad_primary_audit import verify as verify_rad
 from .pq_verified_market_report import (
     exact_filestore_sha_receipts,
     source_receipts,
@@ -73,6 +74,8 @@ def build(*, leads: Path, public223: Path, filestore: Path,
           etp_facts: Path, etp_originals: Path,
           b2b_originals: Path | None = None,
           b2b_journal: Path | None = None,
+          rad_originals: Path | None = None,
+          rad_queue: Path | None = None,
           eis_journal: Path | None = None,
           public_journal: Path | None = None,
           primary_etp_journal: Path | None = None,
@@ -89,6 +92,11 @@ def build(*, leads: Path, public223: Path, filestore: Path,
     etp = {x["procedure_id"]: x for x in verified_etp["records"]}
     b2b = {x["procedure_id"]: x for x in verify_b2b(
         source_root=b2b_originals)["source_records"]} if b2b_originals is not None else {}
+    if rad_originals is not None and rad_queue is None:
+        raise ValueError("RAD originals require a checked source review queue")
+    rad = ({r["procedure_id"]: r for r in verify_rad(
+        root=rad_originals, queue=rad_queue)["records"]}
+        if rad_originals is not None and rad_queue is not None else {})
     found = _journal(eis_journal, "pq-source-attempts/1")
     downloads = _journal(public_journal, "pq-223-public-page-attempts/1")
     native = _journal(primary_etp_journal, "pq-etp-primary-attempts/1")
@@ -110,6 +118,7 @@ def build(*, leads: Path, public223: Path, filestore: Path,
     year_numbers = defaultdict(set)
     year_originals = defaultdict(set)
     unique_source_223_with_files = set()
+    unique_rad_etp_without_eis = set()
     unique_native_etp = set()
     unique_b2b_etp = set()
     statuses = Counter()
@@ -142,8 +151,13 @@ def build(*, leads: Path, public223: Path, filestore: Path,
             if direct is not None:
                 count += direct["verified_file_instances"]
                 proof.append("official_223_exact_url_sha_receipt")
+            if number in rad:
+                proof.append("original_native_rad_223_etp_rar_sha_receipt")
             if count:
                 state = "original_eis_documents_verified"
+            elif number in rad:
+                state = "original_native_rad_223_etp_sha_verified"
+                unique_rad_etp_without_eis.add(number)
             elif pub is not None or direct is not None:
                 state = "official_notice_receipt_without_files"
             elif number in found_ids:
@@ -154,8 +168,9 @@ def build(*, leads: Path, public223: Path, filestore: Path,
             year_key = str(year) if year is not None else "unknown"
             yearly[year_key]["223_candidate_lot_rows"] += 1
             year_numbers[year_key].add(number)
-            if count:
+            if count or number in rad:
                 year_originals[year_key].add(number)
+            if count:
                 unique_source_223_with_files.add(number)
         elif number in etp:
             state = "original_commercial_card_html_sha_verified"
@@ -182,6 +197,7 @@ def build(*, leads: Path, public223: Path, filestore: Path,
             "public_notice_download_attempt_recorded": number in attempted_download_ids,
             "etp_original_card_attempt_recorded": number in native_ids,
             "b2b_original_card_attempt_recorded": number in b2b_attempt_ids,
+            "rad_first_party_rar_original_verified": number in rad,
             "candidate_source_tiers_not_validation": source_tiers,
             "publication_month_source_verified": None,
             "signed_contract_supplier_verified": False,
@@ -196,7 +212,8 @@ def build(*, leads: Path, public223: Path, filestore: Path,
     confirmed_primary = sum(c["primary_source_state"] in (
         "original_eis_documents_verified",
         "original_commercial_card_html_sha_verified",
-        "original_commercial_b2b_html_sha_verified") for c in cases)
+        "original_commercial_b2b_html_sha_verified",
+        "original_native_rad_223_etp_sha_verified") for c in cases)
     bounded_months = Counter()
     for attempt in month_attempts:
         if attempt.get("date_bounds_verified") is not True:
@@ -215,6 +232,10 @@ def build(*, leads: Path, public223: Path, filestore: Path,
         if not verified or attempt.get("query_scoped_not_exhaustive") is not True:
             raise ValueError("Invalid official month-bound search receipt")
         bounded_months[month] += 1
+    eis_no_file_ids = sorted({n for n in all_223_numbers
+        if ((eis.get(n) is not None or original_sha.get(n) is not None)
+            and (eis.get(n) or {}).get("verified_file_instances", 0) +
+            (original_sha.get(n) or {}).get("verified_file_instances", 0) == 0)})
     periods = [
         {"month": m,
          "source_queries_with_verified_month_bounds": bounded_months[m],
@@ -235,11 +256,13 @@ def build(*, leads: Path, public223: Path, filestore: Path,
         "additional_lot_rows_sharing_223_notice": numbered_223_rows - len(all_223_numbers),
         "commercial_or_nonstandard_candidate_rows": by_kind["commercial_or_unresolved"] + by_kind["44fz_candidate_unverified"],
         "source_state_counts": dict(sorted(statuses.items())),
+        "eis_public_notice_ids_without_eis_originals": eis_no_file_ids,
         "candidate_rows_with_primary_original": confirmed_primary,
         "candidate_rows_without_verified_primary_original": observed - confirmed_primary,
-        "unique_notice_or_etp_numbers_with_primary_original": len(unique_source_223_with_files) + len(unique_native_etp) + len(unique_b2b_etp),
+        "unique_notice_or_etp_numbers_with_primary_original": len(unique_source_223_with_files) + len(unique_rad_etp_without_eis) + len(unique_native_etp) + len(unique_b2b_etp),
         "primary_original_source_types": {
             "official_223_unique_notices_with_files": len(unique_source_223_with_files),
+            "native_rad_223_unique_notice_originals_without_eis_duplicates": len(unique_rad_etp_without_eis),
             "original_commercial_etp_unique_cards": len(unique_native_etp),
             "original_b2b_center_unique_cards": len(unique_b2b_etp),
         },
@@ -266,6 +289,8 @@ def main() -> None:
     p.add_argument("--etp-facts", type=Path, required=True)
     p.add_argument("--etp-originals", type=Path, required=True)
     p.add_argument("--b2b-originals", type=Path)
+    p.add_argument("--rad-originals", type=Path)
+    p.add_argument("--rad-queue", type=Path)
     p.add_argument("--b2b-journal", type=Path)
     p.add_argument("--eis-journal", type=Path)
     p.add_argument("--month-journal", type=Path)
@@ -278,6 +303,7 @@ def main() -> None:
     result = build(leads=a.leads, public223=a.public223, filestore=a.filestore,
                    etp_facts=a.etp_facts, etp_originals=a.etp_originals,
                    b2b_originals=a.b2b_originals, b2b_journal=a.b2b_journal,
+                   rad_originals=a.rad_originals, rad_queue=a.rad_queue,
                    eis_journal=a.eis_journal, month_journal=a.month_journal,
                    public_journal=a.public_journal,
                    primary_etp_journal=a.etp_journal,

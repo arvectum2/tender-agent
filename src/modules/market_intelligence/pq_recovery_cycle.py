@@ -26,6 +26,7 @@ from .pq_public_223_expand import expand as expand_public_223
 from .pq_public_dp_resume import run as resume_public_dp
 from .pq_quality_gate import audit as audit_quality
 from .pq_queue_seed import seed
+from .pq_rad_primary_audit import verify as verify_rad
 from .pq_research_coverage import build as build_coverage
 from .pq_source_recovery import run as search_eis
 from .pq_verified_market_report import exact_filestore_sha_receipts
@@ -48,6 +49,7 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
               primary_etp_facts: Path | None = None,
               official_filestore_source: Path | None = None,
               b2b_source: Path | None = None,
+              rad_source: Path | None = None,
               project_links: Path | None = None) -> dict:
     if not 1 <= max_cases <= 30 or not source_roots:
         raise ValueError("Invalid cycle scope")
@@ -227,6 +229,15 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
                     bool(x["results_hidden_by_organizer"])
                     for x in b2b_evidence["source_records"]),
             }
+    if rad_source is not None:
+        rad_evidence = verify_rad(root=rad_source, queue=queue)
+        (runtime / "verified-primary-rad-facts.json").write_text(
+            json.dumps(rad_evidence, ensure_ascii=False, indent=2), encoding="utf-8")
+        report["primary_rad_evidence"] = {
+            "original_223_cases_verified": rad_evidence["first_party_223_notice_cases"],
+            "commission_protocol_cases_verified": rad_evidence["reviewed_original_commission_protocol_cases"],
+            "signed_contracts_verified": 0,
+        }
     if project_links is not None:
         required = (
             public223_source, official_filestore_source,
@@ -246,6 +257,7 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
             filestore=official_filestore_source,
             etp_facts=primary_etp_facts, etp_originals=primary_etp_source,
             b2b_originals=b2b_source,
+            rad_originals=rad_source, rad_queue=queue,
             b2b_journal=runtime / "primary-b2b-attempts.json",
             eis_journal=runtime / "source-attempts.json",
             month_journal=runtime / "month-eis-search-attempts.json",
@@ -258,7 +270,7 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
             etp_facts=primary_etp_facts, etp_originals=primary_etp_source,
             contract_root=contract_root, day_scan=contract_day_scan,
             official_filestore_root=official_filestore_source,
-            b2b_originals=b2b_source)
+            b2b_originals=b2b_source, rad_originals=rad_source)
         quality = audit_quality(
             coverage=coverage, projects=resolved, market=market,
             data_platform=report.get("public223_data_platform"))
@@ -309,6 +321,7 @@ def main() -> None:
     p.add_argument("--primary-etp-facts", type=Path)
     p.add_argument("--official-filestore-source", type=Path)
     p.add_argument("--b2b-source", type=Path)
+    p.add_argument("--rad-source", type=Path)
     p.add_argument("--project-links", type=Path)
     a = p.parse_args()
     result = run_cycle(leads=a.leads, source_roots=a.source_root,
@@ -321,7 +334,8 @@ def main() -> None:
                        primary_etp_source=a.primary_etp_source,
                        primary_etp_facts=a.primary_etp_facts,
                        official_filestore_source=a.official_filestore_source,
-                       b2b_source=a.b2b_source, project_links=a.project_links)
+                       b2b_source=a.b2b_source, rad_source=a.rad_source,
+                       project_links=a.project_links)
     print(json.dumps(result, ensure_ascii=False))
 
 

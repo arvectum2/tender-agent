@@ -180,3 +180,41 @@ def test_month_source_receipt_rejects_forged_date_bound(tmp_path: Path):
                       "source_url": "https://example.com/forged"}]}))
     with pytest.raises(ValueError, match="Invalid official month-bound"):
         build(**sources, month_journal=journal)
+
+
+def test_original_rad_223_protocol_fills_eis_no_file_gap_without_double_count(tmp_path: Path, monkeypatch):
+    from src.modules.market_intelligence import pq_research_coverage as module
+
+    sources = _fixture(tmp_path)
+    data = json.loads(sources["leads"].read_text())
+    data["records"].append({
+        "canonical_id": "223:32615966040:lot1",
+        "procedure_id": "32615966040", "family": "reactive_compensation",
+        "scope": "mixed_epc", "evidence": [],
+    })
+    sources["leads"].write_text(json.dumps(data))
+    no_file = sources["public223"] / "32615966040"
+    no_file.mkdir()
+    (no_file / "public-page-receipt.json").write_text(json.dumps({
+        "schema_version": "pq-223-public-page-download/1",
+        "registry_number": "32615966040", "files": [], "status": "no_files_saved",
+    }))
+    rad = tmp_path / "rad"
+    rad.mkdir()
+    queue = tmp_path / "queue"
+    queue.mkdir()
+    monkeypatch.setattr(module, "verify_rad", lambda **kwargs: {
+        "records": [{"procedure_id": "32615966040",
+                     "commission_source_verified": True}],
+    })
+    result = build(**sources, rad_originals=rad, rad_queue=queue)
+    assert result["candidate_denominator"] == 4
+    assert result["distinct_223_notice_numbers"] == 2
+    assert result["primary_original_source_types"]["official_223_unique_notices_with_files"] == 1
+    assert result["primary_original_source_types"]["native_rad_223_unique_notice_originals_without_eis_duplicates"] == 1
+    assert result["unique_notice_or_etp_numbers_with_primary_original"] == 3
+    assert result["candidate_rows_without_verified_primary_original"] == 1
+    assert result["eis_public_notice_ids_without_eis_originals"] == ["32615966040"]
+    rad_case = next(x for x in result["cases"] if x["procedure_id"] == "32615966040")
+    assert rad_case["primary_source_state"] == "original_native_rad_223_etp_sha_verified"
+    assert rad_case["signed_contract_supplier_verified"] is False

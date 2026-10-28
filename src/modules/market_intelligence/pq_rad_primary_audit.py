@@ -69,7 +69,7 @@ def _rar_docx(archive: Path) -> tuple[bytes, str]:
         process.kill()
         process.communicate(timeout=2)
         raise ValueError("Oversized original commission DOCX")
-    _, stderr = process.communicate(timeout=15)
+    process.communicate(timeout=15)
     if process.returncode != 0 or not data.startswith(b"PK\x03\x04"):
         raise ValueError("Original RAD DOCX could not be extracted")
     return data, choices[0]
@@ -164,6 +164,7 @@ def verify(*, root: Path, queue: Path, extractor=_rar_docx,
             "procedure_id": case.name,
             "native_etp_id": manifest["native_etp_id"],
             "first_party_card_sha256": page_sha,
+            "source_card_url": manifest["source_card_url"],
             "source_level": "rad_etp_original_public_223_archives_sha_verified",
             "original_archive_count": len(validated),
             "source_archives": validated,

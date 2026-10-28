@@ -198,3 +198,27 @@ def test_cancelled_b2b_predecessor_preserved_without_inflating_current_corpus():
     assert report['additional_b2b_original_cards_outside_v29'] == 1
     assert len(report['b2b_explicit_replacements']) == 1
     assert 'открыт новый конкурс № 4565274' in markdown(report)
+
+
+def test_native_rad_original_counts_only_once_when_eis_has_no_original():
+    offers = {"facts_accepted": 0, "records": []}
+    etp = {"original_etp_cases_verified": 0, "records": []}
+    contracts = {"distinct_contract_lots_matched": 0,
+                 "contract_lots_with_rub_price": 0, "records": []}
+    rad = {"first_party_223_notice_cases": 1, "records": [{
+        "procedure_id": "32615966040", "native_etp_id": "RAD260020676",
+        "source_card_url": "https://tender.lot-online.ru/etp/app/OfferCard/page?OfferCard.offerUUID=test",
+        "original_archive_count": 4, "commission_source_verified": True,
+    }]}
+    report = summarize(
+        leads=[{"procedure_id": "32615966040"}],
+        eis=[{"registry_number": "32615966040", "verified_file_instances": 0}],
+        commissions=offers, etp=etp, contracts=contracts, rad=rad)
+    assert report["primary_eis_cases_with_files"] == 0
+    assert report["primary_eis_no_document_cases"] == ["32615966040"]
+    assert report["primary_rad_223_original_cases_verified"] == 1
+    assert report["primary_rad_223_cases_without_eis_originals"] == 1
+    assert report["primary_223_cases_with_originals_from_any_source"] == 1
+    assert report["primary_223_cases_without_any_primary_original"] == []
+    assert report["verified_signed_contract_suppliers"] == 0
+    assert "RAD260020676" in markdown(report)

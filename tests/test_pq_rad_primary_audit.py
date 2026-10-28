@@ -6,7 +6,6 @@ import pytest
 
 from src.modules.market_intelligence.pq_rad_primary_audit import verify
 
-
 CASE = "32615966040"
 URL = "https://tender.lot-online.ru/etp/app/OfferCard/page?OfferCard.offerUUID=Scorebo19718u80000prm9gt3apraje6o"
 BINARY_URL = "https://tender.lot-online.ru/etp/downloadppf?uuid=dbfile19718u80000psji766culv1bck"

@@ -51,10 +51,16 @@ def audit(*, coverage: dict, projects: dict, market: dict,
             "passed": (
                 coverage["unique_notice_or_etp_numbers_with_primary_original"] ==
                 etp_native["official_223_unique_notices_with_files"] +
+                etp_native.get("native_rad_223_unique_notice_originals_without_eis_duplicates", 0) +
                 etp_native["original_commercial_etp_unique_cards"] +
                 etp_native["original_b2b_center_unique_cards"]
                 and etp_native["official_223_unique_notices_with_files"] ==
                 market["primary_eis_cases_with_files"]
+                and etp_native.get("native_rad_223_unique_notice_originals_without_eis_duplicates", 0) ==
+                market.get("primary_rad_223_cases_without_eis_originals", 0)
+                and etp_native["official_223_unique_notices_with_files"] +
+                etp_native.get("native_rad_223_unique_notice_originals_without_eis_duplicates", 0) ==
+                market.get("primary_223_cases_with_originals_from_any_source", market["primary_eis_cases_with_files"])
                 and etp_native["original_commercial_etp_unique_cards"] ==
                 market["primary_etp_cases_verified"]
                 and etp_native["original_b2b_center_unique_cards"] ==
@@ -70,7 +76,8 @@ def audit(*, coverage: dict, projects: dict, market: dict,
                 sum(states.get(name, 0) for name in (
                     "original_eis_documents_verified",
                     "original_commercial_card_html_sha_verified",
-                    "original_commercial_b2b_html_sha_verified"))
+                    "original_commercial_b2b_html_sha_verified",
+                    "original_native_rad_223_etp_sha_verified"))
             ),
         },
         {
@@ -99,8 +106,11 @@ def audit(*, coverage: dict, projects: dict, market: dict,
         {
             "id": "no_false_negative_on_unavailable_eis_files",
             "passed": (
-                len(market["primary_eis_no_document_cases"]) ==
-                states.get("official_notice_receipt_without_files", 0)
+                (sorted(market["primary_eis_no_document_cases"]) ==
+                 sorted(coverage["eis_public_notice_ids_without_eis_originals"])
+                 if "eis_public_notice_ids_without_eis_originals" in coverage
+                 else len(market["primary_eis_no_document_cases"]) ==
+                 states.get("official_notice_receipt_without_files", 0))
                 and all(row["zero_procurements_claimed"] is False for row in
                         coverage["period_search_coverage"])
             ),

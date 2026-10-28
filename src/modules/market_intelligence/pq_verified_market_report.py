@@ -14,6 +14,7 @@ from .pq_commission_fact_audit import verify as verify_commission
 from .pq_contract_outcome_audit import audit as audit_contract
 from .pq_contract_xml_index import scan as scan_contract_xml
 from .pq_primary_etp_audit import verify as verify_etp
+from .pq_rad_primary_audit import verify as verify_rad
 
 DIRECT_CAPACITOR_CATEGORIES = frozenset({
     "filter_capacitor_supply", "capacitor_bank_component_supply",
@@ -106,7 +107,7 @@ def exact_filestore_sha_receipts(root: Path) -> list[dict]:
 
 def summarize(*, leads: list[dict], eis: list[dict],
               commissions: dict, etp: dict, contracts: dict,
-              b2b: dict | None = None) -> dict:
+              b2b: dict | None = None, rad: dict | None = None) -> dict:
     numbered_rows = [
         x for x in leads if re.fullmatch(
             r"[0-9]{11}", str(x.get("procedure_id") or ""))
@@ -119,7 +120,13 @@ def summarize(*, leads: list[dict], eis: list[dict],
               and r.get("price_kind", "").endswith("vat_included")]
     sample_total = sum((Decimal(x["bid_price_rub"]) for x in offers), Decimal(0))
     b2b = b2b or {"first_party_cards_verified": 0, "source_records": []}
+    rad = rad or {"first_party_223_notice_cases": 0, "records": []}
     candidate_ids = {str(row.get("procedure_id")) for row in leads}
+    rad_records = [row for row in rad["records"] if row["procedure_id"] in ids]
+    eis_with_files = {x["registry_number"] for x in covered.values()
+                      if x["verified_file_instances"] > 0}
+    rad_ids = {x["procedure_id"] for x in rad_records}
+    primary_223_any = eis_with_files | rad_ids
     b2b_records = [row for row in b2b["source_records"]
                    if str(row.get("procedure_id")) in candidate_ids]
     b2b_replacements = [
@@ -138,6 +145,10 @@ def summarize(*, leads: list[dict], eis: list[dict],
         "primary_eis_receipt_cases": len(covered),
         "primary_eis_cases_with_files": sum(x["verified_file_instances"] > 0 for x in covered.values()),
         "primary_eis_original_file_download_instances": sum(x["verified_file_instances"] for x in covered.values()),
+        "primary_rad_223_original_cases_verified": len(rad_records),
+        "primary_rad_223_cases_without_eis_originals": len(rad_ids - eis_with_files),
+        "primary_223_cases_with_originals_from_any_source": len(primary_223_any),
+        "primary_223_cases_without_any_primary_original": sorted(ids - primary_223_any),
         "primary_eis_no_document_cases": sorted(x["registry_number"] for x in covered.values()
                                                 if not x["verified_file_instances"]),
         "additional_eis_receipts_outside_v29": len(eis) - len(covered),
@@ -155,6 +166,7 @@ def summarize(*, leads: list[dict], eis: list[dict],
         "commission": commissions["records"],
         "etp": etp["records"],
         "b2b": b2b_records,
+        "rad": rad_records,
         "b2b_explicit_replacements": b2b_replacements,
         "contracts": contracts["records"],
         "source_cases": eis,
@@ -199,6 +211,12 @@ def markdown(report: dict) -> str:
             f"{report['primary_eis_cases_with_files']}."
         ),
         f"- Исходных первичных карточек Bidzaar: {report['primary_etp_cases_verified']}.",
+        (
+            f"- Извещений 223-ФЗ с оригинальными архивами РАД: "
+            f"{report['primary_rad_223_original_cases_verified']}; "
+            f"с оригиналами из ЕИС или РАД всего "
+            f"{report['primary_223_cases_with_originals_from_any_source']}."
+        ),
         f"- Исходных первичных карточек B2B-Center: {report['primary_b2b_center_cases_verified']}.",
         f"- Проверенных решений комиссий: {report['commission_facts_verified']}.",
         f"- Записей публичного реестра договоров: {report['public_223_contract_register_lots']}.",
@@ -264,6 +282,18 @@ def markdown(report: dict) -> str:
             "Сверены два оригинальных HTML и покупатель; отмена не является продажей.")
     lines += [
         "",
+        "## Архивы первичных протоколов РАД по 223-ФЗ",
+        "",
+        "| Извещение | № РАД | Архивов с оригинальными SHA | Протокол проверен |",
+        "|---|---|---:|---|",
+    ]
+    for item in report["rad"]:
+        reviewed = "да (не подписанный договор)" if item["commission_source_verified"] else "нет"
+        lines.append(
+            f"| [{item['procedure_id']}]({item['source_card_url']}) | "
+            f"{item['native_etp_id']} | {item['original_archive_count']} | {reviewed} |")
+    lines += [
+        "",
         "## Публичные записи реестра договоров 223-ФЗ (не проверка подписанных экземпляров)",
         "",
         "| Извещение | Реестровый номер | Заказчик | Цена по XML | Подтверждённый поставщик |",
@@ -294,7 +324,8 @@ def run(*, leads: Path, eis_originals: Path,
         etp_facts: Path, etp_originals: Path,
         contract_root: Path, day_scan: Path | None = None,
         official_filestore_root: Path | None = None,
-        b2b_originals: Path | None = None) -> dict:
+        b2b_originals: Path | None = None,
+        rad_originals: Path | None = None) -> dict:
     corpus = json.loads(leads.read_text(encoding="utf-8"))["records"]
     eis = source_receipts(eis_originals)
     if official_filestore_root is not None:
@@ -309,6 +340,7 @@ def run(*, leads: Path, eis_originals: Path,
     commission = verify_commission(facts=commission_facts, queue=review_queue)
     etp = verify_etp(facts=etp_facts, source_root=etp_originals)
     b2b = verify_b2b(source_root=b2b_originals) if b2b_originals is not None else None
+    rad = verify_rad(root=rad_originals, queue=review_queue) if rad_originals is not None else None
     with TemporaryDirectory(prefix="pq-market-source-") as temporary:
         index = scan_contract_xml(contract_root, leads)
         path = Path(temporary) / "contract-source-index.json"
@@ -316,7 +348,7 @@ def run(*, leads: Path, eis_originals: Path,
         contracts = audit_contract(leads_path=leads, contracts_path=path,
                                    contract_root=contract_root, day_scan_path=day_scan)
     return summarize(leads=corpus, eis=eis, commissions=commission,
-                     etp=etp, contracts=contracts, b2b=b2b)
+                     etp=etp, contracts=contracts, b2b=b2b, rad=rad)
 
 
 def main() -> None:
@@ -328,6 +360,7 @@ def main() -> None:
     p.add_argument("--etp-facts", type=Path, required=True)
     p.add_argument("--etp-originals", type=Path, required=True)
     p.add_argument("--b2b-originals", type=Path)
+    p.add_argument("--rad-originals", type=Path)
     p.add_argument("--contract-root", type=Path, required=True)
     p.add_argument("--day-scan", type=Path)
     p.add_argument("--official-filestore-originals", type=Path)
@@ -338,6 +371,7 @@ def main() -> None:
                  commission_facts=args.commission_facts, review_queue=args.queue,
                  etp_facts=args.etp_facts, etp_originals=args.etp_originals,
                  b2b_originals=args.b2b_originals,
+                 rad_originals=args.rad_originals,
                  contract_root=args.contract_root, day_scan=args.day_scan,
                  official_filestore_root=args.official_filestore_originals)
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -346,7 +380,7 @@ def main() -> None:
         args.markdown.parent.mkdir(parents=True, exist_ok=True)
         args.markdown.write_text(markdown(result), encoding="utf-8")
     print(json.dumps({k: v for k, v in result.items()
-                      if k not in ("commission", "etp", "b2b", "contracts", "source_cases", "warnings")},
+                      if k not in ("commission", "etp", "b2b", "rad", "contracts", "source_cases", "warnings")},
                      ensure_ascii=False))
 
 
