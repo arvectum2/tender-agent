@@ -74,8 +74,17 @@ def inventory(*, leads_file: Path, source_roots: list[Path],
                 continue
             folder = root / number
             if folder.is_dir() and not folder.is_symlink():
+                # Receipts prove that a retrieval was attempted; they are not
+                # original procurement documents. Counting receipt-only
+                # directories as source coverage overstates the denominator.
+                metadata_names = {
+                    "public-page-receipt.json", "download_receipt.json",
+                    "source-receipt.json", "receipt.json", "manifest.json",
+                }
                 docs.extend(str(p) for p in folder.iterdir()
-                            if p.is_file() and not p.is_symlink())
+                            if p.is_file() and not p.is_symlink()
+                            and p.name.lower() not in metadata_names
+                            and p.suffix.lower() != ".sha256")
         reviewed = [r for r in existing.get(number, []) if r.get("state") == "reviewed"]
         evidence_urls = _source_urls(lead)
         # Source-grounded verification requires document-level inspection; no
