@@ -47,3 +47,14 @@ def test_changed_member_rejected(tmp_path: Path):
     (source / "32615969197" / "rev0.docx").write_bytes(b"modified")
     with pytest.raises(ValueError, match="checksum"):
         canonicalize(staged=source, output=tmp_path / "canonical")
+
+
+def test_canonical_budget_preflight_does_not_replace_output(tmp_path: Path):
+    source, digest = _set_up(tmp_path)
+    output = tmp_path / "canonical"
+    output.mkdir()
+    prior = output / "canonical-manifest.json"
+    prior.write_text('{"schema_version":"pq-public-canonical/1","records":[]}')
+    with pytest.raises(ValueError, match="budget would truncate"):
+        canonicalize(staged=source, output=output, max_files=1)
+    assert prior.read_text() == '{"schema_version":"pq-public-canonical/1","records":[]}'
