@@ -407,3 +407,32 @@ run_20261028_0232_final_checkpoint:
     - "Native original B2B-Center/RAD/Roseltorg/PhosAgro signed contracts, awards and supplier prices still missing for commercial cases; official 223 signed registry inaccessible/limited."
     - "UDS corporate archive TLS trust failure; recko.ru original PDF HTTP403; do not bypass certificate or access controls."
   resume_instruction: "First inspect main and PR #519 exact-head CI, then runtime lease and checkpoint. Continue from 100-row v20 gap inventory (31 case-specific local docs/31 reviewed, 100 source URLs) and etp-native-source-attempts.json; do not repeat 9 SHA-verified public HTML fetches or OCR review 32616280467. Prioritize lawful original signed contracts and native ETP attachments for 4559984, 4561228, 4561243, 4565274, COM20082600016, 231994-2 and original EIS 32616280467. Keep source-tier and provisional distinctions; never promote committee selection, price sounding, maintenance, mixed EPC or OCR as signed supply. Repair cross-product import only via approved SDK/service boundary; no audit bypass, no merge without current Company authority, queue auto_merge and exact-head green CI. Preserve unrelated current-task and the one existing hourly Watchdog."
+
+
+run_20261028_0300_cross_journal_recovery:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  branch: fix/mi-etp-source-status-20261028
+  pr: 519
+  last_verified_code_commit: e2c9017e4feb972701bb4348a8c5a88c4330a4be
+  last_test_results: "18 focused pytest PASS, Ruff PASS, diff check PASS; one inherited Starlette warning"
+  coverage:
+    v20_known_leads: 100
+    cases_with_local_originals: 31
+    cases_with_reviewed_packets: 31
+    reviewed_queue_packets: 65
+    pending_unreadable_packets: 1
+    etp_card_journal_total_attempts: 37
+    new_etp_probes_this_run: 7
+    new_signed_contracts_verified: 0
+  completed:
+    - "Refreshed 100-row v20 gap inventory on actual verified original, ZIP and public223 canonical roots: 31 local original cases and 31 reviewed cases; no false 48-case inherited manifest count."
+    - "Seven actual new public Kontur ETP GET attempts across distinct source URLs returned HTTP 403; recorded per-URL status, timestamp and 12-hour next eligibility. These are inaccessible, not absent procurements."
+    - "Fixed repeat GET risk across card/native ETP journals and multiple lead aliases for one URL; optional prior journal in CLI and unified recovery cycle, deterministic cross-journal/expiry/malformed tests."
+    - "Reviewed one additional original SHA-verified 32616497692 DOCX packet through ChatGPT/ARC; exact source quote confirms UKRM 10 kV installation as mixed turnkey EPC on PS 110 kV Vyartsilya, not a signed equipment-only sale."
+    - "ChatGPT ARC next queue empty except one unreadable original PDF; no unsupported OCR promotion."
+    - "Code commit e2c9017e pushed to existing PR #519; CI run 40606567463 initially in progress, PR stays DRAFT/REVIEW."
+  blockers:
+    - "Native ETP attachments and signed contracts remain missing for many commercial cases; Kontur public pages returned 403 without access-control bypass."
+    - "Exact-head CI/architecture audit and Company authority gate not cleared; do not merge PR #519."
+  resume_instruction: "Inspect PR #519 latest head and CI, then shared ARC lease and 100-row v20 gap inventory. Resume lawful primary ETP/RAD/B2B-Center original attachment and signed-contract recovery without replaying SHA-verified pages or seven fresh 403 Kontur URLs before their 12-hour retry. Keep queue dedup across etp-source-attempts and etp-native-source-attempts, review new original packets via ChatGPT/ARC, preserve the unreadable PDF, and never infer supplier/contract price from mixed EPC, committee selection, or secondary HTML. Resolve architecture audit only through sanctioned SDK/service boundary, no merge without explicit queue auto_merge and Company authority. Preserve unrelated current-task and single hourly Watchdog."
