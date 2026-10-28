@@ -814,3 +814,43 @@ watchdog_223_registry_20261028_1844:
     2026-10-29 00:41 Moscow; earlier 44-FZ filestore retry after
     2026-10-29 05:40 Moscow. Preserve original SHA, public source ledgers,
     private documents, PR REVIEW and no auto-merge.
+
+watchdog_primary_recovery_20261028_1934:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  run_start_issue_comment_id: 6474763101
+  dataset: v29_101_unchanged
+  primary_evidence_ledger: docs/market_intelligence/PQ_WATCHDOG_PRIMARY_RECOVERY_20261028_1934.json
+  primary_evidence_ledger_sha256: 5b854780f7ac885839c61e92b0724909862388ed53ca367408f8a4f30497153d
+  actual_source_attempts: 54
+  new_month_source_queries: 36
+  months_with_new_query_combinations: 9
+  new_exhaustively_covered_months: 0
+  new_candidate_metadata_rows: 6
+  new_official_223_notice: '32514705796'
+  new_sha_verified_original_files: 4
+  new_named_protocol_winner: 0
+  new_signed_supplier_verified: 0
+  new_executed_price_verified: 0
+  new_arc_reviews_accepted: 1
+  arc_queue_reviewed: 104
+  arc_queue_pending: 4
+  v29_primary_gaps_unchanged: 54
+  data_platform_sdk_pending_files: 15
+  last_tested_code_commit: 09d72a6574ce097be043affdbc438ae8ea8a9eb3
+  last_test_results: >-
+    No code changes; four original file SHA and source URL bindings reverified,
+    original EIS page SHA reverified, JSON/YAML and git diff --check passed.
+  current_step: >-
+    New 32514705796 primary protocol reports zero bids May 7, but amendment
+    #2 schedules May 21; nominal voltage of 144 capacitors for PS 110kV
+    is unknown. Classified uncertain, not a signed 6-35kV sale.
+  resume_instruction: >-
+    Continue existing PR #521 and v29 101-row corpus. Prioritize
+    32413764701 and 32515582393 independent signed supplier/paid
+    equipment-only value, then GP630876 original after 2026-10-29
+    00:41 Europe/Moscow. Reconcile 32514705796 amendment #2 and final
+    protocol, verify capacitor nominal voltage before PQ 6-35kV inclusion.
+    Do not repeat 36 new exact month/law/query combinations until
+    2026-10-29 07:41 Europe/Moscow. Preserve unrelated current-task,
+    original SHA receipts, review gate and sole hourly Watchdog.
