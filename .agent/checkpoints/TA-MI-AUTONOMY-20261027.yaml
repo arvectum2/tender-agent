@@ -698,3 +698,58 @@ run_20261028_0650_visual_ukrm_rating:
     further source cases. Do not promote 14.79m RUB precontract offer.
     Preserve immutable v20, 12h ETP cooldown, unrelated current-task and
     exactly one Tender Agent Watchdog. No production mutation.
+
+run_20261028_0740_new_eis_lots:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  branch: fix/mi-etp-source-status-20261028
+  pr: 519
+  report: docs/market_intelligence/PQ_NEW_OFFICIAL_LOTS_20261028.md
+  machine_overlay: docs/market_intelligence/PQ_NEW_OFFICIAL_LOTS_20261028.json
+  machine_overlay_sha256: 3532dd70d1171839967a62fa3e4091f306c1c04b105eb35523dabd28a15b5ba1
+  actual_new_official_eis_223_term_queries: 4
+  actual_additional_direct_eis_term_probe: 1
+  new_notice_ids: [32514754857, 32515523596, 32515481065, 32414334005]
+  original_attachments_downloaded: 15
+  source_zip_archives_verified: 2
+  zip_members_indexed: 14
+  zip_members_staged: 10
+  nested_7z_left_opaque: 4
+  new_chatgpt_arc_reviews_accepted: 4
+  review_queue_total_reviewed: 75
+  review_queue_pending_unreadable: 1
+  immutable_v20_leads: 100
+  immutable_v20_cases_with_local_originals: 31
+  immutable_v20_cases_with_reviewed_packets: 31
+  gap_inventory_sha256: 13f0187673de4e996bd8e3c7a7a9d9b40d1073c4c4a3e3a3a32a20b224695093
+  new_contract_registry_actual_attempts: 2
+  new_contract_registry_results: [http_404, http_404]
+  last_test_results: "17 targeted pytest PASS; Ruff PASS after removing unused import and formatting; YAML and overlay checks PASS; git diff --check PASS; one inherited Starlette warning."
+  code_change: "pq_public_223_expand.py: remove unused hashlib import and normalize imports (no functional change)."
+  signed_contracts_verified_new: 0
+  contractual_suppliers_verified_new: 0
+  executed_equipment_prices_verified_new: 0
+  findings:
+    - '32514754857 / 25-004035: 6 kV UKRM reconstruction at PS Andreevka and PS Igrovka; official commission named OOO TECHNOPROM first, 6,732,104.09 RUB ex VAT offer against 7,030,423.59 RUB ex VAT NMCK; no signed contract.'
+    - 'Same named substations as separate UKRM supply 32514720691 / 25-004033: link for project-level dedup, do not merge procurement records or count offers as two equipment sales.'
+    - '32414334005 original technical specification proves 0.4 kV compensation, excluded despite 6/0.4 kV transformer designation.'
+    - '32515481065 no bids; 32515523596 one bidder labelled winner but procedure unsuccessful; voltage unknown, possible unverified reissue; no signed supply inferred.'
+    - 'Native unreadable 32616280467 packet remains pending; separate OCR-provisional visual review unchanged.'
+  blockers:
+    - 'Official public contract-registry entrypoint HTTP404; not evidence of no contract.'
+    - 'Local Data Platform SDK synthetic request previously returned HTTP401; no ingestion or production mutation.'
+    - 'No explicit MI queue auto_merge admission; keep PR draft/review even if exact-head CI green.'
+  resume_instruction: >-
+    On current main and existing DRAFT PR #519 verify exact-head CI after
+    latest evidence commit; do not auto-merge without queue auto_merge and
+    fresh Company authority. Keep immutable v20 and new four-notice evidence
+    separate. Continue independent original signed-contract/ETP retrieval for
+    linked 32514754857 and 32514720691; do not replay their acquired original
+    notice attachments, 33 prior exact EIS searches, or 68 ETP URLs before
+    12-hour cooldown. Preserve 32514754857 commission winner as precontract
+    only and project-level dedup without collapsing distinct lots. Continue
+    eligible original 2024-2026 PQ cases, verify SHA/exact quotes through
+    ChatGPT/ARC, do not promote scanned manual text or OCR as native. No
+    production write, supplier contact, signatures, procurement applications,
+    local LLM or OpenAI API. Preserve unrelated current-task and the single
+    hourly Watchdog.
