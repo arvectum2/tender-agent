@@ -153,14 +153,17 @@ def acquire(*, case: dict, root: Path, download=download_procurement_attachments
 
 
 def batch(*, leads: Path, root: Path, journal: Path, max_cases: int = 4,
-          download=download_procurement_attachments, transport=None) -> dict:
-    if not 1 <= max_cases <= 20:
-        raise ValueError("Invalid EIS exact-source case budget")
+          retry_hours: int = 12, download=download_procurement_attachments,
+          transport=None) -> dict:
+    if not 1 <= max_cases <= 20 or not 1 <= retry_hours <= 720:
+        raise ValueError("Invalid EIS exact-source case/retry budget")
     leads_data = json.loads(leads.read_text(encoding="utf-8"))["records"]
     journal_data = json.loads(journal.read_text(encoding="utf-8")) if journal.is_file() else {
         "schema_version": "pq-official-filestore-sha-attempts/1", "attempts": []}
     already = {x["registry_number"] for x in journal_data["attempts"]
                if x.get("status") in ("verified_originals", "existing_receipt")}
+    latest = {x["registry_number"]: x for x in journal_data["attempts"]}
+    now = datetime.now(timezone.utc)
     new = []
     for case in leads_data:
         if len(new) >= max_cases:
@@ -168,6 +171,13 @@ def batch(*, leads: Path, root: Path, journal: Path, max_cases: int = 4,
         number = str(case.get("procedure_id") or "")
         if number in already or not extract_links(case):
             continue
+        previous = latest.get(number)
+        if previous:
+            try:
+                if (now - datetime.fromisoformat(previous["timestamp"])).total_seconds() < retry_hours * 3600:
+                    continue
+            except (KeyError, ValueError, TypeError):
+                pass
         try:
             result = acquire(case=case, root=root, download=download,
                              transport=transport)
@@ -176,7 +186,7 @@ def batch(*, leads: Path, root: Path, journal: Path, max_cases: int = 4,
                       "error_type": type(exc).__name__, "files_verified": 0}
         new.append(result)
         journal_data["attempts"].append({
-            "timestamp": datetime.now(timezone.utc).isoformat(), **result,
+            "timestamp": now.isoformat(), **result,
         })
         _atomic(journal, journal_data)
         already.add(number)
@@ -191,9 +201,11 @@ def main() -> None:
     p.add_argument("--root", type=Path, required=True)
     p.add_argument("--journal", type=Path, required=True)
     p.add_argument("--max-cases", type=int, default=4)
+    p.add_argument("--retry-hours", type=int, default=12)
     args = p.parse_args()
     print(json.dumps(batch(leads=args.leads, root=args.root,
-                           journal=args.journal, max_cases=args.max_cases),
+                           journal=args.journal, max_cases=args.max_cases,
+                           retry_hours=args.retry_hours),
                      ensure_ascii=False))
 
 
