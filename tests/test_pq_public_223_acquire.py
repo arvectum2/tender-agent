@@ -140,3 +140,73 @@ def test_original_public_223_7z_receipt_is_opaque_and_source_bound(tmp_path: Pat
     assert receipt["files"][0]["sha256"] == hashlib.sha256(opaque).hexdigest()
     assert receipt["files"][0]["original_name"] == "protocol.7z"
     assert (tmp_path / NUMBER / receipt["files"][0]["filename"]).read_bytes() == opaque
+
+def test_mislabeled_html_doc_is_not_native_and_duplicate_sha_not_double_counted(tmp_path: Path):
+    provider = _provider()
+    provider.fetch_detail.return_value.document_links = [
+        SimpleNamespace(file_name="rules.doc", url=FILE_URL),
+        SimpleNamespace(file_name="rules-copy.doc", url=FILE_URL.replace("a" * 32, "b" * 32)),
+    ]
+    payload = b"<!DOCTYPE html><html><body>Not an original DOC</body></html>"
+
+    def download(attachments, **kwargs):
+        dest = kwargs["target_dir"]
+        dest.mkdir(parents=True, exist_ok=True)
+        saved = []
+        for index, attachment in enumerate(attachments):
+            name = f"rules-{index}.doc"
+            (dest / name).write_bytes(payload)
+            saved.append(SimpleNamespace(
+                stored_name=name, name=attachment.name,
+                sha256=hashlib.sha256(payload).hexdigest(),
+                size_bytes=len(payload), source_url=attachment.url,
+            ))
+        return SimpleNamespace(saved=saved, skipped=[])
+
+    outcome = acquire(registry_number=NUMBER, target_root=tmp_path,
+                      provider=provider, download=download)
+    assert outcome["files_saved"] == 2
+    receipt = json.loads((tmp_path / NUMBER / "public-page-receipt.json").read_text())
+    assert receipt["unique_sha256_count"] == 1
+    assert receipt["native_format_count"] == 0
+    assert receipt["non_native_format_count"] == 2
+    assert all(x["observed_file_format"] == "html_or_xml_in_doc_extension"
+               and x["native_format_verified"] is False for x in receipt["files"])
+    assert receipt["files"][1]["duplicate_content_of"] == "rules-0.doc"
+
+
+def test_pdf_signature_is_recorded_without_promoting_source_provenance(tmp_path: Path):
+    acquire(registry_number=NUMBER, target_root=tmp_path,
+            provider=_provider(), download=_downloader())
+    receipt = json.loads((tmp_path / NUMBER / "public-page-receipt.json").read_text())
+    assert receipt["native_format_count"] == 1
+    assert receipt["files"][0]["observed_file_format"] == "native_pdf"
+    assert receipt["source_level"] == "verified_public_page_not_original_soap_xml"
+
+
+def test_mislabeled_zip_json_error_is_not_native_archive(tmp_path: Path):
+    provider = _provider()
+    provider.fetch_detail.return_value.document_links = [
+        SimpleNamespace(file_name="technical.zip", url=FILE_URL)
+    ]
+    payload = b'{"error":"access denied"}'
+
+    def download(attachments, **kwargs):
+        dest = kwargs["target_dir"]
+        dest.mkdir(parents=True, exist_ok=True)
+        (dest / "technical.zip").write_bytes(payload)
+        return SimpleNamespace(
+            saved=[SimpleNamespace(
+                stored_name="technical.zip", name=attachments[0].name,
+                sha256=hashlib.sha256(payload).hexdigest(),
+                size_bytes=len(payload), source_url=attachments[0].url,
+            )],
+            skipped=[],
+        )
+
+    acquire(registry_number=NUMBER, target_root=tmp_path,
+            provider=provider, download=download)
+    receipt = json.loads((tmp_path / NUMBER / "public-page-receipt.json").read_text())
+    assert receipt["native_format_count"] == 0
+    assert receipt["files"][0]["observed_file_format"] == "unrecognized_signature"
+    assert receipt["files"][0]["native_format_verified"] is False

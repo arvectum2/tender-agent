@@ -12,11 +12,10 @@ import json
 import os
 import re
 import tempfile
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from urllib.parse import parse_qs, urlencode, urlsplit
 
-from .eis_attachment_manifest import _public_filestore_digest
 from src.modules.tender_operator_agent_demo.attachment_downloader import (
     download_procurement_attachments,
 )
@@ -26,6 +25,8 @@ from src.modules.tender_operator_agent_demo.procurement_schemas import (
 from src.tender_research.providers.public_223fz_search import (
     Public223FzSearchProvider,
 )
+
+from .eis_attachment_manifest import _public_filestore_digest
 
 UUID = re.compile(
     r"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-"
@@ -82,6 +83,34 @@ def _source_documents_url(card_url: str, number: str) -> str | None:
         return None
     params = urlencode({"purchaseNoticeNumber": number, "noticeGuid": guid})
     return f"https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?{params}"
+
+
+def _observed_format(directory: Path, stored_name: str) -> str:
+    """Record the actual file signature; extensions are not evidence of format."""
+    if Path(stored_name).name != stored_name:
+        return "unsafe_filename"
+    path = directory / stored_name
+    if not path.is_file() or path.is_symlink():
+        return "missing_or_unsafe_file"
+    with path.open("rb") as source:
+        head = source.read(256)
+    suffix = path.suffix.lower()
+    if suffix == ".doc":
+        if head.startswith(bytes.fromhex("d0cf11e0a1b11ae1")):
+            return "native_ole_doc"
+        if head.lstrip(b"\xef\xbb\xbf \t\r\n").lower().startswith(
+            (b"<html", b"<!doctype html", b"<?xml")
+        ):
+            return "html_or_xml_in_doc_extension"
+    if suffix in {".zip", ".docx", ".xlsx"} and head.startswith(
+        (b"PK\x03\x04", b"PK\x05\x06", b"PK\x07\x08")
+    ):
+        return "zip_container"
+    if suffix == ".pdf" and head.startswith(b"%PDF-"):
+        return "native_pdf"
+    if suffix == ".7z" and head.startswith(b"7z\xbc\xaf\x27\x1c"):
+        return "opaque_7z"
+    return "unrecognized_signature"
 
 
 def acquire(*, registry_number: str, target_root: Path,
@@ -150,18 +179,34 @@ def acquire(*, registry_number: str, target_root: Path,
         max_total_size_bytes=max_files * max_file_bytes,
         allowed_domains={"zakupki.gov.ru"}, transport=transport,
     )
-    source_files = [
-        {"filename": x.stored_name, "original_name": x.name,
-         "sha256": x.sha256, "size_bytes": x.size_bytes,
-         "source_url_sha256": hashlib.sha256((x.source_url or "").encode()).hexdigest()}
-        for x in result.saved if x.stored_name and x.sha256
-    ]
+    source_files = []
+    first_sha_filename: dict[str, str] = {}
+    for x in result.saved:
+        if not x.stored_name or not x.sha256:
+            continue
+        observed = _observed_format(directory, x.stored_name)
+        row = {
+            "filename": x.stored_name, "original_name": x.name,
+            "sha256": x.sha256, "size_bytes": x.size_bytes,
+            "source_url_sha256": hashlib.sha256((x.source_url or "").encode()).hexdigest(),
+            "observed_file_format": observed,
+            "native_format_verified": observed in {
+                "native_ole_doc", "zip_container", "native_pdf", "opaque_7z"},
+        }
+        if x.sha256 in first_sha_filename:
+            row["duplicate_content_of"] = first_sha_filename[x.sha256]
+        else:
+            first_sha_filename[x.sha256] = x.stored_name
+        source_files.append(row)
     payload = {
         "schema_version": "pq-223-public-page-download/1",
         "registry_number": registry_number,
         "status": "public_page_files_downloaded" if source_files else "no_files_saved",
         "source_level": "verified_public_page_not_original_soap_xml",
         "public_page_sha256": page_sha, "files_saved": len(source_files),
+        "unique_sha256_count": len(first_sha_filename),
+        "native_format_count": sum(x["native_format_verified"] for x in source_files),
+        "non_native_format_count": sum(not x["native_format_verified"] for x in source_files),
         "files": source_files,
         "source_links_discovered": len(attachments),
         "source_links_selected": min(len(attachments), max_files),
@@ -187,7 +232,7 @@ def batch(*, gaps: Path, target_root: Path, journal: Path,
     tried = {str(x["registry_number"]) for x in state["attempts"]
              if x.get("status") in ("public_page_files_downloaded", "existing_receipt")}
     latest = {str(x.get("registry_number")): x for x in state["attempts"]}
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     new = []
     for case in cases:
         if len(new) >= max_cases:

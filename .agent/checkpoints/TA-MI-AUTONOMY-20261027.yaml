@@ -592,3 +592,48 @@ run_20261028_0531_sdk_and_223_disclosure:
     Process only new SHA-verified originals via ChatGPT/ARC, preserve unreadable
     packet, unrelated current-task and single Watchdog. No merge without
     current Company authority, queue auto_merge and exact-head green CI.
+
+run_20261028_0640_eis_alias_originals:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  branch: fix/mi-etp-source-status-20261028
+  pr: 519
+  source_report: docs/market_intelligence/PQ_EIS_ALIAS_ORIGINALS_20261028.md
+  official_eis_223_new_queries: 6
+  official_notice_ids_retrieved: [32615773152, 32615696503, 32514720691, 32413513847]
+  original_notice_pages_sha_verified: 4
+  saved_attachments: 16
+  zip_archives_expanded: 7
+  zip_members_indexed: 38
+  zip_members_sha_staged: 35
+  new_chatgpt_arc_reviews_accepted: 2
+  reviewed_queue_total: 69
+  pending_unreadable: 1
+  v20_original_case_coverage: 31
+  v20_reviewed_case_coverage: 31
+  signed_contracts_verified_new: 0
+  signed_suppliers_verified_new: 0
+  executed_contract_prices_verified_new: 0
+  new_journals:
+    - eis-alias-search-attempts-20261028.json
+    - eis-alias-original-acquisition-20261028.json
+  gap_inventory: evidence-gaps-watchdog-20261028-0640.json
+  gap_inventory_sha256: 5a90c3b5daf25d1b8e06c31c5b864f7387e7360fc925965104bd74f855516fb8
+  source_findings:
+    - '32514720691: commission recommends sole conforming bidder TD UK Kondensator, offer 14.79m RUB ex VAT vs NMCK 27.318m RUB ex VAT; no signed contract, 6-35kV unverified.'
+    - '32413513847: 400V harmonic filter; excluded from 6-35kV market.'
+    - '32615773152 and 32615696503: same generic DOC SHA; no technical proof.'
+    - 'Downloaded .doc HTML and .zip JSON errors require source-signature/duplicate-SHA receipt warnings.'
+  ci_before_new_commits: 'PR #519 HEAD 3d0c2d0a: 19/19 checks passed; draft/review; no auto_merge admission.'
+  last_test_results: '14 focused pytest passed; Ruff passed; git diff --check passed; one inherited Starlette warning.'
+  resume_instruction: >-
+    Check new exact-head CI on PR #519; remain DRAFT/REVIEW, do not merge.
+    Continue 32514720691 source recovery: original signed contract (not
+    commission selection), remaining 9 of 17 notice links in bounded
+    acquisition, and visually verify 6-35kV from scanned Andreevka/Igrovka
+    questionnaires before counting demand. Exclude 32413513847 (400V)
+    and duplicated generic 2026 DOCs. Preserve source-signature and SHA
+    provenance, v20 immutable 100-row corpus, both ETP journals/12h cooldown,
+    prior 33 exact EIS searches, unrelated .agent/current-task.yaml and the
+    single Watchdog. No OpenAI API/local LLM/production mutation. Do not
+    promote an offer/commission selection to signed supplier/contract price.
