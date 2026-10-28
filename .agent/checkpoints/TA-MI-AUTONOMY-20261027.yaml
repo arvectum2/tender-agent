@@ -1106,3 +1106,48 @@ run_20261028_1140_targeted_eis_discovery:
     recovery for 32514720691 and 32514754857, and rated capacitor bank
     voltage for 32514842313. Keep existing PR #519 DRAFT/REVIEW, preserve
     ETP cooldown and single Watchdog; no production Data Platform mutation.
+
+run_20261028_1255_receipt_coverage_and_due_etp_retries:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  timestamp_moscow: '2026-10-28T12:42:31+03:00'
+  pr: 519
+  branch: fix/mi-etp-source-status-20261028
+  report: docs/market_intelligence/PQ_WATCHDOG_RECOVERY_20261028_1255.md
+  overlay: docs/market_intelligence/PQ_WATCHDOG_RECOVERY_20261028_1255.json
+  code_commit: 4d62f943780edcc2824550e782dd3b4e6f3e85e9
+  regression_test_commit: d72f837fa8a8ed16d89d3751cbe2a5bd2780f7f4
+  immutable_v20_leads: 100
+  original_case_coverage_pre_fix_including_receipts: 33
+  receipt_only_case_ids: [32615966040, 32616400421]
+  original_case_coverage_corrected: 31
+  cases_with_reviewed_packets: 31
+  new_real_official_223_searches: 6
+  official_search_journal_sha256: 318f273efb664696adcee5f73fcd849b446becbd89692be504fbdc583883f737
+  actual_due_etp_retries: 8
+  secondary_html_sha_snapshots: 3
+  etp_http_403: 3
+  etp_body_budget_exceeded: 2
+  etp_retry_journal_sha256_a: 2fa9336175fecb22861cf00ea19a22ece3a6f6b0091fbf10213f12506d2e5d4e
+  etp_retry_journal_sha256_b: 6f7e007c96401ff8cf9700bbb5e53f21ac8106a7b3d04a7f4e369f4c7c6cadae
+  secondary_10kv_candidate: 'ГП630876 — source listing only, original ETP attachments not verified'
+  arc_review_queue_reviewed: 85
+  arc_review_queue_pending_unreadable: 3
+  newly_verified_signed_contracts: 0
+  newly_verified_contract_suppliers: 0
+  newly_verified_executed_equipment_prices: 0
+  data_platform_ingestion: blocked_prior_http401
+  automatic_merge: prohibited_without_queue_admission_and_company_authority
+  resume_instruction: >-
+    Check exact-head CI for PR #519 after new receipt-only coverage regression
+    and report commits; keep PR DRAFT/REVIEW, no automatic merge absent
+    explicit MI queue auto_merge admission and current Company AM-4 authority.
+    Resume source-bound signed contract/supplier recovery for 32514720691 and
+    32514754857, rated capacitor bank voltage for 32514842313, and official
+    GPB ETP attachments for secondary ГП630876 10kV candidate without
+    guessing source URLs. Do not promote the three SHA-bound secondary HTML
+    pages to original awards; retry the two body-budget failures only with
+    approved safe bounded retrieval, respect fresh 12h cooldown for all
+    eight ETP URLs. Three ARC pending native PDFs remain unreadable and need
+    visual original verification. Preserve unrelated current-task.yaml and
+    singleton hourly Watchdog; no Data Platform ingest while SDK auth HTTP401.
