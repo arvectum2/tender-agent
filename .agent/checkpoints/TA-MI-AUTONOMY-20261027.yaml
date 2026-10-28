@@ -542,3 +542,53 @@ etp_html_sha_snapshot_20261028_0435:
     verified supplier/price, then source-bound ChatGPT/ARC review. Preserve
     existing 100-lead v20 corpus, task-specific checkpoint, other current-task
     and single hourly Watchdog.
+
+run_20261028_0531_sdk_and_223_disclosure:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  branch: fix/mi-etp-source-status-20261028
+  pr: 519
+  code_commits:
+    - bb47478c794faa7f61237bb46a7816f9e4c33b1d
+    - f981b6de0d8e31f842013c0346faec94b974678d
+    - 24592e836a3220993afb08d9ca11343696d83922
+    - 1236e72c23d3f9237d127fe31243f01c2ea0576b
+  evidence_note_commit: b6ed3c0f0172617f9710fff0e92e63d75ee27b03
+  completed:
+    - "Replaced prohibited direct arvectum_data source-tree import in pq_dp_ingest with existing src.shared.document_processing.process_document_bytes SDK/service boundary, using source SHA as canonical URI and fail-closed local-only endpoint validation."
+    - "Added synthetic SDK extraction and endpoint/failed-extraction regression tests; 80 focused PQ and architecture tests passed; Ruff and git diff check passed (one inherited Starlette warning)."
+    - "Local Data Platform /health returned HTTP200; synthetic /v1/process/document attempt returned HTTP401 invalid internal API key; no credential disclosure or production write."
+    - "Refreshed 100-row v20 gap inventory: 31 cases with local original folders and 31 with reviewed packets; no new reviewable ARC packet, one unreadable original preserved."
+    - "Checked 68-source ETP queue against both journals: 0 eligible GETs, 0 duplicate network requests; prior 12h cooldown honored."
+    - "New official EIS 223 contract registry entrypoint HEAD via verified TLS returned HTTP404; receipt logged; not evidence of missing contracts."
+    - "Documented 223-FZ Decree 1132 sections 2(e), 2(m), 19(a) public supplier and signed-copy exclusions; three existing XML register prices remain separate from signed contracts and equipment-only revenue."
+  coverage:
+    v20_known_leads: 100
+    cases_with_local_originals: 31
+    cases_with_reviewed_packets: 31
+    reviewed_packets_prior_verified: 67
+    pending_unreadable: 1
+    etp_new_network_probes: 0
+    official_registry_entrypoint_new_head_probes: 1
+    new_verified_signed_contracts: 0
+    new_verified_suppliers: 0
+    new_verified_equipment_only_prices: 0
+  ci: "PR #519 exact-head CI queued after code update; no automatic merge, queue auto_merge not admitted for this MI task."
+  blockers:
+    - "Local Data Platform service requires authorized internal API key; synthetic SDK call returned 401, so no live extraction attempted with source files."
+    - "Public EIS 223 supplier details and signed contract copies are excluded from public publication under Decree 1132 section 19(a); first-party ETP/commission evidence remains separate."
+    - "Public EIS 223 contract registry entrypoint HTTP404 despite TLS success; no signed original newly recovered."
+  resume_instruction: >-
+    Check exact-head CI for existing DRAFT PR #519 and fix any concrete regression.
+    Keep local SDK-only Data Platform boundary, never restore direct arvectum_data
+    imports or bypass architecture audit. For real extraction, verify authorized
+    local Data Platform SDK authentication without exposing credentials or
+    mutating production; until then continue independent source acquisition.
+    Resume v20 100-case inventory and first-party ETP/original signed-contract
+    retrieval using both source attempt journals and 12h cooldown; do not
+    replay 68 previously attempted ETP URLs or 33 prior exact EIS searches
+    prematurely. Do not infer public supplier identity from registry XML,
+    commission selection or OCR; retain 223-FZ public disclosure limitation.
+    Process only new SHA-verified originals via ChatGPT/ARC, preserve unreadable
+    packet, unrelated current-task and single Watchdog. No merge without
+    current Company authority, queue auto_merge and exact-head green CI.
