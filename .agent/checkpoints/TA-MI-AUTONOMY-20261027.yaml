@@ -710,3 +710,26 @@ watchdog_second_44_originals_20261028_1642:
     Continue signed supplier recovery 32413764701 and linked
     32514720691/32514754857, GP630876 after 00:41 Moscow.
     Leave unrelated current-task.yaml and existing hourly Watchdog unchanged.
+
+watchdog_44fz_contract_outcomes_20261028_1733:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  corpus: v29_101_unchanged
+  new_calendar_queries: 42
+  first_party_html_sha_verified: 20
+  registered_contract_suppliers: 3
+  executed_and_paid_contracts: 2
+  signed_original_files: 0
+  verified_target_6_35kv_sales: 0
+  new_arc_reviews: 3
+  unresolved_v29_primary_gaps: 54
+  evidence_ledger: docs/market_intelligence/PQ_WATCHDOG_44FZ_CONTRACT_OUTCOMES_20261028_1733.json
+  last_tested_code_commit: 09d72a6574ce097be043affdbc438ae8ea8a9eb3
+  resume_instruction: >-
+    PR #521 remains REVIEW. Confirm original voltage for 0318100033125000016
+    only after filestore retry eligibility 2026-10-29 05:40 Moscow; do not
+    include unknown-voltage 44-FZ registered contract amounts in PQ 6-35kV
+    total. Continue 32413764701 signed supplier, 32514720691/32514754857
+    project/contract reconciliation and GP630876 original after 2026-10-29
+    00:41 Moscow. Do not repeat 42 exact searches before 12h cooldown.
+    Preserve unrelated current-task and single hourly Watchdog.
