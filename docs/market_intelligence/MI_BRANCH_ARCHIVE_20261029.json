@@ -5,6 +5,15 @@
   "main_integrated_spec_kit_pr": 520,
   "records": [
     {
+      "pr": 514,
+      "original_head_sha": "e1efe5bebcbe6c7818a5d6932b3c5b096cdc4d73",
+      "archive_tag": "archive/mi-pr-514-20261029",
+      "category": "historical-primary-leads",
+      "disposition": "Older source-bounded five-procurement delta; historical only, not promoted to v29 without original SHA and dedup",
+      "preserved_full_git_history": true,
+      "promoted_to_current_v29": false
+    },
+    {
       "pr": 515,
       "original_head_sha": "1e2e24725226e4bb8b64230b04baf3415c5053da",
       "archive_tag": "archive/mi-pr-515-20261029",

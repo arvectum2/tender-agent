@@ -16,8 +16,8 @@ completed:
   - Restored 11 original-source report/ledger files from #519 as historical evidence, not promoted to current v29 market totals
   - Implemented deterministic S0 ResearchBrief for a generic supplier profile, FGI example unverified
   - 43 relevant focused tests passed, Ruff passed and diff check passed
-  - Archived exact heads of MI PRs 515-519 as signed-off recovery refs archive/mi-pr-*-20261029 on GitHub; source history preserved
-current_step: Core reconciliation committed in existing #521; archive registry published; superseded draft PRs ready to close with recovery pointers. CI in progress.
+  - Archived exact heads of MI PRs 514-519 as signed-off recovery refs archive/mi-pr-*-20261029 on GitHub; source history preserved
+current_step: Old MI PRs 515-519 closed, #514 archive tag published; final PR #514 closure and CI/watchdog synchronization pending.
 remaining:
   - Integrate/review remaining unique #519 tests and documentary overlays before closing #519
   - Audit #515 v20-v40 historical files and identify unique cases vs current v29 with SHA-level reconciliation; do not replace current v29 blindly
