@@ -25,7 +25,76 @@
       "supplier_name": null,
       "manufacturer_registered_country": "Республика Казахстан",
       "source_contract_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=57724646338260000460000",
-      "source_spec_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=57724646338260000460000"
+      "source_spec_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=57724646338260000460000",
+      "id": "pq-2026-registered-12kv-10capacitors-reto",
+      "procedure_id": "32616181358",
+      "publication_date": "2026-07-06",
+      "date_basis": "original_ETP",
+      "procurement_regime": "223fz",
+      "platform": "РАД (Lot-Online), ЕИС 223-ФЗ",
+      "family": "capacitor_bank_component",
+      "scope": "signed_equipment_supply",
+      "market_scope": "strict_nominal_component_voltage_6_35kv",
+      "customer": {
+        "name": "АО «Завод РЭТО»",
+        "inn": "7724646338"
+      },
+      "organizer": {
+        "name": "АО «Завод РЭТО»",
+        "inn": "7724646338"
+      },
+      "description": "Подписанный реестровый договор 223-ФЗ №57724646338260000460000, 19.08.2026, заказчик АО Завод РЭТО, 10 конденсаторов КЭПФ 12 кВ двух типов, общая реестровая цена 3 050 000 ₽. Статус Исполнение. Поставщик в открытой карточке не назван. Страна регистрации производителя в ЕИС указана Республика Казахстан; фактическая страна изготовления не подтверждена.",
+      "quantity": 10,
+      "quantity_unit": "шт",
+      "nmck_rub": "3078500.00",
+      "status": "registered_signed_contract_in_execution",
+      "registered_signed_contract_verified": true,
+      "actual_signed_contract_price_rub": "3050000.00",
+      "signed_contract_price_vat_basis": "unspecified on original public registry card",
+      "commission_winner": null,
+      "supplier_verified": false,
+      "supplier_inn": null,
+      "original_signed_contract_date": "2026-08-19",
+      "customer_contract_number": "060-26-Р",
+      "registered_contract_number": "57724646338260000460000",
+      "planned_execution_end": "2026-12-31",
+      "delivered_verified": false,
+      "paid_verified": false,
+      "realized_hardware_revenue_rub": null,
+      "equipment": {
+        "type": "КЭПФ-12 конденсаторы для БСК",
+        "nominal_voltage_kv": 12,
+        "quantity": 10,
+        "model1": "КЭПФ-12-450-2УХЛ1",
+        "model1_quantity": 5,
+        "model1_kvar": 450,
+        "model1_rub": "292000.00",
+        "model2": "КЭПФ-12-600-2УХЛ1",
+        "model2_quantity": 5,
+        "model2_kvar": 600,
+        "model2_rub": "318000.00",
+        "total_nameplate_kvar": 5250,
+        "country_manufacturer_registered": "Республика Казахстан",
+        "manufacturer_name_verified": false
+      },
+      "evidence": [
+        {
+          "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=57724646338260000460000",
+          "source_tier": "first_party_EIS_223_signed_contract_card",
+          "sha256": "94170a4d9314d78307300f410c2e71fc3ee8ab4a3c9ea86633e48d1809b390aa",
+          "bytes": 135409
+        },
+        {
+          "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=57724646338260000460000",
+          "source_tier": "first_party_EIS_223_signed_contract_items",
+          "sha256": "76d050d1fd3f65a6a5eb2f58358fa376b5cc280abe6ff1207122698d73c5f6cf",
+          "bytes": 144792
+        }
+      ]
     }
-  ]
+  ],
+  "schema_version": "pq-original-signed-contract/1.0",
+  "new_original_registered_signed_contracts": 1,
+  "original_single_new_notice_count": 1,
+  "as_of": "2026-10-28"
 }
