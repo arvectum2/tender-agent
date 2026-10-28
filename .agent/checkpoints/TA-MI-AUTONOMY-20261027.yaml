@@ -1300,3 +1300,61 @@ watchdog_b2b_first_party_20261029_0130:
     2026-10-29 06:46 MSK; avoid repeating the 15 logged exact requests
     before 2026-10-29 13:35 MSK unless primary data changed. Keep original
     source SHA, no parallel MI PR, no auto-merge and no production writes.
+
+watchdog_eis_7z_recovery_20261029_0236:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  issue_run_start_comment_id: 6483546781
+  canonical_pr: 521
+  branch: feature/pq-etp-provenance-ledger-20261028
+  branch_head_before_run: 46ceca8668f8906fa23392d52935376a910d4424
+  canonical_v29_rows_unchanged: 101
+  official_notice: '32616400421'
+  new_original_eis_7z_archives: 2
+  original_documentation_sha256: d32e595bbbfe916848fcfcc4ab166d17429c922444e61a20114d9c8518175b16
+  original_cancellation_protocol_sha256: ce2241529a0e2d8df4c3c94d851adc349f403da3a54edbc53b35404f50b363a0
+  regular_archive_members_sha_verified: 13
+  accepted_chatgpt_arc_reviews: 1
+  reviewed_original_quote_count: 10
+  review_id: 32616400421-a7b87657e6bbf4a37cc313d1
+  actual_first_party_requests: 19
+  observed_http200: 4
+  provider_requests_without_numeric_http: 15
+  new_calendar_bound_searches: 12
+  month_search_statuses: {empty: 10, success: 2, lexical_false_positives: 9}
+  months_with_new_queries: ['2026-09', '2026-10']
+  newly_exhaustively_covered_months: 0
+  new_notice_ids: 0
+  new_lot_ids: 0
+  new_deduplicated_project_ids: 0
+  original_cancellation_protocols: 1
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_executed_prices: 0
+  verified_new_core_6_35kv_sales: 0
+  technical_scope: '110kV reactive power source with 10kV MPU and 110kV BSK; cancelled 29.09.2026'
+  buyer_estimated_nmck_rub_ex_vat: '370504918.04'
+  buyer_estimated_10kv_mpu_rub_ex_vat: '335351974.38'
+  buyer_estimated_110kv_bsk_rub_ex_vat: '33723435.46'
+  buyer_estimated_supervision_rub_ex_vat: '1429508.20'
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_EIS_7Z_32616400421_20261029_0236.json
+  source_ledger_sha256: b5a262af811a3b8ae03023061b3dc73a7cac4c20c9c03fee9bb208b345d4ebe2
+  last_tested_code_commit: 3cdbbc28ff345a5c3f4e798187df57b6a5af8ee4
+  test_results: 'No code changed; two original 7z and 13 members SHA verified; ten exact ChatGPT quotes accepted; source_receipts audit PASS; JSON/YAML/diff checks PASS.'
+  next_three:
+    - '32515582393 UKRM 6kV: signed supplier, price and payment after 2026-10-29 06:46 MSK'
+    - '32413764701 UKRM 10kV: signed supplier, price and payment after 2026-10-29 06:46 MSK'
+    - 'GP630876 10kV: original ETP contract/protocol only with newly verified official case URL'
+  calendar_query_retry_after_moscow: '2026-10-29T14:40:08+03:00'
+  remaining:
+    - 'Determine if cancelled 26-1149 was reissued; do not double count same project.'
+    - '15 Data Platform SDK originals blocked pending approved authorization.'
+    - 'Do not treat buyer NMCK or 10kV MPU allocation as executed sales.'
+  resume_instruction: >-
+    Keep one PR #521 and v29 101 rows. EIS 32616400421 original archives
+    now SHA verified; do not redownload. Keep signed outcomes unknown and
+    the 110/10kV hybrid cancelled, no market turnover. Continue independent
+    signed-contract searches after cooldown and native GPB source discovery.
+    Preserve dirty parallel chat worktree, unrelated current-task.yaml,
+    original hourly Watchdog and all review/AM-4 gates.
