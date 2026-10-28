@@ -98,7 +98,19 @@ def download_procurement_attachments(
             and bool(source_provenance.get("xml_sha256"))
             and bool(source_provenance.get("archive_sha256"))
         )
-        if extension not in ALLOWED_ATTACHMENT_EXTENSIONS and not opaque_ri223_rar:
+        # A verified public 223-FZ EIS documents page may publish 7z archives.
+        # Preserve only their bounded opaque bytes, never extract or index them.
+        opaque_public_223_7z = (
+            extension == ".7z"
+            and isinstance(source_provenance, dict)
+            and source_provenance.get("source_regime") == "223fz"
+            and source_provenance.get("binding") == "verified_public_eis_notice_page_only"
+            and isinstance(source_provenance.get("source_public_html_sha256"), str)
+            and bool(re.fullmatch(r"[0-9a-f]{64}", source_provenance["source_public_html_sha256"]))
+            and isinstance(source_provenance.get("source_url_sha256"), str)
+            and bool(re.fullmatch(r"[0-9a-f]{64}", source_provenance["source_url_sha256"]))
+        )
+        if extension not in ALLOWED_ATTACHMENT_EXTENSIONS and not (opaque_ri223_rar or opaque_public_223_7z):
             result.skipped.append(
                 AttachmentDownloadManifestItem(
                     name=display_name,
@@ -242,6 +254,17 @@ def download_procurement_attachments(
                 )
             )
             continue
+        if opaque_public_223_7z and not payload.startswith(b"7z\xbc\xaf\x27\x1c"):
+            result.skipped.append(
+                AttachmentDownloadManifestItem(
+                    name=display_name, stored_name=None, extension=extension,
+                    status="skipped", note="Invalid 7z signature; manual source review required.",
+                    size_bytes=size, source_url=attachment.url,
+                    provenance=source_provenance, error="invalid_7z_signature",
+                    requires_manual_review=True,
+                )
+            )
+            continue
         stored_name = _safe_stored_name(attachment.name, index, extension)
         (target_dir / stored_name).write_bytes(payload)
         total_size += size
@@ -262,8 +285,8 @@ def download_procurement_attachments(
                 provenance=getattr(attachment, "provenance", None),
                 content_type=content_type,
                 sha256=hashlib.sha256(payload).hexdigest(),
-                requires_manual_review=opaque_ri223_rar,
-                content_inspection_status="UNINSPECTED_OPAQUE" if opaque_ri223_rar else None,
+                requires_manual_review=opaque_ri223_rar or opaque_public_223_7z,
+                content_inspection_status="UNINSPECTED_OPAQUE" if (opaque_ri223_rar or opaque_public_223_7z) else None,
             )
         )
 

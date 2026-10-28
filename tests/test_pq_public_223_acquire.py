@@ -5,9 +5,10 @@ from types import SimpleNamespace
 from unittest.mock import Mock
 
 from src.modules.market_intelligence.pq_public_223_acquire import (
-    _source_documents_url, acquire, batch,
+    _source_documents_url,
+    acquire,
+    batch,
 )
-
 
 NUMBER = "32615969197"
 GUID = "a10525c4-dab9-42ff-b596-d1bc02709519"
@@ -113,3 +114,29 @@ def test_final_protocol_precedes_other_attachments(tmp_path: Path):
     assert receipt["source_links_discovered"] == 2
     assert receipt["source_links_selected"] == 1
     assert receipt["coverage_incomplete"] is True
+
+def test_original_public_223_7z_receipt_is_opaque_and_source_bound(tmp_path: Path):
+    from src.modules.tender_operator_agent_demo.attachment_downloader import (
+        download_procurement_attachments,
+    )
+
+    provider = _provider()
+    provider.fetch_detail.return_value.document_links = [
+        SimpleNamespace(file_name="protocol.7z", url=FILE_URL)
+    ]
+    opaque = b"7z\xbc\xaf\x27\x1c" + b"opaque-eis-223-archive"
+
+    def download(attachments, **kwargs):
+        kwargs["transport"] = lambda *_args: (opaque, "application/x-7z-compressed")
+        return download_procurement_attachments(attachments, **kwargs)
+
+    outcome = acquire(registry_number=NUMBER, target_root=tmp_path,
+                      provider=provider, download=download)
+    assert outcome["files_saved"] == 1
+    receipt = json.loads((tmp_path / NUMBER / "public-page-receipt.json").read_text())
+    assert receipt["source_level"] == "verified_public_page_not_original_soap_xml"
+    assert receipt["signed_contract_verified"] is False
+    assert receipt["revision_review_required"] is True
+    assert receipt["files"][0]["sha256"] == hashlib.sha256(opaque).hexdigest()
+    assert receipt["files"][0]["original_name"] == "protocol.7z"
+    assert (tmp_path / NUMBER / receipt["files"][0]["filename"]).read_bytes() == opaque

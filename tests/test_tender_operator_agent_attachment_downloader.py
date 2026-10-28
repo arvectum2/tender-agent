@@ -435,3 +435,66 @@ def test_ri223_rar_wrong_signature_is_rejected(tmp_path: Path):
     assert not result.saved
     assert result.skipped[0].error == "invalid_rar_signature"
     assert not list(tmp_path.iterdir())
+
+
+
+def _verified_public_223_7z_attachment() -> ProcurementAttachment:
+    attachment = _attachment("Протокол_итогов.7z", "https://zakupki.gov.ru/223/filestore/public/download/file.html?uid=example")
+    attachment.provenance = {
+        "source_regime": "223fz",
+        "binding": "verified_public_eis_notice_page_only",
+        "source_public_html_sha256": "a" * 64,
+        "source_url_sha256": "b" * 64,
+        "revision_review_required": True,
+        "original_soap_xml_binding_verified": False,
+    }
+    return attachment
+
+
+def test_verified_public_223_7z_is_sha_bound_opaque_only(tmp_path: Path):
+    import hashlib
+
+    attachment = _verified_public_223_7z_attachment()
+    raw = b"7z\xbc\xaf\x27\x1c" + b"opaque-archive-no-extraction"
+    result = download_procurement_attachments(
+        [attachment], target_dir=tmp_path, max_attachments=1,
+        max_file_size_bytes=1024, max_total_size_bytes=1024,
+        transport=lambda *_args: (raw, "application/x-7z-compressed"),
+    )
+    assert len(result.saved) == 1
+    saved = result.saved[0]
+    assert saved.sha256 == hashlib.sha256(raw).hexdigest()
+    assert saved.requires_manual_review is True
+    assert saved.content_inspection_status == "UNINSPECTED_OPAQUE"
+    assert saved.provenance == attachment.provenance
+    assert (tmp_path / saved.stored_name).read_bytes() == raw
+
+
+@pytest.mark.parametrize("change", [
+    {"binding": "unverified"},
+    {"source_regime": "44fz"},
+    {"source_public_html_sha256": "not-a-sha"},
+    {"source_url_sha256": None},
+])
+def test_7z_without_exact_public_223_binding_is_rejected(tmp_path: Path, change):
+    attachment = _verified_public_223_7z_attachment()
+    attachment.provenance.update(change)
+    result = download_procurement_attachments(
+        [attachment], target_dir=tmp_path, max_attachments=1,
+        max_file_size_bytes=1024, max_total_size_bytes=1024,
+        transport=lambda *_args: pytest.fail("unsupported 7z must not be fetched"),
+    )
+    assert not result.saved
+    assert result.skipped[0].error == "unsupported_extension"
+
+
+def test_public_223_7z_invalid_signature_fails_closed(tmp_path: Path):
+    attachment = _verified_public_223_7z_attachment()
+    result = download_procurement_attachments(
+        [attachment], target_dir=tmp_path, max_attachments=1,
+        max_file_size_bytes=1024, max_total_size_bytes=1024,
+        transport=lambda *_args: (b"<html>not an archive</html>", "text/html"),
+    )
+    assert not result.saved
+    assert result.skipped[0].error == "invalid_7z_signature"
+    assert not list(tmp_path.iterdir())
