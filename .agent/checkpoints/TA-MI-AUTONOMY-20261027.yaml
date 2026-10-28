@@ -555,3 +555,19 @@ watchdog_new_2024_primary_20261028_1436:
     Verify signed contract for 32413764701 and 32514720691/32514754857,
     then native GP630876 after legal access. Preserve 0.4kV exclusion,
     6.3kV repair vs equipment supply, one existing Watchdog and unrelated current-task.
+
+watchdog_additional_month_searches_20261028_1452:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  additional_searches: 8
+  cumulative_new_searches_this_run: 60
+  additional_candidate_rows_unverified: 41
+  new_originals_in_additional_batch: 0
+  reason_no_new_originals: >-
+    First-page 223 results were predominantly buyer-name БСК lexical matches,
+    already-known 32515582393 and 32515285414, and non-PQ titles;
+    no new source file was promoted from metadata alone.
+  source_delta: docs/market_intelligence/PQ_WATCHDOG_MONTH_DELTA_20261028_1452.json
+  resume_instruction: >-
+    Preserve source SHA receipts and avoid repeating 60 month-law-query combinations
+    before cooldown. Continue original signed contract recovery and ETP source work.
