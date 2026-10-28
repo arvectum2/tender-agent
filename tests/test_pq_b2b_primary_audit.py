@@ -3,8 +3,8 @@ from pathlib import Path
 
 import pytest
 
-from src.modules.market_intelligence.pq_b2b_primary_capture import capture
 from src.modules.market_intelligence.pq_b2b_primary_audit import verify
+from src.modules.market_intelligence.pq_b2b_primary_capture import capture
 
 URL = "https://www.b2b-center.ru/market/original-ukrm/tender-4561243/"
 
@@ -23,14 +23,14 @@ def _set_up(tmp_path: Path) -> Path:
         " Результаты процедуры скрыты по решению ее организатора."
         " Всего заявок: 6."
         "</body></html>"
-    ).encode("utf-8")
+    ).encode()
     capture(number="4561243", root=tmp_path,
             fetch=lambda _: (html, URL))
     return tmp_path / "4561243"
 
 
 def test_original_b2b_audit_preserves_hidden_outcome(tmp_path: Path):
-    case = _set_up(tmp_path)
+    _set_up(tmp_path)
     result = verify(source_root=tmp_path)
     assert result["first_party_cards_verified"] == 1
     row = result["source_records"][0]

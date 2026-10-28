@@ -5,7 +5,11 @@ from pathlib import Path
 import pytest
 
 from src.modules.market_intelligence.pq_b2b_primary_capture import (
-    _b2b_eligible, _final_url, _parse, batch, capture,
+    _b2b_eligible,
+    _final_url,
+    _parse,
+    batch,
+    capture,
 )
 
 NUM = "4565274"
@@ -29,7 +33,7 @@ def _html(number: str = NUM) -> bytes:
         "<p>Результаты процедуры скрыты по решению ее организатора.</p>"
         "<p>Всего заявок: 11.</p>"
         "</body></html>"
-    ).encode("utf-8")
+    ).encode()
 
 
 def test_original_b2b_receipt_and_hidden_results(tmp_path: Path):
@@ -58,8 +62,8 @@ def test_original_b2b_tampering_and_cross_id_refused(tmp_path: Path):
         capture(number=NUM, root=tmp_path,
                 fetch=lambda _: (_html("4561243"), FINAL))
     assert not list(tmp_path.iterdir())
-    result = capture(number=NUM, root=tmp_path,
-                     fetch=lambda _: (_html(), FINAL))
+    capture(number=NUM, root=tmp_path,
+            fetch=lambda _: (_html(), FINAL))
     (tmp_path / NUM / "original-public-b2b.html").write_bytes(b"tampered")
     with pytest.raises(ValueError, match="invalid"):
         capture(number=NUM, root=tmp_path,

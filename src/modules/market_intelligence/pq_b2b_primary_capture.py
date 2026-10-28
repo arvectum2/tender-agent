@@ -15,7 +15,7 @@ import tempfile
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from html.parser import HTMLParser
 from pathlib import Path
 
@@ -190,7 +190,7 @@ def capture(*, number: str, root: Path, fetch=fetch_original) -> dict:
         "procedure_id": number,
         "source_url": final_url,
         "source_tier": "original_primary_b2b_public_html",
-        "captured_at": datetime.now(timezone.utc).isoformat(),
+        "captured_at": datetime.now(UTC).isoformat(),
         "original_html_sha256": hashlib.sha256(blob).hexdigest(),
         "original_html_bytes": len(blob),
         **details,
@@ -228,7 +228,7 @@ def batch(*, leads: Path, root: Path, journal: Path,
     if state.get("schema_version") != "pq-original-b2b-capture-attempts/1":
         raise ValueError("Invalid durable B2B source journal")
     latest = {x["procedure_id"]: x for x in state["attempts"]}
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     processed = []
     for row in data:
         if len(processed) >= max_cards:

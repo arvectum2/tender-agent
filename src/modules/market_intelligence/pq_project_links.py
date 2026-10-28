@@ -129,9 +129,9 @@ def resolve(*, leads: Path, links: Path, queue: Path) -> dict:
         })
     groups = defaultdict(list)
     notices = defaultdict(list)
-    for identity in cases:
+    for identity, value in cases.items():
         groups[root(identity)].append(identity)
-        number = str(cases[identity].get("procedure_id") or "")
+        number = str(value.get("procedure_id") or "")
         if re.fullmatch(r"\d{11}", number):
             notices[number].append(identity)
     duplicate_notices = [

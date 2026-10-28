@@ -9,11 +9,11 @@ from decimal import Decimal
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
+from .pq_b2b_primary_audit import verify as verify_b2b
 from .pq_commission_fact_audit import verify as verify_commission
 from .pq_contract_outcome_audit import audit as audit_contract
 from .pq_contract_xml_index import scan as scan_contract_xml
 from .pq_primary_etp_audit import verify as verify_etp
-from .pq_b2b_primary_audit import verify as verify_b2b
 
 DIRECT_CAPACITOR_CATEGORIES = frozenset({
     "filter_capacitor_supply", "capacitor_bank_component_supply",

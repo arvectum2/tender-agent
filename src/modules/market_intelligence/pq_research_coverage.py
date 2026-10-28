@@ -15,12 +15,12 @@ from collections import Counter, defaultdict
 from datetime import date
 from pathlib import Path
 
+from .pq_b2b_primary_audit import verify as verify_b2b
+from .pq_primary_etp_audit import verify as verify_etp
 from .pq_verified_market_report import (
     exact_filestore_sha_receipts,
     source_receipts,
 )
-from .pq_primary_etp_audit import verify as verify_etp
-from .pq_b2b_primary_audit import verify as verify_b2b
 
 
 def _number_category(value: object) -> str:

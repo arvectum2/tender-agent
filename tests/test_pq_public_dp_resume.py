@@ -70,6 +70,7 @@ def test_reject_manifest_sha_filename_mismatch(tmp_path: Path):
 
 def test_missing_dp_api_key_is_non_mutating_and_source_shas_remain_retryable(tmp_path: Path, monkeypatch):
     from types import SimpleNamespace
+
     import src.modules.market_intelligence.pq_public_dp_resume as module
 
     root = _source(tmp_path)

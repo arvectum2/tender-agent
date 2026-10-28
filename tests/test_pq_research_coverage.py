@@ -6,7 +6,9 @@ import pytest
 
 from src.modules.market_intelligence.pq_primary_etp_capture import capture
 from src.modules.market_intelligence.pq_research_coverage import (
-    _months, _source_year, build,
+    _months,
+    _source_year,
+    build,
 )
 
 ETP = "https://bidzaar.com/app/process/light/019fb323-f23b-7872-845e-ba2cb6b43355"
@@ -61,8 +63,8 @@ def _fixture(tmp_path: Path):
             "scope": "equipment_supply_tender", "family": "active_harmonic_filter",
             "signed_contract_verified": False,
         }]}))
-    return dict(leads=leads, public223=official,
-                filestore=filestore, etp_facts=facts, etp_originals=original_etp)
+    return {"leads": leads, "public223": official, "filestore": filestore,
+            "etp_facts": facts, "etp_originals": original_etp}
 
 
 def test_synthetic_source_coverage_no_market_inference(tmp_path: Path):

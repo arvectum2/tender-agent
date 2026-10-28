@@ -4,6 +4,7 @@ Tracks SHA-bound case/document identities rather than a global offset, so
 newly recovered cases do not force already verified documents to be re-read.
 """
 from __future__ import annotations
+
 import argparse
 import hashlib
 import json
@@ -12,8 +13,9 @@ import re
 import tempfile
 from pathlib import Path
 
-from .pq_dp_ingest import ingest
 from src.shared.config.settings import get_settings
+
+from .pq_dp_ingest import ingest
 
 
 def _atomic(path: Path, value: dict) -> None:
