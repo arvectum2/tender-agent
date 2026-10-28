@@ -20,6 +20,7 @@ from .pq_verified_market_report import (
     source_receipts,
 )
 from .pq_primary_etp_audit import verify as verify_etp
+from .pq_b2b_primary_audit import verify as verify_b2b
 
 
 def _number_category(value: object) -> str:
@@ -68,6 +69,8 @@ def _months(start: str, end: str) -> list[str]:
 
 def build(*, leads: Path, public223: Path, filestore: Path,
           etp_facts: Path, etp_originals: Path,
+          b2b_originals: Path | None = None,
+          b2b_journal: Path | None = None,
           eis_journal: Path | None = None,
           public_journal: Path | None = None,
           primary_etp_journal: Path | None = None,
@@ -81,15 +84,19 @@ def build(*, leads: Path, public223: Path, filestore: Path,
                     for r in exact_filestore_sha_receipts(filestore)}
     verified_etp = verify_etp(facts=etp_facts, source_root=etp_originals)
     etp = {x["procedure_id"]: x for x in verified_etp["records"]}
+    b2b = {x["procedure_id"]: x for x in verify_b2b(
+        source_root=b2b_originals)["source_records"]} if b2b_originals is not None else {}
     found = _journal(eis_journal, "pq-source-attempts/1")
     downloads = _journal(public_journal, "pq-223-public-page-attempts/1")
     native = _journal(primary_etp_journal, "pq-etp-primary-attempts/1")
+    b2b_attempts = _journal(b2b_journal, "pq-original-b2b-capture-attempts/1")
     found_ids = {str(r.get("procedure_id")) for r in found
                  if r.get("source") == "official_eis_search"
                  and r.get("status") == "success"
                  and r.get("matches")}
     attempted_download_ids = {str(r.get("registry_number")) for r in downloads}
     native_ids = {str(r.get("procedure_id")) for r in native}
+    b2b_attempt_ids = {str(r.get("procedure_id")) for r in b2b_attempts}
     cases = []
     seen = set()
     source_hosts = Counter()
@@ -100,6 +107,7 @@ def build(*, leads: Path, public223: Path, filestore: Path,
     year_originals = defaultdict(set)
     unique_source_223_with_files = set()
     unique_native_etp = set()
+    unique_b2b_etp = set()
     statuses = Counter()
     for row in corpus:
         canonical = row.get("canonical_id")
@@ -149,6 +157,10 @@ def build(*, leads: Path, public223: Path, filestore: Path,
             state = "original_commercial_card_html_sha_verified"
             proof.append("primary_bidzaar_html_sha_receipt")
             unique_native_etp.add(number)
+        elif number in b2b:
+            state = "original_commercial_b2b_html_sha_verified"
+            proof.append("primary_b2b_html_sha_receipt")
+            unique_b2b_etp.add(number)
         else:
             state = "secondary_or_unverified_source_only"
         statuses[state] += 1
@@ -165,6 +177,7 @@ def build(*, leads: Path, public223: Path, filestore: Path,
             "eis_exact_search_hit_recorded": number in found_ids,
             "public_notice_download_attempt_recorded": number in attempted_download_ids,
             "etp_original_card_attempt_recorded": number in native_ids,
+            "b2b_original_card_attempt_recorded": number in b2b_attempt_ids,
             "candidate_source_tiers_not_validation": source_tiers,
             "publication_month_source_verified": None,
             "signed_contract_supplier_verified": False,
@@ -178,7 +191,8 @@ def build(*, leads: Path, public223: Path, filestore: Path,
     numbered_223_rows = by_kind["223fz"]
     confirmed_primary = sum(c["primary_source_state"] in (
         "original_eis_documents_verified",
-        "original_commercial_card_html_sha_verified") for c in cases)
+        "original_commercial_card_html_sha_verified",
+        "original_commercial_b2b_html_sha_verified") for c in cases)
     periods = [
         {"month": m,
          "source_queries_with_verified_month_bounds": 0,
@@ -200,10 +214,11 @@ def build(*, leads: Path, public223: Path, filestore: Path,
         "source_state_counts": dict(sorted(statuses.items())),
         "candidate_rows_with_primary_original": confirmed_primary,
         "candidate_rows_without_verified_primary_original": observed - confirmed_primary,
-        "unique_notice_or_etp_numbers_with_primary_original": len(unique_source_223_with_files) + len(unique_native_etp),
+        "unique_notice_or_etp_numbers_with_primary_original": len(unique_source_223_with_files) + len(unique_native_etp) + len(unique_b2b_etp),
         "primary_original_source_types": {
             "official_223_unique_notices_with_files": len(unique_source_223_with_files),
             "original_commercial_etp_unique_cards": len(unique_native_etp),
+            "original_b2b_center_unique_cards": len(unique_b2b_etp),
         },
         "source_223_year_hint_not_publication_date": dict(sorted(yearly.items())),
         "period_search_coverage": periods,
@@ -212,6 +227,7 @@ def build(*, leads: Path, public223: Path, filestore: Path,
             "official_223_exact_number_queries": len(found),
             "public_223_download_attempts": len(downloads),
             "original_commercial_etp_capture_attempts": len(native),
+            "original_b2b_center_capture_attempts": len(b2b_attempts),
         },
         "completeness": "partial_period_discovery_not_established",
         "cases": cases,
@@ -225,6 +241,8 @@ def main() -> None:
     p.add_argument("--filestore", type=Path, required=True)
     p.add_argument("--etp-facts", type=Path, required=True)
     p.add_argument("--etp-originals", type=Path, required=True)
+    p.add_argument("--b2b-originals", type=Path)
+    p.add_argument("--b2b-journal", type=Path)
     p.add_argument("--eis-journal", type=Path)
     p.add_argument("--public-journal", type=Path)
     p.add_argument("--etp-journal", type=Path)
@@ -234,6 +252,7 @@ def main() -> None:
     a = p.parse_args()
     result = build(leads=a.leads, public223=a.public223, filestore=a.filestore,
                    etp_facts=a.etp_facts, etp_originals=a.etp_originals,
+                   b2b_originals=a.b2b_originals, b2b_journal=a.b2b_journal,
                    eis_journal=a.eis_journal,
                    public_journal=a.public_journal,
                    primary_etp_journal=a.etp_journal,
