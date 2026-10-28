@@ -404,3 +404,18 @@ month_scoped_official_eis_20261028:
     - "Original ETP awards, signed contracts, verified suppliers and equipment-only prices remain open"
     - "15 Data Platform files blocked pending authorized service API key"
   resume_instruction: "Inspect PR #521 exact-head CI and this checkpoint. Continue bounded new calendar windows and originating ETP source retrieval; do not repeat 20 journaled exact month/law/query combinations before cooldown. Source-verify candidate technical specs and signed contracts, never promote search metadata or commission offers to executed sales. Keep MI in REVIEW, preserve one Watchdog and unrelated current-task.yaml."
+
+arc_review_queue_source_sha_dedup_20261028:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  completed:
+    - "pq_arc_chat next skips exact source-SHA subset packets only when already reviewed under same notice ID; distinct new original SHA remains eligible"
+    - "ChatGPT/ARC accepted new source bundle 32414141662-14b19c48dfe0283628072ff0 as irrelevant using original 110 kV technical specification quote and SHA"
+    - "Queue after review: 86 reviewed, 4 pending; next returns empty with 2 unreadable and 2 source-SHA duplicate packets skipped"
+  evidence:
+    technical_document_sha256: 964dba8b49b77a6ed4ee1c0985be8453ef039f7868c8c826ae6ee94e2f5295d0
+    report: docs/market_intelligence/PQ_ARC_QUEUE_DEDUP_20261028.md
+  remaining:
+    - "Two unreadable originals require separate source-bound visual review; do not promote OCR"
+    - "Original ETP award and signed supplier/contract prices still unverified"
+  resume_instruction: "Inspect current PR #521 exact-head CI and task checkpoint; continue fresh source recovery, not exact-SHA duplicate ChatGPT reviews. Two unreadable original-text packets need visual verification. Preserve source hashes, 12h cooldown, unrelated current-task and single Watchdog."

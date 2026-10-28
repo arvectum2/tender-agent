@@ -37,6 +37,7 @@
 
 ## Phase 3 — governed continuation (US3)
 - [ ] T015 Exercise bounded restart/resume S0–S11 with existing SHA source ledger, queue, lease and checkpoint; prevent duplicate external actions.
+- [x] T015a Prevent repeated ChatGPT review of exact source-SHA subset packets already reviewed for the same notice; preserve genuinely new documents and unreadable originals.
 - [ ] T016 Connect report acceptance evidence to existing roadmap/checkpoint after normal reviewed integration; preserve hourly Watchdog unchanged.
 - [ ] T017 Only when evidence sufficient, independently review source-verified full report and consider task closure. No invented market size, supplier contract or training gold.
 
