@@ -1045,3 +1045,79 @@ watchdog_primary_vostochny_bort_20261028_2227:
     Avoid retrying UDS 404 before 2026-10-29 10:30 MSK. Preserve
     unrelated current-task.yaml, sole hourly Watchdog, immutable SHA,
     REVIEW/no automatic merge and no production/procurement effects.
+
+watchdog_primary_delta_20261028_2335:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  run_start_issue_comment_id: 6480074229
+  checkpoint_updated_utc: '2026-10-28T20:49:36.178Z'
+  corpus: v29_101_unchanged
+  source_evidence_ledger: docs/market_intelligence/PQ_WATCHDOG_PRIMARY_DELTA_20261028_2335.json
+  source_evidence_ledger_sha256: 298e2b765bc45f412593ec8de2f479c993a1e155ca2b1cfbbda7d7e647f2c530
+  source_evidence_commit: 504c74498412fa61cb899bc02889ca0044689f4c
+  last_tested_code_commit: f93031e716b5ce48eb478a1bd21f1a44c70967c8
+  code_changed_this_run: false
+  test_results_this_run: 'No code changed; JSON source ledger parsed; 32 file SHA receipts, five source pages, five exact-quote reviews verified'
+  exact_head_ci_at_evidence_commit: '40766598100 queued, not green; no auto-merge'
+  month_scoped_eis_requests: 110
+  new_unique_month_law_query_combinations: 62
+  accidentally_repeated_earlier_combinations: 48
+  newly_touched_months_with_query_combinations: 21
+  month_search_statuses: {empty: 59, success: 49, network_error: 2}
+  unverified_candidate_metadata_rows: 251
+  exhaustive_months: 0
+  source_adapter_other_requests_estimated: 58
+  logical_first_party_source_operations_estimated: 168
+  new_223_notices: ['32514963292', '32414337924', '32515285414', '32615937898', '32615870159']
+  new_lots: 5
+  distinct_named_projects: 4
+  original_file_instances_sha_verified: 32
+  unique_original_file_sha256: 30
+  original_protocols_with_named_participants: 4
+  original_protocols_with_explicit_winner: 1
+  new_signed_suppliers_verified: 0
+  new_executed_prices_verified: 0
+  new_core_6_35kv_sales_verified: 0
+  arc_source_reviews_accepted: 5
+  review_queue_state: {reviewed: 112, pending_review: 4, unknown: 4}
+  last_known_v29_primary_gaps: 54
+  last_known_dp_sdk_pending: 15
+  private_month_search_journal_sha256: 133909b3adb7c6a89fbafdd019107131867251ac36bde83b647934011eab78d4
+  private_full_dedup_journal_sha256: 2bffb2c36af4952c5c4bb34ac96979cac5af3018ad91cc7a6ae15c5dc0c507a3
+  exact_search_retry_not_before_moscow: '2026-10-29T11:44:12+03:00'
+  findings: >-
+    All five recovered original 223-FZ cases are outside confirmed
+    6-35 kV system sales: 32514963292 is 0.4 kV installation with
+    original winner OOO Novyi Potok 3,874,304.42 RUB VAT-inclusive;
+    32414337924 is 110 kV BSK supply, two named bidders KVAR and
+    EnergoLogika, latter recommended for contract at up to
+    50,288,958.34 RUB ex VAT, but not signed-verified;
+    32515285414 and 32615937898 concern the SAME named PS
+    Tyazhinskaya BSK-110 to SKRM 52 MVAr design project with
+    different procurement participants and no proven subcontract;
+    32615870159 is 23 capacitor components nominal 11.55 kV
+    for 110 kV bank at PS Frunzenskaya 330 kV, NMCK 4,087,100 RUB
+    ex VAT, with inconsistent delivery address and only a
+    visually verified deadline-extension protocol.
+  blockers: >-
+    No new signed supplier or executed contract price. EIS 44-FZ
+    0372200000126000322 returned HTTP500; UDS public page failed
+    TLS validation, no bypass; Metal-IT exact public trade pages
+    HTTP200 but rendered Angular shell without case-specific data.
+    First 86 searches inadvertently repeated 48 prior combinations
+    because four instead of all journals were consulted; fixed
+    operationally by full cross-journal dedup index for later batches.
+    Original private receipts and SHA remain immutable.
+  resume_instruction: >-
+    Continue existing PR #521 and independent first-party research.
+    Next: GP630876 official GPB originals only after
+    2026-10-29 00:41 MSK; 32413764701 signed 10 kV UKRM supplier
+    and payment after 06:46 MSK; 32515582393 signed 6 kV UKRM
+    supplier and equipment-only value after 06:46 MSK.
+    Do not repeat the 62 new exact month/law/query combinations
+    before 2026-10-29 11:44 MSK. Use ALL private month journals
+    for retry dedup, not only one partial journal.
+    Preserve v29 101 rows, unrelated .agent/current-task.yaml,
+    sole enabled hourly Watchdog, source privacy, no auto-merge
+    without AM-4 approval, no production or procurement actions.
