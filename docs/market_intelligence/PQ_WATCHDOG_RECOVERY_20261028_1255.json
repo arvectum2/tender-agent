@@ -1,0 +1,76 @@
+{
+  "schema_version": "pq-watchdog-source-recovery/1",
+  "timestamp_moscow": "2026-10-28 12:42:31+03:00",
+  "task_id": "TA-MI-AUTONOMY-20261027",
+  "immutable_v20_leads": 100,
+  "source_roots": [
+    "public223-originals",
+    "verified-official-originals",
+    "primary-etp-originals"
+  ],
+  "gap_inventory": {
+    "path": "evidence-gaps-watchdog-20261028-1240.json",
+    "sha256": "7dec0f1525d9d467f896eeeb6fb926ce82e7cd43f7e45d2bf76f67f80c40416b",
+    "local_directories_before_receipt_filter": 33,
+    "receipt_only_case_ids": [
+      "32615966040",
+      "32616400421"
+    ],
+    "local_original_case_count_after_receipt_filter": 31,
+    "reviewed_case_count": 31
+  },
+  "official_eis_search": {
+    "queries": 6,
+    "results": {
+      "empty": 5,
+      "success_old_irrelevant": 1
+    },
+    "journal": "eis-new-pq-ontology-search-20261028-1245.json",
+    "sha256": "318f273efb664696adcee5f73fcd849b446becbd89692be504fbdc583883f737",
+    "new_confirmed_6_35kv": 0
+  },
+  "etp_retry": {
+    "attempts": 8,
+    "html_fetched": 3,
+    "body_budget_exceeded": 2,
+    "inaccessible_http403": 3,
+    "journals": [
+      {
+        "name": "etp-retry-attempts-20261028-1250.json",
+        "sha256": "2fa9336175fecb22861cf00ea19a22ece3a6f6b0091fbf10213f12506d2e5d4e"
+      },
+      {
+        "name": "etp-retry-attempts-20261028-1255.json",
+        "sha256": "6f7e007c96401ff8cf9700bbb5e53f21ac8106a7b3d04a7f4e369f4c7c6cadae"
+      }
+    ],
+    "secondary_html": [
+      {
+        "procedure_id": "32515582393",
+        "sha256": "a383223312f594a7c61f71e80fd6856d5bdb98a7c3fef5c7a53761070d875bd7",
+        "source_tier": "secondary_public_index"
+      },
+      {
+        "procedure_id": "5747901",
+        "sha256": "ae705447dce4b42d182ed44b1ae5e03ef58674c8da5d736dfd87cc01e41f01a6",
+        "source_tier": "secondary_public_index"
+      },
+      {
+        "procedure_id": "ГП630876",
+        "sha256": "f55a64b322592ad5f1005afe39e88cad6e919849d1b511fd10641a284a52e40e",
+        "source_tier": "secondary_public_index"
+      }
+    ]
+  },
+  "review_queue": {
+    "reviewed": 85,
+    "pending_unreadable": 3
+  },
+  "new_signed_contracts_verified": 0,
+  "new_contract_suppliers_verified": 0,
+  "new_executed_equipment_prices_verified": 0,
+  "data_platform_ingestion": false,
+  "source_truth_promoted": false,
+  "pr": 519,
+  "auto_merge": false
+}
