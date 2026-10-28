@@ -2,6 +2,16 @@
 
 > Canonical scope/history source for `arvectum2/tender-agent`. The executor queue is only a filtered executable projection and is **not** the complete roadmap.
 
+## 28.10.2026 — Product-specific Market Intelligence: Power Quality (6–35 кВ)
+
+**Status:** `IN PROGRESS`; эта работа не переопределяет очередность APR и не разрешает автоматическое расширение Watchdog queue. **Task:** `TA-MI-AUTONOMY-20261027`; единственный исполнительный checkpoint — `.agent/checkpoints/TA-MI-AUTONOMY-20261027.yaml`.
+
+- **Проверенный промежуточный срез на 28.10:** 101 кандидатная запись, 33 извещения 223-ФЗ (31 с первичными файлами), 68 коммерческих/нестандартных записей, 3 первичные Bidzaar-карточки, 6 протокольных решений, 3 публичные записи реестра договоров; 0 независимо подтверждённых поставщиков по подписанным договорам. Это НЕ исчерпывающий рынок и НЕ оценка его стоимости.
+- **Метод:** существующий S0–S11 `docs/tender_research/market_intelligence/AUTONOMOUS_RESEARCH_PROTOCOL.md`. ChatGPT → ARC исполняет bounded этапы через Spec Kit `none` с опорой на AES-001; [спецификация и проверяемые задачи](../../specs/001-power-quality-evidence-closure/spec.md). Отдельный coding agent, база данных и новый roadmap не создаются.
+- **NEXT RESEARCH ACTION:** добыть первичные итоговые протоколы коммерческих ЭТП и подтверждение подписанных договоров/поставщиков по существующим 68 нестандартным записям; затем дедупликация lot/project и подтверждённое распределение EPC/PQ затрат по периодам 2024–2026. Недоступные сведения сохраняются как `unknown`.
+- **Quality gate:** исходные SHA, точные цитаты, отдельные НМЦ / предложение / реестр / подписанный договор, негативные поисковые результаты и проверяемый coverage denominator. Не записывать неподтверждённые выводы как training gold, не менять единственный hourly Tender Agent Watchdog.
+
+
 ## Оптимизированная Active Product Roadmap — сверено 2026-10-20
 
 Эта секция — **рабочая продуктовая очередь**. Полный ARV/BASE registry ниже остаётся историческим реестром, но открытый checkbox в legacy-реестре **не означает**, что задача автоматически должна быть реализована. Watchdog после исчерпания явной очереди идёт по этой секции; trigger-backlog не исполняется без подтверждённого trigger.
