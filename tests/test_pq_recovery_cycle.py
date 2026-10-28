@@ -87,3 +87,31 @@ def test_cycle_audits_source_anchored_commission_facts(tmp_path: Path):
     assert result["commission_facts_verified"]["source_bound_facts"] == 1
     assert result["commission_facts_verified"]["signed_contracts_verified"] == 0
     assert (runtime / "verified-commission-facts.json").is_file()
+
+
+def test_cycle_offline_audits_original_etp_source_facts(tmp_path: Path):
+    source = tmp_path / "sources"
+    source.mkdir()
+    runtime = tmp_path / "runtime"
+    with patch("src.modules.market_intelligence.pq_recovery_cycle.inventory",
+               return_value={"lead_count": 3}), patch(
+        "src.modules.market_intelligence.pq_recovery_cycle.seed",
+        return_value={"created": []}), patch(
+        "src.modules.market_intelligence.pq_recovery_cycle.verify_primary_etp",
+        return_value={"original_etp_cases_verified": 3,
+                      "signed_contracts_verified": 0,
+                      "records": []}) as audited, patch(
+        "src.modules.market_intelligence.pq_recovery_cycle.fetch_primary_etp",
+    ) as fetched:
+        result = run_cycle(
+            leads=tmp_path / "leads.json", source_roots=[source],
+            archive_index=tmp_path / "index", runtime=runtime,
+            ontology=tmp_path / "ontology", dp_source=tmp_path,
+            network=False, primary_etp_source=tmp_path / "primary",
+            primary_etp_facts=tmp_path / "facts.json",
+        )
+    fetched.assert_not_called()
+    audited.assert_called_once()
+    assert result["primary_etp_fetch"]["status"] == "skipped_offline"
+    assert result["primary_etp_evidence"]["original_cards_verified"] == 3
+    assert (runtime / "verified-primary-etp-facts.json").is_file()
