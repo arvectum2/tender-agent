@@ -345,3 +345,27 @@ native_etp_and_market_snapshot_20261028:
   last_verified_commit: "259cb715121617216c57cd35f5ef600278174f05"
   last_test_results: "51 passed, 1 external deprecation warning; 33/33 numeric 223 leads with source receipts, 31 with originals; 3 primary ETP cards, 6 commission facts, 3 registry lots"
   resume_instruction: "Use latest top-level resume_instruction; do not duplicate Tender Agent Watchdog."
+
+spec_kit_phase2_etp_coverage_20261028:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  objective: "Implement source-scoped 2024-2026 EIS/ETP coverage and deduplicated project evidence under Spec Kit US2 T008-T014"
+  definition_of_done:
+    - "Produce reproducible per-source/per-period coverage ledger with source-level evidence, no simulated procurement data"
+    - "Verify non-223 primary-source cases, distinguish market sounding, notices, commission decisions and signed contracts"
+    - "Dedup repeat project/lot references with reversible evidence links and no EPC/PQ price conflation"
+    - "Pass targeted and integration tests, publish PR and update canonical checkpoint"
+  completed:
+    - "Inspected latest origin/main merge e92c948c PR #520, Spec Kit 1.2.4 integration none status OK, original spec/plan/tasks and AES governance mapping"
+    - "17 targeted Spec Kit and Data Platform SDK/reporter tests passed; one third-party Starlette warning"
+    - "Opened isolated branch feature/pq-etp-provenance-ledger-20261028; avoided dirty main checkout and unchanged existing Watchdog"
+    - "Spec Kit task T007 marked complete after merged PR #520"
+  current_step: "Implement T008 source coverage ledger on primary 101-case v29 source corpus"
+  remaining:
+    - "Integrate 223 public page and direct original receipts, original Bidzaar cases, 44-FZ vs commercial source provenance and source retries"
+    - "Source-verifiable multi-step dedup of B2B 10kV UKRM notices and repeated 2024 Khani SCRM project references"
+    - "Run failing/positive contract tests, validate source-derived warnings, write coverage and quality artifacts"
+    - "Create reviewed PR and merge if checks green, record final SHA/test results, keep task in_progress until full US2 done"
+  last_verified_commit: "e92c948ce7d7e7c325e374bee6964651abde25b4"
+  last_test_results: "17 passed for tests/test_speckit_pq_setup.py, test_pq_verified_market_report.py, test_pq_dp_ingest_sdk.py, test_pq_recovery_cycle.py; Spec Kit status OK"
+  resume_instruction: "On isolated branch inspect specs/001-power-quality-evidence-closure/tasks.md T008-T014, build source-verified coverage ledger and reversible dedup, run pytest, update this checkpoint, PR; leave unrelated .agent/current-task.yaml and the one hourly Watchdog intact."
