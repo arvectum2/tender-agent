@@ -786,3 +786,38 @@ run_20261028_0746_mergeability_audit:
     applicable authority; preserve audit/lease/ETP dedup and source provenance.
     No automatic PR merge without queue auto_merge:true, fresh Company AM-4
     and exact-head CI green. Do not alter unrelated current-task or Watchdog.
+
+run_20261028_0750_irkutsk_capacitor_bank:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  report: docs/market_intelligence/PQ_IRKUTSK_CAPACITOR_BANKS_20261028.md
+  overlay: docs/market_intelligence/PQ_IRKUTSK_CAPACITOR_BANKS_20261028.json
+  overlay_sha256: 52c523b3b87f492a4e3c769ccc857b4049d9d9530365242aa211e0c21fea37f4
+  official_search_queries_new: 4
+  original_notice: 32514842313
+  original_pdfs_sha_verified: 2
+  official_technical_7z_status: file_too_large_not_downloaded
+  review_id: 32514842313-9d6286036ac5317c2931804c
+  classification: uncertain
+  original_commission_nmck_rub_ex_vat: '112201596.67'
+  commission_instruction_offer_rub_ex_vat: '111079600.00'
+  selected_precontract_participant: 'AO Energeticheskie Tekhnologii'
+  rated_voltage_kv: null
+  signed_contract_verified: false
+  contractual_supplier_verified: false
+  executed_equipment_price_verified: false
+  queue_reviewed_after: 76
+  queue_pending_after: 5
+  pending_caveat: >-
+    Four additional pending packets for already reviewed notice IDs may
+    contain additional source files; compare SHA and review only novel
+    evidence. One older unreadable PDF remains pending. Do not re-review
+    already verified documents.
+  resume_instruction: >-
+    Seek independently sourced rated voltage for 32514842313 without
+    bypassing the 25 MB archive limit; keep 500 kV substation title
+    separate from capacitor-bank voltage. Do not promote the commission's
+    instruction to contract at 111,079,600 RUB to a signed contract.
+    Preserve the existing DRAFT PR #519 and main-divergence review gate,
+    continue independent source-bound 6-35 kV cases and deduplicate
+    supplemental packets by original SHA/provenance.
