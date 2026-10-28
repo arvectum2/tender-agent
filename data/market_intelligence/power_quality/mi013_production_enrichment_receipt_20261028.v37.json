@@ -1,0 +1,61 @@
+{
+  "schema_version": "mi013-first-party-eis-24-capacitors-incremental-pg/1.0",
+  "as_of": "2026-10-28",
+  "data_version": "v37",
+  "collection": "arvectum-market-pq-6-35kv",
+  "database": "arvectum_data",
+  "canonical_id": "223fz:32616339168:lot1",
+  "source_archive": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=8FBB1BB807B64388802027D1A4F3827A",
+  "source_archive_sha256": "46c3237d2b632e3e7147ec2e49a44fcbdf95af8e04b6a4b2e300d594cd271710",
+  "sidecar": "original_rosseti_24_bsk_caps_20261028.v37.json",
+  "materializer": "scripts/market_intelligence/materialize_pq_research_v37.py",
+  "importer": "scripts/market_intelligence/apply_pq_evidence_v37.py",
+  "new_notices": 0,
+  "existing_cases_updated": 1,
+  "installed_device_sales_confirmed": 0,
+  "original_primary_signed_contracts_added": 0,
+  "before": {
+    "resources": 103,
+    "records": 103
+  },
+  "after": {
+    "resources": 103,
+    "records": 103,
+    "unique_ids": 103,
+    "metadata_versions": {
+      "v29": 95,
+      "v31": 1,
+      "v32": 2,
+      "v33": 1,
+      "v34": 1,
+      "v35": 1,
+      "v36": 1,
+      "v37": 1
+    },
+    "source_enriched_cases": 17,
+    "first_party_original_enriched_cases": 16,
+    "other_resources": 2192,
+    "other_records": 0,
+    "all_documents": 2192
+  },
+  "backup": {
+    "file": "data-platform-arvectum_data-20261028T044120Z.dump",
+    "directory": "/Volumes/ArvectumSSD/Arvectum/runtime/data-platform-backups",
+    "bytes": 37475661,
+    "sha256": "633ad00fd5b8fc501c152c63724010dac96ca97f22e81b556eccca9f89bcb11f",
+    "official_sha_and_companion_verified_before_write": true
+  },
+  "target_source_new_content_hash": "c5347adc71252f5069bbab75fc7a804d7e4a174cde38c0ef748a96db1a9e2ae8",
+  "atomic_transaction": "commit and independent readback PASS",
+  "source_replay": "103/103 exact source content SHA agreement, no drift",
+  "tests": "38/38 source tests passed: v29(8) v32(4) v33(6) v34(5) v35(5) v36(5) v37(5)",
+  "original_price_breakdown_inc_vat22": {
+    "unit_12kv_rub": "303000.00",
+    "unit_11_55kv_rub": "275000.00",
+    "unit_4_2kv_rub": "253600.00",
+    "strict_18_units_rub": "5286000.00",
+    "below6kv_6_units_rub": "1521600.00",
+    "all24_rub": "6807600.00"
+  },
+  "signed_actual_price_rub": null
+}
