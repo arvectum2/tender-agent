@@ -886,7 +886,7 @@ watchdog_primary_bsk_20261028_2029:
     10 SHA-verified native files (7 unique); 2 source-quote ARC reviews
     accepted; source ledger JSON parsed. No source code changed in this run.
   findings: >-
-    32414185676: 2024 Rossseti Nizhny Novgorod PMES 30 capacitor elements
+    32414185676: 2024 Rosseti Nizhny Novgorod PMES 30 capacitor elements
     KEP1 1.05kV, NMCK 1,428,192 RUB VAT-inclusive, zero bids, no award.
     32515407502: 2025 63 KEP1 1.05kV elements, commission best bid
     OOO TD UK KONDENSATOR 3,012,660 RUB VAT-inclusive, second place
@@ -909,4 +909,4 @@ watchdog_primary_bsk_20261028_2029:
     shared facilities but no proven project merge; new contract-register
     exact URL 404 should not be repeated before 2026-10-29 08:40 MSK.
     Do not repeat the 40 exact month/law/query combinations before
-    2026-10-29 08:35 MSK. PR #521 stays REVIEW; no auto-merge or production.
+    2026-10-29 08:35:48 MSK. PR #521 stays REVIEW; no auto-merge or production.
