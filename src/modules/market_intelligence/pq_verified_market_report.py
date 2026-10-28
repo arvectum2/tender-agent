@@ -199,8 +199,20 @@ def markdown(report: dict) -> str:
     ]
     for item in report["etp"]:
         lines.append(
-            f"| {item['procedure_id']} | {item['source_quote'].replace('|', ' ')} | "
+            f"| [{item['procedure_id']}]({item['source_url']}) | {item['source_quote'].replace('|', ' ')} | "
             f"{item['scope'].replace('_',' ')}; нет верифицированной цены/победителя |")
+    lines += [
+        "",
+        "## Публичные записи реестра договоров 223-ФЗ (не проверка подписанных экземпляров)",
+        "",
+        "| Извещение | Реестровый номер | Заказчик | Цена по XML | Подтверждённый поставщик |",
+        "|---|---|---|---:|---|",
+    ]
+    for item in report["contracts"]:
+        lines.append(
+            f"| {item['procedure_id']} | {item['register_number']} | "
+            f"{(item.get('buyer') or 'не указано').replace('|',' ')} | "
+            f"{_rub(item.get('registry_rub_price'))} | не подтверждён |")
     lines += [
         "",
         "## Ограничения",
