@@ -90,7 +90,17 @@
           "sha256": "76d050d1fd3f65a6a5eb2f58358fa376b5cc280abe6ff1207122698d73c5f6cf",
           "bytes": 144792
         }
-      ]
+      ],
+      "registry_contract": {
+        "signed_contract_registry_verified": true,
+        "registry_number": "57724646338260000460000",
+        "registered_price_rub": "3050000.00",
+        "date": "2026-08-19",
+        "customer_contract_number": "060-26-Р",
+        "state": "Исполнение",
+        "supplier_name_visible": false,
+        "customer_inn": "7724646338"
+      }
     }
   ],
   "schema_version": "pq-original-signed-contract/1.0",
