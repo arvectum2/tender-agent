@@ -100,13 +100,13 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
             expanded = runtime / "public223-expanded"
             report["public223_expansion"] = expand_public_223(
                 source_root=public223_source, output_root=expanded,
-                max_cases=30, max_archives=60)
+                max_cases=80, max_archives=120)
             canonical = runtime / "public223-canonical"
             report["public223_canonical"] = canonicalize_public_223(
                 staged=expanded, output=canonical, max_files=500)
             report["public223_direct"] = merge_direct(
                 source_root=public223_source, canonical=canonical,
-                max_cases=35, max_files=200)
+                max_cases=80, max_files=500)
             report["public223_data_platform"] = resume_public_dp(
                 source_root=canonical, runtime=runtime, dp_source=dp_source,
                 max_files=min(max_cases * 3, 60))
