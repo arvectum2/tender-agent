@@ -136,8 +136,10 @@ def capture(*, number: str, url: str, source_root: Path,
             or not description
             or parser.props.get("og:url") != source_url):
         raise ValueError("Original ETP page metadata does not bind exact card/notice")
-    if not any(word in (title + description).casefold() for word in (
-            "компенсац", "конденсатор", "фильтр гармоник", "укрм")):
+    pq_text = (title + " " + description).casefold()
+    if not (any(word in pq_text for word in (
+            "компенсац", "конденсатор", "укрм"))
+            or ("гармоник" in pq_text and "фильтр" in pq_text)):
         raise ValueError("Original ETP card has no Power Quality source evidence")
     sha = hashlib.sha256(blob).hexdigest()
     case.mkdir(parents=True, exist_ok=True)
