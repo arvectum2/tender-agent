@@ -3,14 +3,15 @@
   "task_id": "TA-MI-AUTONOMY-20261027",
   "run_start_issue_comment_id": 6477259385,
   "dataset": "v29_101_unchanged",
-  "first_party_requests_arc": 55,
+  "first_party_requests_arc": 58,
   "first_party_request_breakdown": {
     "official_eis_month_provider_searches_http_not_exposed": 40,
     "official_44fz_notice_detail_pages_http_not_exposed": 2,
     "official_44fz_original_document_get_http200": 4,
     "official_etp_homepage_get_and_discovery": 5,
     "official_etp_public_script_head_and_bounded_get": 2,
-    "official_etp_project_original_pdf_get_http200": 2
+    "official_etp_project_original_pdf_get_http200": 2,
+    "official_etp_large_pdf_initial_get_head_safe_retry": 3
   },
   "month_search": {
     "count": 40,
@@ -222,12 +223,32 @@
       "source_quote": "Защита УКРМ предусматривается на микропроцессорных устройствах РЗА",
       "locator": "2024 Elga PS 35/6 kV project, original PDF native text",
       "original_http_status": 200
+    },
+    {
+      "original_url": "https://etp.metal-it.ru/files/get/9gobbqUm12hdY21etyAfQpbNXJsMFT75jonEb5otUeCYkK2o3LkGzUqdbXwoM4Xxfe/1194-005-%D0%AD%D0%9F_%D0%98%D0%B7%D0%BC.2.pdf.pdf",
+      "original_sha256": "25039d391709276ea5abc0ec73d88f775fa128270bf381542386efffeaa91ce7",
+      "original_bytes": 11326915,
+      "source_quote": null,
+      "locator": "Elektromed 110/6kV project drawing; native text lacks UKRM quote",
+      "original_http_status": 200,
+      "review_state": "unreviewed_pdf_visual_required"
     }
   ],
-  "new_original_etp_project_document_count": 2,
+  "new_original_etp_project_document_count": 3,
   "new_distinct_source_only_project_count": 1,
   "new_independent_project_count_total_including_source_only": 2,
   "new_confirmed_6kv_project_design_need": 1,
   "original_etp_source_only_review_sha256": "e0e0da343bfbcb20fa9a3cc6c98f4550ac21caf4a4cc6febfce9eb90f9a85ffa",
-  "source_only_project_limitations": "Elga 2024 design: UKRM 6 kV 600 kvar (3x200); tender ID, buyer, signed supplier, executed contract and equipment price not established. Do not count as procurement award or sale."
+  "source_only_project_limitations": "Elga 2024 design: UKRM 6 kV 600 kvar (3x200); tender ID, buyer, signed supplier, executed contract and equipment price not established. Do not count as procurement award or sale. Electromed drawing is SHA-verified original but native text lacks UKRM; cannot promote visual-only mention without page-level verification.",
+  "new_original_etp_unreviewed_pdf": {
+    "url": "https://etp.metal-it.ru/files/get/9gobbqUm12hdY21etyAfQpbNXJsMFT75jonEb5otUeCYkK2o3LkGzUqdbXwoM4Xxfe/1194-005-%D0%AD%D0%9F_%D0%98%D0%B7%D0%BC.2.pdf.pdf",
+    "sha256": "25039d391709276ea5abc0ec73d88f775fa128270bf381542386efffeaa91ce7",
+    "bytes": 11326915,
+    "source_scope": "Electromed 110/6 kV substation reconstruction drawings, independent project lead only",
+    "native_text_ukrm_verified": false,
+    "ocr_or_visual_provisional": true,
+    "initial_download_budget_exceeded": true,
+    "full_bounded_retry_http_status": 200,
+    "supplier_and_price": null
+  }
 }
