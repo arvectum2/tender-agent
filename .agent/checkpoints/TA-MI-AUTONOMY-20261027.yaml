@@ -647,3 +647,37 @@ watchdog_eis_readonly_queries_20261028_1533:
     trade identity confirmed, do not infer award; first-party retry after
     2026-10-29 02:22 Europe/Moscow. Keep one existing Watchdog, preserve
     unrelated current-task.yaml, do not merge or mutate production.
+
+watchdog_primary_44_doc_review_20261028_1627:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  run_start_issue_comment_id: 6470248715
+  source_dataset: v29_101_unchanged
+  new_official_calendar_queries: 24
+  first_pages_empty: 20
+  first_pages_with_metadata: 4
+  metadata_candidate_rows_unverified: 13
+  new_44_first_party_notice: "0372100049624002318"
+  new_original_files_sha_verified: 4
+  new_chatgpt_arc_review_accepted: 1
+  confirmed_6_35_kv_projects_new: 0
+  original_protocol_named_winners_new: 0
+  signed_suppliers_verified_new: 0
+  executed_prices_verified_new: 0
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_44FZ_DOC_REVIEW_20261028_1627.json
+  source_ledger_sha256: "f43c215af076738a066eb5c81a16593f971f6b28113cb60a02b3910afb368929"
+  last_tested_code_commit: "79f03ad6d420e17f9272364f7d1796debe52a56b"
+  last_test_results: "6 focused pytest PASS, Ruff PASS, git diff check PASS; 1 inherited Starlette warning"
+  blocker: >-
+    Original 44-FZ capacitor supply documents do not establish voltage 6-35 kV.
+    Attached contract is an unsigned blank draft; no supplier or executed price.
+    Most new first-page metadata candidates were automotive false positives.
+    Data Platform SDK authorization for 15 files remains blocked.
+  resume_instruction: >-
+    Preserve v29 101 and private SHA-bound originals. Do not repeat 24 exact
+    month-law-query combinations before 2026-10-29 04:35 Moscow. Prioritize
+    32413764701 signed supplier, 32514720691 and 32514754857 signed outcomes
+    and project dedup, then GP630876 native ETP documents after 2026-10-29
+    00:41 Moscow. New 44-FZ 0372100049624002318 remains uncertain until
+    voltage and signed outcome independently verified. Keep existing Watchdog,
+    unrelated current-task.yaml untouched, PR REVIEW, no auto-merge.
