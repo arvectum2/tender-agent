@@ -471,3 +471,30 @@ watchdog_mi_search_priority_reset_20261028:
   runtime_root: "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live"
   branch: "feature/pq-etp-provenance-ledger-20261028"
   resume_instruction: "Read THIS newest checkpoint and PR #521 head. Continue acquiring native B2B/ETP/44+223 originals for 59 missing v29 rows and source-verified signed contract supplier/outcome evidence (NOT v20). Do not repeat 41 already verified original case IDs or create duplicate Watchdog. Prioritize new actual sources before CI, metadata and docs. Record per-run requests, SHA, URLs, citations, award and signed supplier distinctions. Keep blocked Data Platform files as blocked until authorized service environment available. Update canonical checkpoint on new evidence; maintain exactly one hourly Tender Agent Watchdog and unrelated current-task.yaml."
+
+watchdog_mi_primary_etp_recovery_20261028_1423:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  source: original ETP documents and 12 bounded month-law-query searches
+  new_first_party_ids:
+  - COM07102500074
+  - COM16012600053
+  - RAD260049805
+  new_verified_original_cards_files: 10
+  safe_archive_pdf_instances: 9
+  unique_archive_pdf_shas: 5
+  network_requests_journaled: 38
+  original_protocol_named_winner: 1
+  signed_supplier_verified: 0
+  executed_price_verified: 0
+  report: docs/market_intelligence/PQ_PRIMARY_ETP_SOURCE_RECOVERY_20261028.md
+  private_source_review: /Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live/watchdog-commercial-review-20261028.json
+  last_tested_code_commit: bc4d160c9c7656421c38f0b35118d92136547f88
+  coverage_note: 41 prior primary IDs, 59 prior missing; new 3 source IDs in separate verified overlay, pending strict coverage
+    audit
+  resume_instruction: 'Keep PR #521 and task in_progress. Audit Roseltorg/RAD SHA overlay in coverage with tests; do not count
+    0.4kV win or owner-furnished 35kV BSK as equipment sale. Recover signed outcomes 32514720691/32514754857, original GP630876
+    and Metal-IT 6kV 119199-TT/135171-TT with cooldown. Keep one Watchdog, preserve unrelated current-task.yaml and no production
+    writes.'
+
+# Same 35kV Pograniсhnaya project, separate RAD260047641 procedure (outside v29), original DOCX SHA f69882741567ee3b53421eb12ef87db4926fab41751623d494166f0d521f66c0; text similarity 0.9808 to RAD260049805. Do not double count.

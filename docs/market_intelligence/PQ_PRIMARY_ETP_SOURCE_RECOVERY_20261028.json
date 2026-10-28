@@ -1,0 +1,70 @@
+{
+  "schema_version": "pq-first-party-etp-review/1",
+  "time_msk": "2026-10-28T14:23:18+03:00",
+  "v29_candidate_rows": 101,
+  "first_party_new_case_ids": [
+    "COM07102500074",
+    "COM16012600053",
+    "RAD260049805"
+  ],
+  "journaled_source_requests": 38,
+  "new_month_law_query_searches": 12,
+  "new_original_first_party_cards_files": 10,
+  "archive_pdf_instances": 9,
+  "unique_archive_pdf_shas": 5,
+  "original_protocols_naming_winner": 1,
+  "signed_suppliers_verified": 0,
+  "executed_prices_verified": 0,
+  "cases": [
+    {
+      "id": "COM07102500074",
+      "class": "irrelevant_0.4kV_cancelled",
+      "original_card_sha": "9366e5824964dc522a72b282f3a27e33fedfbad78644ee5d825e33ba84423bac",
+      "original_cancel_pdf_sha": "79247fa1d6154a01e3e7f156aac6c362f26f0a9fd6fb4fde22f1661dfafa1202",
+      "visual_quote": "ООО «ЛУКОЙЛ – Западная Сибирь» уведомляет об отмене процедуры Запроса предложений № COM07102500074.",
+      "signed_contract": false
+    },
+    {
+      "id": "COM16012600053",
+      "class": "irrelevant_0.4kV_original_winner_not_signed",
+      "original_card_sha": "f8a64e7ca9b6903265017e2b22e96758d500c18994e66d35f4c8005c845e0066",
+      "original_results_pdf_sha": "e4d7f1efc730e01077029e8fcfe9979d462043c79db4da63dbf6964e917d42a0",
+      "winner_visual_quote": "ООО ТПП «ЭнергоТехника» (ИНН 6679111400) с ценой 570 901,64 рублей без учета НДС",
+      "price_offer_ex_vat_rub": 570901.64,
+      "survey_native_quote": "Класс напряжения питающей сети, кВ 0,4",
+      "survey_pdf_sha": "0b0b5dbb033dbde0d72c150d5ab3bd4e7aa02a96d499c5d586cdc11b1544e858",
+      "shared_4_survey_shas": [
+        "4e7341fda84c6c0ffcba88c1cfcc91eab264b29f95dd7f27ce956d4ccf045470",
+        "7d575e56370868bc68500479fe84f5eda4aa1b6bb961405307239c70838db9ee",
+        "ce7179c2117f2aba113877d460269e5b0254d7ec8dc3b65082d389dac8bf7615",
+        "fd5348866b6950994c97099fb3dc0d5942d6ea7a594873c3ff2e38c0048d25b3"
+      ],
+      "signed_contract": false
+    },
+    {
+      "id": "RAD260049805",
+      "class": "relevant_35kV_design_installation_owner_furnished",
+      "original_card_sha": "dbf00b54736fd01c6fcef109daa889399001d15822b791ee95eded07075d2bed",
+      "original_technical_docx_sha": "b335e7d2bac1a9a24046b73dbb44eec502d7a5fb340b205f2e7b3f84d9171369",
+      "native_quotes": [
+        "Установка БСК 35 кВ - 1 шт.",
+        "оборудование, закупленное и передаваемое подрядчику в виде давальческого оборудования"
+      ],
+      "equipment": "БСК 35 кВ - 1 шт.",
+      "owner_furnished": true,
+      "signed_contract": false
+    },
+    {
+      "id": "RAD260047641",
+      "class": "relevant_35kV_design_installation_owner_furnished",
+      "original_card_sha": "372d11ad861f7966bd8157f03223efb8e9192c5830f0eee4be9046527bfe3402",
+      "original_technical_docx_sha": "f69882741567ee3b53421eb12ef87db4926fab41751623d494166f0d521f66c0",
+      "same_named_substation_and_buyer_as": "RAD260049805",
+      "technical_document_text_similarity": 0.9808,
+      "same_underlying_project": "supported_by_identical_project_name_and_original_technical_scope",
+      "separate_contract_not_verified": true
+    }
+  ],
+  "commercial_review_queue": "numeric_EIS_only; separate SHA-bound review receipt, no fake numeric IDs",
+  "new_outside_v29_first_party_procedure": "RAD260047641"
+}
