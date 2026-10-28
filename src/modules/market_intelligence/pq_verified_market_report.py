@@ -13,6 +13,7 @@ from .pq_commission_fact_audit import verify as verify_commission
 from .pq_contract_outcome_audit import audit as audit_contract
 from .pq_contract_xml_index import scan as scan_contract_xml
 from .pq_primary_etp_audit import verify as verify_etp
+from .pq_b2b_primary_audit import verify as verify_b2b
 
 DIRECT_CAPACITOR_CATEGORIES = frozenset({
     "filter_capacitor_supply", "capacitor_bank_component_supply",
@@ -104,7 +105,8 @@ def exact_filestore_sha_receipts(root: Path) -> list[dict]:
 
 
 def summarize(*, leads: list[dict], eis: list[dict],
-              commissions: dict, etp: dict, contracts: dict) -> dict:
+              commissions: dict, etp: dict, contracts: dict,
+              b2b: dict | None = None) -> dict:
     numbered_rows = [
         x for x in leads if re.fullmatch(
             r"[0-9]{11}", str(x.get("procedure_id") or ""))
@@ -116,6 +118,7 @@ def summarize(*, leads: list[dict], eis: list[dict],
               if r.get("market_category") in DIRECT_CAPACITOR_CATEGORIES
               and r.get("price_kind", "").endswith("vat_included")]
     sample_total = sum((Decimal(x["bid_price_rub"]) for x in offers), Decimal(0))
+    b2b = b2b or {"first_party_cards_verified": 0, "source_records": []}
     return {
         "schema_version": "pq-verified-partial-market/1",
         "completeness": "partial_do_not_extrapolate",
@@ -132,6 +135,7 @@ def summarize(*, leads: list[dict], eis: list[dict],
                                                 if not x["verified_file_instances"]),
         "additional_eis_receipts_outside_v29": len(eis) - len(covered),
         "primary_etp_cases_verified": etp["original_etp_cases_verified"],
+        "primary_b2b_center_cases_verified": b2b["first_party_cards_verified"],
         "commission_facts_verified": commissions["facts_accepted"],
         "public_223_contract_register_lots": contracts["distinct_contract_lots_matched"],
         "public_223_register_lots_with_rub_price": contracts["contract_lots_with_rub_price"],
@@ -142,6 +146,7 @@ def summarize(*, leads: list[dict], eis: list[dict],
         "verified_signed_contract_suppliers": 0,
         "commission": commissions["records"],
         "etp": etp["records"],
+        "b2b": b2b["source_records"],
         "contracts": contracts["records"],
         "source_cases": eis,
         "warnings": [
@@ -185,6 +190,7 @@ def markdown(report: dict) -> str:
             f"{report['primary_eis_cases_with_files']}."
         ),
         f"- Исходных первичных карточек Bidzaar: {report['primary_etp_cases_verified']}.",
+        f"- Исходных первичных карточек B2B-Center: {report['primary_b2b_center_cases_verified']}.",
         f"- Проверенных решений комиссий: {report['commission_facts_verified']}.",
         f"- Записей публичного реестра договоров: {report['public_223_contract_register_lots']}.",
         "",
@@ -223,6 +229,25 @@ def markdown(report: dict) -> str:
             f"{item['scope'].replace('_',' ')}; нет верифицированной цены/победителя |")
     lines += [
         "",
+        "## Оригинальные коммерческие карточки B2B-Center",
+        "",
+        "| № | Организатор / заказчик | Предмет | Всего заявок | Результаты |",
+        "|---|---|---|---:|---|",
+    ]
+    for item in report["b2b"]:
+        body = item["source_title"].replace("|", " ")
+        organizer = str(item.get("buyer_platform_display") or item.get("organizer_platform_display") or "не определён").replace("|", " ")
+        applications = item.get("applications_count_not_qualified_bidders")
+        submitted = "неизвестно" if applications is None else str(applications)
+        results = "скрыты организатором" if item["results_hidden_by_organizer"] else "победитель не подтверждён"
+        lines.append(
+            f"| [{item['procedure_id']}]({item['source_url']}) | {organizer} | "
+            f"{body} | {submitted} | {results} |")
+    lines.append(
+        "«Всего заявок» — число поданных заявок по карточке, не количество "
+        "допущенных участников и не подтверждение заключённого договора.")
+    lines += [
+        "",
         "## Публичные записи реестра договоров 223-ФЗ (не проверка подписанных экземпляров)",
         "",
         "| Извещение | Реестровый номер | Заказчик | Цена по XML | Подтверждённый поставщик |",
@@ -252,7 +277,8 @@ def run(*, leads: Path, eis_originals: Path,
         commission_facts: Path, review_queue: Path,
         etp_facts: Path, etp_originals: Path,
         contract_root: Path, day_scan: Path | None = None,
-        official_filestore_root: Path | None = None) -> dict:
+        official_filestore_root: Path | None = None,
+        b2b_originals: Path | None = None) -> dict:
     corpus = json.loads(leads.read_text(encoding="utf-8"))["records"]
     eis = source_receipts(eis_originals)
     if official_filestore_root is not None:
@@ -266,6 +292,7 @@ def run(*, leads: Path, eis_originals: Path,
                 eis.append(source)
     commission = verify_commission(facts=commission_facts, queue=review_queue)
     etp = verify_etp(facts=etp_facts, source_root=etp_originals)
+    b2b = verify_b2b(source_root=b2b_originals) if b2b_originals is not None else None
     with TemporaryDirectory(prefix="pq-market-source-") as temporary:
         index = scan_contract_xml(contract_root, leads)
         path = Path(temporary) / "contract-source-index.json"
@@ -273,7 +300,7 @@ def run(*, leads: Path, eis_originals: Path,
         contracts = audit_contract(leads_path=leads, contracts_path=path,
                                    contract_root=contract_root, day_scan_path=day_scan)
     return summarize(leads=corpus, eis=eis, commissions=commission,
-                     etp=etp, contracts=contracts)
+                     etp=etp, contracts=contracts, b2b=b2b)
 
 
 def main() -> None:
@@ -284,6 +311,7 @@ def main() -> None:
     p.add_argument("--queue", type=Path, required=True)
     p.add_argument("--etp-facts", type=Path, required=True)
     p.add_argument("--etp-originals", type=Path, required=True)
+    p.add_argument("--b2b-originals", type=Path)
     p.add_argument("--contract-root", type=Path, required=True)
     p.add_argument("--day-scan", type=Path)
     p.add_argument("--official-filestore-originals", type=Path)
@@ -293,6 +321,7 @@ def main() -> None:
     result = run(leads=args.leads, eis_originals=args.eis_originals,
                  commission_facts=args.commission_facts, review_queue=args.queue,
                  etp_facts=args.etp_facts, etp_originals=args.etp_originals,
+                 b2b_originals=args.b2b_originals,
                  contract_root=args.contract_root, day_scan=args.day_scan,
                  official_filestore_root=args.official_filestore_originals)
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -301,7 +330,7 @@ def main() -> None:
         args.markdown.parent.mkdir(parents=True, exist_ok=True)
         args.markdown.write_text(markdown(result), encoding="utf-8")
     print(json.dumps({k: v for k, v in result.items()
-                      if k not in ("commission", "etp", "contracts", "source_cases", "warnings")},
+                      if k not in ("commission", "etp", "b2b", "contracts", "source_cases", "warnings")},
                      ensure_ascii=False))
 
 
