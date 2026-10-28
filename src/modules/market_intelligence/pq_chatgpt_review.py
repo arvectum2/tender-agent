@@ -9,13 +9,15 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import shutil
 import subprocess
+import sys
 import zipfile
 from pathlib import Path
 
 import yaml
 
-ALLOWED = {".pdf", ".txt", ".docx", ".xlsx"}
+ALLOWED = {".pdf", ".txt", ".doc", ".docx", ".xlsx"}
 MAX_FILE = 20 * 1024 * 1024
 MAX_TEXT = 30000
 MAX_FILES = 24
@@ -33,6 +35,25 @@ def _extract(path: Path) -> tuple[str, str]:
         if proc.returncode:
             return "", "pdf_text_extraction_failed"
         return proc.stdout.decode("utf-8", errors="replace")[:MAX_TEXT], "native_pdf_text"
+    if suffix == ".doc":
+        # Legacy binary Word originals are common in EIS 44/223. Preserve the
+        # original file SHA; extraction is bounded, read-only, and macro-free.
+        if path.open("rb").read(8) != b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1":
+            return "", "invalid_legacy_doc_container"
+        if sys.platform == "darwin":
+            command = ["/usr/bin/textutil", "-convert", "txt", "-stdout", str(path)]
+        else:
+            binary = shutil.which("antiword")
+            if binary is None:
+                return "", "legacy_doc_extractor_unavailable"
+            command = [binary, str(path)]
+        try:
+            proc = subprocess.run(command, capture_output=True, timeout=25, check=False)
+        except (OSError, subprocess.TimeoutExpired):
+            return "", "legacy_doc_extraction_failed"
+        if proc.returncode:
+            return "", "legacy_doc_extraction_failed"
+        return proc.stdout.decode("utf-8", errors="replace")[:MAX_TEXT], "legacy_doc_text"
     if suffix == ".txt":
         return path.read_text(encoding="utf-8", errors="replace")[:MAX_TEXT], "text"
     if suffix == ".docx":
