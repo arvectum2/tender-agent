@@ -10,7 +10,8 @@ import json
 from pathlib import Path
 
 
-def audit(*, coverage: dict, projects: dict, market: dict) -> dict:
+def audit(*, coverage: dict, projects: dict, market: dict,
+          data_platform: dict | None = None) -> dict:
     if (coverage.get("schema_version") != "pq-discovery-coverage/1"
             or projects.get("schema_version") != "pq-reviewed-project-links-audit/1"
             or market.get("schema_version") != "pq-verified-partial-market/1"):
@@ -113,9 +114,17 @@ def audit(*, coverage: dict, projects: dict, market: dict) -> dict:
         for row in coverage["period_search_coverage"])
     missing_source = coverage["candidate_rows_without_verified_primary_original"]
     no_documents = market["primary_eis_no_document_cases"]
+    dp = data_platform or {}
+    dp_status = dp.get("status") if data_platform is not None else "not_reported"
+    dp_pending = int(dp.get("pending", 0)) if data_platform is not None else None
+    dp_complete = dp_status == "complete" and dp_pending in (0, None)
     return {
         "schema_version": "pq-s10-quality-gate/1",
         "status": "partial_source_consistent_market_incomplete",
+        "data_platform_extraction_status": dp_status,
+        "data_platform_extraction_complete": dp_complete,
+        "data_platform_pending_source_files": dp_pending,
+        "data_platform_source_bytes_preserved": bool(dp.get("original_shas_preserved", True)),
         "source_arithmetic_consistency_passed": True,
         "full_market_acceptance_passed": False,
         "source_consistency_checks": checks,
@@ -135,6 +144,10 @@ def audit(*, coverage: dict, projects: dict, market: dict) -> dict:
             "signed supplier evidence where accessible; contract register price alone insufficient",
             "line-item PQ equipment price allocations for large EPC programs",
             "independent QA review of duplicate asset/project and legal rights restrictions",
+            *(
+                ["Data Platform SDK extraction blocked or unfinished; source SHA retained without promoting text"]
+                if not dp_complete else []
+            ),
         ],
     }
 
