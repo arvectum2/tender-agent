@@ -10,7 +10,7 @@
 - [x] T005 Add tests for 3/2/1 and 101/33/68 corpora; assert no TAM or signed-supplier inference.
 - [x] T006 Validate lint, unit/regression and source snapshot consistency, then cross-review documentation/code/test diff.
 - [x] T006a Repair existing CI architecture failure without relaxing audit: PQ extraction now uses the shared Data Platform consumer SDK facade, not a cross-repo Python import; source SHA, read-only extraction, selective resume, failure receipt and PDF fallback regression tested with a real synthetic authorized HTTP request.
-- [ ] T007 Prepare reviewed commit/PR, check CI and merge before AES canonical closure; synchronize existing roadmap and Watchdog checkpoint as needed (do not silently overwrite).
+- [x] T007 PR #520 merged to `main` as `e92c948c`; Spec Kit CLI v1.2.4 status OK; targeted smoke 17 passed (CI/merge already performed, broader AES S0-S11 closure still open).
 
 ## Phase 2 — audited original sources (US2)
 - [ ] T008 2024, 2025, 2026 discovery coverage: ЕИС 44/223, official contract register, commercial ETPs; log dates, provider, queries, failures and explicit denominator.
