@@ -71,17 +71,20 @@ def test_synthetic_source_coverage_no_market_inference(tmp_path: Path):
     assert result["candidate_denominator"] == 3
     assert result["source_category_counts"] == {
         "223fz": 1, "commercial_or_unresolved": 2}
-    assert result["primary_source_bound_cases"] == 2
-    assert result["cases_without_verified_primary_original"] == 1
-    assert result["primary_original_source_types"]["official_223_with_files"] == 1
-    assert result["primary_original_source_types"]["original_commercial_etp_html"] == 1
+    assert result["candidate_rows_with_primary_original"] == 2
+    assert result["candidate_rows_without_verified_primary_original"] == 1
+    assert result["distinct_223_notice_numbers"] == 1
+    assert result["numbered_223_candidate_lot_rows"] == 1
+    assert result["unique_notice_or_etp_numbers_with_primary_original"] == 2
+    assert result["primary_original_source_types"]["official_223_unique_notices_with_files"] == 1
+    assert result["primary_original_source_types"]["original_commercial_etp_unique_cards"] == 1
     assert all(row["coverage_state"] == "not_demonstrated"
                for row in result["period_search_coverage"])
     assert len(result["period_search_coverage"]) == 34
     assert result["cases"][-1]["primary_source_state"] == "secondary_or_unverified_source_only"
     assert all(row["signed_contract_supplier_verified"] is False for row in result["cases"])
     assert _source_year("32616339168") == 2026
-    assert result["source_223_year_hint_not_publication_date"]["2026"]["223_number_candidates"] == 1
+    assert result["source_223_year_hint_not_publication_date"]["2026"]["distinct_223_notices"] == 1
 
 
 def test_absent_documents_not_zero_market(tmp_path: Path):
@@ -95,7 +98,7 @@ def test_absent_documents_not_zero_market(tmp_path: Path):
     receipt.write_text(json.dumps(r))
     result = build(**sources)
     assert result["cases"][0]["primary_source_state"] == "official_notice_receipt_without_files"
-    assert result["primary_source_bound_cases"] == 1
+    assert result["candidate_rows_with_primary_original"] == 1
     assert result["completeness"] == "partial_period_discovery_not_established"
 
 
@@ -120,3 +123,24 @@ def test_calendar_window_does_not_infer_nonsearched_months():
     assert _months("2024-01-01", "2024-02-28") == ["2024-01", "2024-02"]
     with pytest.raises(ValueError):
         _months("2026-10-28", "2024-01-01")
+
+
+
+def test_two_lots_share_one_223_notice_but_remain_two_rows(tmp_path: Path):
+    sources = _fixture(tmp_path)
+    data = json.loads(sources["leads"].read_text())
+    data["records"].append({
+        "canonical_id": "223:32616339168:lot2",
+        "procedure_id": "32616339168", "scope": "supply_components",
+        "family": "capacitor_components", "evidence": [],
+    })
+    sources["leads"].write_text(json.dumps(data))
+    result = build(**sources)
+    assert result["candidate_denominator"] == 4
+    assert result["source_category_counts"]["223fz"] == 2
+    assert result["distinct_223_notice_numbers"] == 1
+    assert result["numbered_223_candidate_lot_rows"] == 2
+    assert result["additional_lot_rows_sharing_223_notice"] == 1
+    assert result["commercial_or_nonstandard_candidate_rows"] == 2
+    assert result["candidate_rows_with_primary_original"] == 3
+    assert result["unique_notice_or_etp_numbers_with_primary_original"] == 2
