@@ -65,3 +65,41 @@ def test_reject_manifest_sha_filename_mismatch(tmp_path: Path):
     with pytest.raises(ValueError, match="Unsafe canonical"):
         run(source_root=root, runtime=tmp_path / "runtime",
             dp_source=tmp_path, extractor=lambda **kwargs: None)
+
+
+
+def test_missing_dp_api_key_is_non_mutating_and_source_shas_remain_retryable(tmp_path: Path, monkeypatch):
+    from types import SimpleNamespace
+    import src.modules.market_intelligence.pq_public_dp_resume as module
+
+    root = _source(tmp_path)
+    first = _add(root, "32615969197", b"Source bytes that must not be lost")
+    runtime = tmp_path / "runtime"
+    monkeypatch.setattr(module, "get_settings",
+                        lambda: SimpleNamespace(rag_data_platform_api_key=None))
+    result = run(source_root=root, runtime=runtime, dp_source=tmp_path)
+    assert result["status"] == "blocked_missing_data_platform_api_key"
+    assert result["source_count"] == 1
+    assert result["pending"] == 1
+    assert result["files_inspected"] == 0
+    assert result["original_shas_preserved"] is True
+    assert list(runtime.glob("dp-public223-batch-*.json")) == []
+    state = json.loads((runtime / "public223-dp-state.json").read_text())
+    assert state["processed"] == {}
+    assert state["batches"] == []
+    assert (root / first).read_bytes() == b"Source bytes that must not be lost"
+    # Retry with test-only fake extractor; the existing same-SHA original is picked up.
+    called = []
+    def fake_ingest(*, sources, output, include_relative_paths, **unused):
+        called.extend(include_relative_paths)
+        selected = list(include_relative_paths)
+        output.write_text(json.dumps({"records": [
+            {"path": str(root / name),
+             "sha256": hashlib.sha256((root / name).read_bytes()).hexdigest(),
+             "extraction_status": "extracted"} for name in selected]}))
+        return {"files_inspected": len(selected), "extracted": len(selected), "errors": 0}
+    retry = run(source_root=root, runtime=runtime, dp_source=tmp_path,
+                extractor=fake_ingest)
+    assert retry["status"] == "complete"
+    assert called == [first]
+    assert retry["processed_count"] == 1
