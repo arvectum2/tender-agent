@@ -25,6 +25,8 @@ from .pq_public_223_direct import merge_direct
 from .pq_commission_fact_audit import verify as verify_commission_facts
 from .pq_primary_etp_capture import batch as fetch_primary_etp
 from .pq_primary_etp_audit import verify as verify_primary_etp
+from .pq_official_url_sha_acquire import batch as fetch_official_url_sha
+from .pq_verified_market_report import exact_filestore_sha_receipts
 
 
 def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
@@ -36,7 +38,8 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
               public223_source: Path | None = None,
               commission_facts: Path | None = None,
               primary_etp_source: Path | None = None,
-              primary_etp_facts: Path | None = None) -> dict:
+              primary_etp_facts: Path | None = None,
+              official_filestore_source: Path | None = None) -> dict:
     if not 1 <= max_cases <= 30 or not source_roots:
         raise ValueError("Invalid cycle scope")
     runtime.mkdir(parents=True, exist_ok=True)
@@ -157,6 +160,26 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
             "signed_contracts_verified": verified_facts["verified_signed_contracts"],
             "artifact": str(verified_file),
         }
+    if official_filestore_source is not None:
+        report["official_filestore_fetch"] = (
+            fetch_official_url_sha(
+                leads=leads, root=official_filestore_source,
+                journal=runtime / "official-url-sha-attempts.json",
+                max_cases=min(max_cases, 3))
+            if network else {"status": "skipped_offline"})
+        if official_filestore_source.is_dir():
+            bound = exact_filestore_sha_receipts(official_filestore_source)
+            report["official_filestore_evidence"] = {
+                "cases": len(bound),
+                "sha_verified_files": sum(x["verified_file_instances"] for x in bound),
+            }
+            report["official_filestore_dp"] = ingest(
+                sources=official_filestore_source,
+                output=runtime / "dp-official-url-sha.json",
+                dp_source=dp_source, max_files=min(max_cases * 4, 120))
+            report["review_queues"].append(seed(
+                sources=official_filestore_source, ontology=ontology,
+                queue_dir=queue, max_cases=max_cases))
     if primary_etp_source is not None:
         report["primary_etp_fetch"] = (
             fetch_primary_etp(
@@ -199,6 +222,7 @@ def main() -> None:
     p.add_argument("--commission-facts", type=Path)
     p.add_argument("--primary-etp-source", type=Path)
     p.add_argument("--primary-etp-facts", type=Path)
+    p.add_argument("--official-filestore-source", type=Path)
     a = p.parse_args()
     result = run_cycle(leads=a.leads, source_roots=a.source_root,
                        archive_index=a.archive_index, runtime=a.runtime,
@@ -208,7 +232,8 @@ def main() -> None:
                        public223_source=a.public223_source,
                        commission_facts=a.commission_facts,
                        primary_etp_source=a.primary_etp_source,
-                       primary_etp_facts=a.primary_etp_facts)
+                       primary_etp_facts=a.primary_etp_facts,
+                       official_filestore_source=a.official_filestore_source)
     print(json.dumps(result, ensure_ascii=False))
 
 
