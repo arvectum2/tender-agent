@@ -979,3 +979,69 @@ watchdog_source_bound_xlsx_20261028_2129:
     combinations before 2026-10-29 09:35:02 MSK. Preserve unrelated
     .agent/current-task.yaml, short leases, single hourly Watchdog,
     original source SHA and REVIEW/no automatic merge.
+
+watchdog_primary_vostochny_bort_20261028_2227:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  run_start_issue_comment_id: 6478547799
+  corpus: v29_101_unchanged
+  new_first_party_network_requests: 30
+  source_requests_breakdown: {month_searches: 24, original_pdf_initial_and_retry: 2, uds_legacy_404: 2, uds_current_platform: 2}
+  new_calendar_scoped_searches: 24
+  months_with_new_query_combinations: 6
+  exhaustive_months_new: 0
+  month_statuses: {empty: 17, success: 7}
+  metadata_candidate_rows: 61
+  metadata_candidates_title_exact_matches: 0
+  new_sha_verified_original_files: 1
+  new_primary_case_cards: 0
+  new_verified_notice_ids: 0
+  new_verified_lots: 0
+  new_source_only_projects: 1
+  new_original_named_award_protocols: 0
+  new_signed_supplier_verified: 0
+  new_executed_price_verified: 0
+  new_6_35kv_sales_verified: 0
+  new_arc_standard_queue_reviews: 0
+  review_note: >-
+    ChatGPT visually checked scanned first page and source-native text of
+    a new original Metal-IT 30-page technical specification. Standard ARC
+    review queue requires a verified numeric notice; no fabricated ID or
+    review was enqueued. Existing ARC queue has 2 unreadable packets and
+    2 exact-SHA duplicates skipped; no productive reviewable packet.
+  original_pdf_sha256: 21043f93df29fccc285ffcccc9d9ba09f5d637541eaa11fcb860db84c04cbc75
+  original_pdf_private_relative: watchdog-20261028-2227-primary/metal-it-east-bort-37.pdf
+  source_evidence_ledger: docs/market_intelligence/PQ_WATCHDOG_PRIMARY_DELTA_20261028_2227.json
+  source_evidence_ledger_sha256: a3e8c2bf228450d7d6627a82bb3190afa69c9f5db3fdf0033888bb6dd002b972
+  evidence_commit: 3566e4f6ae96e49491632d4844ea0a608ccff782
+  last_tested_code_commit: f93031e716b5ce48eb478a1bd21f1a44c70967c8
+  validation: >-
+    SHA-256 original PDF and visual first-page render verified; five
+    exact normalized native PDF quotations validated against pages 3, 5,
+    10; JSON parsed and git diff --check passed. No source code changed;
+    no broad test suite repeated.
+  finding: >-
+    2024 OAO KuzbassElektro original supply technical specification for
+    PS Vostochny Bort No37 35/6kV includes 2 UKRMF in 6kV switchgear,
+    reactive power compensation with harmonic filters, stated installation
+    1500 kvar, 300+300 kvar stages, filter tuning 189 Hz. This is
+    source-confirmed equipment demand in a mixed substation supply scope,
+    NOT a verified signed sale, contract, winner or paid price.
+  gaps: >-
+    Tender/lot number and contract for PS Vostochny Bort not found;
+    UDS legacy original URL HTTP404 twice, new official UDS site public
+    pages HTTP200 but no case-specific tender server HTML. 54 v29
+    candidate rows still without primary originals; 15 Data Platform
+    files blocked on approved SDK credential. No signed supplier or
+    executed PQ-only price discovered.
+  resume_instruction: >-
+    Keep v29 corpus unchanged and source-only Vostochny Bort project
+    distinct until original notice/lot/contract verified. Next independent
+    case: GP630876 original GPB source only after 2026-10-29 00:41 MSK;
+    then 32413764701 10kV and 32515582393 6kV signed supplier/payment
+    only after 2026-10-29 06:46 MSK. Do not repeat this run's 24 exact
+    law/month/query searches before 2026-10-29 10:35 MSK; 2024-09,
+    2025-05 and 2026-08 STATCOM results were lexical false positives.
+    Avoid retrying UDS 404 before 2026-10-29 10:30 MSK. Preserve
+    unrelated current-task.yaml, sole hourly Watchdog, immutable SHA,
+    REVIEW/no automatic merge and no production/procurement effects.
