@@ -1169,3 +1169,52 @@ watchdog_source_review_20261029_0030:
     Do not repeat 12 month/law/query combinations before 12:35 MSK.
     Preserve original SHA, unrelated current-task.yaml, dirty chat worktree,
     sole hourly Watchdog, REVIEW and no auto-merge.
+
+manual_supplier_and_archive_reconciliation_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  execution_at_utc: '2026-10-28T22:20:37Z'
+  canonical_research_pr: 521
+  canonical_corpus: v29_101_unchanged
+  evidence_commit: f6c537e49f6eb8b16986bc91b4d07aab45cbc7a2
+  tests: '60 relevant pytest passed; Ruff clean; diff check clean; one inherited Starlette warning'
+  supplier_evidence: docs/market_intelligence/FGI_PRIMARY_PRODUCT_AND_GPB_SOURCE_20261029.json
+  supplier_first_party_product: 'FGI 6-6.6 kV SVG/STATCOM; 3 manufacturer quotes matched to captured source bytes, but transport timed out; do not label complete or proven Russian sale'
+  supplier_first_party_partial_html_sha256: a000124c7635928fdfaaa2fb48ec3c98de57067280ec1e926c39560bc3c38f08
+  gpb_10kv_research:
+    case: 'commercial:ГП630876:lot1'
+    already_in_v29: true
+    original_platform_search_http: 200
+    original_platform_case_identity_visible: false
+    secondary_card_http: 200
+    original_tz_and_contract_found: false
+    source_status: first_party_search_unresolved
+  archive_reconciliation_file: docs/market_intelligence/PQ_RETO_12KV_RECONCILIATION_20261029.json
+  historical_archive_case: '223fz:32616181358:lot1'
+  archival_source_pdf_sha_reverified: 92874d098feb7dc6c283bd7b66c5218e11e472f27eddffc75edd6613fb5b21ef
+  archival_original_protocol_source_http: 200
+  archival_original_protocol_pages_visually_checked: [2, 3]
+  archival_original_winner: 'ООО ЭКСПЕРТ ГРУПП, INN 7720494275, offer RUB 3050000 incl VAT22'
+  archival_original_rejected_bidder: 'ООО Серпуховский конденсаторный завод КВАР (missing requested tax certificate; 37.5A versus 50A requirement)'
+  archived_signed_registry_pages_current_http: [404, 404]
+  archived_contract_price_rub_historical_only: '3050000.00'
+  signed_supplier_identity_verified_new: 0
+  physical_delivery_verified_new: 0
+  new_independent_unique_primary_originals: 0
+  historical_223_source_reverified_count: 1
+  primary_gp630876_originals_new: 0
+  new_notices_promoted_to_v29: 0
+  new_core_6_35kv_equipment_sales_verified: 0
+  blockers: 'Official GPB search returned generic SSR without tender identity; two RETO EIS registry pages returned 404, do not infer signed supplier; FGI official full page stream timed out; 15 DP source items still lack approved service authorization.'
+  resume_instruction: >-
+    Continue only existing PR #521/TA-MI-AUTONOMY; preserve original v29 101 rows.
+    After 06:46 Moscow verify first-party signed 10/6 kV UKRM supplier and
+    registry amount for 32413764701 and 32515582393. Do not retry 12 month
+    searches before 12:35 Moscow. Retry GP630876 only with newly discovered
+    official original case URL. Revisit RETO original contract register via
+    a separately verified public source adapter; historical archived SHA alone
+    does not establish actual signed supplier. Expand supplier profile from
+    complete primary catalogues, compare product capability with technical ТЗ;
+    do not assume SVG/STATCOM is interchangeable with switched UKRM/BSK.
+    Keep one Watchdog, no new MI PR or production mutation, no auto-merge.
