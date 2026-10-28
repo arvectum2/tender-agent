@@ -388,18 +388,19 @@ month_scoped_official_eis_20261028:
   status: in_progress_review_required
   scope: "First-page exact month-bound EIS 223/44 source searches, not exhaustive market discovery"
   completed:
-    - "14 actual official date-bound queries (12 topical + 2 exact-ID) across 2024-04, 2025-05, 2026-09; two PQ terms and two laws per month"
-    - "6 nonempty first pages, 17 unverified candidate metadata rows, 8 parsed empty pages"
+    - "20 actual official date-bound queries (18 topical + 2 exact-ID) across 6 sample months in 2024, 2025 and 2026"
+    - "7 nonempty first pages, 18 unverified candidate metadata rows, 13 parsed empty pages"
     - "5 May-2025 and 2 Sep-2026 44-FZ results are visibly medical equipment repair false positives; no PQ supplier or price promoted"
     - "v29 101 rows, 39 original-source-backed rows, 62 without; all 34 months still lack exhaustive discovery proof"
     - "Gap inventory refreshed for all 101 v29 leads; S10 source checks passed; 15 DP extractions remain blocked by missing authorized SDK key"
+    - "New outside-v29 44-FZ candidate 0315100006624000089 has SHA-bound official notice/documents HTML and five observed links; original DOCX unavailable (verified-TLS URL errors, curl HTTP 404), no 6-35 kV/signed award claimed"
   evidence:
-    journal_sha256: 27949492f0bc2727bb11cdc034b46709ed8f1905563e688c134ced00e4d357b5
-    coverage_sha256: 2238cdb939462d2ee09832df09c33ad56882fff699b622497128b1420332b016
+    journal_sha256: de7e8a2b229f98538d06fe5b706f8ec7d12136a90190bba471ca9b4cca28b25f
+    coverage_sha256: 1e02cb52fa32e9ae1f5c15b974c2405a39c3db1ece94f85875f9c550e469dbba
     quality_sha256: 930d83abf7bbf10ef730020eda9dbc3ed6c23fa6ade29f93eb924c2fe1673205
     report: docs/market_intelligence/PQ_EIS_MONTH_BOUND_SEARCH_20261028.md
   remaining:
-    - "31 months without even bounded sampled official month search; 34 months without exhaustive proof"
+    - "28 months without even bounded sampled official month search; 34 months without exhaustive proof"
     - "Original ETP awards, signed contracts, verified suppliers and equipment-only prices remain open"
     - "15 Data Platform files blocked pending authorized service API key"
-  resume_instruction: "Inspect PR #521 exact-head CI and this checkpoint. Continue bounded new calendar windows and originating ETP source retrieval; do not repeat 14 journaled exact month/law/query combinations before cooldown. Source-verify candidate technical specs and signed contracts, never promote search metadata or commission offers to executed sales. Keep MI in REVIEW, preserve one Watchdog and unrelated current-task.yaml."
+  resume_instruction: "Inspect PR #521 exact-head CI and this checkpoint. Continue bounded new calendar windows and originating ETP source retrieval; do not repeat 20 journaled exact month/law/query combinations before cooldown. Source-verify candidate technical specs and signed contracts, never promote search metadata or commission offers to executed sales. Keep MI in REVIEW, preserve one Watchdog and unrelated current-task.yaml."

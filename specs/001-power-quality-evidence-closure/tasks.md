@@ -27,7 +27,7 @@
 - [x] T013a Prove exact two-notice repeat of BESK lot 26-004167 at Pionerskaya using failed original protocols; preserve 2 independent parent-program links without merging separate Lopcha EPC/design contracts.
 - [x] T014a Produce source consistency-checked `coverage.json`, `project_register.json`, `quality_report.json` and partial `report.md` using existing PQ runtime. Report 38 unique primary IDs, 62 unverified candidate rows, and unknown monthly search completeness.
 - [x] T014b Isolate corrupt RTF-with-DOCX extension and Data Platform missing-key condition; preserve all original SHA and pending 15 extraction tasks. *Do not* claim fully extracted corpus.
-- [x] T008b Perform 14 actual first-page (12 topical + 2 exact-ID), date-bound official EIS searches across three sample months (2024-04, 2025-05, 2026-09), journal exact source/status and seven false-positive medical results. Keep 34 months **not exhaustively verified**; this does not complete T008 or T014c.
+- [x] T008b Perform 20 actual first-page (18 topical + 2 exact-ID), date-bound official EIS searches across six sample months (2024-04, 2024-10, 2025-05, 2025-11, 2026-06, 2026-09), journal exact source/status and seven false-positive medical results. Keep 34 months **not exhaustively verified**; this does not complete T008 or T014c.
 
 ### Source-grade blockers (not closure)
 - [ ] T009b Obtain primary commercial award protocol/supplier and prices for remaining unverified commercial leads (including four B2B cards with hidden outcomes).
