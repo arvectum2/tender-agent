@@ -10,6 +10,7 @@ import hashlib
 import json
 import re
 import subprocess
+import zipfile
 from pathlib import Path
 
 import yaml
@@ -64,13 +65,24 @@ def prepare_packet(*, document_dir: Path, ontology_path: Path,
     terms = [(family["id"], word) for family in ontology["families"]
              for word in family.get("positive", []) if len(word) >= 3]
     docs = []
+    extraction_errors = []
     for path in sorted(document_dir.iterdir()):
         if len(docs) >= max_files:
             break
         if path.suffix.lower() not in ALLOWED:
             continue
         digest = hashlib.sha256(path.read_bytes()).hexdigest()
-        content, method = _extract(path)
+        try:
+            content, method = _extract(path)
+        except zipfile.BadZipFile:
+            # Some publicly uploaded .docx/.xlsx files are mislabeled RTF
+            # or corrupt ZIP bytes. Keep their original SHA, do not fabricate
+            # extracted text, and continue the other source documents.
+            content, method = "", "invalid_office_archive_container"
+            extraction_errors.append({
+                "sha256": digest, "filename": path.name,
+                "error_type": "BadZipFile",
+            })
         hits = [{"family": family, "term": word} for family, word in terms
                 if word.casefold() in content.casefold()]
         docs.append({"filename": path.name, "sha256": digest, "method": method,
@@ -80,6 +92,7 @@ def prepare_packet(*, document_dir: Path, ontology_path: Path,
         "schema_version": "pq-chatgpt-review-packet/1",
         "registry_number": registry_number,
         "documents": docs,
+        "extraction_errors": extraction_errors,
         "review_instructions": (
             "Act as a Russian 6-35 kV Power Quality procurement analyst. "
             "Check original document quotations and precise equipment scope. "
