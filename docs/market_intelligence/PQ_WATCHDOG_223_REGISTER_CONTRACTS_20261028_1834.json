@@ -121,17 +121,41 @@
       "signed_supplier_verified": false,
       "executed_payment_verified": false,
       "pq_equipment_only_price_rub": null
+    },
+    {
+      "notice": "32413764701",
+      "contract_register_number": "58601033125240001550000",
+      "registered_price_rub": "4077120.00",
+      "contract_date": "2024-08-09",
+      "scope": "core_supply_10kv_150kvar",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=58601033125240001550000",
+      "source_sha256": "24c041d6d1419f0564ce85777c0ff3ad96314f71df7180469dd4c0dfa2bc6f28",
+      "registered_status": "Исполнение завершено",
+      "technical_original_sha256": "731f9ce22329ee8d35aa151caf3a714db0d7e2eff34c7060b0b51e8eb63a0349",
+      "original_commission_bid_rub": "3397600.00",
+      "commission_participant_identity": "unknown_participant_1",
+      "vat_status": "not_independently_confirmed",
+      "already_verified_in_local_xml": false,
+      "signed_supplier_verified": false,
+      "executed_payment_verified": false,
+      "pq_equipment_only_price_rub": null
     }
   ],
   "counts": {
-    "contract_registry_records_source_verified": 9,
+    "contract_registry_records_source_verified": 10,
     "previously_local_xml_verified": 2,
-    "new_registry_entries_relative_to_prior_local_xml": 7,
+    "new_registry_entries_relative_to_prior_local_xml": 8,
     "new_sha_verified_original_attachments": 3,
     "new_223_notice_with_originals_outside_v29": "32615810535",
     "new_signed_suppliers": 0,
     "new_executed_prices": 0,
-    "month_scopes_exhaustively_covered": 0
+    "month_scopes_exhaustively_covered": 0,
+    "new_core_6_35kv_registered_supply_contracts": 2,
+    "new_source_requests_this_run": 59,
+    "observed_http_200": 58,
+    "observed_timeout": 1,
+    "new_source_grade_reviews_accepted": 8,
+    "new_date_bounded_registry_searches": 1
   },
   "key_evidence": {
     "notice": "32515582393",
@@ -174,13 +198,27 @@
   },
   "private_runtime_ledger": {
     "relative_path": "pq-agent-pilot-live/watchdog-20261028-1834/contract223-reconciled-facts.json",
-    "sha256": "6e42380e5f317e8e96e6efcd2cb8c0c44cbe24619e27328ae44e05909b44d315"
+    "sha256": "c0ad2a297a761210a738a76b985b78db814620e5e185030edda4fb105df25744"
   },
   "caveats": [
     "Public 223-FZ register card establishes recorded contract price and date, not signed original copy, supplier identity or executed payment.",
     "Commission participant is not automatically a signed contractor.",
     "110/500kV substation labels do not prove device rated voltage; no mixed EPC price included as 6–35kV PQ equipment value.",
     "Possible Nagornaya relationship between supply 32515582393 and reconstruction 32615614821 remains unresolved, no project merge.",
-    "One search results page does not prove exhaustive coverage."
-  ]
+    "One search results page does not prove exhaustive coverage.",
+    "2024 notice 32413764701 has an official 223-FZ registered contract with status Исполнение завершено, but no public signed supplier or independent payment evidence; do not infer VAT solely from a 1.20 price ratio."
+  ],
+  "key_evidence_2024": {
+    "notice": "32413764701",
+    "contract_register_number": "58601033125240001550000",
+    "registered_price_rub": "4077120.00",
+    "date": "2024-08-09",
+    "register_status": "Исполнение завершено",
+    "original_10kv_150kvar_pdf_sha256": "731f9ce22329ee8d35aa151caf3a714db0d7e2eff34c7060b0b51e8eb63a0349",
+    "commission_bid_rub": "3397600.00",
+    "bid_to_contract_price_ratio": 1.2,
+    "vat_status": "not independently verified; ratio is not proof",
+    "signed_supplier_verified": false,
+    "paid_amount_verified": false
+  }
 }
