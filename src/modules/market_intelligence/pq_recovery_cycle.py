@@ -257,7 +257,9 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
             contract_root=contract_root, day_scan=contract_day_scan,
             official_filestore_root=official_filestore_source,
             b2b_originals=b2b_source)
-        quality = audit_quality(coverage=coverage, projects=resolved, market=market)
+        quality = audit_quality(
+            coverage=coverage, projects=resolved, market=market,
+            data_platform=report.get("public223_data_platform"))
         for filename, artifact in (
                 ("coverage.json", coverage),
                 ("project_register.json", resolved),
@@ -269,6 +271,9 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
         (runtime / "report.md").write_text(market_markdown(market), encoding="utf-8")
         report["spec_kit_evidence_closure"] = {
             "source_consistency_passed": quality["source_arithmetic_consistency_passed"],
+            "data_platform_extraction_complete": quality["data_platform_extraction_complete"],
+            "data_platform_extraction_status": quality["data_platform_extraction_status"],
+            "pending_data_platform_original_files": quality["data_platform_pending_source_files"],
             "full_market_acceptance_passed": quality["full_market_acceptance_passed"],
             "primary_procedure_ids": quality["unique_primary_source_procedures"],
             "remaining_candidate_rows_without_primary": quality["source_missing_candidate_rows"],
