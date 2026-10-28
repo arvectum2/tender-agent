@@ -1,0 +1,72 @@
+{
+  "schema_version": "mi013-primary-original-eis-karelia-epc-pg-enrichment/1.0",
+  "as_of": "2026-10-28",
+  "data_version": "v40",
+  "database": "arvectum_data",
+  "collection": "arvectum-market-pq-6-35kv",
+  "updated_existing_case": "223fz:32616433248:lot1",
+  "new_procurement_notices": 0,
+  "new_signed_rd223_contracts": 0,
+  "original_two_protocol_archives": [
+    {
+      "date": "2026-10-14",
+      "file": "D12310E98C084DC0B90B88C588DA72E7",
+      "bytes": 181744,
+      "sha256": "842c06f3d0944e8266fd2aefaeb538ab04b19a5195fe91172fbad923684ad861"
+    },
+    {
+      "date": "2026-10-19",
+      "file": "B2DC4E3EBEE64DB6ADB57D33C419BD97",
+      "bytes": 187120,
+      "sha256": "98062c8f6bb47d177c7630374a8f57193dcf4177e7fd37f3204cf140de05de4e"
+    }
+  ],
+  "source_sidecar": "original_karelia_35kv_commission_20261028.v40.json",
+  "importer": "scripts/market_intelligence/apply_pq_karelia_commission_v40.py",
+  "full_source_materializer": "scripts/market_intelligence/materialize_pq_research_v40.py",
+  "mixed_epc_recommended_price_rub": "56330673.93",
+  "original_bid_number": "1",
+  "original_named_bidder": null,
+  "secondary_named_bidder_inn": "7801564611",
+  "single_ukrm_bus_voltage_kv": 35,
+  "hardware_only_price_rub": null,
+  "registered_signed_contract_verified": false,
+  "individual_device_kgvar": null,
+  "before": {
+    "resources": 104,
+    "records": 104
+  },
+  "after": {
+    "resources": 104,
+    "records": 104,
+    "unique_ids": 104,
+    "source_versions": {
+      "v29": 94,
+      "v31": 1,
+      "v32": 2,
+      "v33": 1,
+      "v34": 1,
+      "v35": 1,
+      "v36": 1,
+      "v37": 1,
+      "v39": 1,
+      "v40": 1
+    },
+    "evidence_enriched_cases": 19,
+    "original_first_party_enriched_cases": 18,
+    "other_resources": 2192,
+    "other_records": 0,
+    "documents": 2192
+  },
+  "backup": {
+    "file": "data-platform-arvectum_data-20261028T105354Z.dump",
+    "directory": "/Volumes/ArvectumSSD/Arvectum/runtime/data-platform-backups",
+    "bytes": 37479828,
+    "sha256": "6b28faa8c81b64511f313cf8b1ee67894315f4e2c18f449e00e66142570ef9a7",
+    "verified_before_sql": true
+  },
+  "transaction": "one-case source-scoped 104-row identity, unchanged other collections and original old SHA guard, SQL COMMIT, independent source read-back",
+  "new_target_content_hash": "49a449fc33b14ae3e963ad4d6c643a068b49e38e096eb8a31b18a5f6e1bad84b",
+  "source_hash_replay": "104/104 equal, 0 drift",
+  "tests": "48/48 targeted source tests PASS (v29=8, v32=4, v33=6, v34=5, v35=5, v36=5, v37=5, v38=5, v40=5); generic unittest discover all wildcard had missing optional pytest and was excluded, not a production code regression."
+}
