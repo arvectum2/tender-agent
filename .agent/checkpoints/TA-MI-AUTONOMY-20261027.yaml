@@ -1218,3 +1218,37 @@ manual_supplier_and_archive_reconciliation_20261029:
     complete primary catalogues, compare product capability with technical ТЗ;
     do not assume SVG/STATCOM is interchangeable with switched UKRM/BSK.
     Keep one Watchdog, no new MI PR or production mutation, no auto-merge.
+
+manual_meles_6kv_source_reverification_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  executed_at_utc: '2026-10-28T22:23:10Z'
+  code_evidence_commit: '3cdbbc28ff345a5c3f4e798187df57b6a5af8ee4'
+  case: '223fz:32616296475:lot1'
+  already_in_v29_101: true
+  original_source_files_http200_and_matching_sha: 3
+  independently_reverified_originals:
+    - docx_technical_spec
+    - xlsx_buyer_price_justification
+    - docx_unsigned_contract_template
+  nominal_network_kv: 6.3
+  nominal_equipment_min_kvar: 500
+  technology: thyristor_controlled_shunt_reactor_plus_harmonic_filter
+  buyer_equipment_reference_average_rub: '3524107.07'
+  separate_services_reference_average_rub: '380666.66'
+  buyer_initial_nmcd_rub: '3904773.73'
+  price_grade: historical_three_vendor_market_price_justification_not_awarded_bid
+  original_contract_template_party_and_price_blank: true
+  signed_supplier_verified: false
+  new_procurement_count: 0
+  new_verified_core_signed_equipment_revenue_rub: 0
+  source_report: docs/market_intelligence/PQ_MELEUZ_6KV_SOURCE_REVALIDATION_20261029.json
+  test_results: '61 targeted pytest PASS, Ruff PASS, diff check PASS; inherited Starlette warning'
+  resume_instruction: >-
+    Advance the single research PR #521 with independently signed award and
+    contract evidence rather than counting buyer price quotations as turnover.
+    Use original verified source files and v29 dedup; preserve historical v36
+    provenance for Meles 6 kV and distinguish thyristor reactor requirements
+    from FGI SVG solution. Retest after code changes only. Maintain Watchdog,
+    no production DB mutation, no automatic market TAM extrapolation.
