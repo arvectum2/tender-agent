@@ -27,3 +27,7 @@ Next: recover and safely inspect 7z technical specifications/final protocols, re
 ## Additional 2026 public notice checks
 
 Two actual EIS 223-FZ attempts for 32615637628 and 32615870159 returned `documents_page_unavailable_or_mismatch`, recorded in `eis-new-cases-20261028-0840.json`. This does **not** establish that the notices or contracts are absent. Retry only after an appropriate interval; no documents or signed facts were invented.
+
+## 32413297739 — bounded follow-up on 13 remaining links
+
+A subsequent official source-page SHA match permitted one bounded six-link supplement. One additional **genuine opaque 7z** protocol (“9. Протокол рассмотрения 24-1026”) was retained with original SHA-256 `fa6346595012c30ffead4612343825abc44386e745aec99e856f05e4dbc12b87`. Five responses failed the 7z file-signature check and were **not** accepted as native documents; seven remaining links were **not attempted** because of the six-link budget. Supplement receipt SHA-256: `ed598a51e858fca79f65b5de446a0b8e721f099105338c55023e3a46ebc4d02f`. The original eight 7z archives and this ninth remain opaque. No award, signed supplier, equipment voltage or executed price is inferred.

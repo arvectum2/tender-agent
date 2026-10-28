@@ -879,3 +879,23 @@ run_20261028_0845_overlay_test_and_extra_probes:
     only through reviewable isolated branch work, no automatic PR merge without queue
     auto_merge:true and Company AM-4. Preserve unrelated current-task, single Watchdog,
     12h ETP cooldown and source SHA.'
+
+run_20261028_0850_2024_supplement_integrity:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  notice: '32413297739'
+  source: official_eis_223_documents
+  original_page_sha_matched: true
+  supplement_receipt_sha256: ed598a51e858fca79f65b5de446a0b8e721f099105338c55023e3a46ebc4d02f
+  new_genuine_opaque_7z: 1
+  new_original_sha256: fa6346595012c30ffead4612343825abc44386e745aec99e856f05e4dbc12b87
+  rejected_invalid_7z_signatures: 5
+  not_attempted_due_to_budget: 7
+  verified_signed_contracts: 0
+  verified_contract_suppliers: 0
+  verified_executed_prices: 0
+  resume_instruction: 'Retain nine 32413297739 native 7z originals as opaque until bounded
+    safe extraction approved. Five returned files failed signature and are not source
+    evidence; seven links remain not attempted due to six-link cap. Continue independent
+    source recovery and SHA reviews; no signed outcome or 6-35kV inference. PR #519
+    DRAFT/REVIEW, do not auto-merge.'
