@@ -991,3 +991,30 @@ run_20261028_0945_2024_screening_and_main_reconcile:
     voltage and possible separate later procurement or signed contract,
     without inventing one. Continue v20/ETP signed-contract evidence recovery,
     preserve 12h cooldown, source SHA, single Watchdog, unrelated current-task.
+
+run_20261028_0950_2025_110kv_original_exclusion:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  timestamp_moscow: '2026-10-28T09:40:59.236520+03:00'
+  branch: fix/mi-etp-source-status-20261028
+  pr: 519
+  original_notice: '32515257631'
+  original_archive_sha256: 343c89f466415f772370a0b922b31f430282d8ce873591b9f63bf0c1ee4e93db
+  source_bound_technical_documents: 2
+  verified_equipment_voltage_kv: 110
+  target_market_classification: irrelevant
+  prior_commission_nmck_rub_ex_vat: 412500000
+  signed_contract_verified: false
+  executed_equipment_price_verified: false
+  new_chatgpt_arc_reviews_this_run: 4
+  total_reviewed_queue_packets: 83
+  report: docs/market_intelligence/PQ_2025_110KV_ORIGINALS_20261028.md
+  resume_instruction: >-
+    Continue source-bound signed contract and supplier evidence for relevant
+    6-35kV cases. Exclude 32515257631: original 2025 technical specification
+    proves 110kV IRM-110/BSK-110, and tender failed with rejected bids;
+    412500000 RUB NMCK is not equipment revenue. Do not infer a repeat
+    of 2024 32413297739 without exact asset/technical proof. PR #519
+    branch has been reconciled with main, but stays DRAFT/REVIEW pending
+    exact-head CI and owner governance; preserve single Watchdog and
+    unrelated current-task.yaml.
