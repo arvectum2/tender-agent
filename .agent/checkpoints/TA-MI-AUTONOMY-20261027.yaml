@@ -1252,3 +1252,51 @@ manual_meles_6kv_source_reverification_20261029:
     provenance for Meles 6 kV and distinguish thyristor reactor requirements
     from FGI SVG solution. Retest after code changes only. Maintain Watchdog,
     no production DB mutation, no automatic market TAM extrapolation.
+
+
+watchdog_b2b_first_party_20261029_0130:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  observed_at_moscow: '2026-10-29 01:37:53'
+  issue_run_start_comment_id: 6482336536
+  canonical_pr: 521
+  canonical_branch: feature/pq-etp-provenance-ledger-20261028
+  canonical_corpus: v29_101_unchanged
+  actual_first_party_requests: 15
+  source_http_statuses: {http_200: 13, http_404: 2}
+  newly_distinct_first_party_html_sha: 6
+  reverified_preexisting_original_zip_sha: 1
+  reverified_preexisting_original_pdf_sha: 2
+  new_notices: 0
+  new_lots: 0
+  new_projects: 0
+  new_original_final_protocols: 0
+  new_named_bidders_with_first_party_offer: 4
+  new_verified_signed_suppliers: 0
+  new_verified_executed_prices: 0
+  new_calendar_searches: 0
+  new_verified_core_6_35kv_sales: 0
+  new_chatgpt_sha_quote_review_packets: 1
+  primary_case_1: '32616474682 / B2B 4642507: two capacitor-component lots, 11+16 pieces; NMCK 2452650.41 RUB ex VAT; 4 named offers from 2362900 to 2449000 RUB ex VAT; planned outcome 03.12.2026; equipment voltage and winner unknown'
+  primary_case_2: '32515582393 / B2B 4283612: first-party card independently corroborates existing 16.02.2026 commission selection of UK KONDENSATOR; original pre-contract protocol reduces offer 4900000 to 4850000 RUB ex VAT; signed supplier and executed price unverified'
+  primary_case_1_card_sha256: 49fceacfc73a815e352be428824921573f83b7a9c065239bebaff1989e6bc5e5
+  primary_case_2_card_sha256: 221abf33d9ae836f362ab1e05c7482ebe0aeaeb8d4c1f9d566b13a280f5b0763
+  evidence_ledger: docs/market_intelligence/PQ_WATCHDOG_B2B_FIRST_PARTY_20261029_0130.json
+  private_source_journal: watchdog-20261029-0130-b2b-native/source-attempts.json
+  private_review_packet: review-queue/32616474682-b2b-20261029-0130.json
+  new_research_commit: d871a6ac672730940ee805b0b13277301fa672f4
+  last_tested_code_commit: 3cdbbc28ff345a5c3f4e798187df57b6a5af8ee4
+  test_results: 'No code changes in this run; JSON ledger validated; 10 exact first-party text quotes and source SHA verified; existing 61 targeted pytest PASS from prior tested code checkpoint; YAML append syntax checked.'
+  blockers: >-
+    4642507 outcome scheduled 2026-12-03 and voltage unknown; 4283612
+    signed supplier/executed payment still unverified; 4304120 and 4559984
+    official B2B exact-number lookups HTTP404; 15 authorized Data Platform
+    SDK extractions blocked; no national market extrapolation.
+  resume_instruction: >-
+    Continue only PR #521 and 101-row v29. Obtain original voltage
+    specification for 32616474682 and final award after 2026-12-03 10:00
+    MSK; signed supplier/contract for 32515582393 and 32413764701 after
+    2026-10-29 06:46 MSK; avoid repeating the 15 logged exact requests
+    before 2026-10-29 13:35 MSK unless primary data changed. Keep original
+    source SHA, no parallel MI PR, no auto-merge and no production writes.
