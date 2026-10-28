@@ -105,8 +105,12 @@ def exact_filestore_sha_receipts(root: Path) -> list[dict]:
 
 def summarize(*, leads: list[dict], eis: list[dict],
               commissions: dict, etp: dict, contracts: dict) -> dict:
-    ids = {str(x.get("procedure_id")) for x in leads
-           if re.fullmatch(r"[0-9]{11}", str(x.get("procedure_id") or ""))}
+    numbered_rows = [
+        x for x in leads if re.fullmatch(
+            r"[0-9]{11}", str(x.get("procedure_id") or ""))
+    ]
+    ids = {str(x.get("procedure_id")) for x in numbered_rows}
+    nonstandard_rows = len(leads) - len(numbered_rows)
     covered = {r["registry_number"]: r for r in eis if r["registry_number"] in ids}
     offers = [r for r in commissions["records"]
               if r.get("market_category") in DIRECT_CAPACITOR_CATEGORIES
@@ -118,7 +122,9 @@ def summarize(*, leads: list[dict], eis: list[dict],
         "period": "2024-01-01 through 2026-10-28",
         "v29_candidate_leads": len(leads),
         "source_number_223_leads": len(ids),
-        "non_223_or_nonstandard_leads": len(leads) - len(ids),
+        "source_223_lot_candidate_rows": len(numbered_rows),
+        "source_223_extra_lot_rows_sharing_notice": len(numbered_rows) - len(ids),
+        "non_223_or_nonstandard_leads": nonstandard_rows,
         "primary_eis_receipt_cases": len(covered),
         "primary_eis_cases_with_files": sum(x["verified_file_instances"] > 0 for x in covered.values()),
         "primary_eis_original_file_download_instances": sum(x["verified_file_instances"] for x in covered.values()),
@@ -141,8 +147,8 @@ def summarize(*, leads: list[dict], eis: list[dict],
         "warnings": [
             f"{len(leads)} candidate leads are not an exhaustive census of Russian PQ tenders",
             (
-                f"{len(leads) - len(ids)} non-223/nonstandard "
-                f"{'lead is' if len(leads) - len(ids) == 1 else 'leads are'} "
+                f"{nonstandard_rows} non-223/nonstandard "
+                f"{'lead is' if nonstandard_rows == 1 else 'leads are'} "
                 "not covered by this EIS 223 source pass"
             ),
             "committee decisions and offered prices are not payment, delivery or signed contract evidence",
@@ -169,7 +175,9 @@ def markdown(report: dict) -> str:
         "",
         (
             f"- Кандидаты из v29: {report['v29_candidate_leads']}; номеров 223-ФЗ: "
-            f"{report['source_number_223_leads']}; прочие коммерческие/нестандартные: "
+            f"{report['source_number_223_leads']} уникальных извещений "
+            f"({report['source_223_lot_candidate_rows']} лотовых записей); "
+            f"прочие коммерческие/нестандартные: "
             f"{report['non_223_or_nonstandard_leads']}."
         ),
         (
