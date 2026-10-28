@@ -1,0 +1,62 @@
+{
+  "schema_version": "mi013-primary_ETP-award-competition/1.0",
+  "data_version": "v39",
+  "as_of": "2026-10-28",
+  "new_procurement_notices": 0,
+  "existing_cases_enriched": 1,
+  "new_signed_contracts": 0,
+  "patches": [
+    {
+      "canonical_id": "223fz:32616181358:lot1",
+      "source_grade": "first_party_ETP_original_signed_final_protocol_pdf",
+      "original_platform": "АО РАД Lot-Online",
+      "tender_notice": "32616181358",
+      "protocol_number": "186-2",
+      "protocol_date": "2026-08-03",
+      "published": "2026-08-05",
+      "original_pdf": {
+        "url": "https://tender.lot-online.ru/etp/downloadppf?uuid=dbfile19718u80000pvkg89is0k0tsd4",
+        "bytes": 263719,
+        "sha256": "92874d098feb7dc6c283bd7b66c5218e11e472f27eddffc75edd6613fb5b21ef"
+      },
+      "initial_NMCD_inc_vat22_rub": "3078500.00",
+      "bids_received": 3,
+      "bids_admitted": 2,
+      "bids_rejected": 1,
+      "participants": [
+        {
+          "name": "ООО «ЭКСПЕРТ ГРУПП»",
+          "inn": "7720494275",
+          "bid_inc_vat22_rub": "3050000.00",
+          "original_decision": "winner_and_first_rank",
+          "factory_proven": false
+        },
+        {
+          "name": "ООО «ТО-СТРОЙМОНТАЖ»",
+          "inn": "7721814062",
+          "bid_inc_vat22_rub": "3078500.00",
+          "original_decision": "admitted_second_rank"
+        },
+        {
+          "name": "ООО «Серпуховский конденсаторный завод «КВАР»",
+          "inn": "5043061102",
+          "bid_inc_vat22_rub": "1960906.00",
+          "original_decision": "rejected"
+        }
+      ],
+      "rejection_reasons_KVAR": [
+        "Original required FNS tax arrears certificate KND1120101 omitted",
+        "Original offer on KEPF-12-600 capacitor rated current 37.5 A, tender requirement 50 A"
+      ],
+      "final_commission_instruction": "Recognize ООО ЭКСПЕРТ ГРУПП as winner and conclude supply agreement at 3,050,000 rub including VAT22",
+      "corresponding_original_rd223_contract": "57724646338260000460000",
+      "rd223_signed_total_rub": "3050000.00",
+      "actual_signed_supplier_identity_disclosed_on_rd223_public_card": false,
+      "awarded_bidder_identity_verified_on_ETP_protocol": true,
+      "signed_contract_status": "Исполнение",
+      "physical_delivery_verified": false,
+      "market_value_rub": "3050000.00",
+      "other_competitor_offer_disqualified_not_market_signed_price": true
+    }
+  ]
+}
