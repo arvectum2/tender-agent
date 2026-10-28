@@ -1121,3 +1121,51 @@ watchdog_primary_delta_20261028_2335:
     Preserve v29 101 rows, unrelated .agent/current-task.yaml,
     sole enabled hourly Watchdog, source privacy, no auto-merge
     without AM-4 approval, no production or procurement actions.
+
+watchdog_source_review_20261029_0030:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  issue_run_start_comment_id: 6481151315
+  canonical_pr: 521
+  corpus: v29_101_unchanged
+  new_first_party_requests: 14
+  official_eis_month_searches: 12
+  month_search_statuses: {empty: 9, success: 3}
+  candidate_metadata_rows: 19
+  candidate_known_duplicate: 1
+  title_false_positives: 18
+  original_sha_reverified_duplicates: 2
+  newly_distinct_original_sha: 0
+  new_original_visual_reviews: 1
+  new_notices: 0
+  new_lots: 0
+  new_projects: 0
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_executed_prices: 0
+  new_core_6_35kv_sales: 0
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_PRIMARY_DELTA_20261029_0030.json
+  source_journal_private: watchdog-20261029-0030-eis-searches.json
+  last_tested_code_commit: df29b29f318452b1d6c6342c013d4ee94b4087fa
+  test_results: >-
+    No source code changed; source ledger JSON and checkpoint YAML validated,
+    two original PDF SHA-256 duplicates reverified, visual page 10
+    source quotation verified, git diff --check passed.
+  finding: >-
+    Original AO Uralelectromed 2024 design PDF 1194-005-EP, SHA
+    25039d391709276ea5abc0ec73d88f775fa128270bf381542386efffeaa91ce7,
+    page 10 requires dismantling six inoperative UKRM 6 kV. Existing
+    equipment removal, not new supply. 12 official EIS first-page searches
+    across 3 months returned 19 candidate rows: 18 medical-service false
+    positives, one previously known 0318100033125000016.
+  blockers: >-
+    No new unique primary original or signed contract: both fetched PDFs
+    matched existing SHA. EIS provider exposes status but not numeric HTTP.
+    GP630876 retry after 00:41 MSK; signed-contract retries after 06:46.
+    Last known 54 v29 primary gaps and 15 Data Platform SDK blocked files.
+  resume_instruction: >-
+    Continue only PR #521 and v29 101-row corpus. GP630876 after
+    2026-10-29 00:41 MSK, 32413764701 and 32515582393 after 06:46.
+    Do not repeat 12 month/law/query combinations before 12:35 MSK.
+    Preserve original SHA, unrelated current-task.yaml, dirty chat worktree,
+    sole hourly Watchdog, REVIEW and no auto-merge.
