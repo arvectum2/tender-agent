@@ -637,3 +637,34 @@ run_20261028_0640_eis_alias_originals:
     prior 33 exact EIS searches, unrelated .agent/current-task.yaml and the
     single Watchdog. No OpenAI API/local LLM/production mutation. Do not
     promote an offer/commission selection to signed supplier/contract price.
+
+run_20261028_0645_223_clarifications:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  notice: '32514720691'
+  source_page_sha_unchanged: true
+  remaining_official_links_attempted: 9
+  new_files_saved: 9
+  actual_format: html_in_doc_extension
+  derived_text_original_sha_bound: true
+  supplement_receipt_sha256: 993344691d6ac93940b03a92687ea8f7fbbe9695e5f492c52c0a1e9359440719
+  derived_manifest_sha256: 8354bcaa4acce00726001631576e6fad53b5a06b5a4412c801934aa12d7e14e8
+  new_chatgpt_arc_reviews_accepted: 1
+  reviewed_queue_total: 70
+  pending_unreadable: 1
+  original_notice_links_attempted_total: '17/17'
+  new_signed_contracts_verified: 0
+  new_verified_6_35kv_voltage: 0
+  finding: >-
+    Official clarification states two capacitor sets per modular building
+    and references auxiliary 0.4kV cabling; neither proves equipment rated
+    voltage, delivered quantity, signed contract or supplier identity.
+  resume_instruction: >-
+    PR #519 remains DRAFT/REVIEW; check exact-head CI after latest commits.
+    All 17 official links for 32514720691 have now been retrieved once.
+    Next independently verify signed contract and original equipment
+    rated voltage from scanned questionnaires without promoting OCR,
+    auxiliary 0.4kV cable voltage or commission offer to signed market
+    evidence. Preserve 100-row v20 and 12h ETP cooldown, no repeat of
+    33 previously successful exact EIS searches. Do not touch unrelated
+    current-task, production or single Watchdog.

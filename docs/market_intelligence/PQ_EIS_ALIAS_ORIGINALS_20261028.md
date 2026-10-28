@@ -69,3 +69,35 @@ Next: find signed contract for 2025 lot, verify voltage visually from
 scanned questionnaires, retrieve remaining nine 2025 links within
 a separate bounded slice, preserve ETP 12h cooldown and avoid replaying
 33 prior exact EIS searches. PR #519 remains DRAFT/REVIEW.
+
+## Second bounded recovery: all remaining nine EIS clarifications
+
+A fresh official 223-FZ documents page for 32514720691 had **the
+same SHA-256** as the first retrieval. The remaining nine distinct
+official links (all named `текст разъяснения.doc`) were downloaded
+once, with a separate source-bound receipt
+`public223-alias-supplement/32514720691/supplement-receipt.json`,
+SHA-256 `993344691d6ac93940b03a92687ea8f7fbbe9695e5f492c52c0a1e9359440719`.
+All nine bytes are **HTML, not native DOC**; original hashes are retained.
+A separate derived-text manifest, SHA-256
+`8354bcaa4acce00726001631576e6fad53b5a06b5a4412c801934aa12d7e14e8`,
+links each HTML original to its text SHA. No original receipt or ZIP
+truth was rewritten.
+
+The official clarification, original HTML SHA
+`41a68fb67c37f857544bd52fbbc20dbde1a45facdd892e6ac4a24bca75c863ab`,
+explains **two capacitor sets for bus sections 1 and 2 in one modular
+building** for each referenced questionnaire. This affects quantity
+interpretation; do not automatically equate two notice `компл` with
+two physical capacitor units or claim four delivered units.
+Another clarification's reference to **0.4 kV** concerns auxiliary
+power cables in the module, not the rated voltage of the UKRM.
+A third clarification describes payment terms, not proof of payment.
+
+ChatGPT accepted an additional `uncertain` source-bound review,
+`32514720691-9e8c454556bb4ab713b6baf0`, with three exact quotes
+and both derived-text and original HTML SHA cross-checks. Total
+accepted review packets: **70**, with one older unreadable packet.
+The 2025 lot still lacks verified 6–35 kV rating, signed contract,
+contract supplier and executed contract amount. All 17/17 official
+notice links have now been attempted; no need to re-download them.
