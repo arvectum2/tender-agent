@@ -859,3 +859,23 @@ run_20261028_0835_static_compensator_originals:
     contract recovery for 32413297739 and 32515257631, safely handle 7z or retain opaque;
     avoid duplicate SHA reviews and preserve 12h ETP cooldown. Do not promote 235m/412.5m
     NMCK or rejected bidder identities to signed market sales.'
+
+run_20261028_0845_overlay_test_and_extra_probes:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  evidence_commit: f33e982d4a3e5bfd7e7ec4bc24c2e2670c45cfad
+  new_original_source_regression: tests/test_pq_static_compensator_overlay.py
+  focused_tests: 27 PASS, one inherited Starlette warning
+  ruff: PASS on inspected source modules
+  new_official_notice_attempts:
+  - '32615637628: documents_page_unavailable_or_mismatch'
+  - '32615870159: documents_page_unavailable_or_mismatch'
+  attempt_journal: eis-new-cases-20261028-0840.json
+  ci: 'PR #519 new exact-head checks in progress; previous head 9/9 green; mergeable
+    CONFLICTING, DRAFT'
+  resume_instruction: 'Continue original signed-contract and technical-voltage recovery
+    without inventing prices; source-bound review of 2024/2025 110kV exclusion and 2025
+    unsuccessful tender complete, do not replay. Resolve PR #519 two-file main conflict
+    only through reviewable isolated branch work, no automatic PR merge without queue
+    auto_merge:true and Company AM-4. Preserve unrelated current-task, single Watchdog,
+    12h ETP cooldown and source SHA.'

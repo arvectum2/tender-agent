@@ -23,3 +23,7 @@ Six new official EIS ontology searches logged; three returned no results, three 
 **Zero new independently verified signed contracts, contractual suppliers or executed equipment-only prices.** The 235m and 412.5m NMCK figures are not counted as 6–35 kV market revenue. No procurement submission, signing, external contact, production write or Data Platform ingestion.
 
 Next: recover and safely inspect 7z technical specifications/final protocols, resolve voltage and contractual outcomes, continue 2024–2026 gaps, preserve SHA-based deduplication and ETP cooldown. PR #519 stays DRAFT/REVIEW pending conflict reconciliation and governance.
+
+## Additional 2026 public notice checks
+
+Two actual EIS 223-FZ attempts for 32615637628 and 32615870159 returned `documents_page_unavailable_or_mismatch`, recorded in `eis-new-cases-20261028-0840.json`. This does **not** establish that the notices or contracts are absent. Retry only after an appropriate interval; no documents or signed facts were invented.
