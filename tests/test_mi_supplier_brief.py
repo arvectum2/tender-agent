@@ -54,3 +54,20 @@ def test_symlink_profile_denied(tmp_path):
     link.symlink_to(PROFILE)
     with pytest.raises(PortfolioInputError):
         build_brief(link, root=ROOT)
+
+
+@pytest.mark.parametrize("replacement", [[], None, 123, {"supplier": "bad"}])
+def test_profile_schema_rejects_wrong_top_level_types(tmp_path, replacement):
+    p = tmp_path / "profile.json"
+    p.write_text(json.dumps(replacement), encoding="utf8")
+    with pytest.raises(PortfolioInputError):
+        build_brief(p, root=ROOT)
+
+
+def test_reject_nested_unhashable_family(tmp_path):
+    data = json.loads(PROFILE.read_text(encoding="utf8"))
+    data["family_ids"] = [{"id": "ukrm"}]
+    p = tmp_path / "malformed.json"
+    p.write_text(json.dumps(data), encoding="utf8")
+    with pytest.raises(PortfolioInputError):
+        build_brief(p, root=ROOT)

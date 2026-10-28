@@ -17,7 +17,7 @@
 6. Не смешивать ownership: Data Platform — общие acquisition/extraction/index, Tender Agent — закупочная семантика и аналитика, Procurement LLM — обучаемый классификатор.
 
 ## Реальный статус
-Документация и seed-набор доступны в репозитории. Автономного оркестратора S0–S11, полной регистрации runtime-трейсов и validated training corpus **пока нет**. Дальнейшие этапы и инструкция продолжения: `/.agent/checkpoints/TA-MI-AUTONOMY-20261027.yaml`. Не заменять и не перезаписывать активный unrelated `/.agent/current-task.yaml`.
+В репозитории есть частичный source-bounded S0–S11 оркестратор, сохранение evidence и offline отчёт. Полный воспроизводимый E2E с подтверждёнными исходными договорами по всему рынку и validated training gold **ещё не принят**. Дальнейшие этапы и инструкция продолжения: `/.agent/checkpoints/TA-MI-AUTONOMY-20261027.yaml`. Не заменять и не перезаписывать активный unrelated `/.agent/current-task.yaml`.
 
 - [SPECKIT_CHATGPT_ARC.md](SPECKIT_CHATGPT_ARC.md) — Spec Kit `none` + AES-001 для текущего ChatGPT → ARC процесса; [спецификация PQ](../../../specs/001-power-quality-evidence-closure/spec.md), [план](../../../specs/001-power-quality-evidence-closure/plan.md), [проверяемые задачи](../../../specs/001-power-quality-evidence-closure/tasks.md).
 

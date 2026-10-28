@@ -20,19 +20,26 @@ def build_brief(profile_file: Path, *, root: Path) -> dict:
     if not raw or len(raw) > 128_000:
         raise PortfolioInputError("profile size")
     profile = json.loads(raw)
-    if profile.get("schema_version") != "mi-supplier-profile/1":
+    if not isinstance(profile, dict) or profile.get("schema_version") != "mi-supplier-profile/1":
         raise PortfolioInputError("unsupported profile schema")
     name = profile.get("profile_id")
     if not isinstance(name, str) or not re.fullmatch("[a-z][a-z0-9-]{2,62}", name):
         raise PortfolioInputError("profile id")
-    supplier = profile["supplier"]
-    urls = supplier["official_portfolio_urls"]
-    if not supplier.get("name") or not isinstance(urls, list) or not 1 <= len(urls) <= 8:
+    supplier = profile.get("supplier")
+    if not isinstance(supplier, dict):
+        raise PortfolioInputError("supplier object")
+    supplier_name = supplier.get("name")
+    urls = supplier.get("official_portfolio_urls")
+    if (not isinstance(supplier_name, str) or not supplier_name.strip()
+            or len(supplier_name) > 200 or not isinstance(urls, list)
+            or not 1 <= len(urls) <= 8):
         raise PortfolioInputError("supplier inputs")
     urls = [_safe_public_website(url) for url in urls]
     if len(set(urls)) != len(urls):
         raise PortfolioInputError("duplicate URL")
-    study = profile["study"]
+    study = profile.get("study")
+    if not isinstance(study, dict):
+        raise PortfolioInputError("study object")
     first, last = date.fromisoformat(study["from"]), date.fromisoformat(study["through"])
     if study.get("country") != "RU" or last < first or (last-first).days > 5*366:
         raise PortfolioInputError("research window")
@@ -47,13 +54,15 @@ def build_brief(profile_file: Path, *, root: Path) -> dict:
     original_ontology = (root / path).read_bytes()
     ontology = yaml.safe_load(original_ontology)
     families = {item["id"]: item for item in ontology["families"]}
-    selected = profile["family_ids"]
-    if (not isinstance(selected, list) or not selected or len(set(selected)) != len(selected)
-            or any(id not in families for id in selected)):
+    selected = profile.get("family_ids")
+    if (not isinstance(selected, list) or not selected
+            or any(not isinstance(family_id, str) for family_id in selected)
+            or len(set(selected)) != len(selected)
+            or any(family_id not in families for family_id in selected)):
         raise PortfolioInputError("unknown product family")
     return {
         "schema_version": "mi-research-brief/1", "study_id": name,
-        "supplier": supplier["name"], "portfolio_urls": urls,
+        "supplier": supplier_name, "portfolio_urls": urls,
         "profile_sha256": hashlib.sha256(raw).hexdigest(),
         "ontology_sha256": hashlib.sha256(original_ontology).hexdigest(),
         "study": study,
