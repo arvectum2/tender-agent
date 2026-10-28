@@ -899,3 +899,37 @@ run_20261028_0850_2024_supplement_integrity:
     evidence; seven links remain not attempted due to six-link cap. Continue independent
     source recovery and SHA reviews; no signed outcome or 6-35kV inference. PR #519
     DRAFT/REVIEW, do not auto-merge.'
+
+run_20261028_0935_safe_7z_source_recovery:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  timestamp_moscow: '2026-10-28T09:36:26.940633+03:00'
+  branch: fix/mi-etp-source-status-20261028
+  pr: 519
+  report: docs/market_intelligence/PQ_2024_7Z_ORIGINALS_20261028.md
+  overlay: docs/market_intelligence/PQ_2024_7Z_ORIGINALS_20261028.json
+  verified_archive_count: 8
+  verified_extracted_members: 23
+  new_chatgpt_arc_reviews: 2
+  total_reviewed_queue_packets: 81
+  original_2024_notice: '32413297739'
+  observed_initial_price_rub_ex_vat: 218810250
+  rated_equipment_voltage: unknown
+  signed_contracts_verified: 0
+  executed_equipment_prices_verified: 0
+  new_official_eis_searches: 3
+  new_exact_notice_download_attempts: 1
+  inventory_v20:
+    leads: 100
+    with_local_originals: 33
+    with_reviewed_packets: 31
+  tests: '19 focused PASS; Ruff PASS; git diff --check PASS; one inherited Starlette warning'
+  resume_instruction: >-
+    Continue PR #519 DRAFT/REVIEW. Reconcile its three overlapping main
+    files without weakening safeguards; do not merge absent queue
+    auto_merge and current Company AM-4. The eight 2024 amendment archives
+    are SHA-verified and safely extracted, do not reprocess them. Recover
+    independent technical rated voltage and final award/signed contract for
+    32413297739; 218810250 RUB ex VAT is NMCK only. Preserve ETP 12h
+    cooldown, v20 inventory, source receipts, separate supplier/price
+    unknowns, single Watchdog and unrelated current-task.yaml.
