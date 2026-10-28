@@ -15,3 +15,7 @@ The hourly Tender Agent Watchdog must treat a known PQ lead as an **open evidenc
 ## Status of implementation
 
 `pq_gap_recovery.py` creates a deterministic **gap inventory** from known seed leads and local originals. It is not yet a network fetch/retry scheduler, and does not claim to search EIS or ETP by itself. EIS attachment acquisition already exists as a separate component. Next step: wire a source-attempt journal, source adapters and bounded retries into the hourly runner, then extend beyond the 12-row seed to the full v29 corpus.
+
+## Corpus-wide ETP URL queue (2026-10-28)
+
+Use `python -m src.modules.market_intelligence.pq_etp_queue_expand --leads-file <SHA-tracked-v20-corpus> --output <runtime-queue>` to enumerate **all exact, allowlisted, case-specific URLs already present in the immutable 100-row corpus**, not just the previous manually selected ETP queue. Duplicate URL aliases are retained without repeating network requests. Generic category/customer indexes and unsafe/unsupported URLs are excluded and counted. Run `pq_etp_card_audit` with both the main and native attempt journals: its 12-hour URL-level retry guard remains authoritative. A retrieved secondary HTML page is **not** an original specification, signed award, supplier or contract price; retain gaps until verified primary evidence is recovered.
