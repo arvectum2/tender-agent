@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 from src.modules.market_intelligence.pq_verified_market_report import (
-    markdown, source_receipts, summarize,
+    markdown, source_receipts, exact_filestore_sha_receipts, summarize,
 )
 
 
@@ -69,3 +69,22 @@ def test_no_market_value_extrapolation_from_commission_sample():
     assert result["verified_signed_contract_suppliers"] == 0
     assert result["non_223_or_nonstandard_leads"] == 1
     assert "10 998 960.00 ₽" in markdown(result)
+
+
+def test_direct_official_source_sha_receipt_is_verified(tmp_path: Path):
+    case = tmp_path / "32616355390"
+    case.mkdir()
+    blob = b"Original EIS DOCX"
+    sha = hashlib.sha256(blob).hexdigest()
+    (case / (sha + ".docx")).write_bytes(blob)
+    (case / "official-sha-receipt.json").write_text(json.dumps({
+        "schema_version": "pq-official-filestore-sha-receipt/1",
+        "registry_number": case.name, "verified": [
+            {"stored_name": sha + ".docx", "sha256": sha}],
+    }))
+    result = exact_filestore_sha_receipts(tmp_path)
+    assert result[0]["verified_file_instances"] == 1
+    assert result[0]["status"] == "official_filestore_exact_sha_verified"
+    (case / (sha + ".docx")).write_bytes(b"bad")
+    with pytest.raises(ValueError, match="SHA mismatch"):
+        exact_filestore_sha_receipts(tmp_path)
