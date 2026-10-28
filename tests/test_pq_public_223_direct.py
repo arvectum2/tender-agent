@@ -45,3 +45,23 @@ def test_source_digest_mismatch_cannot_enter_canonical_corpus(tmp_path: Path):
     result = merge_direct(source_root=root, canonical=canonical)
     assert result["direct_files_added"] == 0
     assert result["errors"][0]["status"] == "source_sha_mismatch"
+
+
+def test_case_budget_refuses_incomplete_direct_evidence(tmp_path: Path):
+    root = tmp_path / "source"
+    for number in ("32616280467", "32615852898"):
+        folder = root / number
+        folder.mkdir(parents=True)
+        (folder / "public-page-receipt.json").write_text(json.dumps({
+            "schema_version": "pq-223-public-page-download/1",
+            "registry_number": number, "files": [],
+        }))
+    canonical = tmp_path / "canonical"
+    canonical.mkdir()
+    manifest = canonical / "canonical-manifest.json"
+    manifest.write_text(json.dumps({
+        "schema_version": "pq-public-canonical/1", "records": []}))
+    import pytest
+    with pytest.raises(ValueError, match="truncate direct EIS"):
+        merge_direct(source_root=root, canonical=canonical, max_cases=1)
+    assert json.loads(manifest.read_text())["records"] == []
