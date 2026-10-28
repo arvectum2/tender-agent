@@ -20,6 +20,8 @@ def test_fgi_profile_is_reproducible_and_never_claims_supplier_sales():
     assert b["study"]["voltage_kv"] == [6, 35]
     assert len(b["search_families"]) == 5
     assert len(b["profile_sha256"]) == 64
+    assert b["supplier_product_evidence"]["source_grade"] == "first_party_partial_quote_verified"
+    assert b["supplier_product_evidence"]["supplier_sale_proven"] is False
 
 
 @pytest.mark.parametrize("field,value", [
@@ -70,4 +72,14 @@ def test_reject_nested_unhashable_family(tmp_path):
     p = tmp_path / "malformed.json"
     p.write_text(json.dumps(data), encoding="utf8")
     with pytest.raises(PortfolioInputError):
+        build_brief(p, root=ROOT)
+
+
+@pytest.mark.parametrize("path", ["../../outside.json", "/etc/passwd", "data/missing.json"])
+def test_product_evidence_path_stays_in_repository(tmp_path, path):
+    data = json.loads(PROFILE.read_text(encoding="utf8"))
+    data["product_evidence_file"] = path
+    p = tmp_path / "profile.json"
+    p.write_text(json.dumps(data), encoding="utf8")
+    with pytest.raises((PortfolioInputError, FileNotFoundError)):
         build_brief(p, root=ROOT)

@@ -26,5 +26,6 @@
     "harmonic_filter",
     "power_quality_system"
   ],
-  "evidence_status": "supplier_technical_fit_unverified"
+  "evidence_status": "supplier_technical_fit_unverified",
+  "product_evidence_file": "docs/market_intelligence/FGI_PRIMARY_PRODUCT_AND_GPB_SOURCE_20261029.json"
 }

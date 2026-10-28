@@ -60,12 +60,53 @@ def build_brief(profile_file: Path, *, root: Path) -> dict:
             or len(set(selected)) != len(selected)
             or any(family_id not in families for family_id in selected)):
         raise PortfolioInputError("unknown product family")
+    # Optional product evidence is a versioned source receipt, not proof of a
+    # signed order. Its path is confined to this repository for reproducibility.
+    evidence_rel = profile.get("product_evidence_file")
+    source_evidence = None
+    if evidence_rel is not None:
+        if not isinstance(evidence_rel, str):
+            raise PortfolioInputError("product evidence path")
+        evidence_path = root / evidence_rel
+        resolved_root = root.resolve()
+        if (Path(evidence_rel).is_absolute() or evidence_path.is_symlink()
+                or resolved_root not in evidence_path.resolve().parents
+                or evidence_path.suffix.lower() != ".json"):
+            raise PortfolioInputError("product evidence must be a local JSON receipt")
+        evidence_bytes = evidence_path.read_bytes()
+        if not 10 <= len(evidence_bytes) <= 128_000:
+            raise PortfolioInputError("product evidence size")
+        evidence = json.loads(evidence_bytes)
+        if (not isinstance(evidence, dict)
+                or evidence.get("schema_version") != "pq-source-investigation/1"
+                or evidence.get("supplier", {}).get("name") != supplier_name):
+            raise PortfolioInputError("product evidence identity/schema")
+        source = evidence.get("supplier_technical_primary")
+        if (not isinstance(source, dict)
+                or source.get("source_grade") not in {
+                    "first_party_partial_quote_verified",
+                    "first_party_complete_quote_verified",
+                }
+                or not isinstance(source.get("quotes"), list)
+                or not source["quotes"]
+                or not isinstance(source.get("sha256"), str)
+                or len(source["sha256"]) != 64):
+            raise PortfolioInputError("product evidence source grade")
+        source_evidence = {
+            "receipt_sha256": hashlib.sha256(evidence_bytes).hexdigest(),
+            "captured_primary_sha256": source["sha256"],
+            "source_grade": source["source_grade"],
+            "provisional_technical_quote_count": len(source["quotes"]),
+            "supplier_sale_proven": False,
+        }
+
     return {
         "schema_version": "mi-research-brief/1", "study_id": name,
         "supplier": supplier_name, "portfolio_urls": urls,
         "profile_sha256": hashlib.sha256(raw).hexdigest(),
         "ontology_sha256": hashlib.sha256(original_ontology).hexdigest(),
         "study": study,
+        "supplier_product_evidence": source_evidence,
         "search_families": [{"id": id, "positive": families[id]["positive"]}
                             for id in selected],
         "status": "S0_UNVERIFIED",

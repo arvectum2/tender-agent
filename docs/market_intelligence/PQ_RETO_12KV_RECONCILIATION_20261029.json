@@ -1,0 +1,58 @@
+{
+  "schema_version": "pq-historical-case-reconciliation/1",
+  "as_of_moscow": "2026-10-29",
+  "canonical_id": "223fz:32616181358:lot1",
+  "source_lineage": "archive/mi-pr-515-20261029 original_reto_2026_competition_winner_20261028.v39.json",
+  "in_prior_v29_101": false,
+  "new_notice_added_to_live_corpus": false,
+  "state": "source_reverified_archive_candidate_not_promoted",
+  "original_award_protocol": {
+    "source_url": "https://tender.lot-online.ru/etp/downloadppf?uuid=dbfile19718u80000pvkg89is0k0tsd4",
+    "sha256": "92874d098feb7dc6c283bd7b66c5218e11e472f27eddffc75edd6613fb5b21ef",
+    "size_bytes": 263719,
+    "page_count": 3,
+    "http_status_rechecked": 200,
+    "exact_byte_match_prior_archive": true,
+    "visual_pages_checked": [
+      2,
+      3
+    ],
+    "protocol_number": "186-2",
+    "protocol_date": "2026-08-03",
+    "buyer": "АО «Завод РЭТО»",
+    "scope": "supply of KEPF capacitors for BSK",
+    "nmck_including_vat_rub": "3078500.00",
+    "winner_name": "ООО «ЭКСПЕРТ ГРУПП»",
+    "winner_inn": "7720494275",
+    "winning_offer_including_vat_rub": "3050000.00",
+    "second_ranked_name": "ООО «ТО-СТРОЙМОНТАЖ»",
+    "second_offer_including_vat_rub": "3078500.00",
+    "rejected_name": "ООО «Серпуховский конденсаторный завод «КВАР»",
+    "rejected_offer_including_vat_rub": "1960906.00",
+    "rejection_causes": [
+      "missing requested FNS tax certificate KND1120101",
+      "KEPF-12-600 rated 37.5A vs buyer required 50A"
+    ],
+    "contract_signer_verification": false,
+    "oem_verification": false
+  },
+  "historical_contract_registry": {
+    "registry_number": "57724646338260000460000",
+    "historical_source_ref": "archive/mi-pr-515-20261029/original_signed_12kv_reto_20261028.v38.json",
+    "historical_price_rub": "3050000.00",
+    "historical_signed_date": "2026-08-19",
+    "historical_primary_card_sha256": "94170a4d9314d78307300f410c2e71fc3ee8ab4a3c9ea86633e48d1809b390aa",
+    "historical_primary_subject_sha256": "76d050d1fd3f65a6a5eb2f58358fa376b5cc280abe6ff1207122698d73c5f6cf",
+    "independent_current_card_http": 404,
+    "independent_current_subject_http": 404,
+    "current_original_byte_match": false,
+    "signed_supplier_identity_publicly_verified": false,
+    "physical_delivery_verified": false,
+    "payment_verified": false
+  },
+  "market_class": "12kV_nominal_capacitor_components_for_BSK_not_proven_6_35kV_complete_compensator",
+  "signed_supplier_count_added": 0,
+  "verified_core_6_35kv_sales_rub_added": 0,
+  "archive_history_preserved": true,
+  "next": "Recheck official registered contract through supported source interface; compare notice/lot/project with current v29 before promotion; do not attribute signer/OEM to protocol winner."
+}
