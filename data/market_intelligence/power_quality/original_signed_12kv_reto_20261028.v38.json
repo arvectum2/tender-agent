@@ -1,0 +1,31 @@
+{
+  "data_version": "v38",
+  "new_notices": 1,
+  "source": "official_Rd223",
+  "records": [
+    {
+      "canonical_id": "223fz:32616181358:lot1",
+      "contract_register": "57724646338260000460000",
+      "contract_price_rub": "3050000.00",
+      "signed_date": "2026-08-19",
+      "buyer_inn": "7724646338",
+      "product_lines": [
+        {
+          "model": "КЭПФ-12-450-2УХЛ1",
+          "units": 5,
+          "unit_price_rub": "292000.00"
+        },
+        {
+          "model": "КЭПФ-12-600-2УХЛ1",
+          "units": 5,
+          "unit_price_rub": "318000.00"
+        }
+      ],
+      "buyer": "АО Завод РЭТО",
+      "supplier_name": null,
+      "manufacturer_registered_country": "Республика Казахстан",
+      "source_contract_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=57724646338260000460000",
+      "source_spec_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=57724646338260000460000"
+    }
+  ]
+}
