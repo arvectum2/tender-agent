@@ -23,6 +23,8 @@ from .pq_public_223_canonical import canonicalize as canonicalize_public_223
 from .pq_public_dp_resume import run as resume_public_dp
 from .pq_public_223_direct import merge_direct
 from .pq_commission_fact_audit import verify as verify_commission_facts
+from .pq_primary_etp_capture import batch as fetch_primary_etp
+from .pq_primary_etp_audit import verify as verify_primary_etp
 
 
 def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
@@ -32,7 +34,9 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
               contract_root: Path | None = None,
               contract_day_scan: Path | None = None,
               public223_source: Path | None = None,
-              commission_facts: Path | None = None) -> dict:
+              commission_facts: Path | None = None,
+              primary_etp_source: Path | None = None,
+              primary_etp_facts: Path | None = None) -> dict:
     if not 1 <= max_cases <= 30 or not source_roots:
         raise ValueError("Invalid cycle scope")
     runtime.mkdir(parents=True, exist_ok=True)
@@ -153,6 +157,25 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
             "signed_contracts_verified": verified_facts["verified_signed_contracts"],
             "artifact": str(verified_file),
         }
+    if primary_etp_source is not None:
+        report["primary_etp_fetch"] = (
+            fetch_primary_etp(
+                leads=leads, source_root=primary_etp_source,
+                journal=runtime / "primary-etp-attempts.json",
+                max_cards=min(max_cases, 4))
+            if network else {"status": "skipped_offline"})
+        if primary_etp_facts is not None:
+            etp_facts = verify_primary_etp(
+                facts=primary_etp_facts, source_root=primary_etp_source)
+            etp_facts_file = runtime / "verified-primary-etp-facts.json"
+            etp_facts_file.write_text(
+                json.dumps(etp_facts, ensure_ascii=False, indent=2),
+                encoding="utf-8")
+            report["primary_etp_evidence"] = {
+                "original_cards_verified": etp_facts["original_etp_cases_verified"],
+                "signed_contracts_verified": etp_facts["signed_contracts_verified"],
+                "artifact": str(etp_facts_file),
+            }
     (runtime / "last-recovery-cycle.json").write_text(
         json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     return report
@@ -174,6 +197,8 @@ def main() -> None:
     p.add_argument("--contract-day-scan", type=Path)
     p.add_argument("--public223-source", type=Path)
     p.add_argument("--commission-facts", type=Path)
+    p.add_argument("--primary-etp-source", type=Path)
+    p.add_argument("--primary-etp-facts", type=Path)
     a = p.parse_args()
     result = run_cycle(leads=a.leads, source_roots=a.source_root,
                        archive_index=a.archive_index, runtime=a.runtime,
@@ -181,7 +206,9 @@ def main() -> None:
                        max_cases=a.max_cases, network=not a.offline, verified_reestr=a.verified_reestr, etp_queue=a.etp_queue,
                        contract_root=a.contract_root, contract_day_scan=a.contract_day_scan,
                        public223_source=a.public223_source,
-                       commission_facts=a.commission_facts)
+                       commission_facts=a.commission_facts,
+                       primary_etp_source=a.primary_etp_source,
+                       primary_etp_facts=a.primary_etp_facts)
     print(json.dumps(result, ensure_ascii=False))
 
 
