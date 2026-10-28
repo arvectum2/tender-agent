@@ -1,0 +1,86 @@
+{
+  "schema_version": "mi013-original-35kv-mixed-epc-commission/1.0",
+  "as_of": "2026-10-28",
+  "data_version": "v40",
+  "base_manifest": "verified_public_leads_20261028.v39.manifest.json",
+  "new_procurement_notices": 0,
+  "existing_cases_enriched": 1,
+  "new_original_registered_signed_contracts": 0,
+  "patches": [
+    {
+      "canonical_id": "223fz:32616433248:lot1",
+      "procedure_id": "32616433248",
+      "source_grade": "first_party_EIS_223_original_final_and_qualification_attachments_sha_verified",
+      "buyer": {
+        "name": "ПАО «Россети Северо-Запад»",
+        "inn": "7802312751"
+      },
+      "procurement_title_short": "26Т0210040.0017 реконструкция ПС35кВ Кяппесельга и ПС110кВ Великая Губа с установкой одной УКРМ 35кВ",
+      "scope": "turnkey EPC including transformer 2.5->4 MVA, CT replacement, 10kV switchgear and 35kV UKRM at PS35 plus another 110kV substation",
+      "full_epc_total_nmc_rub": "56330673.93",
+      "date_published": "2026-10-02",
+      "preliminary_protocol": {
+        "meeting_date": "2026-10-12",
+        "signed_date": "2026-10-14",
+        "bids_received": 1,
+        "qualified_bids": 1,
+        "original_archive": {
+          "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=D12310E98C084DC0B90B88C588DA72E7",
+          "bytes": 181744,
+          "sha256": "842c06f3d0944e8266fd2aefaeb538ab04b19a5195fe91172fbad923684ad861"
+        },
+        "inner_docx": {
+          "name": "Протокол рассм.+ переторжка_5147.docx",
+          "bytes": 28883,
+          "sha256": "cbe58279f4259b7db6ad09a9b59cb50d32bd6405431e16f78f8f71b3e0bbe91d"
+        },
+        "inner_pdf_sha256": "d8459a89544045eab16a1ef9bb7ba27895e4a5d1a45c3479067619b72443c7f4"
+      },
+      "final_protocol": {
+        "meeting_date": "2026-10-16",
+        "signed_date": "2026-10-19",
+        "bids_received": 1,
+        "bid_1_price_rub": "56330673.93",
+        "bidder_named_in_original": false,
+        "retender_price_reduced": false,
+        "procurement_legally_failed_one_bid": true,
+        "original_commission_decision": "Рекомендовать заключение договора с единственным участником №1 на сумму не более 56 330 673,93 руб., провести преддоговорные переговоры для снижения цены",
+        "original_archive": {
+          "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=B2DC4E3EBEE64DB6ADB57D33C419BD97",
+          "bytes": 187120,
+          "sha256": "98062c8f6bb47d177c7630374a8f57193dcf4177e7fd37f3204cf140de05de4e"
+        },
+        "inner_docx": {
+          "name": "Протокол 3 итоги_5147.docx",
+          "bytes": 28353,
+          "sha256": "56e4511d7ca688108a1d9c96505ee54578986d1247db03e4b486b454b176007e"
+        },
+        "inner_pdf_sha256": "7e1d4a7132947c5686d3854a2b45a64cd4e8c7f133685b82b808b8beff1081ca"
+      },
+      "second_tier_bidder": {
+        "name": "ООО «СтройЭнергоИмпорт»",
+        "inn": "7801564611",
+        "source_url": "https://poisktenderov.ru/item/223/32616433248/",
+        "source_grade": "secondary_independent_public_index_not_original_commission_verified",
+        "verified_primary_legal_person": false
+      },
+      "equipment": {
+        "product_family": "UKRM",
+        "units_requested": 1,
+        "site_bus_voltage_kv": 35,
+        "capacitor_nameplate_voltage_kv": null,
+        "individual_device_kvar": null,
+        "hardware_only_signed_price_rub": null,
+        "hardware_only_nmc_rub": null,
+        "verified_installed": false
+      },
+      "signed_original_rd223_contract_verified": false,
+      "registered_signed_contract_number": null,
+      "actual_signed_contract_value_rub": null,
+      "full_epc_cost_is_not_ukrm_price": true,
+      "vat_basis_unchanged_not_stated_in_protocol": true,
+      "programme_dedup_project_key": "rosseti_northwest_karelia_PS35_Kyappeselga_PS110_VelikayaGuba_26T0210040.0017",
+      "notes": "Both original first-party archival protocols directly downloaded by Mac mini and inner DOCX/PDF parsed and SHA verified 2026-10-28. Secondary index supplies bidder's identity but source original commission IDs bidder #1 only; do NOT assert an originally verified winning supplier or signed RD223 contract. Proposal 56.33m RUB covers 2 substations and equipment beyond UKRM. Do NOT classify that as UKRM equipment sale. National origin applicability not independently sourced here."
+    }
+  ]
+}
