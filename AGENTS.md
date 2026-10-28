@@ -123,3 +123,8 @@ pilot wizard/operator workspace frontend or parallel permanent stand.
 Inspect/reuse the existing routes, auth, original data and volumes.
 Historical /demo/tender-agent is a non-product compatibility fixture.
 Read docs/architecture/TENDER_AGENT_SINGLE_OPERATOR_UI.md before UI tasks.
+
+
+## Spec Kit / Power Quality — agent-neutral pilot
+
+For the existing PQ Market Intelligence research task, follow `docs/tender_research/market_intelligence/SPECKIT_CHATGPT_ARC.md` and `specs/001-power-quality-evidence-closure/` along with the canonical research protocol, AES-001 and existing checkpoint. The `.specify/memory/constitution.md` is a **non-authoritative adapter**, not a second ratified constitution. ChatGPT executes the Spec Kit stages via ARC, without Hermes/Codex or agent command dispatch. Do not rewrite `.agent/current-task.yaml`, create extra corpus stores, infer market volume from bid prices, or change the one Tender Agent Watchdog.
