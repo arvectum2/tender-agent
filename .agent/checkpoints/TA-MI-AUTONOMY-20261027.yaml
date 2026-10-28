@@ -561,6 +561,14 @@ watchdog_additional_month_searches_20261028_1452:
   status: in_progress
   additional_searches: 8
   cumulative_new_searches_this_run: 60
+  source_search_statuses: {success: 27, empty: 33}
+  candidate_metadata_rows_unverified: 145
+  new_months_non_exhaustive: 14
+  source_originals_sha_verified_this_run: 24
+  source_quoted_chatgpt_arc_reviews_this_run: 2
+  last_tested_code_commit: f44c98d484ec7f272c7155a36c85fa94841c8e75
+  last_test_results: "10 passed, Ruff PASS, diff check PASS, one inherited Starlette warning"
+  last_pushed_research_commit: 5382e42e097cb013e0cb51e35b1c2051bc981942
   additional_candidate_rows_unverified: 41
   new_originals_in_additional_batch: 0
   reason_no_new_originals: >-
