@@ -68,7 +68,9 @@
       "nmck_rub": "1518147770.00",
       "signed_contract_verified": false,
       "supplier_of_signed_contract_verified": false,
-      "market_category": "mixed_epc_high_voltage_scrm_128_154mvar"
+      "market_category": "adjacent_epc_lot2_ps_hani_parent_project_mentions_scrm",
+      "pq_equipment_within_awarded_lot_verified": false,
+      "qualification": "The awarded lot 2 is PS 220 kV Khani; the overarching project mentions separate 128/154 Mvar SCRM installations at Lopcha. The quoted bid is not evidence of PQ equipment delivery or its budget."
     },
     {
       "procedure_id": "32615794236",
