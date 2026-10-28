@@ -81,17 +81,15 @@ def build(*, leads: Path, public223: Path, filestore: Path,
                     for r in exact_filestore_sha_receipts(filestore)}
     verified_etp = verify_etp(facts=etp_facts, source_root=etp_originals)
     etp = {x["procedure_id"]: x for x in verified_etp["records"]}
-    found = _journal(eis_journal, "pq-source-recovery/1")
+    found = _journal(eis_journal, "pq-source-attempts/1")
     downloads = _journal(public_journal, "pq-223-public-page-attempts/1")
     native = _journal(primary_etp_journal, "pq-etp-primary-attempts/1")
     found_ids = {str(r.get("procedure_id")) for r in found
                  if r.get("source") == "official_eis_search"
                  and r.get("status") == "success"
                  and r.get("matches")}
-    downloaded_ids = {str(r.get("registry_number")) for r in downloads
-                      if r.get("status") in ("public_page_files_downloaded", "existing_receipt")}
-    native_ids = {str(r.get("procedure_id")) for r in native
-                  if r.get("status") == "original_verified"}
+    attempted_download_ids = {str(r.get("registry_number")) for r in downloads}
+    native_ids = {str(r.get("procedure_id")) for r in native}
     cases = []
     seen = set()
     source_hosts = Counter()
@@ -157,7 +155,7 @@ def build(*, leads: Path, public223: Path, filestore: Path,
             "primary_source_proofs": proof,
             "original_eis_file_instances": count,
             "eis_exact_search_hit_recorded": number in found_ids,
-            "public_notice_download_attempt_recorded": number in downloaded_ids,
+            "public_notice_download_attempt_recorded": number in attempted_download_ids,
             "etp_original_card_attempt_recorded": number in native_ids,
             "candidate_source_tiers_not_validation": source_tiers,
             "publication_month_source_verified": None,
