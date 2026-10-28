@@ -114,13 +114,24 @@ def _fetch(url: str, timeout: int = 10) -> dict:
 
 
 def audit(*, queue_file: Path, journal: Path, max_tasks: int = 5,
-          retry_hours: int = 12, fetch=None) -> dict:
+          retry_hours: int = 12, fetch=None,
+          prior_journals: list[Path] | None = None) -> dict:
     if not 1 <= max_tasks <= 30 or not 1 <= retry_hours <= 720:
         raise ValueError("Invalid probe limits")
     fetcher = fetch or _fetch
     tasks = json.loads(queue_file.read_text(encoding="utf-8"))["tasks"]
     state = json.loads(journal.read_text(encoding="utf-8")) if journal.exists() else {
         "schema_version": "pq-etp-card-attempts/1", "attempts": []}
+    # One source URL can appear under several candidate IDs and in a separate
+    # native-ETP journal. A recent verified attempt must not be replayed.
+    prior_attempts = list(state["attempts"])
+    for other in prior_journals or []:
+        if other.is_file():
+            other_data = json.loads(other.read_text(encoding="utf-8"))
+            if not isinstance(other_data, dict) or not isinstance(
+                    other_data.get("attempts"), list):
+                raise ValueError("Invalid prior ETP attempt journal")
+            prior_attempts.extend(other_data["attempts"])
     now = datetime.now(UTC)
     new = []
     for task in tasks:
@@ -133,10 +144,16 @@ def audit(*, queue_file: Path, journal: Path, max_tasks: int = 5,
         host = urllib.parse.urlsplit(url).hostname
         if host not in ALLOW:
             continue
-        latest = next((a for a in reversed(state["attempts"])
-                       if a["procedure_id"] == identity and a["url"] == url), None)
-        if latest and (now - datetime.fromisoformat(latest["timestamp"])).total_seconds() < retry_hours * 3600:
-            continue
+        matching = [a for a in prior_attempts if a.get("url") == url]
+        if matching:
+            try:
+                times = [datetime.fromisoformat(a["timestamp"]) for a in matching]
+                if any(t.tzinfo is None for t in times):
+                    raise ValueError("Naive attempt timestamp")
+            except (KeyError, TypeError, ValueError) as exc:
+                raise ValueError("Invalid ETP attempt timestamp") from exc
+            if any(now - t < timedelta(hours=retry_hours) for t in times):
+                continue
         try:
             result = fetcher(url)
             html = result.pop("text", "")
@@ -162,6 +179,7 @@ def audit(*, queue_file: Path, journal: Path, max_tasks: int = 5,
                   "next_eligible_retry_at": (now + timedelta(hours=retry_hours)).isoformat(),
                   **result, "signed_contract_verified": False, "winner_verified": False}
         state["attempts"].append(record)
+        prior_attempts.append(record)
         new.append(record)
         journal.parent.mkdir(parents=True, exist_ok=True)
         with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=journal.parent,
@@ -181,8 +199,10 @@ def main():
     p.add_argument("--queue-file", type=Path, required=True)
     p.add_argument("--journal", type=Path, required=True)
     p.add_argument("--max-tasks", type=int, default=5)
+    p.add_argument("--prior-journal", type=Path, action="append")
     args = p.parse_args()
-    result = audit(queue_file=args.queue_file,journal=args.journal,max_tasks=args.max_tasks)
+    result = audit(queue_file=args.queue_file, journal=args.journal,
+                   max_tasks=args.max_tasks, prior_journals=args.prior_journal)
     print(json.dumps(result, ensure_ascii=False))
 
 

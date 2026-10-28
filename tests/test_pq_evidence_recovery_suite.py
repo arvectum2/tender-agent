@@ -85,6 +85,50 @@ def test_etp_retry_and_no_contract_inference(tmp_path):
     assert first["results"][0]["signed_contract_verified"] is False
 
 
+def test_etp_cross_journal_dedup_and_source_url_aliases(tmp_path):
+    from datetime import UTC, datetime, timedelta
+
+    url = "https://synapsenet.ru/zakupki/b2b/4565274"
+    queue = tmp_path / "queue.json"
+    queue.write_text(json.dumps({"tasks": [
+        {"procedure_id": "4565274", "mirror": url},
+        {"procedure_id": "4565274-alias", "mirror": url}]}))
+    native = tmp_path / "native.json"
+    native.write_text(json.dumps({"schema_version": "pq-etp-native-source-attempts/1",
+        "attempts": [{"timestamp": datetime.now(UTC).isoformat(),
+                      "procedure_id": "4565274", "url": url,
+                      "status": "html_fetched", "html_sha256": "a" * 64}]}))
+    seen = []
+    def fetch(value):
+        seen.append(value)
+        return {"status": "html_fetched", "http_status": 200, "text": "4565274 УКРМ"}
+    journal = tmp_path / "journal.json"
+    assert audit(queue_file=queue, journal=journal, fetch=fetch,
+                 prior_journals=[native])["probes"] == 0
+    assert not seen
+    native.write_text(json.dumps({"attempts": [{
+        "timestamp": (datetime.now(UTC) - timedelta(hours=13)).isoformat(),
+        "url": url, "status": "inaccessible"}]}))
+    result = audit(queue_file=queue, journal=journal, fetch=fetch,
+                   prior_journals=[native])
+    assert result["probes"] == 1
+    assert seen == [url]
+    assert result["results"][0]["signed_contract_verified"] is False
+
+
+def test_etp_malformed_prior_journal_fails_closed(tmp_path):
+    url = "https://synapsenet.ru/zakupki/b2b/4565274"
+    queue = tmp_path / "queue.json"
+    queue.write_text(json.dumps({"tasks": [
+        {"procedure_id": "4565274", "mirror": url}]}))
+    prior = tmp_path / "native.json"
+    prior.write_text(json.dumps({"attempts": [{"url": url,
+                                               "timestamp": "not-a-timestamp"}]}))
+    with pytest.raises(ValueError, match="timestamp"):
+        audit(queue_file=queue, journal=tmp_path / "journal.json",
+              prior_journals=[prior], fetch=lambda _: {"status": "html_fetched"})
+
+
 def test_etp_http_outcomes_are_distinct_and_do_not_prove_award(tmp_path):
     from urllib.error import HTTPError, URLError
     urls = ["https://synapsenet.ru/zakupki/b2b/403",
