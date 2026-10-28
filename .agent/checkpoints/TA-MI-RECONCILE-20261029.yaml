@@ -22,6 +22,6 @@ remaining:
   - Audit #515 v20-v40 historical files and identify unique cases vs current v29 with SHA-level reconciliation; do not replace current v29 blindly
   - Verify overlapping #516-518 code coverage and close superseded PRs with exact transfer pointers
   - Continue real 44/223-FZ/commercial ETP evidence acquisition and S0-S11 E2E acceptance
-last_verified_commit: aca475560e5fd19615324961eb3159ef505942fc
-test_results: 24 targeted tests passed, Ruff passed, one inherited Starlette deprecation warning
+last_verified_commit: 6acff59336b82ecd3932fdd9e9319c73f1ad2d78
+test_results: 43 targeted tests passed, Ruff passed, one inherited Starlette deprecation warning
 resume_instruction: Start from the head of existing PR #521 and this checkpoint, compare current CI and outstanding historical PRs; do not open a second active MI PR. Verify restored original-source overlays against private source SHA before promotion. Check original signed contractor/price and 6-35kV first. Preserve unrelated current-task.yaml and source originals. Report through single #57 Watchdog.
