@@ -579,3 +579,28 @@ watchdog_additional_month_searches_20261028_1452:
   resume_instruction: >-
     Preserve source SHA receipts and avoid repeating 60 month-law-query combinations
     before cooldown. Continue original signed contract recovery and ETP source work.
+
+watchdog_month_completion_20261028_1500:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  cumulative_new_official_searches_this_run: 82
+  official_first_page_statuses: {success: 36, empty: 46}
+  metadata_candidate_rows_unverified: 157
+  calendar_months_with_at_least_one_bounded_query_in_combined_journal: 34
+  exhaustive_months_proven: 0
+  new_original_notices_this_run: 3
+  new_sha_verified_original_files_this_run: 24
+  new_chatgpt_arc_reviews_this_run: 2
+  named_commission_winners_new: 1
+  signed_suppliers_verified_new: 0
+  executed_contract_prices_verified_new: 0
+  delta_source_ledger: docs/market_intelligence/PQ_WATCHDOG_MONTH_DELTA_20261028_1500.json
+  last_tested_code_commit: f44c98d484ec7f272c7155a36c85fa94841c8e75
+  last_test_results: "10 passed; Ruff PASS; git diff --check PASS; 1 inherited Starlette warning"
+  resume_instruction: >-
+    v29 stays 101 rows, no false 34-month exhaustive claim. Read private
+    watchdog-20261028-1436 original SHA receipts and combined month journal.
+    Do not repeat 82 exact month-law-query combinations before 12h cooldown.
+    Verify signed supplier and executed amount for 32413764701, then 32514720691
+    and 32514754857, and native GP630876. Keep original Watchdog and unrelated
+    current-task untouched; do not promote commission offers to signed prices.
