@@ -604,3 +604,46 @@ watchdog_month_completion_20261028_1500:
     Verify signed supplier and executed amount for 32413764701, then 32514720691
     and 32514754857, and native GP630876. Keep original Watchdog and unrelated
     current-task untouched; do not promote commission offers to signed prices.
+
+
+watchdog_eis_readonly_queries_20261028_1533:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  source_dataset: v29_101_unchanged
+  run_start_issue_comment_id: 6469007392
+  actual_new_first_party_http_requests: 14
+  observed_http_statuses: {200: 14}
+  bounded_first_pages_empty: 11
+  bounded_first_pages_with_metadata_candidates: 3
+  lexical_false_positive_candidate_ids: 12
+  new_original_source_files_saved: 0
+  new_tenders_or_lots_primary_verified: 0
+  new_deduplicated_projects: 0
+  new_named_commission_winners: 0
+  new_signed_suppliers_verified: 0
+  new_executed_contract_prices_verified: 0
+  month_scopes_touched: ["2024-01", "2024-03", "2024-05", "2024-06", "2024-07", "2024-08"]
+  exhaustive_months_proven: 0
+  latest_runtime_coverage: {candidate_rows: 101, with_primary_original: 47, without_primary_original: 54}
+  latest_arc_queue_observed: {reviewed: 90, pending_review: 4}
+  source_attempt_ledger: docs/market_intelligence/PQ_WATCHDOG_BOUNDED_EIS_20261028_1533.json
+  source_attempt_ledger_commit: fd835a353758947965a74c6fbf4429121ec9f1dc
+  last_tested_code_commit: aff31d05f1c33c9ae718de809498e0b1135ba8a0
+  last_test_results: "No code changed in this invocation; no redundant test suite run. 14 read-only first-party HTTP 200 responses hashed in memory."
+  blocker: >-
+    New EIS queries yielded no relevant original technical specifications or signed contracts;
+    12 first-page identifiers were unrelated ventilation/HVAC, vehicle and measurement services.
+    Existing ARC pending packets are 2 unreadable native PDFs and 2 exact-SHA duplicates;
+    Data Platform 15 SDK items remain blocked on authorized credentials.
+  resume_instruction: >-
+    Resume current PR #521 and v29 101-row corpus. Do not repeat 14 exact
+    month/law/query searches before 2026-10-29 03:33 Europe/Moscow.
+    Prioritize independently signed 32413764701 UKRM 10kV supplier/contract
+    using a verified alternative official registry endpoint (prior 223 registry
+    URL returned 404); linked Bashkirenergo lots 32514720691/32514754857
+    with project-level dedup; GP630876 original first-party ETP documentation
+    (secondary card retry eligible 2026-10-29 00:41 Europe/Moscow).
+    Metal-IT 119199-TT/135171-TT official shell previously HTTP200 but no
+    trade identity confirmed, do not infer award; first-party retry after
+    2026-10-29 02:22 Europe/Moscow. Keep one existing Watchdog, preserve
+    unrelated current-task.yaml, do not merge or mutate production.
