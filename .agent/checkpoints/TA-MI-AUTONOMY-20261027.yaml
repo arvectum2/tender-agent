@@ -916,14 +916,16 @@ watchdog_source_bound_xlsx_20261028_2129:
   status: in_progress
   issue_run_start_comment_id: 6477259385
   corpus: v29_101_unchanged
-  new_first_party_requests: 53
+  new_first_party_requests: 55
   month_scoped_eis_searches: 40
   month_search_results: {empty: 31, success: 9, metadata_candidate_rows_unverified: 12}
   newly_touched_months: 8
   newly_exhaustive_months: 0
   original_eis_44fz_files_sha_verified: 4
+  new_original_etp_project_pdfs_sha_verified: 2
+  new_source_only_6kv_project_design_need: 1
   new_44fz_notice: '0548100001225000001'
-  new_independent_project: 1
+  new_independent_project: 2
   new_core_6_35kv_sales: 0
   original_named_award_protocols: 0
   new_signed_suppliers: 0
@@ -934,7 +936,7 @@ watchdog_source_bound_xlsx_20261028_2129:
   last_known_v29_primary_gaps: 54
   last_known_dp_sdk_pending: 15
   source_evidence_ledger: docs/market_intelligence/PQ_WATCHDOG_PRIMARY_DELTA_20261028_2129.json
-  source_evidence_ledger_sha256: 3daacff59ae7879ba5d30868fcb944e3e7a36d5eeaa88002ca8e82d433540419
+  source_evidence_ledger_sha256: 6d27936eb6f94332a7b4e738a12c16a930696df0d59dc6a5966a8ad1b075b81b
   month_search_journal_sha256: 8000b93fb64c436cadb84bc4f16bd517c2bf25d43dd5037ac0ba0adb43799f03
   last_tested_code_commit: f93031e716b5ce48eb478a1bd21f1a44c70967c8
   last_test_results: '6 focused pytest PASS, Ruff PASS, git diff --check PASS; one external Starlette warning'
@@ -944,6 +946,14 @@ watchdog_source_bound_xlsx_20261028_2129:
     exact SHA and quotes reviewed via ARC. UKRM nominal voltage and PQ-only
     cost remain unknown; not promoted as a 6-35 kV sale. Fixed extraction
     of late workbook PQ rows while retaining immutable original SHA.
+  supplementary_project: >-
+    Official Metal-IT original 2024 Elga PS 35/6 kV project PDF (SHA
+    358293efaea44266e32a291a21bfcc87554fe4f404b02633d125df68975bf208)
+    specifies UKRM 6 kV 600 kvar, 3x200 kvar; second original PDF (SHA
+    438a2a2d73275f1bf7e4451446a7554ef361dc20bc6c1fb95dbcbc808720db35)
+    corroborates UKRM protection. Designer name appears as AO ELSI
+    Energoproekt, not an equipment supplier. Tender ID, buyer, signed
+    supplier and price remain unknown; source-only project, not a sale.
   blockers: >-
     Metal-IT official homepage HTTP200 but no original tender card identified;
     GPB observed public list disconnected, B2B HTTP403. 15 Data Platform

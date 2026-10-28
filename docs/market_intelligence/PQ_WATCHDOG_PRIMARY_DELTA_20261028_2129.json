@@ -3,13 +3,14 @@
   "task_id": "TA-MI-AUTONOMY-20261027",
   "run_start_issue_comment_id": 6477259385,
   "dataset": "v29_101_unchanged",
-  "first_party_requests_arc": 53,
+  "first_party_requests_arc": 55,
   "first_party_request_breakdown": {
     "official_eis_month_provider_searches_http_not_exposed": 40,
     "official_44fz_notice_detail_pages_http_not_exposed": 2,
     "official_44fz_original_document_get_http200": 4,
     "official_etp_homepage_get_and_discovery": 5,
-    "official_etp_public_script_head_and_bounded_get": 2
+    "official_etp_public_script_head_and_bounded_get": 2,
+    "official_etp_project_original_pdf_get_http200": 2
   },
   "month_search": {
     "count": 40,
@@ -204,5 +205,29 @@
       "etp_retry_not_before_msk": "2026-10-29 00:41"
     }
   ],
-  "safety": "No bids, signatures, payments, external contacts, production, inferred supplier, API/local LLM or auto-merge."
+  "safety": "No bids, signatures, payments, external contacts, production, inferred supplier, API/local LLM or auto-merge.",
+  "new_original_etp_project_documents": [
+    {
+      "original_url": "https://etp.metal-it.ru/files/get/887fjTd5bkcxpDUVom6f4xnhpi5ckc7fAoLfrqRfYwazHE1fTNkT9shm7XVC3vdh3L/%D0%94-00001-%D0%A2%D0%9C-2024-%D0%98%D0%9B%D0%9E5.1.1_%D0%B8%D0%B7%D0%BC.0_02.10.24.pdf",
+      "original_sha256": "358293efaea44266e32a291a21bfcc87554fe4f404b02633d125df68975bf208",
+      "original_bytes": 5936108,
+      "source_quote": "КРУН 6 кВ предусмотрена установка УКРМ 600кВар с тремя ступенями регулирования по",
+      "locator": "2024 Elga PS 35/6 kV project, original PDF native text",
+      "original_http_status": 200
+    },
+    {
+      "original_url": "https://etp.metal-it.ru/files/get/887fjTd5bkcxpDUVom6f4xnhpi5ckc7fAoLfrqRbXLnY5aJX79QSDRW5ksQs9ApSjq/%D0%94-00001-%D0%A2%D0%9C-2024-%D0%98%D0%9B%D0%9E5.1.4_%D0%B8%D0%B7%D0%BC.0_02.10.24.pdf",
+      "original_sha256": "438a2a2d73275f1bf7e4451446a7554ef361dc20bc6c1fb95dbcbc808720db35",
+      "original_bytes": 2029343,
+      "source_quote": "Защита УКРМ предусматривается на микропроцессорных устройствах РЗА",
+      "locator": "2024 Elga PS 35/6 kV project, original PDF native text",
+      "original_http_status": 200
+    }
+  ],
+  "new_original_etp_project_document_count": 2,
+  "new_distinct_source_only_project_count": 1,
+  "new_independent_project_count_total_including_source_only": 2,
+  "new_confirmed_6kv_project_design_need": 1,
+  "original_etp_source_only_review_sha256": "e0e0da343bfbcb20fa9a3cc6c98f4550ac21caf4a4cc6febfce9eb90f9a85ffa",
+  "source_only_project_limitations": "Elga 2024 design: UKRM 6 kV 600 kvar (3x200); tender ID, buyer, signed supplier, executed contract and equipment price not established. Do not count as procurement award or sale."
 }
