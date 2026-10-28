@@ -64,16 +64,44 @@ def _extract(path: Path) -> tuple[str, str]:
             chunks.extend(" | ".join(c.text for c in row.cells) for row in table.rows)
         return "\n".join(chunks)[:MAX_TEXT], "docx"
     from openpyxl import load_workbook
+    # Large original EIS workbooks can put PQ equipment thousands of rows past
+    # the first 30k characters. Preserve exact original file SHA in the packet,
+    # but prioritize source-cell excerpts before the bounded context prefix.
+    hints = ("укрм", "бск", "статком", "statcom", "svg", "svc",
+             "гармоник", "компенсац", "конденсатор")
+    head, matches = [], []
+    head_chars = match_chars = 0
+    budget = MAX_TEXT // 2
     book = load_workbook(path, read_only=True, data_only=True)
-    chunks = []
-    for sheet in book.worksheets[:12]:
-        chunks.append(f"[SHEET {sheet.title}]")
-        for row in sheet.iter_rows(max_row=2500, max_col=50, values_only=True):
-            chunks.append(" | ".join(str(c)[:250] if c is not None else "" for c in row))
-            if sum(map(len, chunks)) >= MAX_TEXT:
-                break
-    book.close()
-    return "\n".join(chunks)[:MAX_TEXT], "xlsx"
+    try:
+        for sheet in book.worksheets[:12]:
+            if head_chars < budget:
+                label = f"[SHEET {sheet.title}]"
+                head.append(label)
+                head_chars += len(label) + 1
+            for row_number, row in enumerate(
+                    sheet.iter_rows(max_row=2500, max_col=50, values_only=True), 1):
+                if head_chars < budget:
+                    line = " | ".join(str(c)[:250] if c is not None else "" for c in row)
+                    head.append(line[:budget - head_chars])
+                    head_chars += min(len(line), budget - head_chars) + 1
+                if match_chars >= budget:
+                    continue
+                for column_number, cell in enumerate(row, 1):
+                    if cell is None:
+                        continue
+                    value = str(cell)[:2000]
+                    if not any(hint in value.casefold() for hint in hints):
+                        continue
+                    snippet = (f"[SHEET {sheet.title} ROW {row_number} "
+                               f"COL {column_number}] {value[:1400]}")
+                    matches.append(snippet[:budget - match_chars])
+                    match_chars += min(len(snippet), budget - match_chars) + 1
+                    if match_chars >= budget:
+                        break
+    finally:
+        book.close()
+    return ("\n".join(matches) + "\n" + "\n".join(head))[:MAX_TEXT], "xlsx"
 
 
 def prepare_packet(*, document_dir: Path, ontology_path: Path,

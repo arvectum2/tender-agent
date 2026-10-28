@@ -77,3 +77,33 @@ def test_legacy_doc_packet_binds_original_bytes(tmp_path, monkeypatch):
     assert len(packet["documents"]) == 1
     assert packet["documents"][0]["sha256"] == hashlib.sha256(original).hexdigest()
     assert packet["documents"][0]["text"] == "УКРМ 10 кВ"
+
+
+def test_xlsx_late_pq_cell_retains_original_sha_and_quote(tmp_path):
+    import hashlib
+
+    from openpyxl import Workbook
+
+    from src.modules.market_intelligence import pq_chatgpt_review as mod
+
+    book = Workbook()
+    sheet = book.active
+    for i in range(1, 2001):
+        sheet.cell(i, 1, "Радиотехническое оборудование " + "тест " * 15)
+    quote = "КТП 10/0,4 кВ; в составе РУНН УКРМ-2шт; напряжение УКРМ не указано"
+    sheet.cell(2001, 2, quote)
+    source = tmp_path / "original.xlsx"
+    book.save(source)
+    ontology = tmp_path / "ontology.yaml"
+    ontology.write_text("families: []", encoding="utf-8")
+    packet = mod.prepare_packet(
+        document_dir=tmp_path, ontology_path=ontology, registry_number="0548100001225000001",
+    )
+    doc = packet["documents"][0]
+    assert doc["sha256"] == hashlib.sha256(source.read_bytes()).hexdigest()
+    assert quote in doc["text"]
+    assert "ROW 2001 COL 2" in doc["text"]
+    assert len(doc["text"]) <= mod.MAX_TEXT
+    review = {"registry_number": "0548100001225000001", "classification": "uncertain",
+              "evidence": [{"sha256": doc["sha256"], "quote": quote}]}
+    assert mod.validate_review(packet=packet, review=review)["classification"] == "uncertain"
