@@ -27,7 +27,7 @@ def check(row):
     x=query("SELECT content_hash FROM dp_resources WHERE external_id='"+ID+"' AND collection_id='"+COLLECTION+"';")
     if not x:return False
     if x.strip()!=row["content_hash"]:raise RuntimeError("existing original signed row SHA mismatch")
-    j=query("SELECT d.data->>'registered_contract_number',d.data->>'actual_signed_contract_price_rub' FROM dp_records d JOIN dp_resources r USING(resource_id) WHERE r.external_id='"+ID+"';",delimiter="|")
+    j=query("SELECT d.data->>'registered_contract_number',d.data->>'actual_signed_contract_price_rub' FROM dp_records d JOIN dp_resources r USING(resource_id) WHERE r.external_id='"+ID+"';")
     if j.strip()!="57724646338260000460000|3050000.00":raise RuntimeError("existing signed source data not verified")
     return True
 
