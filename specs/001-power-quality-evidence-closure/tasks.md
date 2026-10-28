@@ -21,6 +21,19 @@
 - [ ] T013 Deduplicate notice ↔ lot ↔ project ↔ signed contract, including repeated tenders and mixed EPC; exclude non-PQ costs from any PQ market-volume calculation.
 - [ ] T014 Run source-grade numeric, privacy, rights, audit, contradiction and coverage checks; produce report + separate registers with original evidence and exact coverage limitations.
 
+### Source-grounded US2 slices completed on 2026-10-28 (scope bounded; parent tasks remain open)
+- [x] T008a Generate read-only source-period/notice/lot coverage ledger on the 101-row v29 source corpus; 34 EIS lot rows = 33 unique notices; 67 nonstandard/commercial rows; monthly searches remain explicitly *not demonstrated*.
+- [x] T009a Acquire and verify four original B2B-Center cards and three original Bidzaar cards with SHA receipts; outcomes from all four B2B cards are hidden by organizers. No invented signed supplier.
+- [x] T013a Prove exact two-notice repeat of BESK lot 26-004167 at Pionerskaya using failed original protocols; preserve 2 independent parent-program links without merging separate Lopcha EPC/design contracts.
+- [x] T014a Produce source consistency-checked `coverage.json`, `project_register.json`, `quality_report.json` and partial `report.md` using existing PQ runtime. Report 38 unique primary IDs, 62 unverified candidate rows, and unknown monthly search completeness.
+- [x] T014b Isolate corrupt RTF-with-DOCX extension and Data Platform missing-key condition; preserve all original SHA and pending 15 extraction tasks. *Do not* claim fully extracted corpus.
+
+### Source-grade blockers (not closure)
+- [ ] T009b Obtain primary commercial award protocol/supplier and prices for remaining unverified commercial leads (including four B2B cards with hidden outcomes).
+- [ ] T014c Run official month-scoped ЕИС 44/223/ETP discovery; verify all 34 source months, 2024–2026.
+- [ ] T014d Authorized service API key needed for Data Platform SDK to extract 15 pending SHA-bound sources; no secret in Git/CLI/chat. Do not bypass the SDK or Data Platform boundary.
+- [ ] T014e Verify signed supplier and executed contract value separately from committee-selected participants and public registry amount.
+
 ## Phase 3 — governed continuation (US3)
 - [ ] T015 Exercise bounded restart/resume S0–S11 with existing SHA source ledger, queue, lease and checkpoint; prevent duplicate external actions.
 - [ ] T016 Connect report acceptance evidence to existing roadmap/checkpoint after normal reviewed integration; preserve hourly Watchdog unchanged.
