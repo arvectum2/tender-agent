@@ -171,3 +171,30 @@ def test_b2b_predecessor_not_in_v29_is_not_counted_as_v29_primary():
     assert report["primary_b2b_center_cases_verified"] == 1
     assert report["additional_b2b_original_cards_outside_v29"] == 1
     assert [x["procedure_id"] for x in report["b2b"]] == ["4565274"]
+
+
+def test_cancelled_b2b_predecessor_preserved_without_inflating_current_corpus():
+    url_old = 'https://www.b2b-center.ru/market/old/tender-4538400/'
+    url_new = 'https://www.b2b-center.ru/market/new/tender-4565274/'
+    from src.modules.market_intelligence.pq_verified_market_report import summarize
+    report = summarize(
+        leads=[{'procedure_id': '4565274'}], eis=[],
+        commissions={'facts_accepted': 0, 'records': []},
+        etp={'original_etp_cases_verified': 0, 'records': []},
+        contracts={'distinct_contract_lots_matched': 0,
+                   'contract_lots_with_rub_price': 0, 'records': []},
+        b2b={'first_party_cards_verified': 2, 'source_records': [
+            {'procedure_id': '4538400', 'source_title': 'old', 'source_url': url_old},
+            {'procedure_id': '4565274', 'source_title': 'new', 'source_url': url_new,
+             'results_hidden_by_organizer': True, 'buyer_platform_display': None,
+             'organizer_platform_display': 'ООО МЕТАЛЛОИНВЕСТ',
+             'applications_count_not_qualified_bidders': 11},
+        ], 'explicit_source_verified_replacement_links': [{
+            'cancelled_tender_id': '4538400', 'replacement_tender_id': '4565274',
+            'cancelled_source_url': url_old, 'replacement_source_url': url_new,
+            'source_cancellation_quote': 'открыт новый конкурс № 4565274',
+        }]})
+    assert report['primary_b2b_center_cases_verified'] == 1
+    assert report['additional_b2b_original_cards_outside_v29'] == 1
+    assert len(report['b2b_explicit_replacements']) == 1
+    assert 'открыт новый конкурс № 4565274' in markdown(report)

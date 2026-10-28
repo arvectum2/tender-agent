@@ -7,7 +7,7 @@ import json
 import re
 from pathlib import Path
 
-from .pq_b2b_primary_capture import _final_url, _parse
+from .pq_b2b_primary_capture import _final_url, _normal, _Page, _parse
 
 
 def verify(*, source_root: Path, max_cases: int = 30) -> dict:
@@ -52,6 +52,14 @@ def verify(*, source_root: Path, max_cases: int = 30) -> dict:
                 or row.get("signed_contract_supplier") is not None
                 or row.get("contract_price_rub") is not None):
             raise ValueError("Public card cannot establish hidden winner or signed contract")
+        page = _Page()
+        page.feed(blob.decode("utf-8", errors="replace"))
+        visible = _normal(" ".join(page.tokens))
+        cancellation = "Организатор принял решение отменить процедуру." in visible
+        cancelled_reason = re.search(
+            r"Основание отмены процедуры:\s*(.{10,300}?)\s+Всего заявок:", visible)
+        reason = _normal(cancelled_reason.group(1)) if cancelled_reason else None
+        replacement = re.search(r"открыт новый конкурс\s*№\s*(\d{7})", reason or "", re.IGNORECASE)
         records.append({
             "procedure_id": case.name,
             "source_url": row["source_url"],
@@ -66,15 +74,47 @@ def verify(*, source_root: Path, max_cases: int = 30) -> dict:
             "results_hidden_by_organizer": fresh["results_hidden_by_organizer"],
             "reference_to_replaced_tender": fresh[
                 "replaces_reference_in_original_title"],
+            "organizer_cancelled_procedure": cancellation,
+            "organizer_cancellation_reason_quote": reason if cancellation else None,
+            "organizer_cancelled_for_new_tender_id": (
+                replacement.group(1) if cancellation and replacement else None),
             "subject_category": fresh["subject_category"],
             "winner_verified": False,
             "signed_contract_verified": False,
             "contract_price_rub": None,
             "source_level": "original_first_party_etp_html_sha_verified",
         })
+    cases = {item["procedure_id"]: item for item in records}
+    linked = []
+    for old in records:
+        new_id = old["organizer_cancelled_for_new_tender_id"]
+        newer = cases.get(new_id) if new_id else None
+        if not newer or newer["reference_to_replaced_tender"] != old["procedure_id"]:
+            continue
+        if (old["organizer_platform_display"] is None
+                or old["organizer_platform_display"] != newer["organizer_platform_display"]
+                or old["buyer_platform_display"] is None
+                or old["buyer_platform_display"] != newer["buyer_platform_display"]):
+            raise ValueError("B2B source replacement has contradictory buyer/organizer")
+        linked.append({
+            "cancelled_tender_id": old["procedure_id"],
+            "replacement_tender_id": new_id,
+            "cancelled_original_sha256": old["original_sha256"],
+            "replacement_original_sha256": newer["original_sha256"],
+            "cancelled_source_url": old["source_url"],
+            "replacement_source_url": newer["source_url"],
+            "source_cancellation_quote": old["organizer_cancellation_reason_quote"],
+            "source_replacement_title_quote": newer["source_title"],
+            "same_buyer_and_organizer_verified": True,
+            "signed_contract_verified": False,
+            "dedup_kind": "explicit_cancelled_procedure_replaced_by_new_tender",
+        })
     return {
         "schema_version": "pq-original-b2b-audit/1",
         "first_party_cards_verified": len(records),
+        "organizer_cancelled_cases_verified": sum(
+            x["organizer_cancelled_procedure"] for x in records),
+        "explicit_source_verified_replacement_links": linked,
         "signed_contracts_verified": 0,
         "winner_identity_verified": 0,
         "source_records": records,

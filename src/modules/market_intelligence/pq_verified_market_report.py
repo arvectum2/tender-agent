@@ -122,6 +122,10 @@ def summarize(*, leads: list[dict], eis: list[dict],
     candidate_ids = {str(row.get("procedure_id")) for row in leads}
     b2b_records = [row for row in b2b["source_records"]
                    if str(row.get("procedure_id")) in candidate_ids]
+    b2b_replacements = [
+        edge for edge in b2b.get("explicit_source_verified_replacement_links", [])
+        if edge["replacement_tender_id"] in candidate_ids
+    ]
     return {
         "schema_version": "pq-verified-partial-market/1",
         "completeness": "partial_do_not_extrapolate",
@@ -151,6 +155,7 @@ def summarize(*, leads: list[dict], eis: list[dict],
         "commission": commissions["records"],
         "etp": etp["records"],
         "b2b": b2b_records,
+        "b2b_explicit_replacements": b2b_replacements,
         "contracts": contracts["records"],
         "source_cases": eis,
         "warnings": [
@@ -250,6 +255,13 @@ def markdown(report: dict) -> str:
     lines.append(
         "«Всего заявок» — число поданных заявок по карточке, не количество "
         "допущенных участников и не подтверждение заключённого договора.")
+    for item in report.get("b2b_explicit_replacements", []):
+        lines.append(
+            f"- Отменённый конкурс [{item['cancelled_tender_id']}]"
+            f"({item['cancelled_source_url']}) явно заменён на "
+            f"[{item['replacement_tender_id']}]({item['replacement_source_url']}): "
+            f"{item['source_cancellation_quote']}. "
+            "Сверены два оригинальных HTML и покупатель; отмена не является продажей.")
     lines += [
         "",
         "## Публичные записи реестра договоров 223-ФЗ (не проверка подписанных экземпляров)",
