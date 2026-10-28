@@ -1,0 +1,139 @@
+{
+  "schema_version": "pq-watchdog-primary-delta/1",
+  "task_id": "TA-MI-AUTONOMY-20261027",
+  "run_start_issue_comment_id": 6478547799,
+  "observed_utc": "2026-10-28T19:35:13.073063+00:00",
+  "source_root": "existing_authorized_private_runtime",
+  "corpus": "v29_101_unchanged",
+  "new_source_requests": 30,
+  "request_breakdown": {
+    "official_eis_month_first_pages": 24,
+    "metal_it_original_pdf_initial_bounded_abort_and_retry": 2,
+    "uds_legacy_case_url_404": 2,
+    "uds_current_official_platform_pages": 2
+  },
+  "request_journals": {
+    "original_attempts_private_relative": "watchdog-20261028-2227-primary/attempts.json",
+    "original_attempts_sha256": "7b2fc6f2eb28828befeaec252488311985a8b2a2cc5ea93062c899d1bb45d75e",
+    "month_search_private_relative": "watchdog-20261028-2227-primary/month-new.json",
+    "month_search_sha256": "aca6a116351893fcd9c5372dbb65766e29efc1ac3055da2e293881aa3c0c4af2"
+  },
+  "month_search": {
+    "new_exact_law_month_query_combinations": 24,
+    "distinct_months": 6,
+    "source_laws": [
+      "44fz",
+      "223fz"
+    ],
+    "statuses": {
+      "empty": 17,
+      "success": 7
+    },
+    "metadata_rows": 61,
+    "title_exact_matches": 0,
+    "all_metadata_candidates_unverified": true,
+    "exhaustive_months": 0,
+    "false_positive_notes": "СТАТКОМ fuzzy substring inside остатки/недостатки and unrelated vehicle maintenance; no source promotion"
+  },
+  "new_originals_sha_verified": 1,
+  "new_case_specific_official_cards_verified": 0,
+  "new_tenders_verified": 0,
+  "new_lots_verified": 0,
+  "new_source_only_project_ids": 1,
+  "new_original_named_award_protocols": 0,
+  "new_signed_suppliers_verified": 0,
+  "new_executed_prices_verified": 0,
+  "new_market_sales_6_35kv_verified": 0,
+  "new_project": {
+    "project_key": "source-only:ps-vostochny-bort-37:35-6kv",
+    "type": "technical_supply_specification_not_signed_procurement",
+    "procurement_notice_id": null,
+    "lot_id": null,
+    "contract_id": null,
+    "source_url": "https://etp.metal-it.ru/files/get/6uSNRBL1d7KmRGzE6r9WpPZrkwuA41KgdaCnxo6dDSnaa8hBqcfD3Yhcpdx2TnZ65u/%D0%A2%D0%97%20%D0%9F%D0%A1%20_%D0%92%D0%BE%D1%81%D1%82%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20%D0%91%D0%BE%D1%80%D1%82_%20%E2%84%9637.pdf",
+    "original_pdf_sha256": "21043f93df29fccc285ffcccc9d9ba09f5d637541eaa11fcb860db84c04cbc75",
+    "original_pdf_bytes": 13442094,
+    "original_pdf_pages": 30,
+    "original_private_relative": "watchdog-20261028-2227-primary/metal-it-east-bort-37.pdf",
+    "page1_visual_sha256": "0db91a3778158eac9dd5f9442a4b8ddf07dbcfea1513393c1110a6251021cd91",
+    "page1_visual_checked_by": "current_chatgpt_conversation_via_arc",
+    "page1_visual_source_claims": {
+      "buyer_display": "ОАО «КузбассЭлектро»",
+      "document_title": "Поставка оборудования трансформаторной подстанции ПС 35/6 кВ «Восточный Борт» №37",
+      "equipment_in_switchgear": "КРУН 6кВ 1 комплект (с УКРМФ-2 шт)",
+      "document_year": "2024"
+    },
+    "native_source_evidence": [
+      {
+        "page": 3,
+        "exact_normalized_native_quote": "кВ, УКРМ 6 кВ, с.ш. 6 кВ",
+        "document_sha256": "21043f93df29fccc285ffcccc9d9ba09f5d637541eaa11fcb860db84c04cbc75"
+      },
+      {
+        "page": 5,
+        "exact_normalized_native_quote": "Устройство компенсации реактивной мощности с фильтрами гармоник:",
+        "document_sha256": "21043f93df29fccc285ffcccc9d9ba09f5d637541eaa11fcb860db84c04cbc75"
+      },
+      {
+        "page": 5,
+        "exact_normalized_native_quote": "мощность установки - 1500 кВ Ар;",
+        "document_sha256": "21043f93df29fccc285ffcccc9d9ba09f5d637541eaa11fcb860db84c04cbc75"
+      },
+      {
+        "page": 5,
+        "exact_normalized_native_quote": "частота настройки фильтра 189 Гц.",
+        "document_sha256": "21043f93df29fccc285ffcccc9d9ba09f5d637541eaa11fcb860db84c04cbc75"
+      },
+      {
+        "page": 10,
+        "exact_normalized_native_quote": "УКРМФ шт. 2",
+        "document_sha256": "21043f93df29fccc285ffcccc9d9ba09f5d637541eaa11fcb860db84c04cbc75"
+      }
+    ],
+    "classification": "relevant_6kv_pq_harmonic_filter_compensation_specification_in_mixed_substation_equipment_supply",
+    "equipment_quantity": "УКРМФ 2 шт (technical requirement, not confirmed delivered)",
+    "stated_power": "1500 квар, basis per unit versus total not established",
+    "filter_tuning": "189 Hz",
+    "buyer_inn": null,
+    "supplier": null,
+    "winner": null,
+    "nmck_rub": null,
+    "bid_rub": null,
+    "registered_contract_rub": null,
+    "signed_contract_rub": null,
+    "executed_price_rub": null,
+    "pq_only_price_rub": null,
+    "market_total_rub": null,
+    "status": "source_verified_requirements_only_not_award",
+    "independent_technical_review": "native text quotes verified, scanned first page visually inspected; no OCR promoted to gold"
+  },
+  "first_party_other_source_attempts": {
+    "uds_legacy_original_link": "HTTP404 twice, same observed URL for two separate leads, no evidence of case absence",
+    "uds_current_platform": "official homepage and /tenders HTTP200 SHA-verified, no exact 5534/1866-УДСН or 5631/018-Ял public cards in server HTML; client-rendered listing not equated with no procurement"
+  },
+  "remaining_gaps": {
+    "v29_candidate_rows_without_verified_primary_original": 54,
+    "data_platform_sdk_pending": 15,
+    "signed_supplier_payment_gap": "unresolved"
+  },
+  "next_ranked_targets": [
+    {
+      "case": "ГП630876",
+      "goal": "official GPB original technical/award file",
+      "retry_after_moscow": "2026-10-29 00:41"
+    },
+    {
+      "case": "32413764701",
+      "goal": "signed supplier and payment for 10kV UKRM",
+      "retry_after_moscow": "2026-10-29 06:46"
+    },
+    {
+      "case": "32515582393",
+      "goal": "signed supplier and payment for 6kV UKRM",
+      "retry_after_moscow": "2026-10-29 06:46"
+    }
+  ],
+  "next_other": "Find official tender ID, original award/contract for 2024 PS Vostochny Bort #37, preserve project-only identity; do not count mixed-substation total as PQ turnover",
+  "month_query_retry_after_moscow": "2026-10-29 10:35 or later (12h per combination)",
+  "governance": "PR #521 REVIEW, no merge, no procurement action, no prod mutation, unrelated current-task unchanged"
+}
