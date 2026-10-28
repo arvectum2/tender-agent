@@ -10,9 +10,9 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from .pq_commission_fact_audit import verify as verify_commission
-from .pq_primary_etp_audit import verify as verify_etp
-from .pq_contract_xml_index import scan as scan_contract_xml
 from .pq_contract_outcome_audit import audit as audit_contract
+from .pq_contract_xml_index import scan as scan_contract_xml
+from .pq_primary_etp_audit import verify as verify_etp
 
 DIRECT_CAPACITOR_CATEGORIES = frozenset({
     "filter_capacitor_supply", "capacitor_bank_component_supply",
@@ -139,8 +139,12 @@ def summarize(*, leads: list[dict], eis: list[dict],
         "contracts": contracts["records"],
         "source_cases": eis,
         "warnings": [
-            "101 candidate leads are not an exhaustive census of Russian PQ tenders",
-            "69 non-223/nonstandard leads are not covered by this EIS 223 source pass",
+            f"{len(leads)} candidate leads are not an exhaustive census of Russian PQ tenders",
+            (
+                f"{len(leads) - len(ids)} non-223/nonstandard "
+                f"{'lead is' if len(leads) - len(ids) == 1 else 'leads are'} "
+                "not covered by this EIS 223 source pass"
+            ),
             "committee decisions and offered prices are not payment, delivery or signed contract evidence",
             "mixed EPC cost is not equivalent to the separate PQ equipment price",
             "2024 Khani EPC lot 2 mentions SCRM only in the wider project title; PQ scope in this lot is not proved",
@@ -163,11 +167,15 @@ def markdown(report: dict) -> str:
         "",
         "## Охват",
         "",
-        f"- Кандидаты из v29: {report['v29_candidate_leads']}; номеров 223-ФЗ: "
-        f"{report['source_number_223_leads']}; прочие коммерческие/нестандартные: "
-        f"{report['non_223_or_nonstandard_leads']}.",
-        f"- Извещений с проверенными первичными файлами ЕИС: "
-        f"{report['primary_eis_cases_with_files']}.",
+        (
+            f"- Кандидаты из v29: {report['v29_candidate_leads']}; номеров 223-ФЗ: "
+            f"{report['source_number_223_leads']}; прочие коммерческие/нестандартные: "
+            f"{report['non_223_or_nonstandard_leads']}."
+        ),
+        (
+            f"- Извещений с проверенными первичными файлами ЕИС: "
+            f"{report['primary_eis_cases_with_files']}."
+        ),
         f"- Исходных первичных карточек Bidzaar: {report['primary_etp_cases_verified']}.",
         f"- Проверенных решений комиссий: {report['commission_facts_verified']}.",
         f"- Записей публичного реестра договоров: {report['public_223_contract_register_lots']}.",
@@ -184,13 +192,17 @@ def markdown(report: dict) -> str:
             f"{_rub(item['bid_price_rub'])} | {_rub(item['initial_price_rub'])} |")
     lines += [
         "",
-        "Ставки НДС, стадии тендеров и типы работ различаются; суммы разных "
-        "категорий не складываются.",
+        (
+            "Ставки НДС, стадии тендеров и типы работ различаются; суммы разных "
+            "категорий не складываются."
+        ),
         "",
-        f"Три цены предложений по прямым поставкам конденсаторов/компонентов "
-        f"(с НДС): {_rub(report['direct_capacitor_supply_bid_sample_vat_included_rub'])}. "
-        "Это лишь наблюдаемые предложения выбранных комиссией участников, "
-        "не реализованные продажи, не подписанные договоры и не объём рынка.",
+        (
+            f"Три цены предложений по прямым поставкам конденсаторов/компонентов "
+            f"(с НДС): {_rub(report['direct_capacitor_supply_bid_sample_vat_included_rub'])}. "
+            "Это лишь наблюдаемые предложения выбранных комиссией участников, "
+            "не реализованные продажи, не подписанные договоры и не объём рынка."
+        ),
         "",
         "## Оригинальные коммерческие карточки",
         "",
@@ -217,10 +229,12 @@ def markdown(report: dict) -> str:
         "",
         "## Ограничения",
         "",
-        "Не установлена ни полная рыночная стоимость оборудования PQ, ни "
-        "сумма исполненных договоров по этой выборке. "
-        "Необходимо первично подтвердить исходы коммерческих ЭТП и "
-        "отделить расходы на УКРМ/фильтры/СТАТКОМ от общих EPC-проектов.",
+        (
+            "Не установлена ни полная рыночная стоимость оборудования PQ, ни "
+            "сумма исполненных договоров по этой выборке. "
+            "Необходимо первично подтвердить исходы коммерческих ЭТП и "
+            "отделить расходы на УКРМ/фильтры/СТАТКОМ от общих EPC-проектов."
+        ),
         "",
     ]
     return "\n".join(lines)

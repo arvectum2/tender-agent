@@ -5,7 +5,10 @@ from pathlib import Path
 import pytest
 
 from src.modules.market_intelligence.pq_verified_market_report import (
-    markdown, source_receipts, exact_filestore_sha_receipts, summarize,
+    exact_filestore_sha_receipts,
+    markdown,
+    source_receipts,
+    summarize,
 )
 
 
@@ -88,3 +91,40 @@ def test_direct_official_source_sha_receipt_is_verified(tmp_path: Path):
     (case / (sha + ".docx")).write_bytes(b"bad")
     with pytest.raises(ValueError, match="SHA mismatch"):
         exact_filestore_sha_receipts(tmp_path)
+
+
+def test_warning_counts_follow_verified_source_population():
+    """An intermediate report must not claim stale corpus size/coverage."""
+    def render(candidates):
+        return summarize(
+            leads=candidates, eis=[],
+            commissions={"facts_accepted": 0, "records": []},
+            etp={"original_etp_cases_verified": 0, "records": []},
+            contracts={"distinct_contract_lots_matched": 0,
+                       "contract_lots_with_rub_price": 0, "records": []},
+        )
+
+    small = render([
+        {"procedure_id": "32616339168"},
+        {"procedure_id": "32615969197"},
+        {"procedure_id": "358-830"},
+    ])
+    assert small["v29_candidate_leads"] == 3
+    assert small["source_number_223_leads"] == 2
+    assert small["non_223_or_nonstandard_leads"] == 1
+    assert small["warnings"][0].startswith("3 candidate leads ")
+    assert small["warnings"][1].startswith("1 non-223/nonstandard lead is ")
+    assert "69 non-223/" not in " ".join(small["warnings"])
+
+    corpus = (
+        [{"procedure_id": str(32_600_000_000 + i)} for i in range(33)]
+        + [{"procedure_id": f"ETP-{i}"} for i in range(68)]
+    )
+    larger = render(corpus)
+    assert larger["source_number_223_leads"] == 33
+    assert larger["non_223_or_nonstandard_leads"] == 68
+    assert larger["warnings"][0].startswith("101 candidate leads ")
+    assert larger["warnings"][1].startswith("68 non-223/nonstandard leads ")
+    assert larger["pq_equipment_market_value_rub"] is None
+    assert larger["verified_signed_contract_suppliers"] == 0
+    assert larger["completeness"] == "partial_do_not_extrapolate"

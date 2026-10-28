@@ -48,10 +48,11 @@ def ingest(*, sources: Path, output: Path, dp_source: Path,
         if path.stat().st_size > max_bytes:
             records.append({"path": str(path), "status": "oversized"})
             continue
-        sha = hashlib.sha256(path.read_bytes()).hexdigest()
+        source_bytes = path.read_bytes()
+        sha = hashlib.sha256(source_bytes).hexdigest()
         try:
             result = process_document_bytes(
-                content=path.read_bytes(), filename=path.name,
+                content=source_bytes, filename=path.name,
                 collection_id="arvectum-pq-evidence",
                 canonical_uri=f"content-sha256://{sha}", max_chars=100000,
                 settings=runtime, client=client)
@@ -104,7 +105,8 @@ def ingest(*, sources: Path, output: Path, dp_source: Path,
 def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--sources", type=Path, required=True)
-    p.add_argument("--dp-source", type=Path, required=True)
+    p.add_argument("--dp-source", type=Path, required=True,
+                   help="Deprecated compatibility flag: processing uses the authorized Data Platform SDK.")
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--max-files", type=int, default=30)
     p.add_argument("--ocr-empty", action="store_true")
