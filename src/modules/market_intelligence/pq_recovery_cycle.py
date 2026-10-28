@@ -39,7 +39,8 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
               commission_facts: Path | None = None,
               primary_etp_source: Path | None = None,
               primary_etp_facts: Path | None = None,
-              official_filestore_source: Path | None = None) -> dict:
+              official_filestore_source: Path | None = None,
+              prior_eis_journals: list[Path] | None = None) -> dict:
     if not 1 <= max_cases <= 30 or not source_roots:
         raise ValueError("Invalid cycle scope")
     runtime.mkdir(parents=True, exist_ok=True)
@@ -65,7 +66,7 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
     if network:
         report["official_search"] = search_eis(
             gaps=gaps, journal=runtime / "source-attempts.json",
-            max_cases=max_cases)
+            max_cases=max_cases, prior_journals=prior_eis_journals or [])
         report["indexed_recovery"] = recover_indexed(
             index_path=archive_index, gaps_path=gaps, target_root=originals,
             journal=runtime / "indexed-recovery-attempts.json",
@@ -225,6 +226,7 @@ def main() -> None:
     p.add_argument("--primary-etp-source", type=Path)
     p.add_argument("--primary-etp-facts", type=Path)
     p.add_argument("--official-filestore-source", type=Path)
+    p.add_argument("--prior-eis-journal", type=Path, action="append", default=[])
     a = p.parse_args()
     result = run_cycle(leads=a.leads, source_roots=a.source_root,
                        archive_index=a.archive_index, runtime=a.runtime,
@@ -235,7 +237,8 @@ def main() -> None:
                        commission_facts=a.commission_facts,
                        primary_etp_source=a.primary_etp_source,
                        primary_etp_facts=a.primary_etp_facts,
-                       official_filestore_source=a.official_filestore_source)
+                       official_filestore_source=a.official_filestore_source,
+                       prior_eis_journals=a.prior_eis_journal)
     print(json.dumps(result, ensure_ascii=False))
 
 

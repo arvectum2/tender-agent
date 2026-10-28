@@ -143,3 +143,23 @@ def test_cycle_includes_exact_sha_official_filestore_originals(tmp_path: Path):
     assert result["official_filestore_dp"]["files_inspected"] == 2
     dp.assert_called_once()
     fetch.assert_not_called()
+
+
+def test_cycle_passes_prior_official_eis_journals_to_search(tmp_path: Path):
+    source = tmp_path / "source"
+    source.mkdir()
+    runtime = tmp_path / "runtime"
+    prior = tmp_path / "prior-eis.json"
+    with patch("src.modules.market_intelligence.pq_recovery_cycle.inventory",
+               return_value={"lead_count": 1}), patch(
+        "src.modules.market_intelligence.pq_recovery_cycle.seed",
+        return_value={"created": []}), patch(
+        "src.modules.market_intelligence.pq_recovery_cycle.search_eis",
+        return_value={"attempts_this_run": 0}) as search, patch(
+        "src.modules.market_intelligence.pq_recovery_cycle.recover_indexed",
+        return_value={"attempted": 0}):
+        run_cycle(leads=tmp_path / "leads.json", source_roots=[source],
+                  archive_index=tmp_path / "index.json", runtime=runtime,
+                  ontology=tmp_path / "ontology.yaml", dp_source=tmp_path / "dp",
+                  network=True, prior_eis_journals=[prior])
+    assert search.call_args.kwargs["prior_journals"] == [prior]

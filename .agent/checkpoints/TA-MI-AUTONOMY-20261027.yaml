@@ -1018,3 +1018,38 @@ run_20261028_0950_2025_110kv_original_exclusion:
     branch has been reconciled with main, but stays DRAFT/REVIEW pending
     exact-head CI and owner governance; preserve single Watchdog and
     unrelated current-task.yaml.
+
+run_20261028_1032_official_source_cross_journal:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  timestamp_moscow: '2026-10-28T10:39:32+03:00'
+  pr: 519
+  branch: fix/mi-etp-source-status-20261028
+  report: docs/market_intelligence/PQ_WATCHDOG_RECOVERY_20261028_1032.md
+  overlay: docs/market_intelligence/PQ_WATCHDOG_RECOVERY_20261028_1032.json
+  overlay_sha256: 95d6343ce13b79e9fe1b97e8f050d891ba92cc19510ff380821101825bc2ec95
+  actual_new_eis_223_searches: 8
+  actual_new_eis_44_searches: 4
+  actual_new_223_notice_document_attempts: 2
+  new_source_originals: 0
+  immutable_v20_leads: 100
+  cases_with_local_originals: 33
+  cases_with_reviewed_packets: 31
+  review_queue_reviewed: 83
+  review_queue_pending: 5
+  signed_contracts_verified_new: 0
+  contractual_suppliers_verified_new: 0
+  executed_equipment_prices_verified_new: 0
+  code_change: Cross-journal EIS exact-ID cooldown and fail-closed malformed attempt receipts; optional cycle CLI wiring.
+  verified_tests: 26 focused PASS; Ruff PASS; git diff --check PASS; one inherited Starlette warning.
+  resume_instruction: >-
+    Check exact-head CI for existing DRAFT PR #519. Continue source-bound
+    original 6-35kV technical specifications, award protocols and independent
+    signed contracts/suppliers, prioritizing 32514720691 and 32514754857.
+    Preserve SHA-verified originals and 2024 unsuccessful-tender exclusions.
+    Use --prior-eis-journal with known real attempt receipts to avoid duplicate
+    exact-ID GETs; preserve 12h ETP cooldown. Never treat empty EIS searches
+    or inaccessible documents pages as absent contracts. No Data Platform
+    ingest while local SDK authentication remains HTTP401; do not change
+    unrelated current-task or single Watchdog. Keep PR DRAFT/REVIEW; no
+    automatic merge without queue auto_merge and current Company authority.
