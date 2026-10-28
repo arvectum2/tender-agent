@@ -128,3 +128,27 @@ def test_warning_counts_follow_verified_source_population():
     assert larger["pq_equipment_market_value_rub"] is None
     assert larger["verified_signed_contract_suppliers"] == 0
     assert larger["completeness"] == "partial_do_not_extrapolate"
+
+
+
+def test_realistic_duplicate_lot_under_one_notice_does_not_count_as_commercial():
+    """Actual v29 has 32616474682 lot1 and lot2, not two notices."""
+    leads = [
+        {"canonical_id": "223fz:32616474682:lot1", "procedure_id": "32616474682"},
+        {"canonical_id": "223fz:32616474682:lot2", "procedure_id": "32616474682"},
+        {"canonical_id": "223fz:32616339168:lot1", "procedure_id": "32616339168"},
+        {"canonical_id": "etp:358-830", "procedure_id": "358-830"},
+    ]
+    report = summarize(
+        leads=leads, eis=[],
+        commissions={"facts_accepted": 0, "records": []},
+        etp={"original_etp_cases_verified": 0, "records": []},
+        contracts={"distinct_contract_lots_matched": 0,
+                   "contract_lots_with_rub_price": 0, "records": []},
+    )
+    assert report["v29_candidate_leads"] == 4
+    assert report["source_number_223_leads"] == 2
+    assert report["source_223_lot_candidate_rows"] == 3
+    assert report["source_223_extra_lot_rows_sharing_notice"] == 1
+    assert report["non_223_or_nonstandard_leads"] == 1
+    assert "1 non-223/nonstandard lead is " in report["warnings"][1]
