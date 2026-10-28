@@ -1053,3 +1053,35 @@ run_20261028_1032_official_source_cross_journal:
     ingest while local SDK authentication remains HTTP401; do not change
     unrelated current-task or single Watchdog. Keep PR DRAFT/REVIEW; no
     automatic merge without queue auto_merge and current Company authority.
+
+run_20261028_1129_source_bound_review_and_eis:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  timestamp_moscow: '2026-10-28T11:33:29.157769+03:00'
+  pr: 519
+  branch: fix/mi-etp-source-status-20261028
+  report: docs/market_intelligence/PQ_WATCHDOG_RECOVERY_20261028_1129.md
+  overlay: docs/market_intelligence/PQ_WATCHDOG_RECOVERY_20261028_1129.json
+  overlay_sha256: 09064ae7b49b84e27c755f18bee9e6d3a39ab8d6395148445285e6b800ea91e9
+  new_real_official_eis_queries: 6
+  eis_223_queries: 4
+  eis_44_queries: 2
+  new_eis_matches: 0
+  new_chatgpt_arc_reviews: 2
+  review_queue_reviewed: 85
+  review_queue_pending_unreadable: 3
+  reviewed_32414334005: irrelevant_0_4kv_design_not_medium_voltage_equipment
+  reviewed_32514842313: uncertain_500kv_substation_bank_voltage_unknown
+  source_binary_sha256_reverified: true
+  signed_contracts_verified_new: 0
+  executed_equipment_prices_verified_new: 0
+  data_platform_ingest: blocked_previous_http401
+  resume_instruction: >-
+    Existing PR #519 remains DRAFT/REVIEW. Verify new exact-head CI. Continue
+    source-bound original signed-contract/award recovery for 32514720691
+    and 32514754857, and independent capacitor bank rated voltage for
+    32514842313. Do not repeat the six new EIS queries or earlier exact-ID
+    searches; observe 12-hour ETP URL cooldown. Three pending packets have
+    unreadable native PDFs and need visual source verification, not automatic
+    OCR promotion. No Data Platform ingest until authorized local SDK auth
+    works. Preserve single Watchdog and unrelated .agent/current-task.yaml.

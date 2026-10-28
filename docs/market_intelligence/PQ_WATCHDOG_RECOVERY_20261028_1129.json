@@ -1,0 +1,50 @@
+{
+  "schema_version": "pq-watchdog-evidence-recovery/1",
+  "task": "TA-MI-AUTONOMY-20261027",
+  "timestamp_moscow": "2026-10-28T11:33:29.157769+03:00",
+  "corpus": "MI-013 immutable 100-row v20",
+  "source_inventory": {
+    "leads": 100,
+    "with_case_local_originals_selected_roots": 31,
+    "with_reviewed_packets": 31,
+    "inventory_path": "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live/evidence-gaps-watchdog-20261028-1129.json"
+  },
+  "reviewed_originals_this_run": [
+    {
+      "registry_number": "32414334005",
+      "classification": "irrelevant",
+      "original_pdf_sha256": "f5b14ca8b4fe535746abc671d78e5e69388ea17ea93d6096c843baec406ebe89",
+      "exact_quote": "установка двух устройств компенсации реактивной мощности напряжением 0,4кВ",
+      "signed_contract_verified": false,
+      "executed_equipment_price_verified": false,
+      "original_binary_sha_verified": true
+    },
+    {
+      "registry_number": "32514842313",
+      "classification": "uncertain",
+      "original_pdf_sha256": "cfc5e5c6d12217dc687af9a9e1fdfe17b3d006055e5b446e18553c4a197e2db3",
+      "exact_quote": "Иркутская (замена синхронных компенсаторов на батареи статических",
+      "signed_contract_verified": false,
+      "executed_equipment_price_verified": false,
+      "original_binary_sha_verified": true
+    }
+  ],
+  "review_queue": {
+    "reviewed": 85,
+    "pending": 3
+  },
+  "new_real_official_eis_queries": 6,
+  "eis_223_queries": 4,
+  "eis_44_queries": 2,
+  "eis_new_matches": 0,
+  "search_statuses": {
+    "empty": 6
+  },
+  "search_journal": "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live/eis-new-ontology-search-20261028-1129.json",
+  "search_journal_sha256": "dbccb14ec95cdf60487bb5dff808d1821dd0c2b7d434784bfe33f4a3809a45cb",
+  "signed_contracts_verified_new": 0,
+  "supplier_signed_contract_verified_new": 0,
+  "executed_equipment_prices_verified_new": 0,
+  "data_platform_ingested": false,
+  "review_and_merge_gate": "DRAFT/REVIEW; queue auto_merge not confirmed"
+}
