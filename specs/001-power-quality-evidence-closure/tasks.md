@@ -33,6 +33,11 @@
 - [x] T013b Cross-verify original organizer cancellation of B2B 4538400 and explicit successor 4565274 in both original HTML sources; account for outside-v29 predecessor without inflating v29 denominator.
 - [x] T011a Verify three more native EIS commission decisions for 32514720691 (UKRM supply), 32514754857 (mixed reconstruction with UKRM 6 kV), 32514842313 (adjacent PS 500 kV BSK); source quote/SHA and price kind checks pass, total 9 committee decisions and 0 signed contracts.
 
+- [x] T009a3 Recover complete first-party RAD/EIS 223 source for previously no-EIS-files notice `32615966040`: 4 live-rehashed RAR originals, exact first-party page SHA and 1 RAR-derived DOCX SHA matching accepted ChatGPT queue.
+- [x] T011b Verify RAD original 10kV Nikitskaya mixed-EPC commission outcome: only participant ООО «ЭНЕРГОСЕТЬ», 5,273,763.77 RUB incl 22% VAT, tender unsuccessful with commission-to-contract instruction; no signed contractor or PQ-only price inferred. Distinguish 12 May initial price 5,564,090.57 from 19 May revised price.
+- [x] T014f Wire alternate first-party 223 RAD original into case coverage, market report and S10 without treating EIS download gap as absence: 42 unique primary procurement numbers, 43 candidate lot rows with source, 58 rows still unverified, 10 original commission facts, 0 signed suppliers. Actual offline cycle and 129 targeted tests PASS.
+- [ ] T014g Integrate separately source-audited Watchdog native Roseltorg/RAD commercial overlay (three additional source IDs in v29), with explicit 0.4 kV exclusion and owner-furnished 35kV BSK classification; do not add these to equipment sales.
+
 ### Source-grade blockers (not closure)
 - [ ] T009b Obtain primary commercial award protocol/supplier and prices for remaining unverified commercial leads (including four B2B cards with hidden outcomes).
 - [ ] T014c Run official month-scoped ЕИС 44/223/ETP discovery; verify all 34 source months, 2024–2026.
