@@ -1151,3 +1151,21 @@ run_20261028_1255_receipt_coverage_and_due_etp_retries:
     eight ETP URLs. Three ARC pending native PDFs remain unreadable and need
     visual original verification. Preserve unrelated current-task.yaml and
     singleton hourly Watchdog; no Data Platform ingest while SDK auth HTTP401.
+
+run_20261028_1300_corrected_inventory_validation:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  corrected_gap_inventory: evidence-gaps-watchdog-20261028-1300.json
+  corrected_gap_inventory_sha256: 824f2dc23dc7f1d88ef22c5637217ba946533e49bcefa791b0634d6707892237
+  immutable_v20_leads: 100
+  cases_with_local_original_files: 31
+  cases_with_reviewed_packets: 31
+  focused_pytest_pass: 17
+  ruff: PASS
+  git_diff_check: PASS
+  inherited_starlette_warning: 1
+  resume_instruction: >-
+    Continue bounded original source recovery for 6-35kV cases and check
+    exact-head CI on the new PR #519 commit; do not auto-merge or promote
+    secondary HTML, OCR, NMCK or commission recommendations to signed
+    contracts. Preserve singleton Watchdog and unrelated current-task.

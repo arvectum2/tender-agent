@@ -17,7 +17,9 @@
       "32616400421"
     ],
     "local_original_case_count_after_receipt_filter": 31,
-    "reviewed_case_count": 31
+    "reviewed_case_count": 31,
+    "post_fix_path": "evidence-gaps-watchdog-20261028-1300.json",
+    "post_fix_sha256": "824f2dc23dc7f1d88ef22c5637217ba946533e49bcefa791b0634d6707892237"
   },
   "official_eis_search": {
     "queries": 6,
@@ -72,5 +74,11 @@
   "data_platform_ingestion": false,
   "source_truth_promoted": false,
   "pr": 519,
-  "auto_merge": false
+  "auto_merge": false,
+  "focused_validation": {
+    "pytest_passed": 17,
+    "ruff": "PASS",
+    "git_diff_check": "PASS",
+    "inherited_starlette_warnings": 1
+  }
 }
