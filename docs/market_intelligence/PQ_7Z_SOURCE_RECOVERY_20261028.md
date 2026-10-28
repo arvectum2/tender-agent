@@ -4,7 +4,7 @@
 
 The secondary Energybase discovery https://energybase.ru/tender/01a02eb4-f3f2-7195-9554-9ebc29fc5fce identified EIS 223-FZ notice **32616247401**, Novgorod branch of PАО «Россети Северо-Запад», titled *Поставка устройств обеспечения качества электроэнергии*. The stated **16,708,000 RUB is NMCK, not a signed contract amount**. This candidate is absent from immutable MI-013 v20 (100 records); it was investigated separately, without changing v20.
 
-The exact EIS public 223-FZ documents page was fetched through the existing notice-number/GUID-bound provider. Its HTML SHA-256 is 136e2fdd56519f56d4806db67db77f2a3e713aa1c3d54b245ee31636314d96ef. All six attachments were 7z, previously rejected as unsupported. A narrow **opaque-only** 7z downloader gate now requires the exact EIS public-page provenance, two 64-character source SHA fields, verified HTTPS host, bounded size and correct archive signature. No automatic extraction or award inference is permitted.
+The exact EIS public 223-FZ documents page was fetched through the existing notice-number/GUID-bound provider. Its HTML SHA-256 is 136e2fdd56519f56d4806db67db77f2a3e713aa1c3d54b245ee31636314d96ef. All six attachments were 7z, previously rejected as unsupported. A narrow **opaque-only** 7z downloader gate now requires the exact EIS public-page provenance, two 64-character source SHA fields, exact source URL SHA-256 equality, official 223-FZ filestore HTTPS path, bounded size and correct archive signature. No automatic extraction or award inference is permitted.
 
 Four original 7z files were downloaded without repeating previously verified originals:
 

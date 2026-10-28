@@ -109,6 +109,15 @@ def download_procurement_attachments(
             and bool(re.fullmatch(r"[0-9a-f]{64}", source_provenance["source_public_html_sha256"]))
             and isinstance(source_provenance.get("source_url_sha256"), str)
             and bool(re.fullmatch(r"[0-9a-f]{64}", source_provenance["source_url_sha256"]))
+            and isinstance(attachment.url, str)
+            and urlparse(attachment.url).scheme == "https"
+            and urlparse(attachment.url).hostname == "zakupki.gov.ru"
+            and urlparse(attachment.url).path in {
+                "/223/filestore/public/1.0/download/fz223/file.html",
+                "/223/purchase/public/download/download.html",
+            }
+            and hashlib.sha256(attachment.url.encode("utf-8")).hexdigest()
+            == source_provenance["source_url_sha256"]
         )
         if extension not in ALLOWED_ATTACHMENT_EXTENSIONS and not (opaque_ri223_rar or opaque_public_223_7z):
             result.skipped.append(

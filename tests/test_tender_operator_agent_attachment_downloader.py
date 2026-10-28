@@ -439,12 +439,15 @@ def test_ri223_rar_wrong_signature_is_rejected(tmp_path: Path):
 
 
 def _verified_public_223_7z_attachment() -> ProcurementAttachment:
-    attachment = _attachment("Протокол_итогов.7z", "https://zakupki.gov.ru/223/filestore/public/download/file.html?uid=example")
+    attachment = _attachment(
+        "Протокол_итогов.7z",
+        "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=" + "a" * 32,
+    )
     attachment.provenance = {
         "source_regime": "223fz",
         "binding": "verified_public_eis_notice_page_only",
         "source_public_html_sha256": "a" * 64,
-        "source_url_sha256": "b" * 64,
+        "source_url_sha256": __import__("hashlib").sha256(attachment.url.encode()).hexdigest(),
         "revision_review_required": True,
         "original_soap_xml_binding_verified": False,
     }
@@ -475,6 +478,7 @@ def test_verified_public_223_7z_is_sha_bound_opaque_only(tmp_path: Path):
     {"source_regime": "44fz"},
     {"source_public_html_sha256": "not-a-sha"},
     {"source_url_sha256": None},
+    {"source_url_sha256": "b" * 64},
 ])
 def test_7z_without_exact_public_223_binding_is_rejected(tmp_path: Path, change):
     attachment = _verified_public_223_7z_attachment()
