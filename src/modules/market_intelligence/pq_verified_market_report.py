@@ -119,6 +119,9 @@ def summarize(*, leads: list[dict], eis: list[dict],
               and r.get("price_kind", "").endswith("vat_included")]
     sample_total = sum((Decimal(x["bid_price_rub"]) for x in offers), Decimal(0))
     b2b = b2b or {"first_party_cards_verified": 0, "source_records": []}
+    candidate_ids = {str(row.get("procedure_id")) for row in leads}
+    b2b_records = [row for row in b2b["source_records"]
+                   if str(row.get("procedure_id")) in candidate_ids]
     return {
         "schema_version": "pq-verified-partial-market/1",
         "completeness": "partial_do_not_extrapolate",
@@ -135,7 +138,8 @@ def summarize(*, leads: list[dict], eis: list[dict],
                                                 if not x["verified_file_instances"]),
         "additional_eis_receipts_outside_v29": len(eis) - len(covered),
         "primary_etp_cases_verified": etp["original_etp_cases_verified"],
-        "primary_b2b_center_cases_verified": b2b["first_party_cards_verified"],
+        "primary_b2b_center_cases_verified": len(b2b_records),
+        "additional_b2b_original_cards_outside_v29": len(b2b["source_records"]) - len(b2b_records),
         "commission_facts_verified": commissions["facts_accepted"],
         "public_223_contract_register_lots": contracts["distinct_contract_lots_matched"],
         "public_223_register_lots_with_rub_price": contracts["contract_lots_with_rub_price"],
@@ -146,7 +150,7 @@ def summarize(*, leads: list[dict], eis: list[dict],
         "verified_signed_contract_suppliers": 0,
         "commission": commissions["records"],
         "etp": etp["records"],
-        "b2b": b2b["source_records"],
+        "b2b": b2b_records,
         "contracts": contracts["records"],
         "source_cases": eis,
         "warnings": [

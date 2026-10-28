@@ -152,3 +152,22 @@ def test_realistic_duplicate_lot_under_one_notice_does_not_count_as_commercial()
     assert report["source_223_extra_lot_rows_sharing_notice"] == 1
     assert report["non_223_or_nonstandard_leads"] == 1
     assert "1 non-223/nonstandard lead is " in report["warnings"][1]
+
+
+def test_b2b_predecessor_not_in_v29_is_not_counted_as_v29_primary():
+    """Original 4538400 is a source-verified predecessor referenced by 4565274, not an independent v29 candidate."""
+    report = summarize(
+        leads=[{"procedure_id": "4565274"}], eis=[],
+        commissions={"facts_accepted": 0, "records": []},
+        etp={"original_etp_cases_verified": 0, "records": []},
+        contracts={"distinct_contract_lots_matched": 0,
+                   "contract_lots_with_rub_price": 0, "records": []},
+        b2b={"first_party_cards_verified": 2, "source_records": [
+            {"procedure_id": "4538400", "source_title": "earlier", "source_url": "https://www.b2b-center.ru/market/old/tender-4538400/",
+             "results_hidden_by_organizer": False},
+            {"procedure_id": "4565274", "source_title": "later", "source_url": "https://www.b2b-center.ru/market/new/tender-4565274/",
+             "results_hidden_by_organizer": True},
+        ]})
+    assert report["primary_b2b_center_cases_verified"] == 1
+    assert report["additional_b2b_original_cards_outside_v29"] == 1
+    assert [x["procedure_id"] for x in report["b2b"]] == ["4565274"]
