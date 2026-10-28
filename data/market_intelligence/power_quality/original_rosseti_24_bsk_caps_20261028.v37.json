@@ -1,0 +1,174 @@
+{
+  "schema_version": "mi013-first-party-rosseti-bsk-24-original/1.0",
+  "as_of": "2026-10-28",
+  "data_version": "v37",
+  "base_manifest": "verified_public_leads_20261028.v36.manifest.json",
+  "new_procurement_notices": 0,
+  "existing_cases_enriched": 1,
+  "additional_first_party_signed_contracts": 0,
+  "patches": [
+    {
+      "canonical_id": "223fz:32616339168:lot1",
+      "procedure_id": "32616339168",
+      "RTS_id": "4006686",
+      "buyer": "ПАО «Россети» – МЭС Юга",
+      "organizer": "АО «Россети Центр закупок»",
+      "original_publication_date": "2026-08-31",
+      "bid_deadline": "2026-09-07",
+      "site": "Пятигорск, Кисловодское шоссе, 11",
+      "original_archived_technical": {
+        "item_total_count": 24,
+        "strict_voltage_6_to_35kv_component_count": 18,
+        "below_6kv_component_count": 6,
+        "nominal_voltage_of_substation_bus_verified": false,
+        "technology": "individual_BSK_filter_capacitor_spare_components_not_complete_STATCOM_or_UKRM",
+        "delivery_deadline": "2026-11-30",
+        "warranty_min_years": 2,
+        "rosseti_approval_order": "ПАО Россети 26.07.2023 №305",
+        "items": [
+          {
+            "model": "КЭПФ-12-450-2УХЛ1",
+            "voltage_kv": 12,
+            "kvar": 450,
+            "quantity": 12,
+            "strict_6_to_35kv": true,
+            "source_code": "27.90.52.000",
+            "PP1875": "преимущество"
+          },
+          {
+            "model": "КЭПФ-11,55-430-2УХЛ1",
+            "voltage_kv": 11.55,
+            "kvar": 430,
+            "quantity": 6,
+            "strict_6_to_35kv": true,
+            "source_code": "27.90.52.000",
+            "PP1875": "преимущество"
+          },
+          {
+            "model": "КЭПФ-4,2-510-2УХЛ1",
+            "voltage_kv": 4.2,
+            "kvar": 510,
+            "quantity": 6,
+            "strict_6_to_35kv": false,
+            "source_code": "27.90.52.000",
+            "PP1875": "преимущество"
+          }
+        ]
+      },
+      "original_price_sources": [
+        {
+          "model": "КЭПФ-11,55-430-2УХЛ1",
+          "quantity": 6,
+          "external_quotes_per_unit_ex_vat_rub": [
+            "231152.82",
+            "229842.71",
+            "225409.84"
+          ],
+          "external_quotes_per_unit_inc_vat22_rub": [
+            "282006.44",
+            "280408.11",
+            "275000.00"
+          ],
+          "chosen_initial_estimate_total_ex_vat_rub": "1352459.02",
+          "chosen_initial_estimate_total_inc_vat22_rub": "1650000.00",
+          "selected_price_individual_inc_vat22_rub": "275000.00",
+          "strict_6_to_35kv": true
+        },
+        {
+          "model": "КЭПФ-12-450-2УХЛ1",
+          "quantity": 12,
+          "external_quotes_per_unit_ex_vat_rub": [
+            "255981.51",
+            "254530.69",
+            "248360.66"
+          ],
+          "external_quotes_per_unit_inc_vat22_rub": [
+            "312297.44",
+            "310527.44",
+            "303000.00"
+          ],
+          "chosen_initial_estimate_total_ex_vat_rub": "2980327.87",
+          "chosen_initial_estimate_total_inc_vat22_rub": "3636000.00",
+          "selected_price_individual_inc_vat22_rub": "303000.00",
+          "strict_6_to_35kv": true
+        },
+        {
+          "model": "КЭПФ-4,2-510-2УХЛ1",
+          "quantity": 6,
+          "external_quotes_per_unit_ex_vat_rub": [
+            "212776.65",
+            "211570.70",
+            "207868.85"
+          ],
+          "external_quotes_per_unit_inc_vat22_rub": [
+            "259587.51",
+            "258116.25",
+            "253600.00"
+          ],
+          "chosen_initial_estimate_total_ex_vat_rub": "1247213.11",
+          "chosen_initial_estimate_total_inc_vat22_rub": "1521600.00",
+          "selected_price_individual_inc_vat22_rub": "253600.00",
+          "strict_6_to_35kv": false
+        }
+      ],
+      "original_quotation_sources": [
+        "Коммерческое предложение №26 от 20.02.2026",
+        "Коммерческое предложение №006 от 20.02.2026",
+        "Коммерческое предложение №74 от 15.07.2026"
+      ],
+      "original_whole_initial_price_ex_vat_rub": "5580000.00",
+      "original_whole_initial_price_inc_vat22_rub": "6807600.00",
+      "initial_price_of_only_nominal_6_to_35kv_components_inc_vat22_rub": "5286000.00",
+      "initial_price_of_only_nominal_6_to_35kv_components_ex_vat_rub": "4332786.89",
+      "initial_price_of_below_6kv_components_inc_vat22_rub": "1521600.00",
+      "initial_price_of_below_6kv_components_ex_vat_rub": "1247213.11",
+      "original_calc_qualification": "Three PRETENDER buyer quotation price references; chosen buyer NMC equals third quotation amounts. These are NOT three completed contracts or three legal bidders in this procurement.",
+      "original_signed_contract_verified": false,
+      "winning_supplier": null,
+      "actual_paid_amount_rub": null,
+      "original_sources": [
+        {
+          "tier": "first_party_EIS_223_source_archive_7z",
+          "name": "Извещение о закупке.7z",
+          "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=8FBB1BB807B64388802027D1A4F3827A",
+          "bytes": 850428,
+          "sha256": "46c3237d2b632e3e7147ec2e49a44fcbdf95af8e04b6a4b2e300d594cd271710"
+        },
+        {
+          "tier": "first_party_original_DOCX_technical",
+          "name": "1. Техническое задание БСК (24 шт) +.docx",
+          "parent_archive_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=8FBB1BB807B64388802027D1A4F3827A",
+          "bytes": 43957,
+          "sha256": "eafb60890383a231e6f27fc496def4073dfcab705aa777a424e10101f4304ec2"
+        },
+        {
+          "tier": "first_party_original_DOCX_line_spec",
+          "name": "Приложение 1 к техническому заданию.docx",
+          "parent_archive_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=8FBB1BB807B64388802027D1A4F3827A",
+          "bytes": 29441,
+          "sha256": "cd9907ac8e80f9a9abd1e5587921502f2fbfe214fdad221b40ef3df34a12473e"
+        },
+        {
+          "tier": "first_party_original_PDF_pricing",
+          "name": "2. Расчет стоимости НМЦД.pdf",
+          "parent_archive_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=8FBB1BB807B64388802027D1A4F3827A",
+          "bytes": 90519,
+          "sha256": "255f2caf43c2dddb9479bdd24666378c88a546d9f08cb44a630f193fbf89159d"
+        },
+        {
+          "tier": "first_party_original_DOCX_NMC_basis",
+          "name": "3. Обоснование расчета_ НМЦД.docx",
+          "parent_archive_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=8FBB1BB807B64388802027D1A4F3827A",
+          "bytes": 32819,
+          "sha256": "052f6e1321b4fda18a18b885f63320b030a0827d90ac56f67d813bc4f61024ae"
+        }
+      ],
+      "caveats": [
+        "Original EIS archive contains a DRAFT contract with no named supplier; not evidence of original signed RD223 registration.",
+        "The 4.2kV item is below target 6–35kV nominal COMPONENT rating, but it does not prove line voltage is 4.2kV or classify a 0.4kV LV system.",
+        "Prices are buyer's original market-based INITIAL NMC, not signed invoice values.",
+        "Original 1875 specification uses 'преимущество' for all three capacitor lines (27.90.52.000), not the 1875 'ограничение' recorded separately in Meleuz procedure."
+      ]
+    }
+  ]
+}
