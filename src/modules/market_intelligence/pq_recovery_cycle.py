@@ -13,6 +13,9 @@ from .pq_dp_ingest import ingest
 from .pq_etp_card_audit import audit as audit_etp
 from .pq_gap_recovery import inventory
 from .pq_indexed_recovery import recover_indexed
+from .pq_official_url_sha_acquire import batch as fetch_official_url_sha
+from .pq_primary_etp_audit import verify as verify_primary_etp
+from .pq_primary_etp_capture import batch as fetch_primary_etp
 from .pq_public_223_acquire import batch as fetch_public_223
 from .pq_public_223_canonical import canonicalize as canonicalize_public_223
 from .pq_public_223_direct import merge_direct
@@ -20,6 +23,7 @@ from .pq_public_223_expand import expand as expand_public_223
 from .pq_public_dp_resume import run as resume_public_dp
 from .pq_queue_seed import seed
 from .pq_source_recovery import run as search_eis
+from .pq_verified_market_report import exact_filestore_sha_receipts
 from .pq_verified_stage import stage
 from .pq_verified_zip_expand import expand
 from .pq_zip_dp_resume import run as resume_zip_ingest
@@ -32,7 +36,10 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
               contract_root: Path | None = None,
               contract_day_scan: Path | None = None,
               public223_source: Path | None = None,
-              commission_facts: Path | None = None) -> dict:
+              commission_facts: Path | None = None,
+              primary_etp_source: Path | None = None,
+              primary_etp_facts: Path | None = None,
+              official_filestore_source: Path | None = None) -> dict:
     if not 1 <= max_cases <= 30 or not source_roots:
         raise ValueError("Invalid cycle scope")
     runtime.mkdir(parents=True, exist_ok=True)
@@ -98,13 +105,13 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
             expanded = runtime / "public223-expanded"
             report["public223_expansion"] = expand_public_223(
                 source_root=public223_source, output_root=expanded,
-                max_cases=30, max_archives=60)
+                max_cases=80, max_archives=120)
             canonical = runtime / "public223-canonical"
             report["public223_canonical"] = canonicalize_public_223(
                 staged=expanded, output=canonical, max_files=500)
             report["public223_direct"] = merge_direct(
                 source_root=public223_source, canonical=canonical,
-                max_cases=35, max_files=200)
+                max_cases=80, max_files=500)
             report["public223_data_platform"] = resume_public_dp(
                 source_root=canonical, runtime=runtime, dp_source=dp_source,
                 max_files=min(max_cases * 3, 60))
@@ -155,6 +162,45 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
             "signed_contracts_verified": verified_facts["verified_signed_contracts"],
             "artifact": str(verified_file),
         }
+    if official_filestore_source is not None:
+        report["official_filestore_fetch"] = (
+            fetch_official_url_sha(
+                leads=leads, root=official_filestore_source,
+                journal=runtime / "official-url-sha-attempts.json",
+                max_cases=min(max_cases, 3))
+            if network else {"status": "skipped_offline"})
+        if official_filestore_source.is_dir():
+            bound = exact_filestore_sha_receipts(official_filestore_source)
+            report["official_filestore_evidence"] = {
+                "cases": len(bound),
+                "sha_verified_files": sum(x["verified_file_instances"] for x in bound),
+            }
+            report["official_filestore_dp"] = ingest(
+                sources=official_filestore_source,
+                output=runtime / "dp-official-url-sha.json",
+                dp_source=dp_source, max_files=min(max_cases * 4, 120))
+            report["review_queues"].append(seed(
+                sources=official_filestore_source, ontology=ontology,
+                queue_dir=queue, max_cases=max_cases))
+    if primary_etp_source is not None:
+        report["primary_etp_fetch"] = (
+            fetch_primary_etp(
+                leads=leads, source_root=primary_etp_source,
+                journal=runtime / "primary-etp-attempts.json",
+                max_cards=min(max_cases, 4))
+            if network else {"status": "skipped_offline"})
+        if primary_etp_facts is not None:
+            etp_facts = verify_primary_etp(
+                facts=primary_etp_facts, source_root=primary_etp_source)
+            etp_facts_file = runtime / "verified-primary-etp-facts.json"
+            etp_facts_file.write_text(
+                json.dumps(etp_facts, ensure_ascii=False, indent=2),
+                encoding="utf-8")
+            report["primary_etp_evidence"] = {
+                "original_cards_verified": etp_facts["original_etp_cases_verified"],
+                "signed_contracts_verified": etp_facts["signed_contracts_verified"],
+                "artifact": str(etp_facts_file),
+            }
     (runtime / "last-recovery-cycle.json").write_text(
         json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     return report
@@ -176,6 +222,9 @@ def main() -> None:
     p.add_argument("--contract-day-scan", type=Path)
     p.add_argument("--public223-source", type=Path)
     p.add_argument("--commission-facts", type=Path)
+    p.add_argument("--primary-etp-source", type=Path)
+    p.add_argument("--primary-etp-facts", type=Path)
+    p.add_argument("--official-filestore-source", type=Path)
     a = p.parse_args()
     result = run_cycle(leads=a.leads, source_roots=a.source_root,
                        archive_index=a.archive_index, runtime=a.runtime,
@@ -183,7 +232,10 @@ def main() -> None:
                        max_cases=a.max_cases, network=not a.offline, verified_reestr=a.verified_reestr, etp_queue=a.etp_queue,
                        contract_root=a.contract_root, contract_day_scan=a.contract_day_scan,
                        public223_source=a.public223_source,
-                       commission_facts=a.commission_facts)
+                       commission_facts=a.commission_facts,
+                       primary_etp_source=a.primary_etp_source,
+                       primary_etp_facts=a.primary_etp_facts,
+                       official_filestore_source=a.official_filestore_source)
     print(json.dumps(result, ensure_ascii=False))
 
 

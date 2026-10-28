@@ -1,0 +1,36 @@
+{
+  "schema_version": "pq-primary-etp-facts/1",
+  "source_tier": "original_public_bidzaar_primary_etp",
+  "facts": [
+    {
+      "procedure_id": "358-830",
+      "slug": "019fb323-f23b-7872-845e-ba2cb6b43355",
+      "expected_sha256": "a600a0a26152158cf6db850294624c0ea8e51c3443825c13531328543a8698ef",
+      "source_quote": "Поставка активных фильтров гармоник",
+      "platform_displayed_organizer": "ВАЙЛДБЕРРИЗ",
+      "scope": "equipment_supply_tender",
+      "family": "active_harmonic_filter",
+      "signed_contract_verified": false
+    },
+    {
+      "procedure_id": "306-644",
+      "slug": "019ce668-617b-7b1a-861e-113ed78182af",
+      "expected_sha256": "eb1e730639d14e2bba8726a9b28ea58b57e6b37e8c18696ea73339244a72048b",
+      "source_quote": "установке, подключению и пусконаладке конденсаторных установок компенсации реактивной мощности УКРМ 6 кВ",
+      "platform_displayed_organizer": "СИБСТЕКЛО",
+      "scope": "installation_commissioning_tender",
+      "family": "ukrm",
+      "signed_contract_verified": false
+    },
+    {
+      "procedure_id": "351-062",
+      "slug": "019f415c-8a7a-7c91-bb3f-68da7b9413ea",
+      "expected_sha256": "5676e923891d61f185f17d5f10bcdc48dd38f66ef2eb731a4a7428c103254256",
+      "source_quote": "Анализ цен конденсаторных установок, в количестве 2 шт.",
+      "platform_displayed_organizer": "ГК АКРОН ХОЛДИНГ",
+      "scope": "market_sounding_not_awarded_procurement",
+      "family": "capacitor_bank",
+      "signed_contract_verified": false
+    }
+  ]
+}

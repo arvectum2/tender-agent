@@ -74,3 +74,19 @@ def test_invalid_zip_payload_is_recorded_not_aborted(tmp_path: Path):
     assert result["errors"] == 1
     details = json.loads((output / "public-members-manifest.json").read_text())
     assert details["errors"][0]["error_type"] == "BadZipFile"
+
+
+def test_case_budget_refuses_truncated_manifest(tmp_path: Path):
+    source = _fixture(tmp_path)
+    other = source / "32615614821"
+    other.mkdir()
+    (other / "public-page-receipt.json").write_text(json.dumps({
+        "schema_version": "pq-223-public-page-download/1",
+        "registry_number": other.name,
+        "files": [],
+    }))
+    output = tmp_path / "output"
+    import pytest
+    with pytest.raises(ValueError, match="truncate verified ZIP"):
+        expand(source_root=source, output_root=output, max_cases=1)
+    assert not (output / "public-members-manifest.json").exists()

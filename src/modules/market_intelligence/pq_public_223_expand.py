@@ -28,18 +28,34 @@ def _atomic(path: Path, payload: dict) -> None:
 
 
 def expand(*, source_root: Path, output_root: Path,
-           max_cases: int = 12, max_archives: int = 20) -> dict:
-    if (not 1 <= max_cases <= 30 or not 1 <= max_archives <= 60
+           max_cases: int = 80, max_archives: int = 100) -> dict:
+    if (not 1 <= max_cases <= 100 or not 1 <= max_archives <= 200
             or source_root.is_symlink() or output_root.is_symlink()
             or not source_root.is_dir()):
         raise ValueError("Invalid source or extraction scope")
+    eligible = [
+        p for p in sorted(source_root.iterdir())
+        if p.is_dir() and not p.is_symlink()
+        and re.fullmatch(r"[0-9]{11}", p.name)
+        and (p / "public-page-receipt.json").is_file()
+    ]
+    if len(eligible) > max_cases:
+        raise ValueError("Source-case budget would truncate verified ZIP manifest")
+    receipt_archives = 0
+    for folder in eligible:
+        receipt = json.loads((folder / "public-page-receipt.json").read_text(encoding="utf-8"))
+        receipt_archives += sum(
+            str(f.get("filename") or "").lower().endswith(".zip")
+            for f in receipt.get("files", []))
+    if receipt_archives > max_archives:
+        raise ValueError("Archive budget would truncate verified ZIP manifest")
     manifest = {"schema_version": "pq-public-eis-zip-members/1",
                 "source_level": "verified_public_eis_page_not_original_soap_xml",
                 "records": [], "errors": []}
     unique = set()
     cases = 0
     archives = 0
-    for case in sorted(source_root.iterdir()):
+    for case in eligible:
         if cases >= max_cases or archives >= max_archives:
             break
         if not case.is_dir() or case.is_symlink() or not re.fullmatch(r"[0-9]{11}", case.name):
@@ -92,7 +108,8 @@ def expand(*, source_root: Path, output_root: Path,
                                           "archive_sha256": expected_sha,
                                           "error_type": type(exc).__name__})
     _atomic(output_root / "public-members-manifest.json", manifest)
-    return {"cases_checked": cases, "archives_checked": archives,
+    return {"cases_checked": cases, "source_case_receipts": len(eligible),
+            "archives_checked": archives, "archives_listed": receipt_archives,
             "members_indexed": len(manifest["records"]),
             "members_staged": sum(x["status"] == "staged_sha256_verified_not_yet_indexed"
                                   for x in manifest["records"]),

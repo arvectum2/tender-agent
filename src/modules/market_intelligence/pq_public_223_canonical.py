@@ -22,6 +22,11 @@ def canonicalize(*, staged: Path, output: Path, max_files: int = 150) -> dict:
     manifest = json.loads(manifest_file.read_text(encoding="utf-8"))
     if manifest.get("schema_version") != "pq-public-eis-zip-members/1":
         raise ValueError("Invalid public ZIP manifest")
+    stageable = sum(
+        child.get("status") == "staged_sha256_verified_not_yet_indexed"
+        for child in manifest.get("records", []))
+    if stageable > max_files:
+        raise ValueError("Canonical file budget would truncate verified source manifests")
     records = []
     seen = set()
     for child in manifest["records"]:
