@@ -1,0 +1,309 @@
+{
+  "schema_version": "pq-watchdog-primary-evidence-delta/1",
+  "run_date_moscow": "2026-10-28",
+  "task_id": "TA-MI-AUTONOMY-20261027",
+  "status": "in_progress",
+  "corpus": "v29_101_unchanged",
+  "metrics": {
+    "month_scoped_first_page_source_requests": 110,
+    "new_exact_month_law_query_combinations": 62,
+    "inadvertently_repeated_prior_combinations": 48,
+    "search_statuses": {
+      "empty": 59,
+      "network_error": 2,
+      "success": 49
+    },
+    "candidate_metadata_rows_unverified": 251,
+    "months_with_new_combinations": 21,
+    "exhaustive_months": 0,
+    "new_notice_ids": 5,
+    "new_lots": 5,
+    "distinct_named_projects": 4,
+    "original_file_instances_sha_verified": 32,
+    "unique_original_sha256": 30,
+    "original_protocols_with_named_participants": 4,
+    "original_protocols_with_explicit_winner": 1,
+    "signed_suppliers_verified": 0,
+    "executed_prices_verified": 0,
+    "new_core_6_35kv_sales_verified": 0,
+    "new_review_packets_accepted": 5,
+    "review_queue_states": {
+      "reviewed": 112,
+      "pending_review": 4,
+      "unknown": 4
+    },
+    "source_adapter_nonsearch_requests_estimated": 58,
+    "logical_source_operations_total_estimated": 168
+  },
+  "search_journals_private": [
+    "watchdog-20261028-2335-eis-searches.json",
+    "watchdog-20261028-2335-all-prior-dedup.json"
+  ],
+  "new_search_retry_not_before_moscow": "2026-10-29T11:44:12.766874+03:00",
+  "new_cases": [
+    {
+      "notice": "32514963292",
+      "lot_count": 1,
+      "official_source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32514963292&noticeGuid=1772b59a-91e5-41fc-907d-8fc568ffa498",
+      "public_page_sha256": "968b2e02e315b4357b040ca66a6b7202e2e2cf3e7755d0f18a70228b04092f7a",
+      "original_file_instances": 8,
+      "unique_original_sha256": 8,
+      "original_file_refs": [
+        {
+          "name": "Протокол подведения итогов запроса предложений.docx",
+          "sha256": "bcd29d3982780adacb51ba13321a12874236ba186a883e78d073d5a034c8c238"
+        },
+        {
+          "name": "Протокол рассмотрения заявок на участие.docx",
+          "sha256": "e6595fba74d83ca26cea7ae0546ad533107bdc0eea19174ee249e6ac858e7944"
+        },
+        {
+          "name": "Протокол_открытия_доступа_запроса_предложений.docx",
+          "sha256": "9fc65747fc5db014c24f113dd76e65538107bc4281b8d43e1f90f18379e1b4e4"
+        },
+        {
+          "name": "Протокол оценки заявок на участие в ЗП.docx",
+          "sha256": "081a1456838456ab6194bdc2b47a20f1a06c81e325d8735e6fbaee3372610ead"
+        },
+        {
+          "name": "Закупочная документация.docx",
+          "sha256": "57589631824bbaf1544a377ad2d148be47427cc5888aaa205f4f0a979cef4294"
+        },
+        {
+          "name": "Закупочная документация НОВАЯ редакция.docx",
+          "sha256": "0675728b7a8c6237f63cd14964e25eecf1e296716b3c372cd3402bad3be4cc27"
+        },
+        {
+          "name": "Закупочная документация НОВАЯ редакция.docx",
+          "sha256": "fdcacccbc3336b0aab1b1e019bb512b2831206fdc86488c964505b85515f6cad"
+        },
+        {
+          "name": "Закупочная документация НОВАЯ редакция.docx",
+          "sha256": "74f9000a19c8db5e84c70b667eb129116832e0266a3f293465a1ae1cf690807f"
+        }
+      ],
+      "review_queue_id": "32514963292-bcd29d3982780adacb51",
+      "voltage": "0.4 kV",
+      "scope": "adjacent_low_voltage_installation",
+      "project_key": "samara_severnoye_shosse_shop_tp30",
+      "buyer": "ООО Триггер Ай-Ти",
+      "committee_winner": "ООО НОВЫЙ ПОТОК",
+      "winner_bid_rub_vat_included": "3874304.42",
+      "second_bidder": "ООО АРК",
+      "second_bid_rub_vat_included": "3852633.46",
+      "nmck_rub_vat_included": "3931258.63",
+      "signed_supplier_verified": false
+    },
+    {
+      "notice": "32414337924",
+      "lot_count": 1,
+      "official_source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32414337924&noticeGuid=8a3f51b5-e5f3-4a16-a016-4b57eed92a58",
+      "public_page_sha256": "9779d6ff533e6038e639ae02c8419f21a1c78e7940a4cef605f8a5743a071218",
+      "original_file_instances": 4,
+      "unique_original_sha256": 4,
+      "original_file_refs": [
+        {
+          "name": "Протокол-1_В.docx",
+          "sha256": "39946f01312b1e1918a5718f988c6e668d2c631d7f9bc3a64872028ee915a31c"
+        },
+        {
+          "name": "Протокол-1-Р-РЗ.DOC.doc",
+          "sha256": "e728390b866cfb9c3117beff3d9dccd09cfb66bfcd011d775b7908708baf885a"
+        },
+        {
+          "name": "Уведомление о внесении изменений ОРГ-2.DOC",
+          "sha256": "0bbc507d4e4293d2687b6230baaee7fc58fbad3b64ba5879dad438341c570bc4"
+        },
+        {
+          "name": "Уведомление о внесении изменений ОРГ-3.DOC",
+          "sha256": "e0c4ebcecbed86ec9107907293f0f92f93a1040de79d1831350889fbc6baaa13"
+        }
+      ],
+      "review_queue_id": "32414337924-39946f01312b1e1918a5",
+      "voltage": "110 kV battery",
+      "scope": "adjacent_110kv_equipment_supply",
+      "project_key": "ps_suntar_110kv_bsk",
+      "buyer": "ПАО Якутскэнерго",
+      "bidder_1": "ООО СКЗ КВАР",
+      "bidder_1_rub_ex_vat": "50415000.00",
+      "bidder_2": "ООО ЭнергоЛогика",
+      "bidder_2_rub_ex_vat": "50288958.34",
+      "committee_decision": "one compliant bidder, procurement failed; recommend contract with EnergoLogika",
+      "nmck_rub_ex_vat": "50541666.67",
+      "signed_supplier_verified": false,
+      "document_inconsistency": "Bid submission date 26.12.2025 in Jan/Feb 2025 protocols"
+    },
+    {
+      "notice": "32515285414",
+      "lot_count": 1,
+      "official_source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32515285414&noticeGuid=2f88a9de-3bcb-5d1d-4d3d-c5dc4652d063",
+      "public_page_sha256": "4020c58981cca8f5e9a76158210a17e7e5476851aef58532226ca992832f19fd",
+      "original_file_instances": 7,
+      "unique_original_sha256": 7,
+      "original_file_refs": [
+        {
+          "name": "Протокол_подведения_итогов_80-КуЭ.zip",
+          "sha256": "cde1a7838dac2993ace6250a00a212935976bd7ea9b3dab3a9161734df5e2c84"
+        },
+        {
+          "name": "Протокол_ПДКК___80ПВИ-КуЭ.zip",
+          "sha256": "5880938b90efd0786df7f1fb43b2ed42f8a6b01c7761b25f45baddc2f79153e2"
+        },
+        {
+          "name": "Протокол_внесения_изменений_80ПВИ-1-КуЭ.zip",
+          "sha256": "eca245a4e45865e08a612de6d0136f20490871e2a19f6f1c1ae1d07a1a7454e5"
+        },
+        {
+          "name": "Протокол_рассмотрения_80П-КуЭ.zip",
+          "sha256": "1051f78c6cfeb7d679dacfda6f8a6170316f5c29ef12996a3a65f954a2c050ac"
+        },
+        {
+          "name": "80ПКД-КуЭ_Документация_о_закупке_конкурс.zip",
+          "sha256": "53e5920f8ff1bece00912e96b08a58ca204b72c7b5663d25be03460bfae245f5"
+        },
+        {
+          "name": "80ПКД-КуЭ_Документация_о_закупке_конкурс.zip",
+          "sha256": "f55e0760e41e5d9631377e357f210344f49106d069bfcc9046a5a8725a880b4c"
+        },
+        {
+          "name": "80ПКД-КуЭ_Документация_о_закупке_конкурс.zip",
+          "sha256": "25161272f5fec70a35ad4b453dc9d45094498da7479333c8b9be76574a8a911c"
+        }
+      ],
+      "review_queue_id": "32515285414-3465754ba37d1cd1f684",
+      "voltage": "110 kV replacement",
+      "scope": "adjacent_110kv_design",
+      "project_key": "ps_tyazhinskaya_bsk110_skrm52mvar",
+      "buyer": "ПАО Россети Сибирь",
+      "sole_bidder": "АО Россети Научно-технический центр",
+      "committee_offer_rub_ex_vat": "2526657.33",
+      "committee_decision": "failed competition; recommend contract with sole bidder",
+      "signed_supplier_verified": false
+    },
+    {
+      "notice": "32615937898",
+      "lot_count": 1,
+      "official_source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32615937898&noticeGuid=eb964262-1a27-4d46-a713-ffeb08e1b6e9",
+      "public_page_sha256": "6c3c03e1b0805b154043bca7e649e2f742a1dc5d428e49ca67c7d6c70e3e7f8b",
+      "original_file_instances": 8,
+      "unique_original_sha256": 8,
+      "original_file_refs": [
+        {
+          "name": "Протокол итоговый_09с.pdf",
+          "sha256": "76ea84afa76ab724d8e763a5b85be20cf18c543044c9992b122ceacf17088eab"
+        },
+        {
+          "name": "Протокол итоговый_09с.docx",
+          "sha256": "97ca00f3e2155502de0bbd7536a0cf180c50964767428c0d2ce94582410345d4"
+        },
+        {
+          "name": "Протокол рассмотрения_09с_02.pdf",
+          "sha256": "05f894137a489001c12de8c26c77a3125434d6a1b60b6e24131cd5d87e2816ad"
+        },
+        {
+          "name": "Протокол рассмотрения_09с_02.docx",
+          "sha256": "3d231daa471fd3eeccba4a901e7cef824c4d6ba6195745e652ef1889870fe400"
+        },
+        {
+          "name": "Протокол_проведения_переторжки_09с_03_(системный).docx",
+          "sha256": "0cc9872b678c34aea07c3f897fbd29d9300ede33fbdbdbf726f2a5a5eb41af25"
+        },
+        {
+          "name": "Протокол_проведения_переторжки_09с_03_(системный).pdf",
+          "sha256": "b58565b985f4c93591cb05517278ff4ca7f3a274594fd3e131f3bb3a6cdb7e34"
+        },
+        {
+          "name": "Протокол_открытия_доступа_09с_01_(системный).docx",
+          "sha256": "eb57da9e1834929d72f776fab65262d61850bf57881ca52c79beb8f289d98718"
+        },
+        {
+          "name": "Протокол_открытия_доступа_09с_01_(системный).pdf",
+          "sha256": "adaf646a10826baf2c68b3b4d2949aebe6447a2bad097bd52211cb52a7d0e8bc"
+        }
+      ],
+      "review_queue_id": "32615937898-97ca00f3e2155502de0b",
+      "voltage": "110 kV replacement",
+      "scope": "adjacent_110kv_design",
+      "project_key": "ps_tyazhinskaya_bsk110_skrm52mvar",
+      "buyer": "АО Россети Научно-технический центр",
+      "sole_bidder": "АО ЭСК СИБИРИ",
+      "committee_offer_rub_ex_vat_max": "2500000.00",
+      "committee_decision": "failed competition; negotiate and recommend contract",
+      "signed_supplier_verified": false,
+      "relationship_to_32515285414": "same named project, subcontract not contract-verified"
+    },
+    {
+      "notice": "32615870159",
+      "lot_count": 1,
+      "official_source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32615870159&noticeGuid=c5c8d3b3-177e-4c01-a83f-afb21e090ac4",
+      "public_page_sha256": "e95830b9bb6fa4f787ef210b8c3347528036b30503d273fb2bf91e8c3c02f189",
+      "original_file_instances": 5,
+      "unique_original_sha256": 3,
+      "original_file_refs": [
+        {
+          "name": "Закупочная документация.zip",
+          "sha256": "522c01c5e2ad1e843fd0e6864050053b7d1470c0a39a19a15d44a27055606619"
+        },
+        {
+          "name": "Закупочная документация.zip",
+          "sha256": "522c01c5e2ad1e843fd0e6864050053b7d1470c0a39a19a15d44a27055606619"
+        },
+        {
+          "name": "Закупочная документация.zip",
+          "sha256": "522c01c5e2ad1e843fd0e6864050053b7d1470c0a39a19a15d44a27055606619"
+        },
+        {
+          "name": "1-Уведомление о переносе_09.04.2026.doc",
+          "sha256": "72f9e7f6c5b04b9e0440b7c37ad6a0596d023853aa30a0516aefdf98ea3d6e17"
+        },
+        {
+          "name": "1-3828476_ПРЗК_2026_М1_ЗК_277.pdf",
+          "sha256": "6bb166118ee0e79ff15277e696fde6cb117d0269446ef0a9cccac80c93eef86b"
+        }
+      ],
+      "review_queue_id": "32615870159-bbc3dcad670dc906618b",
+      "voltage": "11.55 kV capacitor elements for 110 kV bank at 330 kV substation",
+      "scope": "adjacent_component_supply",
+      "project_key": "ps_frunzenskaya_bsk_elements",
+      "buyer": "ПАО Россети Черноземное ПМЭС",
+      "item": "23 КЭПФ-11,55-430-2УХЛ1 capacitor elements",
+      "nmck_rub_ex_vat": "4087100.00",
+      "nmck_rub_vat_included": "4986262.00",
+      "committee_decision": "scanned 09.04.2026 protocol only extends application deadline to 15.04.2026",
+      "signed_supplier_verified": false,
+      "document_inconsistency": "Delivery address PS Orlovskaya Rayonnaya 220 kV conflicts with PS Frunzenskaya 330 kV header"
+    }
+  ],
+  "primary_access_limitations": [
+    "44-FZ 0372200000126000322 exact common-info source HTTP500; no document recovered",
+    "UDS public tender page TLS self-signed certificate error; no bypass",
+    "Metal-IT exact 135171-TT and 119199-TT trade URLs HTTP200 but Angular shell contains no case-specific data",
+    "15 Data Platform pending SHA-bound on authorized SDK credential",
+    "No proof of signed supplier or executed price for these five notices",
+    "48 calendar searches inadvertently repeated older combinations before full cross-journal dedup; now consolidated all available journals, next run must consult full dedup index"
+  ],
+  "next_three": [
+    {
+      "case": "ГП630876",
+      "not_before_moscow": "2026-10-29T00:41:00+03:00",
+      "target": "ETP GPB original docs and outcome"
+    },
+    {
+      "case": "32413764701",
+      "not_before_moscow": "2026-10-29T06:46:00+03:00",
+      "target": "10kV UKRM signed supplier and payment evidence"
+    },
+    {
+      "case": "32515582393",
+      "not_before_moscow": "2026-10-29T06:46:00+03:00",
+      "target": "6kV UKRM signed supplier and equipment-only value"
+    }
+  ],
+  "governance": {
+    "auto_merge": false,
+    "production_touched": false,
+    "procurement_actions": false,
+    "originals_private": true,
+    "no_national_tam_extrapolation": true
+  }
+}
