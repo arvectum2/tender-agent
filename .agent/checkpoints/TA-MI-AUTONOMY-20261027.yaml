@@ -436,3 +436,46 @@ run_20261028_0300_cross_journal_recovery:
     - "Native ETP attachments and signed contracts remain missing for many commercial cases; Kontur public pages returned 403 without access-control bypass."
     - "Exact-head CI/architecture audit and Company authority gate not cleared; do not merge PR #519."
   resume_instruction: "Inspect PR #519 latest head and CI, then shared ARC lease and 100-row v20 gap inventory. Resume lawful primary ETP/RAD/B2B-Center original attachment and signed-contract recovery without replaying SHA-verified pages or seven fresh 403 Kontur URLs before their 12-hour retry. Keep queue dedup across etp-source-attempts and etp-native-source-attempts, review new original packets via ChatGPT/ARC, preserve the unreadable PDF, and never infer supplier/contract price from mixed EPC, committee selection, or secondary HTML. Resolve architecture audit only through sanctioned SDK/service boundary, no merge without explicit queue auto_merge and Company authority. Preserve unrelated current-task and single hourly Watchdog."
+
+
+run_20261028_0335_opaque_7z_recovery:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  branch: fix/mi-etp-source-status-20261028
+  pr: 519
+  last_verified_code_commit: ed9cc81583ce9e4f3270f8500bcf5f8f82d315b8
+  last_test_results: "48 focused pytest PASS; Ruff PASS; diff check PASS; one inherited Starlette warning"
+  coverage:
+    immutable_v20_leads: 100
+    v20_cases_with_local_originals: 31
+    v20_cases_with_reviewed_packets: 31
+    independent_new_leads: 1
+    new_original_7z_archives_sha_verified: 4
+    new_docx_children_sha_verified: 4
+    new_chatgpt_arc_review_packets_accepted: 2
+    reviewed_queue_total: 67
+    pending_unreadable_preserved: 1
+    new_etp_http403_probes: 9
+    etp_card_attempts_total: 46
+    new_signed_contracts_verified: 0
+  completed:
+    - "Refreshed v20 100-row gap inventory; no EIS exact-ID searches eligible (33 prior official attempts)."
+    - "Nine new distinct public Kontur ETP probes returned HTTP403, journaled with 12-hour retry; no bypass."
+    - "Discovered independent 223-FZ 32616247401, 16,708,000 RUB NMCK, not previously in immutable v20."
+    - "Recovered four original EIS public-page-bound 7z archives with narrow opaque-only signature/SHA/provenance gate, plus four source-SHA-bound DOCX children."
+    - "ChatGPT/ARC accepted two quote-bound packets; technical specification proves 0.4kV UAB100/PKS, excludes candidate from target 6-35kV market."
+    - "Preserved initial uncertain review and later irrelevant technical review; no supplier, signed contract, equipment-only sale or final price inferred."
+    - "Published PQ_7Z_SOURCE_RECOVERY_20261028.md and code/tests in existing DRAFT PR #519, code commit ed9cc815."
+  blockers:
+    - "Previous CI 40606724054 failed one preexisting architecture audit on direct Data Platform import; 5355 tests passed. New exact-head CI pending."
+    - "Public EIS page does not prove SOAP-XML revision binding; native ETP originals and signed contracts remain missing."
+    - "One old unreadable PDF remains pending; new Kontur 403 retries not yet due."
+  resume_instruction: >-
+    Check PR #519 exact-head CI and main; preserve DRAFT/REVIEW, do not merge
+    without queue auto_merge, Company AM-4 authority, exact-head green CI and
+    sanctioned Data Platform SDK/service boundary repair. Continue signed
+    contract/winner and native B2B-Center/RAD original recovery for 6-35kV.
+    Do not replay 33 previous EIS searches, nine 403 Kontur URLs before 12h,
+    or four verified 7z archives/two reviewed packets. Keep 32616247401
+    as separate 0.4kV false positive, never add its 16.708m NMCK to target
+    market. Preserve unrelated current-task and the single Watchdog.
