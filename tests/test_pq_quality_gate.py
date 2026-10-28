@@ -95,3 +95,23 @@ def test_month_without_search_cannot_be_treated_as_zero_procurements():
     c["period_search_coverage"][0]["zero_procurements_claimed"] = True
     with pytest.raises(ValueError, match="no_false_negative"):
         audit(coverage=c, projects=p, market=m)
+
+
+
+def test_source_consistency_does_not_hide_blocked_data_platform_extraction():
+    c, p, m = _sources()
+    blocked = {"status": "blocked_missing_data_platform_api_key",
+               "source_count": 262, "processed_count": 247,
+               "pending": 15, "files_inspected": 0,
+               "original_shas_preserved": True}
+    result = audit(coverage=c, projects=p, market=m,
+                   data_platform=blocked)
+    assert result["source_arithmetic_consistency_passed"] is True
+    assert result["data_platform_extraction_complete"] is False
+    assert result["data_platform_extraction_status"] == "blocked_missing_data_platform_api_key"
+    assert result["data_platform_pending_source_files"] == 15
+    assert any("Data Platform SDK" in item for item in result["pending_gates"])
+    complete = audit(coverage=c, projects=p, market=m,
+                     data_platform={"status": "complete", "pending": 0})
+    assert complete["data_platform_extraction_complete"] is True
+    assert complete["full_market_acceptance_passed"] is False
