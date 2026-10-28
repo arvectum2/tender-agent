@@ -1,0 +1,63 @@
+{
+  "schema_version": "pq-reviewed-project-links/1",
+  "source_tier": "original_reviewed_eis_queue_document_sha",
+  "links": [
+    {
+      "link_id": "pionerskaya-ukrm-design-lot-26-004167-reissue",
+      "relation": "same_lot_reissued_no_bids",
+      "same_lot_code": "26-004167",
+      "left": {
+        "canonical_id": "223fz:32615969197:lot1",
+        "queue_id": "32615969197-ac83968caccea71087e73151",
+        "sha256": "5d5e57e3b0b7cf9791e365c4f82f1b0b3e22c03d7103d82fdedc5cf2a16e713a",
+        "quote": "Лот № 26-004167 «Выполнение ПИР на установку УКРМ 10кВ ПС 35кВ Пионерская"
+      },
+      "right": {
+        "canonical_id": "223fz:32616103025:lot1",
+        "queue_id": "32616103025-55df5f2ab0420ffa63e1b007",
+        "sha256": "65d7a2b412eab6161b04b929b51fbe755fff623e3040c7c9297f3dc574aae867",
+        "quote": "Лот № 26-004167 «Выполнение ПИР на установку УКРМ 10кВ ПС 35кВ Пионерская"
+      },
+      "dedup_policy": "one_project_need_two_unsuccessful_notices_not_signed_equipment",
+      "signed_contract_verified": false
+    },
+    {
+      "link_id": "lopcha-yuktali-2024-epc-vs-2025-design",
+      "relation": "shared_parent_program_distinct_contract_scope",
+      "shared_title_anchor": "Реконструкция ВЛ 220 кВ Лопча",
+      "left": {
+        "canonical_id": "223fz:32413581034:lot2",
+        "queue_id": "32413581034-a53c898ae0d906da908542dc",
+        "sha256": "f66c98a826fbfb7ede23ae18883614947c0fb74110d8579f4d20779707d1d545",
+        "quote": "Реконструкция ВЛ 220 кВ Лопча"
+      },
+      "right": {
+        "canonical_id": "223fz:32515584863:lot1",
+        "queue_id": "32515584863-7df13bad9a1f1b69367bc5e5",
+        "sha256": "233ae664d938521d1ba0fe401c4dec024e76a7ad546872465bbca8d2674d4777",
+        "quote": "Реконструкция ВЛ 220 кВ Лопча"
+      },
+      "dedup_policy": "shared_parent_program_only_distinct_epc_and_design_procedures",
+      "signed_contract_verified": false
+    },
+    {
+      "link_id": "lopcha-yuktali-2025-vs-2026-design",
+      "relation": "shared_parent_program_distinct_contract_scope",
+      "shared_title_anchor": "Реконструкция ВЛ 220 кВ Лопча",
+      "left": {
+        "canonical_id": "223fz:32515584863:lot1",
+        "queue_id": "32515584863-7df13bad9a1f1b69367bc5e5",
+        "sha256": "233ae664d938521d1ba0fe401c4dec024e76a7ad546872465bbca8d2674d4777",
+        "quote": "Реконструкция ВЛ 220 кВ Лопча"
+      },
+      "right": {
+        "canonical_id": "223fz:32615760238:lot1",
+        "queue_id": "32615760238-a62000f938bebd2fd73887e0",
+        "sha256": "232c72e5d403fa45a4ecc9d3bb41791380ae4b7b002fc1750dfb7a326aec82b5",
+        "quote": "Реконструкция ВЛ 220 кВ Лопча"
+      },
+      "dedup_policy": "shared_parent_program_design_correction_reprocurement_unverified_economics",
+      "signed_contract_verified": false
+    }
+  ]
+}
