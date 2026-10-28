@@ -19,22 +19,30 @@ completed:
   - "2026-10-27: Published AUTONOMOUS_RESEARCH_PROTOCOL.md (S0-S11), PQ_CASEBOOK_20261027.md, RESEARCH_EVENT_SCHEMA.json and 3 example records in PQ_TRAINING_CANDIDATES.jsonl."
   - "2026-10-27: Fetched all 4 new files back from GitHub; parsed JSON Schema and all 3 example JSONL entries; verified required fields and all examples marked non-gold."
   - "2026-10-27: Added a stable Market Intelligence README index."
-current_step: "Offline runner is connected and executed against existing MI-013 v20 on Mac mini. Implement live EIS/ETP source orchestration, outcome evidence checks and repeatable integration tests."
+  - "2026-10-28: Source-reverified original Bidzaar HTML for 358-830, 306-644 and 351-062; all 3 first-party cards SHA-bound and source-quote classified without invented price or award."
+  - "2026-10-28: Fixed EIS ZIP/canonical/direct manifest case-budget truncation. All 37+ original EIS receipt folders are included, 247 current SHA-distinct canonical documents read/marked by Data Platform."
+  - "2026-10-28: Recovered extra 223 notice 32616355390 by exact primary EIS filestore URLs with two independently matching original document SHA-256; both extracted by Data Platform, review marked uncertain manufacturing-input scope."
+  - "2026-10-28: Six source-quoted original commission outcomes audited: 2024 Khani adjacent EPC, 2025 two filter capacitors plus Ufimka capacitor EPC, 2026 Chadan design and 24-unit BSK capacitors."
+  - "2026-10-28: Source-integrity-audited 101-candidate market snapshot generated, includes 33 numeric 223 cases (31 with originals, two no files), 3 original commercial ETP cases, 6 commission decisions and 3 public contract-register entries."
+  - "2026-10-28: 51 focused tests passed; one external Starlette deprecation warning. No verified signed supplier identified; sampled capacitor bid-price sum 10,998,960 RUB VAT-inclusive not reported as market volume."
+current_step: "Broaden first-party commercial ETP original protocols, resolve signed contract suppliers and build project/lot 2024-2026 reconciliation without extrapolating samples."
 remaining:
-  - "Locate and confirm MI-013 v20 canonical corpus and actual source provenance; avoid restoring previously deleted parallel study CSV/Markdown."
-  - "Build event recorder for source attempts/decisions, immutable evidence references, coverage matrix and fail-closed gold labels."
-  - "Build or adapt S0-S11 orchestration/worker with source-plan expansion, legal retries/fallbacks, checkpoint/resume and self-audit."
-  - "Enrich original PQ outcomes and 2024 months and create expert-reviewed procurement gold fixtures for repeat notices, mixed EPC, unknown winner and false positives."
-  - "Run relevant pytest/integration tests and source-anchored E2E; document limitations and final owner-facing report."
-last_verified_commit: "GitHub main 552a8bf48815c4c010d6c24b791f651edebf3a8d (six files published and fetched; last tested commit before final checkpoint metadata update)"
-last_test_results: "Six new files fetched/verified from GitHub; JSON Schema parses (24 properties, 13 required); three JSONL samples parse and meet required-field checks, all training_eligible=false; runtime tests not run because no application code changed. Autonomous executor not yet implemented."
+  - "Recover original commercial ETP protocols and award files for 68 non-11-digit leads; 3 Bidzaar primary cards already source-verified."
+  - "Investigate two official 223 cases with no downloadable files (32615966040, 32616400421) without claiming procurement absent."
+  - "Verify legally accessible signed contracts/supplier identities separately from award protocols; public 223 registry cannot disclose certain supplier records."
+  - "Deduplicate repeated projects/lots and exclude adjacent EPC, design-only, future price studies, and equipment already installed."
+  - "Extend earlier 2024 and commercial 44-FZ evidence and produce complete source-audited market report; until then only partial verified snapshot."
+  - "Re-run complete relevant tests/E2E and mark completed only on satisfaction of all Definition of Done items."
+last_verified_commit: "f8bd27a32fa5b0236f7528a6e27bc8fc940740a5"
+last_test_results: "51 passing focused pytest tests (one external Starlette warning), offline unified 101-case cycle complete; 247 SHA-distinct canonical EIS files processed; 2 exact-filestore SHA originals; 33 primary 223 cases with 31 downloadable, 3 Bidzaar, 6 commission facts, 3 public-contract register records; 0 validated signed suppliers."
 resume_instruction: >-
-  Inspect the canonical MI-013 v20 corpus location and current branch status.
-  Start from docs/tender_research/market_intelligence/README.md.
-  Implement the durable research_events.jsonl writer and fixture tests first,
-  without disturbing the existing unrelated .agent/current-task.yaml or
-  the dirty local Mac mini checkout. After each milestone update this
-  checkpoint with actual verified commit and test outcomes.
+  Read this checkpoint and actual main HEAD, inspect verified-market-snapshot.json and
+  pq-agent-pilot-live/last-recovery-cycle.json. Do NOT repeat SHA-verified batches.
+  Recover first-party commercial ETP protocols from v29 nonstandard IDs (Bidzaar
+  original HTML already captured), revisit two no-files 223 notices only after
+  bounded retry, verify company identities/award/signed outcomes via exact original
+  quotes and SHA. Update owner-facing 2024-2026 deduplicated tender report, maintain
+  exactly one hourly Tender Agent Watchdog, leave unrelated current-task.yaml untouched.
 
 implementation_update_20261027:
   commit: 344738aec8e9d992b3988d37f9f7fd1f725a3624
@@ -317,3 +325,23 @@ verified_eis_223_public_discovery_20261028_final:
   last_test_results: "38 focused tests passed, 1 external Starlette deprecation warning; 32/32 223 source attempted, 30 original case folders downloaded, 217 distinct canonical source files processed, 3 quote-bound commission outcomes."
   runtime_root: "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live"
   resume_instruction: "Inspect latest GitHub main & ARC isolated worktree and status, recover queued original documents for non-11-digit commercial and 44-FZ v29 leads, avoid rerunning 32 completed official EIS searches until 12h retry, correlate commission selections with legitimate supplier/contract source, and publish source-verified deduplicated study. Preserve single existing hourly Watchdog and unrelated .agent/current-task.yaml; update checkpoint after every milestone."
+
+
+native_etp_and_market_snapshot_20261028:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  goal: "Original ETP and 223-FZ economic facts integrated into evidence-grounded market workflow"
+  completed:
+    - "Captured 3 verified first-party Bidzaar HTML cards with original SHA, title and exact procedure ID."
+    - "Added EIS exact filestore URL+SHA acquisition and SHA verified 2 files for previously uncovered notice 32616355390."
+    - "Removed bounded source-manifest truncation and verified complete 247-file Data Platform corpus."
+    - "6 committee-source quote/amount checks, 3 register lots, 3 original ETP case checks; all 33 numeric 223 leads have first-party source receipts, 31 with files."
+    - "Built source-rechecking verified_market_snapshot.json and Markdown report with 10,998,960 RUB limited capacitor bid sample and no estimated market total."
+  current_step: "Investigate native commercial ETP originals and contract winners across remaining 68 leads"
+  remaining:
+    - "Verify actual signed award/contract data and separate EPC vs equipment economics."
+    - "Broaden 2024 and primary commercial platform source coverage."
+    - "Produce full auditable 2024–2026 market report only after source completeness checks."
+  last_verified_commit: "f8bd27a32fa5b0236f7528a6e27bc8fc940740a5"
+  last_test_results: "51 passed, 1 external deprecation warning; 33/33 numeric 223 leads with source receipts, 31 with originals; 3 primary ETP cards, 6 commission facts, 3 registry lots"
+  resume_instruction: "Use latest top-level resume_instruction; do not duplicate Tender Agent Watchdog."
