@@ -8,9 +8,9 @@ import argparse
 import hashlib
 import json
 import os
-from urllib.parse import urlsplit
 import tempfile
 from pathlib import Path
+from urllib.parse import urlsplit
 
 from src.shared.config.settings import get_settings
 from src.shared.document_processing import process_document_bytes
@@ -80,7 +80,7 @@ def ingest(*, sources: Path, output: Path, dp_source: Path,
                             "characters": len(extracted_text),
                             "chunks": len(result.chunks),
                             "text_excerpt": extracted_text[:2500]})
-        except Exception as exc:
+        except Exception as exc:  # noqa: BLE001 - isolate per-source SDK failures
             records.append({"path": str(path), "sha256": sha,
                             "status": "extraction_error",
                             "error_type": type(exc).__name__})
