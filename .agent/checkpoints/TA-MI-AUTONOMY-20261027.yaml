@@ -1169,3 +1169,25 @@ run_20261028_1300_corrected_inventory_validation:
     exact-head CI on the new PR #519 commit; do not auto-merge or promote
     secondary HTML, OCR, NMCK or commission recommendations to signed
     contracts. Preserve singleton Watchdog and unrelated current-task.
+
+run_20261028_1310_main_reconcile:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  merged_main_commit: e92c948c
+  branch_reconciliation_commit: 2378cf576946defb2420aa7c8ea0df7eba7b6426
+  resolved_conflict: src/modules/market_intelligence/pq_dp_ingest.py
+  preservation: 'SDK local-only endpoint and source SHA retained; main single-read bytes and deprecated CLI help incorporated'
+  focused_tests_pass: 23
+  ruff: PASS
+  git_diff_check: PASS
+  yaml: PASS
+  pr: 519
+  pr_state: DRAFT_MERGEABLE
+  exact_head_ci: queued
+  resume_instruction: >-
+    Check final exact-head CI on PR #519; do not auto-merge because MI
+    queue auto_merge:true is not confirmed and Company AM-4 authority has
+    not been revalidated for this PR. Continue safe source-bound original
+    award/signed-contract recovery, preserving the 12h ETP cooldown, SHA
+    receipts and the 31/100 corrected source-document coverage. Keep
+    unrelated current-task.yaml and the single Watchdog unchanged.
