@@ -1843,3 +1843,57 @@ watchdog_20261029_0929:
     - '106044-TT Metal-IT 6.3kV STATCOM outcome: new official event or 2026-10-30 06:42 MSK'
     - '32616433248 UKRM 35kV EPC signed outcome: 2026-10-29 18:48 MSK'
     - '32515582393 UKRM 6kV signed supplier/payment: 2026-10-30 06:46 MSK'
+
+manual_rusagro_harmonic_filter_research_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  recorded_at_utc: '2026-10-29T06:52:00Z'
+  active_pr: 521
+  database: arvectum_data
+  collection: arvectum-market-pq-6-35kv
+  unique_lots_before: 107
+  unique_lots_after: 108
+  distinct_procedure_tokens_after: 97
+  eis_223_lots_after: 37
+  distinct_eis_223_notices_after: 36
+  commercial_and_nonstandard_lots_after: 71
+  inserted_unique_lot: 'commercial:281-705:lot1'
+  supplier_scope: harmonic_filters_design_for_seven_rusagro_sugar_factories
+  first_party_page_url: https://bidzaar.com/app/process/light/019b4fe0-38ca-773a-91b0-0ff33daedb7d
+  first_party_page_sha256: db4d1b92433a57d4fa3adc1ec405d3397375530568b760c5dbf37dbd9cc0c5f5
+  original_technical_docx_sha_verified: 7
+  original_http_status_all: 200
+  legal_notice_count_added: 1
+  seven_design_site_positions_not_seven_notices: true
+  nominal_harmonic_filter_voltage_verified_6_35kv: false
+  low_voltage_0p4kv_protection_in_six_original_specs: true
+  unrelated_6kv_RU_location_in_one_original_spec: true
+  new_6_35kv_verified_equipment_sales_count: 0
+  new_signed_suppliers_count: 0
+  new_executed_equipment_revenue_rub: 0
+  full_postgres_backup_sha256: 93048ad45edb0e178ba4669a915aca491ecc2cf243e2b8153d746363630245f3
+  database_import: atomic_transaction_and_postwrite_readback
+  source_reconciliation: docs/market_intelligence/PQ_RUSAGRO_281705_RECONCILIATION_20261029.json
+  source_manifest: data/market_intelligence/power_quality/rusagro_281705_primary_20261029.json
+  live_database_metrics: docs/market_intelligence/PQ_LIVE_DB_KPI_20261029_0949.json
+  source_limitation: >-
+    Core 6-35kV harmonic filter nominal voltage was NOT established; six
+    original specs refer to 0.4kV protection and the seventh to RU6
+    switchgear location. Database row is research-only staged_unreviewed,
+    not actual equipment sale, contract price or signed supplier.
+    Additional 7 original project positions belong to ONE legal tender.
+    Only four corpus rows presently include direct original SHA arrays
+    in dp_resources.metadata; historic source SHA may be external to DB.
+  resume_instruction: >-
+    Use actual PostgreSQL count 108 unique lot cards, 97 procedure tokens
+    and 36 distinct numeric EIS 223-FZ notices as initial checkpoint, but
+    re-query before every run. Seek genuine NEW 6-35kV equipment procurements,
+    the original platform contract annexes and independently verified signed
+    suppliers and prices; do not repeat/duplicate 281-705 or 4158439.
+    Publish per-case source original SHA, technology voltage and legal
+    procedure dedup; 281-705 is design-only and 6-35kV uncertain.
+    Continue v29 archive provenance reconciliation and source-grade
+    normalization for historic rows. Never count seven TЗ as seven lots.
+    Append only new source-verified canonical procurement rows after fresh
+    full SHA-verified PostgreSQL backup, atomic guard and readback.
+    Keep single PR #521, single Watchdog, no unrelated worktree edits.
