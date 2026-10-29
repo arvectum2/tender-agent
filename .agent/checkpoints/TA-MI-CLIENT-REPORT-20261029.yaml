@@ -1,9 +1,9 @@
 task_id: TA-MI-CLIENT-REPORT-20261029
-status: in_progress
+status: completed
 objective: Актуализировать клиентский HTML-отчёт Power Quality 6–35 кВ на основе проверенного живого PostgreSQL и источников MI-013.
 source_report: docs/market_intelligence/POWER_QUALITY_CLIENT_PREVIEW_20261024.html
 source_report_date: '2026-10-24'
-current_stage: Client HTML generated, Chrome preview visually inspected, validation and final Git publication remaining.
+current_stage: Client report generated and independently validated; research MI-013 remains in_progress.
 completed_stages:
   - Located original client preview (12 curated examples) and linked initial pilot Markdown/JSON.
   - Queried current live PostgreSQL: 113 unique lots, 102 distinct procedure tokens, 38 EIS223 lots / 37 distinct notices, all unreviewed.
@@ -16,9 +16,9 @@ definition_of_done:
 remaining_stages:
   - Read current corpus cases and classify evidence using conservative source rules.
   - Build safe client report generator and update HTML.
-  - Run tests and source/checkpoint consistency checks; push and mark completed.
-last_verified_commit: c91a37c053b6674472243c3a1c48444f05447c17
-last_tests: 9 client-report unit tests passed; Ruff pass; 113 rows and 9 curated case cards validated; Chrome headless screenshot produced. DB count independently reconfirmed at 22:38 MSK; no DB mutations.
+  - Run tests and source/checkpoint consistency checks; push and mark completed. [done]
+last_verified_commit: e4736452f7f9dde0a8cd2e1f36bdd571527b3cf3
+last_tests: 29 focused regressions PASS, Ruff check PASS, Ruff format PASS, reproducible output SHA PASS, Chrome screenshot reviewed. DB 113 unique lots / 102 procedure tokens independently reconfirmed. No DB mutations.
 report_as_of: '2026-10-29'
 db_unique_lots: 113
 db_distinct_procedure_ids: 102
@@ -33,3 +33,11 @@ resume_instruction: >-
   examine source report and current PostgreSQL; update only the client report and report-generator files.
   Do not touch unrelated .agent/current-task.yaml, do not write to DB for a report-only task,
   preserve Watchdog autonomous research, rebase cleanly before pushing sole PR #521.
+
+report_commit: e4736452f7f9dde0a8cd2e1f36bdd571527b3cf3
+report_pub_sha256: 2c028e603371ebcb1a959f124449f1128cd85c82e8ecaf283c580a8ed80d5e39
+report_output: docs/market_intelligence/POWER_QUALITY_CLIENT_PREVIEW_20261024.html
+report_generator: scripts/market_intelligence/render_pq_client_report.py
+report_test: tests/test_pq_client_report_20261029.py
+report_data_status: provisional_client_preview_not_a_final_market_census
+next_research_instruction: Keep the separate TA-MI-AUTONOMY-20261027.yaml task in_progress; rerender client report on source-verified corpus gains with the generator and source gates, not by manual count substitution.
