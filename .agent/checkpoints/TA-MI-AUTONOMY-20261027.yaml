@@ -2287,3 +2287,35 @@ mi_watchdog_source_negatives_20261029_1732:
     SIBUR 2101170/1 VEDA filter is 3x400V, exclude from 6-35kV core.
     DB 113 unique lots / 102 procedures / 37 EIS223 notices.
     Before any next DB append run fresh acceptance and verified full backup.
+
+mi_watchdog_primary_search_20261029_1833:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6501069332
+  parent_head: 0f6076500c03415b8815ca14d94af76f89f30fe0
+  report: docs/market_intelligence/PQ_WATCHDOG_PRIMARY_SEARCH_20261029_1833.json
+  report_sha256: 4513d52882634fb6cd2b46274bd5194121d4cd5beb1e7ff52b7aebfa84173c05
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 113
+  postgres_unique_lots_after: 113
+  postgres_distinct_procedures: 102
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_verified_core_equipment_lots: 0
+  new_first_party_sha_verified_captures: 8
+  new_named_winner_protocols: 0
+  new_signed_suppliers: 0
+  new_executed_equipment_sales: 0
+  new_month_source_coverage: 0
+  db_mutation: false
+  last_tested_code_commit: 0f6076500c03415b8815ca14d94af76f89f30fe0
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Official SIBUR archive lexical BSK/STK queries returned only unrelated
+    first-page rows; 6kV NKNH design PDF describes existing switchgear
+    compensation, not a tender/sale. Pursue 2103585/2 signed 10kV
+    outcome and 32616523441 first-party 10kV compensating devices;
+    Metal-IT 106044-TT eligible 2026-10-30 09:00 MSK.
+    DB 113 unique lots / 102 procedures / 37 EIS223; v29=101.
+    Before new insert run fresh gate and new verified full backup.
