@@ -2220,3 +2220,36 @@ mi_watchdog_sibur_first_party_20261029_1545:
     append run fresh internal runtime gate and NEW full pg_dump backup;
     baseline now 112 unique lots / 101 procedure tokens / 37 EIS223 notices.
     Preserve 101-row v29, single PR #521 and this one issue comment.
+
+mi_watchdog_sibur_design_growth_20261029_1635:
+  task_id: "TA-MI-AUTONOMY-20261027"
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6498025898
+  source_report: "docs/market_intelligence/PQ_WATCHDOG_SIBUR_DESIGN_GROWTH_20261029_1635.json"
+  source_report_sha256: "918e6e3a345b681d65f78441ec8d37c48a7f6000ebfdb7cfc1f00003321d27fb"
+  internal_apfs_gate_before_db: "pass"
+  internal_apfs_gate_after_db: "pass"
+  postgres_unique_lots_before: 112
+  postgres_unique_lots_after: 113
+  postgres_distinct_procedures_before: 101
+  postgres_distinct_procedures_after: 102
+  postgres_eis_223_notices: 37
+  new_unique_lots: 1
+  new_6kv_design_only: 1
+  new_strict_6_35kv_equipment_lots: 0
+  new_signed_suppliers: 0
+  new_executed_equipment_sales_rub: 0
+  fresh_sha_verified_http_200_captures: 18
+  verified_month_source_coverage: 0
+  backup_sha256: "0e69384bc5c2b73fd8d7499eda0c7dd0f95a143eb360225a996a675032ef5a1b"
+  db_receipt_private: "/Users/master/ArvectumSafe/runtime/market-intelligence/pq-agent-pilot-live/pq-sibur-2128160-1-design-20261029T1335.receipt.json"
+  last_tested_code_commit: "6730973199072756469dd31720fbaf893cad98ad"
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Continue real source acquisition: Tander 4617521 after 17:00 MSK;
+    SIBUR 2103585/2 original 7z technical contents; Metal-IT 106044-TT
+    after 2026-10-30 09:00 MSK. Date filters on SIBUR archive were ignored;
+    do not claim month coverage. DB now 113 unique lots, 102 procedure tokens,
+    37 EIS223 notices; 6kV design is NOT equipment sale. Re-run acceptance
+    and fresh backup before any next append. Keep single PR #521 and v29=101.

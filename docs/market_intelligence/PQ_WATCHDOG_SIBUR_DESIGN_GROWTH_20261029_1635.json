@@ -1,0 +1,274 @@
+{
+  "schema_version": "pq-watchdog-sibur-source-growth-20261029/1",
+  "completed_moscow": "2026-10-29T16:35:56.547261+03:00",
+  "issue_comment_id": 6498025898,
+  "canonical_pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "postgresql_before": {
+    "unique_lots": 112,
+    "distinct_procedures": 101,
+    "eis_223_notices": 37
+  },
+  "postgresql_after": {
+    "unique_lots": 113,
+    "distinct_procedures": 102,
+    "eis_223_notices": 37
+  },
+  "new_db_unique_lots": 1,
+  "new_db_distinct_procedures": 1,
+  "new_strict_6_35kv_equipment_lots": 0,
+  "new_verified_6kv_design_only": 1,
+  "new_signed_suppliers": 0,
+  "new_original_named_winner_protocols": 0,
+  "new_executed_contract_prices": 0,
+  "new_equipment_sales_rub": 0,
+  "new_tender_discoveries_not_previously_known": 0,
+  "source_attempts": {
+    "sha_verified_http_200_captures": 18,
+    "additional_http_200_diagnostic": 1,
+    "rejected_malformed_capture_commands": 5,
+    "rejected_capture_http_status_not_verified": true,
+    "verified_new_source_sha": 18,
+    "first_party_cards_existing_known_cases": 7,
+    "first_party_technical_or_template_attachments": 7,
+    "updated_tander_card": 1,
+    "first_party_search_pages": 3
+  },
+  "new_sha_verified_originals": [
+    {
+      "case_id": "commercial:2085519-1:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?procedure=2085519%2F1",
+      "sha256": "30250778e23ef6c590b0619cb2f18c69d7245adf9f0ddf1af4a4ac3633b850f5",
+      "bytes": 179969,
+      "relative_file": "captures/commercial_2085519-1_lot1/20261029T133054895330Z-b4167e7e-30250778e23ef6c5.bin",
+      "captured_utc": "2026-10-29T13:30:54.897492+00:00",
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:2087351-1:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?procedure=2087351%2F1",
+      "sha256": "512550e0b12dccd24b6745804c02578ea25ed797d303b35342598db3a8e778c9",
+      "bytes": 179042,
+      "relative_file": "captures/commercial_2087351-1_lot1/20261029T133102587004Z-2a73a379-512550e0b12dccd2.bin",
+      "captured_utc": "2026-10-29T13:31:02.589421+00:00",
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:2100815-1:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?procedure=2100815%2F1",
+      "sha256": "8c23b93df86e318d759d6e0a3384c98afef2d997420cabf9e935501d88440530",
+      "bytes": 179364,
+      "relative_file": "captures/commercial_2100815-1_lot1/20261029T133103456297Z-df3c8864-8c23b93df86e318d.bin",
+      "captured_utc": "2026-10-29T13:31:03.458761+00:00",
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:2107092-1:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?procedure=2107092%2F1",
+      "sha256": "9d4b94eb8a6f53c8927c13b6735d8feeb48088e8e9ee26b25c381c375a0e631e",
+      "bytes": 180671,
+      "relative_file": "captures/commercial_2107092-1_lot1/20261029T133104255360Z-386927c1-9d4b94eb8a6f53c8.bin",
+      "captured_utc": "2026-10-29T13:31:04.256736+00:00",
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:2113571-1:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?procedure=2113571%2F1",
+      "sha256": "01498f7884f1f2d7895830a759ba7af8d641d1237677fa69d70fd63c4937251f",
+      "bytes": 181266,
+      "relative_file": "captures/commercial_2113571-1_lot1/20261029T133105029118Z-c6dccd8c-01498f7884f1f2d7.bin",
+      "captured_utc": "2026-10-29T13:31:05.030425+00:00",
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:2115781-1:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?procedure=2115781%2F1",
+      "sha256": "572da303ba3ec4ed565f32f8e0cda223f54ac2518f25cec5fd7eacb16be710f0",
+      "bytes": 179365,
+      "relative_file": "captures/commercial_2115781-1_lot1/20261029T133106139659Z-257116fe-572da303ba3ec4ed.bin",
+      "captured_utc": "2026-10-29T13:31:06.142151+00:00",
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:2107277-1:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?procedure=2107277%2F1",
+      "sha256": "83bad81989a0936e1bed84874071e7e4f21529caf09b211db80d01dc44734d43",
+      "bytes": 179367,
+      "relative_file": "captures/commercial_2107277-1_lot1/20261029T133107312186Z-9613a320-83bad81989a0936e.bin",
+      "captured_utc": "2026-10-29T13:31:07.315092+00:00",
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:4617521:lot1",
+      "source_url": "https://www.b2b-center.ru/app/market-next/vybor-ispolnitelia-na-postavku-montazh-i-pnr-ustanovok-kompensatsii/tender-4617521/",
+      "sha256": "5faf725b72861f8d5a5f3cc0d4d56233dadee5a89aad92346e79de989477d528",
+      "bytes": 342999,
+      "relative_file": "captures/commercial_4617521_lot1/20261029T133120472393Z-c43f1965-5faf725b72861f8d.bin",
+      "captured_utc": "2026-10-29T13:31:20.472903+00:00",
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:2085519-1:lot1",
+      "source_url": "https://sibur.ru/upload/tmp/example/9a5/hy9qf49asv53ai89j515pzuib5a7t0ub.docx",
+      "sha256": "f99fdd6dadef48e3425e0ebbf43ba5fc407f74a5b6e22b1271267ffb8553a43f",
+      "bytes": 101330,
+      "relative_file": "captures/commercial_2085519-1_lot1/20261029T133144443244Z-6c6fb546-f99fdd6dadef48e3.bin",
+      "captured_utc": "2026-10-29T13:31:44.443799+00:00",
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:2085519-1:lot1",
+      "source_url": "https://sibur.ru/upload/tmp/example/e9b/vb8vegdrt5a63yzlv5nuj8u9zmp63ybw.7z",
+      "sha256": "7af2362c51c36203c91a36da627c8023624be12087c8d856df993c2eaefeccaa",
+      "bytes": 171477,
+      "relative_file": "captures/commercial_2085519-1_lot1/20261029T133144613985Z-76b4da17-7af2362c51c36203.bin",
+      "captured_utc": "2026-10-29T13:31:44.614456+00:00",
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:2100815-1:lot1",
+      "source_url": "https://sibur.ru/upload/tmp/example/6bd/pq09wrk4x1v6zm1zoeoxcigc7b3ymfg5.docx",
+      "sha256": "31eb27edce794902c00a9491ebe112675f26d9134b30d2099f5a9a0cbf05d0c1",
+      "bytes": 103776,
+      "relative_file": "captures/commercial_2100815-1_lot1/20261029T133144744566Z-fbca4b3a-31eb27edce794902.bin",
+      "captured_utc": "2026-10-29T13:31:44.745022+00:00",
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:2100815-1:lot1",
+      "source_url": "https://sibur.ru/upload/tmp/example/3ed/hxr67j6z1udzn2ayjgix5gt5v4ncw54h.7z",
+      "sha256": "05746eb5bd84925a1050f6670a5ade29a2ea6c8efb34bb7cf4adfbdbe72d7bb5",
+      "bytes": 172521,
+      "relative_file": "captures/commercial_2100815-1_lot1/20261029T133144876111Z-b5a3ea75-05746eb5bd84925a.bin",
+      "captured_utc": "2026-10-29T13:31:44.876566+00:00",
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:2107092-1:lot1",
+      "source_url": "https://sibur.ru/upload/tmp/example/163/nngc6mudo9v9o30rvjwjnp00fw018ee9.docx",
+      "sha256": "5a08336aedb02d9f03c3b462d64416a763f0ecd1b797adff62a1e33845c1222f",
+      "bytes": 135129,
+      "relative_file": "captures/commercial_2107092-1_lot1/20261029T133145005836Z-67819d52-5a08336aedb02d9f.bin",
+      "captured_utc": "2026-10-29T13:31:45.006368+00:00",
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:2113571-1:lot1",
+      "source_url": "https://sibur.ru/upload/tmp/example/1b9/k3s15f3neku170380hivl6ljx41gtt7n.docx",
+      "sha256": "df606af4d5e55989b5072f38f53efd9ca318182d933cff433f58facae0ca6d74",
+      "bytes": 101455,
+      "relative_file": "captures/commercial_2113571-1_lot1/20261029T133145134504Z-3b4d474f-df606af4d5e55989.bin",
+      "captured_utc": "2026-10-29T13:31:45.134966+00:00",
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:2115781-1:lot1",
+      "source_url": "https://sibur.ru/upload/tmp/example/c4f/uhnhh8pmfpeprgymhawoeva5ag4gcia1.docx",
+      "sha256": "6c51653ac465121bf7cea8aa7d09e829deb8955d2a14e4693c10399580867509",
+      "bytes": 133300,
+      "relative_file": "captures/commercial_2115781-1_lot1/20261029T133145265130Z-dc1a3646-6c51653ac465121b.bin",
+      "captured_utc": "2026-10-29T13:31:45.265547+00:00",
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:sibur-search-2024-10-ukrm:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%A3%D0%9A%D0%A0%D0%9C&date-start=01.10.2024&date-end=31.10.2024",
+      "sha256": "44b6466d0447a22c6dddb6b265789fd0b03d1c654c16a04da3271a3f78f0599b",
+      "bytes": 241199,
+      "relative_file": "captures/commercial_sibur-search-2024-10-ukrm_lot1/20261029T133453198340Z-c131f8df-44b6466d0447a22c.bin",
+      "captured_utc": "2026-10-29T13:34:53.200111+00:00",
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:sibur-search-2025-06-bsk:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%91%D0%A1%D0%9A&date-start=01.06.2025&date-end=30.06.2025",
+      "sha256": "f23b68c7eb52b73eaaf1afcb826f96c1034d29cf1c50da779c645a1923bed45f",
+      "bytes": 225968,
+      "relative_file": "captures/commercial_sibur-search-2025-06-bsk_lot1/20261029T133454716659Z-205df5d1-f23b68c7eb52b73e.bin",
+      "captured_utc": "2026-10-29T13:34:54.719117+00:00",
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:sibur-search-2026-09-ukrm:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%A3%D0%9A%D0%A0%D0%9C&date-start=01.09.2026&date-end=30.09.2026",
+      "sha256": "2069a71dc66e563a19e93373e3ec3ab7a573ebaf9ad79c60fe060cb98c79fe59",
+      "bytes": 241199,
+      "relative_file": "captures/commercial_sibur-search-2026-09-ukrm_lot1/20261029T133455538054Z-9ab0b94c-2069a71dc66e563a.bin",
+      "captured_utc": "2026-10-29T13:34:55.539319+00:00",
+      "http_status": 200
+    }
+  ],
+  "source_findings": [
+    {
+      "case": "commercial:2128160-1:lot1",
+      "source_grade": "official_card_plus_6kv_technical_docx_plus_2_drawings",
+      "scope": "engineering_design_only",
+      "technology": "three regulated BSK 6 kV at RP-115/116",
+      "buyer": "ООО «НПП «Нефтехимия»",
+      "signed_supplier_verified": false,
+      "equipment_sale_verified": false,
+      "db_receipt": "/Users/master/ArvectumSafe/runtime/market-intelligence/pq-agent-pilot-live/pq-sibur-2128160-1-design-20261029T1335.receipt.json"
+    },
+    {
+      "cases": [
+        "2085519/1",
+        "2087351/1",
+        "2100815/1",
+        "2107092/1",
+        "2113571/1",
+        "2115781/1",
+        "2107277/1"
+      ],
+      "finding": "Seven first-party SIBUR procedure cards SHA captured; five downloaded DOCX are generic unsigned contract templates, two 7z contain only generic commercial forms. Voltage, named winner and signed contract not proven for these cases.",
+      "scope": "unverified_voltage_or_budgetary_not_core"
+    },
+    {
+      "case": "commercial:4617521:lot1",
+      "finding": "Public retender page updated auto-extension to 29 Oct 15:45 MSK, 2 applications; snapshot still shows countdown, not reliable final award. Buyer Tander, voltage unknown."
+    },
+    {
+      "search": "SIBUR date-start/date-end 2024-10 UKRM; 2025-06 BSK; 2026-09 UKRM",
+      "result": "Three official HTTP200 captures, but date filters ignored: returned out-of-range 2025/2026 rows, BSK result mostly lexical false positives. New verified month coverage = 0.",
+      "months_verified": 0,
+      "page_count_observed": 1,
+      "pagination_exhaustive": false
+    }
+  ],
+  "db_mutation": {
+    "type": "append_only_one_source_sha_bound_6kv_design_not_sale",
+    "canonical_id": "commercial:2128160-1:lot1",
+    "backup_manifest": "/Users/master/ArvectumSafe/backups/data-platform/data-platform-arvectum_data-20261029T133421Z-32509.dump.manifest.json",
+    "backup_sha256": "0e69384bc5c2b73fd8d7499eda0c7dd0f95a143eb360225a996a675032ef5a1b",
+    "pg_restore_list_verified": true,
+    "gate_before": "pass",
+    "gate_after": "pass",
+    "record_hash": "cfcb3a0ceadd1aadee12fad2e4f758dd7ee563569b874ee9cc349bf5b434bfe2",
+    "readback_review": "unreviewed"
+  },
+  "canonical_v29_101_rows_unchanged": true,
+  "code_commit": "6730973199072756469dd31720fbaf893cad98ad",
+  "verification": "source SHA readback, import dry-run, Ruff, post-insert readback, internal APFS runtime PASS",
+  "next_targets": [
+    {
+      "case": "commercial:4617521:lot1",
+      "retry_eligible": "2026-10-29 17:00 MSK or organizer new event",
+      "goal": "Verify final retender outcome and voltage, do not infer signed supplier"
+    },
+    {
+      "case": "commercial:2103585-2:lot1",
+      "retry_eligible": "immediately",
+      "goal": "Inspect two original 7z technical contents for 10kV scope and project-level dedup; signed contract proof"
+    },
+    {
+      "case": "commercial:106044-TT:lot1",
+      "retry_eligible": "2026-10-30 09:00 MSK or first-party result event",
+      "goal": "STATCOM 6.3kV award/contract via Metal-IT"
+    }
+  ],
+  "limitations": [
+    "No confirmed new 6-35kV equipment sale or signed supplier",
+    "SIBUR archive date filters not server-enforced",
+    "Generic unsigned contract forms cannot establish supplier or signed contract",
+    "B2B retender public results and voltage remain hidden"
+  ]
+}
