@@ -579,7 +579,13 @@
     "new_named_signed_suppliers": 0,
     "new_executed_prices": 0,
     "new_calendar_month_searches": 0,
-    "core_equipment_only_sales_confirmed": 0
+    "core_equipment_only_sales_confirmed": 0,
+    "new_original_7z_archives": 1,
+    "new_original_extracted_members": 2,
+    "reverified_existing_original_pdfs": 2,
+    "new_first_party_signed_registry_cards": 2,
+    "distinct_successful_http200_source_sha": 23,
+    "case_specific_successful_http200_source_cards_or_files": 21
   },
   "blockers": [
     "Public 223-FZ contract cards do not identify signed supplier on inspected contract-info pages.",
@@ -592,5 +598,17 @@
     "32413764701 10kV UKRM signed supplier and execution after 2026-10-29 06:46 MSK",
     "32515582393 6kV UKRM signed supplier and execution after 2026-10-29 06:46 MSK",
     "119199-TT / 135171-TT Metal-IT first-party originals via verified public document links; no speculative URL"
-  ]
+  ],
+  "dedup_audit": {
+    "sosnovskaya_original_final_protocol_archive_new_to_existing_private_originals": true,
+    "sosnovskaya_new_original_7z_archives": 1,
+    "sosnovskaya_new_extracted_members": 2,
+    "meles_final_pdf_original_sha_already_in_public223_originals": true,
+    "meles_admission_pdf_original_sha_already_in_public223_originals": true,
+    "meles_original_pdf_reverification_only": 2,
+    "new_signed_contract_register_cards_first_party": 2,
+    "new_named_winner_from_original_protocols": 1,
+    "original_source_files_not_counted_twice": true,
+    "no_changes_to_v29_101": true
+  }
 }
