@@ -1765,3 +1765,45 @@ manual_commercial_dedup_and_primary_capture_20261029:
     price-monitoring probes. Incrementally append NEW source-verified cases
     with backups and owner-approved narrow import. Continue prioritizing
     source-original 6-35kV contracts and verified suppliers, not test counts.
+
+manual_b2b_public_source_growth_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  timestamp_utc: '2026-10-29T06:31:18Z'
+  canonical_pr: 521
+  database: arvectum_data
+  collection: arvectum-market-pq-6-35kv
+  unique_lots_before: 106
+  unique_lots_after: 107
+  distinct_procedure_tokens_after: 96
+  added_lot: commercial:4158439:lot1
+  first_party_source_http: 200
+  first_party_source_sha256: 00a163169f78b3dd30556f1bf43a5968e886e1a877f8729a77339dec74bd5615
+  first_party_outcome: unsuccessful_no_bids
+  first_party_bid_count: 0
+  source_voltage_kv: null
+  new_strict_verified_6_35kv_lots: 0
+  new_signed_suppliers: 0
+  new_verified_equipment_revenue_rub: 0
+  import_status: staged_unreviewed
+  transaction_verified: true
+  backup_sha256: 1657c16b62bf42096369aa1c875f264581a2aa217fddff17d658c6c0959db0c6
+  full_backup_size_bytes: 37483906
+  evidence_receipt: docs/market_intelligence/PQ_DB_GROWTH_TO_107_20261029.json
+  candidate_queue: docs/market_intelligence/PQ_DISCOVERY_CANDIDATES_20261029.md
+  blockers: >-
+    Potential 2025 GPB AP109074 same UKRM model as 2026 AP125337 but separate
+    procedure ID; original official GPB document unavailable, do not import
+    without first-party source. FZ44 0318300338626000160 has contradictory
+    secondary listings, no original; exclude. 4158439 voltage is unknown and
+    bid count zero, not a verified strict PQ 6-35kV equipment purchase.
+  resume_instruction: >-
+    Begin with live PostgreSQL corpus unique IDs: 107 as of 2026-10-29
+    and 96 distinct procedure tokens. Do not re-import commercial:4158439:lot1
+    or existing AP125337/RN61001644/RN61004155. Acquire new first-party
+    technical annexes and signed outcomes on EIS and official ETPs, prioritize
+    AP109074 primary document and 2026 UKRM/Rosneft exact IDs, and dedup
+    exact notice/lot/project. Newly discovered source-only items lacking
+    nominal 6-35kV voltage remain provisional; do not treat failed bidding
+    as sales. Any further append requires fresh sha256-verified PostgreSQL
+    backup, source original verification and transactional readback.
