@@ -25,6 +25,7 @@ ALLOWED_HOSTS = frozenset({
     "www.b2b-center.ru", "bidzaar.com", "zakupki.gov.ru",
     "sibur.ru", "www.sibur.ru",
     "etpgpb.ru", "tender.lot-online.ru", "zakaz.etp-region.ru",
+    "www.recko.ru",  # official Kemerovo regional energy regulator: project evidence
     "www.tektorg.ru", "www.roseltorg.ru", "com.roseltorg.ru",
 })
 MAX_BYTES = 12_000_000

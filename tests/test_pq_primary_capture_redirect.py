@@ -98,3 +98,12 @@ def test_sibur_official_archive_and_document_allowed_but_lookalikes_rejected():
         capture.source_url('https://sibur.ru.evil.example/ru/procurement/buy/archive/')
     with pytest.raises(ValueError, match='allowlisted'):
         capture.source_url('http://sibur.ru/ru/procurement/buy/archive/')
+
+
+def test_official_kuzbass_regulator_pdf_allowed_without_widening_host_boundary():
+    url = "https://www.recko.ru/files/doc/20250324140802_82.pdf"
+    assert capture.source_url(url) == url
+    with pytest.raises(ValueError, match="allowlisted"):
+        capture.source_url("https://www.recko.ru.attacker.example/files/doc/20250324140802_82.pdf")
+    with pytest.raises(ValueError, match="allowlisted"):
+        capture.source_url("http://www.recko.ru/files/doc/20250324140802_82.pdf")
