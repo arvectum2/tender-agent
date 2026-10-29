@@ -1457,3 +1457,58 @@ watchdog_eis_signed_outcomes_20261029_0435:
     registry status changes; retry 10/6kV supplier cases after 06:46 MSK.
     Preserve dirty unrelated APR-07 and MI worktrees, single hourly Watchdog,
     REVIEW/AM-4 gates, no auto-merge or production mutations.
+
+watchdog_primary_outage_and_provisional_epc_20261029_0536:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  run_start_issue_comment_id: 6486342403
+  canonical_pr: 521
+  canonical_branch: feature/pq-etp-provenance-ledger-20261028
+  canonical_v29_rows_unchanged: 101
+  journaled_actual_source_requests: 17
+  source_http_statuses: {http_200: 4, http_403: 1, http_404: 12}
+  official_month_source_searches_attempted: 7
+  newly_successfully_covered_month_source_combinations: 0
+  newly_exhaustively_covered_months: 0
+  newly_sha_verified_first_party_case_originals: 0
+  newly_original_protocols_with_named_winner: 0
+  new_unique_notices_promoted: 0
+  new_unique_projects_promoted: 0
+  secondary_only_provisional_case_ids: ['32616433248', '32616497692']
+  new_signed_supplier_identities_verified: 0
+  new_executed_prices_verified: 0
+  new_core_equipment_only_sales_verified: 0
+  private_source_journal: watchdog-20261029-0536-primary/source-attempts.json
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_SOURCE_BLOCKERS_20261029_0536.json
+  source_ledger_sha256: 5af45a7507905c0729aeb97f90aaebaad57560630535f3210af19c904b5ed9e9
+  source_ledger_commit: a33ace9373b317aeaf019aa018c7c8300ec3f41b
+  last_tested_code_commit: 3cdbbc28ff345a5c3f4e798187df57b6a5af8ee4
+  last_test_results: 'No code changes. Public evidence JSON parsed; local source journal SHA-256 and source receipts verified. No redundant pytest suite.'
+  blockers: >-
+    EIS notice/search/filestore returned uniform 146-byte HTTP404 from Varnish
+    on both Mac mini and MacBook; 7 bounded month queries yielded no usable
+    pages, not evidence of absent market. Rosseti Roseltorg JS landing page
+    and GPB generic SSR did not expose case-specific originals. Kontur 403;
+    no bypass. 15 Data Platform files still await approved SDK credentials.
+  findings: >-
+    Two already-unverified metadata candidate notices were independently
+    corroborated only by SHA-bound secondary sources: 32616433248 mixed EPC
+    for PS Kyappeselga with 1 UKRM 35kV (NMCK 56,330,673.93 RUB), and
+    32616497692 mixed EPC for PS Vyartsilya with 10kV UKRM (NMCK
+    79,101,498 RUB). Secondary-reported winner for 32616433248 is NOT
+    source-original-protocol verified, NOT signed contractor and NOT a PQ
+    equipment-only sale. No source-grade promotion or v29 mutation.
+  next_three:
+    - '32413764701: independently signed 10kV UKRM supplier and executed amount; eligible 2026-10-29 06:46 Moscow.'
+    - '32515582393: independently signed 6kV UKRM supplier and executed amount; eligible 2026-10-29 06:46 Moscow.'
+    - '32616433248 / 32616497692: official original EIS/ETP technical documents and protocol; retry 2026-10-29 17:43 Moscow unless service recovery verified.'
+  resume_instruction: >-
+    Continue only existing PR #521, v29 101 unchanged and single hourly
+    Watchdog. Check branch HEAD and lease before writes. Do not repeat 7
+    unsuccessful EIS month-law-query requests before 17:43 Moscow unless
+    first-party service recovers. Neither secondary lead is original-backed,
+    signed, executed or equipment-only. Resume 10/6kV signed supplier cases
+    after 06:46 Moscow; GP630876 only after discovery of a new exact official
+    source URL. Keep 15 DP items blocked, preserve original SHA and unrelated
+    dirty worktrees. No merge or production mutation.
