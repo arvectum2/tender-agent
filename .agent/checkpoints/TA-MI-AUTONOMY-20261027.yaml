@@ -1924,3 +1924,34 @@ watchdog_20261029_1034:
   result: "B2B 4643332, 10.5kV capacitor, official no-bid outcome (0 applications), no contract or equipment sale."
   blockers: "EIS 32616435269 HTTP404; B2B 4590398 HTTP404; new 1258722 stage-2 only secondary and unverified voltage."
   next_action: "Seek primary signed contracts and verified new unique 6-35kV lots; retry 106044-TT and 32515582393 after 2026-10-30 06:42/06:46 MSK."
+
+manual_sibsteklo_primary_recheck_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  date_moscow: '2026-10-29'
+  canonical_pr: 521
+  source_evidence: docs/market_intelligence/PQ_SIBSTEKLO_306644_SOURCE_RECHECK_20261029.json
+  canonical_candidate: 'commercial:306-644:lot1'
+  source_primary_card: https://bidzaar.com/app/process/light/019ce668-617b-7b1a-861e-113ed78182af
+  source_already_in_primary_facts: true
+  source_technology_voltage_kv: 6
+  source_scope: installation_connection_commissioning_not_verified_new_supply
+  original_technical_docx_sha_verified_this_run: false
+  signed_supplier_verified: false
+  outcome_price_verified: false
+  database_new_rows_added_this_run: 0
+  database_last_confirmed_unique_lots: 108
+  database_last_confirmed_distinct_procedures: 97
+  db_readback_blocker: remote_ARC_run_command_safety_rejections
+  resume_instruction: >-
+    Read PostgreSQL collection arvectum_data/arvectum-market-pq-6-35kv and
+    check whether commercial:306-644:lot1 exists before considering an
+    insert. It was already documented in
+    data/market_intelligence/power_quality/primary_etp_facts.v1.json.
+    Retrieve actual first party DOCX from Bidzaar URL in evidence report,
+    verify document SHA and 6 kV works technical terms. If canonical lot is
+    truly absent, append one provisional 6 kV installation service tender
+    after a fresh SHA-verified pg_dump, safe atomic transaction and readback.
+    Do not infer purchased equipment, OEM, signed supplier, paid price or
+    any new sale. Continue unique high-priority PQ signed 6-35 kV contracts,
+    and do not create a second Watchdog or PR.
