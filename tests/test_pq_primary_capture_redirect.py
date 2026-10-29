@@ -59,3 +59,33 @@ def test_relative_redirect_to_untrusted_host_is_rejected(monkeypatch):
     with pytest.raises(ValueError, match="allowlisted"):
         capture.fetch(url)
     assert seen == [url]
+
+
+def test_strict_curl_transport_rejects_redirect(monkeypatch, tmp_path):
+    import subprocess
+    from pathlib import Path
+
+    def fake_run(cmd, **_):
+        assert '--noproxy' in cmd and '--proto' in cmd
+        assert cmd[cmd.index('--proto') + 1] == '=https'
+        Path(cmd[cmd.index('--output') + 1]).write_bytes(b'fake content' * 10)
+        return subprocess.CompletedProcess(cmd, 0, '302\ntext/html\nhttps://www.roseltorg.ru/procedure/COM1', '')
+
+    monkeypatch.setattr(capture.subprocess, 'run', fake_run)
+    with pytest.raises(RuntimeError, match='not exact URL HTTP 200'):
+        capture.fetch_curl_direct('https://www.roseltorg.ru/procedure/COM1')
+
+
+def test_strict_curl_transport_accepts_only_verified_exact_source(monkeypatch):
+    import subprocess
+    from pathlib import Path
+    url = 'https://com.roseltorg.ru/file/get/t/LotDocuments/id/4476617'
+
+    def fake_run(cmd, **_):
+        Path(cmd[cmd.index('--output') + 1]).write_bytes(b'original-doc' * 12)
+        return subprocess.CompletedProcess(cmd, 0, '200\napplication/msword\n' + url, '')
+
+    monkeypatch.setattr(capture.subprocess, 'run', fake_run)
+    raw, kind = capture.fetch_curl_direct(url)
+    assert raw == b'original-doc' * 12
+    assert kind == 'application/msword'
