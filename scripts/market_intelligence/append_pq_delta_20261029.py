@@ -4,11 +4,17 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 import subprocess
 from pathlib import Path
 
-ROOT = Path("/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live")
+# Prefer a verified internal APFS runtime after macOS removable-volume access
+# failures. Keep legacy source root only when stable storage is not provisioned.
+_INTERNAL_ROOT = Path("/Users/master/ArvectumSafe/runtime/market-intelligence/pq-agent-pilot-live")
+_LEGACY_ROOT = Path("/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live")
+ROOT = Path(os.environ.get("ARVECTUM_MI_RUNTIME_ROOT",
+                           str(_INTERNAL_ROOT if _INTERNAL_ROOT.is_dir() else _LEGACY_ROOT)))
 COL = "arvectum-market-pq-6-35kv"
 SOURCE = "market_intelligence_procurement_research"
 
