@@ -1512,3 +1512,72 @@ watchdog_primary_outage_and_provisional_epc_20261029_0536:
     after 06:46 Moscow; GP630876 only after discovery of a new exact official
     source URL. Keep 15 DP items blocked, preserve original SHA and unrelated
     dirty worktrees. No merge or production mutation.
+
+watchdog_source_recovery_20261029_0636:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  run_start_issue_comment_id: 6487198366
+  canonical_pr: 521
+  canonical_branch: feature/pq-etp-provenance-ledger-20261028
+  base_head_before_run: 65d34a364ae0d366e006a8900433c661ecf5da1e
+  canonical_v29_rows_unchanged: 101
+  actual_source_requests: 37
+  source_http_statuses: {http_200: 31, http_403: 2, http_404: 2, tls_error: 1, timeout: 1}
+  new_original_files_sha_verified: 7
+  new_first_party_html_cards_sha_verified: 10
+  new_223_notices: 0
+  new_lots: 0
+  new_deduplicated_project_ids: 0
+  existing_v29_cases_upgraded_to_first_party: ['106044-ТТ', '32616433248', '32616497692']
+  new_statcom_site_specific_demand_nodes_verified: 2
+  original_protocols_with_named_winner: 0
+  original_protocols_with_anonymous_bidder: 1
+  new_signed_supplier_identities_verified: 0
+  new_executed_payment_values_verified: 0
+  new_equipment_only_signed_sales_verified: 0
+  new_month_source_searches: 0
+  newly_exhaustively_covered_months: 0
+  source_ledger_statcom: docs/market_intelligence/PQ_WATCHDOG_STATCOM_106044_TT_20261029_0636.json
+  source_ledger_statcom_sha256: c9636d9203ae4a25cf899149c8a94dcf67b01dc1190a485118045fa76617eccd
+  source_ledger_eis: docs/market_intelligence/PQ_WATCHDOG_EIS_RECOVERY_20261029_0636.json
+  source_ledger_eis_sha256: 18b1f69e3357a8f854eacd40c662695033f3dd816f42c0c286fd36c371c88d4d
+  private_source_journal: watchdog-20261029-0636-primary/source-attempts.json
+  private_source_journal_sha256: a5d41bc72a1faff03cdf673c82e220d4b41759bb18265cec11e1ae4d38b15c8f
+  last_tested_code_commit: 3cdbbc28ff345a5c3f4e798187df57b6a5af8ee4
+  findings: >-
+    Direct lawful noproxy access restored EIS first-party originals. Metal-IT
+    106044-TT: three planned 6.3kV STATCOM units across two sites, 2Mvar
+    Taldinsky and 2x0.85Mvar Kaltansky, no sale proven. EIS 32616433248:
+    original 35kV UKRM >=3.5Mvar in mixed EPC, NMCK 56.33067393m RUB;
+    original 19.10.2026 final protocol declares one-bid procedure unsuccessful,
+    bidder #1 anonymous, only proposed contract negotiations, no signed
+    supplier. EIS 32616497692: original 10kV UKRM 3Mvar in mixed EPC,
+    total NMCK 79.1014984m RUB; Vartsilya subproject estimated 8.95528621m
+    incl VAT, not equipment-only price. EIS printform 32515582393 states
+    contract number RES-1.26.1/D-01071 and declared goods origin Kazakhstan,
+    but does not name signed supplier or prove payment.
+  price_separation: >-
+    32616433248 original XLSX pre-limit pre-VAT 'Montazh UKRM' 13.3424724m
+    RUB and PNR 0.19758135m, not signed equipment-only allocation.
+    32616497692 original XLSX 'Montazh UKRM' 4.34679332m RUB pre-VAT,
+    Vartsilya site package 8.95528621m RUB incl VAT, overall EPC NMCK
+    79.1014984m RUB. No national TAM inference.
+  blockers: >-
+    Original 32616433248 protocol names only anonymous bidder #1;
+    secondary named winner cannot be promoted. No public contract on either
+    new EIS notice tab. 32616497692 no official protocol. 32515582393
+    signed supplier and executed payment remain unverified; declared Kazakhstan
+    origin is not independent OEM evidence. 15 Data Platform files remain
+    blocked by approved SDK credentials. Generic EIS printform for 32413764701
+    returned landing shell, despite contract card status 'execution completed'.
+  next_three:
+    - '32515582393: independent signed supplier and executed price; retry after 2026-10-30 06:46 MSK or on a new first-party source event.'
+    - '32616433248: final signed contractor/contract-register after one-bid negotiations; retry after 2026-10-29 18:48 MSK or new EIS event.'
+    - '106044-TT: source-native Metal-IT award/protocol for 6.3kV STATCOM; eligible immediately only via newly discovered exact official card URL, no generic root re-probe before 2026-10-30 06:42 MSK.'
+  resume_instruction: >-
+    Continue only PR #521, canonical v29 101 rows unchanged. Do not redownload
+    seven newly verified original files. Preserve original SHA, separate
+    notice/lot/site/project/contract and prices. No new bids, no production,
+    no auto-merge without AM-4 and exact-head CI/review gates. Keep unrelated
+    dirty worktrees and one enabled hourly Watchdog unchanged.
