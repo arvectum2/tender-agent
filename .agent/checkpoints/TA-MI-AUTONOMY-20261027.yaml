@@ -2152,3 +2152,24 @@ mi_watchdog_discovery_20261029_1335:
     EIS originals for 32616523441 and 32615700251 HTTP404; retry after
     2026-10-30 13:40 Moscow, seek RTS originals. No DB insert without SHA,
     fresh full backup and exact dedup. Continue independent PQ research.
+
+mi_watchdog_commercial_delta_20261029_1433:
+  status: "in_progress"
+  issue_comment_id: 6495524226
+  canonical_pr: 521
+  internal_apfs_acceptance: "pass"
+  postgres_unique_lots_before: 109
+  postgres_unique_lots_after: 111
+  postgres_procedure_tokens_after: 100
+  postgres_eis_223_notices_after: 37
+  new_unique_candidate_lots: 2
+  new_verified_core_6_35kv_lots: 0
+  new_primary_originals: 4
+  new_signed_suppliers: 0
+  new_executed_equipment_sales: 0
+  last_tested_code_commit: "1cf091255967223b6a7f4ca9b9543523c1260fd7"
+  report: "docs/market_intelligence/PQ_WATCHDOG_COMMERCIAL_DELTA_20261029_1433.json"
+  db_receipt_private: "/Users/master/ArvectumSafe/runtime/market-intelligence/pq-agent-pilot-live/pq-commercial-delta-20261029T1139.receipt.json"
+  backup_sha256: "4abe39451decbb905698c9048b7989a7da306e4a0ab5bfa42f7daf0d5c70fb29"
+  db_mutation: "append_only_two_source_verified_unreviewed_noncore"
+  resume_instruction: "Continue first-party PQ 6-35kV evidence; recheck Tander retender after 15:15 Moscow, BSK 32615684088 original after retry, STATCOM 106044-TT; preserve 111 DB lots, 100 tokens, 37 EIS 223 notices. No 0.4kV promotion."
