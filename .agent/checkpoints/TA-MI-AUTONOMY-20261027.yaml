@@ -2465,3 +2465,33 @@ mi_watchdog_source_retry_20261030_0032:
     do not retry before 2026-10-30 14:40 MSK. Metal-IT 106044-TT
     eligible 2026-10-30 09:00 MSK. Database remains 113/102/37;
     before any append rerun acceptance and SHA+pg_restore full backup.
+
+mi_watchdog_besk_capacitors_20261030_0135:
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6510037242
+  parent_head: 9444bf9ed48cf9e08d51817547f49fe20f3a7776
+  report: docs/market_intelligence/PQ_WATCHDOG_BESK_CAPACITORS_20261030_0135.json
+  report_sha256: eb69105d2779deb3bbcb2daaa451691b1f00b22f4992b8ccc28b33b101236ad6
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 113
+  postgres_unique_lots_after: 113
+  postgres_distinct_procedures: 102
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_sha_verified_source_captures: 5
+  new_besk_candidate_lots_staged: 2
+  new_verified_core_6_35kv_lots: 0
+  new_signed_suppliers: 0
+  db_mutation: false
+  client_html_regenerated: false
+  last_tested_code_commit: 9444bf9ed48cf9e08d51817547f49fe20f3a7776
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    First-party B2B 4642507 has two KEP capacitor lots: 11 units 981354.33 RUB
+    and 16 units 1471296.08 RUB ex VAT, four anonymous bids; rated voltage
+    not disclosed, so neither lot inserted in PG. Five new SHA-verified source
+    captures including B2B cross-index 32616435269; EIS 32616497692 and
+    32616435269 returned HTTP404. Next source-native technical specs for
+    32616474682/32616435269 and Metal-IT 106044-TT after 09:00 MSK.
+    Database 113/102/37; v29 101. No HTML report regeneration.

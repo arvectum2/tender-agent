@@ -1,0 +1,144 @@
+{
+  "schema_version": "pq-watchdog-besk-capacitors/1",
+  "run_id": "20261030-0135",
+  "completed_moscow": "2026-10-30T01:39:14+03:00",
+  "issue_comment_id": 6510037242,
+  "canonical_pr": 521,
+  "parent_head": "9444bf9ed48cf9e08d51817547f49fe20f3a7776",
+  "status": "in_progress_review",
+  "database_before_after": {
+    "unique_lots": 113,
+    "distinct_procedures": 102,
+    "numeric_eis223_notices": 37
+  },
+  "database_mutation": false,
+  "new_unique_db_lots": 0,
+  "new_verified_core_6_35kv_lots": 0,
+  "client_html_regenerated": false,
+  "canonical_v29_rows_unchanged": 101,
+  "primary_source_requests": {
+    "total": 7,
+    "http_200": 5,
+    "http_404": 2,
+    "new_sha_verified_files": 5,
+    "new_native_etp_card_versions": 4,
+    "new_native_technical_originals": 0
+  },
+  "new_source_receipts": [
+    {
+      "case_id": "223fz:32616474682:lot1",
+      "source_url": "https://www.b2b-center.ru/market/postavka-kondensatorov-kep-dlia-ooo-bashkirenergo-ooo-bsk-27-000090/tender-4642507/",
+      "source_tier": "etp_first_party",
+      "sha256": "46c227c3d7a1bee57fc13a3ab35feebb923b29f463a82f171b73956d4357af67",
+      "bytes": 80709,
+      "receipt_relative_path": "captures/223fz_32616474682_lot1/20261029T223712007847Z-22db39cf-46c227c3d7a1bee5.bin.json",
+      "http": 200
+    },
+    {
+      "case_id": "223fz:32616474682:lot2",
+      "source_url": "https://www.b2b-center.ru/market/postavka-kondensatorov-kep-dlia-ooo-bashkirenergo-ooo-bsk-27-000090/tender-4642507/?action=positions",
+      "source_tier": "etp_first_party",
+      "sha256": "3dbc6f51fd3ffd1d665f5f4d8ecec86e0f49aad3a32490c1db28a2718e8566f3",
+      "bytes": 58635,
+      "receipt_relative_path": "captures/223fz_32616474682_lot2/20261029T223712426570Z-0eb8c9f5-3dbc6f51fd3ffd1d.bin.json",
+      "http": 200
+    },
+    {
+      "case_id": "223fz:32616435269:lot1",
+      "source_url": "https://www.b2b-center.ru/search/number/l32616435269-1/",
+      "source_tier": "first_party_cross_index_not_native_etp",
+      "sha256": "0e8b7bd4f95063caf6b7022f239241eca4d0ad1cafa587df36bf644f9e991951",
+      "bytes": 90893,
+      "receipt_relative_path": "captures/223fz_32616435269_lot1/20261029T223713203994Z-b5cb6e9e-0e8b7bd4f95063ca.bin.json",
+      "http": 200
+    },
+    {
+      "case_id": "223fz:32616474682:lot1",
+      "source_url": "https://www.b2b-center.ru/market/postavka-kondensatorov-kep-dlia-ooo-bashkirenergo-ooo-bsk-27-000090/tender-4642507/?action=positions_groups",
+      "source_tier": "etp_first_party",
+      "sha256": "b9da052d249c8ea43ca87cfc36c0225887e5b617defcdf3f4008ea79c182080c",
+      "bytes": 57342,
+      "receipt_relative_path": "captures/223fz_32616474682_lot1/20261029T223804351846Z-9787e68f-b9da052d249c8ea4.bin.json",
+      "http": 200
+    },
+    {
+      "case_id": "223fz:32616474682:lot2",
+      "source_url": "https://www.b2b-center.ru/market/postavka-kondensatorov-kep-dlia-ooo-bashkirenergo-ooo-bsk-27-000090/tender-4642507/?action=offers",
+      "source_tier": "etp_first_party",
+      "sha256": "a3b0d30894e262c941628932d387a894f1d4e4cb45e02d165eaf4af0f3ea4f8f",
+      "bytes": 61642,
+      "receipt_relative_path": "captures/223fz_32616474682_lot2/20261029T223822328798Z-fea346f1-a3b0d30894e262c9.bin.json",
+      "http": 200
+    }
+  ],
+  "new_candidate": {
+    "eis_notice": "32616474682",
+    "etp_procedure": "4642507",
+    "buyer_organizer": "АО БЭСК",
+    "scope": "capacitor components KEP; nominal voltage NOT in public cards; NOT VERIFIED 6-35 kV",
+    "lots": [
+      {
+        "canonical_id": "223fz:32616474682:lot1",
+        "buyer": "ООО БСК",
+        "quantity_pieces": 11,
+        "initial_price_rub_ex_vat": "981354.33"
+      },
+      {
+        "canonical_id": "223fz:32616474682:lot2",
+        "buyer": "ООО Башкирэнерго",
+        "quantity_pieces": 16,
+        "initial_price_rub_ex_vat": "1471296.08"
+      }
+    ],
+    "initial_price_total_rub_ex_vat": "2452650.41",
+    "anonymous_applications_seen": 4,
+    "original_quote_lots": "Поставка конденсаторов КЭП для ООО \"Башкирэнерго\", ООО \"БСК\" 27-000090",
+    "source_quote_access_limit": "Зарегистрируйтесь, чтобы просматривать заявки, разъяснения организатора и скачивать документацию.",
+    "winner": "unknown",
+    "signed_supplier": "unknown",
+    "executed_equipment_price_rub": null,
+    "classification": "staged_candidate_voltage_unknown_not_inserted",
+    "do_not_infer": "KEP model family spans low and medium voltage; do not infer 6-35kV or sales from model family, bids or NMCK"
+  },
+  "known_prior_case_checked": {
+    "notice": "32616435269",
+    "initial_price_rub": "452016000.01",
+    "scope": "battery static capacitors; nominal voltage unknown",
+    "first_party_cross_index_new_snapshot": true,
+    "native_etp_original": false,
+    "new_lot": false,
+    "signed_supplier": false
+  },
+  "known_prior_10kv_epc": {
+    "notice": "32616497692",
+    "classification": "known 10kV UKRM within mixed EPC",
+    "eis_http": 404,
+    "new_lot": false
+  },
+  "new_signed_suppliers": 0,
+  "new_original_named_winner_protocols": 0,
+  "new_executed_pq_sales": 0,
+  "new_month_source_coverage": 0,
+  "retry_ranked": [
+    {
+      "case": "223fz:32616474682:lot1,lot2",
+      "eligible_after": "native B2B downloadable technical specification or official EIS original becomes accessible; outcome after 2026-12-03 10:00 MSK",
+      "goal": "identify exact rated voltage of 27 KEP units, classify lots separately, then signed contract"
+    },
+    {
+      "case": "223fz:32616435269:lot1",
+      "eligible_after": "new original EETP/roseltorg technical 7z accessible",
+      "goal": "rated voltage, revised 26-1174 document, avoid treating 452m NMCK as sales"
+    },
+    {
+      "case": "commercial:106044-TT:lot1",
+      "eligible_after": "2026-10-30 09:00 MSK",
+      "goal": "official Metal-IT STATCOM 6.3kV outcome and protocol"
+    }
+  ],
+  "notes": [
+    "Two EIS official common-info requests returned HTTP 404, not absence of procurement.",
+    "No fresh verified unique lot insertion: exact voltage of new KEP candidate is unverified; full PG backup not triggered.",
+    "Only one research PR #521, no merge or unrelated production mutations."
+  ]
+}
