@@ -2383,30 +2383,30 @@ mi_watchdog_primary_acquisition_20261029_2034:
     acceptance and create new SHA+pg_restore verified full backup.
 
 mi_watchdog_primary_scope_20261029_2136:
-task_id: TA-MI-AUTONOMY-20261027
-status: in_progress
-canonical_pr: 521
-issue_comment_id: 6505210387
-parent_head: 954162f3767f9068b9b12e670f380982c4663010
-report: docs/market_intelligence/PQ_WATCHDOG_PRIMARY_SCOPE_20261029_2136.json
-report_sha256: 373c7ab83b47e7610a0b6668c89466edcfdeea40da452191140338a268719a37
-internal_apfs_acceptance: pass
-postgres_unique_lots_before: 113
-postgres_unique_lots_after: 113
-postgres_distinct_procedures: 102
-postgres_eis_223_notices: 37
-new_unique_db_lots: 0
-new_first_party_sha_verified_captures: 9
-new_named_winner_protocols: 0
-new_signed_suppliers: 0
-new_executed_equipment_sales: 0
-new_month_source_coverage: 0
-db_mutation: false
-last_tested_code_commit: c43a5d007a4c92d0df2f1f0d9567704a63e1dfb0
-canonical_v29_rows_unchanged: 101
-resume_instruction: New official REK Kuzbass 2025 scanned PDF SHA d2970bb... page
-  5 confirms planned UKRM 10kV on VL F-10-17-L and PS Sosnovskaya; B2B mirror contract
-  52460069527260006170000 is design 2,787,700 RUB, not primary signed contract or
-  equipment sale. EIS 32615852898 returned 404; retry 2026-10-30 21:40 MSK. Next 2103585/2
-  signed 10kV outcome, Metal-IT 106044-TT after 09:00 MSK 30 Oct. DB 113/102/37; v29=101.
-  Re-run acceptance and verified full backup before new DB insert.
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6505210387
+  parent_head: 954162f3767f9068b9b12e670f380982c4663010
+  report: docs/market_intelligence/PQ_WATCHDOG_PRIMARY_SCOPE_20261029_2136.json
+  report_sha256: 373c7ab83b47e7610a0b6668c89466edcfdeea40da452191140338a268719a37
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 113
+  postgres_unique_lots_after: 113
+  postgres_distinct_procedures: 102
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_first_party_sha_verified_captures: 9
+  new_named_winner_protocols: 0
+  new_signed_suppliers: 0
+  new_executed_equipment_sales: 0
+  new_month_source_coverage: 0
+  db_mutation: false
+  last_tested_code_commit: c43a5d007a4c92d0df2f1f0d9567704a63e1dfb0
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: New official REK Kuzbass 2025 scanned PDF SHA d2970bb... page
+    5 confirms planned UKRM 10kV on VL F-10-17-L and PS Sosnovskaya; B2B mirror contract
+    52460069527260006170000 is design 2,787,700 RUB, not primary signed contract or
+    equipment sale. EIS 32615852898 returned 404; retry 2026-10-30 21:40 MSK. Next 2103585/2
+    signed 10kV outcome, Metal-IT 106044-TT after 09:00 MSK 30 Oct. DB 113/102/37; v29=101.
+    Re-run acceptance and verified full backup before new DB insert.
