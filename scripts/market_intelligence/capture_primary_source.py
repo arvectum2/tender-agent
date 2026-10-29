@@ -13,7 +13,7 @@ import re
 import secrets
 from datetime import UTC, datetime
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import urljoin, urlsplit
 
 import httpx
 
@@ -106,8 +106,12 @@ def fetch(url: str) -> tuple[bytes, str]:
             with client.stream("GET", current, headers={"Accept": "*/*"}) as r:
                 if r.status_code in {301, 302, 303, 307, 308}:
                     dest = r.headers.get("location", "")
-                    source_url(dest)
-                    current = dest
+                    # Official platforms may return relative Location headers.
+                    # Resolve against the current URL, then revalidate the
+                    # absolute HTTPS destination against the source allowlist.
+                    target = urljoin(current, dest)
+                    source_url(target)
+                    current = target
                     continue
                 r.raise_for_status()
                 if r.status_code != 200:
