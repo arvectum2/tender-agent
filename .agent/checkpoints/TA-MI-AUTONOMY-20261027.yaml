@@ -2126,6 +2126,7 @@ mi_watchdog_bidzaar_original_technical_20261029_1233:
   elga: "2 requested UKRM 6kV 3000kvar; 4x750kvar; PS 35/6kV POSKO; market survey"
   code_fix: "Relative HTTP302 Location resolved and revalidated against HTTPS allowlist"
   code_tests: "2 focused PASS, Ruff PASS, diff check PASS"
+  last_tested_code_commit: 788ac03e3713378f9ae7889a25b1ef11e8781270
   db_mutation: false
   resume_instruction: >-
     Continue source acquisition on internal APFS. Preserve 109 unique
