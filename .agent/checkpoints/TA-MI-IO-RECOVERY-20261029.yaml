@@ -1,0 +1,34 @@
+task_id: TA-MI-IO-RECOVERY-20261029
+status: in_progress
+owner_project: Tender Agent / Arvectum
+objective: Restore reliable Git, source-evidence and PostgreSQL ingest workflows after Mac mini external SSD operations began failing with EINTR/SIGKILL and macOS SystemPolicyRemovableVolumes denial.
+definition_of_done:
+  - Reproduce and diagnose failure; distinguish disk capacity, filesystem and macOS permission.
+  - Establish durable working Git checkout and Python execution on a stable filesystem without losing remote PR #521 history.
+  - Verify current PostgreSQL PQ collection cardinality and receipt; do not duplicate already imported lot7.
+  - Make new source, checkpoint and backup writes verifiable on a stable writable path; enforce SHA and idempotent guarded inserts.
+  - Run focused source-bound unit tests, Ruff and an actual nonmutating DB readback via stable path.
+  - Update the single existing Tender Agent Watchdog to use the repaired path and retain one PR.
+  - Commit final SHA and mark completed only after acceptance.
+completed_stages:
+  - Reproduced git getcwd failure and Python os.listdir EINTR on /Volumes/ArvectumSSD through ARC and MacBook-Air SSH.
+  - Verified disk7s1 APFS mounted read/write with ~2.8 TiB free; not a disk space issue.
+  - Read kernel macOS sandbox logs showing repeated SystemPolicyRemovableVolumes denials for Arvectum OS relocated-home logs; possible permission issue. Disk Utility verifyVolume blocked by macOS sandbox, not yet filesystem-verified.
+  - Established direct-funnel MacBook Air to Mac mini SSH as reliable alternate control plane.
+  - Cloned sole PR #521 branch to /Users/master/ArvectumSafe/worktrees/tender-agent-mi on internal APFS; Git status and HEAD 158f365 verified clean.
+  - Created isolated Python 3.14 venv /Users/master/ArvectumSafe/.venvs/tender-agent-mi with pytest, Ruff, PyYAML.
+current_stage: Validate internal checkout, migrate live source/backup roots, finish code validation, and reconcile Watchdog.
+remaining_stages:
+  - Run full non-destructive internal-path smoke and robust unit tests.
+  - Ensure source capture/backups/ingest use internal persisted runtime root when external volume blocked.
+  - Reconcile source manifest and importer for already committed PostgreSQL 109th lot and readback.
+  - Update Watchdog route, run final acceptance and preserve existing checkpoint.
+  - Document remaining macOS TCC removable volume issue without bypassing security settings; resolve via supported controls when available.
+last_verified_commit: 158f3654230ab10dd463f1b09b78b19350bc10d3
+last_tests: Internal git clone and Python interpreter smoke passed. Ruff current Tatneft importer PASS. Full pytest and ingestion smoke pending.
+db_state: Last PostgreSQL verified 109 unique PQ lots; Tatneft lot7 already present and must NOT be inserted again.
+worktree: /Users/master/ArvectumSafe/worktrees/tender-agent-mi
+stable_venv: /Users/master/ArvectumSafe/.venvs/tender-agent-mi
+unreliable_old_worktree: /Volumes/ArvectumSSD/Arvectum/worktrees/ta-mi-single-lane-20261029
+resume_instruction: >-
+  Continue over ARC device_execute macbook-air + SSH Mac-mini-master.local with cd to internal filesystem, not old external cwd. Verify Git and DB state first, then complete unit tests and workflow code. Do not operate on unrelated current-task.yaml. Root cause of external SSD directory enumeration not yet fully proven; do not claim physical disk failure, do not modify TCC databases or blindly unmount/repair SSD. Publish only under existing PR #521 and update single Watchdog.
