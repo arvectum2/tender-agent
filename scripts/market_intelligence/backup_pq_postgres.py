@@ -71,11 +71,11 @@ def backup(output_dir: Path = DEFAULT_DIR) -> dict:
             with tmp.open("rb") as stream:
                 check = subprocess.run(
                     ["docker", "exec", "-i", CONTAINER, "sh", "-c",
-                     "exec pg_restore --list -"],
+                     "exec pg_restore --list"],
                     stdin=stream, capture_output=True, timeout=55, check=False,
                 )
             if check.returncode or b"TABLE DATA" not in check.stdout:
-                raise RuntimeError("pg_restore could not validate archive/table data")
+                raise RuntimeError("pg_restore could not validate archive/table data: " + check.stderr[-400:].decode(errors="replace"))
             obj = {
                 "schema_version": "arvectum-data-platform-full-backup/1",
                 "database": DATABASE,
