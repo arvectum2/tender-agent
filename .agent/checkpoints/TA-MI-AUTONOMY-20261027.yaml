@@ -2132,3 +2132,23 @@ mi_watchdog_bidzaar_original_technical_20261029_1233:
     Continue source acquisition on internal APFS. Preserve 109 unique
     PostgreSQL lots and 101-row v29. Verify signed supplier and paid price;
     do not treat customer-provided installation as equipment sale.
+mi_watchdog_discovery_20261029_1335:
+  status: in_progress
+  issue_comment_id: 6494350351
+  canonical_pr: 521
+  parent_head: bdac8eaf5601d6da792bcf5bfb60432f82bde48f
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 109
+  postgres_unique_lots_after: 109
+  postgres_procedure_tokens: 98
+  postgres_eis_223_notices: 37
+  new_unique_lots: 0
+  new_primary_html_versions: 1
+  new_secondary_candidates: 2
+  new_signed_suppliers: 0
+  report: docs/market_intelligence/PQ_WATCHDOG_DISCOVERY_20261029_1335.json
+  db_mutation: false
+  resume_instruction: >-
+    EIS originals for 32616523441 and 32615700251 HTTP404; retry after
+    2026-10-30 13:40 Moscow, seek RTS originals. No DB insert without SHA,
+    fresh full backup and exact dedup. Continue independent PQ research.
