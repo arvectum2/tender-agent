@@ -1955,3 +1955,27 @@ manual_sibsteklo_primary_recheck_20261029:
     Do not infer purchased equipment, OEM, signed supplier, paid price or
     any new sale. Continue unique high-priority PQ signed 6-35 kV contracts,
     and do not create a second Watchdog or PR.
+
+manual_rosseti_sibir_design_contract_candidate_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  reference_date: '2026-10-29'
+  canonical_pr: 521
+  evidence_report: docs/market_intelligence/PQ_ROSSETI_SIBIR_32615852898_REGISTRY_RECHECK_20261029.json
+  candidate_notice: '32615852898'
+  secondary_reported_contract_number: '52460069527260006170000'
+  secondary_reported_contract_price_rub: '2787700.00'
+  scope: 10kv_line_pq_device_design_not_equipment_supply
+  source_grade: secondary_public_contract_index_only
+  original_signed_contract_retrieved: false
+  actual_db_new_rows_added: 0
+  database_unique_lots_last_verified: 108
+  resume_instruction: >-
+    First check exact PostgreSQL unique candidate 223fz:32615852898:lot1
+    against 108-last-verified research corpus. If not imported, obtain
+    original 223FZ EIS notice and primary contract card with source SHA,
+    supplier INN and signed price independently verified before promotion.
+    Contract index reports 2,787,700.00 RUB for entire design/PIР,
+    NOT PQ-equipment sales or paid revenue. Distinguish 10kV feeder from
+    unverified 6-35kV nominal compensator. Do not guess supplier names.
+    Preserve single PR, single Watchdog and existing research history.
