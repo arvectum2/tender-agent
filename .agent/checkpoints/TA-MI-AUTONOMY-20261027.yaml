@@ -1358,3 +1358,47 @@ watchdog_eis_7z_recovery_20261029_0236:
     signed-contract searches after cooldown and native GPB source discovery.
     Preserve dirty parallel chat worktree, unrelated current-task.yaml,
     original hourly Watchdog and all review/AM-4 gates.
+
+watchdog_b2b_20261029_0334:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  issue_run_start_comment_id: 6484510624
+  canonical_pr: 521
+  canonical_branch: feature/pq-etp-provenance-ledger-20261028
+  canonical_v29_rows_unchanged: 101
+  original_source_requests: 5
+  source_http_statuses: {http_200: 5}
+  new_sha_verified_first_party_html: 5
+  preexisting_original_sha_reverified: 1
+  new_first_party_notice_outside_v29: 1
+  new_first_party_lot_outside_v29: 1
+  new_deduplicated_project_count: 0
+  original_protocols_with_named_winner: 0
+  newly_verified_signed_suppliers: 0
+  newly_verified_executed_contract_prices: 0
+  new_calendar_searches: 0
+  newly_exhaustively_covered_months: 0
+  accepted_chatgpt_arc_review_packets: 2
+  accepted_exact_original_quotes: 16
+  verified_new_core_6_35kv_sales: 0
+  case_4535313: "Original B2B card: 1 UKRM 6kV 630kvar, 4 applications, organizer AIM Management; public initial price and signed supplier unknown."
+  case_4538400: "Original B2B card: cancelled 17.08.2026, 2 UKRM 10kV; explicitly replaced by 4565274 with 11 applications, organizer-hidden outcome. Two notices, one project."
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_B2B_4535313_4538400_20261029_0334.json
+  private_source_dir: watchdog-20261029-0334-new-b2b
+  source_ledger_sha256: d7aa9269766cc446df9cc405ea3de5b4781769e6f36403cf4618aa010808ba82
+  evidence_commit: 0e630956e71e9f5bea7c36c1e790678cee4708c6
+  last_tested_code_commit: 3cdbbc28ff345a5c3f4e798187df57b6a5af8ee4
+  test_results: "No code changes; 6 source SHA checks, 17 original text quote checks and 16 ChatGPT ARC review quotes accepted, two queue records reviewed; source JSON valid."
+  blockers: "B2B offers pages require registration and outcome hidden; no signed supplier, executed payment or public contract. No access bypass. 15 authorized Data Platform SDK files remain blocked."
+  next_three:
+    - "32515582393 6kV UKRM: signed supplier and executed price, retry no earlier than 2026-10-29 06:46 MSK."
+    - "32413764701 10kV UKRM: signed supplier and executed price, retry no earlier than 2026-10-29 06:46 MSK."
+    - "119199-TT / 135171-TT: source-native Metal-IT discovery of 6kV UKRM cases, only with verified exact URLs."
+  exact_b2b_request_retry_after_moscow: "2026-10-29 15:36 MSK unless original public content changes"
+  resume_instruction: >-
+    Continue only active PR #521 and canonical v29 101 rows; do not
+    count cancelled 4538400 as a new project or sale, nor claim winner
+    from public bid counts. Avoid re-requesting five B2B pages before
+    cooldown. Preserve private originals, SHA, unrelated dirty APR-07
+    worktree, one hourly Watchdog, review gates and no auto-merge.
