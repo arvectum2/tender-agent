@@ -1,0 +1,121 @@
+{
+  "schema_version": "pq-watchdog-source-gap/1",
+  "run_id": "20261029-2335",
+  "completed_moscow": "2026-10-29T23:41:03+03:00",
+  "issue_comment_id": 6507731489,
+  "pr": 521,
+  "parent_head": "af305f1705edf06bc044dde738cdeb63e0eba39d",
+  "status": "in_progress_review",
+  "gate": "pass",
+  "db_before_after": {
+    "unique_lots": 113,
+    "procedures": 102,
+    "eis223": 37
+  },
+  "db_mutation": false,
+  "new_unique_lots": 0,
+  "v29_unchanged": 101,
+  "client_report_unchanged": true,
+  "metrics": {
+    "distinct_http_urls": 9,
+    "official_http_urls": 7,
+    "secondary_http_urls": 2,
+    "new_sha_verified_first_party_search_snapshots": 2,
+    "new_case_specific_originals": 0,
+    "new_unique_tenders": 0,
+    "new_unique_projects": 0,
+    "new_winner_protocols": 0,
+    "new_signed_suppliers": 0,
+    "new_executed_sales": 0,
+    "new_month_source_coverage": 0
+  },
+  "official_captures": [
+    {
+      "case_id": "commercial:ГП630876:lot1",
+      "source_url": "https://etpgpb.ru/procedures/?search=%D0%93%D0%9F630876",
+      "http_status": 200,
+      "sha256": "5365549ceec49852f803bc52a8da60d8157dfa1bcc3f9d600d4420bf962c4d53",
+      "bytes": 894386,
+      "relative_file": "captures/commercial___630876_lot1/20261029T203928598558Z-022f124a-5365549ceec49852.bin"
+    },
+    {
+      "case_id": "commercial:ГП628666:lot1",
+      "source_url": "https://etpgpb.ru/procedures/?search=%D0%93%D0%9F628666",
+      "http_status": 200,
+      "sha256": "b1250289ec6880eb269eef703140c1917ef01e4726ad5724a69c4d6e9abe2da3",
+      "bytes": 894386,
+      "relative_file": "captures/commercial___628666_lot1/20261029T203929113012Z-db629157-b1250289ec6880eb.bin"
+    }
+  ],
+  "source_attempts": [
+    {
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?procedure=2103585%2F2",
+      "http": 200,
+      "tier": "first_party"
+    },
+    {
+      "url": "https://www.b2b-center.ru/app/market-next/vybor-ispolnitelia-na-postavku-montazh-i-pnr-ustanovok-kompensatsii/tender-4617521/",
+      "http": 200,
+      "tier": "first_party"
+    },
+    {
+      "url": "https://etp.metal-it.ru/trades/431640997/info",
+      "http": 200,
+      "tier": "first_party"
+    },
+    {
+      "url": "https://etp.metal-it.ru/trades/475802614/info",
+      "http": 200,
+      "tier": "first_party"
+    },
+    {
+      "url": "https://etpgpb.ru/procedures/",
+      "http": 200,
+      "tier": "first_party"
+    },
+    {
+      "url": "https://etpgpb.ru/procedures/?search=%D0%93%D0%9F630876",
+      "http": 200,
+      "tier": "first_party"
+    },
+    {
+      "url": "https://etpgpb.ru/procedures/?search=%D0%93%D0%9F628666",
+      "http": 200,
+      "tier": "first_party"
+    },
+    {
+      "url": "https://synapsenet.ru/zakupki/gazprombank/%D0%B3%D0%BF630876%231344734--leningradskaya-obl-postavka-oborudovaniya-s",
+      "http": 200,
+      "tier": "secondary"
+    },
+    {
+      "url": "https://energybase.ru/tender/019d85e1-073d-7222-8421-390b2fbaae67",
+      "http": 200,
+      "tier": "secondary"
+    }
+  ],
+  "findings": [
+    "GP630876 10kV Novatek Ust-Luga modernization already in v29; secondary listing has 10.5kV contactors, 150/300/450kvar reactors, 10.5kV capacitor; not a signed supplier or paid sale.",
+    "GP628666 earlier cancelled version may relate to GP630876, original linkage not established; no double count.",
+    "Official ETP GPB search returns generic SSR HTML without case ID for both exact queries; 2 original search snapshots SHA-verified but ZERO case-specific primary originals.",
+    "SIBUR 2103585/2 no public signed contract; Tander 4617521 3 bids/no winner; Metal-IT returns generic JS shells."
+  ],
+  "next_three": [
+    {
+      "case": "ГП630876",
+      "retry": "new first-party original or 2026-10-30 23:40 MSK",
+      "goal": "technical original, protocol, signed supplier; dedup ГП628666"
+    },
+    {
+      "case": "2103585/2",
+      "retry": "immediate independent signed-contract original",
+      "goal": "10kV UKRM supplier/price"
+    },
+    {
+      "case": "106044-ТТ",
+      "retry": "2026-10-30 09:00 MSK",
+      "goal": "3 STATCOM 6.3kV result"
+    }
+  ],
+  "caution": "Candidate lots are not national TAM, paid sales or signed contracts."
+}
