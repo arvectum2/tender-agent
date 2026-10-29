@@ -11,7 +11,7 @@ import hashlib
 import json
 import os
 import subprocess
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 DEFAULT_DIR = Path("/Users/master/ArvectumSafe/backups/data-platform")
@@ -36,7 +36,7 @@ def backup(output_dir: Path = DEFAULT_DIR) -> dict:
             fcntl.flock(lock_fd.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError as exc:
             raise RuntimeError("Another backup already running") from exc
-        stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
         name = f"data-platform-{DATABASE}-{stamp}-{os.getpid()}.dump"
         file = base / name
         tmp = base / f".{name}.partial"
@@ -49,8 +49,8 @@ def backup(output_dir: Path = DEFAULT_DIR) -> dict:
                 os.chmod(tmp, 0o600)
                 cmd = [
                     "docker", "exec", CONTAINER, "sh", "-c",
-                    'exec pg_dump -Fc -Z 6 -U "$POSTGRES_USER" '
-                    '-d arvectum_data --no-owner --no-acl',
+                    ('exec pg_dump -Fc -Z 6 -U "$POSTGRES_USER" '
+                     '-d arvectum_data --no-owner --no-acl'),
                 ]
                 result = subprocess.run(
                     cmd, stdout=stream, stderr=subprocess.PIPE,
@@ -85,7 +85,7 @@ def backup(output_dir: Path = DEFAULT_DIR) -> dict:
                 "sha256": sha.hexdigest(),
                 "format": "pg_dump_custom",
                 "pg_restore_list_verified": True,
-                "created_at_utc": datetime.now(timezone.utc).isoformat(),
+                "created_at_utc": datetime.now(UTC).isoformat(),
             }
             os.replace(tmp, file)
             payload = json.dumps(obj, ensure_ascii=False, indent=2) + "\n"
