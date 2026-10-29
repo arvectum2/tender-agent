@@ -1,0 +1,350 @@
+{
+  "schema_version": "pq-watchdog-sibur-first-party-20261029/1",
+  "moscow_completed": "2026-10-29T15:46:16.060262+03:00",
+  "issue_comment_id": 6496760746,
+  "canonical_pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "canonical_v29_rows_unchanged": 101,
+  "db_before": {
+    "unique_lots": 111,
+    "distinct_procedures": 100,
+    "eis_223_notices": 37
+  },
+  "db_after": {
+    "unique_lots": 112,
+    "distinct_procedures": 101,
+    "eis_223_notices": 37
+  },
+  "db_new_unique_lots": 1,
+  "db_new_unique_procedures": 1,
+  "db_new_10kv_title_verified_notices": 1,
+  "new_signed_suppliers": 0,
+  "new_winner_protocols": 0,
+  "new_executed_contract_prices": 0,
+  "new_verified_equipment_sales_rub": 0,
+  "new_month_source_coverage": 0,
+  "first_party_requests": {
+    "total": 28,
+    "http_200": 25,
+    "http_404": 1,
+    "tls_errors": 2,
+    "http_404_url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32615684088",
+    "source_requests_note": "Includes repeated read-only official SIBUR archive/form diagnostics, 14 immutable captures and Tander retender recheck; 2 Python TLS verification failures followed by strict-TLS curl HTTP 200. Not 28 distinct tenders.",
+    "new_official_search_queries": [
+      {
+        "provider": "SIBUR official archive",
+        "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%A3%D0%9A%D0%A0%D0%9C",
+        "first_page_rows": 12,
+        "window": "returned 2024-2026 records; not month-scoped",
+        "pagination_exhaustive": false
+      },
+      {
+        "provider": "SIBUR official archive",
+        "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%86%D0%B8%D0%B8+%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9+%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8",
+        "first_page_rows": 10,
+        "window": "2022-2026, only 2024-2026 candidates retained",
+        "pagination_exhaustive": false
+      }
+    ]
+  },
+  "fresh_primary_sha_verified_originals": 14,
+  "fresh_originals": [
+    {
+      "case_id": "commercial:4617521:lot1",
+      "source_url": "https://www.b2b-center.ru/app/market-next/vybor-ispolnitelia-na-postavku-montazh-i-pnr-ustanovok-kompensatsii/tender-4617521/",
+      "sha256": "3bfa1f5d38dd9a41c2c639181f725c0895f7294755723090dcf064b6946a46ba",
+      "bytes": 342983,
+      "content_type": "text/html; charset=utf-8",
+      "captured_utc": "2026-10-29T12:33:46.217669+00:00"
+    },
+    {
+      "case_id": "commercial:2129455-1:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?procedure=2129455%2F1",
+      "sha256": "4e5be98e589ed10c1394a85f81626c92e68034be76af429ee4a5a722c1bc6b99",
+      "bytes": 178414,
+      "content_type": "text/html; charset=UTF-8",
+      "captured_utc": "2026-10-29T12:38:44.813178+00:00"
+    },
+    {
+      "case_id": "commercial:2129455-1:lot1",
+      "source_url": "https://sibur.ru/upload/tmp/example/059/ertqwdz1aab5ypg6e9i2rweyrd0215y6.docx",
+      "sha256": "1bce6965399c46e0c8cf180b8fb817adb3e0b7bd8ff7e4c00f42fb77713684dd",
+      "bytes": 132657,
+      "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "captured_utc": "2026-10-29T12:38:44.957704+00:00"
+    },
+    {
+      "case_id": "commercial:sibur-search-ukrm:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "sha256": "88fd91565490096d6605b1c10795a8d92407596dc5d04e537c38e0f6d661a2a3",
+      "bytes": 241199,
+      "content_type": "text/html; charset=UTF-8",
+      "captured_utc": "2026-10-29T12:39:30.542450+00:00"
+    },
+    {
+      "case_id": "commercial:sibur-search-reactive:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%86%D0%B8%D0%B8+%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9+%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8",
+      "sha256": "2f8e09ad0e1f3a3332963c9f273a5cd34bfbcaef33f6787765ba70b3769f243e",
+      "bytes": 258460,
+      "content_type": "text/html; charset=UTF-8",
+      "captured_utc": "2026-10-29T12:39:31.325519+00:00"
+    },
+    {
+      "case_id": "commercial:2103585-1:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?procedure=2103585%2F1",
+      "sha256": "1cc34bce4a273dd596cd35e902c44ea6c498e65706307385640f854f3cc9a480",
+      "bytes": 180087,
+      "content_type": "text/html; charset=UTF-8",
+      "captured_utc": "2026-10-29T12:39:32.492173+00:00"
+    },
+    {
+      "case_id": "commercial:2103585-2:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?procedure=2103585%2F2",
+      "sha256": "5ac6859c2bb55915db66eae067d332a69342f9793977777e425ac530f8232f7b",
+      "bytes": 181920,
+      "content_type": "text/html; charset=UTF-8",
+      "captured_utc": "2026-10-29T12:39:33.615027+00:00"
+    },
+    {
+      "case_id": "commercial:2103585-2:lot1",
+      "source_url": "https://sibur.ru/upload/tmp/example/3f7/dl90o9w6p3wvgqy8ldhc36ik49cm5f0z.7z",
+      "sha256": "d78513d78cd67f6f4fe06a8b423b18f1a348ccf09e5040ef1efec017ee9a206e",
+      "bytes": 2875815,
+      "content_type": "application/x-7z-compressed",
+      "captured_utc": "2026-10-29T12:40:09.055393+00:00"
+    },
+    {
+      "case_id": "commercial:2103585-2:lot1",
+      "source_url": "https://sibur.ru/upload/tmp/example/f90/3hsr308boy6cevcpvrhnuqdq0e5fota9.7z",
+      "sha256": "f9b03374773634f3b7bdceb1cd134e6dde4e4a002b2cdda883873cf4597de7e2",
+      "bytes": 3454031,
+      "content_type": "application/x-7z-compressed",
+      "captured_utc": "2026-10-29T12:40:09.228279+00:00"
+    },
+    {
+      "case_id": "commercial:2135147-1:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?procedure=2135147%2F1",
+      "sha256": "90dc9d9088c63afe8cd2554475be2bce3e940d889c659659e982964df0040d68",
+      "bytes": 178519,
+      "content_type": "text/html; charset=UTF-8",
+      "captured_utc": "2026-10-29T12:39:34.775001+00:00"
+    },
+    {
+      "case_id": "commercial:2128160-1:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?procedure=2128160%2F1",
+      "sha256": "c9f834bfa96491a8568f2c7c2aaecf9cd79fb76e35d69636c0e1eecb0bf0ffdf",
+      "bytes": 198671,
+      "content_type": "text/html; charset=UTF-8",
+      "captured_utc": "2026-10-29T12:39:35.923392+00:00"
+    },
+    {
+      "case_id": "commercial:2128160-1:lot1",
+      "source_url": "https://sibur.ru/upload/tmp/example/87d/ec8dv36iihtwpj1kbucsfm0k4klksb73.docx",
+      "sha256": "7fe5e993fe157e6d854631b42bb4c8663ab7a224b4138bc314c3f5d5778448b8",
+      "bytes": 43286,
+      "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "captured_utc": "2026-10-29T12:44:56.188331+00:00"
+    },
+    {
+      "case_id": "commercial:2128160-1:lot1",
+      "source_url": "https://sibur.ru/upload/tmp/example/500/d7erk0ekrh2wx8ikafzmblaoq6n9ea1r.pdf",
+      "sha256": "a9422ecaea0532bf5bc92b0e662ed3a9a4d70aef6bb6207549a89580f69cc81e",
+      "bytes": 1773483,
+      "content_type": "application/pdf",
+      "captured_utc": "2026-10-29T12:44:56.370527+00:00"
+    },
+    {
+      "case_id": "commercial:2128160-1:lot1",
+      "source_url": "https://sibur.ru/upload/tmp/example/f0e/p2z6c5kpria8vpxoltdzphaefmltf292.pdf",
+      "sha256": "37fdabbf754dd8d29f2111fbf6f9e2dd9d0b9fd0ce67aba130ff0e3fe0c88715",
+      "bytes": 1761089,
+      "content_type": "application/pdf",
+      "captured_utc": "2026-10-29T12:44:56.555804+00:00"
+    }
+  ],
+  "new_first_party_discovered_candidate_procedures_2024_2026": 16,
+  "candidate_procedures_by_year": {
+    "2024": 5,
+    "2025": 8,
+    "2026": 3
+  },
+  "cancelled_candidate_procedures": 5,
+  "candidate_procedures": [
+    {
+      "procedure_id": "2082669/2",
+      "year": 2024,
+      "title": "УКРМ (НКНХ)",
+      "status": "cancelled"
+    },
+    {
+      "procedure_id": "2084468/1",
+      "year": 2024,
+      "title": "УКРМ (НКНХ)",
+      "status": "cancelled"
+    },
+    {
+      "procedure_id": "2085519/1",
+      "year": 2024,
+      "title": "УКРМ (НКНХ) ОТП",
+      "status": "bids_closed_no_public_award"
+    },
+    {
+      "procedure_id": "2086244/1",
+      "year": 2024,
+      "title": "ЗСНХ. Закупка УКРМ",
+      "status": "cancelled"
+    },
+    {
+      "procedure_id": "2087351/1",
+      "year": 2024,
+      "title": "УКРМ для НКНХ (ЦИ)",
+      "status": "bids_closed_no_public_award"
+    },
+    {
+      "procedure_id": "2100815/1",
+      "year": 2025,
+      "title": "УКРМ (Сибур-Кстово)",
+      "status": "bids_closed_no_public_award"
+    },
+    {
+      "procedure_id": "2103585/1",
+      "year": 2025,
+      "title": "Установка компенсации реактивной мощности 10 кВ для ДГП-2 по PDH2.15383-4015-7.7.6-RFQ-0003",
+      "status": "bids_closed_no_public_award"
+    },
+    {
+      "procedure_id": "2103585/2",
+      "year": 2025,
+      "title": "Установка компенсации реактивной мощности 10 кВ для ДГП-2 по PDH2.15383-4015-7.7.6-RFQ-0003",
+      "status": "bids_closed_no_public_award"
+    },
+    {
+      "procedure_id": "2105852/1",
+      "year": 2025,
+      "title": "УКРМ (НКНХ) Проект: ЭП600",
+      "status": "cancelled"
+    },
+    {
+      "procedure_id": "2107092/1",
+      "year": 2025,
+      "title": "закупка РУВН и УКРМ по ОЛ. Один проект.",
+      "status": "bids_closed_no_public_award"
+    },
+    {
+      "procedure_id": "2107277/1",
+      "year": 2025,
+      "title": "УКРМ (НКНХ) Бюджетная оценка",
+      "status": "bids_closed_no_public_award"
+    },
+    {
+      "procedure_id": "2113571/1",
+      "year": 2025,
+      "title": "УКРМ для НКНХ Срочаня потребность",
+      "status": "bids_closed_no_public_award"
+    },
+    {
+      "procedure_id": "2115781/1",
+      "year": 2025,
+      "title": "СИБУР-Нефтехим (отп) УКРМ",
+      "status": "bids_closed_no_public_award"
+    },
+    {
+      "procedure_id": "2128160/1",
+      "year": 2026,
+      "title": "ПИР . Модернизация батарей статической компенсации реактивной мощности РП-115, РП-116.",
+      "status": "bids_closed_no_public_award"
+    },
+    {
+      "procedure_id": "2129455/1",
+      "year": 2026,
+      "title": "НКНХ(1002367960-отп)УКРМ",
+      "status": "bids_closed_no_public_award"
+    },
+    {
+      "procedure_id": "2135147/1",
+      "year": 2026,
+      "title": "Установки компенсации реактивной мощности для ЗСНХ.",
+      "status": "cancelled"
+    }
+  ],
+  "dedup_cautions": [
+    "2103585/1 and 2103585/2 share exact project reference PDH2.15383-4015-7.7.6-RFQ-0003; only /2 imported; do not count two distinct projects.",
+    "Other NKNH UKRM procurement IDs may refer to same underlying project; project-level dedup unresolved.",
+    "16 official source candidate procedures are not 16 confirmed equipment deliveries or 16 national-market sales."
+  ],
+  "verified_10kv_case": {
+    "canonical_id": "commercial:2103585-2:lot1",
+    "procedure_id": "2103585/2",
+    "buyer": "ООО «ЗапСибНефтехим»",
+    "technology": "reactive_power_compensation",
+    "nominal_voltage_kv": 10,
+    "project_reference": "PDH2.15383-4015-7.7.6-RFQ-0003",
+    "source_scope": "official title verified; supply vs installation details pending archive review",
+    "technical_archives": "two official 7z originals SHA verified, contents listed; generic commercial/contract forms, no signed contract or award",
+    "db_receipt_private": "/Users/master/ArvectumSafe/runtime/market-intelligence/pq-agent-pilot-live/pq-sibur-2103585-2-20261029T1244.receipt.json",
+    "backup_sha256": "caa5198d88cdc914171f4fcdb1930f95ed33946e0f5fdcf649df432cbc0821c6",
+    "source_manifest": "data/market_intelligence/power_quality/sibur_2103585_2_primary_20261029.json",
+    "signed_supplier_verified": false,
+    "executed_price_verified": false
+  },
+  "verified_6kv_design_case": {
+    "canonical_id": "commercial:2128160-1:lot1",
+    "buyer": "ООО «НПП «Нефтехимия»",
+    "scope": "engineering_design_only",
+    "equipment_new_supply_verified": false,
+    "nominal_voltage_kv": 6,
+    "quantity_requested_in_design": 3,
+    "first_party_docx_sha256": "7fe5e993fe157e6d854631b42bb4c8663ab7a224b4138bc314c3f5d5778448b8",
+    "source_quotes": [
+      "регулируемых БСК  (3 шт.) .",
+      "Подключение вновь монтируемых БСК 6кВ выполнить от резервных ячеек РП-115, РП-116."
+    ],
+    "source_note": "Original technical brief asks for design of three regulated BSK 6kV; two schematic PDFs have no native text and remain unreviewed. Not an equipment sale.",
+    "db_import": "pending source-bound design adapter; no silent insert"
+  },
+  "tander_recheck": {
+    "canonical_id": "commercial:4617521:lot1",
+    "new_source_sha256": "3bfa1f5d38dd9a41c2c639181f725c0895f7294755723090dcf064b6946a46ba",
+    "observation": "Original card displays automatic 15-minute extension to 29.10.2026 14:49 MSK, applications tab count 2; page also contains stale countdown; no public award/signed supplier/voltage."
+  },
+  "other_first_party_findings": [
+    {
+      "procedure_id": "2129455/1",
+      "status": "bids_closed",
+      "voltage": "unknown",
+      "attachment": "generic unsigned supply-contract template, not procurement technical specification"
+    },
+    {
+      "procedure_id": "2135147/1",
+      "status": "cancelled",
+      "voltage": "unknown",
+      "not_equipment_sale": true
+    }
+  ],
+  "tests": "9 focused tests passed; Ruff passed; diff check passed",
+  "code_commit_tested": "8fb0683e8d2db1347ef554033426400ddc36b4ba",
+  "db_mutation": "append_only_one_10kv_notice_with_fresh_verified_full_backup_and_serializable_readback",
+  "next_targets": [
+    {
+      "case": "commercial:2128160-1:lot1",
+      "goal": "review 6kV BSK design, official outcomes and source-bound separate design import",
+      "retry_eligible": "immediately; primary DOCX available"
+    },
+    {
+      "case": "commercial:2103585-2:lot1",
+      "goal": "review technical 7z contents, supplier/outcome and separate supply vs installation",
+      "retry_eligible": "immediately; immutable 7z originals available"
+    },
+    {
+      "case": "commercial:4617521:lot1",
+      "goal": "check final retender outcome after automatic extension; obtain voltage",
+      "retry_eligible": "2026-10-29 16:00 MSK or organizer new event"
+    }
+  ],
+  "blocked": [
+    "EIS 32615684088 official docs HTTP 404; no absence-of-market inference.",
+    "No publicly proven signed supplier, award protocol or executed price in new SIBUR cases.",
+    "No Data Platform SDK unauthorized calls or OCR promotions."
+  ],
+  "safety": "single PR #521, no merge, no bids, no unrelated production changes; internal APFS only"
+}

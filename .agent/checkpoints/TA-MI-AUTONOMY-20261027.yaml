@@ -2173,3 +2173,50 @@ mi_watchdog_commercial_delta_20261029_1433:
   backup_sha256: "4abe39451decbb905698c9048b7989a7da306e4a0ab5bfa42f7daf0d5c70fb29"
   db_mutation: "append_only_two_source_verified_unreviewed_noncore"
   resume_instruction: "Continue first-party PQ 6-35kV evidence; recheck Tander retender after 15:15 Moscow, BSK 32615684088 original after retry, STATCOM 106044-TT; preserve 111 DB lots, 100 tokens, 37 EIS 223 notices. No 0.4kV promotion."
+
+mi_watchdog_sibur_first_party_20261029_1545:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6496760746
+  source_report: docs/market_intelligence/PQ_WATCHDOG_SIBUR_FIRST_PARTY_20261029_1545.json
+  source_report_sha256: bf3c276512a7e24745a04a85117e10c793e35cf092dd296a01ffd08355a6eab4
+  internal_apfs_gate_before_db: pass
+  internal_apfs_gate_after_db: pass
+  postgres_unique_lots_before: 111
+  postgres_unique_lots_after: 112
+  postgres_distinct_procedures_before: 100
+  postgres_distinct_procedures_after: 101
+  postgres_eis_223_notices: 37
+  new_unique_lots: 1
+  new_10kv_voltage_title_verified_notices: 1
+  new_signed_suppliers: 0
+  new_executed_equipment_sales_rub: 0
+  first_party_requests: 28
+  first_party_http_200: 25
+  first_party_http_404: 1
+  first_party_tls_errors: 2
+  new_sha_verified_originals: 14
+  sibur_official_discovery_procedure_tokens_2024_2026: 16
+  sibur_cancelled_procedures: 5
+  sibur_10kv_case: commercial:2103585-2:lot1
+  sibur_related_predecessor: 2103585/1
+  sibur_project_reference: PDH2.15383-4015-7.7.6-RFQ-0003
+  sibur_6kv_design_case: commercial:2128160-1:lot1
+  sibur_6kv_design_bsk_quantity: 3
+  fresh_full_backup_sha256: caa5198d88cdc914171f4fcdb1930f95ed33946e0f5fdcf649df432cbc0821c6
+  db_receipt_private: /Users/master/ArvectumSafe/runtime/market-intelligence/pq-agent-pilot-live/pq-sibur-2103585-2-20261029T1244.receipt.json
+  last_tested_code_commit: 8fb0683e8d2db1347ef554033426400ddc36b4ba
+  focused_tests: 9_passed
+  ruff: pass
+  db_mutation: append_only_one_sha_verified_10kv_unreviewed_notice
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Continue SIBUR 2024-2026 first-party case review, deduplicate related
+    NKNH and 2103585/1-/2 project revisions, inspect captured technical
+    archives without promoting unsigned contracts to sales. The 6kV BSK
+    2128160/1 is engineering design for three regulated BSK, not equipment
+    supply. Recheck Tander 4617521 after 16:00 MSK. Before another DB
+    append run fresh internal runtime gate and NEW full pg_dump backup;
+    baseline now 112 unique lots / 101 procedure tokens / 37 EIS223 notices.
+    Preserve 101-row v29, single PR #521 and this one issue comment.
