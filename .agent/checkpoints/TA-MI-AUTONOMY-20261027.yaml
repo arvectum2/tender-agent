@@ -1627,3 +1627,70 @@ watchdog_event_log_and_search_20261029_0729:
     Continue PR #521, v29 101 rows unchanged. Do not repeat 16 exact month-law-query
     first-page searches before 2026-10-29 19:38 MSK. Preserve original SHA,
     unrelated worktrees, current-task.yaml and the one hourly Watchdog.
+
+watchdog_b2b_primary_20261029_0829:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  canonical_pr: 521
+  canonical_branch: feature/pq-etp-provenance-ledger-20261028
+  run_start_issue_comment_id: 6488810725
+  canonical_v29_rows_unchanged: 101
+  source_requests: 24
+  source_http_statuses: {http_200: 16, http_404: 8}
+  newly_sha_verified_first_party_html_relevant: 15
+  newly_sha_verified_first_party_html_total: 16
+  newly_verified_existing_v29_b2b_case_ids: [4256170, 4561228, 4561243, 4526968, 4302914]
+  new_month_law_query_attempts: 6
+  newly_successful_month_source_first_pages: 0
+  exhaustive_months: 0
+  new_unique_notices_promoted: 0
+  new_unique_projects_promoted: 0
+  new_original_protocols_with_named_winner: 0
+  new_signed_suppliers_verified: 0
+  new_executed_payment_prices_verified: 0
+  new_equipment_only_signed_sales: 0
+  chatgpt_arc_review_cases: 5
+  exact_original_quotes_accepted: 20
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_B2B_PRIMARY_20261029_0829.json
+  source_ledger_sha256: "6db2634c2e9a557798712888973ed393157c46bf6adc5b4812fb8208780e342d"
+  private_review_packet: watchdog-20261029-0829-primary/chatgpt-arc-review.json
+  private_review_packet_sha256: "fde26d4160d700bbb8ca7a2318569aec3e62fbbdcb7758f61d5aa34e85ac0565"
+  evidence_commit: 83a9e9079294a8f8a2354a507c4122596f97796d
+  last_tested_code_commit: 3cdbbc28ff345a5c3f4e798187df57b6a5af8ee4
+  test_results: >-
+    No code changes; all 24 available source-body receipts SHA checked,
+    20 exact normalized first-party HTML quotes checked against SHA-bound pages;
+    JSON parsed, YAML syntax parsed, git diff check; no redundant pytest.
+  findings: >-
+    Five preexisting v29 commercial leads now have fresh first-party B2B cards:
+    4256170 PROGAZSTROY UKRM 10kV (title 1600+50 kVA), one bid;
+    4561228 MGBZH UK1/UK2 two 10kV AUKRM, four bids and hidden outcome;
+    4561243 MGBZH UK3/UK4 two separate 10kV AUKRM, six bids and hidden outcome;
+    4526968 Rzhev RZK four UKRM, six bids, voltage unknown;
+    4302914 Lebedinsky GOK service of existing RU-DRIVE SVG 6.3kV, one bid,
+    hidden outcome, not equipment supply. No verified winner or signed sale.
+  dedup_caution: >-
+    4561228 and existing 4565274 both reference UK1/UK2 at MGBZH; exact
+    project identity not yet independently established. 4561243 is UK3/UK4
+    and must not be collapsed into the same equipment lot. Existing 4538400
+    was cancelled with explicit successor 4565274. Keep notice, lot,
+    equipment set, project and contract separate.
+  blockers: >-
+    Six previously unattempted 223-FZ month-query URLs returned identical
+    146-byte HTTP404 (no market-absence inference). B2B participant names,
+    bids, change history and clarifications are login-gated; no bypass.
+    1190793 resolved to unrelated 2019 dosimeter tender; 4559984 and
+    4304120 official B2B numeric routes returned HTTP404. No new signed
+    supplier or executed payment. 15 Data Platform files remain SDK-blocked.
+  next_three:
+    - '32616433248 signed contractor after negotiations: retry 2026-10-29 18:48 MSK or new official event.'
+    - '32515582393 UKRM 6kV signed supplier and executed price: retry 2026-10-30 06:46 MSK or new official event.'
+    - '106044-TT Metal-IT STATCOM award: exact new official URL now; generic root after 2026-10-30 06:42 MSK.'
+  resume_instruction: >-
+    Continue only existing PR #521, v29 101 rows unchanged. Do not repeat
+    six failed 223-FZ month-law-query combinations before 2026-10-29 20:30
+    MSK unless official EIS service recovery is observed. Seek fresh original
+    protocols, supplier names and executed prices, and verify possible
+    4561228/4565274 project link without speculative merge. Preserve dirty
+    canonical worktree and unrelated tasks; no merge, production or bids.
