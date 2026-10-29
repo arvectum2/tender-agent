@@ -2495,3 +2495,36 @@ mi_watchdog_besk_capacitors_20261030_0135:
     32616435269 returned HTTP404. Next source-native technical specs for
     32616474682/32616435269 and Metal-IT 106044-TT after 09:00 MSK.
     Database 113/102/37; v29 101. No HTML report regeneration.
+
+mi_watchdog_named_bids_20261030_0233:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6511026396
+  parent_head: 0b5fa55480efe6189aa859fc81c7bab964878565
+  report: docs/market_intelligence/PQ_WATCHDOG_NAMED_BIDS_20261030_0233.json
+  report_sha256: b8adafdaa038727706e608c231f44961a299d9dac0935c7629c1e7e082582bf0
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 113
+  postgres_unique_lots_after: 113
+  postgres_distinct_procedures: 102
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_source_sha_verified_captures: 2
+  new_named_bidder_protocols: 1
+  new_named_bidders: 4
+  new_signed_suppliers: 0
+  new_executed_equipment_sales: 0
+  new_month_source_coverage: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Original B2B 4642507 commission envelope-opening protocol SHA
+    54a3d55c59d514332d6ca23d82962011496b18f938056e7fb1db8db4b7b0b9d3
+    names four bidders and exact offers ex VAT, but no winner/signed supplier;
+    KEP voltage unknown, do not import. 4617521 offers URL HTTP200
+    generic shell only. Metal-IT 106044-TT retry after 2026-10-30 09:00 MSK;
+    Roseltorg 26-1174 original technical file; BESK award after 2026-12-03.
+    PG 113/102/37; v29=101. Re-run acceptance and full verified backup
+    before any new append. Keep client HTML unchanged absent verified growth.
