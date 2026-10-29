@@ -2006,3 +2006,54 @@ manual_rosseti_32616435269_scope_gate_20261029:
     confirm PostgreSQL canonical notice:lot absent, backup database, use
     atomic SHA-bound import and readback. Also finish SIBSTEKLO 306-644
     dedup and Rosseti Sibir 32615852898 original supplier checking.
+
+manual_tatneft_4469608_lot7_postgres_import_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  date_moscow: '2026-10-29'
+  canonical_pr: 521
+  target_db: arvectum_data
+  target_collection: arvectum-market-pq-6-35kv
+  unique_lots_before: 108
+  unique_lots_after: 109
+  new_procedure_tokens_added: 1
+  unique_procedure_tokens_expected: 98
+  added_eis_223_lot: '223fz:32616065155:lot7'
+  b2b_parent_request: '4469608'
+  b2b_parent_positions_count: 11
+  actual_imported_capacitor_lots: 1
+  source_main_sha256: 792a2964e9e1e50cb57a800dcd1f1ba3546544fd340ae74f9f344beb7deb3504
+  source_positions_sha256: 161f6ede4a0af57777df7db90ffc26d92394af3934c5d5b40f3b45b68c989be0
+  first_party_source_grade: original_B2B_223FZ_notice_and_lot_positions
+  pq_lot7_nmck_rub_with_vat22: '3172000.00'
+  parent_nmc_not_pq_rub_with_vat22: '199598002.40'
+  nominal_pq_capacitor_voltage_6_35kv_verified: false
+  source_technical_attachment_sha_verified: false
+  winner_verified: false
+  signed_supplier_verified: false
+  paid_sales_verified_rub: 0
+  db_import_status: completed
+  db_readback: 109_resources_109_unique_ids_109_records_and_lot7_staged_unreviewed
+  full_backup_sha256: eea3a8308df087646d8ff452d233806e086700accca2f929d8b3609d37eb3ee7
+  source_manifest_sha256: ab652ae09314de71110a24320316c6d02d7f1f46f72dc6c1141c728c524e9995
+  postgres_readback_record_hash: d03976c55ad0211d40d7d0f9a0eb66089f738886580dbdffa6e13567ba48f419
+  evidence_report: docs/market_intelligence/PQ_TATNEFT_4469608_LOT7_DB_IMPORT_20261029.json
+  source_manifest: data/market_intelligence/power_quality/tatneft_32616065155_lot7_primary_20261029.json
+  importer: scripts/market_intelligence/append_tatneft_lot7.py
+  importer_local_commit_pending: true
+  local_command_issue: >-
+    ARC remote commands intermittently return SIGKILL while repository changes
+    were pending; primary DB write was fully committed and independently
+    read back before issue. Evidence report and checkpoint persisted via GitHub.
+  resume_instruction: >-
+    Immediately inspect isolated worktree
+    /Volumes/ArvectumSSD/Arvectum/worktrees/ta-mi-single-lane-20261029 for
+    uncommitted Tatneft importer, manifest and tests. Postgres ALREADY includes
+    the new lot 223fz:32616065155:lot7; DO NOT REIMPORT OR CREATE DUPLICATES.
+    Fix/check tests/test_pq_tatneft_lot7.py (first test failed when source
+    mocked), run Ruff and guarded tests, commit importer and manifest onto
+    latest remote PR #521 head with rebase preserving checkpoint/watchdog.
+    Confirm PG 109 unique lots/98 procedures and backup/receipt hash.
+    Then obtain official detailed TТУ and exact rated PQ capacitor voltage;
+    do not count 3,172,000 RUB ceiling as executed equipment sales and
+    don't count 199,598,002 RUB parent NMC as PQ market.
