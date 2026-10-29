@@ -89,3 +89,12 @@ def test_strict_curl_transport_accepts_only_verified_exact_source(monkeypatch):
     raw, kind = capture.fetch_curl_direct(url)
     assert raw == b'original-doc' * 12
     assert kind == 'application/msword'
+
+
+def test_sibur_official_archive_and_document_allowed_but_lookalikes_rejected():
+    assert capture.source_url('https://sibur.ru/ru/procurement/buy/archive/?procedure=2129455%2F1')
+    assert capture.source_url('https://sibur.ru/upload/tmp/example/059/spec.docx')
+    with pytest.raises(ValueError, match='allowlisted'):
+        capture.source_url('https://sibur.ru.evil.example/ru/procurement/buy/archive/')
+    with pytest.raises(ValueError, match='allowlisted'):
+        capture.source_url('http://sibur.ru/ru/procurement/buy/archive/')

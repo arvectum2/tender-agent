@@ -23,6 +23,7 @@ from scripts.market_intelligence.append_pq_delta_20261029 import ROOT
 
 ALLOWED_HOSTS = frozenset({
     "www.b2b-center.ru", "bidzaar.com", "zakupki.gov.ru",
+    "sibur.ru", "www.sibur.ru",
     "etpgpb.ru", "tender.lot-online.ru", "zakaz.etp-region.ru",
     "www.tektorg.ru", "www.roseltorg.ru", "com.roseltorg.ru",
 })
