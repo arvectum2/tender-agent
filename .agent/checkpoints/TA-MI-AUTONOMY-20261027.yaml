@@ -2064,3 +2064,44 @@ manual_tatneft_4469608_lot7_postgres_import_20261029:
     Then obtain official detailed TТУ and exact rated PQ capacitor voltage;
     do not count 3,172,000 RUB ceiling as executed equipment sales and
     don't count 199,598,002 RUB parent NMC as PQ market.
+
+mi_internal_apfs_operational_acceptance_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  accepted_date_moscow: '2026-10-29'
+  canonical_pr: 521
+  stable_checkout: /Users/master/ArvectumSafe/worktrees/tender-agent-mi
+  stable_python: /Users/master/ArvectumSafe/.venvs/tender-agent-mi/bin/python
+  stable_originals: /Users/master/ArvectumSafe/runtime/market-intelligence/pq-agent-pilot-live
+  stable_backups: /Users/master/ArvectumSafe/backups/data-platform
+  readback_unique_lots: 109
+  readback_distinct_procedure_tokens: 98
+  readback_eis_223_distinct_notices: 37
+  db_actual_new_rows_this_io_repair: 0
+  backup_size_bytes: 37487137
+  backup_sha256: b97ea3900b7a875ab4a3f214b24aa19ffd26c2a95fec438e7d951f6364644502
+  backup_pg_restore_list_verified: true
+  original_capture_sha256: 162fdca84e601e93a4038ff08bac29f28147ebbb7d11be54d6777d94a3c8dbb4
+  immutable_capture_no_overwrite: true
+  internal_write_and_readback_preflight: pass
+  research_writer_focused_regressions: pass
+  watchdog_id: 6aa7ef95fc9c8191beaa71fea17dc372
+  watchdog_enabled: true
+  external_ssd_active_io_disabled: true
+  external_ssd_original_files_preserved: true
+  evidence: docs/market_intelligence/MI_INTERNAL_APFS_ACCEPTANCE_20261029.json
+  resume_instruction: >-
+    Work in /Users/master/ArvectumSafe/worktrees/tender-agent-mi.
+    Before new DB inserts run python -m scripts.market_intelligence.verify_internal_runtime
+    and create a NEW SHA-verified full custom PostgreSQL backup via
+    python -m scripts.market_intelligence.backup_pq_postgres.
+    Store first-party evidence under immutable internal captures via
+    scripts.market_intelligence.capture_primary_source, preserving raw SHA.
+    Read DB count before/after; last validated 109 unique lots, 98 tokens,
+    37 distinct EIS 223-FZ notices. Do not duplicate Tatneft 4469608 lot7.
+    Continue original primary 6-35kV source research, strict technology-voltage
+    qualification and signed supplier/contract original verification.
+    If ARC direct run_command times out, use ARC macbook-air device_execute
+    SSH Mac-mini-master.local with internal cwd. External ArvectumSSD
+    remains unreliable for directory enumeration and should not host active
+    MI work until macOS TCC/volume diagnostics are resolved with approved UI.
