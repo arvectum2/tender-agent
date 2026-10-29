@@ -1897,3 +1897,30 @@ manual_rusagro_harmonic_filter_research_20261029:
     Append only new source-verified canonical procurement rows after fresh
     full SHA-verified PostgreSQL backup, atomic guard and readback.
     Keep single PR #521, single Watchdog, no unrelated worktree edits.
+
+watchdog_20261029_1034:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  date_moscow: "2026-10-29 10:34:11 +0300"
+  issue_comment_id: 6490798753
+  canonical_pr: 521
+  postgres_unique_lots_before: 108
+  postgres_unique_lots_after: 108
+  postgres_distinct_procedures: 97
+  postgres_eis_223_notices: 36
+  new_unique_lots: 0
+  new_unique_projects: 0
+  source_http_requests: 4
+  source_http_200: 2
+  source_http_404: 2
+  new_first_party_unique_sha_originals: 1
+  original_protocol_named_winners: 0
+  signed_suppliers_verified: 0
+  executed_price_verified: 0
+  db_mutation: false
+  source_v29_rows_unchanged: 101
+  evidence_report: docs/market_intelligence/PQ_WATCHDOG_B2B_4643332_20261029_1034.json
+  primary_original_sha256: f846a206604ec18e84d6ea12c309331616fc5c9374aeebd04e5689efcf584461
+  result: "B2B 4643332, 10.5kV capacitor, official no-bid outcome (0 applications), no contract or equipment sale."
+  blockers: "EIS 32616435269 HTTP404; B2B 4590398 HTTP404; new 1258722 stage-2 only secondary and unverified voltage."
+  next_action: "Seek primary signed contracts and verified new unique 6-35kV lots; retry 106044-TT and 32515582393 after 2026-10-30 06:42/06:46 MSK."
