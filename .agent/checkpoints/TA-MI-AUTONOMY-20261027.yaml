@@ -1694,3 +1694,47 @@ watchdog_b2b_primary_20261029_0829:
     protocols, supplier names and executed prices, and verify possible
     4561228/4565274 project link without speculative merge. Preserve dirty
     canonical worktree and unrelated tasks; no merge, production or bids.
+
+manual_db_growth_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  completed_at_utc: '2026-10-29T05:42:58Z'
+  source_commit: 'b723ab227ebf6e9bc6525f6dcea70501d1808f62'
+  database: arvectum_data
+  collection: arvectum-market-pq-6-35kv
+  baseline_unique_lots: 104
+  after_unique_lots: 106
+  after_distinct_canonical_procedure_tokens: 95
+  after_unique_numeric_eis_223_notices: 36
+  added_unique_lots: 2
+  inserted:
+    - '223fz:32413764701:lot1 — 10kV 150kvar container UKRM equipment tender'
+    - '223fz:32413195287:lot1 — 6.3kV existing UKRM maintenance/repair, not new equipment'
+  explicitly_excluded: '32413631624 — AUKRM 0.4 kV, outside core 6-35 kV'
+  original_sha_checked: true
+  new_signed_supplier_count: 0
+  new_verified_equipment_sale_rub: 0
+  actual_database_write: true
+  database_transaction_atomic: true
+  postwrite_readback: '106 dp_resources, 106 unique external_id, 106 matching dp_records, new rows staged_unreviewed'
+  backup_dump_sha256: 03cf1bc983c9ff4e9c69149d8818f9413489731f13dc7723fb1ee68923e33769
+  source_manifest: data/market_intelligence/power_quality/source_bound_delta_20261029.v1.json
+  database_receipt: docs/market_intelligence/PQ_POSTGRES_CORPUS_GROWTH_20261029.json
+  source_limitations: >-
+    104/106 count distinct canonical lot cards, not verified won procurement or
+    equipment revenue. No inferred signed supplier or paid amount. Full market
+    completeness remains unknown; v29 immutable source baseline still 101,
+    production PostgreSQL has incrementally enriched/added rows. Historic
+    223-FZ registry price differs from committee offer; maintain separate fields.
+  resume_instruction: >-
+    Continue unique 223-FZ and commercial-source discovery using one PR #521.
+    First query actual PostgreSQL unique count and avoid re-importing both
+    32413764701 and 32413195287. Every source-verified new notice/lot should
+    undergo original SHA validation, precise scope and dedup; append only to the
+    tender-agent owned PQ collection after fresh pg_dump backup, atomic
+    identity guards and DB readback (explicit owner authorization 2026-10-29).
+    Report new unique procurement and distinct procedure counts before tests;
+    preserve source v29 101 and don't promote unreviewed bids into paid sales.
+    Keep existing hourly Watchdog and canonical checkpoint; do not touch
+    unrelated collections or autoclose PR #521.
