@@ -95,8 +95,11 @@ def backup(output_dir: Path = DEFAULT_DIR) -> dict:
                 stream.flush()
                 os.fsync(stream.fileno())
             os.replace(temp_manifest, manifest)
-            with os.open(base, os.O_RDONLY) as dir_fd:
+            dir_fd = os.open(base, os.O_RDONLY)
+            try:
                 os.fsync(dir_fd)
+            finally:
+                os.close(dir_fd)
             return {"manifest_path": str(manifest), **obj}
         finally:
             if tmp.exists():
