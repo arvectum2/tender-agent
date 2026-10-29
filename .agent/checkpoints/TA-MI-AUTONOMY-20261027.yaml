@@ -1979,3 +1979,30 @@ manual_rosseti_sibir_design_contract_candidate_20261029:
     NOT PQ-equipment sales or paid revenue. Distinguish 10kV feeder from
     unverified 6-35kV nominal compensator. Do not guess supplier names.
     Preserve single PR, single Watchdog and existing research history.
+
+manual_rosseti_32616435269_scope_gate_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  evidence: docs/market_intelligence/PQ_ROSSETI_32616435269_452M_SCOPE_GATE_20261029.json
+  notice_number: '32616435269'
+  buyer: PAO_Rosseti_Sibir
+  reported_total_nmck_rub: '452016000.01'
+  original_nominal_bsk_voltage_kv_verified: false
+  secondary_notice_contains_panel_le_1kv: true
+  potential_target: PQ_static_capacitor_banks
+  original_archive_sha_verified: false
+  signed_winner_supplier_verified: false
+  added_pg_lots_this_run: 0
+  last_pg_unique_lots_verified: 108
+  priority: high_for_primary_source_scope_before_any_market_volume
+  resume_instruction: >-
+    Find original 26-1174 static capacitor battery 7z documentation directly
+    from official EIS/EEPT for notice 32616435269, SHA-verify all extracted
+    technical specs and establish nominal voltage of the actual capacitor
+    installation and itemized prices. The 452016000.01 RUB figure is the
+    entire 223-FZ NMCK, not signed sales or verified 6-35 kV equipment.
+    One public item is low-voltage switchgear under 1kV; do not silently
+    classify the entire tender as medium-voltage. Before any corpus append,
+    confirm PostgreSQL canonical notice:lot absent, backup database, use
+    atomic SHA-bound import and readback. Also finish SIBSTEKLO 306-644
+    dedup and Rosseti Sibir 32615852898 original supplier checking.
