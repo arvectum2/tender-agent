@@ -2351,3 +2351,33 @@ mi_watchdog_primary_triage_20261029_1930:
     Metal-IT 106044-TT retry after 2026-10-30 09:00 MSK.
     DB 113 unique lots / 102 procedures / 37 EIS223 notices; v29=101.
     Re-run acceptance and new verified full backup before any new append.
+
+
+mi_watchdog_primary_acquisition_20261029_2034:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  issue_comment_id: 6503785009
+  canonical_pr: 521
+  parent_head: e47e71ac65c309565e3783b26cac727abfd94054
+  report: docs/market_intelligence/PQ_WATCHDOG_PRIMARY_ACQUISITION_20261029_2034.json
+  report_sha256: f22c09bfd6fb2616387d7dd4a81515e8e2f0181e4d96635ff936e576519b19f8
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 113
+  postgres_unique_lots_after: 113
+  postgres_distinct_procedures: 102
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_first_party_sha_verified_captures: 4
+  new_named_winner_protocols: 0
+  new_signed_suppliers: 0
+  new_executed_equipment_sales: 0
+  new_month_source_coverage: 0
+  db_mutation: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Continue independent official signed-contract source for SIBUR 2103585/2;
+    seek original procurement/contract for secondary UKRM 6.3kV PЭC/ЭНЕРГОЗАПАД lead;
+    Metal-IT 106044-TT retry 2026-10-30 09:00 MSK.
+    Tander 4617521 has 3 hidden-name bids, no winner.
+    DB 113 lots / 102 procedures / 37 EIS223. Before next append rerun
+    acceptance and create new SHA+pg_restore verified full backup.
