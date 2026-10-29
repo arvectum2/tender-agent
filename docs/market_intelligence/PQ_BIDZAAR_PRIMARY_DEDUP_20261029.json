@@ -1,0 +1,33 @@
+{
+  "schema_version": "pq-commercial-primary-card-dedup/1",
+  "as_of": "2026-10-29",
+  "official_source": "https://bidzaar.com/app/process/light/019f415c-8a7a-7c91-bb3f-68da7b9413ea",
+  "source_http": 200,
+  "source_bytes": 291405,
+  "source_sha256": "a4106736d02d812a69001ffd79e38ce01560624c43fe0ab6a395baa751d7ccbf",
+  "private_original_relative": "manual-20261029-commercial/bidzaar-351-062.html",
+  "canonical_id": "commercial:351-062:lot1",
+  "already_exists_in_postgres": true,
+  "new_unique_lots": 0,
+  "identified_product_family": "condenser_UKRM",
+  "quantity_in_title": 2,
+  "nominal_voltage_kv_only_in_attachment_label": 6,
+  "buyer_from_title": "АО «ГК Электрощит-ТМ Самара»",
+  "beneficiary_from_title": "ООО «УК Эльга»",
+  "procedure_type": "market_price_analysis_not_proven_awarded_purchase",
+  "attachment_label": "ОЛ УКРМ 6 кВ",
+  "attachment_original_downloaded": false,
+  "signed_supplier_verified": false,
+  "actual_sale_price_verified": false,
+  "additional_web_candidates_deduplicated": [
+    {
+      "canonical_id": "commercial:4535313:lot1",
+      "db_already_contains": true
+    },
+    {
+      "canonical_id": "commercial:РН60802401:lot1",
+      "db_already_contains": true
+    }
+  ],
+  "next_action": "Safely acquire explicit original spec attachments and assess whether price monitoring became executed procurement; no new records from secondary duplicates."
+}

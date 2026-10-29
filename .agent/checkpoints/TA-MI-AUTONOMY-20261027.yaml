@@ -1738,3 +1738,30 @@ manual_db_growth_20261029:
     preserve source v29 101 and don't promote unreviewed bids into paid sales.
     Keep existing hourly Watchdog and canonical checkpoint; do not touch
     unrelated collections or autoclose PR #521.
+
+manual_commercial_dedup_and_primary_capture_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  recorded_at_utc: '2026-10-29T05:45:33Z'
+  canonical_pr: 521
+  post_import_unique_lots: 106
+  primary_page: https://bidzaar.com/app/process/light/019f415c-8a7a-7c91-bb3f-68da7b9413ea
+  primary_page_http: 200
+  primary_page_sha256: a4106736d02d812a69001ffd79e38ce01560624c43fe0ab6a395baa751d7ccbf
+  source_ledger: docs/market_intelligence/PQ_BIDZAAR_PRIMARY_DEDUP_20261029.json
+  canonical_case: 'commercial:351-062:lot1'
+  duplicate_preexisting_ids:
+    - 'commercial:351-062:lot1'
+    - 'commercial:4535313:lot1'
+    - 'commercial:РН60802401:lot1'
+  genuinely_new_lots_from_commercial_probes: 0
+  new_original_public_pages_sha_verified: 1
+  supplier_verified: false
+  executed_price_verified: false
+  next_action: >-
+    Current PostgreSQL corpus remains 106 unique procurement lot cards.
+    Capture original commercial technical attachments only through permitted
+    official public access; do not infer signed contracts or duplicate old
+    price-monitoring probes. Incrementally append NEW source-verified cases
+    with backups and owner-approved narrow import. Continue prioritizing
+    source-original 6-35kV contracts and verified suppliers, not test counts.
