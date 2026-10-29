@@ -1807,3 +1807,39 @@ manual_b2b_public_source_growth_20261029:
     nominal 6-35kV voltage remain provisional; do not treat failed bidding
     as sales. Any further append requires fresh sha256-verified PostgreSQL
     backup, source original verification and transactional readback.
+
+watchdog_20261029_0929:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  date_moscow: '2026-10-29 09:36:45 +0300'
+  issue_comment_id: 6489665325
+  canonical_pr: 521
+  source_base_sha: '4e727068583d7ac549fdf44a798990064e0ed191'
+  evidence_report: docs/market_intelligence/PQ_WATCHDOG_ROSELTORG_LUKOIL_20261029_0929.json
+  postgres_collection: arvectum_data/arvectum-market-pq-6-35kv
+  postgres_unique_lots_before: 107
+  postgres_unique_lots_after: 107
+  postgres_distinct_procedures: 96
+  new_unique_lots: 0
+  new_unique_projects: 0
+  source_http_requests: 14
+  http_200: 14
+  new_first_party_unique_sha_originals: 10
+  original_protocol_named_winners: 1
+  named_winner_scope: '0.4kV adjacent; excluded from 6-35kV core'
+  winner: 'COM16012600053 - ООО ТПП ЭнергоТехника, ИНН 6679111400'
+  award_price_without_vat_rub: '570901.64'
+  signed_supplier_verified: false
+  executed_payment_verified: false
+  core_equipment_sales_verified_rub: 0
+  new_calendar_month_searches: 0
+  technical_scope: 'Five official questionnaires 0.4kV, not core 6-35kV'
+  previous_procedure: 'COM07102500074 cancelled; original PDF and five-bid opening protocol'
+  access_blockers: 'Three exact Metal-IT trade URLs return identical generic JS shell despite HTTP200'
+  db_mutation: false
+  source_v29_rows_unchanged: 101
+  tested_changes: 'JSON parsed, SHA originals rechecked, YAML parsed, git diff check; no code changed'
+  next_three:
+    - '106044-TT Metal-IT 6.3kV STATCOM outcome: new official event or 2026-10-30 06:42 MSK'
+    - '32616433248 UKRM 35kV EPC signed outcome: 2026-10-29 18:48 MSK'
+    - '32515582393 UKRM 6kV signed supplier/payment: 2026-10-30 06:46 MSK'
