@@ -1402,3 +1402,58 @@ watchdog_b2b_20261029_0334:
     from public bid counts. Avoid re-requesting five B2B pages before
     cooldown. Preserve private originals, SHA, unrelated dirty APR-07
     worktree, one hourly Watchdog, review gates and no auto-merge.
+
+watchdog_eis_signed_outcomes_20261029_0435:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  observed_at_moscow: '2026-10-29T04:44:12+03:00'
+  issue_run_start_comment_id: 6485448327
+  canonical_pr: 521
+  canonical_branch: feature/pq-etp-provenance-ledger-20261028
+  canonical_v29_rows_unchanged: 101
+  actual_first_party_source_requests: 26
+  source_http_statuses: {http_200: 23, http_404: 3}
+  distinct_successful_http200_sha: 23
+  case_specific_http200_source_cards_or_files: 21
+  new_original_eis_7z_archives: 1
+  new_original_archive_members_sha_verified: 2
+  existing_original_meles_pdfs_reverified_sha_duplicates: 2
+  original_protocols_with_named_winner: 1
+  new_notices: 0
+  new_lots: 0
+  new_deduplicated_projects: 0
+  newly_first_party_verified_signed_contract_register_prices: 2
+  newly_verified_signed_supplier_identities: 0
+  newly_verified_executed_prices: 0
+  new_month_source_searches: 0
+  newly_exhaustively_covered_months: 0
+  new_core_equipment_only_sales_verified: 0
+  chatgpt_arc_review_packets_accepted: 2
+  exact_original_quotes_accepted: 15
+  sosnovskaya_case: '223fz:32615852898:lot1 design-only; original 27.05.2026 protocol names winner OOO LEP-PROEKT INN 5406750532, offer 2285000 RUB ex VAT; signed EIS registry 52460069527260006170000, 2787700 RUB, 15.06.2026; signed supplier identity and execution not separately verified.'
+  meles_case: '223fz:32616296475:lot1 mixed 6.3kV compensator, components and installation; original protocol anonymous winner application 79410, offer 3865725.99 RUB; signed EIS registry 50263017332260000870000, same price 21.09.2026; no equipment-only allocation, supplier identity or executed payment verified.'
+  new_sosnovskaya_original_archive_sha256: 6c6b06cdf6435d90aa6efacbca2abb895c208f945db9cd731208725b3f71cce0
+  new_sosnovskaya_original_protocol_pdf_sha256: bd76b83faa5195ecb2943858f158d7a07e89f68e932b4afbb45fa1e3a73b69da
+  preexisting_meles_original_protocol_pdf_sha256: 9e2812d778f3e4534a3fcc02dec65d04df999d8d9ca11032fd1c8ff5000eb3d0
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_EIS_SIGNED_OUTCOMES_20261029_0435.json
+  private_source_journal: watchdog-20261029-0435-primary/source-attempts.json
+  private_review_ids: ['eis-sosnovskaya-20261029-0435', 'eis-meles-20261029-0435']
+  source_ledger_sha256: c72efb7a7479534a31627dc8969e2bbbb04185cd32c12a547babd73910590d96
+  evidence_commit: b31220cf019227dec7eea3350b2410583a77d35f
+  last_tested_code_commit: 3cdbbc28ff345a5c3f4e798187df57b6a5af8ee4
+  test_results: 'No code changes; JSON parsed; 15 exact quotes validated against first-party HTML and PDF text; 7z member SHA verified; two scanned Meles PDFs match existing v29 SHA receipts. No broad pytest rerun.'
+  blockers: 'Public 223-FZ registry cards omit signed supplier identity; Meles winner only anonymous application 79410; no proof of executed payments; mixed Meles contract price not equipment-only; 15 Data Platform files still blocked by missing authorized SDK credential.'
+  next_three:
+    - '32413764701 UKRM 10kV: original signed supplier and executed price, retry after 2026-10-29 06:46 MSK.'
+    - '32515582393 UKRM 6kV: original signed supplier and executed price, retry after 2026-10-29 06:46 MSK.'
+    - '119199-TT / 135171-TT Metal-IT: discover exact first-party case/document URLs; no fabricated endpoints.'
+  resume_instruction: >-
+    Continue only PR #521 with canonical v29 101-row corpus and immutable source SHA.
+    Do not redownload existing Meles 32616296475 original protocol PDFs; signed
+    registry price now first-party verified but supplier and execution remain unknown.
+    Sosnovskaya 32615852898 is design only, not equipment sale.
+    Avoid prior exact case requests before 2026-10-29 16:45 MSK unless public
+    registry status changes; retry 10/6kV supplier cases after 06:46 MSK.
+    Preserve dirty unrelated APR-07 and MI worktrees, single hourly Watchdog,
+    REVIEW/AM-4 gates, no auto-merge or production mutations.
