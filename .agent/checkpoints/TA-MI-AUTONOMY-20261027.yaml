@@ -2040,7 +2040,9 @@ manual_tatneft_4469608_lot7_postgres_import_20261029:
   evidence_report: docs/market_intelligence/PQ_TATNEFT_4469608_LOT7_DB_IMPORT_20261029.json
   source_manifest: data/market_intelligence/power_quality/tatneft_32616065155_lot7_primary_20261029.json
   importer: scripts/market_intelligence/append_tatneft_lot7.py
-  importer_local_commit_pending: true
+  importer_remote_commit: '8f9e66b470e1973ef0627ef0ab81060d3002e836'
+  importer_local_commit_pending: false
+  importer_tests_run_in_this_post_commit_state: false
   local_command_issue: >-
     ARC remote commands intermittently return SIGKILL while repository changes
     were pending; primary DB write was fully committed and independently
@@ -2050,9 +2052,14 @@ manual_tatneft_4469608_lot7_postgres_import_20261029:
     /Volumes/ArvectumSSD/Arvectum/worktrees/ta-mi-single-lane-20261029 for
     uncommitted Tatneft importer, manifest and tests. Postgres ALREADY includes
     the new lot 223fz:32616065155:lot7; DO NOT REIMPORT OR CREATE DUPLICATES.
-    Fix/check tests/test_pq_tatneft_lot7.py (first test failed when source
-    mocked), run Ruff and guarded tests, commit importer and manifest onto
-    latest remote PR #521 head with rebase preserving checkpoint/watchdog.
+    The importer, manifest, receipt and source research files are already saved
+    on the remote PR #521 through GitHub connector despite external SSD IO
+    interruptions on Mac mini. Inspect the detached worktree: its local
+    untracked script, manifest and tests may conflict on later git fetch.
+    Reconcile exact content non-destructively with remote files and fix
+    tests/test_pq_tatneft_lot7.py (first fixture test failed). Run Ruff and
+    tests when the SSD is accessible. Avoid replacing valid remote evidence.
+    The PostgreSQL insert is already committed and must never be repeated.
     Confirm PG 109 unique lots/98 procedures and backup/receipt hash.
     Then obtain official detailed TТУ and exact rated PQ capacitor voltage;
     do not count 3,172,000 RUB ceiling as executed equipment sales and
