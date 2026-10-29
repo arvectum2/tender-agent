@@ -1,0 +1,455 @@
+{
+  "schema_version": "pq-watchdog-source-delta/1",
+  "recorded_at_moscow": "2026-10-29T07:38:06.382106+03:00",
+  "issue_comment_id": 6487971728,
+  "canonical_pr": 521,
+  "canonical_v29_rows_unchanged": 101,
+  "source_requests": 38,
+  "http_statuses": {
+    "200": 36,
+    "404": 2
+  },
+  "new_month_law_query_first_pages": 16,
+  "distinct_months_touched": 8,
+  "exhaustive_months": 0,
+  "new_original_unique_files": 0,
+  "new_notice_ids_after_dedup": 0,
+  "new_dedup_projects": 0,
+  "new_winners": 0,
+  "new_signed_suppliers": 0,
+  "new_executed_prices": 0,
+  "new_event_log_cards": 2,
+  "findings": [
+    {
+      "notice": "32413764701",
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/event-log.html?reestrNumber=58601033125240001550000",
+      "sha256": "755cb8fd1792471b87c282c6a2460070d10f7866084ac7b12d553cb23dc5af36",
+      "fact": "05.12.2024 execution completed and execution record 58601033125240001550006 filed; no paid amount."
+    },
+    {
+      "notice": "32515582393",
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/event-log.html?reestrNumber=50277071467260001550000",
+      "sha256": "b79a789f6e3b4740124167af95ddf62150148e3d37fc35715134f0999596cef4",
+      "fact": "04.08.2026 execution record 50277071467260001550003 filed; 19.08.2026 draft revision v2 50277071467260001550005; not proof of payment or signed supplier."
+    },
+    {
+      "notice": "32413297739",
+      "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=1659DEEF9469426E953B4EEAE31662BF",
+      "archive_sha256": "fa6346595012c30ffead4612343825abc44386e745aec99e856f05e4dbc12b87",
+      "duplicate_prior_ledger": "docs/market_intelligence/PQ_2024_7Z_ORIGINALS_20261028.json",
+      "fact": "Two rejected named bids, no winner; voltage unknown, no new original."
+    }
+  ],
+  "blockers": [
+    "2 official 7z URLs returned HTTP200 with infected-file JSON error; no bypass",
+    "2026-08 СТАТКОМ 10 results are lexical false positives: остатков",
+    "Public 223 contract tabs lack signed supplier and paid amount",
+    "15 Data Platform SDK items blocked"
+  ],
+  "arc_review": {
+    "id": "32413297739-684277e3f5fc3d1ef39926c3",
+    "state": "reviewed",
+    "quotes": 7,
+    "duplicate_source_sha": true
+  },
+  "source_attempts_private": "watchdog-20261029-0729-primary/source-attempts.json",
+  "source_attempts_sha256": "12d9114b787b7d296106a425d55dbd5876a1491300193310d95ed1f3f972ac30",
+  "requests": [
+    {
+      "name": "2024-contract",
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=58601033125240001550000",
+      "http": "200 https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=58601033125240001550000 text/html;charset=UTF-8",
+      "bytes": 137429,
+      "sha256": "24c041d6d1419f0564ce85777c0ff3ad96314f71df7180469dd4c0dfa2bc6f28",
+      "error": ""
+    },
+    {
+      "name": "2024-print",
+      "url": "https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=58601033125240001550000",
+      "http": "200 https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=58601033125240001550000 text/html;charset=UTF-8",
+      "bytes": 114591,
+      "sha256": "9c4d2bbb636c364c437e0c394557c518bb4d1dd795b36e6195d01679279022f6",
+      "error": ""
+    },
+    {
+      "name": "2026-contract",
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=50277071467260001550000",
+      "http": "200 https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=50277071467260001550000 text/html;charset=UTF-8",
+      "bytes": 135718,
+      "sha256": "284e532d010d202980375fb4d684dd0616d8665d7c726e7494e2b5c1a6670595",
+      "error": ""
+    },
+    {
+      "name": "2026-print",
+      "url": "https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=50277071467260001550000",
+      "http": "200 https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=50277071467260001550000 text/html;charset=UTF-8",
+      "bytes": 9934,
+      "sha256": "bac0d89f450f32cdfb6cada70f6976dfaec1ade599ff104898c5338a91a1d553",
+      "error": ""
+    },
+    {
+      "name": "2024-notice-contract",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32413764701",
+      "http": "200 https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32413764701 text/html;charset=UTF-8",
+      "bytes": 133331,
+      "sha256": "d43b2ff656d3e0e9000847be3cc4ed304623c0d1f333f3fda1798d8f6d8c9749",
+      "error": ""
+    },
+    {
+      "name": "2026-b2b",
+      "url": "https://www.b2b-center.ru/market/postavka-ustanovki-kondensatornoi-ukrm-dlia-po-nes-ooo-bashkirenergo/tender-4283612/",
+      "http": "200 https://www.b2b-center.ru/market/postavka-ustanovki-kondensatornoi-ukrm-dlia-po-nes-ooo-bashkirenergo/tender-4283612/ text/html; charset=utf-8",
+      "bytes": 79944,
+      "sha256": "c8f811db3f5cddd6a03377f2423e4fa963b17870607304289a34f255139d50d8",
+      "error": ""
+    },
+    {
+      "name": "2024-contract-subject",
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=58601033125240001550000",
+      "http": "200 https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=58601033125240001550000",
+      "bytes": 142846,
+      "sha256": "25e688151d2bddfdab088354f5ad0b525803a1933c465e63f4438d66f0ad283e",
+      "error": ""
+    },
+    {
+      "name": "2024-journal-version",
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/journal-version.html?reestrNumber=58601033125240001550000",
+      "http": "200 https://zakupki.gov.ru/epz/contractfz223/card/journal-version.html?reestrNumber=58601033125240001550000",
+      "bytes": 127492,
+      "sha256": "517cafc8dc4d4406ea99a3d83b2a21d04a5377e19009f17295d14eb80923939f",
+      "error": ""
+    },
+    {
+      "name": "2024-event-log",
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/event-log.html?reestrNumber=58601033125240001550000",
+      "http": "200 https://zakupki.gov.ru/epz/contractfz223/card/event-log.html?reestrNumber=58601033125240001550000",
+      "bytes": 128709,
+      "sha256": "755cb8fd1792471b87c282c6a2460070d10f7866084ac7b12d553cb23dc5af36",
+      "error": ""
+    },
+    {
+      "name": "2026-contract-subject",
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=50277071467260001550000",
+      "http": "200 https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=50277071467260001550000",
+      "bytes": 142827,
+      "sha256": "b38e16fc92be865ba68902d894d8ea634474bc647e6775062f27f5ddfe5cd76c",
+      "error": ""
+    },
+    {
+      "name": "2026-journal-version",
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/journal-version.html?reestrNumber=50277071467260001550000",
+      "http": "200 https://zakupki.gov.ru/epz/contractfz223/card/journal-version.html?reestrNumber=50277071467260001550000",
+      "bytes": 127514,
+      "sha256": "ff405fbcdebb1a627510f13b9b0d82b8e93f5d7ae9229e1fea99ae590cf7aa0b",
+      "error": ""
+    },
+    {
+      "name": "2026-event-log",
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/event-log.html?reestrNumber=50277071467260001550000",
+      "http": "200 https://zakupki.gov.ru/epz/contractfz223/card/event-log.html?reestrNumber=50277071467260001550000",
+      "bytes": 129074,
+      "sha256": "b79a789f6e3b4740124167af95ddf62150148e3d37fc35715134f0999596cef4",
+      "error": ""
+    },
+    {
+      "name": "32413297739-common-info",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?purchaseNoticeNumber=32413297739",
+      "http": "404",
+      "bytes": 2036,
+      "sha256": "8f07b33b12fb6f1380dc7e70522da0047ce117e8afd414a3ba478a7dce61e376",
+      "error": ""
+    },
+    {
+      "name": "32413297739-documents",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32413297739",
+      "http": "404",
+      "bytes": 2036,
+      "sha256": "8f07b33b12fb6f1380dc7e70522da0047ce117e8afd414a3ba478a7dce61e376",
+      "error": ""
+    },
+    {
+      "name": "32413297739-protocols",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32413297739",
+      "http": "200",
+      "bytes": 133104,
+      "sha256": "b88911de9c5a3b88e5fe09a56893052dc08a911b8e5cfb025c0a44d6d4df6b43",
+      "error": ""
+    },
+    {
+      "name": "32413297739-contract-info",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32413297739",
+      "http": "200",
+      "bytes": 130637,
+      "sha256": "9cb3044a940a390baced37ca6aa025bf36531e53bf8e26b39974311857235da8",
+      "error": ""
+    },
+    {
+      "name": "32413297739-documents-guid",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32413297739&noticeGuid=4ce94c23-9442-50bf-3009-76411db4b10a",
+      "http": "200",
+      "bytes": 224170,
+      "sha256": "5cb00ae3fa249e971468f13a4496ea904921a19f6e8fa10bcaff83945ada3cfa"
+    },
+    {
+      "name": "32413297739-protocol-print",
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=96b6f97d-d231-f555-2927-204ffb4e3b71&purchaseNoticeNumber=32413297739",
+      "http": "200",
+      "bytes": 13086,
+      "sha256": "4cf0b738f765d29cc36c50f9f39b74bc7b43b20a1d814dec77feff160140a753"
+    },
+    {
+      "name": "32413297739-protocol-common",
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/protocol-common-info.html?protocolGuid=96b6f97d-d231-f555-2927-204ffb4e3b71&purchaseNoticeNumber=32413297739",
+      "http": "200",
+      "bytes": 134811,
+      "sha256": "6d13664b052d9f0fd604611aafc789544e4b1d7501198b5a86949b44f02666c5"
+    },
+    {
+      "name": "32413297739-final-docs.7z",
+      "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=B0D6CCC6CFCD4AB98CDCEF478FBA67A9",
+      "http": "200 text/plain; charset=UTF-8",
+      "bytes": 122,
+      "sha256": "506dfa41ea0dca035bea789e26c2c60b9ef25a03e87070132debc568d6a39d48",
+      "error": ""
+    },
+    {
+      "name": "32413297739-final-protocol.7z",
+      "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=1659DEEF9469426E953B4EEAE31662BF",
+      "http": "200 application/download",
+      "bytes": 573547,
+      "sha256": "fa6346595012c30ffead4612343825abc44386e745aec99e856f05e4dbc12b87",
+      "error": ""
+    },
+    {
+      "name": "32413297739-docs-20240426.7z",
+      "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=3798B7AFEF914EE88003D8D68D330C50",
+      "http": "200 text/plain; charset=UTF-8",
+      "bytes": 122,
+      "sha256": "4a3762da41b0d1ea45799c48ef4145fc6433d61c7cfa50c632ce2302c7fc8415",
+      "error": ""
+    }
+  ],
+  "month_searches": [
+    {
+      "month": "2024-02",
+      "law": "223fz",
+      "query": "статический компенсатор",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.02.2024&publishDateTo=29.02.2024&searchString=%D1%81%D1%82%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "http": "200",
+      "error": "",
+      "bytes": 265301,
+      "sha256": "51596ce25b3d0079992435c0d30f5240fcbbc037fe855465a058049a59ef8a30",
+      "candidate_ids_first_page_unverified": [
+        "32413297739"
+      ],
+      "id_count": 1,
+      "has_next_page_unknown": true,
+      "scope": "first_page_only_nonexhaustive"
+    },
+    {
+      "month": "2024-02",
+      "law": "44fz",
+      "query": "статический компенсатор",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz44=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.02.2024&publishDateTo=29.02.2024&searchString=%D1%81%D1%82%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "http": "200",
+      "error": "",
+      "bytes": 266734,
+      "sha256": "33925173a4cdb3c00a7a551a24bf7fef42426369be46ddc5fd4c3fdc20147723",
+      "candidate_ids_first_page_unverified": [],
+      "id_count": 0,
+      "has_next_page_unknown": true,
+      "scope": "first_page_only_nonexhaustive"
+    },
+    {
+      "month": "2025-03",
+      "law": "223fz",
+      "query": "фильтрокомпенсирующее устройство",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.03.2025&publishDateTo=31.03.2025&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B5%D0%B5+%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%BE",
+      "http": "200",
+      "error": "",
+      "bytes": 248159,
+      "sha256": "8b1e08a4e11a1a61b6d56ce705a32d215d3902a603d723b6bb00428ced9e3dcb",
+      "candidate_ids_first_page_unverified": [],
+      "id_count": 0,
+      "has_next_page_unknown": true,
+      "scope": "first_page_only_nonexhaustive"
+    },
+    {
+      "month": "2025-03",
+      "law": "44fz",
+      "query": "фильтрокомпенсирующее устройство",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz44=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.03.2025&publishDateTo=31.03.2025&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B5%D0%B5+%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%BE",
+      "http": "200",
+      "error": "",
+      "bytes": 248158,
+      "sha256": "66b2479a2ebdbef75a2d9cdb2d50d3f8a6c4fa7ae3da66b5a96460782918e763",
+      "candidate_ids_first_page_unverified": [],
+      "id_count": 0,
+      "has_next_page_unknown": true,
+      "scope": "first_page_only_nonexhaustive"
+    },
+    {
+      "month": "2026-04",
+      "law": "223fz",
+      "query": "УКРМ 10 кВ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.04.2026&publishDateTo=30.04.2026&searchString=%D0%A3%D0%9A%D0%A0%D0%9C+10+%D0%BA%D0%92",
+      "http": "200",
+      "error": "",
+      "bytes": 247965,
+      "sha256": "1a9de12c513c7068a30f3972b53010e5a9e26c46a571fe381862b64a4e785c85",
+      "candidate_ids_first_page_unverified": [],
+      "id_count": 0,
+      "has_next_page_unknown": true,
+      "scope": "first_page_only_nonexhaustive"
+    },
+    {
+      "month": "2026-04",
+      "law": "44fz",
+      "query": "УКРМ 10 кВ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz44=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.04.2026&publishDateTo=30.04.2026&searchString=%D0%A3%D0%9A%D0%A0%D0%9C+10+%D0%BA%D0%92",
+      "http": "200",
+      "error": "",
+      "bytes": 247964,
+      "sha256": "4d37d2ab74723691e567bac8e5db58b227831e2194aef7393df93332da4cc9d9",
+      "candidate_ids_first_page_unverified": [],
+      "id_count": 0,
+      "has_next_page_unknown": true,
+      "scope": "first_page_only_nonexhaustive"
+    },
+    {
+      "month": "2026-08",
+      "law": "223fz",
+      "query": "СТАТКОМ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.08.2026&publishDateTo=31.08.2026&searchString=%D0%A1%D0%A2%D0%90%D0%A2%D0%9A%D0%9E%D0%9C",
+      "http": "200",
+      "error": "",
+      "bytes": 362566,
+      "sha256": "1d542eeb5755c8880756fd7da0e7e86dc590bf6e01de645a195249847a5499ce",
+      "candidate_ids_first_page_unverified": [
+        "32616302738",
+        "32616327159",
+        "32616335486",
+        "32616325078",
+        "32616294026",
+        "32616337263",
+        "32616306444",
+        "32616335248",
+        "32616334824",
+        "32616334189"
+      ],
+      "id_count": 10,
+      "has_next_page_unknown": true,
+      "scope": "first_page_only_nonexhaustive"
+    },
+    {
+      "month": "2026-08",
+      "law": "44fz",
+      "query": "СТАТКОМ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz44=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.08.2026&publishDateTo=31.08.2026&searchString=%D0%A1%D0%A2%D0%90%D0%A2%D0%9A%D0%9E%D0%9C",
+      "http": "200",
+      "error": "",
+      "bytes": 372450,
+      "sha256": "91f4b4793c1a45c36ff75f3c794fa768d6a92a654926e6d2a5095bc332017216",
+      "candidate_ids_first_page_unverified": [],
+      "id_count": 0,
+      "has_next_page_unknown": true,
+      "scope": "first_page_only_nonexhaustive"
+    },
+    {
+      "month": "2024-09",
+      "law": "223fz",
+      "query": "тиристорный компенсатор",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.09.2024&publishDateTo=30.09.2024&searchString=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "http": "200",
+      "error": "",
+      "bytes": 248087,
+      "sha256": "a2361223d52bb1cfd769a7b4a5a917fe9d6d519a68d4c8395ff84052603f044d",
+      "candidates_first_page_unverified": [],
+      "first_page_only_nonexhaustive": true
+    },
+    {
+      "month": "2024-09",
+      "law": "44fz",
+      "query": "тиристорный компенсатор",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz44=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.09.2024&publishDateTo=30.09.2024&searchString=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "http": "200",
+      "error": "",
+      "bytes": 248086,
+      "sha256": "aaea8730f905ffeee02f17cba2db919ee3fe855f185c1eb437b0ad7d926edf34",
+      "candidates_first_page_unverified": [],
+      "first_page_only_nonexhaustive": true
+    },
+    {
+      "month": "2025-07",
+      "law": "223fz",
+      "query": "фильтрокомпенсирующая установка",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.07.2025&publishDateTo=31.07.2025&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B0%D1%8F+%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0",
+      "http": "200",
+      "error": "",
+      "bytes": 248151,
+      "sha256": "9c5802d1296c7b0e68193585d8905a4de0bf9d0270fad8f5c014fdf8f86cd0d2",
+      "candidates_first_page_unverified": [],
+      "first_page_only_nonexhaustive": true
+    },
+    {
+      "month": "2025-07",
+      "law": "44fz",
+      "query": "фильтрокомпенсирующая установка",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz44=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.07.2025&publishDateTo=31.07.2025&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B0%D1%8F+%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0",
+      "http": "200",
+      "error": "",
+      "bytes": 248150,
+      "sha256": "e81c95e929e737f643a8168e5a2a77b0c8adbc9807170d559b3716de78e9b754",
+      "candidates_first_page_unverified": [],
+      "first_page_only_nonexhaustive": true
+    },
+    {
+      "month": "2026-01",
+      "law": "223fz",
+      "query": "УКРМ-6",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.01.2026&publishDateTo=31.01.2026&searchString=%D0%A3%D0%9A%D0%A0%D0%9C-6",
+      "http": "200",
+      "error": "",
+      "bytes": 247945,
+      "sha256": "65c4464b6394a99c275ce6bb4a02d285cc139fcca1b4ccf6b4a0b6812596ea0b",
+      "candidates_first_page_unverified": [],
+      "first_page_only_nonexhaustive": true
+    },
+    {
+      "month": "2026-01",
+      "law": "44fz",
+      "query": "УКРМ-6",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz44=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.01.2026&publishDateTo=31.01.2026&searchString=%D0%A3%D0%9A%D0%A0%D0%9C-6",
+      "http": "200",
+      "error": "",
+      "bytes": 247944,
+      "sha256": "a069ff137a85503f1d733fd8c7d79658ef67302e2ff059070a9a8dc9b7ba432a",
+      "candidates_first_page_unverified": [],
+      "first_page_only_nonexhaustive": true
+    },
+    {
+      "month": "2026-09",
+      "law": "223fz",
+      "query": "статический генератор реактивной мощности",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.09.2026&publishDateTo=30.09.2026&searchString=%D1%81%D1%82%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9+%D0%B3%D0%B5%D0%BD%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80+%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9+%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8",
+      "http": "200",
+      "error": "",
+      "bytes": 248219,
+      "sha256": "9014a0d6e44987aa94a0da4f9088114a9ea1031c261931bd4e8f40c02fd3c8ad",
+      "candidates_first_page_unverified": [],
+      "first_page_only_nonexhaustive": true
+    },
+    {
+      "month": "2026-09",
+      "law": "44fz",
+      "query": "статический генератор реактивной мощности",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz44=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.09.2026&publishDateTo=30.09.2026&searchString=%D1%81%D1%82%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9+%D0%B3%D0%B5%D0%BD%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80+%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9+%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8",
+      "http": "200",
+      "error": "",
+      "bytes": 248218,
+      "sha256": "73499f4b87c47e84087ecfd4ba499f3bcd44194cd2353bb7532e74aaf6eec71a",
+      "candidates_first_page_unverified": [],
+      "first_page_only_nonexhaustive": true
+    }
+  ]
+}

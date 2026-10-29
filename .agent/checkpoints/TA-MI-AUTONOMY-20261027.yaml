@@ -1581,3 +1581,49 @@ watchdog_source_recovery_20261029_0636:
     notice/lot/site/project/contract and prices. No new bids, no production,
     no auto-merge without AM-4 and exact-head CI/review gates. Keep unrelated
     dirty worktrees and one enabled hourly Watchdog unchanged.
+
+watchdog_event_log_and_search_20261029_0729:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  canonical_pr: 521
+  run_start_issue_comment_id: 6487971728
+  recorded_at_moscow: '2026-10-29T07:38:06+03:00'
+  canonical_v29_rows_unchanged: 101
+  source_requests: 38
+  source_http_statuses: {http_200: 36, http_404: 2}
+  new_month_law_query_first_pages: 16
+  distinct_months_touched: 8
+  exhaustive_months: 0
+  new_unique_original_files: 0
+  new_first_party_event_log_cards: 2
+  new_notices_after_dedup: 0
+  new_projects_after_dedup: 0
+  new_named_winner_protocols: 0
+  new_signed_suppliers: 0
+  new_executed_payment_prices: 0
+  arc_reviews_accepted: 1
+  arc_review_original_sha_duplicate: true
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_EVENT_LOG_AND_SEARCH_20261029_0729.json
+  source_ledger_sha256: f732a583800661ac219264ffa577074216c740ca6b617efb0712c7e7aa33553d
+  last_tested_code_commit: 3cdbbc28ff345a5c3f4e798187df57b6a5af8ee4
+  findings: >-
+    32515582393 original event log shows execution information filed 04.08.2026
+    and draft revision filed 19.08.2026; no verified payment or signed supplier.
+    32413764701 event log confirms 05.12.2024 completed status, still no paid
+    amount. 32413297739 original protocol was SHA-duplicate of prior review:
+    two rejected bidders, no winner, voltage unknown. Two 7z source URLs
+    returned infected-file JSON; no bypass. 2026-08 СТАТКОМ results were
+    lexical false positives (остатков), not PQ equipment.
+  blockers: >-
+    No new source-unique original files or signed suppliers. Public contract
+    registry omits supplier/payment amounts. 15 Data Platform SDK files blocked.
+    No exhaustive month coverage.
+  next_three:
+    - '32515582393 signed supplier and executed price: retry 2026-10-30 06:46 MSK or new first-party event.'
+    - '32616433248 signed contractor after negotiation: retry 2026-10-29 18:48 MSK or new first-party event.'
+    - '106044-TT Metal-IT STATCOM award: only new exact official URL now; generic root 2026-10-30 06:42 MSK.'
+  resume_instruction: >-
+    Continue PR #521, v29 101 rows unchanged. Do not repeat 16 exact month-law-query
+    first-page searches before 2026-10-29 19:38 MSK. Preserve original SHA,
+    unrelated worktrees, current-task.yaml and the one hourly Watchdog.
