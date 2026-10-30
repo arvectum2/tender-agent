@@ -107,3 +107,21 @@ def test_official_kuzbass_regulator_pdf_allowed_without_widening_host_boundary()
         capture.source_url("https://www.recko.ru.attacker.example/files/doc/20250324140802_82.pdf")
     with pytest.raises(ValueError, match="allowlisted"):
         capture.source_url("http://www.recko.ru/files/doc/20250324140802_82.pdf")
+
+
+def test_tektorg_official_storage_redirect_and_host_boundary(monkeypatch):
+    seen = []
+    url = "https://www.tektorg.ru/files-storage/public-file/download?token=example"
+    storage = "https://storage.tektorg.ru/public-file/technical-spec.docx"
+    monkeypatch.setattr(capture.httpx, "Client", lambda **_: Client([
+        Response(302, storage),
+        Response(200, data=b"official-tektorg-technical-file"),
+    ], seen))
+    raw, kind = capture.fetch(url)
+    assert raw == b"official-tektorg-technical-file"
+    assert kind == "application/octet-stream"
+    assert seen == [url, storage]
+    with pytest.raises(ValueError, match="allowlisted"):
+        capture.source_url("https://storage.tektorg.ru.attacker.example/file")
+    with pytest.raises(ValueError, match="allowlisted"):
+        capture.source_url("http://storage.tektorg.ru/file")

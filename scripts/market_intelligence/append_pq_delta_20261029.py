@@ -57,10 +57,21 @@ def source_data(manifest: Path) -> tuple[list[dict], dict]:
     for item in cases:
         record = item["source_record"]
         cid = record["canonical_id"]
-        if not re.fullmatch(r"223fz:[0-9]{11}:lot[1-9][0-9]*", cid) or cid in seen:
+        if not re.fullmatch(
+            r"(?:223fz:[0-9]{11}|commercial:РН[0-9]{8}):lot[1-9][0-9]*", cid
+        ) or cid in seen:
             raise ValueError("Bad/duplicate identity")
-        if record["procedure_id"] != cid.split(":")[1]:
-            raise ValueError("Wrong notice ID")
+        regime = "commercial" if cid.startswith("commercial:") else "223-fz"
+        if (record["procedure_id"] != cid.split(":")[1]
+                or record.get("procurement_regime") != regime):
+            raise ValueError("Wrong procedure identity/regime")
+        if regime == "commercial" and (
+            record.get("market_scope") != "core_6kv_equipment_supply_notice"
+            or record.get("technical", {}).get("voltage_kv") != 6
+            or record.get("nmck_rub") is not None
+            or record.get("signed_supplier_verified") is not False
+        ):
+            raise ValueError("Unreviewed commercial core or price promotion")
         for flag in ("signed_supplier_verified", "supplier_verified", "paid_verified"):
             if record.get(flag) is not False:
                 raise ValueError("Prohibited unverified supplier/payment promotion")
@@ -92,7 +103,7 @@ def source_data(manifest: Path) -> tuple[list[dict], dict]:
             "mi013_import_batch": "source-bound-20261029",
             "procurement_id": cid,
             "procedure_id": record["procedure_id"],
-            "regime": "223-fz", "family": record["family"], "scope": record["scope"],
+            "regime": regime, "family": record["family"], "scope": record["scope"],
             "market_scope": record["market_scope"], "buyer": record["customer"],
             "status": record["status"], "nmck_rub": record["nmck_rub"],
             "source_urls": list(dict.fromkeys(e["url"] for e in evidence)),
