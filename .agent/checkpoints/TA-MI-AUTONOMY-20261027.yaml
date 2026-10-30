@@ -3001,3 +3001,40 @@ mi_watchdog_eis_tyazhinskaya_design_20261030_1740:
     and 32616435269. 3 original SOAP ZIPs with exact XML SHA.
     PG 117/106/40; next RN61003961 after 20:00, GP630876 after
     23:40, 32615684088 after 31 Oct 09:00 MSK.
+
+mi_watchdog_eis_primary_winner_scope_20261030_1835:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6526559923
+  parent_commit: 183f6d3df6a0683176905b556573f72e3e953464
+  report: docs/market_intelligence/PQ_WATCHDOG_EIS_PRIMARY_WINNER_SCOPE_20261030_1835.json
+  report_sha256: 67f46158228f980d68672dddfdc94693cd444295d131ba49d64c1c4fd947aa66
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_db_lots: 0
+  new_core_6_35kv_lots: 0
+  case_specific_originals: 14
+  calendar_soap_originals: 19
+  original_binary_sha_verified_total: 33
+  original_xml_scanned: 1666
+  new_named_winner_protocols: 1
+  new_signed_suppliers: 0
+  new_executed_sales: 0
+  new_full_month_coverage: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    32615684088: official protocol winner ООО РСО-ЭНЕРГО INN 3661054875,
+    mixed EPC bid 37818258.18 RUB incl VAT; TЗ one 10kV 1Mvar BSK,
+    2025 analog BSK estimated 7.460669m RUB ex VAT (equipment
+    3.035357m), NOT signed equipment sale. 32615700251 only five
+    10kV KРУН cells, anonymous bidder. 32616523441 DGR arc
+    suppression, NOT reactive PQ. Five date/region SOAP cells,
+    19 ZIP and 1666 XML, no full month. PG 117/106/40 unchanged.
+    Retry RN61003961 after 20:00 and GP630876 after 23:40
+    on 30 Oct, 32615684088 signed contract after 31 Oct 09:00 MSK.
