@@ -2528,3 +2528,37 @@ mi_watchdog_named_bids_20261030_0233:
     Roseltorg 26-1174 original technical file; BESK award after 2026-12-03.
     PG 113/102/37; v29=101. Re-run acceptance and full verified backup
     before any new append. Keep client HTML unchanged absent verified growth.
+
+mi_watchdog_besk_clarification_20261030_0327:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6511829728
+  parent_head: 617b775a82b55ac64079d52bd662bc805263cb13
+  report: docs/market_intelligence/PQ_WATCHDOG_BESK_CLARIFICATION_20261030_0330.json
+  report_sha256: 81199f96a81eb7b47327289e3f8674ced24f40f93114428c3839ee67a6389fc0
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 113
+  postgres_unique_lots_after: 113
+  postgres_distinct_procedures: 102
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_source_sha_verified_captures: 1
+  new_original_clarifications: 1
+  new_named_winner_protocols: 0
+  new_signed_suppliers: 0
+  new_executed_equipment_sales: 0
+  new_month_source_coverage: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Official B2B 4642507 clarification SHA 34282ea09cd0a25292177c9efe9a9804cd1470a6c518a98f7dbff694279512ec records
+    proposed KEP2-0.66-80-2U1 and KEPF-11.55-430-2UKhL1 alternative
+    capacitor models, and organizer's technical evaluation caveat. This is
+    NOT an approved model or mapping to lot 1/2 or proof of 6-35kV system.
+    Public B2B category paths returned HTTP404, manufacturer pages were
+    capture-allowlist blocked. PG 113/102/37, v29 101; no HTML regeneration.
+    Next Metal-IT 106044-TT after 09:00 MSK, Roseltorg 26-1174 native
+    technical archive, BESK original OL2/OL3 questionnaires and award
+    no earlier than 2026-12-03. Repeat gate and fresh full backup before INSERT.
