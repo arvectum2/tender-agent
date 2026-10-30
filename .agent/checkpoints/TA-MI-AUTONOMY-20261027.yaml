@@ -2654,3 +2654,34 @@ mi_watchdog_tektorg_primary_20261030_0632:
     supplier or paid sales. HTML refreshed in place, 114 rows, 22 tests.
     Retry STATCOM 106044-TT after 09:00, Roseltorg 32616435269 after
     10:38, ANPZ outcome after 20:00 Moscow.
+
+mi_watchdog_archive_search_gaps_20261030_0734:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6515053698
+  parent_head: fd0dc7d00506bf23c85419e32d4993d30e459d79
+  report: docs/market_intelligence/PQ_WATCHDOG_ARCHIVE_SEARCH_GAPS_20261030_0734.json
+  report_sha256: 024582b39f29d4f810be23593cd379ed9b1677d1598733a75908e03eb439c039
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 114
+  postgres_unique_lots_after: 114
+  postgres_distinct_procedures: 103
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_sha_verified_originals: 0
+  new_signed_suppliers: 0
+  new_executed_sales: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    TEK-Torg official exact-number searches for RN60704547 (July 2026) and
+    RN60602693 (June 2026) returned HTTP200 but zero matches in rosneft
+    and rosnefttkp public current indexes. These are secondary-only leads,
+    not verified 6-35kV equipment or new lots. 1258722 secondary models
+    1.05/1.2/1.85kV are adjacent, do not import. 15 audited first-party
+    requests, zero new original documents or signed suppliers.
+    PG 114/103/37; no client HTML regeneration. Retry Metal-IT 106044-TT
+    after 09:00, Roseltorg 32616435269 after 10:38, ANPZ RN61003961
+    after 20:00 Moscow; archive search RN60704547 after Nov 2.
