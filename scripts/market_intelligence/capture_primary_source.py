@@ -26,7 +26,8 @@ ALLOWED_HOSTS = frozenset({
     "sibur.ru", "www.sibur.ru",
     "etpgpb.ru", "tender.lot-online.ru", "zakaz.etp-region.ru",
     "www.recko.ru",  # official Kemerovo regional energy regulator: project evidence
-    "www.tektorg.ru", "storage.tektorg.ru", "www.roseltorg.ru", "com.roseltorg.ru",
+    "www.tektorg.ru", "storage.tektorg.ru", "api.tektorg.ru",
+    "www.roseltorg.ru", "com.roseltorg.ru",
     "rosseti.roseltorg.ru",  # exact official section; no wildcard subdomains
 })
 MAX_BYTES = 12_000_000
@@ -36,6 +37,10 @@ def source_url(raw: str) -> str:
     u = urlsplit(raw)
     if (u.scheme != "https" or u.hostname not in ALLOWED_HOSTS or
             u.username is not None or u.password is not None or u.fragment):
+        raise ValueError("Only allowlisted first-party HTTPS endpoints")
+    if u.hostname == "api.tektorg.ru" and (
+            not re.fullmatch(r"/open-api/documents/(?:protocol|procedure)/[1-9][0-9]*", u.path)
+            or u.query):
         raise ValueError("Only allowlisted first-party HTTPS endpoints")
     return raw
 

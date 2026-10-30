@@ -134,3 +134,20 @@ def test_rosseti_roseltorg_official_archive_host_boundary():
         capture.source_url("https://rosseti.roseltorg.ru.attacker.example/file/get")
     with pytest.raises(ValueError, match="allowlisted"):
         capture.source_url("http://rosseti.roseltorg.ru/file/get")
+
+
+def test_tektorg_exact_public_document_api_and_restricted_paths():
+    for kind in ("protocol", "procedure"):
+        url = f"https://api.tektorg.ru/open-api/documents/{kind}/1961956"
+        assert capture.source_url(url) == url
+    for url in (
+        "https://api.tektorg.ru/open-api/documents/protocol/1961956?token=secret",
+        "https://api.tektorg.ru/open-api/documents/protocol/../admin",
+        "https://api.tektorg.ru/open-api/documents/private/1961956",
+        "https://api.tektorg.ru/open-api/documents/protocol/0",
+        "https://api.tektorg.ru/open-api/documents/protocol/1961956#fragment",
+        "https://api.tektorg.ru.attacker.example/open-api/documents/protocol/1961956",
+        "http://api.tektorg.ru/open-api/documents/protocol/1961956",
+    ):
+        with pytest.raises(ValueError, match="allowlisted"):
+            capture.source_url(url)
