@@ -12,7 +12,7 @@ from zoneinfo import ZoneInfo
 
 QUERY = """BEGIN READ ONLY;
 SELECT jsonb_build_object('id',r.external_id,'data',d.data,
-       'review',d.review_status)::text
+       'metadata',d.metadata,'review',d.review_status)::text
 FROM dp_resources r JOIN dp_records d USING(resource_id)
 WHERE r.collection_id='arvectum-market-pq-6-35kv'
 ORDER BY r.external_id;
@@ -36,6 +36,20 @@ def val(obj, *keys):
             if x is not None and x != "":
                 return x
     return None
+
+def source_bound_bid(data, metadata):
+    value = val(data, "commission_bid_rub", "winning_bid_rub")
+    if value is not None:
+        return value
+    proof = (metadata or {}).get("roseltorg_field_enrichment") or {}
+    sources = proof.get("source_sha256") or []
+    if (proof.get("role") == "bidder_not_winner"
+            and proof.get("fields", {}).get("bid") == data.get("bid")
+            and len(sources) == 2
+            and all(re.fullmatch(r"[0-9a-f]{64}", s) for s in sources)):
+        return data.get("bid")
+    return None
+
 
 def clean(text, limit=2400):
     if text is None: return ""
@@ -100,7 +114,7 @@ def capture():
             "signed_contract_verified":any(d.get(k) is True for k in (
                 "registered_signed_contract_verified","actual_signed_contract_verified",
                 "underlying_supplier_contract_verified")),
-            "bid":clean(val(d,"commission_bid_rub","winning_bid_rub"),50),
+            "bid":clean(source_bound_bid(d,r.get("metadata")),50),
             "winner":clean(val(d,"commission_winner_name",
                 "winning_supplier_name","commission_bidder_name","supplier_by_court"),210),
             "supplier_inn":clean(d.get("supplier_inn"),28),
