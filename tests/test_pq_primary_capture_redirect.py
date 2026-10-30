@@ -151,3 +151,52 @@ def test_tektorg_exact_public_document_api_and_restricted_paths():
     ):
         with pytest.raises(ValueError, match="allowlisted"):
             capture.source_url(url)
+
+
+def test_native_trust_exact_url_and_bytes(monkeypatch):
+    url = "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=ABCDEF"
+    seen = []
+
+    class FakeResponse:
+        status = 200
+
+        def __init__(self):
+            self.headers = {"content-type": "application/msword"}
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_):
+            return False
+
+        def geturl(self):
+            return url
+
+        def read(self, limit):
+            assert limit == capture.MAX_BYTES + 1
+            return b"original-doc" * 12
+
+    class FakeOpener:
+        def open(self, request, timeout):
+            seen.append((request.full_url, timeout))
+            return FakeResponse()
+
+    def fake_factory(raw, **kwargs):
+        assert kwargs == {"follow_redirects": False, "source_direct_connection": True}
+        assert raw == url
+        return FakeOpener()
+
+    monkeypatch.setattr(capture, "create_urllib_opener", fake_factory)
+    assert capture.fetch_native_trust(url) == (
+        b"original-doc" * 12, "application/msword"
+    )
+    assert seen == [(url, 20)]
+
+
+def test_native_trust_rejects_untrusted_source_before_request(monkeypatch):
+    monkeypatch.setattr(
+        capture, "create_urllib_opener",
+        lambda *_a, **_k: pytest.fail("must not call opener"),
+    )
+    with pytest.raises(ValueError, match="allowlisted"):
+        capture.fetch_native_trust("https://zakupki.gov.ru.attacker.example/secret")

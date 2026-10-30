@@ -16,10 +16,12 @@ import tempfile
 from datetime import UTC, datetime
 from pathlib import Path
 from urllib.parse import urljoin, urlsplit
+from urllib.request import Request
 
 import httpx
 
 from scripts.market_intelligence.append_pq_delta_20261029 import ROOT
+from src.shared.network.http_client import create_urllib_opener
 
 ALLOWED_HOSTS = frozenset({
     "www.b2b-center.ru", "bidzaar.com", "zakupki.gov.ru",
@@ -163,15 +165,40 @@ def fetch_curl_direct(url: str) -> tuple[bytes, str]:
         return output.read_bytes(), lines[1]
 
 
+
+def fetch_native_trust(url: str) -> tuple[bytes, str]:
+    """Exact-URL original using verified native OS TLS trust and direct EIS routing.
+
+    No redirects, proxy, credentials, custom CA bypass or certificate disabling.
+    This matches the existing official EIS provider's native trust policy.
+    """
+    source_url(url)
+    opener = create_urllib_opener(
+        url, follow_redirects=False, source_direct_connection=True
+    )
+    request = Request(url, headers={"Accept": "*/*", "User-Agent": "Mozilla/5.0"}, method="GET")
+    with opener.open(request, timeout=20) as response:
+        if response.status != 200 or response.geturl() != url:
+            raise RuntimeError("Native trust response was not exact URL HTTP 200")
+        data = response.read(MAX_BYTES + 1)
+        if not 32 <= len(data) <= MAX_BYTES:
+            raise ValueError("First-party source size invalid")
+        return data, response.headers.get("content-type", "")
+
+
 def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--url", required=True)
     p.add_argument("--case-id", required=True)
     p.add_argument("--root", type=Path, default=ROOT)
-    p.add_argument("--transport", choices=("httpx", "curl-direct"), default="httpx")
+    p.add_argument("--transport", choices=("httpx", "curl-direct", "native-trust"), default="httpx")
     args = p.parse_args()
-    content, kind = (fetch_curl_direct(args.url) if args.transport == "curl-direct"
-                     else fetch(args.url))
+    if args.transport == "curl-direct":
+        content, kind = fetch_curl_direct(args.url)
+    elif args.transport == "native-trust":
+        content, kind = fetch_native_trust(args.url)
+    else:
+        content, kind = fetch(args.url)
     print(json.dumps(store(args.root, args.case_id, args.url, content, kind),
                      ensure_ascii=False))
 
