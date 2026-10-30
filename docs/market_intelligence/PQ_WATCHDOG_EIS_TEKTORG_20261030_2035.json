@@ -1,0 +1,338 @@
+{
+  "schema_version": "pq-watchdog-eis-tektorg-20261030/1",
+  "run_id": "20261030T2035-MSK",
+  "as_of_moscow": "2026-10-30T20:39:20.703374+03:00",
+  "issue_comment_id": 6529228296,
+  "pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "parent_head": "523bac361d59d91d27bba985e35e09a4d198d07b",
+  "db": {
+    "unique_lots_before": 117,
+    "unique_lots_after": 117,
+    "distinct_procedures": 106,
+    "eis_223_notices": 40,
+    "new_unique_lots": 0,
+    "new_core_6_35kv_lots": 0,
+    "new_underlying_projects": 0,
+    "new_named_winner_protocols": 0,
+    "new_verified_signed_suppliers": 0,
+    "new_executed_sales": 0,
+    "mutation": false,
+    "client_html_regenerated": false,
+    "canonical_v29_rows_unchanged": 101
+  },
+  "source_research": {
+    "eis_endpoint": "https://int.zakupki.gov.ru/eis-integration/services/getDocsIP",
+    "eis_method": "getDocsByOrgRegion",
+    "eis_new_region_day_requests": 8,
+    "eis_complete_region_days": 7,
+    "eis_provider_no_data_region_days": 1,
+    "eis_first_party_sha_verified_archives": 13,
+    "eis_distinct_archive_sha256": 13,
+    "eis_xml_documents_scanned": 881,
+    "eis_new_pq_candidates": 0,
+    "full_months_covered": 0,
+    "eis_cells": [
+      {
+        "subsystem": "PRIZ",
+        "document_type": "fcsNotificationEF",
+        "exact_date": "2025-11-17",
+        "region": "77",
+        "status": "provider_response_review",
+        "soap_status": "no_data",
+        "archive_count": 0,
+        "candidate_numbers": [],
+        "receipt_relative_path": "eis-research-20261030-2038/PRIZ/fcsNotificationEF/2025-11-17/region-77.json"
+      },
+      {
+        "subsystem": "RI223",
+        "document_type": "purchaseNotice",
+        "exact_date": "2024-09-17",
+        "region": "77",
+        "status": "complete_with_archive_scan",
+        "soap_status": "completed",
+        "archive_count": 4,
+        "candidate_numbers": [],
+        "receipt_relative_path": "eis-research-20261030-2038/RI223/purchaseNotice/2024-09-17/region-77.json"
+      },
+      {
+        "subsystem": "RI223",
+        "document_type": "purchaseNotice",
+        "exact_date": "2024-12-16",
+        "region": "78",
+        "status": "complete_with_archive_scan",
+        "soap_status": "completed",
+        "archive_count": 1,
+        "candidate_numbers": [],
+        "receipt_relative_path": "eis-research-20261030-2038/RI223/purchaseNotice/2024-12-16/region-78.json"
+      },
+      {
+        "subsystem": "RI223",
+        "document_type": "purchaseNotice",
+        "exact_date": "2025-03-17",
+        "region": "66",
+        "status": "complete_with_archive_scan",
+        "soap_status": "completed",
+        "archive_count": 2,
+        "candidate_numbers": [],
+        "receipt_relative_path": "eis-research-20261030-2038/RI223/purchaseNotice/2025-03-17/region-66.json"
+      },
+      {
+        "subsystem": "RI223",
+        "document_type": "purchaseNotice",
+        "exact_date": "2026-02-16",
+        "region": "36",
+        "status": "complete_with_archive_scan",
+        "soap_status": "completed",
+        "archive_count": 1,
+        "candidate_numbers": [],
+        "receipt_relative_path": "eis-research-20261030-2038/RI223/purchaseNotice/2026-02-16/region-36.json"
+      },
+      {
+        "subsystem": "RI223",
+        "document_type": "purchaseNotice",
+        "exact_date": "2026-10-29",
+        "region": "63",
+        "status": "complete_with_archive_scan",
+        "soap_status": "completed",
+        "archive_count": 2,
+        "candidate_numbers": [],
+        "receipt_relative_path": "eis-research-20261030-2038/RI223/purchaseNotice/2026-10-29/region-63.json"
+      },
+      {
+        "subsystem": "RI223",
+        "document_type": "purchaseNotice",
+        "exact_date": "2026-10-30",
+        "region": "16",
+        "status": "complete_with_archive_scan",
+        "soap_status": "completed",
+        "archive_count": 2,
+        "candidate_numbers": [],
+        "receipt_relative_path": "eis-research-20261030-2038/RI223/purchaseNotice/2026-10-30/region-16.json"
+      },
+      {
+        "subsystem": "RI223",
+        "document_type": "purchaseNotice",
+        "exact_date": "2026-10-30",
+        "region": "50",
+        "status": "complete_with_archive_scan",
+        "soap_status": "completed",
+        "archive_count": 1,
+        "candidate_numbers": [],
+        "receipt_relative_path": "eis-research-20261030-2038/RI223/purchaseNotice/2026-10-30/region-50.json"
+      }
+    ],
+    "eis_original_archives": [
+      {
+        "date": "2024-09-17",
+        "region": "77",
+        "subsystem": "RI223",
+        "index": 1,
+        "sha256": "21e32fdf0aa5b3faf59a33200f97a18177fe129547374e5a3107c6ce2b7714a7",
+        "xml_scanned": 100,
+        "private_relative_path": "eis-research-20261030-2038/RI223/purchaseNotice/2024-09-17/region-77/archive-001/documentation-archive.zip"
+      },
+      {
+        "date": "2024-09-17",
+        "region": "77",
+        "subsystem": "RI223",
+        "index": 2,
+        "sha256": "0426ee90f7bfce6b4a18ed83b23533d41fd5b2c46f95aaa476fe6e4d623c4a25",
+        "xml_scanned": 100,
+        "private_relative_path": "eis-research-20261030-2038/RI223/purchaseNotice/2024-09-17/region-77/archive-002/documentation-archive.zip"
+      },
+      {
+        "date": "2024-09-17",
+        "region": "77",
+        "subsystem": "RI223",
+        "index": 3,
+        "sha256": "9629cadc2c1860bf7ef6297edaf4e5da7358b6bf7381f86e2ab596bea2336174",
+        "xml_scanned": 100,
+        "private_relative_path": "eis-research-20261030-2038/RI223/purchaseNotice/2024-09-17/region-77/archive-003/documentation-archive.zip"
+      },
+      {
+        "date": "2024-09-17",
+        "region": "77",
+        "subsystem": "RI223",
+        "index": 4,
+        "sha256": "8eee275976df94178bf4957cbdaa2b8374b10ef4b705416e1c51ca03a7249ce4",
+        "xml_scanned": 47,
+        "private_relative_path": "eis-research-20261030-2038/RI223/purchaseNotice/2024-09-17/region-77/archive-004/documentation-archive.zip"
+      },
+      {
+        "date": "2024-12-16",
+        "region": "78",
+        "subsystem": "RI223",
+        "index": 1,
+        "sha256": "999ba1bf5d7774616c18902b3ce2f2724c6d618c8daca2199f9dfa6644e28c22",
+        "xml_scanned": 97,
+        "private_relative_path": "eis-research-20261030-2038/RI223/purchaseNotice/2024-12-16/region-78/archive-001/documentation-archive.zip"
+      },
+      {
+        "date": "2025-03-17",
+        "region": "66",
+        "subsystem": "RI223",
+        "index": 1,
+        "sha256": "4c34c15922811a2a16781b895bea9e78abb3ba9d8ae5ddd191c432d625ba08b6",
+        "xml_scanned": 100,
+        "private_relative_path": "eis-research-20261030-2038/RI223/purchaseNotice/2025-03-17/region-66/archive-001/documentation-archive.zip"
+      },
+      {
+        "date": "2025-03-17",
+        "region": "66",
+        "subsystem": "RI223",
+        "index": 2,
+        "sha256": "7956acc0c1e32427d5e5d18f2db2a31002ec9da8b0a6285a5e1318da1c9d54f0",
+        "xml_scanned": 30,
+        "private_relative_path": "eis-research-20261030-2038/RI223/purchaseNotice/2025-03-17/region-66/archive-002/documentation-archive.zip"
+      },
+      {
+        "date": "2026-02-16",
+        "region": "36",
+        "subsystem": "RI223",
+        "index": 1,
+        "sha256": "d936c3ac24fb96462d223a57487e32ed15646490303cb60e6f17e51a4c3d9621",
+        "xml_scanned": 16,
+        "private_relative_path": "eis-research-20261030-2038/RI223/purchaseNotice/2026-02-16/region-36/archive-001/documentation-archive.zip"
+      },
+      {
+        "date": "2026-10-29",
+        "region": "63",
+        "subsystem": "RI223",
+        "index": 1,
+        "sha256": "4d0563d291e85aabecdcad948d314c80cce76d16db0ba9a9ba3e4750dc6376f3",
+        "xml_scanned": 20,
+        "private_relative_path": "eis-research-20261030-2038/RI223/purchaseNotice/2026-10-29/region-63/archive-001/documentation-archive.zip"
+      },
+      {
+        "date": "2026-10-29",
+        "region": "63",
+        "subsystem": "RI223",
+        "index": 2,
+        "sha256": "9a2cfed29094560ddc28f965b832572103b9d2b5bea69dd4e2b66a461df4824e",
+        "xml_scanned": 100,
+        "private_relative_path": "eis-research-20261030-2038/RI223/purchaseNotice/2026-10-29/region-63/archive-002/documentation-archive.zip"
+      },
+      {
+        "date": "2026-10-30",
+        "region": "16",
+        "subsystem": "RI223",
+        "index": 1,
+        "sha256": "f249f39014d5ca915eb4296bf1a6f968f75d50a4f45db8f6a92e4fc4b479a933",
+        "xml_scanned": 100,
+        "private_relative_path": "eis-research-20261030-2038/RI223/purchaseNotice/2026-10-30/region-16/archive-001/documentation-archive.zip"
+      },
+      {
+        "date": "2026-10-30",
+        "region": "16",
+        "subsystem": "RI223",
+        "index": 2,
+        "sha256": "7b1d24624a6b4ac66a242ec2a6246ba2c0bd7d3dd9e9105343cc5590f8bcd880",
+        "xml_scanned": 30,
+        "private_relative_path": "eis-research-20261030-2038/RI223/purchaseNotice/2026-10-30/region-16/archive-002/documentation-archive.zip"
+      },
+      {
+        "date": "2026-10-30",
+        "region": "50",
+        "subsystem": "RI223",
+        "index": 1,
+        "sha256": "b8302f73ac46fce75dbe60943b7cc8da22e77a5c17ba067757e0da82d77ff822",
+        "xml_scanned": 41,
+        "private_relative_path": "eis-research-20261030-2038/RI223/purchaseNotice/2026-10-30/region-50/archive-001/documentation-archive.zip"
+      }
+    ],
+    "tektorg_new_requests": 6,
+    "tektorg_http200_captures": 5,
+    "tektorg_case_specific_new_html": 0,
+    "tektorg_generic_http200_html": 5,
+    "tektorg_failed_direct_curl": 1,
+    "tektorg_html": [
+      {
+        "case": "RN61003961",
+        "mode": "detail",
+        "url": "https://www.tektorg.ru/rosneft/procedures/20065463",
+        "http": 200,
+        "sha256": "14b793afa86486e79dab4d608dad15348f6f76dde34c7c6aa67e1fb3bf461287",
+        "bytes": 410323,
+        "private_receipt": "captures/commercial_RN61003961_lot1/20261030T173531486774Z-034c7755-14b793afa86486e7.bin.json",
+        "case_number_in_body": false,
+        "source_relevance": "generic_200_no_case_details"
+      },
+      {
+        "case": "RN61003961",
+        "mode": "exact_search",
+        "url": "https://www.tektorg.ru/rosneft/procedures?name=%D0%A0%D0%9D61003961",
+        "http": 200,
+        "sha256": "991f7f26faf90d903a6cdb6a5d626ecda049fb9172c27d317ce16ae5f938c6b9",
+        "bytes": 271414,
+        "private_receipt": "captures/commercial_RN61003961_lot1/20261030T173532014842Z-1ed83114-991f7f26faf90d90.bin.json",
+        "case_number_in_body": false,
+        "source_relevance": "generic_200_no_case_details"
+      },
+      {
+        "case": "RN60802401",
+        "mode": "exact_search",
+        "url": "https://www.tektorg.ru/rosneft/procedures?name=%D0%A0%D0%9D60802401",
+        "http": 200,
+        "sha256": "a5661dd4b8903ffe3a57173d93146afabe0dbe7aa54841a1bf001f177e1942ef",
+        "bytes": 271414,
+        "private_receipt": "captures/commercial_RN60802401_lot1/20261030T173651398785Z-cf049a81-a5661dd4b8903ffe.bin.json",
+        "case_number_in_body": false,
+        "source_relevance": "generic_200_no_case_details"
+      },
+      {
+        "case": "RN60804549",
+        "mode": "exact_search",
+        "url": "https://www.tektorg.ru/rosneft/procedures?name=%D0%A0%D0%9D60804549",
+        "http": 200,
+        "sha256": "62abc0e11badc9deab220127935c9e959caf2e155953590701af74bc304a1ee1",
+        "bytes": 271413,
+        "private_receipt": "captures/commercial_RN60804549_lot1/20261030T173651995025Z-0d6e2cf8-62abc0e11badc9de.bin.json",
+        "case_number_in_body": false,
+        "source_relevance": "generic_200_no_case_details"
+      },
+      {
+        "case": "RN60804549",
+        "mode": "curl_direct_exact_search",
+        "url": "https://www.tektorg.ru/rosneft/procedures?name=%D0%A0%D0%9D60804549",
+        "http": 200,
+        "sha256": "8060461919957a786115b1c8a9a1344a0daa1d54456a8aad2e6e539249a0e6df",
+        "bytes": 271413,
+        "private_receipt": "captures/commercial_RN60804549_lot1/20261030T173819498103Z-d9283d65-8060461919957a78.bin.json",
+        "case_number_in_body": false,
+        "source_relevance": "generic_200_no_case_details"
+      }
+    ],
+    "tektorg_curl_failure": {
+      "url": "https://www.tektorg.ru/rosneft/procedures/20065463",
+      "transport": "curl-direct",
+      "result": "not exact URL HTTP 200; no capture; status not inferred"
+    },
+    "rn61003961_prior_verified_original": "20261030T033744745519Z-a90dcb19-9a9fa6fc6f3fd01b.bin; 20261030T033933090110Z-a14b61f0-f1b7d3f95e1768c6.bin",
+    "rn61003961_prior_original_fact": "6 kV capacitor unit supply, 4 listed items; 450 and 300 kvar organizer clarifications; 30 Oct 19:59 portal cutoff but 23:59 in clarifications; no winner or signed contract",
+    "rn61003961_new_observation": "20:35 MSK detail URL returned generic SSR without procedure number after nominal 19:59 cutoff; this is not proof of cancellation or award",
+    "new_secondary_lead_not_promoted": "RN60804549 supply of UKRM for SKN, voltage and official details not verified; not a DB candidate",
+    "negative_coverage_caveat": "8 individual source-day/region cells are not complete monthly or national search; 44-FZ PRIZ no_data is not absence of market."
+  },
+  "next_ranked_targets": [
+    {
+      "case": "commercial:ГП630876:lot1",
+      "retry_after_msk": "2026-10-30 23:40",
+      "goal": "native GPB first-party protocol/technical files; avoid generic SSR"
+    },
+    {
+      "case": "223fz:32615684088:lot1",
+      "retry_after_msk": "2026-10-31 09:00",
+      "goal": "official signed contract supplier and actual contract price distinct from 37,818,258.18 RUB protocol bid"
+    },
+    {
+      "case": "commercial:RN61003961:lot1",
+      "retry_after_msk": "2026-10-31 10:00",
+      "goal": "official organizer status, award protocol and supplier; inspect after 23:59 clarification cutoff"
+    }
+  ],
+  "acceptance": "pass before any DB write (none performed)",
+  "code_changed": false,
+  "tests": "not run; no code changes; report JSON SHA/archive readback verified",
+  "source_archive_external_unchanged": true
+}
