@@ -2685,3 +2685,32 @@ mi_watchdog_archive_search_gaps_20261030_0734:
     PG 114/103/37; no client HTML regeneration. Retry Metal-IT 106044-TT
     after 09:00, Roseltorg 32616435269 after 10:38, ANPZ RN61003961
     after 20:00 Moscow; archive search RN60704547 after Nov 2.
+
+mi_watchdog_vyartsilya_primary_20261030_0833:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6515796701
+  latest_tested_commit: ad49c93197cb2a5c8d6b1e14a68128e68c325fd1
+  report: docs/market_intelligence/PQ_WATCHDOG_VYARTSILYA_PRIMARY_20261030_0833.json
+  report_sha256: 33c1120bebdead8bcb8a434123337d240e9e5a5ebf502c77bd10d1beb65e171e
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 114
+  postgres_unique_lots_after: 114
+  postgres_distinct_procedures: 103
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_sha_verified_originals: 4
+  new_signed_suppliers: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    First-party Roseltorg 32616497692 already in DB; official 3.5MB ZIP
+    contains technical DOCX verifying one 10kV 3Mvar UKRM at Vyartsilya
+    in mixed EPC (79.1m RUB total not PQ revenue). Official 29 Oct
+    protocol shows one anonymous admitted bidder and retender, no winner.
+    New B2B 4657777 six capacitor blocks: voltage and PQ scope unknown.
+    Four new SHA-verified captures, PG 114/103/37, no import or HTML churn.
+    Retry Metal-IT 106044-TT after 09:00, Roseltorg 32616435269
+    after 10:38, TEK-Torg RN61003961 after 20:00 MSK.
