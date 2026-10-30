@@ -26,7 +26,7 @@ from src.shared.network.http_client import create_urllib_opener
 ALLOWED_HOSTS = frozenset({
     "www.b2b-center.ru", "bidzaar.com", "zakupki.gov.ru",
     "sibur.ru", "www.sibur.ru",
-    "etpgpb.ru", "tender.lot-online.ru", "zakaz.etp-region.ru",
+    "etpgpb.ru", "etp.gpb.ru", "tender.lot-online.ru", "zakaz.etp-region.ru",
     "www.recko.ru",  # official Kemerovo regional energy regulator: project evidence
     "www.tektorg.ru", "storage.tektorg.ru", "api.tektorg.ru",
     "www.roseltorg.ru", "com.roseltorg.ru",
@@ -43,6 +43,10 @@ def source_url(raw: str) -> str:
         raise ValueError("Only allowlisted first-party HTTPS endpoints")
     if u.hostname == "api.tektorg.ru" and (
             not re.fullmatch(r"/open-api/documents/(?:protocol|procedure)/[1-9][0-9]*", u.path)
+            or u.query):
+        raise ValueError("Only allowlisted first-party HTTPS endpoints")
+    if u.hostname == "etp.gpb.ru" and (
+            not re.fullmatch(r"/file/get/t/LotDocuments/id/[1-9][0-9]*/name/[A-Za-z0-9.]+", u.path)
             or u.query):
         raise ValueError("Only allowlisted first-party HTTPS endpoints")
     if u.hostname == "corp.roseltorg.ru" and (

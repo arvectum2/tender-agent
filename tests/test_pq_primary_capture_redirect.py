@@ -214,3 +214,18 @@ def test_corp_roseltorg_public_uuid_documents_exact_host_and_path():
     ):
         with pytest.raises(ValueError, match="allowlisted"):
             capture.source_url(bad)
+
+
+def test_gpb_lot_document_exact_path_and_host():
+    url = "https://etp.gpb.ru/file/get/t/LotDocuments/id/7081646/name/6ad9e8af0957f3.99690708"
+    assert capture.source_url(url) == url
+    for bad in (
+        "https://etp.gpb.ru/file/get/t/LotDocuments/id/7081646/name/6ad9e8af0957f3.99690708?secret=x",
+        "https://etp.gpb.ru/file/get/t/LotDocuments/id/0/name/a",
+        "https://etp.gpb.ru/file/get/t/PrivateDocuments/id/7081646/name/a",
+        "https://etp.gpb.ru/file/get/t/LotDocuments/id/7081646/name/../admin",
+        "https://etp.gpb.ru.attacker.example/file/get/t/LotDocuments/id/7081646/name/a",
+        "http://etp.gpb.ru/file/get/t/LotDocuments/id/7081646/name/a",
+    ):
+        with pytest.raises(ValueError, match="allowlisted"):
+            capture.source_url(bad)

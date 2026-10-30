@@ -3102,3 +3102,31 @@ mi_watchdog_eis_tektorg_20261030_2035:
     generic after 19:59 deadline, no award proven. PG 117/106/40.
     GP630876 after 30 Oct 23:40, 32615684088 signed-contract
     after 31 Oct 09:00, RN61003961 after 31 Oct 10:00 MSK.
+
+mi_watchdog_gpb_omsk_20261030_2130:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6530496430
+  parent_commit: c53392d9e99bf380f9d7a1cdef6bc7b307228c56
+  report: docs/market_intelligence/PQ_WATCHDOG_GPB_OMSK_FALSE_POSITIVE_20261030_2130.json
+  report_sha256: 1efe935ebd99c5ccccdb9993a1fdfe2613e98e405cded5c0b0a1141e8f95ecea
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_db_lots: 0
+  fresh_first_party_originals: 5
+  new_core_6_35kv_lots: 0
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    GP646069 five first-party GPB original documents verified, but only
+    660V heat tracing / process condensers, not PQ 6–35kV.
+    PG 117/106/40 unchanged. Retry GP630876 after 30 Oct 23:40,
+    32615684088 signed contract after 31 Oct 09:00, RN61003961 after
+    31 Oct 10:00 MSK. No merge or client report refresh.
