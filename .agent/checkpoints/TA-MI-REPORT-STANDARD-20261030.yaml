@@ -1,5 +1,5 @@
 task_id: TA-MI-REPORT-STANDARD-20261030
-status: in_progress
+status: completed
 goal: Establish reproducible official Arvectum client reporting standard, fix genuine SVG logo and brand typography, normalize report sections and per-lot evidence/field coverage.
 definition_of_done:
   - Fix source of official logo and brand typography/hex palette for all slides.
@@ -12,11 +12,23 @@ completed:
   - Found official source vector src/modules/tender_operator_agent_demo/assets/arvectum-logo-block.svg.
   - Identified fake Unicode ᐱ in existing generator and CSS fallback.
   - Live DB 117 lots, 106 unique procedure IDs, 40 distinct EIS 223 notices as of 22:39 Moscow.
-current_stage: Write standard and implement reusable template.
+current_stage: Standard and corrected bilingual presentations fully generated, verified, published; incremental source field enrichment continues under separate research checkpoint.
 remaining:
-  - Create standard and completeness audit report.
-  - Build revised bilingual decks and validate.
-  - Commit, push and mark completed.
-last_verified_commit: 70ce9bb40fd43a5a1dba291cbdfdd970c511c1cd
+  - Create standard and completeness audit report. [done]
+  - Build revised bilingual decks and validate. [done]
+  - Commit, push and mark completed. [done]
+last_verified_commit: 11aaba93a24886c9d679061c2366316aedcea90f
 last_tests: Earlier 115-lot versions contain all IDs with no overflow but incorrect logo and incomplete structured fields.
 resume_instruction: Use internal APFS worktree /Users/master/ArvectumSafe/worktrees/ta-mi-clientdeck-20261030. Do not modify DB, Watchdog or unrelated .agent/current-task.yaml. Commit only into original PR #521.
+
+completed_report_commit: 11aaba93a24886c9d679061c2366316aedcea90f
+snapshot_lots: 117
+snapshot_procedures: 106
+snapshot_eis_223_notices: 40
+snapshot_path: data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261030_v2.json
+source_completeness: docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261030_v2.json
+living_field_backlog: docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_BACKLOG_20261030_v2.md
+ru_pdf: docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_RU_20261030_V2.pdf
+en_pdf: docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_EN_20261030_V2.pdf
+research_continuation: TA-MI-AUTONOMY-20261027 in_progress, under single Tender Agent Watchdog; future evidence must create new versioned snapshot rather than rewriting V2.
+resume_instruction: Standardized PDF work is completed. Continue first-party verification P0-P5 using the field backlog and the canonical ongoing MI checkpoint, never infer signed equipment sales from NMC/EPC or invent supplier/OEM. Keep the single PR and Watchdog, no new task.
