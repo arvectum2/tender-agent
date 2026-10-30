@@ -2589,3 +2589,32 @@ mi_watchdog_rosseti_primary_index_20261030_0437:
     306-644 and 4535313 already in v29; do not reimport. Next Metal-IT
     106044-TT after 09:00, Rosseti 32616435269 after 10:38, EIS 32615684088
     after 14:40 MSK. PG 113/102/37, no new signed sales or client HTML edit.
+
+mi_watchdog_apatit_cross_platform_20261030_0528:
+  task_id: "TA-MI-AUTONOMY-20261027"
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6513471341
+  parent_head: "7b8b2ce6f9c8eb45e0f2f20c11c3640e9d65ba60"
+  report: "docs/market_intelligence/PQ_WATCHDOG_APATIT_CROSS_PLATFORM_20261030_0528.json"
+  report_sha256: "83413ae6f14db6e971a45719d05eefacd4e9c04cd2c996b5a91b9a17b3f6098a"
+  internal_apfs_acceptance: "pass"
+  postgres_unique_lots_before: 113
+  postgres_unique_lots_after: 113
+  postgres_distinct_procedures: 102
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_sha_verified_captures: 2
+  new_primary_case_cards: 1
+  new_signed_suppliers: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    B2B 4406425 original design card and restricted history SHA captured; probable same
+    underlying Apatit PS-352 project as existing PhosAgro 231994/231994-2, no new
+    DB lot or signed sale. EIS 2024-12 STATCOM and 2025-08 UKRM 10kV 44/223
+    first-page requests all HTTP404 (coverage blocked). PhosAgro native archive
+    filter HTTP200 but no case-specific result, no auth bypass. Retry Metal-IT
+    106044-TT after 09:00 MSK and Roseltorg 32616435269 after 10:38 MSK.
+    PG 113/102/37; client HTML unchanged.
