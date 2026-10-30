@@ -2714,3 +2714,34 @@ mi_watchdog_vyartsilya_primary_20261030_0833:
     Four new SHA-verified captures, PG 114/103/37, no import or HTML churn.
     Retry Metal-IT 106044-TT after 09:00, Roseltorg 32616435269
     after 10:38, TEK-Torg RN61003961 after 20:00 MSK.
+
+
+mi_watchdog_statcom_service_20261030_0930:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6516535129
+  parent_head: cf0f3bd0d36e7988af845ebf55a4cfdae531e52b
+  report: docs/market_intelligence/PQ_WATCHDOG_STATCOM_SERVICE_20261030_0930.json
+  report_sha256: 95e96cd87d13a12aebe4894b32cccaabda5cc0c4f09a24ba3e4b122e3867b983
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 114
+  postgres_unique_lots_after: 114
+  postgres_distinct_procedures: 103
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_sha_verified_originals: 1
+  new_signed_suppliers: 0
+  new_executed_sales: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Official B2B 4302914 source SHA verifies 6.3kV STATCOM RU-DRIVE
+    maintenance at Lebedinsky GOK: one bid, organizer hides results.
+    Already in PG, not a new equipment sale. Metal-IT 106044-TT
+    two official trade URLs both return same generic JS shell SHA,
+    no named result. Direct EIS 32515582393 contract and 32616435269
+    documents both HTTP404. PG 114/103/37; no import or HTML churn.
+    Retry 32616435269 after 10:38, RN61003961 after 20:00 Moscow,
+    106044-TT after new first-party event or 31 Oct 09:00.
