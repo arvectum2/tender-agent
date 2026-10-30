@@ -1,0 +1,184 @@
+{
+  "schema_version": "pq-watchdog-primary-evidence/1",
+  "run_id": "TA-MI-20261030-1336-11",
+  "run_start_moscow": "2026-10-30T13:36:22+03:00",
+  "finished_moscow": "2026-10-30T13:46:46+03:00",
+  "issue_comment_id": 6520650278,
+  "canonical_pr": 521,
+  "parent_head": "70ce9bb40fd43a5a1dba291cbdfdd970c511c1cd",
+  "ingestion_code_commit": "5858b31039deec2dd1a638443c5c894274e3efe8",
+  "postgres": {
+    "unique_lots_before": 115,
+    "unique_lots_after": 116,
+    "procedures_before": 104,
+    "procedures_after": 105,
+    "eis_223_before": 38,
+    "eis_223_after": 39,
+    "new_unique_lots": 1,
+    "new_verified_core_6_35kv_lots": 0,
+    "new_adjacent_500kv_spares": 1,
+    "new_deduplicated_projects_proven": 0,
+    "new_signed_suppliers": 0,
+    "new_executed_sales": 0,
+    "backup_manifest": "data-platform-arvectum_data-20261030T104403Z-26986.dump.manifest.json",
+    "backup_sha256": "4ad9395596cc1446a7568f9f47cff209e664be83caa8264f6bd29db80e3444c1",
+    "pg_restore_verified": true,
+    "postwrite_record_sha": "4d5f6f7e24184efcd887ff02a78619a518a789239d8d06e0c1702469359f24b7"
+  },
+  "originals": [
+    {
+      "case_id": "223fz:32616266007:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616266007&noticeGuid=02d450e6-9e48-40f6-82a3-bbb1b3bfb3e0",
+      "relative_file": "captures/223fz_32616266007_lot1/20261030T104201485081Z-02cb8fd4-5ce0d93d108363b8.bin",
+      "sha256": "5ce0d93d108363b8cfaa983a58ac55314a42d71e929818c35748206626ebb78b",
+      "bytes": 158444,
+      "content_type": "text/html;charset=UTF-8",
+      "http_status": 200
+    },
+    {
+      "case_id": "223fz:32616266007:lot1",
+      "source_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=ED7E8638FBDC4404A32E200681A35197",
+      "relative_file": "captures/223fz_32616266007_lot1/20261030T104201740669Z-43bb9df6-40c2728c558e6828.bin",
+      "sha256": "40c2728c558e68288cea9a525a09c78779b1c9abb5b1b2a40bf89945c61bdc93",
+      "bytes": 73728,
+      "content_type": "application/download",
+      "http_status": 200
+    },
+    {
+      "case_id": "223fz:32616266007:lot1",
+      "source_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=DD2EF2DFD9884AF09E52D886FC48357E",
+      "relative_file": "captures/223fz_32616266007_lot1/20261030T104202110911Z-4752ef30-c64bf98c8cfc3f67.bin",
+      "sha256": "c64bf98c8cfc3f67ecb30911ce5ccf269fcbe7b02740ecad8317734b0789261a",
+      "bytes": 385948,
+      "content_type": "application/download",
+      "http_status": 200
+    },
+    {
+      "case_id": "223fz:32616266007:lot1",
+      "source_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=CB5DE0E780144515AB98511AEC09E8B8",
+      "relative_file": "captures/223fz_32616266007_lot1/20261030T104202428434Z-ab093cfa-1fcda607d6ef811f.bin",
+      "sha256": "1fcda607d6ef811fde0b2ca1063daa7d6ce418a55f86577903f1b033107e113b",
+      "bytes": 385951,
+      "content_type": "application/download",
+      "http_status": 200
+    },
+    {
+      "case_id": "223fz:32515582393:lot1",
+      "source_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=2441A5EA82314855A809D5C0E9ABC025",
+      "relative_file": "captures/223fz_32515582393_lot1/20261030T104432011722Z-f4c36c20-44c73d283ff8c1ef.bin",
+      "sha256": "44c73d283ff8c1ef01b72417ea9474e2553b2a7c3b982e4d0db4177bb026f906",
+      "bytes": 3728,
+      "content_type": "application/download",
+      "http_status": 200
+    },
+    {
+      "case_id": "223fz:32515582393:lot1",
+      "source_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=1D3831568559425290E8693A3165000C",
+      "relative_file": "captures/223fz_32515582393_lot1/20261030T104432387724Z-02d32388-842cfe42c4ad5f79.bin",
+      "sha256": "842cfe42c4ad5f797cf6d4d104015406ea43d246ecc8c1cf60364861ea69ffae",
+      "bytes": 657694,
+      "content_type": "application/download",
+      "http_status": 200
+    }
+  ],
+  "case_32616266007": {
+    "classification": "adjacent 500kV BSK spare component, not 6–35kV system",
+    "customer": "ПАО Россети — МЭС Центра",
+    "platform": "РТС-Тендер 3985905",
+    "technical": "5 x QBANK-A CHDB-142 or equivalent, capacitor 8.3kV/592kvar, spare parts for PS 500kV Kaluzhskaya",
+    "nmck_rub_with_vat": "856440.00",
+    "commission_bid_rub_with_vat": "662460.00",
+    "commission_named_bidder": "ООО «УСТЬ-КАМЕНОГОРСКИЙ КОНДЕНСАТОР»",
+    "rejected_bidder": "ООО «СЕРПУХОВСКИЙ КОНДЕНСАТОРНЫЙ ЗАВОД «КВАР»",
+    "protocol_date": "2026-08-28",
+    "result": "one admissible bid; procurement failed; direct contract recommended, not signed verified",
+    "signed_supplier": null,
+    "executed_value": null
+  },
+  "case_32515582393": {
+    "classification": "already in corpus, 6kV UKRM supply",
+    "opening_protocol": "2026-01-26",
+    "final_protocol": "2026-02-12",
+    "negotiations": "2026-02-16",
+    "named_bidder": "ООО «УК КОНДЕНСАТОР»",
+    "initial_offer_rub_ex_vat": "4900000.00",
+    "negotiated_offer_rub_ex_vat": "4850000.00",
+    "result": "tender failed (one compliant offer); direct contract recommended, signature not proven",
+    "signed_supplier": null,
+    "executed_value": null
+  },
+  "request_metrics": {
+    "direct_attempts": "at least 28 including network retries and probes",
+    "new_primary_SHA_verified_files": 6,
+    "named_counterparty_protocol_cases": 2,
+    "new_signed_contracts": 0,
+    "new_month_source_queries": 2,
+    "calendar_searches": [
+      {
+        "source": "EIS 223-FZ",
+        "month": "2026-09",
+        "query": "УКРМ 10 кВ",
+        "page": 1,
+        "items": 0,
+        "exhaustive": false
+      },
+      {
+        "source": "EIS 223-FZ",
+        "month": "2026-10",
+        "query": "БСК 6 кВ",
+        "page": 1,
+        "items": 0,
+        "exhaustive": false
+      }
+    ],
+    "blocked": [
+      {
+        "url": "https://www.roseltorg.ru/procedure/32616266007",
+        "result": "httpx disconnect; strict curl HTTP404"
+      },
+      {
+        "source": "EIS httpx",
+        "result": "TLS chain failure, no bypass"
+      },
+      {
+        "source": "EIS strict curl",
+        "result": "HTTP404"
+      },
+      {
+        "source": "EIS native TLS with default Python UA",
+        "result": "HTTP403; normal Mozilla UA with verified native OS TLS returned 200"
+      }
+    ]
+  },
+  "safety": {
+    "internal_APFS_gate": "pass",
+    "full_SHA_pg_restore_backup": "pass",
+    "atomic_append_and_hash_readback": "pass",
+    "client_HTML_rows": 116,
+    "client_report_refreshed": true,
+    "canonical_v29_unchanged": 101,
+    "auto_merge": false
+  },
+  "next_three": [
+    {
+      "case": "РН61003961",
+      "retry_moscow": "2026-10-30T20:00:00+03:00",
+      "goal": "official TEK-Torg 6kV equipment outcome"
+    },
+    {
+      "case": "ГП630876",
+      "retry_moscow": "2026-10-30T23:40:00+03:00",
+      "goal": "GPB original and predecessor dedup"
+    },
+    {
+      "case": "32515582393",
+      "retry_moscow": "2026-10-31T09:00:00+03:00",
+      "goal": "public signed contract and price for named bidder"
+    }
+  ],
+  "gaps": [
+    "No signed contract for either case",
+    "No complete 2024-2026 month coverage",
+    "500kV BSK capacitor not counted as 6-35kV system sale"
+  ]
+}

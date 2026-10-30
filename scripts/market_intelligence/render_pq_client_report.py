@@ -42,6 +42,7 @@ HOSTS = {
 }
 FAMILIES = {
     "ukrm": "УКРМ",
+    "bsk": "БСК",
     "capacitor_bank": "БСК",
     "statcom": "STATCOM / SVG",
     "svc": "SVC / СТК",
@@ -67,7 +68,7 @@ SUPPLY = {
     "supply_with_mixed_work",
     "three_year_supply_framework_not_finished_PQ_equipment",
 }
-COMPONENT = {"supply_components", "component_supply_voltage_unknown"}
+COMPONENT = {"supply_components", "component_supply_voltage_unknown", "capacitor_component_supply_spares"}
 DESIGN = {"design", "engineering_design_only", "design_harmonic_filtration"}
 EPC = {
     "epc",
@@ -327,11 +328,16 @@ def row_html(row: dict) -> str:
     if len(desc) > 220:
         desc = desc[:217].rstrip() + "…"
     st = str(d.get("status") or "").lower()
+    # A protocol recommending a contract is not evidence of signature.
+    # Never infer signed/registered from free-form status substrings such
+    # as "not_signed" or "signed_supplier_unverified".
+    registered = bool(d.get("contract_registry_number") or d.get("contract_registered_price_rub"))
+    signed = d.get("signed_supplier_verified") is True
     state = (
         "Без заявок / отмена"
         if any(x in st for x in ("no_bids", "zero_bids", "cancelled"))
         else "Договор указан*"
-        if any(x in st for x in ("signed", "registered_contract"))
+        if signed or registered
         else "Итог скрыт"
         if "hidden" in st
         else "Требует сверки"

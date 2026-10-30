@@ -9,6 +9,7 @@ import pytest
 from scripts.market_intelligence.render_pq_client_report import (
     group,
     render,
+    row_html,
     safe_url,
     validate,
 )
@@ -108,3 +109,30 @@ def test_existing_client_document_contains_full_live_corpus():
     assert len(ids) == len(set(ids))
     assert "НМЦ не равна цене договора" in report
     assert "Показано" in report
+
+
+def test_precontract_recommendation_is_not_signed_contract():
+    row = _row("223fz:32616266007:lot1")
+    row["data"].update({
+        "family": "bsk",
+        "scope": "capacitor_component_supply_spares",
+        "status": "commission_direct_contract_recommended_not_signed",
+        "signed_supplier_verified": False,
+        "contract_registry_number": None,
+        "contract_registered_price_rub": None,
+    })
+    assert group(row) == "Компоненты"
+    html = row_html(row)
+    assert "Договор указан*" not in html
+    assert "Требует сверки" in html
+    assert ">БСК</td>" in html
+
+
+def test_only_explicit_registered_contract_field_allows_contract_label():
+    row = _row()
+    row["data"].update({
+        "status": "signed_supplier_unverified",
+        "signed_supplier_verified": False,
+        "contract_registry_number": "12345678901234567890123",
+    })
+    assert "Договор указан*" in row_html(row)
