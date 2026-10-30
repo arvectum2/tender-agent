@@ -6,8 +6,9 @@ import json
 import re
 import subprocess
 from collections import Counter
-from datetime import UTC, datetime
+from datetime import datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 QUERY = """BEGIN READ ONLY;
 SELECT jsonb_build_object('id',r.external_id,'data',d.data,
@@ -114,9 +115,10 @@ def capture():
             "paid_verified":d.get("paid_verified") is True,
             "quantity":clean(d.get("quantity"),35),
             "quantity_unit":clean(d.get("quantity_unit"),50),
-            "voltage_kv":clean(val(d,"equipment_voltage_kv") or
+            "voltage_kv":clean(val(d,"equipment_voltage_kv","voltage_kv") or
                 val(technical,"voltage_kv","voltage"),100),
-            "power":clean(val(technical,"power_kvar","power_mvar","nominal_power"),100),
+            "power":clean(val(d,"power") or
+                val(technical,"power_kvar","power_mvar","nominal_power"),100),
             "technical":{k: clean(v,220) for k,v in list(technical.items())[:12]},
             "status":clean(d.get("status"),200),
             "market_scope":clean(d.get("market_scope"),220),
@@ -126,8 +128,8 @@ def capture():
         })
     counts=Counter(x["scope"] for x in out)
     return {"schema":"fgi-client-deck/2",
-            "snapshot_date":"2026-10-30",
-            "snapshot_time_moscow":datetime.now(UTC).astimezone().isoformat(),
+            "snapshot_date":datetime.now(ZoneInfo("Europe/Moscow")).date().isoformat(),
+            "snapshot_time_moscow":datetime.now(ZoneInfo("Europe/Moscow")).isoformat(),
             "database":"arvectum_data","collection":"arvectum-market-pq-6-35kv",
             "unique_lots":len(out),
             "distinct_procedures":len({x["id"].split(":")[1] for x in out}),

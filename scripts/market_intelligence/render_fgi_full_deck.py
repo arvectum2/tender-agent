@@ -525,7 +525,11 @@ def render(data,lang):
     for pos,s in enumerate(slides,1):
         if s.count('<section ') != 1:
             raise ValueError(f"Malformed slide {pos}")
-    return '<!doctype html><html lang="'+lang+'"><head><meta charset="utf-8"><style>'+CSS+'</style></head><body>'+''.join(slides)+'</body></html>',len(slides)
+    report_date = data["snapshot_date"]
+    date_label = ".".join(reversed(report_date.split("-")))
+    body = "".join(slides).replace("POWER QUALITY</b> / 30.10.2026",
+                                  "POWER QUALITY</b> / " + esc(date_label))
+    return '<!doctype html><html lang="'+lang+'"><head><meta charset="utf-8"><style>'+CSS+'</style></head><body>'+body+'</body></html>',len(slides)
 
 def main():
     p=argparse.ArgumentParser()
@@ -538,7 +542,7 @@ def main():
     args.outdir.mkdir(parents=True,exist_ok=True)
     for lang in ("ru","en"):
         html_deck,pages=render(data,lang)
-        stem=f"ARVECTUM_FGI_PQ_FULL_{lang.upper()}_20261030_{args.version}"
+        stem=f"ARVECTUM_FGI_PQ_FULL_{lang.upper()}_{data['snapshot_date'].replace('-','')}_{args.version}"
         hp=args.outdir/(stem+".html")
         hp.write_text(html_deck,encoding="utf-8")
         print(f"{lang}: {pages} slide sections, {len(html_deck)} chars")

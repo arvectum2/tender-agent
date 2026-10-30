@@ -3234,3 +3234,35 @@ mi_watchdog_p2_original_review_20261031_0035:
     participants/prices hidden; not a winner or signed contract.
     Signed contract 32615684088 retry after 31 Oct 09:00 MSK;
     RN61003961 after 10:00. PG 117/106/40 unchanged.
+
+mi_watchdog_p2_enrichment_20261031_0133:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6534825764
+  latest_tested_code_commit: 5d2b0f96edd9e509a977ba63613eb7647bf9aafc
+  report: docs/market_intelligence/PQ_WATCHDOG_P2_ENRICHMENT_20261031_0133.json
+  report_sha256: eb4a911bc7dc0bf97944601c5355b379499e838735079af7093aedb9af30b457
+  internal_apfs_acceptance: pass
+  verified_backup_sha256: b96494c44981e9b87431d903e6d383b306cf19c37c107e61943ded7fe2983f5e
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_db_lots: 0
+  new_source_verified_case_fields: 3
+  new_core_6_35kv_lots: 0
+  fresh_primary_originals: 0
+  first_party_attempts: 4
+  db_mutation: source_SHA_bound_RAR_DOCX_atomic_null_only_CAS
+  client_report_version: V4
+  client_html_legacy_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Three technical fields for 32616266007 now CAS-verified in PostgreSQL
+    from immutable EIS RAR/DOCX (quantity 5, voltage 8.3kV, 592kvar).
+    This is 500kV substation component spares, not new core PQ sale.
+    V4 RU/EN reports 117 lots, 106 procedures; P2 coverage improved 3 fields.
+    EIS 32515208744 and 32515584863 exact-document URLs returned 404.
+    Retry 32615684088 and 106044-TT after 31 Oct 09:00, RN61003961
+    after 10:00 MSK. No auto-merge.
