@@ -125,3 +125,12 @@ def test_tektorg_official_storage_redirect_and_host_boundary(monkeypatch):
         capture.source_url("https://storage.tektorg.ru.attacker.example/file")
     with pytest.raises(ValueError, match="allowlisted"):
         capture.source_url("http://storage.tektorg.ru/file")
+
+
+def test_rosseti_roseltorg_official_archive_host_boundary():
+    url = "https://rosseti.roseltorg.ru/file/get/t/ProcedureDocuments/id/188880"
+    assert capture.source_url(url) == url
+    with pytest.raises(ValueError, match="allowlisted"):
+        capture.source_url("https://rosseti.roseltorg.ru.attacker.example/file/get")
+    with pytest.raises(ValueError, match="allowlisted"):
+        capture.source_url("http://rosseti.roseltorg.ru/file/get")

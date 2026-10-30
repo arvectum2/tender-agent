@@ -27,6 +27,7 @@ ALLOWED_HOSTS = frozenset({
     "etpgpb.ru", "tender.lot-online.ru", "zakaz.etp-region.ru",
     "www.recko.ru",  # official Kemerovo regional energy regulator: project evidence
     "www.tektorg.ru", "storage.tektorg.ru", "www.roseltorg.ru", "com.roseltorg.ru",
+    "rosseti.roseltorg.ru",  # exact official section; no wildcard subdomains
 })
 MAX_BYTES = 12_000_000
 
