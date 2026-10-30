@@ -200,3 +200,17 @@ def test_native_trust_rejects_untrusted_source_before_request(monkeypatch):
     )
     with pytest.raises(ValueError, match="allowlisted"):
         capture.fetch_native_trust("https://zakupki.gov.ru.attacker.example/secret")
+
+
+def test_corp_roseltorg_public_uuid_documents_exact_host_and_path():
+    url = "https://corp.roseltorg.ru/api/v1/documents/476985f6-bbf1-11f1-9925-d762a15dcfbc"
+    assert capture.source_url(url) == url
+    for bad in (
+        "http://corp.roseltorg.ru/api/v1/documents/476985f6-bbf1-11f1-9925-d762a15dcfbc",
+        "https://corp.roseltorg.ru.attacker.example/api/v1/documents/476985f6-bbf1-11f1-9925-d762a15dcfbc",
+        "https://corp.roseltorg.ru/api/v1/documents/476985f6-bbf1-11f1-9925-d762a15dcfbc?token=secret",
+        "https://corp.roseltorg.ru/api/v1/admin",
+        "https://corp.roseltorg.ru/api/v1/documents/../private",
+    ):
+        with pytest.raises(ValueError, match="allowlisted"):
+            capture.source_url(bad)

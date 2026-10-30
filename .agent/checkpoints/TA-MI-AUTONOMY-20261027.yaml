@@ -2874,3 +2874,36 @@ mi_watchdog_eis_named_bidders_20261030_1345:
     PG 116/105/39, fresh SHA+pg_restore backup and atomic readback.
     Retry RN61003961 after 30 Oct 20:00, GP630876 after
     30 Oct 23:40, signed outcomes after 31 Oct 09:00 Moscow.
+
+
+mi_watchdog_rosseti_reissue_sha_dedup_20261030_1430:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6521567173
+  parent_head: 531976acea943e084dbed80aac2cd99b58b4c0d7
+  report: docs/market_intelligence/PQ_WATCHDOG_ROSSETI_REISSUE_SHA_DEDUP_20261030_1430.json
+  report_sha256: 395727f2cdfd0929f940eb8e6c5c415056518b3285a006c60e14a023f964f177
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 116
+  postgres_unique_lots_after: 116
+  postgres_distinct_procedures: 105
+  postgres_eis_223_notices: 39
+  new_unique_db_lots: 0
+  new_sha_verified_capture_receipts: 5
+  already_known_identical_original_archive_shas: 2
+  source_proven_same_project_links: 1
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Official Roseltorg 32616400421/26-1149 cancelled, 32616435269/26-1174
+    active: same buyer, 452016000.01 RUB NMC, PS Tyazhinskaya,
+    5 byte-identical SHA technical/economic files prove same project.
+    Revised sixth technical DOCX changes unbalance CT thermal current
+    20kA to 4kA. Distinct notices/lot IDs remain; no new DB row.
+    B2B indexed EIS 32615852898 contract 2787700 RUB dated 15 Jun 2026,
+    but EIS signed original and supplier unverified. Retry 32615684088
+    after 30 Oct 14:40, RN61003961 after 20:00, GP630876 after 23:40.

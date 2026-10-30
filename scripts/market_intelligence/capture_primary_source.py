@@ -30,6 +30,7 @@ ALLOWED_HOSTS = frozenset({
     "www.recko.ru",  # official Kemerovo regional energy regulator: project evidence
     "www.tektorg.ru", "storage.tektorg.ru", "api.tektorg.ru",
     "www.roseltorg.ru", "com.roseltorg.ru",
+    "corp.roseltorg.ru",  # verified public UUID document API; path restricted below
     "rosseti.roseltorg.ru",  # exact official section; no wildcard subdomains
 })
 MAX_BYTES = 12_000_000
@@ -42,6 +43,10 @@ def source_url(raw: str) -> str:
         raise ValueError("Only allowlisted first-party HTTPS endpoints")
     if u.hostname == "api.tektorg.ru" and (
             not re.fullmatch(r"/open-api/documents/(?:protocol|procedure)/[1-9][0-9]*", u.path)
+            or u.query):
+        raise ValueError("Only allowlisted first-party HTTPS endpoints")
+    if u.hostname == "corp.roseltorg.ru" and (
+            not re.fullmatch(r"/api/v1/documents/[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}", u.path)
             or u.query):
         raise ValueError("Only allowlisted first-party HTTPS endpoints")
     return raw
