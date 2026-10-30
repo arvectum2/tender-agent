@@ -3197,3 +3197,40 @@ mi_watchdog_field_enrichment_20261030_2342:
     Fresh GP630876 first-party HTTP200 is generic search HTML with no exact case;
     4 official EIS 404. Retry 32615684088 after 31 Oct 09:00,
     RN61003961 after 10:00, GP630876 after 12:00 MSK or new official URL.
+
+mi_watchdog_p2_original_review_20261031_0035:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6533952449
+  latest_tested_parent_commit: bc7e8c8cb8c6035caea360701196c698d1f83fce
+  report: docs/market_intelligence/PQ_WATCHDOG_P2_ORIGINAL_REVIEW_20261031_0035.json
+  report_sha256: 0106da02a29abf8444df32b60a1ac6b6fcc27da5cc0dd4fa1a41f56b4da16e70
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_db_lots: 0
+  fresh_first_party_http_200_captures: 3
+  new_source_verified_p2_facts_pending_db: 3
+  db_field_gains: 0
+  verified_case: 223fz:32616266007:lot1
+  source_rar_sha256: c64bf98c8cfc3f67ecb30911ce5ccf269fcbe7b02740ecad8317734b0789261a
+  contained_docx_sha256: d34c50e9f74f05597345f17461dc92d4cc44f62f79c6f533328449475d553a48
+  verified_p2: "5 capacitors; capacitor rated 8.3 kV and 592 kvar; 500 kV substation spares, adjacent not core system sale"
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  db_mutation: false
+  client_reports_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    3 direct original P2 facts source-verified in EIS RAR/DOCX for
+    32616266007; top-level PG fields remain null because current
+    guarded writer supports only HTML quantity. Implement/test strict
+    RAR-contained DOCX CAS writer, require clean Git acceptance and
+    new SHA+pg_restore backup before enrichment, then V4 snapshot/audit/PDFs.
+    New B2B 4617521 public card says 3 applications and completed,
+    participants/prices hidden; not a winner or signed contract.
+    Signed contract 32615684088 retry after 31 Oct 09:00 MSK;
+    RN61003961 after 10:00. PG 117/106/40 unchanged.
