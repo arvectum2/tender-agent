@@ -2620,6 +2620,8 @@ mi_watchdog_apatit_cross_platform_20261030_0528:
     PG 113/102/37; client HTML unchanged.
 
 mi_watchdog_tektorg_primary_20261030_0632:
+  issue_comment_id: 6514294220
+  latest_tested_commit: b2af1d91e619b4c4fd61608f39bdacd64c56f612
   task_id: TA-MI-AUTONOMY-20261027
   status: in_progress
   canonical_pr: 521
