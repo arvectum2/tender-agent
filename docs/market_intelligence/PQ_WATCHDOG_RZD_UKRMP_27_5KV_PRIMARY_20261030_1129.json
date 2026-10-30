@@ -1,0 +1,231 @@
+{
+  "schema_version": "pq-watchdog-primary-evidence/1",
+  "run_start_moscow": "2026-10-30T11:29:27+03:00",
+  "finished_moscow": "2026-10-30T11:38:28+03:00",
+  "issue_comment_id": 6518510894,
+  "canonical_pr": 521,
+  "postgres": {
+    "unique_lots_before": 114,
+    "unique_lots_after": 115,
+    "procedures_before": 103,
+    "procedures_after": 104,
+    "eis_223_notices_before": 37,
+    "eis_223_notices_after": 38,
+    "new_unique_lots": 1,
+    "new_27_5kv_commissioning_services": 1,
+    "new_core_equipment_supply": 0,
+    "new_independently_deduplicated_projects": 0,
+    "new_signed_suppliers": 0,
+    "new_executed_sales": 0
+  },
+  "new_sha_verified_originals": [
+    {
+      "case_id": "commercial:4642507:lot1",
+      "source_url": "https://www.b2b-center.ru/market/postavka-kondensatorov-kep-dlia-ooo-bashkirenergo-ooo-bsk-27-000090/tender-4642507/?action=positions_groups",
+      "relative_file": "captures/commercial_4642507_lot1/20261030T083142758611Z-9590f0a4-c8ed2dc00af0a59f.bin",
+      "sha256": "c8ed2dc00af0a59ff9d2d18d663b504dbc7e5648e792bb40220fe2f18cf14549",
+      "bytes": 57342,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:4642507:lot2",
+      "source_url": "https://www.b2b-center.ru/market/postavka-kondensatorov-kep-dlia-ooo-bashkirenergo-ooo-bsk-27-000090/tender-4642507/?action=positions",
+      "relative_file": "captures/commercial_4642507_lot2/20261030T083143174044Z-bb1a9d15-725b5840ffeb4782.bin",
+      "sha256": "725b5840ffeb4782f6c1000840cea825f556e7db1e8c5ffac59931d4e1a1a190",
+      "bytes": 58635,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:4657777:lot1",
+      "source_url": "https://www.b2b-center.ru/market/postavka-blokov-kondensatornykh-dlia-nuzhd-po-btses-po-kes-ooo/tender-4657777/?action=positions",
+      "relative_file": "captures/commercial_4657777_lot1/20261030T083143768753Z-a7605a74-d3e4b8e79dfb049f.bin",
+      "sha256": "d3e4b8e79dfb049fc6baf97ac3d2647249fb1be087a6cf11f41b12f1242264f9",
+      "bytes": 73965,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP5022490:lot1",
+      "source_url": "https://www.tektorg.ru/223-fz/procedures/13319469",
+      "relative_file": "captures/commercial_ZP5022490_lot1/20261030T083321997027Z-6357ca63-2a8b3a9045e943d1.bin",
+      "sha256": "2a8b3a9045e943d1a136c95b755349012025b8625f75d7834186c00e963ca702",
+      "bytes": 430127,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP5022490:lot1",
+      "source_url": "https://api.tektorg.ru/open-api/documents/protocol/1961956",
+      "relative_file": "captures/commercial_ZP5022490_lot1/20261030T083402733891Z-d904ee28-e6166f104aa5a45b.bin",
+      "sha256": "e6166f104aa5a45b4ca87c52b69e670fcd0fdd20631598f4dc71324d7e5bd51b",
+      "bytes": 204595,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP5022490:lot1",
+      "source_url": "https://api.tektorg.ru/open-api/documents/protocol/1951222",
+      "relative_file": "captures/commercial_ZP5022490_lot1/20261030T083403014693Z-a320e203-69c75d4a3809a955.bin",
+      "sha256": "69c75d4a3809a955d73283a45789728586c242fd250a93403e4dd73594b6f8eb",
+      "bytes": 25769,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP5022490:lot1",
+      "source_url": "https://api.tektorg.ru/open-api/documents/protocol/1961953",
+      "relative_file": "captures/commercial_ZP5022490_lot1/20261030T083403217470Z-ac0b7bba-e01dbcb39a07d658.bin",
+      "sha256": "e01dbcb39a07d658d7a359345fc3898edb76f52e7d447bfe035bc4c2f20da45f",
+      "bytes": 136593,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP5022490:lot1",
+      "source_url": "https://api.tektorg.ru/open-api/documents/procedure/16740259",
+      "relative_file": "captures/commercial_ZP5022490_lot1/20261030T083403756749Z-afbbf122-939459cd56e07045.bin",
+      "sha256": "939459cd56e0704530aa6cf16ab2df9f05d15aef12cf7dc3994d1ce59be7f8c0",
+      "bytes": 769024,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP5022490:lot1",
+      "source_url": "https://api.tektorg.ru/open-api/documents/procedure/16740260",
+      "relative_file": "captures/commercial_ZP5022490_lot1/20261030T083429260814Z-81c66777-bf1f7934e368bd95.bin",
+      "sha256": "bf1f7934e368bd956123d7ac723d2c99c9ce2da74524f548098b5aa573053234",
+      "bytes": 138614,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP5022490:lot1",
+      "source_url": "https://api.tektorg.ru/open-api/documents/procedure/16740261",
+      "relative_file": "captures/commercial_ZP5022490_lot1/20261030T083516550155Z-0f7c1968-2fa47c2ae36b5e6f.bin",
+      "sha256": "2fa47c2ae36b5e6f20df1a0e91b2bc40ec26794aeda3f165cc1c1c148324ecc7",
+      "bytes": 365239,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP4061903:lot1",
+      "source_url": "https://www.tektorg.ru/223-fz/procedures/11386086",
+      "relative_file": "captures/commercial_ZP4061903_lot1/20261030T083702686808Z-159d3a38-a4afe78ae25518bc.bin",
+      "sha256": "a4afe78ae25518bc60acef2d25558c315abcfefbb60d8db70322f0cc5c4b0a5e",
+      "bytes": 366790,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP4061903:lot1",
+      "source_url": "https://api.tektorg.ru/open-api/documents/procedure/15375536",
+      "relative_file": "captures/commercial_ZP4061903_lot1/20261030T083713003156Z-ea0f36f6-7c86bcacf04cebe9.bin",
+      "sha256": "7c86bcacf04cebe9a865b4b4e6dbb2fe6c7c5a5c15deb4eeb94df8a28ee87eb4",
+      "bytes": 134991,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP4061903:lot1",
+      "source_url": "https://api.tektorg.ru/open-api/documents/protocol/1783795",
+      "relative_file": "captures/commercial_ZP4061903_lot1/20261030T083713460290Z-fccad1eb-f0d0c961e4bb1da7.bin",
+      "sha256": "f0d0c961e4bb1da7b70426aa1caf971a8f3c97d811b943c36b448ad78596d779",
+      "bytes": 934721,
+      "http_status": 200
+    }
+  ],
+  "official_search": {
+    "tektorg_223_fz": {
+      "компенсации реактивной мощности": 6,
+      "конденсаторные": 13,
+      "СТАТКОМ": 0,
+      "фильтрокомпенсирующая": 0,
+      "УКРМ": 7
+    },
+    "tektorg_rosneft": {
+      "конденсаторная установка": 1,
+      "компенсации реактивной мощности": 1,
+      "УКРМ": 0,
+      "СТАТКОМ": 0,
+      "фильтр гармоник": 0
+    },
+    "pages_per_query": 1,
+    "period": "unbounded, NOT complete monthly coverage",
+    "new_month_source_searches": 0
+  },
+  "request_metrics": {
+    "script_level_direct_GET_HEAD_attempts": 59,
+    "immutable_captures_http200": 13,
+    "obsolete_B2B_category_HTTP404": 1,
+    "roseltorg_connection_drop": 1,
+    "tektorg_public_protocol_old_allowlist_block_then_fixed": 1
+  },
+  "case_32514565977": {
+    "platform": "ТЭК-Торг ЗП5022490",
+    "buyer": "ОАО РЖД",
+    "inn": "7708503727",
+    "object": "ПС Раздольное",
+    "work": "ПНР УКРМП-27,5 кВ, NOT new equipment supply",
+    "technical_quote": "Раздел 1. УКРМП-27,5; Модуль коммутационный УКРМП-27,5 кВ",
+    "technical_zip_sha256": "2fa47c2ae36b5e6f20df1a0e91b2bc40ec26794aeda3f165cc1c1c148324ecc7",
+    "nmck_rub_incl_vat": 9625921.98,
+    "winner_label": "anonymous participant 1",
+    "winner_offer_rub_incl_vat": 9529662.76,
+    "second_offer_rub_incl_vat": 9577792.37,
+    "final_protocol_date": "2025-03-31",
+    "final_protocol_sha256": "e6166f104aa5a45b4ca87c52b69e670fcd0fdd20631598f4dc71324d7e5bd51b",
+    "signed_supplier": "unknown",
+    "signed_contract_price": "unknown",
+    "executed_price": "unknown",
+    "auction_doc_vat_conflict": "Auction DOCX labels NMCK excluding VAT, technical assignment and final protocol explicitly include VAT; preserve conflict",
+    "physical_project_dedup": "pending, no independent project gain claimed"
+  },
+  "other_findings": [
+    {
+      "case": "B2B 4642507",
+      "result": "lot1 ООО БСК 11 units 981354.33 RUB ex VAT; lot2 ООО Башкирэнерго 16 units 1471296.08 RUB ex VAT; lot voltage unknown; no import"
+    },
+    {
+      "case": "B2B 4657777",
+      "result": "6 capacitor blocks 208419.30 RUB ex VAT; voltage unknown; no import"
+    },
+    {
+      "case": "ТЭК-Торг 32413741282 / ЗП4061903",
+      "result": "2024 technical original: two ICAR MF/LINE CAP 6600V 400kvar capacitor banks for frequency converter and 4 cooling fans; VFD component, not PQ compensator; no import; scanned protocol not interpreted"
+    }
+  ],
+  "protocols": {
+    "anonymous_winner_original": 1,
+    "named_winner_original": 0,
+    "auction_protocol_original": 1,
+    "second_parts_original": 1,
+    "other_scanned_original": 1
+  },
+  "safety": {
+    "internal_APFS_gate": "pass_after_clean_commit",
+    "backup_sha256": "11618ecad64d5b7d182413d5637da8e058853b99225fb50c743ff41db0dfba6a",
+    "pg_restore_list_verified": true,
+    "atomic_insert_readback": "pass",
+    "db_receipt": "docs/market_intelligence/PQ_POSTGRES_CORPUS_GROWTH_20261030_RZD_UKRMP.json",
+    "other_collections_untouched": true,
+    "no_auto_merge": true
+  },
+  "client_html": {
+    "same_path": "docs/market_intelligence/POWER_QUALITY_CLIENT_PREVIEW_20261024.html",
+    "regenerated_from_live_postgres": true,
+    "unique_lots": 115,
+    "procedures": 104,
+    "tests": "18 passed",
+    "ruff": "pass",
+    "not_sales_not_TAM_disclaimer": true
+  },
+  "canonical_v29_rows_unchanged": 101,
+  "next_three": [
+    {
+      "case": "РН61003961",
+      "retry": "2026-10-30 20:00 MSK",
+      "goal": "post-deadline outcome"
+    },
+    {
+      "case": "106044-ТТ",
+      "retry": "2026-10-31 09:00 MSK",
+      "goal": "official named STATCOM result"
+    },
+    {
+      "case": "АП125337",
+      "retry": "2026-10-31 10:00 MSK",
+      "goal": "GPB original technical specification"
+    }
+  ],
+  "remaining_gaps": "32514565977 signed supplier and registry contract unknown; 32413741282 scanned protocol not read; B2B 4642507 lot voltage unknown; 4657777 voltage unknown."
+}
