@@ -7,15 +7,18 @@ import decimal
 import html
 import json
 import subprocess
+from functools import lru_cache
 from pathlib import Path
 
-SNAP = Path("data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261030.json")
+from scripts.market_intelligence.audit_fgi_report_fields import audit as audit_fields
+
+SNAP = Path("data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261030_v2.json")
 SCOPE = {
  "supply":"supply","equipment_supply_new":"supply","equipment_supply_request":"supply",
  "signed_equipment_supply":"supply","supply_candidate":"supply",
  "supply_with_mixed_work":"supply","three_year_supply_framework_not_finished_PQ_equipment":"supply",
- "supply_components":"components","component_supply_voltage_unknown":"components",
- "design":"design","engineering_design_only":"design","design_harmonic_filtration":"design",
+ "supply_components":"components","capacitor_component_supply_spares":"components","component_supply_voltage_unknown":"components",
+ "design":"design","design_and_survey_only":"design","engineering_design_only":"design","design_harmonic_filtration":"design",
  "epc":"epc","mixed_epc":"epc","adjacent_epc":"epc","mixed_epc_repair_services":"epc",
  "mixed_supply_install_pnr":"epc","electrical_auxiliary_works":"epc",
  "maintenance":"service","commissioning_service_existing_ukrm":"service",
@@ -38,6 +41,16 @@ FAM = {
  "reactive_compensation_system":("Система компенсации","Reactive-power compensation"),
  "capacitor_components":("Конденсаторные компоненты","Capacitor components"),
  "capacitor_blocks":("Конденсаторные блоки","Capacitor modules")}
+@lru_cache(maxsize=1)
+def official_logo():
+    """Return original Arvectum Block paths, with approved color only."""
+    source = Path("src/modules/tender_operator_agent_demo/assets/arvectum-logo-block.svg")
+    content = source.read_text(encoding="utf8")
+    if "BRAND__Ok----Block" not in content or "#41b599" not in content:
+        raise RuntimeError("Brand logo source changed; inspect official artwork")
+    content = content.replace("#41b599", "#00C8A0")
+    return content.replace("<svg ", '<svg class="official-logo" role="img" aria-label="Arvectum" ', 1)
+
 def esc(v): return html.escape(str(v) if v is not None and v!="" else "—", quote=True)
 def short(s,n=470):
     s=" ".join(str(s or "").split())
@@ -81,18 +94,18 @@ def group(s,lang):
     return next((x[1 if lang=="ru" else 2] for x in GROUPS if x[0]==k),k)
 def wrap(section, inner, n, sectiontitle,lang):
     return f'''<section class="slide">
-    <div class="brand">ᐱ Arvectum</div><div class="site">arvectum.com</div>
+    <div class="brand">{official_logo()}</div><div class="site">arvectum.com</div>
     <div class="top">{esc(section)}</div><div class="rail">{esc(sectiontitle)}</div>
     <main>{inner}</main><footer><b>POWER QUALITY</b> / 30.10.2026
     <span>{tr("ООО Арвектум • исследование рынка","Arvectum • market research",lang)} &nbsp; <strong>{n:03d}</strong></span></footer></section>'''
 CSS = """
 @page{size:13.333333in 7.5in;margin:0}
-*{box-sizing:border-box}html,body{margin:0;padding:0;font-family:"PT Sans",Arial,sans-serif;color:#152d42}
+*{box-sizing:border-box}html,body{margin:0;padding:0;font-family:"PT Sans",Arial,sans-serif;color:#283246}
 body{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
 .slide{position:relative;width:1280px;height:720px;background:#f6f8fa;overflow:hidden;page-break-after:always}
 .slide:last-child{page-break-after:auto}
-.brand{position:absolute;top:26px;left:40px;font-size:26px;font-weight:800;color:#00c8a0;letter-spacing:-.6px}
-.site{position:absolute;top:64px;left:105px;font-size:13px;color:#76919d}
+.brand{position:absolute;top:24px;left:40px;width:195px;height:35px}.brand svg{width:195px;height:auto;max-height:35px;display:block}
+ .site{position:absolute;top:65px;left:40px;font-size:13px;color:#76919d}
 .top{position:absolute;right:40px;top:32px;font-size:12px;letter-spacing:1.2px;color:#63808f;text-transform:uppercase;font-weight:700}
 .rail{position:absolute;left:39px;top:138px;width:230px;white-space:pre-line;font-size:21px;font-weight:800;line-height:1.17;color:#142e45;text-transform:uppercase}
 .slide main{position:absolute;left:306px;right:44px;top:119px;bottom:68px;overflow:hidden}
@@ -115,7 +128,7 @@ p{margin:8px 0 0;line-height:1.37}
 .panel{background:white;border-radius:12px;border:1px solid #dce5e9;padding:19px 23px}
 .key{font-size:13px;color:#5e7785;letter-spacing:.5px;font-weight:700;text-transform:uppercase}
 .value{font-size:22px;color:#152f45;font-weight:800;margin-top:6px}
-.call{margin-top:23px;background:#0b2040;padding:25px 29px;color:white;border-radius:11px;font-size:18px;line-height:1.4}
+.call{margin-top:23px;background:#001432;padding:25px 29px;color:white;border-radius:11px;font-size:18px;line-height:1.4}
 .list{margin-top:22px;display:grid;gap:12px}
 .listitem{display:flex;align-items:center;gap:12px}
 .listitem b{width:265px;font-size:15px}
@@ -123,21 +136,21 @@ p{margin:8px 0 0;line-height:1.37}
 .listitem i{display:block;height:100%;background:linear-gradient(90deg,#00b699,#28aac3);border-radius:11px}
 .listitem em{font-style:normal;color:#276a78;font-weight:800;width:55px;text-align:right}
 table{border-collapse:collapse;width:100%;margin-top:27px;font-size:14px;background:white}
-th{text-align:left;background:#0b2040;color:white;padding:11px;font-size:13px}
+th{text-align:left;background:#001432;color:white;padding:11px;font-size:13px}
 td{padding:10px 11px;border-bottom:1px solid #e0e8ee;vertical-align:top;line-height:1.3}
 tr:nth-child(even) td{background:#f8fafb}
 .stamp{font-size:12px;font-weight:800;letter-spacing:.8px;color:#00ad9d;margin-bottom:11px}
-.cover{background:#071832;color:#fff}
-.cover .brand{top:36px;left:57px;font-size:30px}
-.cover .site{top:74px;left:59px;color:#8baab8}
+.cover{background:#001432;color:#fff}
+.cover .brand{top:35px;left:56px;width:245px;height:45px}.cover .brand svg{width:245px;max-height:45px}
+.cover .site{top:91px;left:60px;color:#8baab8}
 .cover .tag{position:absolute;left:60px;top:140px;color:#40ddc4;letter-spacing:2px;font-size:13px;font-weight:800}
 .cover h1{position:absolute;top:225px;left:62px;color:white;font-size:71px;line-height:1.01}
 .cover .dek{position:absolute;left:65px;top:420px;width:660px;color:#c7dbe1;font-size:20px;line-height:1.4}
 .cover .date{position:absolute;bottom:57px;left:65px;color:#5bd7c5;font-size:15px;font-weight:800}
-.cover svg{position:absolute;right:0;top:255px;width:580px;height:230px}
+.cover > svg{position:absolute;right:0;top:255px;width:580px;height:230px}
 .case .rail{top:135px;font-size:18px}
 .case main{top:105px;bottom:58px}
-.case .number{font-family:"JetBrains Mono",monospace;font-size:15px;font-weight:800;color:#048c85;letter-spacing:.3px}
+.case .number{font-family:"JetBrains Mono","PT Mono",Menlo,monospace;font-size:15px;font-weight:800;color:#048c85;letter-spacing:.3px}
 .case h2{font-size:32px;margin-top:13px;max-height:76px;overflow:hidden}
 .chips{display:flex;gap:9px;margin-top:11px;align-items:center;flex-wrap:wrap}
 .chip{background:#e8f7f3;border-radius:30px;color:#058b77;font-size:12px;font-weight:800;padding:5px 11px}
@@ -148,7 +161,7 @@ tr:nth-child(even) td{background:#f8fafb}
 .case .datum{border-radius:10px;background:white;border:1px solid #d9e5ea;padding:12px 15px;min-height:68px;overflow:hidden}
 .case .datum .k{font-size:11px;color:#6c8490;font-weight:800;text-transform:uppercase}
 .case .datum .v{font-size:17px;font-weight:800;color:#173246;margin-top:5px;line-height:1.24;overflow-wrap:anywhere}
-.case .datum .v.sm{font-size:12.5px}
+.case .datum .v.sm{font-size:12.5px}.case .grid:not(.two) .datum .v{font-family:"JetBrains Mono","PT Mono",monospace;font-size:14px}
 .case .grid.two{grid-template-columns:1fr 1fr;margin-top:12px}
 .case .grid.two .datum{min-height:70px}
 .case .remark{margin-top:13px;background:#eff4f7;padding:12px 16px;border-radius:9px;font-size:13.4px;line-height:1.3;color:#36596c;max-height:140px;overflow:hidden}
@@ -158,6 +171,20 @@ tr:nth-child(even) td{background:#f8fafb}
 .index a{display:block;border:1px solid #dbe4ea;border-radius:7px;background:white;padding:10px 13px;text-decoration:none;color:#163349;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .index b{color:#00a98e;margin-right:7px}
 .smallnote{font-size:13px;color:#637d89;line-height:1.35;margin-top:15px}
+.case-evidence main{top:93px;bottom:51px}
+.case-evidence .buyer-short{font-size:22px;line-height:1.13;font-weight:800;margin:7px 0 8px}
+.case-evidence .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+.case-evidence .panel{padding:10px 14px}
+.case-evidence .panel h3{font-size:15px;color:#005d58;margin-bottom:8px}
+.case-evidence .kv{display:grid;grid-template-columns:47% 53%;gap:3px 8px;border-bottom:1px solid #dbe5ea;padding:3px 0;font-size:12px;line-height:1.13;min-height:24px}
+.case-evidence .kv:last-child{border-bottom:0}
+.case-evidence .kv b{font-weight:600;color:#4a6b77;overflow-wrap:anywhere}
+.case-evidence .kv span{font-weight:700;color:#172f44;overflow-wrap:anywhere}
+.case-evidence .proofs{background:white;border:1px solid #dbe5eb;border-radius:9px;padding:9px 14px;margin-top:8px}
+.case-evidence .proofs h3{font-size:14px;color:#076f6a;margin:0 0 6px}
+.case-evidence .proofs a{font-size:12px;display:inline-block;margin:3px 12px 3px 0;text-decoration:underline;color:#007d75;overflow-wrap:anywhere}
+.case-evidence .backlog{background:#eaf8f5;border-radius:8px;padding:8px 12px;font-size:11.5px;color:#265868;margin-top:6px;line-height:1.25}
+.case-evidence .mono{font-family:"JetBrains Mono","PT Mono",Menlo,monospace;font-size:12px}
 """
 def metric(v,t):return f'<div class="metric"><strong>{esc(v)}</strong><span>{esc(t)}</span></div>'
 def line(k,v):return f'<div class="listitem"><b>{esc(k)}</b><span class="track"><i style="width:{v[1]:.2f}%"></i></span><em>{v[0]}</em></div>'
@@ -171,7 +198,7 @@ def cover(d,lang):
     title=tr("РОССИЯ · 6–35 КВ","RUSSIA · 6–35 KV",lang)
     desc=tr(f"Полный корпус Power Quality: {n} уникальных закупочных лотов и {p} процедур. Обзор, экономика, участники рынка и детальные карточки каждой закупки.",
             f"Full Power Quality corpus: {n} unique procurement lots and {p} procedure IDs. Market overview, economics, participants, and a source-linked dossier for every lot.",lang)
-    return f'''<section class="slide cover"><div class="brand">ᐱ Arvectum</div>
+    return f'''<section class="slide cover"><div class="brand">{official_logo()}</div>
 <div class="site">arvectum.com</div><div class="tag">{tr("ОБЗОР РЕАЛЬНЫХ ЗАКУПОК","REAL PROCUREMENT REVIEW",lang)}</div>
 <h1>POWER QUALITY<br>{title}</h1><p class="dek">{esc(desc)}</p>
 <div class="date">2023–2026 / {tr("Срез 30 октября 2026","As of 30 October 2026",lang)}</div>
@@ -221,7 +248,7 @@ def summary_pages(d,lang):
         box(tr("Первичные источники","First-party sources",lang),str(orig),tr("Первый уровень доказательств","Direct evidence tier",lang)),
         box(tr("НМЦ / лимит","NMC / ceiling",lang),str(nmc),tr("Это не суммы подписанных договоров","Not signed contract prices",lang)),
         box(tr("Цены договоров","Contract-price entries",lang),str(cp),tr("Включая смешанные / вторичные значения","Includes mixed and secondary signals",lang))])
-    inn=f'<h1>{tr("Качество и полнота фактов","Evidence completeness",lang)}</h1><p class="sub">{tr("Состояние полей в 115 карточках; пустое поле означает «не подтверждено», а не ноль.","Field coverage across the corpus; an empty field means unverified, not zero.",lang)}</p><div class="dual">{boxes}</div><p class="smallnote">{tr(f"Имя участника торгов или поставщика встречается в {win} карточках; это не перечень подписанных поставщиков. Все {n} записей остаются на исследовательской проверке.",f"A named bid participant or supplier is present in {win} cases; this is not a signed-supplier census. All {n} cases remain under research review.",lang)}</p>'
+    inn=f'<h1>{tr("Качество и полнота фактов","Evidence completeness",lang)}</h1><p class="sub">{tr(f"Состояние полей в {n} карточках; пустое поле означает «не подтверждено», а не ноль.",f"Field coverage across {n} cases; an empty field means unverified, not zero.",lang)}</p><div class="dual">{boxes}</div><p class="smallnote">{tr(f"Имя участника торгов или поставщика встречается в {win} карточках; это не перечень подписанных поставщиков. Все {n} записей остаются на исследовательской проверке.",f"A named bid participant or supplier is present in {win} cases; this is not a signed-supplier census. All {n} cases remain under research review.",lang)}</p>'
     pages.append(("05 / "+tr("Проверка","Evidence",lang),tr("ДОКАЗАТЕЛЬСТВА","EVIDENCE",lang),inn))
     contracts=[q for q in rows if q["contract_price"]]
     contracts.sort(key=lambda q:float(q["contract_price"]),reverse=True)
@@ -361,6 +388,83 @@ def dossier(item,idx,total,lang,page):
     return page_html.replace('<section class="slide">',
                              f'<section id="case-{idx}" class="slide case" data-case-id="{key}">',1)
 
+def dossier_evidence(item, idx, total, lang, page, review):
+    """Second fixed-layout page: independent legal, technical and source evidence."""
+    en=lang!="ru"
+    unknown=tr("Не установлено","Not verified",lang)
+    case_id=esc(item["id"])
+    def kv(label,value,monospace=False):
+        value=short(str(value or unknown),95 if not monospace else 68)
+        return (f'<div class="kv"><b>{esc(label)}</b>'
+                f'<span{" class=mono" if monospace else ""}>{esc(value)}</span></div>')
+    def pval(key):
+        return priced_full(item.get(key),en)
+    left=[
+        (tr("Юридический режим","Regime",lang),item.get("regime")),
+        (tr("Номер процедуры","Notice / procedure",lang),item.get("procedure")),
+        (tr("ЭТП / источник","Marketplace",lang),item.get("platform")),
+        (tr("Объект / проект","Facility / project",lang),short(item.get("project"),72)),
+        (tr("НМЦ / лимит","NMC / ceiling",lang),pval("nmck")),
+        (tr("Предложение комиссии","Commission bid",lang),pval("bid")),
+        (tr("Цена договора по источнику","Reported contract value",lang),pval("contract_price")),
+        (tr("Доля PQ-оборудования","Equipment-only amount",lang),pval("equipment_only_price")),
+        (tr("Фактически оплачено","Payment confirmed",lang),
+         pval("paid_amount") if item.get("paid_verified") else unknown),
+        (tr("Реестровый номер договора","Contract registry number",lang),item.get("contract_no")),
+    ]
+    right=[
+        (tr("Номинал изделия (кВ)","Equipment rated kV",lang),item.get("voltage_kv")),
+        (tr("Мощность","Capacity",lang),item.get("power")),
+        (tr("Количество","Quantity",lang),
+         f'{item["quantity"]} {item["quantity_unit"]}' if item.get("quantity") else ""),
+        (tr("Заказчик / ИНН","Customer TIN",lang),item.get("buyer_inn")),
+        (tr("Победитель / участник","Bidder / winner",lang),item.get("winner")),
+        (tr("Подписанный поставщик","Signed supplier",lang),item.get("contract_signatory")),
+        (tr("ИНН поставщика","Supplier TIN",lang),item.get("supplier_inn")),
+        (tr("EPC / подрядчик","EPC contractor",lang),item.get("epc")),
+        (tr("Проектировщик","Designer",lang),item.get("designer")),
+        (tr("Изготовитель OEM","Equipment OEM",lang),item.get("oem")),
+    ]
+    left_html=''.join(kv(k,v,i in (1,9)) for i,(k,v) in enumerate(left))
+    right_html=''.join(kv(k,v) for k,v in right)
+    sources=item.get("source_urls") or []
+    link_html=''.join(
+        f'<a href="{esc(src["url"])}">[{i+1}] {esc(short(src["tier"] or "source",50))}'
+        f'{" · SHA" if src.get("sha") else ""}</a>'
+        for i,src in enumerate(sources[:4])
+    ) or esc(tr("Публичный первоисточник ещё не прикреплён","Public original not attached",lang))
+    missing=review["missing_fields"]
+    miss=[f for section in ("identity","technical","financial","participants","outcome")
+          for f in missing[section]]
+    priority=review["next_priority"]
+    known=f'{sum(len(a) for a in review["filled_fields"].values())}/{sum(len(a) for a in review["filled_fields"].values())+len(miss)}'
+    miss_display=", ".join(miss[:8])
+    if len(miss)>8: miss_display+=f" … +{len(miss)-8}"
+    grade=review["source_grade"]
+    caption=(f'{tr("ДОКАЗАТЕЛЬСТВА И РОЛИ","EVIDENCE AND ROLES",lang)} '
+             f'· {idx:03d}/{total:03d} · {case_id}')
+    head=(f'<div class="number">{caption}</div>'
+          f'<div class="buyer-short">{esc(short(item["buyer"],85))}</div>')
+    cols=(f'<div class="cols"><div class="panel"><h3>'
+          f'{tr("Идентичность и финансы","Identity and financial terms",lang)}</h3>'
+          f'{left_html}</div><div class="panel"><h3>'
+          f'{tr("Техника и участники","Technical data and counterparties",lang)}</h3>'
+          f'{right_html}</div></div>')
+    proof=(f'<div class="proofs"><h3>'
+           f'{tr("Первоисточники и проверка","Sources and verification",lang)}'
+           f' · {tr("класс","grade",lang)} {grade}'
+           f' · {tr("полей заполнено","fields populated",lang)} {known}'
+           f'</h3>{link_html}</div>')
+    backlog=(f'<div class="backlog">'
+             f'<b>{tr("ДАЛЬНЕЙШАЯ ПРОВЕРКА","NEXT EVIDENCE TASK",lang)}:</b> '
+             f'{esc(priority)} · {tr("Не установлено","Missing",lang)}: {esc(miss_display or "—")}'
+             f'</div>')
+    body=head+cols+proof+backlog
+    output=wrap("SOURCE EVIDENCE · "+f"{idx:03d}/{total:03d}",body,page,
+                tr("ПОЛЯ И СТАТУС","FIELDS / STATUS",lang),lang)
+    return output.replace('<section class="slide">',
+        f'<section id="case-{idx}-evidence" class="slide case-evidence" data-evidence-id="{case_id}">',1)
+
 def index_pages(items,lang,startpage):
     pages=[]
     for start in range(0,len(items),16):
@@ -380,12 +484,36 @@ def render(data,lang):
     items=data["items"];n=data["unique_lots"]
     if n != len(items) or len({x["id"] for x in items}) != n:
         raise ValueError("Lot cardinality drift")
+    assessment=audit_fields(data)
+    audit_by_id={q["id"]:q for q in assessment["cases"]}
     slides=[cover(data,lang)]
     for sec,rail,body in summary_pages(data,lang):
         slides.append(wrap(sec,body,len(slides)+1,rail,lang))
+    coverage=assessment["field_coverage"]
+    grade=assessment["source_grades"]
+    field_table=table([
+        tr("Поле","Field",lang),tr("Заполнено (из "+str(n)+")","Populated (of "+str(n)+")",lang)
+    ],[
+        (tr("НМЦ","Initial ceiling",lang),coverage.get("nmck",0)),
+        (tr("Номинальное напряжение изделия","Equipment rated voltage",lang),coverage.get("voltage_kv",0)),
+        (tr("Номинальная мощность","Rated reactive power",lang),coverage.get("power",0)),
+        (tr("Предложение по протоколу","Commission bid amount",lang),coverage.get("bid",0)),
+        (tr("Цена подписанного/заявленного договора","Reported contract price",lang),coverage.get("contract_price",0)),
+        (tr("Стоимость PQ-оборудования","Equipment-only price",lang),coverage.get("equipment_only_price",0)),
+        (tr("Изготовитель OEM","Equipment OEM",lang),coverage.get("oem",0)),
+    ])
+    quality=(f'<h1>{tr("Прогресс верификации полей","Field verification progress",lang)}</h1>'
+             f'<p class="sub">{tr("Заполнение поля не равно первичной верификации. Оценка на дату среза, 117 юридических лотов.","Populated fields do not imply first-party verification. Frozen current-corpus field coverage.",lang)}</p>'
+             +field_table+
+             f'<p class="smallnote">{tr("Источники по уровню доказательности","Source evidence grades",lang)}: '
+             f'A={grade.get("A",0)} · B={grade.get("B",0)} · C={grade.get("C",0)} · D={grade.get("D",0)}. '
+             f'{tr("Индивидуальные пробелы и следующий шаг — на второй странице каждого досье.","Individual missing fields and the next research step appear on every second case page.",lang)}</p>')
+    slides.append(wrap("FIELD COMPLETENESS",quality,len(slides)+1,
+                 tr("ПОЛНОТА ДАННЫХ","FIELD COVERAGE",lang),lang))
     slides.extend(index_pages(items,lang,len(slides)+1))
     for i,item in enumerate(items,1):
         slides.append(dossier(item,i,n,lang,len(slides)+1))
+        slides.append(dossier_evidence(item,i,n,lang,len(slides)+1,audit_by_id[item["id"]]))
     footer=(f'<h1>{tr("Выводы и следующий этап","Conclusions and next steps",lang)}</h1>'
             f'<div class="metrics">{metric(n,tr("Лотов","Lots",lang))}'
             f'{metric(data["distinct_procedures"],tr("Процедур","Procedures",lang))}'
@@ -409,7 +537,7 @@ def main():
     args.outdir.mkdir(parents=True,exist_ok=True)
     for lang in ("ru","en"):
         html_deck,pages=render(data,lang)
-        stem=f"ARVECTUM_FGI_PQ_FULL_{lang.upper()}_20261030"
+        stem=f"ARVECTUM_FGI_PQ_FULL_{lang.upper()}_20261030_V2"
         hp=args.outdir/(stem+".html")
         hp.write_text(html_deck,encoding="utf-8")
         print(f"{lang}: {pages} slide sections, {len(html_deck)} chars")

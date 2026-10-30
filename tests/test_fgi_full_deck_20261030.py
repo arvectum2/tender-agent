@@ -22,7 +22,8 @@ def test_both_html_decks_have_one_dossier_per_lot():
     obj=json.loads(SNAP.read_text(encoding='utf8'))
     for lang in ('ru','en'):
         out,pages=render(obj,lang)
-        assert pages==len(obj['items'])+21
+        assert pages==2*len(obj['items'])+22
+        assert out.count('data-evidence-id=')==len(obj['items'])
         assert out.count('data-case-id=')==len(obj['items'])
         assert '<a href=' in out
         assert '/Volumes/ArvectumSSD' not in out

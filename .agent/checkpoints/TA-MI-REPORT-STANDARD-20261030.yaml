@@ -1,0 +1,22 @@
+task_id: TA-MI-REPORT-STANDARD-20261030
+status: in_progress
+goal: Establish reproducible official Arvectum client reporting standard, fix genuine SVG logo and brand typography, normalize report sections and per-lot evidence/field coverage.
+definition_of_done:
+  - Fix source of official logo and brand typography/hex palette for all slides.
+  - Version executive-slide and per-lot field contract and evidence-grade status.
+  - Freeze latest live DB read-only snapshot with rigorous per-lot completeness matrix.
+  - Regenerate RU and EN PDFs without clipping and with one dossier per unique lot.
+  - Test all page IDs, layout, sources, embedded fonts, and commit under sole PR #521.
+completed:
+  - Found original brandbook v2, its source color palette and typography.
+  - Found official source vector src/modules/tender_operator_agent_demo/assets/arvectum-logo-block.svg.
+  - Identified fake Unicode ᐱ in existing generator and CSS fallback.
+  - Live DB 117 lots, 106 unique procedure IDs, 40 distinct EIS 223 notices as of 22:39 Moscow.
+current_stage: Write standard and implement reusable template.
+remaining:
+  - Create standard and completeness audit report.
+  - Build revised bilingual decks and validate.
+  - Commit, push and mark completed.
+last_verified_commit: 70ce9bb40fd43a5a1dba291cbdfdd970c511c1cd
+last_tests: Earlier 115-lot versions contain all IDs with no overflow but incorrect logo and incomplete structured fields.
+resume_instruction: Use internal APFS worktree /Users/master/ArvectumSafe/worktrees/ta-mi-clientdeck-20261030. Do not modify DB, Watchdog or unrelated .agent/current-task.yaml. Commit only into original PR #521.
