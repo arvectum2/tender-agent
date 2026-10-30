@@ -1,0 +1,559 @@
+{
+  "schema_version": "pq-watchdog-eis-day-research/1",
+  "run_id": "20261030T1931-MSK",
+  "as_of_moscow": "2026-10-30T19:35:26+03:00",
+  "issue_comment_id": 6527914460,
+  "pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "parent_head": "4515c4c7b316c59462590710ea9f1affdc7de9d4",
+  "db": {
+    "unique_lots_before": 117,
+    "unique_lots_after": 117,
+    "distinct_procedures": 106,
+    "distinct_eis223_notices": 40,
+    "new_unique_lots": 0,
+    "new_underlying_projects": 0,
+    "new_core_6_35kv_equipment_lots": 0,
+    "new_named_winners": 0,
+    "new_signed_suppliers": 0,
+    "new_executed_sales": 0,
+    "mutation": false,
+    "client_html_regenerated": false
+  },
+  "source_research": {
+    "first_party_source": "zakupki.gov.ru EIS SOAP RI223/PRIZ",
+    "requests_total": 17,
+    "ri223_requests": 14,
+    "priz_requests": 3,
+    "complete_with_archive_scan": 13,
+    "provider_no_data": 4,
+    "new_sha_verified_original_zip_files": 28,
+    "distinct_original_zip_sha256": 28,
+    "xml_scanned": 2124,
+    "new_candidate_notice_ids": [
+      "32616534558"
+    ],
+    "verified_core_candidate_ids": [],
+    "full_months_covered": 0,
+    "cells": [
+      {
+        "subsystem": "PRIZ",
+        "date": "2026-10-30",
+        "region": "66",
+        "source_method": "getDocsByOrgRegion",
+        "http": "SOAP no_data",
+        "status": "provider_response_review",
+        "archive_count": 0,
+        "xml_count": 0,
+        "candidate_numbers": []
+      },
+      {
+        "subsystem": "PRIZ",
+        "date": "2026-10-30",
+        "region": "77",
+        "source_method": "getDocsByOrgRegion",
+        "http": "SOAP no_data",
+        "status": "provider_response_review",
+        "archive_count": 0,
+        "xml_count": 0,
+        "candidate_numbers": []
+      },
+      {
+        "subsystem": "PRIZ",
+        "date": "2026-10-30",
+        "region": "78",
+        "source_method": "getDocsByOrgRegion",
+        "http": "SOAP no_data",
+        "status": "provider_response_review",
+        "archive_count": 0,
+        "xml_count": 0,
+        "candidate_numbers": []
+      },
+      {
+        "subsystem": "RI223",
+        "date": "2024-06-15",
+        "region": "66",
+        "source_method": "getDocsByOrgRegion",
+        "http": "SOAP no_data",
+        "status": "provider_response_review",
+        "archive_count": 0,
+        "xml_count": 0,
+        "candidate_numbers": []
+      },
+      {
+        "subsystem": "RI223",
+        "date": "2024-06-15",
+        "region": "77",
+        "source_method": "getDocsByOrgRegion",
+        "http": "SOAP completed",
+        "status": "complete_with_archive_scan",
+        "archive_count": 1,
+        "xml_count": 3,
+        "candidate_numbers": []
+      },
+      {
+        "subsystem": "RI223",
+        "date": "2025-09-15",
+        "region": "36",
+        "source_method": "getDocsByOrgRegion",
+        "http": "SOAP completed",
+        "status": "complete_with_archive_scan",
+        "archive_count": 1,
+        "xml_count": 3,
+        "candidate_numbers": []
+      },
+      {
+        "subsystem": "RI223",
+        "date": "2025-09-15",
+        "region": "77",
+        "source_method": "getDocsByOrgRegion",
+        "http": "SOAP completed",
+        "status": "complete_with_archive_scan",
+        "archive_count": 4,
+        "xml_count": 365,
+        "candidate_numbers": []
+      },
+      {
+        "subsystem": "RI223",
+        "date": "2026-10-29",
+        "region": "24",
+        "source_method": "getDocsByOrgRegion",
+        "http": "SOAP completed",
+        "status": "complete_with_archive_scan",
+        "archive_count": 1,
+        "xml_count": 95,
+        "candidate_numbers": []
+      },
+      {
+        "subsystem": "RI223",
+        "date": "2026-10-29",
+        "region": "77",
+        "source_method": "getDocsByOrgRegion",
+        "http": "SOAP completed",
+        "status": "complete_with_archive_scan",
+        "archive_count": 6,
+        "xml_count": 536,
+        "candidate_numbers": []
+      },
+      {
+        "subsystem": "RI223",
+        "date": "2026-10-29",
+        "region": "78",
+        "source_method": "getDocsByOrgRegion",
+        "http": "SOAP completed",
+        "status": "complete_with_archive_scan",
+        "archive_count": 2,
+        "xml_count": 105,
+        "candidate_numbers": []
+      },
+      {
+        "subsystem": "RI223",
+        "date": "2026-10-30",
+        "region": "02",
+        "source_method": "getDocsByOrgRegion",
+        "http": "SOAP completed",
+        "status": "complete_with_archive_scan",
+        "archive_count": 2,
+        "xml_count": 101,
+        "candidate_numbers": []
+      },
+      {
+        "subsystem": "RI223",
+        "date": "2026-10-30",
+        "region": "24",
+        "source_method": "getDocsByOrgRegion",
+        "http": "SOAP completed",
+        "status": "complete_with_archive_scan",
+        "archive_count": 1,
+        "xml_count": 91,
+        "candidate_numbers": []
+      },
+      {
+        "subsystem": "RI223",
+        "date": "2026-10-30",
+        "region": "25",
+        "source_method": "getDocsByOrgRegion",
+        "http": "SOAP completed",
+        "status": "complete_with_archive_scan",
+        "archive_count": 1,
+        "xml_count": 26,
+        "candidate_numbers": []
+      },
+      {
+        "subsystem": "RI223",
+        "date": "2026-10-30",
+        "region": "36",
+        "source_method": "getDocsByOrgRegion",
+        "http": "SOAP completed",
+        "status": "complete_with_archive_scan",
+        "archive_count": 1,
+        "xml_count": 16,
+        "candidate_numbers": []
+      },
+      {
+        "subsystem": "RI223",
+        "date": "2026-10-30",
+        "region": "66",
+        "source_method": "getDocsByOrgRegion",
+        "http": "SOAP completed",
+        "status": "complete_with_archive_scan",
+        "archive_count": 1,
+        "xml_count": 96,
+        "candidate_numbers": []
+      },
+      {
+        "subsystem": "RI223",
+        "date": "2026-10-30",
+        "region": "77",
+        "source_method": "getDocsByOrgRegion",
+        "http": "SOAP completed",
+        "status": "complete_with_archive_scan",
+        "archive_count": 6,
+        "xml_count": 599,
+        "candidate_numbers": [
+          "32616534558"
+        ]
+      },
+      {
+        "subsystem": "RI223",
+        "date": "2026-10-30",
+        "region": "78",
+        "source_method": "getDocsByOrgRegion",
+        "http": "SOAP completed",
+        "status": "complete_with_archive_scan",
+        "archive_count": 1,
+        "xml_count": 88,
+        "candidate_numbers": []
+      }
+    ],
+    "original_archives": [
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "77",
+        "date": "2024-06-15",
+        "subsystem": "RI223",
+        "archive_index": 1,
+        "sha256": "d8a58da6c03cb6c1e62abf403a44d1db55475fd71fe0e41cc8dc2a2a58a11f24",
+        "xml_count": 3,
+        "relative_path": "RI223/purchaseNotice/2024-06-15/region-77/archive-001/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "36",
+        "date": "2025-09-15",
+        "subsystem": "RI223",
+        "archive_index": 1,
+        "sha256": "41694fba96787db623966411a8c4936e96f0a636ec950709d56d20f26a5d6964",
+        "xml_count": 3,
+        "relative_path": "RI223/purchaseNotice/2025-09-15/region-36/archive-001/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "77",
+        "date": "2025-09-15",
+        "subsystem": "RI223",
+        "archive_index": 1,
+        "sha256": "a9be1c7547102bee1f5054e02f87bff798c2f19a6abc438bdd40b1394eca9755",
+        "xml_count": 100,
+        "relative_path": "RI223/purchaseNotice/2025-09-15/region-77/archive-001/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "77",
+        "date": "2025-09-15",
+        "subsystem": "RI223",
+        "archive_index": 2,
+        "sha256": "59f34cabfc31eac61bd5a174db8a7dbdfe7a45ba56c55ba0d16de14701912222",
+        "xml_count": 100,
+        "relative_path": "RI223/purchaseNotice/2025-09-15/region-77/archive-002/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "77",
+        "date": "2025-09-15",
+        "subsystem": "RI223",
+        "archive_index": 3,
+        "sha256": "eb234d7c3ba70061772c66d8bda7eaca28de65510f4ee1f23e9606ce49862b83",
+        "xml_count": 100,
+        "relative_path": "RI223/purchaseNotice/2025-09-15/region-77/archive-003/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "77",
+        "date": "2025-09-15",
+        "subsystem": "RI223",
+        "archive_index": 4,
+        "sha256": "8a1648d19c148d6e5e72f2332c57bf71f3f6a417f02c769c7eaff7a095072b6a",
+        "xml_count": 65,
+        "relative_path": "RI223/purchaseNotice/2025-09-15/region-77/archive-004/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "24",
+        "date": "2026-10-29",
+        "subsystem": "RI223",
+        "archive_index": 1,
+        "sha256": "4a9aa084186c47211fc507c5f95526f588ebea7228c7260686a51d660e52df23",
+        "xml_count": 95,
+        "relative_path": "RI223/purchaseNotice/2026-10-29/region-24/archive-001/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "77",
+        "date": "2026-10-29",
+        "subsystem": "RI223",
+        "archive_index": 1,
+        "sha256": "78dd540683ed17d96535962fe634e3be6b883015a7cd5de6b6b31d5ee651a897",
+        "xml_count": 100,
+        "relative_path": "RI223/purchaseNotice/2026-10-29/region-77/archive-001/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "77",
+        "date": "2026-10-29",
+        "subsystem": "RI223",
+        "archive_index": 2,
+        "sha256": "196fd54a4df44df3f56871aea7b29696308b09357577b3c06e701fb01da61d46",
+        "xml_count": 100,
+        "relative_path": "RI223/purchaseNotice/2026-10-29/region-77/archive-002/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "77",
+        "date": "2026-10-29",
+        "subsystem": "RI223",
+        "archive_index": 3,
+        "sha256": "dc5aa905cb5dfbf375ec4c188acf6da9da8c559deb57f7449bc73e1c64de01cc",
+        "xml_count": 36,
+        "relative_path": "RI223/purchaseNotice/2026-10-29/region-77/archive-003/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "77",
+        "date": "2026-10-29",
+        "subsystem": "RI223",
+        "archive_index": 4,
+        "sha256": "bca04478f0efe9176991f23a99635baaf1de1d570f95e40e786884d278fe815e",
+        "xml_count": 100,
+        "relative_path": "RI223/purchaseNotice/2026-10-29/region-77/archive-004/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "77",
+        "date": "2026-10-29",
+        "subsystem": "RI223",
+        "archive_index": 5,
+        "sha256": "022a4c396c8293838caaf3a12ddb02178f18800213c0ae2c990b8868d31599c9",
+        "xml_count": 100,
+        "relative_path": "RI223/purchaseNotice/2026-10-29/region-77/archive-005/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "77",
+        "date": "2026-10-29",
+        "subsystem": "RI223",
+        "archive_index": 6,
+        "sha256": "71013152858572d6435e8a794a092f4d03da2e090d80c3f639acaba3bd9846d8",
+        "xml_count": 100,
+        "relative_path": "RI223/purchaseNotice/2026-10-29/region-77/archive-006/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "78",
+        "date": "2026-10-29",
+        "subsystem": "RI223",
+        "archive_index": 1,
+        "sha256": "57052f16410d93e2e4f83a9ae5b2d70b8c564459ad03ea7c4962274d085d3aa6",
+        "xml_count": 5,
+        "relative_path": "RI223/purchaseNotice/2026-10-29/region-78/archive-001/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "78",
+        "date": "2026-10-29",
+        "subsystem": "RI223",
+        "archive_index": 2,
+        "sha256": "fd83b607251c09930e31b3332d30e6b9d509daeb9b6e899a5a3984435de6b222",
+        "xml_count": 100,
+        "relative_path": "RI223/purchaseNotice/2026-10-29/region-78/archive-002/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "02",
+        "date": "2026-10-30",
+        "subsystem": "RI223",
+        "archive_index": 1,
+        "sha256": "377f23dd63a5327582878c57ec3df0fb295e9302e371c4565410ac85f4255e96",
+        "xml_count": 100,
+        "relative_path": "RI223/purchaseNotice/2026-10-30/region-02/archive-001/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "02",
+        "date": "2026-10-30",
+        "subsystem": "RI223",
+        "archive_index": 2,
+        "sha256": "94ab412e7258936a87c171401be33e88fa8823caa8c43848fdd59dde94086a67",
+        "xml_count": 1,
+        "relative_path": "RI223/purchaseNotice/2026-10-30/region-02/archive-002/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "24",
+        "date": "2026-10-30",
+        "subsystem": "RI223",
+        "archive_index": 1,
+        "sha256": "3a411e0bf7a201ae9bc9567a2c77b709d5494e4c84716e6b069ae25f63d3b223",
+        "xml_count": 91,
+        "relative_path": "RI223/purchaseNotice/2026-10-30/region-24/archive-001/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "25",
+        "date": "2026-10-30",
+        "subsystem": "RI223",
+        "archive_index": 1,
+        "sha256": "539e755d9619b81f3c81065e52017beafe35596ecac04ac5f99df55f6d57f91b",
+        "xml_count": 26,
+        "relative_path": "RI223/purchaseNotice/2026-10-30/region-25/archive-001/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "36",
+        "date": "2026-10-30",
+        "subsystem": "RI223",
+        "archive_index": 1,
+        "sha256": "a91e373e4469eca95bda43e67c4097d7d150d1c6fdf9fd1e65e1ddb610d6f861",
+        "xml_count": 16,
+        "relative_path": "RI223/purchaseNotice/2026-10-30/region-36/archive-001/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "66",
+        "date": "2026-10-30",
+        "subsystem": "RI223",
+        "archive_index": 1,
+        "sha256": "93ccf7ba5177c0a2b9011d63e45e2bd9a3bdf15287600df8fd533c176a510b75",
+        "xml_count": 96,
+        "relative_path": "RI223/purchaseNotice/2026-10-30/region-66/archive-001/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "77",
+        "date": "2026-10-30",
+        "subsystem": "RI223",
+        "archive_index": 1,
+        "sha256": "b32ac676169befc93891b51ec4972b87238dcf0de5b0dfc2dc9645c866ead836",
+        "xml_count": 99,
+        "relative_path": "RI223/purchaseNotice/2026-10-30/region-77/archive-001/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "77",
+        "date": "2026-10-30",
+        "subsystem": "RI223",
+        "archive_index": 2,
+        "sha256": "9f32afcb2ae8a533de1777a68520efa2bb56770bf60bedd82984eb5415f5b23d",
+        "xml_count": 100,
+        "relative_path": "RI223/purchaseNotice/2026-10-30/region-77/archive-002/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "77",
+        "date": "2026-10-30",
+        "subsystem": "RI223",
+        "archive_index": 3,
+        "sha256": "67945d98bc902afc425e70ab1423ee685e4cbb53389a91d6cb3f517dfbbbf724",
+        "xml_count": 100,
+        "relative_path": "RI223/purchaseNotice/2026-10-30/region-77/archive-003/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "77",
+        "date": "2026-10-30",
+        "subsystem": "RI223",
+        "archive_index": 4,
+        "sha256": "1313c57f572e022b10c78782ab05968d5c4a2fe9e0b57cef90ba64f89ddf91e1",
+        "xml_count": 100,
+        "relative_path": "RI223/purchaseNotice/2026-10-30/region-77/archive-004/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "77",
+        "date": "2026-10-30",
+        "subsystem": "RI223",
+        "archive_index": 5,
+        "sha256": "8ba1a9c3990d7df8e364844feaddcacce3312af2ea30347dfda21d5fc0e7aaee",
+        "xml_count": 100,
+        "relative_path": "RI223/purchaseNotice/2026-10-30/region-77/archive-005/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "77",
+        "date": "2026-10-30",
+        "subsystem": "RI223",
+        "archive_index": 6,
+        "sha256": "fac7894b7e45b626918b38a87189072a13ced63f829052c1889193baca6dee19",
+        "xml_count": 100,
+        "relative_path": "RI223/purchaseNotice/2026-10-30/region-77/archive-006/documentation-archive.zip"
+      },
+      {
+        "source": "EIS SOAP getDocsByOrgRegion",
+        "region": "78",
+        "date": "2026-10-30",
+        "subsystem": "RI223",
+        "archive_index": 1,
+        "sha256": "67497a255aa56e9b4dc5355ed8739fc160eb4a2da73361463f3b20fb684990c4",
+        "xml_count": 88,
+        "relative_path": "RI223/purchaseNotice/2026-10-30/region-78/archive-001/documentation-archive.zip"
+      }
+    ],
+    "runtime_root": "/Users/master/ArvectumSafe/runtime/market-intelligence/pq-agent-pilot-live/eis-research-20261030-1931"
+  },
+  "candidate_review": {
+    "notice": "32616534558",
+    "classification": "lexical_false_positive_excluded",
+    "original_xml_sha256": "702a1c06e02df86f659e17cc5a4bcfb06f2578b9b7dd078ccaa585bade2e8d92",
+    "original_zip_sha256": "b32ac676169befc93891b51ec4972b87238dcf0de5b0dfc2dc9645c866ead836",
+    "observed_scope": "Construction of protective structures for 500kV transmission line supports; parent 500kV substation program mentions 220kV BSK and 220kV reactors, not this procurement scope",
+    "original_title_quote": "Право заключения договора на выполнение работ по строительству защитных сооружений опор ВЛ 500 кВ Нижнеангарская – Усть-Кут № 1",
+    "nmc_rub": "6313586280",
+    "nmc_classification": "tower-protection construction; NOT PQ equipment price",
+    "reason": "БСК-220 кВ appears only inside parent investment-project name; this lot is 500kV transmission-line tower protective construction",
+    "supplier": null,
+    "signed_contract": null
+  },
+  "limitations": [
+    "EIS PRIZ returned no_data for 2026-10-30 regions 66/77/78; this is not evidence of zero 44-FZ market.",
+    "EIS RI223 returned no_data for 2024-06-15 region 66; this is not evidence of zero market.",
+    "17 region-day/provider cells are not exhaustive monthly or national coverage.",
+    "SOAP ZIPs are source originals, not 28 relevant PQ tenders or signed contracts.",
+    "No new source-verified unique in-scope lot; no append-only DB write or client HTML regeneration."
+  ],
+  "next_targets": [
+    {
+      "id": "РН61003961",
+      "retry_eligible_moscow": "2026-10-30 20:00",
+      "goal": "original post-deadline ETP result, named supplier and price for 6kV capacitor equipment"
+    },
+    {
+      "id": "ГП630876",
+      "retry_eligible_moscow": "2026-10-30 23:40",
+      "goal": "original GPB technical file and 6-35kV scope"
+    },
+    {
+      "id": "32615684088",
+      "retry_eligible_moscow": "2026-10-31 09:00",
+      "goal": "signed contract original and legal contractor identity; known winner alone is not signed supplier"
+    }
+  ],
+  "safety": {
+    "internal_apfs_preflight": "pass",
+    "git_clean_before": "pass",
+    "new_full_backup_required": false,
+    "reason_no_backup": "No DB insert",
+    "source_sha_readback": "28/28 pass",
+    "other_collections_untouched": true,
+    "pr_auto_merge": false
+  }
+}

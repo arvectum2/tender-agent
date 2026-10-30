@@ -3038,3 +3038,36 @@ mi_watchdog_eis_primary_winner_scope_20261030_1835:
     19 ZIP and 1666 XML, no full month. PG 117/106/40 unchanged.
     Retry RN61003961 after 20:00 and GP630876 after 23:40
     on 30 Oct, 32615684088 signed contract after 31 Oct 09:00 MSK.
+
+mi_watchdog_eis_region_day_20261030_1931:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6527914460
+  parent_commit: 4515c4c7b316c59462590710ea9f1affdc7de9d4
+  report: docs/market_intelligence/PQ_WATCHDOG_EIS_REGION_DAY_20261030_1931.json
+  report_sha256: 82281fc222ca90e16689d45122cc5bc879d98d8cae71f04d27e18a68f2f80c1f
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_db_lots: 0
+  fresh_sha_verified_original_zip_files: 28
+  original_xml_scanned: 2124
+  source_requests: 17
+  new_core_6_35kv_lots: 0
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    17 EIS region-day SOAP cells (14 RI223, 3 PRIZ); 28 fresh
+    SHA-verified original ZIPs, 2124 XML. Sole lexical candidate
+    32616534558 is 500kV transmission tower protective works;
+    BSK 220kV appears only in parent project title, NOT PQ supply.
+    No DB change: 117 lots / 106 procedures / 40 EIS 223 notices.
+    PRIZ no_data for 2026-10-30 regions 66/77/78 is not no-market.
+    Retry RN61003961 after 2026-10-30 20:00 MSK, GP630876 after
+    23:40, signed contract 32615684088 after 2026-10-31 09:00.
