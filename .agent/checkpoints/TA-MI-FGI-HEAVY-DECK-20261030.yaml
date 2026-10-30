@@ -1,5 +1,5 @@
 task_id: TA-MI-FGI-HEAVY-DECK-20261030
-status: in_progress
+status: completed
 objective: Publish two polished Russian/English Power Quality FGI client PDF presentations on the established Arvectum visual system including every unique source lot, not only 10 showcase cases.
 definition_of_done:
   - Freeze provenance-sourced, uniquely deduplicated full read-only PostgreSQL snapshot, label its actual size.
@@ -11,12 +11,12 @@ definition_of_done:
 completed_stages:
   - Located and examined the 10-page original Russian and English client PDFs attached to the conversation; 960x540 pt, Arvectum navy/teal branded slide layout.
   - Captured immutable read-only snapshot of all current PQ PostgreSQL cases, now 115 unique lots / 104 procedure IDs / 38 distinct EIS 223 notices, with fields and allowed public sources.
-current_stage: Full bilingual presentations generated and audited; final Git publication and commit receipt pending.
+current_stage: Bilingual client heavy decks published on sole PR #521; report design/coverage verified.
 remaining_stages:
   - Generate bilingual HTML and PDF slides. [done]
   - Run visual clipping and per-case completeness audits. [done]
-  - Publish outputs to original PR #521 and checkpoint completion.
-last_verified_commit: 5000cbe
+  - Publish outputs to original PR #521 and checkpoint completion. [done]
+last_verified_commit: 3ca518acbebf2aed0b31936ea0b985976a56ea95
 latest_tests: 115 unique live-snapshot lots, 104 distinct procedures, 38 EIS notices. Two 136-page PDF decks generated; 115 lot IDs in every edition; 142 source hyperlinks per edition. Chrome overflow audit 0, PDF out-of-page text 0. Three focused unit tests PASS, Ruff PASS.
 checkout: /Users/master/ArvectumSafe/worktrees/ta-mi-clientdeck-20261030
 source_snapshot: data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261030.json
@@ -28,3 +28,7 @@ report_readme: docs/market_intelligence/FGI_FULL_DECK_20261030.md
 source_snapshot_sha256: e78673ab4ba53109e52f045b6eafd8e485ad2fb929a2151d91ac15a77072b115
 report_ru_sha256: 4f31a34e0b21735c16a58666f033e41f89d9c5c1710ad7d15a3336cf5438d722
 report_en_sha256: 8b2b87ebb47a52199d3050642fd4add0a0e6b1bf204e31876ec2599b5c8826c1
+
+published_report_commit: 3ca518acbebf2aed0b31936ea0b985976a56ea95
+verification: 136 pages per language; 115 lot dossier pages / 115 distinct canonical IDs in both PDFs; no page overflow; 142 linked sources per edition; Ruff PASS; three targeted tests PASS.
+research_state: TA-MI-AUTONOMY-20261027 remains in_progress; this document-generation task is completed.
