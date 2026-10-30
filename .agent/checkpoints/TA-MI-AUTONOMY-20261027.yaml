@@ -2618,3 +2618,37 @@ mi_watchdog_apatit_cross_platform_20261030_0528:
     filter HTTP200 but no case-specific result, no auth bypass. Retry Metal-IT
     106044-TT after 09:00 MSK and Roseltorg 32616435269 after 10:38 MSK.
     PG 113/102/37; client HTML unchanged.
+
+mi_watchdog_tektorg_primary_20261030_0632:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  report: docs/market_intelligence/PQ_WATCHDOG_TEKTORG_PRIMARY_20261030_0632.json
+  report_sha256: 507f6cd079e7e78656d7465f92576fc7d528bf0f75dff742ed9ee311c342a9be
+  source_capture_commit: 5c839d6f417e94194ee07dbca7ee954a63766bcc
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 113
+  postgres_unique_lots_after: 114
+  postgres_distinct_procedures: 103
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 1
+  new_source_verified_core_6_35kv_lots: 1
+  new_underlying_projects: 0
+  new_sha_verified_captures: 9
+  new_technical_originals: 3
+  new_signed_suppliers: 0
+  new_verified_sales_rub: 0
+  db_mutation: true
+  client_html_regenerated: true
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    TEK-Torg primary XLSX confirms ANPZ RN61003961 lot 2600124554:
+    four 6kV indoor capacitor units (2x300 and 2x450 kvar).
+    Distinct procedure +1, underlying project +0 versus RN60405071.
+    Fresh internal pg_dump SHA and pg_restore verified, atomic append
+    with readback passed. PG 114/103/37. Bashneft RN61004155 official
+    7z confirms 6kV UKRM A450 and R900; already in DB. Nine new primary
+    captures including three technical originals. No winner, signed
+    supplier or paid sales. HTML refreshed in place, 114 rows, 22 tests.
+    Retry STATCOM 106044-TT after 09:00, Roseltorg 32616435269 after
+    10:38, ANPZ outcome after 20:00 Moscow.

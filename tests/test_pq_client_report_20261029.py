@@ -92,12 +92,19 @@ def test_existing_client_document_contains_full_live_corpus():
         / "docs/market_intelligence/POWER_QUALITY_CLIENT_PREVIEW_20261024.html"
     )
     report = path.read_text(encoding="utf8")
-    assert "2026-10-29" in report
+    from datetime import date, datetime
+    from zoneinfo import ZoneInfo
+
+    as_of = re.search(r"срез (20\d{2}-\d{2}-\d{2})", report)
+    assert as_of is not None
+    assert date(2026, 10, 29) <= date.fromisoformat(as_of.group(1)) <= datetime.now(
+        ZoneInfo("Europe/Moscow")
+    ).date()
     ids = re.findall(
         r'<tr data-year="[^"]+" data-group="[^"]+" data-search="[^"]*"><td>([^<]+)</td>',
         report,
     )
-    assert len(ids) >= 113
+    assert len(ids) >= 114
     assert len(ids) == len(set(ids))
     assert "НМЦ не равна цене договора" in report
     assert "Показано" in report
