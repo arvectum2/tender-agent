@@ -5,6 +5,7 @@ import json
 import re
 import subprocess
 import sys
+from datetime import UTC, datetime
 from pathlib import Path
 
 from scripts.market_intelligence.append_pq_delta_20261029 import (
@@ -146,6 +147,10 @@ def main():
     if json.loads(gate.stdout)["status"] != "pass":
         raise RuntimeError("Preflight blocked")
     backup = verified_backup(args.backup_manifest)
+    backup_at = datetime.fromisoformat(backup["created_at_utc"])
+    if (backup.get("pg_restore_list_verified") is not True
+            or not 0 <= (datetime.now(UTC) - backup_at).total_seconds() <= 1800):
+        raise RuntimeError("Fresh pg_restore-checked full backup required")
     result = update(m, row, before)
     result["backup_sha256"] = backup["sha256"]
     result["manifest_sha256"] = hashlib.sha256(args.manifest.read_bytes()).hexdigest()

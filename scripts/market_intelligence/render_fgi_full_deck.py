@@ -532,12 +532,13 @@ def main():
     p.add_argument("--snapshot",type=Path,default=SNAP)
     p.add_argument("--outdir",type=Path,default=Path("docs/market_intelligence"))
     p.add_argument("--html-only",action="store_true")
+    p.add_argument("--version",default="V2",choices=["V2","V3","V4","V5","V6"])
     args=p.parse_args()
     data=json.loads(args.snapshot.read_text(encoding="utf8"))
     args.outdir.mkdir(parents=True,exist_ok=True)
     for lang in ("ru","en"):
         html_deck,pages=render(data,lang)
-        stem=f"ARVECTUM_FGI_PQ_FULL_{lang.upper()}_20261030_V2"
+        stem=f"ARVECTUM_FGI_PQ_FULL_{lang.upper()}_20261030_{args.version}"
         hp=args.outdir/(stem+".html")
         hp.write_text(html_deck,encoding="utf-8")
         print(f"{lang}: {pages} slide sections, {len(html_deck)} chars")

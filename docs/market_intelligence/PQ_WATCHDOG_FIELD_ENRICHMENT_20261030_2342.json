@@ -1,0 +1,125 @@
+{
+  "schema_version": "pq-watchdog-field-enrichment/1",
+  "as_of_moscow": "2026-10-30T23:42:59.171515+03:00",
+  "issue_comment_id": 6532902063,
+  "canonical_pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "tested_parent_commit": "745500b43451f3d298946b61cd2fc4a972fd63f8",
+  "acceptance": {
+    "status": "pass",
+    "internal_apfs": true,
+    "git_clean_before_db_write": true,
+    "backup_manifest": "/Users/master/ArvectumSafe/backups/data-platform/data-platform-arvectum_data-20261030T203934Z-68339.dump.manifest.json",
+    "backup_sha256": "2fff2eb9a56831d690dbf49702c93e671bb8f65945fcdeef4d2e299f9829020a",
+    "pg_restore_list_verified": true
+  },
+  "postgresql": {
+    "unique_lots_before": 117,
+    "unique_lots_after": 117,
+    "distinct_procedures": 106,
+    "eis_223_notices": 40,
+    "new_unique_lots": 0,
+    "new_core_6_35kv_lots": 0,
+    "new_underlying_projects": 0,
+    "new_signed_suppliers": 0,
+    "new_executed_sales": 0
+  },
+  "field_enrichment": {
+    "canonical_id": "commercial:4657777:lot1",
+    "field": "quantity",
+    "before": null,
+    "after": 6,
+    "verified_fields_gained": 1,
+    "source_url": "https://www.b2b-center.ru/market/postavka-blokov-kondensatornykh-dlia-nuzhd-po-btses-po-kes-ooo/tender-4657777/",
+    "source_sha256": "a2b6ea5931172eebda42c3876dacce7a4dae95b6b8df38d8798c60b3d3c183ea",
+    "exact_original_html_quote": "Количество:</td><td>6&nbsp;шт",
+    "old_content_sha256": "5db5729679c2b5126013a89f4638ed1121a83fc40b71fbcbf5b0f9f42c2b9f20",
+    "new_content_sha256": "2ddb20b2e17278f22ea75ccc9e82dfa219a470fd2fd20718fc24a1c7eba4d0aa",
+    "old_revision": 1,
+    "new_revision": 2,
+    "db_receipt": "pq-field-enrichment-4657777-20261030T2039.json",
+    "scope_caution": "Capacitor component voltage unverified; not a proven 6-35kV equipment sale"
+  },
+  "source_requests": [
+    {
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=58601033125240001550000",
+      "http": 404,
+      "result": "contract card unavailable"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32413764701",
+      "http": 404,
+      "result": "notice page unavailable"
+    },
+    {
+      "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=D12310E98C084DC0B90B88C588DA72E7",
+      "http": 404,
+      "result": "official file unavailable"
+    },
+    {
+      "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=B2DC4E3EBEE64DB6ADB57D33C419BD97",
+      "http": 404,
+      "result": "official file unavailable"
+    },
+    {
+      "url": "https://etpgpb.ru/procedures/?search=%D0%93%D0%9F630876",
+      "http": 200,
+      "sha256": "db111f03681538311f7952bddb794f959f4af32ddd9156a56d90cda888068e86",
+      "result": "generic search HTML; zero exact ГП630876/УКРМ occurrence; no case-specific original"
+    },
+    {
+      "url": "https://www.b2b-center.ru/market/postavka-blokov-kondensatornykh-dlia-nuzhd-po-btses-po-kes-ooo/tender-4657777/",
+      "http": 200,
+      "sha256": "d144798a85f90a07bc85ff4b30e8651b1496c722850404c1d1b3d2d567ccf95f",
+      "result": "fresh timestamped version of existing first-party card; no new outcome, still active/zero bids"
+    }
+  ],
+  "additional_attempts": [
+    {
+      "url": "https://etpgpb.ru/procedures/?search=%D0%93%D0%9F630876",
+      "method": "JS-rendered public fetch",
+      "result": "proxy_error; no HTTP status confirmed"
+    }
+  ],
+  "source_metrics": {
+    "first_party_http_requests": 6,
+    "http_200": 2,
+    "http_404": 4,
+    "fresh_immutable_sha_captures": 2,
+    "fresh_case_specific_captures": 1,
+    "new_substantive_case_originals": 0,
+    "new_protocols": 0,
+    "new_signed_contract_originals": 0,
+    "new_full_month_source_searches": 0
+  },
+  "client_v3": {
+    "snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261030_v3.json",
+    "audit": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261030_v3.json",
+    "quantity_coverage_before": 44,
+    "quantity_coverage_after": 45,
+    "denominator": 117,
+    "ru_pdf": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_RU_20261030_V3.pdf",
+    "en_pdf": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_EN_20261030_V3.pdf",
+    "slides_each": 256,
+    "v2_frozen_unchanged": true,
+    "original_client_html_unchanged": true
+  },
+  "next_three": [
+    {
+      "case": "32615684088",
+      "retry_after_moscow": "2026-10-31 09:00",
+      "target": "EIS official signed supplier/contract registry, not commission winner"
+    },
+    {
+      "case": "РН61003961",
+      "retry_after_moscow": "2026-10-31 10:00",
+      "target": "TEK-Torg post-deadline named result and technical scope"
+    },
+    {
+      "case": "ГП630876",
+      "retry_after_moscow": "2026-10-31 12:00 or immediately upon new exact official URL",
+      "target": "GPB original technical documents, protocol, signed supplier"
+    }
+  ],
+  "limitations": "No new core 6-35kV lots, signed sales, national market coverage or full-month searches. GPB HTTP200 was generic; EIS official endpoints 404 are access failures, not evidence of no contract."
+}
