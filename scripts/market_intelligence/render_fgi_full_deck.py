@@ -348,6 +348,15 @@ def dossier(item,idx,total,lang,page):
     status_tag=short(readable_status(item["status"],lang),55)
     chips=chips.replace("</div>",f'<span class="chip alt" title="{esc(item["status"])}">{tr("СТАТУС","STATUS",lang)}: {esc(status_tag)}</span></div>')
     desc=item["description"] or item["project"] or tr("Предмет не указан в карточке","Subject not populated in the source row",lang)
+    # A later SHA-verified signed contract supersedes stale narrative wording,
+    # without rewriting the immutable source record or naming a supplier.
+    if (item.get("signed_contract_verified") and item.get("contract_no")
+            and ", но подпись и исполнение не доказаны." in desc):
+        desc=desc.replace(
+            ", но подпись и исполнение не доказаны.",
+            f"; впоследствии договор №{item['contract_no']} зарегистрирован; "
+            "поставщик-подписант и оплата не установлены.",
+        )
     # English deck preserves the original Russian procurement source wording.
     pref=tr("ПРЕДМЕТ ЗАКУПКИ","ORIGINAL RUSSIAN PROCUREMENT SUBJECT",lang)
     desc_class="small" if len(desc)>240 else ""
@@ -543,7 +552,7 @@ def main():
     p.add_argument("--snapshot",type=Path,default=SNAP)
     p.add_argument("--outdir",type=Path,default=Path("docs/market_intelligence"))
     p.add_argument("--html-only",action="store_true")
-    p.add_argument("--version",default="V2",choices=["V2","V3","V4","V5","V6","V7","V8","V9","V10","V11","V12","V13","V14","V15","V16","V17","V18","V19","V20"])
+    p.add_argument("--version",default="V2",choices=["V2","V3","V4","V5","V6","V7","V8","V9","V10","V11","V12","V13","V14","V15","V16","V17","V18","V19","V20","V21"])
     args=p.parse_args()
     data=json.loads(args.snapshot.read_text(encoding="utf8"))
     args.outdir.mkdir(parents=True,exist_ok=True)

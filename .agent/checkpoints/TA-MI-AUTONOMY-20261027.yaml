@@ -3923,3 +3923,41 @@ mi_watchdog_bidzaar_power_20261031_run11:
     with unresolved conflicting nonempty status and unsigned supplier
     identity. Next 32616266007 supplier/status, 351-062 nominal voltage,
     32616400421 after 1 Nov 07:30 MSK. PR 521 REVIEW, no auto-merge.
+
+mi_watchdog_signed_32616266007_20261031_2140:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6547516658
+  report: docs/market_intelligence/PQ_WATCHDOG_SIGNED_32616266007_20261031_2140.json
+  report_sha256: a9891ba0ddad9121d17f257c527abab883369438fd63413f2497aeb6cf4bc0ad
+  internal_apfs_acceptance: pass
+  backup_sha256: f856fe91be3d5cddbd9b964bfe7de22de341e33c3fdefb19b1bafe75dbc29514
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 7
+  first_party_http_requests: 9
+  fresh_sha_verified_primary_captures: 9
+  new_distinct_original_shas: 6
+  new_original_final_protocols: 1
+  newly_verified_signed_suppliers: 0
+  newly_verified_paid_sales: 0
+  client_report_version: V21
+  canonical_v29_rows_unchanged: 101
+  targeted_tests: 13 passed, Ruff passed, RU/EN 258 pages
+  resume_instruction: >-
+    EIS 32616266007 registered signed contract 1605245 14 Oct 2026
+    662460 RUB, verified original EIS printForm and final protocol
+    32616266007-01 (one admitted of two). Seven previously missing
+    contract fields CAS enriched with SHA+pg_restore full backup;
+    supplier signatory and payment unverified. 500kV parent with 8.3kV
+    spares adjacent, not 6-35kV system. PG 118/107/41 unchanged.
+    Nine captured first-party originals, 6 distinct new SHA.
+    Bidzaar 351-062 old DOC table 6kV filename versus apparent 10kV
+    selection requires visual verification; no voltage DB overwrite.
+    V21 RU/EN 258 pages; HTML preview unchanged. Next 351-062 DOC
+    nominal conflict, 32616266007 supplier identity, 32616400421
+    after 1 Nov 07:30 MSK. PR 521 REVIEW; no auto-merge.
