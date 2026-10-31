@@ -1,5 +1,5 @@
 task_id: TA-MI-FGI-REFERENCE-CASE-20261031
-status: in_progress
+status: completed
 goal: Build one fully researched, source-graded, branded exemplary Power Quality procurement case slide dossier and lock reference template for all later cases.
 selected_lot: 223fz:32616181358:lot1
 selected_reason: Rich first-party set including EIS contract register, buyer and INN, bid protocol with named commission winner, equipment SKUs and original dated documents.
@@ -12,13 +12,13 @@ definition_of_done:
 completed:
   - Selected the richest original-source procurement case 32616181358 by structured evidence score.
   - First-party Lot-online platform confirmed procedure RAD260032779, NMC 3078500 inc VAT22, deadline 2026-07-20, result 2026-08-03, final protocol file 2026-08-05.
-current_stage: Source-bound exemplar and bilingual slide/evidence packages generated, visually inspected and tested. Pending final Git publication.
+current_stage: Original-source-rich Arvectum reference case finished and published as RU/EN one-slide PDFs and full three-page evidence dossiers.
 remaining:
   - Finalize verified normalized record and explicit evidence gaps. [done]
   - Render exemplar and validate RU/EN PDFs. [done]
-  - Test and publish. [in_progress]
-last_verified_commit: f4f1aabeac1476eb08824e86eb13e482e85b04e8
-last_tests: Latest DB at 2026-10-31 09:40 MSK had 118 unique lots; no DB writes performed.
+  - Test and publish. [done]
+last_verified_commit: 536c8e6a3bdbcc0a9416ea2016196023fdcb5d51
+last_tests: Three targeted source/financial/PDF regression tests PASS; Ruff PASS; RU+EN each 3 16:9 pages + standalone 1-page slide, Chrome DOM overflow audit 0; originals TZ and protocol verified by SHA. No DB writes.
 resume_instruction: Continue exemplar RЭТО 32616181358 in isolated ta-mi-clientdeck-20261030 worktree; use first-party original procurement and register sources, no inventing. Do not alter unrelated .agent/current-task.yaml or original research task; keep sole PR #521.
 
 source_spec_original_sha256: 9ceb44be68abcf07729cb9045b1a3ce7b54456810c93c9a32885781d3a578032
@@ -30,3 +30,11 @@ derived_fields: 1
 not_verified_fields: 10
 not_applicable_fields: 1
 source_limitation: original EIS registered-contract page currently HTTP404; do not infer actual signed supplier, OEM, delivery or paid revenue.
+
+published_artifact_commit: 536c8e6a3bdbcc0a9416ea2016196023fdcb5d51
+ru_main_slide: docs/market_intelligence/ARVECTUM_RETO_REFERENCE_SLIDE_RU_20261031.pdf
+en_main_slide: docs/market_intelligence/ARVECTUM_RETO_REFERENCE_SLIDE_EN_20261031.pdf
+ru_full_dossier: docs/market_intelligence/ARVECTUM_RETO_REFERENCE_RU_20261031.pdf
+en_full_dossier: docs/market_intelligence/ARVECTUM_RETO_REFERENCE_EN_20261031.pdf
+normalization_matrix: data/market_intelligence/power_quality/exemplars/reto_32616181358_20261031.v1.json
+next_step: Review this single benchmark slide with owner before applying the same template to the rest of the research corpus; continue separate source-driven background collection under TA-MI-AUTONOMY checkpoint.
