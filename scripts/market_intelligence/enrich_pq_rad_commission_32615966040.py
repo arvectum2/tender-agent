@@ -131,7 +131,7 @@ UPDATE dp_resources SET content_hash='{new_hash}',updated_at=now()
 WHERE collection_id='{COL}' AND external_id='{CID}' AND content_hash='{row['hash']}';
 DO $g$ BEGIN IF (SELECT count(*) FROM dp_resources r JOIN dp_records d USING(resource_id)
  WHERE r.collection_id='{COL}' AND r.external_id='{CID}' AND r.content_hash='{new_hash}'
- AND d.revision={row['rev'] + 1} AND d.data->>'winner'={js(WINNER)}
+ AND d.revision={row['rev'] + 1} AND d.data->'winner'={js(WINNER)}
  AND d.metadata->'rad_commission_enrichment'->>'member_sha256'='{MEMBER_SHA}')<>1
 THEN RAISE EXCEPTION 'RAD postwrite mismatch'; END IF; END $g$;
 COMMIT;"""
