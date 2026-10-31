@@ -3716,10 +3716,10 @@ mi_watchdog_tektorg_ukrm_20261031_1545:
   task_id: TA-MI-AUTONOMY-20261027
   status: in_progress
   canonical_pr: 521
-  issue_comment_id: 6542851437
+  issue_comment_id: 6543427402
   latest_tested_code_commit: 5950cfd4edc6dcd7cbc0a01f81380da653a05c11
   report: docs/market_intelligence/PQ_WATCHDOG_TEK_TORG_UKRM_20261031_1545.json
-  report_sha256: db9e74212eae413b493e9146be8c582e9d86d1547bedb8d4a409f960d03b918d
+  report_sha256: 4455c103330ae16c06dab24e1f43c58f168852b30325203fc8024561a9687d9c
   internal_apfs_acceptance: pass
   backup_sha256: 80f9172e8059542617fb1f2bcd7df2c2518a0f1acebc3ff36360fc1f1e93664f
   postgres_unique_lots_before: 118
