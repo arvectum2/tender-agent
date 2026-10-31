@@ -123,7 +123,10 @@ THEN RAISE EXCEPTION 'PQ owner/count mismatch';END IF;END $g$;"""]
     for c, row, sources in items:
         cid = c["cid"]
         d, meta, h = prepare(c, row, sources)
-        nulls = " AND ".join(f"(d.data->'{k}') IS NULL" for k in c["fields"])
+        nulls = " AND ".join(
+            f"((d.data->'{k}') IS NULL OR (d.data->'{k}') = 'null'::jsonb)"
+            for k in c["fields"]
+        )
         sql.extend([
             f"""DO $g$ BEGIN IF (SELECT count(*) FROM dp_records d
 JOIN dp_resources r USING(resource_id) WHERE r.collection_id='{COL}'
