@@ -47,3 +47,24 @@ def test_owner_mismatch_fails_closed():
     with pytest.raises(RuntimeError):
         validate(r)
 
+
+
+def test_client_note_requires_exact_sha_and_customer_supplied_equipment():
+    from scripts.market_intelligence.export_fgi_deck_snapshot import (
+        source_bound_bidzaar_306644_note,
+    )
+
+    r = row()
+    r["data"].update(FIELDS)
+    r["data"]["evidence"].append({
+        "url": "https://bidzaar.com/api/filestorage/files/download/8042258e-bd58-4efc-9f98-b00db6113f82",
+        "sha256": "28c970162cc7b36cff91df3b64ea4168c5717cc43554aea162440e6d10272516",
+    })
+    meta = {"bidzaar_306644_p2": {
+        "source_sha256": "28c970162cc7b36cff91df3b64ea4168c5717cc43554aea162440e6d10272516",
+        "customer_provided_equipment": True, "not_an_equipment_sale": True,
+    }}
+    note = source_bound_bidzaar_306644_note(r["data"], meta)
+    assert "Оборудование предоставляет заказчик" in note
+    meta["bidzaar_306644_p2"]["not_an_equipment_sale"] = False
+    assert source_bound_bidzaar_306644_note(r["data"], meta) is None

@@ -118,6 +118,29 @@ def verified_bashkirenergo_contract(data, metadata):
     )
 
 
+def source_bound_bidzaar_306644_note(data, metadata):
+    """Supersede stale pre-download note only with SHA-bound technical evidence."""
+    proof = (metadata or {}).get("bidzaar_306644_p2") or {}
+    expected = "28c970162cc7b36cff91df3b64ea4168c5717cc43554aea162440e6d10272516"
+    if (data.get("canonical_id") != "commercial:306-644:lot35"
+            or data.get("voltage_kv") != "6"
+            or data.get("power") != "900 кВАр на каждую из 2 УКРМ"
+            or data.get("quantity") != 1 or data.get("quantity_unit") != "усл.ед"
+            or proof.get("source_sha256") != expected
+            or proof.get("customer_provided_equipment") is not True
+            or proof.get("not_an_equipment_sale") is not True
+            or not any(e.get("sha256") == expected for e in data.get("evidence", []))):
+        return None
+    return (
+        "ТЗ Bidzaar №306-644, SHA-256 " + expected + ": установка и ПНР двух "
+        "УКРМ 6 кВ по 900 кВАр каждая на площадке ООО Сибстекло. "
+        "Оборудование предоставляет заказчик; предмет запроса — монтаж, "
+        "подключение и ПНР, а не продажа двух новых УКРМ. "
+        "1 усл.ед — объём работ, не число физических установок. "
+        "Проект договора не подписан, цена и исполнитель не установлены."
+    )
+
+
 def source_bound_bashkirenergo_note(data, metadata):
     if not verified_bashkirenergo_contract(data, metadata):
         return None
@@ -327,7 +350,7 @@ def capture():
             "technical":{k: clean(v,220) for k,v in list(technical.items())[:12]},
             "status":clean("official_registered_ukrm_supply_contract_supplier_unverified" if verified_bashkirenergo_contract(d,r.get("metadata")) else ("official_registered_contract_supplier_unverified" if verified_meleuz_contract(d,r.get("metadata")) else ("official_registered_design_contract_supplier_unverified" if verified_tyazhinskaya_contract(d,r.get("metadata")) else ("RAD_official_failed_single_application_committee_recommended_contract" if verified_rad_commission(d,r.get("metadata")) else d.get("status")))),200),
             "market_scope":clean("high_voltage_network_requirement_up_to_6p3kv_not_nameplate" if verified_meleuz_contract(d,r.get("metadata")) else d.get("market_scope"),220),
-            "notes":clean(source_bound_bashkirenergo_note(d,r.get("metadata")) or source_bound_tyazhinskaya_note(d,r.get("metadata")) or source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
+            "notes":clean(source_bound_bidzaar_306644_note(d,r.get("metadata")) or source_bound_bashkirenergo_note(d,r.get("metadata")) or source_bound_tyazhinskaya_note(d,r.get("metadata")) or source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
             "review":r["review"],
             "source_urls":safe_urls((d.get("evidence") or []) + source_bound_rad_sources(d,r.get("metadata"))),
         })

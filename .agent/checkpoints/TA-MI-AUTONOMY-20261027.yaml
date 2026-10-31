@@ -3819,3 +3819,36 @@ mi_watchdog_bidzaar_technical_20261031_run11:
     No DB mutation or client report churn. Next guarded source-bound P2 review
     351-062 and 358-830, EIS 32514947144 signed contract register.
     PR 521 REVIEW, no auto-merge.
+
+mi_watchdog_sibsteklo_bidzaar_20261031_1831:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6545428693
+  tested_writer_commit: c051f1f5ab5528ce6c7edffbed6c93d86bcc7f68
+  report: docs/market_intelligence/PQ_WATCHDOG_SIBSTEKLO_BIDZAAR_20261031_1831.json
+  report_sha256: eb909a9b91f26bed7125a9ff3fdf3e03690549912a46e65e3cafeb95ae8a9d56
+  internal_apfs_acceptance: pass
+  backup_sha256: 6a75fc9845e5055405ce6616b5bb555166a8ad6c6dfc3718cb994e1d51aa5fb8
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 2
+  fresh_sha_verified_primary_original_versions: 6
+  first_party_http_requests: 6
+  newly_verified_signed_suppliers: 0
+  newly_verified_paid_sales: 0
+  client_report_version: V18
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Bidzaar 306-644 original DOCX confirms two customer-owned UKRM 6kV
+    900 kvar each; this is installation/commissioning, NOT equipment
+    supply. Two P2 null-only fields CAS-updated after SHA+pg_restore full
+    backup, PG 118/107/41 unchanged. Six first-party originals SHA-verified.
+    Unsigned contractor template is NOT a signed contract.
+    B2B 4643332 original confirms failed zero-bid procedure (already
+    known). V18 RU/EN 258-page dossiers with corrected source-bound note.
+    Next 351-062 per-unit power, 32514947144 signed contract, and
+    32616266007 500kV scope/status conflict. No auto-merge.
