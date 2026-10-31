@@ -1,0 +1,137 @@
+{
+  "schema_version": "pq-watchdog-source-bound-run/1",
+  "completed_moscow": "2026-10-31T20:39:45+03:00",
+  "run_id": 11,
+  "issue_comment_id": 6546809041,
+  "canonical_pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "tested_code_commit": "dc5b12a744bc78dfde34783b5481b497f46d041b",
+  "internal_apfs_acceptance": "pass",
+  "new_full_backup_sha256": "7715c36457c0cfa91f509133d9f2bbd225be3909556c57fed87121ca591f8764",
+  "postgres_before": {
+    "unique_lots": 118,
+    "distinct_procedures": 107,
+    "eis_223_notices": 41
+  },
+  "postgres_after": {
+    "unique_lots": 118,
+    "distinct_procedures": 107,
+    "eis_223_notices": 41
+  },
+  "new_unique_lots": 0,
+  "new_deduplicated_projects": 0,
+  "new_verified_db_fields": 1,
+  "new_client_visible_fields": 1,
+  "new_original_protocols": 0,
+  "new_named_commission_winners": 0,
+  "new_signed_supplier_identities": 0,
+  "new_executed_prices": 0,
+  "new_paid_sales": 0,
+  "new_month_source_searches_exhaustively_covered": 0,
+  "first_party_request_attempts": 5,
+  "first_party_http200": 3,
+  "first_party_tls_errors": 2,
+  "fresh_sha_verified_source_versions": 3,
+  "new_distinct_original_shas": 0,
+  "source_captures": [
+    {
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=54716016979260041190000",
+      "http_status": 200,
+      "sha256": "87a2d3a7d45a8d2a0bd06f93dd0c29312b5aa768d011865b3b6fb7b185c1bdab",
+      "relative_file": "captures/223fz_32616266007_lot1/20261031T173539688444Z-2677dc90-87a2d3a7d45a8d2a.bin",
+      "bytes": 134926,
+      "captured_utc": "2026-10-31T17:35:39.689522+00:00"
+    },
+    {
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/event-log.html?reestrNumber=54716016979260041190000",
+      "http_status": 200,
+      "sha256": "e942c2140a542d63239da8fa210f15a16c902bcaabcc77292ae088308dfe995d",
+      "relative_file": "captures/223fz_32616266007_lot1/20261031T173539996429Z-f49734d5-e942c2140a542d63.bin",
+      "bytes": 127193,
+      "captured_utc": "2026-10-31T17:35:39.997828+00:00"
+    },
+    {
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/event-log.html?reestrNumber=54716016979260041190000",
+      "http_status": 200,
+      "sha256": "e942c2140a542d63239da8fa210f15a16c902bcaabcc77292ae088308dfe995d",
+      "relative_file": "captures/223fz_32616266007_lot1/20261031T173545743242Z-8a44f70f-e942c2140a542d63.bin",
+      "bytes": 127193,
+      "captured_utc": "2026-10-31T17:35:45.743980+00:00"
+    }
+  ],
+  "source_review": {
+    "case_id": "commercial:351-062:lot1",
+    "field": "power",
+    "new_value": "3000 кВАр (по опросному листу; не умножать на 2)",
+    "quantity": 2,
+    "voltage_kv": "unverified_nominal",
+    "docx_sha256": "e53a74ef8a4fda14aedce7254488013187aba3bba7780b5a9c6443e4d0caacaf",
+    "card_sha256": "097d69a3e4aaff20b38fbe6c5e1ef83263fc2ab567b9004ceb869e7ff2e27894",
+    "exact_quote": "УКРМ на 3000 кВАр , должен быть отдельно стоящий.",
+    "additional_quote": "Проект: ПС 35/6 кВ \"ПОСКО\"",
+    "finding": "Standalone UKRM nominal 3000 kvar in buyer original questionnaire for PS 35/6kV POSKO. Two units in lot; do not assume 6000 kvar or signed sale.",
+    "db_receipt": "receipts/pq-bidzaar-351062-p2-20261031T1738.json",
+    "db_content_hash": "a8469a7b2d904f3933ab5fcaca0dbe194261d1da2c1cfdbc30cd63139728b5bc"
+  },
+  "rechecked_no_new_field": {
+    "case_id": "223fz:32616266007:lot1",
+    "registry": "54716016979260041190000",
+    "registered_contract_no": "1605245",
+    "signed_date": "2026-10-14",
+    "registered_price_rub": "662460.00",
+    "source_sha_unchanged": true,
+    "status_conflict": "Existing nonempty failed-procedure status conflicts with signed registered contract; no overwrite; supplier identity still unverified",
+    "scope": "500kV substation capacitor spares, adjacent to core 6-35kV system"
+  },
+  "web_discovery": {
+    "queries": 6,
+    "full_month_coverage": 0,
+    "already_imported": "32616497692 10kV UKRM EPC; no duplicate",
+    "unverified_lead": "139419-ТТ Надеждинский металлургический завод UKRM September 2026, only Energybase secondary listing; external ETP link requires authentication; no promotion"
+  },
+  "report_version": "V20",
+  "snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261031_v20.json",
+  "snapshot_sha256": "c04bad4618e7058095b0169b9d4e76ef0077180814e241eba47977d3cad04e0e",
+  "audit": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261031_V20.json",
+  "audit_sha256": "ca8ae3fc6c245006cf1ddd6cc02aaa06e2f9ac0165aaa5156fb9313c55a85f25",
+  "pdfs": {
+    "ru": {
+      "path": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_RU_20261031_V20.pdf",
+      "sha256": "637bf1cdd0ab5c724ba40261c2546f955ba2355e0b5ddba953dc230464b2141d",
+      "pages": 258
+    },
+    "en": {
+      "path": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_EN_20261031_V20.pdf",
+      "sha256": "5c639be0f6c6c4d8c1ec7be299c4af4783f5fceed797f5d14fa1646e4db00cb3",
+      "pages": 258
+    }
+  },
+  "client_html_preview_unchanged": true,
+  "canonical_v29_rows_unchanged": 101,
+  "tests": "10 targeted passed; Ruff passed; RU/EN 258 pages; target PDF page 144 contains 3000kvar",
+  "next_three": [
+    {
+      "case": "223fz:32616266007:lot1",
+      "eligible": "now",
+      "goal": "first-party supplier identity and signed-status conflict review; never overwrite non-null without owner decision"
+    },
+    {
+      "case": "commercial:351-062:lot1",
+      "eligible": "now",
+      "goal": "P2 nominal voltage and unit allocation from original old DOC layout; signed outcome/INN only if first-party proof"
+    },
+    {
+      "case": "223fz:32616400421:lot1",
+      "eligible": "2026-11-01 07:30 MSK",
+      "goal": "retry official technical original/protocol after source cooldown"
+    }
+  ],
+  "limitations": [
+    "No newly distinct primary source SHA; three captured EIS versions duplicate earlier bytes.",
+    "No newly verified supplier, paid sale, new lot or exhaustive monthly coverage.",
+    "No assumption that 2 x 3000 kvar is contracted; contract price and PQ-only allocation unknown.",
+    "PR 521 REVIEW; no merge; no unrelated production mutations."
+  ],
+  "task_status": "in_progress",
+  "auto_merge": false
+}

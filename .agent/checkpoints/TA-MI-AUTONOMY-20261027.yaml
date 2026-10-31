@@ -3889,3 +3889,37 @@ mi_watchdog_filter_signed_20261031_1935:
     Five SHA-verified first-party originals, V19 RU/EN 258 pages.
     Next 351-062 P2 now, 32616266007 status conflict now,
     32616400421 after 1 Nov 07:30 Moscow. No auto-merge.
+
+mi_watchdog_bidzaar_power_20261031_run11:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6546809041
+  latest_tested_code_commit: dc5b12a744bc78dfde34783b5481b497f46d041b
+  report: docs/market_intelligence/PQ_WATCHDOG_BIDZAAR_POWER_20261031_RUN11.json
+  report_sha256: 4cc2d97dede74d42252ba4330929ee70d49bcf7c962377b430d33c3c9f570acc
+  internal_apfs_acceptance: pass
+  backup_sha256: 7715c36457c0cfa91f509133d9f2bbd225be3909556c57fed87121ca591f8764
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 1
+  first_party_request_attempts: 5
+  fresh_sha_verified_source_versions: 3
+  new_distinct_original_shas: 0
+  newly_verified_signed_suppliers: 0
+  newly_verified_paid_sales: 0
+  client_report_version: V20
+  canonical_v29_rows_unchanged: 101
+  targeted_tests: 10 passed, Ruff passed, RU/EN 258 pages
+  resume_instruction: >-
+    Bidzaar 351-062 buyer DOCX SHA e53a74ef8a4fda14 proves nominal UKRM
+    3000 kvar for PS 35/6kV POSKO; two tender units but total not
+    proven. Null-only power CAS-enriched after fresh SHA+pg_restore
+    backup, readback 118/107/41 unchanged. V20 RU/EN 258 pages.
+    EIS 32616266007 registry 1605245/662460 RUB rechecked unchanged
+    with unresolved conflicting nonempty status and unsigned supplier
+    identity. Next 32616266007 supplier/status, 351-062 nominal voltage,
+    32616400421 after 1 Nov 07:30 MSK. PR 521 REVIEW, no auto-merge.
