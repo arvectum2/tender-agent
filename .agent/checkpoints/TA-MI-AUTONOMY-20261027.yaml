@@ -3329,3 +3329,35 @@ mi_watchdog_rad_commission_20261031_0340:
     Retry EIS signed contract and 32615684088 after 31 Oct 09:00 MSK;
     RN61003961 after 10:00; 106044-TT after 09:00.
     No auto-merge; keep task in_progress.
+
+mi_watchdog_b2b_bidders_20261031_0440:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6537265337
+  baseline_git_head: 3e4987c24140b89ad17061b25a7516d0d768452a
+  report: docs/market_intelligence/PQ_WATCHDOG_B2B_BIDDERS_20261031_0440.json
+  report_sha256: b88e6d350bff5de2d9a422daa88f6a74059cc92fda2b85da09577751e51b6ac0
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_lots: 0
+  new_source_verified_db_fields: 0
+  new_named_bidders: 4
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  fresh_primary_originals: 2
+  db_mutation: false
+  client_reports_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    B2B 4642507 / EIS 32616474682 now shows four NAMED legal-entity bidders
+    and offers covering BOTH lots jointly, not per-lot bids and not a winner.
+    First-party SHA 439919c11ddd8c430e717aa90e1fbe170d1bf68bd0e98d2517118ec9b285e69f preserved in internal APFS;
+    no signed supplier or PQ-only sale. EIS 32616412267 and 32616506708
+    official document URLs returned HTTP404; do not mark market absent.
+    Retry signed contracts 32615966040 and 32615684088 after 09:00 MSK;
+    TEK-Torg RN61003961 after 10:00; B2B award after 03 Dec 10:00.
+    No DB or client-report churn; keep PR #521 in review, no auto-merge.
