@@ -118,6 +118,44 @@ def verified_bashkirenergo_contract(data, metadata):
     )
 
 
+def verified_filter_signed_contract(data, metadata):
+    proof = (metadata or {}).get("eis_contract_enrichment") or {}
+    sources = proof.get("sources") or []
+    return (
+        data.get("canonical_id") == "223fz:32514947144:lot1"
+        and data.get("contract_registry_number") == "54716016979250029010000"
+        and data.get("contract_registered_price_rub") == "3158400.00"
+        and data.get("pq_equipment_only_contract_rub") == "3158400.00"
+        and data.get("contract_execution_completed") is True
+        and data.get("registered_signed_contract_verified") is True
+        and proof.get("role") == "signed_completed_12kv_capacitor_components_for_500kv_substation"
+        and proof.get("supplier_verified") is False
+        and proof.get("payment_verified") is False
+        and len(sources) == 3
+        and [x.get("sha256") for x in sources] == [
+            "66134a163aa0327c095ca0d68d691a597190d2d993c67dbf3cdb4fddc390d234",
+            "ed1399c65155df6f9728e7a2ded84257d175663ae21830110a14e5b2753e6233",
+            "bd23d3b1f01add4850de79eb46d20ef04f9cf51a7e28a43e39c24d5948c71d63",
+        ]
+    )
+
+
+def source_bound_filter_signed_note(data, metadata):
+    if not verified_filter_signed_contract(data, metadata):
+        return None
+    return (
+        "Официальный реестр ЕИС: договор №1423177 от 24.07.2025, "
+        "реестровый №54716016979250029010000, 3 158 400 руб. "
+        "Предмет: 14 конденсаторов КЭПФ-12-450-2УХЛ1 по 225 600 руб. "
+        "каждый (12 кВ, 450 кВАр); сумма целиком относится к "
+        "конденсаторным компонентам. 23.09.2025 реестр отметил "
+        "«Исполнение завершено», но отдельное подтверждение оплаты "
+        "и личности подписавшего поставщика отсутствует. "
+        "Объект применения — ПС 500 кВ; это не доказательство продажи "
+        "полной системы компенсации 6–35 кВ."
+    )
+
+
 def source_bound_bidzaar_306644_note(data, metadata):
     """Supersede stale pre-download note only with SHA-bound technical evidence."""
     proof = (metadata or {}).get("bidzaar_306644_p2") or {}
@@ -348,9 +386,9 @@ def capture():
             "power":clean(val(d,"power") or
                 val(technical,"power_kvar","power_mvar","nominal_power"),100),
             "technical":{k: clean(v,220) for k,v in list(technical.items())[:12]},
-            "status":clean("official_registered_ukrm_supply_contract_supplier_unverified" if verified_bashkirenergo_contract(d,r.get("metadata")) else ("official_registered_contract_supplier_unverified" if verified_meleuz_contract(d,r.get("metadata")) else ("official_registered_design_contract_supplier_unverified" if verified_tyazhinskaya_contract(d,r.get("metadata")) else ("RAD_official_failed_single_application_committee_recommended_contract" if verified_rad_commission(d,r.get("metadata")) else d.get("status")))),200),
+            "status":clean("official_completed_filter_capacitor_contract_supplier_unverified" if verified_filter_signed_contract(d,r.get("metadata")) else ("official_registered_ukrm_supply_contract_supplier_unverified" if verified_bashkirenergo_contract(d,r.get("metadata")) else ("official_registered_contract_supplier_unverified" if verified_meleuz_contract(d,r.get("metadata")) else ("official_registered_design_contract_supplier_unverified" if verified_tyazhinskaya_contract(d,r.get("metadata")) else ("RAD_official_failed_single_application_committee_recommended_contract" if verified_rad_commission(d,r.get("metadata")) else d.get("status"))))),200),
             "market_scope":clean("high_voltage_network_requirement_up_to_6p3kv_not_nameplate" if verified_meleuz_contract(d,r.get("metadata")) else d.get("market_scope"),220),
-            "notes":clean(source_bound_bidzaar_306644_note(d,r.get("metadata")) or source_bound_bashkirenergo_note(d,r.get("metadata")) or source_bound_tyazhinskaya_note(d,r.get("metadata")) or source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
+            "notes":clean(source_bound_filter_signed_note(d,r.get("metadata")) or source_bound_bidzaar_306644_note(d,r.get("metadata")) or source_bound_bashkirenergo_note(d,r.get("metadata")) or source_bound_tyazhinskaya_note(d,r.get("metadata")) or source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
             "review":r["review"],
             "source_urls":safe_urls((d.get("evidence") or []) + source_bound_rad_sources(d,r.get("metadata"))),
         })
