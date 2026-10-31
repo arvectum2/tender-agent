@@ -3634,3 +3634,39 @@ mi_watchdog_tyazhinskaya_eis_20261031_1237:
     HTTP404 or generic HTTP200 lacking exact notice identity, zero new captures.
     V13 bilingual 258-page report. Retry 32616400421 1 Nov 07:30,
     106044-TT 1 Nov 09:00, RN61003961 1 Nov 10:00 Moscow. No auto-merge.
+
+mi_watchdog_bashkirenergo_eis_20261031_1336:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6542253055
+  latest_tested_code_commit: 8a008382e35efaf0fcf23cade9bfd0a68428b031
+  report: docs/market_intelligence/PQ_WATCHDOG_BASHKIRENERGO_EIS_REGISTERED_20261031_1336.json
+  report_sha256: 8da2ce8bd35c24fa3bd67e63757a268141dd513b88bb761d872a18e8e8633dea
+  internal_apfs_acceptance: pass
+  backup_sha256: 662206c65ce74b82485d70ff3e9270268288141d287c079db248333978a5bab9
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 5
+  new_client_visible_fields: 3
+  new_registered_contracts_existing_lot: 1
+  newly_verified_signed_suppliers: 0
+  newly_verified_payments: 0
+  fresh_sha_verified_primary_original_versions: 3
+  client_report_version: V14
+  canonical_v29_rows_unchanged: 101
+  targeted_tests: 21 passed, Ruff passed, PDF RU/EN 258 pages
+  resume_instruction: >-
+    EIS 32515582393 / registry 50277071467260001550000:
+    registered UKRM supply contract RES-1.26.1/D-01071 signed 27 Feb 2026
+    4,850,000.00 RUB; five null-only fields CAS-verified after fresh full
+    SHA+pg_restore backup. No signed supplier/OEM/delivery/payment verified;
+    equipment-only revenue remains unknown. PG 118/107/41 unchanged.
+    Four HTTP200 first-party captures (3 new SHA versions, 1 repeated);
+    Roseltorg 32616433248 no signed-contract result. V14 RU/EN 258 pages,
+    three newly visible contract fields. Next 32616400421 1 Nov 07:30,
+    106044-TT 1 Nov 09:00, RN61003961 1 Nov 10:00 Moscow.
+    PR 521 remains REVIEW, quality CI red, no auto-merge.

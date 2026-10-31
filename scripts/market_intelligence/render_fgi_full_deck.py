@@ -416,7 +416,8 @@ def dossier_evidence(item, idx, total, lang, page, review):
         (tr("Доля PQ-оборудования","Equipment-only amount",lang),pval("equipment_only_price")),
         (tr("Фактически оплачено","Payment confirmed",lang),
          pval("paid_amount") if item.get("paid_verified") else unknown),
-        (tr("Реестровый номер договора","Contract registry number",lang),item.get("contract_no")),
+        (tr("Номер договора","Contract number",lang),item.get("contract_no")),
+        (tr("Реестровый номер","Registry number",lang),item.get("contract_registry_number")),
     ]
     right=[
         (tr("Номинал изделия (кВ)","Equipment rated kV",lang),item.get("voltage_kv")),

@@ -98,6 +98,38 @@ def verified_nikitskaya_contract(data, metadata):
             and sources[1].get("sha256") == "0331902c360c21720c9aa38dfb94611a44ec31bfe664303fb9dce24d8677cb99")
 
 
+def verified_bashkirenergo_contract(data, metadata):
+    """Direct EIS contract proof; never infer supplier, delivery or paid sales."""
+    proof = (metadata or {}).get("eis_bashkirenergo_contract_enrichment") or {}
+    sources = proof.get("sources") or []
+    return (
+        data.get("canonical_id") == "223fz:32515582393:lot1"
+        and data.get("scope") == "supply"
+        and data.get("contract_registry_number") == "50277071467260001550000"
+        and data.get("contract_number") == "РЭС-1.26.1/Д-01071"
+        and data.get("contract_signed_date") == "2026-02-27"
+        and data.get("contract_registered_price_rub") == "4850000.00"
+        and data.get("registered_signed_contract_verified") is True
+        and proof.get("supplier_verified") is False
+        and proof.get("payment_verified") is False
+        and len(sources) == 2
+        and sources[0].get("sha256") == "284e532d010d202980375fb4d684dd0616d8665d7c726e7494e2b5c1a6670595"
+        and sources[1].get("sha256") == "bac0d89f450f32cdfb6cada70f6976dfaec1ade599ff104898c5338a91a1d553"
+    )
+
+
+def source_bound_bashkirenergo_note(data, metadata):
+    if not verified_bashkirenergo_contract(data, metadata):
+        return None
+    return (
+        "Официальный реестр ЕИС подтверждает договор РЭС-1.26.1/Д-01071 "
+        "от 27.02.2026 на 4 850 000,00 руб. по поставке УКРМ для ПО НЭС "
+        "ООО Башкирэнерго, 1 шт. Реестровая цена не доказывает фактическую "
+        "поставку, оплату или выручку изготовителя. Подписавший поставщик, "
+        "OEM и цена изделия без иных затрат независимо не установлены."
+    )
+
+
 def verified_meleuz_contract(data, metadata):
     proof = (metadata or {}).get("meleuz_eis_20261031_enrichment") or {}
     sources = proof.get("sources") or []
@@ -263,7 +295,8 @@ def capture():
             "price_kind":clean(d.get("reported_price_kind"),140),
             "contract_price":clean(val(d,"contract_registered_price_rub",
                 "verified_equipment_supply_contract_price_rub","reported_contract_total_rub"),50),
-            "contract_no":clean(val(d,"contract_registry_number","contract_number","linked_contract_registry_number"),100),
+            "contract_no":clean(val(d,"contract_number","contract_registry_number","linked_contract_registry_number"),100),
+            "contract_registry_number":clean(val(d,"contract_registry_number","linked_contract_registry_number"),100),
             "equipment_only_price":clean(val(d,"pq_equipment_only_contract_rub",
                 "verified_equipment_price_as_of","pq_equipment_portion_rub"),60),
             "paid_amount":clean(val(d,"paid_amount_rub","actual_payment_rub","paid_rub"),60),
@@ -292,9 +325,9 @@ def capture():
             "power":clean(val(d,"power") or
                 val(technical,"power_kvar","power_mvar","nominal_power"),100),
             "technical":{k: clean(v,220) for k,v in list(technical.items())[:12]},
-            "status":clean("official_registered_contract_supplier_unverified" if verified_meleuz_contract(d,r.get("metadata")) else ("official_registered_design_contract_supplier_unverified" if verified_tyazhinskaya_contract(d,r.get("metadata")) else ("RAD_official_failed_single_application_committee_recommended_contract" if verified_rad_commission(d,r.get("metadata")) else d.get("status"))),200),
+            "status":clean("official_registered_ukrm_supply_contract_supplier_unverified" if verified_bashkirenergo_contract(d,r.get("metadata")) else ("official_registered_contract_supplier_unverified" if verified_meleuz_contract(d,r.get("metadata")) else ("official_registered_design_contract_supplier_unverified" if verified_tyazhinskaya_contract(d,r.get("metadata")) else ("RAD_official_failed_single_application_committee_recommended_contract" if verified_rad_commission(d,r.get("metadata")) else d.get("status")))),200),
             "market_scope":clean("high_voltage_network_requirement_up_to_6p3kv_not_nameplate" if verified_meleuz_contract(d,r.get("metadata")) else d.get("market_scope"),220),
-            "notes":clean(source_bound_tyazhinskaya_note(d,r.get("metadata")) or source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
+            "notes":clean(source_bound_bashkirenergo_note(d,r.get("metadata")) or source_bound_tyazhinskaya_note(d,r.get("metadata")) or source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
             "review":r["review"],
             "source_urls":safe_urls((d.get("evidence") or []) + source_bound_rad_sources(d,r.get("metadata"))),
         })
