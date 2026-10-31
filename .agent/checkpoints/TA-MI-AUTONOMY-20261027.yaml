@@ -4132,7 +4132,7 @@ mi_watchdog_yutek_20261101_0241:
   status: in_progress
   canonical_pr: 521
   issue_comment_id: 6550657140
-  latest_tested_code_commit: 771ddffbb198c5f9930b48ebd169ace9993d653e
+  latest_tested_code_commit: d32ccb974ad9a5da00d9527679071d4e00bb3895
   report: docs/market_intelligence/PQ_WATCHDOG_YUTEK_20261101_0241.json
   report_sha256: c9a42631a662d62435dfe4f6249edad9b0676b6c8c6a7dd6c3bfb07c7da6433d
   internal_apfs_acceptance: pass
