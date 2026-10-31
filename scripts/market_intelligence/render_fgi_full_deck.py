@@ -542,7 +542,7 @@ def main():
     p.add_argument("--snapshot",type=Path,default=SNAP)
     p.add_argument("--outdir",type=Path,default=Path("docs/market_intelligence"))
     p.add_argument("--html-only",action="store_true")
-    p.add_argument("--version",default="V2",choices=["V2","V3","V4","V5","V6","V7","V8","V9","V10","V11","V12"])
+    p.add_argument("--version",default="V2",choices=["V2","V3","V4","V5","V6","V7","V8","V9","V10","V11","V12","V13"])
     args=p.parse_args()
     data=json.loads(args.snapshot.read_text(encoding="utf8"))
     args.outdir.mkdir(parents=True,exist_ok=True)

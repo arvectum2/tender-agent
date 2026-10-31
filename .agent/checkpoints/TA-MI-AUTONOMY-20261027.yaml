@@ -3600,3 +3600,37 @@ mi_watchdog_meleuz_eis_signed_20261031_1146:
     V12 bilingual 258-page dossier, six client-visible fields gained.
     Next: 32616354211 guarded writer immediately; 32616400421 after
     1 Nov 07:30; 106044-TT after 1 Nov 09:00. No auto-merge.
+
+mi_watchdog_tyazhinskaya_eis_20261031_1237:
+  latest_tested_code_commit: 345a08c048be7f41fed585fc4b25b5debe934ee0
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6541754912
+  report: docs/market_intelligence/PQ_WATCHDOG_TYAZHINSKAYA_EIS_SIGNED_20261031_1237.json
+  report_sha256: b46181ec22b8e4e74f23944a14ca500d8c8b0f1b5175d45fa853174769c866bd
+  internal_apfs_acceptance: pass
+  backup_sha256: 13c5d6e64b23dcc4ad5ea466d146ecded7d30339573d9f9859c0d53c97fd0567
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 5
+  new_client_visible_fields: 1
+  new_registered_contracts_existing_lot: 1
+  newly_verified_signed_suppliers: 0
+  newly_verified_payments: 0
+  fresh_first_party_originals: 0
+  reused_sha_verified_originals: 2
+  client_report_version: V13
+  canonical_v29_rows_unchanged: 101
+  targeted_tests: 9 passed, Ruff passed, PDF RU/EN 258 pages
+  resume_instruction: >-
+    32616354211 EIS original registered design contract 14-SBP/2026, 23 Sep 2026,
+    7,406,851.40 RUB, not equipment sale; 5 null-only CAS fields updated after
+    new full SHA+pg_restore backup. No supplier/payment verified. 118/107/41
+    unchanged. 21 network attempts for 3 independent EIS candidates found
+    HTTP404 or generic HTTP200 lacking exact notice identity, zero new captures.
+    V13 bilingual 258-page report. Retry 32616400421 1 Nov 07:30,
+    106044-TT 1 Nov 09:00, RN61003961 1 Nov 10:00 Moscow. No auto-merge.

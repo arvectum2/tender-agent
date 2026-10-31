@@ -123,6 +123,43 @@ def verified_meleuz_contract(data, metadata):
                     for source, sha in zip(sources, expected, strict=True)))
 
 
+def verified_tyazhinskaya_contract(data, metadata):
+    proof = (metadata or {}).get("eis_tyazhinskaya_contract_enrichment") or {}
+    sources = proof.get("sources") or []
+    expected = (
+        "a3df999a678442b7b2050702d97141326464b3a493c47cdcae853bb880b7453f",
+        "2815d451811c14e869a2d25fad8a0d2a888950dbb7d6baa1bc5f5c4853bdfb49",
+    )
+    return (
+        data.get("canonical_id") == "223fz:32616354211:lot1"
+        and data.get("scope") == "design"
+        and data.get("contract_registry_number") == "65501231424260000440000"
+        and data.get("contract_number") == "14-СБП/2026"
+        and data.get("contract_signed_date") == "2026-09-23"
+        and data.get("contract_registered_price_rub") == "7406851.40"
+        and data.get("registered_signed_contract_verified") is True
+        and data.get("supplier_verified") is False
+        and data.get("pq_equipment_only_contract_rub") is None
+        and proof.get("supplier_verified") is False
+        and proof.get("payment_verified") is False
+        and len(sources) == len(expected)
+        and all(x.get("sha256") == y for x, y in zip(sources, expected, strict=True))
+    )
+
+
+def source_bound_tyazhinskaya_note(data, metadata):
+    if not verified_tyazhinskaya_contract(data, metadata):
+        return None
+    return (
+        "Первичный реестр ЕИС: договор №14-СБП/2026 от 23.09.2026 "
+        "на 7 406 851,40 руб. за проектирование и инженерные изыскания "
+        "по реконструкции ПС Тяжинская (БСК-110 → СКРМ 52 Мвар). "
+        "Это НЕ продажа оборудования. Новый номинал СКРМ не подтверждён; "
+        "подписавший подрядчик, фактическая оплата и стоимость "
+        "отдельного оборудования не установлены."
+    )
+
+
 def source_bound_meleuz_note(data, metadata):
     if not verified_meleuz_contract(data, metadata):
         return None
@@ -255,9 +292,9 @@ def capture():
             "power":clean(val(d,"power") or
                 val(technical,"power_kvar","power_mvar","nominal_power"),100),
             "technical":{k: clean(v,220) for k,v in list(technical.items())[:12]},
-            "status":clean("official_registered_contract_supplier_unverified" if verified_meleuz_contract(d,r.get("metadata")) else ("RAD_official_failed_single_application_committee_recommended_contract" if verified_rad_commission(d,r.get("metadata")) else d.get("status")),200),
+            "status":clean("official_registered_contract_supplier_unverified" if verified_meleuz_contract(d,r.get("metadata")) else ("official_registered_design_contract_supplier_unverified" if verified_tyazhinskaya_contract(d,r.get("metadata")) else ("RAD_official_failed_single_application_committee_recommended_contract" if verified_rad_commission(d,r.get("metadata")) else d.get("status"))),200),
             "market_scope":clean("high_voltage_network_requirement_up_to_6p3kv_not_nameplate" if verified_meleuz_contract(d,r.get("metadata")) else d.get("market_scope"),220),
-            "notes":clean(source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
+            "notes":clean(source_bound_tyazhinskaya_note(d,r.get("metadata")) or source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
             "review":r["review"],
             "source_urls":safe_urls((d.get("evidence") or []) + source_bound_rad_sources(d,r.get("metadata"))),
         })
