@@ -4007,3 +4007,40 @@ mi_watchdog_lopcha_p0_20261031_2238:
     Next Bidzaar 351-062 visual DOC 6/10kV conflict now, EIS
     32616266007 independently signed supplier now, EIS 32616400421
     after 2026-11-01 07:30 MSK. PR 521 REVIEW; no auto-merge.
+
+mi_watchdog_artskvazhina_20261031_2343:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6548822638
+  latest_tested_code_commit: 4fa3127e9e520cce5548be14e686bf7af8f02a03
+  report: docs/market_intelligence/PQ_WATCHDOG_ARTSKVAZHINA_20261031_RUN11.json
+  report_sha256: fa9b7fc13343e58dcf877065692d11ce876d375c8b1d115bee90d9ac3bb252d1
+  internal_apfs_acceptance: pass
+  full_backup_sha256: a23b62d9f1f3b7f1463a24575b43aaf5a732752b9b06ebf22f8b4dbdfa5a955c
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 10
+  first_party_http_requests: 16
+  new_distinct_original_shas: 7
+  new_original_protocols: 1
+  named_winner_protocols: 0
+  newly_verified_signed_suppliers: 0
+  newly_verified_paid_sales: 0
+  client_report_version: V23
+  canonical_v29_rows_unchanged: 101
+  targeted_tests: 6 passed, Ruff passed, RU/EN 258 pages
+  resume_instruction: >-
+    EIS 32616280467: seven SHA-verified first-party originals; signed
+    design contract 2640-004569 of 03.09.2026 for 3680106.21 RUB,
+    10kV, protocol 32616280467-01 anonymous first-place application 1.
+    Ten missing top-level fields CAS-enriched after fresh verified full
+    backup, DB readback 118/107/41. This is design, NOT equipment sale.
+    Signed supplier and payment unverified. V23 RU/EN 258 pages.
+    Original client HTML preview unchanged. Next Bidzaar 351-062
+    visual 6/10kV conflict now; EIS 32616266007 supplier now;
+    EIS 32616400421 after 1 Nov 07:30 MSK; EIS 32616339168 HTTP404
+    retry after cooldown. PR 521 REVIEW; no auto-merge.

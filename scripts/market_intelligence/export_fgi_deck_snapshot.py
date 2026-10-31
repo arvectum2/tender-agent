@@ -81,6 +81,15 @@ def source_bound_lopcha_sources(data, metadata):
 def source_bound_bid(data, metadata):
     if verified_meleuz_contract(data, metadata):
         return data.get("commission_first_place_bid_rub")
+    # Exact EIS 32616280467 protocol SHA; anonymous commission rank is not a named winner.
+    signed = (metadata or {}).get("eis_20261031_contract_enrichment") or {}
+    if (data.get("canonical_id") == "223fz:32616280467:lot1"
+            and data.get("commission_first_place_application") == "1"
+            and data.get("commission_first_place_bid_rub") == "3680106.21"
+            and signed.get("fields", {}).get("commission_first_place_bid_rub") == "3680106.21"
+            and any(x.get("sha256") == "32b17b6891e29ba60734590f6ff2bbf029c082c8bc75262889da713b92f38554"
+                    for x in signed.get("sources", []))):
+        return data["commission_first_place_bid_rub"]
     value = val(data, "commission_bid_rub", "winning_bid_rub")
     if value is not None:
         return value

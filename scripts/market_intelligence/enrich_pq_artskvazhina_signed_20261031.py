@@ -66,7 +66,7 @@ EXTRAS = [
         "20261031T203948157464Z-4e37942e-32b17b6891e29ba6.bin",
         "32b17b6891e29ba60734590f6ff2bbf029c082c8bc75262889da713b92f38554",
         "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=40f5374c-ee1d-4ca4-2ecb-deb30e2f716c&purchaseNoticeNumber=32616280467",
-        ["32616280467-01", "3 680 106.21", "1 место", "Заключение договора"],
+        ["32616280467-01", "21.08.2026", "3 680 106.21", "1 место", "Заключение договора"],
     ),
 ]
 
