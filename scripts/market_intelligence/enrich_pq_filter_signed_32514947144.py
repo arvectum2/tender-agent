@@ -176,7 +176,7 @@ def write(r, before, p):
             "previous_revision": r["rev"],
         },
     }
-    nulls = " AND ".join(f"(d.data->'{k}') IS NULL" for k in FIELDS)
+    nulls = " AND ".join(f"(d.data->>'{k}') IS NULL" for k in FIELDS)
     sql = f"""BEGIN ISOLATION LEVEL SERIALIZABLE;
 SET LOCAL statement_timeout='55s';SET LOCAL lock_timeout='9s';
 SELECT pg_advisory_xact_lock(hashtext('{COL}-delta'));

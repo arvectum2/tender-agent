@@ -59,3 +59,13 @@ def test_client_note_requires_source_sha_and_distinguishes_payment():
     note = source_bound_filter_signed_note(data, metadata)
     assert "3 158 400" in note and "подтверждение оплаты" in note
     assert source_bound_filter_signed_note(data, {}) is None
+
+
+def test_null_guard_covers_absent_and_json_null_values():
+    from pathlib import Path
+
+    source = Path(
+        "scripts/market_intelligence/enrich_pq_filter_signed_32514947144.py"
+    ).read_text()
+    assert "(d.data->>'{k}') IS NULL" in source
+    assert "(d.data->'{k}') IS NULL" not in source
