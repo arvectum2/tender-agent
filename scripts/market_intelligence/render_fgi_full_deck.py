@@ -74,6 +74,9 @@ def priced_full(value, english=False):
 
 def readable_status(raw, lang):
     s=str(raw or "").lower()
+    if "rad_official_failed_single_application" in s:
+        return tr("Не состоялась: одна заявка, договор рекомендован",
+                  "Unsuccessful: sole bid, contract recommended", lang)
     if "cancel" in s:return tr("Отменено", "Cancelled", lang)
     if "no_bid" in s or "zero_bid" in s:return tr("Без заявок", "No bids", lang)
     if "signed" in s or "registered_contract" in s:

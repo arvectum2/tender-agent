@@ -51,6 +51,47 @@ def source_bound_bid(data, metadata):
     return None
 
 
+def verified_rad_commission(data, metadata):
+    proof = (metadata or {}).get("rad_commission_enrichment") or {}
+    sha = proof.get("source_sha256") or []
+    urls = proof.get("source_urls") or []
+    member = proof.get("member_sha256") or ""
+    if (proof.get("role") == "commission_recommended_contractor_not_signed_supplier"
+            and proof.get("field") == "winner"
+            and proof.get("value") == data.get("winner")
+            and proof.get("signed_supplier_verified") is False
+            and proof.get("signed_contract_verified") is False
+            and data.get("winner") in proof.get("exact_original_quote", "")
+            and len(sha) == len(urls) == 2
+            and all(re.fullmatch(r"[0-9a-f]{64}", x) for x in [*sha, member])
+            and all(u.startswith("https://tender.lot-online.ru/etp/") for u in urls)):
+        return proof
+    return None
+
+
+def source_bound_rad_note(data, metadata):
+    if verified_rad_commission(data, metadata):
+        return (
+            "Первоисточник РАД, протокол МВС-61/26: одна допущенная заявка; "
+            "закупка признана несостоявшейся, комиссия поручила заключить "
+            "договор с ООО «ЭНЕРГОСЕТЬ» на 5 273 763,77 руб. за весь EPC. "
+            "Это решение комиссии, НЕ подтверждение подписанного договора, "
+            "оплаты или цены PQ-оборудования; вторичный реестр сообщает "
+            "договор от 03.06.2026 без открытого оригинала."
+        )
+    return None
+
+
+def source_bound_rad_sources(data, metadata):
+    proof = verified_rad_commission(data, metadata)
+    if not proof:
+        return []
+    return [
+        {"url": u, "sha256": sha, "source_tier": "first_party_original"}
+        for u, sha in zip(proof["source_urls"], proof["source_sha256"], strict=True)
+    ]
+
+
 def clean(text, limit=2400):
     if text is None: return ""
     s = re.sub(r"[\x00-\x1f]+", " ", str(text)).strip()
@@ -116,7 +157,8 @@ def capture():
                 "underlying_supplier_contract_verified")),
             "bid":clean(source_bound_bid(d,r.get("metadata")),50),
             "winner":clean(val(d,"commission_winner_name",
-                "winning_supplier_name","commission_bidder_name","supplier_by_court"),210),
+                "winning_supplier_name","commission_bidder_name","supplier_by_court")
+                or (d.get("winner") if verified_rad_commission(d,r.get("metadata")) else None),210),
             "supplier_inn":clean(d.get("supplier_inn"),28),
             "contract_signatory":clean(val(d,"registered_supplier_name",
                 "contract_awardee","supplier_name"),230),
@@ -134,11 +176,11 @@ def capture():
             "power":clean(val(d,"power") or
                 val(technical,"power_kvar","power_mvar","nominal_power"),100),
             "technical":{k: clean(v,220) for k,v in list(technical.items())[:12]},
-            "status":clean(d.get("status"),200),
+            "status":clean("RAD_official_failed_single_application_committee_recommended_contract" if verified_rad_commission(d,r.get("metadata")) else d.get("status"),200),
             "market_scope":clean(d.get("market_scope"),220),
-            "notes":clean(d.get("notes"),2000),
+            "notes":clean(source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
             "review":r["review"],
-            "source_urls":safe_urls(d.get("evidence")),
+            "source_urls":safe_urls((d.get("evidence") or []) + source_bound_rad_sources(d,r.get("metadata"))),
         })
     counts=Counter(x["scope"] for x in out)
     return {"schema":"fgi-client-deck/2",
