@@ -3746,3 +3746,44 @@ mi_watchdog_tektorg_ukrm_20261031_1545:
     Next EIS 32616400421 after 1 Nov 07:30, 106044-TT after
     1 Nov 09:00, RN61004155 outcome after 3 Nov 12:00 Moscow.
     PR 521 remains REVIEW, no auto-merge.
+
+mi_watchdog_eis_filter_protocols_20261031_1646:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6544079318
+  latest_tested_code_commit: 94ee06ba56221e7cd2c2d74f5009ea34bccdff32
+  report: docs/market_intelligence/PQ_WATCHDOG_EIS_FILTER_PROTOCOLS_20261031_1646.json
+  report_sha256: 99c6bc0317b379704ff8c2ac49c0ae42a8aa411cd67ca08c0b7ce6440505822f
+  internal_apfs_acceptance: pass
+  backup_sha256: 269c84fde09c8ccb1e8b5a57921cb64d2efe32213a5cc1cd40111a4a8f855394
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 8
+  new_client_visible_fields: 5
+  new_original_final_protocols: 3
+  newly_verified_named_commission_winners: 1
+  newly_verified_signed_suppliers: 0
+  newly_verified_paid_sales: 0
+  first_party_requests: 16
+  fresh_sha_verified_primary_captures: 9
+  distinct_primary_source_shas: 8
+  client_report_version: V17
+  canonical_v29_rows_unchanged: 101
+  targeted_tests: 5 passed, Ruff passed, PDF RU/EN 258 pages
+  resume_instruction: >-
+    EIS 32514947144: official TЗ + commission protocol prove 14 filter
+    capacitors KEPF-12-450-2, 12kV and 450kvar each, for 500kV
+    Novo-Anzherskaya emergency spares; commission winner TD
+    Ust-Kamenogorskiy Kondensator, bid 3,158,400 RUB, NOT signed sale.
+    Eight null-only fields CAS enriched after fresh SHA+pg_restore backup.
+    EIS 32514944142: failed 220kV SVC design procurement, 7 applications,
+    one admitted, protocol date conflict 2025/2026. EIS 32515029641:
+    one admitted ESK Yug, failed, no signed contract. Nine captures,
+    eight unique SHA; 118/107/41 unchanged. V17 RU/EN 258 pages.
+    Next: official signed contract/role for three EIS cases, resolve
+    conflict and 500kV market_scope; 32616400421 after 1 Nov 07:30.
+    PR 521 remains REVIEW; no auto-merge.
