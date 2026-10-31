@@ -3852,3 +3852,40 @@ mi_watchdog_sibsteklo_bidzaar_20261031_1831:
     known). V18 RU/EN 258-page dossiers with corrected source-bound note.
     Next 351-062 per-unit power, 32514947144 signed contract, and
     32616266007 500kV scope/status conflict. No auto-merge.
+
+mi_watchdog_filter_signed_20261031_1935:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6546075159
+  latest_tested_code_commit: fad420f
+  report: docs/market_intelligence/PQ_WATCHDOG_FILTER_SIGNED_20261031_1935.json
+  report_sha256: 7bbad62d373f366c0f4f12ffe7ede77989614c03462507cf961a6770b86e0946
+  internal_apfs_acceptance: pass
+  backup_sha256: 3aad39e163189a847654b2312d05eefb156bd439eb6d59811db2bc675846cbfd
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 10
+  first_party_requests: 5
+  fresh_sha_verified_primary_original_versions: 5
+  new_registered_signed_equipment_component_contracts: 1
+  newly_verified_signed_supplier_identities: 0
+  newly_verified_paid_sales: 0
+  client_report_version: V19
+  canonical_v29_rows_unchanged: 101
+  targeted_tests: 15 passed, Ruff passed, RU/EN 258-page PDF checked
+  resume_instruction: >-
+    EIS 32514947144 original registered signed contract 1423177 dated
+    24 Jul 2025, registry 54716016979250029010000, 3,158,400 RUB
+    for 14 KEPF-12-450-2UHL1 capacitors at 225,600 RUB each.
+    Official event log says execution completed 23 Sep 2025.
+    Parent is 500kV substation, components nominal 12kV.
+    Signed supplier identity, payment and OEM remain unverified.
+    Ten previously null fields CAS-enriched with fresh full SHA+pg_restore
+    backup, postwrite readback, PG 118/107/41 unchanged.
+    Five SHA-verified first-party originals, V19 RU/EN 258 pages.
+    Next 351-062 P2 now, 32616266007 status conflict now,
+    32616400421 after 1 Nov 07:30 Moscow. No auto-merge.
