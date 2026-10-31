@@ -3563,3 +3563,40 @@ mi_watchdog_nikitskaya_contract_20261031_1031:
   canonical_v29_rows_unchanged: 101
   resume_instruction: >-
     EIS original SHA-backed registered contract 32615966040/55036065113260035960000: 5,273,763.77 RUB signed 03 June 2026, mixed EPC; 5 null-only CAS fields updated, no signed supplier or PQ-only sale proven. 118 unique lots unchanged. Two fresh TEK-Torg HTML versions HTTP200 contain no result; two Metal-IT capture attempts preflight-blocked by source allowlist. V11 RU/EN 258 pages; existing client HTML unchanged. Retry 106044-TT 1 Nov 09:00, RN61003961 1 Nov 10:00, 32616400421 1 Nov 07:30 Moscow. No auto-merge.
+
+mi_watchdog_meleuz_eis_signed_20261031_1146:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6541226643
+  latest_tested_code_commit: 4f00f32
+  report: docs/market_intelligence/PQ_WATCHDOG_MELEUZ_EIS_SIGNED_20261031_1144.json
+  report_sha256: 5c9261c203257bc5dcd5024e7d58e8801096c1a2cab84593d1932e4f13607b1c
+  internal_apfs_acceptance: pass
+  backup_sha256: 3f1ab7b2efb89bdf4e6fdb23c92185130edf979c671615ade1f4cf431ed94291
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 10
+  new_client_visible_fields: 6
+  fresh_sha_verified_primary_captures: 21
+  original_final_protocols: 4
+  new_registered_contracts_independently_verified: 2
+  new_signed_supplier_identities: 0
+  new_verified_payments: 0
+  client_report_version: V12
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Official EIS 32616296475: 6.3kV upper-bound thyristor/reactor UKRM,
+    >=500kvar, harmonic filter, contract 304/26 signed 21 Sep 2026
+    registered 3,865,725.99 RUB; includes installation/PNR/measurements,
+    supplier/OEM/payment and device-only price unknown. Ten null-only
+    fields CAS-verified after fresh full SHA+pg_restore backup. EIS
+    32616354211: independently verified 7,406,851.40 RUB design contract
+    14-SBP/2026, 23 Sep 2026; not DB enriched yet. 21 immutable
+    first-party captures, 4 protocol prints; 118/107/41 unchanged.
+    V12 bilingual 258-page dossier, six client-visible fields gained.
+    Next: 32616354211 guarded writer immediately; 32616400421 after
+    1 Nov 07:30; 106044-TT after 1 Nov 09:00. No auto-merge.

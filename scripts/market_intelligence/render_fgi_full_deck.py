@@ -276,7 +276,10 @@ def summary_pages(d,lang):
     for cid,ru,en in picked:
         q=by_id.get(cid)
         if q:tab.append([tr(ru,en,lang),short(q["buyer"],39),
-                         priced(q["nmck"],lang!="ru"),tr("Проверить ТЗ","Check source spec",lang)])
+                         priced(q["nmck"],lang!="ru"),
+                         tr("ТЗ и договор проверены","Spec & contract verified",lang)
+                         if cid=="223fz:32616296475:lot1" and q.get("signed_contract_verified")
+                         else tr("Проверить ТЗ","Check source spec",lang)])
     inn=f'<h1>{tr("Технический спрос: 6–35 кВ","Technical demand at 6–35 kV",lang)}</h1>'
     inn+=f'<p class="sub">{tr("Технически значимые объекты; цены могут включать EPC, проектирование и вспомогательные работы.","Technically significant cases; amounts may include EPC, design and auxiliary works.",lang)}</p>'
     inn+=table([tr("Объект","Facility",lang),tr("Заказчик","Buyer",lang),
@@ -506,7 +509,7 @@ def render(data,lang):
         (tr("Изготовитель OEM","Equipment OEM",lang),coverage.get("oem",0)),
     ])
     quality=(f'<h1>{tr("Прогресс верификации полей","Field verification progress",lang)}</h1>'
-             f'<p class="sub">{tr("Заполнение поля не равно первичной верификации. Оценка на дату среза, 117 юридических лотов.","Populated fields do not imply first-party verification. Frozen current-corpus field coverage.",lang)}</p>'
+             f'<p class="sub">{tr("Заполнение поля не равно первичной верификации. Оценка по текущему срезу юридических лотов.","Populated fields do not imply first-party verification. Frozen current-corpus field coverage.",lang)}</p>'
              +field_table+
              f'<p class="smallnote">{tr("Источники по уровню доказательности","Source evidence grades",lang)}: '
              f'A={grade.get("A",0)} · B={grade.get("B",0)} · C={grade.get("C",0)} · D={grade.get("D",0)}. '
@@ -539,7 +542,7 @@ def main():
     p.add_argument("--snapshot",type=Path,default=SNAP)
     p.add_argument("--outdir",type=Path,default=Path("docs/market_intelligence"))
     p.add_argument("--html-only",action="store_true")
-    p.add_argument("--version",default="V2",choices=["V2","V3","V4","V5","V6","V7","V8","V9","V10","V11"])
+    p.add_argument("--version",default="V2",choices=["V2","V3","V4","V5","V6","V7","V8","V9","V10","V11","V12"])
     args=p.parse_args()
     data=json.loads(args.snapshot.read_text(encoding="utf8"))
     args.outdir.mkdir(parents=True,exist_ok=True)

@@ -51,6 +51,8 @@ def source_bound_buyer_inn(data, metadata):
 
 
 def source_bound_bid(data, metadata):
+    if verified_meleuz_contract(data, metadata):
+        return data.get("commission_first_place_bid_rub")
     value = val(data, "commission_bid_rub", "winning_bid_rub")
     if value is not None:
         return value
@@ -94,6 +96,47 @@ def verified_nikitskaya_contract(data, metadata):
             and len(sources) == 2
             and sources[0].get("sha256") == "9f5241d6942c2eb62b69b03938224c1b64cba93995841a4e53db025b7c079317"
             and sources[1].get("sha256") == "0331902c360c21720c9aa38dfb94611a44ec31bfe664303fb9dce24d8677cb99")
+
+
+def verified_meleuz_contract(data, metadata):
+    proof = (metadata or {}).get("meleuz_eis_20261031_enrichment") or {}
+    sources = proof.get("sources") or []
+    expected = (
+        "51d201695c4aa97264e17922a053ba6eca03b0032c13d7cd815dff487c9de90f",
+        "f598adc6ffb6281ac20b025a86a1632091d2f9851dc7c2e018e9b04514fae270",
+        "b3a03bb02d5b84928e91e344de90310679189dc95e84f99d3b8cc7df989aa473",
+        "ca9a840c69bce647287c4571b675d57f401f89a20ae3d24f3842d8e24485b781",
+    )
+    return (data.get("canonical_id") == "223fz:32616296475:lot1"
+            and data.get("contract_registry_number") == "50263017332260000870000"
+            and data.get("contract_registered_price_rub") == "3865725.99"
+            and data.get("contract_signed_date") == "2026-09-21"
+            and data.get("registered_signed_contract_verified") is True
+            and data.get("supplier_verified") is False
+            and data.get("pq_equipment_only_contract_rub") is None
+            and data.get("voltage_kv") == "не более 6,3 кВ (требование ТЗ)"
+            and data.get("power") == "не менее 500 кВАр (требование ТЗ)"
+            and proof.get("supplier_verified") is False
+            and proof.get("equipment_only_price_verified") is False
+            and len(sources) == len(expected)
+            and all(source.get("sha256") == sha
+                    for source, sha in zip(sources, expected, strict=True)))
+
+
+def source_bound_meleuz_note(data, metadata):
+    if not verified_meleuz_contract(data, metadata):
+        return None
+    return (
+        "Оригинал ТЗ: высоковольтная тиристорно-реакторная АУКРМ, "
+        "номинальное напряжение сети не более 6,3 кВ, мощность не менее "
+        "500 кВАр, фильтр высших гармоник. Это пределы требований, а не "
+        "подтверждённый шильдик изделия. Протокол: заявка №79410, "
+        "первое место, 3 865 725,99 руб. Официальный реестр ЕИС: "
+        "договор №304/26 от 21.09.2026 на 3 865 725,99 руб. "
+        "Цена включает поставку, шеф-монтаж, ПНР и измерения. "
+        "Подписавший поставщик, OEM, оплата и отдельная цена "
+        "оборудования не установлены."
+    )
 
 
 def source_bound_rad_note(data, metadata):
@@ -187,7 +230,7 @@ def capture():
             "equipment_only_price":clean(val(d,"pq_equipment_only_contract_rub",
                 "verified_equipment_price_as_of","pq_equipment_portion_rub"),60),
             "paid_amount":clean(val(d,"paid_amount_rub","actual_payment_rub","paid_rub"),60),
-            "contract_date":clean(val(d,"contract_date","contract_register_date","reported_contract_date"),30),
+            "contract_date":clean(val(d,"contract_signed_date","contract_date","contract_register_date","reported_contract_date"),30),
             "signed_contract_verified":any(d.get(k) is True for k in (
                 "registered_signed_contract_verified","actual_signed_contract_verified",
                 "underlying_supplier_contract_verified")),
@@ -212,9 +255,9 @@ def capture():
             "power":clean(val(d,"power") or
                 val(technical,"power_kvar","power_mvar","nominal_power"),100),
             "technical":{k: clean(v,220) for k,v in list(technical.items())[:12]},
-            "status":clean("RAD_official_failed_single_application_committee_recommended_contract" if verified_rad_commission(d,r.get("metadata")) else d.get("status"),200),
-            "market_scope":clean(d.get("market_scope"),220),
-            "notes":clean(source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
+            "status":clean("official_registered_contract_supplier_unverified" if verified_meleuz_contract(d,r.get("metadata")) else ("RAD_official_failed_single_application_committee_recommended_contract" if verified_rad_commission(d,r.get("metadata")) else d.get("status")),200),
+            "market_scope":clean("high_voltage_network_requirement_up_to_6p3kv_not_nameplate" if verified_meleuz_contract(d,r.get("metadata")) else d.get("market_scope"),220),
+            "notes":clean(source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
             "review":r["review"],
             "source_urls":safe_urls((d.get("evidence") or []) + source_bound_rad_sources(d,r.get("metadata"))),
         })
