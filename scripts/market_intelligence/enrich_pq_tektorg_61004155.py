@@ -127,7 +127,7 @@ WHERE r.collection_id='{COL}')<>{before['rows']}
 OR (SELECT count(*) FROM dp_records d JOIN dp_resources r USING(resource_id)
 WHERE r.collection_id='{COL}' AND r.external_id='{CID}' AND r.content_hash='{OLD}'
 AND d.revision=2 AND (d.data->'voltage_kv') IS NULL
-AND (d.data->'power') IS NULL AND (d.data->'quantity') IS NULL)<>1
+AND (d.data->'power') IS NULL AND (d.data->>'quantity') IS NULL)<>1
 THEN RAISE EXCEPTION 'PQ CAS mismatch'; END IF; END $g$;
 UPDATE dp_records d SET data={js(data)},metadata={js(meta)},revision=revision+1,
 updated_at=now() FROM dp_resources r WHERE d.resource_id=r.resource_id

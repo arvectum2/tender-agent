@@ -43,3 +43,9 @@ def test_validate_rejects_owner_revision_and_identity(monkeypatch):
         bad[key] = val
         with pytest.raises(RuntimeError, match="CAS"):
             mod.validate(bad)
+
+
+def test_sql_json_null_guard():
+    import inspect
+
+    assert "(d.data->>'quantity') IS NULL" in inspect.getsource(mod.write)
