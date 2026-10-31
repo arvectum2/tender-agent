@@ -193,6 +193,47 @@ def source_bound_filter_signed_note(data, metadata):
     )
 
 
+def verified_filter_south_signed_contract(data, metadata):
+    proof = (metadata or {}).get("eis_filter_32515029641_enrichment") or {}
+    sources = proof.get("sources") or []
+    return (
+        data.get("canonical_id") == "223fz:32515029641:lot1"
+        and data.get("scope") == "supply_components"
+        and data.get("contract_registry_number") == "54716016979250033980000"
+        and data.get("contract_registered_price_rub") == "3490560.00"
+        and data.get("pq_equipment_only_contract_rub") == "3490560.00"
+        and data.get("quantity") == 12
+        and data.get("unit_price_rub") == "290880.00"
+        and data.get("registered_signed_contract_verified") is True
+        and data.get("contract_execution_status_verified") == "Исполнение"
+        and proof.get("signed_supplier_identity") == "unverified"
+        and proof.get("paid_amount") == "unverified"
+        and [x.get("sha256") for x in sources] == [
+            "b3571212f38a646f3686d30974ce3a4fd6df904e2a5b22a1cd51c3b9363ed0c6",
+            "72a8d234dbaab2a78f64297643a986d5a76dfd6882a7799dd7aa9805a4c414c6",
+            "ecda30473b4c6fef92b459ea4b41e12af3f2ac34d997bef118ddc35525408463",
+            "9f2fcb5412e2b45f5647082fa227fe50703b171d0a40af7047a635805028c0c1",
+            "e52ec01d1e69ac64b4b1e04cd36a8f3b7502d5788a57c61fce27c8f1f2c06506",
+        ]
+    )
+
+
+def source_bound_filter_south_signed_note(data, metadata):
+    if not verified_filter_south_signed_contract(data, metadata):
+        return None
+    return (
+        "ЕИС 223-ФЗ №32515029641: комиссия 19.08.2025 рекомендовала "
+        "заключить договор с допущенным участником ООО «ЭСК ЮГ» "
+        "на 3 490 560 руб. Реестр №54716016979250033980000 "
+        "подтверждает договор №123 от 01.09.2025 на ту же сумму. "
+        "Предмет: 12 конденсаторов КЭПФ-12-450-2 УХЛ1 по 290 880 руб.; "
+        "сумма целиком относится к компонентам фильтра, не к полной "
+        "системе PQ 6–35 кВ. Статус реестра «Исполнение» — "
+        "не подтверждение завершения или оплаты. Личность подписавшего "
+        "поставщика и факт платежа отдельно не подтверждены."
+    )
+
+
 def source_bound_bidzaar_306644_note(data, metadata):
     """Supersede stale pre-download note only with SHA-bound technical evidence."""
     proof = (metadata or {}).get("bidzaar_306644_p2") or {}
@@ -423,9 +464,9 @@ def capture():
             "power":clean(val(d,"power") or
                 val(technical,"power_kvar","power_mvar","nominal_power"),100),
             "technical":{k: clean(v,220) for k,v in list(technical.items())[:12]},
-            "status":clean("official_completed_filter_capacitor_contract_supplier_unverified" if verified_filter_signed_contract(d,r.get("metadata")) else ("official_registered_ukrm_supply_contract_supplier_unverified" if verified_bashkirenergo_contract(d,r.get("metadata")) else ("official_registered_contract_supplier_unverified" if verified_meleuz_contract(d,r.get("metadata")) else ("official_registered_design_contract_supplier_unverified" if verified_tyazhinskaya_contract(d,r.get("metadata")) else ("RAD_official_failed_single_application_committee_recommended_contract" if verified_rad_commission(d,r.get("metadata")) else d.get("status"))))),200),
+            "status":clean("official_registered_filter_components_contract_supplier_unverified" if verified_filter_south_signed_contract(d,r.get("metadata")) else ("official_completed_filter_capacitor_contract_supplier_unverified" if verified_filter_signed_contract(d,r.get("metadata")) else ("official_registered_ukrm_supply_contract_supplier_unverified" if verified_bashkirenergo_contract(d,r.get("metadata")) else ("official_registered_contract_supplier_unverified" if verified_meleuz_contract(d,r.get("metadata")) else ("official_registered_design_contract_supplier_unverified" if verified_tyazhinskaya_contract(d,r.get("metadata")) else ("RAD_official_failed_single_application_committee_recommended_contract" if verified_rad_commission(d,r.get("metadata")) else d.get("status")))))),200),
             "market_scope":clean("adjacent_500kv_substation_12kv_filter_capacitor_components_not_full_pq_system" if verified_filter_signed_contract(d,r.get("metadata")) else ("high_voltage_network_requirement_up_to_6p3kv_not_nameplate" if verified_meleuz_contract(d,r.get("metadata")) else d.get("market_scope")),220),
-            "notes":clean(source_bound_filter_signed_note(d,r.get("metadata")) or source_bound_bidzaar_306644_note(d,r.get("metadata")) or source_bound_bashkirenergo_note(d,r.get("metadata")) or source_bound_tyazhinskaya_note(d,r.get("metadata")) or source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
+            "notes":clean(source_bound_filter_south_signed_note(d,r.get("metadata")) or source_bound_filter_signed_note(d,r.get("metadata")) or source_bound_bidzaar_306644_note(d,r.get("metadata")) or source_bound_bashkirenergo_note(d,r.get("metadata")) or source_bound_tyazhinskaya_note(d,r.get("metadata")) or source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
             "review":r["review"],
             "source_urls":safe_urls((d.get("evidence") or []) + source_bound_rad_sources(d,r.get("metadata")) + source_bound_lopcha_sources(d,r.get("metadata"))),
         })

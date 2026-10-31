@@ -4082,3 +4082,47 @@ mi_watchdog_visual_351062_20261101_0044:
     does not prove absence. Next 32616266007 supplier now;
     32616506708 and 32616400421 after 2026-11-01 07:30 MSK.
     PR 521 REVIEW, no auto-merge.
+
+mi_watchdog_filter_signed_20261101_0140:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6550031984
+  latest_tested_code_commit: c223d06ae721d1e4a9d2bfec874f7500ec2907d3
+  report: docs/market_intelligence/PQ_WATCHDOG_EIS_FILTER_SIGNED_20261101_0140.json
+  report_sha256: 72e828611d59b17dd28a06c861c1855808bc355dc9d519a5d940dc26b7a1b1cf
+  internal_apfs_acceptance: pass
+  full_backup_sha256: c1472c8fd3a2e2bfc4288a6097a66ed27a39f0f5798b63867b3efe31565c0a85
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_core_6_35kv_lots: 0
+  new_verified_db_fields: 15
+  new_verified_signed_registry_contracts: 1
+  first_party_requests: 21
+  first_party_http200_captures: 17
+  first_party_ssl_failures: 4
+  fresh_sha_verified_capture_files: 17
+  new_distinct_identity_verified_original_shas: 9
+  original_protocol_named_commission_bidder: 1
+  newly_verified_signed_suppliers: 0
+  newly_verified_paid_sales: 0
+  client_report_version: V25
+  canonical_v29_rows_unchanged: 101
+  targeted_tests: 4 passed, Ruff passed, RU/EN 258 pages
+  resume_instruction: >-
+    EIS 32515029641: first-party final protocol named sole admitted bidder
+    ООО ЭСК ЮГ and instructed contract 3,490,560 RUB; signed register
+    54716016979250033980000 confirms contract 123 from 01.09.2025
+    12 KEPF-12-450-2 capacitor components at 290,880 RUB each.
+    15 null-only source-SHA CAS fields enriched after new full pg_restore
+    checked backup, readback 118/107/41 unchanged. Supplier signatory and
+    payment still unverified; contract status Исполнение, not completed.
+    Client V25 RU/EN 258 pages; HTML preview unchanged. Independent core
+    10kV 32413764701 official registry confirms quantity 1, contract
+    13790-сн/24 09.08.2024, completion, but DB quantity still null:
+    prepare fresh guarded writer/backup next. 32616266007 supplier identity
+    next; 32616506708 retry after 01.11 07:30 MSK. PR 521 REVIEW,
+    no auto-merge.

@@ -49,3 +49,32 @@ def test_sql_null_guard_covers_json_absent_or_null():
     assert "BEGIN ISOLATION LEVEL SERIALIZABLE" in source
     assert "verify_internal_runtime" in source
     assert "verified_backup" in source
+
+
+def test_customer_report_note_requires_exact_source_shas():
+    from scripts.market_intelligence.export_fgi_deck_snapshot import (
+        source_bound_filter_south_signed_note,
+        verified_filter_south_signed_contract,
+    )
+
+    d = {
+        "canonical_id": CID,
+        "scope": "supply_components",
+        "contract_registry_number": NUM,
+        "contract_registered_price_rub": "3490560.00",
+        "pq_equipment_only_contract_rub": "3490560.00",
+        "quantity": 12,
+        "unit_price_rub": "290880.00",
+        "registered_signed_contract_verified": True,
+        "contract_execution_status_verified": "Исполнение",
+    }
+    m = {"eis_filter_32515029641_enrichment": {
+        "sources": [{"sha256": x[1]} for x in SOURCES],
+        "signed_supplier_identity": "unverified",
+        "paid_amount": "unverified",
+    }}
+    assert verified_filter_south_signed_contract(d, m)
+    note = source_bound_filter_south_signed_note(d, m)
+    assert "3 490 560" in note
+    assert "не подтверждение завершения или оплаты" in note
+    assert source_bound_filter_south_signed_note(d, {}) is None
