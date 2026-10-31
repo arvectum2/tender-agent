@@ -1,0 +1,140 @@
+{
+  "schema_version": "pq-watchdog-source-bound-reissue-dedup/1",
+  "run_id": "20261030T1429-MSK",
+  "started_moscow": "2026-10-30T14:29:24+03:00",
+  "finished_moscow": "2026-10-30T14:36:19.429284+03:00",
+  "issue_comment_id": 6521567173,
+  "pr": 521,
+  "parent_head": "531976acea943e084dbed80aac2cd99b58b4c0d7",
+  "acceptance": "pass",
+  "pg_before_after": {
+    "unique_lots": 116,
+    "procedures": 105,
+    "eis223": 39,
+    "new_unique_lots": 0
+  },
+  "originals": [
+    {
+      "case_id": "223fz:32615852898:lot1",
+      "source_url": "https://www.b2b-center.ru/search/krasnoyarskiy-kray/ispytatelnyj-kompleks/",
+      "relative_file": "captures/223fz_32615852898_lot1/20261030T113157750824Z-6ea22f4c-f45e4bb67c65168f.bin",
+      "sha256": "f45e4bb67c65168f9d3d1199a4b4cccdff2cfc91d1b26819e9b1dcbf08cb5c5c",
+      "bytes": 214956,
+      "http_status": 200
+    },
+    {
+      "case_id": "223fz:32615852898:lot1",
+      "source_url": "https://www.b2b-center.ru/search/number/c52460069527260006170000/",
+      "relative_file": "captures/223fz_32615852898_lot1/20261030T113221706318Z-5ead6f84-df91882725208f6c.bin",
+      "sha256": "df91882725208f6cc2724cf4cdc17b2177ce2f94fd2a98bf0cb540ad2ad91f4e",
+      "bytes": 84224,
+      "http_status": 200
+    },
+    {
+      "case_id": "223fz:32616400421:lot1",
+      "source_url": "https://www.roseltorg.ru/procedure/32616400421",
+      "relative_file": "captures/223fz_32616400421_lot1/20261030T113306790995Z-bba62e0a-fb01e16881b0ace7.bin",
+      "sha256": "fb01e16881b0ace75eb516958f3f34ca033fcb016d27bd0b801e5249f704a297",
+      "bytes": 234736,
+      "http_status": 200
+    },
+    {
+      "case_id": "223fz:32616400421:lot1",
+      "source_url": "https://corp.roseltorg.ru/api/v1/documents/476985f6-bbf1-11f1-9925-d762a15dcfbc",
+      "relative_file": "captures/223fz_32616400421_lot1/20261030T113402044270Z-b167b263-ce2241529a0e2d8d.bin",
+      "sha256": "ce2241529a0e2d8df4c3c94d851adc349f403da3a54edbc53b35404f50b363a0",
+      "bytes": 194533,
+      "http_status": 200
+    },
+    {
+      "case_id": "223fz:32616400421:lot1",
+      "source_url": "https://corp.roseltorg.ru/api/v1/documents/ad495bda-b70f-11f1-94bc-e59c6cd3a685",
+      "relative_file": "captures/223fz_32616400421_lot1/20261030T113402523885Z-7c46df0f-d32e595bbbfe9168.bin",
+      "sha256": "d32e595bbbfe916848fcfcc4ab166d17429c922444e61a20114d9c8518175b16",
+      "bytes": 605671,
+      "http_status": 200
+    }
+  ],
+  "new_timestamped_sha_verified_captures": 5,
+  "repeat_archived_identical_sha_captures": 2,
+  "reissue": {
+    "cancelled_notice": "32616400421",
+    "cancelled_number": "26-1149",
+    "active_notice": "32616435269",
+    "active_number": "26-1174",
+    "buyer": "ПАО Россети Сибирь / Кузбассэнерго-РЭС",
+    "site": "ПС Тяжинская",
+    "nmck_incl_vat_rub": "452016000.01",
+    "five_byte_identical_members": {
+      "ТЗ на поставку.docx": "8ccecf8a3c18158ed4f2cf7ce864cf40bcf8b7254de1b163c5e1b0f655bbcb63",
+      "Приложение 1.xlsx": "acd196f12cc911bb8ab59a2a95f760c17dc85a5f5e8a9fb7b4fcddf3dab06e80",
+      "Обоснование НМЦ_.docx": "6ae3bfdf9d32a074361f250b2c94bea88d5e9f33254a909949f82df49fc104f7",
+      "Расчет стоимости ШМР.XLSX": "6e2bfe56294aa7b4ec636e7542cfed411fd3a9d5c79e651b0b178a876b751110",
+      "СО 6.3140 Приложение Расчет стоимости (1).xlsx": "e8973af7e7427b9a286f1bed8c5d16583c0c7a62a60b752b7af41d762346a097"
+    },
+    "changed_doc": "Приложение 2.docx",
+    "old_sha": "2fe39864fb133bd0b8c961c027b1314760de071646e31a8fd0ff5976044c193a",
+    "new_sha": "6f9654140463a8343dc38a34e2afb84dbdb547cfefc0e4385e254ca67795ae52",
+    "text_similarity": 0.99988,
+    "verified_change": "Ток термической стойкости трансформатора тока небаланса 20 кА -> 4 кА",
+    "conclusion": "one source-proven underlying project, two distinct notice IDs; old cancelled, new active",
+    "new_project_identity_links": 1,
+    "signed_supplier": null,
+    "executed_price": null,
+    "market_scope": "mixed 110kV BSK plus 10kV converter, not a standalone 6-35kV sale"
+  },
+  "contract_recheck": {
+    "notice": "32615852898",
+    "contract": "52460069527260006170000",
+    "source": "B2B-Center official platform index of EIS contract, NOT original EIS register",
+    "displayed_signed_date": "2026-06-15",
+    "displayed_price_rub": "2787700.00",
+    "scope": "design services incl 10kV PQ; not equipment sale",
+    "supplier": null,
+    "original_eis_contract": false
+  },
+  "secondary_only_lead": {
+    "procedure": "26Т0110040.0017",
+    "source": "https://vsem-podryad.ru/purchase/f088b62a-cca2-493e-b887-1653bae98839/",
+    "scope": "6kV UKRM mixed EPC in Karelia",
+    "reported_price_rub": "21120361.66",
+    "source_grade": "secondary_unverified",
+    "promoted": false
+  },
+  "requests": {
+    "direct_get_total": 8,
+    "http_200": 5,
+    "http_404": 3,
+    "head_200": 2,
+    "new_month_queries": 0,
+    "new_named_winners": 0,
+    "new_signed_suppliers": 0,
+    "new_sales": 0,
+    "failed_eis_notice_ids": [
+      "32615684088",
+      "32615966040",
+      "32616400421"
+    ]
+  },
+  "safety": {
+    "db_mutated": false,
+    "client_html_regenerated": false,
+    "canonical_v29_unchanged": 101,
+    "auto_merge": false,
+    "code_change": "corp.roseltorg.ru restricted public UUID document endpoint"
+  },
+  "next": [
+    {
+      "case": "32615684088",
+      "retry": "2026-10-30 14:40 MSK"
+    },
+    {
+      "case": "РН61003961",
+      "retry": "2026-10-30 20:00 MSK"
+    },
+    {
+      "case": "ГП630876",
+      "retry": "2026-10-30 23:40 MSK"
+    }
+  ]
+}

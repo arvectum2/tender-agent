@@ -1,0 +1,215 @@
+{
+  "schema_version": "pq-watchdog-roseltorg-firstparty/1",
+  "date_moscow": "2026-10-29",
+  "run_start_comment_id": 6489665325,
+  "repository": "arvectum2/tender-agent",
+  "canonical_pr": 521,
+  "canonical_branch": "feature/pq-etp-provenance-ledger-20261028",
+  "baseline_v29_rows_unchanged": 101,
+  "postgres_collection": "arvectum_data/arvectum-market-pq-6-35kv",
+  "postgres_before_unique_lots": 107,
+  "postgres_after_unique_lots": 107,
+  "postgres_distinct_procedure_tokens": 96,
+  "new_unique_lots": 0,
+  "new_distinct_procedures": 0,
+  "new_dedup_projects": 0,
+  "source_attempts": {
+    "actual_http_requests": 14,
+    "http_200": 14,
+    "case_specific_originals_sha_verified": 10,
+    "generic_metal_it_shell_requests": 3,
+    "generic_metal_it_sha256": "455aa5185b862a91a297b31a111671becb309a7f61d548f63331f06faa640943",
+    "new_calendar_month_source_searches": 0
+  },
+  "original_source_files": [
+    {
+      "name": "lukoil-2026-jan.html",
+      "source_url": "https://www.roseltorg.ru/procedure/COM16012600053",
+      "source_tier": "first_party_original",
+      "document_type": "Official procedure card",
+      "sha256": "8172552afdb0c52e52de0672f5cd8dd813fa8b1f706ca375306376082ccf6afa",
+      "bytes": 239657
+    },
+    {
+      "name": "lukoil-2026-jan-doc-0.docx",
+      "source_url": "https://com.roseltorg.ru/file/get/t/Protocols/id/1832367/user/-1/name/%D0%9F%D1%80%D0%BE%D1%82%D0%BE%D0%BA%D0%BE%D0%BB_%D0%B4%D0%BE%D0%BF%D1%83%D1%81%D0%BA%D0%B0_%D0%BA_%D0%BF%D0%B5%D1%80%D0%B5%D1%82%D0%BE%D1%80%D0%B6%D0%BA%D0%B5_%5BCOM16012600053__%D0%9B%D0%BE%D1%82_1%5D.docx",
+      "source_tier": "first_party_original",
+      "document_type": "Протокол допуска к переторжке",
+      "sha256": "2423c699665f246e24d070f6fb2ce1d792bbcc877ff2aac236b803547beb119f",
+      "bytes": 12814
+    },
+    {
+      "name": "lukoil-2026-jan-doc-1.pdf",
+      "source_url": "https://com.roseltorg.ru/file/get/t/Protocols/id/1835376/user/-1/name/%D0%A3%D0%B2%D0%B5%D0%B4%D0%BE%D0%BC%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BE_%D1%80%D0%B5%D0%B7%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%82%D0%B0%D1%85_%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D0%B4%D1%83%D1%80%D1%8B.pdf",
+      "source_tier": "first_party_original",
+      "document_type": "Протокол подведения итогов",
+      "sha256": "e4d7f1efc730e01077029e8fcfe9979d462043c79db4da63dbf6964e917d42a0",
+      "bytes": 571902
+    },
+    {
+      "name": "lukoil-2026-jan-doc-2.docx",
+      "source_url": "https://com.roseltorg.ru/file/get/t/Protocols/id/1831081/user/-1/name/%D0%9F%D1%80%D0%BE%D1%82%D0%BE%D0%BA%D0%BE%D0%BB_%D0%B4%D0%BE%D0%BF%D1%83%D1%81%D0%BA%D0%B0_%D0%BA_%D0%BF%D0%B5%D1%80%D0%B5%D1%82%D0%BE%D1%80%D0%B6%D0%BA%D0%B5_%5BCOM16012600053__%D0%9B%D0%BE%D1%82_1%5D.docx",
+      "source_tier": "first_party_original",
+      "document_type": "Протокол допуска к переторжке",
+      "sha256": "cb4bcda47c26deca2f7120b0cf10bef8cd84d9c95b31f67460b8e95423d02f27",
+      "bytes": 12814
+    },
+    {
+      "name": "lukoil-2026-jan-doc-3.docx",
+      "source_url": "https://com.roseltorg.ru/file/get/t/Protocols/id/1830015/user/-1/name/%D0%9F%D1%80%D0%BE%D1%82%D0%BE%D0%BA%D0%BE%D0%BB_%D0%B4%D0%BE%D0%BF%D1%83%D1%81%D0%BA%D0%B0_%D0%BA_%D0%BF%D0%B5%D1%80%D0%B5%D1%82%D0%BE%D1%80%D0%B6%D0%BA%D0%B5_%5BCOM16012600053__%D0%9B%D0%BE%D1%82_1%5D.docx",
+      "source_tier": "first_party_original",
+      "document_type": "Протокол допуска к переторжке",
+      "sha256": "040a29d1153c0dee424169d75d81b9922d062bdbaf03d3d83c1f88037d9cb2fd",
+      "bytes": 12812
+    },
+    {
+      "name": "lukoil-2026-jan-general.docx",
+      "source_url": "https://com.roseltorg.ru/file/get/t/LotDocuments/id/4215243/name/%D0%9E%D0%B1%D1%89%D0%B8%D0%B5_%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F.docx",
+      "source_tier": "first_party_original",
+      "document_type": "General requirements",
+      "sha256": "60452aa6eb7845783468b3be9959ce1bbfd3d72dc935bc25463ab9bc82abca2a",
+      "bytes": 34853
+    },
+    {
+      "name": "lukoil-2026-jan-questionnaires.7z",
+      "source_url": "https://com.roseltorg.ru/file/get/t/LotDocuments/id/4215244/name/%D0%9E%D0%BF%D1%80%D0%BE%D1%81%D0%BD%D1%8B%D0%B5_%D0%BB%D0%B8%D1%81%D1%82%D1%8B.7z",
+      "source_tier": "first_party_original",
+      "document_type": "Technical questionnaires",
+      "sha256": "65f94c51bb198eacba3ad379e592a2274fda56a400fa747403c6074c64efd1bb",
+      "bytes": 3423213
+    },
+    {
+      "name": "lukoil-2025-oct.html",
+      "source_url": "https://www.roseltorg.ru/procedure/COM07102500074",
+      "source_tier": "first_party_original",
+      "document_type": "Official procedure card",
+      "sha256": "3731de78c22ff9a93299b6612610a21582d5c94e4abc336dff59178d01e3a454",
+      "bytes": 234767
+    },
+    {
+      "name": "lukoil-2025-oct-doc-0.pdf",
+      "source_url": "https://com.roseltorg.ru/file/get/t/LotDocuments/id/4211433/name/%D0%A3%D0%B2%D0%B5%D0%B4%D0%BE%D0%BC%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BE%D0%B1_%D0%BE%D1%82%D0%BC%D0%B5%D0%BD%D0%B5_%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D0%B4%D1%83%D1%80%D1%8B.pdf",
+      "source_tier": "first_party_original",
+      "document_type": "Уведомление об отмене процедуры",
+      "sha256": "79247fa1d6154a01e3e7f156aac6c362f26f0a9fd6fb4fde22f1661dfafa1202",
+      "bytes": 262150
+    },
+    {
+      "name": "lukoil-2025-oct-doc-1.docx",
+      "source_url": "https://com.roseltorg.ru/file/get/t/Protocols/id/1795181/user/-1/name/%D0%9F%D1%80%D0%BE%D1%82%D0%BE%D0%BA%D0%BE%D0%BB_%D0%B2%D1%81%D0%BA%D1%80%D1%8B%D1%82%D0%B8%D1%8F_%D0%BA%D0%BE%D0%BD%D0%B2%D0%B5%D1%80%D1%82%D0%BE%D0%B2_COM07102500074.docx",
+      "source_tier": "first_party_original",
+      "document_type": "Протокол вскрытия конвертов",
+      "sha256": "9bbf9e820734920bd97fc81b16f393c25aca3cc7179569a82b855b87e0c812ab",
+      "bytes": 20336
+    }
+  ],
+  "case_findings": [
+    {
+      "procedure_id": "COM16012600053",
+      "canonical_id": "commercial:COM16012600053:lot1",
+      "already_in_v29": true,
+      "buyer": "ООО «ЛУКОЙЛ-Западная Сибирь»",
+      "buyer_inn": "8608048498",
+      "source_grade": "original_first_party_procedure_protocol_and_technical_questionnaires",
+      "outcome": "committee_winner_not_signed_contract",
+      "named_winner": "ООО ТПП «ЭнергоТехника»",
+      "winner_inn": "6679111400",
+      "committee_price_rub": "570901.64",
+      "committee_price_vat": "without_vat",
+      "committee_price_includes_transport": true,
+      "signed_supplier_verified": false,
+      "signed_contract_price_verified": false,
+      "executed_payment_verified": false,
+      "equipment_only_sale_verified": false,
+      "seven_applications_original_protocol": true,
+      "bidders": [
+        "ООО ТПП «ЭнергоТехника»",
+        "ООО «Электро-Техническая Компания-С»",
+        "ООО «Новосибирский завод конденсаторов»",
+        "ООО «Русская электротехническая компания»",
+        "ООО «Системные решения»",
+        "ООО «Нефтепромсервис»",
+        "ООО «Лэвэл Текнолоджис»"
+      ],
+      "technical_questionnaires_in_original_7z": [
+        "6004079225_УКРМ-0,4-60-20.pdf",
+        "6004079312_УКРМ-0,4-75-25.pdf",
+        "6004079334_УКРМ-0,4-70-35.pdf",
+        "6004079465_УКРМ-0,4-60-10.pdf",
+        "6004153624_Установка УКРМ.pdf"
+      ],
+      "fifth_pdf_derived_sha256": "0b0b5dbb033dbde0d72c150d5ab3bd4e7aa02a96d499c5d586cdc11b1544e858",
+      "fifth_pdf_native_text_quote": "Класс напряжения питающей сети, кВ 0,4",
+      "technical_voltage": "0.4_kv_all_five_questionnaires",
+      "core_6_35kv": false,
+      "PQ_equipment_market_core_contribution_rub": 0,
+      "verbatim_outcome_quote": "Победителем закупочной процедуры на поставку установок компенсаций реактивных мощностей (УКРМ) для территориально-производственных предприятий ООО «ЛУКОЙЛ-Западная Сибирь» в 2026 году признано ООО ТПП «ЭнергоТехника» (ИНН 6679111400) с ценой 570 901,64 рублей без учета НДС с учетом транспортных расходов до пункта назначения.",
+      "quote_review_method": "ChatGPT visual review of first-party 1-page scanned PDF; SHA-bound source, not OCR"
+    },
+    {
+      "procedure_id": "COM07102500074",
+      "canonical_id": "commercial:COM07102500074:lot1",
+      "already_in_v29": true,
+      "buyer": "ООО «ЛУКОЙЛ-Западная Сибирь»",
+      "outcome": "cancelled_first_party_notice",
+      "applications_in_opening_protocol": 5,
+      "signed_supplier_verified": false,
+      "executed_price_verified": false,
+      "core_6_35kv": null,
+      "source_grade": "original_first_party_cancel_notice_and_opening_protocol",
+      "verbatim_cancellation_quote": "ООО «ЛУКОЙЛ – Западная Сибирь» уведомляет об отмене процедуры Запроса предложений № COM07102500074.",
+      "quote_review_method": "ChatGPT visual review of first-party 1-page scanned PDF; SHA-bound source, not OCR",
+      "successor_link": "same buyer and title as COM16012600053; project identity not yet source-proven, do not merge procedures",
+      "technical_voltage_status": "unverified_in_this_run"
+    }
+  ],
+  "commercial_platform_blockers": [
+    {
+      "case": "119199-ТТ",
+      "official_url": "https://etp.metal-it.ru/trades/530288488/info",
+      "http": 200,
+      "status": "generic_js_shell_no_case_identity"
+    },
+    {
+      "case": "135171-ТТ",
+      "official_url": "https://etp.metal-it.ru/trades/604971130/info",
+      "http": 200,
+      "status": "generic_js_shell_no_case_identity"
+    },
+    {
+      "case": "106044-ТТ",
+      "official_url": "https://etp.metal-it.ru/trades/431640997/info",
+      "http": 200,
+      "status": "generic_js_shell_no_case_identity"
+    }
+  ],
+  "new_original_named_winner_count": 1,
+  "new_named_core_6_35kv_winner_count": 0,
+  "new_signed_supplier_count": 0,
+  "new_executed_price_count": 0,
+  "new_verified_core_equipment_sales_rub": 0,
+  "limitations": [
+    "Winner in award notification is not a signed contractor or actual sale.",
+    "All five original technical questionnaires for this LUKOIL procedure are 0.4kV, not target 6–35kV.",
+    "Metal-IT public HTML returns the same generic JS shell for three distinct official trade URLs; HTTP200 is not case verification.",
+    "No new unique lot; both Roseltorg cases were already in v29 and PostgreSQL.",
+    "Originals remain in authorized private runtime; only SHA and public links in Git."
+  ],
+  "next_three": [
+    {
+      "case": "106044-ТТ",
+      "goal": "Metal-IT 6.3kV STATCOM named award/contract",
+      "retry": "new publicly accessible first-party result or 2026-10-30 06:42 MSK generic root"
+    },
+    {
+      "case": "32616433248",
+      "goal": "35kV UKRM EPC contract after negotiations",
+      "retry": "2026-10-29 18:48 MSK or new official event"
+    },
+    {
+      "case": "32515582393",
+      "goal": "6kV UKRM signed supplier and executed payment",
+      "retry": "2026-10-30 06:46 MSK or new official event"
+    }
+  ]
+}

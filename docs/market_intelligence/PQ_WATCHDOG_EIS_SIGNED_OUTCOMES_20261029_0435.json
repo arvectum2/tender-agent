@@ -1,0 +1,614 @@
+{
+  "schema_version": "pq-eis-primary-signed-outcomes/1",
+  "retrieved_at_moscow": "2026-10-29T04:42:01.820060+03:00",
+  "canonical_corpus": "v29_101_unchanged",
+  "canonical_pr": 521,
+  "run_issue_comment_id": 6485448327,
+  "sources": [
+    {
+      "name": "eis-sosnovskaya-contract",
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=52460069527260006170000",
+      "final_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=52460069527260006170000",
+      "http": 200,
+      "bytes": 135358,
+      "sha256": "e25677cd34567099993c27dd6762377e2a11cd01096a2dc05e5ee9335a3c51e6",
+      "error": null,
+      "title": [
+        "Информация о договоре"
+      ],
+      "hits": [
+        [
+          "52460069527260006170000",
+          "      № 52460069527260006170000 '>№ 52460069527260006170000                                                                                "
+        ],
+        [
+          "32615852898",
+          "ov.ru/epz/order/notice/notice223/common-info.html?regNumber=32615852898\"                                target=\"_blank\" rel=\"noopener\">Извещение о закупке № 32615852898  "
+        ],
+        [
+          "Сосновская",
+          "ские работы по Реконструкции ВЛ 10 кВ от Ф.10-17-Л ПС 35 кВ Сосновская с установкой пункта автоматического регулирования напряжения (ПАРН/ВДТ), устройства компенсации реа"
+        ],
+        [
+          "Договор",
+          "tent=\"app-id=ru.gov.zakupki.mobile\">     Информация о договоре        <script type=\"text/javas"
+        ]
+      ]
+    },
+    {
+      "name": "eis-sosnovskaya-notice",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?purchaseNoticeNumber=32615852898",
+      "final_url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?purchaseNoticeNumber=32615852898",
+      "http": 404,
+      "bytes": 2036,
+      "sha256": "8f07b33b12fb6f1380dc7e70522da0047ce117e8afd414a3ba478a7dce61e376",
+      "error": null,
+      "title": [
+        " Страница не найдена "
+      ],
+      "hits": []
+    },
+    {
+      "name": "eis-meles-notice",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?purchaseNoticeNumber=32616296475",
+      "final_url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?purchaseNoticeNumber=32616296475",
+      "http": 404,
+      "bytes": 2036,
+      "sha256": "8f07b33b12fb6f1380dc7e70522da0047ce117e8afd414a3ba478a7dce61e376",
+      "error": null,
+      "title": [
+        " Страница не найдена "
+      ],
+      "hits": []
+    },
+    {
+      "name": "b2b-original-contract-index",
+      "url": "https://www.b2b-center.ru/search/krasnoyarskiy-kray/razrabotka-konstruktorskoj-dokumentacii/",
+      "final_url": "https://www.b2b-center.ru/search/krasnoyarskiy-kray/razrabotka-konstruktorskoj-dokumentacii/",
+      "http": 200,
+      "bytes": 184341,
+      "sha256": "67a77f2426c18c1e90b4699bfc2fc4372bb2b52c1a4193340fae20676576f5f4",
+      "error": null,
+      "title": [
+        "Тендеры Разработка конструкторской документации Красноярский край. Госзаказ и коммерческие закупки — B2B-Center"
+      ],
+      "hits": [
+        [
+          "52460069527260006170000",
+          "emprop=\"url\" href=\"https://www.b2b-center.ru/search/number/c52460069527260006170000/\" />\r      \r \r         <meta itemprop"
+        ],
+        [
+          "32615852898",
+          "ov.ru/epz/order/notice/notice223/common-info.html?regNumber=32615852898\" rel=\"nofollow\" class=\"link link-inline\">Закупка №32615852898 в ЕИС \r \r \r                  \r      "
+        ],
+        [
+          "2787700",
+          "                             \r                                  \r \r                             "
+        ],
+        [
+          "Сосновская",
+          "ские работы по Реконструкции ВЛ 10 кВ от Ф.10-17-Л ПС 35 кВ Сосновская с установкой пункта автоматического регулирования напряжения (ПАРН/ВДТ), устройства компенсации реа"
+        ],
+        [
+          "Договор",
+          "m-text\">           Единая среда для оформления и управления договорами на ЭТП                             <a class=\"service-side-menu__item\" href=\"https://www.b2b-center."
+        ]
+      ]
+    },
+    {
+      "name": "roseltorg-official-home",
+      "url": "https://www.roseltorg.ru/",
+      "final_url": "https://www.roseltorg.ru/",
+      "http": 200,
+      "bytes": 233475,
+      "sha256": "f74693ccda295e30b761b7392dc5388bbc5297e35b308a0df662440273709218",
+      "error": null,
+      "title": [
+        "Росэлторг — электронная торговая площадка"
+      ],
+      "hits": [
+        [
+          "Договор",
+          "window__list-item\">Участие в процедурах на право заключения договора на размещение семейного (родового) захоронения без использования электронной подписи                 "
+        ]
+      ]
+    },
+    {
+      "name": "eis-sosnovskaya-print",
+      "url": "https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=52460069527260006170000",
+      "final_url": "https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=52460069527260006170000",
+      "http": 200,
+      "bytes": 10278,
+      "sha256": "5c7ce3c6adb52c39b99c3dd24b71de869a0c7f99f6da4b068246daa152b20747",
+      "error": null,
+      "hits": {
+        "Поставщик": 0,
+        "Цена договора": 1,
+        "2787700": 0,
+        "2 787 700": 2,
+        "Исполнение": 0,
+        "Контрагент": 0,
+        "ООО": 0,
+        "Договор": 10
+      }
+    },
+    {
+      "name": "eis-sosnovskaya-subject",
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=52460069527260006170000",
+      "final_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=52460069527260006170000",
+      "http": 200,
+      "bytes": 142177,
+      "sha256": "7afa28b706706d9dfd071093da11150c54b56942b968cc8bd02390964c8b0cab",
+      "error": null,
+      "hits": {
+        "Поставщик": 1,
+        "Цена договора": 2,
+        "2787700": 0,
+        "2 787 700": 0,
+        "Исполнение": 1,
+        "Контрагент": 0,
+        "ООО": 0,
+        "Договор": 12
+      }
+    },
+    {
+      "name": "eis-sosnovskaya-event",
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/event-log.html?reestrNumber=52460069527260006170000",
+      "final_url": "https://zakupki.gov.ru/epz/contractfz223/card/event-log.html?reestrNumber=52460069527260006170000",
+      "http": 200,
+      "bytes": 127165,
+      "sha256": "7ee1d968c159d7e90253dd60fcfa88d984314ee393a16667e5c29f10eb008dd3",
+      "error": null,
+      "hits": {
+        "Поставщик": 1,
+        "Цена договора": 1,
+        "2787700": 0,
+        "2 787 700": 0,
+        "Исполнение": 2,
+        "Контрагент": 0,
+        "ООО": 0,
+        "Договор": 11
+      }
+    },
+    {
+      "name": "eis-sosnovskaya-notice-canonical",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32615852898",
+      "http": 200,
+      "bytes": 154190,
+      "sha256": "80704f708d6619c8ef090bdc3d03cbc69db7c69c7447d683789f0ba2aab133de",
+      "error": null,
+      "links": [
+        "http://zakupki.gov.ru/epz/main/public/document/view.html?sectionId=1255",
+        "http://zakupki.gov.ru/epz/main/public/document/view.html?sectionId=907",
+        "http://zakupki.gov.ru/epz/main/public/document/view.html?sectionId=908",
+        "http://zakupki.gov.ru/epz/main/public/document/view.html?sectionId=1261",
+        "http://zakupki.gov.ru/epz/main/public/document/view.html?sectionId=910",
+        "http://zakupki.gov.ru/epz/main/public/document/view.html?sectionId=1254",
+        "http://zakupki.gov.ru/epz/main/public/document/view.html?sectionId=1253",
+        "http://zakupki.gov.ru/epz/main/public/document/view.html?sectionId=1252",
+        "https://zakupki.gov.ru/epz/main/public/document/view.html?searchString=&sectionId=2369&strictEqual=false",
+        "/epz/order/notice/notice223/card/rss?purchaseNoticeNumber=32615852898&purchaseNoticeGuid=3ad2598b-865e-4cba-b602-7e4c2f716673",
+        "/epz/order/notice/notice223/signview/listModal.html?purchaseNoticeGuid=3ad2598b-865e-4cba-b602-7e4c2f716673&amp;purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/notice223/printForm/view.html?purchaseNoticeGuid=3ad2598b-865e-4cba-b602-7e4c2f716673&amp;purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/notice223/common-info.html?noticeGuid=3ad2598b-865e-4cba-b602-7e4c2f716673&regNumber=32615852898",
+        "/epz/order/notice/notice223/lot-list.html?purchaseNoticeNumber=32615852898&noticeGuid=3ad2598b-865e-4cba-b602-7e4c2f716673",
+        "/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32615852898&noticeGuid=3ad2598b-865e-4cba-b602-7e4c2f716673",
+        "/epz/order/notice/notice223/changes-and-explanations.html?purchaseNoticeNumber=32615852898&noticeGuid=3ad2598b-865e-4cba-b602-7e4c2f716673",
+        "/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/notice223/event-journal.html?purchaseNoticeNumber=32615852898"
+      ]
+    },
+    {
+      "name": "eis-sosnovskaya-protocols",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32615852898",
+      "http": 200,
+      "bytes": 151641,
+      "sha256": "e3bf0e4bbc22aa499e4a8e7d4d7f811de9c7cadb32215af39bac7b399c47ab80",
+      "error": null,
+      "file_links": [
+        "http://zakupki.gov.ru/epz/main/public/document/view.html?sectionId=1255",
+        "http://zakupki.gov.ru/epz/main/public/document/view.html?sectionId=907",
+        "http://zakupki.gov.ru/epz/main/public/document/view.html?sectionId=908",
+        "http://zakupki.gov.ru/epz/main/public/document/view.html?sectionId=1261",
+        "http://zakupki.gov.ru/epz/main/public/document/view.html?sectionId=910",
+        "http://zakupki.gov.ru/epz/main/public/document/view.html?sectionId=1254",
+        "http://zakupki.gov.ru/epz/main/public/document/view.html?sectionId=1253",
+        "http://zakupki.gov.ru/epz/main/public/document/view.html?sectionId=1252",
+        "https://zakupki.gov.ru/epz/main/public/document/view.html?searchString=§ionId=2369&strictEqual=false",
+        "/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32615852898¬iceGuid=3ad2598b-865e-4cba-b602-7e4c2f716673",
+        "/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/protocol223/signview/listModal.html?protocolGuid=954dd3a7-a6bb-4815-b889-42757627fc0e&purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/protocol223/printForm/view.html?protocolGuid=954dd3a7-a6bb-4815-b889-42757627fc0e&purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/protocol223/protocol-common-info.html?protocolGuid=954dd3a7-a6bb-4815-b889-42757627fc0e&purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/protocol223/signview/listModal.html?protocolGuid=00d22e7c-271e-4687-b082-df31e27b23fd&purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/protocol223/printForm/view.html?protocolGuid=00d22e7c-271e-4687-b082-df31e27b23fd&purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/protocol223/protocol-common-info.html?protocolGuid=00d22e7c-271e-4687-b082-df31e27b23fd&purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/protocol223/signview/listModal.html?protocolGuid=b8f0737a-5ee4-4ca2-aef5-6dcb1e15db87&purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/protocol223/printForm/view.html?protocolGuid=b8f0737a-5ee4-4ca2-aef5-6dcb1e15db87&purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/protocol223/protocol-common-info.html?protocolGuid=b8f0737a-5ee4-4ca2-aef5-6dcb1e15db87&purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/protocol223/signview/listModal.html?protocolGuid=acb0af8f-dbe3-47c7-9561-5dde9ad702d9&purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/protocol223/printForm/view.html?protocolGuid=acb0af8f-dbe3-47c7-9561-5dde9ad702d9&purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/protocol223/protocol-common-info.html?protocolGuid=acb0af8f-dbe3-47c7-9561-5dde9ad702d9&purchaseNoticeNumber=32615852898"
+      ]
+    },
+    {
+      "name": "eis-sosnovskaya-documents",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32615852898&noticeGuid=3ad2598b-865e-4cba-b602-7e4c2f716673",
+      "http": 200,
+      "bytes": 184570,
+      "sha256": "6efa29ef5e5370a5e7d1f3bf6336263b97039905bda1b29f82a9128576873ec0",
+      "error": null,
+      "file_links": [
+        "/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/notice223/document/signview/listModal.html?documentGuid=0a979f9e-2bd9-11f1-9687-fb7fe5df41ab&purchaseNoticeNumber=32615852898&entityGuid=46044723-cb8a-4718-a9cf-ee69f49440d7",
+        "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=2D6ECDB00DEC43E199E06722D86A0FB9",
+        "/epz/order/notice/notice223/document/signview/listModal.html?documentGuid=d4b25a70-3242-11f1-907b-a36db8fc4000&purchaseNoticeNumber=32615852898&entityGuid=2205d873-0505-4512-9495-30d01e3fdd67",
+        "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=7403130F849541508484FCB1870C98B8",
+        "/epz/order/notice/notice223/document/signview/listModal.html?documentGuid=0724a336-ed45-4964-b96f-baa29ae4aac6&purchaseNoticeNumber=32615852898&entityGuid=3ad2598b-865e-4cba-b602-7e4c2f716673",
+        "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=7403130F849541508484FCB1870C98B8",
+        "/epz/order/notice/notice223/document/signview/listModal.html?documentGuid=143a8f44-2e6c-11f1-8fab-e3afdcbc5629&purchaseNoticeNumber=32615852898&entityGuid=924ffdf8-4113-49ae-8bb7-3f3c75067c25",
+        "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=8C9691359C4048B4B093B768F0187470",
+        "/epz/order/notice/protocol223/signview/listModal.html?protocolGuid=acb0af8f-dbe3-47c7-9561-5dde9ad702d9&purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/protocol223/printForm/view.html?protocolGuid=acb0af8f-dbe3-47c7-9561-5dde9ad702d9&purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/notice223/document/signview/listModal.html?documentGuid=11189326-5a61-11f1-b37c-bd7d7d235ccb&purchaseNoticeNumber=32615852898&entityGuid=acb0af8f-dbe3-47c7-9561-5dde9ad702d9",
+        "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=0FF04B762D75482CB90A0E5F4C44F86D",
+        "/epz/order/notice/protocol223/signview/listModal.html?protocolGuid=954dd3a7-a6bb-4815-b889-42757627fc0e&purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/protocol223/printForm/view.html?protocolGuid=954dd3a7-a6bb-4815-b889-42757627fc0e&purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/notice223/document/signview/listModal.html?documentGuid=e545a726-3a2a-11f1-b97e-2ff54a904b20&purchaseNoticeNumber=32615852898&entityGuid=954dd3a7-a6bb-4815-b889-42757627fc0e",
+        "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=E8CB1DE3C1E6487A99009C3E049BDE4D",
+        "/epz/order/notice/protocol223/signview/listModal.html?protocolGuid=00d22e7c-271e-4687-b082-df31e27b23fd&purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/protocol223/printForm/view.html?protocolGuid=00d22e7c-271e-4687-b082-df31e27b23fd&purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/notice223/document/signview/listModal.html?documentGuid=bb0fa2f0-54dc-11f1-b94a-e15386de3ee9&purchaseNoticeNumber=32615852898&entityGuid=00d22e7c-271e-4687-b082-df31e27b23fd",
+        "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=1EA801D9A23343EE8ED15B1A5B2111F6",
+        "/epz/order/notice/protocol223/signview/listModal.html?protocolGuid=b8f0737a-5ee4-4ca2-aef5-6dcb1e15db87&purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/protocol223/printForm/view.html?protocolGuid=b8f0737a-5ee4-4ca2-aef5-6dcb1e15db87&purchaseNoticeNumber=32615852898",
+        "/epz/order/notice/notice223/document/signview/listModal.html?documentGuid=4b06438e-58e1-11f1-b169-b5456dd2812e&purchaseNoticeNumber=32615852898&entityGuid=b8f0737a-5ee4-4ca2-aef5-6dcb1e15db87",
+        "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=6437C161C620416AAF2C69A5FF10E921"
+      ]
+    },
+    {
+      "name": "eis-sosnovskaya-final-protocol-card",
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/protocol-common-info.html?protocolGuid=acb0af8f-dbe3-47c7-9561-5dde9ad702d9&purchaseNoticeNumber=32615852898",
+      "http": 200,
+      "bytes": 135709,
+      "sha256": "ac0b17681528f866690f77fd7bafcffa9d43dc0162d494c4fc3350b31feb8f35",
+      "content_type": "text/html;charset=UTF-8",
+      "error": null,
+      "hits": {
+        "Победитель": 0,
+        "Участник": 2,
+        "УКРМ": 0,
+        "Реактивн": 1,
+        "2 787 700": 0,
+        "2 950 502": 0,
+        "Наименование": 0
+      }
+    },
+    {
+      "name": "eis-sosnovskaya-final-protocol-print",
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=acb0af8f-dbe3-47c7-9561-5dde9ad702d9&purchaseNoticeNumber=32615852898",
+      "http": 200,
+      "bytes": 10659,
+      "sha256": "e9124f9df468cbeaca576f0ebaeac8ef8c5d692bd0e9f0c64f50211b3682c9fb",
+      "content_type": "text/html;charset=UTF-8",
+      "error": null,
+      "hits": {
+        "Победитель": 0,
+        "Участник": 3,
+        "УКРМ": 0,
+        "Реактивн": 2,
+        "2 787 700": 0,
+        "2 950 502": 0,
+        "Наименование": 3
+      }
+    },
+    {
+      "name": "eis-sosnovskaya-final-protocol-original",
+      "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=0FF04B762D75482CB90A0E5F4C44F86D",
+      "http": 200,
+      "bytes": 531957,
+      "sha256": "6c6b06cdf6435d90aa6efacbca2abb895c208f945db9cd731208725b3f71cce0",
+      "content_type": "application/download",
+      "error": null,
+      "hits": {}
+    },
+    {
+      "name": "eis-meles-canonical-notice",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616296475",
+      "http": 200,
+      "bytes": 146614,
+      "sha256": "5e82e5716f9579e5bed0b6ddb19ab79a03506aa2e087837818259a5b893b3d39",
+      "error": null,
+      "protocol_links": []
+    },
+    {
+      "name": "eis-meles-protocols",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616296475",
+      "http": 200,
+      "bytes": 135363,
+      "sha256": "73753d1f92e5cb9afc4a1da1a770d1e320c19a91f0454e1e090ec04ea2c9973e",
+      "error": null,
+      "protocol_links": [
+        "/epz/order/notice/protocol223/printForm/view.html?protocolGuid=355185fe-2a2c-4329-976d-be9868a3c884&purchaseNoticeNumber=32616296475",
+        "/epz/order/notice/protocol223/protocol-common-info.html?protocolGuid=355185fe-2a2c-4329-976d-be9868a3c884&purchaseNoticeNumber=32616296475",
+        "/epz/order/notice/protocol223/printForm/view.html?protocolGuid=b2199faa-ca90-4c2d-9985-66bf9a0dc70f&purchaseNoticeNumber=32616296475",
+        "/epz/order/notice/protocol223/protocol-common-info.html?protocolGuid=b2199faa-ca90-4c2d-9985-66bf9a0dc70f&purchaseNoticeNumber=32616296475"
+      ]
+    },
+    {
+      "name": "eis-meles-contract-info",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616296475",
+      "http": 200,
+      "bytes": 132838,
+      "sha256": "9b1fadbf04287570aecb57c80f71ad54a635a18891b4681d7a2e75f9cd110bf9",
+      "error": null,
+      "protocol_links": []
+    },
+    {
+      "name": "meles-protocol-01-card",
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/protocol-common-info.html?protocolGuid=355185fe-2a2c-4329-976d-be9868a3c884&purchaseNoticeNumber=32616296475",
+      "http": 200,
+      "bytes": 133522,
+      "sha256": "44e1e4d736e891b90aaf73d4f72971d6c8392bdd94e8afc68bbc6eae0b432cc5",
+      "error": null,
+      "hits": {
+        "Победитель": 0,
+        "Признать": 0,
+        "Договор": 3,
+        "3 904 773": 0,
+        "Участник": 2,
+        "Заявок": 1,
+        "отклонен": 0,
+        "несостоявш": 0
+      }
+    },
+    {
+      "name": "meles-protocol-01-print",
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=355185fe-2a2c-4329-976d-be9868a3c884&purchaseNoticeNumber=32616296475",
+      "http": 200,
+      "bytes": 12201,
+      "sha256": "725179f78b491dab4af55db17d8758106150c8aea0106ec042bcdb864acfaf7e",
+      "error": null,
+      "hits": {
+        "Победитель": 0,
+        "Признать": 0,
+        "Договор": 4,
+        "3 904 773": 1,
+        "Участник": 0,
+        "Заявок": 2,
+        "отклонен": 2,
+        "несостоявш": 0
+      }
+    },
+    {
+      "name": "meles-protocol-02-card",
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/protocol-common-info.html?protocolGuid=b2199faa-ca90-4c2d-9985-66bf9a0dc70f&purchaseNoticeNumber=32616296475",
+      "http": 200,
+      "bytes": 133522,
+      "sha256": "d0ab01f2d1deeb46c058aae222b124a3aa62b63a9f5c9fc77bdeecd5da9684bd",
+      "error": null,
+      "hits": {
+        "Победитель": 0,
+        "Признать": 0,
+        "Договор": 3,
+        "3 904 773": 0,
+        "Участник": 2,
+        "Заявок": 1,
+        "отклонен": 0,
+        "несостоявш": 0
+      }
+    },
+    {
+      "name": "meles-protocol-02-print",
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=b2199faa-ca90-4c2d-9985-66bf9a0dc70f&purchaseNoticeNumber=32616296475",
+      "http": 200,
+      "bytes": 13684,
+      "sha256": "b3a03bb02d5b84928e91e344de90310679189dc95e84f99d3b8cc7df989aa473",
+      "error": null,
+      "hits": {
+        "Победитель": 0,
+        "Признать": 0,
+        "Договор": 5,
+        "3 904 773": 1,
+        "Участник": 0,
+        "Заявок": 1,
+        "отклонен": 2,
+        "несостоявш": 0
+      }
+    },
+    {
+      "name": "eis-meles-documents",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616296475",
+      "http": 404,
+      "bytes": 2036,
+      "sha256": "8f07b33b12fb6f1380dc7e70522da0047ce117e8afd414a3ba478a7dce61e376",
+      "error": null,
+      "original_file_urls": []
+    },
+    {
+      "name": "eis-meles-documents-canonical",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616296475&noticeGuid=e3b38808-5d03-44f2-ac23-351e65dfc82a",
+      "http": 200,
+      "bytes": 161435,
+      "sha256": "c7d29fa94ef12517ea3a92afeec2da7fdd8d4ccebd89d9d87a27e6656c795d67",
+      "error": null,
+      "original_file_urls": [
+        "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=AE15FF3CB1E34F86B6F1046E34C92B86",
+        "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=8F274D793CC649B2ACABEB37FA1CCE5F",
+        "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=E82BF8DD15FA4CD496F11D2EC4FF3EBB",
+        "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=0F54EB9D7FDB4152BC15C9D495B3AEAA",
+        "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=9F25836F133B4126AC928EB0AB6842B6",
+        "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=6CD2DBBA7FA74826B50AEDB4E0E70552",
+        "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=96B54987787044C1AC9FA884CCEE8115"
+      ]
+    },
+    {
+      "name": "eis-meles-final-protocol-original",
+      "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=6CD2DBBA7FA74826B50AEDB4E0E70552",
+      "http": 200,
+      "bytes": 1655628,
+      "sha256": "9e2812d778f3e4534a3fcc02dec65d04df999d8d9ca11032fd1c8ff5000eb3d0",
+      "content_type": "application/download",
+      "error": null
+    },
+    {
+      "name": "eis-meles-admission-protocol-original",
+      "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=96B54987787044C1AC9FA884CCEE8115",
+      "http": 200,
+      "bytes": 1483597,
+      "sha256": "8bc4d3dd174450ebe060e9a67c333c3c1454e23dfa31192a743c80a097b7a4e3",
+      "content_type": "application/download",
+      "error": null
+    },
+    {
+      "name": "eis-meles-signed-contract",
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=50263017332260000870000",
+      "http": 200,
+      "bytes": 134958,
+      "sha256": "f598adc6ffb6281ac20b025a86a1632091d2f9851dc7c2e018e9b04514fae270",
+      "error": null
+    }
+  ],
+  "validated_quotes": [
+    {
+      "case": "sosnovskaya",
+      "original_file": "eis-sosnovskaya-contract.html",
+      "sha256": "e25677cd34567099993c27dd6762377e2a11cd01096a2dc05e5ee9335a3c51e6",
+      "exact_quotes": [
+        "Цена договора",
+        "2 787 700,00 ₽",
+        "15.06.2026",
+        "32615852898"
+      ]
+    },
+    {
+      "case": "sosnovskaya",
+      "original_file": "final-protocol-members/ПДКК №26-24-И.pdf",
+      "sha256": "bd76b83faa5195ecb2943858f158d7a07e89f68e932b4afbb45fa1e3a73b69da",
+      "exact_quotes": [
+        "ООО \"ЛЭП-ПРОЕКТ\"",
+        "2 285 000,00",
+        "ООО \"ТЕСЛА\""
+      ]
+    },
+    {
+      "case": "meles",
+      "original_file": "eis-meles-signed-contract.html",
+      "sha256": "f598adc6ffb6281ac20b025a86a1632091d2f9851dc7c2e018e9b04514fae270",
+      "exact_quotes": [
+        "Цена договора",
+        "3 865 725,99 ₽",
+        "21.09.2026",
+        "32616296475"
+      ]
+    },
+    {
+      "case": "meles",
+      "original_file": "meles-protocol-02-print.html",
+      "sha256": "b3a03bb02d5b84928e91e344de90310679189dc95e84f99d3b8cc7df989aa473",
+      "exact_quotes": [
+        "3 865 725.99",
+        "3 885 249.86",
+        "79410",
+        "79376"
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "223fz:32615852898:lot1",
+      "project": "Sosnovskaya 35/10 kV PARN and reactive-power compensation design",
+      "scope": "design_only",
+      "new_notice": false,
+      "original_final_protocol_sha256": "bd76b83faa5195ecb2943858f158d7a07e89f68e932b4afbb45fa1e3a73b69da",
+      "original_final_protocol_archive_sha256": "6c6b06cdf6435d90aa6efacbca2abb895c208f945db9cd731208725b3f71cce0",
+      "named_winner": "ООО \"ЛЭП-ПРОЕКТ\"",
+      "winner_inn": "5406750532",
+      "winning_offer_rub_ex_vat": "2285000.00",
+      "second_bidder": "ООО \"ТЕСЛА\"",
+      "second_offer_rub_ex_vat": "2415985.62",
+      "nmck_rub_ex_vat": "2418444.64",
+      "signed_registry_number": "52460069527260006170000",
+      "signed_contract_number": "14.4200.1746.26",
+      "signed_contract_date": "2026-06-15",
+      "signed_registry_price_rub": "2787700.00",
+      "signed_supplier_identity_confirmed": false,
+      "executed_price_confirmed": false,
+      "registry_sha256": "e25677cd34567099993c27dd6762377e2a11cd01096a2dc05e5ee9335a3c51e6",
+      "registry_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=52460069527260006170000",
+      "original_protocol_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=0FF04B762D75482CB90A0E5F4C44F86D",
+      "pq_equipment_revenue_rub": null,
+      "evidence_grade": "original_protocol_plus_public_signed_registry; signed_supplier_unknown; design_not_equipment_sale"
+    },
+    {
+      "case_id": "223fz:32616296475:lot1",
+      "project": "Meleuz Vodokanal 6.3 kV thyristor controlled reactive power compensator plus filter",
+      "scope": "mixed_equipment_installation",
+      "new_notice": false,
+      "original_final_protocol_sha256": "9e2812d778f3e4534a3fcc02dec65d04df999d8d9ca11032fd1c8ff5000eb3d0",
+      "protocol_print_sha256": "b3a03bb02d5b84928e91e344de90310679189dc95e84f99d3b8cc7df989aa473",
+      "bidder_1": "anonymous_application_79410",
+      "winning_offer_rub": "3865725.99",
+      "bidder_2": "anonymous_application_79376",
+      "second_offer_rub": "3885249.86",
+      "nmck_rub": "3904773.73",
+      "signed_registry_number": "50263017332260000870000",
+      "signed_contract_number": "304/26",
+      "signed_contract_date": "2026-09-21",
+      "signed_registry_price_rub": "3865725.99",
+      "signed_supplier_identity_confirmed": false,
+      "executed_price_confirmed": false,
+      "registry_sha256": "f598adc6ffb6281ac20b025a86a1632091d2f9851dc7c2e018e9b04514fae270",
+      "registry_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=50263017332260000870000",
+      "original_protocol_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=6CD2DBBA7FA74826B50AEDB4E0E70552",
+      "pq_equipment_revenue_rub": null,
+      "evidence_grade": "original_protocol_plus_public_signed_registry; mixed_scope; no equipment-only allocation; anonymous winner"
+    }
+  ],
+  "metrics": {
+    "new_source_requests": 26,
+    "http_200": 23,
+    "http_404": 3,
+    "new_notice_ids": 0,
+    "new_lot_ids": 0,
+    "new_project_ids": 0,
+    "original_protocol_with_named_winner": 1,
+    "signed_contract_registry_prices_newly_verified": 2,
+    "new_named_signed_suppliers": 0,
+    "new_executed_prices": 0,
+    "new_calendar_month_searches": 0,
+    "core_equipment_only_sales_confirmed": 0,
+    "new_original_7z_archives": 1,
+    "new_original_extracted_members": 2,
+    "reverified_existing_original_pdfs": 2,
+    "new_first_party_signed_registry_cards": 2,
+    "distinct_successful_http200_source_sha": 23,
+    "case_specific_successful_http200_source_cards_or_files": 21
+  },
+  "blockers": [
+    "Public 223-FZ contract cards do not identify signed supplier on inspected contract-info pages.",
+    "Meleuz protocol identifies winner only by application number 79410; handwritten notes cannot independently prove identity.",
+    "Meleuz contract price includes equipment and installation, no equipment-only allocation.",
+    "Both registry cards show execution status, no executed payments verified.",
+    "15 Data Platform SDK source items blocked without approved credential."
+  ],
+  "next_three": [
+    "32413764701 10kV UKRM signed supplier and execution after 2026-10-29 06:46 MSK",
+    "32515582393 6kV UKRM signed supplier and execution after 2026-10-29 06:46 MSK",
+    "119199-TT / 135171-TT Metal-IT first-party originals via verified public document links; no speculative URL"
+  ],
+  "dedup_audit": {
+    "sosnovskaya_original_final_protocol_archive_new_to_existing_private_originals": true,
+    "sosnovskaya_new_original_7z_archives": 1,
+    "sosnovskaya_new_extracted_members": 2,
+    "meles_final_pdf_original_sha_already_in_public223_originals": true,
+    "meles_admission_pdf_original_sha_already_in_public223_originals": true,
+    "meles_original_pdf_reverification_only": 2,
+    "new_signed_contract_register_cards_first_party": 2,
+    "new_named_winner_from_original_protocols": 1,
+    "original_source_files_not_counted_twice": true,
+    "no_changes_to_v29_101": true
+  }
+}

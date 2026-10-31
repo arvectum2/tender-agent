@@ -1,0 +1,67 @@
+{
+  "schema_version": "pq-tatneft-4469608-lot7-original-source-db-import/1",
+  "date_moscow": "2026-10-29",
+  "canonical_lot_id": "223fz:32616065155:lot7",
+  "eis_223_notice": "32616065155",
+  "b2b_procedure": "4469608",
+  "source_main": {
+    "url": "https://www.b2b-center.ru/market/postavka-elektrotekhnicheskogo-oborudovaniia-vykliuchateli/tender-4469608/",
+    "http": 200,
+    "bytes": 78449,
+    "sha256": "792a2964e9e1e50cb57a800dcd1f1ba3546544fd340ae74f9f344beb7deb3504"
+  },
+  "source_positions": {
+    "url": "https://www.b2b-center.ru/market/postavka-elektrotekhnicheskogo-oborudovaniia-vykliuchateli/tender-4469608/?action=positions",
+    "http": 200,
+    "bytes": 67396,
+    "sha256": "161f6ede4a0af57777df7db90ffc26d92394af3934c5d5b40f3b45b68c989be0"
+  },
+  "private_source_location": "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live/manual-20261029-tatneft4469608/",
+  "procurement": {
+    "buyer": "ООО «ТН-Энергосбыт»",
+    "organizer": "ПАО «Татнефть» им. В. Д. Шашина",
+    "published": "2026-05-29",
+    "main_stage_ended": "2026-07-10",
+    "legal_parent_request_positions": 11,
+    "requested_pq_position": 7,
+    "name": "Установки конденсаторные",
+    "quantity": 1,
+    "unit": "компл",
+    "okpd2": "27.12.10.190",
+    "category_voltage_class": "более 1 кВ; nominal 6–35kV NOT proven",
+    "lot_price_ceiling_with_vat22_rub": "3172000.00",
+    "whole_parent_initial_limit_with_vat22_rub": "199598002.40",
+    "procurement_outcome": "archived; bidder and result details hidden by organizer"
+  },
+  "classification": {
+    "in_research_corpus": true,
+    "strict_6_35kv_qualification_verified": false,
+    "pq_equipment_sale_verified": false,
+    "registered_contract_verified": false,
+    "winning_supplier_verified": false,
+    "paid_verified": false,
+    "market_census_complete": false
+  },
+  "postgres_import": {
+    "target_database": "arvectum_data",
+    "target_collection": "arvectum-market-pq-6-35kv",
+    "owner": "tender-agent",
+    "unique_lots_before": 108,
+    "unique_lots_after": 109,
+    "record_rows_after": 109,
+    "postwrite_readback_canonical_id": "223fz:32616065155:lot7",
+    "postwrite_status": "staged_unreviewed",
+    "postwrite_review": "unreviewed",
+    "postwrite_record_revision": 1,
+    "record_content_hash": "d03976c55ad0211d40d7d0f9a0eb66089f738886580dbdffa6e13567ba48f419",
+    "full_backup_sha256": "eea3a8308df087646d8ff452d233806e086700accca2f929d8b3609d37eb3ee7",
+    "source_manifest_sha256": "ab652ae09314de71110a24320316c6d02d7f1f46f72dc6c1141c728c524e9995",
+    "import_receipt_private_path": "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live/tatneft-4469608-lot7-postgres-import-receipt-20261029.json"
+  },
+  "next_steps": [
+    "Read first-party detailed ТТУ for actual nominal capacitor installation voltage and applicability of PP-1875",
+    "Check EIS official 223 notice and award/protocol, not duplicate 11 positions",
+    "Seek verified signed supplier and executed item-specific price; do not promote parent 199.6m NMC to PQ TAM"
+  ],
+  "notes": "Only lot7 of 11 was inserted. The other ten are not PQ. 3.172m RUB is an initial per-lot gross ceiling; no signed sale. Two primary HTML SHA are verified; technical detailed attachment not available."
+}

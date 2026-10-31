@@ -1,0 +1,215 @@
+{
+  "schema_version": "pq-watchdog-primary-source-discovery/1",
+  "run_start_moscow": "2026-10-29T18:33:48+03:00",
+  "run_issue_comment_id": 6501069332,
+  "canonical_pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "parent_head": "0f6076500c03415b8815ca14d94af76f89f30fe0",
+  "postgres_before": {
+    "unique_lots": 113,
+    "distinct_procedures": 102,
+    "eis_223_notices": 37
+  },
+  "postgres_after": {
+    "unique_lots": 113,
+    "distinct_procedures": 102,
+    "eis_223_notices": 37
+  },
+  "db_mutation": false,
+  "canonical_v29_rows_unchanged": 101,
+  "metrics": {
+    "new_source_capture_requests": 12,
+    "successful_http_200_captures": 8,
+    "httpx_tls_verify_errors": 4,
+    "unique_sha_verified_primary_originals_or_cards": 8,
+    "new_unique_procurement_lots": 0,
+    "new_distinct_procurement_procedures": 0,
+    "new_deduplicated_procurement_projects": 0,
+    "new_named_winner_protocols": 0,
+    "new_signed_suppliers": 0,
+    "new_verified_executed_equipment_sales": 0,
+    "new_month_source_coverage": 0
+  },
+  "searches": [
+    {
+      "query": "БСК",
+      "date_window": "not applied by official archive; first page only",
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%91%D0%A1%D0%9A",
+      "http": 200,
+      "sha256": "f532243c15c5626e82845b684e74c7600bff8997fc4d473ff5f599d85d8353a4",
+      "receipt": "captures/commercial_sibur-search-bsk-20261029_lot1/20261029T153508527851Z-dfe4d508-f532243c15c5626e.bin.json",
+      "returned_first_page_rows": 12,
+      "first_page_ids": [
+        "2144574/1",
+        "2143424/1",
+        "2140852/1",
+        "2135643/1",
+        "2135222/1",
+        "2132631/1",
+        "2131673/1",
+        "2130522/1",
+        "2129408/1",
+        "2128857/1",
+        "2124801/1",
+        "2124229/1"
+      ],
+      "strict_title_subject_pq_matches": [],
+      "pagination_exhaustive": false
+    },
+    {
+      "query": "СТК",
+      "date_window": "not applied by official archive; first page only",
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%A1%D0%A2%D0%9A",
+      "http": 200,
+      "sha256": "7ff8bbc0c61d439802dfc5f057e12ce53ed6e6d9ac739f5e447f7caf0f96d14e",
+      "receipt": "captures/commercial_sibur-search-stk-20261029_lot1/20261029T153510195034Z-3154e72b-7ff8bbc0c61d4398.bin.json",
+      "returned_first_page_rows": 12,
+      "first_page_ids": [
+        "2143740/2",
+        "2144280/1",
+        "2141328/2",
+        "2143740/1",
+        "2143705/1",
+        "2139200/5",
+        "2143431/1",
+        "2143166/1",
+        "2143077/1",
+        "2142812/1",
+        "2134964/4",
+        "2134964/3"
+      ],
+      "strict_title_subject_pq_matches": [],
+      "pagination_exhaustive": false
+    },
+    {
+      "query": "SVG",
+      "date_window": "not applied by official archive; first page only",
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=SVG",
+      "http": 200,
+      "sha256": "75661b7627c697b69dcfc83709d2e9f08b9cdd11d857b967d29e402e9d9c8b66",
+      "receipt": "captures/commercial_sibur-search-svg-20261029_lot1/20261029T153511694078Z-bf2bb37a-75661b7627c697b6.bin.json",
+      "returned_first_page_rows": 0,
+      "first_page_ids": [],
+      "strict_title_subject_pq_matches": [],
+      "pagination_exhaustive": false
+    },
+    {
+      "query": "конденсаторная",
+      "date_window": "not applied by official archive; first page only",
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%BA%D0%BE%D0%BD%D0%B4%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80%D0%BD%D0%B0%D1%8F",
+      "http": 200,
+      "sha256": "e2031034768cddb349ecb1f3804b69f720e90ffe6fc0e8bc987e4062df008e3b",
+      "receipt": "captures/commercial_sibur-search-capacitor-20261029_lot1/20261029T153625871409Z-a3d09130-e2031034768cddb3.bin.json",
+      "returned_first_page_rows": 0,
+      "first_page_ids": [],
+      "strict_title_subject_pq_matches": [],
+      "pagination_exhaustive": false
+    },
+    {
+      "query": "установка компенсации",
+      "date_window": "not applied by official archive; first page only",
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%86%D0%B8%D0%B8",
+      "http": 200,
+      "sha256": "3862595cd0deb494c32666b87d7ac6665d02fd65114f08c1191a4a0966e51f88",
+      "receipt": "captures/commercial_sibur-search-reactive-unit-20261029_lot1/20261029T153627286250Z-7b7ade8c-3862595cd0deb494.bin.json",
+      "returned_first_page_rows": 2,
+      "first_page_ids": [
+        "2103585/2",
+        "2103585/1"
+      ],
+      "strict_title_subject_pq_matches": [
+        "2103585/2",
+        "2103585/1"
+      ],
+      "pagination_exhaustive": false
+    },
+    {
+      "query": "статический компенсатор",
+      "date_window": "not applied by official archive; first page only",
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D1%81%D1%82%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9%20%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "http": 200,
+      "sha256": "5ef4611f4fc7072c43dacc93428eeb9862da06c2b40c20050db0c4b12475b049",
+      "receipt": "captures/commercial_sibur-search-static-compensator-20261029_lot1/20261029T153628690184Z-f3ae22ed-5ef4611f4fc7072c.bin.json",
+      "returned_first_page_rows": 0,
+      "first_page_ids": [],
+      "strict_title_subject_pq_matches": [],
+      "pagination_exhaustive": false
+    },
+    {
+      "query": "УКРМ-10",
+      "date_window": "not applied by official archive; first page only",
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%A3%D0%9A%D0%A0%D0%9C-10",
+      "http": 200,
+      "sha256": "5bacb20008df280582b0a9a8869932f4a3c621e67a66785cf0e69ea653aecb43",
+      "receipt": "captures/commercial_sibur-search-ukrm10-20261029_lot1/20261029T153630152037Z-452175e7-5bacb20008df2805.bin.json",
+      "returned_first_page_rows": 0,
+      "first_page_ids": [],
+      "strict_title_subject_pq_matches": [],
+      "pagination_exhaustive": false
+    }
+  ],
+  "additional_primary_pdf": {
+    "source_url": "https://www.sibur.ru/upload/iblock/f93/hnvw96fnhj8cj8n8saznun4zioafh0lt.pdf",
+    "http": 200,
+    "sha256": "42966499177451d58e8d9b3374c49a713799720d94f937a396d7e7eba0fd349c",
+    "bytes": 1474349,
+    "receipt": "captures/commercial_sibur-pdf-6kv-project_lot1/20261029T153511859143Z-98a7b271-42966499177451d5.bin.json",
+    "buyer": "ПАО «Нижнекамскнефтехим»",
+    "project": "Производство металлоценового полиэтилена 300 тыс. т/год. Реконструкция действующего производства ПЭ-230",
+    "project_document": "NKNH-mPE-5815-ИОС1.1",
+    "pdf_pages": 66,
+    "original_quotes": [
+      "Компенсация реактивной мощности предусматривается на существующих",
+      "для существующих РУ 6 кВ"
+    ],
+    "assessment": "primary design evidence for existing 6kV switchgear; no standalone tender notice, no explicit new PQ equipment order, no signed supplier, no sales; not a new procurement ID"
+  },
+  "negative_findings": [
+    "БСК query: 12 first-page rows, 0 strict PQ titles; lexical false positives (e.g. Южно-Приобский ГПЗ).",
+    "СТК query: 12 first-page rows, 0 strict PQ titles; substring false positives (e.g. очистка).",
+    "SVG/конденсаторная/статический компенсатор/УКРМ-10: no first-page rows; not proof of zero market.",
+    "Установка компенсации: only already known 2103585/1 and 2103585/2; same project PDH2.15383-4015-7.7.6-RFQ-0003, no double counting.",
+    "First-party 6kV project design does not demonstrate a new compensator procurement."
+  ],
+  "blocked_attempts": [
+    {
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%91%D0%A1%D0%9A",
+      "error": "httpx.ConnectError SSL CERTIFICATE_VERIFY_FAILED; recovered via strict TLS curl-direct HTTP200",
+      "retry": "already recovered, no immediate repeat"
+    },
+    {
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%A1%D0%A2%D0%9A",
+      "error": "httpx.ConnectError SSL CERTIFICATE_VERIFY_FAILED; recovered via strict TLS curl-direct HTTP200",
+      "retry": "already recovered, no immediate repeat"
+    },
+    {
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=SVG",
+      "error": "httpx.ConnectError SSL CERTIFICATE_VERIFY_FAILED; recovered via strict TLS curl-direct HTTP200",
+      "retry": "already recovered, no immediate repeat"
+    },
+    {
+      "url": "https://www.sibur.ru/upload/iblock/f93/hnvw96fnhj8cj8n8saznun4zioafh0lt.pdf",
+      "error": "httpx.ConnectError SSL CERTIFICATE_VERIFY_FAILED; recovered via strict TLS curl-direct HTTP200",
+      "retry": "already recovered, no immediate repeat"
+    }
+  ],
+  "next_targets": [
+    {
+      "case": "2103585/2",
+      "eligibility": "immediate, independent public original only",
+      "goal": "signed 10kV supplier or protocol, not repeated SIBUR archives"
+    },
+    {
+      "case": "32616523441",
+      "eligibility": "immediate when first-party RTS/EIS access permits",
+      "goal": "original 10kV compensating-device design and mixed EPC PQ-only allocation"
+    },
+    {
+      "case": "106044-ТТ",
+      "eligibility": "2026-10-30 09:00 MSK",
+      "goal": "first-party STATCOM 6.3kV outcome, award and signed contract"
+    }
+  ],
+  "status": "in_progress",
+  "note": "No 44/223 month exhaustive coverage; no new confirmed equipment sales; all originals private internal APFS, only hashes/links committed."
+}

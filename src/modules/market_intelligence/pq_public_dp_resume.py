@@ -4,6 +4,7 @@ Tracks SHA-bound case/document identities rather than a global offset, so
 newly recovered cases do not force already verified documents to be re-read.
 """
 from __future__ import annotations
+
 import argparse
 import hashlib
 import json
@@ -11,6 +12,8 @@ import os
 import re
 import tempfile
 from pathlib import Path
+
+from src.shared.config.settings import get_settings
 
 from .pq_dp_ingest import ingest
 
@@ -72,6 +75,19 @@ def run(*, source_root: Path, runtime: Path, dp_source: Path,
         _atomic(state_path, state)
         return {"status": "complete", "source_count": len(records),
                 "processed_count": len(records), "files_inspected": 0}
+    # The nonpersistent SDK endpoint requires the normal service credential.
+    # Do not hit the internal API with an empty key on every watchdog cycle.
+    # Synthetic test extractors are independent of this real-service gate.
+    if extractor is ingest and not get_settings().rag_data_platform_api_key:
+        _atomic(state_path, state)
+        return {
+            "status": "blocked_missing_data_platform_api_key",
+            "source_count": len(records),
+            "processed_count": len(records) - len(missing),
+            "files_inspected": 0, "extracted": 0, "errors": 0,
+            "pending": len(missing),
+            "original_shas_preserved": True,
+        }
     selected = missing[:max_files]
     for name in selected:
         path = source_root / name

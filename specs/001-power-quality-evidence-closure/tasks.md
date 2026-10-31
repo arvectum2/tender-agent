@@ -10,7 +10,7 @@
 - [x] T005 Add tests for 3/2/1 and 101/33/68 corpora; assert no TAM or signed-supplier inference.
 - [x] T006 Validate lint, unit/regression and source snapshot consistency, then cross-review documentation/code/test diff.
 - [x] T006a Repair existing CI architecture failure without relaxing audit: PQ extraction now uses the shared Data Platform consumer SDK facade, not a cross-repo Python import; source SHA, read-only extraction, selective resume, failure receipt and PDF fallback regression tested with a real synthetic authorized HTTP request.
-- [ ] T007 Prepare reviewed commit/PR, check CI and merge before AES canonical closure; synchronize existing roadmap and Watchdog checkpoint as needed (do not silently overwrite).
+- [x] T007 PR #520 merged to `main` as `e92c948c`; Spec Kit CLI v1.2.4 status OK; targeted smoke 17 passed (CI/merge already performed, broader AES S0-S11 closure still open).
 
 ## Phase 2 — audited original sources (US2)
 - [ ] T008 2024, 2025, 2026 discovery coverage: ЕИС 44/223, official contract register, commercial ETPs; log dates, provider, queries, failures and explicit denominator.
@@ -21,8 +21,33 @@
 - [ ] T013 Deduplicate notice ↔ lot ↔ project ↔ signed contract, including repeated tenders and mixed EPC; exclude non-PQ costs from any PQ market-volume calculation.
 - [ ] T014 Run source-grade numeric, privacy, rights, audit, contradiction and coverage checks; produce report + separate registers with original evidence and exact coverage limitations.
 
+### Source-grounded US2 slices completed on 2026-10-28 (scope bounded; parent tasks remain open)
+- [x] T008a Generate read-only source-period/notice/lot coverage ledger on the 101-row v29 source corpus; 34 EIS lot rows = 33 unique notices; 67 nonstandard/commercial rows; monthly searches remain explicitly *not demonstrated*.
+- [x] T009a Acquire and verify four original B2B-Center cards and three original Bidzaar cards with SHA receipts; outcomes from all four B2B cards are hidden by organizers. No invented signed supplier.
+- [x] T013a Prove exact two-notice repeat of BESK lot 26-004167 at Pionerskaya using failed original protocols; preserve 2 independent parent-program links without merging separate Lopcha EPC/design contracts.
+- [x] T014a Produce source consistency-checked `coverage.json`, `project_register.json`, `quality_report.json` and partial `report.md` using existing PQ runtime. Report 38 unique primary IDs, 62 unverified candidate rows, and unknown monthly search completeness.
+- [x] T014b Isolate corrupt RTF-with-DOCX extension and Data Platform missing-key condition; preserve all original SHA and pending 15 extraction tasks. *Do not* claim fully extracted corpus.
+- [x] T008b Perform 20 actual first-page (18 topical + 2 exact-ID), date-bound official EIS searches across six sample months (2024-04, 2024-10, 2025-05, 2025-11, 2026-06, 2026-09), journal exact source/status and seven false-positive medical results. Keep 34 months **not exhaustively verified**; this does not complete T008 or T014c.
+
+- [x] T009a2 Acquire three additional in-corpus original B2B-Center cards 4256170, 4526968, 4535313 and one out-of-v29 predecessor 4538400, using exact first-party SHA receipts; 41 distinct primary IDs now covered in v29.
+- [x] T013b Cross-verify original organizer cancellation of B2B 4538400 and explicit successor 4565274 in both original HTML sources; account for outside-v29 predecessor without inflating v29 denominator.
+- [x] T011a Verify three more native EIS commission decisions for 32514720691 (UKRM supply), 32514754857 (mixed reconstruction with UKRM 6 kV), 32514842313 (adjacent PS 500 kV BSK); source quote/SHA and price kind checks pass, total 9 committee decisions and 0 signed contracts.
+
+- [x] T009a3 Recover complete first-party RAD/EIS 223 source for previously no-EIS-files notice `32615966040`: 4 live-rehashed RAR originals, exact first-party page SHA and 1 RAR-derived DOCX SHA matching accepted ChatGPT queue.
+- [x] T011b Verify RAD original 10kV Nikitskaya mixed-EPC commission outcome: only participant ООО «ЭНЕРГОСЕТЬ», 5,273,763.77 RUB incl 22% VAT, tender unsuccessful with commission-to-contract instruction; no signed contractor or PQ-only price inferred. Distinguish 12 May initial price 5,564,090.57 from 19 May revised price.
+- [x] T014f Wire alternate first-party 223 RAD original into case coverage, market report and S10 without treating EIS download gap as absence: 42 unique primary procurement numbers, 43 candidate lot rows with source, 58 rows still unverified, 10 original commission facts, 0 signed suppliers. Actual offline cycle and 129 targeted tests PASS.
+- [ ] T014g Integrate separately source-audited Watchdog native Roseltorg/RAD commercial overlay (three additional source IDs in v29), with explicit 0.4 kV exclusion and owner-furnished 35kV BSK classification; do not add these to equipment sales.
+
+### Source-grade blockers (not closure)
+- [ ] T009b Obtain primary commercial award protocol/supplier and prices for remaining unverified commercial leads (including four B2B cards with hidden outcomes).
+- [ ] T014c Run official month-scoped ЕИС 44/223/ETP discovery; verify all 34 source months, 2024–2026.
+- [ ] T014d Authorized service API key needed for Data Platform SDK to extract 15 pending SHA-bound sources; no secret in Git/CLI/chat. Do not bypass the SDK or Data Platform boundary.
+- [ ] T014e Verify signed supplier and executed contract value separately from committee-selected participants and public registry amount.
+
 ## Phase 3 — governed continuation (US3)
 - [ ] T015 Exercise bounded restart/resume S0–S11 with existing SHA source ledger, queue, lease and checkpoint; prevent duplicate external actions.
+- [x] T015a Prevent repeated ChatGPT review of exact source-SHA subset packets already reviewed for the same notice; preserve genuinely new documents and unreadable originals.
+- [x] T009c ChatGPT visually inspected two previously unreadable original 2025 Bashkortostan EIS commission scans; recorded SHA-bound provisional results, preserved unknown 6–35 kV voltage and unsigned-contract gate.
 - [ ] T016 Connect report acceptance evidence to existing roadmap/checkpoint after normal reviewed integration; preserve hourly Watchdog unchanged.
 - [ ] T017 Only when evidence sufficient, independently review source-verified full report and consider task closure. No invented market size, supplier contract or training gold.
 

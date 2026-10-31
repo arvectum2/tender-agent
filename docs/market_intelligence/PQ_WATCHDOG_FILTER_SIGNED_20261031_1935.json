@@ -1,0 +1,163 @@
+{
+  "schema_version": "pq-watchdog-source-bound-signed-component-contract/1",
+  "moscow_finished": "2026-10-31T19:35:11.789361+03:00",
+  "issue_comment_id": 6546075159,
+  "canonical_pr": 521,
+  "start_head": "1f1ccedc48c0c219e5539a2e5fcc52c12ceee435",
+  "latest_tested_code_commit": "fad420f",
+  "acceptance": "pass",
+  "backup_sha256": "3aad39e163189a847654b2312d05eefb156bd439eb6d59811db2bc675846cbfd",
+  "postgres_before": {
+    "unique_lots": 118,
+    "distinct_procedures": 107,
+    "eis_223_notices": 41
+  },
+  "postgres_after": {
+    "unique_lots": 118,
+    "distinct_procedures": 107,
+    "eis_223_notices": 41
+  },
+  "new_unique_lots": 0,
+  "new_deduplicated_projects": 0,
+  "new_verified_db_fields": 10,
+  "new_client_visible_fields": 6,
+  "first_party_requests": 5,
+  "first_party_http200": 5,
+  "fresh_sha_verified_primary_original_versions": 5,
+  "new_original_commission_protocols": 0,
+  "new_commission_winners": 0,
+  "new_registered_signed_equipment_component_contracts": 1,
+  "new_registered_signed_contract_price_rub": "3158400.00",
+  "new_signed_supplier_identities": 0,
+  "new_independently_verified_paid_sales": 0,
+  "new_executed_prices": 0,
+  "new_month_source_searches": 0,
+  "source_captures": [
+    {
+      "case_id": "223fz:32514947144:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32514947144",
+      "relative_file": "captures/223fz_32514947144_lot1/20261031T162936566789Z-7c232128-bc7754b3ed0128ad.bin",
+      "http_status": 200,
+      "sha256": "bc7754b3ed0128ad02aa2d21d70c7dfc81dcd480eaa87a1d4d18c57671835655",
+      "bytes": 132765,
+      "captured_utc": "2026-10-31T16:29:36.570330+00:00"
+    },
+    {
+      "case_id": "223fz:32514947144:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=54716016979250029010000",
+      "relative_file": "captures/223fz_32514947144_lot1/20261031T162950607517Z-23e3b7e2-66134a163aa0327c.bin",
+      "http_status": 200,
+      "sha256": "66134a163aa0327c095ca0d68d691a597190d2d993c67dbf3cdb4fddc390d234",
+      "bytes": 134950,
+      "captured_utc": "2026-10-31T16:29:50.608569+00:00"
+    },
+    {
+      "case_id": "223fz:32514947144:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=54716016979250029010000",
+      "relative_file": "captures/223fz_32514947144_lot1/20261031T162952522427Z-bf461e12-40153b2fd3e21b20.bin",
+      "http_status": 200,
+      "sha256": "40153b2fd3e21b2060109b2ea7f7369c8d9ea0d43e0df6e82c859d4eaa5fea60",
+      "bytes": 9727,
+      "captured_utc": "2026-10-31T16:29:52.524712+00:00"
+    },
+    {
+      "case_id": "223fz:32514947144:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=54716016979250029010000",
+      "relative_file": "captures/223fz_32514947144_lot1/20261031T162954942120Z-a677c74f-ed1399c65155df6f.bin",
+      "http_status": 200,
+      "sha256": "ed1399c65155df6f9728e7a2ded84257d175663ae21830110a14e5b2753e6233",
+      "bytes": 142555,
+      "captured_utc": "2026-10-31T16:29:54.943446+00:00"
+    },
+    {
+      "case_id": "223fz:32514947144:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/event-log.html?reestrNumber=54716016979250029010000",
+      "relative_file": "captures/223fz_32514947144_lot1/20261031T163019057258Z-30e46e00-bd23d3b1f01add48.bin",
+      "http_status": 200,
+      "sha256": "bd23d3b1f01add4850de79eb46d20ef04f9cf51a7e28a43e39c24d5948c71d63",
+      "bytes": 128494,
+      "captured_utc": "2026-10-31T16:30:19.059724+00:00"
+    }
+  ],
+  "finding": {
+    "canonical_id": "223fz:32514947144:lot1",
+    "registry": "54716016979250029010000",
+    "contract_number": "1423177",
+    "signed_date": "2025-07-24",
+    "registered_price_rub": "3158400.00",
+    "quantity": 14,
+    "unit_price_rub": "225600.00",
+    "equipment": "КЭПФ-12-450-2УХЛ1",
+    "nominal_voltage_kv": 12,
+    "reactive_power_per_item_kvar": 450,
+    "equipment_only_contract_rub": "3158400.00",
+    "execution_registry_status": "Исполнение завершено 2025-09-23",
+    "parent_substation_voltage_kv": 500,
+    "market_scope": "12kV capacitor components for 500kV substation, not full 6–35kV PQ installation",
+    "supplier_signatory": "unverified",
+    "manufacturer": "unverified",
+    "payment": "unverified",
+    "source_grading": "A: direct official contract/subject/event originals, immutable SHA"
+  },
+  "db_receipt": "receipts/filter-signed-32514947144-20261031T1633Z.json",
+  "db_postwrite_hash": "2dde26c53c3791f91461b8ed73ba6acb0db26886752620a782c4d6b575cd8b2d",
+  "report_version": "V19",
+  "snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261031_v19.json",
+  "snapshot_sha256": "c52200c14c2ec0e65d774eaaeb68a3fdd68d50a2d96080c038156b065af27e59",
+  "audit": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261031_V19.json",
+  "audit_sha256": "78c13e8581d6a09b0f1ad87800d25c2b2252d403f005a64b83c4855855c4e3cb",
+  "pdfs": {
+    "ru": {
+      "path": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_RU_20261031_V19.pdf",
+      "sha256": "e7b53ee7d73c5acb906822c9ec74c9a7fb8de6d343c72460b9c67732b1e4b1f1",
+      "pages": 258,
+      "case_pages": [
+        38,
+        39
+      ]
+    },
+    "en": {
+      "path": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_EN_20261031_V19.pdf",
+      "sha256": "43428b3ccf01dc80ae66c6538c6888858945d867343b7a5685714c8f1aa0918a",
+      "pages": 258,
+      "case_pages": [
+        38,
+        39
+      ]
+    }
+  },
+  "client_html_preview_unchanged": true,
+  "canonical_v29_rows_unchanged": 101,
+  "tests": "15 focused passed; Ruff passed; PDF RU/EN 258 pages; target pages 38/39 inside page geometry",
+  "limitations": [
+    "No new unique lots or distinct projects: procurement already present.",
+    "No public first-party signed supplier identity or independent payment confirmation.",
+    "Contract execution-completed registry status does not itself prove payment or manufacturer revenue.",
+    "Parent project is a 500kV substation; 12kV components are adjacent, not complete 6–35kV PQ system.",
+    "No calendar month/source exhaustively searched in this case-specific run."
+  ],
+  "next_three": [
+    {
+      "case_id": "commercial:351-062:lot1",
+      "eligible": "now",
+      "action": "source-bound P2: 6kV and 3000kvar nominal from existing Bidzaar original questionnaire, distinguish per-unit/total"
+    },
+    {
+      "case_id": "223fz:32616266007:lot1",
+      "eligible": "now",
+      "action": "review signed contract 1605245 and nonempty failed-status conflict, no silent overwrite; 500kV scope"
+    },
+    {
+      "case_id": "223fz:32616400421:lot1",
+      "eligible": "2026-11-01 07:30 MSK",
+      "action": "retry official EIS technical/protocol original after source cooldown"
+    }
+  ],
+  "additional_gap": {
+    "case_id": "223fz:32514947144:lot1",
+    "next_retry": "2026-11-07 07:30 MSK",
+    "action": "supplier signatory and payment from public first-party registry only"
+  },
+  "auto_merge": false,
+  "task_status": "in_progress"
+}

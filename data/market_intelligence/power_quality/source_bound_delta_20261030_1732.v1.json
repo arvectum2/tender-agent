@@ -1,0 +1,115 @@
+{
+  "schema_version": "mi-pq-source-bound-incremental/1",
+  "date": "2026-10-30",
+  "base_db_expected_records": 116,
+  "source": "EIS RI223 SOAP region77 notice 2026-04-22, protocols 2026-05-15 and 2026-05-22",
+  "corpus": "arvectum-market-pq-6-35kv",
+  "new_cases": [
+    {
+      "source_record": {
+        "canonical_id": "223fz:32615937898:lot1",
+        "procedure_id": "32615937898",
+        "family": "static_reactive_compensator",
+        "scope": "design_and_survey_only",
+        "market_scope": "adjacent_110kv_reactive_compensation_design_not_equipment_sale",
+        "procurement_regime": "223-fz",
+        "publication_date": "2026-04-22",
+        "date_basis": "EIS_RI223_notice_original",
+        "customer": {
+          "name": "АО «Россети Научно-Технический Центр»",
+          "inn": "7728589190"
+        },
+        "platform": "ЕИС 223-ФЗ / РТС-тендер",
+        "status": "commission_one_application_failed_competition_signed_contract_unverified",
+        "description": "Проектные и изыскательские работы по реконструкции ПС 110/35/10 кВ Тяжинская с заменой БСК-110 на СКРМ мощностью 52 Мвар. Исходное оборудование на стороне 110 кВ. Это проектирование, не поставка и не подтверждённая продажа PQ 6–35 кВ.",
+        "technical": {
+          "project_substation_kv": "110/35/10",
+          "compensator_replacement_kv": 110,
+          "power_mvar": 52,
+          "equipment_supply_proven": false
+        },
+        "nmck_rub": "3050000.00",
+        "nmck_vat_basis": "not_independently_verified",
+        "commission_bid_rub": "3050000.00",
+        "commission_bidder_name": null,
+        "commission_application_count": 1,
+        "commission_protocol_date": "2026-05-21",
+        "commission_status": "missedContest=true; ONE_APPLICATION_SUBMITTED",
+        "contract_registered_price_rub": null,
+        "contract_registry_number": null,
+        "supplier_verified": false,
+        "supplier_inn": null,
+        "signed_supplier_verified": false,
+        "paid_verified": false,
+        "realized_equipment_revenue_rub": null,
+        "market_population_complete": false,
+        "source_xml_members": [
+          {
+            "kind": "notice",
+            "archive_sha256": "180e71012a031d52205ffda334f7eda13d87f5c38c85ae878d942032b1ae37c3",
+            "xml_member": "purchaseNotice_32615937898_1_019DB41400107D76995955B560021069.xml",
+            "xml_sha256": "cb593728f918e395793047411964ecd85df4aaeb437435652de8a2535c9d4262"
+          },
+          {
+            "kind": "retrade",
+            "archive_sha256": "ac61bd642657741bc7919dc05b81713fadfd1391601eac7c32a023a3014d87e4",
+            "xml_member": "purchaseProtocol_32615937898_1_019E2B01A8347E47857767CAAA80C325.xml",
+            "xml_sha256": "e7643c8e0fa0f55a568ee86e7c9e15ff35835664419a7619109b085c325af370"
+          },
+          {
+            "kind": "final",
+            "archive_sha256": "2fc8340d25599029acef1f91a1060a7b42ae061548788197b5edcf1e8847d646",
+            "xml_member": "purchaseProtocol_32615937898_1_019E4E5D11F67A3AABA4DBBB003A03ED.xml",
+            "xml_sha256": "1f3b90a82a9d277d695ab46adf0ff6b5e069a28fb9698f46872a5b75b0a4b223"
+          }
+        ],
+        "evidence": [
+          {
+            "url": "https://int.zakupki.gov.ru/eis-integration/services/getDocsIP",
+            "source_tier": "first_party_EIS_223_SOAP_RI223_notice",
+            "sha256": "180e71012a031d52205ffda334f7eda13d87f5c38c85ae878d942032b1ae37c3"
+          },
+          {
+            "url": "https://int.zakupki.gov.ru/eis-integration/services/getDocsIP",
+            "source_tier": "first_party_EIS_223_SOAP_RI223_retrade",
+            "sha256": "ac61bd642657741bc7919dc05b81713fadfd1391601eac7c32a023a3014d87e4"
+          },
+          {
+            "url": "https://int.zakupki.gov.ru/eis-integration/services/getDocsIP",
+            "source_tier": "first_party_EIS_223_SOAP_RI223_final",
+            "sha256": "2fc8340d25599029acef1f91a1060a7b42ae061548788197b5edcf1e8847d646"
+          }
+        ],
+        "caution": "EIS protocol XML contractSigned=true is NOT a signed contract original. Bidder identity and executed price unverified. 110 kV design adjacent to 6–35 kV core."
+      },
+      "verified_originals": [
+        {
+          "sha256": "180e71012a031d52205ffda334f7eda13d87f5c38c85ae878d942032b1ae37c3",
+          "filename": "documentation-archive.zip",
+          "source_name": "EIS RI223 SOAP notice ZIP 2026",
+          "private_relative": "eis-20261030-research/RI223/purchaseNotice/2026-04-22/region-77/archive-001/documentation-archive.zip",
+          "bytes": 7428360
+        },
+        {
+          "sha256": "ac61bd642657741bc7919dc05b81713fadfd1391601eac7c32a023a3014d87e4",
+          "filename": "documentation-archive.zip",
+          "source_name": "EIS RI223 SOAP retrade ZIP 2026",
+          "private_relative": "eis-20261030-research/RI223/purchaseProtocol/2026-05-15/region-77/archive-002/documentation-archive.zip",
+          "bytes": 3673617
+        },
+        {
+          "sha256": "2fc8340d25599029acef1f91a1060a7b42ae061548788197b5edcf1e8847d646",
+          "filename": "documentation-archive.zip",
+          "source_name": "EIS RI223 SOAP final ZIP 2026",
+          "private_relative": "eis-20261030-research/RI223/purchaseProtocol/2026-05-22/region-77/archive-001/documentation-archive.zip",
+          "bytes": 3643846
+        }
+      ],
+      "original_verification": "3 distinct SHA-256 verified original EIS RI223 SOAP ZIPs with case-specific XML member+SHA; XML read-only parsed and case ID checked",
+      "review_scope": "adjacent_110kv_design_only_no_signed_contract"
+    }
+  ],
+  "market_population_complete": false,
+  "new_signed_suppliers_verified": 0,
+  "new_executed_equipment_sales_rub": 0
+}

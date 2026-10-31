@@ -1,0 +1,125 @@
+{
+  "schema_version": "pq-watchdog-source-technical/1",
+  "run_start_comment_id": 6493120574,
+  "date_moscow": "2026-10-29",
+  "pr": 521,
+  "parent_head": "9278a140be19163668c33e867cc24a09f72bf59a",
+  "db_before": {
+    "lots": 109,
+    "procedures": 98,
+    "eis223": 37
+  },
+  "db_after": {
+    "lots": 109,
+    "procedures": 98,
+    "eis223": 37
+  },
+  "new_unique_lots": 0,
+  "new_procedures": 0,
+  "new_projects": 0,
+  "new_winners": 0,
+  "new_signed_suppliers": 0,
+  "new_paid_prices": 0,
+  "new_calendar_months": 0,
+  "new_originals": [
+    {
+      "case_id": "commercial:351-062:lot1",
+      "source_url": "https://bidzaar.com/app/process/light/019f415c-8a7a-7c91-bb3f-68da7b9413ea",
+      "relative_file": "captures/commercial_351-062_lot1/20261029T093617406953Z-08e14833-c3d62267ce277f46.bin",
+      "sha256": "c3d62267ce277f46dcde903aaff25074feaf660687d8239f15eb9d1256387fc5",
+      "bytes": 291232,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:351-062:lot1",
+      "source_url": "https://bidzaar.com/api/filestorage/files/download/19864dc9-085e-4bbc-a104-bd8205dffe45",
+      "relative_file": "captures/commercial_351-062_lot1/20261029T093746241657Z-a5d55a03-e7927732264deb30.bin",
+      "sha256": "e7927732264deb30813bcf967740763cfb032f5710ca78156f76646f8cc0d831",
+      "bytes": 641024,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:351-062:lot1",
+      "source_url": "https://bidzaar.com/api/filestorage/files/download/6b83bcd1-b7a6-4347-8277-3afab3c7c35a",
+      "relative_file": "captures/commercial_351-062_lot1/20261029T093746502318Z-b1aff85f-e53a74ef8a4fda14.bin",
+      "sha256": "e53a74ef8a4fda14aedce7254488013187aba3bba7780b5a9c6443e4d0caacaf",
+      "bytes": 15087,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:306-644:lot35",
+      "source_url": "https://bidzaar.com/api/filestorage/files/download/d51475af-9d65-4f4c-b039-e46387a8e790",
+      "relative_file": "captures/commercial_306-644_lot35/20261029T093718096395Z-a841b31c-541eaa3df83d7b29.bin",
+      "sha256": "541eaa3df83d7b29f29aeb0d4d1787f1a442a6c1919552790d40425c9eccd267",
+      "bytes": 83286,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:306-644:lot35",
+      "source_url": "https://bidzaar.com/api/filestorage/files/download/8042258e-bd58-4efc-9f98-b00db6113f82",
+      "relative_file": "captures/commercial_306-644_lot35/20261029T093717781727Z-d2c2b031-28c970162cc7b36c.bin",
+      "sha256": "28c970162cc7b36cff91df3b64ea4168c5717cc43554aea162440e6d10272516",
+      "bytes": 43070,
+      "http_status": 200
+    }
+  ],
+  "http_requests": {
+    "total": 13,
+    "200": 5,
+    "302": 8,
+    "note": "4 successful 302->200 attachment chains; 1 direct card 200; 2 initially blocked and 2 diagnostic 302; web searches excluded"
+  },
+  "findings": [
+    {
+      "case": "commercial:306-644:lot35",
+      "tech_sha": "28c970162cc7b36cff91df3b64ea4168c5717cc43554aea162440e6d10272516",
+      "customer": "Сибстекло",
+      "voltage_kv": 6,
+      "ukrm_units": 2,
+      "each_kvar": 900,
+      "quote": "Установки компенсации реактивной мощности УКРМ 6 кВ. предоставляет заказчик.",
+      "scope": "installation, connection and commissioning of customer-supplied units; contractor provides auxiliary materials; NOT new equipment sale",
+      "already_in_db": true
+    },
+    {
+      "case": "commercial:351-062:lot1",
+      "tech_sha": "e7927732264deb30813bcf967740763cfb032f5710ca78156f76646f8cc0d831",
+      "project_sha": "e53a74ef8a4fda14aedce7254488013187aba3bba7780b5a9c6443e4d0caacaf",
+      "buyer": "Электрощит-ТМ Самара",
+      "beneficiary": "УК Эльга",
+      "project": "300240128, ПС 35/6 кВ ПОСКО, Нерюнгринский район",
+      "units_requested": 2,
+      "each_kvar_requested": 3000,
+      "stages_kvar": [
+        750,
+        750,
+        750,
+        750
+      ],
+      "quote": "УКРМ на 3000 кВАр , должен быть отдельно стоящий.",
+      "scope": "market price survey only; no awarded contract, supplier, OEM or paid amount",
+      "already_in_db": true
+    }
+  ],
+  "fix": "Resolve relative Bidzaar 302 Location via urljoin and revalidate HTTPS allowlist; 2 targeted tests pass",
+  "limitations": [
+    "No verified signed supplier or executed equipment sale",
+    "Previously blocked relative redirects resolved without auth bypass"
+  ],
+  "next_three": [
+    {
+      "case": "32515582393",
+      "retry_moscow": "2026-10-30 06:46"
+    },
+    {
+      "case": "106044-ТТ",
+      "retry_moscow": "2026-10-30 06:42"
+    },
+    {
+      "case": "32616435269",
+      "retry_moscow": "2026-10-30 10:38"
+    }
+  ],
+  "db_mutated": false,
+  "v29_unchanged": 101
+}

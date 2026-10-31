@@ -1,0 +1,141 @@
+{
+  "schema_version": "pq-watchdog-eis-signed-bsk/1",
+  "as_of_moscow": "2026-10-31T09:34:00+03:00",
+  "issue_comment_id": 6540100805,
+  "canonical_pr": 521,
+  "parent_head": "343cb196cac169ae563ad8874ed3a3ad034c8740",
+  "db": {
+    "collection": "arvectum_data.arvectum-market-pq-6-35kv",
+    "unique_lots_before": 117,
+    "unique_lots_after": 118,
+    "distinct_procedures_before": 106,
+    "distinct_procedures_after": 107,
+    "eis_223_notices_before": 40,
+    "eis_223_notices_after": 41,
+    "new_unique_lots": 1,
+    "new_verified_core_equipment_only_sales": 0,
+    "new_signed_supplier_identifications": 0,
+    "new_executed_payments": 0,
+    "other_collections_untouched": true,
+    "postwrite_sha_readback_verified": true
+  },
+  "new_unique_case": {
+    "canonical_id": "223fz:32615684088:lot1",
+    "buyer": "ПАО Россети Центр",
+    "buyer_inn": "6901067107",
+    "scope": "mixed_epc",
+    "network_voltage_kv": 10,
+    "pq_component": "БСК в составе ВЛ 10 кВ, реклоузер, два разъединителя и ПИР/СМР",
+    "bsk_rated_voltage_and_power_verified": false,
+    "initial_total_rub": "37828258.18",
+    "first_place_anonymous_bid_application": "464597",
+    "first_place_offer_total_rub": "37818258.18",
+    "registered_contract_number": "56901067107260004310000",
+    "contract_number": "3600/02874/26",
+    "contract_signed_date": "2026-03-10",
+    "registered_contract_total_rub": "37818258.18",
+    "signed_supplier_name_verified": false,
+    "paid_amount_verified": false,
+    "equipment_only_price_verified": false,
+    "project_dedup": "no_matching_AGROEKO_or_notice_identity_in_existing_117_rows"
+  },
+  "existing_case_new_original_contract_evidence": {
+    "canonical_id": "223fz:32615966040:lot1",
+    "contract_registry_number": "55036065113260035960000",
+    "contract_no": "28912-26-100201",
+    "signed_date": "2026-06-03",
+    "registered_total_epc_rub": "5273763.77",
+    "prior_secondary_reported_total_rub": "5273764.00",
+    "price_difference_rub": "0.23",
+    "scope": "mixed_epc_10kv_bus_compensation_with_110kv_substation_works",
+    "named_commission_recommended_contractor": "ООО ЭНЕРГОСЕТЬ",
+    "signed_supplier_identity_proven": false,
+    "existing_db_fields_updated": 0,
+    "next_action": "source-bound null-only CAS enrichment after fresh full backup"
+  },
+  "primary_source_requests": {
+    "total": 20,
+    "initial_httpx_tls_certificate_failures": 6,
+    "native_trust_http200": 12,
+    "native_trust_http404": 2,
+    "other": 0,
+    "new_month_source_searches": 0
+  },
+  "new_sha_verified_primary_originals": 12,
+  "original_protocol_prints": 4,
+  "new_named_winners": 0,
+  "new_signed_contracts_by_official_registry": 2,
+  "new_verified_signed_suppliers": 0,
+  "official_sources": [
+    {
+      "case": "32615684088",
+      "type": "contract registry card",
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=56901067107260004310000",
+      "sha256": "d04ae14eaee9cb1b8787cb313f7f8848268f512ca5747bc7ea4150566030e7f2"
+    },
+    {
+      "case": "32615684088",
+      "type": "final protocol, 4 anonymous applications",
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=1025d03f-af05-4d6b-bdfd-e3c6fcb076ae&purchaseNoticeNumber=32615684088",
+      "sha256": "e3a320953fe4b63c7931de6eb7ce895a2e2b1d5e6f8115afba99c40c8c18671d"
+    },
+    {
+      "case": "32615966040",
+      "type": "registered contract card",
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=55036065113260035960000",
+      "sha256": "9f5241d6942c2eb62b69b03938224c1b64cba93995841a4e53db025b7c079317"
+    },
+    {
+      "case": "32615966040",
+      "type": "official contract print",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract/printForm/viewXml.html?contractRegistrationNumber=55036065113260035960001",
+      "sha256": "0331902c360c21720c9aa38dfb94611a44ec31bfe664303fb9dce24d8677cb99"
+    }
+  ],
+  "backup": {
+    "manifest": "data-platform-arvectum_data-20261031T063231Z-74024.dump.manifest.json",
+    "sha256": "acc6ff644046770f6aad5cb9083ff2ca851e207863070c1fa069815c9b0804ec",
+    "pg_restore_list_verified": true
+  },
+  "delta_manifest_sha256": "826f259f2e2e1f085587e23ad04deb022fd92a85f69051cbbecab09872f8bc8b",
+  "report": {
+    "legacy_html_refreshed_on_verified_unique_lot_growth": true,
+    "version": "V10",
+    "snapshot_unique_lots": 118,
+    "ru_pdf_pages": 258,
+    "en_pdf_pages": 258,
+    "frozen_V2_through_V9_unchanged": true
+  },
+  "tests": {
+    "focused": "13 passed; 1 inherited Starlette warning",
+    "ruff": "pass",
+    "pdfinfo": "258 pages RU/EN",
+    "git_diff_check": "pass"
+  },
+  "next_three": [
+    {
+      "case": "32615966040",
+      "retry_after_moscow": "2026-10-31 09:35",
+      "goal": "safe CAS enrich registered contract fields, supplier remains unverified"
+    },
+    {
+      "case": "106044-ТТ",
+      "retry_after_moscow": "2026-10-31 09:00",
+      "goal": "STATCOM official protocol, named bidder and outcome"
+    },
+    {
+      "case": "RN61003961",
+      "retry_after_moscow": "2026-10-31 10:00",
+      "goal": "TEK-Torg native 6kV result after deadline"
+    }
+  ],
+  "limitations": [
+    "10kV network voltage is not confirmed BSK nameplate rating",
+    "total EPC price is not PQ equipment revenue",
+    "anonymous first-place application is not a named supplier",
+    "registered signed contract does not prove payment/execution",
+    "404 or TLS failures do not prove market absence",
+    "v29 frozen 101-row historical materialization not silently replaced",
+    "no auto-merge"
+  ]
+}

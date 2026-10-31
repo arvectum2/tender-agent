@@ -1,0 +1,7210 @@
+{
+  "schema": "arvectum-pq-evidence-completeness/1",
+  "snapshot_schema": "fgi-client-deck/2",
+  "snapshot_date": "2026-10-31",
+  "lots": 118,
+  "fields_expected_each": 28,
+  "field_coverage": {
+    "bid": 9,
+    "buyer": 117,
+    "buyer_inn": 73,
+    "contract_date": 15,
+    "contract_no": 14,
+    "contract_price": 16,
+    "date": 113,
+    "description": 118,
+    "equipment_only_price": 3,
+    "family": 118,
+    "id": 118,
+    "nmck": 45,
+    "platform": 115,
+    "power": 9,
+    "procedure": 101,
+    "quantity": 47,
+    "regime": 118,
+    "scope": 118,
+    "source_urls": 106,
+    "status": 118,
+    "voltage_kv": 24,
+    "winner": 6
+  },
+  "source_grades": {
+    "C": 71,
+    "A": 21,
+    "D": 12,
+    "B": 14
+  },
+  "cases": [
+    {
+      "id": "223fz:32313008364:lot1",
+      "buyer": "ПАО «Россети» / Забайкальское ПМЭС",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4286,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32413195287:lot1",
+      "buyer": "ООО «ЕвроЭнергоТранс»",
+      "source_grade": "A",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [
+          "winner"
+        ],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 3,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32413581034:lot2",
+      "buyer": "ПАО «Федеральная сетевая компания – Россети»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4286,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "platform"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32413708738:lot1",
+      "buyer": "ПАО «Россети» / МЭС Сибири",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.5,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32413764701:lot1",
+      "buyer": "АО «ЮТЭК-Региональные сети»",
+      "source_grade": "A",
+      "review": "unreviewed",
+      "completion_ratio": 0.6429,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price"
+        ],
+        "participants": [],
+        "outcome": [
+          "status",
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "date"
+        ],
+        "technical": [
+          "quantity"
+        ],
+        "financial": [
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": []
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 3,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32514476448:lot1",
+      "buyer": "ООО «Башкирские распределительные электрические сети»",
+      "source_grade": "A",
+      "review": "unreviewed",
+      "completion_ratio": 0.6429,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "contract_price"
+        ],
+        "participants": [],
+        "outcome": [
+          "status",
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "power"
+        ],
+        "financial": [
+          "bid",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": []
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 6,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32514565977:lot1",
+      "buyer": "ОАО «РЖД»",
+      "source_grade": "A",
+      "review": "unreviewed",
+      "completion_ratio": 0.5357,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv"
+        ],
+        "financial": [
+          "nmck",
+          "bid"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32514944142:lot1",
+      "buyer": "ПАО «Россети» / МЭС Юга",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32514947144:lot1",
+      "buyer": "ПАО «Федеральная сетевая компания — Россети», Кузбасское ПМЭС",
+      "source_grade": "A",
+      "review": "unreviewed",
+      "completion_ratio": 0.75,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price"
+        ],
+        "participants": [
+          "winner"
+        ],
+        "outcome": [
+          "status",
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [],
+        "financial": [
+          "paid_amount"
+        ],
+        "participants": [
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": []
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 6,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32515029641:lot1",
+      "buyer": "ПАО «Федеральная сетевая компания — Россети», МЭС Юга",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4286,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32515044454:lot1",
+      "buyer": "ПАО «Россети Сибирь»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.5,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32515208744:lot1",
+      "buyer": "ПАО «Федеральная сетевая компания — Россети»",
+      "source_grade": "D",
+      "review": "unreviewed",
+      "completion_ratio": 0.3929,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn",
+          "source_urls"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 0,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32515218366:lot1",
+      "buyer": "АО «Россети Научно-технический центр»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.5,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32515225588:lot1",
+      "buyer": "ПАО «Федеральная сетевая компания — Россети»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4286,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32515582393:lot1",
+      "buyer": "ООО «Башкирэнерго»",
+      "source_grade": "A",
+      "review": "unreviewed",
+      "completion_ratio": 0.6071,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "contract_price"
+        ],
+        "participants": [],
+        "outcome": [
+          "status",
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "bid",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": []
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 3,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32515584863:lot1",
+      "buyer": "ПАО «Россети» / МЭС Востока",
+      "source_grade": "D",
+      "review": "unreviewed",
+      "completion_ratio": 0.4286,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "source_urls"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 0,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32615614821:lot1",
+      "buyer": "ООО «Башкирские распределительные электрические сети»",
+      "source_grade": "B",
+      "review": "unreviewed",
+      "completion_ratio": 0.6429,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "contract_price"
+        ],
+        "participants": [],
+        "outcome": [
+          "status",
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "power"
+        ],
+        "financial": [
+          "bid",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": []
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 4,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32615684088:lot1",
+      "buyer": "ПАО «Россети Центр»",
+      "source_grade": "A",
+      "review": "unreviewed",
+      "completion_ratio": 0.5714,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price"
+        ],
+        "participants": [],
+        "outcome": [
+          "status",
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "date"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": []
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 4,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32615760238:lot1",
+      "buyer": "ПАО «Россети» / МЭС Востока",
+      "source_grade": "D",
+      "review": "unreviewed",
+      "completion_ratio": 0.4286,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "source_urls"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 0,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32615794236:lot1",
+      "buyer": "ПАО «Россети» / МЭС Сибири",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.6071,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv"
+        ],
+        "financial": [
+          "nmck",
+          "contract_price"
+        ],
+        "participants": [],
+        "outcome": [
+          "status",
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": []
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32615852898:lot1",
+      "buyer": "ПАО «Россети Сибирь» / Кузбассэнерго-РЭС",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.5357,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "contract_price"
+        ],
+        "participants": [],
+        "outcome": [
+          "status",
+          "contract_no"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "bid",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32615937898:lot1",
+      "buyer": "АО «Россети Научно-Технический Центр»",
+      "source_grade": "D",
+      "review": "unreviewed",
+      "completion_ratio": 0.5,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "source_urls"
+        ],
+        "technical": [
+          "voltage_kv",
+          "quantity"
+        ],
+        "financial": [
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 0,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32615966040:lot1",
+      "buyer": "ПАО «Россети Московский регион»",
+      "source_grade": "A",
+      "review": "unreviewed",
+      "completion_ratio": 0.6071,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [
+          "nmck",
+          "contract_price"
+        ],
+        "participants": [
+          "winner"
+        ],
+        "outcome": [
+          "status",
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": []
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 5,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32615969197:lot1",
+      "buyer": "ООО «Башкирские распределительные электрические сети»",
+      "source_grade": "B",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 2,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32616065155:lot7",
+      "buyer": "ООО «ТН-Энергосбыт»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 2,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32616103025:lot1",
+      "buyer": "ООО «Башкирские распределительные электрические сети»",
+      "source_grade": "B",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32616120582:lot1",
+      "buyer": "ПАО «Россети Северо-Запад»",
+      "source_grade": "B",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 3,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32616181358:lot1",
+      "buyer": "АО «Завод РЭТО»",
+      "source_grade": "A",
+      "review": "unreviewed",
+      "completion_ratio": 0.7143,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price"
+        ],
+        "participants": [
+          "winner"
+        ],
+        "outcome": [
+          "status",
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "paid_amount"
+        ],
+        "participants": [
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": []
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 6,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32616266007:lot1",
+      "buyer": "ПАО «Россети» — МЭС Центра",
+      "source_grade": "A",
+      "review": "unreviewed",
+      "completion_ratio": 0.6429,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid"
+        ],
+        "participants": [
+          "winner"
+        ],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [],
+        "financial": [
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P3: roles and protocol",
+      "source_urls": 4,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32616280467:lot1",
+      "buyer": "ПАО «Россети Волга»",
+      "source_grade": "B",
+      "review": "unreviewed",
+      "completion_ratio": 0.5,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 2,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32616296475:lot1",
+      "buyer": "ООО «Водоканал», г. Мелеуз",
+      "source_grade": "A",
+      "review": "unreviewed",
+      "completion_ratio": 0.7143,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price"
+        ],
+        "participants": [],
+        "outcome": [
+          "status",
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [],
+        "financial": [
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": []
+      },
+      "next_priority": "P3: roles and protocol",
+      "source_urls": 6,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32616339168:lot1",
+      "buyer": "ПАО «Россети» / МЭС Юга",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32616354211:lot1",
+      "buyer": "АО «Энергосервисная компания Сибири»",
+      "source_grade": "A",
+      "review": "unreviewed",
+      "completion_ratio": 0.6071,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "contract_price"
+        ],
+        "participants": [],
+        "outcome": [
+          "status",
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "bid",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": []
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 5,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32616355390:lot1",
+      "buyer": "АО «Россети Научно-технический центр»",
+      "source_grade": "A",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 3,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32616400421:lot1",
+      "buyer": "ПАО «Россети Сибирь», Кузбассэнерго-РЭС",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 2,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32616412267:lot1",
+      "buyer": "МУП Ангарского городского округа «Ангарский Водоканал»",
+      "source_grade": "A",
+      "review": "unreviewed",
+      "completion_ratio": 0.6071,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv"
+        ],
+        "financial": [
+          "nmck",
+          "contract_price"
+        ],
+        "participants": [],
+        "outcome": [
+          "status",
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": []
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 4,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32616433248:lot1",
+      "buyer": "ПАО «Россети Северо-Запад»",
+      "source_grade": "B",
+      "review": "unreviewed",
+      "completion_ratio": 0.5,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32616435269:lot1",
+      "buyer": "ПАО «Россети Сибирь», филиал «Кузбассэнерго-РЭС»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 2,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32616474682:lot1",
+      "buyer": "ООО «Башкирская сетевая компания»",
+      "source_grade": "B",
+      "review": "unreviewed",
+      "completion_ratio": 0.5,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 2,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32616474682:lot2",
+      "buyer": "ООО «Башкирские распределительные электрические сети»",
+      "source_grade": "B",
+      "review": "unreviewed",
+      "completion_ratio": 0.5,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 2,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32616497692:lot1",
+      "buyer": "ПАО «Россети Северо-Запад»",
+      "source_grade": "B",
+      "review": "unreviewed",
+      "completion_ratio": 0.6071,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [],
+        "financial": [
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P3: roles and protocol",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:32616506708:lot1",
+      "buyer": "АО «Россети Научно-Технический Центр»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4286,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "platform"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:chges24621PR:lot1",
+      "buyer": "АО «ЧиркейГЭСстрой»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "223fz:judicial-contract-03-34-24:lot1",
+      "buyer": "АО «Тюменьэнерго Инжиниринг»",
+      "source_grade": "B",
+      "review": "unreviewed",
+      "completion_ratio": 0.6071,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [
+          "contract_price",
+          "equipment_only_price"
+        ],
+        "participants": [
+          "winner"
+        ],
+        "outcome": [
+          "status",
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "procedure"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "paid_amount"
+        ],
+        "participants": [
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": []
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "aggregator:2418411721:lot1",
+      "buyer": "Заказчик не установлен",
+      "source_grade": "D",
+      "review": "unreviewed",
+      "completion_ratio": 0.3571,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "buyer",
+          "date",
+          "platform",
+          "regime"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "procedure",
+          "buyer_inn",
+          "source_urls"
+        ],
+        "technical": [
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 0,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:106044-ТТ:lot1",
+      "buyer": "АО «УК «Кузбассразрезуголь»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 2,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:111098-ТТ:lot1",
+      "buyer": "ПАО «Гайский горно-обогатительный комбинат»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:1148520:lot1",
+      "buyer": "ООО «Инженерно-Строительная Компания»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 2,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:1190793:lot1",
+      "buyer": "ООО «Завод Технофлекс», филиал г. Учалы",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4286,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:119199-ТТ:lot1",
+      "buyer": "ПАО «Гайский горно-обогатительный комбинат»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:1216754:lot1",
+      "buyer": "Филиал ООО «Завод Технофлекс», Учалы",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3929,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:1221629:lot1",
+      "buyer": "ООО «Исо» (филиал в Братске)",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:1234013:lot1",
+      "buyer": "ООО «Завод Технофлекс», филиал г. Учалы",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4286,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:130233-ТТ:lot1",
+      "buyer": "АО «Учалинский ГОК»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3929,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:135171-ТТ:lot1",
+      "buyer": "ПАО «Гайский горно-обогатительный комбинат»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:2103585-2:lot1",
+      "buyer": "ООО «ЗапСибНефтехим»",
+      "source_grade": "D",
+      "review": "unreviewed",
+      "completion_ratio": 0.3571,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn",
+          "source_urls"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 0,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:2128160-1:lot1",
+      "buyer": "ООО «НПП «Нефтехимия»",
+      "source_grade": "D",
+      "review": "unreviewed",
+      "completion_ratio": 0.3571,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn",
+          "source_urls"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 0,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:231994-2:lot1",
+      "buyer": "АО «Апатит» (Кировский филиал)",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4286,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:231994:lot1",
+      "buyer": "АО «Апатит» (Кировский филиал)",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4286,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:281-705:lot1",
+      "buyer": "Русагро — сахарные заводы",
+      "source_grade": "A",
+      "review": "unreviewed",
+      "completion_ratio": 0.3929,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:306-644:lot35",
+      "buyer": "СИБСТЕКЛО",
+      "source_grade": "A",
+      "review": "unreviewed",
+      "completion_ratio": 0.5,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 2,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:351-062:lot1",
+      "buyer": "АО «ГК «Электрощит»-ТМ Самара»",
+      "source_grade": "B",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "power",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 2,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:358-830:lot1",
+      "buyer": "Не раскрыт на публичной карточке Bidzaar",
+      "source_grade": "B",
+      "review": "unreviewed",
+      "completion_ratio": 0.4286,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:364-959:lot1",
+      "buyer": "ООО УК «Мега»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3929,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:4158439:lot1",
+      "buyer": "ООО «ЭЛЬБРУС ДРИЛЛИНГ»",
+      "source_grade": "A",
+      "review": "unreviewed",
+      "completion_ratio": 0.3929,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:4256170:lot1",
+      "buyer": "ООО «Прогазстрой»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:4302914:lot1",
+      "buyer": "АО «Лебединский ГОК»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4286,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:4304120:lot1",
+      "buyer": "ООО «НГК Ресурс»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:4526968:lot1",
+      "buyer": "ООО «Мелькомбинат»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:4535313:lot1",
+      "buyer": "Заказчик не установлен",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:4559984:ukrm-6p3-component",
+      "buyer": "ООО «Аргос-Строй» / филиал «Прометей»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.5,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 2,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:4561228:lot1",
+      "buyer": "АО «Михайловский ГОК им. А. В. Варичева»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.5,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 2,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:4561243:lot1",
+      "buyer": "АО «Михайловский ГОК им. А. В. Варичева»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.5,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:4565274:lot1",
+      "buyer": "АО «Михайловский ГОК им. А. В. Варичева»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.5,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 2,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:4617521:lot1",
+      "buyer": "АО «Тандер»",
+      "source_grade": "A",
+      "review": "unreviewed",
+      "completion_ratio": 0.4286,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:4643332:lot1",
+      "buyer": "АО «Ванинотрансуголь» (АО «ВТУ»)",
+      "source_grade": "B",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 2,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:4657777:lot1",
+      "buyer": "ООО «Башкирэнерго»",
+      "source_grade": "A",
+      "review": "unreviewed",
+      "completion_ratio": 0.4286,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:5534/1866-УДСН:lot1",
+      "buyer": "UDSgroup (exact legal buyer unverified)",
+      "source_grade": "D",
+      "review": "unreviewed",
+      "completion_ratio": 0.3571,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "platform",
+          "regime"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn",
+          "date",
+          "source_urls"
+        ],
+        "technical": [
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 0,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:5631/018-Ял:lot1",
+      "buyer": "UDSgroup (exact legal buyer unverified)",
+      "source_grade": "D",
+      "review": "unreviewed",
+      "completion_ratio": 0.3214,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "platform",
+          "regime"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn",
+          "date",
+          "source_urls"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 0,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:5747901:lot1",
+      "buyer": "ООО «ЭЛЬБРУС ДРИЛЛИНГ»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:77795100:lot1",
+      "buyer": "АО «ГК «Электрощит» — ТМ Самара»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3929,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:77907981:lot1",
+      "buyer": "АО «ГК «Электрощит» — ТМ Самара»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3929,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:834269:lot1",
+      "buyer": "",
+      "source_grade": "B",
+      "review": "unreviewed",
+      "completion_ratio": 0.3929,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer",
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 2,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:86829457:lot1",
+      "buyer": "Не раскрыт на доступной публичной карточке",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3929,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:895449:lot1",
+      "buyer": "АО «Русская Медная Компания»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:945712:lot1",
+      "buyer": "АО «НК «Конданефть»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:COM07102500074:lot1",
+      "buyer": "ООО «ЛУКОЙЛ-Западная Сибирь»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4286,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:COM16012600053:lot1",
+      "buyer": "ООО «ЛУКОЙЛ-Западная Сибирь»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4286,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 2,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:COM20082600016:lot1",
+      "buyer": "ООО «ЛУКОЙЛ-Западная Сибирь»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4286,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:RAD260049805:lot1",
+      "buyer": "АО «Дальневосточная распределительная сетевая компания», филиал «Приморские электрические сети»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.5,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 2,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:UKK-0SCS-3-102:lot1",
+      "buyer": "ООО «ЕвроХим — Усольский калийный комбинат»",
+      "source_grade": "D",
+      "review": "unreviewed",
+      "completion_ratio": 0.3929,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "source_urls"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 0,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:unverified-rosneft-2025-02-28-ukrm6kv-blockbox:lot1",
+      "buyer": "ПАО «НК «Роснефть» (агрегаторный организатор)",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3571,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "procedure",
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:unverified-suhodol-2025-07-17:lot1",
+      "buyer": "ООО «Морской порт «Суходол»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3929,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "procedure",
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:АП125337:lot1",
+      "buyer": "ООО «Газпром бурение»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:ГП630876:lot1",
+      "buyer": "ООО «НОВАТЭК-УСТЬ-ЛУГА»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.5,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv",
+          "quantity"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "power"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:РН41205245:lot1",
+      "buyer": "ООО «РН-Ванкор» (организатор закупки нескольких заказчиков)",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4286,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 2,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:РН50303773:lot1",
+      "buyer": "ПАО «НК «Роснефть» (корпоративный организатор)",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3929,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:РН51202455:lot1",
+      "buyer": "ООО «РН-Бурение»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4286,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:РН60802401:lot1",
+      "buyer": "ПАО «Удмуртнефть» им. В. И. Кудинова",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3929,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:РН60804549:lot1",
+      "buyer": "ООО «Севкомнефтегаз»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3929,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:РН61001644:lot1",
+      "buyer": "ООО «Севкомнефтегаз»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3929,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:РН61003961:lot1",
+      "buyer": "АО «АНПЗ ВНК»",
+      "source_grade": "A",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 4,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:РН61004155:lot1",
+      "buyer": "ООО «Башнефть-Добыча»",
+      "source_grade": "A",
+      "review": "unreviewed",
+      "completion_ratio": 0.5,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 2,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "commercial:РН61005187:lot1",
+      "buyer": "ООО «Харампурнефтегаз»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3929,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "index:energybase:rosneft-pq-20231109-kharampur",
+      "buyer": "ПАО «НК «Роснефть» (корпоративный организатор)",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3571,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "procedure",
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "index:energybase:rosneft-pq-20231201-kharampur",
+      "buyer": "ПАО «НК «Роснефть» (корпоративный организатор)",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3571,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "procedure",
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "index:energybase:rosneft-pq-20240124-rospan",
+      "buyer": "ПАО «НК «Роснефть» (корпоративный организатор)",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3571,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "procedure",
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "index:energybase:rosneft-pq-20240320-bashneft-polyus",
+      "buyer": "ПАО «НК «Роснефть» (корпоративный организатор)",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3571,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "procedure",
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "index:energybase:rosneft-pq-20240411-kharampur",
+      "buyer": "ПАО «НК «Роснефть» (корпоративный организатор)",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3571,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "procedure",
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "index:energybase:rosneft-pq-20240423-kharampur",
+      "buyer": "ПАО «НК «Роснефть» (корпоративный организатор)",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3571,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "procedure",
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "index:energybase:rosneft-pq-20240427-nizhnevartovsk",
+      "buyer": "ПАО «НК «Роснефть» (корпоративный организатор)",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3571,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "procedure",
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "index:energybase:rosneft-pq-20240517-kharampur-nku",
+      "buyer": "ПАО «НК «Роснефть» (корпоративный организатор)",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3571,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "procedure",
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "index:energybase:rosneft-pq-20250410-rospan-ktp-ukrm",
+      "buyer": "ПАО «НК «Роснефть» (корпоративный организатор)",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3571,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "procedure",
+          "buyer_inn"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "index:rostender:88416730",
+      "buyer": "Не раскрыт в индексированной выдаче",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.3929,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "buyer",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "voltage_kv"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "procedure",
+          "buyer_inn"
+        ],
+        "technical": [
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "index:vsempodryad:9d4a58cf-6c10-4485-8537-53e550c24269",
+      "buyer": "ПАО «Федеральная сетевая компания – Россети»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [
+          "nmck",
+          "contract_price"
+        ],
+        "participants": [],
+        "outcome": [
+          "status",
+          "contract_date"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "procedure",
+          "platform"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "index:vsempodryad:ea5a381b-31b1-4c37-962f-9fddf1761b74",
+      "buyer": "ПАО «Россети Юг», филиал «Волгоградэнерго»",
+      "source_grade": "D",
+      "review": "unreviewed",
+      "completion_ratio": 0.5,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "contract_price"
+        ],
+        "participants": [],
+        "outcome": [
+          "status",
+          "contract_date"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "procedure",
+          "source_urls"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power"
+        ],
+        "financial": [
+          "bid",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 0,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "index:vsempodryad:tplus-samara-gres-reactive-20240427",
+      "buyer": "ПАО «Т Плюс»",
+      "source_grade": "D",
+      "review": "unreviewed",
+      "completion_ratio": 0.2857,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "buyer",
+          "platform",
+          "regime"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [
+          "procedure",
+          "buyer_inn",
+          "date",
+          "source_urls"
+        ],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "nmck",
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P0/P1: identity and original source",
+      "source_urls": 0,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    },
+    {
+      "id": "platform:1351/ОАЭ-ЦДКС/26:lot1",
+      "buyer": "ОАО «РЖД»",
+      "source_grade": "C",
+      "review": "unreviewed",
+      "completion_ratio": 0.4643,
+      "filled_fields": {
+        "identity": [
+          "id",
+          "procedure",
+          "buyer",
+          "buyer_inn",
+          "date",
+          "platform",
+          "regime",
+          "source_urls"
+        ],
+        "technical": [
+          "family",
+          "scope",
+          "description"
+        ],
+        "financial": [
+          "nmck"
+        ],
+        "participants": [],
+        "outcome": [
+          "status"
+        ]
+      },
+      "missing_fields": {
+        "identity": [],
+        "technical": [
+          "voltage_kv",
+          "power",
+          "quantity"
+        ],
+        "financial": [
+          "bid",
+          "contract_price",
+          "equipment_only_price",
+          "paid_amount"
+        ],
+        "participants": [
+          "winner",
+          "contract_signatory",
+          "supplier_inn",
+          "epc",
+          "designer",
+          "oem"
+        ],
+        "outcome": [
+          "contract_no",
+          "contract_date"
+        ]
+      },
+      "next_priority": "P2: technical specification",
+      "source_urls": 1,
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    }
+  ],
+  "provenance_note": "Field populated does not imply independently verified; review=unreviewed remains provisional."
+}

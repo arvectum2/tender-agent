@@ -1,0 +1,29 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-MI-RECONCILE-20261029
+status: completed
+goal: Consolidate all parallel MI research and evidence into one auditable supplier-profile-driven research lane, piloted on FGI/PQ.
+definition_of_done:
+  - One active MI research PR and exactly one existing Watchdog, shared canonical MI checkpoint and issue #57
+  - Audit and preserve unique code, evidence and history of MI PRs #515-519 without copying unverified metrics into current corpus
+  - Retain safe recoveries with tested regressions and a reusable supplier study intake
+  - Canonical runbook, inventory of unresolved historical versions and single escalation/resume policy
+  - Verify tests, CI, final commit, synchronized Watchdog scope; no destructive branch/history rewrite
+completed:
+  - Inspected main, dirty unrelated APR-07 checkout, active PR #521 and overlapping MI PRs #515-519
+  - Established PR #521 as sole active MI code/research branch; runbook is source of coordination
+  - Restored safe public 7z and allowlisted ETP queue modules plus gap-inventory original-vs-receipt protection from PR #519
+  - Restored 11 original-source report/ledger files from #519 as historical evidence, not promoted to current v29 market totals
+  - Implemented deterministic S0 ResearchBrief for a generic supplier profile, FGI example unverified
+  - 43 relevant focused tests passed, Ruff passed and diff check passed
+  - Archived exact heads of MI PRs 514-519 as signed-off recovery refs archive/mi-pr-*-20261029 on GitHub; source history preserved
+current_step: "Consolidation completed; one open MI PR #521, six old PRs closed, exact archive tags verified and existing Watchdog synchronized."
+remaining: []
+follow_on_research_in_canonical_mi_task:
+  - "Source-SHA-based reconciliation of historical v20-v40 into v29 where genuine unique leads exist."
+  - "Review and selectively promote archived #519 overlays/remaining tests; never auto-promote source-only reports."
+  - "Complete 2024-2026 original-source market coverage, public contract outcomes and full S0-S11 acceptance."
+  - "PR #521 exact-head GitHub CI and AM-4 review before any merge; CI currently queued, not green."
+last_verified_commit: df29b29f318452b1d6c6342c013d4ee94b4087fa
+test_results: 48 targeted tests passed, Ruff passed, diff check passed; one inherited Starlette deprecation warning
+resume_instruction: Reconciliation task complete; continue active TA-MI-AUTONOMY-20261027 exclusively in PR #521, read archived MI_BRANCH_ARCHIVE_20261029.json for historical candidates, verify source SHA before promotion and do not reopen parallel PRs. Preserve current-task.yaml, keep hourly Watchdog and report on issue #57.

@@ -345,3 +345,3581 @@ native_etp_and_market_snapshot_20261028:
   last_verified_commit: "259cb715121617216c57cd35f5ef600278174f05"
   last_test_results: "51 passed, 1 external deprecation warning; 33/33 numeric 223 leads with source receipts, 31 with originals; 3 primary ETP cards, 6 commission facts, 3 registry lots"
   resume_instruction: "Use latest top-level resume_instruction; do not duplicate Tender Agent Watchdog."
+
+spec_kit_phase2_etp_coverage_20261028:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  objective: "Spec Kit US2 source-scoped PQ discovery, primary EIS/ETP provenance, reviewed project deduplication and S10 partial-market quality gates"
+  definition_of_done:
+    - "Generate reproducible source and month-level coverage ledger and correct distinct EIS notices vs lot row counts"
+    - "Recover/verifiably rehash non-223 original platform cards without inferring hidden winners or signed contract prices"
+    - "Reconcile same-lot repeat notices and distinct parent EPC project scopes using SHA-bound original documents"
+    - "Generate report.md, coverage.json, project_register.json, quality_report.json with explicit incomplete acceptance"
+    - "Run targeted Ruff/pytest, review PR, preserve original source runtime and hourly Watchdog"
+  completed:
+    - "Spec Kit CLI 1.2.4 integration none status OK, governance adapter merged in #520; T007 marked complete"
+    - "On isolated feature branch, implemented pq_research_coverage: v29 101 rows = 34 EIS 223 candidate lot rows / 33 distinct notices / 67 non-223 rows"
+    - "Original primary EIS files support 31 distinct notices, 2 notices remain no-files; original Bidzaar supports 3 cards"
+    - "Original B2B-Center HTML SHA verified for 4302914, 4561228, 4561243, 4565274: 1/4/6/11 applications and hidden organizer outcomes; 4559984 original unavailable"
+    - "Coverage ledgers prove 39 source-backed candidate lot rows, 38 distinct primary procurement IDs, 62 rows without original primary evidence; no exhaustive month-scoped source proof across 34 months"
+    - "Pionerskaya lot 26-004167 reissued 32615969197 and 32616103025, both unsuccessfully with no offers; 1 deduplicated need"
+    - "Two Lopcha-Yuktali shared parent project relations link separate EPC/design notices, never merge distinct contracts; 32616474682 lots kept distinct"
+    - "S10 quality gate prevents stale commercial counts, fabricated PQ market totals, and false zero-demand months"
+    - "User-facing artifacts generated in existing runtime: report.md, coverage.json, project_register.json, verified-market-snapshot.json, quality_report.json"
+    - "Original EIS .docx RTF/ZIP format mismatch isolated; valid other files continue and SHA source preserved"
+    - "Data Platform SDK isolated ARC environment lacks authenticated API key, 15/262 SHA-tracked source files remain unextracted (247 checkpointed); graceful blocked_missing_data_platform_api_key replaces repeated HTTP 401"
+    - "Ruff passed on 16 changed source/test files; git diff --check passed; 70 targeted pytest passed with one external Starlette deprecation warning"
+  current_step: "Review and submit Spec Kit US2 PR, verify CI and reconcile canonical checkpoint while continuing lawful source retrieval"
+  remaining:
+    - "Resolve Data Platform SDK auth via approved operator/service environment; no CLI/Git disclosure of secret, do not assert 15 pending files processed"
+    - "Obtain original ETP commission/award protocols from B2B-Center and other platforms when lawfully publicly accessible"
+    - "Obtain signed supplier/contract evidence and 44-FZ coverage, never promote hidden B2B result or committee bid to signed contract"
+    - "Run calendar-bound discovery for 2024-2026, document provider-specific search constraints and explicit denominator"
+    - "Independently review source-grade merge/split and project vs lot vs signed contract relationships"
+    - "Open/review feature PR, confirm all checks, merge only under normal governance; keep MI overall in_progress until all S0-S11 DoD met"
+  last_verified_commit: "a7760783908a7fc6fd37f1c45df4b1a827fa0d4c"
+  last_test_results: "70 targeted tests passed, Ruff passed, diff --check passed; actual offline S0-S11 cycle produced 5 artifacts, S10 arithmetic pass; Data Platform blocked with 247/262 processed and 15 SHA-preserved pending"
+  runtime_root: "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live"
+  branch: "feature/pq-etp-provenance-ledger-20261028"
+  resume_instruction: "Inspect this section, feature PR status and actual main SHA. Do not repeat SHA-verified EIS/Bidzaar/B2B downloads. If CI/review permits, merge feature branch with governance then update source logs. Resume source-native ETP signed outcomes and month-bounded 44/223/ETP coverage. Data Platform 15 pending sources must remain blocked until authorized service API key is supplied via normal environment. Preserve one hourly Tender Agent Watchdog and unrelated .agent/current-task.yaml."
+
+month_scoped_official_eis_20261028:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  scope: "First-page exact month-bound EIS 223/44 source searches, not exhaustive market discovery"
+  completed:
+    - "20 actual official date-bound queries (18 topical + 2 exact-ID) across 6 sample months in 2024, 2025 and 2026"
+    - "7 nonempty first pages, 18 unverified candidate metadata rows, 13 parsed empty pages"
+    - "5 May-2025 and 2 Sep-2026 44-FZ results are visibly medical equipment repair false positives; no PQ supplier or price promoted"
+    - "v29 101 rows, 39 original-source-backed rows, 62 without; all 34 months still lack exhaustive discovery proof"
+    - "Gap inventory refreshed for all 101 v29 leads; S10 source checks passed; 15 DP extractions remain blocked by missing authorized SDK key"
+    - "New outside-v29 44-FZ candidate 0315100006624000089 has SHA-bound official notice/documents HTML and five observed links; original DOCX unavailable (verified-TLS URL errors, curl HTTP 404), no 6-35 kV/signed award claimed"
+  evidence:
+    journal_sha256: de7e8a2b229f98538d06fe5b706f8ec7d12136a90190bba471ca9b4cca28b25f
+    coverage_sha256: 1e02cb52fa32e9ae1f5c15b974c2405a39c3db1ece94f85875f9c550e469dbba
+    quality_sha256: 930d83abf7bbf10ef730020eda9dbc3ed6c23fa6ade29f93eb924c2fe1673205
+    report: docs/market_intelligence/PQ_EIS_MONTH_BOUND_SEARCH_20261028.md
+  remaining:
+    - "28 months without even bounded sampled official month search; 34 months without exhaustive proof"
+    - "Original ETP awards, signed contracts, verified suppliers and equipment-only prices remain open"
+    - "15 Data Platform files blocked pending authorized service API key"
+  resume_instruction: "Inspect PR #521 exact-head CI and this checkpoint. Continue bounded new calendar windows and originating ETP source retrieval; do not repeat 20 journaled exact month/law/query combinations before cooldown. Source-verify candidate technical specs and signed contracts, never promote search metadata or commission offers to executed sales. Keep MI in REVIEW, preserve one Watchdog and unrelated current-task.yaml."
+
+arc_review_queue_source_sha_dedup_20261028:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  completed:
+    - "pq_arc_chat next skips exact source-SHA subset packets only when already reviewed under same notice ID; distinct new original SHA remains eligible"
+    - "ChatGPT/ARC accepted new source bundle 32414141662-14b19c48dfe0283628072ff0 as irrelevant using original 110 kV technical specification quote and SHA"
+    - "Queue after review: 86 reviewed, 4 pending; next returns empty with 2 unreadable and 2 source-SHA duplicate packets skipped"
+  evidence:
+    technical_document_sha256: 964dba8b49b77a6ed4ee1c0985be8453ef039f7868c8c826ae6ee94e2f5295d0
+    report: docs/market_intelligence/PQ_ARC_QUEUE_DEDUP_20261028.md
+  remaining:
+    - "Two unreadable originals require separate source-bound visual review; do not promote OCR"
+    - "Original ETP award and signed supplier/contract prices still unverified"
+  resume_instruction: "Inspect current PR #521 exact-head CI and task checkpoint; continue fresh source recovery, not exact-SHA duplicate ChatGPT reviews. Two unreadable original-text packets need visual verification. Preserve source hashes, 12h cooldown, unrelated current-task and single Watchdog."
+
+visual_source_review_bashkortostan_20261028:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress_review_required
+  completed:
+    - "ChatGPT visually inspected two pages each of original EIS scanned protocols 32515481065 and 32515523596; source PDF and rendered JPEG SHA recorded"
+    - "32515481065: 3 Dec 2025 procurement for reactive compensation installation had no bids, failed"
+    - "32515523596: 12 Dec 2025 protocol lists sole bidder ООО РНБ ГРУПП at 326990 RUB ex VAT / 392388 RUB incl VAT, but procedure failed with one bid; not a signed supplier or executed price"
+    - "Same buyer and similar need may be a repeat procurement, but dedup project identity not proven; nominal voltage remains unknown"
+    - "Visual receipts are provisional manual transcriptions, not native-text accepted ARC reviews or OCR promotion"
+  evidence:
+    original_pdf_sha_32515481065: c388c94b673fcbd051426ad0af814ec8fc0ebd8b9087707f2df209f76a7d4ab3
+    original_pdf_sha_32515523596: bf9e6c2f67274b2b10ceaef248a8bdea286d9f138eee327a8985b301f1838382
+    visual_receipt_sha_32515481065: 16da58ac6dcae6ce62f25de92d8f7539409cd479820da9e864a2e976c669b909
+    visual_receipt_sha_32515523596: d7f2545da3bb9d2354970f510d923ee94d96bab255b6f8eebfe124c4a7f95ff5
+    report: docs/market_intelligence/PQ_2025_BASHKORTOSTAN_VISUAL_PROTOCOLS_20261028.md
+  remaining:
+    - "Verify equipment nominal voltage and project/lot reissue identity from original specifications"
+    - "No signed supplier/contract amount independently confirmed"
+  resume_instruction: "Continue lawful source retrieval of voltage-bearing technical specifications and signed outcomes; do not count failed Bashkortostan tenders as sales. Keep visual receipts provisional, original native queue packets intact and 6–35 kV relevance uncertain. Preserve single Watchdog and unrelated current-task.yaml."
+
+watchdog_mi_search_priority_reset_20261028:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  objective: "One existing hourly Watchdog prioritizes original procurement and signed-outcome research over metadata-only roadmap/CI work"
+  definition_of_done:
+    - "Keep the original enabled hourly scheduled task ID; prioritize live 2024-2026 PQ primary source research over unrelated roadmap"
+    - "Acquire original native ETP records with exact source SHA and source-visible outcomes"
+    - "Preserve correct lot-vs-notice-vs-project-vs-signed contract distinctions, no unsupported equipment turnover"
+    - "Produce consistent versioned 101-row v29 private report with source gaps and restart instructions"
+    - "Run code QA, publish reviewed PR and continue signed supplier and ETP award recovery"
+  completed:
+    - "Updated EXISTING Tender Agent Watchdog automation ID 6aa7ef95fc9c8191beaa71fea17dc372 prompt in-place; enabled hourly schedule unchanged; explicitly overrides stale 100-row v20 task-selection instructions"
+    - "New Watchdog priority: actual original 6-35kV PQ procurements, signed suppliers/contracts, 2024-2026 month-and-source coverage, 70 percent of productive actions toward evidence acquisition instead of metadata-only repetition"
+    - "Captured B2B exact native original HTML for v29 4256170, 4526968, 4535313 (additional 3 source-backed v29 cases) and predecessor 4538400 (outside-v29) with SHA checks"
+    - "Independently verified original B2B organizer cancellation of tender 4538400 on 2026-08-17, replacement 4565274 from both source cards with same buyer/organizer and original SHA; no double count"
+    - "Market reporter now excludes cancelled predecessor original outside-v29 from candidate-source denominator, retains its source-verified replacement relation"
+    - "Original EIS reviewed packets yield 3 newly SHA/source-quote-audited committee offers: 32514720691, 32514754857 and 32514842313; 9 commission decisions now verified in total, 0 signed contracts inferred"
+    - "Latest actual offline Spec Kit source cycle generated report.md, coverage.json, project_register.json, quality_report.json: 101 rows, 41 distinct first-party source case IDs, 59 still missing primary originals, 9 commission facts, 8 B2B original HTML including 1 outside-v29"
+    - "123 relevant pytest cases passed, Ruff and git diff --check passed, one external Starlette deprecation warning; 15 Data Platform originals remain pending an authorized SDK API key"
+  current_step: "Confirm exact-head CI and PR #521 review; execute actual original ETP award and 223/44 signed contract searches, no inventory-only claim"
+  remaining:
+    - "Record fresh Watchdog run after prompt change and verify that evidence metrics include newly acquired primary documents, not only inventory/PR stats"
+    - "Recover 59 in-corpus primary source gaps, 2024-2026 representative historical coverage, original ETP outcomes and signed suppliers where public"
+    - "Find authorized service context for 15 pending Data Platform source extractions; never disclose or bypass credential"
+    - "Run release-safe review and green CI before PR merge, leave unrelated current-task and original hourly Watchdog untouched"
+    - "Do not mark full market study complete while 34 months lack exhaustive source coverage and signed values remain unverified"
+  last_verified_commit: "8d136ae2"
+  last_test_results: "123 passed, Ruff pass, diff check pass; live first-party originals SHA 41 in v29; 9 committee facts source-audited; Data Platform 247/262 checkpointed and 15 blocked"
+  runtime_root: "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live"
+  branch: "feature/pq-etp-provenance-ledger-20261028"
+  resume_instruction: "Read THIS newest checkpoint and PR #521 head. Continue acquiring native B2B/ETP/44+223 originals for 59 missing v29 rows and source-verified signed contract supplier/outcome evidence (NOT v20). Do not repeat 41 already verified original case IDs or create duplicate Watchdog. Prioritize new actual sources before CI, metadata and docs. Record per-run requests, SHA, URLs, citations, award and signed supplier distinctions. Keep blocked Data Platform files as blocked until authorized service environment available. Update canonical checkpoint on new evidence; maintain exactly one hourly Tender Agent Watchdog and unrelated current-task.yaml."
+
+watchdog_mi_primary_etp_recovery_20261028_1423:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  source: original ETP documents and 12 bounded month-law-query searches
+  new_first_party_ids:
+  - COM07102500074
+  - COM16012600053
+  - RAD260049805
+  new_verified_original_cards_files: 10
+  safe_archive_pdf_instances: 9
+  unique_archive_pdf_shas: 5
+  network_requests_journaled: 38
+  original_protocol_named_winner: 1
+  signed_supplier_verified: 0
+  executed_price_verified: 0
+  report: docs/market_intelligence/PQ_PRIMARY_ETP_SOURCE_RECOVERY_20261028.md
+  private_source_review: /Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live/watchdog-commercial-review-20261028.json
+  last_tested_code_commit: bc4d160c9c7656421c38f0b35118d92136547f88
+  coverage_note: 41 prior primary IDs, 59 prior missing; new 3 source IDs in separate verified overlay, pending strict coverage
+    audit
+  resume_instruction: 'Keep PR #521 and task in_progress. Audit Roseltorg/RAD SHA overlay in coverage with tests; do not count
+    0.4kV win or owner-furnished 35kV BSK as equipment sale. Recover signed outcomes 32514720691/32514754857, original GP630876
+    and Metal-IT 6kV 119199-TT/135171-TT with cooldown. Keep one Watchdog, preserve unrelated current-task.yaml and no production
+    writes.'
+
+# Same 35kV Pograniсhnaya project, separate RAD260047641 procedure (outside v29), original DOCX SHA f69882741567ee3b53421eb12ef87db4926fab41751623d494166f0d521f66c0; text similarity 0.9808 to RAD260049805. Do not double count.
+
+native_rad_223_nikitskaya_20261028:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  goal: "Recover original 223-FZ native ETP source and validated commission price without inventing signed execution"
+  definition_of_done:
+    - "Match first-party RAD page and original download URLs to each of four real RAR SHA-256 bytes"
+    - "Cross-verify original RAR DOCX member SHA against accepted ChatGPT/ARC packet and commission facts"
+    - "Link source evidence to v29 coverage, report and S10 without double-counting original EIS receipts"
+    - "Test source integrity, no signed-contract inference and update Spec Kit and task checkpoint"
+  completed:
+    - "Official RAD 223 notice 32615966040 native tender RAD260020676: 4 RAR originals SHA/live URL match, 16,860,711 original archive bytes; original first-party public card saved"
+    - "RAR source hashes notice-approval 0e202143ee43ec1cae9ff7034eae89f0741f10644235e19b37d4b5b483f47ec0, technical 0d1b4730cf2ce43237c79ad7175063a528a40e611a6d8c2caa50264e346f42e3, review 92676bcfcd00a25cc3d90b9a5d29ba97ca0a9b6b6cefa5b9a28203a02bf66db7, final 86a6d2605f575465feebfb5cb84eae1d90f7f4ed56bd178588061dc200273744"
+    - "Final 19 May 2026 DOCX protocol SHA c4259db4db81d2d0af153acf2fc56ac6e3ac354999c84b9248431bb6814338d6 matches reviewed packet 32615966040-26fad6b664141900a39c3a1c and private original RAR"
+    - "Source confirms 10kV compensating works in mixed EPC PS110 Nikitskaya, one admitted applicant OOO Energoset; procurement failed for one application, commission instructed contract at 5273763.77 RUB VAT 22% included; no signed contract, supplier-of-signed-contract or PQ equipment-only price"
+    - "Earlier 12 May protocol lists initial price 5564090.57 RUB VAT included whereas final 19 May protocol lists 5273763.77 RUB; preserve stage difference, no double counting"
+    - "New pq_rad_primary_audit with 4 synthetic fail-closed source tests; integrated alternate 223 primary proof into pq_research_coverage, pq_verified_market_report, pq_quality_gate and pq_recovery_cycle"
+    - "Actual offline Spec Kit cycle: 101 candidate rows, 34 223 lot rows/33 distinct notices; 31 EIS original notice IDs + 1 native RAD; 32 of 33 223 notices with primary originals from any platform; 42 unique all-platform source IDs, 43 sourced candidate rows, 58 unsourced rows"
+    - "10 exact-quote/SHA-backed commission decisions, 3 public contract-register entries, zero verified signed suppliers; 15 Data Platform docs still blocked by authorized SDK key"
+    - "129 test_pq*.py and Spec Kit tests passed; Ruff PASS, git diff --check PASS; one external Starlette warning"
+    - "Spec Kit T009a3/T011b/T014f and research report docs/market_intelligence/PQ_RAD_NIKITSKAYA_PRIMARY_20261028.md updated"
+  current_step: "Verify original signed supplier/contract registry for RAD260020676 and source-grade integrate Watchdog native Roseltorg/RAD commercial overlay"
+  remaining:
+    - "Follow exact 223 contract registry/award XML for notice 32615966040; aggregator 03 June 2026 signed-contract signal remains secondary and not proof of counterpart or executed price"
+    - "Integrate watchdog SHA-backed 3 new v29 native ETP case IDs COM07102500074, COM16012600053, RAD260049805 with original evidence, preserving 0.4kV out-of-scope and 35kV owner-furnished distinctions"
+    - "Investigate 32616400421, the last v29 223 notice without original files from either EIS or native ETP"
+    - "Broaden 2024–2026 exact-month 44/223/EТP primary sources, winner and executed price validation; full market study remains incomplete"
+    - "Resolve 15 pending Data Platform SDK extracts in authorized service context without exposing credentials"
+    - "Reconfirm PR #521 exact-head required CI, review and merge governance; do not merge without permitted authority"
+  last_verified_commit: "bcbc364a2d1c71d8d8a80029fb898575225d62b1"
+  last_test_results: "129 passed, Ruff pass, git diff check pass; real RAD original 4 SHA verified and source rehashed, S10 source consistency pass, full market acceptance false, Data Platform SDK 15 blocked"
+  runtime_root: "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live"
+  source_manifest: "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live/primary-rad-originals/32615966040/original-source-manifest.json"
+  resume_instruction: "Read this newest RAD subsection and last actual remote main/PR #521; do not re-download four SHA-verified RAD archives. Verify signed contract from first-party registry, not aggregator. Integrate three additional original commercial ETP cases already recovered and reviewed by current hourly Watchdog (see watchdog_mi_primary_etp_recovery_20261028_1423), source-audit 0.4kV and owner-furnished 35kV separately. Resume remaining 58 v29 rows in 42-source-ID baseline. Keep existing single hourly Tender Agent Watchdog, leave unrelated .agent/current-task.yaml intact."
+
+watchdog_new_2024_primary_20261028_1436:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  source_dataset: v29_101_unchanged
+  new_official_month_searches: 52
+  new_2024_notice_ids: ["32413195287", "32413631624", "32413764701"]
+  sha_verified_original_files: 24
+  chatgpt_arc_reviews_accepted: 2
+  visually_reviewed_original_protocols: 2
+  commission_named_winners: 1
+  signed_suppliers_verified: 0
+  executed_prices_verified: 0
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_2024_ORIGINALS_20261028_1436.json
+  source_ledger_sha256: "0981cc8c7844a8f0fa90b2284bb0b09b05b58aa181733b1355e60fccb0dc5940"
+  current_step: "Recover independently signed 10kV UKRM supply and linked 6kV project outcomes"
+  resume_instruction: >-
+    Keep v29 101 unchanged; resume PR #521. Read private watchdog-20261028-1436
+    original SHA receipts, 52 month queries and two accepted ARC reviews. Do not
+    replay 24 originals or exact month-law-query searches before 12h cooldown.
+    Verify signed contract for 32413764701 and 32514720691/32514754857,
+    then native GP630876 after legal access. Preserve 0.4kV exclusion,
+    6.3kV repair vs equipment supply, one existing Watchdog and unrelated current-task.
+
+watchdog_additional_month_searches_20261028_1452:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  additional_searches: 8
+  cumulative_new_searches_this_run: 60
+  source_search_statuses: {success: 27, empty: 33}
+  candidate_metadata_rows_unverified: 145
+  new_months_non_exhaustive: 14
+  source_originals_sha_verified_this_run: 24
+  source_quoted_chatgpt_arc_reviews_this_run: 2
+  last_tested_code_commit: f44c98d484ec7f272c7155a36c85fa94841c8e75
+  last_test_results: "10 passed, Ruff PASS, diff check PASS, one inherited Starlette warning"
+  last_pushed_research_commit: 5382e42e097cb013e0cb51e35b1c2051bc981942
+  additional_candidate_rows_unverified: 41
+  new_originals_in_additional_batch: 0
+  reason_no_new_originals: >-
+    First-page 223 results were predominantly buyer-name БСК lexical matches,
+    already-known 32515582393 and 32515285414, and non-PQ titles;
+    no new source file was promoted from metadata alone.
+  source_delta: docs/market_intelligence/PQ_WATCHDOG_MONTH_DELTA_20261028_1452.json
+  resume_instruction: >-
+    Preserve source SHA receipts and avoid repeating 60 month-law-query combinations
+    before cooldown. Continue original signed contract recovery and ETP source work.
+
+watchdog_month_completion_20261028_1500:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  cumulative_new_official_searches_this_run: 82
+  official_first_page_statuses: {success: 36, empty: 46}
+  metadata_candidate_rows_unverified: 157
+  calendar_months_with_at_least_one_bounded_query_in_combined_journal: 34
+  exhaustive_months_proven: 0
+  new_original_notices_this_run: 3
+  new_sha_verified_original_files_this_run: 24
+  new_chatgpt_arc_reviews_this_run: 2
+  named_commission_winners_new: 1
+  signed_suppliers_verified_new: 0
+  executed_contract_prices_verified_new: 0
+  delta_source_ledger: docs/market_intelligence/PQ_WATCHDOG_MONTH_DELTA_20261028_1500.json
+  last_tested_code_commit: f44c98d484ec7f272c7155a36c85fa94841c8e75
+  last_test_results: "10 passed; Ruff PASS; git diff --check PASS; 1 inherited Starlette warning"
+  resume_instruction: >-
+    v29 stays 101 rows, no false 34-month exhaustive claim. Read private
+    watchdog-20261028-1436 original SHA receipts and combined month journal.
+    Do not repeat 82 exact month-law-query combinations before 12h cooldown.
+    Verify signed supplier and executed amount for 32413764701, then 32514720691
+    and 32514754857, and native GP630876. Keep original Watchdog and unrelated
+    current-task untouched; do not promote commission offers to signed prices.
+
+
+watchdog_eis_readonly_queries_20261028_1533:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  source_dataset: v29_101_unchanged
+  run_start_issue_comment_id: 6469007392
+  actual_new_first_party_http_requests: 14
+  observed_http_statuses: {200: 14}
+  bounded_first_pages_empty: 11
+  bounded_first_pages_with_metadata_candidates: 3
+  lexical_false_positive_candidate_ids: 12
+  new_original_source_files_saved: 0
+  new_tenders_or_lots_primary_verified: 0
+  new_deduplicated_projects: 0
+  new_named_commission_winners: 0
+  new_signed_suppliers_verified: 0
+  new_executed_contract_prices_verified: 0
+  month_scopes_touched: ["2024-01", "2024-03", "2024-05", "2024-06", "2024-07", "2024-08"]
+  exhaustive_months_proven: 0
+  latest_runtime_coverage: {candidate_rows: 101, with_primary_original: 47, without_primary_original: 54}
+  latest_arc_queue_observed: {reviewed: 90, pending_review: 4}
+  source_attempt_ledger: docs/market_intelligence/PQ_WATCHDOG_BOUNDED_EIS_20261028_1533.json
+  source_attempt_ledger_commit: fd835a353758947965a74c6fbf4429121ec9f1dc
+  last_tested_code_commit: aff31d05f1c33c9ae718de809498e0b1135ba8a0
+  last_test_results: "No code changed in this invocation; no redundant test suite run. 14 read-only first-party HTTP 200 responses hashed in memory."
+  blocker: >-
+    New EIS queries yielded no relevant original technical specifications or signed contracts;
+    12 first-page identifiers were unrelated ventilation/HVAC, vehicle and measurement services.
+    Existing ARC pending packets are 2 unreadable native PDFs and 2 exact-SHA duplicates;
+    Data Platform 15 SDK items remain blocked on authorized credentials.
+  resume_instruction: >-
+    Resume current PR #521 and v29 101-row corpus. Do not repeat 14 exact
+    month/law/query searches before 2026-10-29 03:33 Europe/Moscow.
+    Prioritize independently signed 32413764701 UKRM 10kV supplier/contract
+    using a verified alternative official registry endpoint (prior 223 registry
+    URL returned 404); linked Bashkirenergo lots 32514720691/32514754857
+    with project-level dedup; GP630876 original first-party ETP documentation
+    (secondary card retry eligible 2026-10-29 00:41 Europe/Moscow).
+    Metal-IT 119199-TT/135171-TT official shell previously HTTP200 but no
+    trade identity confirmed, do not infer award; first-party retry after
+    2026-10-29 02:22 Europe/Moscow. Keep one existing Watchdog, preserve
+    unrelated current-task.yaml, do not merge or mutate production.
+
+watchdog_primary_44_doc_review_20261028_1627:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  run_start_issue_comment_id: 6470248715
+  source_dataset: v29_101_unchanged
+  new_official_calendar_queries: 24
+  first_pages_empty: 20
+  first_pages_with_metadata: 4
+  metadata_candidate_rows_unverified: 13
+  new_44_first_party_notice: "0372100049624002318"
+  new_original_files_sha_verified: 4
+  new_chatgpt_arc_review_accepted: 1
+  confirmed_6_35_kv_projects_new: 0
+  original_protocol_named_winners_new: 0
+  signed_suppliers_verified_new: 0
+  executed_prices_verified_new: 0
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_44FZ_DOC_REVIEW_20261028_1627.json
+  source_ledger_sha256: "f43c215af076738a066eb5c81a16593f971f6b28113cb60a02b3910afb368929"
+  last_tested_code_commit: "79f03ad6d420e17f9272364f7d1796debe52a56b"
+  last_test_results: "6 focused pytest PASS, Ruff PASS, git diff check PASS; 1 inherited Starlette warning"
+  blocker: >-
+    Original 44-FZ capacitor supply documents do not establish voltage 6-35 kV.
+    Attached contract is an unsigned blank draft; no supplier or executed price.
+    Most new first-page metadata candidates were automotive false positives.
+    Data Platform SDK authorization for 15 files remains blocked.
+  resume_instruction: >-
+    Preserve v29 101 and private SHA-bound originals. Do not repeat 24 exact
+    month-law-query combinations before 2026-10-29 04:35 Moscow. Prioritize
+    32413764701 signed supplier, 32514720691 and 32514754857 signed outcomes
+    and project dedup, then GP630876 native ETP documents after 2026-10-29
+    00:41 Moscow. New 44-FZ 0372100049624002318 remains uncertain until
+    voltage and signed outcome independently verified. Keep existing Watchdog,
+    unrelated current-task.yaml untouched, PR REVIEW, no auto-merge.
+
+watchdog_second_44_originals_20261028_1642:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  run_start_issue_comment_id: 6470248715
+  cumulative_new_official_searches_this_invocation: 25
+  cumulative_new_official_notice_page_requests: 4
+  cumulative_new_sha_verified_originals: 8
+  cumulative_new_arc_reviews_accepted: 2
+  new_first_party_44_notice_ids: ["0372100049624002318", "0373200087824000460"]
+  confirmed_new_6_35_kv_equipment_projects: 0
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_executed_prices: 0
+  second_notice_classification: uncertain_service_existing_ukrm_voltage_unknown
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_44FZ_SERVICE_ORIGINALS_20261028_1627.json
+  source_ledger_sha256: "105d157caaa59ec65fb3832fb7e61f4146d384d872d5a63e7239e03ee1ddc6a3"
+  last_tested_code_commit: "79f03ad6d420e17f9272364f7d1796debe52a56b"
+  last_test_results: "6 focused tests PASS; Ruff PASS; YAML/JSON PASS; diff PASS"
+  resume_instruction: >-
+    Keep v29 101 unchanged and preserve both new private original 44-FZ
+    receipts and two SHA-quoted ARC reviews. 0372100049624002318 has unknown
+    voltage; 0373200087824000460 is service of existing UKRM, not a sale.
+    No 44 signed contracts verified. Do not replay 24 calendar query combos
+    until 2026-10-29 04:35 Moscow; exact-number 0373200087824000460
+    search retry no earlier than 2026-10-29 04:41 Moscow.
+    Continue signed supplier recovery 32413764701 and linked
+    32514720691/32514754857, GP630876 after 00:41 Moscow.
+    Leave unrelated current-task.yaml and existing hourly Watchdog unchanged.
+
+watchdog_44fz_contract_outcomes_20261028_1733:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  corpus: v29_101_unchanged
+  new_calendar_queries: 42
+  first_party_html_sha_verified: 20
+  registered_contract_suppliers: 3
+  executed_and_paid_contracts: 2
+  signed_original_files: 0
+  verified_target_6_35kv_sales: 0
+  new_arc_reviews: 3
+  unresolved_v29_primary_gaps: 54
+  evidence_ledger: docs/market_intelligence/PQ_WATCHDOG_44FZ_CONTRACT_OUTCOMES_20261028_1733.json
+  last_tested_code_commit: 09d72a6574ce097be043affdbc438ae8ea8a9eb3
+  resume_instruction: >-
+    PR #521 remains REVIEW. Confirm original voltage for 0318100033125000016
+    only after filestore retry eligibility 2026-10-29 05:40 Moscow; do not
+    include unknown-voltage 44-FZ registered contract amounts in PQ 6-35kV
+    total. Continue 32413764701 signed supplier, 32514720691/32514754857
+    project/contract reconciliation and GP630876 original after 2026-10-29
+    00:41 Moscow. Do not repeat 42 exact searches before 12h cooldown.
+    Preserve unrelated current-task and single hourly Watchdog.
+
+watchdog_223_registry_20261028_1844:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  run_start_issue_comment_id: 6473303869
+  dataset: v29_101_unchanged
+  actual_new_first_party_source_requests: 59
+  observed_http_200: 58
+  observed_timeout: 1
+  official_223_registry_searches: 22
+  new_sha_verified_original_attachments: 3
+  new_official_223_notice_with_originals: "32615810535"
+  new_primary_protocol_with_named_participant: 1
+  new_public_223_registry_contract_entries: 8
+  previously_xml_verified_registry_entries_corroborated: 2
+  registered_6kv_ukrm_supply_contract:
+    notice: "32515582393"
+    contract_register_number: "50277071467260001550000"
+    registered_contract_price_rub: "4850000.00"
+    date: "2026-02-27"
+    original_pdf_sha256: "48ceaa3f94c353f638dbab29951d3ec6dd5b32e79114fa0641800831715333a9"
+    visual_pdf_page: 1
+    nominal_voltage_kv: 6
+    reactive_power_kvar: 200
+    commission_named_candidate: "ООО УК КОНДЕНСАТОР"
+    signed_supplier_verified: false
+    executed_or_paid_verified: false
+    equipment_only_allocation_verified: false
+  registered_10kv_ukrm_supply_contract:
+    notice: "32413764701"
+    contract_register_number: "58601033125240001550000"
+    registered_contract_price_rub: "4077120.00"
+    registered_status: "Исполнение завершено"
+    date: "2024-08-09"
+    original_technical_pdf_sha256: "731f9ce22329ee8d35aa151caf3a714db0d7e2eff34c7060b0b51e8eb63a0349"
+    nominal_voltage_kv: 10
+    reactive_power_kvar: 150
+    commission_offer_rub: "3397600.00"
+    vat_status: not_independently_verified
+    signed_supplier_verified: false
+    executed_payment_verified: false
+  newly_confirmed_signed_supplier_identities: 0
+  newly_verified_executed_prices: 0
+  newly_exhaustively_covered_months: 0
+  new_date_bounded_223_registry_searches: 1
+  new_core_6_35kv_registered_supply_contracts: 2
+  v29_primary_original_gaps_unchanged: 54
+  arc_source_reviews_accepted_this_run: 8
+  latest_review_queue: {reviewed: 103, pending_review: 4, other: 4}
+  public_evidence_ledger: docs/market_intelligence/PQ_WATCHDOG_223_REGISTER_CONTRACTS_20261028_1834.json
+  private_reconciliation_sha256: "c0ad2a297a761210a738a76b985b78db814620e5e185030edda4fb105df25744"
+  evidence_ledger_commit: "e5f784eac4433b25d6c1b41c8079e5125dd80c44"
+  last_tested_code_commit: "09d72a6574ce097be043affdbc438ae8ea8a9eb3"
+  last_test_results: >-
+    No source code changed in this run. New public JSON evidence report parsed
+    successfully before commit; original attachment SHA and source HTML SHA
+    verified. No redundant full test-suite run.
+  blocker: >-
+    Public 223-FZ contract registry does not disclose signed supplier or
+    original signed copy. Registered prices are not executed or paid values.
+    The 6kV UKRM contract may include redesign/supervisory installation;
+    equipment-only allocation remains unknown. Existing 15 Data Platform
+    SDK source files still await authorized credentials. Full-market S10
+    acceptance remains false.
+  resume_instruction: >-
+    Resume PR #521 and v29 101-row corpus without changing unrelated
+    current-task or the sole hourly Watchdog. Two target 6-35kV UKRM supply
+    contracts now have public 223-FZ registry prices: 32413764701 (10kV,
+    150kvar, 4,077,120 RUB, registry execution completed) and 32515582393
+    (6kV, 200kvar, 4,850,000 RUB, status execution). Neither has publicly
+    verified signed supplier, original signed contract copy or independently
+    confirmed paid amount; equipment-only allocation and VAT require care.
+    Recover legal public supplier/contract outcomes without equating commission
+    bidder with signed contractor. Independently establish whether Nagornaya
+    32515582393 and reconstruction 32615614821 are one project; do not merge
+    on name alone. Continue 32616280467 10kV design and 32615852898 PИР
+    outcomes; do not count design/EPC as equipment sales. No exact 223 registry
+    URL replay before 2026-10-29 06:46 Moscow; GP630876 ETP retry after
+    2026-10-29 00:41 Moscow; earlier 44-FZ filestore retry after
+    2026-10-29 05:40 Moscow. Preserve original SHA, public source ledgers,
+    private documents, PR REVIEW and no auto-merge.
+
+watchdog_primary_recovery_20261028_1934:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  run_start_issue_comment_id: 6474763101
+  dataset: v29_101_unchanged
+  primary_evidence_ledger: docs/market_intelligence/PQ_WATCHDOG_PRIMARY_RECOVERY_20261028_1934.json
+  primary_evidence_ledger_sha256: 5b854780f7ac885839c61e92b0724909862388ed53ca367408f8a4f30497153d
+  actual_source_attempts: 54
+  new_month_source_queries: 36
+  months_with_new_query_combinations: 9
+  new_exhaustively_covered_months: 0
+  new_candidate_metadata_rows: 6
+  new_official_223_notice: '32514705796'
+  new_sha_verified_original_files: 4
+  new_named_protocol_winner: 0
+  new_signed_supplier_verified: 0
+  new_executed_price_verified: 0
+  new_arc_reviews_accepted: 1
+  arc_queue_reviewed: 104
+  arc_queue_pending: 4
+  v29_primary_gaps_unchanged: 54
+  data_platform_sdk_pending_files: 15
+  last_tested_code_commit: 09d72a6574ce097be043affdbc438ae8ea8a9eb3
+  last_test_results: >-
+    No code changes; four original file SHA and source URL bindings reverified,
+    original EIS page SHA reverified, JSON/YAML and git diff --check passed.
+  current_step: >-
+    New 32514705796 primary protocol reports zero bids May 7, but amendment
+    #2 schedules May 21; nominal voltage of 144 capacitors for PS 110kV
+    is unknown. Classified uncertain, not a signed 6-35kV sale.
+  resume_instruction: >-
+    Continue existing PR #521 and v29 101-row corpus. Prioritize
+    32413764701 and 32515582393 independent signed supplier/paid
+    equipment-only value, then GP630876 original after 2026-10-29
+    00:41 Europe/Moscow. Reconcile 32514705796 amendment #2 and final
+    protocol, verify capacitor nominal voltage before PQ 6-35kV inclusion.
+    Do not repeat 36 new exact month/law/query combinations until
+    2026-10-29 07:41 Europe/Moscow. Preserve unrelated current-task,
+    original SHA receipts, review gate and sole hourly Watchdog.
+
+watchdog_primary_bsk_20261028_2029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  run_start_issue_comment_id: 6475982890
+  corpus: v29_101_unchanged
+  logical_first_party_source_operations: 60
+  new_calendar_scoped_searches: 40
+  months_with_new_query_combinations: 10
+  exhaustive_months_new: 0
+  metadata_candidates_unverified: 43
+  calendar_search_statuses: {empty: 26, success: 10, network_error: 4}
+  new_official_223_notices: ['32414185676', '32515407502']
+  new_lots: 2
+  new_sha_verified_original_files: 10
+  new_unique_original_sha256: 7
+  new_original_protocol_with_named_best_bidder: 1
+  new_original_protocol_with_zero_bids: 1
+  new_signed_supplier_verified: 0
+  new_executed_price_verified: 0
+  new_core_6_35kv_sales_verified: 0
+  new_arc_reviews_accepted: 2
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_PRIMARY_RECOVERY_20261028_2029.json
+  source_ledger_sha256: b6d102289d31f99be0cf5c41c00efe4897df5457624ba545fc579285e6fbfd42
+  source_journal_sha256: f1c79c9b90ef5db3635b6f0f7d9e84f63eb4d01bf7225cd2aaa7975752996029
+  evidence_commit: 24ff35d05a4d18ef6d4070d290b5be0ad3eaffa0
+  last_tested_code_commit: 09d72a6574ce097be043affdbc438ae8ea8a9eb3
+  validation: >-
+    Original 223 notice page and 10 original file URL hashes reconciled;
+    10 SHA-verified native files (7 unique); 2 source-quote ARC reviews
+    accepted; source ledger JSON parsed. No source code changed in this run.
+  findings: >-
+    32414185676: 2024 Rosseti Nizhny Novgorod PMES 30 capacitor elements
+    KEP1 1.05kV, NMCK 1,428,192 RUB VAT-inclusive, zero bids, no award.
+    32515407502: 2025 63 KEP1 1.05kV elements, commission best bid
+    OOO TD UK KONDENSATOR 3,012,660 RUB VAT-inclusive, second place
+    OOO SKZ KVAR 4,827,816 RUB VAT-inclusive; signed supplier unverified.
+    Both for 500kV substations Luch/Arzamasskaya; battery bus 6-35kV
+    unverified, therefore neither counted as core PQ sales.
+  blockers: >-
+    223-FZ contract-register exact search returned HTTP 404 both direct
+    and default; no signed contract/supplier or executed price.
+    Four new calendar searches returned network_error; 15 Data Platform
+    files remain blocked on authorized SDK credentials.
+  resume_instruction: >-
+    Preserve v29 101-row dataset, original receipts, immutable SHA reviews,
+    unrelated .agent/current-task.yaml and sole hourly Watchdog.
+    Continue independent signed supplier/payment recovery for 32413764701
+    (10kV) and 32515582393 (6kV) using legal first-party alternatives;
+    avoid prior exact 223 registry URL retry until 2026-10-29 06:46 MSK.
+    Retry GP630876 original ETP evidence only after 2026-10-29 00:41 MSK.
+    Newly found 32515407502 and 32414185676 are two separate lots with
+    shared facilities but no proven project merge; new contract-register
+    exact URL 404 should not be repeated before 2026-10-29 08:40 MSK.
+    Do not repeat the 40 exact month/law/query combinations before
+    2026-10-29 08:35:48 MSK. PR #521 stays REVIEW; no auto-merge or production.
+
+watchdog_source_bound_xlsx_20261028_2129:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  issue_run_start_comment_id: 6477259385
+  corpus: v29_101_unchanged
+  new_first_party_requests: 58
+  month_scoped_eis_searches: 40
+  month_search_results: {empty: 31, success: 9, metadata_candidate_rows_unverified: 12}
+  newly_touched_months: 8
+  newly_exhaustive_months: 0
+  original_eis_44fz_files_sha_verified: 4
+  new_original_etp_project_pdfs_sha_verified: 3
+  unreviewed_etp_scanned_or_visual_pdf: 1
+  new_source_only_6kv_project_design_need: 1
+  new_44fz_notice: '0548100001225000001'
+  new_independent_project: 2
+  new_core_6_35kv_sales: 0
+  original_named_award_protocols: 0
+  new_signed_suppliers: 0
+  new_executed_prices: 0
+  new_arc_reviews: 1
+  arc_review_id: 0548100001225000001-0ddd86b6769ea19e090f08a3
+  last_known_review_queue: {reviewed: 107, pending_review: 4, unknown_state: 4}
+  last_known_v29_primary_gaps: 54
+  last_known_dp_sdk_pending: 15
+  source_evidence_ledger: docs/market_intelligence/PQ_WATCHDOG_PRIMARY_DELTA_20261028_2129.json
+  source_evidence_ledger_sha256: 187c2e5caa12f356021b2372b58d4caf42443cf7a98b76015ce0c44ef1d25eec
+  month_search_journal_sha256: 8000b93fb64c436cadb84bc4f16bd517c2bf25d43dd5037ac0ba0adb43799f03
+  last_tested_code_commit: f93031e716b5ce48eb478a1bd21f1a44c70967c8
+  last_test_results: '6 focused pytest PASS, Ruff PASS, git diff --check PASS; one external Starlette warning'
+  current_step: >-
+    Original 44-FZ XLSX for 0548100001225000001 contains two UKRM units
+    in a 10/0.4 kV packaged substation within large mixed EPC; source
+    exact SHA and quotes reviewed via ARC. UKRM nominal voltage and PQ-only
+    cost remain unknown; not promoted as a 6-35 kV sale. Fixed extraction
+    of late workbook PQ rows while retaining immutable original SHA.
+  supplementary_project: >-
+    Official Metal-IT original 2024 Elga PS 35/6 kV project PDF (SHA
+    358293efaea44266e32a291a21bfcc87554fe4f404b02633d125df68975bf208)
+    specifies UKRM 6 kV 600 kvar, 3x200 kvar; second original PDF (SHA
+    438a2a2d73275f1bf7e4451446a7554ef361dc20bc6c1fb95dbcbc808720db35)
+    corroborates UKRM protection. Designer name appears as AO ELSI
+    Energoproekt, not an equipment supplier. Tender ID, buyer, signed
+    supplier and price remain unknown; source-only project, not a sale.
+  unreviewed_original: >-
+    Official Metal-IT Elektromed 110/6 kV drawing SHA
+    25039d391709276ea5abc0ec73d88f775fa128270bf381542386efffeaa91ce7
+    recovered after safe 8 MB refusal and HEAD-confirmed 11.3 MB bounded retry.
+    Native text has no UKRM quote; page-level visual/OCR remains provisional,
+    no buyer/supplier/contract or PQ-sale inference.
+  blockers: >-
+    Metal-IT official homepage HTTP200 but no original tender card identified;
+    GPB observed public list disconnected, B2B HTTP403. 15 Data Platform
+    SDK files remain pending authorized credential. No signed supplier or
+    executed PQ-only price recovered. All 40 official month searches were
+    bounded first pages, not exhaustive; no market-total inference.
+  resume_instruction: >-
+    Continue existing PR #521; use v29 101-row corpus, private original
+    receipts and immutable ARC queue. Next 3: 32413764701 10kV signed
+    supplier/paid amount and 32515582393 6kV signed supplier/paid amount
+    only after 2026-10-29 06:46 MSK registry retry; GP630876 original
+    GPB source after 2026-10-29 00:41 MSK. For new 0548100001225000001
+    44-FZ EPC, verify UKRM nominal voltage only from original project
+    electrical drawings if safely available; do not infer from 10/0.4 kV
+    transformer or count entire EPC. Do not repeat 40 exact month/law/query
+    combinations before 2026-10-29 09:35:02 MSK. Preserve unrelated
+    .agent/current-task.yaml, short leases, single hourly Watchdog,
+    original source SHA and REVIEW/no automatic merge.
+
+watchdog_primary_vostochny_bort_20261028_2227:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  run_start_issue_comment_id: 6478547799
+  corpus: v29_101_unchanged
+  new_first_party_network_requests: 30
+  source_requests_breakdown: {month_searches: 24, original_pdf_initial_and_retry: 2, uds_legacy_404: 2, uds_current_platform: 2}
+  new_calendar_scoped_searches: 24
+  months_with_new_query_combinations: 6
+  exhaustive_months_new: 0
+  month_statuses: {empty: 17, success: 7}
+  metadata_candidate_rows: 61
+  metadata_candidates_title_exact_matches: 0
+  new_sha_verified_original_files: 1
+  new_primary_case_cards: 0
+  new_verified_notice_ids: 0
+  new_verified_lots: 0
+  new_source_only_projects: 1
+  new_original_named_award_protocols: 0
+  new_signed_supplier_verified: 0
+  new_executed_price_verified: 0
+  new_6_35kv_sales_verified: 0
+  new_arc_standard_queue_reviews: 0
+  review_note: >-
+    ChatGPT visually checked scanned first page and source-native text of
+    a new original Metal-IT 30-page technical specification. Standard ARC
+    review queue requires a verified numeric notice; no fabricated ID or
+    review was enqueued. Existing ARC queue has 2 unreadable packets and
+    2 exact-SHA duplicates skipped; no productive reviewable packet.
+  original_pdf_sha256: 21043f93df29fccc285ffcccc9d9ba09f5d637541eaa11fcb860db84c04cbc75
+  original_pdf_private_relative: watchdog-20261028-2227-primary/metal-it-east-bort-37.pdf
+  source_evidence_ledger: docs/market_intelligence/PQ_WATCHDOG_PRIMARY_DELTA_20261028_2227.json
+  source_evidence_ledger_sha256: a3e8c2bf228450d7d6627a82bb3190afa69c9f5db3fdf0033888bb6dd002b972
+  evidence_commit: 3566e4f6ae96e49491632d4844ea0a608ccff782
+  last_tested_code_commit: f93031e716b5ce48eb478a1bd21f1a44c70967c8
+  validation: >-
+    SHA-256 original PDF and visual first-page render verified; five
+    exact normalized native PDF quotations validated against pages 3, 5,
+    10; JSON parsed and git diff --check passed. No source code changed;
+    no broad test suite repeated.
+  finding: >-
+    2024 OAO KuzbassElektro original supply technical specification for
+    PS Vostochny Bort No37 35/6kV includes 2 UKRMF in 6kV switchgear,
+    reactive power compensation with harmonic filters, stated installation
+    1500 kvar, 300+300 kvar stages, filter tuning 189 Hz. This is
+    source-confirmed equipment demand in a mixed substation supply scope,
+    NOT a verified signed sale, contract, winner or paid price.
+  gaps: >-
+    Tender/lot number and contract for PS Vostochny Bort not found;
+    UDS legacy original URL HTTP404 twice, new official UDS site public
+    pages HTTP200 but no case-specific tender server HTML. 54 v29
+    candidate rows still without primary originals; 15 Data Platform
+    files blocked on approved SDK credential. No signed supplier or
+    executed PQ-only price discovered.
+  resume_instruction: >-
+    Keep v29 corpus unchanged and source-only Vostochny Bort project
+    distinct until original notice/lot/contract verified. Next independent
+    case: GP630876 original GPB source only after 2026-10-29 00:41 MSK;
+    then 32413764701 10kV and 32515582393 6kV signed supplier/payment
+    only after 2026-10-29 06:46 MSK. Do not repeat this run's 24 exact
+    law/month/query searches before 2026-10-29 10:35 MSK; 2024-09,
+    2025-05 and 2026-08 STATCOM results were lexical false positives.
+    Avoid retrying UDS 404 before 2026-10-29 10:30 MSK. Preserve
+    unrelated current-task.yaml, sole hourly Watchdog, immutable SHA,
+    REVIEW/no automatic merge and no production/procurement effects.
+
+watchdog_primary_delta_20261028_2335:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  run_start_issue_comment_id: 6480074229
+  checkpoint_updated_utc: '2026-10-28T20:49:36.178Z'
+  corpus: v29_101_unchanged
+  source_evidence_ledger: docs/market_intelligence/PQ_WATCHDOG_PRIMARY_DELTA_20261028_2335.json
+  source_evidence_ledger_sha256: 298e2b765bc45f412593ec8de2f479c993a1e155ca2b1cfbbda7d7e647f2c530
+  source_evidence_commit: 504c74498412fa61cb899bc02889ca0044689f4c
+  last_tested_code_commit: f93031e716b5ce48eb478a1bd21f1a44c70967c8
+  code_changed_this_run: false
+  test_results_this_run: 'No code changed; JSON source ledger parsed; 32 file SHA receipts, five source pages, five exact-quote reviews verified'
+  exact_head_ci_at_evidence_commit: '40766598100 queued, not green; no auto-merge'
+  month_scoped_eis_requests: 110
+  new_unique_month_law_query_combinations: 62
+  accidentally_repeated_earlier_combinations: 48
+  newly_touched_months_with_query_combinations: 21
+  month_search_statuses: {empty: 59, success: 49, network_error: 2}
+  unverified_candidate_metadata_rows: 251
+  exhaustive_months: 0
+  source_adapter_other_requests_estimated: 58
+  logical_first_party_source_operations_estimated: 168
+  new_223_notices: ['32514963292', '32414337924', '32515285414', '32615937898', '32615870159']
+  new_lots: 5
+  distinct_named_projects: 4
+  original_file_instances_sha_verified: 32
+  unique_original_file_sha256: 30
+  original_protocols_with_named_participants: 4
+  original_protocols_with_explicit_winner: 1
+  new_signed_suppliers_verified: 0
+  new_executed_prices_verified: 0
+  new_core_6_35kv_sales_verified: 0
+  arc_source_reviews_accepted: 5
+  review_queue_state: {reviewed: 112, pending_review: 4, unknown: 4}
+  last_known_v29_primary_gaps: 54
+  last_known_dp_sdk_pending: 15
+  private_month_search_journal_sha256: 133909b3adb7c6a89fbafdd019107131867251ac36bde83b647934011eab78d4
+  private_full_dedup_journal_sha256: 2bffb2c36af4952c5c4bb34ac96979cac5af3018ad91cc7a6ae15c5dc0c507a3
+  exact_search_retry_not_before_moscow: '2026-10-29T11:44:12+03:00'
+  findings: >-
+    All five recovered original 223-FZ cases are outside confirmed
+    6-35 kV system sales: 32514963292 is 0.4 kV installation with
+    original winner OOO Novyi Potok 3,874,304.42 RUB VAT-inclusive;
+    32414337924 is 110 kV BSK supply, two named bidders KVAR and
+    EnergoLogika, latter recommended for contract at up to
+    50,288,958.34 RUB ex VAT, but not signed-verified;
+    32515285414 and 32615937898 concern the SAME named PS
+    Tyazhinskaya BSK-110 to SKRM 52 MVAr design project with
+    different procurement participants and no proven subcontract;
+    32615870159 is 23 capacitor components nominal 11.55 kV
+    for 110 kV bank at PS Frunzenskaya 330 kV, NMCK 4,087,100 RUB
+    ex VAT, with inconsistent delivery address and only a
+    visually verified deadline-extension protocol.
+  blockers: >-
+    No new signed supplier or executed contract price. EIS 44-FZ
+    0372200000126000322 returned HTTP500; UDS public page failed
+    TLS validation, no bypass; Metal-IT exact public trade pages
+    HTTP200 but rendered Angular shell without case-specific data.
+    First 86 searches inadvertently repeated 48 prior combinations
+    because four instead of all journals were consulted; fixed
+    operationally by full cross-journal dedup index for later batches.
+    Original private receipts and SHA remain immutable.
+  resume_instruction: >-
+    Continue existing PR #521 and independent first-party research.
+    Next: GP630876 official GPB originals only after
+    2026-10-29 00:41 MSK; 32413764701 signed 10 kV UKRM supplier
+    and payment after 06:46 MSK; 32515582393 signed 6 kV UKRM
+    supplier and equipment-only value after 06:46 MSK.
+    Do not repeat the 62 new exact month/law/query combinations
+    before 2026-10-29 11:44 MSK. Use ALL private month journals
+    for retry dedup, not only one partial journal.
+    Preserve v29 101 rows, unrelated .agent/current-task.yaml,
+    sole enabled hourly Watchdog, source privacy, no auto-merge
+    without AM-4 approval, no production or procurement actions.
+
+watchdog_source_review_20261029_0030:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  issue_run_start_comment_id: 6481151315
+  canonical_pr: 521
+  corpus: v29_101_unchanged
+  new_first_party_requests: 14
+  official_eis_month_searches: 12
+  month_search_statuses: {empty: 9, success: 3}
+  candidate_metadata_rows: 19
+  candidate_known_duplicate: 1
+  title_false_positives: 18
+  original_sha_reverified_duplicates: 2
+  newly_distinct_original_sha: 0
+  new_original_visual_reviews: 1
+  new_notices: 0
+  new_lots: 0
+  new_projects: 0
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_executed_prices: 0
+  new_core_6_35kv_sales: 0
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_PRIMARY_DELTA_20261029_0030.json
+  source_journal_private: watchdog-20261029-0030-eis-searches.json
+  last_tested_code_commit: df29b29f318452b1d6c6342c013d4ee94b4087fa
+  test_results: >-
+    No source code changed; source ledger JSON and checkpoint YAML validated,
+    two original PDF SHA-256 duplicates reverified, visual page 10
+    source quotation verified, git diff --check passed.
+  finding: >-
+    Original AO Uralelectromed 2024 design PDF 1194-005-EP, SHA
+    25039d391709276ea5abc0ec73d88f775fa128270bf381542386efffeaa91ce7,
+    page 10 requires dismantling six inoperative UKRM 6 kV. Existing
+    equipment removal, not new supply. 12 official EIS first-page searches
+    across 3 months returned 19 candidate rows: 18 medical-service false
+    positives, one previously known 0318100033125000016.
+  blockers: >-
+    No new unique primary original or signed contract: both fetched PDFs
+    matched existing SHA. EIS provider exposes status but not numeric HTTP.
+    GP630876 retry after 00:41 MSK; signed-contract retries after 06:46.
+    Last known 54 v29 primary gaps and 15 Data Platform SDK blocked files.
+  resume_instruction: >-
+    Continue only PR #521 and v29 101-row corpus. GP630876 after
+    2026-10-29 00:41 MSK, 32413764701 and 32515582393 after 06:46.
+    Do not repeat 12 month/law/query combinations before 12:35 MSK.
+    Preserve original SHA, unrelated current-task.yaml, dirty chat worktree,
+    sole hourly Watchdog, REVIEW and no auto-merge.
+
+manual_supplier_and_archive_reconciliation_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  execution_at_utc: '2026-10-28T22:20:37Z'
+  canonical_research_pr: 521
+  canonical_corpus: v29_101_unchanged
+  evidence_commit: f6c537e49f6eb8b16986bc91b4d07aab45cbc7a2
+  tests: '60 relevant pytest passed; Ruff clean; diff check clean; one inherited Starlette warning'
+  supplier_evidence: docs/market_intelligence/FGI_PRIMARY_PRODUCT_AND_GPB_SOURCE_20261029.json
+  supplier_first_party_product: 'FGI 6-6.6 kV SVG/STATCOM; 3 manufacturer quotes matched to captured source bytes, but transport timed out; do not label complete or proven Russian sale'
+  supplier_first_party_partial_html_sha256: a000124c7635928fdfaaa2fb48ec3c98de57067280ec1e926c39560bc3c38f08
+  gpb_10kv_research:
+    case: 'commercial:ГП630876:lot1'
+    already_in_v29: true
+    original_platform_search_http: 200
+    original_platform_case_identity_visible: false
+    secondary_card_http: 200
+    original_tz_and_contract_found: false
+    source_status: first_party_search_unresolved
+  archive_reconciliation_file: docs/market_intelligence/PQ_RETO_12KV_RECONCILIATION_20261029.json
+  historical_archive_case: '223fz:32616181358:lot1'
+  archival_source_pdf_sha_reverified: 92874d098feb7dc6c283bd7b66c5218e11e472f27eddffc75edd6613fb5b21ef
+  archival_original_protocol_source_http: 200
+  archival_original_protocol_pages_visually_checked: [2, 3]
+  archival_original_winner: 'ООО ЭКСПЕРТ ГРУПП, INN 7720494275, offer RUB 3050000 incl VAT22'
+  archival_original_rejected_bidder: 'ООО Серпуховский конденсаторный завод КВАР (missing requested tax certificate; 37.5A versus 50A requirement)'
+  archived_signed_registry_pages_current_http: [404, 404]
+  archived_contract_price_rub_historical_only: '3050000.00'
+  signed_supplier_identity_verified_new: 0
+  physical_delivery_verified_new: 0
+  new_independent_unique_primary_originals: 0
+  historical_223_source_reverified_count: 1
+  primary_gp630876_originals_new: 0
+  new_notices_promoted_to_v29: 0
+  new_core_6_35kv_equipment_sales_verified: 0
+  blockers: 'Official GPB search returned generic SSR without tender identity; two RETO EIS registry pages returned 404, do not infer signed supplier; FGI official full page stream timed out; 15 DP source items still lack approved service authorization.'
+  resume_instruction: >-
+    Continue only existing PR #521/TA-MI-AUTONOMY; preserve original v29 101 rows.
+    After 06:46 Moscow verify first-party signed 10/6 kV UKRM supplier and
+    registry amount for 32413764701 and 32515582393. Do not retry 12 month
+    searches before 12:35 Moscow. Retry GP630876 only with newly discovered
+    official original case URL. Revisit RETO original contract register via
+    a separately verified public source adapter; historical archived SHA alone
+    does not establish actual signed supplier. Expand supplier profile from
+    complete primary catalogues, compare product capability with technical ТЗ;
+    do not assume SVG/STATCOM is interchangeable with switched UKRM/BSK.
+    Keep one Watchdog, no new MI PR or production mutation, no auto-merge.
+
+manual_meles_6kv_source_reverification_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  executed_at_utc: '2026-10-28T22:23:10Z'
+  code_evidence_commit: '3cdbbc28ff345a5c3f4e798187df57b6a5af8ee4'
+  case: '223fz:32616296475:lot1'
+  already_in_v29_101: true
+  original_source_files_http200_and_matching_sha: 3
+  independently_reverified_originals:
+    - docx_technical_spec
+    - xlsx_buyer_price_justification
+    - docx_unsigned_contract_template
+  nominal_network_kv: 6.3
+  nominal_equipment_min_kvar: 500
+  technology: thyristor_controlled_shunt_reactor_plus_harmonic_filter
+  buyer_equipment_reference_average_rub: '3524107.07'
+  separate_services_reference_average_rub: '380666.66'
+  buyer_initial_nmcd_rub: '3904773.73'
+  price_grade: historical_three_vendor_market_price_justification_not_awarded_bid
+  original_contract_template_party_and_price_blank: true
+  signed_supplier_verified: false
+  new_procurement_count: 0
+  new_verified_core_signed_equipment_revenue_rub: 0
+  source_report: docs/market_intelligence/PQ_MELEUZ_6KV_SOURCE_REVALIDATION_20261029.json
+  test_results: '61 targeted pytest PASS, Ruff PASS, diff check PASS; inherited Starlette warning'
+  resume_instruction: >-
+    Advance the single research PR #521 with independently signed award and
+    contract evidence rather than counting buyer price quotations as turnover.
+    Use original verified source files and v29 dedup; preserve historical v36
+    provenance for Meles 6 kV and distinguish thyristor reactor requirements
+    from FGI SVG solution. Retest after code changes only. Maintain Watchdog,
+    no production DB mutation, no automatic market TAM extrapolation.
+
+
+watchdog_b2b_first_party_20261029_0130:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  observed_at_moscow: '2026-10-29 01:37:53'
+  issue_run_start_comment_id: 6482336536
+  canonical_pr: 521
+  canonical_branch: feature/pq-etp-provenance-ledger-20261028
+  canonical_corpus: v29_101_unchanged
+  actual_first_party_requests: 15
+  source_http_statuses: {http_200: 13, http_404: 2}
+  newly_distinct_first_party_html_sha: 6
+  reverified_preexisting_original_zip_sha: 1
+  reverified_preexisting_original_pdf_sha: 2
+  new_notices: 0
+  new_lots: 0
+  new_projects: 0
+  new_original_final_protocols: 0
+  new_named_bidders_with_first_party_offer: 4
+  new_verified_signed_suppliers: 0
+  new_verified_executed_prices: 0
+  new_calendar_searches: 0
+  new_verified_core_6_35kv_sales: 0
+  new_chatgpt_sha_quote_review_packets: 1
+  primary_case_1: '32616474682 / B2B 4642507: two capacitor-component lots, 11+16 pieces; NMCK 2452650.41 RUB ex VAT; 4 named offers from 2362900 to 2449000 RUB ex VAT; planned outcome 03.12.2026; equipment voltage and winner unknown'
+  primary_case_2: '32515582393 / B2B 4283612: first-party card independently corroborates existing 16.02.2026 commission selection of UK KONDENSATOR; original pre-contract protocol reduces offer 4900000 to 4850000 RUB ex VAT; signed supplier and executed price unverified'
+  primary_case_1_card_sha256: 49fceacfc73a815e352be428824921573f83b7a9c065239bebaff1989e6bc5e5
+  primary_case_2_card_sha256: 221abf33d9ae836f362ab1e05c7482ebe0aeaeb8d4c1f9d566b13a280f5b0763
+  evidence_ledger: docs/market_intelligence/PQ_WATCHDOG_B2B_FIRST_PARTY_20261029_0130.json
+  private_source_journal: watchdog-20261029-0130-b2b-native/source-attempts.json
+  private_review_packet: review-queue/32616474682-b2b-20261029-0130.json
+  new_research_commit: d871a6ac672730940ee805b0b13277301fa672f4
+  last_tested_code_commit: 3cdbbc28ff345a5c3f4e798187df57b6a5af8ee4
+  test_results: 'No code changes in this run; JSON ledger validated; 10 exact first-party text quotes and source SHA verified; existing 61 targeted pytest PASS from prior tested code checkpoint; YAML append syntax checked.'
+  blockers: >-
+    4642507 outcome scheduled 2026-12-03 and voltage unknown; 4283612
+    signed supplier/executed payment still unverified; 4304120 and 4559984
+    official B2B exact-number lookups HTTP404; 15 authorized Data Platform
+    SDK extractions blocked; no national market extrapolation.
+  resume_instruction: >-
+    Continue only PR #521 and 101-row v29. Obtain original voltage
+    specification for 32616474682 and final award after 2026-12-03 10:00
+    MSK; signed supplier/contract for 32515582393 and 32413764701 after
+    2026-10-29 06:46 MSK; avoid repeating the 15 logged exact requests
+    before 2026-10-29 13:35 MSK unless primary data changed. Keep original
+    source SHA, no parallel MI PR, no auto-merge and no production writes.
+
+watchdog_eis_7z_recovery_20261029_0236:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  issue_run_start_comment_id: 6483546781
+  canonical_pr: 521
+  branch: feature/pq-etp-provenance-ledger-20261028
+  branch_head_before_run: 46ceca8668f8906fa23392d52935376a910d4424
+  canonical_v29_rows_unchanged: 101
+  official_notice: '32616400421'
+  new_original_eis_7z_archives: 2
+  original_documentation_sha256: d32e595bbbfe916848fcfcc4ab166d17429c922444e61a20114d9c8518175b16
+  original_cancellation_protocol_sha256: ce2241529a0e2d8df4c3c94d851adc349f403da3a54edbc53b35404f50b363a0
+  regular_archive_members_sha_verified: 13
+  accepted_chatgpt_arc_reviews: 1
+  reviewed_original_quote_count: 10
+  review_id: 32616400421-a7b87657e6bbf4a37cc313d1
+  actual_first_party_requests: 19
+  observed_http200: 4
+  provider_requests_without_numeric_http: 15
+  new_calendar_bound_searches: 12
+  month_search_statuses: {empty: 10, success: 2, lexical_false_positives: 9}
+  months_with_new_queries: ['2026-09', '2026-10']
+  newly_exhaustively_covered_months: 0
+  new_notice_ids: 0
+  new_lot_ids: 0
+  new_deduplicated_project_ids: 0
+  original_cancellation_protocols: 1
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_executed_prices: 0
+  verified_new_core_6_35kv_sales: 0
+  technical_scope: '110kV reactive power source with 10kV MPU and 110kV BSK; cancelled 29.09.2026'
+  buyer_estimated_nmck_rub_ex_vat: '370504918.04'
+  buyer_estimated_10kv_mpu_rub_ex_vat: '335351974.38'
+  buyer_estimated_110kv_bsk_rub_ex_vat: '33723435.46'
+  buyer_estimated_supervision_rub_ex_vat: '1429508.20'
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_EIS_7Z_32616400421_20261029_0236.json
+  source_ledger_sha256: b5a262af811a3b8ae03023061b3dc73a7cac4c20c9c03fee9bb208b345d4ebe2
+  last_tested_code_commit: 3cdbbc28ff345a5c3f4e798187df57b6a5af8ee4
+  test_results: 'No code changed; two original 7z and 13 members SHA verified; ten exact ChatGPT quotes accepted; source_receipts audit PASS; JSON/YAML/diff checks PASS.'
+  next_three:
+    - '32515582393 UKRM 6kV: signed supplier, price and payment after 2026-10-29 06:46 MSK'
+    - '32413764701 UKRM 10kV: signed supplier, price and payment after 2026-10-29 06:46 MSK'
+    - 'GP630876 10kV: original ETP contract/protocol only with newly verified official case URL'
+  calendar_query_retry_after_moscow: '2026-10-29T14:40:08+03:00'
+  remaining:
+    - 'Determine if cancelled 26-1149 was reissued; do not double count same project.'
+    - '15 Data Platform SDK originals blocked pending approved authorization.'
+    - 'Do not treat buyer NMCK or 10kV MPU allocation as executed sales.'
+  resume_instruction: >-
+    Keep one PR #521 and v29 101 rows. EIS 32616400421 original archives
+    now SHA verified; do not redownload. Keep signed outcomes unknown and
+    the 110/10kV hybrid cancelled, no market turnover. Continue independent
+    signed-contract searches after cooldown and native GPB source discovery.
+    Preserve dirty parallel chat worktree, unrelated current-task.yaml,
+    original hourly Watchdog and all review/AM-4 gates.
+
+watchdog_b2b_20261029_0334:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  issue_run_start_comment_id: 6484510624
+  canonical_pr: 521
+  canonical_branch: feature/pq-etp-provenance-ledger-20261028
+  canonical_v29_rows_unchanged: 101
+  original_source_requests: 5
+  source_http_statuses: {http_200: 5}
+  new_sha_verified_first_party_html: 5
+  preexisting_original_sha_reverified: 1
+  new_first_party_notice_outside_v29: 1
+  new_first_party_lot_outside_v29: 1
+  new_deduplicated_project_count: 0
+  original_protocols_with_named_winner: 0
+  newly_verified_signed_suppliers: 0
+  newly_verified_executed_contract_prices: 0
+  new_calendar_searches: 0
+  newly_exhaustively_covered_months: 0
+  accepted_chatgpt_arc_review_packets: 2
+  accepted_exact_original_quotes: 16
+  verified_new_core_6_35kv_sales: 0
+  case_4535313: "Original B2B card: 1 UKRM 6kV 630kvar, 4 applications, organizer AIM Management; public initial price and signed supplier unknown."
+  case_4538400: "Original B2B card: cancelled 17.08.2026, 2 UKRM 10kV; explicitly replaced by 4565274 with 11 applications, organizer-hidden outcome. Two notices, one project."
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_B2B_4535313_4538400_20261029_0334.json
+  private_source_dir: watchdog-20261029-0334-new-b2b
+  source_ledger_sha256: d7aa9269766cc446df9cc405ea3de5b4781769e6f36403cf4618aa010808ba82
+  evidence_commit: 0e630956e71e9f5bea7c36c1e790678cee4708c6
+  last_tested_code_commit: 3cdbbc28ff345a5c3f4e798187df57b6a5af8ee4
+  test_results: "No code changes; 6 source SHA checks, 17 original text quote checks and 16 ChatGPT ARC review quotes accepted, two queue records reviewed; source JSON valid."
+  blockers: "B2B offers pages require registration and outcome hidden; no signed supplier, executed payment or public contract. No access bypass. 15 authorized Data Platform SDK files remain blocked."
+  next_three:
+    - "32515582393 6kV UKRM: signed supplier and executed price, retry no earlier than 2026-10-29 06:46 MSK."
+    - "32413764701 10kV UKRM: signed supplier and executed price, retry no earlier than 2026-10-29 06:46 MSK."
+    - "119199-TT / 135171-TT: source-native Metal-IT discovery of 6kV UKRM cases, only with verified exact URLs."
+  exact_b2b_request_retry_after_moscow: "2026-10-29 15:36 MSK unless original public content changes"
+  resume_instruction: >-
+    Continue only active PR #521 and canonical v29 101 rows; do not
+    count cancelled 4538400 as a new project or sale, nor claim winner
+    from public bid counts. Avoid re-requesting five B2B pages before
+    cooldown. Preserve private originals, SHA, unrelated dirty APR-07
+    worktree, one hourly Watchdog, review gates and no auto-merge.
+
+watchdog_eis_signed_outcomes_20261029_0435:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  observed_at_moscow: '2026-10-29T04:44:12+03:00'
+  issue_run_start_comment_id: 6485448327
+  canonical_pr: 521
+  canonical_branch: feature/pq-etp-provenance-ledger-20261028
+  canonical_v29_rows_unchanged: 101
+  actual_first_party_source_requests: 26
+  source_http_statuses: {http_200: 23, http_404: 3}
+  distinct_successful_http200_sha: 23
+  case_specific_http200_source_cards_or_files: 21
+  new_original_eis_7z_archives: 1
+  new_original_archive_members_sha_verified: 2
+  existing_original_meles_pdfs_reverified_sha_duplicates: 2
+  original_protocols_with_named_winner: 1
+  new_notices: 0
+  new_lots: 0
+  new_deduplicated_projects: 0
+  newly_first_party_verified_signed_contract_register_prices: 2
+  newly_verified_signed_supplier_identities: 0
+  newly_verified_executed_prices: 0
+  new_month_source_searches: 0
+  newly_exhaustively_covered_months: 0
+  new_core_equipment_only_sales_verified: 0
+  chatgpt_arc_review_packets_accepted: 2
+  exact_original_quotes_accepted: 15
+  sosnovskaya_case: '223fz:32615852898:lot1 design-only; original 27.05.2026 protocol names winner OOO LEP-PROEKT INN 5406750532, offer 2285000 RUB ex VAT; signed EIS registry 52460069527260006170000, 2787700 RUB, 15.06.2026; signed supplier identity and execution not separately verified.'
+  meles_case: '223fz:32616296475:lot1 mixed 6.3kV compensator, components and installation; original protocol anonymous winner application 79410, offer 3865725.99 RUB; signed EIS registry 50263017332260000870000, same price 21.09.2026; no equipment-only allocation, supplier identity or executed payment verified.'
+  new_sosnovskaya_original_archive_sha256: 6c6b06cdf6435d90aa6efacbca2abb895c208f945db9cd731208725b3f71cce0
+  new_sosnovskaya_original_protocol_pdf_sha256: bd76b83faa5195ecb2943858f158d7a07e89f68e932b4afbb45fa1e3a73b69da
+  preexisting_meles_original_protocol_pdf_sha256: 9e2812d778f3e4534a3fcc02dec65d04df999d8d9ca11032fd1c8ff5000eb3d0
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_EIS_SIGNED_OUTCOMES_20261029_0435.json
+  private_source_journal: watchdog-20261029-0435-primary/source-attempts.json
+  private_review_ids: ['eis-sosnovskaya-20261029-0435', 'eis-meles-20261029-0435']
+  source_ledger_sha256: c72efb7a7479534a31627dc8969e2bbbb04185cd32c12a547babd73910590d96
+  evidence_commit: b31220cf019227dec7eea3350b2410583a77d35f
+  last_tested_code_commit: 3cdbbc28ff345a5c3f4e798187df57b6a5af8ee4
+  test_results: 'No code changes; JSON parsed; 15 exact quotes validated against first-party HTML and PDF text; 7z member SHA verified; two scanned Meles PDFs match existing v29 SHA receipts. No broad pytest rerun.'
+  blockers: 'Public 223-FZ registry cards omit signed supplier identity; Meles winner only anonymous application 79410; no proof of executed payments; mixed Meles contract price not equipment-only; 15 Data Platform files still blocked by missing authorized SDK credential.'
+  next_three:
+    - '32413764701 UKRM 10kV: original signed supplier and executed price, retry after 2026-10-29 06:46 MSK.'
+    - '32515582393 UKRM 6kV: original signed supplier and executed price, retry after 2026-10-29 06:46 MSK.'
+    - '119199-TT / 135171-TT Metal-IT: discover exact first-party case/document URLs; no fabricated endpoints.'
+  resume_instruction: >-
+    Continue only PR #521 with canonical v29 101-row corpus and immutable source SHA.
+    Do not redownload existing Meles 32616296475 original protocol PDFs; signed
+    registry price now first-party verified but supplier and execution remain unknown.
+    Sosnovskaya 32615852898 is design only, not equipment sale.
+    Avoid prior exact case requests before 2026-10-29 16:45 MSK unless public
+    registry status changes; retry 10/6kV supplier cases after 06:46 MSK.
+    Preserve dirty unrelated APR-07 and MI worktrees, single hourly Watchdog,
+    REVIEW/AM-4 gates, no auto-merge or production mutations.
+
+watchdog_primary_outage_and_provisional_epc_20261029_0536:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  run_start_issue_comment_id: 6486342403
+  canonical_pr: 521
+  canonical_branch: feature/pq-etp-provenance-ledger-20261028
+  canonical_v29_rows_unchanged: 101
+  journaled_actual_source_requests: 17
+  source_http_statuses: {http_200: 4, http_403: 1, http_404: 12}
+  official_month_source_searches_attempted: 7
+  newly_successfully_covered_month_source_combinations: 0
+  newly_exhaustively_covered_months: 0
+  newly_sha_verified_first_party_case_originals: 0
+  newly_original_protocols_with_named_winner: 0
+  new_unique_notices_promoted: 0
+  new_unique_projects_promoted: 0
+  secondary_only_provisional_case_ids: ['32616433248', '32616497692']
+  new_signed_supplier_identities_verified: 0
+  new_executed_prices_verified: 0
+  new_core_equipment_only_sales_verified: 0
+  private_source_journal: watchdog-20261029-0536-primary/source-attempts.json
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_SOURCE_BLOCKERS_20261029_0536.json
+  source_ledger_sha256: 5af45a7507905c0729aeb97f90aaebaad57560630535f3210af19c904b5ed9e9
+  source_ledger_commit: a33ace9373b317aeaf019aa018c7c8300ec3f41b
+  last_tested_code_commit: 3cdbbc28ff345a5c3f4e798187df57b6a5af8ee4
+  last_test_results: 'No code changes. Public evidence JSON parsed; local source journal SHA-256 and source receipts verified. No redundant pytest suite.'
+  blockers: >-
+    EIS notice/search/filestore returned uniform 146-byte HTTP404 from Varnish
+    on both Mac mini and MacBook; 7 bounded month queries yielded no usable
+    pages, not evidence of absent market. Rosseti Roseltorg JS landing page
+    and GPB generic SSR did not expose case-specific originals. Kontur 403;
+    no bypass. 15 Data Platform files still await approved SDK credentials.
+  findings: >-
+    Two already-unverified metadata candidate notices were independently
+    corroborated only by SHA-bound secondary sources: 32616433248 mixed EPC
+    for PS Kyappeselga with 1 UKRM 35kV (NMCK 56,330,673.93 RUB), and
+    32616497692 mixed EPC for PS Vyartsilya with 10kV UKRM (NMCK
+    79,101,498 RUB). Secondary-reported winner for 32616433248 is NOT
+    source-original-protocol verified, NOT signed contractor and NOT a PQ
+    equipment-only sale. No source-grade promotion or v29 mutation.
+  next_three:
+    - '32413764701: independently signed 10kV UKRM supplier and executed amount; eligible 2026-10-29 06:46 Moscow.'
+    - '32515582393: independently signed 6kV UKRM supplier and executed amount; eligible 2026-10-29 06:46 Moscow.'
+    - '32616433248 / 32616497692: official original EIS/ETP technical documents and protocol; retry 2026-10-29 17:43 Moscow unless service recovery verified.'
+  resume_instruction: >-
+    Continue only existing PR #521, v29 101 unchanged and single hourly
+    Watchdog. Check branch HEAD and lease before writes. Do not repeat 7
+    unsuccessful EIS month-law-query requests before 17:43 Moscow unless
+    first-party service recovers. Neither secondary lead is original-backed,
+    signed, executed or equipment-only. Resume 10/6kV signed supplier cases
+    after 06:46 Moscow; GP630876 only after discovery of a new exact official
+    source URL. Keep 15 DP items blocked, preserve original SHA and unrelated
+    dirty worktrees. No merge or production mutation.
+
+watchdog_source_recovery_20261029_0636:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  run_start_issue_comment_id: 6487198366
+  canonical_pr: 521
+  canonical_branch: feature/pq-etp-provenance-ledger-20261028
+  base_head_before_run: 65d34a364ae0d366e006a8900433c661ecf5da1e
+  canonical_v29_rows_unchanged: 101
+  actual_source_requests: 37
+  source_http_statuses: {http_200: 31, http_403: 2, http_404: 2, tls_error: 1, timeout: 1}
+  new_original_files_sha_verified: 7
+  new_first_party_html_cards_sha_verified: 10
+  new_223_notices: 0
+  new_lots: 0
+  new_deduplicated_project_ids: 0
+  existing_v29_cases_upgraded_to_first_party: ['106044-ТТ', '32616433248', '32616497692']
+  new_statcom_site_specific_demand_nodes_verified: 2
+  original_protocols_with_named_winner: 0
+  original_protocols_with_anonymous_bidder: 1
+  new_signed_supplier_identities_verified: 0
+  new_executed_payment_values_verified: 0
+  new_equipment_only_signed_sales_verified: 0
+  new_month_source_searches: 0
+  newly_exhaustively_covered_months: 0
+  source_ledger_statcom: docs/market_intelligence/PQ_WATCHDOG_STATCOM_106044_TT_20261029_0636.json
+  source_ledger_statcom_sha256: c9636d9203ae4a25cf899149c8a94dcf67b01dc1190a485118045fa76617eccd
+  source_ledger_eis: docs/market_intelligence/PQ_WATCHDOG_EIS_RECOVERY_20261029_0636.json
+  source_ledger_eis_sha256: 18b1f69e3357a8f854eacd40c662695033f3dd816f42c0c286fd36c371c88d4d
+  private_source_journal: watchdog-20261029-0636-primary/source-attempts.json
+  private_source_journal_sha256: a5d41bc72a1faff03cdf673c82e220d4b41759bb18265cec11e1ae4d38b15c8f
+  last_tested_code_commit: 3cdbbc28ff345a5c3f4e798187df57b6a5af8ee4
+  findings: >-
+    Direct lawful noproxy access restored EIS first-party originals. Metal-IT
+    106044-TT: three planned 6.3kV STATCOM units across two sites, 2Mvar
+    Taldinsky and 2x0.85Mvar Kaltansky, no sale proven. EIS 32616433248:
+    original 35kV UKRM >=3.5Mvar in mixed EPC, NMCK 56.33067393m RUB;
+    original 19.10.2026 final protocol declares one-bid procedure unsuccessful,
+    bidder #1 anonymous, only proposed contract negotiations, no signed
+    supplier. EIS 32616497692: original 10kV UKRM 3Mvar in mixed EPC,
+    total NMCK 79.1014984m RUB; Vartsilya subproject estimated 8.95528621m
+    incl VAT, not equipment-only price. EIS printform 32515582393 states
+    contract number RES-1.26.1/D-01071 and declared goods origin Kazakhstan,
+    but does not name signed supplier or prove payment.
+  price_separation: >-
+    32616433248 original XLSX pre-limit pre-VAT 'Montazh UKRM' 13.3424724m
+    RUB and PNR 0.19758135m, not signed equipment-only allocation.
+    32616497692 original XLSX 'Montazh UKRM' 4.34679332m RUB pre-VAT,
+    Vartsilya site package 8.95528621m RUB incl VAT, overall EPC NMCK
+    79.1014984m RUB. No national TAM inference.
+  blockers: >-
+    Original 32616433248 protocol names only anonymous bidder #1;
+    secondary named winner cannot be promoted. No public contract on either
+    new EIS notice tab. 32616497692 no official protocol. 32515582393
+    signed supplier and executed payment remain unverified; declared Kazakhstan
+    origin is not independent OEM evidence. 15 Data Platform files remain
+    blocked by approved SDK credentials. Generic EIS printform for 32413764701
+    returned landing shell, despite contract card status 'execution completed'.
+  next_three:
+    - '32515582393: independent signed supplier and executed price; retry after 2026-10-30 06:46 MSK or on a new first-party source event.'
+    - '32616433248: final signed contractor/contract-register after one-bid negotiations; retry after 2026-10-29 18:48 MSK or new EIS event.'
+    - '106044-TT: source-native Metal-IT award/protocol for 6.3kV STATCOM; eligible immediately only via newly discovered exact official card URL, no generic root re-probe before 2026-10-30 06:42 MSK.'
+  resume_instruction: >-
+    Continue only PR #521, canonical v29 101 rows unchanged. Do not redownload
+    seven newly verified original files. Preserve original SHA, separate
+    notice/lot/site/project/contract and prices. No new bids, no production,
+    no auto-merge without AM-4 and exact-head CI/review gates. Keep unrelated
+    dirty worktrees and one enabled hourly Watchdog unchanged.
+
+watchdog_event_log_and_search_20261029_0729:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  canonical_pr: 521
+  run_start_issue_comment_id: 6487971728
+  recorded_at_moscow: '2026-10-29T07:38:06+03:00'
+  canonical_v29_rows_unchanged: 101
+  source_requests: 38
+  source_http_statuses: {http_200: 36, http_404: 2}
+  new_month_law_query_first_pages: 16
+  distinct_months_touched: 8
+  exhaustive_months: 0
+  new_unique_original_files: 0
+  new_first_party_event_log_cards: 2
+  new_notices_after_dedup: 0
+  new_projects_after_dedup: 0
+  new_named_winner_protocols: 0
+  new_signed_suppliers: 0
+  new_executed_payment_prices: 0
+  arc_reviews_accepted: 1
+  arc_review_original_sha_duplicate: true
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_EVENT_LOG_AND_SEARCH_20261029_0729.json
+  source_ledger_sha256: f732a583800661ac219264ffa577074216c740ca6b617efb0712c7e7aa33553d
+  last_tested_code_commit: 3cdbbc28ff345a5c3f4e798187df57b6a5af8ee4
+  findings: >-
+    32515582393 original event log shows execution information filed 04.08.2026
+    and draft revision filed 19.08.2026; no verified payment or signed supplier.
+    32413764701 event log confirms 05.12.2024 completed status, still no paid
+    amount. 32413297739 original protocol was SHA-duplicate of prior review:
+    two rejected bidders, no winner, voltage unknown. Two 7z source URLs
+    returned infected-file JSON; no bypass. 2026-08 СТАТКОМ results were
+    lexical false positives (остатков), not PQ equipment.
+  blockers: >-
+    No new source-unique original files or signed suppliers. Public contract
+    registry omits supplier/payment amounts. 15 Data Platform SDK files blocked.
+    No exhaustive month coverage.
+  next_three:
+    - '32515582393 signed supplier and executed price: retry 2026-10-30 06:46 MSK or new first-party event.'
+    - '32616433248 signed contractor after negotiation: retry 2026-10-29 18:48 MSK or new first-party event.'
+    - '106044-TT Metal-IT STATCOM award: only new exact official URL now; generic root 2026-10-30 06:42 MSK.'
+  resume_instruction: >-
+    Continue PR #521, v29 101 rows unchanged. Do not repeat 16 exact month-law-query
+    first-page searches before 2026-10-29 19:38 MSK. Preserve original SHA,
+    unrelated worktrees, current-task.yaml and the one hourly Watchdog.
+
+watchdog_b2b_primary_20261029_0829:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  review_gate: REVIEW
+  canonical_pr: 521
+  canonical_branch: feature/pq-etp-provenance-ledger-20261028
+  run_start_issue_comment_id: 6488810725
+  canonical_v29_rows_unchanged: 101
+  source_requests: 24
+  source_http_statuses: {http_200: 16, http_404: 8}
+  newly_sha_verified_first_party_html_relevant: 15
+  newly_sha_verified_first_party_html_total: 16
+  newly_verified_existing_v29_b2b_case_ids: [4256170, 4561228, 4561243, 4526968, 4302914]
+  new_month_law_query_attempts: 6
+  newly_successful_month_source_first_pages: 0
+  exhaustive_months: 0
+  new_unique_notices_promoted: 0
+  new_unique_projects_promoted: 0
+  new_original_protocols_with_named_winner: 0
+  new_signed_suppliers_verified: 0
+  new_executed_payment_prices_verified: 0
+  new_equipment_only_signed_sales: 0
+  chatgpt_arc_review_cases: 5
+  exact_original_quotes_accepted: 20
+  source_ledger: docs/market_intelligence/PQ_WATCHDOG_B2B_PRIMARY_20261029_0829.json
+  source_ledger_sha256: "6db2634c2e9a557798712888973ed393157c46bf6adc5b4812fb8208780e342d"
+  private_review_packet: watchdog-20261029-0829-primary/chatgpt-arc-review.json
+  private_review_packet_sha256: "fde26d4160d700bbb8ca7a2318569aec3e62fbbdcb7758f61d5aa34e85ac0565"
+  evidence_commit: 83a9e9079294a8f8a2354a507c4122596f97796d
+  last_tested_code_commit: 3cdbbc28ff345a5c3f4e798187df57b6a5af8ee4
+  test_results: >-
+    No code changes; all 24 available source-body receipts SHA checked,
+    20 exact normalized first-party HTML quotes checked against SHA-bound pages;
+    JSON parsed, YAML syntax parsed, git diff check; no redundant pytest.
+  findings: >-
+    Five preexisting v29 commercial leads now have fresh first-party B2B cards:
+    4256170 PROGAZSTROY UKRM 10kV (title 1600+50 kVA), one bid;
+    4561228 MGBZH UK1/UK2 two 10kV AUKRM, four bids and hidden outcome;
+    4561243 MGBZH UK3/UK4 two separate 10kV AUKRM, six bids and hidden outcome;
+    4526968 Rzhev RZK four UKRM, six bids, voltage unknown;
+    4302914 Lebedinsky GOK service of existing RU-DRIVE SVG 6.3kV, one bid,
+    hidden outcome, not equipment supply. No verified winner or signed sale.
+  dedup_caution: >-
+    4561228 and existing 4565274 both reference UK1/UK2 at MGBZH; exact
+    project identity not yet independently established. 4561243 is UK3/UK4
+    and must not be collapsed into the same equipment lot. Existing 4538400
+    was cancelled with explicit successor 4565274. Keep notice, lot,
+    equipment set, project and contract separate.
+  blockers: >-
+    Six previously unattempted 223-FZ month-query URLs returned identical
+    146-byte HTTP404 (no market-absence inference). B2B participant names,
+    bids, change history and clarifications are login-gated; no bypass.
+    1190793 resolved to unrelated 2019 dosimeter tender; 4559984 and
+    4304120 official B2B numeric routes returned HTTP404. No new signed
+    supplier or executed payment. 15 Data Platform files remain SDK-blocked.
+  next_three:
+    - '32616433248 signed contractor after negotiations: retry 2026-10-29 18:48 MSK or new official event.'
+    - '32515582393 UKRM 6kV signed supplier and executed price: retry 2026-10-30 06:46 MSK or new official event.'
+    - '106044-TT Metal-IT STATCOM award: exact new official URL now; generic root after 2026-10-30 06:42 MSK.'
+  resume_instruction: >-
+    Continue only existing PR #521, v29 101 rows unchanged. Do not repeat
+    six failed 223-FZ month-law-query combinations before 2026-10-29 20:30
+    MSK unless official EIS service recovery is observed. Seek fresh original
+    protocols, supplier names and executed prices, and verify possible
+    4561228/4565274 project link without speculative merge. Preserve dirty
+    canonical worktree and unrelated tasks; no merge, production or bids.
+
+manual_db_growth_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  completed_at_utc: '2026-10-29T05:42:58Z'
+  source_commit: 'b723ab227ebf6e9bc6525f6dcea70501d1808f62'
+  database: arvectum_data
+  collection: arvectum-market-pq-6-35kv
+  baseline_unique_lots: 104
+  after_unique_lots: 106
+  after_distinct_canonical_procedure_tokens: 95
+  after_unique_numeric_eis_223_notices: 36
+  added_unique_lots: 2
+  inserted:
+    - '223fz:32413764701:lot1 — 10kV 150kvar container UKRM equipment tender'
+    - '223fz:32413195287:lot1 — 6.3kV existing UKRM maintenance/repair, not new equipment'
+  explicitly_excluded: '32413631624 — AUKRM 0.4 kV, outside core 6-35 kV'
+  original_sha_checked: true
+  new_signed_supplier_count: 0
+  new_verified_equipment_sale_rub: 0
+  actual_database_write: true
+  database_transaction_atomic: true
+  postwrite_readback: '106 dp_resources, 106 unique external_id, 106 matching dp_records, new rows staged_unreviewed'
+  backup_dump_sha256: 03cf1bc983c9ff4e9c69149d8818f9413489731f13dc7723fb1ee68923e33769
+  source_manifest: data/market_intelligence/power_quality/source_bound_delta_20261029.v1.json
+  database_receipt: docs/market_intelligence/PQ_POSTGRES_CORPUS_GROWTH_20261029.json
+  source_limitations: >-
+    104/106 count distinct canonical lot cards, not verified won procurement or
+    equipment revenue. No inferred signed supplier or paid amount. Full market
+    completeness remains unknown; v29 immutable source baseline still 101,
+    production PostgreSQL has incrementally enriched/added rows. Historic
+    223-FZ registry price differs from committee offer; maintain separate fields.
+  resume_instruction: >-
+    Continue unique 223-FZ and commercial-source discovery using one PR #521.
+    First query actual PostgreSQL unique count and avoid re-importing both
+    32413764701 and 32413195287. Every source-verified new notice/lot should
+    undergo original SHA validation, precise scope and dedup; append only to the
+    tender-agent owned PQ collection after fresh pg_dump backup, atomic
+    identity guards and DB readback (explicit owner authorization 2026-10-29).
+    Report new unique procurement and distinct procedure counts before tests;
+    preserve source v29 101 and don't promote unreviewed bids into paid sales.
+    Keep existing hourly Watchdog and canonical checkpoint; do not touch
+    unrelated collections or autoclose PR #521.
+
+manual_commercial_dedup_and_primary_capture_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  recorded_at_utc: '2026-10-29T05:45:33Z'
+  canonical_pr: 521
+  post_import_unique_lots: 106
+  primary_page: https://bidzaar.com/app/process/light/019f415c-8a7a-7c91-bb3f-68da7b9413ea
+  primary_page_http: 200
+  primary_page_sha256: a4106736d02d812a69001ffd79e38ce01560624c43fe0ab6a395baa751d7ccbf
+  source_ledger: docs/market_intelligence/PQ_BIDZAAR_PRIMARY_DEDUP_20261029.json
+  canonical_case: 'commercial:351-062:lot1'
+  duplicate_preexisting_ids:
+    - 'commercial:351-062:lot1'
+    - 'commercial:4535313:lot1'
+    - 'commercial:РН60802401:lot1'
+  genuinely_new_lots_from_commercial_probes: 0
+  new_original_public_pages_sha_verified: 1
+  supplier_verified: false
+  executed_price_verified: false
+  next_action: >-
+    Current PostgreSQL corpus remains 106 unique procurement lot cards.
+    Capture original commercial technical attachments only through permitted
+    official public access; do not infer signed contracts or duplicate old
+    price-monitoring probes. Incrementally append NEW source-verified cases
+    with backups and owner-approved narrow import. Continue prioritizing
+    source-original 6-35kV contracts and verified suppliers, not test counts.
+
+manual_b2b_public_source_growth_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  timestamp_utc: '2026-10-29T06:31:18Z'
+  canonical_pr: 521
+  database: arvectum_data
+  collection: arvectum-market-pq-6-35kv
+  unique_lots_before: 106
+  unique_lots_after: 107
+  distinct_procedure_tokens_after: 96
+  added_lot: commercial:4158439:lot1
+  first_party_source_http: 200
+  first_party_source_sha256: 00a163169f78b3dd30556f1bf43a5968e886e1a877f8729a77339dec74bd5615
+  first_party_outcome: unsuccessful_no_bids
+  first_party_bid_count: 0
+  source_voltage_kv: null
+  new_strict_verified_6_35kv_lots: 0
+  new_signed_suppliers: 0
+  new_verified_equipment_revenue_rub: 0
+  import_status: staged_unreviewed
+  transaction_verified: true
+  backup_sha256: 1657c16b62bf42096369aa1c875f264581a2aa217fddff17d658c6c0959db0c6
+  full_backup_size_bytes: 37483906
+  evidence_receipt: docs/market_intelligence/PQ_DB_GROWTH_TO_107_20261029.json
+  candidate_queue: docs/market_intelligence/PQ_DISCOVERY_CANDIDATES_20261029.md
+  blockers: >-
+    Potential 2025 GPB AP109074 same UKRM model as 2026 AP125337 but separate
+    procedure ID; original official GPB document unavailable, do not import
+    without first-party source. FZ44 0318300338626000160 has contradictory
+    secondary listings, no original; exclude. 4158439 voltage is unknown and
+    bid count zero, not a verified strict PQ 6-35kV equipment purchase.
+  resume_instruction: >-
+    Begin with live PostgreSQL corpus unique IDs: 107 as of 2026-10-29
+    and 96 distinct procedure tokens. Do not re-import commercial:4158439:lot1
+    or existing AP125337/RN61001644/RN61004155. Acquire new first-party
+    technical annexes and signed outcomes on EIS and official ETPs, prioritize
+    AP109074 primary document and 2026 UKRM/Rosneft exact IDs, and dedup
+    exact notice/lot/project. Newly discovered source-only items lacking
+    nominal 6-35kV voltage remain provisional; do not treat failed bidding
+    as sales. Any further append requires fresh sha256-verified PostgreSQL
+    backup, source original verification and transactional readback.
+
+watchdog_20261029_0929:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  date_moscow: '2026-10-29 09:36:45 +0300'
+  issue_comment_id: 6489665325
+  canonical_pr: 521
+  source_base_sha: '4e727068583d7ac549fdf44a798990064e0ed191'
+  evidence_report: docs/market_intelligence/PQ_WATCHDOG_ROSELTORG_LUKOIL_20261029_0929.json
+  postgres_collection: arvectum_data/arvectum-market-pq-6-35kv
+  postgres_unique_lots_before: 107
+  postgres_unique_lots_after: 107
+  postgres_distinct_procedures: 96
+  new_unique_lots: 0
+  new_unique_projects: 0
+  source_http_requests: 14
+  http_200: 14
+  new_first_party_unique_sha_originals: 10
+  original_protocol_named_winners: 1
+  named_winner_scope: '0.4kV adjacent; excluded from 6-35kV core'
+  winner: 'COM16012600053 - ООО ТПП ЭнергоТехника, ИНН 6679111400'
+  award_price_without_vat_rub: '570901.64'
+  signed_supplier_verified: false
+  executed_payment_verified: false
+  core_equipment_sales_verified_rub: 0
+  new_calendar_month_searches: 0
+  technical_scope: 'Five official questionnaires 0.4kV, not core 6-35kV'
+  previous_procedure: 'COM07102500074 cancelled; original PDF and five-bid opening protocol'
+  access_blockers: 'Three exact Metal-IT trade URLs return identical generic JS shell despite HTTP200'
+  db_mutation: false
+  source_v29_rows_unchanged: 101
+  tested_changes: 'JSON parsed, SHA originals rechecked, YAML parsed, git diff check; no code changed'
+  next_three:
+    - '106044-TT Metal-IT 6.3kV STATCOM outcome: new official event or 2026-10-30 06:42 MSK'
+    - '32616433248 UKRM 35kV EPC signed outcome: 2026-10-29 18:48 MSK'
+    - '32515582393 UKRM 6kV signed supplier/payment: 2026-10-30 06:46 MSK'
+
+manual_rusagro_harmonic_filter_research_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  recorded_at_utc: '2026-10-29T06:52:00Z'
+  active_pr: 521
+  database: arvectum_data
+  collection: arvectum-market-pq-6-35kv
+  unique_lots_before: 107
+  unique_lots_after: 108
+  distinct_procedure_tokens_after: 97
+  eis_223_lots_after: 37
+  distinct_eis_223_notices_after: 36
+  commercial_and_nonstandard_lots_after: 71
+  inserted_unique_lot: 'commercial:281-705:lot1'
+  supplier_scope: harmonic_filters_design_for_seven_rusagro_sugar_factories
+  first_party_page_url: https://bidzaar.com/app/process/light/019b4fe0-38ca-773a-91b0-0ff33daedb7d
+  first_party_page_sha256: db4d1b92433a57d4fa3adc1ec405d3397375530568b760c5dbf37dbd9cc0c5f5
+  original_technical_docx_sha_verified: 7
+  original_http_status_all: 200
+  legal_notice_count_added: 1
+  seven_design_site_positions_not_seven_notices: true
+  nominal_harmonic_filter_voltage_verified_6_35kv: false
+  low_voltage_0p4kv_protection_in_six_original_specs: true
+  unrelated_6kv_RU_location_in_one_original_spec: true
+  new_6_35kv_verified_equipment_sales_count: 0
+  new_signed_suppliers_count: 0
+  new_executed_equipment_revenue_rub: 0
+  full_postgres_backup_sha256: 93048ad45edb0e178ba4669a915aca491ecc2cf243e2b8153d746363630245f3
+  database_import: atomic_transaction_and_postwrite_readback
+  source_reconciliation: docs/market_intelligence/PQ_RUSAGRO_281705_RECONCILIATION_20261029.json
+  source_manifest: data/market_intelligence/power_quality/rusagro_281705_primary_20261029.json
+  live_database_metrics: docs/market_intelligence/PQ_LIVE_DB_KPI_20261029_0949.json
+  source_limitation: >-
+    Core 6-35kV harmonic filter nominal voltage was NOT established; six
+    original specs refer to 0.4kV protection and the seventh to RU6
+    switchgear location. Database row is research-only staged_unreviewed,
+    not actual equipment sale, contract price or signed supplier.
+    Additional 7 original project positions belong to ONE legal tender.
+    Only four corpus rows presently include direct original SHA arrays
+    in dp_resources.metadata; historic source SHA may be external to DB.
+  resume_instruction: >-
+    Use actual PostgreSQL count 108 unique lot cards, 97 procedure tokens
+    and 36 distinct numeric EIS 223-FZ notices as initial checkpoint, but
+    re-query before every run. Seek genuine NEW 6-35kV equipment procurements,
+    the original platform contract annexes and independently verified signed
+    suppliers and prices; do not repeat/duplicate 281-705 or 4158439.
+    Publish per-case source original SHA, technology voltage and legal
+    procedure dedup; 281-705 is design-only and 6-35kV uncertain.
+    Continue v29 archive provenance reconciliation and source-grade
+    normalization for historic rows. Never count seven TЗ as seven lots.
+    Append only new source-verified canonical procurement rows after fresh
+    full SHA-verified PostgreSQL backup, atomic guard and readback.
+    Keep single PR #521, single Watchdog, no unrelated worktree edits.
+
+watchdog_20261029_1034:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  date_moscow: "2026-10-29 10:34:11 +0300"
+  issue_comment_id: 6490798753
+  canonical_pr: 521
+  postgres_unique_lots_before: 108
+  postgres_unique_lots_after: 108
+  postgres_distinct_procedures: 97
+  postgres_eis_223_notices: 36
+  new_unique_lots: 0
+  new_unique_projects: 0
+  source_http_requests: 4
+  source_http_200: 2
+  source_http_404: 2
+  new_first_party_unique_sha_originals: 1
+  original_protocol_named_winners: 0
+  signed_suppliers_verified: 0
+  executed_price_verified: 0
+  db_mutation: false
+  source_v29_rows_unchanged: 101
+  evidence_report: docs/market_intelligence/PQ_WATCHDOG_B2B_4643332_20261029_1034.json
+  primary_original_sha256: f846a206604ec18e84d6ea12c309331616fc5c9374aeebd04e5689efcf584461
+  result: "B2B 4643332, 10.5kV capacitor, official no-bid outcome (0 applications), no contract or equipment sale."
+  blockers: "EIS 32616435269 HTTP404; B2B 4590398 HTTP404; new 1258722 stage-2 only secondary and unverified voltage."
+  next_action: "Seek primary signed contracts and verified new unique 6-35kV lots; retry 106044-TT and 32515582393 after 2026-10-30 06:42/06:46 MSK."
+
+manual_sibsteklo_primary_recheck_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  date_moscow: '2026-10-29'
+  canonical_pr: 521
+  source_evidence: docs/market_intelligence/PQ_SIBSTEKLO_306644_SOURCE_RECHECK_20261029.json
+  canonical_candidate: 'commercial:306-644:lot1'
+  source_primary_card: https://bidzaar.com/app/process/light/019ce668-617b-7b1a-861e-113ed78182af
+  source_already_in_primary_facts: true
+  source_technology_voltage_kv: 6
+  source_scope: installation_connection_commissioning_not_verified_new_supply
+  original_technical_docx_sha_verified_this_run: false
+  signed_supplier_verified: false
+  outcome_price_verified: false
+  database_new_rows_added_this_run: 0
+  database_last_confirmed_unique_lots: 108
+  database_last_confirmed_distinct_procedures: 97
+  db_readback_blocker: remote_ARC_run_command_safety_rejections
+  resume_instruction: >-
+    Read PostgreSQL collection arvectum_data/arvectum-market-pq-6-35kv and
+    check whether commercial:306-644:lot1 exists before considering an
+    insert. It was already documented in
+    data/market_intelligence/power_quality/primary_etp_facts.v1.json.
+    Retrieve actual first party DOCX from Bidzaar URL in evidence report,
+    verify document SHA and 6 kV works technical terms. If canonical lot is
+    truly absent, append one provisional 6 kV installation service tender
+    after a fresh SHA-verified pg_dump, safe atomic transaction and readback.
+    Do not infer purchased equipment, OEM, signed supplier, paid price or
+    any new sale. Continue unique high-priority PQ signed 6-35 kV contracts,
+    and do not create a second Watchdog or PR.
+
+manual_rosseti_sibir_design_contract_candidate_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  reference_date: '2026-10-29'
+  canonical_pr: 521
+  evidence_report: docs/market_intelligence/PQ_ROSSETI_SIBIR_32615852898_REGISTRY_RECHECK_20261029.json
+  candidate_notice: '32615852898'
+  secondary_reported_contract_number: '52460069527260006170000'
+  secondary_reported_contract_price_rub: '2787700.00'
+  scope: 10kv_line_pq_device_design_not_equipment_supply
+  source_grade: secondary_public_contract_index_only
+  original_signed_contract_retrieved: false
+  actual_db_new_rows_added: 0
+  database_unique_lots_last_verified: 108
+  resume_instruction: >-
+    First check exact PostgreSQL unique candidate 223fz:32615852898:lot1
+    against 108-last-verified research corpus. If not imported, obtain
+    original 223FZ EIS notice and primary contract card with source SHA,
+    supplier INN and signed price independently verified before promotion.
+    Contract index reports 2,787,700.00 RUB for entire design/PIР,
+    NOT PQ-equipment sales or paid revenue. Distinguish 10kV feeder from
+    unverified 6-35kV nominal compensator. Do not guess supplier names.
+    Preserve single PR, single Watchdog and existing research history.
+
+manual_rosseti_32616435269_scope_gate_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  evidence: docs/market_intelligence/PQ_ROSSETI_32616435269_452M_SCOPE_GATE_20261029.json
+  notice_number: '32616435269'
+  buyer: PAO_Rosseti_Sibir
+  reported_total_nmck_rub: '452016000.01'
+  original_nominal_bsk_voltage_kv_verified: false
+  secondary_notice_contains_panel_le_1kv: true
+  potential_target: PQ_static_capacitor_banks
+  original_archive_sha_verified: false
+  signed_winner_supplier_verified: false
+  added_pg_lots_this_run: 0
+  last_pg_unique_lots_verified: 108
+  priority: high_for_primary_source_scope_before_any_market_volume
+  resume_instruction: >-
+    Find original 26-1174 static capacitor battery 7z documentation directly
+    from official EIS/EEPT for notice 32616435269, SHA-verify all extracted
+    technical specs and establish nominal voltage of the actual capacitor
+    installation and itemized prices. The 452016000.01 RUB figure is the
+    entire 223-FZ NMCK, not signed sales or verified 6-35 kV equipment.
+    One public item is low-voltage switchgear under 1kV; do not silently
+    classify the entire tender as medium-voltage. Before any corpus append,
+    confirm PostgreSQL canonical notice:lot absent, backup database, use
+    atomic SHA-bound import and readback. Also finish SIBSTEKLO 306-644
+    dedup and Rosseti Sibir 32615852898 original supplier checking.
+
+manual_tatneft_4469608_lot7_postgres_import_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  date_moscow: '2026-10-29'
+  canonical_pr: 521
+  target_db: arvectum_data
+  target_collection: arvectum-market-pq-6-35kv
+  unique_lots_before: 108
+  unique_lots_after: 109
+  new_procedure_tokens_added: 1
+  unique_procedure_tokens_expected: 98
+  added_eis_223_lot: '223fz:32616065155:lot7'
+  b2b_parent_request: '4469608'
+  b2b_parent_positions_count: 11
+  actual_imported_capacitor_lots: 1
+  source_main_sha256: 792a2964e9e1e50cb57a800dcd1f1ba3546544fd340ae74f9f344beb7deb3504
+  source_positions_sha256: 161f6ede4a0af57777df7db90ffc26d92394af3934c5d5b40f3b45b68c989be0
+  first_party_source_grade: original_B2B_223FZ_notice_and_lot_positions
+  pq_lot7_nmck_rub_with_vat22: '3172000.00'
+  parent_nmc_not_pq_rub_with_vat22: '199598002.40'
+  nominal_pq_capacitor_voltage_6_35kv_verified: false
+  source_technical_attachment_sha_verified: false
+  winner_verified: false
+  signed_supplier_verified: false
+  paid_sales_verified_rub: 0
+  db_import_status: completed
+  db_readback: 109_resources_109_unique_ids_109_records_and_lot7_staged_unreviewed
+  full_backup_sha256: eea3a8308df087646d8ff452d233806e086700accca2f929d8b3609d37eb3ee7
+  source_manifest_sha256: ab652ae09314de71110a24320316c6d02d7f1f46f72dc6c1141c728c524e9995
+  postgres_readback_record_hash: d03976c55ad0211d40d7d0f9a0eb66089f738886580dbdffa6e13567ba48f419
+  evidence_report: docs/market_intelligence/PQ_TATNEFT_4469608_LOT7_DB_IMPORT_20261029.json
+  source_manifest: data/market_intelligence/power_quality/tatneft_32616065155_lot7_primary_20261029.json
+  importer: scripts/market_intelligence/append_tatneft_lot7.py
+  importer_remote_commit: '8f9e66b470e1973ef0627ef0ab81060d3002e836'
+  importer_local_commit_pending: false
+  importer_tests_run_in_this_post_commit_state: false
+  local_command_issue: >-
+    ARC remote commands intermittently return SIGKILL while repository changes
+    were pending; primary DB write was fully committed and independently
+    read back before issue. Evidence report and checkpoint persisted via GitHub.
+  resume_instruction: >-
+    Immediately inspect isolated worktree
+    /Volumes/ArvectumSSD/Arvectum/worktrees/ta-mi-single-lane-20261029 for
+    uncommitted Tatneft importer, manifest and tests. Postgres ALREADY includes
+    the new lot 223fz:32616065155:lot7; DO NOT REIMPORT OR CREATE DUPLICATES.
+    The importer, manifest, receipt and source research files are already saved
+    on the remote PR #521 through GitHub connector despite external SSD IO
+    interruptions on Mac mini. Inspect the detached worktree: its local
+    untracked script, manifest and tests may conflict on later git fetch.
+    Reconcile exact content non-destructively with remote files and fix
+    tests/test_pq_tatneft_lot7.py (first fixture test failed). Run Ruff and
+    tests when the SSD is accessible. Avoid replacing valid remote evidence.
+    The PostgreSQL insert is already committed and must never be repeated.
+    Confirm PG 109 unique lots/98 procedures and backup/receipt hash.
+    Then obtain official detailed TТУ and exact rated PQ capacitor voltage;
+    do not count 3,172,000 RUB ceiling as executed equipment sales and
+    don't count 199,598,002 RUB parent NMC as PQ market.
+
+mi_internal_apfs_operational_acceptance_20261029:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  accepted_date_moscow: '2026-10-29'
+  canonical_pr: 521
+  stable_checkout: /Users/master/ArvectumSafe/worktrees/tender-agent-mi
+  stable_python: /Users/master/ArvectumSafe/.venvs/tender-agent-mi/bin/python
+  stable_originals: /Users/master/ArvectumSafe/runtime/market-intelligence/pq-agent-pilot-live
+  stable_backups: /Users/master/ArvectumSafe/backups/data-platform
+  readback_unique_lots: 109
+  readback_distinct_procedure_tokens: 98
+  readback_eis_223_distinct_notices: 37
+  db_actual_new_rows_this_io_repair: 0
+  backup_size_bytes: 37487137
+  backup_sha256: b97ea3900b7a875ab4a3f214b24aa19ffd26c2a95fec438e7d951f6364644502
+  backup_pg_restore_list_verified: true
+  original_capture_sha256: 162fdca84e601e93a4038ff08bac29f28147ebbb7d11be54d6777d94a3c8dbb4
+  immutable_capture_no_overwrite: true
+  internal_write_and_readback_preflight: pass
+  research_writer_focused_regressions: pass
+  watchdog_id: 6aa7ef95fc9c8191beaa71fea17dc372
+  watchdog_enabled: true
+  external_ssd_active_io_disabled: true
+  external_ssd_original_files_preserved: true
+  evidence: docs/market_intelligence/MI_INTERNAL_APFS_ACCEPTANCE_20261029.json
+  resume_instruction: >-
+    Work in /Users/master/ArvectumSafe/worktrees/tender-agent-mi.
+    Before new DB inserts run python -m scripts.market_intelligence.verify_internal_runtime
+    and create a NEW SHA-verified full custom PostgreSQL backup via
+    python -m scripts.market_intelligence.backup_pq_postgres.
+    Store first-party evidence under immutable internal captures via
+    scripts.market_intelligence.capture_primary_source, preserving raw SHA.
+    Read DB count before/after; last validated 109 unique lots, 98 tokens,
+    37 distinct EIS 223-FZ notices. Do not duplicate Tatneft 4469608 lot7.
+    Continue original primary 6-35kV source research, strict technology-voltage
+    qualification and signed supplier/contract original verification.
+    If ARC direct run_command times out, use ARC macbook-air device_execute
+    SSH Mac-mini-master.local with internal cwd. External ArvectumSSD
+    remains unreliable for directory enumeration and should not host active
+    MI work until macOS TCC/volume diagnostics are resolved with approved UI.
+
+mi_watchdog_bidzaar_original_technical_20261029_1233:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6493120574
+  parent_head: 9278a140be19163668c33e867cc24a09f72bf59a
+  internal_apfs_acceptance_before_source_capture: pass
+  postgres_unique_lots_before: 109
+  postgres_unique_lots_after: 109
+  postgres_procedure_tokens: 98
+  postgres_eis_223_notices: 37
+  new_unique_lots: 0
+  new_sha_verified_originals: 5
+  new_signed_suppliers: 0
+  new_executed_equipment_sales: 0
+  report: docs/market_intelligence/PQ_WATCHDOG_BIDZAAR_TECHNICAL_20261029_1233.json
+  sibsteklo: "2 customer-provided UKRM 6kV 900kvar; installation, not new supply"
+  elga: "2 requested UKRM 6kV 3000kvar; 4x750kvar; PS 35/6kV POSKO; market survey"
+  code_fix: "Relative HTTP302 Location resolved and revalidated against HTTPS allowlist"
+  code_tests: "2 focused PASS, Ruff PASS, diff check PASS"
+  last_tested_code_commit: 788ac03e3713378f9ae7889a25b1ef11e8781270
+  db_mutation: false
+  resume_instruction: >-
+    Continue source acquisition on internal APFS. Preserve 109 unique
+    PostgreSQL lots and 101-row v29. Verify signed supplier and paid price;
+    do not treat customer-provided installation as equipment sale.
+mi_watchdog_discovery_20261029_1335:
+  status: in_progress
+  issue_comment_id: 6494350351
+  canonical_pr: 521
+  parent_head: bdac8eaf5601d6da792bcf5bfb60432f82bde48f
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 109
+  postgres_unique_lots_after: 109
+  postgres_procedure_tokens: 98
+  postgres_eis_223_notices: 37
+  new_unique_lots: 0
+  new_primary_html_versions: 1
+  new_secondary_candidates: 2
+  new_signed_suppliers: 0
+  report: docs/market_intelligence/PQ_WATCHDOG_DISCOVERY_20261029_1335.json
+  db_mutation: false
+  resume_instruction: >-
+    EIS originals for 32616523441 and 32615700251 HTTP404; retry after
+    2026-10-30 13:40 Moscow, seek RTS originals. No DB insert without SHA,
+    fresh full backup and exact dedup. Continue independent PQ research.
+
+mi_watchdog_commercial_delta_20261029_1433:
+  status: "in_progress"
+  issue_comment_id: 6495524226
+  canonical_pr: 521
+  internal_apfs_acceptance: "pass"
+  postgres_unique_lots_before: 109
+  postgres_unique_lots_after: 111
+  postgres_procedure_tokens_after: 100
+  postgres_eis_223_notices_after: 37
+  new_unique_candidate_lots: 2
+  new_verified_core_6_35kv_lots: 0
+  new_primary_originals: 4
+  new_signed_suppliers: 0
+  new_executed_equipment_sales: 0
+  last_tested_code_commit: "1cf091255967223b6a7f4ca9b9543523c1260fd7"
+  report: "docs/market_intelligence/PQ_WATCHDOG_COMMERCIAL_DELTA_20261029_1433.json"
+  db_receipt_private: "/Users/master/ArvectumSafe/runtime/market-intelligence/pq-agent-pilot-live/pq-commercial-delta-20261029T1139.receipt.json"
+  backup_sha256: "4abe39451decbb905698c9048b7989a7da306e4a0ab5bfa42f7daf0d5c70fb29"
+  db_mutation: "append_only_two_source_verified_unreviewed_noncore"
+  resume_instruction: "Continue first-party PQ 6-35kV evidence; recheck Tander retender after 15:15 Moscow, BSK 32615684088 original after retry, STATCOM 106044-TT; preserve 111 DB lots, 100 tokens, 37 EIS 223 notices. No 0.4kV promotion."
+
+mi_watchdog_sibur_first_party_20261029_1545:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6496760746
+  source_report: docs/market_intelligence/PQ_WATCHDOG_SIBUR_FIRST_PARTY_20261029_1545.json
+  source_report_sha256: bf3c276512a7e24745a04a85117e10c793e35cf092dd296a01ffd08355a6eab4
+  internal_apfs_gate_before_db: pass
+  internal_apfs_gate_after_db: pass
+  postgres_unique_lots_before: 111
+  postgres_unique_lots_after: 112
+  postgres_distinct_procedures_before: 100
+  postgres_distinct_procedures_after: 101
+  postgres_eis_223_notices: 37
+  new_unique_lots: 1
+  new_10kv_voltage_title_verified_notices: 1
+  new_signed_suppliers: 0
+  new_executed_equipment_sales_rub: 0
+  first_party_requests: 28
+  first_party_http_200: 25
+  first_party_http_404: 1
+  first_party_tls_errors: 2
+  new_sha_verified_originals: 14
+  sibur_official_discovery_procedure_tokens_2024_2026: 16
+  sibur_cancelled_procedures: 5
+  sibur_10kv_case: commercial:2103585-2:lot1
+  sibur_related_predecessor: 2103585/1
+  sibur_project_reference: PDH2.15383-4015-7.7.6-RFQ-0003
+  sibur_6kv_design_case: commercial:2128160-1:lot1
+  sibur_6kv_design_bsk_quantity: 3
+  fresh_full_backup_sha256: caa5198d88cdc914171f4fcdb1930f95ed33946e0f5fdcf649df432cbc0821c6
+  db_receipt_private: /Users/master/ArvectumSafe/runtime/market-intelligence/pq-agent-pilot-live/pq-sibur-2103585-2-20261029T1244.receipt.json
+  last_tested_code_commit: 8fb0683e8d2db1347ef554033426400ddc36b4ba
+  focused_tests: 9_passed
+  ruff: pass
+  db_mutation: append_only_one_sha_verified_10kv_unreviewed_notice
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Continue SIBUR 2024-2026 first-party case review, deduplicate related
+    NKNH and 2103585/1-/2 project revisions, inspect captured technical
+    archives without promoting unsigned contracts to sales. The 6kV BSK
+    2128160/1 is engineering design for three regulated BSK, not equipment
+    supply. Recheck Tander 4617521 after 16:00 MSK. Before another DB
+    append run fresh internal runtime gate and NEW full pg_dump backup;
+    baseline now 112 unique lots / 101 procedure tokens / 37 EIS223 notices.
+    Preserve 101-row v29, single PR #521 and this one issue comment.
+
+mi_watchdog_sibur_design_growth_20261029_1635:
+  task_id: "TA-MI-AUTONOMY-20261027"
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6498025898
+  source_report: "docs/market_intelligence/PQ_WATCHDOG_SIBUR_DESIGN_GROWTH_20261029_1635.json"
+  source_report_sha256: "918e6e3a345b681d65f78441ec8d37c48a7f6000ebfdb7cfc1f00003321d27fb"
+  internal_apfs_gate_before_db: "pass"
+  internal_apfs_gate_after_db: "pass"
+  postgres_unique_lots_before: 112
+  postgres_unique_lots_after: 113
+  postgres_distinct_procedures_before: 101
+  postgres_distinct_procedures_after: 102
+  postgres_eis_223_notices: 37
+  new_unique_lots: 1
+  new_6kv_design_only: 1
+  new_strict_6_35kv_equipment_lots: 0
+  new_signed_suppliers: 0
+  new_executed_equipment_sales_rub: 0
+  fresh_sha_verified_http_200_captures: 18
+  verified_month_source_coverage: 0
+  backup_sha256: "0e69384bc5c2b73fd8d7499eda0c7dd0f95a143eb360225a996a675032ef5a1b"
+  db_receipt_private: "/Users/master/ArvectumSafe/runtime/market-intelligence/pq-agent-pilot-live/pq-sibur-2128160-1-design-20261029T1335.receipt.json"
+  last_tested_code_commit: "6730973199072756469dd31720fbaf893cad98ad"
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Continue real source acquisition: Tander 4617521 after 17:00 MSK;
+    SIBUR 2103585/2 original 7z technical contents; Metal-IT 106044-TT
+    after 2026-10-30 09:00 MSK. Date filters on SIBUR archive were ignored;
+    do not claim month coverage. DB now 113 unique lots, 102 procedure tokens,
+    37 EIS223 notices; 6kV design is NOT equipment sale. Re-run acceptance
+    and fresh backup before any next append. Keep single PR #521 and v29=101.
+
+mi_watchdog_source_negatives_20261029_1732:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  issue_comment_id: 6499517202
+  canonical_pr: 521
+  parent_head: ebe1c09c10ed40292689c956cc754091e832ea74
+  report: docs/market_intelligence/PQ_WATCHDOG_SOURCE_NEGATIVES_20261029_1732.json
+  report_sha256: 91bcece03a106e708d14b9fdd811f83d827e1af6bfdd133a883a5b34e97e8e9b
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 113
+  postgres_unique_lots_after: 113
+  postgres_distinct_procedures: 102
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_verified_core_equipment_lots: 0
+  new_first_party_captures: 13
+  distinct_source_sha_this_run: 12
+  source_sha_not_in_previous_reports: 11
+  new_adjacent_low_voltage_candidate: 1
+  new_named_winner_protocols: 0
+  new_signed_suppliers: 0
+  new_executed_equipment_sales_rub: 0
+  new_month_source_coverage: 0
+  db_mutation: false
+  last_tested_code_commit: ebe1c09c10ed40292689c956cc754091e832ea74
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Seek SIBUR 2103585/2 signed 10kV outcome from independent public source;
+    Tander 4617521 has 3 offers but no winner or voltage;
+    Metal-IT 106044-TT retry after 2026-10-30 09:00 MSK.
+    SIBUR 2101170/1 VEDA filter is 3x400V, exclude from 6-35kV core.
+    DB 113 unique lots / 102 procedures / 37 EIS223 notices.
+    Before any next DB append run fresh acceptance and verified full backup.
+
+mi_watchdog_primary_search_20261029_1833:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6501069332
+  parent_head: 0f6076500c03415b8815ca14d94af76f89f30fe0
+  report: docs/market_intelligence/PQ_WATCHDOG_PRIMARY_SEARCH_20261029_1833.json
+  report_sha256: 4513d52882634fb6cd2b46274bd5194121d4cd5beb1e7ff52b7aebfa84173c05
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 113
+  postgres_unique_lots_after: 113
+  postgres_distinct_procedures: 102
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_verified_core_equipment_lots: 0
+  new_first_party_sha_verified_captures: 8
+  new_named_winner_protocols: 0
+  new_signed_suppliers: 0
+  new_executed_equipment_sales: 0
+  new_month_source_coverage: 0
+  db_mutation: false
+  last_tested_code_commit: 0f6076500c03415b8815ca14d94af76f89f30fe0
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Official SIBUR archive lexical BSK/STK queries returned only unrelated
+    first-page rows; 6kV NKNH design PDF describes existing switchgear
+    compensation, not a tender/sale. Pursue 2103585/2 signed 10kV
+    outcome and 32616523441 first-party 10kV compensating devices;
+    Metal-IT 106044-TT eligible 2026-10-30 09:00 MSK.
+    DB 113 unique lots / 102 procedures / 37 EIS223; v29=101.
+    Before new insert run fresh gate and new verified full backup.
+
+
+mi_watchdog_primary_triage_20261029_1930:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  issue_comment_id: 6502392581
+  canonical_pr: 521
+  parent_head: f6a3c9d07a19e032942b62697f519b581c2975f0
+  report: docs/market_intelligence/PQ_WATCHDOG_PRIMARY_TRIAGE_20261029_1930.json
+  report_sha256: eb734602327d7a1776ff8594f143df38e68c5387847e921dddda73dbc5cd7f5f
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 113
+  postgres_unique_lots_after: 113
+  postgres_distinct_procedures: 102
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_first_party_sha_verified_pages: 5
+  new_named_winner_protocols: 0
+  new_signed_suppliers: 0
+  new_executed_equipment_sales: 0
+  new_month_source_coverage: 0
+  db_mutation: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    SIBUR first-page searches FKU, filter-compensating, thyristor and capacitor
+    bank produced only irrelevant results (one road FKU, three control thyristors).
+    Tander 4617521 still 3 bids, review, no winner/voltage.
+    Metal-IT 111098-TT is already in PostgreSQL and its public HTML is JS shell.
+    Prioritize 111098-TT primary outcome and SIBUR 2103585/2 10kV signed supplier;
+    Metal-IT 106044-TT retry after 2026-10-30 09:00 MSK.
+    DB 113 unique lots / 102 procedures / 37 EIS223 notices; v29=101.
+    Re-run acceptance and new verified full backup before any new append.
+
+
+mi_watchdog_primary_acquisition_20261029_2034:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  issue_comment_id: 6503785009
+  canonical_pr: 521
+  parent_head: e47e71ac65c309565e3783b26cac727abfd94054
+  report: docs/market_intelligence/PQ_WATCHDOG_PRIMARY_ACQUISITION_20261029_2034.json
+  report_sha256: f22c09bfd6fb2616387d7dd4a81515e8e2f0181e4d96635ff936e576519b19f8
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 113
+  postgres_unique_lots_after: 113
+  postgres_distinct_procedures: 102
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_first_party_sha_verified_captures: 4
+  new_named_winner_protocols: 0
+  new_signed_suppliers: 0
+  new_executed_equipment_sales: 0
+  new_month_source_coverage: 0
+  db_mutation: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Continue independent official signed-contract source for SIBUR 2103585/2;
+    seek original procurement/contract for secondary UKRM 6.3kV PЭC/ЭНЕРГОЗАПАД lead;
+    Metal-IT 106044-TT retry 2026-10-30 09:00 MSK.
+    Tander 4617521 has 3 hidden-name bids, no winner.
+    DB 113 lots / 102 procedures / 37 EIS223. Before next append rerun
+    acceptance and create new SHA+pg_restore verified full backup.
+
+mi_watchdog_primary_scope_20261029_2136:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6505210387
+  parent_head: 954162f3767f9068b9b12e670f380982c4663010
+  report: docs/market_intelligence/PQ_WATCHDOG_PRIMARY_SCOPE_20261029_2136.json
+  report_sha256: 373c7ab83b47e7610a0b6668c89466edcfdeea40da452191140338a268719a37
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 113
+  postgres_unique_lots_after: 113
+  postgres_distinct_procedures: 102
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_first_party_sha_verified_captures: 9
+  new_named_winner_protocols: 0
+  new_signed_suppliers: 0
+  new_executed_equipment_sales: 0
+  new_month_source_coverage: 0
+  db_mutation: false
+  last_tested_code_commit: c43a5d007a4c92d0df2f1f0d9567704a63e1dfb0
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: New official REK Kuzbass 2025 scanned PDF SHA d2970bb... page
+    5 confirms planned UKRM 10kV on VL F-10-17-L and PS Sosnovskaya; B2B mirror contract
+    52460069527260006170000 is design 2,787,700 RUB, not primary signed contract or
+    equipment sale. EIS 32615852898 returned 404; retry 2026-10-30 21:40 MSK. Next 2103585/2
+    signed 10kV outcome, Metal-IT 106044-TT after 09:00 MSK 30 Oct. DB 113/102/37; v29=101.
+    Re-run acceptance and verified full backup before new DB insert.
+
+mi_watchdog_gpb_source_gap_20261029_2335:
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6507731489
+  parent_head: af305f1705edf06bc044dde738cdeb63e0eba39d
+  report: docs/market_intelligence/PQ_WATCHDOG_GPB_SOURCE_GAP_20261029_2335.json
+  report_sha256: df44689679e31ec7c5c01b952e0f9a0e70974be78eb0a6f54392c0a381b04730
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 113
+  postgres_unique_lots_after: 113
+  postgres_distinct_procedures: 102
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_case_specific_primary_originals: 0
+  new_sha_verified_search_snapshots: 2
+  new_signed_suppliers: 0
+  db_mutation: false
+  client_html_regenerated: false
+  last_tested_code_commit: af305f1705edf06bc044dde738cdeb63e0eba39d
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    ETP GPB exact GP630876/GP628666 searches returned generic SSR only;
+    two SHA-verified search snapshots, zero case-specific originals.
+    GP630876 is already in v29, 10kV modernization, no proven signed sale.
+    Seek original GPB outcome and SIBUR 2103585/2 signed supplier;
+    Metal-IT 106044-TT eligible 2026-10-30 09:00 MSK. DB 113/102/37.
+
+mi_watchdog_source_retry_20261030_0032:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6508832618
+  parent_head: d48353fa28ecc9cd400d9b67b5bb83fcfd33249f
+  report: docs/market_intelligence/PQ_WATCHDOG_SOURCE_RETRY_20261030_0032.json
+  report_sha256: adab399910231e9a01a05dc1e3d00ea6146bf0835bed8285d818c91c360d2f5c
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 113
+  postgres_unique_lots_after: 113
+  postgres_distinct_procedures: 102
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_first_party_sha_verified_captures: 2
+  new_case_specific_originals: 0
+  new_signed_suppliers: 0
+  new_executed_equipment_sales: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Two fresh primary HTML snapshots (B2B 4617521, SIBUR 2103585/2),
+    no new contract or winner; EIS 32615684088 three strict TLS HTTP404,
+    do not retry before 2026-10-30 14:40 MSK. Metal-IT 106044-TT
+    eligible 2026-10-30 09:00 MSK. Database remains 113/102/37;
+    before any append rerun acceptance and SHA+pg_restore full backup.
+
+mi_watchdog_besk_capacitors_20261030_0135:
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6510037242
+  parent_head: 9444bf9ed48cf9e08d51817547f49fe20f3a7776
+  report: docs/market_intelligence/PQ_WATCHDOG_BESK_CAPACITORS_20261030_0135.json
+  report_sha256: eb69105d2779deb3bbcb2daaa451691b1f00b22f4992b8ccc28b33b101236ad6
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 113
+  postgres_unique_lots_after: 113
+  postgres_distinct_procedures: 102
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_sha_verified_source_captures: 5
+  new_besk_candidate_lots_staged: 2
+  new_verified_core_6_35kv_lots: 0
+  new_signed_suppliers: 0
+  db_mutation: false
+  client_html_regenerated: false
+  last_tested_code_commit: 9444bf9ed48cf9e08d51817547f49fe20f3a7776
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    First-party B2B 4642507 has two KEP capacitor lots: 11 units 981354.33 RUB
+    and 16 units 1471296.08 RUB ex VAT, four anonymous bids; rated voltage
+    not disclosed, so neither lot inserted in PG. Five new SHA-verified source
+    captures including B2B cross-index 32616435269; EIS 32616497692 and
+    32616435269 returned HTTP404. Next source-native technical specs for
+    32616474682/32616435269 and Metal-IT 106044-TT after 09:00 MSK.
+    Database 113/102/37; v29 101. No HTML report regeneration.
+
+mi_watchdog_named_bids_20261030_0233:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6511026396
+  parent_head: 0b5fa55480efe6189aa859fc81c7bab964878565
+  report: docs/market_intelligence/PQ_WATCHDOG_NAMED_BIDS_20261030_0233.json
+  report_sha256: b8adafdaa038727706e608c231f44961a299d9dac0935c7629c1e7e082582bf0
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 113
+  postgres_unique_lots_after: 113
+  postgres_distinct_procedures: 102
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_source_sha_verified_captures: 2
+  new_named_bidder_protocols: 1
+  new_named_bidders: 4
+  new_signed_suppliers: 0
+  new_executed_equipment_sales: 0
+  new_month_source_coverage: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Original B2B 4642507 commission envelope-opening protocol SHA
+    54a3d55c59d514332d6ca23d82962011496b18f938056e7fb1db8db4b7b0b9d3
+    names four bidders and exact offers ex VAT, but no winner/signed supplier;
+    KEP voltage unknown, do not import. 4617521 offers URL HTTP200
+    generic shell only. Metal-IT 106044-TT retry after 2026-10-30 09:00 MSK;
+    Roseltorg 26-1174 original technical file; BESK award after 2026-12-03.
+    PG 113/102/37; v29=101. Re-run acceptance and full verified backup
+    before any new append. Keep client HTML unchanged absent verified growth.
+
+mi_watchdog_besk_clarification_20261030_0327:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6511829728
+  parent_head: 617b775a82b55ac64079d52bd662bc805263cb13
+  report: docs/market_intelligence/PQ_WATCHDOG_BESK_CLARIFICATION_20261030_0330.json
+  report_sha256: 81199f96a81eb7b47327289e3f8674ced24f40f93114428c3839ee67a6389fc0
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 113
+  postgres_unique_lots_after: 113
+  postgres_distinct_procedures: 102
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_source_sha_verified_captures: 1
+  new_original_clarifications: 1
+  new_named_winner_protocols: 0
+  new_signed_suppliers: 0
+  new_executed_equipment_sales: 0
+  new_month_source_coverage: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Official B2B 4642507 clarification SHA 34282ea09cd0a25292177c9efe9a9804cd1470a6c518a98f7dbff694279512ec records
+    proposed KEP2-0.66-80-2U1 and KEPF-11.55-430-2UKhL1 alternative
+    capacitor models, and organizer's technical evaluation caveat. This is
+    NOT an approved model or mapping to lot 1/2 or proof of 6-35kV system.
+    Public B2B category paths returned HTTP404, manufacturer pages were
+    capture-allowlist blocked. PG 113/102/37, v29 101; no HTML regeneration.
+    Next Metal-IT 106044-TT after 09:00 MSK, Roseltorg 26-1174 native
+    technical archive, BESK original OL2/OL3 questionnaires and award
+    no earlier than 2026-12-03. Repeat gate and fresh full backup before INSERT.
+
+mi_watchdog_rosseti_primary_index_20261030_0437:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6512789263
+  parent_head: a888c46e67db42b28cb7a37a3a7d5257f39ebaa0
+  report: docs/market_intelligence/PQ_WATCHDOG_ROSSETI_PRIMARY_INDEX_20261030_0437.json
+  report_sha256: adf3b8d79ffca22a22d9cd133f51ff9c1f960fd6535767420e15ab00a94275d0
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 113
+  postgres_unique_lots_after: 113
+  postgres_distinct_procedures: 102
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_sha_verified_captures: 3
+  new_case_specific_primary_indexes: 1
+  new_signed_suppliers: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    First-party B2B index confirms 26-1174 amended 26.10.2026 archive name
+    but 7z unavailable via public JS-only link. EIS strict TLS curl HTTP404.
+    306-644 and 4535313 already in v29; do not reimport. Next Metal-IT
+    106044-TT after 09:00, Rosseti 32616435269 after 10:38, EIS 32615684088
+    after 14:40 MSK. PG 113/102/37, no new signed sales or client HTML edit.
+
+mi_watchdog_apatit_cross_platform_20261030_0528:
+  task_id: "TA-MI-AUTONOMY-20261027"
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6513471341
+  parent_head: "7b8b2ce6f9c8eb45e0f2f20c11c3640e9d65ba60"
+  report: "docs/market_intelligence/PQ_WATCHDOG_APATIT_CROSS_PLATFORM_20261030_0528.json"
+  report_sha256: "83413ae6f14db6e971a45719d05eefacd4e9c04cd2c996b5a91b9a17b3f6098a"
+  internal_apfs_acceptance: "pass"
+  postgres_unique_lots_before: 113
+  postgres_unique_lots_after: 113
+  postgres_distinct_procedures: 102
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_sha_verified_captures: 2
+  new_primary_case_cards: 1
+  new_signed_suppliers: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    B2B 4406425 original design card and restricted history SHA captured; probable same
+    underlying Apatit PS-352 project as existing PhosAgro 231994/231994-2, no new
+    DB lot or signed sale. EIS 2024-12 STATCOM and 2025-08 UKRM 10kV 44/223
+    first-page requests all HTTP404 (coverage blocked). PhosAgro native archive
+    filter HTTP200 but no case-specific result, no auth bypass. Retry Metal-IT
+    106044-TT after 09:00 MSK and Roseltorg 32616435269 after 10:38 MSK.
+    PG 113/102/37; client HTML unchanged.
+
+mi_watchdog_tektorg_primary_20261030_0632:
+  issue_comment_id: 6514294220
+  latest_tested_commit: b2af1d91e619b4c4fd61608f39bdacd64c56f612
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  report: docs/market_intelligence/PQ_WATCHDOG_TEKTORG_PRIMARY_20261030_0632.json
+  report_sha256: 507f6cd079e7e78656d7465f92576fc7d528bf0f75dff742ed9ee311c342a9be
+  source_capture_commit: 5c839d6f417e94194ee07dbca7ee954a63766bcc
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 113
+  postgres_unique_lots_after: 114
+  postgres_distinct_procedures: 103
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 1
+  new_source_verified_core_6_35kv_lots: 1
+  new_underlying_projects: 0
+  new_sha_verified_captures: 9
+  new_technical_originals: 3
+  new_signed_suppliers: 0
+  new_verified_sales_rub: 0
+  db_mutation: true
+  client_html_regenerated: true
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    TEK-Torg primary XLSX confirms ANPZ RN61003961 lot 2600124554:
+    four 6kV indoor capacitor units (2x300 and 2x450 kvar).
+    Distinct procedure +1, underlying project +0 versus RN60405071.
+    Fresh internal pg_dump SHA and pg_restore verified, atomic append
+    with readback passed. PG 114/103/37. Bashneft RN61004155 official
+    7z confirms 6kV UKRM A450 and R900; already in DB. Nine new primary
+    captures including three technical originals. No winner, signed
+    supplier or paid sales. HTML refreshed in place, 114 rows, 22 tests.
+    Retry STATCOM 106044-TT after 09:00, Roseltorg 32616435269 after
+    10:38, ANPZ outcome after 20:00 Moscow.
+
+mi_watchdog_archive_search_gaps_20261030_0734:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6515053698
+  parent_head: fd0dc7d00506bf23c85419e32d4993d30e459d79
+  report: docs/market_intelligence/PQ_WATCHDOG_ARCHIVE_SEARCH_GAPS_20261030_0734.json
+  report_sha256: 024582b39f29d4f810be23593cd379ed9b1677d1598733a75908e03eb439c039
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 114
+  postgres_unique_lots_after: 114
+  postgres_distinct_procedures: 103
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_sha_verified_originals: 0
+  new_signed_suppliers: 0
+  new_executed_sales: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    TEK-Torg official exact-number searches for RN60704547 (July 2026) and
+    RN60602693 (June 2026) returned HTTP200 but zero matches in rosneft
+    and rosnefttkp public current indexes. These are secondary-only leads,
+    not verified 6-35kV equipment or new lots. 1258722 secondary models
+    1.05/1.2/1.85kV are adjacent, do not import. 15 audited first-party
+    requests, zero new original documents or signed suppliers.
+    PG 114/103/37; no client HTML regeneration. Retry Metal-IT 106044-TT
+    after 09:00, Roseltorg 32616435269 after 10:38, ANPZ RN61003961
+    after 20:00 Moscow; archive search RN60704547 after Nov 2.
+
+mi_watchdog_vyartsilya_primary_20261030_0833:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6515796701
+  latest_tested_commit: ad49c93197cb2a5c8d6b1e14a68128e68c325fd1
+  report: docs/market_intelligence/PQ_WATCHDOG_VYARTSILYA_PRIMARY_20261030_0833.json
+  report_sha256: 33c1120bebdead8bcb8a434123337d240e9e5a5ebf502c77bd10d1beb65e171e
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 114
+  postgres_unique_lots_after: 114
+  postgres_distinct_procedures: 103
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_sha_verified_originals: 4
+  new_signed_suppliers: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    First-party Roseltorg 32616497692 already in DB; official 3.5MB ZIP
+    contains technical DOCX verifying one 10kV 3Mvar UKRM at Vyartsilya
+    in mixed EPC (79.1m RUB total not PQ revenue). Official 29 Oct
+    protocol shows one anonymous admitted bidder and retender, no winner.
+    New B2B 4657777 six capacitor blocks: voltage and PQ scope unknown.
+    Four new SHA-verified captures, PG 114/103/37, no import or HTML churn.
+    Retry Metal-IT 106044-TT after 09:00, Roseltorg 32616435269
+    after 10:38, TEK-Torg RN61003961 after 20:00 MSK.
+
+
+mi_watchdog_statcom_service_20261030_0930:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6516535129
+  parent_head: cf0f3bd0d36e7988af845ebf55a4cfdae531e52b
+  report: docs/market_intelligence/PQ_WATCHDOG_STATCOM_SERVICE_20261030_0930.json
+  report_sha256: 95e96cd87d13a12aebe4894b32cccaabda5cc0c4f09a24ba3e4b122e3867b983
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 114
+  postgres_unique_lots_after: 114
+  postgres_distinct_procedures: 103
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_sha_verified_originals: 1
+  new_signed_suppliers: 0
+  new_executed_sales: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Official B2B 4302914 source SHA verifies 6.3kV STATCOM RU-DRIVE
+    maintenance at Lebedinsky GOK: one bid, organizer hides results.
+    Already in PG, not a new equipment sale. Metal-IT 106044-TT
+    two official trade URLs both return same generic JS shell SHA,
+    no named result. Direct EIS 32515582393 contract and 32616435269
+    documents both HTTP404. PG 114/103/37; no import or HTML churn.
+    Retry 32616435269 after 10:38, RN61003961 after 20:00 Moscow,
+    106044-TT after new first-party event or 31 Oct 09:00.
+
+mi_watchdog_rosseti_mixed_voltage_20261030_1036:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6517492207
+  parent_head: deaac15d76d91906059f97ef7ef0be73aefb4f93
+  report: docs/market_intelligence/PQ_WATCHDOG_ROSSETI_110KV_MPU_10KV_PRIMARY_20261030_1036.json
+  report_sha256: 378cfa207e4d7aa8989dc67887d820cd76c3426600f7e392f20f44d89bd3a39d
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 114
+  postgres_unique_lots_after: 114
+  postgres_distinct_procedures: 103
+  postgres_eis_223_notices: 37
+  new_unique_db_lots: 0
+  new_sha_verified_originals: 3
+  new_technical_archives: 2
+  new_amendment_protocols: 1
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Roseltorg 32616435269 official archives: 110kV system, 10kV 30Mvar
+    converter, 110kV 26Mvar BSK; 370504918.04 RUB budget ex VAT,
+    not signed sale. 27 Oct amendment protocol, no award. Existing
+    DB IDs 32616435269 and AP125337; no duplicates, PG 114/103/37.
+    Retry AP125337 first-party GPB, RN61003961 after 20:00,
+    Metal-IT 106044-TT after 31 Oct 09:00 Moscow.
+
+mi_watchdog_rzd_ukrmp_27_5kv_20261030_1129:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6518510894
+  latest_tested_commit: 3c002a3172586e5d81d5c7990e5ea2cb4bde9841
+  report: docs/market_intelligence/PQ_WATCHDOG_RZD_UKRMP_27_5KV_PRIMARY_20261030_1129.json
+  report_sha256: b44a2182bb201bf55e3227ed0cf0904dffbdc2585171047a551be70c0f78daca
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 114
+  postgres_unique_lots_after: 115
+  postgres_distinct_procedures: 104
+  postgres_eis_223_notices: 38
+  new_unique_db_lots: 1
+  new_27_5kv_commissioning_service_lots: 1
+  new_sha_verified_originals: 13
+  new_anonymous_winner_protocols: 1
+  new_named_winner_protocols: 0
+  new_signed_suppliers: 0
+  new_executed_sales: 0
+  db_mutation: append_only_atomic_sha_bound
+  client_html_regenerated: true
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Official TEK-Torg 32514565977/ZP5022490 cost estimate proves
+    27.5kV UKRMP at RZD PS Razdolnoe; 31 Mar 2025 final protocol
+    names anonymous participant #1 at 9,529,662.76 RUB incl VAT.
+    This is commissioning service, NOT signed supplier or equipment sale.
+    New unique 223-FZ lot appended after clean internal APFS gate,
+    fresh full SHA+pg_restore backup and atomic readback. PG 115/104/38;
+    client HTML refreshed, 18 targeted tests passed. TEK-Torg
+    32413741282 is 6.6kV VFD component, not PQ compensator.
+    Retry RN61003961 after 30 Oct 20:00, Metal-IT 106044-TT
+    after 31 Oct 09:00, GPB AP125337 after 31 Oct 10:00 Moscow.
+
+mi_watchdog_besk_capacitor_blocks_20261030_1231:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6519542480
+  parent_head: 2b51479bcb913114025014eef48e62dfcee92852
+  report: docs/market_intelligence/PQ_WATCHDOG_BESK_CAPACITOR_BLOCKS_20261030_1231.json
+  report_sha256: 6dbc8879495a66183e48d53978e1c822e4010bd9e900da8017b30c95188be15f
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 115
+  postgres_unique_lots_after: 115
+  postgres_distinct_procedures: 104
+  postgres_eis_223_notices: 38
+  new_unique_db_lots: 0
+  new_sha_verified_originals: 2
+  new_named_winner_protocols: 0
+  new_signed_suppliers: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    B2B 4657777 first-party official card and positions page captured with
+    independent SHA; 6 capacitor blocks, 208419.30 RUB ex VAT, zero bids
+    at capture, deadline 9 Nov, results planned 15 Dec. Voltage and PQ
+    membership not proven, technical documents require registration,
+    so no DB insert. TEK-Torg RN51202455 official search returned no
+    usable results, not evidence of no procurement. PG 115/104/38.
+    Retry RN61003961 after 30 Oct 20:00, Metal-IT 106044-TT after
+    31 Oct 09:00, GPB AP125337 after 31 Oct 10:00 Moscow.
+
+mi_watchdog_eis_named_bidders_20261030_1345:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6520650278
+  latest_tested_commit: 78070dd244a2f917394dde92d3a602527ee52e99
+  report: docs/market_intelligence/PQ_WATCHDOG_EIS_NAMED_BIDDERS_20261030_1345.json
+  report_sha256: 58596ca33001bad7f9a0dbdac0ff78e3f4d1c2ca5b041945c1e3efd35bf324d6
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 115
+  postgres_unique_lots_after: 116
+  postgres_distinct_procedures: 105
+  postgres_eis_223_notices: 39
+  new_unique_db_lots: 1
+  new_core_6_35kv_equipment_lots: 0
+  new_adjacent_500kv_bsk_component_lots: 1
+  new_sha_verified_originals: 6
+  new_named_commission_counterparties: 2
+  new_signed_suppliers: 0
+  new_executed_sales: 0
+  db_mutation: append_only_atomic_sha_bound
+  client_html_regenerated: true
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    EIS 32616266007: five 8.3kV/592kvar BSK capacitors for
+    500kV Kaluzhskaya spares; named commission bidder
+    Ust-Kamenogorsky Kondensator 662460 RUB VAT-included,
+    no signed contract. Adjacent, NOT core 6-35kV system.
+    EIS 32515582393: named bidder UK Kondensator,
+    16 Feb negotiated 4850000 RUB ex VAT, signature unknown.
+    PG 116/105/39, fresh SHA+pg_restore backup and atomic readback.
+    Retry RN61003961 after 30 Oct 20:00, GP630876 after
+    30 Oct 23:40, signed outcomes after 31 Oct 09:00 Moscow.
+
+
+mi_watchdog_rosseti_reissue_sha_dedup_20261030_1430:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6521567173
+  parent_head: 531976acea943e084dbed80aac2cd99b58b4c0d7
+  report: docs/market_intelligence/PQ_WATCHDOG_ROSSETI_REISSUE_SHA_DEDUP_20261030_1430.json
+  report_sha256: 395727f2cdfd0929f940eb8e6c5c415056518b3285a006c60e14a023f964f177
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 116
+  postgres_unique_lots_after: 116
+  postgres_distinct_procedures: 105
+  postgres_eis_223_notices: 39
+  new_unique_db_lots: 0
+  new_sha_verified_capture_receipts: 5
+  already_known_identical_original_archive_shas: 2
+  source_proven_same_project_links: 1
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Official Roseltorg 32616400421/26-1149 cancelled, 32616435269/26-1174
+    active: same buyer, 452016000.01 RUB NMC, PS Tyazhinskaya,
+    5 byte-identical SHA technical/economic files prove same project.
+    Revised sixth technical DOCX changes unbalance CT thermal current
+    20kA to 4kA. Distinct notices/lot IDs remain; no new DB row.
+    B2B indexed EIS 32615852898 contract 2787700 RUB dated 15 Jun 2026,
+    but EIS signed original and supplier unverified. Retry 32615684088
+    after 30 Oct 14:40, RN61003961 after 20:00, GP630876 after 23:40.
+
+mi_watchdog_b2b_index_contract_gaps_20261030_1531:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6522910265
+  latest_tested_parent_commit: 8491de696e260f015a553dbbf5b0b629da6eae8e
+  report: docs/market_intelligence/PQ_WATCHDOG_B2B_INDEX_CONTRACTS_20261030_1531.json
+  report_sha256: 01260ff8cf4f265bc8a3a874219358a9aa11fdc19e49fbdb1573087b3a35c5e6
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 116
+  postgres_unique_lots_after: 116
+  postgres_distinct_procedures: 105
+  postgres_eis_223_notices: 39
+  new_unique_db_lots: 0
+  new_sha_verified_b2b_index_cards: 5
+  new_buyer_original_documents: 0
+  new_named_winners: 0
+  new_verified_signed_suppliers: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    B2B index 32615684088 10kV BSK mixed EPC indexed contract
+    56901067107260004310000 for 37818258.18 RUB, signed 10 Mar;
+    32615700251 PS Graviynaya 35/10kV existing capacitor cell
+    indexed contract 57017380970260000030000 for 11244111.77 RUB;
+    32616523441 PS Chesmenskaia mixed EPC 10kV compensating devices
+    NMC 29384480 RUB. These are B2B index SHA, not organizer
+    originals or proven signed supplier/sales. EIS 404, RTS 503.
+    PG unchanged 116/105/39. Retry RN61003961 after 30 Oct 20:00,
+    32615684088 after 31 Oct 09:00, RTS after 31 Oct 10:00 MSK.
+
+mi_watchdog_tektorg_scope_20261030_1645:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6524147830
+  report: docs/market_intelligence/PQ_WATCHDOG_TEK_TORG_SCOPE_REVIEW_20261030_1645.json
+  report_sha256: b85fd2d608277aacb9e2cc76510576fce3306c4ce40539cece21014d06263c0a
+  latest_tested_parent_commit: 7a3facd2a6a17dc39c86bf2831d8a502d5631f78
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 116
+  postgres_unique_lots_after: 116
+  postgres_distinct_procedures: 105
+  postgres_eis_223_notices: 39
+  new_unique_db_lots: 0
+  fresh_sha_verified_primary_files: 13
+  fresh_distinct_primary_sha256: 11
+  fresh_original_protocols: 2
+  new_named_winner_protocols: 0
+  new_signed_suppliers: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Original TEK-Torg ZP602955 2026 48 FRAKO LKT25-400DB 400V,
+    ZP509357 2025 one KRMT-0.4-300-25 0.4kV and no-bid protocol,
+    ZP4081337 2024 two KRMT-0.4-300-25 0.4kV price inquiry.
+    All outside 6-35kV. PG 116/105/39 unchanged. Retry
+    RN61003961 after 30 Oct 20:00, GP630876 after 23:40,
+    32615684088 after 31 Oct 09:00 MSK.
+
+mi_watchdog_eis_tyazhinskaya_design_20261030_1740:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6525277112
+  latest_tested_parent_commit: fedded8400d15ec48246dcecc4822ccc2ae3fb99
+  report: docs/market_intelligence/PQ_WATCHDOG_EIS_TYAZHINSKAYA_DESIGN_20261030_1740.json
+  report_sha256: 5580a12760319f9ef1f0d50e12c9e5354bd5a1577ffbafc59b4571ef97e4e2a0
+  internal_apfs_acceptance_before_db_mutation: pass
+  postgres_unique_lots_before: 116
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_db_lots: 1
+  new_core_6_35kv_equipment_lots: 0
+  new_adjacent_110kv_design_lots: 1
+  new_underlying_projects: 0
+  new_case_specific_primary_soap_zip_originals: 3
+  new_case_specific_protocol_xml_originals: 2
+  new_signed_suppliers: 0
+  new_executed_sales: 0
+  db_mutation: append_only_atomic_sha_bound
+  client_html_regenerated: true
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    32615937898: 110kV PS Tyazhinskaya SKRM 52Mvar design only,
+    NMC and one bid 3.05m RUB, commission failed; XML contractSigned
+    not proof of signed contract. Same physical project as 32616400421
+    and 32616435269. 3 original SOAP ZIPs with exact XML SHA.
+    PG 117/106/40; next RN61003961 after 20:00, GP630876 after
+    23:40, 32615684088 after 31 Oct 09:00 MSK.
+
+mi_watchdog_eis_primary_winner_scope_20261030_1835:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6526559923
+  parent_commit: 183f6d3df6a0683176905b556573f72e3e953464
+  report: docs/market_intelligence/PQ_WATCHDOG_EIS_PRIMARY_WINNER_SCOPE_20261030_1835.json
+  report_sha256: 67f46158228f980d68672dddfdc94693cd444295d131ba49d64c1c4fd947aa66
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_db_lots: 0
+  new_core_6_35kv_lots: 0
+  case_specific_originals: 14
+  calendar_soap_originals: 19
+  original_binary_sha_verified_total: 33
+  original_xml_scanned: 1666
+  new_named_winner_protocols: 1
+  new_signed_suppliers: 0
+  new_executed_sales: 0
+  new_full_month_coverage: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    32615684088: official protocol winner ООО РСО-ЭНЕРГО INN 3661054875,
+    mixed EPC bid 37818258.18 RUB incl VAT; TЗ one 10kV 1Mvar BSK,
+    2025 analog BSK estimated 7.460669m RUB ex VAT (equipment
+    3.035357m), NOT signed equipment sale. 32615700251 only five
+    10kV KРУН cells, anonymous bidder. 32616523441 DGR arc
+    suppression, NOT reactive PQ. Five date/region SOAP cells,
+    19 ZIP and 1666 XML, no full month. PG 117/106/40 unchanged.
+    Retry RN61003961 after 20:00 and GP630876 after 23:40
+    on 30 Oct, 32615684088 signed contract after 31 Oct 09:00 MSK.
+
+mi_watchdog_eis_region_day_20261030_1931:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6527914460
+  parent_commit: 4515c4c7b316c59462590710ea9f1affdc7de9d4
+  report: docs/market_intelligence/PQ_WATCHDOG_EIS_REGION_DAY_20261030_1931.json
+  report_sha256: 82281fc222ca90e16689d45122cc5bc879d98d8cae71f04d27e18a68f2f80c1f
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_db_lots: 0
+  fresh_sha_verified_original_zip_files: 28
+  original_xml_scanned: 2124
+  source_requests: 17
+  new_core_6_35kv_lots: 0
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    17 EIS region-day SOAP cells (14 RI223, 3 PRIZ); 28 fresh
+    SHA-verified original ZIPs, 2124 XML. Sole lexical candidate
+    32616534558 is 500kV transmission tower protective works;
+    BSK 220kV appears only in parent project title, NOT PQ supply.
+    No DB change: 117 lots / 106 procedures / 40 EIS 223 notices.
+    PRIZ no_data for 2026-10-30 regions 66/77/78 is not no-market.
+    Retry RN61003961 after 2026-10-30 20:00 MSK, GP630876 after
+    23:40, signed contract 32615684088 after 2026-10-31 09:00.
+
+mi_watchdog_eis_tektorg_20261030_2035:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6529228296
+  parent_commit: 523bac361d59d91d27bba985e35e09a4d198d07b
+  report: docs/market_intelligence/PQ_WATCHDOG_EIS_TEKTORG_20261030_2035.json
+  report_sha256: 083b014bc15a970eca5f25cd5ff71618359a01d32df1680ec431ee139ad742cb
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_db_lots: 0
+  fresh_eis_sha_verified_archives: 13
+  fresh_eis_xml_scanned: 881
+  new_core_6_35kv_lots: 0
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    8 EIS SOAP region-day cells: 7 completed, 13 unique SHA-verified ZIP,
+    881 XML, zero PQ hits; 44-FZ PRIZ one no_data, not no market.
+    6 TEK-Torg source attempts: 5 generic HTTP200 HTML receipts,
+    1 curl-direct failed; RN61003961 public case page temporarily
+    generic after 19:59 deadline, no award proven. PG 117/106/40.
+    GP630876 after 30 Oct 23:40, 32615684088 signed-contract
+    after 31 Oct 09:00, RN61003961 after 31 Oct 10:00 MSK.
+
+mi_watchdog_gpb_omsk_20261030_2130:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6530496430
+  parent_commit: c53392d9e99bf380f9d7a1cdef6bc7b307228c56
+  report: docs/market_intelligence/PQ_WATCHDOG_GPB_OMSK_FALSE_POSITIVE_20261030_2130.json
+  report_sha256: 1efe935ebd99c5ccccdb9993a1fdfe2613e98e405cded5c0b0a1141e8f95ecea
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_db_lots: 0
+  fresh_first_party_originals: 5
+  new_core_6_35kv_lots: 0
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    GP646069 five first-party GPB original documents verified, but only
+    660V heat tracing / process condensers, not PQ 6–35kV.
+    PG 117/106/40 unchanged. Retry GP630876 after 30 Oct 23:40,
+    32615684088 signed contract after 31 Oct 09:00, RN61003961 after
+    31 Oct 10:00 MSK. No merge or client report refresh.
+
+mi_watchdog_metalit_20261030_2236:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6531885537
+  parent_commit: be81a85e503fc5a712f7f9f01b617cd79f28703e
+  report: docs/market_intelligence/PQ_WATCHDOG_METALIT_20261030_2236.json
+  report_sha256: b01303e4ac38336048cef43f910826cb8fcc8f785952b850fd6f9aedf8333067
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_db_lots: 0
+  new_verified_core_6_35kv_lots: 0
+  new_first_party_case_originals: 0
+  new_secondary_candidate_procedures: 2
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  db_mutation: false
+  client_html_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Secondary-only 10kV capacitor leads 140321-TT (Oct) and 125180-TT
+    (May), same buyer/model/3 pieces, unproven repeated project.
+    Official Metal-IT public SPA search found no exact original.
+    No DB ingest. PG 117/106/40. Retry GP630876 after 30 Oct 23:40,
+    32615684088 after 31 Oct 09:00, RN61003961 after 31 Oct 10:00.
+
+mi_watchdog_field_enrichment_20261030_2342:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6532902063
+  latest_tested_parent_commit: 745500b43451f3d298946b61cd2fc4a972fd63f8
+  report: docs/market_intelligence/PQ_WATCHDOG_FIELD_ENRICHMENT_20261030_2342.json
+  internal_apfs_acceptance_before_db_mutation: pass
+  verified_full_backup_sha256: 2fff2eb9a56831d690dbf49702c93e671bb8f65945fcdeef4d2e299f9829020a
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_db_lots: 0
+  new_core_6_35kv_lots: 0
+  new_verified_case_fields: 1
+  verified_field: "commercial:4657777:lot1 quantity=6"
+  quantity_field_coverage_before: 44
+  quantity_field_coverage_after: 45
+  first_party_http_requests: 6
+  fresh_sha_verified_original_captures: 2
+  fresh_case_specific_captures: 1
+  new_case_specific_substantive_originals: 0
+  new_signed_suppliers: 0
+  new_executed_sales: 0
+  new_full_month_searches: 0
+  db_mutation: source_sha_bound_atomic_cas_existing_null_only
+  client_report_version: V3
+  client_html_legacy_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Quantity field for existing B2B 4657777 verified as 6 from immutable
+    original SHA a2b6ea5931172eebda42c3876dacce7a4dae95b6b8df38d8798c60b3d3c183ea;
+    DB CAS 117/106/40 unchanged, quantity completeness 44 to 45.
+    Fresh GP630876 first-party HTTP200 is generic search HTML with no exact case;
+    4 official EIS 404. Retry 32615684088 after 31 Oct 09:00,
+    RN61003961 after 10:00, GP630876 after 12:00 MSK or new official URL.
+
+mi_watchdog_p2_original_review_20261031_0035:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6533952449
+  latest_tested_parent_commit: bc7e8c8cb8c6035caea360701196c698d1f83fce
+  report: docs/market_intelligence/PQ_WATCHDOG_P2_ORIGINAL_REVIEW_20261031_0035.json
+  report_sha256: 0106da02a29abf8444df32b60a1ac6b6fcc27da5cc0dd4fa1a41f56b4da16e70
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_db_lots: 0
+  fresh_first_party_http_200_captures: 3
+  new_source_verified_p2_facts_pending_db: 3
+  db_field_gains: 0
+  verified_case: 223fz:32616266007:lot1
+  source_rar_sha256: c64bf98c8cfc3f67ecb30911ce5ccf269fcbe7b02740ecad8317734b0789261a
+  contained_docx_sha256: d34c50e9f74f05597345f17461dc92d4cc44f62f79c6f533328449475d553a48
+  verified_p2: "5 capacitors; capacitor rated 8.3 kV and 592 kvar; 500 kV substation spares, adjacent not core system sale"
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  db_mutation: false
+  client_reports_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    3 direct original P2 facts source-verified in EIS RAR/DOCX for
+    32616266007; top-level PG fields remain null because current
+    guarded writer supports only HTML quantity. Implement/test strict
+    RAR-contained DOCX CAS writer, require clean Git acceptance and
+    new SHA+pg_restore backup before enrichment, then V4 snapshot/audit/PDFs.
+    New B2B 4617521 public card says 3 applications and completed,
+    participants/prices hidden; not a winner or signed contract.
+    Signed contract 32615684088 retry after 31 Oct 09:00 MSK;
+    RN61003961 after 10:00. PG 117/106/40 unchanged.
+
+mi_watchdog_p2_enrichment_20261031_0133:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6534825764
+  latest_tested_code_commit: 5d2b0f96edd9e509a977ba63613eb7647bf9aafc
+  report: docs/market_intelligence/PQ_WATCHDOG_P2_ENRICHMENT_20261031_0133.json
+  report_sha256: eb4a911bc7dc0bf97944601c5355b379499e838735079af7093aedb9af30b457
+  internal_apfs_acceptance: pass
+  verified_backup_sha256: b96494c44981e9b87431d903e6d383b306cf19c37c107e61943ded7fe2983f5e
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_db_lots: 0
+  new_source_verified_case_fields: 3
+  new_core_6_35kv_lots: 0
+  fresh_primary_originals: 0
+  first_party_attempts: 4
+  db_mutation: source_SHA_bound_RAR_DOCX_atomic_null_only_CAS
+  client_report_version: V4
+  client_html_legacy_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Three technical fields for 32616266007 now CAS-verified in PostgreSQL
+    from immutable EIS RAR/DOCX (quantity 5, voltage 8.3kV, 592kvar).
+    This is 500kV substation component spares, not new core PQ sale.
+    V4 RU/EN reports 117 lots, 106 procedures; P2 coverage improved 3 fields.
+    EIS 32515208744 and 32515584863 exact-document URLs returned 404.
+    Retry 32615684088 and 106044-TT after 31 Oct 09:00, RN61003961
+    after 10:00 MSK. No auto-merge.
+
+mi_watchdog_roseltorg_20261031_0238:
+  task_id: "TA-MI-AUTONOMY-20261027"
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6535688042
+  latest_tested_code_commit: "2d032eefd14d1b8e1a8dcf32e0d8fa63e8537ef2"
+  report: "docs/market_intelligence/PQ_WATCHDOG_ROSELTORG_P2_BID_20261031_0238.json"
+  report_sha256: "871fec823f7206569cd09ade9a28cc65d38113a76f2d61d8ca5c77d3ebee687b"
+  internal_apfs_acceptance: "pass"
+  backup_sha256: "0dfabc6bf0690e6de8209292ab3ac58a636319ccd6a42cbaa4a637443e6b0f9c"
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_lots: 0
+  new_source_verified_fields: 3
+  fresh_first_party_originals: 4
+  new_named_bidders: 1
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  client_report_version: "V5"
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Roseltorg 32616497692: 10.5kV/3150kvar P2 and 79,101,498.40 RUB EPC bid
+    source SHA-bound, one named bidder not winner, no signed sale.
+    PG 117/106/40 unchanged; V5 RU/EN PDFs 256 pages; P2/bid coverage +3.
+    Retry 32615684088 and 106044-TT after 31 Oct 09:00 MSK,
+    RN61003961 after 10:00, 32616497692 after 2 Nov 16:00.
+
+mi_watchdog_rad_commission_20261031_0340:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6536554169
+  latest_tested_code_commit: 6c505acd4842c7bf39cc1e433f83653b97ba2daa
+  report: docs/market_intelligence/PQ_WATCHDOG_RAD_COMMISSION_20261031_0340.json
+  report_sha256: 46bf2cbd9896801b730edc7e32f14ff1a11997a1c3935ca3118205e6d7a41dfb
+  internal_apfs_acceptance: pass
+  backup_sha256: 43cf2f7cb21a88101873495e7ece7d71f2ce69244b1817b5f1bb75b6c26a0384
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_lots: 0
+  new_verified_fields: 1
+  field_coverage_winner_before: 3
+  field_coverage_winner_after: 4
+  fresh_first_party_originals: 5
+  original_commission_protocols: 2
+  new_named_commission_recommended_contractors: 1
+  new_signed_suppliers: 0
+  client_report_version: V6
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    RAD 32615966040: original commission protocol SHA 86a6d2605f575465feebfb5cb84eae1d90f7f4ed56bd178588061dc200273744
+    proves sole bidder ООО ЭНЕРГОСЕТЬ and decision to conclude EPC contract at
+    5273763.77 RUB, but procedure formally failed; signed contract not proven.
+    One P3 field CAS-verified, V6 bilingual dossier 117/106/40 and winner 3 to 4.
+    Original technical PDF does not establish device-rated power or PQ-only cost.
+    Retry EIS signed contract and 32615684088 after 31 Oct 09:00 MSK;
+    RN61003961 after 10:00; 106044-TT after 09:00.
+    No auto-merge; keep task in_progress.
+
+mi_watchdog_b2b_bidders_20261031_0440:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6537265337
+  baseline_git_head: 3e4987c24140b89ad17061b25a7516d0d768452a
+  report: docs/market_intelligence/PQ_WATCHDOG_B2B_BIDDERS_20261031_0440.json
+  report_sha256: b88e6d350bff5de2d9a422daa88f6a74059cc92fda2b85da09577751e51b6ac0
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_lots: 0
+  new_source_verified_db_fields: 0
+  new_named_bidders: 4
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  fresh_primary_originals: 2
+  db_mutation: false
+  client_reports_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    B2B 4642507 / EIS 32616474682 now shows four NAMED legal-entity bidders
+    and offers covering BOTH lots jointly, not per-lot bids and not a winner.
+    First-party SHA 439919c11ddd8c430e717aa90e1fbe170d1bf68bd0e98d2517118ec9b285e69f preserved in internal APFS;
+    no signed supplier or PQ-only sale. EIS 32616412267 and 32616506708
+    official document URLs returned HTTP404; do not mark market absent.
+    Retry signed contracts 32615966040 and 32615684088 after 09:00 MSK;
+    TEK-Torg RN61003961 after 10:00; B2B award after 03 Dec 10:00.
+    No DB or client-report churn; keep PR #521 in review, no auto-merge.
+
+mi_watchdog_eis_ufimka_contract_20261031_0531:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6537825525
+  latest_tested_code_commit: c0fce8c37880471cd578c0b7e393a63fc6fa063d
+  report: docs/market_intelligence/PQ_WATCHDOG_EIS_UFIMKA_CONTRACT_20261031_0531.json
+  report_sha256: a0dfbe619d00f80d3d0a3ffaa8d7ff10ca2ffadb871801af60120cf5a87a12fa
+  internal_apfs_acceptance: pass
+  backup_sha256: c5b8ea7a6acad8c585cd0604c8089750d44621a8cce33440bdd3b0e49623cb24
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_lots: 0
+  new_source_verified_fields: 5
+  newly_verified_signed_contracts: 1
+  newly_verified_completed_epc_contracts: 1
+  newly_named_signed_suppliers: 0
+  new_executed_payments: 0
+  fresh_first_party_originals: 4
+  first_party_requests: 6
+  first_party_http404: 2
+  client_report_version: V7
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    EIS 32514476448 official signed/completed EPC 10kV BSK contract
+    50277071467250001900000 verified 2922405.35 RUB, 26 Mar 2025;
+    contractor, paid amount and equipment-only allocation still unknown.
+    5 null-only fields CAS-verified in PG, signed-contract coverage 1->2,
+    V7 RU/EN PDFs 256 pages. No new lot (117/106/40).
+    Retry 32615966040 and 32615684088 after 31 Oct 09:00 MSK,
+    RN61003961 after 10:00. No auto-merge.
+
+mi_watchdog_reto_signed_supply_20261031_0630:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6538431832
+  latest_tested_code_commit: 3e968083a7f7f49780651cd423345e72887d33c8
+  report: docs/market_intelligence/PQ_WATCHDOG_RETO_SIGNED_SUPPLY_20261031_0630.json
+  report_sha256: 95209a4cb0daf5414a08c200fa1261824cb8cb760abe2ea0637ee872730dae93
+  internal_apfs_acceptance: pass
+  backup_sha256: 111d2d07b62a830a49f03df08c963503a617c579ccfef2c8f80d79851c0028b1
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_lots: 0
+  new_verified_db_fields: 7
+  new_client_visible_fields: 6
+  fresh_primary_captures: 7
+  original_commission_protocols: 1
+  newly_visible_named_commission_winners: 1
+  newly_verified_signed_suppliers: 0
+  newly_verified_payments: 0
+  client_report_version: V8
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Reto 32616181358: official signed 12kV ten-capacitor supply 3,050,000 RUB,
+    original RAD commission winner ООО ЭКСПЕРТ ГРУПП (INN 7720494275)
+    and registered contract 57724646338260000460000 verified with immutable SHA.
+    Seven null-only research fields CAS-verified; 117/106/40 unchanged; V8
+    bilingual dossier 256 pages, winner coverage 4->5, equipment-only 1->2.
+    Signed supplier/OEM/payment remain unknown. Retry 32615966040 and
+    32615684088 after 31 Oct 09:00 Moscow; RN61003961 after 10:00.
+    No legacy HTML churn, no auto-merge, task remains in_progress.
+
+mi_watchdog_b2b_buyer_inn_and_tektorg_protocol_20261031_0730:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6539046707
+  latest_tested_code_commit: 4fcc4310654ca8811a913fcbb7622bac46cd6719
+  report: docs/market_intelligence/PQ_WATCHDOG_FIELD_AND_PROTOCOL_20261031_0730.json
+  report_sha256: 2df90cc0e3ba9f55fa1e65bd358dba340c60d9251695d8cad3220dc940916bcb
+  internal_apfs_acceptance: pass
+  backup_sha256: 93fff4a108d6531dab399fd268f1e11f3f4f00c4ee9a27ec53b7fa95b18d9d05
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_lots: 0
+  new_verified_db_fields: 1
+  new_client_visible_fields: 1
+  fresh_primary_captures: 3
+  newly_verified_named_winners: 0
+  newly_verified_signed_suppliers: 0
+  newly_verified_payments: 0
+  client_report_version: V9
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Buyer INN 2310031475 for commercial 4617521 from first-party B2B original,
+    CAS-verified; 117/106/40 unchanged, V9 RU/EN 256-page dossier. TEK-Torg
+    32514565977: second-parts protocol two anonymous bidders; final bid
+    9529662.76 RUB already in DB, 27.5kV commissioning service not device sale.
+    Secondary contract lead 32615937898 (110kV design, 3050000 RUB) remains
+    unverified because EIS official print HTTP503/404. Retry 32615966040
+    after 31 Oct 09:00, RN61003961 after 10:00, EIS 32615937898 after
+    1 Nov 07:30 Moscow. No legacy HTML churn, no auto-merge.
+
+mi_watchdog_eis_primary_protocols_20261031_0835:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6539622947
+  latest_tested_code_commit: a6f902e07746efca73456fc6bd5f6b8cde0b4e8b
+  report: docs/market_intelligence/PQ_WATCHDOG_EIS_PROTOCOLS_20261031_0835.json
+  report_sha256: ce02c489318b044090cea2607945c442f614129be96e9679c35fddf791c73436
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_lots: 0
+  new_verified_db_fields: 0
+  first_party_requests: 18
+  fresh_sha_verified_original_versions: 14
+  first_party_http404: 4
+  fresh_original_protocol_prints: 4
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_executed_payments: 0
+  db_mutation: false
+  client_report_regenerated: false
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    EIS 32616497692 protocol confirms existing named bidder INN 7723124579,
+    offer 79,101,498.40 RUB; bidder not winner. Official contracts tab empty
+    as of capture. EIS 32616412267 first-place anonymous bid 2,590,000 RUB,
+    signed service contract 2,639,026.64 RUB 19 Oct; supplier unknown,
+    discrepancy 49,026.64 RUB unexplained. 32615969197 no bids, repeated
+    project 32616103025. 14 SHA-verified originals, 4 HTTP404; no DB
+    additions or field gains; V9 unchanged. Retry 32615966040/32615684088
+    after 31 Oct 09:00 Moscow; RN61003961 after 10:00.
+    No auto-merge; task remains in_progress.
+
+
+mi_watchdog_eis_signed_bsk_20261031_0930:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6540100805
+  latest_tested_code_commit: aa1240a1072e495607d5eb092b87090b39df3fd9
+  report: docs/market_intelligence/PQ_WATCHDOG_EIS_SIGNED_BSK_20261031_0930.json
+  report_sha256: 66763c21aca785197943802f62f4d762fa1dee1f8087b2bff44f65e4f0e944bc
+  internal_apfs_acceptance: pass
+  backup_sha256: acc6ff644046770f6aad5cb9083ff2ca851e207863070c1fa069815c9b0804ec
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 1
+  new_source_verified_core_equipment_sales: 0
+  newly_verified_registered_contracts: 2
+  newly_verified_signed_suppliers: 0
+  new_existing_lot_db_field_updates: 0
+  fresh_sha_verified_primary_originals: 12
+  original_protocol_prints: 4
+  client_report_version: V10
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Official EIS 32615684088 / contract 56901067107260004310000:
+    10kV grid mixed EPC including BSK, 37,818,258.18 RUB registered
+    contract, 4 anonymous bids; +1 unique lot with SHA and pg_restore
+    verified backup. Not BSK equipment-only sale; supplier unknown.
+    EIS 32615966040 / contract 55036065113260035960000 independently
+    verifies signed 5,273,763.77 RUB EPC dated 03 June 2026;
+    secondary 5,273,764.00 differs 0.23 RUB. Official source SHA
+    archived; implement guarded null-only CAS enrichment on this
+    existing row with NEW full backup before any field update.
+    PG 118 unique lots / 107 procedures / 41 EIS 223 notices;
+    V10 RU/EN 258 pages and original client HTML refreshed.
+    Next 106044-TT native STATCOM protocol now, RN61003961
+    after 31 Oct 10:00 Moscow. No auto-merge; task in_progress.
+
+mi_watchdog_nikitskaya_contract_20261031_1031:
+  latest_tested_code_commit: f9f82c6845bb8ecfe4f7bbfffde05fed23a61429
+  targeted_tests: 6 passed, Ruff passed, PDF RU/EN 258 pages
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6540648776
+  report: docs/market_intelligence/PQ_WATCHDOG_NIKITSKAYA_EIS_REGISTERED_20261031_1031.json
+  report_sha256: d8c272ff21d6b2d0f29a45cb71bf831edd6ec9ee05ee9c4af5a1a0e8e09d6fd6
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 5
+  new_registered_contracts_existing_lot: 1
+  newly_verified_signed_suppliers: 0
+  newly_verified_payments: 0
+  fresh_first_party_original_versions: 2
+  backup_sha256: 73836b812786e3813f173cc1d2c1515bdfbee5367d36a6e0326daeb961072cfc
+  client_report_version: V11
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    EIS original SHA-backed registered contract 32615966040/55036065113260035960000: 5,273,763.77 RUB signed 03 June 2026, mixed EPC; 5 null-only CAS fields updated, no signed supplier or PQ-only sale proven. 118 unique lots unchanged. Two fresh TEK-Torg HTML versions HTTP200 contain no result; two Metal-IT capture attempts preflight-blocked by source allowlist. V11 RU/EN 258 pages; existing client HTML unchanged. Retry 106044-TT 1 Nov 09:00, RN61003961 1 Nov 10:00, 32616400421 1 Nov 07:30 Moscow. No auto-merge.
+
+mi_watchdog_meleuz_eis_signed_20261031_1146:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6541226643
+  latest_tested_code_commit: 4f00f32
+  report: docs/market_intelligence/PQ_WATCHDOG_MELEUZ_EIS_SIGNED_20261031_1144.json
+  report_sha256: 5c9261c203257bc5dcd5024e7d58e8801096c1a2cab84593d1932e4f13607b1c
+  internal_apfs_acceptance: pass
+  backup_sha256: 3f1ab7b2efb89bdf4e6fdb23c92185130edf979c671615ade1f4cf431ed94291
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 10
+  new_client_visible_fields: 6
+  fresh_sha_verified_primary_captures: 21
+  original_final_protocols: 4
+  new_registered_contracts_independently_verified: 2
+  new_signed_supplier_identities: 0
+  new_verified_payments: 0
+  client_report_version: V12
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Official EIS 32616296475: 6.3kV upper-bound thyristor/reactor UKRM,
+    >=500kvar, harmonic filter, contract 304/26 signed 21 Sep 2026
+    registered 3,865,725.99 RUB; includes installation/PNR/measurements,
+    supplier/OEM/payment and device-only price unknown. Ten null-only
+    fields CAS-verified after fresh full SHA+pg_restore backup. EIS
+    32616354211: independently verified 7,406,851.40 RUB design contract
+    14-SBP/2026, 23 Sep 2026; not DB enriched yet. 21 immutable
+    first-party captures, 4 protocol prints; 118/107/41 unchanged.
+    V12 bilingual 258-page dossier, six client-visible fields gained.
+    Next: 32616354211 guarded writer immediately; 32616400421 after
+    1 Nov 07:30; 106044-TT after 1 Nov 09:00. No auto-merge.
+
+mi_watchdog_tyazhinskaya_eis_20261031_1237:
+  latest_tested_code_commit: 345a08c048be7f41fed585fc4b25b5debe934ee0
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6541754912
+  report: docs/market_intelligence/PQ_WATCHDOG_TYAZHINSKAYA_EIS_SIGNED_20261031_1237.json
+  report_sha256: b46181ec22b8e4e74f23944a14ca500d8c8b0f1b5175d45fa853174769c866bd
+  internal_apfs_acceptance: pass
+  backup_sha256: 13c5d6e64b23dcc4ad5ea466d146ecded7d30339573d9f9859c0d53c97fd0567
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 5
+  new_client_visible_fields: 1
+  new_registered_contracts_existing_lot: 1
+  newly_verified_signed_suppliers: 0
+  newly_verified_payments: 0
+  fresh_first_party_originals: 0
+  reused_sha_verified_originals: 2
+  client_report_version: V13
+  canonical_v29_rows_unchanged: 101
+  targeted_tests: 9 passed, Ruff passed, PDF RU/EN 258 pages
+  resume_instruction: >-
+    32616354211 EIS original registered design contract 14-SBP/2026, 23 Sep 2026,
+    7,406,851.40 RUB, not equipment sale; 5 null-only CAS fields updated after
+    new full SHA+pg_restore backup. No supplier/payment verified. 118/107/41
+    unchanged. 21 network attempts for 3 independent EIS candidates found
+    HTTP404 or generic HTTP200 lacking exact notice identity, zero new captures.
+    V13 bilingual 258-page report. Retry 32616400421 1 Nov 07:30,
+    106044-TT 1 Nov 09:00, RN61003961 1 Nov 10:00 Moscow. No auto-merge.
+
+mi_watchdog_bashkirenergo_eis_20261031_1336:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6542253055
+  latest_tested_code_commit: 8a008382e35efaf0fcf23cade9bfd0a68428b031
+  report: docs/market_intelligence/PQ_WATCHDOG_BASHKIRENERGO_EIS_REGISTERED_20261031_1336.json
+  report_sha256: 8da2ce8bd35c24fa3bd67e63757a268141dd513b88bb761d872a18e8e8633dea
+  internal_apfs_acceptance: pass
+  backup_sha256: 662206c65ce74b82485d70ff3e9270268288141d287c079db248333978a5bab9
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 5
+  new_client_visible_fields: 3
+  new_registered_contracts_existing_lot: 1
+  newly_verified_signed_suppliers: 0
+  newly_verified_payments: 0
+  fresh_sha_verified_primary_original_versions: 3
+  client_report_version: V14
+  canonical_v29_rows_unchanged: 101
+  targeted_tests: 21 passed, Ruff passed, PDF RU/EN 258 pages
+  resume_instruction: >-
+    EIS 32515582393 / registry 50277071467260001550000:
+    registered UKRM supply contract RES-1.26.1/D-01071 signed 27 Feb 2026
+    4,850,000.00 RUB; five null-only fields CAS-verified after fresh full
+    SHA+pg_restore backup. No signed supplier/OEM/delivery/payment verified;
+    equipment-only revenue remains unknown. PG 118/107/41 unchanged.
+    Four HTTP200 first-party captures (3 new SHA versions, 1 repeated);
+    Roseltorg 32616433248 no signed-contract result. V14 RU/EN 258 pages,
+    three newly visible contract fields. Next 32616400421 1 Nov 07:30,
+    106044-TT 1 Nov 09:00, RN61003961 1 Nov 10:00 Moscow.
+    PR 521 remains REVIEW, quality CI red, no auto-merge.
+
+mi_watchdog_angarsk_reto_eis_20261031_1445:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6542846151
+  latest_tested_code_commit: dee6252f540314ea3992cf8847eb8b50b96f5a4a
+  report: docs/market_intelligence/PQ_WATCHDOG_ANGARSK_RETO_EIS_20261031_1445.json
+  report_sha256: 0e97beb9bd21808ab084f7b260c82fdde75c07d2f0be1143d0b96775186f74e7
+  internal_apfs_acceptance: pass
+  backup_sha256: 1df48d0d5262b96e6068ffa8c172b6338ba4d4749d778b20df27b1178a53af9f
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 8
+  new_client_visible_fields: 4
+  new_independently_verified_registered_contracts: 2
+  newly_verified_signed_suppliers: 0
+  newly_verified_payments: 0
+  fresh_sha_verified_primary_original_versions: 10
+  original_final_protocols: 0
+  client_report_version: V15
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Official EIS Angarsk 32616412267: signed 6kV service contract
+    61/26кс/223 dated 19 Oct 2026, 2,639,026.64 RUB, six null-only
+    fields. RETO 32616181358: signed contract 060-26-Р dated
+    19 Aug 2026, two null-only fields. Full SHA+pg_restore backup,
+    atomic CAS and readback, PG 118/107/41 unchanged.
+    New Rossseti 32616266007 signed contract 1605245 dated 14 Oct
+    2026, 662,460 RUB, 5 Kazakhstan capacitors at 132,492 RUB each;
+    adjacent 500kV project, old DB status conflicts with signed result;
+    staged for reviewed status reconciliation, no overwrite.
+    13 official captures, 10 new SHA versions; three generic HTTP200
+    identity failures. Zero signed supplier identities and payments.
+    V15 RU/EN 258-page dossiers, four newly client-visible fields.
+    Next 32616266007 conflict-aware status review immediately;
+    32616400421 after 1 Nov 07:30; 106044-TT after 1 Nov 09:00.
+    No auto-merge; task remains in_progress.
+
+mi_watchdog_tektorg_ukrm_20261031_1545:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6543427402
+  latest_tested_code_commit: 5950cfd4edc6dcd7cbc0a01f81380da653a05c11
+  report: docs/market_intelligence/PQ_WATCHDOG_TEK_TORG_UKRM_20261031_1545.json
+  report_sha256: 4455c103330ae16c06dab24e1f43c58f168852b30325203fc8024561a9687d9c
+  internal_apfs_acceptance: pass
+  backup_sha256: 80f9172e8059542617fb1f2bcd7df2c2518a0f1acebc3ff36360fc1f1e93664f
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 2
+  fresh_sha_verified_primary_original_versions: 4
+  first_party_http_requests: 5
+  original_final_protocols: 0
+  newly_verified_signed_suppliers: 0
+  newly_verified_payments: 0
+  client_report_version: V16
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    TEK-Torg RN61004155 official card and 7z technical archive confirm
+    UKRM-6 450 and 900 kvar models, not 2 purchased units or 1350 kvar
+    contracted total. Two null-only P2 fields CAS-enriched after clean
+    internal APFS gate and SHA+pg_restore full backup. One archive
+    downloaded twice with identical SHA; 5 requests, 4 unique SHA.
+    No winner/signed supplier/paid price; offers close 3 Nov 12:00 Moscow.
+    PG 118/107/41 unchanged. V16 RU/EN 258 pages; C->A case grade.
+    Next EIS 32616400421 after 1 Nov 07:30, 106044-TT after
+    1 Nov 09:00, RN61004155 outcome after 3 Nov 12:00 Moscow.
+    PR 521 remains REVIEW, no auto-merge.
+
+mi_watchdog_eis_filter_protocols_20261031_1646:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6544079318
+  latest_tested_code_commit: 94ee06ba56221e7cd2c2d74f5009ea34bccdff32
+  report: docs/market_intelligence/PQ_WATCHDOG_EIS_FILTER_PROTOCOLS_20261031_1646.json
+  report_sha256: 99c6bc0317b379704ff8c2ac49c0ae42a8aa411cd67ca08c0b7ce6440505822f
+  internal_apfs_acceptance: pass
+  backup_sha256: 269c84fde09c8ccb1e8b5a57921cb64d2efe32213a5cc1cd40111a4a8f855394
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 8
+  new_client_visible_fields: 5
+  new_original_final_protocols: 3
+  newly_verified_named_commission_winners: 1
+  newly_verified_signed_suppliers: 0
+  newly_verified_paid_sales: 0
+  first_party_requests: 16
+  fresh_sha_verified_primary_captures: 9
+  distinct_primary_source_shas: 8
+  client_report_version: V17
+  canonical_v29_rows_unchanged: 101
+  targeted_tests: 5 passed, Ruff passed, PDF RU/EN 258 pages
+  resume_instruction: >-
+    EIS 32514947144: official TЗ + commission protocol prove 14 filter
+    capacitors KEPF-12-450-2, 12kV and 450kvar each, for 500kV
+    Novo-Anzherskaya emergency spares; commission winner TD
+    Ust-Kamenogorskiy Kondensator, bid 3,158,400 RUB, NOT signed sale.
+    Eight null-only fields CAS enriched after fresh SHA+pg_restore backup.
+    EIS 32514944142: failed 220kV SVC design procurement, 7 applications,
+    one admitted, protocol date conflict 2025/2026. EIS 32515029641:
+    one admitted ESK Yug, failed, no signed contract. Nine captures,
+    eight unique SHA; 118/107/41 unchanged. V17 RU/EN 258 pages.
+    Next: official signed contract/role for three EIS cases, resolve
+    conflict and 500kV market_scope; 32616400421 after 1 Nov 07:30.
+    PR 521 remains REVIEW; no auto-merge.
+
+mi_watchdog_bidzaar_technical_20261031_run11:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6544724869
+  source_checkout_head: b40e8631122a15acbdab8c99299152ee6de939fd
+  report: docs/market_intelligence/PQ_WATCHDOG_BIDZAAR_TECH_20261031_RUN11.json
+  report_sha256: ce3a2f4d76ca8269372f162bcecd05e7b9bf31b221f2ea035f9dc2de0e5e2100
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 0
+  fresh_sha_verified_primary_original_versions: 10
+  first_party_request_attempts: 36
+  newly_verified_signed_suppliers: 0
+  newly_verified_paid_sales: 0
+  client_report_version: V17_unchanged
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Bidzaar 351-062 original DOC/DOCX: Elga PS 35/6kV POSKO, standalone UKRM
+    3000 kvar; two units in title but per-unit power not proven.
+    Bidzaar 358-830 original technical DOCX: three active filters at 400V,
+    exclude from 6-35kV core; unsigned blank-supplier template.
+    B2B 4657777: six blocks, indicative 208419.30 RUB excl VAT; B2B 4617521:
+    three applications, participants hidden. Ten SHA-verified original files.
+    No DB mutation or client report churn. Next guarded source-bound P2 review
+    351-062 and 358-830, EIS 32514947144 signed contract register.
+    PR 521 REVIEW, no auto-merge.
+
+mi_watchdog_sibsteklo_bidzaar_20261031_1831:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6545428693
+  tested_writer_commit: c051f1f5ab5528ce6c7edffbed6c93d86bcc7f68
+  report: docs/market_intelligence/PQ_WATCHDOG_SIBSTEKLO_BIDZAAR_20261031_1831.json
+  report_sha256: eb909a9b91f26bed7125a9ff3fdf3e03690549912a46e65e3cafeb95ae8a9d56
+  internal_apfs_acceptance: pass
+  backup_sha256: 6a75fc9845e5055405ce6616b5bb555166a8ad6c6dfc3718cb994e1d51aa5fb8
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 2
+  fresh_sha_verified_primary_original_versions: 6
+  first_party_http_requests: 6
+  newly_verified_signed_suppliers: 0
+  newly_verified_paid_sales: 0
+  client_report_version: V18
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Bidzaar 306-644 original DOCX confirms two customer-owned UKRM 6kV
+    900 kvar each; this is installation/commissioning, NOT equipment
+    supply. Two P2 null-only fields CAS-updated after SHA+pg_restore full
+    backup, PG 118/107/41 unchanged. Six first-party originals SHA-verified.
+    Unsigned contractor template is NOT a signed contract.
+    B2B 4643332 original confirms failed zero-bid procedure (already
+    known). V18 RU/EN 258-page dossiers with corrected source-bound note.
+    Next 351-062 per-unit power, 32514947144 signed contract, and
+    32616266007 500kV scope/status conflict. No auto-merge.
+
+mi_watchdog_filter_signed_20261031_1935:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6546075159
+  latest_tested_code_commit: fad420f
+  report: docs/market_intelligence/PQ_WATCHDOG_FILTER_SIGNED_20261031_1935.json
+  report_sha256: 7bbad62d373f366c0f4f12ffe7ede77989614c03462507cf961a6770b86e0946
+  internal_apfs_acceptance: pass
+  backup_sha256: 3aad39e163189a847654b2312d05eefb156bd439eb6d59811db2bc675846cbfd
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 10
+  first_party_requests: 5
+  fresh_sha_verified_primary_original_versions: 5
+  new_registered_signed_equipment_component_contracts: 1
+  newly_verified_signed_supplier_identities: 0
+  newly_verified_paid_sales: 0
+  client_report_version: V19
+  canonical_v29_rows_unchanged: 101
+  targeted_tests: 15 passed, Ruff passed, RU/EN 258-page PDF checked
+  resume_instruction: >-
+    EIS 32514947144 original registered signed contract 1423177 dated
+    24 Jul 2025, registry 54716016979250029010000, 3,158,400 RUB
+    for 14 KEPF-12-450-2UHL1 capacitors at 225,600 RUB each.
+    Official event log says execution completed 23 Sep 2025.
+    Parent is 500kV substation, components nominal 12kV.
+    Signed supplier identity, payment and OEM remain unverified.
+    Ten previously null fields CAS-enriched with fresh full SHA+pg_restore
+    backup, postwrite readback, PG 118/107/41 unchanged.
+    Five SHA-verified first-party originals, V19 RU/EN 258 pages.
+    Next 351-062 P2 now, 32616266007 status conflict now,
+    32616400421 after 1 Nov 07:30 Moscow. No auto-merge.
+
+mi_watchdog_bidzaar_power_20261031_run11:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6546809041
+  latest_tested_code_commit: dc5b12a744bc78dfde34783b5481b497f46d041b
+  report: docs/market_intelligence/PQ_WATCHDOG_BIDZAAR_POWER_20261031_RUN11.json
+  report_sha256: 4cc2d97dede74d42252ba4330929ee70d49bcf7c962377b430d33c3c9f570acc
+  internal_apfs_acceptance: pass
+  backup_sha256: 7715c36457c0cfa91f509133d9f2bbd225be3909556c57fed87121ca591f8764
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 1
+  first_party_request_attempts: 5
+  fresh_sha_verified_source_versions: 3
+  new_distinct_original_shas: 0
+  newly_verified_signed_suppliers: 0
+  newly_verified_paid_sales: 0
+  client_report_version: V20
+  canonical_v29_rows_unchanged: 101
+  targeted_tests: 10 passed, Ruff passed, RU/EN 258 pages
+  resume_instruction: >-
+    Bidzaar 351-062 buyer DOCX SHA e53a74ef8a4fda14 proves nominal UKRM
+    3000 kvar for PS 35/6kV POSKO; two tender units but total not
+    proven. Null-only power CAS-enriched after fresh SHA+pg_restore
+    backup, readback 118/107/41 unchanged. V20 RU/EN 258 pages.
+    EIS 32616266007 registry 1605245/662460 RUB rechecked unchanged
+    with unresolved conflicting nonempty status and unsigned supplier
+    identity. Next 32616266007 supplier/status, 351-062 nominal voltage,
+    32616400421 after 1 Nov 07:30 MSK. PR 521 REVIEW, no auto-merge.

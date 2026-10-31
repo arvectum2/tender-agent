@@ -9,12 +9,15 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import shutil
 import subprocess
+import sys
+import zipfile
 from pathlib import Path
 
 import yaml
 
-ALLOWED = {".pdf", ".txt", ".docx", ".xlsx"}
+ALLOWED = {".pdf", ".txt", ".doc", ".docx", ".xlsx"}
 MAX_FILE = 20 * 1024 * 1024
 MAX_TEXT = 30000
 MAX_FILES = 24
@@ -32,6 +35,25 @@ def _extract(path: Path) -> tuple[str, str]:
         if proc.returncode:
             return "", "pdf_text_extraction_failed"
         return proc.stdout.decode("utf-8", errors="replace")[:MAX_TEXT], "native_pdf_text"
+    if suffix == ".doc":
+        # Legacy binary Word originals are common in EIS 44/223. Preserve the
+        # original file SHA; extraction is bounded, read-only, and macro-free.
+        if path.open("rb").read(8) != b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1":
+            return "", "invalid_legacy_doc_container"
+        if sys.platform == "darwin":
+            command = ["/usr/bin/textutil", "-convert", "txt", "-stdout", str(path)]
+        else:
+            binary = shutil.which("antiword")
+            if binary is None:
+                return "", "legacy_doc_extractor_unavailable"
+            command = [binary, str(path)]
+        try:
+            proc = subprocess.run(command, capture_output=True, timeout=25, check=False)
+        except (OSError, subprocess.TimeoutExpired):
+            return "", "legacy_doc_extraction_failed"
+        if proc.returncode:
+            return "", "legacy_doc_extraction_failed"
+        return proc.stdout.decode("utf-8", errors="replace")[:MAX_TEXT], "legacy_doc_text"
     if suffix == ".txt":
         return path.read_text(encoding="utf-8", errors="replace")[:MAX_TEXT], "text"
     if suffix == ".docx":
@@ -42,16 +64,44 @@ def _extract(path: Path) -> tuple[str, str]:
             chunks.extend(" | ".join(c.text for c in row.cells) for row in table.rows)
         return "\n".join(chunks)[:MAX_TEXT], "docx"
     from openpyxl import load_workbook
+    # Large original EIS workbooks can put PQ equipment thousands of rows past
+    # the first 30k characters. Preserve exact original file SHA in the packet,
+    # but prioritize source-cell excerpts before the bounded context prefix.
+    hints = ("укрм", "бск", "статком", "statcom", "svg", "svc",
+             "гармоник", "компенсац", "конденсатор")
+    head, matches = [], []
+    head_chars = match_chars = 0
+    budget = MAX_TEXT // 2
     book = load_workbook(path, read_only=True, data_only=True)
-    chunks = []
-    for sheet in book.worksheets[:12]:
-        chunks.append(f"[SHEET {sheet.title}]")
-        for row in sheet.iter_rows(max_row=2500, max_col=50, values_only=True):
-            chunks.append(" | ".join(str(c)[:250] if c is not None else "" for c in row))
-            if sum(map(len, chunks)) >= MAX_TEXT:
-                break
-    book.close()
-    return "\n".join(chunks)[:MAX_TEXT], "xlsx"
+    try:
+        for sheet in book.worksheets[:12]:
+            if head_chars < budget:
+                label = f"[SHEET {sheet.title}]"
+                head.append(label)
+                head_chars += len(label) + 1
+            for row_number, row in enumerate(
+                    sheet.iter_rows(max_row=2500, max_col=50, values_only=True), 1):
+                if head_chars < budget:
+                    line = " | ".join(str(c)[:250] if c is not None else "" for c in row)
+                    head.append(line[:budget - head_chars])
+                    head_chars += min(len(line), budget - head_chars) + 1
+                if match_chars >= budget:
+                    continue
+                for column_number, cell in enumerate(row, 1):
+                    if cell is None:
+                        continue
+                    value = str(cell)[:2000]
+                    if not any(hint in value.casefold() for hint in hints):
+                        continue
+                    snippet = (f"[SHEET {sheet.title} ROW {row_number} "
+                               f"COL {column_number}] {value[:1400]}")
+                    matches.append(snippet[:budget - match_chars])
+                    match_chars += min(len(snippet), budget - match_chars) + 1
+                    if match_chars >= budget:
+                        break
+    finally:
+        book.close()
+    return ("\n".join(matches) + "\n" + "\n".join(head))[:MAX_TEXT], "xlsx"
 
 
 def prepare_packet(*, document_dir: Path, ontology_path: Path,
@@ -64,13 +114,24 @@ def prepare_packet(*, document_dir: Path, ontology_path: Path,
     terms = [(family["id"], word) for family in ontology["families"]
              for word in family.get("positive", []) if len(word) >= 3]
     docs = []
+    extraction_errors = []
     for path in sorted(document_dir.iterdir()):
         if len(docs) >= max_files:
             break
         if path.suffix.lower() not in ALLOWED:
             continue
         digest = hashlib.sha256(path.read_bytes()).hexdigest()
-        content, method = _extract(path)
+        try:
+            content, method = _extract(path)
+        except zipfile.BadZipFile:
+            # Some publicly uploaded .docx/.xlsx files are mislabeled RTF
+            # or corrupt ZIP bytes. Keep their original SHA, do not fabricate
+            # extracted text, and continue the other source documents.
+            content, method = "", "invalid_office_archive_container"
+            extraction_errors.append({
+                "sha256": digest, "filename": path.name,
+                "error_type": "BadZipFile",
+            })
         hits = [{"family": family, "term": word} for family, word in terms
                 if word.casefold() in content.casefold()]
         docs.append({"filename": path.name, "sha256": digest, "method": method,
@@ -80,6 +141,7 @@ def prepare_packet(*, document_dir: Path, ontology_path: Path,
         "schema_version": "pq-chatgpt-review-packet/1",
         "registry_number": registry_number,
         "documents": docs,
+        "extraction_errors": extraction_errors,
         "review_instructions": (
             "Act as a Russian 6-35 kV Power Quality procurement analyst. "
             "Check original document quotations and precise equipment scope. "

@@ -1,0 +1,260 @@
+{
+  "schema_version": "pq-watchdog-primary-20261028/1",
+  "recorded_at_moscow": "2026-10-28T14:50:18.121424+03:00",
+  "canonical_v29_rows_unchanged": 101,
+  "new_month_searches": 52,
+  "month_search_statuses": {
+    "success": 22,
+    "empty": 30
+  },
+  "new_months_not_exhaustive": [
+    "2024-01",
+    "2024-05",
+    "2024-06",
+    "2024-07",
+    "2024-08",
+    "2025-01",
+    "2025-02",
+    "2025-04",
+    "2025-06",
+    "2025-08",
+    "2025-09"
+  ],
+  "candidate_metadata_rows_unverified": 104,
+  "new_notices_outside_v29": [
+    "32413195287",
+    "32413631624",
+    "32413764701"
+  ],
+  "original_files_sha_verified": 24,
+  "originals": {
+    "32413195287": {
+      "page_sha256": "488a81cfa18ce7dcf25e4ff9a98e0c74c8d4970b2458bb81f9dc16fc56ab6fee",
+      "files": [
+        {
+          "filename": "01-32413195287-4.pdf",
+          "original_name": "32413195287 протокол КР диспетч ОП4 продл ср.pdf",
+          "sha256": "729506b0d805546fc38b01087e9a0399292c1eb7dec74f04ff96889bcee1a738",
+          "size_bytes": 370647,
+          "source_url_sha256": "b23dd36faf10ba79f7c06b001777a28b1c5f5af72385f9ba2f09535e1d750b8a"
+        },
+        {
+          "filename": "02-32413195287-4--35.pdf",
+          "original_name": "32413195287 протокол КР сист телеинф ОП4, Капитальная-35 скидка.pdf",
+          "sha256": "f324d9ab1089ab3e50511500309aa68ebfc750fb5b44120fa93a2b3d6d6eefd7",
+          "size_bytes": 697303,
+          "source_url_sha256": "244229d9b346c1103d86e403c0234a3a838ecad5b4a2e97ef54221b3b659cccd"
+        },
+        {
+          "filename": "03-32413195287-4.-35.pdf",
+          "original_name": "32413195287 итог протокол КР диспетч ОП4. Капитальная 35.pdf",
+          "sha256": "9c5ea293266ae5ccd5f352c0d4ec46816a0d732971de10cac939a2cac3947a57",
+          "size_bytes": 842418,
+          "source_url_sha256": "26486a2b70e946de5e925648e1e25377b34e42e9c79d218c64b87914ece06c7a"
+        },
+        {
+          "filename": "04-32413195287-4--35.pdf",
+          "original_name": "32413195287 протокол КР сист приема ОП4 Капитальная-35 повтор скидка.pdf",
+          "sha256": "d79a8d3242d7a9b08ec9ec2198725eada0fe317819b4058ce2f7571bbeb54b3a",
+          "size_bytes": 501872,
+          "source_url_sha256": "513b73ad774df7390b66b95f2cc470c4df29e8fc50d1d152b269f35f7fdce7f7"
+        },
+        {
+          "filename": "05-4.docx",
+          "original_name": "ЗП КР СППИ ОП4 ЗСМК, УКРМ.docx",
+          "sha256": "da402f69632984e637e11bfc7e29089ccb04cf52c58ca113592c40ea01860589",
+          "size_bytes": 471755,
+          "source_url_sha256": "d40bf1bff6320c0dd29de0e2746b8e26ea6e74a64e87c1a76fe71fcccba504b6"
+        },
+        {
+          "filename": "06-4.xlsx",
+          "original_name": "смета КР ОП-4 СППИ.xlsx",
+          "sha256": "752e635629cd61af79849ecb3e71b6b9edcfbed85f3657e3373a8da5376e38cf",
+          "size_bytes": 54506,
+          "source_url_sha256": "88f832cad8c51350c05315f382a352a7f03b5f04299a8d66310361a478f0e2be"
+        },
+        {
+          "filename": "07-35.xlsx",
+          "original_name": "смета КР УКРМ ПС 35 кВ Капитальная.xlsx",
+          "sha256": "d07cb09f90ef1e99c8002df8ad1023149862c5f5d9b196c5c8134f1fba4429a1",
+          "size_bytes": 73440,
+          "source_url_sha256": "331be73369105ee8b57239fbeeb554d0637026303f28e0d650293c3f5c49e10f"
+        },
+        {
+          "filename": "08-4-1.docx",
+          "original_name": "ЗП КР СППИ ОП4 ЗСМК, УКРМ продление Прил1.docx",
+          "sha256": "8073cc13e419a38c7399dd3583d81d8550824a97b7d36cafa6e18e274d4230b8",
+          "size_bytes": 473636,
+          "source_url_sha256": "637e12181d15a41cfeecbc70f827a2e45fed37622cbf90e16393c45e969a575f"
+        }
+      ],
+      "files_saved": 8,
+      "signed_contract_verified": false
+    },
+    "32413631624": {
+      "page_sha256": "6826895e89601743b36a94337ffefffea2fd8b834aa447e47d065fae81a7dc86",
+      "files": [
+        {
+          "filename": "01-attachment-1.doc",
+          "original_name": "извещение.doc",
+          "sha256": "f064be89934a8943b9a17c2eb3e32dda7f95511ade03361dba399e7fa13df1ec",
+          "size_bytes": 59392,
+          "source_url_sha256": "d41b15bb4bb232dfcc9b076f2afbbc8d30c4bfa8bb202512260aad9eaa66f824"
+        },
+        {
+          "filename": "02-1.doc",
+          "original_name": "Приложение №1.doc",
+          "sha256": "efa6923cbedea58ba2db9081ae33eb4f27ee5c8337c69e0ae7f55bde3564f5a0",
+          "size_bytes": 74240,
+          "source_url_sha256": "13e0a776ac269255c7b371cb3bec32e0ba8b91d86d5baf435f1ceb9a4070269b"
+        },
+        {
+          "filename": "03-attachment-3.doc",
+          "original_name": "документация (Восстановлен).doc",
+          "sha256": "82e60a2b305ca5e68101d94f659298d3cc3cc50583d0fb8ad0ef504b453c3414",
+          "size_bytes": 161792,
+          "source_url_sha256": "527a5b5eb15b2aa40ade74938be49df32657b00edc65351fb4c0d826e2ad26c7"
+        },
+        {
+          "filename": "04-attachment-4.pdf",
+          "original_name": "проект+укрм ориг.pdf",
+          "sha256": "aecc2f9f4709b4f9ff7f08ed30a1385ccd19092e1cde3eb0f9f0f5bd667e243f",
+          "size_bytes": 9494192,
+          "source_url_sha256": "c08c2da202ea4228d214caac229ee3d4b7538a6ec532ed85a913c517d9bbb68c"
+        },
+        {
+          "filename": "05-scan.pdf",
+          "original_name": "Scan.pdf",
+          "sha256": "985d3c28ae121167bc2e3e3056d84a1ca759405f0eaf751fb004b31847164550",
+          "size_bytes": 615401,
+          "source_url_sha256": "f03bfaaf6c5c276810c1a76132d2e2322af28aa92d625699ff410173bcd6f642"
+        },
+        {
+          "filename": "06-scan.pdf",
+          "original_name": "Scan.pdf",
+          "sha256": "ae194920a399a54427d2f9384a0860211f35f22d1d898f7d1ad934c167089c44",
+          "size_bytes": 671527,
+          "source_url_sha256": "0a81a87ecfaa218405a39e7bb311f44b1ef35e04391e2e70d2e92fd5b5fba90a"
+        }
+      ],
+      "files_saved": 6,
+      "signed_contract_verified": false
+    },
+    "32413764701": {
+      "page_sha256": "ab219686f14f5401eb4615d629379589129d7fefdd7b3de194df9f325050ede9",
+      "files": [
+        {
+          "filename": "01-116-3-22.07.2024.pdf",
+          "original_name": "Итоговый протокол №116-3 от 22.07.2024.pdf",
+          "sha256": "a7d0eec0064ae7088064d767792f5ff7cc4aebfc6941722e59e3844e3eceff65",
+          "size_bytes": 264115,
+          "source_url_sha256": "e209a2e482ab11bc079475a5e22abf0ee4066576a6565b299997c5e06e8e8c9a"
+        },
+        {
+          "filename": "02-116-2-23.07.2024.pdf",
+          "original_name": "Протокол рассмотрения вторых частей №116-2 от 23.07.2024.pdf",
+          "sha256": "2cd89ebfad3bddaef1562034fc229d294cc0cf3994bf3a685d8c1d2d2043cd6c",
+          "size_bytes": 164052,
+          "source_url_sha256": "29ef8b8e8028bdf6315ec7e96d45ca7b8f46232dbc1c6f9ac81311bbbaa30fb4"
+        },
+        {
+          "filename": "03-116-1-19.07.2024.pdf",
+          "original_name": "Протокол рассмотрения первых частей заявок №116-1 от 19.07.2024.pdf",
+          "sha256": "e005196583e5cfc65367aaeeaf0a0de1c5601a6efa348fe69bac8d92078123e2",
+          "size_bytes": 402696,
+          "source_url_sha256": "d7312191da4f6073f82fe9d568e7fdeda871bf59f86d3927c4928ec8235a6bcd"
+        },
+        {
+          "filename": "04-116-2024.doc",
+          "original_name": "Извещение АЭФ №116-2024.doc",
+          "sha256": "0b1e564af01fa802a96ed6b411e1317c0313c70a1333423b4fdbb6a5797a4d99",
+          "size_bytes": 128512,
+          "source_url_sha256": "8b6b270330a002b1fe114a79a991dd37aff778a8e1416d6a6373fdac7de8e8f2"
+        },
+        {
+          "filename": "05-116-2024-.-2.doc",
+          "original_name": "Извещение АЭФ №116-2024 ред. 2.doc",
+          "sha256": "fba393be1ff3cbf29d5ab03018e84c93263eafd0882a63cdc28c88bfce870dc4",
+          "size_bytes": 128512,
+          "source_url_sha256": "1f4599b35b40672c8e6d5b1074a66cf3584f6eebd94a62eba20f69f8723dad48"
+        },
+        {
+          "filename": "06-attachment-6.pdf",
+          "original_name": "Приложение к ТЗ.pdf",
+          "sha256": "731f9ce22329ee8d35aa151caf3a714db0d7e2eff34c7060b0b51e8eb63a0349",
+          "size_bytes": 358137,
+          "source_url_sha256": "a55bc8da83b03ae10e3e5ecd888b82ea5963bddeb81c9696fd2e7a74476ef2c5"
+        },
+        {
+          "filename": "07-116-2024.docx",
+          "original_name": "Аукционная документация №116-2024.docx",
+          "sha256": "a2b94d8fb2bc4ab3f9754110d50b7ef84ba7fa837dab1bc66bbab1ce4428a98a",
+          "size_bytes": 113549,
+          "source_url_sha256": "b27b03e0654de38cad58c84032aff77d6add426d6dc6b2a882435df3b417d51e"
+        },
+        {
+          "filename": "08-attachment-8.pdf",
+          "original_name": "Приложение к ТЗ.pdf",
+          "sha256": "731f9ce22329ee8d35aa151caf3a714db0d7e2eff34c7060b0b51e8eb63a0349",
+          "size_bytes": 358137,
+          "source_url_sha256": "85925a6559e9aa8621e94f4353cd21fe48a88256cd43a44b825f6689c22718c7"
+        },
+        {
+          "filename": "09-116-2024-.-2.docx",
+          "original_name": "Аукционная документация №116-2024 ред. 2.docx",
+          "sha256": "5a318ff0c87d1d3583d6f532a702d39b34289cd15294f7860551ab6f38a41dc1",
+          "size_bytes": 113569,
+          "source_url_sha256": "999e183648240f7e22f04d5e8ca2564eaee9702e36f60ce29bc1d847867e26ef"
+        },
+        {
+          "filename": "10-attachment-10.docx",
+          "original_name": "схема для разъяснения.docx",
+          "sha256": "7a579fe20497b00e0cab0b702c92923f597ea9aebbca4f9ce6e86c23c0706f2a",
+          "size_bytes": 83707,
+          "source_url_sha256": "69fe1322e9870089ddd52553de12a4126e45cebb0711655e20a476ece9de7688"
+        }
+      ],
+      "files_saved": 10,
+      "signed_contract_verified": false
+    }
+  },
+  "visual_commission_protocols": [
+    {
+      "notice": "32413195287",
+      "protocol_pdf_sha": "9c5ea293266ae5ccd5f352c0d4ec46816a0d732971de10cac939a2cac3947a57",
+      "page_jpeg_sha": [
+        "60ce52b89f4c4c7c6844d19d3c1771ce4fb61fe5b341d8b68ed636f08a4e7cc3",
+        "0f486d55ce3e90693d210e7e29672a25908433e7494c426a280b96ec8232e234"
+      ],
+      "commission_winner": "АО «ТЯЖПРОМСЕРВИС»",
+      "bid_rub": "10467272.45",
+      "mixed_lot_nmck_rub": "13892027.33",
+      "pq_repair_nmck_rub": "684349.81",
+      "signed_supplier_verified": false
+    },
+    {
+      "notice": "32413764701",
+      "protocol_pdf_sha": "a7d0eec0064ae7088064d767792f5ff7cc4aebfc6941722e59e3844e3eceff65",
+      "page_jpeg_sha": [
+        "65d8d7f4348fb24089184aa5d00703ac9ae1350480b56e2b84a967d9a0f5793a",
+        "ac656e5ffbb25f49de1890566a6a6413a610d438872b303053f78504b74e9f2e"
+      ],
+      "commission_winner": null,
+      "bidder": "anonymous participant №1",
+      "bid_rub": "3397600.00",
+      "nmck_rub": "3415594.16",
+      "voltage_kv": 10,
+      "kvar": 150,
+      "signed_supplier_verified": false
+    }
+  ],
+  "arc_reviews_accepted": [
+    "32413195287-915c3d706f92d0430e7703c1",
+    "32413764701-4bb09da8601c836b41c1688a"
+  ],
+  "signed_suppliers_verified": 0,
+  "executed_contract_prices_verified": 0,
+  "month_journal_sha256": "5d041615e0303464ecc58dea3c8f9a570904ea8e396f51e461c485c12a1d6bf9",
+  "visual_receipts_sha256": "f57a497b30c26c266f53b476dbc7a8c697016b916a521fb74efd664bf2ce815a",
+  "source_attempts_sha256": "feac3590eca8a48d40251506c93c1184588c9407ff71b71e43cf37a975fe2280"
+}

@@ -1,0 +1,178 @@
+{
+  "schema_version": "pq-watchdog-source-research/1",
+  "run_start_moscow": "2026-10-30T07:33:58+03:00",
+  "finished_moscow": "2026-10-30T07:38:27+03:00",
+  "issue_comment_id": 6515053698,
+  "canonical_pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "parent_head": "fd0dc7d00506bf23c85419e32d4993d30e459d79",
+  "internal_apfs_acceptance": "pass",
+  "postgres": {
+    "unique_lots_before": 114,
+    "unique_lots_after": 114,
+    "distinct_procedures": 103,
+    "eis_223_notices": 37,
+    "new_unique_lots": 0,
+    "new_core_6_35kv_lots": 0,
+    "new_signed_suppliers": 0,
+    "new_executed_sales_rub": 0
+  },
+  "source_requests": {
+    "audited_direct_http_total": 15,
+    "unique_first_party_urls": 11,
+    "http_200": 15,
+    "queries": [
+      {
+        "url": "https://www.tektorg.ru/rosneft/procedures?name=%D0%A3%D0%9A%D0%A0%D0%9C",
+        "query": "УКРМ",
+        "http": 200,
+        "requests": 2,
+        "case_specific_results": 0
+      },
+      {
+        "url": "https://www.tektorg.ru/rosneft/procedures?name=%D0%A0%D0%9D60704547",
+        "query": "РН60704547",
+        "http": 200,
+        "requests": 3,
+        "case_specific_results": 0
+      },
+      {
+        "url": "https://www.tektorg.ru/rosnefttkp/procedures?name=%D0%A0%D0%9D60704547",
+        "query": "РН60704547",
+        "http": 200,
+        "requests": 1,
+        "case_specific_results": 0
+      },
+      {
+        "url": "https://www.tektorg.ru/rosneft/procedures?name=%D0%A0%D0%9D60602693",
+        "query": "РН60602693",
+        "http": 200,
+        "requests": 2,
+        "case_specific_results": 0
+      },
+      {
+        "url": "https://www.tektorg.ru/rosnefttkp/procedures?name=%D0%A0%D0%9D60602693",
+        "query": "РН60602693",
+        "http": 200,
+        "requests": 1,
+        "case_specific_results": 0
+      },
+      {
+        "url": "https://www.tektorg.ru/rosneft/procedures?name=%D0%A0%D0%9D60804549",
+        "query": "РН60804549",
+        "http": 200,
+        "requests": 1,
+        "case_specific_results": 0
+      },
+      {
+        "url": "https://www.tektorg.ru/rosnefttkp/procedures?name=%D0%A0%D0%9D60804549",
+        "query": "РН60804549",
+        "http": 200,
+        "requests": 1,
+        "case_specific_results": 0
+      },
+      {
+        "url": "https://www.tektorg.ru/rosneft/procedures?name=%D0%A0%D0%9D61001644",
+        "query": "РН61001644",
+        "http": 200,
+        "requests": 1,
+        "case_specific_results": 0
+      },
+      {
+        "url": "https://www.tektorg.ru/rosnefttkp/procedures?name=%D0%A0%D0%9D61001644",
+        "query": "РН61001644",
+        "http": 200,
+        "requests": 1,
+        "case_specific_results": 0
+      },
+      {
+        "url": "https://www.tektorg.ru/rosneft/procedures?name=%D0%A0%D0%9D61003961",
+        "query": "РН61003961",
+        "http": 200,
+        "requests": 1,
+        "case_specific_results": 1
+      },
+      {
+        "url": "https://tender.russneft.ru/",
+        "query": "official tender index search: УКРМ / компенсац / конденсатор / СТАТКОМ / гармоник / БСК / реактивн",
+        "http": 200,
+        "requests": 1,
+        "case_specific_results": 0,
+        "bytes": 41161
+      }
+    ],
+    "other_web_discovery_requests_excluded": true,
+    "monthly_search_coverage_gain": 0
+  },
+  "new_original_files_sha_verified": 0,
+  "new_original_protocols_with_named_winner": 0,
+  "new_signed_suppliers": 0,
+  "new_underlying_projects": 0,
+  "secondary_only_not_promoted": [
+    {
+      "token": "РН60704547",
+      "buyer": "ООО Харампурнефтегаз",
+      "secondary_url": "https://energybase.ru/tender-outdated/019f8954-ba9e-71c6-8f68-80fdd1df5d6a",
+      "publication": "2026-07-22",
+      "title": "Опрос рынка на поставку устройства компенсации реактивной мощности",
+      "voltage_kv": null,
+      "first_party_exact_search": "HTTP200 / zero matching results in both public TEK-Torg sections",
+      "status": "unverified_source_only"
+    },
+    {
+      "token": "РН60602693",
+      "buyer": "ООО Башнефть-Полюс",
+      "secondary_url": "https://energybase.ru/tender-outdated/019eb623-88bc-7380-a905-5fe39b58e739",
+      "publication": "2026-06-10",
+      "title": "Опрос рынка на поставку конденсаторной установки",
+      "voltage_kv": null,
+      "first_party_exact_search": "HTTP200 / zero matching results in both public TEK-Torg sections",
+      "status": "unverified_source_only"
+    },
+    {
+      "token": "1258722",
+      "buyer": "ООО ИСО",
+      "secondary_url": "https://zakupki.kontur.ru/IS83917556",
+      "publication": "2026-10-23",
+      "models": [
+        "КЭЭПВ-1.85-380-0.25-4У3",
+        "КЭЭС-1.2-200-У3",
+        "КЭП1-1.05-75-2У3"
+      ],
+      "status": "secondary_only_adjacent_voltage_1_05_1_2_1_85kv_not_core",
+      "first_party": "Tender.Pro original not obtained"
+    }
+  ],
+  "dedup_checks": {
+    "РН61001644": "already in 114-lot PG and existing client report; not imported",
+    "4643332": "already in PG; 0 bids and unsuccessful official original already captured",
+    "РН61003961": "already imported prior run; first-party search returns exact one result"
+  },
+  "why_zero_originals": "The newly identified June/July cases are absent from current public exact-number TEK-Torg listings (HTTP200 but 0 matches); other first-party index has no PQ matches. 1258722 only secondary low-voltage models. No new case-specific original, signed contract or verified core lot was obtained. HTTP200/zero matches does not imply absent market.",
+  "db_mutation": false,
+  "client_html_regenerated": false,
+  "canonical_v29_rows_unchanged": 101,
+  "no_auto_merge": true,
+  "next": [
+    {
+      "id": "106044-ТТ",
+      "retry_after_moscow": "2026-10-30 09:00",
+      "goal": "official STATCOM outcome and participant protocol"
+    },
+    {
+      "id": "32616435269",
+      "retry_after_moscow": "2026-10-30 10:38",
+      "goal": "Roseltorg original technical 7z and voltage"
+    },
+    {
+      "id": "РН61003961",
+      "retry_after_moscow": "2026-10-30 20:00",
+      "goal": "official TEK-Torg result after application close"
+    },
+    {
+      "id": "РН60704547",
+      "retry_after_moscow": "2026-11-02 09:00",
+      "goal": "archive-specific official search; don't repeat current listing"
+    }
+  ]
+}

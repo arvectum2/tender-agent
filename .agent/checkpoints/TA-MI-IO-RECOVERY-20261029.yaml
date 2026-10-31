@@ -1,0 +1,40 @@
+task_id: TA-MI-IO-RECOVERY-20261029
+status: completed
+owner_project: Tender Agent / Arvectum
+objective: Restore reliable Git, source-evidence and PostgreSQL ingest workflows after Mac mini external SSD operations began failing with EINTR/SIGKILL and macOS SystemPolicyRemovableVolumes denial.
+definition_of_done:
+  - Reproduce and diagnose failure; distinguish disk capacity, filesystem and macOS permission.
+  - Establish durable working Git checkout and Python execution on a stable filesystem without losing remote PR #521 history.
+  - Verify current PostgreSQL PQ collection cardinality and receipt; do not duplicate already imported lot7.
+  - Make new source, checkpoint and backup writes verifiable on a stable writable path; enforce SHA and idempotent guarded inserts.
+  - Run focused source-bound unit tests, Ruff and an actual nonmutating DB readback via stable path.
+  - Update the single existing Tender Agent Watchdog to use the repaired path and retain one PR.
+  - Commit final SHA and mark completed only after acceptance.
+completed_stages:
+  - Reproduced git getcwd failure and Python os.listdir EINTR on /Volumes/ArvectumSSD through ARC and MacBook-Air SSH.
+  - Verified disk7s1 APFS mounted read/write with ~2.8 TiB free; not a disk space issue.
+  - Read kernel macOS sandbox logs showing repeated SystemPolicyRemovableVolumes denials for Arvectum OS relocated-home logs; possible permission issue. Disk Utility verifyVolume blocked by macOS sandbox, not yet filesystem-verified.
+  - Established direct-funnel MacBook Air to Mac mini SSH as reliable alternate control plane.
+  - Cloned sole PR #521 branch to /Users/master/ArvectumSafe/worktrees/tender-agent-mi on internal APFS; Git status and HEAD 158f365 verified clean.
+  - Created isolated Python 3.14 venv /Users/master/ArvectumSafe/.venvs/tender-agent-mi with pytest, Ruff, PyYAML.
+current_stage: Completed operating research writer on internal APFS; separate macOS external removable-volume diagnosis remains outstanding but is removed from critical path.
+remaining_stages:
+  - Optional: Later diagnose external SSD removable-volume macOS TCC permission through official OS UI/First Aid. No active Tender Agent write depends on that external volume.
+last_verified_commit: b4608c7566431cc449a585acd6e48780af948c8a
+last_tests: Internal full project venv Python 3.14.10 installed; Ruff PASS; 28 focused source-bound regression tests PASS. First-party capture fsync+readback PASS; full pg_dump 37487137 bytes and pg_restore --list PASS; full live preflight status=pass on b4608c7, PostgreSQL 109 unique lots / 98 distinct procedure tokens / 37 EIS 223 notices.
+db_state: PostgreSQL independently re-read twice from stable worktree: 109 unique PQ lots, 98 distinct procedure tokens, 37 distinct EIS223 notices; Tatneft lot7 retained with no reimport.
+worktree: /Users/master/ArvectumSafe/worktrees/tender-agent-mi
+stable_venv: /Users/master/ArvectumSafe/.venvs/tender-agent-mi
+unreliable_old_worktree: /Volumes/ArvectumSSD/Arvectum/worktrees/ta-mi-single-lane-20261029
+resume_instruction: >-
+  Technical IO recovery is completed for Tender Agent market research. Continue
+  source acquisition from the separate in_progress TA-MI-AUTONOMY-20261027
+  checkpoint, using internal checkout /Users/master/ArvectumSafe/worktrees/tender-agent-mi,
+  internal source root /Users/master/ArvectumSafe/runtime/market-intelligence/pq-agent-pilot-live,
+  internal backup root /Users/master/ArvectumSafe/backups/data-platform and the single
+  existing Watchdog. Run python -m scripts.market_intelligence.verify_internal_runtime
+  before source/DB writes; fresh custom pg_dump with pg_restore+SHA prior to each new insert.
+  Only source verified unique notice:lot rows, atomic count guard and readback.
+  Do not reimport 223fz:32616065155:lot7. Preserve external SSD state and
+  seek approved macOS privacy/First Aid diagnostics separately, never bypass TCC.
+  No second watchdog, no second PR, no force push, no unrelated current-task.yaml changes.

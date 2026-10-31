@@ -1,0 +1,209 @@
+{
+  "schema_version": "pq-watchdog-evidence/1",
+  "run_start_moscow": "2026-10-30T06:32:55+03:00",
+  "finished_moscow": "2026-10-30T06:44:25+03:00",
+  "pr": 521,
+  "status": "in_progress_review",
+  "source_capture_commit": "5c839d6f417e94194ee07dbca7ee954a63766bcc",
+  "postgres": {
+    "unique_lots_before": 113,
+    "unique_lots_after": 114,
+    "procedures_before": 102,
+    "procedures_after": 103,
+    "eis_223_notices": 37,
+    "new_unique_lots": 1,
+    "new_core_6kv_lots": 1,
+    "new_underlying_projects": 0,
+    "signed_suppliers": 0,
+    "executed_prices": 0,
+    "verified_sales_rub": 0
+  },
+  "requests": {
+    "tektorg_exact_number_search_GET_200": 10,
+    "queries": [
+      "РН60805563",
+      "РН61003961",
+      "РН60405071",
+      "РН61004155",
+      "РН61005187"
+    ],
+    "sections": [
+      "/rosneft/procedures",
+      "/rosnefttkp/procedures"
+    ],
+    "case_specific_capture_GET_200": 9,
+    "tracked_case_specific_GET_200_total": 19,
+    "technical_redirects_302": 3,
+    "secondary_kontur_403": 2,
+    "b2b_home_403": 2,
+    "new_month_search_coverage": 0,
+    "note": "Exact-number searches are not complete monthly coverage; 26.4MB RN61005187 archive exceeds 12MB capture limit"
+  },
+  "originals": [
+    {
+      "case_id": "commercial:RN61003961:lot1",
+      "source_url": "https://www.tektorg.ru/rosneft/procedures?name=%D0%A0%D0%9D61003961",
+      "signed_file_url_only_in_private_receipt": false,
+      "private_receipt": "captures/commercial_RN61003961_lot1/20261030T033730207400Z-90b902a6-1a13305a2d7482ad.bin.json",
+      "private_original": "captures/commercial_RN61003961_lot1/20261030T033730207400Z-90b902a6-1a13305a2d7482ad.bin",
+      "sha256": "1a13305a2d7482ad0b99f40dde3aab6befebcab055a329142b23d2a51222c001",
+      "bytes": 287589,
+      "http": 200
+    },
+    {
+      "case_id": "commercial:RN61003961:lot1",
+      "source_url": "https://www.tektorg.ru/rosneft/procedures/20065463",
+      "signed_file_url_only_in_private_receipt": false,
+      "private_receipt": "captures/commercial_RN61003961_lot1/20261030T033744745519Z-a90dcb19-9a9fa6fc6f3fd01b.bin.json",
+      "private_original": "captures/commercial_RN61003961_lot1/20261030T033744745519Z-a90dcb19-9a9fa6fc6f3fd01b.bin",
+      "sha256": "9a9fa6fc6f3fd01b17ad80f3fd9ef4cdaf134d32cebd1004c54b451d1bf5588c",
+      "bytes": 305148,
+      "http": 200
+    },
+    {
+      "case_id": "commercial:RN61003961:lot1",
+      "source_url": "https://www.tektorg.ru/rosneft/procedures/20065463",
+      "signed_file_url_only_in_private_receipt": true,
+      "private_receipt": "captures/commercial_RN61003961_lot1/20261030T033918572929Z-d9b8e47d-397ece2fa5086b7b.bin.json",
+      "private_original": "captures/commercial_RN61003961_lot1/20261030T033918572929Z-d9b8e47d-397ece2fa5086b7b.bin",
+      "sha256": "397ece2fa5086b7b89d14c4249b94291f7617fb39684142df8750e3ee22e5380",
+      "bytes": 119279,
+      "http": 200
+    },
+    {
+      "case_id": "commercial:RN61003961:lot1",
+      "source_url": "https://www.tektorg.ru/rosneft/procedures/20065463",
+      "signed_file_url_only_in_private_receipt": true,
+      "private_receipt": "captures/commercial_RN61003961_lot1/20261030T033933090110Z-a14b61f0-f1b7d3f95e1768c6.bin.json",
+      "private_original": "captures/commercial_RN61003961_lot1/20261030T033933090110Z-a14b61f0-f1b7d3f95e1768c6.bin",
+      "sha256": "f1b7d3f95e1768c6757d65e469cc25f62ad79d31883839d37173958fc072f886",
+      "bytes": 17906,
+      "http": 200
+    },
+    {
+      "case_id": "commercial:RN61004155:lot1",
+      "source_url": "https://www.tektorg.ru/rosneft/procedures?name=%D0%A0%D0%9D61004155",
+      "signed_file_url_only_in_private_receipt": false,
+      "private_receipt": "captures/commercial_RN61004155_lot1/20261030T033730597012Z-59f51b72-7d4b57971cee2e96.bin.json",
+      "private_original": "captures/commercial_RN61004155_lot1/20261030T033730597012Z-59f51b72-7d4b57971cee2e96.bin",
+      "sha256": "7d4b57971cee2e96257660420c7e5952b96e79ec109232b81aabce87ece4a493",
+      "bytes": 287747,
+      "http": 200
+    },
+    {
+      "case_id": "commercial:RN61004155:lot1",
+      "source_url": "https://www.tektorg.ru/rosneft/procedures/20068407",
+      "signed_file_url_only_in_private_receipt": false,
+      "private_receipt": "captures/commercial_RN61004155_lot1/20261030T033745309563Z-85382590-546de5b5f7161435.bin.json",
+      "private_original": "captures/commercial_RN61004155_lot1/20261030T033745309563Z-85382590-546de5b5f7161435.bin",
+      "sha256": "546de5b5f7161435a9e8f73351f2b859da1886486e7b4b77d64208dd8b1794d4",
+      "bytes": 275134,
+      "http": 200
+    },
+    {
+      "case_id": "commercial:RN61004155:lot1",
+      "source_url": "https://www.tektorg.ru/rosneft/procedures/20068407",
+      "signed_file_url_only_in_private_receipt": true,
+      "private_receipt": "captures/commercial_RN61004155_lot1/20261030T033936618550Z-46392e4e-8d534d2a2de2339f.bin.json",
+      "private_original": "captures/commercial_RN61004155_lot1/20261030T033936618550Z-46392e4e-8d534d2a2de2339f.bin",
+      "sha256": "8d534d2a2de2339f0c3e495b0d81accf4d285b3d58a405dc9cabef10f03c368b",
+      "bytes": 5378067,
+      "http": 200
+    },
+    {
+      "case_id": "commercial:RN61005187:lot1",
+      "source_url": "https://www.tektorg.ru/rosnefttkp/procedures?name=%D0%A0%D0%9D61005187",
+      "signed_file_url_only_in_private_receipt": false,
+      "private_receipt": "captures/commercial_RN61005187_lot1/20261030T033730841720Z-dc389188-d9a4ce41d3ff7c10.bin.json",
+      "private_original": "captures/commercial_RN61005187_lot1/20261030T033730841720Z-dc389188-d9a4ce41d3ff7c10.bin",
+      "sha256": "d9a4ce41d3ff7c1062fbfe60ab46d6e7caef3fd760a5768de701647661958195",
+      "bytes": 279103,
+      "http": 200
+    },
+    {
+      "case_id": "commercial:RN61005187:lot1",
+      "source_url": "https://www.tektorg.ru/rosnefttkp/procedures/20083978",
+      "signed_file_url_only_in_private_receipt": false,
+      "private_receipt": "captures/commercial_RN61005187_lot1/20261030T033746639989Z-7fd0c4aa-ad145e070ebaf2d0.bin.json",
+      "private_original": "captures/commercial_RN61005187_lot1/20261030T033746639989Z-7fd0c4aa-ad145e070ebaf2d0.bin",
+      "sha256": "ad145e070ebaf2d085781beddf15a07a46b38ff3a92a141eb0c3b281f44bc037",
+      "bytes": 282952,
+      "http": 200
+    }
+  ],
+  "new_sha_verified_originals": 9,
+  "new_technical_original_files": 3,
+  "case": {
+    "id": "commercial:РН61003961:lot1",
+    "buyer": "АО АНПЗ ВНК",
+    "lot": "2600124554",
+    "voltage_kv": 6,
+    "units": 4,
+    "power_kvar_each": [
+      300,
+      300,
+      450,
+      450
+    ],
+    "total_kvar": 1500,
+    "source_xlsx_sha": "f1b7d3f95e1768c6757d65e469cc25f62ad79d31883839d37173958fc072f886",
+    "verbatim": [
+      "Номинальное напряжение 6кВ",
+      "Номинальная мощность 300 кВАр",
+      "Номинальная мощность 450 кВАр"
+    ],
+    "cells": [
+      "E9",
+      "E23",
+      "E37",
+      "E51"
+    ],
+    "related_prior_monitoring": "РН60405071",
+    "project_gain": 0,
+    "nmck": null,
+    "winner": null,
+    "signed_supplier": null,
+    "paid_sales": null
+  },
+  "existing_case_originals": {
+    "РН61004155": "Official 7z contains 6kV UKRM-A450 and UKRM-R900 technical folders, already imported",
+    "РН61005187": "Official DFKU/UKRM card, voltage unknown, 26.4MB archive exceeds capture bound, already imported"
+  },
+  "safety": {
+    "prewrite_gate": "pass",
+    "new_full_backup_sha": "0a0f70808968fcc975199bedd4e90e1878651a76e579e86cf0595bd5727d28f3",
+    "pg_restore_list_verified": true,
+    "atomic_append_postwrite_hash_readback": "pass",
+    "receipt": "docs/market_intelligence/PQ_POSTGRES_CORPUS_GROWTH_20261030_TEKTORG.json",
+    "review": "staged_unreviewed",
+    "other_collections_untouched": true
+  },
+  "client_html": {
+    "path": "docs/market_intelligence/POWER_QUALITY_CLIENT_PREVIEW_20261024.html",
+    "regenerated_after_verified_ingest": true,
+    "rows": 114,
+    "as_of": "2026-10-30",
+    "tests": 22,
+    "ruff": "pass",
+    "not_sales_or_TAM_disclaimer": true
+  },
+  "next": [
+    {
+      "id": "106044-ТТ",
+      "retry": "2026-10-30 09:00 MSK",
+      "goal": "STATCOM result"
+    },
+    {
+      "id": "32616435269",
+      "retry": "2026-10-30 10:38 MSK",
+      "goal": "technical archive and voltage"
+    },
+    {
+      "id": "РН61003961",
+      "retry": "2026-10-30 20:00 MSK",
+      "goal": "post-deadline result and supplier"
+    }
+  ],
+  "canonical_v29_rows_unchanged": 101,
+  "no_auto_merge": true
+}

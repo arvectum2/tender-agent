@@ -1,0 +1,310 @@
+{
+  "schema_version": "pq-watchdog-223-eis-7z/1",
+  "run": "2026-10-29T02:36:20+03:00",
+  "case_id": "223fz:32616400421:lot1",
+  "v29_rows_unchanged": 101,
+  "existing_notice": true,
+  "official_card_url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616400421&noticeGuid=0169b856-1de7-44af-b145-c323b7566aa3",
+  "official_card_html_sha256": "709da09cf6279957c1ece2efb1970ae7cfd59d611629565de5674429cc17484c",
+  "official_card_http": 200,
+  "buyer": "ПАО Россети Сибирь",
+  "project": "ПС Тяжинская (from original XLSX)",
+  "procedure": "26-1149",
+  "status": "cancelled_2026-09-29",
+  "reason": "изменение места проведения закупки для привлечения большего числа участников",
+  "source_archives": [
+    {
+      "type": "documentation",
+      "sha256": "d32e595bbbfe916848fcfcc4ab166d17429c922444e61a20114d9c8518175b16",
+      "bytes": 605671,
+      "source_url_sha256": "50142ecce1c4d78bcdc65fe1c07ff9f5477768c1a0cafc2e1e22350183021982",
+      "http_status": 200
+    },
+    {
+      "type": "cancellation_protocol",
+      "sha256": "ce2241529a0e2d8df4c3c94d851adc349f403da3a54edbc53b35404f50b363a0",
+      "bytes": 194533,
+      "source_url_sha256": "17f9d497077ccb9abe165a6c930de937085df6cbb74d4af97a340e7ccb3171fe",
+      "http_status": 200
+    }
+  ],
+  "regular_members_sha_verified": [
+    {
+      "file": "Документация о закупке МСП 26-1149.docx",
+      "sha256": "135b380c0369236bcc9ca86c9fa7d081a5272050e1649dcf8da6e5416473d8e4",
+      "bytes": 145292
+    },
+    {
+      "file": "Извещение о закупке МСП 26-1149.docx",
+      "sha256": "4b1a9d72ea495dff0bdab770f646322c7fef41dc9a0a38023357e102bd94809c",
+      "bytes": 35323
+    },
+    {
+      "file": "Приложение 1 - Проект договора/Проект договора.DOCX",
+      "sha256": "cbbb900c805f5aa5278e941f0de4cd89bcc3e170a52f31ce5cb6876654c470d6",
+      "bytes": 281390
+    },
+    {
+      "file": "Приложение 3 - Обоснование НМЦ/Расчет стоимости ШМР.XLSX",
+      "sha256": "6e2bfe56294aa7b4ec636e7542cfed411fd3a9d5c79e651b0b178a876b751110",
+      "bytes": 11708
+    },
+    {
+      "file": "Приложение 3 - Обоснование НМЦ/СО 6.3140 Приложение Расчет стоимости (1).xlsx",
+      "sha256": "e8973af7e7427b9a286f1bed8c5d16583c0c7a62a60b752b7af41d762346a097",
+      "bytes": 10926
+    },
+    {
+      "file": "Приложение 3 - Обоснование НМЦ/Обоснование НМЦ_.docx",
+      "sha256": "6ae3bfdf9d32a074361f250b2c94bea88d5e9f33254a909949f82df49fc104f7",
+      "bytes": 23145
+    },
+    {
+      "file": "Приложение 2 - Техническое задание/ТЗ на поставку.docx",
+      "sha256": "8ccecf8a3c18158ed4f2cf7ce864cf40bcf8b7254de1b163c5e1b0f655bbcb63",
+      "bytes": 40320
+    },
+    {
+      "file": "Приложение 2 - Техническое задание/Приложение 2.docx",
+      "sha256": "2fe39864fb133bd0b8c961c027b1314760de071646e31a8fd0ff5976044c193a",
+      "bytes": 99787
+    },
+    {
+      "file": "Приложение 2 - Техническое задание/Приложение 1.xlsx",
+      "sha256": "acd196f12cc911bb8ab59a2a95f760c17dc85a5f5e8a9fb7b4fcddf3dab06e80",
+      "bytes": 9711
+    },
+    {
+      "file": "Голосование.docx",
+      "sha256": "517d4d997e33a14661a96e80615016093d70e4f4db398f09e53225b0590df91a",
+      "bytes": 23677
+    },
+    {
+      "file": "Протокол отмены 26-1149.docx",
+      "sha256": "1cf439532a7acf87d47d0f5baac56cf386e77f6cdc373e8276b29a46ae8ec23e",
+      "bytes": 28781
+    },
+    {
+      "file": "Протокол отмены 26-1149.pdf",
+      "sha256": "de1e83f7ef61a1f883d01f2eba568f7bc80d164ce2c33ccfcee9dd525b44ecba",
+      "bytes": 88426
+    },
+    {
+      "file": "Голосование.pdf",
+      "sha256": "b321a5eaa8999e6a1d39776cb6c2c2364c9e6eb966425701658ae76be0494bbc",
+      "bytes": 74245
+    }
+  ],
+  "chatgpt_arc_review": {
+    "id": "32616400421-a7b87657e6bbf4a37cc313d1",
+    "state": "reviewed",
+    "evidence_count": 10,
+    "source_sha": [
+      "2fe39864fb133bd0b8c961c027b1314760de071646e31a8fd0ff5976044c193a",
+      "acd196f12cc911bb8ab59a2a95f760c17dc85a5f5e8a9fb7b4fcddf3dab06e80",
+      "1cf439532a7acf87d47d0f5baac56cf386e77f6cdc373e8276b29a46ae8ec23e",
+      "8ccecf8a3c18158ed4f2cf7ce864cf40bcf8b7254de1b163c5e1b0f655bbcb63"
+    ]
+  },
+  "voltage": {
+    "system_kv": 110,
+    "mpu_kv": 10,
+    "mpu_model": "МПУ-30000/10 УХЛ1",
+    "bsk_kv": 110,
+    "bsk_model": "БСК-110-26 ХЛ1"
+  },
+  "buyer_nmck_rub_ex_vat": {
+    "mpu_10kv": "335351974.38",
+    "bsk_110kv": "33723435.46",
+    "supervision": "1429508.20",
+    "total": "370504918.04"
+  },
+  "official_nmck_rub_incl_vat": "452016000.01",
+  "signed_supplier": null,
+  "signed_contract_price": null,
+  "executed_price": null,
+  "commission_winner": null,
+  "verified_new_6_35kv_equipment_sales": 0,
+  "new_notices": 0,
+  "new_lots": 0,
+  "new_deduplicated_projects": 0,
+  "new_cancellation_protocols": 1,
+  "first_party_requests": {
+    "total": 19,
+    "http_200": 4,
+    "provider_without_numeric_http": 15,
+    "new_calendar_searches": 12,
+    "search_status": {
+      "empty": 10,
+      "success": 2
+    },
+    "metadata_false_positives": 9,
+    "months_with_new_queries": [
+      "2026-09",
+      "2026-10"
+    ],
+    "new_unique_months": 0,
+    "exhaustive_months": 0,
+    "retry_after_moscow": "2026-10-29T14:40:08.302295+03:00",
+    "searches": [
+      {
+        "month": "2026-10",
+        "law": "223fz",
+        "query": "МПУ-30000/10",
+        "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.10.2026&publishDateTo=28.10.2026&searchString=%D0%9C%D0%9F%D0%A3-30000%2F10",
+        "page": 1,
+        "provider_status": "empty",
+        "http_numeric": "not_exposed",
+        "candidates": [],
+        "has_next": false,
+        "exhaustive": false
+      },
+      {
+        "month": "2026-10",
+        "law": "223fz",
+        "query": "БСК-110-26",
+        "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.10.2026&publishDateTo=28.10.2026&searchString=%D0%91%D0%A1%D0%9A-110-26",
+        "page": 1,
+        "provider_status": "empty",
+        "http_numeric": "not_exposed",
+        "candidates": [],
+        "has_next": false,
+        "exhaustive": false
+      },
+      {
+        "month": "2026-10",
+        "law": "223fz",
+        "query": "УКРМ-6,3-600",
+        "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.10.2026&publishDateTo=28.10.2026&searchString=%D0%A3%D0%9A%D0%A0%D0%9C-6%2C3-600",
+        "page": 1,
+        "provider_status": "empty",
+        "http_numeric": "not_exposed",
+        "candidates": [],
+        "has_next": false,
+        "exhaustive": false
+      },
+      {
+        "month": "2026-10",
+        "law": "223fz",
+        "query": "источник реактивной мощности",
+        "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.10.2026&publishDateTo=28.10.2026&searchString=%D0%B8%D1%81%D1%82%D0%BE%D1%87%D0%BD%D0%B8%D0%BA+%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9+%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8",
+        "page": 1,
+        "provider_status": "empty",
+        "http_numeric": "not_exposed",
+        "candidates": [],
+        "has_next": false,
+        "exhaustive": false
+      },
+      {
+        "month": "2026-10",
+        "law": "44fz",
+        "query": "МПУ-30000/10",
+        "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.10.2026&publishDateTo=28.10.2026&pageNumber=1&recordsPerPage=30&searchString=%D0%9C%D0%9F%D0%A3-30000%2F10",
+        "page": 1,
+        "provider_status": "empty",
+        "http_numeric": "not_exposed",
+        "candidates": [],
+        "has_next": false,
+        "exhaustive": false
+      },
+      {
+        "month": "2026-10",
+        "law": "44fz",
+        "query": "БСК-110-26",
+        "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.10.2026&publishDateTo=28.10.2026&pageNumber=1&recordsPerPage=30&searchString=%D0%91%D0%A1%D0%9A-110-26",
+        "page": 1,
+        "provider_status": "success",
+        "http_numeric": "not_exposed",
+        "candidates": [
+          "0131200001026007888",
+          "0131200001026007881",
+          "0131200001026007875",
+          "0131200001026007867",
+          "0131200001026007866",
+          "0131200001026007859",
+          "0140100009826000102"
+        ],
+        "has_next": false,
+        "exhaustive": false
+      },
+      {
+        "month": "2026-10",
+        "law": "44fz",
+        "query": "УКРМ-6,3-600",
+        "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.10.2026&publishDateTo=28.10.2026&pageNumber=1&recordsPerPage=30&searchString=%D0%A3%D0%9A%D0%A0%D0%9C-6%2C3-600",
+        "page": 1,
+        "provider_status": "empty",
+        "http_numeric": "not_exposed",
+        "candidates": [],
+        "has_next": false,
+        "exhaustive": false
+      },
+      {
+        "month": "2026-10",
+        "law": "44fz",
+        "query": "источник реактивной мощности",
+        "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.10.2026&publishDateTo=28.10.2026&pageNumber=1&recordsPerPage=30&searchString=%D0%B8%D1%81%D1%82%D0%BE%D1%87%D0%BD%D0%B8%D0%BA+%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9+%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8",
+        "page": 1,
+        "provider_status": "success",
+        "http_numeric": "not_exposed",
+        "candidates": [
+          "0140100009826000102",
+          "0172100003026000118"
+        ],
+        "has_next": false,
+        "exhaustive": false
+      },
+      {
+        "month": "2026-09",
+        "law": "223fz",
+        "query": "МПУ-30000/10",
+        "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.09.2026&publishDateTo=30.09.2026&searchString=%D0%9C%D0%9F%D0%A3-30000%2F10",
+        "page": 1,
+        "provider_status": "empty",
+        "http_numeric": "not_exposed",
+        "candidates": [],
+        "has_next": false,
+        "exhaustive": false
+      },
+      {
+        "month": "2026-09",
+        "law": "223fz",
+        "query": "БСК-110-26",
+        "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.09.2026&publishDateTo=30.09.2026&searchString=%D0%91%D0%A1%D0%9A-110-26",
+        "page": 1,
+        "provider_status": "empty",
+        "http_numeric": "not_exposed",
+        "candidates": [],
+        "has_next": false,
+        "exhaustive": false
+      },
+      {
+        "month": "2026-09",
+        "law": "223fz",
+        "query": "УКРМ-6,3-600",
+        "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.09.2026&publishDateTo=30.09.2026&searchString=%D0%A3%D0%9A%D0%A0%D0%9C-6%2C3-600",
+        "page": 1,
+        "provider_status": "empty",
+        "http_numeric": "not_exposed",
+        "candidates": [],
+        "has_next": false,
+        "exhaustive": false
+      },
+      {
+        "month": "2026-09",
+        "law": "223fz",
+        "query": "источник реактивной мощности",
+        "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.09.2026&publishDateTo=30.09.2026&searchString=%D0%B8%D1%81%D1%82%D0%BE%D1%87%D0%BD%D0%B8%D0%BA+%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9+%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8",
+        "page": 1,
+        "provider_status": "empty",
+        "http_numeric": "not_exposed",
+        "candidates": [],
+        "has_next": false,
+        "exhaustive": false
+      }
+    ]
+  },
+  "source_grade": "original_official_eis_html_and_two_7z_with_sha; no_soap_xml_binding",
+  "private_receipts": "watchdog-20261029-0236-primary",
+  "note": "Do not count cancelled 110kV hybrid or 10kV component estimated price as signed equipment turnover. Prior Roseltorg source may cover same notice; no double count."
+}
