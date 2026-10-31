@@ -82,7 +82,30 @@ def verified_rad_commission(data, metadata):
     return None
 
 
+def verified_nikitskaya_contract(data, metadata):
+    proof = (metadata or {}).get("eis_nikitskaya_contract_enrichment") or {}
+    sources = proof.get("sources") or []
+    return (data.get("canonical_id") == "223fz:32615966040:lot1"
+            and data.get("contract_registry_number") == "55036065113260035960000"
+            and data.get("contract_registered_price_rub") == "5273763.77"
+            and data.get("registered_signed_contract_verified") is True
+            and proof.get("supplier_verified") is False
+            and proof.get("payment_verified") is False
+            and len(sources) == 2
+            and sources[0].get("sha256") == "9f5241d6942c2eb62b69b03938224c1b64cba93995841a4e53db025b7c079317"
+            and sources[1].get("sha256") == "0331902c360c21720c9aa38dfb94611a44ec31bfe664303fb9dce24d8677cb99")
+
+
 def source_bound_rad_note(data, metadata):
+    if verified_nikitskaya_contract(data, metadata):
+        return (
+            "Официальный реестр ЕИС: договор №28912-26-100201 от 03.06.2026 "
+            "зарегистрирован на 5 273 763,77 руб. (общий смешанный EPC). "
+            "Протокол РАД рекомендовал ООО «ЭНЕРГОСЕТЬ», но реестр не "
+            "подтверждает личность подписавшего поставщика. Оплата и "
+            "стоимость отдельного PQ-оборудования не установлены. "
+            "Вторичный источник завышал сумму на 0,23 руб."
+        )
     if verified_rad_commission(data, metadata):
         return (
             "Первоисточник РАД, протокол МВС-61/26: одна допущенная заявка; "

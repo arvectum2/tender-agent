@@ -3537,3 +3537,29 @@ mi_watchdog_eis_signed_bsk_20261031_0930:
     V10 RU/EN 258 pages and original client HTML refreshed.
     Next 106044-TT native STATCOM protocol now, RN61003961
     after 31 Oct 10:00 Moscow. No auto-merge; task in_progress.
+
+mi_watchdog_nikitskaya_contract_20261031_1031:
+  latest_tested_code_commit: f9f82c6845bb8ecfe4f7bbfffde05fed23a61429
+  targeted_tests: 6 passed, Ruff passed, PDF RU/EN 258 pages
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6540648776
+  report: docs/market_intelligence/PQ_WATCHDOG_NIKITSKAYA_EIS_REGISTERED_20261031_1031.json
+  report_sha256: d8c272ff21d6b2d0f29a45cb71bf831edd6ec9ee05ee9c4af5a1a0e8e09d6fd6
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 5
+  new_registered_contracts_existing_lot: 1
+  newly_verified_signed_suppliers: 0
+  newly_verified_payments: 0
+  fresh_first_party_original_versions: 2
+  backup_sha256: 73836b812786e3813f173cc1d2c1515bdfbee5367d36a6e0326daeb961072cfc
+  client_report_version: V11
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    EIS original SHA-backed registered contract 32615966040/55036065113260035960000: 5,273,763.77 RUB signed 03 June 2026, mixed EPC; 5 null-only CAS fields updated, no signed supplier or PQ-only sale proven. 118 unique lots unchanged. Two fresh TEK-Torg HTML versions HTTP200 contain no result; two Metal-IT capture attempts preflight-blocked by source allowlist. V11 RU/EN 258 pages; existing client HTML unchanged. Retry 106044-TT 1 Nov 09:00, RN61003961 1 Nov 10:00, 32616400421 1 Nov 07:30 Moscow. No auto-merge.
