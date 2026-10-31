@@ -74,7 +74,7 @@ def build(row,sources):
 
 def write(row,before,sources):
  d,meta,h=build(row,sources)
- absent=' AND '.join(f"(d.data->'{k}') IS NULL" for k in FIELDS)
+ absent=' AND '.join(f"(d.data->>'{k}') IS NULL" for k in FIELDS)
  present=' AND '.join(f"d.data->'{k}'={js(v)}" for k,v in FIELDS.items())
  sql=f'''BEGIN ISOLATION LEVEL SERIALIZABLE;
 SET LOCAL statement_timeout='55s'; SET LOCAL lock_timeout='9s';
