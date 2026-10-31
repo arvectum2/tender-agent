@@ -50,6 +50,34 @@ def source_bound_buyer_inn(data, metadata):
     return None
 
 
+def verified_lopcha_p0(data, metadata):
+    """Only expose direct-EIS buyer INN and URLs when the exact SHA-bound CAS is present."""
+    from scripts.market_intelligence.enrich_pq_lopcha_p0_20261031 import CASES, INN
+
+    cid = data.get("canonical_id", "")
+    number = cid.split(":")[1] if cid.count(":") == 2 else ""
+    if number not in CASES or cid != f"223fz:{number}:lot1":
+        return False
+    scope, _, sha = CASES[number]
+    proof = (metadata or {}).get("eis_lopcha_p0") or {}
+    source = proof.get("source") or {}
+    url = f"https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber={number}"
+    return (data.get("procedure_id") == number and data.get("scope") == scope
+            and data.get("buyer_inn") == INN
+            and proof.get("fields") == ["buyer_inn", "source_urls"]
+            and source.get("url") == url and source.get("sha256") == sha
+            and source.get("exact_original_quote") == "ИНН 4716016979"
+            and data.get("source_urls") == [{"url": url, "tier": "first_party", "sha": sha}])
+
+
+def source_bound_lopcha_sources(data, metadata):
+    if not verified_lopcha_p0(data, metadata):
+        return []
+    return [{"url": x["url"], "sha256": x["sha"],
+             "source_tier": "first_party_byte_original"}
+            for x in data["source_urls"]]
+
+
 def source_bound_bid(data, metadata):
     if verified_meleuz_contract(data, metadata):
         return data.get("commission_first_place_bid_rub")
@@ -346,7 +374,7 @@ def capture():
             "customer_contract_number":clean(val(d,"customer_contract_number","registered_contract_number"),160),
             "date":clean(d.get("publication_date"),20),
             "buyer":clean(customer.get("name"),230),
-            "buyer_inn":clean(customer.get("inn") or source_bound_buyer_inn(d,r.get("metadata")),24),
+            "buyer_inn":clean(customer.get("inn") or source_bound_buyer_inn(d,r.get("metadata")) or ("4716016979" if verified_lopcha_p0(d,r.get("metadata")) else None),24),
             "project":clean(d.get("project"),500),
             "description":clean(d.get("description"),2200),
             "family":clean(d.get("family"),120),
@@ -390,7 +418,7 @@ def capture():
             "market_scope":clean("adjacent_500kv_substation_12kv_filter_capacitor_components_not_full_pq_system" if verified_filter_signed_contract(d,r.get("metadata")) else ("high_voltage_network_requirement_up_to_6p3kv_not_nameplate" if verified_meleuz_contract(d,r.get("metadata")) else d.get("market_scope")),220),
             "notes":clean(source_bound_filter_signed_note(d,r.get("metadata")) or source_bound_bidzaar_306644_note(d,r.get("metadata")) or source_bound_bashkirenergo_note(d,r.get("metadata")) or source_bound_tyazhinskaya_note(d,r.get("metadata")) or source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
             "review":r["review"],
-            "source_urls":safe_urls((d.get("evidence") or []) + source_bound_rad_sources(d,r.get("metadata"))),
+            "source_urls":safe_urls((d.get("evidence") or []) + source_bound_rad_sources(d,r.get("metadata")) + source_bound_lopcha_sources(d,r.get("metadata"))),
         })
     counts=Counter(x["scope"] for x in out)
     return {"schema":"fgi-client-deck/2",
