@@ -3498,3 +3498,42 @@ mi_watchdog_eis_primary_protocols_20261031_0835:
     additions or field gains; V9 unchanged. Retry 32615966040/32615684088
     after 31 Oct 09:00 Moscow; RN61003961 after 10:00.
     No auto-merge; task remains in_progress.
+
+
+mi_watchdog_eis_signed_bsk_20261031_0930:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6540100805
+  latest_tested_code_commit: aa1240a1072e495607d5eb092b87090b39df3fd9
+  report: docs/market_intelligence/PQ_WATCHDOG_EIS_SIGNED_BSK_20261031_0930.json
+  report_sha256: 66763c21aca785197943802f62f4d762fa1dee1f8087b2bff44f65e4f0e944bc
+  internal_apfs_acceptance: pass
+  backup_sha256: acc6ff644046770f6aad5cb9083ff2ca851e207863070c1fa069815c9b0804ec
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 1
+  new_source_verified_core_equipment_sales: 0
+  newly_verified_registered_contracts: 2
+  newly_verified_signed_suppliers: 0
+  new_existing_lot_db_field_updates: 0
+  fresh_sha_verified_primary_originals: 12
+  original_protocol_prints: 4
+  client_report_version: V10
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Official EIS 32615684088 / contract 56901067107260004310000:
+    10kV grid mixed EPC including BSK, 37,818,258.18 RUB registered
+    contract, 4 anonymous bids; +1 unique lot with SHA and pg_restore
+    verified backup. Not BSK equipment-only sale; supplier unknown.
+    EIS 32615966040 / contract 55036065113260035960000 independently
+    verifies signed 5,273,763.77 RUB EPC dated 03 June 2026;
+    secondary 5,273,764.00 differs 0.23 RUB. Official source SHA
+    archived; implement guarded null-only CAS enrichment on this
+    existing row with NEW full backup before any field update.
+    PG 118 unique lots / 107 procedures / 41 EIS 223 notices;
+    V10 RU/EN 258 pages and original client HTML refreshed.
+    Next 106044-TT native STATCOM protocol now, RN61003961
+    after 31 Oct 10:00 Moscow. No auto-merge; task in_progress.
