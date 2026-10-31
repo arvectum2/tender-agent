@@ -4126,3 +4126,46 @@ mi_watchdog_filter_signed_20261101_0140:
     prepare fresh guarded writer/backup next. 32616266007 supplier identity
     next; 32616506708 retry after 01.11 07:30 MSK. PR 521 REVIEW,
     no auto-merge.
+
+mi_watchdog_yutek_20261101_0241:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6550657140
+  latest_tested_code_commit: 771ddffbb198c5f9930b48ebd169ace9993d653e
+  report: docs/market_intelligence/PQ_WATCHDOG_YUTEK_20261101_0241.json
+  report_sha256: c9a42631a662d62435dfe4f6249edad9b0676b6c8c6a7dd6c3bfb07c7da6433d
+  internal_apfs_acceptance: pass
+  full_backup_sha256: 88c9b0d79767a93e02c34caea654882ffa3af2c690f1e0f574c70dbd399d81ed
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_core_6_35kv_lots: 0
+  new_verified_db_fields: 4
+  first_party_requests: 10
+  first_party_http200_captures: 10
+  fresh_sha_verified_capture_files: 10
+  new_protocol_html_original_shas: 4
+  first_time_captured_shas_in_internal_runtime: 5
+  new_unique_protocol_documents: 0
+  new_named_winner_protocols: 0
+  newly_verified_signed_suppliers: 0
+  newly_verified_paid_sales: 0
+  client_report_version: V26
+  canonical_v29_rows_unchanged: 101
+  targeted_tests: 7 passed, Ruff passed, RU/EN 258 pages
+  resume_instruction: >-
+    YUTEK 32413764701: EIS original contract subject confirms one
+    container 10kV UKRM, registry 58601033125240001550000 contract
+    13790-сн/24 dated 09.08.2024 for 4,077,120 RUB, execution
+    completed. Four null-only source-SHA CAS fields after fresh
+    SHA+pg_restore backup; readback 118/107/41 unchanged.
+    Supplier signatory and paid sale still unverified. V26 bilingual
+    258-page PDF, original HTML preview unchanged. Reinspected
+    32616433248 original protocol: one bid, procurement failed, committee
+    recommends potential EPC contract at ceiling, no EIS contract linked.
+    No new unique lots or named signed supplier. Next 32616266007
+    independent signed supplier now; 32616506708 and 32616400421
+    after 2026-11-01 07:30 MSK. PR 521 REVIEW; no auto-merge.
