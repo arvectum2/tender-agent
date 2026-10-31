@@ -37,6 +37,19 @@ def val(obj, *keys):
                 return x
     return None
 
+def source_bound_buyer_inn(data, metadata):
+    proof = (metadata or {}).get("buyer_inn_field_enrichment") or {}
+    source = proof.get("source") or {}
+    if (proof.get("field") == "buyer_inn"
+            and proof.get("value") == data.get("buyer_inn") == "2310031475"
+            and source.get("sha256") == "02d956e85a58cd254b9e1503a892acc94bddb38849bf20f0b1ca721a679dc50f"
+            and "ТАНДЕР" in source.get("exact_original_quote", "")
+            and any(e.get("sha256") == source["sha256"] and e.get("url") == source.get("url")
+                    for e in data.get("evidence", []))):
+        return data["buyer_inn"]
+    return None
+
+
 def source_bound_bid(data, metadata):
     value = val(data, "commission_bid_rub", "winning_bid_rub")
     if value is not None:
@@ -137,7 +150,7 @@ def capture():
             "customer_contract_number":clean(val(d,"customer_contract_number","registered_contract_number"),160),
             "date":clean(d.get("publication_date"),20),
             "buyer":clean(customer.get("name"),230),
-            "buyer_inn":clean(customer.get("inn"),24),
+            "buyer_inn":clean(customer.get("inn") or source_bound_buyer_inn(d,r.get("metadata")),24),
             "project":clean(d.get("project"),500),
             "description":clean(d.get("description"),2200),
             "family":clean(d.get("family"),120),
