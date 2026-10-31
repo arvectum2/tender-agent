@@ -3711,3 +3711,38 @@ mi_watchdog_angarsk_reto_eis_20261031_1445:
     Next 32616266007 conflict-aware status review immediately;
     32616400421 after 1 Nov 07:30; 106044-TT after 1 Nov 09:00.
     No auto-merge; task remains in_progress.
+
+mi_watchdog_tektorg_ukrm_20261031_1545:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6542851437
+  latest_tested_code_commit: 5950cfd4edc6dcd7cbc0a01f81380da653a05c11
+  report: docs/market_intelligence/PQ_WATCHDOG_TEK_TORG_UKRM_20261031_1545.json
+  report_sha256: db9e74212eae413b493e9146be8c582e9d86d1547bedb8d4a409f960d03b918d
+  internal_apfs_acceptance: pass
+  backup_sha256: 80f9172e8059542617fb1f2bcd7df2c2518a0f1acebc3ff36360fc1f1e93664f
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 2
+  fresh_sha_verified_primary_original_versions: 4
+  first_party_http_requests: 5
+  original_final_protocols: 0
+  newly_verified_signed_suppliers: 0
+  newly_verified_payments: 0
+  client_report_version: V16
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    TEK-Torg RN61004155 official card and 7z technical archive confirm
+    UKRM-6 450 and 900 kvar models, not 2 purchased units or 1350 kvar
+    contracted total. Two null-only P2 fields CAS-enriched after clean
+    internal APFS gate and SHA+pg_restore full backup. One archive
+    downloaded twice with identical SHA; 5 requests, 4 unique SHA.
+    No winner/signed supplier/paid price; offers close 3 Nov 12:00 Moscow.
+    PG 118/107/41 unchanged. V16 RU/EN 258 pages; C->A case grade.
+    Next EIS 32616400421 after 1 Nov 07:30, 106044-TT after
+    1 Nov 09:00, RN61004155 outcome after 3 Nov 12:00 Moscow.
+    PR 521 remains REVIEW, no auto-merge.
