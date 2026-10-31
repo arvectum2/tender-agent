@@ -3361,3 +3361,37 @@ mi_watchdog_b2b_bidders_20261031_0440:
     Retry signed contracts 32615966040 and 32615684088 after 09:00 MSK;
     TEK-Torg RN61003961 after 10:00; B2B award after 03 Dec 10:00.
     No DB or client-report churn; keep PR #521 in review, no auto-merge.
+
+mi_watchdog_eis_ufimka_contract_20261031_0531:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6537825525
+  latest_tested_code_commit: c0fce8c37880471cd578c0b7e393a63fc6fa063d
+  report: docs/market_intelligence/PQ_WATCHDOG_EIS_UFIMKA_CONTRACT_20261031_0531.json
+  report_sha256: a0dfbe619d00f80d3d0a3ffaa8d7ff10ca2ffadb871801af60120cf5a87a12fa
+  internal_apfs_acceptance: pass
+  backup_sha256: c5b8ea7a6acad8c585cd0604c8089750d44621a8cce33440bdd3b0e49623cb24
+  postgres_unique_lots_before: 117
+  postgres_unique_lots_after: 117
+  postgres_distinct_procedures: 106
+  postgres_eis_223_notices: 40
+  new_unique_lots: 0
+  new_source_verified_fields: 5
+  newly_verified_signed_contracts: 1
+  newly_verified_completed_epc_contracts: 1
+  newly_named_signed_suppliers: 0
+  new_executed_payments: 0
+  fresh_first_party_originals: 4
+  first_party_requests: 6
+  first_party_http404: 2
+  client_report_version: V7
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    EIS 32514476448 official signed/completed EPC 10kV BSK contract
+    50277071467250001900000 verified 2922405.35 RUB, 26 Mar 2025;
+    contractor, paid amount and equipment-only allocation still unknown.
+    5 null-only fields CAS-verified in PG, signed-contract coverage 1->2,
+    V7 RU/EN PDFs 256 pages. No new lot (117/106/40).
+    Retry 32615966040 and 32615684088 after 31 Oct 09:00 MSK,
+    RN61003961 after 10:00. No auto-merge.
