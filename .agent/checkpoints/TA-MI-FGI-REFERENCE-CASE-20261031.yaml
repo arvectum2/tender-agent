@@ -1,0 +1,32 @@
+task_id: TA-MI-FGI-REFERENCE-CASE-20261031
+status: in_progress
+goal: Build one fully researched, source-graded, branded exemplary Power Quality procurement case slide dossier and lock reference template for all later cases.
+selected_lot: 223fz:32616181358:lot1
+selected_reason: Rich first-party set including EIS contract register, buyer and INN, bid protocol with named commission winner, equipment SKUs and original dated documents.
+definition_of_done:
+  - Read original recorded evidence and check official live marketplace, EIS sources, signed-contract price, technical bill of material and roles independently.
+  - Produce complete field-by-field evidence schema with source URLs and explicit unknowns/conflicts; never claim unverified OEM, paid revenue or supplier signatory.
+  - Make one finished exemplar dossier in firm Arvectum brand from genuine SVG with consistent typography, legible no-clipping RU/EN PDF.
+  - Create controlled re-usable exemplar generator and tests checking mandatory fields, source grades, geometry and evidence matching.
+  - Commit under the only existing PR #521 and mark checkpoint completed; do not bulk edit other procurement cards or DB yet.
+completed:
+  - Selected the richest original-source procurement case 32616181358 by structured evidence score.
+  - First-party Lot-online platform confirmed procedure RAD260032779, NMC 3078500 inc VAT22, deadline 2026-07-20, result 2026-08-03, final protocol file 2026-08-05.
+current_stage: Source-bound exemplar and bilingual slide/evidence packages generated, visually inspected and tested. Pending final Git publication.
+remaining:
+  - Finalize verified normalized record and explicit evidence gaps. [done]
+  - Render exemplar and validate RU/EN PDFs. [done]
+  - Test and publish. [in_progress]
+last_verified_commit: f4f1aabeac1476eb08824e86eb13e482e85b04e8
+last_tests: Latest DB at 2026-10-31 09:40 MSK had 118 unique lots; no DB writes performed.
+resume_instruction: Continue exemplar RЭТО 32616181358 in isolated ta-mi-clientdeck-20261030 worktree; use first-party original procurement and register sources, no inventing. Do not alter unrelated .agent/current-task.yaml or original research task; keep sole PR #521.
+
+source_spec_original_sha256: 9ceb44be68abcf07729cb9045b1a3ce7b54456810c93c9a32885781d3a578032
+source_protocol_sha256: 92874d098feb7dc6c283bd7b66c5218e11e472f27eddffc75edd6613fb5b21ef
+matrix_fields: 52
+verified_primary_fields: 34
+historical_archived_fields: 6
+derived_fields: 1
+not_verified_fields: 10
+not_applicable_fields: 1
+source_limitation: original EIS registered-contract page currently HTTP404; do not infer actual signed supplier, OEM, delivery or paid revenue.
