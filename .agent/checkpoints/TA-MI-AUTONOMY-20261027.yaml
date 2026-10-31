@@ -3926,6 +3926,7 @@ mi_watchdog_bidzaar_power_20261031_run11:
 
 mi_watchdog_signed_32616266007_20261031_2140:
   task_id: TA-MI-AUTONOMY-20261027
+  latest_tested_code_commit: d99f1fa8dde8fe4db33ffeca43e17a4d3073b46a
   status: in_progress
   canonical_pr: 521
   issue_comment_id: 6547516658
