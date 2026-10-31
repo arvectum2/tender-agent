@@ -4044,3 +4044,41 @@ mi_watchdog_artskvazhina_20261031_2343:
     visual 6/10kV conflict now; EIS 32616266007 supplier now;
     EIS 32616400421 after 1 Nov 07:30 MSK; EIS 32616339168 HTTP404
     retry after cooldown. PR 521 REVIEW; no auto-merge.
+
+mi_watchdog_visual_351062_20261101_0044:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6549419592
+  latest_tested_code_commit: 06bf07be13b0d1603ce0a10f622abd521b89503a
+  report: docs/market_intelligence/PQ_WATCHDOG_VISUAL_BIDZAAR_20261101_0043.json
+  report_sha256: de7653ae153a26dcd8abdc55037cf7d62385fa4aca1412312a3b558a87dfaa01
+  internal_apfs_acceptance: pass
+  backup_sha256: 57237080d87a00dcff64c29a0f758e56e24313645a4ff0d98462075357593c9d
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 1
+  first_party_request_attempts: 22
+  new_sha_verified_capture_files: 7
+  new_distinct_original_shas: 3
+  new_signed_suppliers: 0
+  new_paid_sales: 0
+  new_exhaustive_month_source_searches: 0
+  client_report_version: V24
+  canonical_v29_rows_unchanged: 101
+  targeted_tests: 12 passed, Ruff passed, RU/EN 258 pages
+  resume_instruction: >-
+    Bidzaar 351-062 original legacy DOC visually inspected with QuickLook:
+    nominal voltage 6.3 kV ('ДА' under 6,3), not 10 kV.
+    Original DOC SHA e7927732264deb30813bcf967740763cfb032f5710ca78156f76646f8cc0d831.
+    One null-only CAS field enriched after full SHA+pg_restore backup,
+    postwrite DB 118/107/41. Power remains 3000 kvar per questionnaire,
+    not proven twice for two units. V24 RU/EN PDFs and audit voltage
+    coverage 25 to 26. Seven EIS captures, three new distinct SHAs;
+    no new lots/signed supplier/payment. HTTP404/identity failure
+    does not prove absence. Next 32616266007 supplier now;
+    32616506708 and 32616400421 after 2026-11-01 07:30 MSK.
+    PR 521 REVIEW, no auto-merge.
