@@ -3670,3 +3670,44 @@ mi_watchdog_bashkirenergo_eis_20261031_1336:
     three newly visible contract fields. Next 32616400421 1 Nov 07:30,
     106044-TT 1 Nov 09:00, RN61003961 1 Nov 10:00 Moscow.
     PR 521 remains REVIEW, quality CI red, no auto-merge.
+
+mi_watchdog_angarsk_reto_eis_20261031_1445:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6542846151
+  latest_tested_code_commit: dee6252f540314ea3992cf8847eb8b50b96f5a4a
+  report: docs/market_intelligence/PQ_WATCHDOG_ANGARSK_RETO_EIS_20261031_1445.json
+  report_sha256: 0e97beb9bd21808ab084f7b260c82fdde75c07d2f0be1143d0b96775186f74e7
+  internal_apfs_acceptance: pass
+  backup_sha256: 1df48d0d5262b96e6068ffa8c172b6338ba4d4749d778b20df27b1178a53af9f
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 8
+  new_client_visible_fields: 4
+  new_independently_verified_registered_contracts: 2
+  newly_verified_signed_suppliers: 0
+  newly_verified_payments: 0
+  fresh_sha_verified_primary_original_versions: 10
+  original_final_protocols: 0
+  client_report_version: V15
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    Official EIS Angarsk 32616412267: signed 6kV service contract
+    61/26кс/223 dated 19 Oct 2026, 2,639,026.64 RUB, six null-only
+    fields. RETO 32616181358: signed contract 060-26-Р dated
+    19 Aug 2026, two null-only fields. Full SHA+pg_restore backup,
+    atomic CAS and readback, PG 118/107/41 unchanged.
+    New Rossseti 32616266007 signed contract 1605245 dated 14 Oct
+    2026, 662,460 RUB, 5 Kazakhstan capacitors at 132,492 RUB each;
+    adjacent 500kV project, old DB status conflicts with signed result;
+    staged for reviewed status reconciliation, no overwrite.
+    13 official captures, 10 new SHA versions; three generic HTTP200
+    identity failures. Zero signed supplier identities and payments.
+    V15 RU/EN 258-page dossiers, four newly client-visible fields.
+    Next 32616266007 conflict-aware status review immediately;
+    32616400421 after 1 Nov 07:30; 106044-TT after 1 Nov 09:00.
+    No auto-merge; task remains in_progress.
