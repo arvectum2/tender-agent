@@ -4799,3 +4799,44 @@ mi_watchdog_bsk_20261101_1932:
     positives rejected. Next 32616474682 after 2 Nov 06:30 MSK,
     32616433248 after 09:00, 32616497692 after 16:30.
     PR 521 REVIEW, no auto-merge; task remains in_progress.
+
+mi_watchdog_tyazhinskaya_20261101_2041:
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6561423370
+  latest_tested_code_commit: 52fec16696f83a2b2f8d830672445204b34f1f08
+  report: docs/market_intelligence/PQ_WATCHDOG_TYAZHINSKAYA_CONTRACT_20261101_2041.json
+  report_sha256: a1816177faa2a15e084a17e5e4fa8f37adec384e6232eb51ee84a9dac9445ff5
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 120
+  postgres_unique_lots_after: 120
+  postgres_distinct_procedures: 109
+  postgres_eis_223_notices: 43
+  new_unique_lots: 0
+  new_verified_fields_existing_lots: 5
+  first_party_source_requests: 21
+  new_immutable_source_captures: 12
+  new_material_contract_originals: 3
+  new_original_final_protocols: 0
+  new_registered_design_contracts: 1
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_paid_sales: 0
+  exhaustive_month_source_searches: 0
+  source_original_card_sha256: d449da956df043fd0660a2df91b0ba8f5a314a58a33707c7e01fb4d1b30de75e
+  source_original_print_sha256: 4460e5d597e28260c16b0281cf445c8e6e742df6a3ff7ca8638174bd6765764a
+  full_backup_sha256: eaa12bfb36bdce8291675971575eb359ea91b7ff0aa221b6678e4bb7faf36c5e
+  client_report_version: V39
+  client_pdfs_pages_each: 262
+  tests: 11 targeted PASS, Ruff PASS, PDFs 262 pages each
+  resume_instruction: >-
+    EIS registered contract 67728589190260001030000, number
+    СП-14.4200.4613.25/1 signed 2026-06-10 for 3.05m RUB:
+    Tyazhinskaya 110kV design only, NOT equipment sale. Five null-only
+    fields enriched with atomic CAS after SHA+pg_restore full backup;
+    readback 120/109/43. Supplier and payment unknown. Client V39
+    bilingual 262-page PDFs, V2-V38 untouched. 21 source requests,
+    12 new SHA receipts, four HTTP404, five non-exhaustive first-page
+    month searches. Next 32616474682 after 2026-11-02 06:30,
+    32616433248 after 09:00, 32616497692 after 16:30 Moscow.
+    PR #521 REVIEW, no auto-merge.

@@ -32,3 +32,27 @@ def test_conflicts_fail_closed(field,value):
     r=make_row();r["data"][field]=value;r["hash"]=digest(r["data"])
     with pytest.raises(RuntimeError):
         validate(r, {"sources":[{"sha256":"a"*64},{"sha256":"b"*64}]})
+
+
+def test_client_snapshot_verifier_source_bound():
+    from scripts.market_intelligence.enrich_pq_tyazhinskaya_contract_20261101 import (
+        FILES,
+    )
+    from scripts.market_intelligence.export_fgi_deck_snapshot import (
+        verified_tyazhinskaya_20261101,
+    )
+
+    r = make_row()
+    r["data"].update(FIELDS)
+    r["data"]["evidence"] = [
+        {"url": url, "sha256": sha} for _, sha, url in FILES
+    ]
+    meta = {
+        "eis_tyazhinskaya_20261101_registered_contract": {
+            "sources": [{"url": url, "sha256": sha} for _, sha, url in FILES],
+            "supplier_verified": False, "payment_verified": False,
+        }
+    }
+    assert verified_tyazhinskaya_20261101(r["data"], meta)
+    r["data"]["paid_verified"] = True
+    assert not verified_tyazhinskaya_20261101(r["data"], meta)

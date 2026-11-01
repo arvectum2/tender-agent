@@ -391,6 +391,47 @@ def verified_tyazhinskaya_contract(data, metadata):
     )
 
 
+def verified_tyazhinskaya_20261101(data, metadata):
+    proof = (metadata or {}).get("eis_tyazhinskaya_20261101_registered_contract") or {}
+    sources = proof.get("sources") or []
+    expected = (
+        "d449da956df043fd0660a2df91b0ba8f5a314a58a33707c7e01fb4d1b30de75e",
+        "4460e5d597e28260c16b0281cf445c8e6e742df6a3ff7ca8638174bd6765764a",
+    )
+    return (
+        data.get("canonical_id") == "223fz:32615937898:lot1"
+        and data.get("scope") == "design_and_survey_only"
+        and data.get("market_scope") == "adjacent_110kv_reactive_compensation_design_not_equipment_sale"
+        and data.get("contract_registry_number") == "67728589190260001030000"
+        and data.get("contract_number") == "СП-14.4200.4613.25/1"
+        and data.get("contract_signed_date") == "2026-06-10"
+        and data.get("contract_registered_price_rub") == "3050000.00"
+        and data.get("registered_signed_contract_verified") is True
+        and data.get("supplier_verified") is False
+        and data.get("paid_verified") is False
+        and proof.get("payment_verified") is False
+        and proof.get("supplier_verified") is False
+        and len(sources) == len(expected)
+        and all(source.get("sha256") == sha
+                for source, sha in zip(sources, expected, strict=True))
+        and all(any(e.get("sha256") == sha and e.get("url") == source.get("url")
+                    for e in data.get("evidence", []))
+                for source, sha in zip(sources, expected, strict=True))
+    )
+
+
+def source_bound_tyazhinskaya_20261101_note(data, metadata):
+    if not verified_tyazhinskaya_20261101(data, metadata):
+        return None
+    return (
+        "Первичный реестр ЕИС: договор №СП-14.4200.4613.25/1 "
+        "от 10.06.2026 на 3 050 000,00 руб. за проектирование и "
+        "инженерные изыскания ПС Тяжинская (БСК-110 → СКРМ 52 Мвар). "
+        "Это НЕ продажа оборудования 6–35 кВ. Подписавший подрядчик, "
+        "фактическая оплата и цена отдельного PQ-оборудования не подтверждены."
+    )
+
+
 def source_bound_tyazhinskaya_note(data, metadata):
     if not verified_tyazhinskaya_contract(data, metadata):
         return None
@@ -624,6 +665,9 @@ def capture():
             "review":r["review"],
             "source_urls":safe_urls(evraz_sources(d,r.get("metadata")) + source_bound_eis_contract_item_sources(d,r.get("metadata")) + (d.get("evidence") or []) + source_bound_rad_sources(d,r.get("metadata")) + source_bound_lopcha_sources(d,r.get("metadata")) + source_bound_ntc_vanino_sources(d,r.get("metadata"))),
         })
+        if verified_tyazhinskaya_20261101(d, r.get("metadata")):
+            out[-1]["status"] = "official_registered_design_contract_supplier_unverified"
+            out[-1]["notes"] = source_bound_tyazhinskaya_20261101_note(d, r.get("metadata"))
     counts=Counter(x["scope"] for x in out)
     return {"schema":"fgi-client-deck/2",
             "snapshot_date":datetime.now(ZoneInfo("Europe/Moscow")).date().isoformat(),
