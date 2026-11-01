@@ -4960,3 +4960,32 @@ mi_watchdog_primary_discovery_20261101_2332:
     verifies the commercial case's electrical voltage, signed supplier or price.
     Do not regenerate client reports without new verified lot or field. Prioritize
     genuinely new originals and P0/P1 then P2-P5 evidence, not repeat captures.
+
+mi_watchdog_kuzbass_buyer_inn_20261102_0035:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6564153264
+  latest_tested_code_commit: "1248013faa93ebf01bf6e5bf950ad7b0cee77d19"
+  report: "docs/market_intelligence/PQ_WATCHDOG_KUZBASS_BUYER_INN_20261102.json"
+  report_sha256: "7e84e864cc9dfbe73e3f2e44204e41033535778f925580624673040fef50703b"
+  internal_apfs_acceptance: "pass"
+  postgres_unique_lots_before: 120
+  postgres_unique_lots_after: 120
+  postgres_distinct_procedures: 109
+  postgres_eis_223_notices: 43
+  new_unique_core_6_35kv_lots: 0
+  new_verified_fields_persisted: 2
+  first_party_source_attempts: 17
+  new_sha_originals: 0
+  new_original_protocols: 0
+  new_signed_suppliers: 0
+  new_paid_equipment_sales: 0
+  exhaustive_month_source_searches: 0
+  report_version: "V40"
+  resume_instruction: >-
+    EIS live source acquisition blocked by strict TLS/404/invalid short responses.
+    Previously SHA-verified EIS original establishes buyer INN 2460069527 for
+    223fz:32615852898:lot1. CAS readback 120/109/43, 2 missing research
+    fields enriched (buyer INN and source URL); no signed equipment sale.
+    V40 bilingual 262-page reports versioned. Next 32616474682 after 06:30,
+    32616433248 after 09:00, 32616497692 after 16:30 Moscow Nov 2.
