@@ -4392,3 +4392,42 @@ mi_watchdog_evraz_dual_20261101_0835:
     contract signatories and protocol, AP125337 public GPB original,
     32616474682 final protocol after 2026-11-02 06:30 Moscow.
     PR 521 REVIEW; no auto-merge.
+
+mi_watchdog_karelia_slavyanskaya_20261101_0937:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6554434120
+  latest_tested_code_commit: fbd833c2250ba0ff962301f2abe3070822d0c98c
+  report: docs/market_intelligence/PQ_WATCHDOG_KARELIA_SLV_20261101.json
+  report_sha256: 313e8f0e639230640ce1ebc549b3394c30ceaf1a7f52892cbcb5f5eef2fee75c
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 16
+  first_party_requests: 33
+  first_party_http200_captures: 25
+  first_party_failed_attempts: 8
+  new_distinct_original_shas: 15
+  new_original_protocols: 3
+  newly_verified_registered_contracts: 2
+  newly_verified_signed_supplier_identities: 0
+  newly_verified_paid_sales: 0
+  exhaustive_month_source_searches: 0
+  client_report_version: V31
+  client_html: unchanged
+  canonical_v29_rows_unchanged: 101
+  tests: 3 targeted passed, Ruff passed, RU/EN 258 PDF pages each
+  resume_instruction: >-
+    32616120582: registered signed 6kV mixed EPC 17m RUB, first ranked
+    bid 4149972340; supplier and equipment-only amount unverified.
+    32515225588: 220kV STK design contract 20.4423911m RUB,
+    not equipment sale. 16 old-null fields CAS verified across 2 lots;
+    full SHA+pg_restore backups, before/after 118/107/41 unchanged.
+    25 first-party captures (15 new SHAs), 8 initial TLS trust failures.
+    V30/V31 RU/EN versioned; legacy client HTML unchanged.
+    Next 32616120582 signatory, AP125337 public source,
+    32616474682 after 2026-11-02 06:30 MSK. PR 521 REVIEW.
