@@ -105,7 +105,7 @@ THEN RAISE EXCEPTION 'PQ corpus count/owner mismatch'; END IF; END $g$;"""]
     for c, r, s in items:
         cid = c["cid"]
         d, meta, h = prepare(c, r, s)
-        old_null = ("(d.data->'customer'->'inn') IS NULL"
+        old_null = ("((d.data->'customer'->'inn') IS NULL OR (d.data->'customer'->'inn') = 'null'::jsonb)"
                     if c["field"] == "customer.inn"
                     else f"(d.data->'{c['field']}') IS NULL")
         guard = (f"r.collection_id='{COL}' AND r.external_id='{cid}' "
