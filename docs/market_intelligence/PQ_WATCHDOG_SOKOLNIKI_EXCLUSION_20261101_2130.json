@@ -1,0 +1,212 @@
+{
+  "schema": "pq-watchdog-source-exclusion/1",
+  "run_id": "20261101T2130-MSK-11",
+  "completed_moscow": "2026-11-01T21:35:05.688137+03:00",
+  "issue_comment_id": 6562103829,
+  "canonical_pr": 521,
+  "parent_head": "7b0bf63401dec79b4c150b13bb7d71a2eeef9661",
+  "acceptance": "pass",
+  "db_before": {
+    "unique_lots": 120,
+    "procedures": 109,
+    "eis_223_notices": 43
+  },
+  "db_after": {
+    "unique_lots": 120,
+    "procedures": 109,
+    "eis_223_notices": 43
+  },
+  "new_unique_corpus_lots": 0,
+  "new_unique_core_6_35kv_lots": 0,
+  "new_deduplicated_core_projects": 0,
+  "new_verified_fields_existing_lots": 0,
+  "first_party_direct_requests": 18,
+  "first_party_http200_verified_captures": 8,
+  "first_party_capture_rejected": 3,
+  "first_party_http404": 1,
+  "first_party_readonly_searches": 3,
+  "first_party_readonly_case_triage": 3,
+  "new_sha_verified_originals": [
+    {
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616070899",
+      "sha256": "b826c0d0f9a0cc40a812e124927da37635895d448bce66a84a3c8775708e64dc",
+      "bytes": 146599,
+      "http_status": 200,
+      "relative_file": "captures/223fz_32616070899_lot1/20261101T183221630482Z-04d27e56-b826c0d0f9a0cc40.bin"
+    },
+    {
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616070899",
+      "sha256": "97715ca3bc00b33d1609339694376b5e28f0de705ec33ddb90c0780e56448291",
+      "bytes": 133019,
+      "http_status": 200,
+      "relative_file": "captures/223fz_32616070899_lot1/20261101T183222076115Z-11cad55b-97715ca3bc00b33d.bin"
+    },
+    {
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=55036065113260039300000",
+      "sha256": "67204bb94e5c6e3a754dbad3084475624864f4ec5285ccdc92e5ea704dc2c31a",
+      "bytes": 135678,
+      "http_status": 200,
+      "relative_file": "captures/223fz_32616070899_lot1/20261101T183243747742Z-2c1937cc-67204bb94e5c6e3a.bin"
+    },
+    {
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=55036065113260039300000",
+      "sha256": "e31d88b7a26508d7df1e5aaffedfb72a5aa7746c51821a8cb2fac9d9e5b3d5f3",
+      "bytes": 142260,
+      "http_status": 200,
+      "relative_file": "captures/223fz_32616070899_lot1/20261101T183244555115Z-0270386d-e31d88b7a26508d7.bin"
+    },
+    {
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=55036065113260039300000",
+      "sha256": "925a151d8961b1f05b89b6ecb5a4215f41b4173584af479bf064edb8b5684e50",
+      "bytes": 10669,
+      "http_status": 200,
+      "relative_file": "captures/223fz_32616070899_lot1/20261101T183244977232Z-09b544f4-925a151d8961b1f0.bin"
+    },
+    {
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616070899",
+      "sha256": "f78f9d1e65a432c70779c056b196da81242620ceeddbded63d41b24b62de0ba1",
+      "bytes": 133429,
+      "http_status": 200,
+      "relative_file": "captures/223fz_32616070899_lot1/20261101T183245403281Z-ed91498b-f78f9d1e65a432c7.bin"
+    },
+    {
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=4fca030c-146f-4025-b478-76d80c3ed650&purchaseNoticeNumber=32616070899",
+      "sha256": "0f4e5792c133d90554181809ee0bc5a1ba640cad8bf01f78557fff290a330e56",
+      "bytes": 12738,
+      "http_status": 200,
+      "relative_file": "captures/223fz_32616070899_lot1/20261101T183257452560Z-48f0bb1e-0f4e5792c133d905.bin"
+    },
+    {
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/protocol223/protocol-common-info.html?protocolGuid=4fca030c-146f-4025-b478-76d80c3ed650&purchaseNoticeNumber=32616070899",
+      "sha256": "3b4ef0310c4b0e1c0fa0ba3893bd33fd1780e53220b5c5424327a554fd44c35c",
+      "bytes": 134980,
+      "http_status": 200,
+      "relative_file": "captures/223fz_32616070899_lot1/20261101T183257748747Z-b5d7d38f-3b4ef0310c4b0e1c.bin"
+    }
+  ],
+  "original_final_protocols": 1,
+  "named_participants": 0,
+  "named_winners": 0,
+  "signed_supplier_names": 0,
+  "paid_sales": 0,
+  "registered_contracts_discovered_but_out_of_scope": 1,
+  "new_case": {
+    "canonical_candidate": "223fz:32616070899:lot1",
+    "corpus_duplicate_readback": 0,
+    "buyer": "ПАО «Россети Московский регион»",
+    "buyer_inn": "5036065113",
+    "project": "ПС-110 кВ №45 Сокольники, РУ-10 кВ",
+    "scope": "mixed EPC/design/installation for compensation of capacitive earth-fault currents, NOT reactive power compensation PQ",
+    "classification": "out_of_scope_earth_fault_current_compensation",
+    "nmck_rub": "14665189.63",
+    "commission_protocol": "32616070899-01",
+    "protocol_date": "2026-06-10",
+    "protocol_outcome": "one bid; procedure declared unsuccessful for single application; anonymous bid 499228 ranked first, contract decision yes",
+    "bid_price_rub": "14665189.63",
+    "contract_register": "55036065113260039300000",
+    "contract_number": "28912-26-100264",
+    "contract_signed_date": "2026-06-23",
+    "registered_contract_price_rub": "14665189.63",
+    "signed_supplier": "unknown",
+    "equipment_only_price": "unknown",
+    "executed_payment": "unknown",
+    "admission": "REJECT, not PQ reactive power or harmonic filtering; contract is not PQ equipment sale"
+  },
+  "negative_attempts": [
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32515208744",
+      "result": "capture_rejected_invalid_status_or_size",
+      "case": "32515208744"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32413581034",
+      "result": "capture_rejected_invalid_status_or_size",
+      "case": "32413581034"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32515584863",
+      "result": "capture_rejected_invalid_status_or_size",
+      "case": "32515584863"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616070899",
+      "http": 404,
+      "result": "technical attachments not retrieved"
+    }
+  ],
+  "month_searches": [
+    {
+      "law": "223",
+      "month": "2024-12",
+      "query": "СТАТКОМ",
+      "http": 200,
+      "page": 1,
+      "observed_ids": 10,
+      "date_filter_verified": false,
+      "exhaustive": false,
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.12.2024&publishDateTo=31.12.2024&searchString=%D0%A1%D0%A2%D0%90%D0%A2%D0%9A%D0%9E%D0%9C"
+    },
+    {
+      "law": "44",
+      "month": "2025-08",
+      "query": "УКРМ",
+      "http": 200,
+      "page": 1,
+      "observed_ids": 0,
+      "date_filter_verified": false,
+      "exhaustive": false,
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz44=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.08.2025&publishDateTo=31.08.2025&searchString=%D0%A3%D0%9A%D0%A0%D0%9C"
+    },
+    {
+      "law": "223",
+      "month": "2026-04",
+      "query": "фильтры гармоник",
+      "http": 200,
+      "page": 1,
+      "observed_ids": 0,
+      "date_filter_verified": false,
+      "exhaustive": false,
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.04.2026&publishDateTo=30.04.2026&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D1%8B+%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D0%BD%D0%B8%D0%BA"
+    }
+  ],
+  "search_false_positive_samples": [
+    {
+      "id": "32414375969",
+      "actual": "вырубка растительности в охранной зоне ВЛ",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32414375969",
+      "http": 200
+    },
+    {
+      "id": "32414381352",
+      "actual": "обслуживание авиасимулятора Bombardier CRJ-200",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32414381352",
+      "http": 200
+    },
+    {
+      "id": "32414385275",
+      "actual": "утилизация медицинских отходов",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32414385275",
+      "http": 200
+    }
+  ],
+  "new_exhaustively_covered_months": 0,
+  "why_no_corpus_growth": "new official contract concerns capacitive earth-fault current compensation rather than reactive-power PQ; search returned lexical false positives; remaining ETP leads already in corpus or without source-original voltage proof",
+  "next_three": [
+    {
+      "case": "32616474682",
+      "retry_after_moscow": "2026-11-02 06:30",
+      "goal": "official PQ 10kV scope/outcome"
+    },
+    {
+      "case": "32616433248",
+      "retry_after_moscow": "2026-11-02 09:00",
+      "goal": "technical 6-35kV specification"
+    },
+    {
+      "case": "32616497692",
+      "retry_after_moscow": "2026-11-02 16:30",
+      "goal": "10kV UKRM technical original and lot-level split"
+    }
+  ],
+  "governance": "No DB write, backup not needed, no report refresh, no merge; PR521 REVIEW, v29 101 rows untouched"
+}
