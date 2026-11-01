@@ -4595,3 +4595,49 @@ mi_watchdog_roseltorg_buyer_inn_20261101_1442:
     newly captured but adjacent/outside 2024-26 core. Retry 32616497692
     after 1 Nov 16:00 MSK; 32616474682 after 2 Nov 06:30 MSK;
     32616120582 after 2 Nov 09:00 MSK. PR 521 REVIEW, no auto-merge.
+
+mi_watchdog_roseltorg_commission_20261101_1538:
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6557941468
+  latest_tested_code_commit: 469000c314a2f1871787dc70cc14225694c6193c
+  report: docs/market_intelligence/PQ_WATCHDOG_ROSELTORG_COMMISSION_20261101_1540.json
+  report_sha256: fb3c0a3199656825578a1d7a59bed1806fdad9c285fa4814286a49771a106ad4
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 8
+  new_report_visible_bid_fields: 1
+  first_party_network_attempts: 9
+  new_valid_original_sha256: 3
+  new_original_protocols: 2
+  rejected_http200_access_denied_html: 2
+  new_named_winners: 0
+  corroborated_named_bidder_identities: 2
+  new_signed_suppliers: 0
+  new_paid_sales: 0
+  exhaustive_month_source_searches: 0
+  full_backup_sha256: 22846a0176900b1378fa15b4fff0c423d2bddaf6a733a04592b269d8a4bf5a90
+  client_report_version: V36
+  client_html: unchanged
+  canonical_v29_rows_unchanged: 101
+  tests: 28 targeted passed, Ruff passed, RU/EN 258 PDF pages each
+  resume_instruction: >-
+    Original Roseltorg ZIP final commission protocol 32616433248
+    SHA98062c8f: one bid 56.33067393m RUB, competition failed,
+    commission recommends negotiating with sole EPC bidder
+    Stroyenergoimport INN 7801564611; NOT a signed supplier.
+    Original 32616497692 admission protocol SHA2f5ad8ba: one
+    admitted bid, retender pending; prior named bidder
+    Vtoralyuminprodukt is not a winner. 8 old-null fields CAS
+    with SHA+pg_restore full backup, postreadback 118/107/41.
+    Roseltorg LotDocuments HTTP200 access-denied HTML was not
+    accepted as original; capture guard regression tested.
+    V36 RU/EN versioned; old HTML and V2-V35 unchanged.
+    Next 32616497692 final after 2026-11-01 16:00 MSK,
+    32616474682 lot1/2 after 2026-11-02 06:30 MSK,
+    AP125337 only if first-party technical attachment public.
+    PR 521 REVIEW; no auto-merge.
