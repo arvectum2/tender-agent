@@ -4453,10 +4453,10 @@ mi_watchdog_primary_gaps_20261101_1035:
 mi_watchdog_source_fields_20261101_1148:
   status: in_progress
   pr: 521
-  issue_comment_id: 6555368191
+  issue_comment_id: 6555604538
   latest_tested_code_commit: ddcfda0a7bb147e6efe55233dd36bc7607135283
   report: docs/market_intelligence/PQ_WATCHDOG_SOURCE_FIELDS_20261101_1147.json
-  report_sha256: dc8c82554786ed0617cfa17fc3db7e2a42bc9b8377c0b054f054ac2e309a02e2
+  report_sha256: d36b0b03ca790e3721ae566c41229197af801864efef9e0257f93fcc5ad03a4a
   internal_apfs_acceptance: pass
   db_unique_lots_before_after: 118
   db_procedures: 107
