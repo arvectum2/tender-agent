@@ -4719,3 +4719,35 @@ mi_watchdog_poluprovodniki_20261101_1743:
     2 Nov 06:30 MSK, 32616433248 after 2 Nov 09:00 MSK,
     32616497692 after 2 Nov 16:30 MSK; Poluprovodniki final
     after 3 Nov 18:00 MSK. PR 521 REVIEW, no auto-merge.
+
+mi_watchdog_standards_20261101_1831:
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6560020328
+  latest_tested_code_commit: 8d26b03999a88af324560d4c380a92cf1b4b5856
+  report: docs/market_intelligence/PQ_WATCHDOG_STANDARDS_20261101_1831.json
+  report_sha256: df8b9cf24838f8e6e85cab3587b14f36b94a7415e38d60ee24bfbd0cf1635b64
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 119
+  postgres_unique_lots_after: 119
+  postgres_distinct_procedures: 108
+  postgres_eis_223_notices: 42
+  new_core_lots: 0
+  new_adjacent_candidates: 1
+  new_signed_contracts_adjacent: 1
+  new_verified_db_fields: 0
+  new_original_final_protocols: 1
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_paid_sales: 0
+  first_party_http200_captures: 17
+  new_adjacent_source_captures: 8
+  first_page_searches: 25
+  exhaustive_month_source_searches: 0
+  resume_instruction: >-
+    EIS 32515217772: 0.4-35kV PQ standard development, signed contract
+    25-28035 on 2025-11-25, amended 6.065m RUB due VAT; completed.
+    No signed supplier name or paid amount. Not equipment sales; no DB write.
+    119/108/42 unchanged. Next 32616474682 after 2 Nov 06:30,
+    32616433248 after 09:00, 32616497692 after 16:30 Moscow.
+    PR521 REVIEW, no merge.
