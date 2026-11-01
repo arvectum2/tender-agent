@@ -5035,3 +5035,34 @@ mi_watchdog_manual_primary_check_20261102_0128:
     Do not re-insert existing lots. Capture verified official originals and signed-register
     supplier separately; 404 is not market absence. No new lot/field, so no report
     regeneration. PR #521 REVIEW, no auto-merge.
+
+mi_watchdog_is_mt_first_party_exclusion_20261102_0136:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6564921147
+  moscow_run_end: "2026-11-02T01:43:02+03:00"
+  internal_apfs_acceptance: "pass"
+  postgres_unique_lots_before: 120
+  postgres_unique_lots_after: 120
+  postgres_distinct_procedures: 109
+  postgres_eis_223_notices: 43
+  new_verified_core_6_35kv_lots: 0
+  new_persisted_verified_fields: 0
+  newly_sha_verified_first_party_originals: 6
+  new_native_commercial_cards: 2
+  native_selected_winners_named: 1
+  new_original_commission_protocols: 0
+  new_signed_suppliers: 0
+  new_paid_equipment_sales: 0
+  exhaustive_month_source_searches: 0
+  report: "docs/market_intelligence/PQ_WATCHDOG_ISMT_04KV_FALSE_POSITIVES_20261102.json"
+  report_sha256: "06f36536da0a88ecae13009c77066c85926d44cedae06e2a59ff216974da3d11"
+  latest_tested_code_commit: "efc9fccdf16c1679540f52f2b7c8d0f579c1a3b4"
+  resume_instruction: >-
+    First-party is-mt.pro captured six immutable originals: KNS-1 UUID
+    c396eb0d has 2 UKM58-0.4-70-10 U3 at 0.4kV, selected INESK 159500
+    RUB but lower nonselected MEGAVAR bid 107800 RUB; KNS-2 UUID 31a23033
+    has 2 UKM58-0.4-45-15 U3 at 0.4kV and no selected winner.
+    Both EXCLUDED from strict 6-35kV, not ingested or counted as signed
+    equipment sales. July KNS-1 same-title lead may be a repeated project
+    but lacks native original. PR #521 REVIEW, no auto-merge.
