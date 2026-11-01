@@ -4641,3 +4641,36 @@ mi_watchdog_roseltorg_commission_20261101_1538:
     32616474682 lot1/2 after 2026-11-02 06:30 MSK,
     AP125337 only if first-party technical attachment public.
     PR 521 REVIEW; no auto-merge.
+
+mi_watchdog_retry_20261101_1637:
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6558662851
+  latest_tested_code_commit: 5865420565527459fc42e0c68d64fd5b65240e78
+  report: docs/market_intelligence/PQ_WATCHDOG_RETRY_20261101_1637.json
+  report_sha256: 1ee352d2d103017ec2cf1c1b8857b8f58aa88e892b65f2a5e267de002e1159cc
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 0
+  first_party_attempts: 11
+  first_party_http200_captures: 7
+  distinct_new_dynamic_html_shas: 2
+  new_material_evidence_shas: 0
+  new_final_protocols: 0
+  new_signed_suppliers: 0
+  new_paid_sales: 0
+  exhaustive_month_source_searches: 0
+  tests: no code changed; JSON syntax validated
+  resume_instruction: >-
+    Roseltorg 32616497692 official final-result deadline is 2026-11-02
+    16:00 MSK (not 2026-11-01); at 2026-11-01 16:37 still
+    Подведение итогов, EIS contract absent. AP125337 official GPB
+    search returned no lot-specific evidence. EIS 32616506708 protocols
+    and contract still absent, 220kV design adjacent. No new material
+    evidence or DB fields, 118/107/41 unchanged. Next 32616474682
+    after 2026-11-02 06:30; 32616433248 after 09:00; 32616497692
+    after 16:30 MSK. PR 521 REVIEW, no merge.

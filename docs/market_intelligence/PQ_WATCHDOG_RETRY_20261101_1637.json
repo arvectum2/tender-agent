@@ -1,0 +1,94 @@
+{
+  "schema": "pq-watchdog-retry-evidence/1",
+  "completed_moscow": "2026-11-01T16:37:38+03:00",
+  "issue_comment_id": 6558662851,
+  "canonical_pr": 521,
+  "before": {
+    "unique_lots": 118,
+    "distinct_procedures": 107,
+    "numeric_eis_223": 41
+  },
+  "after": {
+    "unique_lots": 118,
+    "distinct_procedures": 107,
+    "numeric_eis_223": 41
+  },
+  "new_unique_lots": 0,
+  "new_deduplicated_projects": 0,
+  "new_verified_db_fields": 0,
+  "new_named_winners": 0,
+  "new_signed_suppliers": 0,
+  "new_paid_sales": 0,
+  "new_original_final_protocols": 0,
+  "new_exhaustive_month_source_searches": 0,
+  "source_attempts": {
+    "total": 11,
+    "http_200_captured": 7,
+    "http_403": 1,
+    "remote_protocol_errors": 3,
+    "new_distinct_byte_shas": 2,
+    "new_material_evidence_shas": 0,
+    "note": "7 new immutable captures; 2 novel dynamic HTML SHA values, not new technical/protocol/contract evidence. Other 5 SHA already archived. HTTP200 alone does not prove case match."
+  },
+  "source_findings": [
+    {
+      "case": "223fz:32616497692:lot1",
+      "source": "https://www.roseltorg.ru/procedure/32616497692",
+      "sha256": "529f6411123bfbfbe689099711dd1b8f9576e362e0e746618da2993ed8e160ec",
+      "finding": "First-party card still says Подведение итогов; exact final-results planned 2026-11-02 16:00 MSK, NOT 2026-11-01 16:00. 10kV UKRM 3150 kVAr mixed EPC already known. Correction of retry eligibility, not a new winner."
+    },
+    {
+      "case": "223fz:32616497692:lot1",
+      "source": "https://rosseti.roseltorg.ru/file/get/t/ProtocolFiles/id/299452/user/-1/name/HappenedRetrade_32616497692.rtf",
+      "sha256": "c6fb6317471d1bc0fff40d641152df09cacd734e188a4f12eb73153898eddbbb",
+      "finding": "Already SHA-archived 2026-11-01 11:37 MSK; one named bidder Vtoralyuminprodukt, offer 79101498.40 RUB, no further price decrease; not a final winner or signed supplier."
+    },
+    {
+      "case": "223fz:32616497692:lot1",
+      "source": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616497692",
+      "sha256": "6867d993d2897464c1fccc34622bb5318a7e2570408ee39ee2c8845d8bd9f513",
+      "finding": "EIS public contract-info says Сведения отсутствуют; unchanged original SHA; cannot attribute signed contract."
+    },
+    {
+      "case": "223fz:32616506708:lot1",
+      "source": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616506708",
+      "sha256": "6bd6eac364b987c0177c46c7a5d7e62b9c350a061f6f7e9601f7814bc3e6eb3d",
+      "finding": "EIS protocols: Сведения отсутствуют; 220kV design/СКРМ project, not verified core 6-35kV equipment."
+    },
+    {
+      "case": "223fz:32616506708:lot1",
+      "source": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616506708",
+      "sha256": "deb1a181b46af8af0ef711c7f2b2cc4a35a257d84626d536c06f5db6bb6cc55e",
+      "finding": "No new public signed contract; SHA identical to prior."
+    },
+    {
+      "case": "commercial:АП125337:lot1",
+      "source": "https://etpgpb.ru/procedures/?search=%D0%90%D0%9F125337",
+      "sha256": "97fa153b371af54a005e32d6249f8ecd9922b8dc5a1cb80006c75f6974d1ab12",
+      "finding": "Official search HTTP200 but returned HTML has zero AP125337/АП125337/УКРМ occurrences; no first-party lot-specific specification. Dynamic SHA not promotion evidence."
+    }
+  ],
+  "blockers": [
+    "Rosseti section direct endpoint HTTP403; 3 httpx RemoteProtocolError recovered for two first-party sources via curl/native-trust",
+    "GPB official search did not yield AP125337 lot-specific source",
+    "No final commission or contract as of 2026-11-01 16:37 MSK"
+  ],
+  "next_three": [
+    {
+      "case": "223fz:32616474682:lot1/lot2",
+      "retry_after_moscow": "2026-11-02 06:30",
+      "goal": "Two lot-specific final protocols; distinguish 11.55kV equipment lot2"
+    },
+    {
+      "case": "223fz:32616433248:lot1",
+      "retry_after_moscow": "2026-11-02 09:00",
+      "goal": "Signed contract registry, not only proposed sole bidder"
+    },
+    {
+      "case": "223fz:32616497692:lot1",
+      "retry_after_moscow": "2026-11-02 16:30",
+      "goal": "Final commission protocol after official 16:00 deadline; verify winner and contract separately"
+    }
+  ],
+  "governance": "No DB mutation, backup not needed, no client HTML/PDF regeneration, v29 101 rows unchanged, PR 521 REVIEW, no auto-merge"
+}
