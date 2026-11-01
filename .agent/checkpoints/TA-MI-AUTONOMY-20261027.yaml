@@ -4906,3 +4906,57 @@ mi_watchdog_statcom_service_and_svc_design_20261101_2233:
     41 requests, six nonexhaustive search pages, 20 lexical false positives.
     Live PG 120/109/43 unchanged. Next 32616474682 Nov 2 06:30,
     32616433248 09:00, 32616497692 16:30 Moscow. PR521 REVIEW.
+
+mi_watchdog_primary_discovery_20261101_2332:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6562843768
+  internal_apfs_acceptance: "pass"
+  postgres_unique_lots_before: 120
+  postgres_unique_lots_after: 120
+  postgres_distinct_procedures: 109
+  postgres_eis_223_notices: 43
+  new_unique_core_6_35kv_lots: 0
+  new_verified_fields_persisted: 0
+  new_source_requests: 8
+  first_party_search_pages_sha_verified: 2
+  new_case_originals: 0
+  new_original_protocols: 0
+  new_signed_suppliers: 0
+  new_paid_equipment_sales: 0
+  exhaustive_month_source_searches: 0
+  tektorg_exact_number_search:
+    case_id: "commercial:РН61005187:lot1"
+    url: "https://www.tektorg.ru/rosneft/procedures?name=%D0%A0%D0%9D61005187"
+    http_status: 200
+    sha256: "97626f9940e3e53f817d38a36470e79f7ab54e5f04f3686afb20b2890eae7f4a"
+    official_listing_total: 0
+    interpretation: "No official procedure match in this public query; not evidence that procurement does not exist."
+  tektorg_keyword_search:
+    url: "https://www.tektorg.ru/rosneft/procedures?name=%D0%94%D0%A4%D0%9A%D0%A3"
+    http_status: 200
+    sha256: "cd4407c2ed851dbde8ffa3ab547888a8e6fc7fbd069ca79a261f20c32220ca72"
+    official_listing_total: 0
+  eis_source_attempts:
+    total: 6
+    outcome: "capture rejected: source content too short; no saved original or source SHA"
+    cases: ["223fz:32514947144:lot1", "223fz:32515582393:lot1", "223fz:32515208744:lot1", "223fz:32616280467:lot1"]
+    note: "First case attempted common-info, protocols, contract-info; other three common-info. Existing earlier SHA originals remain intact."
+  independent_discovery:
+    candidate: "commercial:1258722:lot1"
+    source: "https://zakupki.kontur.ru/IS83917556"
+    observed: "2026-10-23 Tender.Pro second-stage supply of KЭЭПВ-1.85, КЭЭС-1.2, КЭП1-1.05 capacitors; no verified 6-35kV equipment."
+    decision: "Exclude from core pending original; do not INSERT or count second-stage as separate underlying project."
+    additional_checked: ["commercial:4643332:lot1", "223fz:32616433248:lot1", "223fz:32616497692:lot1"]
+    note: "Already in live corpus; no duplicate INSERT. 44-FZ/223-FZ broad searches did not establish exhaustive monthly coverage."
+  next_targets:
+    - "223fz:32616474682:lot1 after 2026-11-02 06:30 Moscow: original outcome/contract"
+    - "223fz:32616433248:lot1 after 2026-11-02 09:00 Moscow: 35kV UKRM signed EPC contract"
+    - "223fz:32616497692:lot1 after 2026-11-02 16:30 Moscow: 10kV UKRM EPC result"
+  resume_instruction: >-
+    Preserve the same PR #521 and original Issue #57 comment. 120 unique lots,
+    109 distinct procedures and 43 EIS 223 notices unchanged. Two new first-party
+    TEK-Torg search page SHA captures returned empty public listings; neither
+    verifies the commercial case's electrical voltage, signed supplier or price.
+    Do not regenerate client reports without new verified lot or field. Prioritize
+    genuinely new originals and P0/P1 then P2-P5 evidence, not repeat captures.
