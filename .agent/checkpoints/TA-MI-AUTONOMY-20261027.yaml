@@ -4309,3 +4309,48 @@ mi_watchdog_kep_protocol_20261101_0630:
     final protocol from 2026-11-02 06:30 MSK, AP125337 official source
     now if public, 32616506708 after 2026-11-01 07:30 MSK.
     PR 521 REVIEW; no auto-merge.
+
+mi_watchdog_vanino_p0_20261101_0735:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6553412947
+  latest_tested_code_commit: ff27691
+  report: docs/market_intelligence/PQ_WATCHDOG_VANINO_P0_20261101_0735.json
+  report_sha256: f344eb4c85971f7d6722340e86017c6a5d0ea705f5fdde1cbbcb37b218a1a2b4
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 3
+  first_party_requests: 23
+  first_party_http200_captures: 13
+  first_party_failed_attempts: 10
+  fresh_sha_verified_capture_files: 13
+  new_distinct_original_shas: 9
+  new_case_specific_original_shas: 8
+  new_protocol_originals: 0
+  new_signed_suppliers: 0
+  new_paid_sales: 0
+  exhaustive_month_source_searches: 0
+  full_backup_sha256: a5a95301f5ab905978b27f6e5ee0d0e36b882885c8f084bb74551b39c04fedbb
+  client_report_version: V28
+  client_html: unchanged
+  canonical_v29_rows_unchanged: 101
+  tests: 8 targeted passed; Ruff passed; RU/EN 258 PDF pages each, embedded PT Sans/JetBrains Mono, no blank/out-of-page text
+  resume_instruction: >-
+    Official EIS 32616506708 primary notice and original technical DOCX
+    captured on internal APFS with SHA; design-only 220kV Vanino project,
+    parent SCRM 150 Mvar is not equipment sale or proven 6-35kV nameplate.
+    Buyer INN 7728589190, RTS-Tender platform and first-party source URL
+    filled by full-backup, source-SHA, old-null CAS and readback. 118/107/41
+    unchanged. V28 bilingual PDFs and quality audit versioned; old V2-V27
+    unchanged. 32616266007 final protocol repeated prior SHA and bids,
+    signed supplier/payment still unknown. AP125337 first-party GPB docs
+    inaccessible without public link; 32616400421 official exact URLs 404,
+    secondary cancellation not promoted. Next AP125337 public original now,
+    32616474682 final outcome after 2026-11-02 06:30 Moscow,
+    32616506708 final outcome after 2026-11-06 23:59 Moscow.
+    PR #521 REVIEW; no auto-merge. Continue primary research.
