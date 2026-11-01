@@ -61,7 +61,7 @@ def write(row,before,evidence):
  data['evidence']=[*row['data']['evidence'],*({'url':x['url'],'sha256':x['sha256'],'source_tier':'first_party_eis_registered_contract','excerpt':('Номер договора СП-14.4200.4613.25/1; цена 3 050 000,00 ₽' if i==0 else 'Номер договора СП-14.4200.4613.25/1; дата заключения 10.06.2026')} for i,x in enumerate(evidence['sources']))]
  h=digest(data)
  meta={**row['meta'],'source_content_hash':h,'eis_tyazhinskaya_20261101_registered_contract':{**evidence,'fields':FIELDS,'previous_hash':row['hash'],'previous_revision':row['rev'],'legacy_status_warning':'Old nonempty status is historical pre-registry; review separately, never overwrite'}}
- nulls=' AND '.join(f"(d.data->'{k}') IS NULL" for k in FIELDS)
+ nulls=' AND '.join(f"((d.data->'{k}') IS NULL OR (d.data->'{k}') = 'null'::jsonb)" for k in FIELDS)
  sql=f"""BEGIN ISOLATION LEVEL SERIALIZABLE;
 SET LOCAL statement_timeout='55s'; SET LOCAL lock_timeout='9s';
 SELECT pg_advisory_xact_lock(hashtext('{COL}-delta'));
