@@ -4751,3 +4751,51 @@ mi_watchdog_standards_20261101_1831:
     119/108/42 unchanged. Next 32616474682 after 2 Nov 06:30,
     32616433248 after 09:00, 32616497692 after 16:30 Moscow.
     PR521 REVIEW, no merge.
+
+mi_watchdog_bsk_20261101_1932:
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6560723702
+  latest_tested_code_commit: 1295768e29e4eecb9d7a79978d40ba95e2c285b7
+  report: docs/market_intelligence/PQ_WATCHDOG_BSK_20261101_1932.json
+  report_sha256: d9f8f8b7eba827c5d2ad738fcfd3ebd2165e48308290135954b81e34a7e49e89
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 119
+  postgres_unique_lots_after: 120
+  postgres_distinct_procedures: 109
+  postgres_eis_223_notices: 43
+  new_unique_core_6_35kv_lots: 1
+  new_deduplicated_projects: 1
+  new_verified_fields_existing_lots: 0
+  new_first_party_immutable_originals: 3
+  new_original_final_protocols: 1
+  new_registered_equipment_contracts: 1
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_paid_sales: 0
+  source_search_requests: 19
+  exhaustive_month_source_searches: 0
+  new_lot: 223fz:32615637628:lot1
+  verified_voltage_kv: 11.55
+  verified_units: 2
+  verified_kvar_per_unit: 500
+  registered_contract_price_rub: "484998.80"
+  registered_contract_date: 2026-03-16
+  full_backup_sha256: 3f89aba0467cc5c27afb13d61376f5d2ccc46b5dc122012c9b7e295871c73fb3
+  source_manifest_sha256: 946d30e3304d87e7497ed9693ce3c7d974cb7927dc35491b87d6b2e53b316463
+  client_report_version: V38
+  client_pdfs_pages_each: 262
+  tests: 16 targeted PASS, Ruff PASS, PDF 262 pages each
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    New source-verified 223fz:32615637628:lot1 is 2x 11.55kV 500kvar
+    KEPF capacitor units; official ZIP technical specification, final
+    protocol 02 Mar 2026 and registered contract 02.4200.567.26 signed
+    16 Mar 2026 for RUB 484998.80. No named supplier, payment or
+    executed revenue confirmed. DB readback 120/109/43 after SHA and
+    pg_restore-verified backup; V38 bilingual PDFs versioned.
+    EIS publishDateFrom/To search returned 2026 cases for requested
+    2024 month: date-bound coverage NOT validated, lexical false
+    positives rejected. Next 32616474682 after 2 Nov 06:30 MSK,
+    32616433248 after 09:00, 32616497692 after 16:30.
+    PR 521 REVIEW, no auto-merge; task remains in_progress.
