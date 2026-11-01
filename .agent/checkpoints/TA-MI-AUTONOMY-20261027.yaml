@@ -5066,3 +5066,34 @@ mi_watchdog_is_mt_first_party_exclusion_20261102_0136:
     Both EXCLUDED from strict 6-35kV, not ingested or counted as signed
     equipment sales. July KNS-1 same-title lead may be a repeated project
     but lacks native original. PR #521 REVIEW, no auto-merge.
+
+mi_watchdog_tomsk_eis_20261102_0237:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6565541941
+  moscow_run_end: "2026-11-02T02:37:15+03:00"
+  internal_apfs_acceptance: "pass"
+  postgres_unique_lots_before: 120
+  postgres_unique_lots_after: 120
+  postgres_distinct_procedures: 109
+  postgres_eis_223_notices: 43
+  first_party_source_requests: 21
+  http200_sha_verified_captures: 19
+  new_distinct_sha_versions: 16
+  new_registered_contract_originals: 1
+  new_core_6_35kv_lots: 0
+  new_verified_db_fields: 0
+  new_signed_suppliers: 0
+  new_paid_equipment_sales: 0
+  exhaustive_month_source_searches: 0
+  report: "docs/market_intelligence/PQ_WATCHDOG_TOMSK_EIS_CONTRACT_20261102.json"
+  report_sha256: "331737a27ea5ceb379d9d57a50f03482eecab0d58f031f40e19aa2a7b488cdf6"
+  latest_tested_code_commit: "76b28028c145ca677e3fccfc7992ba4599dbd2ae"
+  resume_instruction: >-
+    EIS 32615700251 has official registered contract 57017380970260000030000
+    dated 2026-03-10 for 11244111.77 RUB, but is mixed 10kV switchgear
+    modernization, NOT verified new PQ equipment sale. Supplier/payment unknown.
+    32616523441 technical original is 10kV DGR arc suppression, excluded.
+    Both outside live 120-lot corpus. No INSERT or report refresh.
+    Next 32616474682 after 06:30, 32616433248 after 09:00,
+    32616497692 after 16:30 Moscow on 2026-11-02. PR521 REVIEW.
