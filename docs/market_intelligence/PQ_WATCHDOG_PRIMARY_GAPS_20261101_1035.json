@@ -1,0 +1,131 @@
+{
+  "schema": "pq-watchdog-primary-gap-verification/1",
+  "completed_moscow": "2026-11-01T10:36:17.335072+03:00",
+  "issue_comment_id": 6554969742,
+  "pr": 521,
+  "parent_head": "71d732f4e7a656ca807de7379b3218aa03ea7450",
+  "acceptance": "pass",
+  "db_before_after": {
+    "unique_lots": 118,
+    "procedures": 107,
+    "eis_223_notices": 41
+  },
+  "new_unique_lots": 0,
+  "new_projects": 0,
+  "new_verified_db_fields": 0,
+  "new_named_winners": 0,
+  "new_signed_suppliers": 0,
+  "new_paid_sales": 0,
+  "new_original_protocols": 0,
+  "new_exhaustive_month_searches": 0,
+  "first_party_GET_attempts": 14,
+  "first_party_HEAD_attempts": 3,
+  "sha_verified_captures": 7,
+  "new_distinct_sha_count": 3,
+  "new_distinct_shas": [
+    "89ce334789afca1dac84368f694e57642dd251c13be25a341e6def521c01e186",
+    "d3d2ebcb65e4011d5687f820a7185bdb6d4634572a1ff38278aa4378c04d303b",
+    "0fb7fdd40ed5e562cd5e6cf31d74685a6fe9f75023b6ad5a11dddda0b726b40f"
+  ],
+  "repeat_sha_captures": 4,
+  "capture_failures": 7,
+  "captures": [
+    {
+      "case_id": "223fz:32616120582:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=57802312751260008280000",
+      "sha256": "34d0c247faaea86a700c495e6789ac37b4d537658df3781afa3787cbdf3f1af7",
+      "relative_file": "captures/223fz_32616120582_lot1/20261101T073155518876Z-fa38d7d8-34d0c247faaea86a.bin",
+      "bytes": 135458,
+      "http_status": 200
+    },
+    {
+      "case_id": "223fz:32616120582:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=57802312751260008280000",
+      "sha256": "89ce334789afca1dac84368f694e57642dd251c13be25a341e6def521c01e186",
+      "relative_file": "captures/223fz_32616120582_lot1/20261101T073155811994Z-48e1256a-89ce334789afca1d.bin",
+      "bytes": 144607,
+      "http_status": 200
+    },
+    {
+      "case_id": "223fz:32616120582:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/event-log.html?reestrNumber=57802312751260008280000",
+      "sha256": "d3d2ebcb65e4011d5687f820a7185bdb6d4634572a1ff38278aa4378c04d303b",
+      "relative_file": "captures/223fz_32616120582_lot1/20261101T073156129837Z-9cfbd471-d3d2ebcb65e4011d.bin",
+      "bytes": 127163,
+      "http_status": 200
+    },
+    {
+      "case_id": "223fz:32616120582:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=57802312751260008280000",
+      "sha256": "81702e88f56880456f6c0777b2b5514eebae12f30ca7f6386b83c8f4203da88c",
+      "relative_file": "captures/223fz_32616120582_lot1/20261101T073156539999Z-643c5037-81702e88f5688045.bin",
+      "bytes": 12485,
+      "http_status": 200
+    },
+    {
+      "case_id": "223fz:32616400421:lot1",
+      "source_url": "https://www.roseltorg.ru/procedure/32616400421",
+      "sha256": "0fb7fdd40ed5e562cd5e6cf31d74685a6fe9f75023b6ad5a11dddda0b726b40f",
+      "relative_file": "captures/223fz_32616400421_lot1/20261101T073244338186Z-06b56550-0fb7fdd40ed5e562.bin",
+      "bytes": 234736,
+      "http_status": 200
+    },
+    {
+      "case_id": "223fz:32616400421:lot1",
+      "source_url": "https://corp.roseltorg.ru/api/v1/documents/476985f6-bbf1-11f1-9925-d762a15dcfbc",
+      "sha256": "ce2241529a0e2d8df4c3c94d851adc349f403da3a54edbc53b35404f50b363a0",
+      "relative_file": "captures/223fz_32616400421_lot1/20261101T073301179272Z-25e8100f-ce2241529a0e2d8d.bin",
+      "bytes": 194533,
+      "http_status": 200
+    },
+    {
+      "case_id": "223fz:32616400421:lot1",
+      "source_url": "https://corp.roseltorg.ru/api/v1/documents/ad495bda-b70f-11f1-94bc-e59c6cd3a685",
+      "sha256": "d32e595bbbfe916848fcfcc4ab166d17429c922444e61a20114d9c8518175b16",
+      "relative_file": "captures/223fz_32616400421_lot1/20261101T073301527818Z-55425708-d32e595bbbfe9168.bin",
+      "bytes": 605671,
+      "http_status": 200
+    }
+  ],
+  "source_findings": [
+    {
+      "case": "223fz:32616120582:lot1",
+      "finding": "EIS contract subject and event log new SHA; contract 57802312751260008280000, КАР/00225/26, 19.08.2026, 17m RUB, status Исполнение; 2026=0, 2027=1.02m, 2028=15.98m RUB are scheduled amounts NOT paid",
+      "new_field": false,
+      "supplier": "unverified",
+      "paid": "unverified",
+      "equipment_only_price": "unverified"
+    },
+    {
+      "case": "223fz:32616400421:lot1",
+      "finding": "Roseltorg first-party cancelled notice #26-1149; 29.09.2026 cancellation to change venue for more participants; archived 7z hashes identical; 110kV BSK system + 10kV MPU 30Mvar; 32616435269 is previously proven reissue, not new project",
+      "new_field": false,
+      "protocol_docx_sha": "1cf439532a7acf87d47d0f5baac56cf386e77f6cdc373e8276b29a46ae8ec23e",
+      "technical_docx_sha": "2fe39864fb133bd0b8c961c027b1314760de071646e31a8fd0ff5976044c193a"
+    }
+  ],
+  "failures": [
+    "EIS 32616400421 common-info/protocols/contract-info: 3 rejected invalid source identity/size",
+    "EIS 32616506708 protocols/contract-info: 2 rejected invalid source identity/size",
+    "Roseltorg 32616120582: invalid identity/size; Roseltorg 32616506708: HTTP 404",
+    "B2B 4304120 HEAD HTTP 404; B2B 1190793/1234013 HEAD 301 to unrelated procurement (wrong platform)"
+  ],
+  "next_three": [
+    {
+      "case": "32616120582",
+      "retry": "only after new official supplier/execution document",
+      "goal": "signed supplier, actual paid amount"
+    },
+    {
+      "case": "АП125337",
+      "retry": "now if first-party GPB original accessible; outcome after 2027-01-05",
+      "goal": "official 2-UKRM specification"
+    },
+    {
+      "case": "32616474682",
+      "retry": "2026-11-02 06:30 MSK",
+      "goal": "lot-specific official outcome"
+    }
+  ],
+  "governance": "No DB mutation, no report HTML/PDF churn, no merge; PR #521 only, MI in_progress"
+}

@@ -4431,3 +4431,21 @@ mi_watchdog_karelia_slavyanskaya_20261101_0937:
     V30/V31 RU/EN versioned; legacy client HTML unchanged.
     Next 32616120582 signatory, AP125337 public source,
     32616474682 after 2026-11-02 06:30 MSK. PR 521 REVIEW.
+
+mi_watchdog_primary_gaps_20261101_1035:
+  status: in_progress
+  pr: 521
+  issue_comment_id: 6554969742
+  parent_head: 71d732f4e7a656ca807de7379b3218aa03ea7450
+  report: docs/market_intelligence/PQ_WATCHDOG_PRIMARY_GAPS_20261101_1035.json
+  report_sha256: 22b799834f763aa0b70f7298663b181e1c2d61c2415c4cb83ba976fbb10b9cad
+  internal_apfs_acceptance: pass
+  db_unique_lots_before_after: 118
+  db_procedures: 107
+  db_eis223: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 0
+  first_party_get_attempts: 14
+  sha_verified_captures: 7
+  new_distinct_original_shas: 3
+  next: "32616120582 signed supplier; AP125337 GPB original; 32616474682 after 2026-11-02 06:30 MSK"
