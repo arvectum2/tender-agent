@@ -4875,3 +4875,34 @@ mi_watchdog_sokolniki_exclusion_20261101_2130:
     three first-party search-result titles were lexical false positives.
     Retry 32616474682 after Nov 2 06:30 MSK, 32616433248
     after 09:00, 32616497692 after 16:30. PR521 REVIEW.
+
+mi_watchdog_statcom_service_and_svc_design_20261101_2233:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6562833194
+  latest_tested_code_commit: "d999d28065039506ff3eba84fa73c5861ede1e04"
+  report: "docs/market_intelligence/PQ_WATCHDOG_STATCOM_SERVICE_AND_SVC_DESIGN_20261101_2233.json"
+  report_sha256: "63b0a75ff3566d128507aee0fa03b921d215c84d25013bf8593e0e645feafe59"
+  internal_apfs_acceptance: "pass"
+  postgres_unique_lots_before: 120
+  postgres_unique_lots_after: 120
+  postgres_distinct_procedures: 109
+  postgres_eis_223_notices: 43
+  new_unique_core_6_35kv_lots: 0
+  new_verified_fields_persisted: 0
+  first_party_source_requests: 41
+  new_sha_originals: 12
+  new_original_protocols: 3
+  new_registered_service_contracts: 1
+  new_signed_suppliers: 0
+  new_paid_equipment_sales: 0
+  exhaustive_month_source_searches: 0
+  resume_instruction: >-
+    Two existing 223-FZ cases gained immutable originals: 32313008364 STATCOM cooling
+    service at Mogocha 220kV, registered contract 6,795,960 RUB dated 2023-12-25;
+    32514944142 design of three 220kV SVC replacements, seven applications, six
+    rejected, sole admitted bid 18,668,690 RUB, signed contract unverified.
+    Neither is 6-35kV equipment sale. Twelve SHA captures, three original protocols,
+    41 requests, six nonexhaustive search pages, 20 lexical false positives.
+    Live PG 120/109/43 unchanged. Next 32616474682 Nov 2 06:30,
+    32616433248 09:00, 32616497692 16:30 Moscow. PR521 REVIEW.
