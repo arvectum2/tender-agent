@@ -4674,3 +4674,48 @@ mi_watchdog_retry_20261101_1637:
     evidence or DB fields, 118/107/41 unchanged. Next 32616474682
     after 2026-11-02 06:30; 32616433248 after 09:00; 32616497692
     after 16:30 MSK. PR 521 REVIEW, no merge.
+
+
+mi_watchdog_poluprovodniki_20261101_1743:
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6559357768
+  latest_tested_code_commit: e45b3d6f6fcad02d681ef9c48bca286d8ecbc17a
+  report: docs/market_intelligence/PQ_WATCHDOG_POLUPROVODNIKI_20261101_1740.json
+  report_sha256: 8da815104456af10e9ca1f0cab47e6d11fe6f6637fe032d9e693293ef589f7cf
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 119
+  postgres_distinct_procedures: 108
+  postgres_eis_223_notices: 42
+  new_unique_lots: 1
+  new_deduplicated_projects: 1
+  new_verified_fields_existing_lots: 0
+  first_party_get_attempts: 40
+  new_immutable_source_captures: 8
+  new_original_protocols: 1
+  first_parts_admitted_bids: 2
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_paid_sales: 0
+  exhaustive_month_source_searches: 0
+  new_lot: 223fz:32616430382:lot1
+  mixed_epc_nmck_rub: "72183607.13"
+  equipment_only_price_verified: false
+  full_backup_sha256: f4081bf0230e3c1c94372d0809fa66dc12e2af6170c7e7224b8be47799268e34
+  source_manifest_sha256: 6ed28c089af676879cee4da8be0ad9f9a75941ac80b0fca1fa853479ffa2743b
+  client_report_version: V37
+  client_html: docs/market_intelligence/POWER_QUALITY_CLIENT_PREVIEW_20261024.html
+  client_pdfs_pages_each: 260
+  tests: 14 targeted PASS, Ruff PASS, diff check PASS
+  canonical_v29_rows_unchanged: 101
+  resume_instruction: >-
+    New EIS original for Poluprovodniki 10kV compensation within mixed 220kV
+    substation EPC; lot1, buyer, 72.18m RUB whole-EPC NMC, two first-parts
+    bids both admitted 28 Oct 2026. Winner, signed supplier and PQ-only
+    equipment price unknown. Source SHA-bound new lot inserted atomically
+    after full SHA+pg_restore backup; readback 119/108/42. Versioned V37
+    RU/EN PDFs 260 pages, old V2-V36 untouched. Next 32616474682 after
+    2 Nov 06:30 MSK, 32616433248 after 2 Nov 09:00 MSK,
+    32616497692 after 2 Nov 16:30 MSK; Poluprovodniki final
+    after 3 Nov 18:00 MSK. PR 521 REVIEW, no auto-merge.
