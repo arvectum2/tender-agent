@@ -4449,3 +4449,40 @@ mi_watchdog_primary_gaps_20261101_1035:
   sha_verified_captures: 7
   new_distinct_original_shas: 3
   next: "32616120582 signed supplier; AP125337 GPB original; 32616474682 after 2026-11-02 06:30 MSK"
+
+mi_watchdog_source_fields_20261101_1148:
+  status: in_progress
+  pr: 521
+  issue_comment_id: 6555368191
+  latest_tested_code_commit: ddcfda0a7bb147e6efe55233dd36bc7607135283
+  report: docs/market_intelligence/PQ_WATCHDOG_SOURCE_FIELDS_20261101_1147.json
+  report_sha256: dc8c82554786ed0617cfa17fc3db7e2a42bc9b8377c0b054f054ac2e309a02e2
+  internal_apfs_acceptance: pass
+  db_unique_lots_before_after: 118
+  db_procedures: 107
+  db_eis223: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 4
+  new_report_visible_fields: 2
+  first_party_attempts: 20
+  http200_captures: 18
+  identity_verified_captures: 17
+  new_distinct_case_source_shas: 5
+  new_protocol_originals: 1
+  newly_verified_signed_suppliers: 0
+  newly_verified_paid_sales: 0
+  exhaustive_month_source_searches: 0
+  backup_sha256: 6273752b0d748567252f4269ee76466ad37c9426ecc755ede9120e6e07e0d1e2
+  client_report_version: V32
+  canonical_v29_rows_unchanged: 101
+  tests: 7 targeted passed, Ruff passed, RU/EN 258 PDF pages each
+  resume_instruction: >-
+    Two primary EIS originals support 4 old-null DB field enrichments:
+    32514947144 filter capacitor buyer INN 4716016979 plus source_urls;
+    32616433248 mixed EPC UKRM 35kV plus source_urls.
+    Corpus 118/107/41 unchanged. No newly verified signed supplier
+    or paid sale. One new original protocol PDF is scanned.
+    V32 bilingual reports versioned; legacy HTML unchanged.
+    Retry 32616474682 after 2026-11-02 06:30 MSK,
+    32616120582 supplier and AP125337 GPB after 09:00 MSK,
+    32616497692 final after 16:00 MSK. PR 521 REVIEW.
