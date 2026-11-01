@@ -1,0 +1,313 @@
+{
+  "schema": "pq-watchdog-source-evidence/1",
+  "run_id": "20261101T1932-MSK-11",
+  "completed_moscow": "2026-11-01T19:38:13.165355+03:00",
+  "issue_comment_id": 6560723702,
+  "canonical_pr": 521,
+  "parent_head": "c70d32edd41b9e89ef94bb46c3558efe76e6c545",
+  "acceptance": "pass_before_db_mutation",
+  "db_before": {
+    "unique_lots": 119,
+    "procedures": 108,
+    "eis_223_notices": 42
+  },
+  "db_after": {
+    "unique_lots": 120,
+    "procedures": 109,
+    "eis_223_notices": 43
+  },
+  "new_unique_lots": 1,
+  "new_deduplicated_projects": 1,
+  "new_core_6_35kv_equipment_lots": 1,
+  "new_verified_fields_existing_lots": 0,
+  "new_original_final_protocols": 1,
+  "new_named_winners": 0,
+  "new_signed_supplier_names": 0,
+  "new_paid_sales": 0,
+  "source_search_requests": 19,
+  "source_searches": [
+    {
+      "month_requested": "2026-10",
+      "law_requested": "223",
+      "query": "СТАТКОМ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.10.2026&publishDateTo=31.10.2026&searchString=%D0%A1%D0%A2%D0%90%D0%A2%D0%9A%D0%9E%D0%9C",
+      "http": 200,
+      "page": 1,
+      "observed_cards": 10,
+      "date_scope_verified": false
+    },
+    {
+      "month_requested": "2025-07",
+      "law_requested": "223",
+      "query": "БСК 10 кВ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.07.2025&publishDateTo=31.07.2025&searchString=%D0%91%D0%A1%D0%9A+10+%D0%BA%D0%92",
+      "http": 200,
+      "page": 1,
+      "observed_cards": 0,
+      "date_scope_verified": false
+    },
+    {
+      "month_requested": "2024-05",
+      "law_requested": "223",
+      "query": "компенсатор реактивной мощности",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.05.2024&publishDateTo=31.05.2024&searchString=%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80+%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9+%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8",
+      "http": 200,
+      "page": 1,
+      "observed_cards": 0,
+      "date_scope_verified": false
+    },
+    {
+      "month_requested": "2026-09",
+      "law_requested": "44",
+      "query": "УКРМ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz44=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.09.2026&publishDateTo=30.09.2026&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "http": 200,
+      "page": 1,
+      "observed_cards": 0,
+      "date_scope_verified": false
+    },
+    {
+      "month_requested": "2025-11",
+      "law_requested": "44",
+      "query": "фильтр гармоник",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz44=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.11.2025&publishDateTo=30.11.2025&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80+%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D0%BD%D0%B8%D0%BA",
+      "http": 200,
+      "page": 1,
+      "observed_cards": 10,
+      "date_scope_verified": false
+    },
+    {
+      "month_requested": "2026-06",
+      "law_requested": "223",
+      "query": "СТК",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.06.2026&publishDateTo=30.06.2026&searchString=%D0%A1%D0%A2%D0%9A",
+      "http": 200,
+      "page": 1,
+      "observed_cards": 10,
+      "date_scope_verified": false
+    },
+    {
+      "month_requested": "2026-10",
+      "law_requested": "223",
+      "query": "УКРМ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.10.2026&publishDateTo=31.10.2026&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "http": 200,
+      "page": 1,
+      "observed_cards": 2,
+      "date_scope_verified": false
+    },
+    {
+      "month_requested": "2026-10",
+      "law_requested": "223",
+      "query": "БСК",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.10.2026&publishDateTo=31.10.2026&searchString=%D0%91%D0%A1%D0%9A",
+      "http": 200,
+      "page": 1,
+      "observed_cards": 10,
+      "date_scope_verified": false
+    },
+    {
+      "month_requested": "2026-10",
+      "law_requested": "223",
+      "query": "компенсация реактивной мощности",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.10.2026&publishDateTo=31.10.2026&searchString=%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%86%D0%B8%D1%8F+%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9+%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8",
+      "http": 200,
+      "page": 1,
+      "observed_cards": 0,
+      "date_scope_verified": false
+    },
+    {
+      "month_requested": "2025-10",
+      "law_requested": "223",
+      "query": "фильтрокомпенсирующая установка",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.10.2025&publishDateTo=31.10.2025&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B0%D1%8F+%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0",
+      "http": 200,
+      "page": 1,
+      "observed_cards": 0,
+      "date_scope_verified": false
+    },
+    {
+      "month_requested": "2024-11",
+      "law_requested": "223",
+      "query": "УКРМ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.11.2024&publishDateTo=30.11.2024&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "http": 200,
+      "page": 1,
+      "observed_cards": 10,
+      "date_scope_verified": false
+    },
+    {
+      "month_requested": "2026-10",
+      "law_requested": "44",
+      "query": "конденсаторная установка",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz44=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.10.2026&publishDateTo=31.10.2026&searchString=%D0%BA%D0%BE%D0%BD%D0%B4%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80%D0%BD%D0%B0%D1%8F+%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0",
+      "http": 200,
+      "page": 1,
+      "observed_cards": 9,
+      "date_scope_verified": false
+    },
+    {
+      "month_requested": "2025-03",
+      "law_requested": "223",
+      "query": "тиристорный компенсатор",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.03.2025&publishDateTo=31.03.2025&searchString=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "http": 200,
+      "page": 1,
+      "observed_cards": 0,
+      "date_scope_verified": false
+    },
+    {
+      "month_requested": "2024-03",
+      "law_requested": "223",
+      "query": "БСК 6 кВ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.03.2024&publishDateTo=31.03.2024&searchString=%D0%91%D0%A1%D0%9A+6+%D0%BA%D0%92",
+      "http": 200,
+      "page": 1,
+      "observed_cards": 0,
+      "date_scope_verified": false
+    },
+    {
+      "query": "УКРМ 10кВ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&searchString=%D0%A3%D0%9A%D0%A0%D0%9C+10%D0%BA%D0%92",
+      "http": 200,
+      "page": 1,
+      "observed_cards": 10,
+      "date_scope_verified": false
+    },
+    {
+      "query": "УКРМ 6кВ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&searchString=%D0%A3%D0%9A%D0%A0%D0%9C+6%D0%BA%D0%92",
+      "http": 200,
+      "page": 1,
+      "observed_cards": 3,
+      "date_scope_verified": false
+    },
+    {
+      "query": "фильтрокомпенсирующая",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B0%D1%8F",
+      "http": 200,
+      "page": 1,
+      "observed_cards": 8,
+      "date_scope_verified": false
+    },
+    {
+      "query": "статический компенсатор реактивной мощности",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&searchString=%D1%81%D1%82%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80+%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9+%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8",
+      "http": 200,
+      "page": 1,
+      "observed_cards": 6,
+      "date_scope_verified": false
+    },
+    {
+      "query": "батарея статических конденсаторов",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&searchString=%D0%B1%D0%B0%D1%82%D0%B0%D1%80%D0%B5%D1%8F+%D1%81%D1%82%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D1%85+%D0%BA%D0%BE%D0%BD%D0%B4%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2",
+      "http": 200,
+      "page": 1,
+      "observed_cards": 10,
+      "date_scope_verified": false
+    }
+  ],
+  "first_party_sha_captures": 3,
+  "new_month_source_coverage_exhaustive": 0,
+  "date_filter_warning": "EIS returned 2026 notice IDs for query requesting 2024-11; supplied publishDateFrom/To appear not reliably enforced. Never claim these pages as month coverage. Lexical false positives included СТАТКОМ=>остатков, СТК=>участков, БСК=>Сердобск/БСК company.",
+  "case": {
+    "id": "223fz:32615637628:lot1",
+    "buyer": "ПАО «Россети Сибирь»",
+    "buyer_inn": "2460069527",
+    "technology": "БСК / конденсаторы КЭПФ-11,55-500-2УХЛ1",
+    "voltage_kv": 11.55,
+    "quantity": 2,
+    "power_kvar_per_unit": 500,
+    "nmck_rub": "531888.28",
+    "registered_contract_number": "52460069527260002170000",
+    "contract_no": "02.4200.567.26",
+    "contract_concluded_date": "2026-03-16",
+    "registered_contract_price_rub": "484998.80",
+    "contract_subject": "2 capacitors; equipment-only registered contract, not confirmed paid sale",
+    "signed_supplier_name": null,
+    "paid_amount": null,
+    "winner_name": null,
+    "protocol": "32615637628-04 2026-03-02, three anonymized application IDs; first ranked 3751683308",
+    "originals": [
+      {
+        "sha256": "9f777396386b1c13615c2216af113ff2fe4c35db813020030d8e8a6f00b1de68",
+        "filename": "20261101T163514530392Z-c4506600-9f777396386b1c13.bin",
+        "source_name": "first_party_EIS_223_registered_contract",
+        "private_relative": "captures/223fz_32615637628_lot1/20261101T163514530392Z-c4506600-9f777396386b1c13.bin",
+        "bytes": 9408
+      },
+      {
+        "sha256": "3c9f6a06a6b0fccddd3518af7d56457998820008ea687ef3bd3e5f104f22b9ee",
+        "filename": "20261101T163514913242Z-260bb3d1-3c9f6a06a6b0fccd.bin",
+        "source_name": "first_party_EIS_223_official_original_zip",
+        "private_relative": "captures/223fz_32615637628_lot1/20261101T163514913242Z-260bb3d1-3c9f6a06a6b0fccd.bin",
+        "bytes": 824927
+      },
+      {
+        "sha256": "4394ed2e676b682e43bde361f86d6c09d408172d3276e2d75dffd08a58d6104f",
+        "filename": "20261101T163515301646Z-1dbae8b9-4394ed2e676b682e.bin",
+        "source_name": "first_party_EIS_223_final_commission_protocol",
+        "private_relative": "captures/223fz_32615637628_lot1/20261101T163515301646Z-1dbae8b9-4394ed2e676b682e.bin",
+        "bytes": 11581
+      }
+    ],
+    "source_urls": [
+      {
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract/printForm/viewXml.html?contractRegistrationNumber=52460069527260002170001",
+        "source_tier": "first_party_EIS_223_registered_contract",
+        "sha256": "9f777396386b1c13615c2216af113ff2fe4c35db813020030d8e8a6f00b1de68"
+      },
+      {
+        "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=73FE171703C84A6D8919B93811CEB6B8",
+        "source_tier": "first_party_EIS_223_official_original_zip",
+        "sha256": "3c9f6a06a6b0fccddd3518af7d56457998820008ea687ef3bd3e5f104f22b9ee"
+      },
+      {
+        "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=2a6cd1da-b9e5-4018-b851-cbb66c1571f1&purchaseNoticeNumber=32615637628",
+        "source_tier": "first_party_EIS_223_final_commission_protocol",
+        "sha256": "4394ed2e676b682e43bde361f86d6c09d408172d3276e2d75dffd08a58d6104f"
+      }
+    ],
+    "private_manifest_sha256": "946d30e3304d87e7497ed9693ce3c7d974cb7927dc35491b87d6b2e53b316463",
+    "postwrite_record_hash": "d89c5d5a1ffd308161db4c44eaebc5dd4476ae09a4a8f6e3e72c73103d9d7ec6",
+    "review_status": "staged_unreviewed"
+  },
+  "backup": {
+    "sha256": "3f89aba0467cc5c27afb13d61376f5d2ccc46b5dc122012c9b7e295871c73fb3",
+    "manifest": "data-platform-arvectum_data-20261101T163606Z-32520.dump.manifest.json",
+    "pg_restore_list_verified": true
+  },
+  "client_report": {
+    "html": "docs/market_intelligence/POWER_QUALITY_CLIENT_PREVIEW_20261024.html",
+    "snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261101_v38.json",
+    "version": "V38",
+    "ru_pdf_pages": 262,
+    "en_pdf_pages": 262
+  },
+  "tests": "16 targeted PASS, Ruff PASS, PDF info 262 pages each, PDF text includes new ID",
+  "next_ranked_cases": [
+    {
+      "id": "32616474682",
+      "retry_after_moscow": "2026-11-02 06:30",
+      "target": "final result and registered contract"
+    },
+    {
+      "id": "32616433248",
+      "retry_after_moscow": "2026-11-02 09:00",
+      "target": "commission final result and supplier"
+    },
+    {
+      "id": "32616497692",
+      "retry_after_moscow": "2026-11-02 16:30",
+      "target": "commission final result and signed contract"
+    }
+  ],
+  "remaining_gaps": [
+    "No supplier name or INN in verified registered contract print",
+    "No executed payment evidence",
+    "Date-filter query coverage not reliable",
+    "Most corpus candidate rows have missing P2-P5 fields"
+  ],
+  "canonical_v29_unchanged": 101,
+  "auto_merge": false
+}
