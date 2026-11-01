@@ -4559,3 +4559,39 @@ mi_watchdog_rosseti_south_caps_20261101_1335:
     V34 bilingual reports/audit versioned; HTML and V33 unchanged.
     Next 32616474682 after 2026-11-02 06:30 MSK, 32616400421
     and 32616120582 after 2026-11-02 09:00 MSK. PR 521 REVIEW.
+
+mi_watchdog_roseltorg_buyer_inn_20261101_1442:
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6557392495
+  latest_tested_code_commit: 5b1958c19ebe8496a5d3d166909d18f98b8a2aa1
+  report: docs/market_intelligence/PQ_WATCHDOG_ROSELTORG_BUYER_INN_20261101_1441.json
+  report_sha256: 6688fe6de55ec14efc6908f50c13bcdf535efff3bed00f725167a47b1ea8f4f6
+  internal_apfs_acceptance: pass
+  db_unique_lots_before_after: 118
+  db_distinct_procedures: 107
+  db_numeric_eis223: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 3
+  new_report_visible_filled_fields: 0
+  new_original_capture_sha: 1
+  reused_sha_verified_first_party_originals: 3
+  first_party_source_attempts: 29
+  new_original_protocols: 0
+  new_signed_suppliers: 0
+  new_paid_sales: 0
+  exhaustive_month_source_searches: 0
+  fresh_full_backup_sha256: a01f46e1b37972db09a97c109357ec736fc13132e96fd474004b3d2bfd2f5a25
+  client_report_version: V35
+  canonical_v29_rows_unchanged: 101
+  tests: 14 targeted passed; Ruff passed; RU/EN 258 PDF pages each
+  resume_instruction: >-
+    Three 2026 Roseltorg buyer INNs verified from SHA originals via
+    null-only atomic CAS; 118/107/41 unchanged. Buyer INN already existed
+    in nested customer object, so client field coverage did not grow;
+    V35 adds original-source links. Roseltorg first-party 32616400421
+    explicitly cancelled, 32616435269 successor open through 5 Nov;
+    no duplicate 452m RUB demand. 2023 STATCOM 220kV service original
+    newly captured but adjacent/outside 2024-26 core. Retry 32616497692
+    after 1 Nov 16:00 MSK; 32616474682 after 2 Nov 06:30 MSK;
+    32616120582 after 2 Nov 09:00 MSK. PR 521 REVIEW, no auto-merge.
