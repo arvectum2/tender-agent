@@ -4989,3 +4989,49 @@ mi_watchdog_kuzbass_buyer_inn_20261102_0035:
     fields enriched (buyer INN and source URL); no signed equipment sale.
     V40 bilingual 262-page reports versioned. Next 32616474682 after 06:30,
     32616433248 after 09:00, 32616497692 after 16:30 Moscow Nov 2.
+
+mi_watchdog_manual_primary_check_20261102_0128:
+  status: "in_progress"
+  report_issue: 57
+  issue_comment_id: 6564827271
+  canonical_pr: 521
+  branch: "feature/pq-etp-provenance-ledger-20261028"
+  verified_parent_head: "2716fc35fc9f880f45354cee3bae71e9284d4722"
+  moscow_run_end: "2026-11-02 01:35:25"
+  internal_apfs_acceptance: "pass"
+  postgres_unique_lots_before: 120
+  postgres_unique_lots_after: 120
+  postgres_distinct_procedures: 109
+  postgres_eis_223_notices: 43
+  new_unique_core_6_35kv_lots: 0
+  new_persisted_verified_fields: 0
+  new_verified_signed_suppliers: 0
+  new_verified_paid_sales: 0
+  direct_first_party_requests: 5
+  http_200_captures: 3
+  http_404_failures: 2
+  distinct_new_sha_versions: 2
+  new_unique_procurement_originals: 0
+  new_original_award_protocols: 0
+  exhaustive_month_searches: 0
+  source_1_case: "223fz:32615966040:lot1"
+  source_1_url: "https://tender.lot-online.ru/etp/app/OfferCard/page?OfferCard.offerUUID=Scorebo19718u80000prm9gt3apraje6o"
+  source_1_sha: "cafbc771b383b1c63e72b2d75ff765eb090952448493ca75a9a0eb59ffb90aab"
+  source_1_observation: "AO RAD original confirms 10kV mixed modernization procurement did not take place; not signed PQ sale"
+  source_2_case: "commercial:4657777:lot1"
+  source_2_url: "https://www.b2b-center.ru/market/postavka-blokov-kondensatornykh-dlia-nuzhd-po-btses-po-kes-ooo/tender-4657777/"
+  source_2_sha: "105673fce99671e5733130bd23be16f853633f418d2792a248de76b070bc2874"
+  source_2_observation: "B2B original: organizer AO BESK, buyer OOO Bashkirenergo, six capacitor blocks, advertised ceiling 208419.30 RUB excl VAT, voltage and signed supplier unverified; existing lot only"
+  source_3_case: "223fz:32616355390:lot1"
+  source_3_url: "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616355390"
+  source_3_sha: "5606b551d11da6a2953a938396c23081ec00eb7bc78935972772640e7b7d838c"
+  source_3_observation: "200 but SHA identical to prior known original; no new award proof"
+  blocked_requests: "EIS documents for 32616412267 and 32515044454 returned HTTP 404; no source archive fabricated"
+  retry_next:
+    - "223fz:32616474682:lot1/lot2 after 2026-11-02 06:30 MSK for final source"
+    - "223fz:32616433248:lot1 after 2026-11-02 09:00 MSK for signed contract"
+    - "223fz:32616497692:lot1 after 2026-11-02 16:30 MSK for outcome"
+  resume_instruction: >-
+    Do not re-insert existing lots. Capture verified official originals and signed-register
+    supplier separately; 404 is not market absence. No new lot/field, so no report
+    regeneration. PR #521 REVIEW, no auto-merge.
