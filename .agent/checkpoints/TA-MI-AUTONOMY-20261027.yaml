@@ -4354,3 +4354,41 @@ mi_watchdog_vanino_p0_20261101_0735:
     32616474682 final outcome after 2026-11-02 06:30 Moscow,
     32616506708 final outcome after 2026-11-06 23:59 Moscow.
     PR #521 REVIEW; no auto-merge. Continue primary research.
+
+mi_watchdog_evraz_dual_20261101_0835:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6553917161
+  latest_tested_code_commit: f8cd9621c5239f1be5f90b00702b078490ae27fa
+  report: docs/market_intelligence/PQ_WATCHDOG_EVRAZ_DUAL_20261101_0835.json
+  report_sha256: a896ff0528a52688700637786e526f536987f602d1c981422b3638f73f5a750d
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 5
+  first_party_requests: 20
+  first_party_http200_captures: 20
+  new_distinct_original_shas: 18
+  new_original_protocols: 1
+  registered_contracts_newly_verified_for_existing_lot: 2
+  new_signed_suppliers: 0
+  new_paid_sales: 0
+  exhaustive_month_source_searches: 0
+  full_backup_sha256: cd1dd271a3103c15fad2b3eba63ed41a18c1fe4588968d24adb0d2aeee64de72
+  client_report_version: V29
+  canonical_v29_rows_unchanged: 101
+  targeted_tests: 8 passed, Ruff passed, RU/EN 258 pages each
+  resume_instruction: >-
+    EIS 32413195287: two distinct registered contracts (1043734.03 and
+    13090401.45 RUB) signed 2024-03-11, marked execution completed,
+    but final protocol 32413195287-03 says no bids. Five old-null
+    fields added with SHA+pg_restore backup and CAS; no signed supplier,
+    paid sale or PQ-only allocation inferred. 118/107/41 unchanged.
+    V29 PDFs/audit versioned, client HTML unchanged. Next reconcile
+    contract signatories and protocol, AP125337 public GPB original,
+    32616474682 final protocol after 2026-11-02 06:30 Moscow.
+    PR 521 REVIEW; no auto-merge.

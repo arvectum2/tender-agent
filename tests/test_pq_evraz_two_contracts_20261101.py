@@ -31,3 +31,25 @@ def test_identity_and_old_null_guard():
     row['hash'] = digest(row['data'])
     with pytest.raises(RuntimeError, match='conflict'):
         validate(row)
+
+
+def test_client_snapshot_displays_both_contracts_without_pq_price():
+    from scripts.market_intelligence.enrich_pq_evraz_two_contracts_20261101 import FILES
+    from scripts.market_intelligence.export_fgi_deck_snapshot import (
+        evraz_contract_numbers,
+        evraz_sources,
+        verified_evraz_dual,
+    )
+
+    data = {'canonical_id': CID, **FIELDS}
+    proof = {'sources': [{'url': u, 'sha256': sha} for _, sha, u, _ in FILES],
+             'supplier_verified': False, 'paid_verified': False,
+             'pq_equipment_allocation_verified': False}
+    metadata = {'evraz_dual_contract_20261101': proof}
+    assert verified_evraz_dual(data, metadata)
+    assert evraz_contract_numbers(data, metadata) == '; '.join(NUMBERS)
+    assert len(evraz_sources(data, metadata)) == 4
+    assert 'contract_registered_price_rub' not in data
+    assert not verified_evraz_dual(data, {'evraz_dual_contract_20261101': {
+        **proof, 'sources': [{**proof['sources'][0], 'sha256': '0' * 64},
+                              *proof['sources'][1:]]}})

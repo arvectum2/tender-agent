@@ -452,6 +452,43 @@ def source_bound_eis_contract_item_sources(data, metadata):
     ]
 
 
+def verified_evraz_dual(data, metadata):
+    """Two independent EIS contracts on one mixed repair lot; not PQ sales."""
+    proof = (metadata or {}).get("evraz_dual_contract_20261101") or {}
+    entries = data.get("contract_registry_entries") or []
+    sources = proof.get("sources") or []
+    return (data.get("canonical_id") == "223fz:32413195287:lot1"
+            and data.get("buyer_inn") == "4217084532"
+            and data.get("registered_signed_contract_verified") is True
+            and len(entries) == 2 and len(sources) == 4
+            and [e.get("registry_number") for e in entries] == [
+                "54217084532240000450000", "54217084532240000460000"]
+            and [e.get("registered_price_rub") for e in entries] == [
+                "1043734.03", "13090401.45"]
+            and [s.get("sha256") for s in sources] == [
+                "d8db0210aa94eaef7102c4384ec188d82468a736647369daad0a253c7e5e7db4",
+                "b5c6cc09f7b2dec47682a5d63c4445d51762db3da3f74c2d31b9aa69efa7b0a2",
+                "926bbce4fd20cb0d264f42cd25326063131ffb73997d45706097a2953f752964",
+                "c968b9971c26b45280c5839eafb74de45487fee9abd08e5132a3a84880aedf67"]
+            and proof.get("supplier_verified") is False
+            and proof.get("paid_verified") is False
+            and proof.get("pq_equipment_allocation_verified") is False)
+
+
+def evraz_contract_numbers(data, metadata):
+    if verified_evraz_dual(data, metadata):
+        return "; ".join(e["registry_number"] for e in data["contract_registry_entries"])
+    return None
+
+
+def evraz_sources(data, metadata):
+    if verified_evraz_dual(data, metadata):
+        return [{"url": s["url"], "sha256": s["sha256"],
+                 "source_tier": "first_party_eis_registered_contract"}
+                for s in metadata["evraz_dual_contract_20261101"]["sources"]]
+    return []
+
+
 def clean(text, limit=2400):
     if text is None: return ""
     s = re.sub(r"[\x00-\x1f]+", " ", str(text)).strip()
@@ -497,7 +534,7 @@ def capture():
             "customer_contract_number":clean(val(d,"customer_contract_number","registered_contract_number"),160),
             "date":clean(d.get("publication_date"),20),
             "buyer":clean(customer.get("name"),230),
-            "buyer_inn":clean(customer.get("inn") or source_bound_buyer_inn(d,r.get("metadata")) or ("4716016979" if verified_lopcha_p0(d,r.get("metadata")) else None),24),
+            "buyer_inn":clean(customer.get("inn") or (d.get("buyer_inn") if verified_evraz_dual(d,r.get("metadata")) else None) or source_bound_buyer_inn(d,r.get("metadata")) or ("4716016979" if verified_lopcha_p0(d,r.get("metadata")) else None),24),
             "project":clean(d.get("project"),500),
             "description":clean(d.get("description"),2200),
             "family":clean(d.get("family"),120),
@@ -507,12 +544,12 @@ def capture():
             "price_kind":clean(d.get("reported_price_kind"),140),
             "contract_price":clean(val(d,"contract_registered_price_rub",
                 "verified_equipment_supply_contract_price_rub","reported_contract_total_rub"),50),
-            "contract_no":clean(val(d,"contract_number","contract_registry_number","linked_contract_registry_number"),100),
-            "contract_registry_number":clean(val(d,"contract_registry_number","linked_contract_registry_number"),100),
+            "contract_no":clean(evraz_contract_numbers(d,r.get("metadata")) or val(d,"contract_number","contract_registry_number","linked_contract_registry_number"),100),
+            "contract_registry_number":clean(evraz_contract_numbers(d,r.get("metadata")) or val(d,"contract_registry_number","linked_contract_registry_number"),100),
             "equipment_only_price":clean(val(d,"pq_equipment_only_contract_rub",
                 "verified_equipment_price_as_of","pq_equipment_portion_rub"),60),
             "paid_amount":clean(val(d,"paid_amount_rub","actual_payment_rub","paid_rub"),60),
-            "contract_date":clean(val(d,"contract_signed_date","contract_date","contract_register_date","reported_contract_date"),30),
+            "contract_date":clean(("2024-03-11" if verified_evraz_dual(d,r.get("metadata")) else None) or val(d,"contract_signed_date","contract_date","contract_register_date","reported_contract_date"),30),
             "signed_contract_verified":any(d.get(k) is True for k in (
                 "registered_signed_contract_verified","actual_signed_contract_verified",
                 "underlying_supplier_contract_verified")),
@@ -539,9 +576,9 @@ def capture():
             "technical":{k: clean(v,220) for k,v in list(technical.items())[:12]},
             "status":clean("official_registered_filter_components_contract_supplier_unverified" if verified_filter_south_signed_contract(d,r.get("metadata")) else ("official_completed_filter_capacitor_contract_supplier_unverified" if verified_filter_signed_contract(d,r.get("metadata")) else ("official_registered_ukrm_supply_contract_supplier_unverified" if verified_bashkirenergo_contract(d,r.get("metadata")) else ("official_registered_contract_supplier_unverified" if verified_meleuz_contract(d,r.get("metadata")) else ("official_registered_design_contract_supplier_unverified" if verified_tyazhinskaya_contract(d,r.get("metadata")) else ("RAD_official_failed_single_application_committee_recommended_contract" if verified_rad_commission(d,r.get("metadata")) else d.get("status")))))),200),
             "market_scope":clean("adjacent_500kv_substation_12kv_filter_capacitor_components_not_full_pq_system" if verified_filter_signed_contract(d,r.get("metadata")) else ("high_voltage_network_requirement_up_to_6p3kv_not_nameplate" if verified_meleuz_contract(d,r.get("metadata")) else d.get("market_scope")),220),
-            "notes":clean(source_bound_eis_contract_item_note(d,r.get("metadata")) or source_bound_filter_south_signed_note(d,r.get("metadata")) or source_bound_filter_signed_note(d,r.get("metadata")) or source_bound_bidzaar_306644_note(d,r.get("metadata")) or source_bound_bashkirenergo_note(d,r.get("metadata")) or source_bound_tyazhinskaya_note(d,r.get("metadata")) or source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
+            "notes":clean((d.get("contract_status_note") if verified_evraz_dual(d,r.get("metadata")) else None) or source_bound_eis_contract_item_note(d,r.get("metadata")) or source_bound_filter_south_signed_note(d,r.get("metadata")) or source_bound_filter_signed_note(d,r.get("metadata")) or source_bound_bidzaar_306644_note(d,r.get("metadata")) or source_bound_bashkirenergo_note(d,r.get("metadata")) or source_bound_tyazhinskaya_note(d,r.get("metadata")) or source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
             "review":r["review"],
-            "source_urls":safe_urls(source_bound_eis_contract_item_sources(d,r.get("metadata")) + (d.get("evidence") or []) + source_bound_rad_sources(d,r.get("metadata")) + source_bound_lopcha_sources(d,r.get("metadata")) + source_bound_ntc_vanino_sources(d,r.get("metadata"))),
+            "source_urls":safe_urls(evraz_sources(d,r.get("metadata")) + source_bound_eis_contract_item_sources(d,r.get("metadata")) + (d.get("evidence") or []) + source_bound_rad_sources(d,r.get("metadata")) + source_bound_lopcha_sources(d,r.get("metadata")) + source_bound_ntc_vanino_sources(d,r.get("metadata"))),
         })
     counts=Counter(x["scope"] for x in out)
     return {"schema":"fgi-client-deck/2",
