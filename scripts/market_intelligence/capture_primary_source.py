@@ -32,6 +32,7 @@ ALLOWED_HOSTS = frozenset({
     "www.roseltorg.ru", "com.roseltorg.ru",
     "corp.roseltorg.ru",  # verified public UUID document API; path restricted below
     "rosseti.roseltorg.ru",  # exact official section; no wildcard subdomains
+    "is-mt.pro",  # native public procurement card; UUID-restricted below
 })
 MAX_BYTES = 12_000_000
 
@@ -48,6 +49,13 @@ def source_url(raw: str) -> str:
     if u.hostname == "etp.gpb.ru" and (
             not re.fullmatch(r"/file/get/t/LotDocuments/id/[1-9][0-9]*/name/[A-Za-z0-9.]+", u.path)
             or u.query):
+        raise ValueError("Only allowlisted first-party HTTPS endpoints")
+    if u.hostname == "is-mt.pro" and (
+            u.path != "/Purchase/Details"
+            or not re.fullmatch(
+                r"id=[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}",
+                u.query,
+            )):
         raise ValueError("Only allowlisted first-party HTTPS endpoints")
     if u.hostname == "corp.roseltorg.ru" and (
             not re.fullmatch(r"/api/v1/documents/[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}", u.path)
