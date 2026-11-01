@@ -379,6 +379,50 @@ def source_bound_rad_sources(data, metadata):
     ]
 
 
+def verified_eis_contract_item(data, metadata):
+    proof = (metadata or {}).get("eis_20261101_contract_item_enrichment") or {}
+    sources = proof.get("sources") or []
+    return (
+        data.get("canonical_id") == "223fz:32616266007:lot1"
+        and data.get("contract_registry_number") == "54716016979260041190000"
+        and data.get("contract_item_model") == "КЭПФ-12-450-2 УХЛ1"
+        and data.get("contract_item_quantity") == 5
+        and data.get("contract_item_unit_price_rub") == "132492.00"
+        and data.get("contract_item_country_of_origin") == "Республика Казахстан"
+        and data.get("contract_item_okpd2") == "27.90.52.000"
+        and data.get("signed_supplier_verified") is False
+        and data.get("paid_verified") is False
+        and len(sources) == 2
+        and sources[0].get("sha256") == "a2865ba18ce0e67bcb45d8bf6054e1dbe13e71a15fb78287ce6cdcf273a97f74"
+        and sources[1].get("sha256") == "08b09706b512f497b94941b5de857d0aabbda3eac9f1df64b4c8bd0d4e8b375c"
+    )
+
+
+def source_bound_eis_contract_item_note(data, metadata):
+    if not verified_eis_contract_item(data, metadata):
+        return None
+    return (
+        "Официальный реестр ЕИС, договор №1605245 от 14.10.2026: "
+        "5 конденсаторов КЭПФ-12-450-2 УХЛ1, 132 492 руб./шт., "
+        "всего 662 460 руб.; страна происхождения — Казахстан. "
+        "В ТЗ указан QBANK-A CHDB-142 или эквивалент, 8,3 кВ, 592 квар. "
+        "Эквивалентность и номинальные параметры фактически поставленного "
+        "изделия не подтверждены. Это компоненты БСК для ПС 500 кВ, "
+        "не поставка полноценной системы PQ 6–35 кВ. "
+        "Личность подписавшего поставщика и оплата не установлены."
+    )
+
+
+def source_bound_eis_contract_item_sources(data, metadata):
+    if not verified_eis_contract_item(data, metadata):
+        return []
+    return [
+        {"url": x["url"], "sha256": x["sha256"],
+         "source_tier": "first_party_eis_registered_contract_subject"}
+        for x in metadata["eis_20261101_contract_item_enrichment"]["sources"]
+    ]
+
+
 def clean(text, limit=2400):
     if text is None: return ""
     s = re.sub(r"[\x00-\x1f]+", " ", str(text)).strip()
@@ -466,9 +510,9 @@ def capture():
             "technical":{k: clean(v,220) for k,v in list(technical.items())[:12]},
             "status":clean("official_registered_filter_components_contract_supplier_unverified" if verified_filter_south_signed_contract(d,r.get("metadata")) else ("official_completed_filter_capacitor_contract_supplier_unverified" if verified_filter_signed_contract(d,r.get("metadata")) else ("official_registered_ukrm_supply_contract_supplier_unverified" if verified_bashkirenergo_contract(d,r.get("metadata")) else ("official_registered_contract_supplier_unverified" if verified_meleuz_contract(d,r.get("metadata")) else ("official_registered_design_contract_supplier_unverified" if verified_tyazhinskaya_contract(d,r.get("metadata")) else ("RAD_official_failed_single_application_committee_recommended_contract" if verified_rad_commission(d,r.get("metadata")) else d.get("status")))))),200),
             "market_scope":clean("adjacent_500kv_substation_12kv_filter_capacitor_components_not_full_pq_system" if verified_filter_signed_contract(d,r.get("metadata")) else ("high_voltage_network_requirement_up_to_6p3kv_not_nameplate" if verified_meleuz_contract(d,r.get("metadata")) else d.get("market_scope")),220),
-            "notes":clean(source_bound_filter_south_signed_note(d,r.get("metadata")) or source_bound_filter_signed_note(d,r.get("metadata")) or source_bound_bidzaar_306644_note(d,r.get("metadata")) or source_bound_bashkirenergo_note(d,r.get("metadata")) or source_bound_tyazhinskaya_note(d,r.get("metadata")) or source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
+            "notes":clean(source_bound_eis_contract_item_note(d,r.get("metadata")) or source_bound_filter_south_signed_note(d,r.get("metadata")) or source_bound_filter_signed_note(d,r.get("metadata")) or source_bound_bidzaar_306644_note(d,r.get("metadata")) or source_bound_bashkirenergo_note(d,r.get("metadata")) or source_bound_tyazhinskaya_note(d,r.get("metadata")) or source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
             "review":r["review"],
-            "source_urls":safe_urls((d.get("evidence") or []) + source_bound_rad_sources(d,r.get("metadata")) + source_bound_lopcha_sources(d,r.get("metadata"))),
+            "source_urls":safe_urls(source_bound_eis_contract_item_sources(d,r.get("metadata")) + (d.get("evidence") or []) + source_bound_rad_sources(d,r.get("metadata")) + source_bound_lopcha_sources(d,r.get("metadata"))),
         })
     counts=Counter(x["scope"] for x in out)
     return {"schema":"fgi-client-deck/2",

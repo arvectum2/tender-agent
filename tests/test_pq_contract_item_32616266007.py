@@ -47,3 +47,21 @@ def test_rejects_conflicting_existing_field_and_signed_supplier():
         conflicting["hash"] = digest(conflicting["data"])
         with pytest.raises(RuntimeError, match="CAS conflict"):
             validate(conflicting)
+
+
+def test_client_report_source_bound_note_requires_exact_sha():
+    from scripts.market_intelligence.enrich_pq_eis_contract_item_32616266007 import (
+        SOURCE,
+    )
+    from scripts.market_intelligence.export_fgi_deck_snapshot import (
+        source_bound_eis_contract_item_note,
+    )
+    data = {**row()["data"], **FIELDS}
+    metadata = {"eis_20261101_contract_item_enrichment": {
+        "sources": [{"url": x[2], "sha256": x[1]} for x in SOURCE]}}
+    note = source_bound_eis_contract_item_note(data, metadata)
+    assert "КЭПФ-12-450-2" in note
+    assert "не подтверждены" in note
+    assert "не поставка полноценной системы" in note
+    metadata["eis_20261101_contract_item_enrichment"]["sources"][0]["sha256"] = "0" * 64
+    assert source_bound_eis_contract_item_note(data, metadata) is None
