@@ -42,3 +42,20 @@ def test_serializable_cas_and_no_contract_inference():
                   "AND (d.data->'source_urls') IS NULL", "COMMIT;"):
         assert token in sql
     assert d["contract_signatory"] is None
+
+
+def test_client_source_requires_exact_sha_and_quotes():
+    from scripts.market_intelligence.export_fgi_deck_snapshot import (
+        source_bound_ntc_vanino_sources,
+    )
+
+    d = {**row()["data"], "buyer_inn": m.INN, "platform": m.PLATFORM,
+         "source_urls": [{"url": m.URL, "tier": "first_party", "sha": m.SHA}]}
+    proof = {"eis_ntc_vanino_p0": {
+        "fields": ["buyer_inn", "platform", "source_urls"],
+        "source": {"url": m.URL, "sha256": m.SHA,
+                   "exact_original_quotes": list(m.QUOTES)}}}
+    assert len(source_bound_ntc_vanino_sources(d, proof)) == 1
+    wrong = copy.deepcopy(proof)
+    wrong["eis_ntc_vanino_p0"]["source"]["sha256"] = "0" * 64
+    assert source_bound_ntc_vanino_sources(d, wrong) == []

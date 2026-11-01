@@ -78,6 +78,35 @@ def source_bound_lopcha_sources(data, metadata):
             for x in data["source_urls"]]
 
 
+def verified_ntc_vanino_p0(data, metadata):
+    from scripts.market_intelligence.enrich_pq_ntc_vanino_p0_20261101 import (
+        CID,
+        INN,
+        PLATFORM,
+        QUOTES,
+        SHA,
+        URL,
+    )
+
+    proof = (metadata or {}).get("eis_ntc_vanino_p0") or {}
+    src = proof.get("source") or {}
+    return (data.get("canonical_id") == CID and data.get("procedure_id") == "32616506708"
+            and data.get("scope") == "design"
+            and data.get("buyer_inn") == INN and data.get("platform") == PLATFORM
+            and data.get("source_urls") == [{"url": URL, "tier": "first_party", "sha": SHA}]
+            and proof.get("fields") == ["buyer_inn", "platform", "source_urls"]
+            and src.get("url") == URL and src.get("sha256") == SHA
+            and src.get("exact_original_quotes") == list(QUOTES))
+
+
+def source_bound_ntc_vanino_sources(data, metadata):
+    if not verified_ntc_vanino_p0(data, metadata):
+        return []
+    return [{"url": data["source_urls"][0]["url"],
+             "sha256": data["source_urls"][0]["sha"],
+             "source_tier": "first_party_byte_original"}]
+
+
 def source_bound_bid(data, metadata):
     if verified_meleuz_contract(data, metadata):
         return data.get("commission_first_place_bid_rub")
@@ -512,7 +541,7 @@ def capture():
             "market_scope":clean("adjacent_500kv_substation_12kv_filter_capacitor_components_not_full_pq_system" if verified_filter_signed_contract(d,r.get("metadata")) else ("high_voltage_network_requirement_up_to_6p3kv_not_nameplate" if verified_meleuz_contract(d,r.get("metadata")) else d.get("market_scope")),220),
             "notes":clean(source_bound_eis_contract_item_note(d,r.get("metadata")) or source_bound_filter_south_signed_note(d,r.get("metadata")) or source_bound_filter_signed_note(d,r.get("metadata")) or source_bound_bidzaar_306644_note(d,r.get("metadata")) or source_bound_bashkirenergo_note(d,r.get("metadata")) or source_bound_tyazhinskaya_note(d,r.get("metadata")) or source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
             "review":r["review"],
-            "source_urls":safe_urls(source_bound_eis_contract_item_sources(d,r.get("metadata")) + (d.get("evidence") or []) + source_bound_rad_sources(d,r.get("metadata")) + source_bound_lopcha_sources(d,r.get("metadata"))),
+            "source_urls":safe_urls(source_bound_eis_contract_item_sources(d,r.get("metadata")) + (d.get("evidence") or []) + source_bound_rad_sources(d,r.get("metadata")) + source_bound_lopcha_sources(d,r.get("metadata")) + source_bound_ntc_vanino_sources(d,r.get("metadata"))),
         })
     counts=Counter(x["scope"] for x in out)
     return {"schema":"fgi-client-deck/2",
