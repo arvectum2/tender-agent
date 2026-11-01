@@ -1,0 +1,122 @@
+{
+  "schema_version": "mi-pq-source-bound-incremental/1",
+  "date": "2026-11-01",
+  "base_db_expected_records": 118,
+  "source": "first_party_EIS_223_notice_lot_and_first_parts_protocol_originals",
+  "corpus": "power_quality_russia",
+  "new_cases": [
+    {
+      "source_record": {
+        "canonical_id": "223fz:32616430382:lot1",
+        "procedure_id": "32616430382",
+        "family": "reactive_compensation",
+        "scope": "mixed_epc",
+        "market_scope": "core_10kv_compensating_devices_replacement_within_220kv_substation_mixed_epc",
+        "procurement_regime": "223-fz",
+        "publication_date": "2026-10-01",
+        "date_basis": "original_EIS_223_notice_docx",
+        "customer": {
+          "name": "ПАО «Федеральная сетевая компания — Россети»",
+          "inn": null
+        },
+        "platform": "ЕИС 223-ФЗ / РТС-тендер",
+        "status": "commission_first_parts_two_admitted_final_and_signed_contract_unverified",
+        "description": "Реконструкция ПС 220 кВ «Полупроводники»: замена компенсирующих устройств в ЗРУ 10 кВ, проектирование, строительно-монтажные и пусконаладочные работы, поставка МТРиО. НМЦ относится ко всему EPC, не к оборудованию PQ отдельно. Протокол первых частей 28.10.2026: две заявки, обе допущены; имена участников, победитель и подписанный договор пока не подтверждены.",
+        "technical": {
+          "substation_voltage_kv": 220,
+          "compensation_switchgear_voltage_kv": 10,
+          "compensator_rated_voltage_kv": null,
+          "compensator_power_kvar": null,
+          "compensator_quantity": null,
+          "equipment_only_price_rub": null,
+          "equipment_supply_in_scope": true,
+          "equipment_supply_completed_verified": false
+        },
+        "nmck_rub": "72183607.13",
+        "nmck_vat_basis": "first_party_notice_22pct_vat_included",
+        "nmck_rub_without_vat": "59166891.09",
+        "commission_application_count": 2,
+        "commission_admitted_count": 2,
+        "commission_protocol_date": "2026-10-28",
+        "commission_protocol_type": "first_parts_only_no_winner",
+        "commission_bid_rub": null,
+        "commission_bidder_name": null,
+        "contract_registered_price_rub": null,
+        "contract_registry_number": null,
+        "supplier_verified": false,
+        "supplier_inn": null,
+        "signed_supplier_verified": false,
+        "paid_verified": false,
+        "realized_equipment_revenue_rub": null,
+        "market_population_complete": false,
+        "deduplicated_project_key": "PS_Poluprovodniki_220kv_10kv_compensation_replacement_2026",
+        "evidence": [
+          {
+            "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616430382",
+            "sha256": "5c324d6252eaee04a36dd6e28acfb90de3995eabfd5296bb55875d4194128098",
+            "source_tier": "first_party_EIS_223_notice_card",
+            "excerpt": "ЗРУ 10 кВ; НМЦ 72 183 607,13 ₽"
+          },
+          {
+            "url": "https://zakupki.gov.ru/epz/order/notice/notice223/lot-list.html?purchaseNoticeNumber=32616430382&noticeGuid=729085d4-f52f-4160-bcf4-850c8890c9cd",
+            "sha256": "f28740eb67fea84597f6590f699b97e47db451d6116351a1e8d06ee0246248fc",
+            "source_tier": "first_party_EIS_223_lot1_card",
+            "excerpt": "Лот 1; 72 183 607,13 ₽; mixed EPC"
+          },
+          {
+            "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=84C55CCAF5B74CD5B3CA13A7A6D10EFA",
+            "sha256": "e10de67e0aefa0086ae6d90ac8524f24596f01888025887e77fa5dc7c1e54408",
+            "source_tier": "first_party_EIS_223_original_first_parts_protocol_pdf",
+            "excerpt": "2 заявки; допущены 2; протокол первых частей от 28.10.2026"
+          },
+          {
+            "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=68941FEE66044431B9C8327453E913C9",
+            "sha256": "2fb047806203faa5516af7eef3602a2976556cc4b1d22d32d5529839c0cf6db5",
+            "source_tier": "first_party_EIS_223_original_notice_docx",
+            "excerpt": "Извещение №4050248; срок итогового этапа 03.11.2026"
+          },
+          {
+            "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616430382",
+            "sha256": "2b43c21de1a5cf8f6fb3737d3579f827aee2c0ef82aaf046fa9a5ac4721ec333",
+            "source_tier": "first_party_EIS_223_contract_tab_no_registry_entry",
+            "excerpt": "Реестр договоров: Сведения отсутствуют"
+          }
+        ]
+      },
+      "verified_originals": [
+        {
+          "sha256": "5c324d6252eaee04a36dd6e28acfb90de3995eabfd5296bb55875d4194128098",
+          "bytes": 152220,
+          "private_relative": "captures/223fz_32616430382_lot1/20261101T143755726936Z-4f7c0680-5c324d6252eaee04.bin",
+          "source_name": "first_party_EIS_223_notice_card"
+        },
+        {
+          "sha256": "f28740eb67fea84597f6590f699b97e47db451d6116351a1e8d06ee0246248fc",
+          "bytes": 135676,
+          "private_relative": "captures/223fz_32616430382_lot1/20261101T143834599120Z-d5568900-f28740eb67fea845.bin",
+          "source_name": "first_party_EIS_223_lot1_card"
+        },
+        {
+          "sha256": "e10de67e0aefa0086ae6d90ac8524f24596f01888025887e77fa5dc7c1e54408",
+          "bytes": 439344,
+          "private_relative": "captures/223fz_32616430382_lot1/20261101T143849227843Z-0dadb9ec-e10de67e0aefa008.bin",
+          "source_name": "first_party_EIS_223_original_first_parts_protocol_pdf"
+        },
+        {
+          "sha256": "2fb047806203faa5516af7eef3602a2976556cc4b1d22d32d5529839c0cf6db5",
+          "bytes": 117865,
+          "private_relative": "captures/223fz_32616430382_lot1/20261101T143849506942Z-8bb98989-2fb047806203faa5.bin",
+          "source_name": "first_party_EIS_223_original_notice_docx"
+        },
+        {
+          "sha256": "2b43c21de1a5cf8f6fb3737d3579f827aee2c0ef82aaf046fa9a5ac4721ec333",
+          "bytes": 131174,
+          "private_relative": "captures/223fz_32616430382_lot1/20261101T143807024547Z-50fdeb45-2b43c21de1a5cf8f.bin",
+          "source_name": "first_party_EIS_223_contract_tab_no_registry_entry"
+        }
+      ],
+      "original_verification": "sha256_byte_exact_receipts",
+      "review_scope": "mixed_epc_core_10kv_compensation_no_verified_supplier_or_equipment_only_sales"
+    }
+  ]
+}

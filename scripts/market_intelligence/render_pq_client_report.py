@@ -57,6 +57,7 @@ FAMILIES = {
     "filter_compensation": "ФКУ",
     "dynamic_reactive_compensation": "Динамическая компенсация",
     "reactive_compensation_system": "Системы компенсации",
+    "reactive_compensation": "Компенсация реактивной мощности",
     "hybrid_reactive_power_source": "Гибридные установки",
 }
 SUPPLY = {

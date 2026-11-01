@@ -33,7 +33,7 @@ GROUPS = [
  ("components","Компоненты","Components"),
  ("other","Другое / требует проверки","Other / needs review")]
 FAM = {
- "ukrm":("УКРМ","UKRM capacitor compensation"),"bsk":("БСК","Capacitor banks"),
+ "ukrm":("УКРМ","UKRM capacitor compensation"),"reactive_compensation":("Компенсация реактивной мощности","Reactive power compensation"),"bsk":("БСК","Capacitor banks"),
  "capacitor_bank":("БСК / КУ","Capacitor banks"),"statcom":("STATCOM / SVG","STATCOM / SVG"),
  "svc":("СТК / SVC","SVC / TCR"),"svc_thyristor":("Тиристорная компенсация","Thyristor compensation"),
  "harmonic_filter":("Фильтры гармоник","Harmonic filters"),
@@ -74,6 +74,9 @@ def priced_full(value, english=False):
 
 def readable_status(raw, lang):
     s=str(raw or "").lower()
+    if "commission_first_parts" in s:
+        return tr("Первые части заявок рассмотрены; итог не подтверждён",
+                  "First bid parts reviewed; final result unverified", lang)
     if "rad_official_failed_single_application" in s:
         return tr("Не состоялась: одна заявка, договор рекомендован",
                   "Unsuccessful: sole bid, contract recommended", lang)
@@ -552,7 +555,7 @@ def main():
     p.add_argument("--snapshot",type=Path,default=SNAP)
     p.add_argument("--outdir",type=Path,default=Path("docs/market_intelligence"))
     p.add_argument("--html-only",action="store_true")
-    p.add_argument("--version",default="V2",choices=["V2","V3","V4","V5","V6","V7","V8","V9","V10","V11","V12","V13","V14","V15","V16","V17","V18","V19","V20","V21","V22","V23","V24","V25","V26","V27","V28","V29","V30","V31","V32","V33","V34","V35","V36"])
+    p.add_argument("--version",default="V2",choices=["V2","V3","V4","V5","V6","V7","V8","V9","V10","V11","V12","V13","V14","V15","V16","V17","V18","V19","V20","V21","V22","V23","V24","V25","V26","V27","V28","V29","V30","V31","V32","V33","V34","V35","V36","V37"])
     args=p.parse_args()
     data=json.loads(args.snapshot.read_text(encoding="utf8"))
     args.outdir.mkdir(parents=True,exist_ok=True)

@@ -1,0 +1,192 @@
+{
+  "schema": "pq-watchdog-source-acquisition-and-db-growth/1",
+  "completed_moscow": "2026-11-01T17:42:52+03:00",
+  "issue_comment_id": 6559357768,
+  "canonical_pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "tested_parent_commit": "b35f28c32803c62f7ec7535e3b3352c39e8f2783",
+  "internal_apfs_acceptance": "pass",
+  "source_capture_sha_verified": true,
+  "postgres_before": {
+    "unique_lots": 118,
+    "distinct_procedures": 107,
+    "numeric_eis223_notices": 41
+  },
+  "postgres_after": {
+    "unique_lots": 119,
+    "distinct_procedures": 108,
+    "numeric_eis223_notices": 42
+  },
+  "new_unique_lots": 1,
+  "new_distinct_projects": 1,
+  "new_verified_fields_existing_lots": 0,
+  "new_lot_source_verified_fields": [
+    "canonical_lot1",
+    "buyer_name",
+    "publication_date",
+    "10kv_compensation_switchgear",
+    "mixed_epc_scope",
+    "nmck_total_epc_with_and_without_vat",
+    "two_admitted_bids",
+    "first_parts_protocol_date"
+  ],
+  "new_original_protocols": 1,
+  "original_protocol_kind": "first_parts_admission_only_two_anonymous_bids",
+  "new_named_winners": 0,
+  "new_signed_suppliers": 0,
+  "new_executed_contract_prices": 0,
+  "new_paid_sales": 0,
+  "first_party_get_attempts_including_bounded_retries": 40,
+  "new_immutable_first_party_captures": 8,
+  "case_specific_first_party_captures": 7,
+  "new_material_original_files": 2,
+  "material_original_types": [
+    "first_parts_protocol_pdf",
+    "notice_docx"
+  ],
+  "new_exhaustive_month_source_coverage": 0,
+  "first_page_searches": "2024-11, 2025-04, 2025-11, 2025-12, 2026-09, 2026-10; 44/223-FZ; page 1 only; repeated diagnostic retries not counted as new coverage",
+  "new_lot": {
+    "canonical_id": "223fz:32616430382:lot1",
+    "deduplicated_project_id": "PS_Poluprovodniki_220kv_10kv_compensation_replacement_2026",
+    "buyer": "ПАО «Федеральная сетевая компания — Россети»",
+    "organizer": "АО «Россети Центр закупок»",
+    "notice_publication": "2026-10-01",
+    "substation_kv": 220,
+    "compensation_switchgear_kv": 10,
+    "compensator_device_rating_kv": null,
+    "scope": "mixed EPC: design, construction, commissioning, equipment; compensation replacement in 10kV switchgear",
+    "nmck_total_epc_rub_vat_included": "72183607.13",
+    "nmck_total_epc_rub_without_vat": "59166891.09",
+    "equipment_only_price_rub": null,
+    "first_parts_protocol_date": "2026-10-28",
+    "first_parts_applications": 2,
+    "first_parts_admitted": 2,
+    "final_protocol_verified": false,
+    "named_winner_verified": false,
+    "signed_supplier_verified": false,
+    "contract_register_entry": "not present in first-party tab at 2026-11-01",
+    "db_review_status": "staged_unreviewed",
+    "provenance_receipts": [
+      {
+        "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616430382",
+        "http_status": 200,
+        "relative_file": "captures/223fz_32616430382_lot1/20261101T143755726936Z-4f7c0680-5c324d6252eaee04.bin",
+        "sha256": "5c324d6252eaee04a36dd6e28acfb90de3995eabfd5296bb55875d4194128098",
+        "bytes": 152220
+      },
+      {
+        "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.10.2026&publishDateTo=31.10.2026&searchString=%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B8%D1%85+%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B9%D1%81%D1%82%D0%B2",
+        "http_status": 200,
+        "relative_file": "captures/223fz_32616430382_lot1/20261101T143756199113Z-b6ad9764-f4822d9630a2364d.bin",
+        "sha256": "f4822d9630a2364d3a5e30610b2093dd4c22c064d247a34c1572de47dce4b218",
+        "bytes": 319770
+      },
+      {
+        "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616430382",
+        "http_status": 200,
+        "relative_file": "captures/223fz_32616430382_lot1/20261101T143806642093Z-8e2486ae-e5e890b524e774d9.bin",
+        "sha256": "e5e890b524e774d9d437567813fa70d073cbcda938785794e55e64d3761b97a3",
+        "bytes": 141879
+      },
+      {
+        "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616430382",
+        "http_status": 200,
+        "relative_file": "captures/223fz_32616430382_lot1/20261101T143807024547Z-50fdeb45-2b43c21de1a5cf8f.bin",
+        "sha256": "2b43c21de1a5cf8f6fb3737d3579f827aee2c0ef82aaf046fa9a5ac4721ec333",
+        "bytes": 131174
+      },
+      {
+        "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/lot-list.html?purchaseNoticeNumber=32616430382&noticeGuid=729085d4-f52f-4160-bcf4-850c8890c9cd",
+        "http_status": 200,
+        "relative_file": "captures/223fz_32616430382_lot1/20261101T143834599120Z-d5568900-f28740eb67fea845.bin",
+        "sha256": "f28740eb67fea84597f6590f699b97e47db451d6116351a1e8d06ee0246248fc",
+        "bytes": 135676
+      },
+      {
+        "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616430382&noticeGuid=729085d4-f52f-4160-bcf4-850c8890c9cd",
+        "http_status": 200,
+        "relative_file": "captures/223fz_32616430382_lot1/20261101T143835010150Z-06607e81-bdd94b0f833f00bf.bin",
+        "sha256": "bdd94b0f833f00bfcf675475feb12c227505ef7b6262d764a01b01262aeff26a",
+        "bytes": 150964
+      },
+      {
+        "source_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=84C55CCAF5B74CD5B3CA13A7A6D10EFA",
+        "http_status": 200,
+        "relative_file": "captures/223fz_32616430382_lot1/20261101T143849227843Z-0dadb9ec-e10de67e0aefa008.bin",
+        "sha256": "e10de67e0aefa0086ae6d90ac8524f24596f01888025887e77fa5dc7c1e54408",
+        "bytes": 439344
+      },
+      {
+        "source_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=68941FEE66044431B9C8327453E913C9",
+        "http_status": 200,
+        "relative_file": "captures/223fz_32616430382_lot1/20261101T143849506942Z-8bb98989-2fb047806203faa5.bin",
+        "sha256": "2fb047806203faa5516af7eef3602a2976556cc4b1d22d32d5529839c0cf6db5",
+        "bytes": 117865
+      }
+    ]
+  },
+  "negative_controls": [
+    {
+      "query": "2025-04 44-FZ фильтр гармоник",
+      "result": "4 candidate notice IDs; all four official full titles concern medical-equipment service/repair; lexical false positives, excluded",
+      "http": "EIS search 200; four official notice cards 200"
+    },
+    {
+      "query": "2026-09 44-FZ компенсация реактивной мощности",
+      "result": "0190300000426000479 official title is vehicle spare parts; excluded",
+      "http": "EIS search 200"
+    },
+    {
+      "query": "2026-10 223-FZ БСК",
+      "result": "10 first-page IDs; 32616534558 mentions 220kV BSK only as parent-project context, other 9 are unrelated BSK string collisions; none promoted",
+      "http": "EIS search 200"
+    },
+    {
+      "query": "32616430382 documents without noticeGuid",
+      "result": "HTTP404; canonical noticeGuid extracted from original EIS common-info and exact official documents tab HTTP200; no access bypass",
+      "http": "404 then 200"
+    }
+  ],
+  "backup": {
+    "manifest": "data-platform-arvectum_data-20261101T143949Z-7571.dump.manifest.json",
+    "sha256": "f4081bf0230e3c1c94372d0809fa66dc12e2af6170c7e7224b8be47799268e34",
+    "pg_restore_list_verified": true
+  },
+  "db_receipt": "docs/market_intelligence/PQ_DB_IMPORT_POLUPROVODNIKI_20261101.json",
+  "source_manifest": "data/market_intelligence/power_quality/source_bound_delta_20261101_poluprovodniki.v1.json",
+  "client_html": "docs/market_intelligence/POWER_QUALITY_CLIENT_PREVIEW_20261024.html",
+  "client_version": "V37",
+  "client_snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261101_v37.json",
+  "client_field_audit": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261101_V37.json",
+  "client_pdfs": [
+    "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_RU_20261101_V37.pdf",
+    "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_EN_20261101_V37.pdf"
+  ],
+  "pdf_pages_each": 260,
+  "tests": "14 targeted PASS; Ruff PASS; git diff --check PASS",
+  "next_three_ranked": [
+    {
+      "case": "32616474682 lot1/lot2",
+      "retry_not_before_moscow": "2026-11-02 06:30",
+      "target": "first-party final protocol and supplier"
+    },
+    {
+      "case": "32616433248 lot1",
+      "retry_not_before_moscow": "2026-11-02 09:00",
+      "target": "signed contract register; commission sole-bidder is not signatory"
+    },
+    {
+      "case": "32616497692 lot1",
+      "retry_not_before_moscow": "2026-11-02 16:30",
+      "target": "final protocol after official 16:00 outcome deadline"
+    }
+  ],
+  "additional_retry": {
+    "case": "32616430382 lot1",
+    "retry_not_before_moscow": "2026-11-03 18:00",
+    "target": "second parts / final outcome; first parts alone do not establish winner"
+  },
+  "review_state": "in_progress; PR521 REVIEW; no auto-merge",
+  "disclaimer": "119 source-backed research candidates are not a national market census, signed equipment sales, or actual paid revenue. 72.18m RUB is entire EPC ceiling, not 10kV compensator sales."
+}
