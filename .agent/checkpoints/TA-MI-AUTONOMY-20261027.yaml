@@ -4486,3 +4486,37 @@ mi_watchdog_source_fields_20261101_1148:
     Retry 32616474682 after 2026-11-02 06:30 MSK,
     32616120582 supplier and AP125337 GPB after 09:00 MSK,
     32616497692 final after 16:00 MSK. PR 521 REVIEW.
+
+mi_watchdog_two_contracts_20261101_1240:
+  status: in_progress
+  pr: 521
+  issue_comment_id: 6556170171
+  latest_tested_code_commit: 00a6b3e4f3da3f3a501e6573c95368f96cabb409
+  report: docs/market_intelligence/PQ_WATCHDOG_TWO_CONTRACTS_20261101_1240.json
+  report_sha256: 14f44fd5c23ba24e381f9d410b729e1cd1242c63ff999dba267fe3565941e17c
+  internal_apfs_acceptance: pass
+  db_unique_lots_before_after: 118
+  db_procedures: 107
+  db_eis223: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 11
+  new_registered_contracts: 2
+  first_party_http200_captures: 20
+  new_distinct_source_shas: 15
+  new_original_final_protocols: 2
+  newly_verified_signed_suppliers: 0
+  newly_verified_paid_sales: 0
+  exhaustive_month_source_searches: 0
+  backup_sha256: aed6be3c0f54eb6f940363f52e578af12670bcd7d89b7504f8c7af2aff79b0b2
+  client_report_version: V33
+  client_html: unchanged
+  canonical_v29_rows_unchanged: 101
+  tests: 8 targeted passed; Ruff passed; RU/EN 258 PDF pages each
+  resume_instruction: >-
+    EIS registered 32515218366 49.9m RUB materials/components, voltage
+    unknown, anonymous first rank; 32615852898 design 10kV 2.7877m RUB
+    signed register vs 2.285m first-place bid, no verified named supplier.
+    11 old-null fields CAS verified across two lots, no paid sales.
+    20 primary captures, 15 new SHAs, two final protocols.
+    Next 32616474682 after 2026-11-02 06:30 MSK,
+    32616120582 and AP125337 after 09:00 MSK. PR 521 REVIEW.
