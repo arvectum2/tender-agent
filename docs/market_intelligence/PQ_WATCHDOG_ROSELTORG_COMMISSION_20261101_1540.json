@@ -1,0 +1,129 @@
+{
+  "schema": "pq-watchdog-first-party-commission/1",
+  "run_id": "20261101-1527-MSK",
+  "completed_moscow": "2026-11-01T15:38:42.448842+03:00",
+  "issue_comment_id": 6557941468,
+  "canonical_pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "before": {
+    "unique_lots": 118,
+    "distinct_procedures": 107,
+    "eis_223_notices": 41
+  },
+  "after": {
+    "unique_lots": 118,
+    "distinct_procedures": 107,
+    "eis_223_notices": 41
+  },
+  "new_unique_lots": 0,
+  "new_deduplicated_projects": 0,
+  "new_verified_db_fields": 8,
+  "new_report_visible_bid_fields": 1,
+  "new_original_protocols": 2,
+  "new_named_winners": 0,
+  "new_named_bidder_identities": 0,
+  "corroborated_named_bidder_identities": 2,
+  "new_signed_suppliers": 0,
+  "new_paid_sales": 0,
+  "new_exhaustive_month_source_searches": 0,
+  "research": {
+    "first_party_network_attempts": 9,
+    "first_party_http200_valid_new_originals": 3,
+    "distinct_valid_new_original_shas": 3,
+    "http200_access_denied_html": 2,
+    "eis_capture_rejections_unclassified_http": 4,
+    "non_network_unicode_url_error": 1,
+    "secondary_web_queries": 4,
+    "selective_not_exhaustive": true
+  },
+  "primary_evidence": [
+    {
+      "id": "223fz:32616433248:lot1",
+      "scope": "UKRM 35kV, mixed EPC",
+      "protocol": "final commission 3 signed 2026-10-19",
+      "original_sha256": "98062c8f6bb47d177c7630374a8f57193dcf4177e7fd37f3204cf140de05de4e",
+      "url": "https://rosseti.roseltorg.ru/file/get/t/ProtocolFiles/id/298084/user/-1/name/%D0%9F%D1%80%D0%BE%D1%82%D0%BE%D0%BA%D0%BE%D0%BB_3_%D0%B8%D1%82%D0%BE%D0%B3%D0%B8_5147.zip",
+      "bid_rub": "56330673.93",
+      "named_bidder": "ООО СТРОЙЭНЕРГОИМПОРТ",
+      "named_bidder_inn": "7801564611",
+      "role": "sole bidder, proposed contract, NOT signed supplier",
+      "result": "one application; procedure failed as competition; negotiation recommended"
+    },
+    {
+      "id": "223fz:32616497692:lot1",
+      "scope": "UKRM 10kV, mixed EPC",
+      "protocol": "admission/retender commission 2 signed 2026-10-29",
+      "original_sha256": "2f5ad8ba337f60c1e50cb42bed4c6d420be608619f533c51850448db549ddd97",
+      "url": "https://rosseti.roseltorg.ru/file/get/t/ProtocolFiles/id/299297/user/-1/name/%D0%9F%D1%80%D0%BE%D1%82%D0%BE%D0%BA%D0%BE%D0%BB_2_%D1%80%D0%B0%D1%81%D1%81%D0%BC_%D0%BF%D0%B5%D1%80%D0%B5%D1%82%D0%BE%D1%80%D0%B6%D0%BA%D0%B0_5237.zip",
+      "named_bidder": "ООО ПРОМЫШЛЕННАЯ КОМПАНИЯ ВТОРАЛЮМИНПРОДУКТ",
+      "role": "named bidder from prior SHA-bound RTF, admitted application 1, NOT final winner",
+      "result": "one admitted application, retender planned; signed contract not verified"
+    },
+    {
+      "id": "223fz:32616433248:lot1",
+      "kind": "original Roseltorg retender RTF",
+      "sha256": "798e3a22dd2c71a986be257bf94d80e2facd31d72de92c2071fe5d83bc4a6107",
+      "url": "https://rosseti.roseltorg.ru/file/get/t/ProtocolFiles/id/297776/user/-1/name/HappenedRetrade_32616433248.rtf",
+      "role": "names bidder and original offer; not contract"
+    }
+  ],
+  "blocked_attempts": [
+    {
+      "count": 4,
+      "source": "EIS notice223 common-info",
+      "cases": [
+        "32616412267",
+        "32616355390",
+        "32515584863",
+        "32616280467"
+      ],
+      "result": "native-trust capture rejected (identity/status/size); exact HTTP code not established"
+    },
+    {
+      "count": 2,
+      "source": "rosseti.roseltorg.ru LotDocuments ZIP links 5147 and 5237",
+      "result": "HTTP200 but 966-byte access-denied HTML, SHA e1322596a02f...; NOT a procurement original"
+    }
+  ],
+  "source_integrity_fix": "capture_primary_source rejects access-denied HTML and non-ZIP content for .zip/.docx; immutable old error receipts preserved, not promoted",
+  "db_write": {
+    "atomic_null_only_cas": true,
+    "postreadback": true,
+    "verified_backup_sha256": "22846a0176900b1378fa15b4fff0c423d2bddaf6a733a04592b269d8a4bf5a90",
+    "receipt": "roseltorg-5147-5237-commission-20261101T1234.json"
+  },
+  "client_report": {
+    "version": "V36",
+    "unique_lots": 118,
+    "field_coverage_bid": 13,
+    "snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261101_v36.json",
+    "audit": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261101_V36.json",
+    "pdfs": [
+      "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_RU_20261101_V36.pdf",
+      "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_EN_20261101_V36.pdf"
+    ],
+    "pages_each": 258,
+    "legacy_html_unchanged": true,
+    "historical_v2_v35_unchanged": true
+  },
+  "tests": "28 targeted passed, Ruff passed, diff check passed; external deprecation warnings only",
+  "next_three": [
+    {
+      "case": "223fz:32616497692:lot1",
+      "retry_after_moscow": "2026-11-01 16:00",
+      "goal": "first-party final commission protocol; named winner vs signed contract"
+    },
+    {
+      "case": "223fz:32616474682:lot1/lot2",
+      "retry_after_moscow": "2026-11-02 06:30",
+      "goal": "separate two lot-specific outcomes and supplier identities"
+    },
+    {
+      "case": "commercial:АП125337:lot1",
+      "retry_after_moscow": "now, only when official GPB attachment public",
+      "goal": "technical specification of two 6–35kV UKRM; do not use generic search result as source"
+    }
+  ],
+  "other_retry": "32616433248 signed contract registry after 2026-11-02 09:00 MSK if published",
+  "governance": "PR 521 REVIEW, no merge; v29 immutable 101 rows; task in_progress; existing hourly watchdog unchanged"
+}

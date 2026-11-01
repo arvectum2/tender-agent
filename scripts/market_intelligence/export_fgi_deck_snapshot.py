@@ -21,7 +21,7 @@ COMMIT;
 ALLOWED = (
     "zakupki.gov.ru", "www.b2b-center.ru", "bidzaar.com",
     "tektorg.ru", "www.tektorg.ru", "etp.roseltorg.ru", "www.roseltorg.ru",
-    "roseltorg.ru", "sudact.ru", "energybase.ru",
+    "roseltorg.ru", "rosseti.roseltorg.ru", "sudact.ru", "energybase.ru",
     "zakupki.kontur.ru", "synapsenet.ru", "rostender.info",
     "www.tender.pro", "tender.pro", "www.dv-tender.ru", "www.tenderguru.ru",
     "kontendus.ru", "www.lot-online.ru", "tender.lot-online.ru",
@@ -107,6 +107,47 @@ def source_bound_ntc_vanino_sources(data, metadata):
              "source_tier": "first_party_byte_original"}]
 
 
+def verified_roseltorg_commission(data, metadata):
+    """Only show field evidence from exact original-SHA-backed CAS receipts."""
+    from scripts.market_intelligence.enrich_pq_roseltorg_commission_20261101 import (
+        CASES,
+        KEY,
+    )
+
+    cid = data.get("canonical_id")
+    case = next((x for x in CASES if x["cid"] == cid), None)
+    proof = (metadata or {}).get(KEY) or {}
+    source = proof.get("proof") or {}
+    fields = proof.get("fields") or {}
+    if not case or not fields or any(data.get(k) != v for k, v in fields.items()):
+        return False
+    return (source.get("sha256") == case["sha"]
+            and source.get("url") == case["url"]
+            and source.get("role") == "anonymous_bidder_not_signed_supplier"
+            and proof.get("signed_supplier_verified") is False
+            and proof.get("paid_sale_verified") is False
+            and data.get("winner") is None
+            and any(e.get("sha256") == case["sha"] and e.get("url") == case["url"]
+                    for e in data.get("evidence", [])))
+
+
+def source_bound_commission_note(data, metadata):
+    if not verified_roseltorg_commission(data, metadata):
+        return None
+    note = data["protocol_status_note"]
+    if data["canonical_id"] == "223fz:32616433248:lot1":
+        role = data.get("protocol_role_evidence") or {}
+        if (role.get("original_protocol_named_bidder") == "ООО «СТРОЙЭНЕРГОИМПОРТ»"
+                and role.get("original_protocol_named_bidder_inn") == "7801564611"
+                and role.get("original_protocol_accepted_bid_rub") == "56330673.93"):
+            return "Участник №1: ООО «СТРОЙЭНЕРГОИМПОРТ» (ИНН 7801564611); не подтверждён как подписанный поставщик. " + note
+    if data["canonical_id"] == "223fz:32616497692:lot1":
+        role = (metadata or {}).get("roseltorg_field_enrichment") or {}
+        if role.get("role") == "bidder_not_winner" and role.get("participant"):
+            return "Названный участник (не победитель): " + role["participant"] + ". " + note
+    return note
+
+
 def source_bound_bid(data, metadata):
     if verified_meleuz_contract(data, metadata):
         return data.get("commission_first_place_bid_rub")
@@ -128,6 +169,9 @@ def source_bound_bid(data, metadata):
             and proof.get("fields", {}).get("bid") == data.get("bid")
             and len(sources) == 2
             and all(re.fullmatch(r"[0-9a-f]{64}", s) for s in sources)):
+        return data.get("bid")
+    if (data.get("canonical_id") == "223fz:32616433248:lot1"
+            and verified_roseltorg_commission(data, metadata)):
         return data.get("bid")
     return None
 
@@ -576,7 +620,7 @@ def capture():
             "technical":{k: clean(v,220) for k,v in list(technical.items())[:12]},
             "status":clean("official_registered_filter_components_contract_supplier_unverified" if verified_filter_south_signed_contract(d,r.get("metadata")) else ("official_completed_filter_capacitor_contract_supplier_unverified" if verified_filter_signed_contract(d,r.get("metadata")) else ("official_registered_ukrm_supply_contract_supplier_unverified" if verified_bashkirenergo_contract(d,r.get("metadata")) else ("official_registered_contract_supplier_unverified" if verified_meleuz_contract(d,r.get("metadata")) else ("official_registered_design_contract_supplier_unverified" if verified_tyazhinskaya_contract(d,r.get("metadata")) else ("RAD_official_failed_single_application_committee_recommended_contract" if verified_rad_commission(d,r.get("metadata")) else d.get("status")))))),200),
             "market_scope":clean("adjacent_500kv_substation_12kv_filter_capacitor_components_not_full_pq_system" if verified_filter_signed_contract(d,r.get("metadata")) else ("high_voltage_network_requirement_up_to_6p3kv_not_nameplate" if verified_meleuz_contract(d,r.get("metadata")) else d.get("market_scope")),220),
-            "notes":clean((d.get("contract_status_note") if verified_evraz_dual(d,r.get("metadata")) else None) or source_bound_eis_contract_item_note(d,r.get("metadata")) or source_bound_filter_south_signed_note(d,r.get("metadata")) or source_bound_filter_signed_note(d,r.get("metadata")) or source_bound_bidzaar_306644_note(d,r.get("metadata")) or source_bound_bashkirenergo_note(d,r.get("metadata")) or source_bound_tyazhinskaya_note(d,r.get("metadata")) or source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
+            "notes":clean(source_bound_commission_note(d,r.get("metadata")) or (d.get("contract_status_note") if verified_evraz_dual(d,r.get("metadata")) else None) or source_bound_eis_contract_item_note(d,r.get("metadata")) or source_bound_filter_south_signed_note(d,r.get("metadata")) or source_bound_filter_signed_note(d,r.get("metadata")) or source_bound_bidzaar_306644_note(d,r.get("metadata")) or source_bound_bashkirenergo_note(d,r.get("metadata")) or source_bound_tyazhinskaya_note(d,r.get("metadata")) or source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
             "review":r["review"],
             "source_urls":safe_urls(evraz_sources(d,r.get("metadata")) + source_bound_eis_contract_item_sources(d,r.get("metadata")) + (d.get("evidence") or []) + source_bound_rad_sources(d,r.get("metadata")) + source_bound_lopcha_sources(d,r.get("metadata")) + source_bound_ntc_vanino_sources(d,r.get("metadata"))),
         })

@@ -63,6 +63,14 @@ def store(root: Path, case_id: str, url: str, content: bytes,
             or not isinstance(content, bytes) or not 32 <= len(content) <= MAX_BYTES
             or http_status != 200):
         raise ValueError("Invalid first-party capture identity, status or size")
+    # Some first-party ETPs return HTTP 200 with an access-denied HTML body
+    # even for a .zip download. This is NOT an original procurement document.
+    lower = content[:4096].lower()
+    if (b"<h1>an error occurred</h1>" in lower
+            or "У вашей организации нет доступа".encode() in content[:4096]
+            or (urlsplit(url).path.lower().endswith((".zip", ".docx"))
+                and not content.startswith(b"PK\x03\x04"))):
+        raise ValueError("Access-denied or non-ZIP response is not a primary original")
     root = root.expanduser()
     if root.is_symlink():
         raise ValueError("Source root symlink not allowed")
