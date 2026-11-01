@@ -4520,3 +4520,42 @@ mi_watchdog_two_contracts_20261101_1240:
     20 primary captures, 15 new SHAs, two final protocols.
     Next 32616474682 after 2026-11-02 06:30 MSK,
     32616120582 and AP125337 after 09:00 MSK. PR 521 REVIEW.
+
+mi_watchdog_rosseti_south_caps_20261101_1335:
+  status: in_progress
+  canonical_pr: 521
+  issue_comment_id: 6556724073
+  latest_tested_code_commit: 3a33dc70070c68dc2d97ce49ec6712ea1d002f7a
+  report: docs/market_intelligence/PQ_WATCHDOG_ROSSETI_SOUTH_20261101_1335.json
+  report_sha256: 2b08c1a12127c7e878d5f72c12898a6b69e18696ab7421fe024dbbf61683a2f1
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 118
+  postgres_unique_lots_after: 118
+  postgres_distinct_procedures: 107
+  postgres_eis_223_notices: 41
+  new_unique_lots: 0
+  new_verified_db_fields: 10
+  first_party_requests: 32
+  first_party_http200_captures: 32
+  identity_verified_original_cards: 30
+  new_distinct_source_shas: 17
+  new_original_final_protocols: 1
+  newly_verified_registered_contracts: 1
+  newly_verified_signed_supplier_identities: 0
+  newly_verified_paid_sales: 0
+  exhaustive_month_source_searches: 0
+  backup_sha256: 05f8d08870a237dfb2626e9868e0c9172a17d37d2120b7f58968443ef6f61964
+  client_report_version: V34
+  canonical_v29_rows_unchanged: 101
+  tests: 6 targeted passed, Ruff passed, RU/EN 258 PDF pages each
+  resume_instruction: >-
+    EIS 32616339168: Rosseti South signed registered contract 312
+    dated 2026-09-28 for 4.35m RUB, 24 BSK capacitor components,
+    original final protocol first-ranked anonymous application 2.
+    Supplier and payment unknown; 4.2kV component in mix, 6-35kV
+    network voltage unknown. Ten old-null fields CAS enriched after
+    new SHA+pg_restore full backup; corpus 118/107/41 unchanged.
+    32 primary requests, 30 case-identity originals, 17 new byte SHAs.
+    V34 bilingual reports/audit versioned; HTML and V33 unchanged.
+    Next 32616474682 after 2026-11-02 06:30 MSK, 32616400421
+    and 32616120582 after 2026-11-02 09:00 MSK. PR 521 REVIEW.
