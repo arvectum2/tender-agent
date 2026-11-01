@@ -4910,7 +4910,7 @@ mi_watchdog_statcom_service_and_svc_design_20261101_2233:
 mi_watchdog_primary_discovery_20261101_2332:
   status: "in_progress"
   canonical_pr: 521
-  issue_comment_id: 6562843768
+  issue_comment_id: 6563447276
   internal_apfs_acceptance: "pass"
   postgres_unique_lots_before: 120
   postgres_unique_lots_after: 120
