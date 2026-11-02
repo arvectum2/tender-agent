@@ -93,6 +93,21 @@ def readable_status(raw, lang):
 def firstparty(s):
     return any("primary" in x.get("tier","").lower() or "first_party" in x.get("tier","").lower() or "original" in x.get("tier","").lower() for x in s)
 def tr(ru,en,lang):return ru if lang=="ru" else en
+def localized_case_note(item, lang):
+    note = item["notes"] or item["market_scope"] or item["status"] or ""
+    if (lang == "en" and item["id"] == "223fz:32616339168:lot1"
+            and note.startswith("ЕИС 223-ФЗ №32616339168, реестровый договор №312")):
+        return (
+            "EIS 223-FZ notice 32616339168, registered contract No. 312 "
+            "dated 28 Sep 2026: 24 capacitor components, RUB 4,350,000. "
+            "Six registered line items: 18 units rated 11.55–12 kV, "
+            "RUB 3,270,000.02; 6 units rated 4.2 kV, RUB 1,080,000.02. "
+            "Printed line items exceed the registered contract price by RUB 0.04. "
+            "Component voltage does not establish a 6–35 kV network. "
+            "Named supplier, OEM, delivery and payment remain unverified."
+        )
+    return note
+
 def family(s,lang):
     return FAM.get(s,(s.replace("_"," "),s.replace("_"," ")))[0 if lang=="ru" else 1]
 def group(s,lang):
@@ -390,7 +405,7 @@ def dossier(item,idx,total,lang,page):
     facts+=field(tr("Технические характеристики","Technical parameters",lang),' · '.join(tech),True)
     facts+=field(tr("Участник / поставщик из источника","Bidder / supplier named in source",lang),winner,True)
     facts+='</div>'
-    note=item["notes"] or item["market_scope"] or item["status"] or ""
+    note=localized_case_note(item,lang)
     if not note:note=tr("Дополнительных сведений нет","No additional notes available",lang)
     note=short(note,500)
     disclaimer=(f'<div class="remark"><b>{tr("ОГОВОРКА /","RESEARCH CAVEAT / SOURCE NOTE",lang)}</b>'
@@ -557,7 +572,7 @@ def main():
     p.add_argument("--snapshot",type=Path,default=SNAP)
     p.add_argument("--outdir",type=Path,default=Path("docs/market_intelligence"))
     p.add_argument("--html-only",action="store_true")
-    p.add_argument("--version",default="V2",choices=[f"V{i}" for i in range(2, 58)])
+    p.add_argument("--version",default="V2",choices=[f"V{i}" for i in range(2, 59)])
     args=p.parse_args()
     data=json.loads(args.snapshot.read_text(encoding="utf8"))
     args.outdir.mkdir(parents=True,exist_ok=True)

@@ -6069,3 +6069,50 @@ mi_watchdog_source_review_20261103_0033:
     New first-party source captures and anonymous commission outcome verified;
     0 new unique lots, 0 DB fields, 0 signed suppliers. Preserve frozen V57.
     Next: source-bound guarded enrichment and 09:00 eligible core cases.
+
+mi_watchdog_rosseti_south_items_20261103_0140:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6590153806
+  moscow_run_end: "2026-11-03T01:41:13.525632+03:00"
+  internal_apfs_acceptance: "pass on 7e9888ba470c12c2f47f8af3da4bb4ef0cd7152a"
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_unique_lots: 0
+  new_deduplicated_projects: 0
+  new_verified_db_fields: 5
+  first_party_http200_sha_captures: 15
+  newly_distinct_source_shas: 7
+  new_original_protocol_printforms: 2
+  new_original_contract_printforms: 2
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_paid_pq_equipment_sales: 0
+  new_exhaustive_months: 0
+  enriched_case: "223fz:32616339168:lot1"
+  source_sha256: "4ddf383bfc50e0a2a139c0ef000b86a0bd9647c8306ba45f4417f92cff5773e7"
+  backup_sha256: "2723007853cc88e7b006e20868ec9e69f0998392f5861fa47fe8f19747733a17"
+  db_receipt: "receipts/pq-rosseti-south-item-split-20261103T0137.json"
+  report: "docs/market_intelligence/PQ_WATCHDOG_ROSSETI_SOUTH_ITEMS_20261103_0140.json"
+  report_sha256: "f35375000faa52a4192a80aca22c30f23da2b08ff4af72b1c5bad55f176ad68d"
+  client_report_version: "V58"
+  bilingual_pdf_pages_each: 268
+  targeted_tests: "21 passed; Ruff clean; RU/EN 268 pages; source-bound CAS readback"
+  latest_tested_code_commit: "7e9888ba470c12c2f47f8af3da4bb4ef0cd7152a"
+  client_html_unchanged: true
+  next_targets:
+    - "223fz:32616497692:lot1 final protocol after 2026-11-03 09:00 Moscow"
+    - "223fz:32616433248:lot1 signed registry after 2026-11-03 09:00 Moscow"
+    - "223fz:32616506708:lot1 final commission after 2026-11-06 09:00 Moscow"
+  resume_instruction: >-
+    Seven new first-party SHA originals from 15 HTTP200 captures:
+    32615794236 protocols and 110kV design contract, plus itemized EIS
+    contract for 32616339168. Source-bound CAS enriched five null-only
+    capacitor item fields: 18 units rated 11.55-12kV cost 3,270,000.02 RUB;
+    six rated 4.2kV cost 1,080,000.02 RUB. Printed line sum differs by
+    0.04 RUB from registered 4.35m. This is NOT verified network 6-35kV
+    sales, signed supplier or payment. Fresh pg_restore-verified full
+    backup, 123/112/45 unchanged, V58 bilingual 268-page reports;
+    frozen V57 and legacy HTML unchanged. No auto-merge.

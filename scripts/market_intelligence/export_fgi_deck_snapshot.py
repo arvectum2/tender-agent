@@ -457,6 +457,28 @@ def verified_filter_south_signed_contract(data, metadata):
     )
 
 
+
+def source_bound_rosseti_south_items_note(data, metadata):
+    """Show a nominal-voltage COMPONENT split only for exact EIS SHA-bound rows."""
+    m = (metadata or {}).get("eis_rosseti_south_item_split_20261103") or {}
+    src = m.get("source") or {}
+    if (data.get("canonical_id") != "223fz:32616339168:lot1"
+            or src.get("sha256") != "4ddf383bfc50e0a2a139c0ef000b86a0bd9647c8306ba45f4417f92cff5773e7"
+            or data.get("contract_capacitor_nominal_6plus_kv_rub") != "3270000.02"
+            or data.get("contract_capacitor_nominal_below_6kv_rub") != "1080000.02"
+            or data.get("contract_capacitor_item_rounding_delta_rub") != "0.04"
+            or len(data.get("contract_capacitor_item_lines") or []) != 6):
+        return None
+    return (
+        "ЕИС 223-ФЗ №32616339168, реестровый договор №312 от 28.09.2026: "
+        "24 конденсаторных компонента, 4 350 000 руб. Шесть строк реестра: "
+        "18 изделий номиналом 11,55–12 кВ — 3 270 000,02 руб.; "
+        "6 изделий номиналом 4,2 кВ — 1 080 000,02 руб. "
+        "Сумма напечатанных строк превышает цену договора на 0,04 руб. "
+        "Номинал компонента не доказывает класс напряжения сети 6–35 кВ; "
+        "поставщик, производитель, исполнение и оплата не подтверждены."
+    )
+
 def source_bound_filter_south_signed_note(data, metadata):
     if not verified_filter_south_signed_contract(data, metadata):
         return None
@@ -852,7 +874,7 @@ def capture():
             "technical":{k: clean(v,220) for k,v in list(technical.items())[:12]},
             "status":clean("official_registered_filter_components_contract_supplier_unverified" if verified_filter_south_signed_contract(d,r.get("metadata")) else ("official_completed_filter_capacitor_contract_supplier_unverified" if verified_filter_signed_contract(d,r.get("metadata")) else ("official_registered_ukrm_supply_contract_supplier_unverified" if verified_bashkirenergo_contract(d,r.get("metadata")) else ("official_registered_contract_supplier_unverified" if verified_meleuz_contract(d,r.get("metadata")) else ("official_registered_design_contract_supplier_unverified" if verified_tyazhinskaya_contract(d,r.get("metadata")) else ("RAD_official_failed_single_application_committee_recommended_contract" if verified_rad_commission(d,r.get("metadata")) else d.get("status")))))),200),
             "market_scope":clean("adjacent_500kv_substation_12kv_filter_capacitor_components_not_full_pq_system" if verified_filter_signed_contract(d,r.get("metadata")) else ("high_voltage_network_requirement_up_to_6p3kv_not_nameplate" if verified_meleuz_contract(d,r.get("metadata")) else d.get("market_scope")),220),
-            "notes":clean(source_bound_commission_note(d,r.get("metadata")) or (d.get("contract_status_note") if verified_evraz_dual(d,r.get("metadata")) else None) or source_bound_eis_contract_item_note(d,r.get("metadata")) or source_bound_filter_south_signed_note(d,r.get("metadata")) or source_bound_filter_signed_note(d,r.get("metadata")) or source_bound_bidzaar_306644_note(d,r.get("metadata")) or source_bound_bidzaar_351062_note(d,r.get("metadata")) or source_bound_bashkirenergo_note(d,r.get("metadata")) or source_bound_tyazhinskaya_note(d,r.get("metadata")) or source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
+            "notes":clean(source_bound_commission_note(d,r.get("metadata")) or (d.get("contract_status_note") if verified_evraz_dual(d,r.get("metadata")) else None) or source_bound_eis_contract_item_note(d,r.get("metadata")) or source_bound_filter_south_signed_note(d,r.get("metadata")) or source_bound_filter_signed_note(d,r.get("metadata")) or source_bound_bidzaar_306644_note(d,r.get("metadata")) or source_bound_bidzaar_351062_note(d,r.get("metadata")) or source_bound_bashkirenergo_note(d,r.get("metadata")) or source_bound_tyazhinskaya_note(d,r.get("metadata")) or source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or source_bound_rosseti_south_items_note(d,r.get("metadata")) or d.get("notes"),2000),
             "review":r["review"],
             "source_urls":safe_urls(evraz_sources(d,r.get("metadata")) + source_bound_eis_contract_item_sources(d,r.get("metadata")) + (d.get("evidence") or []) + source_bound_rad_sources(d,r.get("metadata")) + source_bound_lopcha_sources(d,r.get("metadata")) + source_bound_ntc_vanino_sources(d,r.get("metadata"))),
         })

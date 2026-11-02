@@ -68,3 +68,27 @@ def test_hash_owner_and_metadata():
     r["meta"][KEY] = {"already": True}
     with pytest.raises(RuntimeError):
         validate(r)
+
+
+def test_snapshot_note_requires_exact_source_sha():
+    from scripts.market_intelligence.export_fgi_deck_snapshot import (
+        source_bound_rosseti_south_items_note,
+    )
+
+    d, meta, _ = prepare(row(), {"url": "https://zakupki.gov.ru", "sha256": SHA})
+    assert "3 270 000,02" in source_bound_rosseti_south_items_note(d, meta)
+    assert "не доказывает" in source_bound_rosseti_south_items_note(d, meta)
+    meta[KEY]["source"]["sha256"] = "0" * 64
+    assert source_bound_rosseti_south_items_note(d, meta) is None
+
+
+def test_english_deck_renders_source_note_in_english():
+    from scripts.market_intelligence.render_fgi_full_deck import localized_case_note
+
+    note = "ЕИС 223-ФЗ №32616339168, реестровый договор №312: source verified"
+    item = {"id": CID, "notes": note, "market_scope": "", "status": ""}
+    assert localized_case_note(item, "ru") == note
+    assert "RUB 3,270,000.02" in localized_case_note(item, "en")
+    assert "unverified" in localized_case_note(item, "en")
+    item["id"] = "223fz:other:lot1"
+    assert localized_case_note(item, "en") == note
