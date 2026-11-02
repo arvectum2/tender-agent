@@ -5278,3 +5278,32 @@ mi_watchdog_ukcp_model_20261102_0642:
     264-page dossiers published, HTML unchanged. EIS 32616474682 existing
     opening protocol unchanged, no final outcome; defer final award until
     2026-12-03. PR521 REVIEW, no auto-merge.
+
+mi_watchdog_bounded_search_20261102_0740:
+  status: "in_progress"
+  issue_comment_id: 6569145998
+  moscow_run_end: "2026-11-02T07:41:36.268445+03:00"
+  internal_apfs_acceptance: "pass"
+  postgres_unique_lots_before: 121
+  postgres_unique_lots_after: 121
+  postgres_distinct_procedures: 110
+  postgres_eis_223_notices: 43
+  new_unique_core_6_35kv_lots: 0
+  new_verified_research_fields: 0
+  first_party_http200_sha_captures: 12
+  new_substantive_originals: 0
+  distinct_first_page_month_queries: 7
+  new_signed_suppliers: 0
+  new_paid_equipment_sales: 0
+  report: "docs/market_intelligence/PQ_WATCHDOG_SOURCE_SEARCH_20261102_0740.json"
+  report_sha256: "fcc2b2a40dafb2cfa8e770c84c432328224bf1ee3c859a664dcfaff37ca08751"
+  latest_tested_code_commit: "6206f0d06b96c827097e0a66bc73cd14a9977fbb"
+  next_targets:
+    - "32616433248 after 2026-11-02 09:00 Moscow"
+    - "32616497692 after 2026-11-02 16:30 Moscow"
+    - "32616474682 after 2026-12-03 10:00 Moscow"
+  resume_instruction: >-
+    Read-only source-first research: 12 immutable HTTP200 captures and 8 first-page EIS
+    searches, 7 distinct month/query pairs. No new substantive originals, verified
+    lots, fields, winners, signed suppliers or sales. 32615700251 already excluded
+    as switchgear modernization. No HTML/PDF refresh or DB write. PR521 REVIEW.
