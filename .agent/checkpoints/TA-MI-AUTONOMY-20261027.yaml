@@ -5233,3 +5233,48 @@ mi_watchdog_uralkali_20261102_0537:
     Next 4643332 guarded voltage source review now; EIS 32616474682
     after 06:30, 32616433248 after 09:00, 32616497692 after 16:30 Moscow.
     PR521 REVIEW; no auto-merge.
+
+
+mi_watchdog_ukcp_model_20261102_0642:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6568416882
+  moscow_run_end: "2026-11-02T06:41:11.095701+03:00"
+  internal_apfs_acceptance: "pass"
+  postgres_unique_lots_before: 121
+  postgres_unique_lots_after: 121
+  postgres_distinct_procedures: 110
+  postgres_eis_223_notices: 43
+  new_unique_core_6_35kv_lots: 0
+  new_verified_research_fields: 2
+  new_first_party_originals_sha_verified: 5
+  new_independent_oem_catalogue_originals: 1
+  original_commission_protocols: 0
+  newly_signed_suppliers: 0
+  newly_paid_equipment_sales: 0
+  exhaustive_month_source_searches: 0
+  enrichment_case: "commercial:4643332:lot1"
+  equipment_voltage_kv: "10.5"
+  equipment_power_kvar: 150
+  source_sha256: "cffe971868056da009187f9fc0fb721627fd62181449788cd0722735c8854f73"
+  backup_sha256: "1d202fe6a08d9fc1fd9018f5c2991c339f8047a08e1a5c35ff9052ab82454b6f"
+  report: "docs/market_intelligence/PQ_WATCHDOG_UKCP_MODEL_20261102_0642.json"
+  report_sha256: "7730e07d6201d8bab1e187b91f3205522c00197e9dbde87eadc388a2ea12ca0d"
+  client_report_version: "V44"
+  pdf_pages_each: 264
+  targeted_tests: "18 passed; Ruff clean"
+  latest_tested_code_commit: "d11703485a1bc0b8e338159462ca0715a0df53cc"
+  next_targets:
+    - "223fz:32616433248:lot1 after 2026-11-02 09:00 Moscow"
+    - "223fz:32616497692:lot1 after 2026-11-02 16:30 Moscow"
+    - "223fz:32616474682:lot1/lot2 after 2026-12-03 10:00 Moscow"
+  resume_instruction: >-
+    Independent official UKCP capacitor model catalogue cross-checks exact
+    B2B 4643332 item: nominal 10.5 kV and 150 kvar, 1 capacitor; two
+    previously null research fields CAS-enriched after fresh SHA+pg_restore
+    verified full backup. Tender failed with zero bids; UKCP is a model
+    reference, NOT an awarded OEM, signed supplier or paid sale. Corpus
+    unchanged 121 lots / 110 procedures / 43 EIS 223 notices. V44 RU/EN
+    264-page dossiers published, HTML unchanged. EIS 32616474682 existing
+    opening protocol unchanged, no final outcome; defer final award until
+    2026-12-03. PR521 REVIEW, no auto-merge.
