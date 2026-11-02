@@ -557,7 +557,7 @@ def main():
     p.add_argument("--snapshot",type=Path,default=SNAP)
     p.add_argument("--outdir",type=Path,default=Path("docs/market_intelligence"))
     p.add_argument("--html-only",action="store_true")
-    p.add_argument("--version",default="V2",choices=[f"V{i}" for i in range(2, 54)])
+    p.add_argument("--version",default="V2",choices=[f"V{i}" for i in range(2, 55)])
     args=p.parse_args()
     data=json.loads(args.snapshot.read_text(encoding="utf8"))
     args.outdir.mkdir(parents=True,exist_ok=True)

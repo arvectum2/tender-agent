@@ -60,3 +60,32 @@ def test_no_existing_field_is_overwritten():
         "bid", "commission_selected_participant",
         "negotiated_offer_rub", "protocol_status_note",
     }
+
+
+def test_snapshot_requires_both_exact_primary_shas():
+    from scripts.market_intelligence.enrich_pq_bashkirenergo_commission_20261102 import (
+        EIS_SHA,
+        EIS_URL,
+        ZIP_SHA,
+        ZIP_URL,
+    )
+    from scripts.market_intelligence.export_fgi_deck_snapshot import (
+        source_bound_bid,
+        source_bound_commission_note,
+        verified_bashkirenergo_commission,
+    )
+
+    r = row()
+    data, meta, _ = prepare(r, {
+        "zip_sha256": ZIP_SHA, "eis_sha256": EIS_SHA,
+        "role": "selected_sole_participant_not_competitive_winner",
+    })
+    assert verified_bashkirenergo_commission(data, meta)
+    assert source_bound_bid(data, meta) == "4900000.00"
+    assert "несостоявшийся" in source_bound_commission_note(data, meta)
+    assert data["winner"] is None
+    damaged = copy.deepcopy(data)
+    damaged["evidence"] = [e for e in data["evidence"] if e.get("url") != EIS_URL]
+    assert not verified_bashkirenergo_commission(damaged, meta)
+    assert source_bound_bid(damaged, meta) is None
+    assert {e["url"] for e in data["evidence"]} == {ZIP_URL, EIS_URL}

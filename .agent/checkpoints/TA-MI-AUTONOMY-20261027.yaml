@@ -5808,3 +5808,58 @@ mi_watchdog_eis_buyer_inns_20261102_1847:
     display remains 85/123 because customer.inn fallback already populated.
     32515582393 buyer-name mismatch requires role reconciliation; no overwrite.
     PR521 REVIEW; CI quality failed; no auto-merge.
+
+mi_watchdog_bashkirenergo_commission_20261102_1937:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6582396185
+  moscow_run_end: "2026-11-02T19:37:21.928374+03:00"
+  internal_apfs_acceptance: "pass on af50134b7701304f2f3d477b3a0e250497b77f50"
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_unique_lots: 0
+  new_deduplicated_projects: 0
+  new_verified_db_fields: 4
+  enriched_case: "223fz:32515582393:lot1"
+  named_selected_sole_participant: "ООО «УК КОНДЕНСАТОР»"
+  competitive_winners_new: 0
+  new_signed_suppliers: 0
+  new_paid_pq_equipment_sales: 0
+  first_party_requests: 9
+  first_party_http200_sha_captures: 6
+  tls_failure_attempts: 3
+  newly_attempted_month_source_pairs: 0
+  new_exhaustive_months: 0
+  original_commission_zip_sha256: "842cfe42c4ad5f797cf6d4d104015406ea43d246ecc8c1cf60364861ea69ffae"
+  original_eis_protocol_sha256: "8def93c5cba42bb177d8fd838a456328de3b7ad364bd9c484f26932b8aba76d3"
+  backup_sha256: "6c35ae2ad14eafdd533ed5d5cb40ab6225f6adf142eff417591a34605193370b"
+  db_receipt: "receipts/pq-bashkirenergo-commission-20261102T1634.json"
+  report: "docs/market_intelligence/PQ_WATCHDOG_BASHKIRENERGO_COMMISSION_20261102_1937.json"
+  report_sha256: "9fb9838c5b025b728312e8e9db514842efdf03d9bf29aeac14bcfb8c934b1e69"
+  client_report_version: "V54"
+  bilingual_pdf_pages_each: 268
+  field_coverage_bid_after: "16/123"
+  named_bidder_or_participant_coverage_after: "8/123"
+  source_grade_A_after: 48
+  targeted_tests: "16 passed; Ruff clean; both PDF 268 pages and pdftotext verified"
+  latest_tested_code_commit: "af50134b7701304f2f3d477b3a0e250497b77f50"
+  client_html_unchanged: true
+  next_targets:
+    - "223fz:32616497692:lot1 final protocol after 2026-11-03 09:00 Moscow"
+    - "223fz:32616433248:lot1 signed registry after 2026-11-03 09:00 Moscow"
+    - "commercial:4657777:lot1 result after 2026-11-09 10:00 site time"
+  resume_instruction: >-
+    EIS 32515582393 official protocol corroborated immutable original ETP
+    ZIP with two SHA-checked commission PDFs: tender unsuccessful, sole
+    selected participant ООО УК КОНДЕНСАТОР, original 4.9m RUB ex VAT,
+    negotiated 4.85m RUB ex VAT; independent EIS registered contract 4.85m.
+    Do not call the selected participant a competitive winner or signed
+    supplier; payment, voltage and OEM remain unknown. Fresh SHA+pg_restore
+    backup, serializable null-only CAS and readback of 4 fields. Five
+    new first-party EIS HTML captures plus one B2B card (dynamic SHA,
+    unchanged substantive data); 3 initial httpx TLS failures resolved
+    with native-trust, no TLS bypass. V54 bilingual 268-page dossier;
+    frozen V53 untouched. PostgreSQL 123/112/45 unchanged. PR521 REVIEW,
+    no auto-merge or client HTML refresh.

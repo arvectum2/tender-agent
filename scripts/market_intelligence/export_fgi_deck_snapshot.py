@@ -173,7 +173,39 @@ def verified_angarsk_commission(data, metadata):
     )
 
 
+def verified_bashkirenergo_commission(data, metadata):
+    """Selected sole participant is not a competitive winner or signed supplier."""
+    from scripts.market_intelligence.enrich_pq_bashkirenergo_commission_20261102 import (
+        CID,
+        EIS_SHA,
+        EIS_URL,
+        FIELDS,
+        KEY,
+        ZIP_SHA,
+        ZIP_URL,
+    )
+    proof = (metadata or {}).get(KEY) or {}
+    source = proof.get("proof") or {}
+    return (
+        data.get("canonical_id") == CID
+        and all(data.get(k) == v for k, v in FIELDS.items())
+        and proof.get("fields") == FIELDS
+        and source.get("zip_sha256") == ZIP_SHA
+        and source.get("eis_sha256") == EIS_SHA
+        and source.get("role") == "selected_sole_participant_not_competitive_winner"
+        and proof.get("signed_supplier_verified") is False
+        and proof.get("paid_pq_equipment_sale_verified") is False
+        and data.get("winner") is None
+        and data.get("contract_signatory") is None
+        and all(any(e.get("sha256") == sha and e.get("url") == url
+                    for e in data.get("evidence", []))
+                for url, sha in ((ZIP_URL, ZIP_SHA), (EIS_URL, EIS_SHA)))
+    )
+
+
 def source_bound_commission_note(data, metadata):
+    if verified_bashkirenergo_commission(data, metadata):
+        return data["protocol_status_note"]
     if verified_angarsk_commission(data, metadata):
         return data["protocol_status_note"]
     if not verified_roseltorg_commission(data, metadata):
@@ -193,6 +225,8 @@ def source_bound_commission_note(data, metadata):
 
 
 def source_bound_bid(data, metadata):
+    if verified_bashkirenergo_commission(data, metadata):
+        return data["bid"]
     if verified_angarsk_commission(data, metadata):
         return data["bid"]
     if verified_meleuz_contract(data, metadata):
@@ -711,6 +745,7 @@ def capture():
             "bid":clean(source_bound_bid(d,r.get("metadata")),50),
             "winner":clean(val(d,"commission_winner_name",
                 "winning_supplier_name","commission_bidder_name","supplier_by_court")
+                or (d.get("commission_selected_participant") if verified_bashkirenergo_commission(d,r.get("metadata")) else None)
                 or (d.get("winner") if verified_rad_commission(d,r.get("metadata")) else None),210),
             "supplier_inn":clean(d.get("supplier_inn"),28),
             "contract_signatory":clean(val(d,"registered_supplier_name",
