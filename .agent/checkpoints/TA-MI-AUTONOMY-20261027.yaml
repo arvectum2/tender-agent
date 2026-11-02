@@ -5760,3 +5760,51 @@ mi_watchdog_angarsk_commission_20261102_1752:
     EIS searches HTTP404 are access failures, not zero market.
     PostgreSQL 123 unique lots / 112 procedures / 45 numeric EIS 223 notices.
     PR521 REVIEW; no auto-merge, no client HTML refresh.
+
+mi_watchdog_eis_buyer_inns_20261102_1847:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6581257422
+  moscow_run_end: "2026-11-02T18:45:01.482986+03:00"
+  internal_apfs_acceptance: "pass on a98c62b before and after DB mutation"
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_unique_lots: 0
+  new_deduplicated_projects: 0
+  new_verified_db_fields: 4
+  enriched_field: "buyer_inn"
+  buyer_inn_report_coverage_after: "85/123 (unchanged, customer.inn fallback)"
+  first_party_http200_captures: 23
+  new_distinct_internal_case_sha: 5
+  new_first_parts_protocol_originals: 1
+  new_final_award_protocols: 0
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_paid_pq_equipment_sales: 0
+  new_exhaustive_months: 0
+  full_backup_sha256: "9a643b50798a8adb46526d0a8aa1a51c78712c5dfa603e0c9c8b69c696278a3c"
+  db_receipt: "receipts/pq-eis-buyer-inn-20261102T1543.json"
+  report: "docs/market_intelligence/PQ_WATCHDOG_EIS_BUYER_INNS_20261102_1847.json"
+  report_sha256: "9ee120ea516b8e1f0addcd2a5faccdd09a4f6bdf49c902530fe7375f06cdf4e4"
+  client_report_version: "V53"
+  bilingual_pdf_pages_each: 268
+  targeted_tests: "10 passed; Ruff clean; both PDFs 268 pages; source-bound CAS readback"
+  latest_tested_code_commit: "a98c62b7a045a492474814c35acac4deb98d03b7"
+  client_html_unchanged: true
+  next_targets:
+    - "223fz:32515582393:lot1 buyer-name conflict: inspect official signed-contract role, eligible now"
+    - "223fz:32616497692:lot1 final protocol after 2026-11-03 09:00 MSK"
+    - "223fz:32616433248:lot1 contract register after 2026-11-03 09:00 MSK"
+  resume_instruction: >-
+    Four previously null buyer_inn fields populated from immutable first-party
+    EIS notice SHA after fresh full SHA+pg_restore backup, serializable CAS
+    and postwrite readback. 23 first-party HTTP200 captures, 5 newly distinct
+    case SHA, 3 generic EIS shells rejected as case evidence; one newly distinct
+    first-parts protocol for 32616120582 shows anonymous applications, not winner.
+    V53 bilingual 268-page dossiers frozen; V52 untouched. No new unique
+    lot/project, signed supplier, paid sale or exhaustive month. Buyer INN
+    display remains 85/123 because customer.inn fallback already populated.
+    32515582393 buyer-name mismatch requires role reconciliation; no overwrite.
+    PR521 REVIEW; CI quality failed; no auto-merge.
