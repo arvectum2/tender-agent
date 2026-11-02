@@ -5961,3 +5961,52 @@ mi_watchdog_tyazhinskaya_commission_20261102_2138:
     bidder, signed supplier, paid sale or new unique lot. V56 bilingual
     268-page dossiers; V55 frozen. PQ equipment 6-35 kV sales not
     inferred from 110/35/10 kV design. PR521 REVIEW, no auto-merge.
+
+mi_watchdog_kuzbass_filter_items_20261102_2240:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6586434053
+  moscow_run_end: "2026-11-02T22:37:56.098566+03:00"
+  internal_apfs_acceptance: "pass after commit 2a4a699f4355bf2b32c6677b9656aa31a14bf2d9"
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_unique_lots: 0
+  new_deduplicated_projects: 0
+  new_verified_db_fields: 5
+  first_party_http_attempts: 27
+  sha_verified_captures: 7
+  newly_distinct_source_shas: 2
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_paid_pq_equipment_sales: 0
+  new_exhaustive_months: 0
+  enriched_case: "223fz:32514947144:lot1"
+  primary_contract_printform_sha256: "4d498c22761156fe98c2b7d1946ae0c80a1360b2e2f6323ee411c1c90cb8d741"
+  additional_epc_contract_printform_sha256: "3d1921f5d462ee3532ad94a47abaa1c12d0370b3c798b0a631ae4221f1d86c5f"
+  backup_sha256: "5d132ecef4e51157f435275b3f210da8e31c6593285d72482256b6a6cee8f103"
+  db_receipt: "receipts/pq-kuzbass-filter-items-20261102T1935.json"
+  report: "docs/market_intelligence/PQ_WATCHDOG_KUZBASS_FILTER_ITEMS_20261102_2240.json"
+  report_sha256: "6cd178181087817b796d5e683702d5f0ed430ed9f2c3f63dc005050b24f29112"
+  client_report_version: "V57"
+  bilingual_pdf_pages_each: 268
+  targeted_tests: "22 passed; Ruff clean; RU/EN 268 pages; source-bound CAS readback"
+  latest_tested_code_commit: "2a4a699f4355bf2b32c6677b9656aa31a14bf2d9"
+  client_html_unchanged: true
+  next_targets:
+    - "223fz:32616497692:lot1 final protocol after 2026-11-03 09:00 Moscow"
+    - "223fz:32616433248:lot1 signed registry after 2026-11-03 09:00 Moscow"
+    - "223fz:32616506708:lot1 final commission after 2026-11-06 09:00 Moscow"
+  resume_instruction: >-
+    Two genuinely new immutable EIS contract printform SHAs; 7 SHA-checked
+    captures, 5 previously seen SHAs reverified, one generic EIS shell
+    not promoted. Source-bound guarded enrichment adds five previously
+    null capacitor item fields for 32514947144 (14 x 225600 = 3158400 RUB,
+    origin Russian Federation). This is component supply for a 500kV
+    substation, not a complete 6-35kV PQ sale. Independent 32616120582
+    printform corroborates existing 17m RUB mixed EPC total; no PQ-only
+    allocation, signed supplier, OEM or payment proven. Fresh full SHA+
+    pg_restore backup and CAS readback passed. V57 bilingual 268-page
+    dossiers frozen, V56 untouched. No unique lot/project gain and no
+    exhaustive month. PR521 REVIEW; no auto-merge or client HTML refresh.
