@@ -330,6 +330,30 @@ def source_bound_bidzaar_306644_note(data, metadata):
     )
 
 
+
+def source_bound_bidzaar_351062_note(data, metadata):
+    """Replace stale pre-download note only when both original documents are SHA-bound."""
+    proof = (metadata or {}).get("bidzaar_351062_p2") or {}
+    voltage = (metadata or {}).get("bidzaar_351062_voltage") or {}
+    power_sha = "e53a74ef8a4fda14aedce7254488013187aba3bba7780b5a9c6443e4d0caacaf"
+    voltage_sha = "e7927732264deb30813bcf967740763cfb032f5710ca78156f76646f8cc0d831"
+    if (data.get("canonical_id") != "commercial:351-062:lot1"
+            or data.get("quantity") != 2 or data.get("equipment_voltage_kv") != "6.3"
+            or data.get("power") != "3000 кВАр (по опросному листу; не умножать на 2)"
+            or proof.get("original_sha256") != power_sha
+            or voltage.get("original_sha256") != voltage_sha
+            or not all(any(e.get("sha256") == sha for e in data.get("evidence", []))
+                       for sha in (power_sha, voltage_sha))):
+        return None
+    return (
+        "Bidzaar №351-062: получены SHA-проверенные оригиналы DOC и DOCX. "
+        "Опросный лист указывает УКРМ 6,3 кВ, 3000 кВАр; заявлено 2 установки, "
+        "но суммарная мощность двух изделий отдельно не подтверждена. "
+        "Это анализ цен/мониторинг рынка, а не доказанный подписанный договор. "
+        "Победитель, цена договора, факт поставки и оплаты не установлены."
+    )
+
+
 def source_bound_bashkirenergo_note(data, metadata):
     if not verified_bashkirenergo_contract(data, metadata):
         return None
@@ -661,7 +685,7 @@ def capture():
             "technical":{k: clean(v,220) for k,v in list(technical.items())[:12]},
             "status":clean("official_registered_filter_components_contract_supplier_unverified" if verified_filter_south_signed_contract(d,r.get("metadata")) else ("official_completed_filter_capacitor_contract_supplier_unverified" if verified_filter_signed_contract(d,r.get("metadata")) else ("official_registered_ukrm_supply_contract_supplier_unverified" if verified_bashkirenergo_contract(d,r.get("metadata")) else ("official_registered_contract_supplier_unverified" if verified_meleuz_contract(d,r.get("metadata")) else ("official_registered_design_contract_supplier_unverified" if verified_tyazhinskaya_contract(d,r.get("metadata")) else ("RAD_official_failed_single_application_committee_recommended_contract" if verified_rad_commission(d,r.get("metadata")) else d.get("status")))))),200),
             "market_scope":clean("adjacent_500kv_substation_12kv_filter_capacitor_components_not_full_pq_system" if verified_filter_signed_contract(d,r.get("metadata")) else ("high_voltage_network_requirement_up_to_6p3kv_not_nameplate" if verified_meleuz_contract(d,r.get("metadata")) else d.get("market_scope")),220),
-            "notes":clean(source_bound_commission_note(d,r.get("metadata")) or (d.get("contract_status_note") if verified_evraz_dual(d,r.get("metadata")) else None) or source_bound_eis_contract_item_note(d,r.get("metadata")) or source_bound_filter_south_signed_note(d,r.get("metadata")) or source_bound_filter_signed_note(d,r.get("metadata")) or source_bound_bidzaar_306644_note(d,r.get("metadata")) or source_bound_bashkirenergo_note(d,r.get("metadata")) or source_bound_tyazhinskaya_note(d,r.get("metadata")) or source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
+            "notes":clean(source_bound_commission_note(d,r.get("metadata")) or (d.get("contract_status_note") if verified_evraz_dual(d,r.get("metadata")) else None) or source_bound_eis_contract_item_note(d,r.get("metadata")) or source_bound_filter_south_signed_note(d,r.get("metadata")) or source_bound_filter_signed_note(d,r.get("metadata")) or source_bound_bidzaar_306644_note(d,r.get("metadata")) or source_bound_bidzaar_351062_note(d,r.get("metadata")) or source_bound_bashkirenergo_note(d,r.get("metadata")) or source_bound_tyazhinskaya_note(d,r.get("metadata")) or source_bound_meleuz_note(d,r.get("metadata")) or source_bound_rad_note(d,r.get("metadata")) or d.get("notes"),2000),
             "review":r["review"],
             "source_urls":safe_urls(evraz_sources(d,r.get("metadata")) + source_bound_eis_contract_item_sources(d,r.get("metadata")) + (d.get("evidence") or []) + source_bound_rad_sources(d,r.get("metadata")) + source_bound_lopcha_sources(d,r.get("metadata")) + source_bound_ntc_vanino_sources(d,r.get("metadata"))),
         })
