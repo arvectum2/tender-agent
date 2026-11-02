@@ -118,15 +118,15 @@ OR (SELECT count(*) FROM dp_records d JOIN dp_resources r USING(resource_id)
 WHERE r.collection_id='{COL}')<>{before['records']}
 OR (SELECT count(*) FROM dp_resources r JOIN dp_records d USING(resource_id)
 WHERE r.collection_id='{COL}' AND r.external_id='{CID}' AND r.content_hash='{old_hash}'
-AND d.revision={rev} AND (d.data->'equipment_voltage_kv') IS NULL
-AND (d.data->'power') IS NULL)<>1
+AND d.revision={rev} AND (d.data->>'equipment_voltage_kv') IS NULL
+AND (d.data->>'power') IS NULL)<>1
 THEN RAISE EXCEPTION 'PQ CAS/owner/count mismatch'; END IF; END $g$;
 UPDATE dp_records d SET data={js(data)},metadata={js(meta)},
 revision=revision+1,updated_at=now() FROM dp_resources r
 WHERE d.resource_id=r.resource_id AND r.collection_id='{COL}'
 AND r.external_id='{CID}' AND r.content_hash='{old_hash}'
-AND d.revision={rev} AND (d.data->'equipment_voltage_kv') IS NULL
-AND (d.data->'power') IS NULL;
+AND d.revision={rev} AND (d.data->>'equipment_voltage_kv') IS NULL
+AND (d.data->>'power') IS NULL;
 UPDATE dp_resources SET content_hash='{new_hash}',updated_at=now()
 WHERE collection_id='{COL}' AND external_id='{CID}' AND content_hash='{old_hash}';
 DO $g$ BEGIN IF (SELECT count(*) FROM dp_resources r JOIN dp_records d USING(resource_id)
