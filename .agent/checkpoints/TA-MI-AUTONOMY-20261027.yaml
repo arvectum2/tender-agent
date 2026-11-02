@@ -5575,3 +5575,53 @@ mi_watchdog_argos_model_20261102_1340:
     B2B offers/changes generic homepage; EIS 32515029641 docs HTTP404.
     No new lot, no exhaustive month search, no client HTML refresh.
     PR521 REVIEW, no auto-merge.
+
+
+mi_watchdog_bashkirenergo_quantity_20261102_1437:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6575993883
+  moscow_run_end: "2026-11-02T14:37:19.075046+03:00"
+  internal_apfs_acceptance: "pass on 369b0b5b39c068b164c81af1a247263539a1d2be"
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_unique_lots: 0
+  new_unique_projects: 0
+  new_verified_db_fields: 1
+  enriched_case: "223fz:32514720691:lot1"
+  enriched_field: "quantity=2 комплекта УКРМ; B2B first-party SHA b679ed12340fad5673407a7d530309d858a3563d2439d96f926584db5df35232"
+  quantity_field_coverage_after: "52/123"
+  sha_verified_first_party_captures: 7
+  new_distinct_original_sha: 0
+  first_party_month_query_pairs: 10
+  first_party_search_http200_requests: 12
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_paid_equipment_sales: 0
+  full_backup_sha256: "5d4ce19c8206760acfd53f74defded951541a5e42bbcd46ac17cb3f2c8f4f159"
+  db_receipt: "receipts/pq-bashkirenergo-quantity-20261102T1433.json"
+  report: "docs/market_intelligence/PQ_WATCHDOG_BASHKIRENERGO_QUANTITY_20261102_1436.json"
+  report_sha256: "5d85bd847d3caddb8e07b0fa6916f69a7b65dde0e95cf2b64b9d5d6f23f31122"
+  client_report_version: "V50"
+  bilingual_pdf_pages_each: 268
+  targeted_tests: "17 passed; Ruff clean; both PDFs 268 pages; post-commit preflight pass"
+  latest_tested_code_commit: "369b0b5b39c068b164c81af1a247263539a1d2be"
+  client_html_unchanged: true
+  next_targets:
+    - "223fz:32514947144:lot1 supplier/INN only on new official registry revision"
+    - "223fz:32514720691:lot1 OEM/technical rating and signed supplier after new primary document"
+    - "223fz:32616497692:lot1 final protocol after 2026-11-02 16:30 Moscow"
+  resume_instruction: >-
+    B2B first-party original and signed EIS registry agree on 2 sets for
+    existing 6.3kV Bashkirenergo UKRM supply lot; null-only quantity CAS
+    under fresh SHA+pg_restore-checked full backup, readback 123/112/45.
+    V50 bilingual 268-page dossiers generated, frozen V49 unchanged.
+    Seven first-party re-captures match existing original SHA (0 new distinct).
+    Ten new first-page month/source queries, zero exhaustive months; 2024-07
+    BSK 223 search is 223 results dominated by company acronym, first 10
+    false positives; 2025-02 STATCOM 44 search matches 'ostatkov', first 10
+    false positives. No new verified lot, winner, signed supplier or paid sale.
+    2023 STATCOM cooling service and 220kV EPC/design excluded from 6-35kV
+    equipment sales. PR521 REVIEW; no auto-merge. Continue primary research.
