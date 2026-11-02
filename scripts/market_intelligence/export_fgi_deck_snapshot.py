@@ -203,7 +203,39 @@ def verified_bashkirenergo_commission(data, metadata):
     )
 
 
+def verified_slavyanskaya_commission(data, metadata):
+    """First-place bid only when exact EIS protocol SHA and CAS receipt agree."""
+    from scripts.market_intelligence.enrich_pq_slavyanskaya_commission_20261102 import (
+        CID,
+        FIELDS,
+        KEY,
+        SHA,
+        URL,
+    )
+
+    receipt = (metadata or {}).get(KEY) or {}
+    source = receipt.get("proof") or {}
+    return (
+        data.get("canonical_id") == CID
+        and data.get("scope") == "design"
+        and data.get("contract_registered_price_rub") == "20442391.10"
+        and data.get("registered_signed_contract_verified") is True
+        and all(data.get(k) == v for k, v in FIELDS.items())
+        and receipt.get("fields") == FIELDS
+        and source.get("sha256") == SHA
+        and source.get("url") == URL
+        and receipt.get("signed_supplier_verified") is False
+        and receipt.get("paid_equipment_sale_verified") is False
+        and data.get("winner") is None
+        and data.get("contract_signatory") is None
+        and any(e.get("url") == URL and e.get("sha256") == SHA
+                for e in data.get("evidence", []))
+    )
+
+
 def source_bound_commission_note(data, metadata):
+    if verified_slavyanskaya_commission(data, metadata):
+        return data["protocol_status_note"]
     if verified_bashkirenergo_commission(data, metadata):
         return data["protocol_status_note"]
     if verified_angarsk_commission(data, metadata):
@@ -225,6 +257,8 @@ def source_bound_commission_note(data, metadata):
 
 
 def source_bound_bid(data, metadata):
+    if verified_slavyanskaya_commission(data, metadata):
+        return data["bid"]
     if verified_bashkirenergo_commission(data, metadata):
         return data["bid"]
     if verified_angarsk_commission(data, metadata):

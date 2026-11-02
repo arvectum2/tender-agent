@@ -35,3 +35,27 @@ def test_old_null_guard_rejects_conflict():
                     "registered_signed_contract_verified": True, "bid": "conflict"}}
     with pytest.raises(RuntimeError, match="guard"):
         m.prepare(row, {"sha256": m.SHA})
+
+
+def test_client_report_requires_source_bound_cas():
+    from scripts.market_intelligence.export_fgi_deck_snapshot import (
+        source_bound_bid,
+        source_bound_commission_note,
+        verified_slavyanskaya_commission,
+    )
+    source = {"sha256": m.SHA, "url": m.URL}
+    data = {**m.FIELDS, "canonical_id": m.CID, "scope": "design",
+            "contract_registered_price_rub": "20442391.10",
+            "registered_signed_contract_verified": True,
+            "winner": None, "contract_signatory": None,
+            "evidence": [{"sha256": m.SHA, "url": m.URL}]}
+    meta = {m.KEY: {"fields": m.FIELDS, "proof": source,
+                    "signed_supplier_verified": False,
+                    "paid_equipment_sale_verified": False}}
+    assert verified_slavyanskaya_commission(data, meta)
+    assert source_bound_bid(data, meta) == "20107269.94"
+    assert "второе место" in source_bound_commission_note(data, meta)
+    data["evidence"][0]["sha256"] = "0" * 64
+    assert not verified_slavyanskaya_commission(data, meta)
+    assert source_bound_bid(data, meta) is None
+    assert source_bound_commission_note(data, meta) is None

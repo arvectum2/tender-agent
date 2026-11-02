@@ -5863,3 +5863,55 @@ mi_watchdog_bashkirenergo_commission_20261102_1937:
     with native-trust, no TLS bypass. V54 bilingual 268-page dossier;
     frozen V53 untouched. PostgreSQL 123/112/45 unchanged. PR521 REVIEW,
     no auto-merge or client HTML refresh.
+
+mi_watchdog_slavyanskaya_protocols_20261102_2040:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6583877933
+  moscow_run_end: "2026-11-02T20:39:47.556744+03:00"
+  internal_apfs_acceptance: "pass on 5de70817 before full backup and CAS mutation"
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_unique_lots: 0
+  new_deduplicated_projects: 0
+  new_verified_db_fields: 5
+  first_party_requests: 11
+  first_party_http200_sha_captures: 9
+  first_party_http404: 2
+  new_protocol_printforms: 5
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_paid_pq_equipment_sales: 0
+  new_exhaustive_months: 0
+  enriched_case: "223fz:32515225588:lot1"
+  first_place_anonymous_application: "3"
+  commission_bid_rub: "20107269.94"
+  independent_registered_contract_rub: "20442391.10"
+  backup_sha256: "e1f74814a05c441cbb2a802724aaf6da6198bf98adcc0e6d4b00972a1c7a20da"
+  db_receipt: "receipts/pq-slavyanskaya-commission-20261102T1737.json"
+  report: "docs/market_intelligence/PQ_WATCHDOG_SLAVYANSKAYA_PROTOCOLS_20261102_2040.json"
+  report_sha256: "3a0f68888be9151fa585779d18df612cfb065d6b1a287effb1fb5c9c961f8885"
+  client_report_version: "V55"
+  bilingual_pdf_pages_each: 268
+  field_coverage_bid_after: "17/123"
+  targeted_tests: "8 passed; Ruff clean; RU/EN PDF 268 pages and SHA/receipt checks"
+  latest_tested_code_commit: "5de70817bf0f830e745555738917639fb4dac876"
+  client_html_unchanged: true
+  next_targets:
+    - "223fz:32616497692:lot1 final protocol after 2026-11-03 09:00 Moscow"
+    - "223fz:32616433248:lot1 signed registry after 2026-11-03 09:00 Moscow"
+    - "223fz:32616506708:lot1 final commission after 2026-11-06 09:00 Moscow"
+  resume_instruction: >-
+    Five new immutable EIS protocol printforms plus three case-specific
+    protocol-list pages and one negative contract-registry HTML; nine SHA-verified
+    HTTP200 first-party captures, two document endpoints HTTP404. For Slavyanskaya
+    STK design, anonymous application #3 ranked first at 20,107,269.94 RUB
+    despite cheaper #2; independent signed registered contract 20,442,391.10 RUB
+    was already in corpus, signatory unverified. Five previously null research
+    fields filled under new full SHA+pg_restore backup and serializable CAS;
+    no equipment sale, signed supplier or new lot. Other protocols prove all
+    first parts rejected (32515208744) and zero applications (32515584863).
+    V55 bilingual 268-page reports created, frozen V54 untouched.
+    PR521 REVIEW, no auto-merge or client HTML refresh.
