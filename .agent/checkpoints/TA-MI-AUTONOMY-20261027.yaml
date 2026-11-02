@@ -5307,3 +5307,53 @@ mi_watchdog_bounded_search_20261102_0740:
     searches, 7 distinct month/query pairs. No new substantive originals, verified
     lots, fields, winners, signed suppliers or sales. 32615700251 already excluded
     as switchgear modernization. No HTML/PDF refresh or DB write. PR521 REVIEW.
+
+
+mi_watchdog_bashkirenergo_signed_20261102_0844:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6569924306
+  moscow_run_end: "2026-11-02T08:44:41.866700+03:00"
+  internal_apfs_acceptance: "pass"
+  postgres_unique_lots_before: 121
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_unique_lots: 2
+  new_core_6_35kv_equipment_supply_leads: 1
+  new_linked_mixed_epc_lots: 1
+  deduplicated_project_groups: 1
+  newly_verified_registered_contracts: 2
+  registry_execution_completed_statuses: 2
+  new_named_commission_winners: 1
+  newly_verified_signed_suppliers: 0
+  newly_verified_paid_equipment_sales: 0
+  first_party_search_http200_requests: 43
+  distinct_first_page_month_queries: 37
+  first_party_sha_verified_captures: 21
+  substantive_case_captures: 17
+  exhaustive_month_searches: 0
+  backup_sha256: "cf31b48bdbf2c5cd85b31a3c34e8394d4343f006023b45d8210a59c9e4089d2e"
+  db_receipt: "receipts/pq-bashkirenergo-signed-20261102T0542.json"
+  report: "docs/market_intelligence/PQ_WATCHDOG_BASHKIRENERGO_SIGNED_20261102_0842.json"
+  report_sha256: "78c2fd1e6b41f0ba14b1b2264001a33d40d5d11d8d3aa1de6aaa973dc17dec00"
+  client_report_version: "V45"
+  pdf_pages_each: 268
+  targeted_tests: "11 passed; Ruff clean; PDF 268 pages each; DB readback 123"
+  latest_tested_code_commit: "abdcf45f0c5a608f93e6a260b7d96789357563da"
+  next_targets:
+    - "223fz:32616433248:lot1 after 2026-11-02 09:00 Moscow"
+    - "223fz:32616497692:lot1 after 2026-11-02 16:30 Moscow"
+    - "223fz:32616474682:lot1/lot2 after 2026-12-03 10:00 Moscow"
+  resume_instruction: >-
+    Two distinct signed-register 223-FZ lots 32514720691 and 32514754857
+    newly source-SHA verified and append-only imported (121->123), one shared
+    Bashkirenergo PS Andreevka/Igrovka UKRM project group. Supply of two
+    6.3kV UKRM sets registered 14,790,000 RUB, signed 2025-06-23; separate
+    mixed 110kV parent EPC installation 6,732,104.09 RUB signed 2025-06-11.
+    Both official registry cards mark execution completed, but paid amounts
+    and signed supplier identities remain UNVERIFIED. Native B2B names
+    commission winner UK Kondensator only, NOT a proven contract signatory.
+    Do not sum EPC as second equipment sale. V45 bilingual 268-page dossiers
+    and existing HTML refreshed. 37 first-page searches are not exhaustive.
+    Continue 32616433248 only after 09:00 Moscow. PR #521 REVIEW; no auto-merge.
