@@ -5705,3 +5705,58 @@ mi_watchdog_final_protocol_retry_20261102_1640:
     official 0.4kV UKRM cards excluded from 6-35kV core. 16 month-query
     requests, 8 previously unreported, zero exhaustive. No DB or PDF/HTML
     mutations; PostgreSQL 123/112/45. Continue first-party research.
+
+mi_watchdog_angarsk_commission_20261102_1752:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6579944500
+  moscow_run_end: "2026-11-02T17:52:17.026504+03:00"
+  internal_apfs_acceptance: "pass on 889c6d0 before DB mutation; pass on 6d4e2b7 after report generation"
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_unique_lots: 0
+  new_deduplicated_projects: 0
+  new_verified_db_fields: 4
+  enriched_case: "223fz:32616412267:lot1"
+  source_sha256: "df19f3c9a0fbe913592dcf98ce649b295cff9692c9e813a182266a76904efaa0"
+  verified_first_place_offer_rub: "2590000.00"
+  separately_registered_signed_contract_rub: "2639026.64"
+  first_party_http200_captures: 31
+  new_distinct_internal_case_shas: 12
+  new_core_originals: 0
+  lexical_false_positive_originals: 10
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_paid_pq_equipment_sales: 0
+  newly_attempted_month_source_pairs: 6
+  new_exhaustive_months: 0
+  backup_sha256: "34ad323147fd9f8f9aed2386922b737fcac5e5c665cc4b1cfa533d308283af87"
+  db_receipt: "receipts/pq-angarsk-commission-20261102T144728Z.json"
+  report: "docs/market_intelligence/PQ_WATCHDOG_ANGARSK_COMMISSION_20261102_1752.json"
+  report_sha256: "d61a794d7d68495a56bf225b90290c2bd50be02d18c6d35fae4b3afec26914a6"
+  client_report_version: "V52"
+  bilingual_pdf_pages_each: 268
+  field_coverage_bid_after: "15/123"
+  source_grade_A_after: 46
+  targeted_tests: "11 passed; Ruff clean; RU/EN PDFs 268 pages and text verified"
+  latest_tested_code_commit: "6d4e2b7ca75f2c4b1d52bbe288ed7bf0a6513616"
+  client_html_unchanged: true
+  next_targets:
+    - "223fz:32616497692:lot1 final protocol after 2026-11-03 09:00 MSK"
+    - "223fz:32616433248:lot1 contract registry after 2026-11-03 09:00 MSK"
+    - "223fz:32514947144:lot1 signed supplier only on new registry revision"
+  resume_instruction: >-
+    One previously archived official Angarsk 6kV final protocol SHA
+    proves anonymous first-place application #2 at 2,590,000 RUB,
+    distinct from signed registered mixed service contract 2,639,026.64 RUB.
+    Four old-null research fields added with fresh SHA+pg_restore full backup,
+    serializable CAS and postwrite readback; no signed supplier or PQ equipment sale.
+    V52 bilingual 268-page dossier and source-bound bid display; frozen V51 intact.
+    31 first-party HTTP200 captures, 12 new internal case SHA, of which
+    10 lexical 'ostatkov' false positives and two no-new-core dynamic pages.
+    Six first-page month/source query pairs, no exhaustive coverage; 44-FZ
+    EIS searches HTTP404 are access failures, not zero market.
+    PostgreSQL 123 unique lots / 112 procedures / 45 numeric EIS 223 notices.
+    PR521 REVIEW; no auto-merge, no client HTML refresh.
