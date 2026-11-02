@@ -5103,7 +5103,7 @@ mi_watchdog_sibsteklo_buyer_20261102_0332:
   canonical_pr: 521
   issue_comment_id: 6566234984
   moscow_run_start: "2026-11-02T03:32:00+03:00"
-  moscow_run_end: "2026-11-02T03:48:00+03:00"
+  moscow_run_end: "2026-11-02T03:44:23+03:00"
   latest_tested_code_commit: "714fd72b4dd7e7bfdaa25edc82c88a782cf492f9"
   internal_apfs_acceptance: "pass"
   postgres_unique_lots_before: 120
