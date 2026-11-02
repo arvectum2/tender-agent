@@ -5915,3 +5915,49 @@ mi_watchdog_slavyanskaya_protocols_20261102_2040:
     first parts rejected (32515208744) and zero applications (32515584863).
     V55 bilingual 268-page reports created, frozen V54 untouched.
     PR521 REVIEW, no auto-merge or client HTML refresh.
+
+mi_watchdog_tyazhinskaya_commission_20261102_2138:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6585028305
+  moscow_run_end: "2026-11-02T21:36:04.305121+03:00"
+  internal_apfs_acceptance: "pass on bbedcfd99a62164c26f421ed499e762ede6a828b"
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_unique_lots: 0
+  new_deduplicated_projects: 0
+  new_verified_db_fields: 5
+  enriched_case: "223fz:32616354211:lot1"
+  first_party_get_requests: 29
+  first_party_sha_captures: 15
+  newly_distinct_protocol_originals: 2
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_paid_pq_equipment_sales: 0
+  new_exhaustive_months: 0
+  backup_sha256: "e1b9b21196d0628b580d5fea93cbdc7cc9bb42e80b23ac7267f04aeed4f43d13"
+  db_receipt: "receipts/pq-tyazhinskaya-commission-20261102T1834.json"
+  report: "docs/market_intelligence/PQ_WATCHDOG_TYAZHINSKAYA_COMMISSION_20261102_2138.json"
+  report_sha256: "00a23b2e7b27e668a1a793d14dd81d0c0f35ce8d5d3d2a228457b78acd776d42"
+  client_report_version: "V56"
+  bilingual_pdf_pages_each: 268
+  field_coverage_bid_after: "18/123"
+  targeted_tests: "12 passed; Ruff clean; both PDFs 268 pages; CAS readback"
+  latest_tested_code_commit: "bbedcfd99a62164c26f421ed499e762ede6a828b"
+  client_html_unchanged: true
+  next_targets:
+    - "223fz:32616497692:lot1 after 2026-11-03 09:00 Moscow"
+    - "223fz:32616433248:lot1 after 2026-11-03 09:00 Moscow"
+    - "223fz:32616506708:lot1 after 2026-11-06 09:00 Moscow"
+  resume_instruction: >-
+    First-party EIS final protocol 32616354211-03 proves one anonymous
+    application #2, ranked first at RUB 7,406,851.40 despite failed
+    competitive procedure; registered RUB 7,406,851.40 design contract
+    previously verified. Five null-only fields enriched with full SHA+
+    pg_restore backup and serializable CAS. Two newly distinct EIS
+    preliminary printforms; 15 fresh captures in this run. No named
+    bidder, signed supplier, paid sale or new unique lot. V56 bilingual
+    268-page dossiers; V55 frozen. PQ equipment 6-35 kV sales not
+    inferred from 110/35/10 kV design. PR521 REVIEW, no auto-merge.
