@@ -6043,3 +6043,29 @@ mi_watchdog_turan_originals_20261102_2340:
     protocol unchanged. 32616474682 SHA-identical rechecks added no evidence.
     No DB writes or new backup, no report churn; retry next three after
     exact eligibility, continue independent first-party 6-35kV cases.
+
+mi_watchdog_source_review_20261103_0033:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6589004525
+  moscow_run_end: "2026-11-03T00:38:35.250711+03:00"
+  internal_apfs_acceptance: "pass on 7d4f33bd0e48e32a8c3f02854abfc0630b6393e1"
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_unique_lots: 0
+  new_verified_db_fields: 0
+  source_requests_total: 52
+  http200_sha_captures: 40
+  new_distinct_original_sha: 15
+  new_signed_suppliers: 0
+  new_paid_pq_equipment_sales: 0
+  report: "docs/market_intelligence/PQ_WATCHDOG_SOURCE_REVIEW_20261103_0033.json"
+  report_sha256: "6d70b9ebc04917a014def480600bbee4f5469c6eba9c08676ff034ae475b1514"
+  latest_tested_code_commit: "7d4f33bd0e48e32a8c3f02854abfc0630b6393e1"
+  client_html_unchanged: true
+  resume_instruction: >-
+    New first-party source captures and anonymous commission outcome verified;
+    0 new unique lots, 0 DB fields, 0 signed suppliers. Preserve frozen V57.
+    Next: source-bound guarded enrichment and 09:00 eligible core cases.
