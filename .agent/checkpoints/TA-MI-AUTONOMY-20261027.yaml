@@ -5444,3 +5444,32 @@ mi_watchdog_rosseti_buyer_inns_20261102_1050:
     Retry 32616497692 after 02 Nov 16:30, 32616433248 after
     03 Nov 09:00, 32616474682 after 03 Dec 10:00 MSK.
     PR521 REVIEW, no auto-merge.
+
+
+mi_watchdog_hani_contract_20261102_1140:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6572651348
+  moscow_run_end: "2026-11-02T11:41:26.198727+03:00"
+  internal_apfs_acceptance: "pass"
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_unique_lots: 0
+  new_verified_db_fields: 0
+  new_verified_research_fields: 7
+  sha_verified_originals: 10
+  first_page_month_queries: 25
+  new_registered_signed_contracts: 1
+  new_signed_suppliers: 0
+  new_paid_equipment_sales: 0
+  report: "docs/market_intelligence/PQ_WATCHDOG_HANI_SIGNED_CONTRACT_20261102_1140.json"
+  report_sha256: "d08956850210a4da9b6e605175dec432819c6b34f0e95cd07a06880cedf8e640"
+  latest_tested_code_commit: "81f0d17ee73eab694b417a4e55690ad99d57b3c3"
+  client_reports_unchanged: true
+  resume_instruction: >-
+    Hani 2024 signed 220kV mixed EPC contract 1277102 1,517,360,443.50 RUB;
+    equipment category 1,116,853,914 RUB is NOT PQ-only or paid.
+    EIS legal lot1 vs existing canonical lot2; fail closed, no DB update.
+    Anonymous winner 1, supplier/paid amount unknown. PR521 REVIEW.
