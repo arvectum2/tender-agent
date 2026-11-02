@@ -5625,3 +5625,52 @@ mi_watchdog_bashkirenergo_quantity_20261102_1437:
     false positives. No new verified lot, winner, signed supplier or paid sale.
     2023 STATCOM cooling service and 220kV EPC/design excluded from 6-35kV
     equipment sales. PR521 REVIEW; no auto-merge. Continue primary research.
+
+
+mi_watchdog_rn61005187_inn_20261102_1542:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6577241940
+  moscow_run_end: "2026-11-02T15:39:00.609382+03:00"
+  internal_apfs_acceptance: "pass on d1f9000af8be36067cdb10d9c7c36e41796380fe"
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_unique_lots: 0
+  new_unique_projects: 0
+  new_verified_db_fields: 1
+  enriched_case: "commercial:РН61005187:lot1"
+  enriched_field: "customer.inn=7536125117"
+  source_sha256: "ad145e070ebaf2d085781beddf15a07a46b38ff3a92a141eb0c3b281f44bc037"
+  source_case_alias: "commercial:RN61005187:lot1"
+  buyer_inn_field_coverage_after: "85/123"
+  fresh_first_party_requests: 3
+  fresh_first_party_http200: 2
+  new_case_specific_originals: 0
+  new_distinct_generic_search_sha: 2
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_paid_equipment_sales: 0
+  new_exhaustive_month_coverage: 0
+  full_backup_sha256: "03e1985c39d2c0347cb7238887064e2da45af728b2a17e82daac440325a79b66"
+  db_receipt: "receipts/pq-rn61005187-buyer-inn-20261102T1538.json"
+  report: "docs/market_intelligence/PQ_WATCHDOG_RN61005187_INN_20261102_1542.json"
+  report_sha256: "8df636384351912ae8ca3bc6bafcee81d3d5f1c8a58ecdc323da4c805865e879"
+  client_report_version: "V51"
+  bilingual_pdf_pages_each: 268
+  targeted_tests: "9 passed; Ruff clean; 268 PDF pages each"
+  latest_tested_code_commit: "d1f9000af8be36067cdb10d9c7c36e41796380fe"
+  client_html_unchanged: true
+  next_targets:
+    - "223fz:32514947144:lot1 supplier INN only after registry revision / valid TLS"
+    - "223fz:32514720691:lot1 OEM/technical rating on new first-party original"
+    - "223fz:32616497692:lot1 final protocol after 2026-11-02 16:30 Moscow"
+  resume_instruction: >-
+    Source-bound first-party TEK-Torg original with historical Latin receipt
+    alias confirms buyer INN 7536125117 for canonical Cyrillic RN61005187.
+    New full SHA+pg_restore-verified backup, serializable null-only CAS,
+    readback 123/112/45. Buyer INN coverage 85/123. V51 bilingual
+    268-page dossiers, V50 frozen. No new lot, winner, signed supplier,
+    paid sale or exhaustive month. 954014 is a fire-suppression maintenance
+    false positive, not PQ; EIS TLS chain failed. PR521 REVIEW; no merge.
