@@ -5097,3 +5097,51 @@ mi_watchdog_tomsk_eis_20261102_0237:
     Both outside live 120-lot corpus. No INSERT or report refresh.
     Next 32616474682 after 06:30, 32616433248 after 09:00,
     32616497692 after 16:30 Moscow on 2026-11-02. PR521 REVIEW.
+
+mi_watchdog_sibsteklo_buyer_20261102_0332:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6566234984
+  moscow_run_start: "2026-11-02T03:32:00+03:00"
+  moscow_run_end: "2026-11-02T03:48:00+03:00"
+  latest_tested_code_commit: "714fd72b4dd7e7bfdaa25edc82c88a782cf492f9"
+  internal_apfs_acceptance: "pass"
+  postgres_unique_lots_before: 120
+  postgres_unique_lots_after: 120
+  postgres_distinct_procedures: 109
+  postgres_eis_223_notices: 43
+  new_unique_core_6_35kv_lots: 0
+  new_verified_research_fields: 2
+  first_party_requests: 24
+  http200_sha_verified_captures: 10
+  new_distinct_sha_versions: 4
+  newly_identified_first_party_profile_originals: 1
+  original_commission_protocols: 0
+  newly_signed_suppliers: 0
+  newly_paid_equipment_sales: 0
+  exhaustive_month_source_searches: 0
+  enrichment_case: "commercial:306-644:lot35"
+  buyer_inn_verified: "5406305355"
+  source_sha256: "fa39eea182d7a2aa667e2846f9aad8ef36579fc57146997c16d1a2b498fb7f0a"
+  backup_sha256: "fe91e7cfab76533b9d9c10b6b4a7a2fafc7fa159336769a4fe68fcf4131f805d"
+  report: "docs/market_intelligence/PQ_WATCHDOG_SIBSTEKLO_BUYER_INN_20261102.json"
+  report_sha256: "98284300db8a16d64d5c7f8f38d4fe68eebab8185ff0760b285037bfb89cee5d"
+  client_report_version: "V41"
+  pdf_pages_each: 262
+  targeted_tests: "6 passed; Ruff clean"
+  next_targets:
+    - "223fz:32616474682:lot1/lot2 after 2026-11-02 06:30 Moscow"
+    - "223fz:32616433248:lot1 after 2026-11-02 09:00 Moscow"
+    - "223fz:32616497692:lot1 after 2026-11-02 16:30 Moscow"
+  resume_instruction: >-
+    V41 RU/EN 262-page dossier published with 120 lots / 109 procedures /
+    43 EIS notices, unchanged. Bidzaar buyer profile independently proves
+    ООО Сибирское стекло INN 5406305355 for existing commercial 306-644;
+    two missing buyer identity fields CAS-enriched after full verified backup.
+    Two UKRM 6kV 900kvar units are customer-supplied, so this is installation
+    and PNR, NOT an equipment sale. Reused originals for 351-062 confirm
+    6.3kV 3000kvar market sounding, not signed contract; V41 corrected stale
+    pre-download note. Wildberries 358-830 original is 400V adjacent and
+    must not be promoted to strict core. EIS 404/TLS and B2B 403 blocked
+    independent originals; no market absence inferred. No new lots, winners,
+    signed suppliers or paid sales. PR521 REVIEW, no auto-merge.
