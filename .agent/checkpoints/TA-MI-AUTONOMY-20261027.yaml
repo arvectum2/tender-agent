@@ -6116,3 +6116,56 @@ mi_watchdog_rosseti_south_items_20261103_0140:
     sales, signed supplier or payment. Fresh pg_restore-verified full
     backup, 123/112/45 unchanged, V58 bilingual 268-page reports;
     frozen V57 and legacy HTML unchanged. No auto-merge.
+
+mi_watchdog_nagornaya_registered_20261103_0245:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6591244516
+  moscow_run_end: "2026-11-03T02:43:02+03:00"
+  internal_apfs_acceptance: "pass on ab90e9f42f034ac13b9bf5c5b51264e90651ad6c"
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_unique_lots: 0
+  new_deduplicated_projects: 0
+  new_verified_db_fields: 6
+  source_requests: 46
+  http200_sha_captures: 37
+  http404_attempts: 9
+  new_distinct_original_sha: 13
+  new_protocol_printforms: 4
+  new_contract_printforms: 2
+  new_contract_registry_card: 1
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_paid_pq_equipment_sales: 0
+  new_exhaustive_months: 0
+  enriched_case: "223fz:32615614821:lot1"
+  source_sha256: "afea7b5c3a601a6f3c0c493e52f2a07e5245793769d71584f3131e4e21005e1c"
+  backup_sha256: "885e00b3c8b98ffbaa5170908fa36563ca0c51537c3eb89fb50f4a7f0b941d89"
+  db_receipt: "receipts/pq-nagornaya-contract-20261103T0241.json"
+  report: "docs/market_intelligence/PQ_WATCHDOG_NAGORNAYA_REGISTER_20261103_0245.json"
+  report_sha256: "2aebcfa34f23067e6038be2e2e37d75040f8fa111986faa8922019173d920190"
+  client_report_version: "V59"
+  bilingual_pdf_pages_each: 268
+  targeted_tests: "12 passed; Ruff clean; RU/EN 268 pages; SHA/pg_restore/CAS readback"
+  latest_tested_code_commit: "ab90e9f42f034ac13b9bf5c5b51264e90651ad6c"
+  client_html_unchanged: true
+  next_targets:
+    - "223fz:32616497692:lot1 final protocol after 2026-11-03 09:00 Moscow"
+    - "223fz:32616433248:lot1 signed registry after 2026-11-03 09:00 Moscow"
+    - "223fz:32616506708:lot1 final commission after 2026-11-06 09:00 Moscow"
+  resume_instruction: >-
+    13 genuinely new SHA originals, including first-party Nagornaya 6kV
+    final commission and signed contract registry, and first-party
+    32616103025 no-bid protocol. Registered 32615614821 EPC contract
+    1,833,358.30 RUB dated 2026-04-14; EIS card says execution completed
+    (2026-11-02 update), but named signed supplier, paid amount and PQ-only
+    allocation remain unverified. Six previously null DB research fields
+    enriched with fresh full pg_restore-checked backup and atomic CAS.
+    123/112/45 counts unchanged; V59 RU/EN dossiers frozen, legacy client
+    HTML untouched. Tatneft notice-level originals recaptured under
+    canonical lot7, no lot1 insertion. Lopcha/Anthracite 220kV separate
+    notices share one project; no duplicate project. Nine HTTP404 attempts
+    are source-access gaps, not proof of market absence. No auto-merge.
