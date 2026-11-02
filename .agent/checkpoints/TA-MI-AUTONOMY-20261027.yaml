@@ -5674,3 +5674,34 @@ mi_watchdog_rn61005187_inn_20261102_1542:
     268-page dossiers, V50 frozen. No new lot, winner, signed supplier,
     paid sale or exhaustive month. 954014 is a fire-suppression maintenance
     false positive, not PQ; EIS TLS chain failed. PR521 REVIEW; no merge.
+
+mi_watchdog_final_protocol_retry_20261102_1640:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6578520738
+  moscow_run_end: "2026-11-02T16:42:26.617215+03:00"
+  internal_apfs_acceptance: "pass"
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_unique_lots: 0
+  new_verified_db_fields: 0
+  first_party_http200_captures: 9
+  new_internal_shas: 4
+  new_core_originals: 0
+  new_signed_suppliers: 0
+  new_paid_equipment_sales: 0
+  month_source_query_requests: 16
+  newly_attempted_query_pairs: 8
+  new_exhaustive_months: 0
+  latest_tested_code_commit: "2e42417649546f09d7f396eec4b59d69e6c2a136"
+  report: "docs/market_intelligence/PQ_WATCHDOG_FINAL_PROTOCOL_RETRY_20261102_1640.json"
+  report_sha256: "96f93c29b5d1bd53f20309817ed7872a7f857564e63988bdac37bbad7a98b90f"
+  client_html_unchanged: true
+  resume_instruction: >-
+    Final 32616497692 protocol still not published after 2026-11-02 16:30 Moscow;
+    only 29 Oct admission protocol and no signed contract. Two new internal
+    official 0.4kV UKRM cards excluded from 6-35kV core. 16 month-query
+    requests, 8 previously unreported, zero exhaustive. No DB or PDF/HTML
+    mutations; PostgreSQL 123/112/45. Continue first-party research.
