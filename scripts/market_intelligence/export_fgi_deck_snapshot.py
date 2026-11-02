@@ -397,6 +397,22 @@ def verified_filter_signed_contract(data, metadata):
     )
 
 
+def verified_kuzbass_filter_items(data, metadata):
+    proof = (metadata or {}).get("eis_kuzbass_filter_items_20261102") or {}
+    sources = proof.get("sources") or []
+    return (
+        verified_filter_signed_contract(data, metadata)
+        and data.get("contract_item_model") == "КЭПФ-12-450-2УХЛ1"
+        and data.get("contract_item_quantity") == 14
+        and data.get("contract_item_unit_price_rub") == "225600.00"
+        and data.get("contract_item_country_of_origin") == "Российская Федерация"
+        and data.get("contract_item_okpd2") == "27.90.51.000"
+        and len(sources) == 1
+        and sources[0].get("sha256")
+        == "4d498c22761156fe98c2b7d1946ae0c80a1360b2e2f6323ee411c1c90cb8d741"
+    )
+
+
 def source_bound_filter_signed_note(data, metadata):
     if not verified_filter_signed_contract(data, metadata):
         return None
@@ -410,6 +426,9 @@ def source_bound_filter_signed_note(data, metadata):
         "и личности подписавшего поставщика отсутствует. "
         "Объект применения — ПС 500 кВ; это не доказательство продажи "
         "полной системы компенсации 6–35 кВ."
+        + (" В печатной форме договора страна происхождения 14 изделий — "
+           "Российская Федерация; производитель не установлен."
+           if verified_kuzbass_filter_items(data, metadata) else "")
     )
 
 
