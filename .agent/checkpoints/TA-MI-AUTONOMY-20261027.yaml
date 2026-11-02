@@ -5145,3 +5145,49 @@ mi_watchdog_sibsteklo_buyer_20261102_0332:
     must not be promoted to strict core. EIS 404/TLS and B2B 403 blocked
     independent originals; no market absence inferred. No new lots, winners,
     signed suppliers or paid sales. PR521 REVIEW, no auto-merge.
+
+
+mi_watchdog_metalloinvest_progaz_20261102_0442:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6566983516
+  moscow_run_end: "2026-11-02T04:42:26.218206+03:00"
+  internal_apfs_acceptance: "pass"
+  postgres_unique_lots_before: 120
+  postgres_unique_lots_after: 120
+  postgres_distinct_procedures: 109
+  postgres_eis_223_notices: 43
+  new_unique_core_6_35kv_lots: 0
+  new_verified_research_fields: 1
+  new_first_party_cards: 4
+  new_first_party_position_pages: 3
+  new_first_party_offers_pages: 4
+  first_party_http200_captures: 15
+  distinct_first_party_urls: 11
+  original_commission_protocols: 0
+  newly_signed_suppliers: 0
+  newly_paid_equipment_sales: 0
+  exhaustive_month_source_searches: 0
+  verified_field_case: "commercial:4256170:lot1"
+  verified_equipment_voltage_kv: "10"
+  source_sha256: "71fba87b2a06c46251165c709fb5d6a0dbff953d972cb4c02e3f76bc8377d1d1"
+  backup_sha256: "ad5a87e43a9eda77872c577b0d3b061739fc28b5da092912a17d7c7bef689d2e"
+  report: "docs/market_intelligence/PQ_WATCHDOG_METALLOINVEST_PROGAZ_20261102.json"
+  report_sha256: "9e791920f6d20f4d4025aa0543d2ce6578d8aac8290806ca5bfe4a6e7f3aa929"
+  client_report_version: "V42"
+  pdf_pages_each: 262
+  targeted_tests: "6 passed; Ruff clean"
+  latest_tested_code_commit: "6631e1e6bc6858f78f2ee0039404d28256e1df27"
+  next_targets:
+    - "223fz:32616474682:lot1/lot2 after 2026-11-02 06:30 Moscow"
+    - "223fz:32616433248:lot1 after 2026-11-02 09:00 Moscow"
+    - "223fz:32616497692:lot1 after 2026-11-02 16:30 Moscow"
+  resume_instruction: >-
+    Four previously known B2B-Center PQ supply tenders 4561228, 4561243,
+    4565274 and 4256170 now have immutable first-party cards (and 3 native
+    positions + 4 offers pages). B2B reports 4, 6, 11 and 1 submitted offers,
+    not winners. Three Metalloinvest outcomes hidden by organizer; no signed
+    supplier, equipment sale or new lot. Source-bound CAS enriched only
+    missing equipment_voltage_kv=10 for existing Progaz 4256170 after fresh
+    verified full backup. V42 RU/EN 262-page dossier; unchanged HTML preview.
+    Keep single PR #521 REVIEW, no auto-merge.

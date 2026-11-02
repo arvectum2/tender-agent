@@ -613,7 +613,7 @@ def safe_urls(src):
         host = u.split("/")[2].lower()
         if host not in ALLOWED:continue
         if u not in urls:
-            urls.append({"url":u,"tier":clean(e.get("source_tier"),120),
+            urls.append({"url":u,"tier":clean(e.get("source_tier") or e.get("tier"),120),
                          "sha":clean(e.get("sha256"),75)})
     return urls[:6]
 
