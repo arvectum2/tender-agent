@@ -5403,3 +5403,44 @@ mi_watchdog_44fz_adjacent_20261102_0934:
     new 6-35kV lot. 44-FZ original capture identity support added with
     6 focused tests and Ruff. DB unchanged 123/112/45, no new backup,
     no HTML/PDF regeneration. PR521 REVIEW, no auto-merge.
+
+mi_watchdog_rosseti_buyer_inns_20261102_1050:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6571821735
+  moscow_run_end: "2026-11-02T10:50:56.555072+03:00"
+  internal_apfs_acceptance: "pass"
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_unique_core_6_35kv_lots: 0
+  new_verified_existing_research_fields: 6
+  new_verified_buyer_inns: 3
+  new_first_party_source_urls: 3
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_paid_equipment_sales: 0
+  capture_attempts: 6
+  sha_verified_first_party_captures: 5
+  new_distinct_source_sha_versions: 3
+  new_substantive_originals: 0
+  exhaustive_month_searches: 0
+  backup_sha256: "74e8969c3cad6132d678cda0c59bd6c5568ebc693ed586d210a04f2d397e6234"
+  db_receipt: "receipts/pq-rosseti-buyer-inns-20261102T1048.json"
+  report: "docs/market_intelligence/PQ_WATCHDOG_ROSSETI_BUYER_INNS_20261102_1050.json"
+  report_sha256: "1df3af2b3b76c354ca00411a62bcf3b67d9697333ec07d6cb5725dc1ae416a45"
+  client_report_version: "V46"
+  bilingual_pdf_pages_each: 268
+  targeted_tests: "4 passed, Ruff clean, PDFs 268 pages each"
+  resume_instruction: >-
+    Three immutable EIS notices verify buyer INN 4716016979 for
+    32616430382 mixed 10kV EPC, 32515029641 12kV filter capacitors,
+    and 32515225588 220kV SVC design. Three null-only buyer INNs
+    and three source URLs enriched after fresh pg_restore full backup.
+    PG 123/112/45 unchanged. V46 bilingual PDFs published. No new
+    named winner, signed supplier, paid sale, or final protocol.
+    4535313 four hidden offers; 4565274 eleven organizer-hidden offers.
+    Retry 32616497692 after 02 Nov 16:30, 32616433248 after
+    03 Nov 09:00, 32616474682 after 03 Dec 10:00 MSK.
+    PR521 REVIEW, no auto-merge.

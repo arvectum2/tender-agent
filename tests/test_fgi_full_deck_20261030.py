@@ -41,3 +41,12 @@ def test_final_pdfs_page_count_and_per_page_id():
             pg=d[20+index]
             assert lot['id'] in pg.get_text(sort=True)
             assert pg.rect.width==960 and pg.rect.height==540
+
+
+def test_cover_uses_snapshot_date_not_frozen_october_date():
+    from scripts.market_intelligence.render_fgi_full_deck import cover
+    sample = {"unique_lots": 123, "distinct_procedures": 112,
+              "snapshot_date": "2026-11-02"}
+    assert "Срез 02.11.2026" in cover(sample, "ru")
+    assert "As of 2026-11-02" in cover(sample, "en")
+    assert "30 октября 2026" not in cover(sample, "ru")

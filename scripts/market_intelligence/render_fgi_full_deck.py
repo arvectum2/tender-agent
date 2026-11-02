@@ -201,13 +201,15 @@ def table(headers,rows):
     )+'</tbody></table>'
 def cover(d,lang):
     n=d["unique_lots"];p=d["distinct_procedures"]
+    year, month, day = d["snapshot_date"].split("-")
+    cover_date = tr(f"Срез {day}.{month}.{year}", f"As of {year}-{month}-{day}", lang)
     title=tr("РОССИЯ · 6–35 КВ","RUSSIA · 6–35 KV",lang)
     desc=tr(f"Полный корпус Power Quality: {n} уникальных закупочных лотов и {p} процедур. Обзор, экономика, участники рынка и детальные карточки каждой закупки.",
             f"Full Power Quality corpus: {n} unique procurement lots and {p} procedure IDs. Market overview, economics, participants, and a source-linked dossier for every lot.",lang)
     return f'''<section class="slide cover"><div class="brand">{official_logo()}</div>
 <div class="site">arvectum.com</div><div class="tag">{tr("ОБЗОР РЕАЛЬНЫХ ЗАКУПОК","REAL PROCUREMENT REVIEW",lang)}</div>
 <h1>POWER QUALITY<br>{title}</h1><p class="dek">{esc(desc)}</p>
-<div class="date">2023–2026 / {tr("Срез 30 октября 2026","As of 30 October 2026",lang)}</div>
+<div class="date">2023–2026 / {cover_date}</div>
 <svg viewBox="0 0 580 230" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#03bfa5" stroke-width="2.4">
 <path d="M0 85 C110 32 160 155 277 104 S460 160 580 90"/>
 <path d="M0 108 C110 55 160 178 277 127 S460 183 580 113"/>
@@ -555,7 +557,7 @@ def main():
     p.add_argument("--snapshot",type=Path,default=SNAP)
     p.add_argument("--outdir",type=Path,default=Path("docs/market_intelligence"))
     p.add_argument("--html-only",action="store_true")
-    p.add_argument("--version",default="V2",choices=["V2","V3","V4","V5","V6","V7","V8","V9","V10","V11","V12","V13","V14","V15","V16","V17","V18","V19","V20","V21","V22","V23","V24","V25","V26","V27","V28","V29","V30","V31","V32","V33","V34","V35","V36","V37","V38","V39","V40","V41","V42","V43","V44","V45"])
+    p.add_argument("--version",default="V2",choices=["V2","V3","V4","V5","V6","V7","V8","V9","V10","V11","V12","V13","V14","V15","V16","V17","V18","V19","V20","V21","V22","V23","V24","V25","V26","V27","V28","V29","V30","V31","V32","V33","V34","V35","V36","V37","V38","V39","V40","V41","V42","V43","V44","V45","V46"])
     args=p.parse_args()
     data=json.loads(args.snapshot.read_text(encoding="utf8"))
     args.outdir.mkdir(parents=True,exist_ok=True)
