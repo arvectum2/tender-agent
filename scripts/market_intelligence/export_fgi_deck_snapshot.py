@@ -145,7 +145,37 @@ def verified_roseltorg_commission(data, metadata):
                     for e in data.get("evidence", [])))
 
 
+def verified_angarsk_commission(data, metadata):
+    """Allow only the exact EIS commission offer, not a signed supplier."""
+    from scripts.market_intelligence.enrich_pq_angarsk_commission_20261102 import (
+        CID,
+        FIELDS,
+        KEY,
+        SHA,
+        URL,
+    )
+    proof = (metadata or {}).get(KEY) or {}
+    source = proof.get("proof") or {}
+    return (
+        data.get("canonical_id") == CID
+        and data.get("scope") == "maintenance"
+        and data.get("contract_registered_price_rub") == "2639026.64"
+        and all(data.get(k) == v for k, v in FIELDS.items())
+        and proof.get("fields") == FIELDS
+        and source.get("sha256") == SHA
+        and source.get("url") == URL
+        and proof.get("signed_supplier_verified") is False
+        and proof.get("paid_equipment_sale_verified") is False
+        and data.get("winner") is None
+        and data.get("contract_signatory") is None
+        and any(e.get("sha256") == SHA and e.get("url") == URL
+                for e in data.get("evidence", []))
+    )
+
+
 def source_bound_commission_note(data, metadata):
+    if verified_angarsk_commission(data, metadata):
+        return data["protocol_status_note"]
     if not verified_roseltorg_commission(data, metadata):
         return None
     note = data["protocol_status_note"]
@@ -163,6 +193,8 @@ def source_bound_commission_note(data, metadata):
 
 
 def source_bound_bid(data, metadata):
+    if verified_angarsk_commission(data, metadata):
+        return data["bid"]
     if verified_meleuz_contract(data, metadata):
         return data.get("commission_first_place_bid_rub")
     # Exact EIS 32616280467 protocol SHA; anonymous commission rank is not a named winner.
