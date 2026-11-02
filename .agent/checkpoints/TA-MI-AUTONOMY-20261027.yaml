@@ -6010,3 +6010,36 @@ mi_watchdog_kuzbass_filter_items_20261102_2240:
     pg_restore backup and CAS readback passed. V57 bilingual 268-page
     dossiers frozen, V56 untouched. No unique lot/project gain and no
     exhaustive month. PR521 REVIEW; no auto-merge or client HTML refresh.
+
+mi_watchdog_turan_originals_20261102_2340:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6587802893
+  moscow_run_end: "2026-11-02T23:39:08.910056+03:00"
+  internal_apfs_acceptance: "pass on f480cd381e49b55cfb2f135cb18c4c6d610400be"
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_unique_lots: 0
+  new_deduplicated_projects: 0
+  new_verified_db_fields: 0
+  first_party_http200_sha_captures: 19
+  newly_distinct_source_shas: 9
+  new_protocol_printforms: 4
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_paid_pq_equipment_sales: 0
+  new_exhaustive_months: 0
+  report: "docs/market_intelligence/PQ_WATCHDOG_TURAN_PRIMARY_20261102_2340.json"
+  report_sha256: "6d1ac0bbc07728e0c9df42a5da4e1ecc820d364dae7294aae9797ceafb29a220"
+  client_html_unchanged: true
+  latest_tested_code_commit: "f480cd381e49b55cfb2f135cb18c4c6d610400be"
+  resume_instruction: >-
+    Seven new first-party EIS originals for 32413708738 (four protocol printforms):
+    2024-07-29 final rejects both anonymous bids, 220kV mixed EPC only,
+    no verified signed contract. Two newly distinct originals for 32615969197
+    (10kV UKRM design technical ZIP and EIS document tab); prior no-bid
+    protocol unchanged. 32616474682 SHA-identical rechecks added no evidence.
+    No DB writes or new backup, no report churn; retry next three after
+    exact eligibility, continue independent first-party 6-35kV cases.
