@@ -5357,3 +5357,49 @@ mi_watchdog_bashkirenergo_signed_20261102_0844:
     Do not sum EPC as second equipment sale. V45 bilingual 268-page dossiers
     and existing HTML refreshed. 37 first-page searches are not exhaustive.
     Continue 32616433248 only after 09:00 Moscow. PR #521 REVIEW; no auto-merge.
+
+
+mi_watchdog_44fz_adjacent_20261102_0934:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6570662044
+  moscow_run_end: "2026-11-02T09:34:15.550922+03:00"
+  internal_apfs_acceptance: "pass"
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_unique_core_6_35kv_lots: 0
+  new_verified_core_research_fields: 0
+  new_signed_suppliers: 0
+  new_paid_equipment_sales: 0
+  first_party_distinct_new_month_query_pairs: 14
+  first_party_sha_verified_captures: 7
+  new_distinct_original_sha: 2
+  new_44fz_adjacent_case_count: 1
+  new_case_id: "44fz:0373100009926000182:lot1"
+  case_classification: "adjacent low-voltage controller, not verified 6-35kV equipment"
+  case_initial_line_price_rub: "61899.02"
+  case_signed_price_verified: false
+  exhaustive_month_source_searches: 0
+  report: "docs/market_intelligence/PQ_WATCHDOG_44FZ_ADJACENT_SEARCH_20261102_0934.json"
+  report_sha256: "733d0142f48512d0480063e95d7229ed357a915b7ce175041d4395f1d5e603dc"
+  targeted_tests: "6 passed; Ruff clean; 44-FZ source SHA readback verified"
+  latest_tested_code_commit: "a389396a0ecb3d286be7fc735355f24c42025427"
+  client_reports_unchanged: true
+  next_targets:
+    - "223fz:32616497692:lot1 after 2026-11-02 16:30 Moscow"
+    - "223fz:32616433248:lot1 after 2026-11-03 09:00 Moscow or observed signed-register publication"
+    - "223fz:32616474682:lot1/lot2 after 2026-12-03 10:00 Moscow"
+  resume_instruction: >-
+    After 09:00 Moscow 32616433248 official EIS contract tab still HTTP404;
+    5 SHA-verified 223 originals unchanged. 14 new bounded month/source
+    first-page searches, including 44-FZ: 2026-06 first page surfaced
+    0373100009926000182 Tretyakov Gallery mixed electrical spare parts;
+    original EIS 44-FZ card and documents saved with two NEW immutable SHA.
+    2 automatic reactive-power controllers, initial line price 61,899.02 RUB,
+    supply/measurement voltage 80-275 V, no verified 6-35kV scope,
+    no signed supplier or paid sale. Exclude from core; do not count as a
+    new 6-35kV lot. 44-FZ original capture identity support added with
+    6 focused tests and Ruff. DB unchanged 123/112/45, no new backup,
+    no HTML/PDF regeneration. PR521 REVIEW, no auto-merge.
