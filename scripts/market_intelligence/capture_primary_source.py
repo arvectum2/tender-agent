@@ -33,6 +33,7 @@ ALLOWED_HOSTS = frozenset({
     "corp.roseltorg.ru",  # verified public UUID document API; path restricted below
     "rosseti.roseltorg.ru",  # exact official section; no wildcard subdomains
     "is-mt.pro",  # native public procurement card; UUID-restricted below
+    "ukkz.com",  # official UKCP model catalogue; exact public page only
 })
 MAX_BYTES = 12_000_000
 
@@ -42,6 +43,10 @@ def source_url(raw: str) -> str:
     if (u.scheme != "https" or u.hostname not in ALLOWED_HOSTS or
             u.username is not None or u.password is not None or u.fragment):
         raise ValueError("Only allowlisted first-party HTTPS endpoints")
+    if u.hostname == "ukkz.com" and (
+            u.path != "/en/catalog/capacitors/power-factor-correction-capacitors/high-voltage-power-factor-correction-capacitors.html"
+            or u.query):
+        raise ValueError("Only exact official UKCP model catalogue page")
     if u.hostname == "api.tektorg.ru" and (
             not re.fullmatch(r"/open-api/documents/(?:protocol|procedure)/[1-9][0-9]*", u.path)
             or u.query):
