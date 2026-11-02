@@ -233,7 +233,38 @@ def verified_slavyanskaya_commission(data, metadata):
     )
 
 
+def verified_tyazhinskaya_commission(data, metadata):
+    """Only anonymous first-place design bid, never named supplier or equipment sale."""
+    from scripts.market_intelligence.enrich_pq_tyazhinskaya_commission_20261102 import (
+        CID,
+        FIELDS,
+        KEY,
+        SHA,
+        URL,
+    )
+    proof = (metadata or {}).get(KEY) or {}
+    source = proof.get("proof") or {}
+    return (
+        data.get("canonical_id") == CID
+        and data.get("scope") == "design"
+        and data.get("contract_registered_price_rub") == "7406851.40"
+        and data.get("registered_signed_contract_verified") is True
+        and all(data.get(k) == v for k, v in FIELDS.items())
+        and proof.get("fields") == FIELDS
+        and source.get("sha256") == SHA
+        and source.get("url") == URL
+        and proof.get("signed_supplier_verified") is False
+        and proof.get("paid_equipment_sale_verified") is False
+        and data.get("winner") is None
+        and data.get("contract_signatory") is None
+        and any(e.get("url") == URL and e.get("sha256") == SHA
+                for e in data.get("evidence", []))
+    )
+
+
 def source_bound_commission_note(data, metadata):
+    if verified_tyazhinskaya_commission(data, metadata):
+        return data["protocol_status_note"]
     if verified_slavyanskaya_commission(data, metadata):
         return data["protocol_status_note"]
     if verified_bashkirenergo_commission(data, metadata):
@@ -257,6 +288,8 @@ def source_bound_commission_note(data, metadata):
 
 
 def source_bound_bid(data, metadata):
+    if verified_tyazhinskaya_commission(data, metadata):
+        return data["bid"]
     if verified_slavyanskaya_commission(data, metadata):
         return data["bid"]
     if verified_bashkirenergo_commission(data, metadata):
