@@ -5524,3 +5524,54 @@ mi_watchdog_ufimka_protocols_20261102_1241:
     fresh pg_restore full backup and serializable CAS; corpus stays
     123/112/45. V47 bilingual 268-page dossiers generated; HTML client
     preview not changed because no new unique lot. PR521 REVIEW; no merge.
+
+
+mi_watchdog_argos_model_20261102_1340:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6574851412
+  moscow_run_end: "2026-11-02T13:39:19+03:00"
+  internal_apfs_acceptance: "pass on 301b8d25950f304f5666ef7871c1e26e7aebaa70"
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_unique_lots: 0
+  new_unique_projects: 0
+  new_verified_db_fields: 3
+  new_distinct_first_party_original_shas: 2
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_paid_equipment_sales: 0
+  first_party_unique_url_attempts_at_least: 12
+  month_searches_newly_covered: 0
+  source_grade_A_before: 44
+  source_grade_A_after: 45
+  full_backups_sha256:
+    - "c3e7041a0549abbdae35d196776edc9b7ad05ba44c508f82fa17a45a63db21d4"
+    - "04eabfef21ad17d08e3b10efa3065105dcf78fb09dab0cd6e1f208c28dd82e69"
+  db_receipts:
+    - "receipts/pq-filter-model-32515029641-20261102T1333.json"
+    - "receipts/pq-argos-b2b-4559984-20261102T1337.json"
+  report: "docs/market_intelligence/PQ_WATCHDOG_ARGOS_MODEL_20261102_1340.json"
+  report_sha256: "8d82b26437fd0e0a772f3598823fddff203e16360c330f632ab72a0641950ece"
+  client_report_version: "V49"
+  bilingual_pdf_pages_each: 268
+  targeted_tests: "15 passed; Ruff clean; 268 PDF pages each; PostgreSQL readback 123/112/45"
+  latest_tested_code_commit: "301b8d25950f304f5666ef7871c1e26e7aebaa70"
+  client_html_unchanged: true
+  next_targets:
+    - "223fz:32514947144:lot1 signed supplier/INN, retry on registry revision"
+    - "223fz:32515029641:lot1 signed supplier and OEM, retry on new registry original"
+    - "223fz:32616497692:lot1 final protocol after 2026-11-02 16:30 Moscow"
+  resume_instruction: >-
+    Two new SHA-verified native B2B 4559984 originals prove an existing
+    Argos-Stroy mixed indicative-price request with one 6.3kV AUKRM;
+    no signed supplier or paid PQ sale. Source grade A 44->45.
+    KEPF-12-450-2 nominal 12kV/450kvar cross-checked with official
+    same-model EIS technical specification, not a verified network voltage.
+    Three null-only fields updated with full verified backups, CAS and readback.
+    Corpus 123/112/45. V48 and V49 bilingual 268-page dossiers.
+    B2B offers/changes generic homepage; EIS 32515029641 docs HTTP404.
+    No new lot, no exhaustive month search, no client HTML refresh.
+    PR521 REVIEW, no auto-merge.
