@@ -73,7 +73,9 @@ def source_url(raw: str) -> str:
 def store(root: Path, case_id: str, url: str, content: bytes,
           content_type: str = "", http_status: int = 200) -> dict:
     source_url(url)
-    if (not re.fullmatch(r"(223fz|commercial):[^\s/\\]+:lot[1-9][0-9]*", case_id)
+    if (not re.fullmatch(
+            r"(?:223fz|commercial):[^\s/\\]+:lot[1-9][0-9]*|44fz:[0-9]{19}:lot[1-9][0-9]*",
+            case_id)
             or not isinstance(content, bytes) or not 32 <= len(content) <= MAX_BYTES
             or http_status != 200):
         raise ValueError("Invalid first-party capture identity, status or size")
