@@ -50,3 +50,17 @@ def test_quote_and_receipt_identity_rejection(tmp_path, monkeypatch):
     Path(str(f) + ".json").write_text(json.dumps(receipt))
     with pytest.raises(ValueError, match="identity"):
         mod.stage(tmp_path)
+
+
+def test_client_power_only_with_exact_original_sha():
+    from scripts.market_intelligence.export_fgi_deck_snapshot import (
+        source_bound_uralkali_power,
+    )
+
+    source = mod.ORIGINALS[0]
+    d = {"canonical_id": mod.CID, "procedure_id": "4263966",
+         "reactive_power_kvar": 200, "equipment_voltage_kv": "10",
+         "evidence": [{"sha256": source[1], "verbatim_quotes": list(source[3])}]}
+    assert source_bound_uralkali_power(d) == "200 кВАр"
+    d["evidence"][0]["sha256"] = "0" * 64
+    assert source_bound_uralkali_power(d) is None

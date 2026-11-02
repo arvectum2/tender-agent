@@ -37,6 +37,20 @@ def val(obj, *keys):
                 return x
     return None
 
+def source_bound_uralkali_power(data):
+    """Display only the exact 200 kvar first-party source-bound new case."""
+    sha = "dd4d50a4b48b06f60b832f9fbe460885bb7bcc024a583dd2c79540767e376b40"
+    if (data.get("canonical_id") == "commercial:4263966:lot1"
+            and data.get("procedure_id") == "4263966"
+            and data.get("reactive_power_kvar") == 200
+            and data.get("equipment_voltage_kv") == "10"
+            and any(e.get("sha256") == sha and
+                    "N=200кВАр_Uн=10кВ" in e.get("verbatim_quotes", [])
+                    for e in data.get("evidence", []))):
+        return "200 кВАр"
+    return None
+
+
 def source_bound_buyer_inn(data, metadata):
     proof = (metadata or {}).get("buyer_inn_field_enrichment") or {}
     source = proof.get("source") or {}
@@ -680,7 +694,7 @@ def capture():
             "quantity_unit":clean(d.get("quantity_unit"),50),
             "voltage_kv":clean(val(d,"equipment_voltage_kv","voltage_kv") or
                 val(technical,"voltage_kv","voltage"),100),
-            "power":clean(val(d,"power") or
+            "power":clean(val(d,"power") or source_bound_uralkali_power(d) or
                 val(technical,"power_kvar","power_mvar","nominal_power"),100),
             "technical":{k: clean(v,220) for k,v in list(technical.items())[:12]},
             "status":clean("official_registered_filter_components_contract_supplier_unverified" if verified_filter_south_signed_contract(d,r.get("metadata")) else ("official_completed_filter_capacitor_contract_supplier_unverified" if verified_filter_signed_contract(d,r.get("metadata")) else ("official_registered_ukrm_supply_contract_supplier_unverified" if verified_bashkirenergo_contract(d,r.get("metadata")) else ("official_registered_contract_supplier_unverified" if verified_meleuz_contract(d,r.get("metadata")) else ("official_registered_design_contract_supplier_unverified" if verified_tyazhinskaya_contract(d,r.get("metadata")) else ("RAD_official_failed_single_application_committee_recommended_contract" if verified_rad_commission(d,r.get("metadata")) else d.get("status")))))),200),

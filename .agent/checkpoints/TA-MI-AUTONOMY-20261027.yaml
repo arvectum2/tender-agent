@@ -5191,3 +5191,45 @@ mi_watchdog_metalloinvest_progaz_20261102_0442:
     missing equipment_voltage_kv=10 for existing Progaz 4256170 after fresh
     verified full backup. V42 RU/EN 262-page dossier; unchanged HTML preview.
     Keep single PR #521 REVIEW, no auto-merge.
+
+mi_watchdog_uralkali_20261102_0537:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6567716868
+  moscow_run_end: "2026-11-02T05:45:18.064169+03:00"
+  internal_apfs_acceptance: "pass"
+  postgres_unique_lots_before: 120
+  postgres_unique_lots_after: 121
+  postgres_distinct_procedures: 110
+  postgres_eis_223_notices: 43
+  new_unique_core_6_35kv_lots: 1
+  new_verified_research_fields: 3
+  first_party_requests: 6
+  http200_sha_verified_captures: 4
+  new_distinct_sha_versions: 3
+  useful_first_party_original_pages: 2
+  original_commission_protocols: 0
+  newly_signed_suppliers: 0
+  newly_paid_equipment_sales: 0
+  exhaustive_month_source_searches: 0
+  new_case_id: "commercial:4263966:lot1"
+  new_case_voltage_kv: "10"
+  new_case_power_kvar: 200
+  new_case_quantity: 1
+  backup_sha256: "17b6c6c036d989cfef03a6ba96438c9b2cb5978f42a1f0fbbce28dedb6b29c9a"
+  report: "docs/market_intelligence/PQ_WATCHDOG_URALKALI_20261102_0542.json"
+  report_sha256: "8fa70b47e646a4d0f13f7b5dfa8fb86a7b46603124ec142fdb92bd6b33822721"
+  client_report_version: "V43"
+  pdf_pages_each: 264
+  targeted_tests: "14 passed; Ruff clean; PDF checks passed"
+  latest_tested_code_commit: "659536d458576c2215d5909e847db9f95f8d2847"
+  resume_instruction: >-
+    Original B2B 4263966 Uralkali 10kV 200kvar regulated compensator, 1 unit,
+    2025-12 notice / 2026-02 closed outcome-hidden, verified SHA card+positions;
+    append-only DB 120->121, procedures 109->110, 223 notices unchanged 43.
+    One new core equipment supply LEAD, NOT a signed supplier or paid sale.
+    RU/EN V43 264-page dossiers, HTML refreshed. B2B firm 4657777
+    exact original HTTP403 by httpx and strict curl; no bypass.
+    Next 4643332 guarded voltage source review now; EIS 32616474682
+    after 06:30, 32616433248 after 09:00, 32616497692 after 16:30 Moscow.
+    PR521 REVIEW; no auto-merge.
