@@ -6200,3 +6200,31 @@ mi_watchdog_source_access_20261103_0332:
     32616261429/32616419047 not promoted. Recheck official first-party
     32616497692 and 32616433248 after 09:00 Moscow 03 Nov,
     32616506708 after 09:00 Moscow 06 Nov. No auto-merge.
+
+mi_watchdog_20261103_1335:
+  status: in_progress
+  issue_comment_id: 6601338382
+  moscow_run_start: '2026-11-03T13:35:56+03:00'
+  accepted_git_head: 6b58fa4215e38678320aabbb41ab458fa718d51e
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  official_source_attempts: 2
+  official_http404: 2
+  new_originals: 0
+  new_unique_lots: 0
+  new_verified_fields: 0
+  new_signed_suppliers: 0
+  new_paid_pq_equipment_sales: 0
+  new_exhaustive_months: 0
+  targets_checked:
+    - '223fz:32616497692:lot1 — official notice223 common-info HTTP404'
+    - '223fz:32616433248:lot1 — official notice223 common-info HTTP404'
+  next_targets:
+    - '223fz:32616497692:lot1 — retry via verified official protocol adapter, after 2026-11-04 09:00 Moscow'
+    - '223fz:32616433248:lot1 — retry signed registry via official adapter, after 2026-11-04 09:00 Moscow'
+    - '223fz:32616506708:lot1 — final commission after 2026-11-06 09:00 Moscow'
+  client_html_unchanged: true
+  no_auto_merge: true
