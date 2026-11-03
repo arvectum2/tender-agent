@@ -6169,3 +6169,34 @@ mi_watchdog_nagornaya_registered_20261103_0245:
     canonical lot7, no lot1 insertion. Lopcha/Anthracite 220kV separate
     notices share one project; no duplicate project. Nine HTTP404 attempts
     are source-access gaps, not proof of market absence. No auto-merge.
+
+mi_watchdog_source_access_20261103_0332:
+  status: "in_progress"
+  canonical_pr: 521
+  issue_comment_id: 6592148806
+  moscow_run_end: "2026-11-03T03:36:14+03:00"
+  internal_apfs_acceptance: "pass on 5ec4848270908e8ce3c81a01ac2d4945f61a133e"
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  source_requests_total: 22
+  source_requests_eis: 21
+  source_http404: 13
+  new_originals: 0
+  new_unique_lots: 0
+  new_verified_db_fields: 0
+  new_signed_suppliers: 0
+  new_paid_pq_equipment_sales: 0
+  report: "docs/market_intelligence/PQ_WATCHDOG_SOURCE_ACCESS_20261103_0332.json"
+  report_sha256: "08100060538f1eb286f300d0e9f5a8614187d59574eaca7ecdbf72565c0a1d74"
+  latest_tested_code_commit: "5ec4848270908e8ce3c81a01ac2d4945f61a133e"
+  client_html_unchanged: true
+  resume_instruction: >-
+    EIS access HTTP404 (13/21 EIS direct requests), strict TLS failures (4) and
+    native-trust identity failures (4); B2B connectivity HTTP200 unrelated.
+    0 new source SHA, 0 DB changes, 123/112/45 unchanged. Existing leads
+    AP125337/1258722 deduplicated, arc-suppression reactor false positives
+    32616261429/32616419047 not promoted. Recheck official first-party
+    32616497692 and 32616433248 after 09:00 Moscow 03 Nov,
+    32616506708 after 09:00 Moscow 06 Nov. No auto-merge.

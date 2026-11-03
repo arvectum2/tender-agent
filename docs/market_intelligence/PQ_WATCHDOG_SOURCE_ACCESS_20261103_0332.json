@@ -1,0 +1,200 @@
+{
+  "schema": "pq-watchdog-source-access/1",
+  "run_start_moscow": "2026-11-03T03:32:27+03:00",
+  "run_end_moscow": "2026-11-03T03:36:14+03:00",
+  "issue_comment_id": 6592148806,
+  "canonical_pr": 521,
+  "base_head": "5ec4848270908e8ce3c81a01ac2d4945f61a133e",
+  "internal_apfs_acceptance": "pass",
+  "postgres_before_after": {
+    "unique_lots": [
+      123,
+      123
+    ],
+    "distinct_procedures": [
+      112,
+      112
+    ],
+    "eis_223_notices": [
+      45,
+      45
+    ]
+  },
+  "source_requests_total": 22,
+  "source_requests_eis": 21,
+  "http404": 13,
+  "tls_failures": 4,
+  "invalid_identity_status_size": 4,
+  "unrelated_b2b_http200": 1,
+  "fresh_sha_originals": 0,
+  "new_unique_lots": 0,
+  "new_deduplicated_projects": 0,
+  "new_verified_db_fields": 0,
+  "new_named_winners": 0,
+  "new_signed_suppliers": 0,
+  "new_paid_pq_equipment_sales": 0,
+  "new_exhaustive_months": 0,
+  "source_attempts": [
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616280467",
+      "transport": "curl-direct",
+      "result": "HTTP404"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616280467",
+      "transport": "curl-direct",
+      "result": "HTTP404"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616280467",
+      "transport": "curl-direct",
+      "result": "HTTP404"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616296475",
+      "transport": "curl-direct",
+      "result": "HTTP404"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616296475",
+      "transport": "curl-direct",
+      "result": "HTTP404"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616296475",
+      "transport": "curl-direct",
+      "result": "HTTP404"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616355390",
+      "transport": "curl-direct",
+      "result": "HTTP404"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616355390",
+      "transport": "curl-direct",
+      "result": "HTTP404"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616355390",
+      "transport": "curl-direct",
+      "result": "HTTP404"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616280467",
+      "transport": "httpx",
+      "result": "TLS_CERTIFICATE_VERIFY_FAILED"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616280467",
+      "transport": "native-trust",
+      "result": "invalid_source_identity_or_status_or_size"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616412267",
+      "transport": "httpx",
+      "result": "TLS_CERTIFICATE_VERIFY_FAILED"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616412267",
+      "transport": "native-trust",
+      "result": "invalid_source_identity_or_status_or_size"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32615852898",
+      "transport": "httpx",
+      "result": "TLS_CERTIFICATE_VERIFY_FAILED"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32615852898",
+      "transport": "native-trust",
+      "result": "invalid_source_identity_or_status_or_size"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32615614821",
+      "transport": "httpx",
+      "result": "TLS_CERTIFICATE_VERIFY_FAILED"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32615614821",
+      "transport": "native-trust",
+      "result": "invalid_source_identity_or_status_or_size"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32615614821",
+      "transport": "curl-headers",
+      "result": "HTTP404"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616433248",
+      "transport": "curl-headers",
+      "result": "HTTP404"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=52460069527260006170000",
+      "transport": "curl-direct",
+      "result": "HTTP404"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=52460069527260006170000",
+      "transport": "curl-direct",
+      "result": "HTTP404"
+    },
+    {
+      "url": "https://www.b2b-center.ru/market/view.html?id=4654307",
+      "transport": "curl-headers",
+      "result": "HTTP200",
+      "classification": "connectivity control, unrelated video wall; NOT PQ original"
+    }
+  ],
+  "secondary_discovery_not_promoted": [
+    {
+      "case_id": "223fz:32615852898:lot1",
+      "source": "https://www.b2b-center.ru/search/krasnoyarskiy-kray/ispytatelnyj-kompleks/",
+      "finding": "Third-party-style indexed EIS contract claim: reestr 52460069527260006170000; design-only 10kV PQ mixed with PARН, 2026-06-15, 2,787,700 RUB. Existing corpus lot. Official card and printform HTTP404; unverified, not signed-supplier evidence."
+    },
+    {
+      "case_id": "commercial:АП125337:lot1",
+      "source": "https://zakupki.kontur.ru/AP125337",
+      "finding": "2 UKRM-6.3(10.5)-3150-450, already in current 123-lot corpus; GPB original gated, no new lot or verified supplier."
+    },
+    {
+      "case_id": "commercial:1258722:lot1",
+      "source": "https://zakupki.kontur.ru/IS83917556",
+      "finding": "ISO capacitor supply tender second stage, already in prior MI evidence; no new lot."
+    },
+    {
+      "case_id": "223fz:32616261429:lot1",
+      "source": "https://zakupki.kontur.ru/32616261429",
+      "finding": "Arc-suppression reactors at 110/10/6kV South substation, distinct technology from PQ reactive-power compensators; do not promote without itemized PQ evidence."
+    },
+    {
+      "case_id": "223fz:32616419047:lot1",
+      "source": "https://zakupki.kontur.ru/32616419047",
+      "finding": "Arc-suppression reactors 6–35kV; lexical false positive for PQ capacitor/STATCOM scope."
+    }
+  ],
+  "blockers": [
+    "EIS returned 13 HTTP404 across 15 unique notice/contract URLs despite previously successful captures; do not infer absence of notices.",
+    "HTTPX strict TLS certificate chain failed on four attempts; native-trust did not yield valid source identity on four attempts.",
+    "Official ETP GPB and Tender.Pro links behind authenticated intermediary; no bypass or secondary-to-primary promotion."
+  ],
+  "next_targets": [
+    {
+      "case": "223fz:32616497692:lot1",
+      "retry_not_before_moscow": "2026-11-03T09:00:00+03:00",
+      "goal": "official final protocol, named winner vs signed contract"
+    },
+    {
+      "case": "223fz:32616433248:lot1",
+      "retry_not_before_moscow": "2026-11-03T09:00:00+03:00",
+      "goal": "official 35kV UKRM mixed EPC signed registry and PQ price split"
+    },
+    {
+      "case": "223fz:32616506708:lot1",
+      "retry_not_before_moscow": "2026-11-06T09:00:00+03:00",
+      "goal": "official final commission and supply/role classification"
+    }
+  ],
+  "policy": "No database mutation, no backup creation, no report regeneration; frozen V59 and legacy HTML unchanged. Source access errors are not evidence of market absence."
+}
