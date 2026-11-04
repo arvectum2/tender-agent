@@ -1,0 +1,250 @@
+{
+  "schema_version": "pq-watchdog-primary-evidence-delta/1",
+  "run_moscow": "2026-10-29T00:30:00+03:00",
+  "issue_comment_id": 6481151315,
+  "canonical_pr": 521,
+  "base_sha": "13dd8dcf16493d0367aafa0d2e28d17cc589a2b1",
+  "corpus": "v29_101_unchanged",
+  "status": "in_progress",
+  "metrics": {
+    "first_party_requests": 14,
+    "eis_month_searches": 12,
+    "search_statuses": {
+      "empty": 9,
+      "success": 3
+    },
+    "candidate_metadata": 19,
+    "known_case_duplicates": 1,
+    "medical_service_false_positives": 18,
+    "new_original_sha": 0,
+    "duplicate_original_sha_reverified": 2,
+    "new_visual_source_reviews": 1,
+    "new_notices": 0,
+    "new_lots": 0,
+    "new_projects": 0,
+    "new_winners": 0,
+    "new_signed_suppliers": 0,
+    "new_executed_prices": 0,
+    "new_core_sales": 0,
+    "exhaustive_months": 0
+  },
+  "source_journal_private": "watchdog-20261029-0030-eis-searches.json",
+  "source_journal_sha256": "fa3fed24c83e3d024c9e792a319355f7d9cda8ea990bc83a78b8b29bfa5ad2ee",
+  "source_attempts": [
+    {
+      "utc": "2026-10-28T21:34:42.967447+00:00",
+      "law": "223fz",
+      "month": "2024-06",
+      "query": "активный фильтр гармоник",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.06.2024&publishDateTo=30.06.2024&searchString=%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D1%8B%D0%B9+%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80+%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D0%BD%D0%B8%D0%BA",
+      "status": "empty",
+      "http": "not_exposed_by_provider",
+      "page": 1,
+      "numbers": []
+    },
+    {
+      "utc": "2026-10-28T21:34:43.295912+00:00",
+      "law": "223fz",
+      "month": "2024-06",
+      "query": "тиристорный компенсатор",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.06.2024&publishDateTo=30.06.2024&searchString=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "status": "empty",
+      "http": "not_exposed_by_provider",
+      "page": 1,
+      "numbers": []
+    },
+    {
+      "utc": "2026-10-28T21:34:43.644855+00:00",
+      "law": "44fz",
+      "month": "2024-06",
+      "query": "активный фильтр гармоник",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.06.2024&publishDateTo=30.06.2024&pageNumber=1&recordsPerPage=30&searchString=%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D1%8B%D0%B9+%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80+%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D0%BD%D0%B8%D0%BA",
+      "status": "success",
+      "http": "not_exposed_by_provider",
+      "page": 1,
+      "numbers": [
+        "0318300120824000330",
+        "0318300207024000206",
+        "0318200060024000164"
+      ]
+    },
+    {
+      "utc": "2026-10-28T21:34:44.130690+00:00",
+      "law": "44fz",
+      "month": "2024-06",
+      "query": "тиристорный компенсатор",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.06.2024&publishDateTo=30.06.2024&pageNumber=1&recordsPerPage=30&searchString=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "status": "empty",
+      "http": "not_exposed_by_provider",
+      "page": 1,
+      "numbers": []
+    },
+    {
+      "utc": "2026-10-28T21:34:44.419885+00:00",
+      "law": "223fz",
+      "month": "2025-09",
+      "query": "активный фильтр гармоник",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.09.2025&publishDateTo=30.09.2025&searchString=%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D1%8B%D0%B9+%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80+%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D0%BD%D0%B8%D0%BA",
+      "status": "empty",
+      "http": "not_exposed_by_provider",
+      "page": 1,
+      "numbers": []
+    },
+    {
+      "utc": "2026-10-28T21:34:44.727625+00:00",
+      "law": "223fz",
+      "month": "2025-09",
+      "query": "тиристорный компенсатор",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.09.2025&publishDateTo=30.09.2025&searchString=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "status": "empty",
+      "http": "not_exposed_by_provider",
+      "page": 1,
+      "numbers": []
+    },
+    {
+      "utc": "2026-10-28T21:34:45.035636+00:00",
+      "law": "44fz",
+      "month": "2025-09",
+      "query": "активный фильтр гармоник",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.09.2025&publishDateTo=30.09.2025&pageNumber=1&recordsPerPage=30&searchString=%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D1%8B%D0%B9+%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80+%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D0%BD%D0%B8%D0%BA",
+      "status": "success",
+      "http": "not_exposed_by_provider",
+      "page": 1,
+      "numbers": [
+        "0318100033125000016",
+        "0318300166225000214",
+        "0318200023225000326",
+        "0318300101825000367",
+        "0318200023225000314",
+        "0318300039825000225"
+      ]
+    },
+    {
+      "utc": "2026-10-28T21:34:45.521477+00:00",
+      "law": "44fz",
+      "month": "2025-09",
+      "query": "тиристорный компенсатор",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.09.2025&publishDateTo=30.09.2025&pageNumber=1&recordsPerPage=30&searchString=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "status": "empty",
+      "http": "not_exposed_by_provider",
+      "page": 1,
+      "numbers": []
+    },
+    {
+      "utc": "2026-10-28T21:34:51.315042+00:00",
+      "law": "223fz",
+      "month": "2026-03",
+      "query": "активный фильтр гармоник",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.03.2026&publishDateTo=31.03.2026&searchString=%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D1%8B%D0%B9+%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80+%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D0%BD%D0%B8%D0%BA",
+      "status": "empty",
+      "http": "not_exposed_by_provider",
+      "page": 1,
+      "numbers": []
+    },
+    {
+      "utc": "2026-10-28T21:34:51.639963+00:00",
+      "law": "223fz",
+      "month": "2026-03",
+      "query": "тиристорный компенсатор",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.03.2026&publishDateTo=31.03.2026&searchString=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "status": "empty",
+      "http": "not_exposed_by_provider",
+      "page": 1,
+      "numbers": []
+    },
+    {
+      "utc": "2026-10-28T21:34:51.921762+00:00",
+      "law": "44fz",
+      "month": "2026-03",
+      "query": "активный фильтр гармоник",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.03.2026&publishDateTo=31.03.2026&pageNumber=1&recordsPerPage=30&searchString=%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D1%8B%D0%B9+%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80+%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D0%BD%D0%B8%D0%BA",
+      "status": "success",
+      "http": "not_exposed_by_provider",
+      "page": 1,
+      "numbers": [
+        "0318300194126000155",
+        "0318300109426000062",
+        "0318300101826000083",
+        "0318300063526000204",
+        "0318300109426000058",
+        "0318300194226000097",
+        "0318300166226000046",
+        "0318300166226000047",
+        "0318200023226000053",
+        "0318300039826000065"
+      ]
+    },
+    {
+      "utc": "2026-10-28T21:34:52.457699+00:00",
+      "law": "44fz",
+      "month": "2026-03",
+      "query": "тиристорный компенсатор",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.03.2026&publishDateTo=31.03.2026&pageNumber=1&recordsPerPage=30&searchString=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "status": "empty",
+      "http": "not_exposed_by_provider",
+      "page": 1,
+      "numbers": []
+    },
+    {
+      "utc": "2026-10-28T21:32:45.335603+00:00",
+      "url": "https://etp.metal-it.ru/files/get/887fjTd5bkcxpDUVom6f4xnhpi5ckc7fAoLfrqRbXLnY5aJX79QSDRW5ksQs9ApSjq/%D0%94-00001-%D0%A2%D0%9C-2024-%D0%98%D0%9B%D0%9E5.1.4_%D0%B8%D0%B7%D0%BC.0_02.10.24.pdf",
+      "http": 200,
+      "sha256": "438a2a2d73275f1bf7e4451446a7554ef361dc20bc6c1fb95dbcbc808720db35",
+      "bytes": 2029343,
+      "status": "sha_verified_duplicate",
+      "case": "Elga-PS-35-6kv-2024"
+    },
+    {
+      "utc": "2026-10-28T21:33:03.826735+00:00",
+      "url": "https://etp.metal-it.ru/files/get/9gobbqUm12hdY21etyAfQpbNXJsMFT75jonEb5otUeCYkK2o3LkGzUqdbXwoM4Xxfe/1194-005-%D0%AD%D0%9F_%D0%98%D0%B7%D0%BC.2.pdf.pdf",
+      "http": 200,
+      "sha256": "25039d391709276ea5abc0ec73d88f775fa128270bf381542386efffeaa91ce7",
+      "bytes": 11326915,
+      "status": "sha_verified_duplicate",
+      "case": "Elektromed-6kv-demolition-2023-24"
+    }
+  ],
+  "visual_review": {
+    "url": "https://etp.metal-it.ru/files/get/9gobbqUm12hdY21etyAfQpbNXJsMFT75jonEb5otUeCYkK2o3LkGzUqdbXwoM4Xxfe/1194-005-%D0%AD%D0%9F_%D0%98%D0%B7%D0%BC.2.pdf.pdf",
+    "original_sha256": "25039d391709276ea5abc0ec73d88f775fa128270bf381542386efffeaa91ce7",
+    "page": 10,
+    "quote": "Демонтаж 6 недействующих отдельностоящих УКРМ 6 кВ в ЗРУ ПС Электромедь;",
+    "buyer": "АО «Уралэлектромедь»",
+    "project": "ЦРП 6 кВ — ПС Электромедь, документ 1194-005-ЭП, редакции 2024",
+    "scope": "demolition_of_six_existing_inoperative_6kv_ukrm",
+    "new_sale": false,
+    "new_original": false,
+    "standard_arc_queue_review": false
+  },
+  "negative_evidence": "18 из 19 видимых заголовков — медицинское обслуживание/ремонт, один №0318100033125000016 ранее известен. Поиск только первой страницы, не исчерпывающий.",
+  "last_known_gaps": {
+    "v29_without_primary": 54,
+    "dp_sdk_pending": 15
+  },
+  "next_three": [
+    {
+      "case": "ГП630876",
+      "retry_msk": "2026-10-29 00:41",
+      "goal": "GPB original technical documents/outcome"
+    },
+    {
+      "case": "32413764701",
+      "retry_msk": "2026-10-29 06:46",
+      "goal": "signed supplier/payment 10kV"
+    },
+    {
+      "case": "32515582393",
+      "retry_msk": "2026-10-29 06:46",
+      "goal": "signed supplier/payment 6kV"
+    }
+  ],
+  "search_retry_not_before_msk": "2026-10-29 12:35",
+  "safety": {
+    "single_pr": 521,
+    "auto_merge": false,
+    "production": false,
+    "bids": false,
+    "private_originals": true,
+    "no_tam": true
+  }
+}

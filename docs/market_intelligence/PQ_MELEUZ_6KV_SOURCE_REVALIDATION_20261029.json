@@ -1,0 +1,73 @@
+{
+  "schema_version": "pq-6kv-equipment-benchmark-reconciliation/1",
+  "as_of_moscow": "2026-10-29",
+  "canonical_id": "223fz:32616296475:lot1",
+  "archive_lineage": "archive/mi-pr-515-20261029/original_meles_6kv_itemized_cost_and_regime_20261028.v36.json",
+  "already_in_v29_101": true,
+  "new_tender_count_added": 0,
+  "buyer": "ООО Водоканал, Мелеуз",
+  "source_grade": "three_first_party_ETP_documents_byte_exact_reverified",
+  "original_sources": [
+    {
+      "name": "buyer_price_comparison",
+      "source_url": "https://zakaz.etp-region.ru/fx/gpms/etpGetFileServlet?fileUUID=dbfilefs002080000q03kmh4c7au8vf4",
+      "sha256": "fc342d5bfb6cdffdf4fa459f77cbd3ab957c78bce400fbc3d3c0141af18be218",
+      "size_bytes": 34673,
+      "original_sha_reverified": true,
+      "http_status": 200
+    },
+    {
+      "name": "buyer_technical_spec",
+      "source_url": "https://zakaz.etp-region.ru/fx/gpms/etpGetFileServlet?fileUUID=dbfilefs002080000q03kmh4j5tmvv6g",
+      "sha256": "ca9a840c69bce647287c4571b675d57f401f89a20ae3d24f3842d8e24485b781",
+      "size_bytes": 28240,
+      "original_sha_reverified": true,
+      "http_status": 200
+    },
+    {
+      "name": "contract_template_not_signed",
+      "source_url": "https://zakaz.etp-region.ru/fx/gpms/etpGetFileServlet?fileUUID=dbfilefs002080000q03kmh4i38vumuc",
+      "sha256": "0360f92c4b701319af60c53a8f1c911a3b0cb5b4e7cda79f2c857a23babaade4",
+      "size_bytes": 43444,
+      "original_sha_reverified": true,
+      "http_status": 200
+    }
+  ],
+  "technology": {
+    "network_bus_kv": 6,
+    "network_rated_max_kv": 6.3,
+    "requested_equipment": "high-voltage automatic reactive compensation unit",
+    "technique": "thyristor-controlled shunt reactor and higher harmonics filter",
+    "min_reactive_power_kvar": 500,
+    "max_control_step_kvar": 50,
+    "target_power_factor_min": "0.98",
+    "supplied_unit_count": 1,
+    "configuration_verified_against_original_docx_text": true,
+    "fgi_svg_equivalence": "not_proven_different_power_electronic_vs_thyristor_reactor_implementation"
+  },
+  "buyer_price_justification": {
+    "reference_quote_count": 3,
+    "equipment_only_quotes_rub": [
+      "3577711.20",
+      "3493410.00",
+      "3501200.00"
+    ],
+    "equipment_only_arithmetic_average_rub": "3524107.07",
+    "separate_installation_services_average_rub": "380666.66",
+    "total_initial_NMCD_rub": "3904773.73",
+    "basis": "historic buyer market-price justification from original XLSX (same SHA reobtained); NOT final winning bid or signed price",
+    "vat_basis": "not verifiable from original cost XLSX alone"
+  },
+  "original_contract_template": {
+    "source_is_draft_not_signed": true,
+    "party_name_left_blank": true,
+    "total_price_left_blank": true,
+    "buyer_assembles_parts": true,
+    "supplier_supervises_and_commissions": true
+  },
+  "manufacturer_identity_verified": false,
+  "signed_supplier_verified": false,
+  "actual_signed_equipment_revenue_rub": null,
+  "national_market_value_contribution_rub": 0,
+  "next": "Verify actual ETP final contract supplier/public contract independently; separate technology constraints and national origin/1875 buyer rules before FGI fit."
+}

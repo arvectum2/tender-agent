@@ -1,0 +1,145 @@
+{
+  "schema": "pq-watchdog-contract-item/1",
+  "completed_moscow": "2026-11-01T03:43:26+03:00",
+  "issue_comment_id": 6551207961,
+  "canonical_pr": 521,
+  "tested_code_commit": "1b63ab7b56b93459e35a4bb105959f7a35b3c685",
+  "acceptance": "pass",
+  "full_backup_sha256": "3f4a2254714ce0be2cab7bb3ce716d328ae651bd71cee0ab7e7548fa7f1c775e",
+  "db_receipt": "receipts/pq-eis-contract-item-32616266007-20261101T0338.json",
+  "new_content_hash": "3c0e6319ed3fed16f74ad9bbac19ab2573f92f7c67889b137d10ed4434648e5f",
+  "postgres_before": {
+    "unique_lots": 118,
+    "distinct_procedures": 107,
+    "eis_223_notices": 41
+  },
+  "postgres_after": {
+    "unique_lots": 118,
+    "distinct_procedures": 107,
+    "eis_223_notices": 41
+  },
+  "new_unique_lots": 0,
+  "new_projects": 0,
+  "new_core_6_35kv_lots": 0,
+  "new_verified_db_fields": 5,
+  "new_signed_suppliers": 0,
+  "new_paid_sales": 0,
+  "new_named_winner_protocols": 0,
+  "new_signed_contracts": 0,
+  "web_discovery_queries": 8,
+  "new_exhaustive_month_source_searches": 0,
+  "first_party_request_attempts": 9,
+  "first_party_http200_captures": 5,
+  "first_party_tls_cert_failures": 4,
+  "fresh_sha_verified_capture_files": 5,
+  "distinct_sha_in_run": 5,
+  "new_distinct_original_shas": 1,
+  "source_requests": [
+    {
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=54716016979260041190000",
+      "http": 200,
+      "sha256": "a2865ba18ce0e67bcb45d8bf6054e1dbe13e71a15fb78287ce6cdcf273a97f74",
+      "new_unique_original": false
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/event-log.html?reestrNumber=54716016979260041190000",
+      "http": 200,
+      "sha256": "e942c2140a542d63239da8fa210f15a16c902bcaabcc77292ae088308dfe995d",
+      "new_unique_original": false
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/journal-version.html?reestrNumber=54716016979260041190000",
+      "http": 200,
+      "sha256": "21d32efda4ad55b2e1b3fe234d7c3eb436bf7f833ac6fb0052da51b6ade1250e",
+      "new_unique_original": false
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=54716016979260041190000",
+      "http": 200,
+      "sha256": "08b09706b512f497b94941b5de857d0aabbda3eac9f1df64b4c8bd0d4e8b375c",
+      "new_unique_original": false
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616296418",
+      "http": 200,
+      "sha256": "b8d879af5cca0a4c154080812641b578a39d02fc95dd98b6d5545c3dd53176f1",
+      "new_unique_original": true
+    }
+  ],
+  "failed_source_requests": [
+    {
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=54716016979260041190000",
+      "error": "httpx SSL CERTIFICATE_VERIFY_FAILED; strict native-trust retry HTTP200"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/event-log.html?reestrNumber=54716016979260041190000",
+      "error": "httpx SSL CERTIFICATE_VERIFY_FAILED; strict native-trust retry HTTP200"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/journal-version.html?reestrNumber=54716016979260041190000",
+      "error": "httpx SSL CERTIFICATE_VERIFY_FAILED; strict native-trust retry HTTP200"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=54716016979260041190000",
+      "error": "httpx SSL CERTIFICATE_VERIFY_FAILED; strict native-trust retry HTTP200"
+    }
+  ],
+  "case": "223fz:32616266007:lot1",
+  "contract_item": {
+    "model": "КЭПФ-12-450-2 УХЛ1",
+    "quantity": 5,
+    "unit_price_rub": "132492.00",
+    "origin": "Республика Казахстан",
+    "okpd2": "27.90.52.000",
+    "total_rub": "662460.00",
+    "tender_model": "QBANK-A CHDB-142 or equivalent",
+    "tender_nominal_kv": 8.3,
+    "tender_kvar": 592,
+    "equivalence": "unverified",
+    "supplier_signatory": "unverified",
+    "paid": "unverified",
+    "scope": "adjacent 500kV substation capacitor components, not complete PQ system"
+  },
+  "independent_candidate": {
+    "id": "223fz:32616296418:lot1",
+    "official_title": "Поставка дугогасительных реакторов 6-35 кВ",
+    "buyer": "ПАО Россети Сибирь",
+    "published": "2026-08-17",
+    "nmck_rub": "1248060.00",
+    "classification": "adjacent arc-suppression, not proven PQ",
+    "inserted": false,
+    "technical_original_pending": true
+  },
+  "client_report_version": "V27",
+  "client_snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261101_v27.json",
+  "client_audit": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261101_V27.json",
+  "client_pdf_ru": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_RU_20261101_V27.pdf",
+  "client_pdf_en": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_EN_20261101_V27.pdf",
+  "pdf_slide_sections": {
+    "ru": 258,
+    "en": 258
+  },
+  "html_preview_unchanged": true,
+  "canonical_v29_rows_unchanged": 101,
+  "tests": "6 focused tests, Ruff passed",
+  "next_three": [
+    {
+      "case": "223fz:32515029641:lot1",
+      "eligible": "now",
+      "goal": "signed supplier INN/payment official registry"
+    },
+    {
+      "case": "223fz:32616266007:lot1",
+      "eligible": "now",
+      "goal": "signed supplier and contract-vs-TZ equivalence"
+    },
+    {
+      "case": "223fz:32616506708:lot1",
+      "eligible": "2026-11-01 07:30 MSK",
+      "goal": "exact official identity retry"
+    }
+  ],
+  "other_retry": "223fz:32616400421:lot1 after 2026-11-01 07:30 MSK",
+  "task_status": "in_progress",
+  "merge_policy": "PR 521 review; no auto-merge"
+}

@@ -1,0 +1,105 @@
+{
+  "schema_version": "mi-pq-source-bound-incremental/1",
+  "date": "2026-10-31",
+  "base_db_expected_records": 117,
+  "source": "first_party_EIS_223_registered_contract_and_final_protocol",
+  "corpus": "power_quality_russia",
+  "new_cases": [
+    {
+      "source_record": {
+        "canonical_id": "223fz:32615684088:lot1",
+        "procedure_id": "32615684088",
+        "family": "bsk",
+        "scope": "mixed_epc",
+        "market_scope": "adjacent_10kv_grid_epc_bsk_installation_device_rating_unverified",
+        "procurement_regime": "223-fz",
+        "publication_date": null,
+        "date_basis": "original_commission_protocol_2026-02-24",
+        "customer": {
+          "name": "ПАО «Россети Центр»",
+          "inn": "6901067107"
+        },
+        "platform": "ЕИС 223-ФЗ",
+        "status": "registered_signed_epc_contract_execution_not_proven_supplier_unknown",
+        "description": "Строительство ВЛ 10 кВ, установка реклоузера и двух разъединителей 10 кВ, установка БСК для технологического присоединения ООО «АГРОЭКО-ВОСТОК» (нагрузка 665 кВт). БСК — только один компонент комплексного EPC, номинал БСК и её отдельная цена не подтверждены.",
+        "technical": {
+          "network_voltage_kv": 10,
+          "bsk_in_scope": true,
+          "applicant_load_kw": 665,
+          "bsk_rated_voltage_kv": null,
+          "bsk_power_kvar": null
+        },
+        "nmck_rub": "37828258.18",
+        "nmck_vat_basis": "original_commission_no_vat_separation",
+        "commission_bid_rub": "37818258.18",
+        "commission_bidder_application_id": "464597",
+        "commission_bidder_name": null,
+        "contract_registered_price_rub": "37818258.18",
+        "contract_registry_number": "56901067107260004310000",
+        "contract_no": "3600/02874/26",
+        "contract_register_date": "2026-03-10",
+        "contract_execution_completed": false,
+        "supplier_verified": false,
+        "supplier_inn": null,
+        "signed_supplier_verified": false,
+        "paid_verified": false,
+        "realized_equipment_revenue_rub": null,
+        "market_population_complete": false,
+        "evidence": [
+          {
+            "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32615684088",
+            "sha256": "c64a7002c1a6379c5e41c1e16ba98ad13003ceff258c792fc99582e682ea3ffb",
+            "source_tier": "first_party_EIS_223_eis_notice_contract_tab",
+            "excerpt": "Договор №56901067107260004310000"
+          },
+          {
+            "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=56901067107260004310000",
+            "sha256": "d04ae14eaee9cb1b8787cb313f7f8848268f512ca5747bc7ea4150566030e7f2",
+            "source_tier": "first_party_EIS_223_eis_registered_contract_card",
+            "excerpt": "Цена договора 37 818 258,18 ₽"
+          },
+          {
+            "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract/printForm/viewXml.html?contractRegistrationNumber=56901067107260004310001",
+            "sha256": "b6be5a132ff7bbfac37113abef6b5968eb67d88521e99e439b9a606e29f7f9ab",
+            "source_tier": "first_party_EIS_223_eis_contract_print",
+            "excerpt": "Заключение договора 10.03.2026"
+          },
+          {
+            "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=1025d03f-af05-4d6b-bdfd-e3c6fcb076ae&purchaseNoticeNumber=32615684088",
+            "sha256": "e3a320953fe4b63c7931de6eb7ce895a2e2b1d5e6f8115afba99c40c8c18671d",
+            "source_tier": "first_party_EIS_223_eis_final_commission_protocol",
+            "excerpt": "1 место Да"
+          }
+        ]
+      },
+      "verified_originals": [
+        {
+          "sha256": "c64a7002c1a6379c5e41c1e16ba98ad13003ceff258c792fc99582e682ea3ffb",
+          "bytes": 133002,
+          "private_relative": "captures/223fz_32615684088_lot1/20261031T063051501898Z-0d0b33c0-c64a7002c1a6379c.bin",
+          "source_name": "eis_notice_contract_tab"
+        },
+        {
+          "sha256": "d04ae14eaee9cb1b8787cb313f7f8848268f512ca5747bc7ea4150566030e7f2",
+          "bytes": 135276,
+          "private_relative": "captures/223fz_32615684088_lot1/20261031T063119637313Z-91cce0f4-d04ae14eaee9cb1b.bin",
+          "source_name": "eis_registered_contract_card"
+        },
+        {
+          "sha256": "b6be5a132ff7bbfac37113abef6b5968eb67d88521e99e439b9a606e29f7f9ab",
+          "bytes": 10624,
+          "private_relative": "captures/223fz_32615684088_lot1/20261031T063119737835Z-8d06fb8b-b6be5a132ff7bbfa.bin",
+          "source_name": "eis_contract_print"
+        },
+        {
+          "sha256": "e3a320953fe4b63c7931de6eb7ce895a2e2b1d5e6f8115afba99c40c8c18671d",
+          "bytes": 17931,
+          "private_relative": "captures/223fz_32615684088_lot1/20261031T063120100653Z-b2075606-e3a320953fe4b63c.bin",
+          "source_name": "eis_final_commission_protocol"
+        }
+      ],
+      "original_verification": "sha256_byte_exact_receipt",
+      "review_scope": "source_bound_adjacent_mixed_epc_not_equipment_sale"
+    }
+  ]
+}

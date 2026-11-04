@@ -1,0 +1,158 @@
+{
+  "schema_version": "pq-watchdog-source-bound-field-enrichment/1",
+  "completed_moscow": "2026-10-31T13:35:24.737894+03:00",
+  "run_start_moscow": "2026-10-31T13:30:44+03:00",
+  "issue_comment_id": 6542253055,
+  "canonical_pr": 521,
+  "source_code_commit": "8a008382e35efaf0fcf23cade9bfd0a68428b031",
+  "db": {
+    "unique_lots_before": 118,
+    "unique_lots_after": 118,
+    "distinct_procedures": 107,
+    "eis_223_notices": 41,
+    "new_unique_lots": 0,
+    "new_deduplicated_projects": 0,
+    "new_verified_research_fields": 5,
+    "new_client_visible_fields": 3,
+    "new_registered_contracts_existing_lot": 1,
+    "new_signed_supplier_names": 0,
+    "new_executed_payments": 0
+  },
+  "verified_case": {
+    "id": "223fz:32515582393:lot1",
+    "scope": "direct UKRM supply request (6 kV in older archived technical evidence)",
+    "registry_number": "50277071467260001550000",
+    "contract_number": "РЭС-1.26.1/Д-01071",
+    "contract_date": "2026-02-27",
+    "registered_price_rub": "4850000.00",
+    "buyer": "ООО Башкирэнерго, ИНН 0277071467",
+    "signed_supplier_verified": false,
+    "oem_verified": false,
+    "delivery_verified": false,
+    "paid_verified": false,
+    "equipment_only_revenue_verified": false,
+    "contract_price_not_equivalent_to_paid_revenue": true,
+    "original_sources": [
+      {
+        "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=50277071467260001550000",
+        "sha256": "284e532d010d202980375fb4d684dd0616d8665d7c726e7494e2b5c1a6670595",
+        "new_sha": true,
+        "http": 200
+      },
+      {
+        "url": "https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=50277071467260001550000",
+        "sha256": "bac0d89f450f32cdfb6cada70f6976dfaec1ade599ff104898c5338a91a1d553",
+        "new_sha": false,
+        "http": 200
+      }
+    ],
+    "primary_quotes": [
+      "Номер договора РЭС-1.26.1/Д-01071",
+      "Цена договора 4 850 000,00 ₽",
+      "Дата заключения договора 27.02.2026",
+      "Извещение о закупке № 32515582393",
+      "Лот №1"
+    ]
+  },
+  "other_primary_source_attempts": [
+    {
+      "case": "223fz:32616433248:lot1",
+      "url": "https://www.roseltorg.ru/procedure/32616433248",
+      "http": 200,
+      "sha256": "f3518249c80d2dae78cd7854f1720d13e6e2eb82062b0073810619624f755d4d",
+      "result": "new dynamic HTML SHA, no new signed supplier/registry outcome"
+    },
+    {
+      "case": "223fz:32616433248:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616433248",
+      "http": 200,
+      "sha256": "24b45048b6c06bcf5e1cd1dc3f122d787f34d61eae2a206085db1c9dd08ae0a6",
+      "result": "notice identity present, no registered signed contract"
+    }
+  ],
+  "research": {
+    "first_party_requests": 4,
+    "http_200": 4,
+    "new_sha_verified_original_versions": 3,
+    "same_sha_existing_originals": 1,
+    "new_original_final_protocols": 0,
+    "new_original_protocols_with_named_winner": 0,
+    "calendar_bound_secondary_search_probes": 2,
+    "new_month_source_combinations_exhaustively_covered": 0,
+    "secondary_queries": [
+      "закупка октябрь 2026 УКРМ 10 кВ 223 фз номер извещения",
+      "закупка октябрь 2026 БСК 35 кВ Росэлторг 223"
+    ],
+    "lexical_false_positive_examples": [
+      "32616524839: ВЛ 35-110 кВ расчистка растительности, не PQ",
+      "32616347233: птицезащитные устройства, не PQ",
+      "32616450734: ЛЭП/БКТП 35/10 кВ, PQ component not evidenced"
+    ],
+    "zero_new_unique_lot_reason": "No independent new source-verified PQ lot after exact identity and technical scope checks; existing registered contract was the verified gain."
+  },
+  "backup": {
+    "manifest": "/Users/master/ArvectumSafe/backups/data-platform/data-platform-arvectum_data-20261031T103329Z-35330.dump.manifest.json",
+    "sha256": "662206c65ce74b82485d70ff3e9270268288141d287c079db248333978a5bab9",
+    "pg_restore_list_verified": true
+  },
+  "cas": {
+    "atomic_null_only": true,
+    "postwrite_readback": true,
+    "new_fields": [
+      "contract_registry_number",
+      "contract_number",
+      "contract_signed_date",
+      "contract_registered_price_rub",
+      "registered_signed_contract_verified"
+    ],
+    "new_content_hash": "54f6e8552509b4c98f18901ce155acd1a638f93a9acc377a7bf4795cfc48af10",
+    "private_receipt": "receipts/pq-bashkirenergo-ukrm-contract-20261031T1334.json"
+  },
+  "client_report": {
+    "version": "V14",
+    "snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261031_v14.json",
+    "snapshot_sha256": "900a30fe8b8ded62d7f24798b4d658ebe983268d98ddf032be8e151a45d48716",
+    "audit": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261031_v14.json",
+    "audit_sha256": "29af6bb9e3cfa3dc64a6ef85103a851cd88c4ee34fb2dcf0c62d44168b18f818",
+    "ru_pdf_sha256": "ae7abfea55a7d882830fb91e7c1ec2b75f986706c7871d34702339ba631deb65",
+    "en_pdf_sha256": "e11f1434ec1edbd1ef358ec76d0bce502358aac2b2173e7aa42259699b5fe351",
+    "ru_pages": 258,
+    "en_pages": 258,
+    "existing_legacy_html_unchanged": true,
+    "v2_through_v13_unchanged": true,
+    "field_coverage_delta": {
+      "contract_date": 1,
+      "contract_no": 1,
+      "contract_price": 1
+    }
+  },
+  "tests": {
+    "targeted_pytest": "21 passed, 1 inherited Starlette warning",
+    "ruff": "pass",
+    "pdf_pages": "258 RU, 258 EN, 960x540pt"
+  },
+  "next_three": [
+    {
+      "case": "223fz:32616400421:lot1",
+      "retry_after_moscow": "2026-11-01 07:30",
+      "goal": "official original voltage and scope"
+    },
+    {
+      "case": "commercial:106044-ТТ:lot1",
+      "retry_after_moscow": "2026-11-01 09:00",
+      "goal": "first-party STATCOM 6.3 kV outcome; allowlist source"
+    },
+    {
+      "case": "commercial:РН61003961:lot1",
+      "retry_after_moscow": "2026-11-01 10:00",
+      "goal": "first-party technical specification and award"
+    }
+  ],
+  "governance": {
+    "canonical_v29_rows_unchanged": 101,
+    "no_auto_merge": true,
+    "pr_521_ci_quality_red": true,
+    "task_status": "in_progress",
+    "no_other_collections_modified": true
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": "pq-sibur-6kv-design-originals/1",
+  "base_db_expected_records": 112,
+  "canonical_id": "commercial:2128160-1:lot1",
+  "procedure_id": "2128160/1",
+  "source_receipts": [
+    "captures/commercial_2128160-1_lot1/20261029T123935920765Z-b06c99b3-c9f834bfa96491a8.bin.json",
+    "captures/commercial_2128160-1_lot1/20261029T124456187853Z-6944cdbb-7fe5e993fe157e6d.bin.json",
+    "captures/commercial_2128160-1_lot1/20261029T124456369072Z-c049c088-a9422ecaea0532bf.bin.json",
+    "captures/commercial_2128160-1_lot1/20261029T124456554535Z-c7e59406-37fdabbf754dd8d2.bin.json"
+  ],
+  "signed_supplier_verified": false,
+  "paid_verified": false,
+  "equipment_supply_verified": false
+}

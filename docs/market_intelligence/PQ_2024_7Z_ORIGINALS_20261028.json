@@ -1,0 +1,52 @@
+{
+  "schema_version": "pq-2024-originals/1",
+  "verified_at": "2026-10-28T09:36:26.940633+03:00",
+  "registry_number": "32413297739",
+  "source_tier": "verified_public_page_not_original_soap_xml",
+  "public_page_sha256": "113ca5e455f6abbdaa1a5c6ac36018c4c5c1b7d7fe83551349da252bb4700521",
+  "7z_manifest_sha256": "f1136a411c57fa42bae5adc9793e20f2ae2962af9409589a5637024c77fafdfa",
+  "source_archives": 8,
+  "staged_members": 23,
+  "unique_child_sha256": 23,
+  "commission_protocol_original_sha256": "3223ed9ff23d08fa95d3d912910fad02e4a01a3ea31582b06f828eaefe14579d",
+  "evidence_quote": "Конкурс в электронной форме № 24-1026 на право заключения договора поставки статических компенсаторов реактивной мощности",
+  "last_revision_quote": "- дата подведения итогов – 01.07.2024.",
+  "observed_initial_price_rub_ex_vat": 218810250.0,
+  "price_type": "initial_maximum_not_executed",
+  "equipment_voltage_kv": null,
+  "signed_contract_verified": false,
+  "winner_verified": false,
+  "market_total_rub": null,
+  "chatgpt_arc_reviews_accepted": 3,
+  "official_eis_term_queries": 3,
+  "official_eis_notice_download_attempts": 1,
+  "new_signed_contracts": 0,
+  "supplement_screening_protocol": {
+    "date": "2024-06-05",
+    "protocol": "24-1026/32413297739/9",
+    "source_archive_sha256": "fa6346595012c30ffead4612343825abc44386e745aec99e856f05e4dbc12b87",
+    "original_pdf_sha256": "cc86863f029ab7a8d236cbe536a14235df0a3c4a971e15b1491e357498f78eb5",
+    "source_tier": "verified_public_eis_attachment",
+    "commission_result": "unsuccessful_all_two_bids_rejected",
+    "nmck_rub_ex_vat": 235000000,
+    "prior_amendment_nmck_rub_ex_vat": 218810250,
+    "nmck_discrepancy": "different original documents/revisions; do not collapse without revision evidence",
+    "rejected_bids_rub_ex_vat": [
+      {
+        "bidder": "ООО «НПК «ЛЕНПРОМАВТОМАТИКА»",
+        "amount": 234500000
+      },
+      {
+        "bidder": "ООО «ИНЭЛКО»",
+        "amount": 235000000
+      }
+    ],
+    "signed_contract_verified": false,
+    "contract_supplier_verified": false,
+    "executed_price_verified": false,
+    "source_quotes": [
+      "признать закупку несостоявшейся.",
+      "все заявки на участие в закупке отклонены."
+    ]
+  }
+}

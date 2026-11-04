@@ -1,0 +1,131 @@
+{
+  "schema_version": "pq-watchdog-b2b-index-contract-gaps/1",
+  "run_id": "20261030T1531-MSK",
+  "finished_moscow": "2026-10-30T15:37:21+03:00",
+  "issue_comment_id": 6522910265,
+  "canonical_pr": 521,
+  "parent_head": "8491de696e260f015a553dbbf5b0b629da6eae8e",
+  "acceptance": "pass",
+  "postgresql": {
+    "unique_lots_before": 116,
+    "unique_lots_after": 116,
+    "procedures": 105,
+    "eis223": 39,
+    "new_unique_lots": 0
+  },
+  "source_grade": "B2B-Center publicly accessible index HTML originals, NOT buyer/organizer EIS/RAD/RTS original technical documents, protocols or signed contracts",
+  "new_sha_verified_index_cards": [
+    {
+      "case_id": "223fz:32615684088:lot1",
+      "source_url": "https://www.b2b-center.ru/search/number/l32615684088-1/",
+      "relative_file": "captures/223fz_32615684088_lot1/20261030T123341415670Z-f4e275aa-f0552ca8c005158c.bin",
+      "sha256": "f0552ca8c005158c2af84bb27f55b2126fee4ad35ded7f90f4a0ba809f32c603",
+      "bytes": 87880,
+      "captured_utc": "2026-10-30T12:33:41.418724+00:00"
+    },
+    {
+      "case_id": "223fz:32615684088:lot1",
+      "source_url": "https://www.b2b-center.ru/search/number/c56901067107260004310000/",
+      "relative_file": "captures/223fz_32615684088_lot1/20261030T123410415654Z-b50cff25-ddedd927d50a7659.bin",
+      "sha256": "ddedd927d50a76595dfcca589cc7a253703b48ed0c6c1434cccc370f6c95745f",
+      "bytes": 84399,
+      "captured_utc": "2026-10-30T12:34:10.419174+00:00"
+    },
+    {
+      "case_id": "223fz:32616523441:lot1",
+      "source_url": "https://www.b2b-center.ru/search/number/l32616523441-1/",
+      "relative_file": "captures/223fz_32616523441_lot1/20261030T123507072719Z-7f8097d7-9479ef07839bfa7f.bin",
+      "sha256": "9479ef07839bfa7fe83bbad935d40c340031dc5eb1ddc8b08c2542bc62378324",
+      "bytes": 89561,
+      "captured_utc": "2026-10-30T12:35:07.075582+00:00"
+    },
+    {
+      "case_id": "223fz:32615700251:lot1",
+      "source_url": "https://www.b2b-center.ru/search/number/l32615700251-1/",
+      "relative_file": "captures/223fz_32615700251_lot1/20261030T123507532455Z-4ec6e46e-1a69dcb18ef6294e.bin",
+      "sha256": "1a69dcb18ef6294ef1b4b8bca245f206091eb3486fd57d3c5a875b032edc9ae3",
+      "bytes": 84184,
+      "captured_utc": "2026-10-30T12:35:07.534838+00:00"
+    },
+    {
+      "case_id": "223fz:32615700251:lot1",
+      "source_url": "https://www.b2b-center.ru/search/number/c57017380970260000030000/",
+      "relative_file": "captures/223fz_32615700251_lot1/20261030T123557981774Z-c754499c-ac5473a0e4d20ec8.bin",
+      "sha256": "ac5473a0e4d20ec8dfbfd4449e66d34b21256eac0dcd9b1a8e5ce8e81478dede",
+      "bytes": 83971,
+      "captured_utc": "2026-10-30T12:35:57.984940+00:00"
+    }
+  ],
+  "new_buyer_originals": 0,
+  "new_named_winners": 0,
+  "new_signed_suppliers": 0,
+  "new_verified_sales": 0,
+  "new_calendar_months_exhaustively_covered": 0,
+  "findings": [
+    {
+      "notice": "32615684088",
+      "buyer": "Россети Центр/Воронежэнерго",
+      "scope": "mixed EPC: 10kV line, recloser, disconnectors, BSK for Агроэко-Восток",
+      "nmck_epc_rub": "37828258.18",
+      "indexed_contract": "56901067107260004310000",
+      "indexed_price_rub": "37818258.18",
+      "indexed_signed_date": "2026-03-10",
+      "supplier": null,
+      "signed_original_verified": false,
+      "pq_only_price": null
+    },
+    {
+      "notice": "32615700251",
+      "scope": "ПС Гравийная 35/10kV modernization of existing capacitor cell, not proven new equipment",
+      "nmck_epc_rub": "11244111.77",
+      "indexed_contract": "57017380970260000030000",
+      "indexed_price_rub": "11244111.77",
+      "indexed_signed_date": "2026-03-10",
+      "supplier": null,
+      "signed_original_verified": false,
+      "pq_only_price": null
+    },
+    {
+      "notice": "32616523441",
+      "scope": "ПС Чесменская 220kV mixed EPC replacing 10kV compensation and 6kV switchgear",
+      "nmck_epc_rub": "29384480.00",
+      "rts_trade_id": "4051192",
+      "bid_deadline": "2026-11-05 12:00 MSK",
+      "supplier": null,
+      "pq_only_price": null
+    }
+  ],
+  "requests": {
+    "observed_direct_get_minimum": 14,
+    "http_200": 11,
+    "http_404": 1,
+    "http_503": 2,
+    "eis_404": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32615684088",
+    "rts_503": [
+      "https://223.rts-tender.ru/supplier/auction/Trade/View.aspx?Id=4051192",
+      "https://223.rts-tender.ru/supplier/auction/Trade/View.aspx?Id=3775328"
+    ],
+    "b2b_search_q_200_but_unfiltered": 2,
+    "note": "HTTP 404/503 and unfiltered search do not prove absence or coverage"
+  },
+  "next": [
+    {
+      "case": "РН61003961",
+      "retry_msk": "2026-10-30 20:00"
+    },
+    {
+      "case": "32615684088",
+      "retry_msk": "2026-10-31 09:00"
+    },
+    {
+      "case": "32615700251/32616523441",
+      "retry_msk": "2026-10-31 10:00"
+    }
+  ],
+  "safety": {
+    "db_mutation": false,
+    "client_html_regenerated": false,
+    "canonical_v29_unchanged": 101,
+    "auto_merge": false
+  }
+}

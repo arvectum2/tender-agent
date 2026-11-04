@@ -1,0 +1,254 @@
+{
+  "schema_version": "pq-watchdog-evidence-delta/1",
+  "task_id": "TA-MI-AUTONOMY-20261027",
+  "run_start_issue_comment_id": 6477259385,
+  "dataset": "v29_101_unchanged",
+  "first_party_requests_arc": 58,
+  "first_party_request_breakdown": {
+    "official_eis_month_provider_searches_http_not_exposed": 40,
+    "official_44fz_notice_detail_pages_http_not_exposed": 2,
+    "official_44fz_original_document_get_http200": 4,
+    "official_etp_homepage_get_and_discovery": 5,
+    "official_etp_public_script_head_and_bounded_get": 2,
+    "official_etp_project_original_pdf_get_http200": 2,
+    "official_etp_large_pdf_initial_get_head_safe_retry": 3
+  },
+  "month_search": {
+    "count": 40,
+    "status_counts": {
+      "empty": 31,
+      "success": 9
+    },
+    "metadata_candidate_rows_unverified": 12,
+    "months_touched": [
+      "2024-03",
+      "2024-12",
+      "2025-01",
+      "2025-04",
+      "2025-08",
+      "2025-12",
+      "2026-03",
+      "2026-07"
+    ],
+    "exhaustive_months": 0,
+    "source_journal_sha256": "8000b93fb64c436cadb84bc4f16bd517c2bf25d43dd5037ac0ba0adb43799f03",
+    "retry_after_msk": "2026-10-29 09:35:02 Europe/Moscow",
+    "limitation": "First page only; no complete coverage; provider HTTP status not exposed; false-positive titles not promoted"
+  },
+  "new_original_source_files": [
+    {
+      "filename": "Приложение к контракту №1 ТЗ к контракту.docx",
+      "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=3E89004D82A7404B9B85C7A42CF00B1A",
+      "http_status": 200,
+      "sha256": "734bc330d667a33c77fa69a6873444cb8fbcb78ffb006c30e1e6758963f05712",
+      "bytes": 593519,
+      "state": "original_sha_verified"
+    },
+    {
+      "filename": "Описание объекта закупки 1.docx",
+      "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=04E13A50D32B4121948695A68015311C",
+      "http_status": 200,
+      "sha256": "bd02915531b86eea1de01b9df2d30387fe0a567f4539f94ad40223cba1b590b9",
+      "bytes": 44229,
+      "state": "original_sha_verified"
+    },
+    {
+      "filename": "Описание объекта закупки 2 часть.xlsx",
+      "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=215CEF917993489285E883F534C8E8BC",
+      "http_status": 200,
+      "sha256": "6ae948df37bd5c9adac67c6f9cc46c9a24c24104328c9b8625ac36bb8e36332a",
+      "bytes": 169693,
+      "state": "original_sha_verified"
+    },
+    {
+      "filename": "Описание объекта закупки 3 часть.docx",
+      "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=DD8341E861E741A4A2C5C7BA559C3B21",
+      "http_status": 200,
+      "sha256": "506b0547e4768a6d413bc4ea7fa13121d76b5f9af875f3599d72b86c5ff8b597",
+      "bytes": 86009,
+      "state": "original_sha_verified"
+    }
+  ],
+  "original_attempts_journal_sha256": "8e85d3b2b6e04df78448394aa7f3a619910dbf23040e46bf6fdf26edd62d281d",
+  "new_notice": {
+    "number": "0548100001225000001",
+    "law": "44fz",
+    "project": "Жуковский: реконструкция радиополигона ЛИИ им. М. М. Громова",
+    "new_unique_project_count": 1,
+    "scope": "mixed EPC, PQ subcomponent only, not equipment-only",
+    "evidence_original_sha256": "6ae948df37bd5c9adac67c6f9cc46c9a24c24104328c9b8625ac36bb8e36332a",
+    "locator": "Описание объекта закупки 2 часть.xlsx / Описание оборудования!B1934 and B1937",
+    "verbatim_quotes": [
+      "РУНН на базе низковольтных сборок Prisma + (Schneider Electric)",
+      "УКРМ-2шт.; Обогрев-1к-т"
+    ],
+    "classification": "uncertain",
+    "kv": "10/0.4 kV substation, nominal UKRM kV unknown",
+    "pq_only_price_rub": null,
+    "signed_supplier": null,
+    "executed_price_rub": null,
+    "chatgpt_arc_review_id": "0548100001225000001-0ddd86b6769ea19e090f08a3",
+    "chatgpt_arc_review_state": "reviewed",
+    "core_pq_6_35kv_sale_verified": false
+  },
+  "official_etp_discovery": {
+    "observed_attempts": [
+      {
+        "url": "https://etp.metal-it.ru/",
+        "utc": "2026-10-28T18:31:40.318364+00:00",
+        "http_status": 200,
+        "final_url": "https://etp.metal-it.ru/",
+        "content_type": "text/html;charset=UTF-8",
+        "bytes_read": 290051,
+        "truncated_at_650001": false,
+        "sha256_captured_bytes": "455aa5185b862a91a297b31a111671becb309a7f61d548f63331f06faa640943",
+        "title": "",
+        "candidate_links": []
+      },
+      {
+        "url": "https://etpgpb.ru/",
+        "utc": "2026-10-28T18:31:40.510686+00:00",
+        "http_status": 200,
+        "final_url": "https://etpgpb.ru/",
+        "content_type": "text/html;charset=utf-8",
+        "bytes_read": 650001,
+        "truncated_at_650001": true,
+        "sha256_captured_bytes": "ce265d2b02751eb24662a009fa227c3cd2f8ecba53bd134574099ad00572fb98",
+        "title": "ЭТП ГПБ: Закупки и тендеры по 223-ФЗ и 44-ФЗ",
+        "candidate_links": [
+          [
+            "https://gos.etpgpb.ru/tender/list/?utm_source=etpgpb.ru&utm_medium=menu&utm_campaign=615",
+            ""
+          ],
+          [
+            "https://welcome.etpgpb.ru/support_tender",
+            ""
+          ]
+        ]
+      },
+      {
+        "url": "https://www.b2b-center.ru/",
+        "utc": "2026-10-28T18:31:40.945194+00:00",
+        "http_status": 403,
+        "error_type": "HTTPError"
+      },
+      {
+        "name": "metal-it-root",
+        "url": "https://etp.metal-it.ru/",
+        "retrieved_at_utc": "2026-10-28T18:31:56.836555+00:00",
+        "http_status": 200,
+        "final_url": "https://etp.metal-it.ru/",
+        "bytes": 290051,
+        "sha256": "455aa5185b862a91a297b31a111671becb309a7f61d548f63331f06faa640943",
+        "complete": true,
+        "content_type": "text/html;charset=UTF-8",
+        "script_sources": [
+          "/resources/ru-RU/runtime.5ba3446a88a71330.js",
+          "/resources/ru-RU/polyfills.77857564a6443346.js",
+          "/resources/ru-RU/main.c6f7ba7cf2ac45cc.js",
+          "https://code.jquery.com/jquery-3.6.0.min.js",
+          "https://zammad.it-element29.tech/assets/chat/chat.min.js",
+          "https://api-maps.yandex.ru/1.1/index.xml"
+        ],
+        "form_actions": [
+          "/fz223-integration/fz223/savelogin"
+        ],
+        "keyword_counts": {
+          "119199": 0,
+          "135171": 0,
+          "tender": 25,
+          "procedure": 0,
+          "search": 21,
+          "закуп": 0,
+          "торг": 5
+        },
+        "relevant_snippets": [
+          "\"PER_TRADE\",\"decisionMatrixValidationConfiguration\":{\"validateLimitPerTender\":false,\"validateLimitPerSupplier\":false},\"enablePaymentTerms\":true,\"enableDecryptor\":false,\"calculatePu",
+          ",\"publiclyAvailable\":true,\"procurementMethod\":\"corporatePurchasesGoodsTender\",\"singleLotTrade\":false,\"writeConfiguration\":{\"enableSubmissionForm\":true,\"enableAutoProlongation\":true",
+          "\"PER_TRADE\",\"decisionMatrixValidationConfiguration\":{\"validateLimitPerTender\":false,\"validateLimitPerSupplier\":false},\"enablePaymentTerms\":true,\"enableDecryptor\":false,\"calculatePu",
+          "true,\"publiclyAvailable\":true,\"procurementMethod\":\"corporateSalesGoodsTender\",\"singleLotTrade\":false,\"writeConfiguration\":{\"enableSubmissionForm\":true,\"enableAutoProlongation\":true",
+          "\"PER_TRADE\",\"decisionMatrixValidationConfiguration\":{\"validateLimitPerTender\":false,\"validateLimitPerSupplier\":false},\"enablePaymentTerms\":true,\"enableDecryptor\":false,\"calculatePu"
+        ]
+      },
+      {
+        "name": "etpgpb-observed-tender-list",
+        "url": "https://gos.etpgpb.ru/tender/list/?utm_source=etpgpb.ru&utm_medium=menu&utm_campaign=615",
+        "retrieved_at_utc": "2026-10-28T18:31:57.063095+00:00",
+        "error_type": "RemoteDisconnected",
+        "error": "Remote end closed connection without response"
+      }
+    ],
+    "initial_probe_sha256": "7d5619bcfd248821ff8f40dd75d44699fa7b6f7630478e4be431ee1d305fbb4d",
+    "followup_sha256": "2d2b26bf84fdd8c2d0a1c9feabd6c400a1ea3fdd6cd42f0e16d3ef1b2f4e078a",
+    "case_native_cards_verified": 0,
+    "note": "Official Metal-IT homepage HTTP200 SHA; no exact tender card yet. GPB public tender list disconnected; B2B root HTTP403. Bounded JS GET is incomplete and not source evidence."
+  },
+  "new_original_protocol_named_bidder": 0,
+  "new_signed_supplier": 0,
+  "new_executed_price": 0,
+  "new_6_35kv_equipment_sales": 0,
+  "v29_primary_source_gaps_last_known": 54,
+  "data_platform_sdk_pending_last_known": 15,
+  "next_three_ranked_cases": [
+    {
+      "number": "32413764701",
+      "goal": "signed supplier and paid PQ-only value for UKRM 10 kV",
+      "registry_retry_not_before_msk": "2026-10-29 06:46"
+    },
+    {
+      "number": "32515582393",
+      "goal": "signed supplier, VAT and execution for UKRM 6 kV",
+      "registry_retry_not_before_msk": "2026-10-29 06:46"
+    },
+    {
+      "number": "ГП630876",
+      "goal": "original GPB technical attachments/protocol, no URL guesswork",
+      "etp_retry_not_before_msk": "2026-10-29 00:41"
+    }
+  ],
+  "safety": "No bids, signatures, payments, external contacts, production, inferred supplier, API/local LLM or auto-merge.",
+  "new_original_etp_project_documents": [
+    {
+      "original_url": "https://etp.metal-it.ru/files/get/887fjTd5bkcxpDUVom6f4xnhpi5ckc7fAoLfrqRfYwazHE1fTNkT9shm7XVC3vdh3L/%D0%94-00001-%D0%A2%D0%9C-2024-%D0%98%D0%9B%D0%9E5.1.1_%D0%B8%D0%B7%D0%BC.0_02.10.24.pdf",
+      "original_sha256": "358293efaea44266e32a291a21bfcc87554fe4f404b02633d125df68975bf208",
+      "original_bytes": 5936108,
+      "source_quote": "КРУН 6 кВ предусмотрена установка УКРМ 600кВар с тремя ступенями регулирования по",
+      "locator": "2024 Elga PS 35/6 kV project, original PDF native text",
+      "original_http_status": 200
+    },
+    {
+      "original_url": "https://etp.metal-it.ru/files/get/887fjTd5bkcxpDUVom6f4xnhpi5ckc7fAoLfrqRbXLnY5aJX79QSDRW5ksQs9ApSjq/%D0%94-00001-%D0%A2%D0%9C-2024-%D0%98%D0%9B%D0%9E5.1.4_%D0%B8%D0%B7%D0%BC.0_02.10.24.pdf",
+      "original_sha256": "438a2a2d73275f1bf7e4451446a7554ef361dc20bc6c1fb95dbcbc808720db35",
+      "original_bytes": 2029343,
+      "source_quote": "Защита УКРМ предусматривается на микропроцессорных устройствах РЗА",
+      "locator": "2024 Elga PS 35/6 kV project, original PDF native text",
+      "original_http_status": 200
+    },
+    {
+      "original_url": "https://etp.metal-it.ru/files/get/9gobbqUm12hdY21etyAfQpbNXJsMFT75jonEb5otUeCYkK2o3LkGzUqdbXwoM4Xxfe/1194-005-%D0%AD%D0%9F_%D0%98%D0%B7%D0%BC.2.pdf.pdf",
+      "original_sha256": "25039d391709276ea5abc0ec73d88f775fa128270bf381542386efffeaa91ce7",
+      "original_bytes": 11326915,
+      "source_quote": null,
+      "locator": "Elektromed 110/6kV project drawing; native text lacks UKRM quote",
+      "original_http_status": 200,
+      "review_state": "unreviewed_pdf_visual_required"
+    }
+  ],
+  "new_original_etp_project_document_count": 3,
+  "new_distinct_source_only_project_count": 1,
+  "new_independent_project_count_total_including_source_only": 2,
+  "new_confirmed_6kv_project_design_need": 1,
+  "original_etp_source_only_review_sha256": "e0e0da343bfbcb20fa9a3cc6c98f4550ac21caf4a4cc6febfce9eb90f9a85ffa",
+  "source_only_project_limitations": "Elga 2024 design: UKRM 6 kV 600 kvar (3x200); tender ID, buyer, signed supplier, executed contract and equipment price not established. Do not count as procurement award or sale. Electromed drawing is SHA-verified original but native text lacks UKRM; cannot promote visual-only mention without page-level verification.",
+  "new_original_etp_unreviewed_pdf": {
+    "url": "https://etp.metal-it.ru/files/get/9gobbqUm12hdY21etyAfQpbNXJsMFT75jonEb5otUeCYkK2o3LkGzUqdbXwoM4Xxfe/1194-005-%D0%AD%D0%9F_%D0%98%D0%B7%D0%BC.2.pdf.pdf",
+    "sha256": "25039d391709276ea5abc0ec73d88f775fa128270bf381542386efffeaa91ce7",
+    "bytes": 11326915,
+    "source_scope": "Electromed 110/6 kV substation reconstruction drawings, independent project lead only",
+    "native_text_ukrm_verified": false,
+    "ocr_or_visual_provisional": true,
+    "initial_download_budget_exceeded": true,
+    "full_bounded_retry_http_status": 200,
+    "supplier_and_price": null
+  }
+}

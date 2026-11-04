@@ -1,0 +1,188 @@
+{
+  "schema_version": "pq-watchdog-eis-readonly-queries/1",
+  "run_start_comment_id": 6469007392,
+  "observed_at_utc_range": "2026-10-28T12:32:47Z..2026-10-28T12:33:07Z",
+  "source": "Official EIS 44/223-FZ HTTPS, Mac mini ARC read-only, response hashed in memory",
+  "new_queries": 14,
+  "http_200": 14,
+  "empty_first_pages": 11,
+  "nonempty_first_pages": 3,
+  "metadata_candidates": 12,
+  "new_sha_verified_original_documents": 0,
+  "new_tenders_promoted": 0,
+  "new_signed_suppliers": 0,
+  "new_executed_prices": 0,
+  "reason_no_new_originals": "First-page searches returned no result or only false-positive titles about ventilation, HVAC, vehicle servicing and measurement maintenance; no PQ 6-35kV source confirmed",
+  "limitations": "First-page query slices only; zero exhaustive months; response hashes are not persisted original-document hashes",
+  "attempts": [
+    {
+      "law": "223fz",
+      "month": "2024-01",
+      "query": "фильтрокомпенсирующая установка",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.01.2024&publishDateTo=31.01.2024&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B0%D1%8F+%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0",
+      "http_status": 200,
+      "response_bytes": 248151,
+      "response_sha256": "2a3caac004cdf97ab70aac2b2dd993a45d8b274abf8fd24d3dfefe45fc15877c",
+      "first_page_candidate_ids": [],
+      "original_document_saved": false
+    },
+    {
+      "law": "223fz",
+      "month": "2024-03",
+      "query": "тиристорный компенсатор",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.03.2024&publishDateTo=31.03.2024&searchString=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "http_status": 200,
+      "response_bytes": 248087,
+      "response_sha256": "e0b2d966a4e3406892c91906dc93c380a6a38265b6dc5622f7e0b02174f1918f",
+      "first_page_candidate_ids": [],
+      "original_document_saved": false
+    },
+    {
+      "law": "44fz",
+      "month": "2024-03",
+      "query": "фильтрокомпенсирующая установка",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.03.2024&publishDateTo=31.03.2024&pageNumber=1&recordsPerPage=30&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B0%D1%8F+%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0",
+      "http_status": 200,
+      "response_bytes": 248184,
+      "response_sha256": "7f806b103691e69d93b3536d59350c14672c0f235ad2f2924822d5bbe11c38ae",
+      "first_page_candidate_ids": [],
+      "original_document_saved": false
+    },
+    {
+      "law": "223fz",
+      "month": "2024-05",
+      "query": "статический компенсатор",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.05.2024&publishDateTo=31.05.2024&searchString=%D1%81%D1%82%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "http_status": 200,
+      "response_bytes": 248087,
+      "response_sha256": "c7d54fbd9cd9aabc861054bc3199460bbbc00c3ee2426439883905cf650eb7e3",
+      "first_page_candidate_ids": [],
+      "original_document_saved": false
+    },
+    {
+      "law": "44fz",
+      "month": "2024-05",
+      "query": "тиристорный компенсатор",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.05.2024&publishDateTo=31.05.2024&pageNumber=1&recordsPerPage=30&searchString=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "http_status": 200,
+      "response_bytes": 248120,
+      "response_sha256": "165efd6f143f751bbd7e2be3b20bafbacd38480cadb11f3f200eb6a98b358e24",
+      "first_page_candidate_ids": [],
+      "original_document_saved": false
+    },
+    {
+      "law": "223fz",
+      "month": "2024-06",
+      "query": "тиристорный компенсатор",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.06.2024&publishDateTo=30.06.2024&searchString=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "http_status": 200,
+      "response_bytes": 248087,
+      "response_sha256": "aa89298497d2f555dcd9db156505c1cccc416219bb92799c5371874ae5f62a57",
+      "first_page_candidate_ids": [],
+      "original_document_saved": false
+    },
+    {
+      "law": "44fz",
+      "month": "2024-06",
+      "query": "фильтрокомпенсирующая установка",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.06.2024&publishDateTo=30.06.2024&pageNumber=1&recordsPerPage=30&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B0%D1%8F+%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0",
+      "http_status": 200,
+      "response_bytes": 248184,
+      "response_sha256": "cb72dfc4f04e4533b36e1c5bda92a8b0ee822b37825ce42e61437ea71c345a3c",
+      "first_page_candidate_ids": [],
+      "original_document_saved": false
+    },
+    {
+      "law": "223fz",
+      "month": "2024-07",
+      "query": "фильтрокомпенсирующая установка",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.07.2024&publishDateTo=31.07.2024&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B0%D1%8F+%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0",
+      "http_status": 200,
+      "response_bytes": 248151,
+      "response_sha256": "a59c1065691f770696da012e0c5e2ab930983a5e00caaa92cbb36160681c4016",
+      "first_page_candidate_ids": [],
+      "original_document_saved": false
+    },
+    {
+      "law": "44fz",
+      "month": "2024-07",
+      "query": "статический компенсатор",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.07.2024&publishDateTo=31.07.2024&pageNumber=1&recordsPerPage=30&searchString=%D1%81%D1%82%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "http_status": 200,
+      "response_bytes": 278267,
+      "response_sha256": "3a2bee392894f6c4a925a640d603f1fd963adabb7c886f1a744e00c33c2e9290",
+      "first_page_candidate_ids": [
+        "0165100005424000117",
+        "0328300007524000077"
+      ],
+      "original_document_saved": false
+    },
+    {
+      "law": "223fz",
+      "month": "2024-08",
+      "query": "статический компенсатор",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.08.2024&publishDateTo=31.08.2024&searchString=%D1%81%D1%82%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "http_status": 200,
+      "response_bytes": 248087,
+      "response_sha256": "612bf2760568e35de812b26725f054619afd341f0645b3805b869dc99c54191a",
+      "first_page_candidate_ids": [],
+      "original_document_saved": false
+    },
+    {
+      "law": "44fz",
+      "month": "2024-08",
+      "query": "тиристорный компенсатор",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.08.2024&publishDateTo=31.08.2024&pageNumber=1&recordsPerPage=30&searchString=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "http_status": 200,
+      "response_bytes": 248120,
+      "response_sha256": "e4969b2d9b9debdd4ca78e31a8bb94488ab3d9f13b010fcc6270589a0844dce0",
+      "first_page_candidate_ids": [],
+      "original_document_saved": false
+    },
+    {
+      "law": "44fz",
+      "month": "2024-01",
+      "query": "конденсаторная установка",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.01.2024&publishDateTo=31.01.2024&pageNumber=1&recordsPerPage=30&searchString=%D0%BA%D0%BE%D0%BD%D0%B4%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80%D0%BD%D0%B0%D1%8F+%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0",
+      "http_status": 200,
+      "response_bytes": 290096,
+      "response_sha256": "38bee9e1af09d5b87c752a54c2ee20c971733fcc22e4501516fc1240a763e409",
+      "first_page_candidate_ids": [
+        "0346200008024000011",
+        "0373200011424000043",
+        "0332100022724000013"
+      ],
+      "original_document_saved": false
+    },
+    {
+      "law": "44fz",
+      "month": "2024-03",
+      "query": "конденсаторная установка",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.03.2024&publishDateTo=31.03.2024&pageNumber=1&recordsPerPage=30&searchString=%D0%BA%D0%BE%D0%BD%D0%B4%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80%D0%BD%D0%B0%D1%8F+%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0",
+      "http_status": 200,
+      "response_bytes": 335655,
+      "response_sha256": "afd2fb9ce7b8200511e7d266701986df6ffedbc04ce96000055fb07f055f48b6",
+      "first_page_candidate_ids": [
+        "0321100006124000015",
+        "0818500000824002124",
+        "0373100011624000007",
+        "0358200050524000008",
+        "0373100093224000046",
+        "0328100009024000001",
+        "0311200003024000039"
+      ],
+      "original_document_saved": false
+    },
+    {
+      "law": "44fz",
+      "month": "2024-06",
+      "query": "конденсаторная установка",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.06.2024&publishDateTo=30.06.2024&pageNumber=1&recordsPerPage=30&searchString=%D0%BA%D0%BE%D0%BD%D0%B4%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80%D0%BD%D0%B0%D1%8F+%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0",
+      "http_status": 200,
+      "response_bytes": 248128,
+      "response_sha256": "192182d333ad421be9bc9b021acbf7e6f4e854c86b78169bd3a2b607ba708834",
+      "first_page_candidate_ids": [],
+      "original_document_saved": false
+    }
+  ]
+}

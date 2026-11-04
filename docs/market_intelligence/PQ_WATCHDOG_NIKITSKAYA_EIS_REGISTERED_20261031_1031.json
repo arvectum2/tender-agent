@@ -1,0 +1,103 @@
+{
+  "schema": "pq-watchdog-source-verified-field-enrichment/1",
+  "run_start_moscow": "2026-10-31T10:31:49+03:00",
+  "completed_moscow": "2026-10-31T10:37:06+03:00",
+  "issue_comment_id": 6540648776,
+  "canonical_pr": 521,
+  "baseline": {
+    "unique_lots": 118,
+    "procedures": 107,
+    "eis_223_notices": 41
+  },
+  "after": {
+    "unique_lots": 118,
+    "procedures": 107,
+    "eis_223_notices": 41
+  },
+  "new_unique_lots": 0,
+  "new_verified_fields": 5,
+  "new_registered_contracts_on_existing_lots": 1,
+  "new_signed_supplier_identities": 0,
+  "new_verified_equipment_sales": 0,
+  "new_paid_amounts": 0,
+  "new_named_commission_winners": 0,
+  "new_calendar_month_source_coverage": 0,
+  "primary_capture_attempts": 4,
+  "first_party_http200": 2,
+  "first_party_allowlist_preflight_blocks": 2,
+  "new_sha_verified_original_versions": 2,
+  "original_protocols_new": 0,
+  "source_attempts": [
+    {
+      "case": "106044-ТТ",
+      "url": "https://etp.metal-it.ru/trades/431640997/info",
+      "result": "blocked_pre_request_host_not_allowlisted",
+      "http": null
+    },
+    {
+      "case": "106044-ТТ",
+      "url": "https://etp.metal-it.ru/trades/475802614/info",
+      "result": "blocked_pre_request_host_not_allowlisted",
+      "http": null
+    },
+    {
+      "case": "RN61003961",
+      "url": "https://www.tektorg.ru/rosneft/procedures/20065463",
+      "http": 200,
+      "sha256": "6a2656b1c20e6e0be3abc5b7405f21eb28ded1f64963b6d7693005423a48141b",
+      "result": "new_dynamic_html_version_no_case_specific_result_or_named_winner"
+    },
+    {
+      "case": "RN61003961",
+      "url": "https://www.tektorg.ru/rosneft/procedures?name=%D0%A0%D0%9D61003961",
+      "http": 200,
+      "sha256": "8affa3a72be7108e145328bb6f2f988ae671451c14034956054facf2572748b4",
+      "result": "new_dynamic_html_version_search_query_only_no_outcome"
+    }
+  ],
+  "source_verified_case": {
+    "id": "223fz:32615966040:lot1",
+    "role": "mixed EPC 10kV compensation within 110kV substation works",
+    "registry": "55036065113260035960000",
+    "contract_number": "28912-26-100201",
+    "signed_date": "2026-06-03",
+    "registered_price_rub": "5273763.77",
+    "secondary_previous_price_rub": "5273764.00",
+    "difference_rub": "0.23",
+    "supplier_name_in_registered_contract": null,
+    "commission_recommended": "ООО ЭНЕРГОСЕТЬ (NOT proven signed supplier)",
+    "equipment_only_price_rub": null,
+    "payment_verified": false,
+    "original_sha256": [
+      "9f5241d6942c2eb62b69b03938224c1b64cba93995841a4e53db025b7c079317",
+      "0331902c360c21720c9aa38dfb94611a44ec31bfe664303fb9dce24d8677cb99"
+    ],
+    "new_record_sha256": "79b7f4486f3c1f870031e8ceb6734dab50dc4bcd70f3231be7834c42af4fde53"
+  },
+  "backup_sha256": "73836b812786e3813f173cc1d2c1515bdfbee5367d36a6e0326daeb961072cfc",
+  "new_client_version": "V11",
+  "pdf_pages": {
+    "ru": 258,
+    "en": 258
+  },
+  "legacy_html_regenerated": false,
+  "canonical_v29_rows_unchanged": 101,
+  "next_three": [
+    {
+      "case": "106044-ТТ",
+      "retry_after_moscow": "2026-11-01 09:00",
+      "goal": "native Metal-IT 6.3kV STATCOM award/contract; source allowlist review required"
+    },
+    {
+      "case": "RN61003961",
+      "retry_after_moscow": "2026-11-01 10:00",
+      "goal": "TEK-Torg native procedure result, signed supplier"
+    },
+    {
+      "case": "32616400421",
+      "retry_after_moscow": "2026-11-01 07:30",
+      "goal": "recover missing EIS original/technical archive, dedup and 6–35kV scope"
+    }
+  ],
+  "no_auto_merge": true
+}

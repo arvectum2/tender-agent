@@ -1,0 +1,127 @@
+{
+  "schema_version": "pq-watchdog-primary-evidence/1",
+  "run_id": "TA-MI-20261030093154",
+  "run_start_moscow": "2026-10-30T12:31:54+03:00",
+  "finished_moscow": "2026-10-30T12:36:29+03:00",
+  "issue_comment_id": 6519542480,
+  "canonical_pr": 521,
+  "parent_head": "2b51479bcb913114025014eef48e62dfcee92852",
+  "postgres": {
+    "unique_lots_before": 115,
+    "unique_lots_after": 115,
+    "distinct_procedures": 104,
+    "eis_223_notices": 38,
+    "new_unique_lots": 0,
+    "new_deduplicated_projects": 0,
+    "new_core_6_35kv_verified": 0,
+    "new_signed_suppliers": 0,
+    "new_executed_pq_sales": 0,
+    "read_source": "verify_internal_runtime live PG"
+  },
+  "new_sha_verified_originals": [
+    {
+      "case_id": "commercial:4657777:lot1",
+      "source_url": "https://www.b2b-center.ru/market/view.html?id=4657777",
+      "relative_file": "captures/commercial_4657777_lot1/20261030T093434939270Z-bd60b32f-c4311db70e30abfd.bin",
+      "sha256": "c4311db70e30abfd6d68d11e5ea39c756e5147061e698f3145721809cd6211a4",
+      "bytes": 74321,
+      "http_status": 200,
+      "captured_utc": "2026-10-30T09:34:34.940307+00:00"
+    },
+    {
+      "case_id": "commercial:4657777:lot1",
+      "source_url": "https://www.b2b-center.ru/market/postavka-blokov-kondensatornykh-dlia-nuzhd-po-btses-po-kes-ooo/tender-4657777/?action=positions_groups",
+      "relative_file": "captures/commercial_4657777_lot1/20261030T093459109951Z-715c077b-1d6c300da211526b.bin",
+      "sha256": "1d6c300da211526bd4c101bda58272b8a492a07e786aa8374df397fdf179be3e",
+      "bytes": 74179,
+      "http_status": 200,
+      "captured_utc": "2026-10-30T09:34:59.113057+00:00"
+    }
+  ],
+  "case_4657777": {
+    "source": "first-party B2B-Center",
+    "buyer": "ООО Башкирэнерго",
+    "organizer": "АО БЭСК",
+    "subject": "Поставка блоков конденсаторных для нужд ПО БцЭС, ПО КЭС ООО Башкирэнерго 27-001523",
+    "quantity": 6,
+    "unit": "шт",
+    "nmck_rub_ex_vat": 208419.3,
+    "unit_price_rub_ex_vat": 34736.55,
+    "published_moscow": "2026-10-27T12:04:00+03:00",
+    "applications_at_capture": 0,
+    "bid_deadline_moscow": "2026-11-09T10:00:00+03:00",
+    "docs_deadline_moscow": "2026-11-10T10:00:00+03:00",
+    "planned_results_moscow": "2026-12-15T10:00:00+03:00",
+    "technical_voltage": "unknown",
+    "PQ_system_membership": "unknown",
+    "technical_documents": "registration form required; do not bypass access",
+    "winner": "unknown",
+    "signed_contract": "unknown",
+    "classification": "components_candidate_voltage_unverified",
+    "corpus_disposition": "no insert: not verified 6-35kV, no duplicate assumption"
+  },
+  "official_search_observations": [
+    {
+      "source": "TEK-Torg Rosneft",
+      "url": "https://www.tektorg.ru/rosneft/procedures?name=%D0%A0%D0%9D51202455",
+      "http": 200,
+      "query": "РН51202455",
+      "observed": "SSR listing data empty/status loading; not proof of no procurement; secondary 2025 6kV service lead remains unverified"
+    },
+    {
+      "source": "TEK-Torg Rosneft",
+      "url": "https://www.tektorg.ru/rosneft/procedures?name=%D0%A3%D0%9A%D0%A0%D0%9C%206%20%D0%BA%D0%92",
+      "http": 200,
+      "query": "УКРМ 6 кВ",
+      "observed": "SSR listing data empty/status loading; not complete source search"
+    },
+    {
+      "source": "TEK-Torg Rosneft",
+      "url": "https://www.tektorg.ru/rosneft/procedures?name=%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%86%D0%B8%D0%B8%20%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9%20%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8",
+      "http": 200,
+      "query": "компенсации реактивной мощности",
+      "observed": "one official result РН61004155, already in corpus, no new unique lot"
+    }
+  ],
+  "request_metrics": {
+    "actual_direct_first_party_GETs": 17,
+    "distinct_first_party_URLs": 5,
+    "HTTP_200": 17,
+    "new_first_party_sha_verified_files": 2,
+    "new_technical_originals": 0,
+    "new_protocols_with_named_winner": 0,
+    "new_signed_contracts": 0,
+    "new_calendar_month_source_searches": 0,
+    "limitations": "Several repeated GETs for parsing/SSR inspection, not independent coverage. Web discovery separate from direct HTTP counts."
+  },
+  "unverified_gaps": [
+    "4657777: voltage, exact SKU/technical specification and outcome unavailable without registration; do not infer PQ core",
+    "РН51202455: official first-party original not recovered, secondary service lead not promoted",
+    "existing corpus: named signed suppliers and executed prices remain unverified"
+  ],
+  "next_three": [
+    {
+      "case": "РН61003961",
+      "eligible_after_moscow": "2026-10-30T20:00:00+03:00",
+      "goal": "official TEK-Torg outcome; do not duplicate 6kV equipment lot"
+    },
+    {
+      "case": "106044-ТТ",
+      "eligible_after_moscow": "2026-10-31T09:00:00+03:00",
+      "goal": "first-party STATCOM 6.3kV final protocol and named winner"
+    },
+    {
+      "case": "АП125337",
+      "eligible_after_moscow": "2026-10-31T10:00:00+03:00",
+      "goal": "GPB original technical archive and voltage"
+    }
+  ],
+  "safety": {
+    "internal_APFS_acceptance": "pass",
+    "postgres_mutation": false,
+    "backup_not_required_no_insert": true,
+    "client_html_regenerated": false,
+    "no_auto_merge": true,
+    "canonical_v29_rows_unchanged": 101
+  }
+}

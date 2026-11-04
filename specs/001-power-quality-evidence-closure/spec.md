@@ -13,7 +13,7 @@ As the market researcher I need every stated count in the partial PQ report to a
 
 - **AC1:** `v29_candidate_leads = source_number_223_leads + non_223_or_nonstandard_leads`; output narrative warning counts are derived from these values, not manually entered constants.
 - **AC2:** Counterexample regression: a corpus of 3 leads with 2 distinct 11-digit EIS numbers generates warnings about 3 candidates and 1 non-223/nonstandard lead, never 101/69.
-- **AC3:** Historical 101-lead fixture, 33 unique 223 numbers, produces exactly 68 non-223/nonstandard leads in warnings; keep report's `completeness=partial_do_not_extrapolate`.
+- **AC3:** In the historical 101-row v29 corpus, 34 223-FZ candidate-lot rows represent 33 distinct notices (32616474682 has two lots), leaving **67** non-223/commercial candidate rows. The report and coverage ledger must agree; a separate synthetic 101/33/68 test case may be retained as a regression fixture. Keep `completeness=partial_do_not_extrapolate`.
 - **AC4:** SHA integrity and numeric distinction regression tests remain passing. Bids, NMCK, public register prices and signed contract amounts are never conflated.
 
 ### US2 (P0) — Research completion with primary records
@@ -40,6 +40,8 @@ First implementation slice: Spec Kit `none` bootstrap, governed mapping to AES-0
 Building a second crawler/market DB; replacing Data Platform; deploying a model/API; releasing a SaaS product; placing bids, ETP authentication circumvention, contacting vendors or triggering external commitments; fully automated market valuation without original evidence.
 
 ## Source baseline and known limitations (2026-10-28)
-Verified runtime partial snapshot: 101 candidate leads, 33 EIS 223 leads (31 with original files), 68 other leads, 3 Bidzaar primary cards, 6 commission decisions, 3 public 223 contract registry lots, **0 independently verified signed suppliers**. The 10,998,960.00 RUB sample consists of three VAT-inclusive bid offers, not signed contract turnover. These are evidence counts, **not market coverage percentages**. Two EIS cases lack downloaded files; public 223 registry may hide supplier evidence. Commercial ETP award/contract outcomes remain incomplete.
+Verified runtime partial snapshot: 101 candidate rows, 34 223-FZ lot rows across 33 distinct EIS notices (31 notices with originals), **67** non-223/nonstandard rows, 3 original Bidzaar cards, 4 original B2B-Center cards, 6 commission decisions, 3 public 223 contract registry lots, **0 independently verified signed suppliers**. Out of 101 candidate rows, 39 have original primary sources (38 unique procurement numbers); 62 do not. 34 calendar months lack evidenced exhaustive provider discovery. The 10,998,960.00 RUB sample consists of three VAT-inclusive bid offers, not signed contract turnover. These are evidence counts, **not market coverage percentages**. Two EIS cases lack downloaded files; public 223 registry may hide supplier evidence. Commercial ETP award/contract outcomes remain incomplete.
+
+**Extraction caveat:** New original documents have validated SHA and private storage, but the isolated ARC shell lacks the service Data Platform API key; as of this slice 247/262 canonical files have recorded completed extraction and 15 await authenticated SDK processing. A missing credential must produce a blocked/retryable state, never a false successful extraction.
 
 **Decision authority:** consequential source-grade or market-coverage acceptance requires current evidence and ordinary product governance. Spec Kit output alone does not grant approval.

@@ -1,0 +1,224 @@
+{
+  "schema_version": "pq-watchdog-223-registry-evidence/1",
+  "date": "2026-10-28",
+  "source": "official EIS 223-FZ public contract register",
+  "corpus": "v29 101 rows unchanged",
+  "run_start_issue_comment_id": 6473303869,
+  "records": [
+    {
+      "notice": "32515582393",
+      "contract_register_number": "50277071467260001550000",
+      "registered_price_rub": "4850000.00",
+      "contract_date": "2026-02-27",
+      "scope": "core_supply_6kv_200kvar",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=50277071467260001550000",
+      "source_sha256": "284e532d010d202980375fb4d684dd0616d8665d7c726e7494e2b5c1a6670595",
+      "already_verified_in_local_xml": false,
+      "signed_supplier_verified": false,
+      "executed_payment_verified": false,
+      "pq_equipment_only_price_rub": null
+    },
+    {
+      "notice": "32615614821",
+      "contract_register_number": "50277071467260002650000",
+      "registered_price_rub": "1833358.30",
+      "contract_date": "2026-04-14",
+      "scope": "mixed_reconstruction_ps110kv_device_voltage_unknown",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=50277071467260002650000",
+      "source_sha256": "f076fcf6bb0c7ef251fa4e03607100aea7cebdf1babf55296d566e45d3289089",
+      "already_verified_in_local_xml": true,
+      "signed_supplier_verified": false,
+      "executed_payment_verified": false,
+      "pq_equipment_only_price_rub": null
+    },
+    {
+      "notice": "32616280467",
+      "contract_register_number": "56450925977260018070000",
+      "registered_price_rub": "3680106.21",
+      "contract_date": "2026-09-03",
+      "scope": "design_10kv_dynamic_reactive_compensation",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=56450925977260018070000",
+      "source_sha256": "c68cda41ff03c59a4f1c9dfd69def07985613abe6fe9923dbf9cd8e1fe06f683",
+      "already_verified_in_local_xml": true,
+      "signed_supplier_verified": false,
+      "executed_payment_verified": false,
+      "pq_equipment_only_price_rub": null
+    },
+    {
+      "notice": "32615852898",
+      "contract_register_number": "52460069527260006170000",
+      "registered_price_rub": "2787700.00",
+      "contract_date": "2026-06-15",
+      "scope": "design_10kv_line_regulation_and_compensation",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=52460069527260006170000",
+      "source_sha256": "e25677cd34567099993c27dd6762377e2a11cd01096a2dc05e5ee9335a3c51e6",
+      "already_verified_in_local_xml": false,
+      "signed_supplier_verified": false,
+      "executed_payment_verified": false,
+      "pq_equipment_only_price_rub": null
+    },
+    {
+      "notice": "32616354211",
+      "contract_register_number": "65501231424260000440000",
+      "registered_price_rub": "7406851.40",
+      "contract_date": "2026-09-23",
+      "scope": "design_110kv_bsk_to_skrm",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=65501231424260000440000",
+      "source_sha256": "a3df999a678442b7b2050702d97141326464b3a493c47cdcae853bb880b7453f",
+      "already_verified_in_local_xml": false,
+      "signed_supplier_verified": false,
+      "executed_payment_verified": false,
+      "pq_equipment_only_price_rub": null
+    },
+    {
+      "notice": "32514842313",
+      "contract_register_number": "53812122706250005130000",
+      "registered_price_rub": "163038003.10",
+      "contract_date": "2025-07-11",
+      "scope": "mixed_epc_ps500kv_device_voltage_unknown",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=53812122706250005130000",
+      "source_sha256": "fee3fb6c0925e47a2445def241716af610984ebd52a04594d2affc291ff68fa4",
+      "already_verified_in_local_xml": false,
+      "signed_supplier_verified": false,
+      "executed_payment_verified": false,
+      "pq_equipment_only_price_rub": null
+    },
+    {
+      "notice": "32615810535",
+      "contract_register_number": "54716016979260018250000",
+      "registered_price_rub": "11400000.00",
+      "contract_date": "2026-05-14",
+      "scope": "organizational_standard_dc_harmonic_filters_not_equipment",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=54716016979260018250000",
+      "source_sha256": "b7bcdf2a55bc4a60503395f86870d70e274b562e0d3fe0f1a332c357ded0cf88",
+      "already_verified_in_local_xml": false,
+      "signed_supplier_verified": false,
+      "executed_payment_verified": false,
+      "pq_equipment_only_price_rub": null
+    },
+    {
+      "notice": "32413513847",
+      "contract_register_number": "73808118560240019880000",
+      "registered_price_rub": "8400000.00",
+      "contract_date": "2024-07-31",
+      "scope": "adjacent_active_harmonic_filter_400v",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=73808118560240019880000",
+      "source_sha256": "d1b4925bfc7cde5ad641bb8d5fb75b89845c44b59e2f0bcd6db573f273cb8178",
+      "already_verified_in_local_xml": false,
+      "signed_supplier_verified": false,
+      "executed_payment_verified": false,
+      "pq_equipment_only_price_rub": null
+    },
+    {
+      "notice": "32514609387",
+      "contract_register_number": "55036065113250031060000",
+      "registered_price_rub": "25775.18",
+      "contract_date": "2025-04-21",
+      "scope": "author_supervision_10kv_compensation",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=55036065113250031060000",
+      "source_sha256": "6baf29a382ce240de1c76123627408c25370b366c8e552b346b2b9927b932e92",
+      "already_verified_in_local_xml": false,
+      "signed_supplier_verified": false,
+      "executed_payment_verified": false,
+      "pq_equipment_only_price_rub": null
+    },
+    {
+      "notice": "32413764701",
+      "contract_register_number": "58601033125240001550000",
+      "registered_price_rub": "4077120.00",
+      "contract_date": "2024-08-09",
+      "scope": "core_supply_10kv_150kvar",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=58601033125240001550000",
+      "source_sha256": "24c041d6d1419f0564ce85777c0ff3ad96314f71df7180469dd4c0dfa2bc6f28",
+      "registered_status": "Исполнение завершено",
+      "technical_original_sha256": "731f9ce22329ee8d35aa151caf3a714db0d7e2eff34c7060b0b51e8eb63a0349",
+      "original_commission_bid_rub": "3397600.00",
+      "commission_participant_identity": "unknown_participant_1",
+      "vat_status": "not_independently_confirmed",
+      "already_verified_in_local_xml": false,
+      "signed_supplier_verified": false,
+      "executed_payment_verified": false,
+      "pq_equipment_only_price_rub": null
+    }
+  ],
+  "counts": {
+    "contract_registry_records_source_verified": 10,
+    "previously_local_xml_verified": 2,
+    "new_registry_entries_relative_to_prior_local_xml": 8,
+    "new_sha_verified_original_attachments": 3,
+    "new_223_notice_with_originals_outside_v29": "32615810535",
+    "new_signed_suppliers": 0,
+    "new_executed_prices": 0,
+    "month_scopes_exhaustively_covered": 0,
+    "new_core_6_35kv_registered_supply_contracts": 2,
+    "new_source_requests_this_run": 59,
+    "observed_http_200": 58,
+    "observed_timeout": 1,
+    "new_source_grade_reviews_accepted": 8,
+    "new_date_bounded_registry_searches": 1
+  },
+  "key_evidence": {
+    "notice": "32515582393",
+    "registry": "50277071467260001550000",
+    "original_pdf_sha256": "48ceaa3f94c353f638dbab29951d3ec6dd5b32e79114fa0641800831715333a9",
+    "original_pdf_page": 1,
+    "render_sha256": "51eb751ad72cd9436b1b8baac7baf9a672cef4d2c36a77c5fabe14eed4bf3eed",
+    "visual_reading": "УКРМ56, номинальное напряжение 6 кВ, мощность 200 квар, ПС Нагорная 35 кВ",
+    "registered_price_rub": "4850000.00",
+    "registered_price_not_payment": true,
+    "commission_named_candidate": "ООО «УК КОНДЕНСАТОР»",
+    "signed_supplier_not_publicly_verified": true,
+    "possible_ancillary_engineering_and_supervision": true
+  },
+  "new_originals": [
+    {
+      "notice": "32615810535",
+      "name": "Часть V Техническая часть.docx",
+      "sha256": "751052836aac5afefef91d8e9a6b21d360ac8fa4f34a946aec77c6d312fc1f1b"
+    },
+    {
+      "notice": "32615810535",
+      "name": "Протокол 5_3817023.pdf",
+      "sha256": "bd68e385f7b966956dc03b40f17227b882bd2c8f761078871bd09c521dd3b852"
+    },
+    {
+      "notice": "32615810535",
+      "name": "Протокол 4_3817023.pdf",
+      "sha256": "2f363d74cddbfe90e022bbcc7e293ee4bc8b744b21402495d2b8055a3185fda4"
+    }
+  ],
+  "new_protocol": {
+    "notice": "32615810535",
+    "sha256": "bd68e385f7b966956dc03b40f17227b882bd2c8f761078871bd09c521dd3b852",
+    "named_participant": "АО «Россети Научно-технический центр»",
+    "bid_after_retrade_ex_vat_rub": "9412424.94",
+    "contract_registry_price_rub": "11400000.00",
+    "not_equipment_sale": true,
+    "signed_supplier_not_verified": true
+  },
+  "private_runtime_ledger": {
+    "relative_path": "pq-agent-pilot-live/watchdog-20261028-1834/contract223-reconciled-facts.json",
+    "sha256": "c0ad2a297a761210a738a76b985b78db814620e5e185030edda4fb105df25744"
+  },
+  "caveats": [
+    "Public 223-FZ register card establishes recorded contract price and date, not signed original copy, supplier identity or executed payment.",
+    "Commission participant is not automatically a signed contractor.",
+    "110/500kV substation labels do not prove device rated voltage; no mixed EPC price included as 6–35kV PQ equipment value.",
+    "Possible Nagornaya relationship between supply 32515582393 and reconstruction 32615614821 remains unresolved, no project merge.",
+    "One search results page does not prove exhaustive coverage.",
+    "2024 notice 32413764701 has an official 223-FZ registered contract with status Исполнение завершено, but no public signed supplier or independent payment evidence; do not infer VAT solely from a 1.20 price ratio."
+  ],
+  "key_evidence_2024": {
+    "notice": "32413764701",
+    "contract_register_number": "58601033125240001550000",
+    "registered_price_rub": "4077120.00",
+    "date": "2024-08-09",
+    "register_status": "Исполнение завершено",
+    "original_10kv_150kvar_pdf_sha256": "731f9ce22329ee8d35aa151caf3a714db0d7e2eff34c7060b0b51e8eb63a0349",
+    "commission_bid_rub": "3397600.00",
+    "bid_to_contract_price_ratio": 1.2,
+    "vat_status": "not independently verified; ratio is not proof",
+    "signed_supplier_verified": false,
+    "paid_amount_verified": false
+  }
+}

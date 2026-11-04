@@ -1,0 +1,159 @@
+{
+  "schema_version": "pq-watchdog-primary-research/20261102",
+  "moscow_run_start": "2026-11-02T13:28:00+03:00",
+  "moscow_run_end": "2026-11-02T13:39:19+03:00",
+  "issue": 57,
+  "issue_comment_id": 6574851412,
+  "single_pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "latest_tested_code_commit": "301b8d25950f304f5666ef7871c1e26e7aebaa70",
+  "internal_apfs_acceptance": "pass",
+  "postgres_before": {
+    "unique_lots": 123,
+    "distinct_procedures": 112,
+    "eis_223_notices": 45
+  },
+  "postgres_after": {
+    "unique_lots": 123,
+    "distinct_procedures": 112,
+    "eis_223_notices": 45
+  },
+  "new_unique_lots": 0,
+  "new_unique_projects": 0,
+  "new_named_winners": 0,
+  "new_signed_suppliers": 0,
+  "new_paid_sales": 0,
+  "new_verified_db_fields": 3,
+  "verified_fields": [
+    {
+      "case_id": "223fz:32515029641:lot1",
+      "fields": {
+        "equipment_voltage_kv": "12",
+        "power": "450 кВАр на конденсатор (номинал модели, не всей установки)"
+      },
+      "evidence_note": "Модель в реестре договора этого лота и номинал точно такой же модели в ТЗ другого официального лота 32514947144; НЕ подтверждение напряжения сети, изготовителя, оплаты или подписанта.",
+      "source_sha256": [
+        "5aee81a7a8dc65d4314ba718ab7621293ca3d708448958fd22c1cd5bdeb2f94c",
+        "ecda30473b4c6fef92b459ea4b41e12af3f2ac34d997bef118ddc35525408463"
+      ]
+    },
+    {
+      "case_id": "commercial:4559984:ukrm-6p3-component",
+      "fields": {
+        "source_urls": "2 first-party B2B URLs"
+      },
+      "evidence_note": "Исходный запрос КП для определения ориентировочной стоимости, 6 позиций; одна АУКРМ-6,3-1350-450-12 УХЛ4, 1 комплект, ШМР/ПНР; сумма не указана; НЕ контракт и не подтверждение мощности 1350 кВАр без опросного листа.",
+      "source_sha256": [
+        "b525bfaab92fac20c1f571615425c43d379085551d9cfd384d23101c0d9e7d31",
+        "78a3a7add2d731154087b2e6185f7b4fc02b97c703a73e5c5693f05de053d373"
+      ]
+    }
+  ],
+  "new_first_party_case_specific_originals": 2,
+  "new_distinct_original_sha256": [
+    "b525bfaab92fac20c1f571615425c43d379085551d9cfd384d23101c0d9e7d31",
+    "78a3a7add2d731154087b2e6185f7b4fc02b97c703a73e5c5693f05de053d373"
+  ],
+  "source_requests": [
+    {
+      "url": "https://www.b2b-center.ru/app/next/market-search/?q=4559984",
+      "http": 200,
+      "query": "4559984",
+      "outcome": "official exact-number search resolved previously known procedure; not new lot"
+    },
+    {
+      "url": "https://www.b2b-center.ru/app/market-next/zapros-kommercheskikh-predlozhenii-na-postavku-mtr-dlia-ob-ekta/tender-4559984/",
+      "http": 200,
+      "sha256": "b525bfaab92fac20c1f571615425c43d379085551d9cfd384d23101c0d9e7d31"
+    },
+    {
+      "url": "https://www.b2b-center.ru/app/market-next/zapros-kommercheskikh-predlozhenii-na-postavku-mtr-dlia-ob-ekta/tender-4559984/positions/",
+      "http": 200,
+      "sha256": "78a3a7add2d731154087b2e6185f7b4fc02b97c703a73e5c5693f05de053d373"
+    },
+    {
+      "url": "https://www.b2b-center.ru/app/market-next/zapros-kommercheskikh-predlozhenii-na-postavku-mtr-dlia-ob-ekta/tender-4559984/offers/",
+      "http": 200,
+      "outcome": "generic homepage, procedure ID absent; no public winner"
+    },
+    {
+      "url": "https://www.b2b-center.ru/app/market-next/zapros-kommercheskikh-predlozhenii-na-postavku-mtr-dlia-ob-ekta/tender-4559984/changes/",
+      "http": 200,
+      "outcome": "same generic homepage SHA, no case-specific evidence"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616506708",
+      "http": 200,
+      "sha256": "9ecb0dab2ed15573a387f258c3a9f4301e65dd53f9b280d4568258bfa908d749",
+      "outcome": "already verified SHA, duplicate; no new field"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?purchaseNoticeNumber=32616506708",
+      "http": 404
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?regNumber=32616506708",
+      "http": 404
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?regNumber=32515029641",
+      "http": 404
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32515029641",
+      "http": 404
+    }
+  ],
+  "attempted_unique_first_party_urls_at_least": 12,
+  "allowlist_blocked_before_http": [
+    "https://elektropostavka.ru/kdsfvg",
+    "https://injelek.ru/komplektuyuschie/vysokovoltnye-kondensatory/kosinusnye-kondensatory-kep-folgovye/kondensatory-kepf/"
+  ],
+  "month_searches_newly_covered": 0,
+  "exhaustive_month_searches": 0,
+  "source_grade_before": {
+    "A": 44,
+    "B": 8,
+    "C": 63,
+    "D": 8
+  },
+  "source_grade_after": {
+    "A": 45,
+    "B": 8,
+    "C": 62,
+    "D": 8
+  },
+  "verified_full_backup_shas": [
+    "c3e7041a0549abbdae35d196776edc9b7ad05ba44c508f82fa17a45a63db21d4",
+    "04eabfef21ad17d08e3b10efa3065105dcf78fb09dab0cd6e1f208c28dd82e69"
+  ],
+  "db_receipts": [
+    "receipts/pq-filter-model-32515029641-20261102T1333.json",
+    "receipts/pq-argos-b2b-4559984-20261102T1337.json"
+  ],
+  "reports": [
+    "V48: model rating +2 fields",
+    "V49: native B2B original +1 source field, A-grade +1"
+  ],
+  "bilingual_pdf_pages_each": 268,
+  "client_html_unchanged": true,
+  "test_results": "15 targeted pytest passed; Ruff clean; PDFs 268 pages each; PostgreSQL 123/112/45 after readback",
+  "why_zero_unique": "Exact-number discovery resolved existing commercial:4559984 component; no newly verified distinct lot found; EIS 32616506708 original SHA already present; supplier and offers inaccessible or not public.",
+  "next_targets": [
+    {
+      "case_id": "223fz:32514947144:lot1",
+      "gap": "signed supplier INN, execution, paid amount",
+      "retry": "new public EIS contract registry revision or signed attachment"
+    },
+    {
+      "case_id": "223fz:32515029641:lot1",
+      "gap": "signed supplier identity, OEM, paid amount",
+      "retry": "new registry supplier attachment; original notice documents 404 on two URL forms"
+    },
+    {
+      "case_id": "223fz:32616497692:lot1",
+      "gap": "final protocol and supplier",
+      "retry": "after 2026-11-02 16:30 Europe/Moscow"
+    }
+  ]
+}

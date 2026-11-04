@@ -1,0 +1,96 @@
+{
+  "schema_version": "pq-watchdog-source-search/1",
+  "as_of_moscow": "2026-10-30T22:42:34.901081+03:00",
+  "issue_comment_id": 6531885537,
+  "pr": 521,
+  "parent_head": "be81a85e503fc5a712f7f9f01b617cd79f28703e",
+  "db": {
+    "lots_before": 117,
+    "lots_after": 117,
+    "procedures": 106,
+    "eis223": 40,
+    "new_lots": 0,
+    "signed_suppliers": 0,
+    "executed_sales": 0,
+    "mutation": false
+  },
+  "new_secondary_candidates": [
+    {
+      "id": "commercial:140321-ТТ:lot1",
+      "buyer": "АО Челябинский цинковый завод",
+      "inn": "7448000013",
+      "published": "2026-10-01",
+      "bid_deadline": "2026-10-08",
+      "reported_result_date": "2026-10-28",
+      "item": "BO/R MT 10кВ 17,31мкФ",
+      "quantity": 3,
+      "url": "https://zakupki.kontur.ru/IS78626821"
+    },
+    {
+      "id": "commercial:125180-ТТ:lot1",
+      "buyer": "АО Челябинский цинковый завод",
+      "published": "2026-05-06",
+      "bid_deadline": "2026-05-11",
+      "item": "BO/R MT 10кВ 17,31мкФ",
+      "quantity": 3,
+      "url": "https://synapsenet.ru/zakupki/ugmk/125180-%D1%82%D1%82%231--chelyabinskaya-obl-kondensator-bor-mt-10kv-1731mkf"
+    }
+  ],
+  "dedup": "Same buyer/model/quantity; possible repeat, NOT a verified single project. No original procurement docs, protocol, supplier, contract or price. 10kV capacitor component candidate, NOT verified 6-35kV installed PQ system. Do not ingest.",
+  "first_party_attempts": [
+    {
+      "url": "https://etp.metal-it.ru/frame/index.html",
+      "http": 200,
+      "full_bytes": 290051,
+      "full_sha256": "455aa5185b862a91a297b31a111671becb309a7f61d548f63331f06faa640943",
+      "result": "Angular homepage, no case-specific original"
+    },
+    {
+      "url": "https://etp.metal-it.ru/",
+      "http": 200,
+      "result": "same public SPA, not a case original"
+    },
+    {
+      "url": "https://etp.metal-it.ru/frame/index.html",
+      "method": "public_browser_search",
+      "queries": [
+        "140321-ТТ",
+        "140321",
+        "BO/R MT 10 кВ",
+        "Челябинский цинковый"
+      ],
+      "result": "first three no match, fourth remained loading; NOT evidence of absence",
+      "run": "https://agent.tinyfish.ai/runs/5194db62-8248-4746-825f-8feb647e6a52"
+    }
+  ],
+  "metrics": {
+    "official_http_get_200": 2,
+    "public_ui_queries": 4,
+    "new_case_primary_originals": 0,
+    "new_primary_protocols": 0,
+    "new_secondary_procedure_leads": 2,
+    "new_verified_projects": 0,
+    "new_months_fully_covered": 0
+  },
+  "other_secondary_checked": {
+    "id": "commercial:1258722:lot1",
+    "source": "https://zakupki.kontur.ru/IS83917556",
+    "component_ratings": "1.05/1.2/1.85kV",
+    "note": "component voltage does not establish network voltage; no first-party original"
+  },
+  "next": [
+    {
+      "id": "ГП630876",
+      "retry_moscow": "2026-10-30 23:40"
+    },
+    {
+      "id": "32615684088",
+      "retry_moscow": "2026-10-31 09:00"
+    },
+    {
+      "id": "РН61003961",
+      "retry_moscow": "2026-10-31 10:00"
+    }
+  ],
+  "limitations": "No new verified core lots, signed sales or national market coverage. Canonical v29 101 rows unchanged."
+}

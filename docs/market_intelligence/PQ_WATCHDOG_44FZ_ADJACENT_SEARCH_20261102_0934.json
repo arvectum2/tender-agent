@@ -1,0 +1,308 @@
+{
+  "schema": "pq-watchdog-evidence-run/1",
+  "moscow_completed": "2026-11-02T09:33:51.422684+03:00",
+  "issue_comment_id": 6570662044,
+  "run_id": "TA-MI-20261102062807",
+  "canonical_pr": 521,
+  "acceptance_status": "pass",
+  "db_before": {
+    "unique_lots": 123,
+    "procedures": 112,
+    "eis_223_notices": 45
+  },
+  "db_after": {
+    "unique_lots": 123,
+    "procedures": 112,
+    "eis_223_notices": 45
+  },
+  "new_unique_lots": 0,
+  "new_core_6_35kv_lots": 0,
+  "new_verified_existing_core_fields": 0,
+  "new_signed_suppliers": 0,
+  "new_paid_sales": 0,
+  "first_party_month_searches": [
+    {
+      "law": "fz223",
+      "query": "УКРМ",
+      "month": "2024-11",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.11.2024&publishDateTo=30.11.2024&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "http_status": 200,
+      "page": 1,
+      "reported_total": 0,
+      "first_page_cards_inspected": 0,
+      "observed": "no_results",
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "УКРМ",
+      "month": "2024-12",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.12.2024&publishDateTo=31.12.2024&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "http_status": 200,
+      "page": 1,
+      "reported_total": 0,
+      "first_page_cards_inspected": 0,
+      "observed": "no_results",
+      "exhaustive": false
+    },
+    {
+      "law": "fz44",
+      "query": "УКРМ",
+      "month": "2026-10",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz44=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.10.2026&publishDateTo=31.10.2026&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "http_status": 200,
+      "page": 1,
+      "reported_total": 0,
+      "first_page_cards_inspected": 0,
+      "observed": "no_results",
+      "exhaustive": false
+    },
+    {
+      "law": "fz44",
+      "query": "фильтр гармоник",
+      "month": "2026-09",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz44=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.09.2026&publishDateTo=30.09.2026&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80+%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D0%BD%D0%B8%D0%BA",
+      "http_status": 200,
+      "page": 1,
+      "reported_total": 5,
+      "first_page_cards_inspected": 5,
+      "observed": "five medical-equipment service notices, title false positives",
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "STATCOM",
+      "month": "2026-10",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.10.2026&publishDateTo=31.10.2026&searchString=STATCOM",
+      "http_status": 200,
+      "page": 1,
+      "reported_total": 0,
+      "first_page_cards_inspected": 0,
+      "observed": "no_results",
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "SVC",
+      "month": "2026-09",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.09.2026&publishDateTo=30.09.2026&searchString=SVC",
+      "http_status": 200,
+      "page": 1,
+      "reported_total": 0,
+      "first_page_cards_inspected": 0,
+      "observed": "no_results",
+      "exhaustive": false
+    },
+    {
+      "law": "fz44",
+      "query": "батарея статических конденсаторов",
+      "month": "2025-06",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz44=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.06.2025&publishDateTo=30.06.2025&searchString=%D0%B1%D0%B0%D1%82%D0%B0%D1%80%D0%B5%D1%8F+%D1%81%D1%82%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D1%85+%D0%BA%D0%BE%D0%BD%D0%B4%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2",
+      "http_status": 200,
+      "page": 1,
+      "reported_total": 19,
+      "first_page_cards_inspected": 10,
+      "observed": "first ten are road-maintenance procurements, lexical false positives; remaining nine not checked",
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "компенсация реактивной мощности",
+      "month": "2024-11",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.11.2024&publishDateTo=30.11.2024&searchString=%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%86%D0%B8%D1%8F+%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9+%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8",
+      "http_status": 200,
+      "page": 1,
+      "reported_total": 0,
+      "first_page_cards_inspected": 0,
+      "observed": "no_results",
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "тиристорный компенсатор",
+      "month": "2025-12",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.12.2025&publishDateTo=31.12.2025&searchString=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "http_status": 200,
+      "page": 1,
+      "reported_total": 0,
+      "first_page_cards_inspected": 0,
+      "observed": "no_results",
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "компенсатор реактивной мощности",
+      "month": "2026-05",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.05.2026&publishDateTo=31.05.2026&searchString=%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80+%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9+%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8",
+      "http_status": 200,
+      "page": 1,
+      "reported_total": 0,
+      "first_page_cards_inspected": 0,
+      "observed": "no_results",
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "конденсаторная батарея",
+      "month": "2024-07",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.07.2024&publishDateTo=31.07.2024&searchString=%D0%BA%D0%BE%D0%BD%D0%B4%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80%D0%BD%D0%B0%D1%8F+%D0%B1%D0%B0%D1%82%D0%B0%D1%80%D0%B5%D1%8F",
+      "http_status": 200,
+      "page": 1,
+      "reported_total": 0,
+      "first_page_cards_inspected": 0,
+      "observed": "no_results",
+      "exhaustive": false
+    },
+    {
+      "law": "fz44",
+      "query": "реактивной мощности",
+      "month": "2026-06",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz44=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.06.2026&publishDateTo=30.06.2026&searchString=%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9+%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8",
+      "http_status": 200,
+      "page": 1,
+      "reported_total": 20,
+      "first_page_cards_inspected": 10,
+      "observed": "first-page: one low-voltage PQ controller line item in mixed electrical supply, other nine unrelated auto/machinery parts; 10 unseen results remain",
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "УКРМ",
+      "month": "2024-06",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.06.2024&publishDateTo=30.06.2024&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "http_status": 200,
+      "page": 1,
+      "reported_total": 0,
+      "first_page_cards_inspected": 0,
+      "observed": "no_results",
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "БСК",
+      "month": "2026-10",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.10.2026&publishDateTo=31.10.2026&searchString=%D0%91%D0%A1%D0%9A",
+      "http_status": 200,
+      "page": 1,
+      "reported_total": 143,
+      "first_page_cards_inspected": 10,
+      "observed": "first ten lexical false positives including Башкирская сетевая компания acronym, personal names and other non-PQ; 133 results not reviewed",
+      "exhaustive": false
+    }
+  ],
+  "distinct_new_month_query_pairs": 14,
+  "first_party_captures": [
+    {
+      "case_id": "44fz:0373100009926000182:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/ea20/view/common-info.html?regNumber=0373100009926000182",
+      "sha256": "b8e44e01a1d19643a51317ba970a957821ec1314ac861fccf9d6a49e0dd59a15",
+      "receipt": "captures/44fz_0373100009926000182_lot1/20261102T063312721279Z-79bde17e-b8e44e01a1d19643.bin.json",
+      "bytes": 348894,
+      "http_status": 200,
+      "new_unique_sha": true
+    },
+    {
+      "case_id": "44fz:0373100009926000182:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/ea20/view/documents.html?regNumber=0373100009926000182",
+      "sha256": "630c6a1aab718bf8494c004a0a414ba6a9b3bf808b1d22bfeb9ee705dea589ed",
+      "receipt": "captures/44fz_0373100009926000182_lot1/20261102T063313242280Z-b62ec2d2-630c6a1aab718bf8.bin.json",
+      "bytes": 166177,
+      "http_status": 200,
+      "new_unique_sha": true
+    },
+    {
+      "case_id": "223fz:32616433248:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616433248",
+      "sha256": "2345e8a88ff2731c05a43a69af49b50e74a28cc44ae4ae714ac386111627f8e3",
+      "receipt": "captures/223fz_32616433248_lot1/20261102T062903458351Z-107aefbc-2345e8a88ff2731c.bin.json",
+      "bytes": 148575,
+      "http_status": 200,
+      "new_unique_sha": false
+    },
+    {
+      "case_id": "223fz:32616433248:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616433248",
+      "sha256": "774c4a3d66a5c118b2b4cf43351cae692955e313aea92ce7987d02d962512218",
+      "receipt": "captures/223fz_32616433248_lot1/20261102T062912514457Z-add7c3bf-774c4a3d66a5c118.bin.json",
+      "bytes": 136230,
+      "http_status": 200,
+      "new_unique_sha": false
+    },
+    {
+      "case_id": "223fz:32616433248:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616433248&noticeGuid=e5083f5e-3ce6-3bb6-921b-1b72ad8b6a0a",
+      "sha256": "c5185b2178b41ee40ed8eb64f04fbcdb1734d7c9d1d158e8a0bd00ad77610d89",
+      "receipt": "captures/223fz_32616433248_lot1/20261102T062913268209Z-21061989-c5185b2178b41ee4.bin.json",
+      "bytes": 152272,
+      "http_status": 200,
+      "new_unique_sha": false
+    },
+    {
+      "case_id": "223fz:32515208744:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32515208744",
+      "sha256": "080e48e5aede0ff8d44cbdc59b43918644c2f76a935298b1974c5319be0fd18d",
+      "receipt": "captures/223fz_32515208744_lot1/20261102T062913925513Z-b660d222-080e48e5aede0ff8.bin.json",
+      "bytes": 153857,
+      "http_status": 200,
+      "new_unique_sha": false
+    },
+    {
+      "case_id": "223fz:32615760238:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32615760238",
+      "sha256": "d230fc1a29457fdaa475ddc9fd35d8c519c3255ff64f8ae107d7157cf5a904c8",
+      "receipt": "captures/223fz_32615760238_lot1/20261102T062914875281Z-c3fc5342-d230fc1a29457fda.bin.json",
+      "bytes": 148474,
+      "http_status": 200,
+      "new_unique_sha": false
+    }
+  ],
+  "new_unique_primary_sha_count": 2,
+  "new_substantive_primary_cases": 1,
+  "new_primary_case": {
+    "id": "44fz:0373100009926000182:lot1",
+    "buyer": "ФГБУК Государственная Третьяковская галерея",
+    "scope": "mixed electrical spare parts, NOT proven 6-35kV",
+    "pq_item": "Автоматический регулятор реактивной мощности",
+    "quantity": 2,
+    "unit_initial_price_rub": "30949.51",
+    "line_initial_total_rub": "61899.02",
+    "controller_supply_voltage_v": "80-275",
+    "controller_measurement_voltage_v": "80-275",
+    "price_type": "procurement initial line estimate, not contract or executed sale",
+    "decision": "exclude_from_6_35kv_core; adjacent low-voltage controller only",
+    "first_party_url": "https://zakupki.gov.ru/epz/order/notice/ea20/view/common-info.html?regNumber=0373100009926000182",
+    "source_sha256": "b8e44e01a1d19643a51317ba970a957821ec1314ac861fccf9d6a49e0dd59a15",
+    "verbatim_quotes": [
+      "Автоматический регулятор реактивной мощности",
+      "Штука 2,00 30 949,51 61 899,02",
+      "Напряжение питания ≥ 80.00000000000 и ≤ 275.00000000000 Вольт"
+    ]
+  },
+  "target_checks": [
+    {
+      "case": "223fz:32616433248:lot1",
+      "outcome": "EIS common-info/protocols/documents HTTP200 with unchanged SHA; contract tab and final protocol print HTTP404 on 2026-11-02 after 09:00 MSK; prior named commission first-place bidder is not signed supplier",
+      "signed_supplier_verified": false
+    },
+    {
+      "case": "223fz:32514720691:lot1",
+      "outcome": "EIS registered-contract card HTTP404 this run; previous signed register evidence remains valid; supplier identity still unverified"
+    },
+    {
+      "case": "223fz:32616355390:lot1",
+      "outcome": "EIS contract tab HTTP404, no signed contract proven"
+    }
+  ],
+  "transport_limitations": [
+    "httpx TLS certificate chain error; strict direct curl returned HTTP404 for some endpoints; native OS TLS trust succeeded for five unchanged 223 originals and two new 44 originals",
+    "8 first attempts to archive search result pages rejected by immutable capture identity guard (correctly); subsequent search requests performed read-only, without fake lot case IDs",
+    "Search is first page only; zero matches or HTTP404 do not establish zero market; some queries match unrelated descriptions or bidder/company acronym",
+    "No new core evidence, no DB writes, no backup needed, no HTML/PDF regeneration"
+  ],
+  "next_targets": [
+    "223fz:32616433248:lot1 retry official signed contract registry after 2026-11-03 09:00 Moscow, or on observed registry publication",
+    "223fz:32616497692:lot1 retry final commission protocol after 2026-11-02 16:30 Moscow",
+    "223fz:32616474682:lot1/lot2 retry final protocol after 2026-12-03 10:00 Moscow"
+  ],
+  "no_auto_merge": true
+}

@@ -1,0 +1,93 @@
+{
+  "schema": "pq-watchdog-20261029/1",
+  "comment_id": 6494350351,
+  "moscow": "2026-10-29T13:40:47+03:00",
+  "db_before": {
+    "lots": 109,
+    "procedures": 98,
+    "eis223": 37
+  },
+  "db_after": {
+    "lots": 109,
+    "procedures": 98,
+    "eis223": 37
+  },
+  "new_verified_lots": 0,
+  "new_db_rows": 0,
+  "new_verified_projects": 0,
+  "new_protocol_winners": 0,
+  "new_signed_suppliers": 0,
+  "new_executed_prices": 0,
+  "new_months_fully_covered": 0,
+  "new_secondary_candidates": [
+    {
+      "id": "223fz:32616523441:lot1",
+      "buyer": "Россети / МЭС Северо-Запада",
+      "date": "2026-10-28",
+      "description": "ПС Чесменская: замена компенсирующих устройств ЗРУ 10кВ, смешанный EPC",
+      "nmck_total_epc_rub": 29384480,
+      "secondary": "https://energybase.ru/tender/01a186a7-ee79-71ff-8cf0-7068bbc165d2",
+      "scope": "possible_core_integrated_not_technically_verified",
+      "first_party_url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616523441",
+      "first_party_http": 404,
+      "first_party_bytes": 146,
+      "original_verified": false,
+      "supplier_verified": false,
+      "executed_price_verified": false,
+      "postgresql_exact_id_present": false
+    },
+    {
+      "id": "223fz:32615700251:lot1",
+      "buyer": "Томские электрические сети",
+      "date": "2026-02-12",
+      "description": "ПС Гравийная 35/10кВ: модернизация ячейки конденсаторной установки, смешанный EPC",
+      "nmck_total_epc_rub": 11244111.77,
+      "secondary": "https://energybase.ru/tender-outdated/019c5616-79f3-7239-8f95-dd2e217d4155",
+      "scope": "adjacent_capacitor_cell_not_proven_new_ukrm",
+      "first_party_url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32615700251",
+      "first_party_http": 404,
+      "first_party_bytes": 146,
+      "original_verified": false,
+      "supplier_verified": false,
+      "executed_price_verified": false,
+      "postgresql_exact_id_present": false
+    }
+  ],
+  "first_party_requests": {
+    "GET_200": 1,
+    "GET_404": 2,
+    "python_tls_errors": 3,
+    "diagnostic_HEAD": 3,
+    "note": "EIS 404 146 bytes direct verified TLS, not absence of market; Python SSL failure not bypassed"
+  },
+  "captured_original": {
+    "case_id": "commercial:4302914:lot1",
+    "url": "https://www.b2b-center.ru/market/view.html?id=4302914",
+    "bytes": 76611,
+    "sha256": "3c227521e95d42b5b2f0b83c2f4b8b2ac116a5c43f0d557113ab8d04b90204de",
+    "previous_sha256": "519a7d0b4c80e899d3e703c3e0f42d4a7c0d521d821c71ac4cf1d795649dd196",
+    "receipt": "captures/commercial_4302914_lot1/20261029T103849504863Z-e3b86a09-3c227521e95d42b5.bin.json",
+    "result": "Existing 6.3kV STATCOM service, 1 bid, organizer-hidden result; timestamped new dynamic HTML not new tender"
+  },
+  "already_in_db": [
+    "commercial:4302914:lot1",
+    "aggregator:2418411721:lot1"
+  ],
+  "next_three": [
+    {
+      "id": "32616523441",
+      "retry_moscow": "2026-10-30 13:40"
+    },
+    {
+      "id": "32615700251",
+      "retry_moscow": "2026-10-30 13:40"
+    },
+    {
+      "id": "106044-ТТ",
+      "retry_moscow": "2026-10-30 06:42"
+    }
+  ],
+  "v29_rows": 101,
+  "db_mutated": false,
+  "status": "IN_PROGRESS / REVIEW"
+}

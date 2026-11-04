@@ -1,0 +1,157 @@
+{
+  "schema_version": "pq-watchdog-b2b-native-evidence/1",
+  "observed_at_utc": "2026-10-29T00:37:08.666763+00:00",
+  "run_comment_id": 6484510624,
+  "canonical_pr": 521,
+  "canonical_corpus": "v29_101_unchanged",
+  "source_request_count": 5,
+  "source_http_200": 5,
+  "fresh_sha_verified_original_pages": 5,
+  "previously_saved_source_sha_reverified": 1,
+  "new_v29_leads": 0,
+  "new_v29_lots": 0,
+  "new_deduplicated_projects": 0,
+  "new_protocols_with_named_winner": 0,
+  "new_signed_suppliers": 0,
+  "new_executed_contract_prices": 0,
+  "new_month_searches": 0,
+  "new_core_pq_6_35kv_sales": 0,
+  "case_4535313": {
+    "canonical_id": "commercial:4535313:lot1",
+    "v29_existing": true,
+    "technology": "capacitor_bank_ukrm",
+    "equipment_nominal_kv": 6,
+    "equipment_kvar": 630,
+    "quantity": 1,
+    "buyer_site": "АО Разрез Тугнуйский (delivery site in original card)",
+    "organizer": "ООО АИМ МЕНЕДЖМЕНТ",
+    "date_published": "2026-07-23",
+    "bid_count_public": 4,
+    "initial_price": "not_public",
+    "named_winner": "unknown",
+    "signed_supplier": "unknown",
+    "source_grade": "first_party_card_original_verified",
+    "source_refs": [
+      "4535313_card",
+      "4535313_offers"
+    ],
+    "outcome_visibility": "offers page requires registration; no access bypass"
+  },
+  "case_4538400": {
+    "new_notice_not_in_v29": true,
+    "status": "cancelled",
+    "cancellation_date": "2026-08-17",
+    "original_equipment_nominal_kv": 10,
+    "original_quantity": 2,
+    "direct_original_successor_notice": "4565274",
+    "successor_in_v29": true,
+    "same_underlying_project": "verified_explicit_successor_reference",
+    "count_as_new_project": false,
+    "successor_public_bid_count": 11,
+    "successor_outcome": "organizer_hidden",
+    "signed_supplier": "unknown",
+    "price": "not_public",
+    "source_refs": [
+      "4538400_card",
+      "4538400_positions",
+      "4565274_card_existing",
+      "4565274_offers"
+    ]
+  },
+  "sources": {
+    "4535313_card": {
+      "sha256": "8416785b1c2facdb19a9998689e13007244354702313f8f825a832bd77bfa26a",
+      "bytes": 70122,
+      "http_status": 200,
+      "new_in_run": true,
+      "quotes": [
+        "Закупка конденсаторной установки среднего напряжения УКРМ 6кВ 630 кВар",
+        "Количество: 1 шт.",
+        "Дата публикации: 23.07.2026 10:42",
+        "Организатор: ООО \"АИМ МЕНЕДЖМЕНТ\"",
+        "Всего заявок: 4.",
+        "Условия поставки: DDP склад п. Саган-Нур",
+        "Общая стоимость закупки: Без указания цены"
+      ],
+      "url": "https://www.b2b-center.ru/market/view.html?id=4535313"
+    },
+    "4535313_offers": {
+      "sha256": "176d62d40dd0372fcdcc5ab6c3ca1cae53b3cd17392af9b4566d18f4fe7300cb",
+      "bytes": 62128,
+      "http_status": 200,
+      "new_in_run": true,
+      "quotes": [
+        "Зарегистрируйтесь за 5 минут, чтобы просматривать заявки, разъяснения организатора и скачивать документацию."
+      ],
+      "url": "https://www.b2b-center.ru/market/zakupka-kondensatornoi-ustanovki-srednego-napriazheniia-ukrm-6kv-630-kvar/tender-4535313/?action=offers"
+    },
+    "4538400_card": {
+      "sha256": "eae7819b910277cf56cf1c90682afe022ba0e3697fd8c16a741a6d0baf2c788e",
+      "bytes": 77159,
+      "http_status": 200,
+      "new_in_run": true,
+      "quotes": [
+        "Дата отмены процедуры: 17.08.2026 в 13:51.",
+        "Основание отмены процедуры: открыт новый конкурс № 4565274 (в связи с внесением корректировок проектным институтом в ОЛ)"
+      ],
+      "url": "https://www.b2b-center.ru/market/view.html?id=4538400"
+    },
+    "4538400_positions": {
+      "sha256": "2d326d7fb22eace3450de0950bf766d34121f9bc5ed2e307f852774058dba46f",
+      "bytes": 56594,
+      "http_status": 200,
+      "new_in_run": true,
+      "quotes": [
+        "Конденсаторная установка 10 кВ АУКРМ",
+        "2 ШТ"
+      ],
+      "url": "https://www.b2b-center.ru/market/zakupka-ustanovki-kondensatornoi-ukrm-dlia-mgbzh/tender-4538400/?action=positions"
+    },
+    "4565274_card_existing": {
+      "sha256": "8b7232d9aca473647d24f2c741e44d36042ab6ae325d77d263dc6cbff528cf78",
+      "bytes": 76146,
+      "http_status": 200,
+      "new_in_run": false,
+      "quotes": [
+        "взамен конкурса № 4538400",
+        "Всего заявок: 11.",
+        "Результаты процедуры скрыты по решению ее организатора."
+      ],
+      "url": "https://www.b2b-center.ru/market/view.html?id=4565274"
+    },
+    "4565274_offers": {
+      "sha256": "63b54b26d4bb1a4580b34d76d79fbc0eb75a6012666e29c2a523c6144e80aa04",
+      "bytes": 65878,
+      "http_status": 200,
+      "new_in_run": true,
+      "quotes": [
+        "Поступившие заявки - 11",
+        "Зарегистрируйтесь за 5 минут, чтобы просматривать заявки, разъяснения организатора и скачивать документацию."
+      ],
+      "url": "https://www.b2b-center.ru/market/zakupka-kondensatornoi-ustanovki-10-kv-aukrm-uk1-uk2-dlia-mgbzh-ps/tender-4565274/?action=offers"
+    }
+  },
+  "limitations": [
+    "No signed supplier or executed price for either case",
+    "B2B offer pages require registration; no bypass",
+    "Cancelled predecessor and successor are distinct notices but same project; no double count",
+    "Previous 4565274 card rechecked, not a newly acquired original"
+  ],
+  "accepted_chatgpt_arc_review_packets": 2,
+  "accepted_review_ids": [
+    "4535313-b2b-20261029-0334",
+    "4538400-b2b-20261029-0334"
+  ],
+  "exact_source_quotes_accepted": 16,
+  "new_first_party_notice_ids_found_outside_v29": 1,
+  "new_first_party_lot_ids_found_outside_v29": 1,
+  "new_project_count_after_dedup": 0,
+  "new_notice_disposition": "4538400 is cancelled predecessor of existing v29 4565274; do not add to 101-row v29 without formal versioned reconciliation",
+  "newly_exhaustively_covered_months": 0,
+  "next_retry_eligibility_moscow": "2026-10-29T15:36:00+03:00 (same exact B2B card/offer requests only; earlier if verified public change)",
+  "next_ranked_cases": [
+    "32515582393 6kV UKRM: signed supplier/payment official original after 2026-10-29 06:46 MSK",
+    "32413764701 10kV UKRM: signed supplier/payment official original after 2026-10-29 06:46 MSK",
+    "119199-ТТ / 135171-ТТ 6kV UKRM: discover original Metal-IT tender identity via official search, no guessed links"
+  ]
+}

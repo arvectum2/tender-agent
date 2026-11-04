@@ -1,0 +1,53 @@
+{
+  "schema_version": "pq-original-source-recheck/1",
+  "as_of": "2026-10-29",
+  "canonical_candidate_id": "commercial:306-644:lot1",
+  "prior_existing_evidence_index": "data/market_intelligence/power_quality/primary_etp_facts.v1.json",
+  "prior_indexed_original_public_html_sha256": "eb1e730639d14e2bba8726a9b28ea58b57e6b37e8c18696ea73339244a72048b",
+  "official_etp_card_url": "https://bidzaar.com/app/process/light/019ce668-617b-7b1a-861e-113ed78182af",
+  "organizer": "СИБСТЕКЛО",
+  "location": "Россия, Новосибирск, ул. Даргомыжского, 8А, стр. 20",
+  "announcement_date": "2026-03-13",
+  "deadline_date": "2026-03-31",
+  "request_finished_date": "2026-04-17",
+  "public_platform_status": "completed",
+  "procurement_scope": "installation_connection_and_commissioning_of_6kV_UKRM",
+  "technical_nominal_voltage_kv": 6,
+  "commercial_request_items": 1,
+  "public_original_attachment_urls": [
+    {
+      "type": "technical_spec_docx",
+      "url": "https://bidzaar.com/api/filestorage/files/download/8042258e-bd58-4efc-9f98-b00db6113f82",
+      "bytes_and_sha_this_run_verified": false
+    },
+    {
+      "type": "layout_annex_pdf",
+      "url": "https://bidzaar.com/api/filestorage/files/download/d51475af-9d65-4f4c-b039-e46387a8e790",
+      "bytes_and_sha_this_run_verified": false
+    },
+    {
+      "type": "commercial_offer_form_xls",
+      "url": "https://bidzaar.com/api/filestorage/files/download/120489e6-e0c5-451e-8ab6-5b08948e4077",
+      "bytes_and_sha_this_run_verified": false
+    },
+    {
+      "type": "draft_contract_doc",
+      "url": "https://bidzaar.com/api/filestorage/files/download/8a0545e5-3d6e-42b4-b090-3651cf45549b",
+      "bytes_and_sha_this_run_verified": false
+    }
+  ],
+  "document_extraction_this_run": {
+    "original_layout_annex_pdf_text": "Схема расположения нового оборудования; Приложение №3 к техническому заданию",
+    "technical_docx": "Not downloaded/validated; direct fetch unavailable",
+    "source": "public Bidzaar source links; third-party extractor text limited"
+  },
+  "strict_6_35kV_equipment_technology_confirmed": true,
+  "new_equipment_supply_included_in_tender_unverified": true,
+  "bid_winner_verified": false,
+  "signed_supplier_verified": false,
+  "actual_contract_price_rub": null,
+  "verified_equipment_sales_rub": null,
+  "db_identity_dedup_status": "NOT_VERIFIED_THIS_RUN; case already represented in repo first-party facts; do not increment corpus without readback and original verification",
+  "db_inserted_this_run": false,
+  "follow_up_priority": "Read PostgreSQL for commercial:306-644:lot1; if absent, inspect original first-party technical DOCX, make new post-backup source-bound append; never count as new equipment sale without independent contract."
+}

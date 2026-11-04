@@ -1,0 +1,226 @@
+{
+  "schema_version": "pq-watchdog-eis-design/1",
+  "run_id": "20261030T1732-MSK",
+  "as_of_moscow": "2026-10-30T17:41:54+03:00",
+  "pr": 521,
+  "issue_comment_id": 6525277112,
+  "parent_head": "fedded8400d15ec48246dcecc4822ccc2ae3fb99",
+  "db": {
+    "before_lots": 116,
+    "after_lots": 117,
+    "before_procedures": 105,
+    "after_procedures": 106,
+    "before_eis_223": 39,
+    "after_eis_223": 40,
+    "new_unique_lots": 1,
+    "new_core_6_35kv": 0,
+    "new_adjacent_110kv_design": 1,
+    "new_physical_projects": 0,
+    "signed_suppliers": 0,
+    "executed_sales": 0,
+    "readback": [
+      {
+        "id": "223fz:32615937898:lot1",
+        "hash": "0d8a096677b1185465f897f5ab1019a0abf7304bbbcf0a78d34ad05eec116279",
+        "review": "unreviewed",
+        "status": "staged_unreviewed",
+        "revision": 1
+      }
+    ],
+    "backup_sha256": "7a252b492238f760c0378d65480e6beb199e9178920480699398e82fa5f2bcee",
+    "source_manifest_sha256": "98a08e2330d4ac99fa0d3890738be56df8fdbaef497ed4d209523482300280fe"
+  },
+  "research": {
+    "roseltorg_http200": 6,
+    "eis_direct_http404": 4,
+    "soap_cells": [
+      {
+        "day": "2026-04-22",
+        "region": "42",
+        "type": "purchaseNotice",
+        "status": "complete_with_archive_scan",
+        "archives": 1,
+        "candidate_ids": []
+      },
+      {
+        "day": "2026-04-22",
+        "region": "77",
+        "type": "purchaseNotice",
+        "status": "complete_with_archive_scan",
+        "archives": 4,
+        "candidate_ids": [
+          "32615937898",
+          "32615939281"
+        ]
+      },
+      {
+        "day": "2026-05-15",
+        "region": "77",
+        "type": "purchaseProtocol",
+        "status": "complete_with_archive_scan",
+        "archives": 5,
+        "candidate_ids": [
+          "32615937898",
+          "32616013300"
+        ]
+      },
+      {
+        "day": "2026-05-22",
+        "region": "77",
+        "type": "purchaseProtocol",
+        "status": "complete_with_archive_scan",
+        "archives": 5,
+        "candidate_ids": [
+          "32615937898",
+          "32616006125"
+        ]
+      },
+      {
+        "day": "2026-10-28",
+        "region": "77",
+        "type": "purchaseNotice",
+        "status": "complete_with_archive_scan",
+        "archives": 6,
+        "candidate_ids": []
+      },
+      {
+        "day": "2026-10-28",
+        "region": "78",
+        "type": "purchaseNotice",
+        "status": "complete_with_archive_scan",
+        "archives": 2,
+        "candidate_ids": []
+      },
+      {
+        "day": "2026-10-29",
+        "region": "77",
+        "type": "purchaseNotice",
+        "status": "complete_with_archive_scan",
+        "archives": 6,
+        "candidate_ids": []
+      },
+      {
+        "day": "2026-10-29",
+        "region": "78",
+        "type": "purchaseNotice",
+        "status": "complete_with_archive_scan",
+        "archives": 2,
+        "candidate_ids": []
+      }
+    ],
+    "soap_zip_archives": 31,
+    "case_specific_original_zip": 3,
+    "case_specific_original_protocol_xml": 2,
+    "new_named_winner_protocols": 0,
+    "complete_months": 0,
+    "roseltorg_tags": {
+      "УКРМ": [
+        "32616433248",
+        "32616497692"
+      ],
+      "БСК": [],
+      "СТАТКОМ": [],
+      "компенсация реактивной мощности": [],
+      "фильтрокомпенсирующая": []
+    },
+    "limitations": "One-page searches and date/region SOAP cells are not exhaustive coverage. EIS public links HTTP404. No auth bypass."
+  },
+  "case": {
+    "id": "223fz:32615937898:lot1",
+    "buyer": "АО Россети Научно-Технический Центр",
+    "inn": "7728589190",
+    "role": "design_only",
+    "equipment_voltage_kv": 110,
+    "power_mvar": 52,
+    "nmc_rub": 3050000,
+    "commission_bid_rub": 3050000,
+    "one_application": true,
+    "missed_contest": true,
+    "signed_supplier": null,
+    "executed_price": null,
+    "contractSigned_xml_flag_not_signature": true,
+    "physical_project": "PS Tyazhinskaya BSK-110 to SKRM 52Mvar",
+    "same_project_notices": [
+      "32616400421",
+      "32616435269"
+    ],
+    "originals": [
+      {
+        "sha256": "180e71012a031d52205ffda334f7eda13d87f5c38c85ae878d942032b1ae37c3",
+        "filename": "documentation-archive.zip",
+        "source_name": "EIS RI223 SOAP notice ZIP 2026",
+        "private_relative": "eis-20261030-research/RI223/purchaseNotice/2026-04-22/region-77/archive-001/documentation-archive.zip",
+        "bytes": 7428360
+      },
+      {
+        "sha256": "ac61bd642657741bc7919dc05b81713fadfd1391601eac7c32a023a3014d87e4",
+        "filename": "documentation-archive.zip",
+        "source_name": "EIS RI223 SOAP retrade ZIP 2026",
+        "private_relative": "eis-20261030-research/RI223/purchaseProtocol/2026-05-15/region-77/archive-002/documentation-archive.zip",
+        "bytes": 3673617
+      },
+      {
+        "sha256": "2fc8340d25599029acef1f91a1060a7b42ae061548788197b5edcf1e8847d646",
+        "filename": "documentation-archive.zip",
+        "source_name": "EIS RI223 SOAP final ZIP 2026",
+        "private_relative": "eis-20261030-research/RI223/purchaseProtocol/2026-05-22/region-77/archive-001/documentation-archive.zip",
+        "bytes": 3643846
+      }
+    ],
+    "xml_members": [
+      {
+        "kind": "notice",
+        "archive_sha256": "180e71012a031d52205ffda334f7eda13d87f5c38c85ae878d942032b1ae37c3",
+        "xml_member": "purchaseNotice_32615937898_1_019DB41400107D76995955B560021069.xml",
+        "xml_sha256": "cb593728f918e395793047411964ecd85df4aaeb437435652de8a2535c9d4262"
+      },
+      {
+        "kind": "retrade",
+        "archive_sha256": "ac61bd642657741bc7919dc05b81713fadfd1391601eac7c32a023a3014d87e4",
+        "xml_member": "purchaseProtocol_32615937898_1_019E2B01A8347E47857767CAAA80C325.xml",
+        "xml_sha256": "e7643c8e0fa0f55a568ee86e7c9e15ff35835664419a7619109b085c325af370"
+      },
+      {
+        "kind": "final",
+        "archive_sha256": "2fc8340d25599029acef1f91a1060a7b42ae061548788197b5edcf1e8847d646",
+        "xml_member": "purchaseProtocol_32615937898_1_019E4E5D11F67A3AABA4DBBB003A03ED.xml",
+        "xml_sha256": "1f3b90a82a9d277d695ab46adf0ff6b5e069a28fb9698f46872a5b75b0a4b223"
+      }
+    ]
+  },
+  "excluded": [
+    {
+      "id": "32615939281",
+      "reason": "ФВГ — фильтры очистки воздуха, ЕИС ОКПД2"
+    },
+    {
+      "id": "32616013300",
+      "reason": "монтаж воздушных фильтров ФВГ, не PQ"
+    },
+    {
+      "id": "32616006125",
+      "reason": "БСК 220 кВ, вне 6–35 кВ"
+    }
+  ],
+  "tests": {
+    "client_report": "11 passed",
+    "ruff": "pass",
+    "code_changed": false,
+    "html_updated_from_live_pg": true
+  },
+  "next": [
+    {
+      "case": "РН61003961",
+      "after_moscow": "2026-10-30 20:00"
+    },
+    {
+      "case": "ГП630876",
+      "after_moscow": "2026-10-30 23:40"
+    },
+    {
+      "case": "32615684088",
+      "after_moscow": "2026-10-31 09:00"
+    }
+  ],
+  "canonical_v29_unchanged": 101
+}
