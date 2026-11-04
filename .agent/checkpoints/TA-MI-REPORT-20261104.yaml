@@ -1,0 +1,28 @@
+task_id: TA-MI-REPORT-20261104
+status: in_progress
+goal: Deliver as-of-2026-11-04 bilingual exhaustive PQ market intelligence report from the live corpus using the verified Arvectum three-slide RETO exemplar.
+definition_of_done:
+  - Read-only freeze of current unique lot-level PostgreSQL corpus with source links, content hash, exact live metrics, no unrelated DB changes.
+  - Strong cross-corpus analytical summary (scope, technologies, buyers, years, procedures, price types, outcome status, evidence gaps) without market coverage or signed contract overclaim.
+  - Reusable three-page dossier for every unique lot: executive case; technical and exact prices; bid roles, provenance, missing fields and research next steps.
+  - Reuse original vector Arvectum Block, brandbook colors and PT Sans/JetBrains Mono, output RU and EN PDFs with identical coverage and versioned immutable artifacts.
+  - Audit every canonical ID on exactly three consecutive PDF pages, no clipped text or missing pages, accessible links, scripts/test checks, render previews.
+  - Commit snapshot, generator, audit, readme, tests and PDFs to original research PR #521, mark checkpoint completed.
+completed:
+  - Verified live DB on 2026-11-04 16:57 MSK: 123 unique lots, 112 distinct procedure tokens, 45 EIS-223 notices.
+  - Located original three-slide source-bound exemplar, verified Arvectum vector and original docs.
+current_stage: Final complete, tested bilingual PDFs, full normalized snapshot and field/source ledgers ready for Git publication.
+remaining:
+  - Export immutable current corpus and evidence ledger. [done]
+  - Generate full bilingual report using exemplar. [done]
+  - Validate geometry, no clipping, IDs, source hyperlinks, consistency. [done]
+  - Commit/push into existing PR and close report task checkpoint. [pending]
+last_verified_commit: 1e82747813cccfdc2d6a246f7f088a27d87f0d39
+latest_tests: 123/123 lots, 112 procedures, 45 EIS notices, 294 source URLs. 406 RU and EN pages; 369 case pages, 6 protocol appendices. 738 original-ID case-page checks PASS; 0 DOM overflow; 0 off-page text; embedded PT Sans and JetBrains Mono; 4 focused pytest PASS; Ruff PASS.
+checkout: /Users/master/ArvectumSafe/worktrees/ta-mi-clientdeck-20261030
+resume_instruction: Continue generating as-of-Nov4 full report; no DB mutations or unrelated task checkpoint modifications; keep single PR #521, rebase on Watchdog remote branch before push.
+
+snapshot_sha256: bd2878b3b024ba90db4b6250b3d7be6263ca1c7211b7035fe8ce1f27c7cbb8d8
+ru_pdf_sha256: e4a75c8ffc3e3449380249aaaefbf73eebdd16a8b2578791726fd917d67502af
+en_pdf_sha256: b130629a80c6628b5aefa37faed7556dcd2151bf7b37f9382e8644d78ebc468f
+release_receipt: docs/market_intelligence/ARVECTUM_FGI_PQ_RELEASE_RECEIPT_20261104.json
