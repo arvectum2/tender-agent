@@ -6258,3 +6258,28 @@ mi_watchdog_20261104_0833:
     - '223fz:32616506708:lot1 commission after 2026-11-06 09:00 Moscow'
   client_html_unchanged: true
   no_auto_merge: true
+
+watchdog_run_2026_11_05_0335_msk:
+  status: in_progress
+  accepted_git_head: e90d2d08b1c909ef2780df16f7006645cd3ab014
+  internal_apfs_acceptance: pass
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  source_requests_success_http200: 3
+  source_requests_failed_before_http: 1
+  new_immutable_original_versions: 3
+  new_final_protocol_originals: 1
+  new_unique_lots: 0
+  new_verified_fields_in_database: 0
+  new_signed_suppliers: 0
+  new_paid_pq_equipment_sales: 0
+  new_exhaustive_months: 0
+  key_evidence: '32616497692 final protocol no.3 dated 03.11.2026: one anonymous bidder no.1, price 79101498.40 RUB, failed competition, proposed contract and pre-contract negotiations; no signed contract proven. Immutable ZIP SHA cc2fa5a9e0e25d8ce41e56ca68826f5935088393e94242fb892bd6c2b12ce00b.'
+  next_targets:
+    - '32616497692 signed contract/participant identity after 2026-11-06 09:00 Moscow'
+    - '32616433248 signed registry after 2026-11-06 09:00 Moscow'
+    - '32616506708 commission after 2026-11-06 09:00 Moscow'
+  client_html_unchanged: true
+  no_auto_merge: true
