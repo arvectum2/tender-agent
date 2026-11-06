@@ -6339,3 +6339,30 @@ watchdog_run_2026_11_06_2133_msk:
     - '32616506708 commission protocol: retry after 2026-11-07 09:00 MSK'
   client_html_unchanged: true
   no_auto_merge: true
+
+watchdog_run_2026_11_07_0036_msk:
+  status: in_progress
+  issue_comment_id: 6696296920
+  internal_apfs_acceptance: pass
+  git_head_before: 8053bb6bddd6ba62e691f6eab8c87de2e1a8f789
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  source_requests: 3
+  source_http200: 2
+  source_http404: 1
+  immutable_captures: 0
+  new_unique_lots: 0
+  new_verified_fields: 0
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_paid_pq_equipment_sales: 0
+  exhaustive_months: 0
+  observation: 'B2B-Center and ETP GPB search landing HTML returned HTTP200 but no server-rendered UKRM result rows; EIS search HTTP404. No verified primary lot/protocol or negative-market inference.'
+  next_targets:
+    - '32616497692 signed contract: EIS retry after 2026-11-07 09:00 MSK'
+    - '32616433248 signed contract: EIS retry after 2026-11-07 09:00 MSK'
+    - '32616506708 commission protocol: EIS retry after 2026-11-07 09:00 MSK'
+  client_html_unchanged: true
+  no_auto_merge: true
