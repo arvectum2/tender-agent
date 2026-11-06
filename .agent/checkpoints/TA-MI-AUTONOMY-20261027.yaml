@@ -6366,3 +6366,31 @@ watchdog_run_2026_11_07_0036_msk:
     - '32616506708 commission protocol: EIS retry after 2026-11-07 09:00 MSK'
   client_html_unchanged: true
   no_auto_merge: true
+
+watchdog_run_2026_11_07_0134_msk:
+  status: in_progress
+  issue_comment_id: 6697516515
+  internal_apfs_acceptance: pass
+  git_head_before: 6c4635d4e972640cee565e5b934a1560c5ec04df
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  source_requests: 4
+  source_http200: 2
+  source_http400: 1
+  source_http404: 1
+  immutable_captures: 0
+  new_unique_lots: 0
+  new_verified_fields: 0
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_paid_pq_equipment_sales: 0
+  exhaustive_months: 0
+  observation: 'B2B search УКРМ redirects to generic market listing: HTTP200 but 0 УКРМ matches, 0 qualifying cards; Roseltorg СТАТКОМ HTTP400; EIS БСК HTTP404. No negative-market inference.'
+  next_targets:
+    - '32616497692 signed contract: retry EIS after 2026-11-07 09:00 MSK'
+    - '32616433248 signed contract: retry EIS after 2026-11-07 09:00 MSK'
+    - '32616506708 commission protocol: retry EIS after 2026-11-07 09:00 MSK'
+  client_html_unchanged: true
+  no_auto_merge: true
