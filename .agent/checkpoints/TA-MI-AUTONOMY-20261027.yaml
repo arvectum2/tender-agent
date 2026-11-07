@@ -6423,3 +6423,32 @@ watchdog_run_2026_11_07_0635_msk:
     - '32616497692: retry first-party signed contract/result after 2026-11-07 09:00 MSK'
   client_html_unchanged: true
   no_auto_merge: true
+
+watchdog_run_2026_11_07_0836_msk:
+  status: in_progress
+  issue_comment_id: 6702888867
+  acceptance: pass
+  git_head_before: 192c4663a91dbd47d092609c10ce04eab3328ecf
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  original_source_requests: 2
+  original_http200: 2
+  new_immutable_captures: 2
+  source_sha256:
+    '32515208744': '080e48e5aede0ff8d44cbdc59b43918644c2f76a935298b1974c5319be0fd18d'
+    '32515584863': '916ae6462b343d87f26aec20ab0a074ad252ed16653cdf409f77f709310b6234'
+  verified_finding: 'Both EIS notices relate to one 220kV Lopcha-Yuktali/Antratsit project with SKRM 128+154 Mvar at 220kV substations. First is RD/SMR/PNR mixed EPC ceiling 56,688,490 RUB; second design correction ceiling 11,583,990 RUB. Adjacent 220kV, not proven 6-35kV device sales; separate procedures, one underlying project.'
+  new_unique_lots: 0
+  new_verified_fields_in_db: 0
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  new_paid_pq_equipment_sales: 0
+  exhaustive_months: 0
+  next_targets:
+    - '32616497692 EIS outcome/contract: retry after 2026-11-07 09:00 MSK'
+    - '32616433248 EIS signed contract: retry after 2026-11-07 09:00 MSK'
+    - '32616506708 EIS protocol: retry after 2026-11-07 09:00 MSK'
+  client_html_unchanged: true
+  no_auto_merge: true
