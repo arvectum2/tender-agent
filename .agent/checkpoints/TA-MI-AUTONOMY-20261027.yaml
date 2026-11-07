@@ -6394,3 +6394,32 @@ watchdog_run_2026_11_07_0134_msk:
     - '32616506708 commission protocol: retry EIS after 2026-11-07 09:00 MSK'
   client_html_unchanged: true
   no_auto_merge: true
+
+watchdog_run_2026_11_07_0635_msk:
+  status: in_progress
+  issue_comment_id: 6701723863
+  acceptance: pass
+  git_head_before: 7fa5e095ece35e84fcbd6a4ecbd946fd91263a2b
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  original_source_requests_http200: 2
+  original_source_urls:
+    - 'https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32515208744'
+    - 'https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32515584863'
+  source_capture_attempts_failed_tls: 2
+  new_immutable_captures: 0
+  new_unique_lots: 0
+  new_verified_fields: 0
+  named_winners: 0
+  signed_suppliers: 0
+  verified_paid_pq_sales: 0
+  exhaustive_months: 0
+  observation: 'Direct urllib first-party EIS HTML HTTP200 with SHA of transient bytes, but canonical httpx capture fails TLS self-signed chain. Do not promote unarchived bytes to verified originals. Secondary source suggests 32616497692 unsuccessful with one admitted participant; not verified by first party.'
+  next_targets:
+    - '32515208744: repair trusted TLS CA configuration without disabling verification; recapture and inspect original'
+    - '32515584863: repair trusted TLS CA configuration without disabling verification; recapture and inspect original'
+    - '32616497692: retry first-party signed contract/result after 2026-11-07 09:00 MSK'
+  client_html_unchanged: true
+  no_auto_merge: true
