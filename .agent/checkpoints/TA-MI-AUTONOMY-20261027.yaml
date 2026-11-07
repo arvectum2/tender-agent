@@ -6477,3 +6477,28 @@ watchdog_run_2026_11_07_0930_msk:
     - '32616506708: retry commission protocol after trusted CA fix, not before 2026-11-07 10:30 MSK'
   client_html_unchanged: true
   no_auto_merge: true
+
+watchdog_run_2026_11_07_1034_msk:
+  status: in_progress
+  issue_comment_id: 6703976555
+  acceptance: pass
+  git_head_before: 6cc1b6fa1cd3eef161095cb631b8f9649658979b
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  first_party_capture_attempts: 3
+  first_party_http_404: 3
+  new_immutable_captures: 0
+  new_unique_lots: 0
+  new_verified_fields: 0
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  verified_paid_pq_sales: 0
+  exhaustive_months: 0
+  next_targets:
+    - '32616497692: find alternate verified first-party result/contract URL; EIS documents HTTP 404, retry no earlier than 2026-11-08 10:30 MSK'
+    - '32616433248: verify contract register by documented source adapter; EIS documents HTTP 404, retry no earlier than 2026-11-08 10:30 MSK'
+    - '32616506708: obtain ETP-native commission protocol; EIS documents HTTP 404, retry no earlier than 2026-11-08 10:30 MSK'
+  client_html_unchanged: true
+  no_auto_merge: true
