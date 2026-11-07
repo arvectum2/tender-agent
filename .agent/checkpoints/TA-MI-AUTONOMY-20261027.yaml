@@ -6579,3 +6579,29 @@ watchdog_run_2026_11_07_1729_msk:
     - '32514947144: RTS-Tender original component specification; EIS 404, retry after 2026-11-08 17:30 MSK'
   client_html_unchanged: true
   no_auto_merge: true
+
+watchdog_run_2026_11_07_2331_msk:
+  status: in_progress
+  issue_comment_id: 6712652305
+  acceptance: pass
+  git_head_before: a96aeecf1252c3c084e80977b962b4e22fb1fc7a
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  first_party_access_checks: 1
+  first_party_access_result: 'Energybase РН60804549 ETP outgoing link redirects to authorization; no native original acquired'
+  secondary_search_queries: 6
+  newly_verified_primary_fields: 0
+  new_unique_lots: 0
+  new_original_captures: 0
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  verified_paid_pq_sales: 0
+  new_exhaustive_months: 0
+  next_targets:
+    - 'РН60804549: source-native TEK-Torg result/technical documents; Energybase link requires login; retry after 2026-11-08 23:31 MSK'
+    - '32616497692: official contract/protocol native source, EIS 404; retry after 2026-11-08 10:30 MSK'
+    - 'commercial:895449:lot1: verify native original identity/size; retry after 2026-11-08 13:35 MSK'
+  client_html_unchanged: true
+  no_auto_merge: true
