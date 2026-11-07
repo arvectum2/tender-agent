@@ -6528,3 +6528,27 @@ watchdog_run_2026_11_07_1334_msk:
     - 'commercial:895449:lot1 — first-party identity/size rejection; investigate exact source URL after 2026-11-08 13:35 MSK'
   client_html_unchanged: true
   no_auto_merge: true
+
+watchdog_run_2026_11_07_1429_msk:
+  status: in_progress
+  issue_comment_id: 6706256653
+  acceptance: pass
+  git_head_before: c115dfd757b622d28578340583775f41deacf0bb
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  secondary_research_cases: ['commercial:АП125337:lot1', 'commercial:ГП630876:lot1', 'commercial:РН61003961:lot1']
+  first_party_access: 'Energybase external ETP link redirected to login; exact-number official ETP web searches returned no results'
+  newly_verified_primary_fields: 0
+  new_unique_lots: 0
+  new_signed_suppliers: 0
+  new_named_winners: 0
+  new_original_captures: 0
+  new_exhaustive_months: 0
+  next_targets:
+    - 'АП125337: ETP GPB native original technical zip / protocol, retry via documented adapter after 2026-11-08 14:30 MSK'
+    - 'ГП630876: ETP GPB original technical 7z and award, retry after 2026-11-08 14:30 MSK'
+    - 'РН61003961: TEK-Torg native technical specification and result, retry after 2026-11-08 14:30 MSK'
+  client_html_unchanged: true
+  no_auto_merge: true
