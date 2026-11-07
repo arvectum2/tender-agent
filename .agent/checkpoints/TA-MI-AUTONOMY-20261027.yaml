@@ -6552,3 +6552,30 @@ watchdog_run_2026_11_07_1429_msk:
     - 'РН61003961: TEK-Torg native technical specification and result, retry after 2026-11-08 14:30 MSK'
   client_html_unchanged: true
   no_auto_merge: true
+
+watchdog_run_2026_11_07_1729_msk:
+  status: in_progress
+  issue_comment_id: 6708203843
+  acceptance: pass
+  git_head_before: 171614185f2e02e1d4af49f06aa8fc2b35e0bafc
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  case_source_attempts: ['32515584863', '32515208744', '32514947144']
+  primary_httpx_tls_failures: 3
+  primary_curl_direct_http_404: 3
+  secondary_indexed_case_pages: 2
+  new_original_captures: 0
+  new_unique_lots: 0
+  new_verified_fields: 0
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  verified_paid_pq_sales: 0
+  new_exhaustive_months: 0
+  next_targets:
+    - '32515584863: RTS-Tender original protocol 22.01.2026; EIS 404, retry native adapter after 2026-11-08 17:30 MSK'
+    - '32515208744: RTS-Tender technical original and award; EIS 404, retry after 2026-11-08 17:30 MSK'
+    - '32514947144: RTS-Tender original component specification; EIS 404, retry after 2026-11-08 17:30 MSK'
+  client_html_unchanged: true
+  no_auto_merge: true
