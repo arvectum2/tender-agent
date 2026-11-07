@@ -6605,3 +6605,29 @@ watchdog_run_2026_11_07_2331_msk:
     - 'commercial:895449:lot1: verify native original identity/size; retry after 2026-11-08 13:35 MSK'
   client_html_unchanged: true
   no_auto_merge: true
+
+watchdog_run_2026_11_08_0136_msk:
+  status: in_progress
+  issue_comment_id: 6713945978
+  acceptance: pass
+  git_head_before: 69e078f063d4fda7cf5a8d5df3a7784497467876
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_unique_lots: 0
+  newly_verified_primary_fields: 0
+  new_original_captures: 0
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  verified_paid_pq_sales: 0
+  new_exhaustive_months: 0
+  discovery_queries: 8
+  secondary_evidence: 'Контур 4657777: ООО Башкирэнерго ИНН 0277071467, 254271.54 RUB, condenser blocks, 27 Oct 2026; Контур 4617521: АО Тандер ИНН 2310031475, mixed supply/installation/commissioning, no price; Energybase RN61001644: SKN INN 4101150169, UKRM, files listed but native technical docs unverified.'
+  source_status: 'Search engine returned no indexed B2B native cards for 4657777/4617521; secondary mirrors cannot establish technical voltage, winner or signed contract. No first-party originals acquired.'
+  next_targets:
+    - 'commercial:4657777:lot1 native B2B original and voltage, after 2026-11-08 02:36 MSK'
+    - 'commercial:4617521:lot1 native B2B technical annex and voltage, after 2026-11-08 02:36 MSK'
+    - 'commercial:RN61001644:lot1 native TEK-Torg files and lot 100313485, after 2026-11-08 02:36 MSK'
+  client_html_unchanged: true
+  no_auto_merge: true
