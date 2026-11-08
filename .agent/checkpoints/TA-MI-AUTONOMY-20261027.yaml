@@ -6737,3 +6737,31 @@ watchdog_run_2026_11_08_1331_msk:
     - '32616474682 voltage in technical annex and outcome after 2026-12-03'
   client_html_unchanged: true
   no_auto_merge: true
+
+watchdog_run_2026_11_08_1428_msk:
+  status: in_progress
+  issue_comment_id: 6720919058
+  acceptance: pass
+  git_head_before: c26db3b1f73b085f32bf16359168de611b9bdd38
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  primary_source_requests: 4
+  first_party_http_200: 2
+  first_party_http_404: 2
+  new_original_sha_receipts: 1
+  captured_case: 'commercial:4617521:lot1'
+  captured_sha256: bfd830cf46eaec7f7ffa7487e78afc1ddfa7fc51a00dae60fabe5e8e8a0f221a
+  new_unique_lots: 0
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  verified_paid_pq_sales: 0
+  new_exhaustive_months: 0
+  source_observation: 'B2B 4617521 original HTTP 200: 3 applications, names and prices hidden, technical attachments login-gated, voltage unverified; no winner or signed contract. EIS 32616497692 and 32616474682 HTTP 404. B2B 4657777 HTTP 200 already known.'
+  next_targets:
+    - '32616497692 official protocol/contract registry, retry when EIS accessible'
+    - '4657777 original annex and outcome, after 2026-11-09 10:00 platform time'
+    - '32616474682 technical voltage and outcome after 2026-12-03'
+  client_html_unchanged: true
+  no_auto_merge: true
