@@ -6658,3 +6658,31 @@ watchdog_run_2026_11_08_0735_msk:
     - 'commercial:4617521:lot1: source-native mixed EPC technical annex, retry after 2026-11-08 08:35 MSK'
   client_html_unchanged: true
   no_auto_merge: true
+
+watchdog_run_2026_11_08_1027_msk:
+  status: in_progress
+  issue_comment_id: 6718738323
+  acceptance: pass
+  git_head_before: a72730d0032e994ec8d72bcdc91e7894e165523e
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  first_party_http_200: 2
+  immutable_capture_receipts: 2
+  fresh_distinct_primary_sha: 1
+  case_4657777_sha256: c6cc850ffebbf6bb009824076e53733b7b2fc5006ab221e3ccecae3e3a10860f
+  case_4617521_sha256: e5364f7ec3c6ab25faa4b5470d4dfe37507ebc1c3bb5ca0d5e7176b8426c69f6
+  case_4617521_sha_previously_captured: true
+  new_unique_lots: 0
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  verified_paid_pq_sales: 0
+  new_exhaustive_months: 0
+  source_observation: 'B2B 4657777 original: 6 pieces at 34736.55 RUB ex VAT, total 208419.30 RUB ex VAT, bid deadline 2026-11-09 10:00, active 0 bids; no voltage or winner. Mirror 254271.54 RUB must not be silently substituted for original net value. B2B 4617521 original SHA same as previously captured.'
+  client_html_unchanged: true
+  next_targets:
+    - '4657777 technical annex/voltage and status after bid deadline 2026-11-09 10:00 platform local time'
+    - '4617521 native attachments and mixed EPC scope, retry after 2026-11-09 10:30 MSK'
+    - '32616497692 official protocol and contract registry, retry now when source accessible'
+  no_auto_merge: true
