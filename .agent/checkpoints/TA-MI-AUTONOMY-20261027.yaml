@@ -6825,3 +6825,34 @@ watchdog_run_2026_11_08_2234_msk:
     - 'commercial RN61005187 TEK-Torg native exact card and technical original'
   client_html_unchanged: true
   no_auto_merge: true
+
+watchdog_run_2026_11_09_0234_msk:
+  status: in_progress
+  issue_comment_id: 6728732252
+  acceptance: pass
+  git_head_before: 95fcd8b6ba06fd7bb3458762b56fb635efd7a120
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  first_party_requests: 5
+  first_party_http_200: 5
+  immutable_sha_receipts: 5
+  new_unique_lots: 0
+  new_verified_case_fields: 2
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  verified_paid_pq_sales: 0
+  newly_exhaustive_months: 0
+  case: '223fz:32616497692:lot1'
+  protocol_01_sha256: 560a2e1a3bf1c1619a80aad7ea57c6dad4a045edd4da9b23bd1a7cb06d241e62
+  protocol_02_sha256: 0f428651444fb6c0d120319a0171e7f9165906c26b71b27f9c762a4cfd3ac05e
+  contract_page_sha256: 09e9969aa801f72b68b626116df9c06bd2d3e4fffafcdf3986024d0875b3612a
+  second_contract_page_sha256: f1109aa34d9f00f845cb23f98ce4eb7e1f4e2b239cc47ff99cd8d2e72246a5f1
+  source_facts: 'EIS 32616497692 protocol 01 signed 29.10.2026, protocol 02 signed 03.11.2026: procurement failed because only one application; EIS contract-info shows Сведения отсутствуют. Neither bidder identity nor signed contract proven. Mixed EPC 10kV UKRM + 35/10kV substation works, not standalone equipment sale. EIS 32616355390 contract-info also shows Сведения отсутствуют.'
+  next_targets:
+    - '32616497692 protocol documents/commission applicant identity, then independent signed contract register retry after publication'
+    - '32616355390 signed contract register retry after publication, not committee decision'
+    - 'РН61005187 TEK-Torg exact original card and annex, access permitting'
+  client_html_unchanged: true
+  no_auto_merge: true
