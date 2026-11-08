@@ -6797,3 +6797,31 @@ watchdog_run_2026_11_08_1831_msk:
     - 'РН61005187 TEK-Torg exact source-native procedure result and technical attachments'
   client_html_unchanged: true
   no_auto_merge: true
+
+watchdog_run_2026_11_08_2234_msk:
+  status: in_progress
+  issue_comment_id: 6726112333
+  acceptance: pass
+  git_head_before: 29d3ab5b63795f192ac33fa8a51ffde81766dd16
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_primary_requests: 1
+  new_original_sha_receipts: 1
+  new_unique_lots: 0
+  new_verified_case_fields: 3
+  signed_suppliers_verified: 0
+  verified_paid_pq_sales: 0
+  new_exhaustive_months: 0
+  case: '223fz:32616355390:lot1'
+  source_url: 'https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=C3F84B482EE34CF294EB7B95AEC46D97'
+  original_sha256: e29e23cc07f68cc09515aabe5b54fee62a6dd8bd9094d03db9bd364b0f1f5fe2
+  observed_http: 200
+  source_facts: 'Final commission protocol #10 of 20.10.2026: single admitted joint application; LKU KAMELEKTROTSENTR INN 1650327380, member NH ENGINEERING INN 7716584575; offered 399120560 RUB incl VAT 22%, ceiling 399120963 RUB; competition declared failed with decision to conclude contract. Signed contract and payment NOT proven. Mixed manufacturing components, not finished PQ equipment sales.'
+  next_targets:
+    - '32616355390 signed contract register and contract signature, separately from committee decision'
+    - '32616497692 protocol and signed supplier for 10kV UKRM mixed EPC'
+    - 'commercial RN61005187 TEK-Torg native exact card and technical original'
+  client_html_unchanged: true
+  no_auto_merge: true
