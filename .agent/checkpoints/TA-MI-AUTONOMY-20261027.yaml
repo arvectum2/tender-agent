@@ -6686,3 +6686,29 @@ watchdog_run_2026_11_08_1027_msk:
     - '4617521 native attachments and mixed EPC scope, retry after 2026-11-09 10:30 MSK'
     - '32616497692 official protocol and contract registry, retry now when source accessible'
   no_auto_merge: true
+
+watchdog_run_2026_11_08_1228_msk:
+  status: in_progress
+  issue_comment_id: 6719818976
+  acceptance: pass
+  git_head_before: 14a3c1dce70a9b7ee0e126386de869f689c0e4ae
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  first_party_http_200: 1
+  immutable_capture_receipts: 1
+  captured_case: 'commercial:4642507:lot1'
+  captured_sha256: 1677049b8a382645b6559f49bfb9bf3b96b50791d5220e85315d2810087bc5cd
+  new_unique_lots: 0
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  verified_paid_pq_sales: 0
+  new_exhaustive_months: 0
+  source_observation: 'B2B first-party card displays 4 anonymous offers, lowest 2362900.00 RUB excluding VAT across lots 1 and 2. This is an offer, NOT winner, signed contract or equipment-only revenue. Original HTML SHA captured; voltage 6-35kV not established.'
+  next_targets:
+    - '32616474682 technical annex, voltage and commission outcome after 2026-12-03'
+    - '32616497692 original protocol and signed contract registry; retry now'
+    - '4657777 original technical annex; outcome after 2026-11-09 10:00'
+  client_html_unchanged: true
+  no_auto_merge: true
