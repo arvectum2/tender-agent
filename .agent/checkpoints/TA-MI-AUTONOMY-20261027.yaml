@@ -6712,3 +6712,28 @@ watchdog_run_2026_11_08_1228_msk:
     - '4657777 original technical annex; outcome after 2026-11-09 10:00'
   client_html_unchanged: true
   no_auto_merge: true
+
+watchdog_run_2026_11_08_1331_msk:
+  status: in_progress
+  issue_comment_id: 6720382000
+  acceptance: pass
+  git_head_before: dd876b15687df329eb24f35c666b90f1fd5209d9
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_unique_lots: 0
+  new_original_sha_receipts: 0
+  new_named_winners: 0
+  new_signed_suppliers: 0
+  verified_paid_pq_sales: 0
+  source_attempts:
+    - 'EIS 223 regNumber=32616497692 HTTP 404; no original acquired'
+    - 'Roseltorg public landing HTTP 200; no case-specific protocol established'
+  secondary_observation: '32616497692 secondary Kontur reports one applicant and failed competition on 2026-11-03; not first-party proof and not signed contract'
+  next_targets:
+    - '32616497692 first-party commission ZIP and contract registry; retry when EIS accessible'
+    - '4657777 technical annex and voltage, after 2026-11-09 10:00 platform time'
+    - '32616474682 voltage in technical annex and outcome after 2026-12-03'
+  client_html_unchanged: true
+  no_auto_merge: true
