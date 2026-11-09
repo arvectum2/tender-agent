@@ -6937,3 +6937,31 @@ watchdog_run_2026_11_09_1052_msk:
     - 'РН61005187: exact TEK-Torg first-party card and annex'
   client_html_unchanged: true
   no_auto_merge: true
+
+watchdog_run_2026_11_09_2129_msk:
+  status: in_progress
+  issue_comment_id: 6748094701
+  acceptance: pass
+  git_head_before: 79aff59c732c8a62388af33928f336e4d3ce94c0
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  primary_source_attempts: 2
+  first_party_http_200: 1
+  first_party_http_404: 1
+  fresh_immutable_original_receipts: 1
+  original_sha256: af70c80e2e5764aea5cad658037aeb028109a2b1679705efd1d5c4b21e1316f8
+  new_unique_lots: 0
+  newly_verified_protocol_metadata: 2
+  named_winners_verified: 0
+  signed_suppliers_verified: 0
+  paid_sales_verified: 0
+  newly_exhaustive_months: 0
+  finding: 'Official EIS 32616497692 protocol tab HTTP200, SHA-bound: protocol -01 dated 29.10.2026 15:57 MSK and -02 dated 03.11.2026; contents/winner not verified. 32616355390 contract tab HTTP404. No DB mutation or client report regeneration.'
+  next_targets:
+    - '32616497692: obtain exact protocol -01/-02 attachments and verify bidder identities'
+    - '32616355390: recheck signed contract register only after source publication or retry eligibility'
+    - 'РН61005187: locate TEK-Torg source-native exact card and technical annex'
+  client_html_unchanged: true
+  no_auto_merge: true
