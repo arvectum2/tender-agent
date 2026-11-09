@@ -6856,3 +6856,27 @@ watchdog_run_2026_11_09_0234_msk:
     - 'РН61005187 TEK-Torg exact original card and annex, access permitting'
   client_html_unchanged: true
   no_auto_merge: true
+
+watchdog_run_2026_11_09_0430_msk:
+  status: in_progress
+  issue_comment_id: 6730089398
+  acceptance: pass
+  git_head_before: a7b69b06a19953541e015f222488c73527d431b7
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  primary_source_attempts: 2
+  observed_http: [404, 301]
+  original_sha_receipts: 0
+  new_unique_lots: 0
+  new_verified_fields: 0
+  new_signed_suppliers: 0
+  new_exhaustive_months: 0
+  blocker: 'EIS 32616506708 document route HTTP404; alternate public card route HTTP301 not followed by capture adapter. No verified original; no DB mutation or report regeneration.'
+  next_targets:
+    - '32616506708 discover official current canonical URL, follow public redirect safely'
+    - '32616497692 commission applicant identity from official protocol original'
+    - '32616355390 signed contract registry after publication'
+  client_html_unchanged: true
+  no_auto_merge: true
