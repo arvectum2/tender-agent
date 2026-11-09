@@ -6880,3 +6880,34 @@ watchdog_run_2026_11_09_0430_msk:
     - '32616355390 signed contract registry after publication'
   client_html_unchanged: true
   no_auto_merge: true
+
+watchdog_run_2026_11_09_0929_msk:
+  status: in_progress
+  issue_comment_id: 6733801415
+  acceptance: pass
+  git_head_before: 23717cb61f933b225540d71b9b2ce88a25b5a1e8
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  primary_source_requests: 5
+  first_party_http_200: 4
+  first_party_http_404: 1
+  fresh_immutable_original_receipts: 4
+  new_unique_lots: 0
+  new_verified_fields: 1
+  new_signed_suppliers: 0
+  verified_paid_pq_sales: 0
+  newly_exhaustive_months: 0
+  finding: '32616506708 official EIS common-info is 220kV overhead line project documentation correction; lexical PQ false positive for core 6–35kV. Protocol tab no protocols. Document URL 32616497692 returned HTTP404. 32616355390 contract tab rechecked, no signed contract proven.'
+  source_sha:
+    '32616506708_common': 9ecb0dab2ed15573a387f258c3a9f4301e65dd53f9b280d4568258bfa908d749
+    '32616506708_protocol': 6bd6eac364b987c0177c46c7a5d7e62b9c350a061f6f7e9601f7814bc3e6eb3d
+    '32616506708_contract': deb1a181b46af8af0ef711c7f2b2cc4a35a257d84626d536c06f5db6bb6cc55e
+    '32616355390_contract': f1109aa34d9f00f845cb23f98ce4eb7e1f4e2b239cc47ff99cd8d2e72246a5f1
+  next_targets:
+    - '32616497692 original protocol attachments for applicant identity, use existing native EIS link identifiers'
+    - '32616355390 signed contract register after publication, no extrapolation from committee offer'
+    - 'РН61005187 exact TEK-Torg original and annex, source-native access permitting'
+  client_html_unchanged: true
+  no_auto_merge: true
