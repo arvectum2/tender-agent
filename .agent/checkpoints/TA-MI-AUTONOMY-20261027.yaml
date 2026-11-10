@@ -7190,3 +7190,32 @@ run_20261110_2135:
     - '32616355390: locate official contract ID and original protocol through source-native search; previous direct paths 404'
     - '32616497692: contract register and signed supplier, avoid repeat of captured original'
     - 'РН61005187: TEK-Torg original annex only through authorized public route'
+
+# Watchdog 2026-11-10 22:29 MSK: primary final protocol reconciled
+run_20261110_2229:
+  status: in_progress
+  issue_comment_id: 6777140380
+  acceptance: pass
+  git_head_before: f5507fdcd67eb004c8cb38b34e19e48107cf40c3
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  primary_requests: 2
+  first_attempt_error: httpx.RemoteProtocolError
+  successful_curl_direct_http: 200
+  original_receipt_sha256: cc2fa5a9e0e25d8ce41e56ca68826f5935088393e94242fb892bd6c2b12ce00b
+  newly_unique_originals: 0
+  verified_final_protocol: '32616497692: final protocol #3 original DOCX inside ZIP; anonymous bidder #1, proposed 79,101,498.40 RUB mixed EPC; tender declared failed with one participant; NOT signed contract or PQ equipment price'
+  secondary_name_unverified: 'Kontendus lists ООО Промышленная Компания Вторалюминпродукт; original protocol does not name it; do not promote to verified winner/signed supplier'
+  new_unique_lots: 0
+  new_signed_suppliers: 0
+  new_executed_prices: 0
+  new_months_exhaustive: 0
+  no_db_mutation: true
+  client_html_unchanged: true
+  next_targets:
+    - '32616497692: signed contract register and participant identity from original source, retry after publication'
+    - '32616355390: RTS final protocol original, source-native link required'
+    - 'РН61005187: TEK-Torg first-party annex with authorized public access'
+  no_auto_merge: true
