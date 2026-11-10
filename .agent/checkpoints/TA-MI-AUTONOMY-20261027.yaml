@@ -7014,3 +7014,30 @@ run_2026_11_10_0631_msk:
     - '32616355390: EIS original protocol and contract status, retry with validated source transport'
   client_html_unchanged: true
   no_auto_merge: true
+
+run_2026_11_10_0729_msk:
+  status: in_progress
+  issue_comment_id: 6759009524
+  acceptance: pass
+  git_head_before: d625f68b368a4f543ac6395e61fb8847950bce5d
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  source_requests: 2
+  first_party_http_200: 1
+  first_party_http_404: 1
+  new_immutable_original_receipts: 1
+  original_sha256: b77c47f7c0219cac9311880a692b08ae5902c7287c7d0fa8c8568e3e2fa54d59
+  new_unique_lots: 0
+  named_winners_verified: 0
+  signed_suppliers_verified: 0
+  paid_sales_verified: 0
+  new_months_exhaustive: 0
+  finding: 'Roseltorg original 32616497692 HTML HTTP200 SHA verified (239335 bytes); 32616506708 Roseltorg exact URL HTTP404, no inference about EIS or market absence.'
+  next_targets:
+    - '32616497692: extract exact contract outcome from source-native protocol and signed register'
+    - 'РН61005187: TEK-Torg native annex only after authorized access'
+    - '32616355390: official contract tab after eligible retry and trusted TLS'
+  client_html_unchanged: true
+  no_auto_merge: true
