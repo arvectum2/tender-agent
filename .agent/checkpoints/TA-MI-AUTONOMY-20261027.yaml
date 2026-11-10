@@ -7071,3 +7071,29 @@ run_2026_11_10_1332_msk:
     - 'РН61005187: TEK-Torg original annex with authorized access'
   client_html_unchanged: true
   no_auto_merge: true
+
+run_2026_11_10_1531_msk:
+  status: in_progress
+  issue_comment_id: 6767370787
+  acceptance: pass
+  git_head_before: dc2eac86a68804965dd7d4dd1534c66e0723e381
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  source_requests: 4
+  new_immutable_original_receipts: 2
+  new_unique_lots: 0
+  new_signed_suppliers: 0
+  paid_sales_verified: 0
+  new_months_exhaustive: 0
+  primary_protocol_sha256: cc2fa5a9e0e25d8ce41e56ca68826f5935088393e94242fb892bd6c2b12ce00b
+  primary_card_sha256: 08b51a2f1f43c480e7e4a6df32d28743b2424b2f06f868f44729f942a0aab86f
+  finding: '32616497692 lot1: original Roseltorg final protocol #3 dated 02.11.2026 signed 03.11.2026. One bid at 79,101,498.40 RUB; procurement and rebidding declared failed due to one application, commission proposed contract with sole compliant bidder and pre-contract price negotiations. Signed contract and named signatory NOT proven. Mixed EPC including UKRM 10kV; whole bid is not equipment-only sales.'
+  blocked: 'Official contract URL 67728589190260002060000 returned HTTP404; initial HTTPX Roseltorg disconnected and official EIS TLS self-signed chain, strict curl-direct Roseltorg succeeded.'
+  next_targets:
+    - '32616497692: official contract register after publication; identify sole bidder from source-native result, do not infer signed supplier'
+    - '32616355390: signed supplier identity through correct official contract registry route'
+    - 'РН61005187: TEK-Torg annex via authorized first-party access'
+  client_html_unchanged: true
+  no_auto_merge: true
