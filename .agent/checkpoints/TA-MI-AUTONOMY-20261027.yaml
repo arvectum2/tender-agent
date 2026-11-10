@@ -6992,3 +6992,25 @@ run_2026_11_10_0332_msk:
     - '32616355390: signed contract tab retry after eligibility'
   client_html_unchanged: true
   no_auto_merge: true
+
+run_2026_11_10_0631_msk:
+  status: in_progress
+  acceptance: pass
+  git_head_before: 973b252651fc90862a7936844095f161b64d97a0
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  official_capture_attempts: 4
+  new_immutable_original_receipts: 0
+  new_unique_lots: 0
+  named_winners_verified_from_original: 0
+  signed_suppliers_verified: 0
+  new_months_exhaustive: 0
+  blocker: 'EIS exact notice 32616497692 and 32616355390: httpx TLS self-signed chain; native-trust returned content rejected by source identity/status/size guard. Energybase TEK-Torg link for РН61005187 requires login; no bypass. Secondary index lists bidder for 32616497692 but no original identity verification.'
+  next_targets:
+    - 'РН61005187: TEK-Torg native card and original specification after authorized access'
+    - '32616497692: official signed contract register and named participant, retry with validated source transport'
+    - '32616355390: EIS original protocol and contract status, retry with validated source transport'
+  client_html_unchanged: true
+  no_auto_merge: true
