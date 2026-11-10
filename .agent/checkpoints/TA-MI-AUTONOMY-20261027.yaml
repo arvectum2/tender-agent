@@ -7147,3 +7147,22 @@ run_2026_11_10_1830_msk:
     - 'РН61005187: TEK-Torg original annex with authorized access'
   client_html_unchanged: true
   no_auto_merge: true
+
+# Watchdog 2026-11-10 20:36 MSK: read-only source research
+run_20261110_2036:
+  status: in_progress
+  issue_comment_id: 6774534469
+  acceptance: pass
+  git_head_before: 8ecff663b79c4374e909e8043aa6b33e65e7ce8c
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  new_unique_lots: 0
+  new_signed_suppliers: 0
+  new_verified_primary_originals: 0
+  new_months_exhaustive: 0
+  secondary_finding: "32616355390: indexed documents include final protocol dated 2026-10-20; primary protocol and signed supplier not yet inspected. RN61005187 TEK-Torg original link gated by Energybase login."
+  no_db_mutation: true
+  client_html_unchanged: true
+  no_auto_merge: true
