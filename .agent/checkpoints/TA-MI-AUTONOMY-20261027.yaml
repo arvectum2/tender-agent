@@ -7121,3 +7121,29 @@ run_2026_11_10_1631_msk:
     - 'РН61005187: TEK-Torg original annex only with authorized access'
   client_html_unchanged: true
   no_auto_merge: true
+
+run_2026_11_10_1830_msk:
+  status: in_progress
+  issue_comment_id: 6771486583
+  acceptance: pass
+  git_head_before: a90f9dabc1c78afd10e51cd790dbe1871c8f6c55
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  first_party_requests: 2
+  first_party_http_200: 1
+  first_party_http_404: 1
+  new_immutable_original_receipts: 1
+  original_sha256: 41ab1653206f9edafec95bb7b8f4ddbc4337b4c23cd7df55edfc3c4c15d95de7
+  new_unique_lots: 0
+  new_signed_suppliers: 0
+  paid_sales_verified: 0
+  new_months_exhaustive: 0
+  finding: 'Roseltorg 32616497692 primary HTML fetched HTTP200, immutable SHA captured; official EIS 32616355390 common-info exact-number URL HTTP404. No new verified winner, signed supplier or contract. No duplicate DB insertion.'
+  next_targets:
+    - '32616497692: source-native contract and identity after publication, without re-fetching unchanged card'
+    - '32616355390: official contract registry supplier details via correct route, not 404 notice URL'
+    - 'РН61005187: TEK-Torg original annex with authorized access'
+  client_html_unchanged: true
+  no_auto_merge: true
