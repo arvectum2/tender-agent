@@ -6965,3 +6965,30 @@ watchdog_run_2026_11_09_2129_msk:
     - 'РН61005187: locate TEK-Torg source-native exact card and technical annex'
   client_html_unchanged: true
   no_auto_merge: true
+
+run_2026_11_10_0332_msk:
+  status: in_progress
+  acceptance: pass
+  git_head_before: 4e9a3ec273fa0540881191152087193398485992
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  source_requests: 4
+  first_party_http_200: 3
+  first_party_http_404: 1
+  transport_error_httpx: 1
+  new_immutable_original_receipts: 3
+  new_unique_lots: 0
+  new_protocol_originals: 2
+  named_winners_verified: 0
+  signed_suppliers_verified: 0
+  paid_sales_verified: 0
+  new_months_exhaustive: 0
+  finding: '32616497692 Roseltorg: two original ZIP protocols (29 Oct, 3 Nov) captured, SHA cc2fa5a9e0e25d8ce41e56ca68826f5935088393e94242fb892bd6c2b12ce00b and 2f5ad8ba337f60c1e50cb42bed4c6d420be608619f533c51850448db549ddd97. Single bidder #1, bid 79101498.40 RUB; procedure failed due one bid; committee proposed negotiation/contract, no signed contractor proof. Full turnkey EPC including 10kV UKRM at 110kV substation, not equipment-only price. EIS contract tab 32616355390 HTTP404.'
+  next_targets:
+    - '32616497692: exact signed contract register and bidder identity; only after publication'
+    - 'РН61005187: TEK-Torg native card/technical annex'
+    - '32616355390: signed contract tab retry after eligibility'
+  client_html_unchanged: true
+  no_auto_merge: true
