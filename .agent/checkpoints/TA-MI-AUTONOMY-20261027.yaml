@@ -7041,3 +7041,33 @@ run_2026_11_10_0729_msk:
     - '32616355390: official contract tab after eligible retry and trusted TLS'
   client_html_unchanged: true
   no_auto_merge: true
+
+run_2026_11_10_1332_msk:
+  status: in_progress
+  issue_comment_id: 6765083342
+  acceptance: pass
+  git_head_before: 4190b9ca136381ecb69c26e29217fd503c6ea281
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  source_requests: 3
+  first_party_http_200: 3
+  new_immutable_original_receipts: 3
+  new_unique_lots: 0
+  new_signed_contract_register_evidence: 1
+  signed_supplier_identity_verified: 0
+  paid_sales_verified: 0
+  new_months_exhaustive: 0
+  contract_registration_number: '67728589190260002060000'
+  contract_date: '2026-11-02'
+  contract_publication_date: '2026-11-10'
+  contract_register_price_rub: 399120560.00
+  contract_print_sha256: 4784bfe48a50cf4c010bafded216fb75809b2ecfac92361bb953469770b96b2b
+  finding: 'EIS first-party print form confirms signed contract for 32616355390 lot1: AO Rosseti Scientific-Technical Center buyer, contract 2026.277464 dated 02.11.2026, 399120560 RUB, publication 10.11.2026. This is mixed component supply for PQ/HVDC equipment, not proven 6-35kV equipment-only turnover; supplier identity and payments not in captured print form. Do not infer paid sales from planned annual funding.'
+  next_targets:
+    - '32616355390: signed supplier identity in official contract register, verified contract detail'
+    - '32616497692: signed contract register and bidder identity after source publication'
+    - 'РН61005187: TEK-Torg original annex with authorized access'
+  client_html_unchanged: true
+  no_auto_merge: true
