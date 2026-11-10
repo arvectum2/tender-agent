@@ -7166,3 +7166,27 @@ run_20261110_2036:
   no_db_mutation: true
   client_html_unchanged: true
   no_auto_merge: true
+
+# Watchdog 2026-11-10 21:36 MSK: first-party registry route check
+run_20261110_2135:
+  status: in_progress
+  issue_comment_id: 6775907690
+  acceptance: pass
+  git_head_before: 216bfbce6e26aa8af352b2258747479cd1fc01e7
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  first_party_requests: 2
+  primary_protocol_http: 404
+  contract_route_http: 404
+  new_verified_primary_originals: 0
+  new_unique_lots: 0
+  new_signed_suppliers: 0
+  new_months_exhaustive: 0
+  no_db_mutation: true
+  client_html_unchanged: true
+  next_targets:
+    - '32616355390: locate official contract ID and original protocol through source-native search; previous direct paths 404'
+    - '32616497692: contract register and signed supplier, avoid repeat of captured original'
+    - 'РН61005187: TEK-Torg original annex only through authorized public route'
