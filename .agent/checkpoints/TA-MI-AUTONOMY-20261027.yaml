@@ -7097,3 +7097,27 @@ run_2026_11_10_1531_msk:
     - 'РН61005187: TEK-Torg annex via authorized first-party access'
   client_html_unchanged: true
   no_auto_merge: true
+
+run_2026_11_10_1631_msk:
+  status: in_progress
+  issue_comment_id: 6768660365
+  acceptance: pass
+  git_head_before: 6803cb7b73d23cb2c600e603b5651cbe00e37d27
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  first_party_requests: 3
+  first_party_http_404: 3
+  new_immutable_original_receipts: 0
+  new_unique_lots: 0
+  new_signed_suppliers: 0
+  paid_sales_verified: 0
+  new_months_exhaustive: 0
+  finding: 'Three official EIS exact-number protocol/contract URLs returned HTTP404 (146 bytes): 32616497692 protocol, 32616355390 protocol, 67728589190260002060000 contract print. No inference of absent contracts. Secondary TEK-Torg listing РН61005187 reconfirmed but no first-party annex or new evidence. Previous Roseltorg original SHA cc2fa5a9e0e25d8ce41e56ca68826f5935088393e94242fb892bd6c2b12ce00b remains verified; no new original this run.'
+  next_targets:
+    - '32616497692: Roseltorg source-native outcome/contract after new publication or retry eligibility'
+    - '32616355390: alternate official contract registry route for named signed supplier'
+    - 'РН61005187: TEK-Torg original annex only with authorized access'
+  client_html_unchanged: true
+  no_auto_merge: true
