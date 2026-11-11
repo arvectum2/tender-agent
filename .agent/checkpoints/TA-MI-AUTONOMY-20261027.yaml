@@ -7299,3 +7299,34 @@ run_20261111_1627:
     - '32616355390: RTS final protocol original through public native route, not guessed EIS path'
     - '32616497692: official signed contract registry, retry after publication'
   no_auto_merge: true
+
+# Watchdog 2026-11-11 17:33 MSK: official contract-info and ETP source checks
+run_20261111_1733:
+  status: in_progress
+  issue_comment_id: 6798628639
+  acceptance: pass
+  git_head_before: 7f0a79564a0ba27cc10c93147eed70fab453e966
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  primary_http_requests: 3
+  primary_http_200: 3
+  source_checks:
+    - 'https://www.roseltorg.ru/procedure/32616497692 HTTP200 239335 bytes SHA256 b614881fc05ba67d1e15e5deb753e6135b685ed96b2d51da73d1e480cca0541e'
+    - 'https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616497692 HTTP200 131957 bytes SHA256 09e9969aa801f72b68b626116df9c06bd2d3e4fffafcdf3986024d0875b3612a'
+    - 'https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616355390 HTTP200 132959 bytes SHA256 78f0190c959c007246d62cdd193af515d19b37f8908cb5510562f748d2cad464'
+  observed: 'All three first-party pages reachable, but no source-bound signed counterparty, executed price or new lot verified; keyword counts are not evidence of award. Previously archived originals exist; no duplicate capture.'
+  new_sha_verified_originals: 0
+  new_unique_lots: 0
+  new_verified_fields: 0
+  new_signed_suppliers: 0
+  new_executed_prices: 0
+  new_months_exhaustive: 0
+  no_db_mutation: true
+  client_html_unchanged: true
+  next_targets:
+    - '32616497692: source-native contract register details and signed supplier, retry after new publication'
+    - '32616355390: original RTS commission protocol and contract register matching, retry when registry changes'
+    - 'РН61005187: TEK-Torg public annex or published results, retry on new source-native link'
+  no_auto_merge: true
