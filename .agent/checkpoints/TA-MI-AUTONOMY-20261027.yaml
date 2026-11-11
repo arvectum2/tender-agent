@@ -7271,3 +7271,31 @@ run_20261111_0927:
     - '32616497692: signed contract registry and participant identity after publication'
     - 'РН61005187: source-native TEK-Torg annex/protocol via public card; avoid re-capturing existing card'
   no_auto_merge: true
+
+# Watchdog 2026-11-11 16:27 MSK: TEK-Torg primary card examined, no new verified case field
+run_20261111_1627:
+  status: in_progress
+  issue_comment_id: 6797095775
+  acceptance: pass
+  git_head_before: 7276da4459e226419e6305f16ae6c96e75dca6b6
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  primary_http_requests: 2
+  primary_http_200: 2
+  original_url: 'https://www.tektorg.ru/rosnefttkp/procedures/20083978'
+  observed: 'Public HTML 408147 bytes on first GET; page contains localized generic documentation/protocol labels but no exposed original annex or signed supplier in inspected links. Existing card already captured; no duplicate capture.'
+  new_sha_verified_originals: 0
+  new_unique_lots: 0
+  new_verified_fields: 0
+  new_signed_suppliers: 0
+  new_executed_prices: 0
+  new_months_exhaustive: 0
+  no_db_mutation: true
+  client_html_unchanged: true
+  next_targets:
+    - 'РН61005187: seek source-native public attachment URL or published result; retry when link appears'
+    - '32616355390: RTS final protocol original through public native route, not guessed EIS path'
+    - '32616497692: official signed contract registry, retry after publication'
+  no_auto_merge: true
