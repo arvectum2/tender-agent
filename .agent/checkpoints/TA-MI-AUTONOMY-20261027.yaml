@@ -7244,3 +7244,30 @@ run_20261111_0636:
     - '32616497692: official signed contract registry, retry on publication rather than re-download original'
     - 'РН61005187: TEK-Torg original annex via public authorized route'
   no_auto_merge: true
+
+# Watchdog 2026-11-11 09:27 MSK: direct official source availability checks
+run_20261111_0927:
+  status: in_progress
+  issue_comment_id: 6788800553
+  acceptance: pass
+  git_head_before: 0faef6c311437094cf2f157049a0f95960af5ab1
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  first_party_http_requests: 6
+  eis_http_404: 5
+  tektorg_http_200: 1
+  newly_verified_originals: 0
+  new_unique_lots: 0
+  new_signed_suppliers: 0
+  new_executed_prices: 0
+  new_months_exhaustive: 0
+  no_db_mutation: true
+  client_html_unchanged: true
+  observed: 'EIS 223 public common-info/protocol/contract URLs and two previously SHA-recorded file-store links returned HTTP404; TEK-Torg procedure 20083978 returned HTTP200, but existing original card is already recorded; no new first-party field verified.'
+  next_targets:
+    - '32616355390: original protocol from archived SHA-verified local evidence; seek current signed contract through official registry search, not guessed paths'
+    - '32616497692: signed contract registry and participant identity after publication'
+    - 'РН61005187: source-native TEK-Torg annex/protocol via public card; avoid re-capturing existing card'
+  no_auto_merge: true
