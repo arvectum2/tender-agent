@@ -7330,3 +7330,34 @@ run_20261111_1733:
     - '32616355390: original RTS commission protocol and contract register matching, retry when registry changes'
     - 'РН61005187: TEK-Torg public annex or published results, retry on new source-native link'
   no_auto_merge: true
+
+# Watchdog 2026-11-11 19:33 MSK — source-only discovery; not DB-promoted
+run_2026_11_11_1933_msk:
+  status: in_progress
+  issue_comment_id: 6801418088
+  git_head_before: c71859bea1fc4df606ce980dc750dbdd2c03c94f
+  acceptance: pass
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  first_party_http_requests: 3
+  first_party_http_200: 3
+  newly_sha_verified_original_versions: 2
+  new_unique_lots: 0
+  newly_observed_source_fields_not_db_promoted: 4
+  original_protocol_winners: 0
+  verified_signed_suppliers: 0
+  verified_executed_prices: 0
+  new_exhaustive_months: 0
+  source_evidence:
+    - 'commercial:4657777:lot1 B2B-Center public card HTTP200 SHA f739c952f89daca7e9a004df3b419a4d3228215bdadc5be1d0c3ad58fee30b1d: quantity 6 pcs, 34736.55 RUB/pc excl VAT, 208419.30 RUB total excl VAT; bids 264000.00 RUB IP Mazitov A.R. and 445871.16 RUB IP Badykshanov A.R.; no public winner/contract; adjacent capacitor blocks, voltage unverified'
+    - 'commercial:4617521:lot1 B2B-Center public card HTTP200 SHA fa3f2b0ae3b8921fa397522a5cd06c26f95605e5e0460fe90124c976f8f152c8: no confirmed signed supplier/contract; mixed turnkey installation, voltage unverified'
+    - 'TEK-Torg homepage HTTP200, not a case-specific primary source; no award claim'
+  no_db_mutation: true
+  client_reports_unchanged: true
+  next_targets:
+    - 'commercial:4657777:lot1: native outcome/protocol and voltage evidence after public publication; two bids are NOT winner'
+    - 'commercial:4617521:lot1: native technical annex, voltage and winner/protocol after publication'
+    - 'commercial:РН61005187:lot1: locate source-native TEK-Torg card/document via verified link; not aggregator as primary'
+  no_auto_merge: true
