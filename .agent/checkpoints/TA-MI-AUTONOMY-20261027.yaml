@@ -7219,3 +7219,28 @@ run_20261110_2229:
     - '32616355390: RTS final protocol original, source-native link required'
     - 'РН61005187: TEK-Torg first-party annex with authorized public access'
   no_auto_merge: true
+
+# Watchdog 2026-11-11 06:36 MSK: targeted discovery, no promotion
+run_20261111_0636:
+  status: in_progress
+  issue_comment_id: 6786272884
+  acceptance: pass
+  git_head_before: 4f1c8e7939797413780f725ff1998ac01f956ca8
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  search_queries: 4
+  new_primary_originals: 0
+  new_unique_lots: 0
+  new_signed_suppliers: 0
+  new_executed_prices: 0
+  new_months_exhaustive: 0
+  discovery_result: 'Web-index searches for 32616355390 final protocol and November 2026 6-10kV capacitor compensation returned no authenticated first-party original; other results were lexical false positives (cables, relay protection, 0.4kV substations). No first-party HTTP attempts this run; avoid claiming official coverage.'
+  no_db_mutation: true
+  client_html_unchanged: true
+  next_targets:
+    - '32616355390: RTS original final protocol via source-native public search when accessible'
+    - '32616497692: official signed contract registry, retry on publication rather than re-download original'
+    - 'РН61005187: TEK-Torg original annex via public authorized route'
+  no_auto_merge: true
