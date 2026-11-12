@@ -7485,3 +7485,34 @@ run_2026_11_12_1634_msk:
     - '32616355390: RTS original protocol and contract, when publicly discoverable'
     - 'РН61005187: TEK-Torg original technical annex and participant result, on new public source'
   no_auto_merge: true
+
+# Watchdog 2026-11-12 23:31 MSK — three official EIS notice originals, no database writes
+run_2026_11_12_2329_msk:
+  status: in_progress
+  issue_comment_id: 6835118087
+  acceptance: pass
+  git_head_before: 9fa5b73864312f8d16c479370a2b0ba6ec462386
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  source_requests_attempted: 9
+  newly_sha_verified_original_versions: 3
+  new_unique_lots: 0
+  new_verified_fields: 0
+  original_protocol_winners: 0
+  signed_suppliers_verified: 0
+  executed_prices_verified: 0
+  new_exhaustive_months: 0
+  evidence:
+    - '32515208744 official EIS notice common-info HTTP200 SHA256 9ee1c912065e79d55f4aa2507869044c80d5d446d0db39a171c64fee4471ab4f; 151643 bytes; 220kV EPC with 128/154 Mvar SKRM, not verified 6–35kV supply'
+    - '32615760238 official EIS notice common-info HTTP200 SHA256 01051c04733d0c385942b653cf76d0bce37752a2edbdf4004732e1f046fbe519; 146260 bytes; design correction for 220kV 128/154 Mvar SKRM, not equipment sale'
+    - '32615937898 official EIS notice common-info HTTP200 SHA256 1b5ce3e887fff7333c4580765526f5f22a6e1f272f86b17a3ff0843ef13e7d32; 144701 bytes; design for 110/35/10kV substation replacing BSK-110 with SKRM 52 Mvar; ceiling 3050000 RUB, not signed sale'
+  blocker: 'Notice common-info originals contain case-specific project titles but do not prove protocol winner or signed contract; initial capture loop had invalid zsh interpolation of case-id and was corrected without database writes.'
+  no_db_mutation: true
+  client_reports_unchanged: true
+  next_targets:
+    - '32615937898: original protocol and signed design contract from EIS contract register, retry on published source-native document'
+    - '32615760238: original design contract and signer, separate from 220kV SKRM equipment delivery'
+    - '32515208744: original EPC technical annex and signed supplier, with PQ equipment allocation separately verified'
+  no_auto_merge: true
