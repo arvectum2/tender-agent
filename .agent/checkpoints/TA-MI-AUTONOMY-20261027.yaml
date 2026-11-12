@@ -7390,3 +7390,35 @@ run_2026_11_12_0728_msk:
     - '32616355390: реестр договора после публикации, отдельно комплектующие от оборудования PQ'
     - 'РН61005187: TEK-Torg итоговый протокол/вложения, после появления открытой ссылки'
   no_auto_merge: true
+
+# Watchdog 2026-11-12 12:33 MSK — first-party contract-tab source inspection
+run_2026_11_12_1233_msk:
+  status: in_progress
+  issue_comment_id: 6819962472
+  acceptance: pass
+  git_head_before: 365b82b17cf752631c01f6de0422d6eeb2198f10
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  first_party_http_requests: 5
+  first_party_http_200: 5
+  case_specific_urls:
+    - 'https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32515208744 HTTP200 SHA256 4b4f6bf3d64428b57a3b4efe0b752a1599d7656f2a4331907d32bff514301395 (first response)'
+    - 'https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32515584863 HTTP200 SHA256 2aa519f6b6f1a1fdb0ad9fd4af770fd642199f1b6edc8938d8e8eeb72fc75f8b (first response)'
+    - 'https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616355390 HTTP200 SHA256 fe13132719bcf184617901cc528c532b4f4b71d2935e83d1fbc309285db6c93d'
+  observed: 'Official HTML returned purchase-card shell, not case-specific contract data; extracted visible text has no contract-details heading, signed supplier or contract price. HTTP200 does not verify signed award. Repeat retrieval of first two URLs used to inspect visible text. No new originals captured: source only transiently inspected; no new evidence fields accepted.'
+  newly_sha_verified_persistent_originals: 0
+  new_unique_lots: 0
+  new_verified_fields: 0
+  original_protocol_winners: 0
+  signed_suppliers_verified: 0
+  executed_prices_verified: 0
+  new_exhaustive_months: 0
+  no_db_mutation: true
+  client_reports_unchanged: true
+  next_targets:
+    - '32515208744: native first-party technical annex and separate 220kV project vs 6-35kV core; retry after source-native document discovery'
+    - '32515584863: first-party design specification for SKRM 128/154 Mvar and signed supplier; retry when registry details become visible'
+    - '32616355390: RTS native commission protocol and signed contract; retry on new published original'
+  no_auto_merge: true
