@@ -7422,3 +7422,35 @@ run_2026_11_12_1233_msk:
     - '32515584863: first-party design specification for SKRM 128/154 Mvar and signed supplier; retry when registry details become visible'
     - '32616355390: RTS native commission protocol and signed contract; retry on new published original'
   no_auto_merge: true
+
+# Watchdog 2026-11-12 15:34 MSK — verified immutable EIS contract-tab captures
+run_2026_11_12_1532_msk:
+  status: in_progress
+  issue_comment_id: 6823709446
+  acceptance: pass
+  git_head_before: d1a8625319fadf3efa84117240d89517da31a5cc
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  source_requests_attempted: 4
+  source_requests_http_200: 2
+  source_requests_tls_failed: 2
+  newly_sha_verified_original_versions: 2
+  new_unique_lots: 0
+  new_verified_fields: 0
+  original_protocol_winners: 0
+  signed_suppliers_verified: 0
+  executed_prices_verified: 0
+  new_exhaustive_months: 0
+  evidence:
+    - '32616497692: official EIS contract-info HTTP200, SHA256 53b853551a415847305d79bd05451007437783736b188b8e578297d3051a8338, 129712 bytes; visible text generic shell, no signed supplier/contract price'
+    - '32413764701: official EIS contract-info HTTP200, SHA256 7a6eb9f698ca4390c370f59201804bac375be863f89d1b94770a597e7ea2b6c1, 131086 bytes; visible text generic shell, no signed supplier/contract price'
+  blocker: 'Default httpx transport certificate chain failed for both; native-trust successfully captured. EIS contract tab only generic visible text, no award proof.'
+  no_db_mutation: true
+  client_reports_unchanged: true
+  next_targets:
+    - '32616497692: signed contract in separate registry, after publication; current commission proposal not contract'
+    - '32413764701: first-party technical annex and supplier/contract; existing 10kV lot, no duplicate'
+    - 'РН61005187: source-native TEK-Torg protocol and annex after discoverable public link'
+  no_auto_merge: true
