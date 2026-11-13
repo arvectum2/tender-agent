@@ -7543,3 +7543,34 @@ run_20261113_0132:
     - '32615937898: inspect registry token 28589190260001030000, verify contractor and signed amount'
     - '32515225588: inspect registry token 16016979250046600000 and separate PQ scope'
     - '32615760238: inspect protocol and native registry independently'
+
+# Watchdog 2026-11-13 03:31 MSK — contract registry follow-up, negative original retrieval.
+run_20261113_0331:
+  status: in_progress
+  issue_comment_id: 6840102150
+  acceptance: pass
+  git_head_before: a4db6f82f13ce5a242f381dfba9dbd1a14e83099
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  source_requests_attempted: 5
+  newly_sha_verified_original_versions: 0
+  new_unique_lots: 0
+  new_verified_fields: 0
+  original_protocol_winners: 0
+  signed_suppliers_verified: 0
+  executed_prices_verified: 0
+  new_exhaustive_months: 0
+  evidence:
+    - '32615937898 registry 28589190260001030000: contract-info HTTP404, printForm HTTP404'
+    - '32515225588 registry 16016979250046600000: contract-info HTTP404, printForm HTTP404'
+    - '32615852898 registry 52460069527260006170000: printForm fetched but failed first-party capture identity/status/size validation; no admissible original'
+  blocker: 'Public EIS registry endpoints return 404 or unaccepted print form; no contract signatory or price verified. Secondary search by exact registry tokens returned no usable first-party records.'
+  no_db_mutation: true
+  client_reports_unchanged: true
+  next_targets:
+    - '32615937898: retry registry 28589190260001030000 only after new published first-party link or retry eligibility'
+    - '32515225588: retry registry 16016979250046600000 only after new public registry source'
+    - '32615852898: inspect alternate official protocol/technical annex; avoid unvalidated printForm'
+  no_auto_merge: true
