@@ -7636,3 +7636,5 @@ run_20261113_0632:
     - '32514565977: RZD native result/protocol on verified public platform'
     - '32514944142: Rosseti native technical annex or registry contract'
   no_auto_merge: true
+
+# Watchdog 2026-11-13 07:28 MSK: source attempts only; acceptance PASS, live 123/112/45, HEAD 651692595f35165828dda583bb10cef05d56fd5f; EIS primary URLs 32514476448 and 32514565977 returned HTTP301 (native-trust); zero admissible originals/fields/lots/signed suppliers; no DB or client report writes. Secondary Kontur indicates 32514476448 contract 50277071467250001900000 / 2922405.35 RUB, unverified first-party. Next: ZakazRF protocol/contract for 32514476448; RZD ETP 32514565977; Rosseti 32514944142. Task remains in_progress.
