@@ -7574,3 +7574,34 @@ run_20261113_0331:
     - '32515225588: retry registry 16016979250046600000 only after new public registry source'
     - '32615852898: inspect alternate official protocol/technical annex; avoid unvalidated printForm'
   no_auto_merge: true
+
+# Watchdog 2026-11-13 05:27 MSK — source-native EIS retry, no database writes
+run_20261113_0527:
+  status: in_progress
+  issue_comment_id: 6841993754
+  acceptance: pass
+  git_head_before: a731d612d4ffd753b144339f24b97df0049a62b6
+  postgres_unique_lots_before: 123
+  postgres_unique_lots_after: 123
+  postgres_distinct_procedures: 112
+  postgres_eis_223_notices: 45
+  source_requests_attempted: 6
+  newly_sha_verified_original_versions: 0
+  new_unique_lots: 0
+  new_verified_fields: 0
+  original_protocol_winners: 0
+  signed_suppliers_verified: 0
+  executed_prices_verified: 0
+  new_exhaustive_months: 0
+  evidence:
+    - '32515584863: official EIS contract-info response rejected by capture identity/status/size validation; common-info HTTP404'
+    - '32616355390: official EIS contract-info response rejected by capture identity/status/size validation; common-info HTTP404'
+    - '32615852898: official EIS contract-info response rejected by capture identity/status/size validation; common-info HTTP404'
+  blocker: 'No admissible original from six first-party EIS requests; no signed supplier or price evidence. No PostgreSQL mutations.'
+  no_db_mutation: true
+  client_reports_unchanged: true
+  next_targets:
+    - '32515584863: native technical annex/contract on new public link or after retry eligibility'
+    - '32616355390: RTS native protocol/contract, if public'
+    - '32615852898: alternate official protocol/technical annex, avoid invalid printForm'
+  no_auto_merge: true
