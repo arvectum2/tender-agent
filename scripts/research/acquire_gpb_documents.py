@@ -97,6 +97,7 @@ def main():
     p.add_argument("--root", required=True, type=Path)
     p.add_argument("--limit", type=int, default=20)
     p.add_argument("--include-archives", action="store_true")
+    p.add_argument("--protocols-only", action="store_true")
     a = p.parse_args()
     if not 1 <= a.limit <= 30:
         raise ValueError("invalid batch")
@@ -109,7 +110,8 @@ def main():
     refs = references(root)
     allowed = SUPPORTED if a.include_archives else SUPPORTED - {".zip", ".rar", ".7z"}
     tasks = [r for r in refs if (r["external_id"], r["document_url"]) not in seen
-             and Path(r["original_filename"]).suffix.lower() in allowed][:a.limit]
+             and Path(r["original_filename"]).suffix.lower() in allowed
+             and (not a.protocols_only or r.get("document_role") == "published_protocol")][:a.limit]
     for row in tasks:
         try:
             rc = capture(root, row)

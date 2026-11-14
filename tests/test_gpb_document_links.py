@@ -37,3 +37,14 @@ def test_root_link_is_unavailable_not_downloadable():
     links, unavailable = parse_document_entries(raw, detail_url=DETAIL, external_id="etp:123")
     assert len(links) == 1
     assert unavailable == [{"original_filename": "Жалоба.doc", "verification": "LABEL_ONLY_ROOT_LINK"}]
+
+
+def test_protocol_repeated_anchor_is_one_evidence_link():
+    url = "https://etp.gpb.ru/file/get/t/Protocols/id/123/name/abcd.123"
+    anchor = f'<a class="procedureDocItem__title" href="{url}">Протокол.zip</a>'
+    rows = parse_document_links((anchor * 2).encode(), detail_url=DETAIL, external_id="etp:123")
+    assert len(rows) == 1
+    assert rows[0]["document_role"] == "published_protocol"
+    with pytest.raises(ValueError, match="conflicting"):
+        parse_document_links((anchor + anchor.replace("Протокол.zip", "Другое.zip")).encode(),
+                             detail_url=DETAIL, external_id="etp:123")

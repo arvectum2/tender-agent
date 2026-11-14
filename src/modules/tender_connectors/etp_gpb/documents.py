@@ -7,7 +7,7 @@ from html.parser import HTMLParser
 from urllib.parse import urlsplit
 
 DOCUMENT_PATH = re.compile(
-    r"/file/get/t/(?:LotDocuments/id/[0-9]+|PriceOrderDocument/id/[0-9]+/m/nsi)"
+    r"/file/get/t/(?:LotDocuments/id/[0-9]+|Protocols/id/[0-9]+|PriceOrderDocument/id/[0-9]+/m/nsi)"
     r"/name/[a-f0-9]+\.[0-9]+"
 )
 
@@ -52,18 +52,25 @@ def parse_document_entries(raw, *, detail_url, external_id):
     p.feed(raw.decode("utf-8"))
     p.close()
     rows, unavailable = [], []
+    seen = {}
     for url, name in p.rows:
         if url == "https://etp.gpb.ru/" and name and len(name) <= 512:
             unavailable.append({"original_filename": name, "verification": "LABEL_ONLY_ROOT_LINK"})
             continue
         if not valid_document_url(url) or not name or len(name) > 512:
             raise ValueError("invalid published document anchor")
+        if url in seen:
+            if seen[url] != name:
+                raise ValueError("conflicting document anchor labels")
+            continue
+        seen[url] = name
         rows.append({"source": "etp_gpb", "external_id": external_id,
                      "detail_url": detail_url, "detail_sha256": hashlib.sha256(raw).hexdigest(),
                      "document_url": url, "original_filename": name,
                      "verification": "PUBLISHED_LINK_ONLY"})
-    if len({r["document_url"] for r in rows}) != len(rows):
-        raise ValueError("duplicate document anchor")
+    for row in rows:
+        if "/file/get/t/Protocols/" in row["document_url"]:
+            row["document_role"] = "published_protocol"
     return rows, unavailable
 
 
