@@ -103,6 +103,20 @@ def select_batch(directory, rows, priority, mode, limit, max_chunks):
         extracted[v["source_sha256"]] = v["result"]
     indexed = {json.loads(f.read_text())["source_sha256"]
                for f in directory.glob("persistent-pilot-*.json")}
+    # A timed-out ingest may have committed server-side. A separate verified
+    # read-only export receipt suppresses blind retries without claiming that
+    # per-document embedding completion has been proven.
+    recovered = directory / "dp-recovered-server-resource.json"
+    if recovered.exists():
+        receipt = json.loads(recovered.read_text())
+        if (receipt.get("collection_id") != COLLECTION
+                or receipt.get("verification") != "RESOURCE_DOCUMENT_CHUNKS_VERIFIED_EMBEDDINGS_NOT_PER_CHUNK_VERIFIED"
+                or not receipt.get("export_sha256")):
+            raise ValueError("invalid recovered-resource receipt")
+        original_export = directory / "dp-export-reconciliation-20261114.json"
+        if hashlib.sha256(original_export.read_bytes()).hexdigest() != receipt["export_sha256"]:
+            raise ValueError("recovered export receipt mismatch")
+        indexed.add(receipt["source_sha256"])
     result = []
     for sha, row in rows.items():
         if mode == "extract":

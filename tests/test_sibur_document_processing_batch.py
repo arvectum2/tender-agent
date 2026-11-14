@@ -72,3 +72,22 @@ def test_pdf_transport_failure_stops_future_requests(tmp_path, monkeypatch):
         worker.run_extraction_batch(tmp_path, [{"file": "one.pdf"}, {"file": "two.pdf"}])
     assert exc.value.code == 2
     assert calls == ["one.pdf"]
+
+
+def test_recovered_server_resource_suppresses_blind_retry(tmp_path):
+    from scripts.research.process_sibur_document_batch import COLLECTION
+
+    p = tmp_path / "dp-export-reconciliation-20261114.json"
+    p.write_text("{}")
+    (tmp_path / "dp-recovered-server-resource.json").write_text(json.dumps({
+        "source_sha256": "a", "collection_id": COLLECTION,
+        "verification": "RESOURCE_DOCUMENT_CHUNKS_VERIFIED_EMBEDDINGS_NOT_PER_CHUNK_VERIFIED",
+        "export_sha256": hashlib.sha256(p.read_bytes()).hexdigest(),
+    }))
+    (tmp_path / "a.dp-result.json").write_text(json.dumps({
+        "source_sha256": "a", "result": {"extraction_status": "extracted", "chunks": [1]}}))
+    rows = {"a": {"sha256": "a", "bytes": 1, "references": []}}
+    assert not select_batch(tmp_path, rows, set(), "index", 1, 5)
+    p.write_text("changed")
+    with pytest.raises(ValueError, match="export receipt mismatch"):
+        select_batch(tmp_path, rows, set(), "index", 1, 5)
