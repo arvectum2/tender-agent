@@ -3,12 +3,12 @@ status: in_progress
 goal: Verify public source acquisition and normalize first-party procurement records for three tracks.
 definition_of_done: [source access matrix, first-party receipts, bounded normalization, verified next connector steps]
 completed: [10 source probes, 8 HTTP 200 pages, real AJAX pagination, 27 pages and 313 unique procedures, 516 document URLs, 2 sample OOXML documents, duplicate observation preservation, parser and bounded research probe]
-current_stage: sibur_working_db_seed_verified
+current_stage: sibur_document_acquisition_pilot_verified
 remaining: [SIBUR document acquisition and historical coverage, production DP transport and monitoring integration, ETP GPB and TEK-Torg source access, EAT and Moscow list acquisition]
 last_verified_commit: 44ff2d1b3fca8d336be5b2854a937f76414807ee
 latest_tests: "56 focused pytest PASS (11 SIBUR + 45 prior parser/Watchdog); Ruff PASS; real 27/27 SHA-bound replay 313 IDs / 314 rows / one duplicate; two original OOXML samples PASS; explicitly authorized TA DB seed verified; MI DB not mutated"
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114
-resume_instruction: Reconcile PR 524 or the source-persistence review branch if PR number differs; use existing sibur_public seed instead of reinserting. Acquire verified documents through DP, then implement historical/status coverage and incremental monitoring; parallel GEH/ZMO public discovery. Preserve observations and never expose contacts or submit bids.
+resume_instruction: Reconcile PRs 524 and 525; reuse existing 30 verified file receipts and 11 distinct DP results, acquire remaining supported documents in bounded batches, audit empty extraction, then persistent DP/TA linkage after prewrite gate. Continue historical coverage and GEH/ZMO public discovery. Never expose contacts or submit bids.
 
 report: docs/roadmap/SIBUR_PUBLIC_REGISTRY_BASELINE_2026-11-14.md
 
@@ -22,3 +22,16 @@ working_db_seed:
   prewrite_gate: pass
   owner_authorized: true
   tests: 21 focused passed; Ruff passed
+
+document_acquisition_pilot:
+  captured: 30
+  distinct_sha: 30
+  linked_procedures: 40
+  source_links_total: 516
+  dp_distinct_processed: 11
+  dp_extracted: 10
+  dp_empty_review: 1
+  dp_chunks: 269
+  dp_persisted: false
+  tests: 14 focused passed; Ruff passed
+  report: docs/roadmap/SIBUR_DOCUMENT_ACQUISITION_2026-11-14.md
