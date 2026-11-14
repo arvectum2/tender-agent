@@ -3,12 +3,12 @@ status: in_progress
 goal: Verify public source acquisition and normalize first-party procurement records for three tracks.
 definition_of_done: [source access matrix, first-party receipts, bounded normalization, verified next connector steps]
 completed: [10 source probes, 8 HTTP 200 pages, real AJAX pagination, 27 pages and 313 unique procedures, 516 document URLs, 2 sample OOXML documents, duplicate observation preservation, parser and bounded research probe]
-current_stage: sibur_document_acquisition_pilot_verified
+current_stage: sibur_source_document_db_linkage_verified
 remaining: [SIBUR document acquisition and historical coverage, production DP transport and monitoring integration, ETP GPB and TEK-Torg source access, EAT and Moscow list acquisition]
-last_verified_commit: 44ff2d1b3fca8d336be5b2854a937f76414807ee
+last_verified_commit: 2c16798c0d2e74a4e087f6a66448756c0d0dbc4a
 latest_tests: "56 focused pytest PASS (11 SIBUR + 45 prior parser/Watchdog); Ruff PASS; real 27/27 SHA-bound replay 313 IDs / 314 rows / one duplicate; two original OOXML samples PASS; explicitly authorized TA DB seed verified; MI DB not mutated"
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114
-resume_instruction: Reconcile PRs 524 and 525; reuse existing 30 verified file receipts and 11 distinct DP results, acquire remaining supported documents in bounded batches, audit empty extraction, then persistent DP/TA linkage after prewrite gate. Continue historical coverage and GEH/ZMO public discovery. Never expose contacts or submit bids.
+resume_instruction: PR 525 merged; reconcile stacked PRs 524/526 and document linkage branch without repeating verified writes. Reuse 90 capture receipts and 116 DB links; index bounded verified originals, append DP receipts, verify authorized retrieval and file serving, classify source-grounded relevance; continue historical coverage and GEH/ZMO public discovery.
 
 report: docs/roadmap/SIBUR_PUBLIC_REGISTRY_BASELINE_2026-11-14.md
 
@@ -35,3 +35,18 @@ document_acquisition_pilot:
   dp_persisted: false
   tests: 14 focused passed; Ruff passed
   report: docs/roadmap/SIBUR_DOCUMENT_ACQUISITION_2026-11-14.md
+
+document_persistence:
+  captured_originals: 90
+  linked_procedures: 81
+  ta_db_links: 116
+  repeat_inserted: 0
+  dp_collection: tender-agent:sibur-public-research
+  dp_indexed_originals: 1
+  dp_chunks: 1
+  dp_embeddings: 1
+  prewrite_gate: pass
+  dp_backup_sha256: 3eb6fbcc0f116e647fc483f2508f8beaf5c496a44021c58eb95b75f487346d80
+  ta_backup_sha256: 6848339e80419ffcd07a6a8add1168bd5281c6c35adb3d7dd3e91c3e9195ac60
+  report: docs/roadmap/SIBUR_DOCUMENT_LINKAGE_2026-11-14.md
+  latest_tests: 18 targeted passed; Ruff passed; live replay zero inserts and independent DB counts
