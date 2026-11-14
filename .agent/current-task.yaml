@@ -652,3 +652,8 @@ source_discovery_2026_11_14:
   stage: sibur_public_snapshot_verified
   remaining: [document_acquisition, historical_coverage, dp_integration, geh_and_zmo_sources]
   no_live_trading_or_db_mutation: true
+
+geh_zmo_parallel_2026_11_14:
+  child_checkpoint: .agent/checkpoints/TA-GEH-ZMO-PARALLEL-20261114.yaml
+  stage: gpb_group_history192_and_priority_details_verified
+  parent_resume_preserved: true
