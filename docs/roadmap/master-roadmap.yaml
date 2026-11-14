@@ -287,6 +287,48 @@ active_product_roadmap_2026_10_08:
       trigger: 'Attributable correction corpus is large enough to evaluate recurring failure patterns; target >=30 useful corrections across >=3 customer/pilot contexts.'
       done_gate: 'No autonomous self-training/promotion; every promoted change has frozen regression evidence and attributable review.'
 
+owner_business_tracks_2026_11_14:
+  status: approved_roadmap_scope
+  source: Owner directive 2026-11-14
+  execution_model: parallel_independent_tracks_reuse_first
+  precedence: Preserve APR ordering and active Power Quality work; explicit bounded queue only.
+  shared_core: [source_adapters, procurement_identity, document_evidence, deduplication, entity_project_graph, semantic_screening, supplier_catalog, economics_engine, operator_workspace]
+  data_boundary: Separate tenant profiles, entitlements, confidential evidence, credentials and business decisions; never commit private client or trading data.
+  tracks:
+    - id: TA-SIBUR-INTELLIGENCE
+      priority: P0
+      state: planned
+      sources:
+        - {platform: SAP SRM SIBUR, role: direct_procurement}
+        - {platform: B2B-Center, role: general_contractor_procurement}
+      milestones: [source_access_inventory, historical_backfill_24_36_months_where_available, company_project_mapping, incremental_monitoring, evidence_grounded_digest]
+      first_task: TA-SIBUR-SOURCE-DISCOVERY-001
+      done_gate: Deduplicated procurement history with verified buyer/project/contractor provenance, access gaps, coverage denominator and recurring monitoring.
+    - id: TA-GEH-INTELLIGENCE
+      priority: P0
+      state: planned
+      sources:
+        - {platform: ETP GPB, role: direct_procurement}
+        - {platform: TEK-Torg, role: general_contractor_procurement}
+      focus: Gazprom Energoholding subsidiaries including Mosenergo
+      milestones: [source_access_inventory, historical_backfill_24_36_months_where_available, company_project_mapping, incremental_monitoring, evidence_grounded_digest]
+      first_task: TA-GEH-SOURCE-DISCOVERY-001
+      done_gate: Deduplicated procurement history with verified buyer/project/contractor provenance, access gaps, coverage denominator and recurring monitoring.
+    - id: TA-AI-TRADING
+      priority: P0
+      state: planned_paper_trading_only
+      initial_source_candidates: [Moscow Supplier Portal, EAT Berezka, RTS-market, Sber A electronic shop, GPB electronic shop]
+      milestones: [source_access_inventory, price_and_supplier_history, exact_sku_matching, deterministic_full_cost_and_cashflow, paper_bid_simulation, outcome_reconciliation, offline_backtest, owner_review]
+      first_task: TA-AI-TRADING-SOURCE-DISCOVERY-001
+      target_routine_automation_percent: 99
+      measurement: Eligible routine steps without human intervention divided by all eligible routine steps; also report exceptions and operator time.
+      paper_trading: {enabled: true, real_bid: false, signing: false, supplier_contact: false, spend: false, real_order: false, real_delivery: false}
+      economics: [purchase_price, stock_and_lead_time, shipping, platform_fee, tax_and_vat_profile, financing, security_cashflow, risk_reserve, expected_margin, max_bid_discount, uncertainty]
+      done_gate: Time-correct simulated bids with source evidence, historical price/availability, observed outcomes separate from hypothetical wins, net profit and peak capital exposure; no live trading before separate Owner/legal approval.
+  shared_quality_gate: Source URL/time/revision/hash where available; explicit UNKNOWN for missing facts; distinguish direct buyer from contractor and observed from inferred outcomes.
+  external_action_gate: No actual bidding, signatures, supplier messages, payments, paid access, production deployment or restricted access without separate authorization.
+  checkpoint: .agent/checkpoints/TA-ROADMAP-TRACKS-20261114.yaml
+
 roadmap_status_snapshot_2026_10_20:
   as_of: '2026-10-20'
   base_main_commit: 'd2a927ecebc9222bb3b38b47aa14c7024ccec4f0'

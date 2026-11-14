@@ -1,0 +1,12 @@
+task_id: TA-ROADMAP-TRACKS-20261114
+status: completed
+goal: Add three owner-approved tracks without disrupting APR or PQ.
+definition_of_done: [canonical roadmap YAML and Markdown, bounded queue tasks, parent checkpoint preserved, validation, published review PR]
+completed: [roadmap, queue, parent preservation, targeted validation, PR 522 published]
+current_stage: review_pr_published
+remaining: []
+last_verified_commit: 7d7ec385c5d097af688fe458ae7cd9c27fa4f917
+latest_tests: 'Watchdog continuation policy targeted pytest without unrelated application conftest; YAML and scope invariants PASS; git diff --check PASS'
+resume_instruction: Review PR 522 and exact-head required CI before governed merge; after merge first three ready discovery items may be selected under existing policy. No external execution.
+review_pr: 522
+main_merge: pending_required_CI_and_governance_review

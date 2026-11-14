@@ -1054,6 +1054,45 @@ items:
   executor_scope: Ten aligned real-source questions on 223-FZ and 44-FZ local Qwen; separate citation and factual quality judgments
   done_gate: Reproducible 20-case real-doc model results, grounded report, regressions and owner gated CI merge
 
+- order: 1130
+  task_id: TA-SIBUR-SOURCE-DISCOVERY-001
+  title: SIBUR source and reuse inventory
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: false
+  strategy: ADAPT
+  dependencies: []
+  source: 'Owner directive 2026-11-14; master-roadmap.yaml#owner_business_tracks_2026_11_14'
+  executor_scope: 'SAP SRM and B2B-Center; buyer and contractor attribution; historical coverage. Inventory existing modules and public/authorized read-only sources. No DB mutation, private credentials or external effects.'
+  done_gate: 'Sanitized source/access and reuse matrix, observed vs unavailable coverage, gaps and bounded next-stage proposal. No live connector or trading readiness claim.'
+
+- order: 1140
+  task_id: TA-GEH-SOURCE-DISCOVERY-001
+  title: GEH source and reuse inventory
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: false
+  strategy: ADAPT
+  dependencies: []
+  source: 'Owner directive 2026-11-14; master-roadmap.yaml#owner_business_tracks_2026_11_14'
+  executor_scope: 'ETP GPB and TEK-Torg; subsidiaries including Mosenergo; historical coverage. Inventory existing modules and public/authorized read-only sources. No DB mutation, private credentials or external effects.'
+  done_gate: 'Sanitized source/access and reuse matrix, observed vs unavailable coverage, gaps and bounded next-stage proposal. No live connector or trading readiness claim.'
+
+- order: 1150
+  task_id: TA-AI-TRADING-SOURCE-DISCOVERY-001
+  title: Small procurement paper-trading source inventory
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: false
+  strategy: ADAPT
+  dependencies: []
+  source: 'Owner directive 2026-11-14; master-roadmap.yaml#owner_business_tracks_2026_11_14'
+  executor_scope: 'Electronic shops, catalog/economics modules, price and outcome history, SKU and simulation feasibility. Inventory existing modules and public/authorized read-only sources. No DB mutation, private credentials or external effects.'
+  done_gate: 'Sanitized source/access and reuse matrix, observed vs unavailable coverage, gaps and bounded next-stage proposal. No live connector or trading readiness claim.'
+
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'
