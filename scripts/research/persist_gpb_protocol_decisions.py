@@ -41,8 +41,8 @@ def attach_decision(meta, row):
                and r.get("external_id") == row["external_id"]
                and r.get("document_role") == "published_protocol" for r in refs):
         raise ValueError("protocol capture evidence mismatch")
-    if (row.get("decision") != "BEST_BID_SELECTED_NOT_SIGNED_CONTRACT"
-            or row.get("parser_schema") != "gpb_best_bid_v2"
+    if (row.get("decision") not in {"BEST_BID_SELECTED_NOT_SIGNED_CONTRACT", "PROCEDURE_DECLARED_UNSUCCESSFUL"}
+            or row.get("parser_schema") not in {"gpb_best_bid_v2", "gpb_outcome_v3"}
             or row.get("participant_legal_identity") is not None
             or row.get("contract_amount") is not None):
         raise ValueError("unsupported or unverified decision")

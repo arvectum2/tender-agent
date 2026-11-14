@@ -51,3 +51,20 @@ def test_multiple_bid_amounts_not_guessed():
                    para("Определить лучшей заявку участника с идентификационным номером 123, на сумму 900,00 руб., на сумму 800,00 руб."))
     with pytest.raises(ValueError, match="ambiguous"):
         parse_protocol(raw)
+
+
+def test_unsuccessful_not_a_winner():
+    r = parse_protocol(protocol(para("Признать открытый конкурентный отбор несостоявшимся.")))
+    assert r["decision"] == "PROCEDURE_DECLARED_UNSUCCESSFUL"
+    assert r["participant_platform_id"] is None
+
+
+def test_local_ordinal_does_not_become_platform_id():
+    raw = protocol(para("Начальная (максимальная) цена договора:") +
+                   para("100,00 без НДС;") + para("122,00 с НДС.") +
+                   para("Комиссия приняла решение о выборе наиболее выгодных условий поставки товара в заявке Участника №2 с ценовым предложением (далее – Победитель):") +
+                   para("90,00 руб. без НДС;") + para("109,80 руб. с НДС."))
+    row = parse_protocol(raw)
+    assert row["participant_local_ordinal"] == "2"
+    assert row["participant_platform_id"] is None
+    assert row["best_bid_rub"] == "109.80"

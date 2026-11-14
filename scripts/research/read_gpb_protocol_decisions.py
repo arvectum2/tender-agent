@@ -40,8 +40,12 @@ def read_docx_member(raw):
 
 
 def parse_protocol(raw):
+    if raw.startswith(b"%PDF-"):
+        raise ValueError("PDF protocol requires separate text-layer or OCR review")
     with zipfile.ZipFile(io.BytesIO(raw)) as z:
         infos = z.infolist()
+        if "word/document.xml" in z.namelist():
+            return parse_decision_lines(read_docx_member(raw), None, hashlib.sha256(raw).hexdigest())
         if len(infos) > 20 or sum(i.file_size for i in infos) > 20_000_000:
             raise ValueError("archive bounds")
         members = [i for i in infos if i.filename.lower().endswith(".docx")]
@@ -49,11 +53,14 @@ def parse_protocol(raw):
             raise ValueError("expected one bounded DOCX protocol")
         member = members[0]
         content = z.read(member)
-    lines = read_docx_member(content)
+    return parse_decision_lines(read_docx_member(content), member.filename, hashlib.sha256(content).hexdigest())
+
+
+def parse_decision_lines(lines, member, member_sha256):
     best = [(i, DECISION.search(line)) for i, line in enumerate(lines) if DECISION.search(line)]
     initial = [(i, INITIAL.search(line)) for i, line in enumerate(lines) if INITIAL.search(line)]
     if len(best) != 1 or len(initial) != 1:
-        raise ValueError("ambiguous or absent explicit decision")
+        return alternate_decision(lines, member, member_sha256)
     i, m = best[0]
     j, n = initial[0]
     prices = list(BID_PRICE.finditer(lines[i], m.end()))
@@ -72,7 +79,7 @@ def parse_protocol(raw):
     def price(s):
         return str(Decimal(s.replace(" ", "").replace("\u00a0", "").replace(",", ".")))
 
-    return {"member": member.filename, "member_sha256": hashlib.sha256(content).hexdigest(),
+    return {"member": member, "member_sha256": member_sha256,
             "decision": "BEST_BID_SELECTED_NOT_SIGNED_CONTRACT",
             "participant_platform_id": m["participant"] or m["leader"],
             "participant_role": "group_leader" if m["leader"] else "participant",
@@ -82,6 +89,44 @@ def parse_protocol(raw):
             "best_bid_tax_basis": tax_basis(lines[i][bid.end():]),
             "contract_amount": None, "best_bid_paragraph": i, "best_bid_evidence": lines[i],
             "initial_price_paragraph": j, "initial_price_evidence": lines[j]}
+
+
+def alternate_decision(lines, member, member_sha256):
+    base = {"member": member, "member_sha256": member_sha256,
+            "participant_platform_id": None, "participant_legal_identity": None,
+            "contract_amount": None, "parser_schema": "gpb_outcome_v3"}
+    failed = [(i, line) for i, line in enumerate(lines) if re.search(
+        r"признать.{0,180}несостоявш(?:имся|имися)", line, re.IGNORECASE)]
+    if len(failed) == 1:
+        i, evidence = failed[0]
+        return {**base, "decision": "PROCEDURE_DECLARED_UNSUCCESSFUL",
+                "decision_paragraph": i, "decision_evidence": evidence}
+    winner = [(i, re.search(r"Комиссия приняла решение о выборе наиболее выгодных условий.{0,220}в заявке Участника №\s*(\d+) с ценовым предложением", line, re.IGNORECASE))
+              for i, line in enumerate(lines)]
+    winner = [(i, m) for i, m in winner if m]
+    headers = [i for i, line in enumerate(lines) if re.search(
+        r"Начальная \(максимальная\) цена договора:\s*$", line, re.IGNORECASE)]
+    if len(winner) != 1 or len(headers) != 1:
+        raise ValueError("ambiguous or absent explicit decision")
+    i, m = winner[0]
+    j = headers[0]
+    gross = re.compile(r"^\s*-?\s*" + MONEY + r"\s*(?:руб\.\s*)?с НДС(?:[.;\s]|$)", re.IGNORECASE)
+    def unique_amount(start):
+        matches = [(k, gross.search(lines[k])) for k in range(start+1, min(start+5,len(lines)))]
+        matches = [(k, v) for k, v in matches if v]
+        if len(matches) != 1:
+            raise ValueError("ambiguous gross price")
+        k, v = matches[0]
+        return k, str(Decimal(v[1].replace(" ", "").replace("\u00a0", "").replace(",", ".")))
+    a, initial = unique_amount(j)
+    b, bid = unique_amount(i)
+    return {**base, "decision": "BEST_BID_SELECTED_NOT_SIGNED_CONTRACT",
+            "participant_role": "procedure_local_ordinal", "participant_local_ordinal": m[1],
+            "initial_price_rub": initial, "best_bid_rub": bid,
+            "initial_price_tax_basis": "includes_vat", "best_bid_tax_basis": "includes_vat",
+            "initial_price_paragraph": a, "initial_price_evidence": lines[a],
+            "best_bid_paragraph": i, "best_bid_evidence": lines[i],
+            "best_bid_price_paragraph": b, "best_bid_price_evidence": lines[b]}
 
 
 def main():
