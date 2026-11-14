@@ -5,3 +5,7 @@ Eight bounded HTTP probes concurrent with the SIBUR capture: six HTTP 200, two T
 TEK-Torg public market/223 pages returned HTTP 307 redirect loops, while https://kim.tektorg.ru/ loads the storefront shell. Moscow supplier portal returns an SPA shell; EAT public landing response is an intermediate loading page, not purchase sessions. Existing EAT/Moscow parsers are available; actual list/detail contracts and item-level data remain to verify. Do not treat HTTP 200 shell as data acquisition or invent API paths. Raw source receipts and normalized GPB preview are in private runtime, not Git.
 
 Next: establish owner/customer filters using the public UI and official primary detail links, verify source dates, then source-separated ingestion of target GEH purchases. Resolve authorized public list acquisition for small-procurement platforms and distinguish goods, units, price, delivery and actual outcomes before economics.
+
+## Target detail follow-up
+
+Two first-party historical details returned HTTP 200 and were byte-hashed. Notice 32414196205, published 14.11.2024, 7,407,342 RUB: survey works for 275 MW units at CHPP-25/26. Notice 32414239479, published 25.11.2024, 1,267,200 RUB: functional logic diagrams for protection and automation terminals at HPP-1 boiler modernization. Both show archive status and source text supports Mosenergoproekt and GEH Zakupki. Actual award, supplier and target-filter contract remain unverified. Keep customer, organizer and project owner separate. Raw receipts retained privately.

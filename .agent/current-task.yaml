@@ -655,5 +655,5 @@ source_discovery_2026_11_14:
 
 geh_zmo_parallel_2026_11_14:
   child_checkpoint: .agent/checkpoints/TA-GEH-ZMO-PARALLEL-20261114.yaml
-  stage: gpb_list_contract_verified_target_owner_filter_pending
+  stage: gpb_target_archived_details_verified
   parent_resume_preserved: true
