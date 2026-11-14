@@ -3,12 +3,12 @@ status: in_progress
 goal: Establish verified primary public list acquisition for GEH and small procurement parallel to SIBUR.
 definition_of_done: [primary target lists and detail receipts, source-scoped stable identities, date and status validation, verified normalized samples, gated working DB ingestion]
 completed: [eight parallel source probes, GPB SSR card parser, real 20-card replay, 3 focused tests]
-current_stage: historical_protocol_outcomes_58_verified
+current_stage: historical_protocol_outcomes_65_verified
 remaining: [GPB customer-specific queries and actual date checks, TEK-Torg accessible lists, Moscow and EAT list contracts, source-separated import]
 last_verified_commit: 7677527e75de0c12af37ae46e240873e0b20780c
 latest_tests: 3 pytest passed; Ruff passed; 20 distinct primary observed cards; 13 future-dated observations quarantined
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources
-resume_instruction: Reuse 8206 GPB rows, 19 active and 110 historical details, 73 GPB document links, 59 captured protocols, 58 structured outcomes (55 best bids, 3 unsuccessful). One PDF scan etp:1293269 needs bounded OCR; no inferred legal identity or signed contract. Continue historical priority details from next unseen ID, verify remaining published protocol links, active archives, earlier dates and ZMO. Keep procedure-local ordinals separate from platform-global IDs.
+resume_instruction: Reuse 8206 GPB rows, 19 active and 110 historical verified details, 81 GPB document links, all 67 published protocols captured, 65 structured outcomes (62 best bids and 3 unsuccessful). Review etp:1293269 scanned PDF and etp:1290716 alternate decision; next unseen historical candidate IDs, active archives, older date windows and ZMO. Keep local participant ordinals distinct from global platform IDs; no inferred signed contracts or supplier identities.
 
 target_detail_receipts:
   detail_pages_verified: 2
@@ -156,3 +156,21 @@ geh_protocol_outcomes_batch4:
   original_replay_inserted: 0
   prewrite_gate: pass
   backup_sha256: 27fa827268b23836ed4f772d4341c8a23c3acbe42e7337d3ac687b459f14bb91
+
+geh_protocol_outcomes_batch4_complete:
+  historical_details: 110
+  historical_published_links: 214
+  published_protocols_captured: 67
+  structured_outcomes: 65
+  best_bids: 62
+  unsuccessful: 3
+  individual_participants: 57
+  group_leaders: 3
+  procedure_local_ordinals: 2
+  distinct_global_ids: 23
+  remaining_review: [etp:1293269, etp:1290716]
+  historical_document_links: 68
+  total_gpb_links: 81
+  repeat_inserts: 0
+  repeat_updates: 0
+  backup_sha256: 866656b3e5586b597cd9295b010cdb144b4f3c02351172034fa0404d75d1aed0
