@@ -56,3 +56,19 @@ def test_pdf_capture_signature_and_eof(tmp_path):
     p.write_bytes(b"%PDF-1.7\ntruncated")
     with pytest.raises(ValueError, match="EOF"):
         verified_bytes(p, hashlib.sha256(p.read_bytes()).hexdigest())
+
+
+def test_pdf_transport_failure_stops_future_requests(tmp_path, monkeypatch):
+    from scripts.research import process_sibur_document_batch as worker
+
+    calls = []
+
+    def fail(directory, row, mode):
+        calls.append(row["file"])
+        return row["file"], "review", "TimeoutExpired"
+
+    monkeypatch.setattr(worker, "operate", fail)
+    with pytest.raises(SystemExit) as exc:
+        worker.run_extraction_batch(tmp_path, [{"file": "one.pdf"}, {"file": "two.pdf"}])
+    assert exc.value.code == 2
+    assert calls == ["one.pdf"]

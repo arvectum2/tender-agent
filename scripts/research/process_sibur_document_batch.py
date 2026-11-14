@@ -163,6 +163,22 @@ def require_prewrite(gate, now=None):
         raise ValueError("fresh canonical prewrite gate required")
 
 
+def run_extraction_batch(directory, batch):
+    """Bound concurrency; cease new requests after a transport failure."""
+    width = 1 if any(Path(row["file"]).suffix == ".pdf" for row in batch) else 2
+    with ThreadPoolExecutor(max_workers=width) as pool:
+        for start in range(0, len(batch), width):
+            wave = batch[start:start + width]
+            results = list(pool.map(lambda row: operate(directory, row, "extract"), wave))
+            for result in results:
+                print(*result, flush=True)
+            if any(r[1] == "review" and r[2] in {
+                "CalledProcessError", "TimeoutExpired"
+            } for r in results):
+                print("transport failure: stop batch and reconcile", flush=True)
+                raise SystemExit(2)
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--snapshot", required=True, type=Path)
@@ -185,15 +201,13 @@ def main():
     rows = originals(a.snapshot, a.directory, frozenset("." + f for f in a.formats))
     batch = select_batch(a.directory, rows, priority, a.mode, a.limit, a.max_chunks)
     if a.mode == "extract":
-        with ThreadPoolExecutor(max_workers=2) as pool:
-            for result in pool.map(lambda row: operate(a.directory, row, a.mode), batch):
-                print(*result, flush=True)
+        run_extraction_batch(a.directory, batch)
     else:
         for row in batch:
             result = operate(a.directory, row, a.mode)
             print(*result, flush=True)
             if result[1] == "review":
-                break
+                raise SystemExit(2)
     print("planned", len(batch), flush=True)
 
 
