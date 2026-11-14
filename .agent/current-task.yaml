@@ -625,3 +625,11 @@ gemma_eval_criteria_oct20:
   criterion_single_section_rerun: not_started_due_to_http401
   main_code_changed: false
   owner_legal_bid_go: false
+
+owner_expansion_2026_11_14:
+  child_checkpoint: .agent/checkpoints/TA-ROADMAP-TRACKS-20261114.yaml
+  scope: [TA-SIBUR-INTELLIGENCE, TA-GEH-INTELLIGENCE, TA-AI-TRADING]
+  roadmap: docs/roadmap/master-roadmap.yaml#owner_business_tracks_2026_11_14
+  preserve_parent_resume_and_existing_pq_work: true
+  next_bounded_tasks: [TA-SIBUR-SOURCE-DISCOVERY-001, TA-GEH-SOURCE-DISCOVERY-001, TA-AI-TRADING-SOURCE-DISCOVERY-001]
+  live_trade_authorized: false
