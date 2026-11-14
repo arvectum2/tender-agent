@@ -3,12 +3,12 @@ status: in_progress
 goal: Verify public source acquisition and normalize first-party procurement records for three tracks.
 definition_of_done: [source access matrix, first-party receipts, bounded normalization, verified next connector steps]
 completed: [10 source probes, 8 HTTP 200 pages, real AJAX pagination, 27 pages and 313 unique procedures, 516 document URLs, 2 sample OOXML documents, duplicate observation preservation, parser and bounded research probe]
-current_stage: sibur_pdf_backpressure_and_gpb_history192_verified
+current_stage: geh_history400_and_gpb_original_pilot_verified
 remaining: [SIBUR document acquisition and historical coverage, production DP transport and monitoring integration, ETP GPB and TEK-Torg source access, EAT and Moscow list acquisition]
 last_verified_commit: cae5fb6b25f39362c2ebc79280fa5ac09c5a1ad1
 latest_tests: "56 focused pytest PASS (11 SIBUR + 45 prior parser/Watchdog); Ruff PASS; real 27/27 SHA-bound replay 313 IDs / 314 rows / one duplicate; two original OOXML samples PASS; explicitly authorized TA DB seed verified; MI DB not mutated"
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114
-resume_instruction: Reuse 516 source URL receipts, 513 unique hashes, 713 DB links, 351 DP processing receipts and 109 verified indexed originals. PDF OCR overload recovered after stopping own batch; use serial PDF and fail-fast transport handler, reconcile actual DP stats before repeat. Continue GEH history from page 193 (4053 rows committed). Review active GPB details and document retrieval contract, finish PDF and legacy formats, configure authorized consumer identity without weakening access policy.
+resume_instruction: Reuse 513 SIBUR originals, 713 links, 118 verified persistent index receipts and 134 TA index links. DP reports 119 documents with 331 embeddings but receipts cover 118/304; reconcile a5c77f47a0c04917c7ec630687e902b929e27364a117b8cd0e0ccb35276b1e67 via supported read-only provenance or audited idempotence before retry; no speculative receipt creation. GEH 400 historical pages and 8206 rows committed; continue remaining priority detail and attachment capture, older history and award protocols, ZMO and consumer-authenticated retrieval.
 
 report: docs/roadmap/SIBUR_PUBLIC_REGISTRY_BASELINE_2026-11-14.md
 
@@ -150,3 +150,25 @@ continuation_2026_11_14_1945:
   parallel_gpb_checkpoint_commit: b512ed0703b0249a964cfcaa5a6b5fd8a5947424
   ta_backup_sha256: 1ec0ae2ec962cd50850fabd4d7627c0d1285fabeaf7f446d608f982c10f88dd0
   latest_tests: 25 passed with standard conftest; Ruff passed
+
+continuation_2026_11_14_1956:
+  sibur_captured_originals: 513
+  sibur_db_links: 713
+  dp_index_receipts_verified: 118
+  dp_embeddings_receipt_verified: 304
+  dp_server_documents: 119
+  dp_server_embeddings: 331
+  dp_unreconciled_timed_out_sha256: a5c77f47a0c04917c7ec630687e902b929e27364a117b8cd0e0ccb35276b1e67
+  dp_health_after_batch_stop: HTTP_200
+  ta_index_links: 134
+  gpb_history_pages: 400
+  gpb_active_pages: 16
+  gpb_db_rows: 8206
+  gpb_lexical_candidates: 1225
+  gpb_published_attachment_links: 24
+  gpb_verified_original_links: 4
+  gpb_checkpoint_commit: 2b6cb1606d74c012babc36881768768be0a6509e
+  ta_total_procurements: 8519
+  repeat_inserted: 0
+  ta_backup_sha256: 2016f62f033c04867d0818d446e1ac7b1b954224ad92ac1f5d7716db6094db5e
+  next: reconcile DP pending result, continue GPB technical detail and older historical windows; ZMO source contract and economic paper trading remain open

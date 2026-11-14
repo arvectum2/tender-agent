@@ -17,3 +17,7 @@ All 516 allowlisted source URLs captured and SHA replay verified (513 unique ori
 ## PDF backpressure and consumer configuration
 
 351 processing receipts (342 extracted, 7 empty, 2 unsupported), 109 persistent indexed originals, 268 embeddings and 123 source-bound index links. PDF OCR overloaded live DP; stopped only our bounded client batch, DP daemon untouched, health HTTP 200 and live collection stats reconciled exactly. Serial PDF processing and stop-on-transport-failure regression tested. Optional paired consumer identity configuration now supported by TA RAG client, no consumer credential issued or deployed; actual authorized retrieval still pending. 25 targeted tests with standard conftest passed; Ruff passed. GEH parallel checkpoint has 4053 rows and 192 historical pages.
+
+## Continued index and GPB history milestone
+
+118 independent persistent index receipts cover 304 embeddings and 134 TA links. Live DP reports 119 documents/331 embeddings after a client timeout; one additional server document is not counted as verified linked until exact provenance can be reconciled. No duplicate retries. DP health recovered HTTP 200. GEH has 8206 rows, 400 historical/16 active pages and four verified document links; total TA rows 8519.
