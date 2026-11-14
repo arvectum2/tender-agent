@@ -642,6 +642,15 @@ ci_mirror_recovery_2026_11_14:
 source_discovery_2026_11_14:
   child_checkpoint: .agent/checkpoints/TA-SOURCE-DISCOVERY-20261114.yaml
   parent_resume_preserved: true
-  stage: sibur_public_snapshot_verified
+  stage: sibur_working_db_seed_verified
   remaining: [document_acquisition, historical_coverage, dp_integration, geh_and_zmo_sources]
-  no_live_trading_or_db_mutation: true
+  no_live_trading: true
+  owner_authorized_verified_working_db_import: true
+  no_mi_db_mutation: true
+
+owner_am4_2026_11_14:
+  owner_confirmed: true
+  company_review_pr: 13
+  canonical_effect: pending_company_mirror_health
+  explicit_owner_merges: [522, 523]
+  preserve_existing_automatic_merge_gates: true
