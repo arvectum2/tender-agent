@@ -1,0 +1,7 @@
+# SIBUR document acquisition pilot — 2026-11-14
+
+Existing working DB seed remains 313 source-separated procedures. Replayed source SHA receipts to enumerate 516 allowlisted URLs. Bounded acquisition of supported PDF/DOCX/XLSX: 30/30 captured, 30 distinct SHA hashes, linked to 40 procedures; 16 DOCX, 9 XLSX, 5 PDF. All files hash-verified. Private original bytes and URL-to-procedure receipts are kept outside Git. Signature checks alone are not full format validation.
+
+Authenticated Data Platform process/document pilot (non-persisting processing endpoint): 11 distinct original hashes including prior samples, 10 extracted, 1 empty requiring review, 269 chunks, 347605 characters total. OOXML structure and uncompressed-size bounds validated for batch samples. Results stored privately with original SHA; no collection or database mutation by this step. Indexing, archive/legacy formats, PDF extraction, and semantic relevance acceptance remain separate. Do not count empty extraction as success or conditional source evidence as award outcome.
+
+Next: resume capture by existing receipts, audit empty extraction, process bounded batches, then verify collection access and prewrite backup before persistent source-separated DP index and TA document metadata. Acquisition script intentionally limits each invocation to 60 supported attachments; unsupported formats need a separate adapter and review. No source-side mutation.
