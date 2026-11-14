@@ -1,16 +1,22 @@
 task_id: TA-CI-MIRROR-20261114
-status: in_progress
+status: completed
 goal: Repair CI recovery compatibility and verify GitVerse mirror; inventory existing TA/DP.
 definition_of_done: [reproduce recovery failure, targeted fix and verification, verify mirror, record runtime baseline, publish review]
 completed: [PG16 restore incompatibility reproduced, isolated recovery acceptance 10 passed, mirror exact-head parity confirmed, authenticated TA to DP read-only API verified]
-current_stage: runner_pin_exact_head_ci_pending
-remaining: [exact-head CI, mirror parity at new head, governance review]
+current_stage: verified_review_ready
+remaining: []
 latest_tests: 'PG16 isolated R9 recovery/security 10 passed; prior parser/policy 45 passed; PG17/18 reproduction failed as expected; mirror attempt 3 success and both refs matched before fix'
-resume_instruction: Check PR 522 exact-head CI and public GitVerse ref parity; do not auto-merge with expired AM-4. Then reconcile runtime and authorized read-only source inventory.
+resume_instruction: PR 522 clean CI 18/18 plus mirror SUCCESS; merge and live runtime upgrade still separately governed; use full candidate instead of stale SDK overlay; no production DB mutation.
 root_cause: PG17 and PG18 clients emit transaction_timeout against PG16; minimal disposable reproduction fails for both, PG16 passes.
 fix: Pin quality runner to ubuntu-24.04 and recovery clients to PG16 with version assertions; no restore safety changes.
 second_failure: ubuntu-latest now Ubuntu 26.04 resolute; apt cannot find postgresql-client-16.
-mirror_verified_at: acdb5deba9587cc86b4929fc975648c5c60de525
+mirror_verified_at: 460091af21b3217c0baa0fb7a80dbe147ead2ac0
 runtime_contract: data-platform 0.6.0; authenticated collections and connectors HTTP 200 from active TA; installed SDK 0.3.0 versus main pin 0.4.0.
 baseline_report: docs/roadmap/TA_DP_REUSE_BASELINE_2026-11-14.md
-last_verified_commit: acdb5deba9587cc86b4929fc975648c5c60de525
+last_verified_commit: 460091af21b3217c0baa0fb7a80dbe147ead2ac0
+
+source_discovery_child: .agent/checkpoints/TA-SOURCE-DISCOVERY-20261114.yaml
+source_discovery_evidence_comment: https://github.com/arvectum2/tender-agent/pull/522#issuecomment-6881720156
+ci_exact_head: "18/18 SUCCESS plus mirror SUCCESS; PR 522 CLEAN unmerged"
+clean_candidate_image: "sha256:ca4b092d58c10417b7d071c14d1345b19acb9a41c04b717b22e8fb07d57c01ac; SDK 0.4.0; isolated health HTTP 200, 117 routes"
+governance_merge: pending_owner_authority

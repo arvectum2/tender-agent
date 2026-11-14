@@ -1,0 +1,13 @@
+task_id: TA-SOURCE-DISCOVERY-20261114
+status: in_progress
+goal: Verify public source acquisition and normalize first-party procurement records for three tracks.
+definition_of_done: [source access matrix, first-party receipts, bounded normalization, verified next connector steps]
+completed: [10 source probes, 8 HTTP 200 pages, real AJAX pagination, 27 pages and 313 unique procedures, 516 document URLs, 2 sample OOXML documents, duplicate observation preservation, parser and bounded research probe]
+current_stage: sibur_public_registry_snapshot_verified
+remaining: [SIBUR document acquisition and historical coverage, production DP transport and monitoring integration, ETP GPB and TEK-Torg source access, EAT and Moscow list acquisition]
+last_verified_commit: b32376e970a55280c9f3b33ee40d9bd543e12d0b
+latest_tests: "56 focused pytest PASS (11 SIBUR + 45 prior parser/Watchdog); Ruff PASS; real 27/27 SHA-bound replay 313 IDs / 314 rows / one duplicate; two original OOXML samples PASS; no production DB mutation"
+evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114
+resume_instruction: Reuse private 27-page snapshot; acquire verified documents through bounded safe acquisition and DP, then historical date/status coverage and canonical persistence design; parallel GEH/ZMO authorized public discovery. Preserve duplicate variants and never expose contacts or submit bids.
+
+report: docs/roadmap/SIBUR_PUBLIC_REGISTRY_BASELINE_2026-11-14.md
