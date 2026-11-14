@@ -21,3 +21,7 @@ Primary detail pages link official GEH Zakupki and Mosenergoproekt catalogs. Off
 ## Full advertised history and public attachments
 
 400 historical and 16 active pages, 8313 observations, 8206 validated rows (223 active by list/date, 7983 completed), 4871 prices present, 107 review observations. Publication range 2025-11-24 to 2026-11-13; not a complete two-year archive. 1225 lexical candidates. Exact published anchors on ten primary detail pages yield 24 links to etp.gpb.ru LotDocuments/PriceOrderDocument. Four original PDF/DOCX/XLSX captured, SHA-replayed against detail/list provenance and linked to two existing procedures. Repeat import inserted zero. Archives remain unexecuted. No award claim.
+
+## Active priority details and attachment provenance
+
+All 19 active lexical candidates verified on primary details: 14 accepting, 5 supplier review. 45 explicit download links and two complaint labels whose destination is merely the platform root. 14 captured URLs, 13 unique tender/SHA links in TA across six procedures; 14 archive downloads disconnected, 17 links unattempted. Raw archives remain unexecuted and multipart completeness unverified. Monotonic provenance reconciliation preserves both links for identical content; replay inserted zero. Historical pilot: 17/20 primary details accepted; three parser failures remain; 14 buyer review, one expired, one order preparation, one archived. Completed list filter is not an award result. 15 focused tests and Ruff passed.

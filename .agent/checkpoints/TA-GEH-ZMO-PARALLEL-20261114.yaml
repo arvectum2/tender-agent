@@ -3,12 +3,12 @@ status: in_progress
 goal: Establish verified primary public list acquisition for GEH and small procurement parallel to SIBUR.
 definition_of_done: [primary target lists and detail receipts, source-scoped stable identities, date and status validation, verified normalized samples, gated working DB ingestion]
 completed: [eight parallel source probes, GPB SSR card parser, real 20-card replay, 3 focused tests]
-current_stage: gpb_history400_and_document_pilot_persisted
+current_stage: gpb_active_priority_documents_and_historical_detail_pilot_verified
 remaining: [GPB customer-specific queries and actual date checks, TEK-Torg accessible lists, Moscow and EAT list contracts, source-separated import]
-last_verified_commit: 20a3fa72b2d1212936339fbb45804129ea77570f
+last_verified_commit: aa8b74da808f3953daaffd3b0ba6dec2f833b3c0
 latest_tests: 3 pytest passed; Ruff passed; 20 distinct primary observed cards; 13 future-dated observations quarantined
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources
-resume_instruction: Reuse all 400 historical and 16 active GEH group pages, 8206 committed rows, 24 published attachment links and 4 verified linked originals. Continue remaining priority details and bounded attachment acquisition; verify older date windows and outcome protocols, review 107 quarantined observations, then ZMO source contracts. Never infer awards or submit bids.
+resume_instruction: Reuse all 400 historical and 16 active GEH group pages and 8206 committed rows. All 19 active lexical candidate details verified (14 accepting, 5 supplier review), 45 downloadable links and 2 label-only unavailable. 14 captured URL receipts, 13 distinct DB links, 14 remote-disconnect archive reviews, 17 yet unattempted published links. Continue bounded archive capture with source availability checks, investigate 3 historical detail parser failures and outcome-specific anchors; 17 historical details already captured. Expand historical date windows, ZMO source contracts. Never infer awards or submit bids.
 
 target_detail_receipts:
   detail_pages_verified: 2
@@ -80,3 +80,22 @@ geh_history400:
   history_backup_sha256: b9b2086d87156deb0e7f556951fbae169d0c11d5352d86d631132685b077eb2a
   document_backup_sha256: 2016f62f033c04867d0818d446e1ac7b1b954224ad92ac1f5d7716db6094db5e
   remaining: [older_history, other_priority_details, document_capture, semantic_classification, award_protocols, ZMO]
+
+geh_priority_documents_2026_11_14:
+  active_detail_pages: 19
+  active_confirmed_accepting: 14
+  active_supplier_review: 5
+  active_published_download_links: 45
+  active_unavailable_label_only: 2
+  active_capture_url_receipts: 14
+  active_unique_tender_hash_links: 13
+  active_procedures_with_originals: 6
+  active_archive_remote_disconnect_review: 14
+  active_unattempted_links: 17
+  historical_pilot_details: 17
+  historical_pilot_review: 3
+  historical_published_download_links: 1
+  historical_detail_statuses: {buyer_review: 14, expired: 1, order_preparation: 1, archived: 1}
+  db_replay_inserted: 0
+  backup_sha256: da84db2b21415f1d9a292c64f2b4c2e580af4fa864ad50aad5522a515ea60906
+  tests: 15 focused passed; Ruff passed
