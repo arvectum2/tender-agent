@@ -17,3 +17,7 @@ Primary detail pages link official GEH Zakupki and Mosenergoproekt catalogs. Off
 ## Historical registry expansion
 
 192/400 history pages and 16/16 active pages verified, 4,153 observations, 4,053 source-scoped DB rows (223 accepting, 3,830 completed, 2,445 prices present), 100 quarantined observations. Publication dates 2026-05-12 to 2026-11-13. Replay inserted zero. Ten priority detail snapshots confirm source numbers; nine expose attachment labels, but no direct verified attachment links. Status on six details is accepting; four are supplier review. Do not infer awards. Continue historical pages from 193, resolve document links and review observations.
+
+## Full advertised history and public attachments
+
+400 historical and 16 active pages, 8313 observations, 8206 validated rows (223 active by list/date, 7983 completed), 4871 prices present, 107 review observations. Publication range 2025-11-24 to 2026-11-13; not a complete two-year archive. 1225 lexical candidates. Exact published anchors on ten primary detail pages yield 24 links to etp.gpb.ru LotDocuments/PriceOrderDocument. Four original PDF/DOCX/XLSX captured, SHA-replayed against detail/list provenance and linked to two existing procedures. Repeat import inserted zero. Archives remain unexecuted. No award claim.

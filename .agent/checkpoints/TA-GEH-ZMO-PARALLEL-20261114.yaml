@@ -3,12 +3,12 @@ status: in_progress
 goal: Establish verified primary public list acquisition for GEH and small procurement parallel to SIBUR.
 definition_of_done: [primary target lists and detail receipts, source-scoped stable identities, date and status validation, verified normalized samples, gated working DB ingestion]
 completed: [eight parallel source probes, GPB SSR card parser, real 20-card replay, 3 focused tests]
-current_stage: gpb_group_history192_and_priority_details_verified
+current_stage: gpb_history400_and_document_pilot_persisted
 remaining: [GPB customer-specific queries and actual date checks, TEK-Torg accessible lists, Moscow and EAT list contracts, source-separated import]
-last_verified_commit: 7be0149094f80d44877e3dc8a5f16b7b01a53f4c
+last_verified_commit: 20a3fa72b2d1212936339fbb45804129ea77570f
 latest_tests: 3 pytest passed; Ruff passed; 20 distinct primary observed cards; 13 future-dated observations quarantined
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources
-resume_instruction: Reuse verified 16 active and 192 historical GEH group pages and 4053 TA rows. Resume completed pages from 193 with system Python verified TLS; inspect 100 review observations and remaining priority details. Resolve ZMO list contracts; never infer awards or submit bids.
+resume_instruction: Reuse all 400 historical and 16 active GEH group pages, 8206 committed rows, 24 published attachment links and 4 verified linked originals. Continue remaining priority details and bounded attachment acquisition; verify older date windows and outcome protocols, review 107 quarantined observations, then ZMO source contracts. Never infer awards or submit bids.
 
 target_detail_receipts:
   detail_pages_verified: 2
@@ -58,3 +58,25 @@ geh_history192:
   prewrite_gate: pass
   ta_backup_sha256: 9f09f3d81b6d5b3b583c98df1cf34698e375487e60fcecbefd075c24b1180e67
   next: history pages 193 to 400; priority details and published document retrieval contract; ZMO
+
+geh_history400:
+  active_pages: 16
+  history_pages: 400
+  history_pages_advertised: 400
+  observed_cards: 8313
+  verified_db_rows: 8206
+  accepting: 223
+  completed: 7983
+  known_price: 4871
+  review_observations: 107
+  repeat_inserted: 0
+  publication_range: 2025-11-24 to 2026-11-13
+  lexical_candidates: 1225
+  active_lexical_candidates: 19
+  published_attachment_links: 24
+  verified_attachment_originals: 4
+  ta_document_links: 4
+  prewrite_gate: pass
+  history_backup_sha256: b9b2086d87156deb0e7f556951fbae169d0c11d5352d86d631132685b077eb2a
+  document_backup_sha256: 2016f62f033c04867d0818d446e1ac7b1b954224ad92ac1f5d7716db6094db5e
+  remaining: [older_history, other_priority_details, document_capture, semantic_classification, award_protocols, ZMO]
