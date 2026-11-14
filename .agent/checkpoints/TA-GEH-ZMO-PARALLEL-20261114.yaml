@@ -3,12 +3,12 @@ status: in_progress
 goal: Establish verified primary public list acquisition for GEH and small procurement parallel to SIBUR.
 definition_of_done: [primary target lists and detail receipts, source-scoped stable identities, date and status validation, verified normalized samples, gated working DB ingestion]
 completed: [eight parallel source probes, GPB SSR card parser, real 20-card replay, 3 focused tests]
-current_stage: gpb_group_active_registry_and_history32_persisted
+current_stage: gpb_group_history192_and_priority_details_verified
 remaining: [GPB customer-specific queries and actual date checks, TEK-Torg accessible lists, Moscow and EAT list contracts, source-separated import]
 last_verified_commit: 7be0149094f80d44877e3dc8a5f16b7b01a53f4c
 latest_tests: 3 pytest passed; Ruff passed; 20 distinct primary observed cards; 13 future-dated observations quarantined
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources
-resume_instruction: Reuse verified 16 active and 32 historical GEH group pages and 861 TA rows. Resume completed pages from 33 with system Python verified TLS; inspect 92 quarantined temporal observations by detail. Resolve ZMO list contracts; never infer awards or submit bids.
+resume_instruction: Reuse verified 16 active and 192 historical GEH group pages and 4053 TA rows. Resume completed pages from 193 with system Python verified TLS; inspect 100 review observations and remaining priority details. Resolve ZMO list contracts; never infer awards or submit bids.
 
 target_detail_receipts:
   detail_pages_verified: 2
@@ -38,3 +38,23 @@ gpb_group_registry:
   ta_backup_sha256: f7a33cb85a3d21c76102d4a7e93f1dff104710934eca67720d94d3a62c99569b
   owner_catalogs_verified: [geh_zakupki, mosenergoproekt]
   remaining: [historical_pages_33_to_400, target_details, outcome_protocols, ZMO_acquisition]
+
+geh_history192:
+  active_pages: 16
+  historical_pages: 192
+  historical_total_advertised: 400
+  observed_cards: 4153
+  verified_db_rows: 4053
+  accepting: 223
+  completed: 3830
+  known_price: 2445
+  review_observations: 100
+  repeat_inserted: 0
+  priority_detail_pages: 10
+  detail_numbers_verified: 10
+  detail_document_labels_present: 9
+  direct_document_links_verified: 0
+  date_range: 2026-05-12 to 2026-11-13
+  prewrite_gate: pass
+  ta_backup_sha256: 9f09f3d81b6d5b3b583c98df1cf34698e375487e60fcecbefd075c24b1180e67
+  next: history pages 193 to 400; priority details and published document retrieval contract; ZMO

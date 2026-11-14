@@ -13,3 +13,7 @@ Two first-party historical details returned HTTP 200 and were byte-hashed. Notic
 ## Verified GEH group capture and working DB seed
 
 Primary detail pages link official GEH Zakupki and Mosenergoproekt catalogs. Official menu exposes section=geh_group. All 16 advertised accepting pages (313 unique observations), plus 32/400 completed pages (640 observations) replayed. Separate update date fixed parsing defect; 92 conflicting temporal observations quarantined. 861 rows imported as etp_gpb (223 accepting date-consistent, 638 completed date-consistent, 496 prices present); repeat inserted zero. Publication range 2026-05-27 to 2026-11-13. No complete historical coverage or winner claim. System Python trusted TLS succeeds; no verification bypass. Private originals and receipts retained.
+
+## Historical registry expansion
+
+192/400 history pages and 16/16 active pages verified, 4,153 observations, 4,053 source-scoped DB rows (223 accepting, 3,830 completed, 2,445 prices present), 100 quarantined observations. Publication dates 2026-05-12 to 2026-11-13. Replay inserted zero. Ten priority detail snapshots confirm source numbers; nine expose attachment labels, but no direct verified attachment links. Status on six details is accepting; four are supplier review. Do not infer awards. Continue historical pages from 193, resolve document links and review observations.
