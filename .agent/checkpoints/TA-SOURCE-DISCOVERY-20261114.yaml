@@ -3,12 +3,12 @@ status: in_progress
 goal: Verify public source acquisition and normalize first-party procurement records for three tracks.
 definition_of_done: [source access matrix, first-party receipts, bounded normalization, verified next connector steps]
 completed: [10 source probes, 8 HTTP 200 pages, real AJAX pagination, 27 pages and 313 unique procedures, 516 document URLs, 2 sample OOXML documents, duplicate observation preservation, parser and bounded research probe]
-current_stage: sibur_prioritized_batch5_and_index_verified
+current_stage: sibur_complete_capture_and_document_triage_verified
 remaining: [SIBUR document acquisition and historical coverage, production DP transport and monitoring integration, ETP GPB and TEK-Torg source access, EAT and Moscow list acquisition]
-last_verified_commit: 6fb5ef39ad2489a7e86c8e76a8246c3048b5e52e
+last_verified_commit: 9454fa627032ec6de1b563c8210079c4ca780a16
 latest_tests: "56 focused pytest PASS (11 SIBUR + 45 prior parser/Watchdog); Ruff PASS; real 27/27 SHA-bound replay 313 IDs / 314 rows / one duplicate; two original OOXML samples PASS; explicitly authorized TA DB seed verified; MI DB not mutated"
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114
-resume_instruction: PR 525 merged; reconcile stacked PRs 524/526 and document linkage branch without repeating verified writes. Reuse 270 capture receipts and 427 DB links; prioritize 67 keyword candidates only for processing order, never discard remaining 246. Index remaining verified originals in bounded batches, append DP receipts, verify consumer-authenticated retrieval and file serving, classify source-grounded relevance; continue historical coverage and GEH/ZMO public discovery.
+resume_instruction: PR 525 merged; reconcile stacked PRs 524/526 and document linkage branch without repeating verified writes. Reuse 516 capture receipts, 513 distinct original hashes, 713 DB links and 106 indexed originals; prioritize 67 keyword candidates only for processing order, never discard remaining 246. Index remaining verified originals in bounded batches, append DP receipts, verify consumer-authenticated retrieval and file serving, classify source-grounded relevance; continue historical coverage and GEH/ZMO public discovery.
 
 report: docs/roadmap/SIBUR_PUBLIC_REGISTRY_BASELINE_2026-11-14.md
 
@@ -100,3 +100,28 @@ document_batch5:
   ta_backup_sha256: 3b6971df6b20dd7ea85b722dce7b432d720595c90ef2f09a64066ac98b91263f
   parallel_gpb_target_archived_details: 2
   next: continue bounded priority capture, extraction and index; verify consumer-authenticated retrieval; targeted GPB lists and ZMO contracts
+
+sibur_complete_capture:
+  captured_urls: 516
+  unique_original_sha256: 513
+  linked_procedures: 229
+  ta_db_links: 713
+  repeat_inserted: 0
+  priority_procedures_covered: 57
+  dp_processed_originals: 337
+  dp_extracted_nonempty: 329
+  dp_empty_review: 8
+  possible_text_cap: 10
+  dp_indexed_originals: 106
+  dp_embeddings: 261
+  ta_indexed_links: 118
+  lexical_candidate_procedures: 79
+  document_only_candidates: 51
+  lexical_candidates_need_semantic_review: true
+  local_reasoning_pilot: timeout_30_seconds_no_accepted_result
+  authenticated_consumer_search: still_pending
+  ta_backup_sha256: 83350eeb793287f4b8135e306b75076e390a8e5e5698c85987c13731353d0f55
+  dp_backup_sha256: 485c4122963f9fbabca3b0bcd0e37f52c5fc17ae361b9c1b4d218b8209cb3e7e
+  parallel_gpb_commit: 0eaa3e4b1acf1cd29984b02e53989a3ae60a5d02
+  parallel_gpb_db_rows: 861
+  next: process remaining PDF and safely reviewed legacy formats; index remaining extracted originals; address capped documents, reasoning timeout and consumer-authenticated retrieval

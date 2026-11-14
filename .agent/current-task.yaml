@@ -642,11 +642,12 @@ ci_mirror_recovery_2026_11_14:
 source_discovery_2026_11_14:
   child_checkpoint: .agent/checkpoints/TA-SOURCE-DISCOVERY-20261114.yaml
   parent_resume_preserved: true
-  stage: sibur_prioritized_batch5_and_index_verified
+  stage: sibur_complete_capture_and_document_triage_verified
   remaining: [document_acquisition, historical_coverage, dp_integration, geh_and_zmo_sources]
   no_live_trading: true
   owner_authorized_verified_working_db_import: true
-  no_mi_db_mutation: true
+  no_pq_collection_mutation: true
+  dedicated_sibur_dp_collection_mutated: true
 
 owner_am4_2026_11_14:
   owner_confirmed: true
@@ -661,4 +662,4 @@ parallel_source_discovery_2026_11_14:
   pr: 528
   branch: feat/gpb-public-discovery-20261114
   checkpoint: .agent/checkpoints/TA-GEH-ZMO-PARALLEL-20261114.yaml
-  stage: gpb_target_archived_details_verified
+  stage: gpb_group_active_registry_and_history32_persisted
