@@ -74,7 +74,18 @@ def type_matches(raw, ext):
     return False
 
 
-def acquire(snapshot, output, limit):
+def order_candidates(refs, priority_ids):
+    return sorted(
+        refs,
+        key=lambda u: (
+            Path(urlsplit(u).path).suffix.lower() not in SUPPORTED,
+            not any(r["external_id"] in priority_ids for r in refs[u]),
+            u,
+        ),
+    )
+
+
+def acquire(snapshot, output, limit, priority_ids=frozenset()):
     if not 1 <= limit <= 60:
         raise ValueError("invalid bounded batch")
     if output.resolve().is_relative_to(Path(__file__).resolve().parents[2]):
@@ -83,7 +94,7 @@ def acquire(snapshot, output, limit):
     refs = source_refs(snapshot)
     opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), NoRedirect(),
                                          urllib.request.HTTPSHandler(context=ssl.create_default_context()))
-    candidates = sorted(refs, key=lambda u: (Path(urlsplit(u).path).suffix.lower() not in SUPPORTED, u))
+    candidates = order_candidates(refs, priority_ids)
     count = 0
     for url in candidates:
         ext = Path(urlsplit(url).path).suffix.lower()
@@ -136,9 +147,15 @@ def main():
     parser.add_argument("--snapshot", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--limit", type=int, default=30)
+    parser.add_argument("--priority-queue", type=Path)
     args = parser.parse_args()
     os.umask(0o077)
-    print("attempted", acquire(args.snapshot, args.output, args.limit))
+    priority = frozenset()
+    if args.priority_queue:
+        priority = frozenset(
+            r["external_id"] for r in json.loads(args.priority_queue.read_text()) if r["priority"]
+        )
+    print("attempted", acquire(args.snapshot, args.output, args.limit, priority))
 
 
 if __name__ == "__main__":

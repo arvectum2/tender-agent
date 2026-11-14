@@ -3,12 +3,12 @@ status: in_progress
 goal: Verify public source acquisition and normalize first-party procurement records for three tracks.
 definition_of_done: [source access matrix, first-party receipts, bounded normalization, verified next connector steps]
 completed: [10 source probes, 8 HTTP 200 pages, real AJAX pagination, 27 pages and 313 unique procedures, 516 document URLs, 2 sample OOXML documents, duplicate observation preservation, parser and bounded research probe]
-current_stage: sibur_document_batch4_and_parallel_gpb_verified
+current_stage: sibur_prioritized_batch5_and_index_verified
 remaining: [SIBUR document acquisition and historical coverage, production DP transport and monitoring integration, ETP GPB and TEK-Torg source access, EAT and Moscow list acquisition]
 last_verified_commit: 6fb5ef39ad2489a7e86c8e76a8246c3048b5e52e
 latest_tests: "56 focused pytest PASS (11 SIBUR + 45 prior parser/Watchdog); Ruff PASS; real 27/27 SHA-bound replay 313 IDs / 314 rows / one duplicate; two original OOXML samples PASS; explicitly authorized TA DB seed verified; MI DB not mutated"
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114
-resume_instruction: PR 525 merged; reconcile stacked PRs 524/526 and document linkage branch without repeating verified writes. Reuse 210 capture receipts and 252 DB links; prioritize 67 keyword candidates only for processing order, never discard remaining 246. Index remaining verified originals in bounded batches, append DP receipts, verify consumer-authenticated retrieval and file serving, classify source-grounded relevance; continue historical coverage and GEH/ZMO public discovery.
+resume_instruction: PR 525 merged; reconcile stacked PRs 524/526 and document linkage branch without repeating verified writes. Reuse 270 capture receipts and 427 DB links; prioritize 67 keyword candidates only for processing order, never discard remaining 246. Index remaining verified originals in bounded batches, append DP receipts, verify consumer-authenticated retrieval and file serving, classify source-grounded relevance; continue historical coverage and GEH/ZMO public discovery.
 
 report: docs/roadmap/SIBUR_PUBLIC_REGISTRY_BASELINE_2026-11-14.md
 
@@ -81,3 +81,22 @@ document_batch4:
   parallel_gpb_pr: 528
   parallel_gpb_commit: 9ef3db51c25b6bf789ba76cfb66a1fdae4950196
   next: resume remaining documents with priority candidates first; parallel GPB customer-specific source discovery and ZMO list contracts
+
+document_batch5:
+  captured_originals: 270
+  linked_procedures: 205
+  ta_db_links: 427
+  repeat_inserted: 0
+  priority_urls_captured: 111
+  priority_procedures_covered: 56
+  dp_extracted: 22
+  dp_empty_review: 1
+  dp_indexed_originals: 13
+  dp_chunks: 30
+  dp_embeddings: 30
+  ta_indexed_links: 15
+  priority_order_test: pass
+  dp_backup_sha256: 69095a5d94155a7101e336f8ca4428ea7b712c06ce1119a852489578497afe64
+  ta_backup_sha256: 3b6971df6b20dd7ea85b722dce7b432d720595c90ef2f09a64066ac98b91263f
+  parallel_gpb_target_archived_details: 2
+  next: continue bounded priority capture, extraction and index; verify consumer-authenticated retrieval; targeted GPB lists and ZMO contracts

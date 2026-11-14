@@ -42,3 +42,19 @@ def test_verified_source_links(tmp_path):
     (tmp_path / "page-001.json").write_bytes(raw + b" ")
     with pytest.raises(ValueError, match="receipt mismatch"):
         source_refs(tmp_path)
+
+
+def test_priority_changes_order_without_excluding_others():
+    from scripts.research.acquire_sibur_documents import order_candidates
+
+    refs = {
+        "https://www.sibur.ru/upload/tmp/example/a.pdf": [{"external_id": "other"}],
+        "https://www.sibur.ru/upload/tmp/example/b.xlsx": [{"external_id": "priority"}],
+        "https://www.sibur.ru/upload/tmp/example/c.rar": [{"external_id": "priority"}],
+    }
+    ordered = order_candidates(refs, {"priority"})
+    assert ordered == [
+        "https://www.sibur.ru/upload/tmp/example/b.xlsx",
+        "https://www.sibur.ru/upload/tmp/example/a.pdf",
+        "https://www.sibur.ru/upload/tmp/example/c.rar",
+    ]
