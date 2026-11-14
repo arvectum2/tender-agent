@@ -40,7 +40,7 @@ class Documents(HTMLParser):
             self.current = None
 
 
-def parse_document_links(raw, *, detail_url, external_id):
+def parse_document_entries(raw, *, detail_url, external_id):
     u = urlsplit(detail_url)
     prefix, native_id = external_id.split(":", 1)
     if (u.scheme != "https" or u.netloc not in {"etpgpb.ru", "new.etpgpb.ru"}
@@ -51,8 +51,11 @@ def parse_document_links(raw, *, detail_url, external_id):
     p = Documents()
     p.feed(raw.decode("utf-8"))
     p.close()
-    rows = []
+    rows, unavailable = [], []
     for url, name in p.rows:
+        if url == "https://etp.gpb.ru/" and name and len(name) <= 512:
+            unavailable.append({"original_filename": name, "verification": "LABEL_ONLY_ROOT_LINK"})
+            continue
         if not valid_document_url(url) or not name or len(name) > 512:
             raise ValueError("invalid published document anchor")
         rows.append({"source": "etp_gpb", "external_id": external_id,
@@ -61,4 +64,9 @@ def parse_document_links(raw, *, detail_url, external_id):
                      "verification": "PUBLISHED_LINK_ONLY"})
     if len({r["document_url"] for r in rows}) != len(rows):
         raise ValueError("duplicate document anchor")
-    return rows
+    return rows, unavailable
+
+
+def parse_document_links(raw, *, detail_url, external_id):
+    links, _ = parse_document_entries(raw, detail_url=detail_url, external_id=external_id)
+    return links

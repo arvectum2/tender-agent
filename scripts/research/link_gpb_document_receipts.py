@@ -39,15 +39,43 @@ def prepare(root):
     return result
 
 
+def reconcile_capture_metadata(actual, proposed):
+    """Preserve previous immutable receipts; allow only new equivalent-source links."""
+    if actual == proposed:
+        return False
+    if not actual or actual.get("source") != "etp_gpb":
+        raise ValueError("existing document differs")
+    if actual.get("capture_status") != proposed["capture_status"]:
+        raise ValueError("existing capture status differs")
+    if actual.get("dp_index") != proposed["dp_index"]:
+        raise ValueError("existing DP receipt differs")
+    old = actual.get("capture_receipts") or [actual.get("capture_receipt")]
+    if any(row is None for row in old):
+        raise ValueError("missing original capture receipt")
+    old_keys = {json.dumps(row, sort_keys=True, ensure_ascii=False) for row in old}
+    new_keys = {json.dumps(row, sort_keys=True, ensure_ascii=False)
+                for row in proposed["capture_receipts"]}
+    if not old_keys <= new_keys:
+        raise ValueError("existing receipt removed or changed")
+    if set(actual) - {"source", "capture_status", "capture_receipt", "capture_receipts", "dp_index"}:
+        raise ValueError("unrecognized metadata")
+    return True
+
+
 def link(session, rows):
-    from sqlalchemy import select
+    from sqlalchemy import select, update
     from sqlalchemy.dialects.postgresql import insert
 
     from src.tender_research.models import ProcurementTender, ProcurementTenderDocument
 
     t, d = ProcurementTender.__table__, ProcurementTenderDocument.__table__
     inserted = 0
+    groups = {}
     for row in rows:
+        groups.setdefault((row["external_id"], row["sha256"]), []).append(row)
+    for group in groups.values():
+        group = sorted(group, key=lambda row: row["document_url"])
+        row = group[0]
         if row["source"] != "etp_gpb" or row["capture_status"] != "captured":
             raise ValueError("unexpected source")
         if not re.fullmatch("[0-9a-f]{64}", row["sha256"]):
@@ -55,11 +83,13 @@ def link(session, rows):
         tender = session.execute(select(t.c.id, t.c.raw_payload).where(
             t.c.source == "etp_gpb", t.c.external_id == row["external_id"])).one()
         obs = tender.raw_payload["observation"]
-        if (obs["source_sha256"] != row["list_source_sha256"]
-                or obs["detail_url"] != row["list_detail_url"]):
-            raise ValueError("list provenance mismatch")
+        for item in group:
+            if (item["source"] != "etp_gpb" or item["capture_status"] != "captured"
+                    or obs["source_sha256"] != item["list_source_sha256"]
+                    or obs["detail_url"] != item["list_detail_url"]):
+                raise ValueError("list provenance mismatch")
         meta = {"source": "etp_gpb", "capture_status": "verified_private_original",
-                "capture_receipt": row, "dp_index": None}
+                "capture_receipts": group, "dp_index": None}
         now = datetime.now(UTC)
         result = session.execute(insert(d).values(
             id=str(uuid.uuid4()), tender_id=tender.id,
@@ -72,9 +102,11 @@ def link(session, rows):
         inserted += int(result.scalar_one_or_none() is not None)
         actual = session.execute(select(d.c.raw_meta).where(
             d.c.tender_id == tender.id, d.c.sha256 == row["sha256"])).scalar_one()
-        if actual != meta:
-            raise ValueError("existing document differs")
-    return {"inserted": inserted, "verified_links": len(rows)}
+        if reconcile_capture_metadata(actual, meta):
+            session.execute(update(d).where(
+                d.c.tender_id == tender.id, d.c.sha256 == row["sha256"]).values(
+                    raw_meta=meta, updated_at=now))
+    return {"inserted": inserted, "verified_links": len(groups), "verified_url_receipts": len(rows)}
 
 
 def main():
