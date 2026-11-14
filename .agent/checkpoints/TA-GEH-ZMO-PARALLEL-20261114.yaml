@@ -1,0 +1,11 @@
+task_id: TA-GEH-ZMO-PARALLEL-20261114
+status: in_progress
+goal: Establish verified primary public list acquisition for GEH and small procurement parallel to SIBUR.
+definition_of_done: [primary target lists and detail receipts, source-scoped stable identities, date and status validation, verified normalized samples, gated working DB ingestion]
+completed: [eight parallel source probes, GPB SSR card parser, real 20-card replay, 3 focused tests]
+current_stage: gpb_list_contract_verified_target_owner_filter_pending
+remaining: [GPB customer-specific queries and actual date checks, TEK-Torg accessible lists, Moscow and EAT list contracts, source-separated import]
+last_verified_commit: 0d2b35a2aba026bec3f0dae03d641e5f8c218ddf
+latest_tests: 3 pytest passed; Ruff passed; 20 distinct primary observed cards; 13 future-dated observations quarantined
+evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources
+resume_instruction: Reuse primary SSR HTML and receipts; verify owner-specific GPB filters with public UI, confirm temporal details before ingestion, resolve accessible ZMO listing contracts. No authentication bypass or bids.
