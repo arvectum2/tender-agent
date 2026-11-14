@@ -14,6 +14,7 @@ LABELS = {
     "Секция": "section_raw", "Регионы": "regions_raw", "Заказчики": "customers_raw",
     "Организатор": "organizer_raw", "Начальная цена": "price_raw",
     "Подача заявок до": "deadline_raw", "Дата публикации": "published_raw",
+    "Дата обновления": "updated_raw",
 }
 
 

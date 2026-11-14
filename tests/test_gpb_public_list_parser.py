@@ -29,3 +29,12 @@ def test_gos_uuid_identity():
     raw = sample().replace(b"/procedures/etp/123-test/",
                            b"https://gos.etpgpb.ru/front/procedure/view/77a2fcac-8193-42e4-b561-f6cc11b680e8")
     assert parse_list(raw, "https://etpgpb.ru/procedures/")[0]["external_id"].startswith("gos:")
+
+
+def test_update_date_is_separate_from_publication():
+    raw = sample().replace(b"</article>", (
+        "<div>Дата публикации</div><div>10 ноября 2026, 10:00 Z</div>"
+        "<div>Дата обновления</div><div>13 ноября 2026, 12:00 Z</div></article>").encode())
+    row = parse_list(raw, "https://etpgpb.ru/procedures/")[0]
+    assert row["published_raw"] == "10 ноября 2026, 10:00 Z"
+    assert row["updated_raw"] == "13 ноября 2026, 12:00 Z"
