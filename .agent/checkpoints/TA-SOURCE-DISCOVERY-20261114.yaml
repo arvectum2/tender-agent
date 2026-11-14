@@ -8,7 +8,7 @@ remaining: [SIBUR document acquisition and historical coverage, production DP tr
 last_verified_commit: c52856bff1b4df35c887f5148172473ca6636d82
 latest_tests: "56 focused pytest PASS (11 SIBUR + 45 prior parser/Watchdog); Ruff PASS; real 27/27 SHA-bound replay 313 IDs / 314 rows / one duplicate; two original OOXML samples PASS; explicitly authorized TA DB seed verified; MI DB not mutated"
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114
-resume_instruction: Reuse 513 SIBUR originals, 713 links, 118 ingestion receipts, and separate verified server resource receipt for timed-out a5c77f47a0c0. Export matches all 119 resource/document identities and 331 chunks; per-chunk embedding proof for recovered resource remains absent, do not blindly retry (selection guard tested). Continue DP safe bounded indexing after fresh gate and health checks, PDF extraction/legacy review, consumer retrieval. GEH 8206 rows, all 19 active priority detail pages, 45 links, 14 captured URLs and 13 DB links; continue remaining download/review and historical outcomes, date windows, ZMO.
+resume_instruction: Continue GEH historical candidates after 110 verified detail cards, 67 captured protocols and 65 structured outcomes. Two protocol reviews remain. SIBUR 513 originals, 713 DB links, 121 full DP ingest receipts with 316 embeddings and 137 verified index links, plus one previously reconciled server resource. Live DP 122 documents/343 embeddings. Three-document serial batch with max 5 preview chunks passed; fresh backup gate before further index writes, stop on transport failure, reconcile before retry. Preserve protected collection access. Older history, ZMO, B2B and semantic retrieval remain open.
 
 report: docs/roadmap/SIBUR_PUBLIC_REGISTRY_BASELINE_2026-11-14.md
 
@@ -218,3 +218,23 @@ continuation_2026_11_14_decisions:
   dp_new_index_writes: 0
   parallel_gpb_checkpoint_commit: 7d01b05dedbf651ede3d6899c520646011caebaf
   next: five protocol review cases, continue historical detail and protocol capture; ZMO, older history and DP remainder still open
+
+continuation_2026_11_14_outcomes65:
+  ta_procurements: 8519
+  ta_sibur_links: 713
+  ta_gpb_links: 81
+  gpb_historical_details: 110
+  gpb_captured_protocols: 67
+  gpb_outcomes: 65
+  dp_full_ingest_receipts: 121
+  dp_receipt_embeddings: 316
+  dp_server_documents: 122
+  dp_server_embeddings: 343
+  dp_recovered_resource_per_chunk_embedding_proof_pending: true
+  ta_sibur_index_links: 137
+  small_index_batch_pass: 3
+  prewrite_gate: pass
+  repeat_inserts: 0
+  repeat_updates: 0
+  gpb_checkpoint_commit: f7eb6a10fc0914794897c9fc315c716713978712
+  backup_sha256: 866656b3e5586b597cd9295b010cdb144b4f3c02351172034fa0404d75d1aed0
