@@ -21,3 +21,7 @@ All 516 allowlisted source URLs captured and SHA replay verified (513 unique ori
 ## Continued index and GPB history milestone
 
 118 independent persistent index receipts cover 304 embeddings and 134 TA links. Live DP reports 119 documents/331 embeddings after a client timeout; one additional server document is not counted as verified linked until exact provenance can be reconciled. No duplicate retries. DP health recovered HTTP 200. GEH has 8206 rows, 400 historical/16 active pages and four verified document links; total TA rows 8519.
+
+## Read-only resource reconciliation
+
+Dedicated collection export matched 118 previous ingest receipts, plus the timed-out SHA a5c77f47a0c0 with exact resource/document identity, source SHA and 27 chunks. 119 resources and 331 chunks verified; server aggregate 331 embeddings, but export does not expose per-chunk embedding status. Separate read-only evidence receipt retained, no fabricated ingestion receipt or blind retry. Batch selection guard verifies export hash and suppresses retry, regression tested. No new SIBUR index writes during reconciliation. GPB 13 unique document links, 14 URL receipts; total TA procurements 8519.

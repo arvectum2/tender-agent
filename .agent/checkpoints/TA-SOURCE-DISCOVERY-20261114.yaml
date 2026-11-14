@@ -3,12 +3,12 @@ status: in_progress
 goal: Verify public source acquisition and normalize first-party procurement records for three tracks.
 definition_of_done: [source access matrix, first-party receipts, bounded normalization, verified next connector steps]
 completed: [10 source probes, 8 HTTP 200 pages, real AJAX pagination, 27 pages and 313 unique procedures, 516 document URLs, 2 sample OOXML documents, duplicate observation preservation, parser and bounded research probe]
-current_stage: geh_history400_and_gpb_original_pilot_verified
+current_stage: dp_resource_reconciled_and_gpb_priority_details_verified
 remaining: [SIBUR document acquisition and historical coverage, production DP transport and monitoring integration, ETP GPB and TEK-Torg source access, EAT and Moscow list acquisition]
-last_verified_commit: cae5fb6b25f39362c2ebc79280fa5ac09c5a1ad1
+last_verified_commit: c52856bff1b4df35c887f5148172473ca6636d82
 latest_tests: "56 focused pytest PASS (11 SIBUR + 45 prior parser/Watchdog); Ruff PASS; real 27/27 SHA-bound replay 313 IDs / 314 rows / one duplicate; two original OOXML samples PASS; explicitly authorized TA DB seed verified; MI DB not mutated"
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114
-resume_instruction: Reuse 513 SIBUR originals, 713 links, 118 verified persistent index receipts and 134 TA index links. DP reports 119 documents with 331 embeddings but receipts cover 118/304; reconcile a5c77f47a0c04917c7ec630687e902b929e27364a117b8cd0e0ccb35276b1e67 via supported read-only provenance or audited idempotence before retry; no speculative receipt creation. GEH 400 historical pages and 8206 rows committed; continue remaining priority detail and attachment capture, older history and award protocols, ZMO and consumer-authenticated retrieval.
+resume_instruction: Reuse 513 SIBUR originals, 713 links, 118 ingestion receipts, and separate verified server resource receipt for timed-out a5c77f47a0c0. Export matches all 119 resource/document identities and 331 chunks; per-chunk embedding proof for recovered resource remains absent, do not blindly retry (selection guard tested). Continue DP safe bounded indexing after fresh gate and health checks, PDF extraction/legacy review, consumer retrieval. GEH 8206 rows, all 19 active priority detail pages, 45 links, 14 captured URLs and 13 DB links; continue remaining download/review and historical outcomes, date windows, ZMO.
 
 report: docs/roadmap/SIBUR_PUBLIC_REGISTRY_BASELINE_2026-11-14.md
 
@@ -172,3 +172,23 @@ continuation_2026_11_14_1956:
   repeat_inserted: 0
   ta_backup_sha256: 2016f62f033c04867d0818d446e1ac7b1b954224ad92ac1f5d7716db6094db5e
   next: reconcile DP pending result, continue GPB technical detail and older historical windows; ZMO source contract and economic paper trading remain open
+
+continuation_2026_11_14_2001:
+  dp_export_resources_verified: 119
+  dp_export_chunks_verified: 331
+  dp_aggregate_embeddings_server: 331
+  dp_ingest_receipts: 118
+  dp_ingest_receipt_embeddings: 304
+  dp_recovered_resource_chunks: 27
+  dp_recovered_per_chunk_embedding_proof: pending
+  dp_recovery_guard: tested_no_blind_retry
+  dp_recovery_source: dp-recovered-server-resource.json
+  ta_sibur_links: 713
+  ta_sibur_index_links: 134
+  ta_gpb_links: 13
+  ta_gpb_captured_urls: 14
+  ta_gpb_active_detail_pages: 19
+  ta_gpb_historical_detail_pages: 17
+  ta_total_procurements: 8519
+  parallel_gpb_checkpoint_commit: 27cfc30b4ef24bdda66fe4a2c505626cff8e3e4b
+  latest_tests: 6 SIBUR batch and 15 GPB focused passed
