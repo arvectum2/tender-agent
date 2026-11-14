@@ -39,3 +39,7 @@ All 3 earlier parser failures resolved by allowlisting the published Protocols p
 110 historical details, 59 captured protocols, 58 source-bound persisted outcomes: 55 best bids and 3 unsuccessful procedures. Two MOEK local ordinal participants are explicitly not platform-wide identities; 21 distinct global IDs among other decisions. Direct DOCX supported independently of ZIP containers; one scanned PDF etp:1293269 lacks text layer and requires separate OCR. 60 historical links, 73 GPB links total. Repeat wrote zero.
 
 Completed remaining eight published protocols for 110 historical details. 67/67 captured, 65 outcomes persisted (62 best bids, 3 unsuccessful), 23 distinct global IDs; two local ordinals excluded from participant aggregation. Two reviews remain (PDF scan and alternate clause). 81 GPB links; repeat zero inserts/updates.
+
+## Protocol batch 5
+
+140 historical details, all 95 published protocols captured, 93 source-bound outcomes (89 best bids, 4 unsuccessful). 31 distinct platform IDs, 109 GPB DB links. Explicit total bid distinguished from unit-rate sum when both are published; prior 65 decisions replay unchanged. Two reviews remain (scanned PDF and alternate decision). Repeat writes zero.
