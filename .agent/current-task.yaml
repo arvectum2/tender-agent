@@ -638,3 +638,10 @@ ci_mirror_recovery_2026_11_14:
   child_checkpoint: .agent/checkpoints/TA-CI-MIRROR-20261114.yaml
   parent_resume_preserved: true
   scope: isolated_ci_recovery_and_mirror_verification
+
+source_discovery_2026_11_14:
+  child_checkpoint: .agent/checkpoints/TA-SOURCE-DISCOVERY-20261114.yaml
+  parent_resume_preserved: true
+  stage: sibur_public_snapshot_verified
+  remaining: [document_acquisition, historical_coverage, dp_integration, geh_and_zmo_sources]
+  no_live_trading_or_db_mutation: true
