@@ -33,7 +33,8 @@ jobs:
           ARVECTUM_LANDING_PUBLIC_DIR="$PWD" docker compose -f docker-compose.site-pilot.yml config >/dev/null
 
   quality:
-    runs-on: ubuntu-latest
+    # Ubuntu 26.04 (ubuntu-latest) no longer ships the PG16 client.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

@@ -16,3 +16,10 @@ CI repair: Both quality jobs for PR 522 at 5faaa134 failed only R9 backup/restor
 Mirror: GitVerse HTTP 502 twice, third attempt of run 43621472378 succeeded. Independent public git ls-remote confirmed main and PR refs match GitHub at the pre-fix head. No mirror credentials or workflow changes needed for this transient outage. Recheck after this commit.
 
 Next: exact-head CI and mirror confirmation; then existing governance review, runtime parity and source inventory. AM-4 review deadline in policy was 2026-11-08; no newer decision found in company decision list. No automatic merge without valid authority.
+
+## Follow-up verification
+
+- GitVerse independently matched GitHub main and PR head acdb5deba9587cc86b4929fc975648c5c60de525.
+- CI runner logs confirm ubuntu-latest switched to Ubuntu 26.04 (resolute); its apt repository has no postgresql-client-16. Pin only the quality job to ubuntu-24.04; retain PG16 major assertions.
+- Active TA authenticated read-only requests to DP 0.6.0 returned HTTP 200 on collections and connectors; anonymous requests returned 401. The running TA uses SDK 0.3.0, while main pins 0.4.0. This is a genuine runtime/source parity gap, not an API outage.
+- Next: isolated SDK 0.4.0 contract replay with existing runtime, candidate image build and read-only validation; no runtime replacement or DB mutation before safety gates.
