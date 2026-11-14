@@ -9,3 +9,7 @@ Next: establish owner/customer filters using the public UI and official primary 
 ## Target detail follow-up
 
 Two first-party historical details returned HTTP 200 and were byte-hashed. Notice 32414196205, published 14.11.2024, 7,407,342 RUB: survey works for 275 MW units at CHPP-25/26. Notice 32414239479, published 25.11.2024, 1,267,200 RUB: functional logic diagrams for protection and automation terminals at HPP-1 boiler modernization. Both show archive status and source text supports Mosenergoproekt and GEH Zakupki. Actual award, supplier and target-filter contract remain unverified. Keep customer, organizer and project owner separate. Raw receipts retained privately.
+
+## Verified GEH group capture and working DB seed
+
+Primary detail pages link official GEH Zakupki and Mosenergoproekt catalogs. Official menu exposes section=geh_group. All 16 advertised accepting pages (313 unique observations), plus 32/400 completed pages (640 observations) replayed. Separate update date fixed parsing defect; 92 conflicting temporal observations quarantined. 861 rows imported as etp_gpb (223 accepting date-consistent, 638 completed date-consistent, 496 prices present); repeat inserted zero. Publication range 2026-05-27 to 2026-11-13. No complete historical coverage or winner claim. System Python trusted TLS succeeds; no verification bypass. Private originals and receipts retained.
