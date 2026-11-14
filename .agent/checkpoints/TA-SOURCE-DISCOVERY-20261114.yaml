@@ -192,3 +192,17 @@ continuation_2026_11_14_2001:
   ta_total_procurements: 8519
   parallel_gpb_checkpoint_commit: 27cfc30b4ef24bdda66fe4a2c505626cff8e3e4b
   latest_tests: 6 SIBUR batch and 15 GPB focused passed
+
+continuation_2026_11_14_protocols:
+  dp_health: HTTP_200
+  dp_new_index_writes: 0
+  ta_total_procurements: 8519
+  ta_sibur_document_links: 713
+  ta_gpb_document_links: 36
+  gpb_historical_verified_details: 50
+  gpb_protocols_captured: 22
+  gpb_explicit_best_bid_decisions: 8
+  gpb_protocols_review: 14
+  gpb_structured_decisions_db_persistence: pending
+  parallel_gpb_checkpoint_commit: dd272ffc0bbc037704717004d207f90d12b9ef42
+  next: review protocol variants and persist source-bound decisions, continue historical details and active attachments; safe DP index and processing, ZMO and older history remain pending
