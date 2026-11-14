@@ -1,0 +1,205 @@
+{
+  "schema_version": "mi-pq-source-bound-incremental/1",
+  "date": "2026-10-29",
+  "base_db_expected_records": 104,
+  "source": "official_223FZ_original_docs_and_commission_review",
+  "corpus": "power_quality_russia",
+  "new_cases": [
+    {
+      "source_record": {
+        "canonical_id": "223fz:32413764701:lot1",
+        "procedure_id": "32413764701",
+        "family": "ukrm",
+        "scope": "equipment_supply_new",
+        "market_scope": "core_10kv_equipment_supply_notice",
+        "procurement_regime": "223-fz",
+        "publication_date": null,
+        "date_basis": "historical_originals_not_exact_publication_day",
+        "customer": {
+          "name": "АО «ЮТЭК-Региональные сети»",
+          "inn": "8601033125"
+        },
+        "platform": "ЕИС 223-ФЗ",
+        "status": "registered_contract_execution_completed_supplier_unknown",
+        "description": "Аукцион №116/2024: поставка контейнерной УКРМ-А-10,5-150-50-УХЛ1 для электросетей Югорска. 10 кВ, 150 квар. Единственная анонимная заявка, комиссия указала возможность заключения договора; оригинальный реестр содержит договор и цену, но публичный подписант/оплата не подтверждены.",
+        "technical": {
+          "voltage_kv": 10,
+          "power_kvar": 150,
+          "type": "УКРМ-А-10,5-150-50-УХЛ1"
+        },
+        "nmck_rub": "3415594.16",
+        "nmck_vat_basis": "original_commission_quote_context_no_independent_VAT_claim",
+        "commission_bid_rub": "3397600.00",
+        "commission_bidder_name": null,
+        "contract_registered_price_rub": "4077120.00",
+        "contract_registry_number": "58601033125240001550000",
+        "contract_register_date": "2024-08-09",
+        "contract_register_status": "Исполнение завершено",
+        "supplier_verified": false,
+        "supplier_inn": null,
+        "signed_supplier_verified": false,
+        "paid_verified": false,
+        "realized_equipment_revenue_rub": null,
+        "market_population_complete": false,
+        "evidence": [
+          {
+            "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=58601033125240001550000",
+            "source_tier": "first_party_EIS_223_public_contract_card",
+            "sha256": "24c041d6d1419f0564ce85777c0ff3ad96314f71df7180469dd4c0dfa2bc6f28"
+          },
+          {
+            "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32413764701",
+            "source_tier": "first_party_EIS_223_original_notice",
+            "sha256": "731f9ce22329ee8d35aa151caf3a714db0d7e2eff34c7060b0b51e8eb63a0349"
+          },
+          {
+            "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32413764701",
+            "source_tier": "first_party_EIS_223_commission_protocol",
+            "sha256": "a7d0eec0064ae7088064d767792f5ff7cc4aebfc6941722e59e3844e3eceff65"
+          }
+        ]
+      },
+      "verified_originals": [
+        {
+          "sha256": "a7d0eec0064ae7088064d767792f5ff7cc4aebfc6941722e59e3844e3eceff65",
+          "filename": "01-116-3-22.07.2024.pdf",
+          "source_name": "Итоговый протокол №116-3 от 22.07.2024.pdf",
+          "private_relative": "watchdog-20261028-1436/review-curated-32413764701/01-116-3-22.07.2024.pdf",
+          "bytes": 264115
+        },
+        {
+          "sha256": "731f9ce22329ee8d35aa151caf3a714db0d7e2eff34c7060b0b51e8eb63a0349",
+          "filename": "06-attachment-6.pdf",
+          "source_name": "Приложение к ТЗ.pdf",
+          "private_relative": "watchdog-20261028-1436/review-curated-32413764701/06-attachment-6.pdf",
+          "bytes": 358137
+        },
+        {
+          "sha256": "a2b94d8fb2bc4ab3f9754110d50b7ef84ba7fa837dab1bc66bbab1ce4428a98a",
+          "filename": "07-116-2024.docx",
+          "source_name": "Аукционная документация №116-2024.docx",
+          "private_relative": "watchdog-20261028-1436/review-curated-32413764701/07-116-2024.docx",
+          "bytes": 113549
+        }
+      ],
+      "original_verification": "local_sha256_byte_exact",
+      "review_scope": "source_bound_candidate_not_confirmed_signed_sale"
+    },
+    {
+      "source_record": {
+        "canonical_id": "223fz:32413195287:lot1",
+        "procedure_id": "32413195287",
+        "family": "ukrm",
+        "scope": "mixed_epc_repair_services",
+        "market_scope": "adjacent_service_6p3kv_no_new_equipment",
+        "procurement_regime": "223-fz",
+        "publication_date": "2024-01-19",
+        "date_basis": "original_secondary_notice_publication",
+        "customer": {
+          "name": "ООО «ЕвроЭнергоТранс»",
+          "inn": null
+        },
+        "platform": "ЕИС 223-ФЗ",
+        "status": "commission_winner_not_signed_verified",
+        "description": "Смешанная закупка ремонта телемеханики 110/10 кВ ОП-4 и капитального ремонта существующей УКРМ-2 на ПС 35/6 кВ «Капитальная-35». Расчёт ремонта УКРМ отдельно 684 349,81 ₽ (НМЦ); поставки новой установки не доказано.",
+        "technical": {
+          "installed_compensator_nominal_kv": 6.3,
+          "work": "capital_repair_existing_UKRM_2"
+        },
+        "nmck_rub": "13892027.33",
+        "nmck_basis": "whole_mixed_lot_not_PQ_equipment",
+        "pq_repair_component_nmck_rub": "684349.81",
+        "commission_winner_name": "АО «ТЯЖПРОМСЕРВИС»",
+        "commission_offer_rub": "10467272.45",
+        "supplier_verified": false,
+        "signed_supplier_verified": false,
+        "paid_verified": false,
+        "realized_equipment_revenue_rub": null,
+        "market_population_complete": false,
+        "evidence": [
+          {
+            "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32413195287",
+            "source_tier": "first_party_EIS_223_originals",
+            "sha256": "9c5ea293266ae5ccd5f352c0d4ec46816a0d732971de10cac939a2cac3947a57",
+            "original_name": "32413195287 итог протокол КР диспетч ОП4. Капитальная 35.pdf"
+          },
+          {
+            "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32413195287",
+            "source_tier": "first_party_EIS_223_originals",
+            "sha256": "da402f69632984e637e11bfc7e29089ccb04cf52c58ca113592c40ea01860589",
+            "original_name": "ЗП КР СППИ ОП4 ЗСМК, УКРМ.docx"
+          },
+          {
+            "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32413195287",
+            "source_tier": "first_party_EIS_223_originals",
+            "sha256": "d07cb09f90ef1e99c8002df8ad1023149862c5f5d9b196c5c8134f1fba4429a1",
+            "original_name": "смета КР УКРМ ПС 35 кВ Капитальная.xlsx"
+          }
+        ]
+      },
+      "verified_originals": [
+        {
+          "sha256": "729506b0d805546fc38b01087e9a0399292c1eb7dec74f04ff96889bcee1a738",
+          "filename": "01-32413195287-4.pdf",
+          "source_name": "32413195287 протокол КР диспетч ОП4 продл ср.pdf",
+          "private_relative": "watchdog-20261028-1436/new-official-223-originals/32413195287/01-32413195287-4.pdf",
+          "bytes": 370647
+        },
+        {
+          "sha256": "f324d9ab1089ab3e50511500309aa68ebfc750fb5b44120fa93a2b3d6d6eefd7",
+          "filename": "02-32413195287-4--35.pdf",
+          "source_name": "32413195287 протокол КР сист телеинф ОП4, Капитальная-35 скидка.pdf",
+          "private_relative": "watchdog-20261028-1436/new-official-223-originals/32413195287/02-32413195287-4--35.pdf",
+          "bytes": 697303
+        },
+        {
+          "sha256": "9c5ea293266ae5ccd5f352c0d4ec46816a0d732971de10cac939a2cac3947a57",
+          "filename": "03-32413195287-4.-35.pdf",
+          "source_name": "32413195287 итог протокол КР диспетч ОП4. Капитальная 35.pdf",
+          "private_relative": "watchdog-20261028-1436/new-official-223-originals/32413195287/03-32413195287-4.-35.pdf",
+          "bytes": 842418
+        },
+        {
+          "sha256": "d79a8d3242d7a9b08ec9ec2198725eada0fe317819b4058ce2f7571bbeb54b3a",
+          "filename": "04-32413195287-4--35.pdf",
+          "source_name": "32413195287 протокол КР сист приема ОП4 Капитальная-35 повтор скидка.pdf",
+          "private_relative": "watchdog-20261028-1436/new-official-223-originals/32413195287/04-32413195287-4--35.pdf",
+          "bytes": 501872
+        },
+        {
+          "sha256": "da402f69632984e637e11bfc7e29089ccb04cf52c58ca113592c40ea01860589",
+          "filename": "05-4.docx",
+          "source_name": "ЗП КР СППИ ОП4 ЗСМК, УКРМ.docx",
+          "private_relative": "watchdog-20261028-1436/new-official-223-originals/32413195287/05-4.docx",
+          "bytes": 471755
+        },
+        {
+          "sha256": "752e635629cd61af79849ecb3e71b6b9edcfbed85f3657e3373a8da5376e38cf",
+          "filename": "06-4.xlsx",
+          "source_name": "смета КР ОП-4 СППИ.xlsx",
+          "private_relative": "watchdog-20261028-1436/new-official-223-originals/32413195287/06-4.xlsx",
+          "bytes": 54506
+        },
+        {
+          "sha256": "d07cb09f90ef1e99c8002df8ad1023149862c5f5d9b196c5c8134f1fba4429a1",
+          "filename": "07-35.xlsx",
+          "source_name": "смета КР УКРМ ПС 35 кВ Капитальная.xlsx",
+          "private_relative": "watchdog-20261028-1436/new-official-223-originals/32413195287/07-35.xlsx",
+          "bytes": 73440
+        },
+        {
+          "sha256": "8073cc13e419a38c7399dd3583d81d8550824a97b7d36cafa6e18e274d4230b8",
+          "filename": "08-4-1.docx",
+          "source_name": "ЗП КР СППИ ОП4 ЗСМК, УКРМ продление Прил1.docx",
+          "private_relative": "watchdog-20261028-1436/new-official-223-originals/32413195287/08-4-1.docx",
+          "bytes": 473636
+        }
+      ],
+      "original_verification": "local_sha256_byte_exact",
+      "review_scope": "source_bound_candidate_not_confirmed_signed_sale"
+    }
+  ],
+  "market_population_complete": false,
+  "new_signed_suppliers_verified": 0,
+  "new_executed_equipment_sales_rub": 0
+}

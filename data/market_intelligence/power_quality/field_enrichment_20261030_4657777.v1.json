@@ -1,0 +1,12 @@
+{
+  "schema_version": "pq-field-enrichment/1",
+  "canonical_id": "commercial:4657777:lot1",
+  "field": "quantity",
+  "value": 6,
+  "source_relative": "captures/commercial_4657777_lot1/20261029T113646455922Z-3b80bdb8-a2b6ea5931172eeb.bin",
+  "source_sha256": "a2b6ea5931172eebda42c3876dacce7a4dae95b6b8df38d8798c60b3d3c183ea",
+  "source_url": "https://www.b2b-center.ru/market/postavka-blokov-kondensatornykh-dlia-nuzhd-po-btses-po-kes-ooo/tender-4657777/",
+  "exact_original_quote": "Количество:</td><td>6&nbsp;шт",
+  "expected_content_hash": "5db5729679c2b5126013a89f4638ed1121a83fc40b71fbcbf5b0f9f42c2b9f20",
+  "expected_revision": 1
+}

@@ -1,0 +1,140 @@
+{
+  "schema_version": "pq-watchdog-run/2026-11-02",
+  "run_end_moscow": "2026-11-02T19:37:21.928374+03:00",
+  "issue_comment_id": 6582396185,
+  "canonical_pr": 521,
+  "code_commit": "af50134b7701304f2f3d477b3a0e250497b77f50",
+  "acceptance_gate": "pass before backup and write on af50134",
+  "postgres_before": {
+    "rows": 123,
+    "owner": "tender-agent",
+    "unique": 123,
+    "records": 123
+  },
+  "postgres_after": {
+    "rows": 123,
+    "owner": "tender-agent",
+    "unique": 123,
+    "records": 123
+  },
+  "new_unique_lots": 0,
+  "new_deduplicated_projects": 0,
+  "new_verified_db_fields": 4,
+  "enriched_case": "223fz:32515582393:lot1",
+  "enriched_fields": [
+    "bid",
+    "commission_selected_participant",
+    "negotiated_offer_rub",
+    "protocol_status_note"
+  ],
+  "new_named_selected_sole_participant": 1,
+  "new_competitive_winners": 0,
+  "new_signed_suppliers": 0,
+  "new_paid_pq_equipment_sales": 0,
+  "new_exhaustive_month_source_pairs": 0,
+  "first_party_requests_total": 9,
+  "first_party_http200_sha_captures": 6,
+  "failed_httpx_tls_requests": 3,
+  "failed_request_urls": [
+    "https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=50277071467260001550000",
+    "https://zakupki.gov.ru/epz/contractfz223/card/journal-version.html?reestrNumber=50277071467260001550000",
+    "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32515582393"
+  ],
+  "failure": "httpx certificate verify failed (self-signed certificate in chain); native-trust succeeded with normal TLS verification, no bypass",
+  "source_requests": [
+    {
+      "case_id": "223fz:32515582393:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=50277071467260001550000",
+      "http_status": 200,
+      "sha256": "b38e16fc92be865ba68902d894d8ea634474bc647e6775062f27f5ddfe5cd76c",
+      "relative_file": "captures/223fz_32515582393_lot1/20261102T163113351129Z-0518df3c-b38e16fc92be865b.bin",
+      "bytes": 142827
+    },
+    {
+      "case_id": "223fz:32515582393:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/journal-version.html?reestrNumber=50277071467260001550000",
+      "http_status": 200,
+      "sha256": "ff405fbcdebb1a627510f13b9b0d82b8e93f5d7ae9229e1fea99ae590cf7aa0b",
+      "relative_file": "captures/223fz_32515582393_lot1/20261102T163113658848Z-27c71d12-ff405fbcdebb1a62.bin",
+      "bytes": 127514
+    },
+    {
+      "case_id": "223fz:32515582393:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32515582393",
+      "http_status": 200,
+      "sha256": "b088935b7dc2ea43a7e19c3b3f5dc3f44c2433883aa075530c1bcc404d988c1d",
+      "relative_file": "captures/223fz_32515582393_lot1/20261102T163114079797Z-13efe77b-b088935b7dc2ea43.bin",
+      "bytes": 135128
+    },
+    {
+      "case_id": "223fz:32515582393:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=a9898519-3612-0004-0000-6992e9033f64&purchaseNoticeNumber=32515582393",
+      "http_status": 200,
+      "sha256": "8def93c5cba42bb177d8fd838a456328de3b7ad364bd9c484f26932b8aba76d3",
+      "relative_file": "captures/223fz_32515582393_lot1/20261102T163143156151Z-bd4ec281-8def93c5cba42bb1.bin",
+      "bytes": 11695
+    },
+    {
+      "case_id": "223fz:32515582393:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/protocol223/protocol-common-info.html?protocolGuid=a9898519-3612-0004-0000-6992e9033f64&purchaseNoticeNumber=32515582393",
+      "http_status": 200,
+      "sha256": "6b5f369a866d59a51da0f950735cd89b8f93af5a33a02106264d5d6dafd45d77",
+      "relative_file": "captures/223fz_32515582393_lot1/20261102T163143507931Z-a9c7ac02-6b5f369a866d59a5.bin",
+      "bytes": 134677
+    },
+    {
+      "case_id": "commercial:4657777:lot1",
+      "source_url": "https://www.b2b-center.ru/market/postavka-blokov-kondensatornykh-dlia-nuzhd-po-btses-po-kes-ooo/tender-4657777/",
+      "http_status": 200,
+      "sha256": "418f8e24608f364253d9ffc11b0617c2539a7f71c4ecf56f5247b9e105e4f1fe",
+      "relative_file": "captures/commercial_4657777_lot1/20261102T163631286976Z-bae38037-418f8e24608f3642.bin",
+      "bytes": 74321
+    }
+  ],
+  "original_commission_zip_sha256": "842cfe42c4ad5f797cf6d4d104015406ea43d246ecc8c1cf60364861ea69ffae",
+  "embedded_final_protocol_pdf_sha256": "028b7c02597f2f5adb7b4881334b9e4f13dc39d5e8b4a54c660c2ea7dd66298f",
+  "embedded_negotiation_pdf_sha256": "a5d0232672daf75f602b1cfe8dc60d0b1cff30e8605f17d2c7dac539132151e7",
+  "original_eis_protocol_sha256": "8def93c5cba42bb177d8fd838a456328de3b7ad364bd9c484f26932b8aba76d3",
+  "new_case_specific_first_party_sha": 6,
+  "new_distinct_core_lots": 0,
+  "new_case_specific_protocol_corroboration": 1,
+  "facts": {
+    "official_protocol": "32515582393-02",
+    "sole_participant": "ООО «УК КОНДЕНСАТОР»",
+    "competitive_tender": "unsuccessful_single_bid",
+    "original_offer_rub_ex_vat": "4900000.00",
+    "negotiated_offer_rub_ex_vat": "4850000.00",
+    "registered_contract_rub": "4850000.00",
+    "registered_contract_no": "РЭС-1.26.1/Д-01071",
+    "registered_contract_date": "2026-02-27",
+    "buyer_full_name": "ООО «БАШКИРСКИЕ РАСПРЕДЕЛИТЕЛЬНЫЕ ЭЛЕКТРИЧЕСКИЕ СЕТИ»",
+    "buyer_short_name": "ООО «БАШКИРЭНЕРГО»",
+    "buyer_inn": "0277071467",
+    "voltage_kv": "unverified",
+    "signed_supplier": "unverified",
+    "paid_amount": "unverified"
+  },
+  "independent_case": "commercial:4657777:lot1",
+  "independent_case_outcome": "B2B-Center public card unchanged in substantive facts; 6 blocks, 208419.30 RUB ex VAT initial value; 09.11.2026 10:00 bid deadline; no winner, no 6–35kV nameplate; dynamic SHA only, no DB promotion",
+  "backup_sha256": "6c35ae2ad14eafdd533ed5d5cb40ab6225f6adf142eff417591a34605193370b",
+  "db_receipt": "receipts/pq-bashkirenergo-commission-20261102T1634.json",
+  "client_report_version": "V54",
+  "snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261102_v54.json",
+  "audit": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261102_V54.json",
+  "field_coverage": {
+    "bid": 16,
+    "winner_or_named_bidder": 8,
+    "source_grade_A": 48,
+    "lots": 123
+  },
+  "bilingual_pdf_pages_each": 268,
+  "targeted_tests": "16 passed (commission, full deck, standard v14); Ruff clean; 268 RU/EN PDF pages, pdftotext checked",
+  "client_html_unchanged": true,
+  "pr_state": "REVIEW; no auto-merge",
+  "next_targets": [
+    "223fz:32616497692:lot1 final award protocol after 2026-11-03 09:00 MSK",
+    "223fz:32616433248:lot1 contract registry after 2026-11-03 09:00 MSK",
+    "commercial:4657777:lot1 result after 2026-11-09 10:00 site time; technical voltage only if first-party attachment published"
+  ],
+  "limitations": "Candidate corpus is not national TAM or paid sales; source-grade, signed supplier, voltage and PQ-only allocation remain separately unverified."
+}

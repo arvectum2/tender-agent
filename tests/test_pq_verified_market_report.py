@@ -128,3 +128,97 @@ def test_warning_counts_follow_verified_source_population():
     assert larger["pq_equipment_market_value_rub"] is None
     assert larger["verified_signed_contract_suppliers"] == 0
     assert larger["completeness"] == "partial_do_not_extrapolate"
+
+
+
+def test_realistic_duplicate_lot_under_one_notice_does_not_count_as_commercial():
+    """Actual v29 has 32616474682 lot1 and lot2, not two notices."""
+    leads = [
+        {"canonical_id": "223fz:32616474682:lot1", "procedure_id": "32616474682"},
+        {"canonical_id": "223fz:32616474682:lot2", "procedure_id": "32616474682"},
+        {"canonical_id": "223fz:32616339168:lot1", "procedure_id": "32616339168"},
+        {"canonical_id": "etp:358-830", "procedure_id": "358-830"},
+    ]
+    report = summarize(
+        leads=leads, eis=[],
+        commissions={"facts_accepted": 0, "records": []},
+        etp={"original_etp_cases_verified": 0, "records": []},
+        contracts={"distinct_contract_lots_matched": 0,
+                   "contract_lots_with_rub_price": 0, "records": []},
+    )
+    assert report["v29_candidate_leads"] == 4
+    assert report["source_number_223_leads"] == 2
+    assert report["source_223_lot_candidate_rows"] == 3
+    assert report["source_223_extra_lot_rows_sharing_notice"] == 1
+    assert report["non_223_or_nonstandard_leads"] == 1
+    assert "1 non-223/nonstandard lead is " in report["warnings"][1]
+
+
+def test_b2b_predecessor_not_in_v29_is_not_counted_as_v29_primary():
+    """Original 4538400 is a source-verified predecessor referenced by 4565274, not an independent v29 candidate."""
+    report = summarize(
+        leads=[{"procedure_id": "4565274"}], eis=[],
+        commissions={"facts_accepted": 0, "records": []},
+        etp={"original_etp_cases_verified": 0, "records": []},
+        contracts={"distinct_contract_lots_matched": 0,
+                   "contract_lots_with_rub_price": 0, "records": []},
+        b2b={"first_party_cards_verified": 2, "source_records": [
+            {"procedure_id": "4538400", "source_title": "earlier", "source_url": "https://www.b2b-center.ru/market/old/tender-4538400/",
+             "results_hidden_by_organizer": False},
+            {"procedure_id": "4565274", "source_title": "later", "source_url": "https://www.b2b-center.ru/market/new/tender-4565274/",
+             "results_hidden_by_organizer": True},
+        ]})
+    assert report["primary_b2b_center_cases_verified"] == 1
+    assert report["additional_b2b_original_cards_outside_v29"] == 1
+    assert [x["procedure_id"] for x in report["b2b"]] == ["4565274"]
+
+
+def test_cancelled_b2b_predecessor_preserved_without_inflating_current_corpus():
+    url_old = 'https://www.b2b-center.ru/market/old/tender-4538400/'
+    url_new = 'https://www.b2b-center.ru/market/new/tender-4565274/'
+    from src.modules.market_intelligence.pq_verified_market_report import summarize
+    report = summarize(
+        leads=[{'procedure_id': '4565274'}], eis=[],
+        commissions={'facts_accepted': 0, 'records': []},
+        etp={'original_etp_cases_verified': 0, 'records': []},
+        contracts={'distinct_contract_lots_matched': 0,
+                   'contract_lots_with_rub_price': 0, 'records': []},
+        b2b={'first_party_cards_verified': 2, 'source_records': [
+            {'procedure_id': '4538400', 'source_title': 'old', 'source_url': url_old},
+            {'procedure_id': '4565274', 'source_title': 'new', 'source_url': url_new,
+             'results_hidden_by_organizer': True, 'buyer_platform_display': None,
+             'organizer_platform_display': 'ООО МЕТАЛЛОИНВЕСТ',
+             'applications_count_not_qualified_bidders': 11},
+        ], 'explicit_source_verified_replacement_links': [{
+            'cancelled_tender_id': '4538400', 'replacement_tender_id': '4565274',
+            'cancelled_source_url': url_old, 'replacement_source_url': url_new,
+            'source_cancellation_quote': 'открыт новый конкурс № 4565274',
+        }]})
+    assert report['primary_b2b_center_cases_verified'] == 1
+    assert report['additional_b2b_original_cards_outside_v29'] == 1
+    assert len(report['b2b_explicit_replacements']) == 1
+    assert 'открыт новый конкурс № 4565274' in markdown(report)
+
+
+def test_native_rad_original_counts_only_once_when_eis_has_no_original():
+    offers = {"facts_accepted": 0, "records": []}
+    etp = {"original_etp_cases_verified": 0, "records": []}
+    contracts = {"distinct_contract_lots_matched": 0,
+                 "contract_lots_with_rub_price": 0, "records": []}
+    rad = {"first_party_223_notice_cases": 1, "records": [{
+        "procedure_id": "32615966040", "native_etp_id": "RAD260020676",
+        "source_card_url": "https://tender.lot-online.ru/etp/app/OfferCard/page?OfferCard.offerUUID=test",
+        "original_archive_count": 4, "commission_source_verified": True,
+    }]}
+    report = summarize(
+        leads=[{"procedure_id": "32615966040"}],
+        eis=[{"registry_number": "32615966040", "verified_file_instances": 0}],
+        commissions=offers, etp=etp, contracts=contracts, rad=rad)
+    assert report["primary_eis_cases_with_files"] == 0
+    assert report["primary_eis_no_document_cases"] == ["32615966040"]
+    assert report["primary_rad_223_original_cases_verified"] == 1
+    assert report["primary_rad_223_cases_without_eis_originals"] == 1
+    assert report["primary_223_cases_with_originals_from_any_source"] == 1
+    assert report["primary_223_cases_without_any_primary_original"] == []
+    assert report["verified_signed_contract_suppliers"] == 0
+    assert "RAD260020676" in markdown(report)

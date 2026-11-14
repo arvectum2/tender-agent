@@ -1,0 +1,284 @@
+{
+  "schema_version": "pq-watchdog-source-attempts/1",
+  "run_start_issue_comment_id": 6486342403,
+  "as_of_utc": "2026-10-29T02:44:11.267893+00:00",
+  "canonical_corpus": "v29_101_unchanged",
+  "canonical_pr": 521,
+  "research_scope": "Russia PQ 6–35 kV 2024–2026",
+  "summary": {
+    "journaled_requests": 17,
+    "http_statuses": {
+      "200": 4,
+      "403": 1,
+      "404": 12
+    },
+    "new_official_month_searches_attempted": 7,
+    "successful_official_month_searches": 0,
+    "new_exhaustively_covered_months": 0,
+    "new_original_primary_source_files": 0,
+    "new_original_protocols_with_named_winner": 0,
+    "new_verified_signed_suppliers": 0,
+    "new_verified_executed_prices": 0,
+    "new_unique_notices_promoted": 0,
+    "new_unique_projects_promoted": 0,
+    "secondary_lead_notices_already_present_as_unverified_metadata": [
+      "32616433248",
+      "32616497692"
+    ]
+  },
+  "findings": [
+    {
+      "notice": "32616433248",
+      "scope": "PS Kyappeselga 35/10kV; 1 UKRM 35kV within mixed EPC; NMCK 56330673.93 RUB",
+      "classification": "secondary_provisional_lead",
+      "winner_name_secondary_only": "ООО СтройЭнергоИмпорт",
+      "winner_primary_protocol_verified": false,
+      "signed_supplier_verified": false,
+      "pq_only_allocation_verified": false,
+      "official_original_zip_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=0B71CDD1BF2B40F3AB1CA3A9AD876C4E",
+      "official_zip_http": 404
+    },
+    {
+      "notice": "32616497692",
+      "scope": "PS Vyartsilya 10kV UKRM installation within mixed EPC; NMCK 79101498 RUB",
+      "classification": "secondary_provisional_lead",
+      "winner_primary_protocol_verified": false,
+      "signed_supplier_verified": false,
+      "pq_only_allocation_verified": false,
+      "official_original_zip_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=F1217EB50B7340E09557E0AD74864C9C",
+      "official_zip_http": 404
+    }
+  ],
+  "blockers": [
+    "EIS host and official filestore return uniform HTTP404 146-byte Varnish response on Mac mini and independent MacBook; this is not evidence of absent tenders.",
+    "Rosseti Roseltorg official landing page HTTP200 is JS shell without case-specific original; GPB official search returned generic SSR, no case ID.",
+    "Kontur source HTTP403; no access bypass.",
+    "15 authorized Data Platform SDK source items remain blocked by missing approved credential."
+  ],
+  "next_three": [
+    {
+      "target": "32413764701",
+      "goal": "independent signed supplier and paid amount for 10kV UKRM",
+      "retry_eligible_moscow": "2026-10-29 06:46"
+    },
+    {
+      "target": "32515582393",
+      "goal": "independent signed supplier and paid amount for 6kV UKRM",
+      "retry_eligible_moscow": "2026-10-29 06:46"
+    },
+    {
+      "target": "32616433248 / 32616497692",
+      "goal": "official EIS/ETP technical originals and award, no mirror-based winner promotion",
+      "retry_eligible_moscow": "2026-10-29 17:43 unless verified service recovery"
+    }
+  ],
+  "source_requests": [
+    {
+      "name": "223-2026-10-statcom",
+      "kind": "official_month_search_first_page",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&publishDateFrom=01.10.2026&publishDateTo=29.10.2026&pageNumber=1&recordsPerPage=30&searchString=%D0%A1%D0%A2%D0%90%D0%A2%D0%9A%D0%9E%D0%9C&fz223=on",
+      "query": "СТАТКОМ",
+      "date_from": "01.10.2026",
+      "date_to": "29.10.2026",
+      "law": "223",
+      "http": 404,
+      "curl_exit": 0,
+      "bytes": 146,
+      "sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0",
+      "error": null
+    },
+    {
+      "name": "223-2025-02-svc",
+      "kind": "official_month_search_first_page",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&publishDateFrom=01.02.2025&publishDateTo=28.02.2025&pageNumber=1&recordsPerPage=30&searchString=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80&fz223=on",
+      "query": "тиристорный компенсатор",
+      "date_from": "01.02.2025",
+      "date_to": "28.02.2025",
+      "law": "223",
+      "http": 404,
+      "curl_exit": 0,
+      "bytes": 146,
+      "sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0",
+      "error": null
+    },
+    {
+      "name": "44-2025-02-harmonic",
+      "kind": "official_month_search_first_page",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&publishDateFrom=01.02.2025&publishDateTo=28.02.2025&pageNumber=1&recordsPerPage=30&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80+%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D0%BD%D0%B8%D0%BA&fz44=on",
+      "query": "фильтр гармоник",
+      "date_from": "01.02.2025",
+      "date_to": "28.02.2025",
+      "law": "44",
+      "http": 404,
+      "curl_exit": 0,
+      "bytes": 146,
+      "sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0",
+      "error": null
+    },
+    {
+      "name": "223-2024-11-ukrm35",
+      "kind": "official_month_search_first_page",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&publishDateFrom=01.11.2024&publishDateTo=30.11.2024&pageNumber=1&recordsPerPage=30&searchString=%D0%A3%D0%9A%D0%A0%D0%9C+35+%D0%BA%D0%92&fz223=on",
+      "query": "УКРМ 35 кВ",
+      "date_from": "01.11.2024",
+      "date_to": "30.11.2024",
+      "law": "223",
+      "http": 404,
+      "curl_exit": 0,
+      "bytes": 146,
+      "sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0",
+      "error": null
+    },
+    {
+      "name": "44-2026-10-statcom",
+      "kind": "official_month_search_first_page",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&publishDateFrom=01.10.2026&publishDateTo=29.10.2026&pageNumber=1&recordsPerPage=30&searchString=%D1%81%D1%82%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80&fz44=on",
+      "query": "статический компенсатор",
+      "date_from": "01.10.2026",
+      "date_to": "29.10.2026",
+      "law": "44",
+      "http": 404,
+      "curl_exit": 0,
+      "bytes": 146,
+      "sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0",
+      "error": null
+    },
+    {
+      "name": "223-2025-01-ukrm6",
+      "kind": "official_month_search_first_page",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&publishDateFrom=01.01.2025&publishDateTo=31.01.2025&pageNumber=1&recordsPerPage=30&searchString=%D0%A3%D0%9A%D0%A0%D0%9C+6+%D0%BA%D0%92&fz223=on",
+      "query": "УКРМ 6 кВ",
+      "date_from": "01.01.2025",
+      "date_to": "31.01.2025",
+      "law": "223",
+      "http": 404,
+      "curl_exit": 0,
+      "bytes": 146,
+      "sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0",
+      "error": null
+    },
+    {
+      "name": "44-2024-11-harmonic",
+      "kind": "official_month_search_first_page",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&publishDateFrom=01.11.2024&publishDateTo=30.11.2024&pageNumber=1&recordsPerPage=30&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80+%D0%B2%D1%8B%D1%81%D1%88%D0%B8%D1%85+%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D0%BD%D0%B8%D0%BA&fz44=on",
+      "query": "фильтр высших гармоник",
+      "date_from": "01.11.2024",
+      "date_to": "30.11.2024",
+      "law": "44",
+      "http": 404,
+      "curl_exit": 0,
+      "bytes": 146,
+      "sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0",
+      "error": null
+    },
+    {
+      "name": "44-0318100033125000016-technical-xlsx",
+      "kind": "original_44_technical_file_retry",
+      "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=30D14FAEE4684885A92E2C111FF2E876",
+      "query": "exact first-party uid from previously verified EIS documents page",
+      "http": 404,
+      "curl_exit": 0,
+      "bytes": 146,
+      "sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0",
+      "error": null
+    },
+    {
+      "name": "32616433248-original-eis-notice-zip",
+      "kind": "original_file",
+      "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=0B71CDD1BF2B40F3AB1CA3A9AD876C4E",
+      "http": 404,
+      "curl_exit": 0,
+      "bytes": 146,
+      "sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0",
+      "error": null
+    },
+    {
+      "name": "32616497692-original-eis-notice-zip",
+      "kind": "original_file",
+      "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=F1217EB50B7340E09557E0AD74864C9C",
+      "http": 404,
+      "curl_exit": 0,
+      "bytes": 146,
+      "sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0",
+      "error": null
+    },
+    {
+      "name": "rosseti-roseltorg-first-party-root",
+      "kind": "first_party_portal",
+      "url": "https://rosseti.roseltorg.ru/",
+      "http": 200,
+      "curl_exit": 0,
+      "bytes": 5841,
+      "sha256": "0ebd5478012a075633eca73c7fb6076ce02d940a03e55a4276da33e562b7e7d0",
+      "error": null
+    },
+    {
+      "name": "b2b-public-2026-10-source-index",
+      "kind": "etp_first_party_index",
+      "url": "https://www.b2b-center.ru/search/sankt-peterburg/transformator/",
+      "http": 200,
+      "curl_exit": 0,
+      "bytes": 431114,
+      "sha256": "0d5f25e4d4f347b7f279347c011870d6a61051175049225dab546ce33f269766",
+      "error": null,
+      "case_32616433248_present": false,
+      "ukrm_35kv_present": false
+    },
+    {
+      "name": "secondary-32616433248-poisktenderov",
+      "source_grade": "secondary_lead_only",
+      "url": "https://poisktenderov.ru/item/223/32616433248/",
+      "http": 200,
+      "curl_exit": 0,
+      "bytes": 100874,
+      "sha256": "6f1182857b36ab59916333e3935c73af9f828a33a5d64c81da4e17c83005127e",
+      "case_id_visible": true,
+      "ukrm_visible": true,
+      "winner_name_visible": true,
+      "first_ukrm_context": "10 кВ (1 шт.), установки выключателя 35 кВ (1 шт.), устройства компенсирования реактивной мощности (УКРМ) 35 кВ (1 шт.) и ПС 110 кВ Великая Губа (ПС 78) в части замены трансформаторов тока 35 кВ (3 шт.) в п. Кяппесельга Кондопожского района и с. Великая Губа М"
+    },
+    {
+      "name": "secondary-32616433248-kontur",
+      "source_grade": "secondary_lead_only",
+      "url": "https://zakupki.kontur.ru/32616433248",
+      "http": 403,
+      "curl_exit": 0,
+      "bytes": 13868,
+      "sha256": "869bc7974d1bbf940cc2d79c561f38334e883943a82975b7194a68bc60f18ca0",
+      "case_id_visible": false,
+      "ukrm_visible": false,
+      "winner_name_visible": false,
+      "first_ukrm_context": ""
+    },
+    {
+      "name": "secondary-32616497692-kontendus",
+      "source_grade": "secondary_lead_only",
+      "url": "https://kontendus.ru/tender/32616497692",
+      "http": 200,
+      "curl_exit": 0,
+      "bytes": 114879,
+      "sha256": "6a06e1d0750d9552a752e0214ef085e1035d1fede08dbdd48cc7e5b6ca13183d",
+      "case_id_visible": true,
+      "ukrm_visible": true,
+      "winner_name_visible": false,
+      "first_ukrm_context": "полнительной ячейки КРУН 10 кВ с вакуумным выключателем для присоединения конденсаторной установки (УКРМ), монтажом конденсаторной установки 10 кВ (УКРМ) на ПС 110 кВ Вяртсиля (ПС 28) с КЛ 10 кВ 0,05 км (ж/б лотки) и Реконструкция ПС 35 кВ Октябрь (ПС 12С) с з"
+    },
+    {
+      "name": "macbook-32616433248-eis-notice",
+      "kind": "independent_macbook_primary_access_test",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616433248",
+      "http": 404,
+      "bytes": 146,
+      "sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0"
+    },
+    {
+      "name": "macbook-32616433248-eis-documents",
+      "kind": "independent_macbook_primary_access_test",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616433248",
+      "http": 404,
+      "bytes": 146,
+      "sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0"
+    }
+  ],
+  "private_source_journal": "watchdog-20261029-0536-primary/source-attempts.json"
+}

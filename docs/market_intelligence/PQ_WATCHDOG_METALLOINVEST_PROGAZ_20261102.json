@@ -1,0 +1,203 @@
+{
+  "schema": "pq-watchdog-metalloinvest-progaz/1",
+  "completed_moscow": "2026-11-02T04:42:10.497259+03:00",
+  "issue_comment_id": 6566983516,
+  "canonical_pr": 521,
+  "corpus_before_after": {
+    "unique_lots": [
+      120,
+      120
+    ],
+    "distinct_procedures": 109,
+    "eis_223_notices": 43
+  },
+  "new_unique_lots": 0,
+  "new_deduplicated_projects": 0,
+  "new_verified_fields": 1,
+  "field_update": {
+    "case_id": "commercial:4256170:lot1",
+    "field": "equipment_voltage_kv",
+    "value": "10",
+    "source_sha256": "71fba87b2a06c46251165c709fb5d6a0dbff953d972cb4c02e3f76bc8377d1d1",
+    "new_hash": "a6a234104d9007d5a1e64cd4dd3193d1652953e1a92e2e5be1ca55738150ab13",
+    "backup_sha256": "ad5a87e43a9eda77872c577b0d3b061739fc28b5da092912a17d7c7bef689d2e"
+  },
+  "first_party_http200_captures": 15,
+  "distinct_first_party_urls": 11,
+  "new_first_party_cards": 4,
+  "new_first_party_positions": 3,
+  "new_first_party_offers_pages": 4,
+  "duplicate_dynamic_offers_versions": 4,
+  "first_party_http301_get": 1,
+  "first_party_head_requests": {
+    "total": 6,
+    "http301": 5,
+    "http404": 1
+  },
+  "secondary_page_http200_requests": 7,
+  "first_party_requests_total_including_head_and_redirect": 22,
+  "new_original_commission_protocols": 0,
+  "new_named_winners": 0,
+  "new_signed_suppliers": 0,
+  "new_executed_prices": 0,
+  "new_paid_equipment_sales": 0,
+  "new_exhaustive_month_source_searches": 0,
+  "native_bids_reported_by_procedure": {
+    "4561228": 4,
+    "4561243": 6,
+    "4565274": 11,
+    "4256170": 1
+  },
+  "bid_warning": "These are numbers of submitted offers, not unique companies, awarded suppliers or signed contracts.",
+  "scope": "Four previously known 10kV PQ supply candidate procedures; not new lots or proven sales.",
+  "project_dedup": "4565274 expressly references replacement of 4538400; not proven same as 4561228; no merge.",
+  "source_captures": [
+    {
+      "case_id": "commercial:4561228:lot1",
+      "page_type": "card",
+      "url": "https://www.b2b-center.ru/market/zakupka-kondensatornykh-ustanovok-10-kv-aukrm-uk1-uk2-dlia-mgbzh/tender-4561228/",
+      "http_status": 200,
+      "sha256": "a5ea345c4fbf0ef11a891363198130c662f4d6fdf9f198f57104ae81cab4c1f5",
+      "bytes": 75677,
+      "relative_file": "captures/commercial_4561228_lot1/20261102T013738961614Z-7df7319d-a5ea345c4fbf0ef1.bin",
+      "exact_quote": "Результаты процедуры скрыты по решению ее организатора.",
+      "bids_reported": 4
+    },
+    {
+      "case_id": "commercial:4561228:lot1",
+      "page_type": "positions",
+      "url": "https://www.b2b-center.ru/market/zakupka-kondensatornykh-ustanovok-10-kv-aukrm-uk1-uk2-dlia-mgbzh/tender-4561228/?action=positions",
+      "http_status": 200,
+      "sha256": "d7d36912cee97fdec89c6eb4a01d27a78b0f9c9c9853508aad94aba0e26abcbf",
+      "bytes": 57031,
+      "relative_file": "captures/commercial_4561228_lot1/20261102T013818618898Z-e0ad9238-d7d36912cee97fde.bin",
+      "exact_quote": "Статус объявления: в архиве.",
+      "bids_reported": null
+    },
+    {
+      "case_id": "commercial:4561228:lot1",
+      "page_type": "offers",
+      "url": "https://www.b2b-center.ru/market/zakupka-kondensatornykh-ustanovok-10-kv-aukrm-uk1-uk2-dlia-mgbzh/tender-4561228/?action=offers",
+      "http_status": 200,
+      "sha256": "fdb9e071cb53956f0f3e65d210023d7d485531d4554c8495e28e61e5e2288987",
+      "bytes": 65469,
+      "relative_file": "captures/commercial_4561228_lot1/20261102T013819068357Z-1e2f949c-fdb9e071cb53956f.bin",
+      "exact_quote": "Статус объявления: в архиве.",
+      "bids_reported": null
+    },
+    {
+      "case_id": "commercial:4561243:lot1",
+      "page_type": "card",
+      "url": "https://www.b2b-center.ru/market/zakupka-kondensatornykh-ustanovok-10-kv-aukrm-uk3-uk4-dlia-mgbzh/tender-4561243/",
+      "http_status": 200,
+      "sha256": "f19800aa7a265d704f15a8159e1c4ecb647860abe1a3a9ae618f8c200a7113ad",
+      "bytes": 75670,
+      "relative_file": "captures/commercial_4561243_lot1/20261102T013744233675Z-a386ca2f-f19800aa7a265d70.bin",
+      "exact_quote": "Результаты процедуры скрыты по решению ее организатора.",
+      "bids_reported": 6
+    },
+    {
+      "case_id": "commercial:4561243:lot1",
+      "page_type": "positions",
+      "url": "https://www.b2b-center.ru/market/zakupka-kondensatornykh-ustanovok-10-kv-aukrm-uk3-uk4-dlia-mgbzh/tender-4561243/?action=positions",
+      "http_status": 200,
+      "sha256": "ae31ec2f23e4f6ef8d847104a9b5d121d277126270a8c362208b2cd1ece8e064",
+      "bytes": 56952,
+      "relative_file": "captures/commercial_4561243_lot1/20261102T013819973033Z-27a28d6e-ae31ec2f23e4f6ef.bin",
+      "exact_quote": "Статус объявления: в архиве.",
+      "bids_reported": null
+    },
+    {
+      "case_id": "commercial:4561243:lot1",
+      "page_type": "offers",
+      "url": "https://www.b2b-center.ru/market/zakupka-kondensatornykh-ustanovok-10-kv-aukrm-uk3-uk4-dlia-mgbzh/tender-4561243/?action=offers",
+      "http_status": 200,
+      "sha256": "9837196df46e44095df4b550dc6ac0ded69dc4006350d8da5ad7e9b5bd782fff",
+      "bytes": 65463,
+      "relative_file": "captures/commercial_4561243_lot1/20261102T013820432950Z-f9d88ed2-9837196df46e4409.bin",
+      "exact_quote": "Статус объявления: в архиве.",
+      "bids_reported": null
+    },
+    {
+      "case_id": "commercial:4565274:lot1",
+      "page_type": "card",
+      "url": "https://www.b2b-center.ru/market/zakupka-kondensatornoi-ustanovki-10-kv-aukrm-uk1-uk2-dlia-mgbzh-ps/tender-4565274/",
+      "http_status": 200,
+      "sha256": "db2cb1446963d2d0354724c140e939b8c54ff4976d4933354b224a17ae5b39b4",
+      "bytes": 76146,
+      "relative_file": "captures/commercial_4565274_lot1/20261102T013744973385Z-464451cb-db2cb1446963d2d0.bin",
+      "exact_quote": "Результаты процедуры скрыты по решению ее организатора.",
+      "bids_reported": 11
+    },
+    {
+      "case_id": "commercial:4565274:lot1",
+      "page_type": "positions",
+      "url": "https://www.b2b-center.ru/market/zakupka-kondensatornoi-ustanovki-10-kv-aukrm-uk1-uk2-dlia-mgbzh-ps/tender-4565274/?action=positions",
+      "http_status": 200,
+      "sha256": "770334d913e065f2b0716e1a623f5eaa119713e2619b9808801417ae4b3f25d2",
+      "bytes": 57338,
+      "relative_file": "captures/commercial_4565274_lot1/20261102T013821338897Z-768d7aa4-770334d913e065f2.bin",
+      "exact_quote": "Статус объявления: в архиве.",
+      "bids_reported": null
+    },
+    {
+      "case_id": "commercial:4565274:lot1",
+      "page_type": "offers",
+      "url": "https://www.b2b-center.ru/market/zakupka-kondensatornoi-ustanovki-10-kv-aukrm-uk1-uk2-dlia-mgbzh-ps/tender-4565274/?action=offers",
+      "http_status": 200,
+      "sha256": "0bc03e2ee87e4360621e7e5c672f3fbb6d8b29ea18d29e34094d0f88a6522380",
+      "bytes": 65878,
+      "relative_file": "captures/commercial_4565274_lot1/20261102T013821818026Z-fe86b2e4-0bc03e2ee87e4360.bin",
+      "exact_quote": "Статус объявления: в архиве.",
+      "bids_reported": null
+    },
+    {
+      "case_id": "commercial:4256170:lot1",
+      "page_type": "card",
+      "url": "https://www.b2b-center.ru/market/postavka-kondensatornykh-ustanovok-ukrm-10-kv-1600-kva-v-kol-ve-1/tender-4256170/",
+      "http_status": 200,
+      "sha256": "71fba87b2a06c46251165c709fb5d6a0dbff953d972cb4c02e3f76bc8377d1d1",
+      "bytes": 69910,
+      "relative_file": "captures/commercial_4256170_lot1/20261102T013745693103Z-a06bffbd-71fba87b2a06c462.bin",
+      "exact_quote": "Статус объявления: в архиве.",
+      "bids_reported": 1
+    },
+    {
+      "case_id": "commercial:4256170:lot1",
+      "page_type": "offers",
+      "url": "https://www.b2b-center.ru/market/postavka-kondensatornykh-ustanovok-ukrm-10-kv-1600-kva-v-kol-ve-1/tender-4256170/?action=offers",
+      "http_status": 200,
+      "sha256": "cd7f617dae5526c747e24178898c3c6237145ec854cca30f297db337f230e7df",
+      "bytes": 61994,
+      "relative_file": "captures/commercial_4256170_lot1/20261102T013822723240Z-f594fe47-cd7f617dae5526c7.bin",
+      "exact_quote": "Статус объявления: в архиве.",
+      "bids_reported": null
+    }
+  ],
+  "limitations": [
+    "B2B-Center native offers pages require registration to view participant names.",
+    "Organizer hides final results for 4561228, 4561243 and 4565274.",
+    "4256170 one offer does not establish winner or contract.",
+    "No full-month 44/223-FZ search coverage established this run."
+  ],
+  "next_ranked_targets": [
+    {
+      "case": "223fz:32616474682:lot1/lot2",
+      "retry_not_before_moscow": "2026-11-02T06:30:00+03:00",
+      "goal": "final BSK/Bashkirenergo capacitor components"
+    },
+    {
+      "case": "223fz:32616433248:lot1",
+      "retry_not_before_moscow": "2026-11-02T09:00:00+03:00",
+      "goal": "signed 35kV contract registry"
+    },
+    {
+      "case": "223fz:32616497692:lot1",
+      "retry_not_before_moscow": "2026-11-02T16:30:00+03:00",
+      "goal": "outcome/protocol"
+    }
+  ],
+  "client_report_version": "V42",
+  "client_report_pages_each": 262,
+  "no_html_preview_refresh": "Unique lot count unchanged; old HTML preview intentionally not modified."
+}

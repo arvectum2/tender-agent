@@ -1,0 +1,16 @@
+{
+  "schema_version": "pq-docx-field-enrichment/1",
+  "canonical_id": "223fz:32616266007:lot1",
+  "source_relative": "captures/223fz_32616266007_lot1/20261030T104202110911Z-4752ef30-c64bf98c8cfc3f67.bin",
+  "source_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=DD2EF2DFD9884AF09E52D886FC48357E",
+  "source_sha256": "c64bf98c8cfc3f67ecb30911ce5ccf269fcbe7b02740ecad8317734b0789261a",
+  "member_name": "ТЧКД Конденсаторы БСК _5 шт. с эскизом_правка.docx",
+  "member_sha256": "d34c50e9f74f05597345f17461dc92d4cc44f62f79c6f533328449475d553a48",
+  "fields": {
+    "quantity": {"value": 5, "exact_original_quote": "Количество: 5 шт.."},
+    "voltage_kv": {"value": "8.3", "exact_original_quote": "Напряжение номинальное, кВ 8,3"},
+    "power": {"value": "592 кВАр", "exact_original_quote": "Номинальная мощность, кВАр 592"}
+  },
+  "expected_content_hash": "4d5f6f7e24184efcd887ff02a78619a518a789239d8d06e0c1702469359f24b7",
+  "expected_revision": 1
+}

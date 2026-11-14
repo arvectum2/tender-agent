@@ -1,0 +1,200 @@
+{
+  "schema": "pq-watchdog-sibsteklo-buyer-inn/1",
+  "completed_moscow": "2026-11-02T03:42:58.196639+03:00",
+  "issue_comment_id": 6566234984,
+  "canonical_pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "verified_code_commit": "24afd3defcd2db2f21861c60c1eb5216068b05b1",
+  "acceptance": "pass",
+  "postgres_before_after": {
+    "unique_lots": 120,
+    "distinct_procedures": 109,
+    "eis_223_notices": 43,
+    "new_unique_lots": 0,
+    "new_verified_research_fields": 2,
+    "new_signed_suppliers": 0,
+    "new_paid_equipment_sales": 0
+  },
+  "research": {
+    "first_party_requests": 24,
+    "http200_sha_captures": 10,
+    "new_sha_versions_vs_prior_runtime": 4,
+    "genuinely_new_original_entity": 1,
+    "original_commission_protocols": 0,
+    "exhaustive_month_source_searches": 0,
+    "captures": [
+      {
+        "case_id": "commercial:306-644:lot35",
+        "source_url": "https://bidzaar.com/app/process/light/019ce668-617b-7b1a-861e-113ed78182af",
+        "http_status": 200,
+        "sha256": "ec8f171a5d0a26e794d08b77e994deceec9b9eeed70353db3a39aaa66a684e95",
+        "bytes": 307520,
+        "relative_file": "captures/commercial_306-644_lot35/20261102T003414659634Z-fe6bed5b-ec8f171a5d0a26e7.bin"
+      },
+      {
+        "case_id": "commercial:306-644:lot35",
+        "source_url": "https://bidzaar.com/api/filestorage/files/download/8042258e-bd58-4efc-9f98-b00db6113f82",
+        "http_status": 200,
+        "sha256": "28c970162cc7b36cff91df3b64ea4168c5717cc43554aea162440e6d10272516",
+        "bytes": 43070,
+        "relative_file": "captures/commercial_306-644_lot35/20261102T003515313471Z-1eb0d36f-28c970162cc7b36c.bin"
+      },
+      {
+        "case_id": "commercial:306-644:lot35",
+        "source_url": "https://bidzaar.com/api/filestorage/files/download/d51475af-9d65-4f4c-b039-e46387a8e790",
+        "http_status": 200,
+        "sha256": "541eaa3df83d7b29f29aeb0d4d1787f1a442a6c1919552790d40425c9eccd267",
+        "bytes": 83286,
+        "relative_file": "captures/commercial_306-644_lot35/20261102T003515688208Z-b0489e01-541eaa3df83d7b29.bin"
+      },
+      {
+        "case_id": "commercial:306-644:lot35",
+        "source_url": "https://bidzaar.com/app/companies/tendery/sibsteklo-001-0212",
+        "http_status": 200,
+        "sha256": "fa39eea182d7a2aa667e2846f9aad8ef36579fc57146997c16d1a2b498fb7f0a",
+        "bytes": 168178,
+        "relative_file": "captures/commercial_306-644_lot35/20261102T003725866813Z-8382345d-fa39eea182d7a2aa.bin"
+      },
+      {
+        "case_id": "commercial:351-062:lot1",
+        "source_url": "https://bidzaar.com/app/process/light/019f415c-8a7a-7c91-bb3f-68da7b9413ea",
+        "http_status": 200,
+        "sha256": "7f8f0ee7f6805f09784aa3b247df49f8dcdb8ee1ab6289a5b7c00e00d43abcd1",
+        "bytes": 291418,
+        "relative_file": "captures/commercial_351-062_lot1/20261102T003415129885Z-1dda4366-7f8f0ee7f6805f09.bin"
+      },
+      {
+        "case_id": "commercial:351-062:lot1",
+        "source_url": "https://bidzaar.com/api/filestorage/files/download/19864dc9-085e-4bbc-a104-bd8205dffe45",
+        "http_status": 200,
+        "sha256": "e7927732264deb30813bcf967740763cfb032f5710ca78156f76646f8cc0d831",
+        "bytes": 641024,
+        "relative_file": "captures/commercial_351-062_lot1/20261102T003516109199Z-f7ab833e-e7927732264deb30.bin"
+      },
+      {
+        "case_id": "commercial:351-062:lot1",
+        "source_url": "https://bidzaar.com/api/filestorage/files/download/6b83bcd1-b7a6-4347-8277-3afab3c7c35a",
+        "http_status": 200,
+        "sha256": "e53a74ef8a4fda14aedce7254488013187aba3bba7780b5a9c6443e4d0caacaf",
+        "bytes": 15087,
+        "relative_file": "captures/commercial_351-062_lot1/20261102T003516431773Z-d0797b59-e53a74ef8a4fda14.bin"
+      },
+      {
+        "case_id": "commercial:358-830:lot1",
+        "source_url": "https://bidzaar.com/app/process/light/019fb323-f23b-7872-845e-ba2cb6b43355",
+        "http_status": 200,
+        "sha256": "f36e1f75ce61b54cd60f65e120a1c0ed8d35a22c679d97c4042287bb831e9043",
+        "bytes": 272406,
+        "relative_file": "captures/commercial_358-830_lot1/20261102T003415690812Z-84c7f2f1-f36e1f75ce61b54c.bin"
+      },
+      {
+        "case_id": "commercial:358-830:lot1",
+        "source_url": "https://bidzaar.com/api/filestorage/files/download/87c39909-2f04-4c06-92b8-918bbf8327ae",
+        "http_status": 200,
+        "sha256": "c4b55d0c467f43a2f502f7f1b7affc3c29d456b1a40a73d5a9f1bd68100ef71e",
+        "bytes": 40757,
+        "relative_file": "captures/commercial_358-830_lot1/20261102T003516752485Z-254acca2-c4b55d0c467f43a2.bin"
+      },
+      {
+        "case_id": "commercial:358-830:lot1",
+        "source_url": "https://bidzaar.com/api/filestorage/files/download/b9fa2ffd-9dee-4547-b4e7-6a80d81cb03f",
+        "http_status": 200,
+        "sha256": "d81da613e56cbc5f7f08a4a1632f7fedb37dd9a8cf78f9affbce16d0927ed2b2",
+        "bytes": 11198,
+        "relative_file": "captures/commercial_358-830_lot1/20261102T003517053734Z-4b23f768-d81da613e56cbc5f.bin"
+      }
+    ],
+    "blocked": [
+      {
+        "source": "EIS 223",
+        "attempts": 8,
+        "transport": "native-trust",
+        "urls": "common-info and protocols for 32515208744, 32515584863, 32615760238, 32514944142",
+        "result": "source identity/status/size rejected; no original saved"
+      },
+      {
+        "source": "EIS 223",
+        "attempts": 1,
+        "transport": "httpx",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32515208744",
+        "result": "strict TLS certificate verify failed"
+      },
+      {
+        "source": "EIS 223",
+        "attempts": 1,
+        "transport": "curl-direct",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32515208744",
+        "result": "HTTP 404"
+      },
+      {
+        "source": "B2B-Center official number search",
+        "attempts": 3,
+        "urls": [
+          "https://www.b2b-center.ru/search/number/l4535313-4-11-1/",
+          "https://www.b2b-center.ru/search/number/l4561228-4-11-1/",
+          "https://www.b2b-center.ru/search/number/l4561243-4-11-1/"
+        ],
+        "result": "HTTP 403 after redirect to B2B homepage; no original"
+      },
+      {
+        "source": "B2B-Center official number search",
+        "attempts": 1,
+        "transport": "curl-direct",
+        "url": "https://www.b2b-center.ru/search/number/l4535313-4-11-1/",
+        "result": "not exact-URL HTTP 200; rejected"
+      }
+    ]
+  },
+  "case_results": [
+    {
+      "id": "commercial:306-644:lot35",
+      "finding": "Bidzaar official buyer profile verifies ООО Сибирское стекло, INN 5406305355; SHA-bound technical DOCX ties buyer to 6kV installation/PnR of two 900kvar units, equipment provided by customer. No new equipment sale.",
+      "profile_sha256": "fa39eea182d7a2aa667e2846f9aad8ef36579fc57146997c16d1a2b498fb7f0a",
+      "technical_sha256": "28c970162cc7b36cff91df3b64ea4168c5717cc43554aea162440e6d10272516",
+      "fields_persisted": [
+        "buyer_inn",
+        "customer.inn"
+      ],
+      "signed_supplier": "unknown",
+      "contract_price": "unknown"
+    },
+    {
+      "id": "commercial:351-062:lot1",
+      "finding": "Previously verified technical DOC and DOCX reconfirm 6.3kV 3000kvar questionnaire, two requested units, market sounding only; stale client note corrected from SHA-bound existing metadata. No new fields or contract."
+    },
+    {
+      "id": "commercial:358-830:lot1",
+      "finding": "Previously verified technical DOCX specifies 400V active harmonic filters, outside strict 6-35kV. Existing row not overwritten; source-bound exclusion remains a follow-up."
+    }
+  ],
+  "enrichment_receipt": "/Users/master/ArvectumSafe/runtime/market-intelligence/pq-agent-pilot-live/receipts/bidzaar-sibsteklo-buyer-inn-20261102T0039.json",
+  "backup_sha256": "fe91e7cfab76533b9d9c10b6b4a7a2fafc7fa159336769a4fe68fcf4131f805d",
+  "report_version": "V41",
+  "snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261102_v41.json",
+  "quality_audit": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261102_v41.json",
+  "pdfs": [
+    "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_RU_20261102_V41.pdf",
+    "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_EN_20261102_V41.pdf"
+  ],
+  "pdf_pages_each": 262,
+  "tests": "6 targeted passed; Ruff clean; pdfinfo 262 pages each",
+  "next_targets": [
+    {
+      "case": "223fz:32616474682:lot1/lot2",
+      "retry_after_moscow": "2026-11-02 06:30",
+      "goal": "official protocol/contract and lot-level identity"
+    },
+    {
+      "case": "223fz:32616433248:lot1",
+      "retry_after_moscow": "2026-11-02 09:00",
+      "goal": "35kV UKRM EPC signed contract"
+    },
+    {
+      "case": "223fz:32616497692:lot1",
+      "retry_after_moscow": "2026-11-02 16:30",
+      "goal": "10kV UKRM EPC outcome"
+    }
+  ],
+  "client_disclaimer": "120 evidence candidates, not signed paid sales, not national market census or TAM",
+  "status": "in_progress"
+}

@@ -1,0 +1,173 @@
+{
+  "schema_version": "pq-extra-official-20261028/1",
+  "scope": "additional_notices_outside_immutable_v20",
+  "source_search_journal": "eis-pq-terms-search-attempts-20261028.json",
+  "contract_search_journal": "eis-new-lots-contract-registry-attempts-20261028.json",
+  "zip_receipt_sha256": "ff67f6e0ff99115a63e01634ea5de843c379fc906e149298216898772a9d0dcf",
+  "project_overlap": {
+    "notices": [
+      "32514754857",
+      "32514720691"
+    ],
+    "assets": [
+      "PS Andreevka",
+      "PS Igrovka"
+    ],
+    "scope": "reconstruction_installation_vs_equipment_supply",
+    "status": "linked_not_collapsed"
+  },
+  "possible_reissue": {
+    "notices": [
+      "32515481065",
+      "32515523596"
+    ],
+    "status": "unverified_same_buyer_and_subject"
+  },
+  "records": [
+    {
+      "notice_id": "32514754857",
+      "page_sha256": "9bbd40e4fc24a6f420b09b1cf2e28c6fd4d77772635e06cc2934b762cadb7111",
+      "receipt_sha256": "9e50c01f499b3a8cd68959b12a0957d650dc1885d15d46061c23197dc69adad1",
+      "source_level": "verified_public_page_not_original_soap_xml",
+      "originals": [
+        {
+          "sha256": "eb94ebe8b7019383ffbd4cd7781bca158c97d7a72248e19ca6febc94f17ec24f",
+          "observed_format": "native_pdf",
+          "filename": "01-25-004035.pdf"
+        },
+        {
+          "sha256": "ef2d0d2ca46392fb5fa76c7a114f60be75f842e0b7e5ba019e3ffb0eb2b62f4d",
+          "observed_format": "unrecognized_signature",
+          "filename": "02-attachment-2.html"
+        },
+        {
+          "sha256": "da02ac3912f0dadb93a874fe2f4d0d8e0f41c696244a47da286f0ce190f6869a",
+          "observed_format": "unrecognized_signature",
+          "filename": "03-attachment-3.html"
+        },
+        {
+          "sha256": "4f7be3bc75796b306b73f9eb728f319be50f86f97e2f25a7759b5cd93b0bbf06",
+          "observed_format": "native_pdf",
+          "filename": "04-25-004035---_-_-_-__2.pdf"
+        },
+        {
+          "sha256": "609d143c89fe62292c86e870d0aa347cb479d31bfecc93e9ad59e1b483b62115",
+          "observed_format": "unrecognized_signature",
+          "filename": "05-attachment-5.html"
+        },
+        {
+          "sha256": "0324a984415f0837827e59e64c024004d3c07b163f88f973730e97d8aa7609f3",
+          "observed_format": "native_pdf",
+          "filename": "06-25-004035_-1.pdf"
+        },
+        {
+          "sha256": "3d2b0773cbaea574c36cc491c7332ce3eb37b9db74b39a69185890102ae0cbf1",
+          "observed_format": "zip_container",
+          "filename": "07-25-004035.zip"
+        },
+        {
+          "sha256": "1992419a7ec27ccc764371c7cba83c8069511ff59ba7ba8905d13797e0d4bc6d",
+          "observed_format": "zip_container",
+          "filename": "08-25-004035_2.zip"
+        }
+      ],
+      "review_id": "32514754857-1c80b84dcd3911e2d2f7a08d",
+      "classification": "relevant",
+      "review_evidence_sha256": [
+        "afbc16c2abbfc629ff8c2f82d4cfc55761fb5cb376e5f946484b7fbbd1af0a4f",
+        "eb94ebe8b7019383ffbd4cd7781bca158c97d7a72248e19ca6febc94f17ec24f",
+        "eb94ebe8b7019383ffbd4cd7781bca158c97d7a72248e19ca6febc94f17ec24f",
+        "eb94ebe8b7019383ffbd4cd7781bca158c97d7a72248e19ca6febc94f17ec24f"
+      ],
+      "signed_contract_verified": false,
+      "contractual_supplier_verified": false,
+      "executed_contract_price_verified": false
+    },
+    {
+      "notice_id": "32515523596",
+      "page_sha256": "5319c9a2f3012ca1b1d6c618f2a5b9981e74bd398d6425afd6026dfd2b48c8cf",
+      "receipt_sha256": "4a52dab84f2cd3c723c0728774ef22af686fccc6a6dfc6cdc86b6efd9b662bb9",
+      "source_level": "verified_public_page_not_original_soap_xml",
+      "originals": [
+        {
+          "sha256": "bf9e6c2f67274b2b10ceaef248a8bdea286d9f138eee327a8985b301f1838382",
+          "observed_format": "native_pdf",
+          "filename": "01-attachment-1.pdf"
+        }
+      ],
+      "review_id": "32515523596-d0ff3882aedf375bcfbd41e2",
+      "classification": "uncertain",
+      "review_evidence_sha256": [
+        "abc74fa077293d84af1304ad7109b9c9c980ddfae8dfc3a99c65c33ca78619b6",
+        "abc74fa077293d84af1304ad7109b9c9c980ddfae8dfc3a99c65c33ca78619b6",
+        "abc74fa077293d84af1304ad7109b9c9c980ddfae8dfc3a99c65c33ca78619b6"
+      ],
+      "signed_contract_verified": false,
+      "contractual_supplier_verified": false,
+      "executed_contract_price_verified": false
+    },
+    {
+      "notice_id": "32515481065",
+      "page_sha256": "ee0961685eb6936506be814ee9a57cd7ac509dddeb121281b143d6167146ab89",
+      "receipt_sha256": "561d83c807bee4e7331b5e1d5e5270a20444873dfb9a54e1df75583aaac52e67",
+      "source_level": "verified_public_page_not_original_soap_xml",
+      "originals": [
+        {
+          "sha256": "c388c94b673fcbd051426ad0af814ec8fc0ebd8b9087707f2df209f76a7d4ab3",
+          "observed_format": "native_pdf",
+          "filename": "01-attachment-1.pdf"
+        }
+      ],
+      "review_id": "32515481065-f08cd71ceab9ef5bc4fc1b42",
+      "classification": "uncertain",
+      "review_evidence_sha256": [
+        "69a7bac80266a66b560b8ac1ee3515ae47a4d6182ebb8079240c9a27649e930d",
+        "69a7bac80266a66b560b8ac1ee3515ae47a4d6182ebb8079240c9a27649e930d"
+      ],
+      "signed_contract_verified": false,
+      "contractual_supplier_verified": false,
+      "executed_contract_price_verified": false
+    },
+    {
+      "notice_id": "32414334005",
+      "page_sha256": "1604060683714c5085ad9c48af73c181c131084db20e949a6e5191f21a163220",
+      "receipt_sha256": "a58f2240aecc07adb13585b28ecc6d8d95b818b7e4745e9e22651ded868b2d72",
+      "source_level": "verified_public_page_not_original_soap_xml",
+      "originals": [
+        {
+          "sha256": "fd76007deaf0a1ba2d115457a7a638c68e155c762d2988adacd0501a3fb50674",
+          "observed_format": "native_ole_doc",
+          "filename": "01-attachment-1.doc"
+        },
+        {
+          "sha256": "8ebe8b54f58d14ad09abc613bf51a38f4d5f9fbc175088f145a5026ede6775eb",
+          "observed_format": "native_ole_doc",
+          "filename": "02-attachment-2.doc"
+        },
+        {
+          "sha256": "f5b14ca8b4fe535746abc671d78e5e69388ea17ea93d6096c843baec406ebe89",
+          "observed_format": "native_pdf",
+          "filename": "03-attachment-3.pdf"
+        },
+        {
+          "sha256": "4ae22d07102244edc22887e5b352c3dfad61a57edbb74abc1bb774dc0df5d928",
+          "observed_format": "native_pdf",
+          "filename": "04-scan_0001_0001.pdf"
+        },
+        {
+          "sha256": "d065ffdceb60b4d256b5951e9b53528d2d7121e209120e6a7fa7f15c5bc8ea69",
+          "observed_format": "unrecognized_signature",
+          "filename": "05-scan_0001_0001.pdf"
+        }
+      ],
+      "review_id": "32414334005-c854e37a30fdf260211bef9a",
+      "classification": "irrelevant",
+      "review_evidence_sha256": [
+        "f5b14ca8b4fe535746abc671d78e5e69388ea17ea93d6096c843baec406ebe89"
+      ],
+      "signed_contract_verified": false,
+      "contractual_supplier_verified": false,
+      "executed_contract_price_verified": false
+    }
+  ]
+}

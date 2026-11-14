@@ -1,0 +1,95 @@
+{
+  "schema_version": "pq-watchdog-evidence/1",
+  "run_start_moscow": "2026-10-30 04:36:50 +0300",
+  "finished_moscow": "2026-10-30T04:39:46.934399+03:00",
+  "issue_comment_id": 6512789263,
+  "pr": 521,
+  "parent_head": "a888c46e67db42b28cb7a37a3a7d5257f39ebaa0",
+  "acceptance": "pass",
+  "postgres": {
+    "unique_lots_before": 113,
+    "unique_lots_after": 113,
+    "procedures": 102,
+    "eis223_notices": 37,
+    "new_unique_lots": 0,
+    "new_projects": 0,
+    "new_core_6_35kv": 0
+  },
+  "source_requests": {
+    "direct": 5,
+    "http200": 3,
+    "http404": 1,
+    "tls_error": 1,
+    "eis_url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616435269",
+    "eis_observation": "httpx strict TLS failed, curl-direct strict TLS HTTP404",
+    "third_party_7z_cdn": "HTTP403; no original promoted"
+  },
+  "captures": [
+    {
+      "case_id": "223fz:32616435269:lot1",
+      "role": "new_first_party_etp_index",
+      "url": "https://www.b2b-center.ru/search/number/l32616435269-1/",
+      "http": 200,
+      "sha256": "beed8a5e0178fc077075cf9466a700d9de54acd8a67bd23933e0f8382001e0a9",
+      "receipt": "captures/223fz_32616435269_lot1/20261030T013739838929Z-fe95fb7e-beed8a5e0178fc07.bin.json"
+    },
+    {
+      "case_id": "commercial:bidzaar:306-644:lot35",
+      "role": "repeat",
+      "url": "https://bidzaar.com/app/process/light/019ce668-617b-7b1a-861e-113ed78182af",
+      "http": 200,
+      "sha256": "0ac7ffca66a0758a57193730e929f76d682d7fbc1d9520a21c99cceaf9d03d5c",
+      "receipt": "captures/commercial_bidzaar_306-644_lot35/20261030T013827177291Z-c8fa7e67-0ac7ffca66a0758a.bin.json"
+    },
+    {
+      "case_id": "commercial:4535313:lot1",
+      "role": "repeat",
+      "url": "https://www.b2b-center.ru/market/view.html?id=4535313",
+      "http": 200,
+      "sha256": "a6c445bbaf8b2011ae09176167b3cf20bd9be1d90656fc0479e85142d4fc991d",
+      "receipt": "captures/commercial_4535313_lot1/20261030T013838905994Z-71d0e954-a6c445bbaf8b2011.bin.json"
+    }
+  ],
+  "new_sha_verified_captures": 3,
+  "new_case_specific_primary_indexes": 1,
+  "new_original_technical_documents": 0,
+  "new_winner_protocols": 0,
+  "new_signed_suppliers": 0,
+  "new_executed_prices": 0,
+  "new_month_searches": 0,
+  "new_facts": {
+    "case": "223fz:32616435269:lot1",
+    "buyer": "ПАО Россети Сибирь / Кузбассэнерго-РЭС",
+    "source": "B2B-Center official platform index, not original EIS technical archive",
+    "exact_quotes": [
+      "2._Протокол_внесения_изменений_26-1174.7z",
+      "Документация_о_закупке_26-1174_от_26.10.2026.7z"
+    ],
+    "deadline_moscow": "2026-11-05 12:00",
+    "nmck_rub": "452016000.01",
+    "voltage_kv": null,
+    "grade": "candidate_unverified_voltage",
+    "signed_sale": false
+  },
+  "dedup": "32616435269 previously staged; 306-644 and 4535313 already in v29; no new canonical rows. Dynamic HTML versions are not new tenders.",
+  "client_html_regenerated": false,
+  "db_mutation": false,
+  "canonical_v29_unchanged": 101,
+  "next": [
+    {
+      "case": "106044-ТТ",
+      "after": "2026-10-30 09:00 MSK",
+      "goal": "STATCOM 6.3kV outcome"
+    },
+    {
+      "case": "32616435269",
+      "after": "2026-10-30 10:38 MSK",
+      "goal": "official 26.10 updated 7z voltage"
+    },
+    {
+      "case": "32615684088",
+      "after": "2026-10-30 14:40 MSK",
+      "goal": "EIS documents"
+    }
+  ]
+}

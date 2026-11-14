@@ -1,0 +1,282 @@
+{
+  "schema": "pq-watchdog-source-bound-enrichment/1",
+  "completed_moscow": "2026-11-01T14:42:08+03:00",
+  "run_id": "TA-MI-20261101T1435-MSK-11",
+  "issue_comment_id": 6557392495,
+  "pr": 521,
+  "latest_tested_code_commit": "5b1958c19ebe8496a5d3d166909d18f98b8a2aa1",
+  "acceptance": {
+    "status": "pass",
+    "git_clean_prewrite": true,
+    "post_code_commit_preflight": "pass",
+    "fresh_full_backup_sha256": "a01f46e1b37972db09a97c109357ec736fc13132e96fd474004b3d2bfd2f5a25",
+    "pg_restore_verified": true,
+    "atomic_cas_postreadback": true
+  },
+  "db": {
+    "unique_lots_before": 118,
+    "unique_lots_after": 118,
+    "distinct_procedures": 107,
+    "numeric_eis_223_notices": 41,
+    "new_unique_lots": 0,
+    "new_deduplicated_projects": 0,
+    "new_verified_db_fields": 3,
+    "new_report_visible_filled_fields": 0,
+    "new_source_linked_case_cards": 3,
+    "new_named_winners": 0,
+    "new_signed_suppliers": 0,
+    "new_paid_sales": 0
+  },
+  "research": {
+    "first_party_capture_attempts": 24,
+    "first_party_http_diagnostic_probes": 5,
+    "total_source_http_attempts": 29,
+    "new_accepted_original_captures": 1,
+    "new_distinct_original_sha256": 1,
+    "preexisting_first_party_originals_reverified": 3,
+    "new_original_protocols": 0,
+    "new_registered_contracts": 0,
+    "new_exhaustive_month_source_searches": 0,
+    "secondary_web_discovery_queries": 5,
+    "requests": [
+      {
+        "case": "32313008364",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32313008364",
+        "transport": "native-trust",
+        "observed": "HTTP200, original SHA66c9660f; 2023 220kV STATCOM cooling service, adjacent"
+      },
+      {
+        "case": "32313008364",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32313008364",
+        "transport": "native-trust",
+        "observed": "capture rejected: invalid HTTP/status/size; no accepted original"
+      },
+      {
+        "case": "32313008364",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32313008364",
+        "transport": "native-trust",
+        "observed": "capture rejected: invalid HTTP/status/size; no accepted original"
+      },
+      {
+        "case": "32413581034",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32413581034",
+        "transport": "native-trust",
+        "observed": "capture rejected: invalid HTTP/status/size; no accepted original"
+      },
+      {
+        "case": "32413581034",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32413581034",
+        "transport": "native-trust",
+        "observed": "capture rejected: invalid HTTP/status/size; no accepted original"
+      },
+      {
+        "case": "32413708738",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32413708738",
+        "transport": "native-trust",
+        "observed": "capture rejected: invalid HTTP/status/size; no accepted original"
+      },
+      {
+        "case": "32413708738",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32413708738",
+        "transport": "native-trust",
+        "observed": "capture rejected: invalid HTTP/status/size; no accepted original"
+      },
+      {
+        "case": "32514476448",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32514476448",
+        "transport": "native-trust",
+        "observed": "capture rejected: invalid HTTP/status/size; no accepted original"
+      },
+      {
+        "case": "32514476448",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32514476448",
+        "transport": "native-trust",
+        "observed": "capture rejected: invalid HTTP/status/size; no accepted original"
+      },
+      {
+        "case": "32413581034",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32413581034",
+        "transport": "native-trust",
+        "observed": "capture rejected: invalid HTTP/status/size; no accepted original"
+      },
+      {
+        "case": "32413708738",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32413708738",
+        "transport": "native-trust",
+        "observed": "capture rejected: invalid HTTP/status/size; no accepted original"
+      },
+      {
+        "case": "32514476448",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32514476448",
+        "transport": "native-trust",
+        "observed": "capture rejected: invalid HTTP/status/size; no accepted original"
+      },
+      {
+        "case": "32413195287",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32413195287",
+        "transport": "native-trust",
+        "observed": "capture rejected: invalid HTTP/status/size; no accepted original"
+      },
+      {
+        "case": "32514944142",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32514944142",
+        "transport": "native-trust",
+        "observed": "capture rejected: invalid HTTP/status/size; no accepted original"
+      },
+      {
+        "case": "32515044454",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32515044454",
+        "transport": "native-trust",
+        "observed": "capture rejected: invalid HTTP/status/size; no accepted original"
+      },
+      {
+        "case": "32515208744",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32515208744",
+        "transport": "native-trust",
+        "observed": "capture rejected: invalid HTTP/status/size; no accepted original"
+      },
+      {
+        "case": "32616400421",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616400421",
+        "transport": "native-trust",
+        "observed": "HTTP404; no accepted original"
+      },
+      {
+        "case": "32616506708",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616506708",
+        "transport": "native-trust",
+        "observed": "HTTP404; no accepted original"
+      },
+      {
+        "case": "32616433248",
+        "url": "https://www.roseltorg.ru/procedure/32616433248",
+        "transport": "native-trust",
+        "observed": "capture rejected: invalid HTTP/status/size; previous immutable SHA remains valid"
+      },
+      {
+        "case": "32616433248",
+        "url": "https://www.roseltorg.ru/procedure/32616433248",
+        "transport": "curl-direct",
+        "observed": "capture rejected: invalid HTTP/status/size; previous immutable SHA remains valid"
+      },
+      {
+        "case": "32616497692",
+        "url": "https://www.roseltorg.ru/procedure/32616497692",
+        "transport": "native-trust",
+        "observed": "capture rejected: invalid HTTP/status/size; previous immutable SHA remains valid"
+      },
+      {
+        "case": "32616497692",
+        "url": "https://www.roseltorg.ru/procedure/32616497692",
+        "transport": "curl-direct",
+        "observed": "capture rejected: invalid HTTP/status/size; previous immutable SHA remains valid"
+      },
+      {
+        "case": "32616400421",
+        "url": "https://www.roseltorg.ru/procedure/32616400421",
+        "transport": "native-trust",
+        "observed": "capture rejected: invalid HTTP/status/size; previous immutable SHA remains valid"
+      },
+      {
+        "case": "32616400421",
+        "url": "https://www.roseltorg.ru/procedure/32616400421",
+        "transport": "curl-direct",
+        "observed": "capture rejected: invalid HTTP/status/size; previous immutable SHA remains valid"
+      },
+      {
+        "case": "32313008364",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32313008364",
+        "transport": "curl -k diagnostic only",
+        "observed": "HTTP 200; not admitted as source original"
+      },
+      {
+        "case": "32413581034",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32413581034",
+        "transport": "curl -k diagnostic only",
+        "observed": "HTTP 404; not admitted as source original"
+      },
+      {
+        "case": "32616433248",
+        "url": "https://www.roseltorg.ru/procedure/32616433248",
+        "transport": "curl -k diagnostic only",
+        "observed": "HTTP200; insecure diagnostic not admitted; use pre-existing SHA-verified original"
+      },
+      {
+        "case": "32616497692",
+        "url": "https://www.roseltorg.ru/procedure/32616497692",
+        "transport": "curl -k diagnostic only",
+        "observed": "HTTP200; insecure diagnostic not admitted; use pre-existing SHA-verified original"
+      },
+      {
+        "case": "32616400421",
+        "url": "https://www.roseltorg.ru/procedure/32616400421",
+        "transport": "curl -k diagnostic only",
+        "observed": "HTTP200; insecure diagnostic not admitted; use pre-existing SHA-verified original"
+      }
+    ]
+  },
+  "case_fields": [
+    {
+      "id": "223fz:32616433248:lot1",
+      "field": "buyer_inn",
+      "value": "7802312751",
+      "scope": "35kV UKRM mixed EPC",
+      "original_sha256": "f3518249c80d2dae78cd7854f1720d13e6e2eb82062b0073810619624f755d4d"
+    },
+    {
+      "id": "223fz:32616497692:lot1",
+      "field": "buyer_inn",
+      "value": "7802312751",
+      "scope": "10kV UKRM mixed EPC",
+      "original_sha256": "d3aa23718331a9ad0e5c4699f01754dd661c48ecf556a8f6a5b7e418951cf2ff"
+    },
+    {
+      "id": "223fz:32616400421:lot1",
+      "field": "buyer_inn",
+      "value": "2460069527",
+      "scope": "BSK supply; voltage unverified, cancellation",
+      "original_sha256": "0fb7fdd40ed5e562cd5e6cf31d74685a6fe9f75023b6ad5a11dddda0b726b40f"
+    }
+  ],
+  "new_observations": [
+    "2023 EIS 32313008364 first-party HTML: service of cooling systems for STATCOM at 220kV Mogocha, buyer INN 4716016979; adjacent service, not new core 2024-2026 lot.",
+    "Existing original Roseltorg 32616400421 SHA0fb7fdd4: lot 1 explicitly Отменен; secondary cancellation independently corroborated, not a signed sale.",
+    "Existing original Roseltorg successor 32616435269 SHAa2e668e7: same BSK title, buyer INN2460069527, initial price 452016000.01 RUB; status Прием заявок, closing 2026-11-05 12:00 MSK, final planned 2026-12-21; avoid double-counting 904m demand.",
+    "Buyer INN was already present as nested customer.inn, hence report field-coverage count unchanged; newly verified top-level DB fields and three source-linked report cards are provenance improvements, not new sales."
+  ],
+  "client_report": {
+    "version": "V35",
+    "snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261101_v35.json",
+    "audit": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261101_V35.json",
+    "ru_pdf": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_RU_20261101_V35.pdf",
+    "en_pdf": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_EN_20261101_V35.pdf",
+    "pages_each": 258,
+    "historical_v2_v34_unchanged": true,
+    "legacy_html_unchanged": true,
+    "canonical_v29_101_rows_unchanged": true
+  },
+  "tests": "14 targeted pytest passed; Ruff passed; 258 RU + 258 EN PDF pages",
+  "next_three": [
+    {
+      "case": "32616497692",
+      "retry_after_moscow": "2026-11-01 16:00",
+      "goal": "official final protocol and winner vs bidder, 10kV UKRM"
+    },
+    {
+      "case": "32616474682",
+      "retry_after_moscow": "2026-11-02 06:30",
+      "goal": "two-lot official final protocol for capacitor components"
+    },
+    {
+      "case": "32616120582",
+      "retry_after_moscow": "2026-11-02 09:00",
+      "goal": "signed supplier of 6kV mixed EPC; separate equipment price"
+    }
+  ],
+  "governance": {
+    "only_research_pr": 521,
+    "auto_merge": false,
+    "other_collections_untouched": true,
+    "no_bids": true
+  }
+}

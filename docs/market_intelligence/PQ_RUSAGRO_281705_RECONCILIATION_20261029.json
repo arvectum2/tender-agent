@@ -1,0 +1,85 @@
+{
+  "schema_version": "pq-bidzaar-281705-source-reconciliation/1",
+  "as_of_moscow": "2026-10-29",
+  "canonical_id": "commercial:281-705:lot1",
+  "source_card": {
+    "url": "https://bidzaar.com/app/process/light/019b4fe0-38ca-773a-91b0-0ff33daedb7d",
+    "sha256": "db4d1b92433a57d4fa3adc1ec405d3397375530568b760c5dbf37dbd9cc0c5f5",
+    "captured_http": 200
+  },
+  "seven_original_docx": [
+    {
+      "url": "https://bidzaar.com/api/filestorage/files/download/e4f6c980-d4e9-4532-9a13-b91c998b34e3",
+      "sha256": "3945f821c1114e82ad833fb2922e9a54f7a6f2127f1b079c07d98a5c6cb3ce67",
+      "bytes": 53987,
+      "source_label": "description ТЗ проектирование мест установки фильтр гармоник docx 52.7 КБ 24.12.2025, 10:20 visibility"
+    },
+    {
+      "url": "https://bidzaar.com/api/filestorage/files/download/81a065d7-4ea8-4818-9ddf-3460d1e2a6c9",
+      "sha256": "735e6fed09547529da388c564397896d0e2ca64eba00675acc34bc0f036eb929",
+      "bytes": 56186,
+      "source_label": "description ТЗ ПИР установка фильтр гармоник docx 54.9 КБ 24.12.2025, 10:20 visibility"
+    },
+    {
+      "url": "https://bidzaar.com/api/filestorage/files/download/f65798d2-8577-49b8-add5-20cc55085487",
+      "sha256": "757a73c82d1422297780265306db93711bcb24da5901a7e9c761d0559fa3d275",
+      "bytes": 54262,
+      "source_label": "description ТЗ проектирование мест установки фильтр гармоник docx 53 КБ 24.12.2025, 10:20 visibility"
+    },
+    {
+      "url": "https://bidzaar.com/api/filestorage/files/download/de6aae4d-d558-4bf5-85dd-a7ab2464fd26",
+      "sha256": "ee66a6c6fde72596dadce1d10c2d3245b247133cb9d344883cb5d1d5d9551a1e",
+      "bytes": 54101,
+      "source_label": "description ТЗ проектирование мест установки фильтр гармоник (1) docx 52.8 КБ 24.12.2025, 10:20 visibility"
+    },
+    {
+      "url": "https://bidzaar.com/api/filestorage/files/download/d24924d7-0de3-4475-ac52-e2b62ac5b804",
+      "sha256": "c93e23bdeb38548a979b816e8dae533440a16dcb0ccf075ca73ad41ed74258a2",
+      "bytes": 53848,
+      "source_label": "description ТЗ проектирование мест установки фильтр гармоник АО Кривец-сахар 2025г docx 52.6 КБ 24.12.2025, 10:20 visibility"
+    },
+    {
+      "url": "https://bidzaar.com/api/filestorage/files/download/e8f9091d-776e-4a3a-aa37-971de7747c0e",
+      "sha256": "76c85f89e90bf7995c73ff0e5705fd824f7a50de0dff25b357be00efc380c18c",
+      "bytes": 54069,
+      "source_label": "description 2025 ЗН ТЗ проектирование установки фильтров гармонических искажений docx 52.8 КБ 24.12.2025, 10:20 visibility"
+    },
+    {
+      "url": "https://bidzaar.com/api/filestorage/files/download/1dc45db8-a0ad-40fc-ada1-82e12c521c71",
+      "sha256": "e7dfacbe62d78e6fbb3cd1f4fdd5ab5967c7ef24a5b8c677f0033be75903b3a9",
+      "bytes": 54650,
+      "source_label": "description ТЗ проектирование мест установки фильтр гармоник docx 53.4 КБ 24.12.2025, 10:20 visibility"
+    }
+  ],
+  "source_level": "first_party_platform_html_plus_seven_original_technical_docx",
+  "official_lot_count": 1,
+  "documented_project_positions": 7,
+  "technical_facts": {
+    "low_voltage_protection_0p4kv_in_majority_specs": true,
+    "ru6_location_in_one_spec": true,
+    "direct_6_35kv_harmonic_filter_nominal_voltage_proven": false
+  },
+  "outcome": {
+    "public_status": "completed_request",
+    "named_supplier_verified": false,
+    "signed_contract_verified": false,
+    "equipment_only_price_verified": false
+  },
+  "actual_db_write": {
+    "before_unique_lots": 107,
+    "after_unique_lots": 108,
+    "postwrite_readback": [
+      {
+        "id": "commercial:281-705:lot1",
+        "hash": "e503d8ba10815e8cf845a6a8024472b2f5b9b9e3a74f910400e8602833cd1905",
+        "review": "unreviewed",
+        "status": "staged_unreviewed",
+        "revision": 1
+      }
+    ],
+    "backup_sha256": "93048ad45edb0e178ba4669a915aca491ecc2cf243e2b8153d746363630245f3",
+    "source_manifest_sha256": "51fa2f67d9da74d1e7a538d578e5b23165476d90b44d12ae30aed8c7e81d83d1"
+  },
+  "new_strict_6_35kv_equipment_tenders": 0,
+  "new_verified_equipment_sales_rub": 0
+}

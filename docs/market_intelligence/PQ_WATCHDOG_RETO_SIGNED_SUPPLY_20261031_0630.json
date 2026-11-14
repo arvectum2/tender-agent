@@ -1,0 +1,242 @@
+{
+  "schema_version": "pq-watchdog-reto-signed-supply-fields/1",
+  "as_of_moscow": "2026-10-31T06:36:11.825431+03:00",
+  "issue_comment_id": 6538431832,
+  "canonical_pr": 521,
+  "postgres": {
+    "collection": "arvectum_data.arvectum-market-pq-6-35kv",
+    "unique_lots_before": 117,
+    "unique_lots_after": 117,
+    "distinct_procedures": 106,
+    "eis_223_notices": 40,
+    "new_unique_lots": 0,
+    "new_deduplicated_projects": 0,
+    "new_core_lots": 0
+  },
+  "source_requests": {
+    "first_party_GET_attempts": 11,
+    "http_200": 10,
+    "http_301": 1,
+    "new_immutable_receipts": 7,
+    "distinct_first_party_urls": 7,
+    "first_three_capture_errors": "HTTP200 fetched, but invalid case-id syntax rejected storage; retried with canonical IDs",
+    "b2b_offers_301": "native-trust rejects redirect, httpx direct allowlisted retry succeeded",
+    "new_month_source_searches_covered": 0,
+    "web_discovery_queries": 6,
+    "web_result_disposition": "no verified new unique lot; known 32616497692, adjacent capacitive-earth-fault current compensation, and 0.4kV lexical false positives"
+  },
+  "originals": [
+    {
+      "schema_version": "pq-primary-immutable-capture/1",
+      "case_id": "commercial:4617521:lot1",
+      "source_url": "https://www.b2b-center.ru/app/market-next/vybor-ispolnitelia-na-postavku-montazh-i-pnr-ustanovok-kompensatsii/tender-4617521/",
+      "source_tier": "first_party_byte_original",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "captured_utc": "2026-10-31T03:31:15.855187+00:00",
+      "relative_file": "captures/commercial_4617521_lot1/20261031T033115854408Z-11f6625e-48a03a66f9966bb0.bin",
+      "bytes": 324549,
+      "sha256": "48a03a66f9966bb0365b9892a044ff00c2a0b144915b015855266724250c7297",
+      "database_mutated": false
+    },
+    {
+      "schema_version": "pq-primary-immutable-capture/1",
+      "case_id": "commercial:4657777:lot1",
+      "source_url": "https://www.b2b-center.ru/market/postavka-blokov-kondensatornykh-dlia-nuzhd-po-btses-po-kes-ooo/tender-4657777/",
+      "source_tier": "first_party_byte_original",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "captured_utc": "2026-10-31T03:31:18.418710+00:00",
+      "relative_file": "captures/commercial_4657777_lot1/20261031T033118416490Z-06860c0e-f08614c1161aecb6.bin",
+      "bytes": 74321,
+      "sha256": "f08614c1161aecb6d968a3436dcf641de1843f2ca9b1d27ae65406b689682b95",
+      "database_mutated": false
+    },
+    {
+      "schema_version": "pq-primary-immutable-capture/1",
+      "case_id": "223fz:32514565977:lot1",
+      "source_url": "https://www.tektorg.ru/223-fz/procedures/13319469",
+      "source_tier": "first_party_byte_original",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "captured_utc": "2026-10-31T03:31:20.581976+00:00",
+      "relative_file": "captures/223fz_32514565977_lot1/20261031T033120578614Z-568b319e-023a3881be6dc557.bin",
+      "bytes": 439439,
+      "sha256": "023a3881be6dc55717ef9338e3bf66b0faf750f3ba25f6ed08d1d0965fe00586",
+      "database_mutated": false
+    },
+    {
+      "schema_version": "pq-primary-immutable-capture/1",
+      "case_id": "commercial:4657777:lot1",
+      "source_url": "https://www.b2b-center.ru/market/postavka-blokov-kondensatornykh-dlia-nuzhd-po-btses-po-kes-ooo/tender-4657777/?action=offers",
+      "source_tier": "first_party_byte_original",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "captured_utc": "2026-10-31T03:31:51.419887+00:00",
+      "relative_file": "captures/commercial_4657777_lot1/20261031T033151416441Z-dc5c002d-f6e7fe80ebd56dc0.bin",
+      "bytes": 56473,
+      "sha256": "f6e7fe80ebd56dc0ee0b14f2e2012c4be143dbfb8e747ca2058ee027fd3ba63f",
+      "database_mutated": false
+    },
+    {
+      "schema_version": "pq-primary-immutable-capture/1",
+      "case_id": "223fz:32616181358:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=57724646338260000460000",
+      "source_tier": "first_party_byte_original",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "captured_utc": "2026-10-31T03:31:53.509278+00:00",
+      "relative_file": "captures/223fz_32616181358_lot1/20261031T033153506457Z-7debd590-e887daa8160e963e.bin",
+      "bytes": 10167,
+      "sha256": "e887daa8160e963e2bea1b9664ff5cdd929b87a08510d5bbe1aed70dd0b995b2",
+      "database_mutated": false
+    },
+    {
+      "schema_version": "pq-primary-immutable-capture/1",
+      "case_id": "commercial:4617521:lot1",
+      "source_url": "https://www.b2b-center.ru/app/market-next/vybor-ispolnitelia-na-postavku-montazh-i-pnr-ustanovok-kompensatsii/tender-4617521/offers",
+      "source_tier": "first_party_byte_original",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "captured_utc": "2026-10-31T03:31:57.305213+00:00",
+      "relative_file": "captures/commercial_4617521_lot1/20261031T033157301824Z-7c91eb45-b32ba39f23a6b559.bin",
+      "bytes": 171119,
+      "sha256": "b32ba39f23a6b55929fbfd901ed15932d26da3eab81530ec801e60face9cabea",
+      "database_mutated": false
+    },
+    {
+      "schema_version": "pq-primary-immutable-capture/1",
+      "case_id": "223fz:32616181358:lot1",
+      "source_url": "https://tender.lot-online.ru/etp/downloadppf?uuid=dbfile19718u80000pvkg89is0k0tsd4",
+      "source_tier": "first_party_byte_original",
+      "http_status": 200,
+      "content_type": "application/pdf",
+      "captured_utc": "2026-10-31T03:32:29.534882+00:00",
+      "relative_file": "captures/223fz_32616181358_lot1/20261031T033229533085Z-1b7133af-92874d098feb7dc6.bin",
+      "bytes": 263719,
+      "sha256": "92874d098feb7dc6c283bd7b66c5218e11e472f27eddffc75edd6613fb5b21ef",
+      "database_mutated": false
+    }
+  ],
+  "case": {
+    "id": "223fz:32616181358:lot1",
+    "scope": "12kV capacitor component supply, not complete BSK",
+    "buyer": "АО Завод РЭТО",
+    "contract_registry_number": "57724646338260000460000",
+    "contract_number": "060-26-Р",
+    "signed_date": "2026-08-19",
+    "registered_total_rub": "3050000.00",
+    "equipment_only_capacitor_items_rub": "3050000.00",
+    "quantity": 10,
+    "items": [
+      {
+        "model": "КЭПФ-12-450-2УХЛ1",
+        "units": 5,
+        "unit_rub": "292000.00"
+      },
+      {
+        "model": "КЭПФ-12-600-2УХЛ1",
+        "units": 5,
+        "unit_rub": "318000.00"
+      }
+    ],
+    "protocol_number": "186-2",
+    "commission_winner": "ООО «ЭКСПЕРТ ГРУПП»",
+    "commission_winner_inn": "7720494275",
+    "commission_bid_rub": "3050000.00",
+    "signed_supplier": null,
+    "paid_amount": null,
+    "oem": null,
+    "winner_was_previously_present_in_historical_nested_evidence": true
+  },
+  "db_enrichment": {
+    "new_source_verified_db_fields": 7,
+    "new_client_visible_fields": 6,
+    "atomic_CAS": true,
+    "readback_verified": true,
+    "new_signed_contracts_discovered": 0,
+    "new_named_commission_winners_in_client_dossier": 1,
+    "new_verified_signed_suppliers": 0,
+    "new_executed_payments": 0,
+    "backup_sha256": "111d2d07b62a830a49f03df08c963503a617c579ccfef2c8f80d79851c0028b1",
+    "receipt": "pq-reto-signed-supply-enrichment-20261031T0634.json"
+  },
+  "other_source_findings": [
+    {
+      "id": "commercial:4617521:lot1",
+      "public_applications": 3,
+      "bidder_names": "hidden",
+      "signed_supplier": null,
+      "offer_page": "generic_shell_no_public_bidder_detail",
+      "voltage": "unknown"
+    },
+    {
+      "id": "commercial:4657777:lot1",
+      "quantity": 6,
+      "initial_listed_rub_ex_vat": "208419.30",
+      "applications_as_of_capture": 0,
+      "bid_deadline_moscow": "2026-11-09 10:00",
+      "voltage": "unknown",
+      "status": "previously_known_no_new_lot"
+    }
+  ],
+  "client_report": {
+    "version": "V8",
+    "frozen_V7_unchanged": true,
+    "legacy_html_unchanged": true,
+    "unique_lots": 117,
+    "pages_each": 256,
+    "field_coverage_before": {
+      "winner": 4,
+      "bid": 5,
+      "contract_price": 10,
+      "contract_no": 6,
+      "contract_date": 9,
+      "equipment_only_price": 1
+    },
+    "field_coverage_after": {
+      "winner": 5,
+      "bid": 6,
+      "contract_price": 11,
+      "contract_no": 7,
+      "contract_date": 10,
+      "equipment_only_price": 2
+    },
+    "artifacts_sha256": {
+      "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261031_v8.json": "d67375b89d728dfef997dc7b9252d705fead27c2d865eb132fc41bba144cbae3",
+      "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261031_v8.json": "5159c637aad86bfb2c8f2d4db5cf8e8e27ace3e99ac8690f9d125fc37c902817",
+      "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_BACKLOG_20261031_v8.md": "ec05c2bccf5402a5ed08e16b76bc3ac0bdc3b91a1bbf9bba88a453621d98c133",
+      "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_RU_20261031_V8.pdf": "6ad5f2305dccf6c0394c9929fb8ed6a385a227cb13957f5f4ce4ef581d748853",
+      "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_EN_20261031_V8.pdf": "38789652eac162fd7b2ea88fd3b4ad65b3948c5229682ce6e32d58b0802a5e2e"
+    }
+  },
+  "engineering": {
+    "code_commit": "3e968083a7f7f49780651cd423345e72887d33c8",
+    "tests": "7 targeted passed; Ruff passed; RU/EN 256 pages; embedded PT Sans; PDF case 27 checked"
+  },
+  "next_three": [
+    {
+      "case": "32615966040",
+      "retry_after_moscow": "2026-10-31 09:00",
+      "goal": "EIS signed contractor for RAD commission decision"
+    },
+    {
+      "case": "32615684088",
+      "retry_after_moscow": "2026-10-31 09:00",
+      "goal": "original signed supplier/contract register"
+    },
+    {
+      "case": "RN61003961",
+      "retry_after_moscow": "2026-10-31 10:00",
+      "goal": "TEK-Torg post-deadline 6kV outcome"
+    }
+  ],
+  "limitations": [
+    "Reto commission winner is NOT verified signed supplier",
+    "No executed payment proven",
+    "No full BSK device sale; ten capacitor components only",
+    "Commercial 4657777 voltage unknown; do not promote to core",
+    "No new lot: do not regenerate legacy HTML",
+    "No auto-merge; v29 101 rows frozen"
+  ]
+}

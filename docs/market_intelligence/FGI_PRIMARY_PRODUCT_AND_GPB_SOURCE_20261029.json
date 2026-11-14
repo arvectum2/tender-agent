@@ -1,0 +1,39 @@
+{
+  "schema_version": "pq-source-investigation/1",
+  "as_of_moscow": "2026-10-29",
+  "supplier_technical_primary": {
+    "source_url": "https://www.fgi-energyrouter.com/product/FGI-6kV-High-Voltage-Static-Var-Generator-SVG-STATCOM.html",
+    "sha256": "a000124c7635928fdfaaa2fb48ec3c98de57067280ec1e926c39560bc3c38f08",
+    "source_grade": "first_party_partial_quote_verified",
+    "quotes": [
+      "IGBT-based dynamic reactive power compensation system designed for 6–6.6 kV medium-voltage power networks.",
+      "Response time: <5 ms",
+      "The SVG can also compensate harmonic currents while performing dynamic reactive power compensation."
+    ],
+    "source_html_private": "manual-20261029-profile-gpb/fgi_svg_6kv_retry.html",
+    "source_transport_complete": false
+  },
+  "gpb": {
+    "canonical_id": "commercial:ГП630876:lot1",
+    "already_present_in_v29": true,
+    "secondary_original_case_url": "https://synapsenet.ru/zakupki/gazprombank/%D0%B3%D0%BF630876%231344734--leningradskaya-obl-postavka-oborudovaniya-s",
+    "secondary_html_sha256": "6a7c9f499403fe4a1638c3dc17edc10b38efcc0f0b32fd69b7e1a6db2c0cd325",
+    "secondary_observation": "secondary describes 10kV UKRM retrofit, no winner or signed contract",
+    "first_party_search_url": "https://etpgpb.ru/procedures/?search=%D0%93%D0%9F630876",
+    "first_party_search_http_status": 200,
+    "first_party_search_html_sha256": "665e457b25d7d4f6e63fe0d98ce30d282dd4df49e3b1163e4f776be21f51be8a",
+    "first_party_case_identity_found": false,
+    "first_party_original_TZ_recovered": false,
+    "signed_supplier_verified": false,
+    "predecessor": "commercial:ГП628666 (possible; linkage not proven from original documents)",
+    "status": "unknown_official_search_returned_generic_SSR_no_case"
+  },
+  "market_demand_confirmed_from_primary": false,
+  "sales_total_added_rub": 0,
+  "warning": "No source response completeness for FGI; no platform procurement original for GP630876. Distinguish SVG from conventional UKRM/BSK.",
+  "supplier": {
+    "name": "FGI Energy Router",
+    "product_evidence_count": 1,
+    "catalogue_completeness": "partial"
+  }
+}

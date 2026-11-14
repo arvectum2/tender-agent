@@ -1,0 +1,143 @@
+{
+  "schema_version": "pq-watchdog-evidence/1",
+  "run_start_moscow": "2026-10-30 05:28:37 +0300",
+  "finished_moscow": "2026-10-30T05:33:14.976761+03:00",
+  "issue_comment_id": 6513471341,
+  "pr": 521,
+  "parent_head": "7b8b2ce6f9c8eb45e0f2f20c11c3640e9d65ba60",
+  "internal_apfs_acceptance": "pass",
+  "postgres": {
+    "unique_lots_before": 113,
+    "unique_lots_after": 113,
+    "distinct_procedures": 102,
+    "eis_223_notices": 37,
+    "new_unique_lots": 0,
+    "new_projects": 0,
+    "new_verified_core_6_35kv": 0
+  },
+  "source_requests": {
+    "direct_http_total": 20,
+    "b2b": 3,
+    "eis": 4,
+    "phosagro_etp": 12,
+    "phosagro_official_site": 1,
+    "eis_month_attempts": [
+      {
+        "month": "2024-12",
+        "query": "СТАТКОМ",
+        "fz": "223",
+        "http": 404,
+        "bytes": 146,
+        "page": 1,
+        "cursor": null,
+        "coverage": "blocked_not_exhaustive"
+      },
+      {
+        "month": "2024-12",
+        "query": "СТАТКОМ",
+        "fz": "44",
+        "http": 404,
+        "bytes": 146,
+        "page": 1,
+        "cursor": null,
+        "coverage": "blocked_not_exhaustive"
+      },
+      {
+        "month": "2025-08",
+        "query": "УКРМ 10 кВ",
+        "fz": "223",
+        "http": 404,
+        "bytes": 146,
+        "page": 1,
+        "cursor": null,
+        "coverage": "blocked_not_exhaustive"
+      },
+      {
+        "month": "2025-08",
+        "query": "УКРМ 10 кВ",
+        "fz": "44",
+        "http": 404,
+        "bytes": 146,
+        "page": 1,
+        "cursor": null,
+        "coverage": "blocked_not_exhaustive"
+      }
+    ],
+    "eis_search_url_template": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?{fz}=on&pageNumber=1&recordsPerPage=30&publishDateFrom={dd.mm.yyyy}&publishDateTo={dd.mm.yyyy}&searchString={urlencoded_query}",
+    "phosagro_etp_base": "https://etpreg.phosagro.ru/services/",
+    "phosagro_search": "Official HTML form set_filter=Y, arrFilter_pf[ACTUAL], arrFilter_pf[CODE] queried for 231994, 231994-2, 233612. HTTP 200, zero case-specific result links. Public listing displays 6 active and 74 archive records, but only 15 first archive records loaded; no completeness claim. Capture helper rejects this official host (allowlist), so no original promoted.",
+    "phosagro_capture_allowlist": "blocked_as_designed; no security policy change",
+    "b2b_history": "200; history details require registration, not bypassed"
+  },
+  "captures": [
+    {
+      "case_id": "commercial:4406425:lot1",
+      "source_url": "https://www.b2b-center.ru/market/razrabotka-rabochei-dokumentatsii-po-ob-ektu-ps-352-organizatsiia/tender-4406425/",
+      "http_status": 200,
+      "sha256": "d7f2f9862706be0b84a85e49d52ce25fd22f5ee576bb17adf4e0f65377c59d34",
+      "relative_file": "captures/commercial_4406425_lot1/20261030T023017226289Z-bf931e67-d7f2f9862706be0b.bin",
+      "captured_utc": "2026-10-30T02:30:17.229550+00:00"
+    },
+    {
+      "case_id": "commercial:4406425:lot1",
+      "source_url": "https://www.b2b-center.ru/market/razrabotka-rabochei-dokumentatsii-po-ob-ektu-ps-352-organizatsiia/tender-4406425/?action=changes",
+      "http_status": 200,
+      "sha256": "6d03eab8c6d35a673b7a9506f27a1d714288c3a7395bc9e381e64659dec36bfd",
+      "relative_file": "captures/commercial_4406425_lot1/20261030T023118811484Z-32ac858e-6d03eab8c6d35a67.bin",
+      "captured_utc": "2026-10-30T02:31:18.813468+00:00"
+    }
+  ],
+  "new_sha_verified_captures": 2,
+  "new_case_specific_primary_cards": 1,
+  "new_case_specific_primary_history_pages": 1,
+  "new_original_technical_documents": 0,
+  "new_winner_protocols": 0,
+  "new_signed_suppliers": 0,
+  "new_executed_prices": 0,
+  "new_month_source_searches_attempted": 4,
+  "new_month_source_searches_verified_coverage": 0,
+  "new_facts": {
+    "candidate": "commercial:4406425:lot1",
+    "buyer": "АО АПАТИТ",
+    "title": "Разработка рабочей документации по объекту: ПС-352. Организация системы динамической компенсации реактивной мощности на ГС-2 Кировского рудника",
+    "published": "2026-04-09 14:21 MSK",
+    "deadline": "2026-05-25 14:00 MSK",
+    "planned_outcome": "2026-05-29",
+    "last_edited": "2026-05-15 16:18 MSK",
+    "bids": "Скрыто",
+    "source_quote": [
+      "Организатор: АО \"АПАТИТ\"",
+      "Дата публикации: 09.04.2026 14:21",
+      "Дата окончания подачи заявок: 25.05.2026 14:00",
+      "Всего заявок: Скрыто"
+    ],
+    "grade": "first_party_procurement_card; design_only; voltage_unverified; no winner",
+    "relation_to_existing": "same buyer/site/work scope and identical deadline to already recorded PhosAgro 231994-2; probable cross-platform duplicate or repost. Original linking document unavailable, do not assert same legal notice or add new project.",
+    "existing_related_ids": [
+      "commercial:231994:lot1",
+      "commercial:231994-2:lot1"
+    ],
+    "signed_sale": false
+  },
+  "dedup": "No DB append: 4406425 likely overlaps existing PhosAgro 231994/231994-2 design project, and 6-35kV voltage not established. A new public source page is not a verified new unique lot or signed equipment sale.",
+  "db_mutation": false,
+  "client_html_regenerated": false,
+  "canonical_v29_unchanged": 101,
+  "next": [
+    {
+      "case": "commercial:106044-TT:lot1",
+      "retry_after": "2026-10-30 09:00 MSK",
+      "goal": "Metal-IT first-party STATCOM 6.3kV result"
+    },
+    {
+      "case": "223fz:32616435269:lot1",
+      "retry_after": "2026-10-30 10:38 MSK",
+      "goal": "Roseltorg original technical 7z and voltage"
+    },
+    {
+      "case": "commercial:4406425:lot1 / 231994-2",
+      "retry_after": "2026-11-02 09:00 MSK or official new event",
+      "goal": "original organizer cross-reference and design winner; avoid double counting"
+    }
+  ]
+}

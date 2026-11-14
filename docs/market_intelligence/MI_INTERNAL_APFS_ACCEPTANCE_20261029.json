@@ -1,0 +1,83 @@
+{
+  "schema_version": "mi-internal-apfs-recovery-acceptance/1",
+  "date": "2026-10-29",
+  "scope": "Tender Agent Market Intelligence writer, not global macOS removable volume repair",
+  "outcome": "operational_workaround_verified",
+  "canonical_pr": "https://github.com/arvectum2/tender-agent/pull/521",
+  "primary_git_checkout": "/Users/master/ArvectumSafe/worktrees/tender-agent-mi",
+  "python_venv": "/Users/master/ArvectumSafe/.venvs/tender-agent-mi",
+  "source_root": "/Users/master/ArvectumSafe/runtime/market-intelligence/pq-agent-pilot-live",
+  "backup_root": "/Users/master/ArvectumSafe/backups/data-platform",
+  "mac_mini_control_primary": "Arvectum Remote Cloud direct when responsive",
+  "mac_mini_control_fallback": "ARC device_execute macbook-air -> ssh -o BatchMode=yes Mac-mini-master.local",
+  "environment_verified": {
+    "python_version": "3.14.10",
+    "full_project_editable_dependencies_installed": true,
+    "git_clean_after_checkout": true
+  },
+  "io_verified": {
+    "internal_git": true,
+    "scandir": true,
+    "write_fsync_atomic_rename_readback": true,
+    "immutable_first_party_capture": true,
+    "source_sha256": true,
+    "full_pg_dump": true,
+    "pg_restore_archive_check": true,
+    "backup_sha256": true,
+    "live_postgresql_readback": true,
+    "postgresql_not_modified_by_preflight": true
+  },
+  "postgresql": {
+    "database": "arvectum_data",
+    "owner": "tender-agent",
+    "collection": "arvectum-market-pq-6-35kv",
+    "unique_lots": 109,
+    "distinct_procedure_tokens": 98,
+    "distinct_eis_223_notices": 37,
+    "research_not_market_population": 109
+  },
+  "last_verified_pg_dump": {
+    "size_bytes": 37487137,
+    "sha256": "b97ea3900b7a875ab4a3f214b24aa19ffd26c2a95fec438e7d951f6364644502",
+    "pg_restore_list_verified": true,
+    "location": "internal_APFS_private_backup"
+  },
+  "last_verified_immutable_capture": {
+    "case_id": "223fz:32616065155:lot7",
+    "url": "https://www.b2b-center.ru/market/postavka-elektrotekhnicheskogo-oborudovaniia-vykliuchateli/tender-4469608/?action=positions",
+    "size_bytes": 67396,
+    "sha256": "162fdca84e601e93a4038ff08bac29f28147ebbb7d11be54d6777d94a3c8dbb4",
+    "new_version_not_overwrite": true,
+    "database_mutated": false
+  },
+  "safety_regression": {
+    "focused_source_bound_tests": "28 passed",
+    "ruff": "pass",
+    "known_warning": "Starlette/httpx deprecated TestClient import, unrelated"
+  },
+  "watchdog": {
+    "id": "6aa7ef95fc9c8191beaa71fea17dc372",
+    "existing_schedule_preserved": true,
+    "enabled": true,
+    "new_watchdogs_created": 0,
+    "mandatory_preflight": true,
+    "single_pr": true
+  },
+  "external_ssd": {
+    "mount": "/Volumes/ArvectumSSD",
+    "mounted": true,
+    "filesystem": "APFS",
+    "capacity_free_approx_tib": 2.8,
+    "scandir_status": "InterruptedError",
+    "git_getcwd_status": "Interrupted system call",
+    "macos_sandbox_logs": "SystemPolicyRemovableVolumes denials",
+    "diskutil_verification": "macOS security sandbox denied operation",
+    "physical_corruption_proven": false,
+    "remediation_status": "external volume still not reliable for active Git; preserved and excluded, not erased/repaired"
+  },
+  "constraints": [
+    "Preserve legacy files and uncommitted worktree, no irreversible TCC bypass",
+    "Do not duplicate 109th lot 223fz:32616065155:lot7",
+    "Backup before any new DB append; source SHA and precise lot identity; no false sales"
+  ]
+}

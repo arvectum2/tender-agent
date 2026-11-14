@@ -1,0 +1,460 @@
+{
+  "schema_version": "pq-watchdog-month-delta/1",
+  "additional_queries": 22,
+  "status_counts": {
+    "empty": 13,
+    "success": 9
+  },
+  "candidate_rows_unverified": 12,
+  "full_journal_sha256": "da7f071e282707534895c03898885eaee1027c3e86b74f69957df655c7ed519b",
+  "not_exhaustive": true,
+  "attempts": [
+    {
+      "timestamp": "2026-10-28T11:52:56.567328+00:00",
+      "law": "223fz",
+      "month": "2026-01",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "empty",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.01.2026&publishDateTo=31.01.2026&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:52:56.567328+00:00",
+      "law": "44fz",
+      "month": "2026-01",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "empty",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.01.2026&publishDateTo=31.01.2026&pageNumber=1&recordsPerPage=30&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:52:56.567328+00:00",
+      "law": "223fz",
+      "month": "2026-02",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "success",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.02.2026&publishDateTo=28.02.2026&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [
+        {
+          "number_unverified": "32615696503",
+          "title_unverified": "Монтаж конденсаторной установки УКРМ",
+          "customer_unverified": "11.02.2026",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        }
+      ],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:52:56.567328+00:00",
+      "law": "44fz",
+      "month": "2026-02",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "empty",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.02.2026&publishDateTo=28.02.2026&pageNumber=1&recordsPerPage=30&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:52:56.567328+00:00",
+      "law": "223fz",
+      "month": "2026-03",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "success",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.03.2026&publishDateTo=31.03.2026&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [
+        {
+          "number_unverified": "32615773152",
+          "title_unverified": "Монтаж конденсаторной установки УКРМ",
+          "customer_unverified": "05.03.2026",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        }
+      ],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:52:56.567328+00:00",
+      "law": "44fz",
+      "month": "2026-03",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "empty",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.03.2026&publishDateTo=31.03.2026&pageNumber=1&recordsPerPage=30&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:52:56.567328+00:00",
+      "law": "223fz",
+      "month": "2026-04",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "success",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.04.2026&publishDateTo=30.04.2026&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [
+        {
+          "number_unverified": "32615969197",
+          "title_unverified": "26-004167 Выполнение ПИР на установку УКРМ",
+          "customer_unverified": "30.04.2026",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        }
+      ],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:52:56.567328+00:00",
+      "law": "44fz",
+      "month": "2026-04",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "success",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.04.2026&publishDateTo=30.04.2026&pageNumber=1&recordsPerPage=30&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [
+        {
+          "number_unverified": "0372200000126000322",
+          "title_unverified": "Оказание услуг по обследованию электролабораторией систем внутреннего электроснабжения установок компенсации реактивной мощности, измерение показателей качества электроэнергии на питающих вводах",
+          "customer_unverified": "САНКТ-ПЕТЕРБУРГСКОЕ ГОСУДАРСТВЕННОЕ БЮДЖЕТНОЕ УЧРЕЖДЕНИЕ ЗДРАВООХРАНЕНИЯ \"ГОРОДСКАЯ МАРИИНСКАЯ БОЛЬНИЦА\"",
+          "publication": "2026-04-02T00:00:00+00:00",
+          "query_in_visible_title": false,
+          "pq_relevance_verified": false,
+          "date_in_window": true
+        }
+      ],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:52:56.567328+00:00",
+      "law": "223fz",
+      "month": "2026-05",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "empty",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.05.2026&publishDateTo=31.05.2026&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:52:56.567328+00:00",
+      "law": "44fz",
+      "month": "2026-05",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "empty",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.05.2026&publishDateTo=31.05.2026&pageNumber=1&recordsPerPage=30&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:52:56.567328+00:00",
+      "law": "223fz",
+      "month": "2026-06",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "success",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.06.2026&publishDateTo=30.06.2026&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [
+        {
+          "number_unverified": "32616120582",
+          "title_unverified": "26Т0110040.0017. Выполнение полного комплекса работ под «ключ» по реализации инвестиционного проекта «Строительство ЛЭП 6 кВ (ориентировочной протяженностью 0,175 км, из них КЛ 6 кВ ГНБ - 0,125 км, КЛ 6 кВ в трубе в траншее - 0,05 км) от ВЛ-6 кВ Л-27-74, монтаж конденсаторной установки 6 кВ ( УКРМ",
+          "customer_unverified": "17.06.2026",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32616103025",
+          "title_unverified": "26-004167 Выполнение ПИР на установку УКРМ",
+          "customer_unverified": "10.06.2026",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        }
+      ],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:52:56.567328+00:00",
+      "law": "44fz",
+      "month": "2026-06",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "empty",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.06.2026&publishDateTo=30.06.2026&pageNumber=1&recordsPerPage=30&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:53:12.667975+00:00",
+      "law": "223fz",
+      "month": "2026-07",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "empty",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.07.2026&publishDateTo=31.07.2026&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:53:12.667975+00:00",
+      "law": "44fz",
+      "month": "2026-07",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "empty",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.07.2026&publishDateTo=31.07.2026&pageNumber=1&recordsPerPage=30&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:53:12.667975+00:00",
+      "law": "223fz",
+      "month": "2026-08",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "empty",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.08.2026&publishDateTo=31.08.2026&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:53:12.667975+00:00",
+      "law": "44fz",
+      "month": "2026-08",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "empty",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.08.2026&publishDateTo=31.08.2026&pageNumber=1&recordsPerPage=30&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:53:12.667975+00:00",
+      "law": "223fz",
+      "month": "2026-10",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "success",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.10.2026&publishDateTo=28.10.2026&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [
+        {
+          "number_unverified": "32616497692",
+          "title_unverified": "26Т0210040.0015. Выполнение полного комплекса работ под «ключ» по объектам: «Техническое перевооружение ПС 110 кВ Вяртсиля (ПС 28) с монтажом дополнительной ячейки КРУН 10 кВ с вакуумным выключателем для присоединения конденсаторной установки ( УКРМ",
+          "customer_unverified": "22.10.2026",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32616433248",
+          "title_unverified": "26Т0210040.0017. Выполнение полного комплекса работ под «ключ» по реализации инвестиционного проекта \"Реконструкция ПС 35 кВ Кяппесельга (ПС 27П) в части замены трансформатора Т-1 35/10 кВ мощностью 2,5 МВА на трансформатор 35/10 кВ мощностью 4 МВА, замены трансформаторов тока 10 кВ в ячейке ВТ1-10 ",
+          "customer_unverified": "02.10.2026",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        }
+      ],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:53:12.667975+00:00",
+      "law": "44fz",
+      "month": "2026-10",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "empty",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.10.2026&publishDateTo=28.10.2026&pageNumber=1&recordsPerPage=30&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:53:49.774706+00:00",
+      "law": "223fz",
+      "month": "2024-03",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "success",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.03.2024&publishDateTo=31.03.2024&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [
+        {
+          "number_unverified": "32413394736",
+          "title_unverified": "Закупка автоматическое устройство компенсации реактивной мощности напряжение 0,4кВ (А УКРМ",
+          "customer_unverified": "18.03.2024",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        }
+      ],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:53:49.774706+00:00",
+      "law": "223fz",
+      "month": "2024-03",
+      "query": "фильтр гармоник",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "empty",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.03.2024&publishDateTo=31.03.2024&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80+%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D0%BD%D0%B8%D0%BA",
+      "date_bounds_verified": true,
+      "candidates": [],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:53:49.774706+00:00",
+      "law": "44fz",
+      "month": "2024-03",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "success",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.03.2024&publishDateTo=31.03.2024&pageNumber=1&recordsPerPage=30&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [
+        {
+          "number_unverified": "0373200087824000460",
+          "title_unverified": "Совместная закупка на оказание услуг по обслуживанию существующих установок компенсации реактивной мощности(УКРМ)",
+          "customer_unverified": "",
+          "publication": "2024-03-05T00:00:00+00:00",
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": true
+        }
+      ],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:53:49.774706+00:00",
+      "law": "44fz",
+      "month": "2024-03",
+      "query": "фильтр гармоник",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "success",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.03.2024&publishDateTo=31.03.2024&pageNumber=1&recordsPerPage=30&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80+%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D0%BD%D0%B8%D0%BA",
+      "date_bounds_verified": true,
+      "candidates": [
+        {
+          "number_unverified": "0318300180124000022",
+          "title_unverified": "Техническое обслуживание и ремонт медицинской техники с использованием запасных частей",
+          "customer_unverified": "ГОСУДАРСТВЕННОЕ БЮДЖЕТНОЕ УЧРЕЖДЕНИЕ ЗДРАВООХРАНЕНИЯ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 4 ГОРОДА КРАСНОДАРА\" МИНИСТЕРСТВА ЗДРАВООХРАНЕНИЯ КРАСНОДАРСКОГО КРАЯ",
+          "publication": "2024-03-26T00:00:00+00:00",
+          "query_in_visible_title": false,
+          "pq_relevance_verified": false,
+          "date_in_window": true
+        },
+        {
+          "number_unverified": "0318300186324000015",
+          "title_unverified": "Оказание услуг по техническому обслуживанию и ремонту медицинского оборудования",
+          "customer_unverified": "ГОСУДАРСТВЕННОЕ БЮДЖЕТНОЕ УЧРЕЖДЕНИЕ ЗДРАВООХРАНЕНИЯ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 11 ГОРОДА КРАСНОДАРА\" МИНИСТЕРСТВА ЗДРАВООХРАНЕНИЯ КРАСНОДАРСКОГО КРАЯ",
+          "publication": "2024-03-01T00:00:00+00:00",
+          "query_in_visible_title": false,
+          "pq_relevance_verified": false,
+          "date_in_window": true
+        }
+      ],
+      "first_page_has_next": false
+    }
+  ]
+}

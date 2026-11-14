@@ -1,0 +1,101 @@
+{
+  "schema_version": "pq-watchdog-source-ledger/1",
+  "run_id": "20261028-1934-MSK",
+  "issue_comment_id": 6474763101,
+  "corpus": "v29_101_unchanged",
+  "v29_primary_gaps": 54,
+  "actual_source_attempts": 54,
+  "bounded_eis_month_queries": 36,
+  "new_query_months": [
+    "2024-02",
+    "2024-05",
+    "2024-08",
+    "2025-04",
+    "2025-07",
+    "2025-09",
+    "2026-03",
+    "2026-06",
+    "2026-09"
+  ],
+  "new_exhaustive_months": 0,
+  "month_search_statuses": {
+    "empty": 31,
+    "network_error": 1,
+    "success": 4
+  },
+  "metadata_candidate_rows": 6,
+  "month_journal_sha256": "f5d1e2000d235d892c0e924bbce4cddcbc30e469009027b01ed70fdeb443a2c7",
+  "new_notice": "32514705796",
+  "new_lots": 1,
+  "verified_unique_projects": 0,
+  "provisional_project_key": "nera_novaya_ps110_capacitors_2025",
+  "original_source_page_sha256": "bca7e0751e58d507961ddfe57808306fc4fd4add081abbc18ca2c564c78efb47",
+  "official_documents_page_url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32514705796&noticeGuid=7427a6de-c9a0-4063-acd1-caf7c4ee61ba",
+  "page_sha_reverified": true,
+  "original_file_source_urls_sha_reverified": true,
+  "new_original_files": [
+    {
+      "filename": "01-366.1_-_5.1.1-213_07_05_2025.pdf",
+      "original_name": "Протокол закрытия процедуры Лот 366.1_П_5.1.1-213_07_05_2025.pdf",
+      "sha256": "9d179960b26b33d2a2f5f8da66ebc5a24ff4fd200f40b7a51dd59276b3e20782",
+      "size_bytes": 112478,
+      "source_url_sha256": "1c7a98ad7c03421dc2a6df7ac0e943f5822ec7eefd5637ed0f1ddc7a0c9d71a5"
+    },
+    {
+      "filename": "02-1-366.1.pdf",
+      "original_name": "Уведомление о внесении изменений №1 к 366.1.pdf",
+      "sha256": "25e195e00395dd12a9824e928ade99ac027290a1b6d3ab8c29e95b5f55d9e7e0",
+      "size_bytes": 115911,
+      "source_url_sha256": "8dc78a7c939307c9231b0b8860af995867d92a89595121984675ad1c22820801"
+    },
+    {
+      "filename": "03-2-366.1.pdf",
+      "original_name": "Уведомление о внесении изменений №2 к 366.1.pdf",
+      "sha256": "759c1770a4ac4717c59c1470b1e35ab7b469bac5e478d1b80f8f124e2ce1df2f",
+      "size_bytes": 115921,
+      "source_url_sha256": "ada7b4c5a1301f431dc1dec26454c83e0dc52b9fb9ff54771ee659073cc4ae8d"
+    },
+    {
+      "filename": "05-32514705796.docx",
+      "original_name": "Ответ_32514705796.docx",
+      "sha256": "2a263b77b164e5c0eaafc2da59745f65f843f0551f6f1ad29102c457d8a897ae",
+      "size_bytes": 7843,
+      "source_url_sha256": "908ef89c22d2cd4f88c013b89bf496315a515c72aa164f3ca6e1b503882f3d87"
+    }
+  ],
+  "case": {
+    "buyer": "ПАО «Магаданэнерго»",
+    "scope": "144 high-voltage capacitors for PS 110 kV Nera-Novaya",
+    "equipment_nominal_kv": null,
+    "classification": "uncertain",
+    "nmck_ex_vat_rub": "8709690.15",
+    "protocol_date": "2025-05-07",
+    "bids_in_protocol": 0,
+    "protocol_sha256": "9d179960b26b33d2a2f5f8da66ebc5a24ff4fd200f40b7a51dd59276b3e20782",
+    "later_amendment_sha256": "759c1770a4ac4717c59c1470b1e35ab7b469bac5e478d1b80f8f124e2ce1df2f",
+    "later_amendment_scheduled_result": "2025-05-21",
+    "revision_order_unresolved": true,
+    "named_winner": null,
+    "signed_supplier": null,
+    "executed_paid_price": null
+  },
+  "arc_review_id": "32514705796-c8d94b0ccf3ae04aeab5c7c5",
+  "additional_source_attempts": {
+    "metal_it_root": "HTTP200_generic_shell",
+    "tender_pro_root": "HTTP503",
+    "b2b_center_root": "HTTP403",
+    "roseltorg_rushydro_root": "HTTP200_no_case_result",
+    "contract223_search": "3_TLS_errors_and_2_HTTP404_curl_requests",
+    "notice_search_nera_novaya": "success_but_lexical_false_positives"
+  },
+  "new_signed_suppliers": 0,
+  "new_executed_prices": 0,
+  "data_platform_pending_sdk": 15,
+  "next_three": [
+    "32413764701 signed supplier and paid equipment-only amount",
+    "32515582393 signed supplier and paid equipment-only amount",
+    "ГП630876 original GPB ETP after 2026-10-29 00:41 MSK"
+  ],
+  "next_new_case": "32514705796 final protocol and actual capacitor nominal voltage; 12h exact search cooldown through 2026-10-29 07:41 MSK",
+  "not_national_market_coverage": true
+}

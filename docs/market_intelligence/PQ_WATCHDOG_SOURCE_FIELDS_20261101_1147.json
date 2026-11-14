@@ -1,0 +1,281 @@
+{
+  "schema": "pq-watchdog-source-fields/1",
+  "as_of_moscow": "2026-11-01T11:48:19.213067+03:00",
+  "issue_comment_id": 6555604538,
+  "pr": 521,
+  "code_commit": "ddcfda0a7bb147e6efe55233dd36bc7607135283",
+  "db": {
+    "before_unique_lots": 118,
+    "after_unique_lots": 118,
+    "distinct_procedures": 107,
+    "eis_223_notices": 41,
+    "new_unique_lots": 0,
+    "new_projects": 0,
+    "new_verified_fields": 4,
+    "new_report_coverage": {
+      "buyer_inn": 1,
+      "voltage_kv": 1
+    },
+    "new_signed_suppliers": 0,
+    "new_executed_sales": 0
+  },
+  "research": {
+    "requests_attempted": 20,
+    "http200_captures": 18,
+    "case_specific_valid_captures": 17,
+    "new_distinct_case_specific_shas": 5,
+    "new_original_protocols": 1,
+    "new_named_winners": 0,
+    "new_named_participants": 0,
+    "new_signed_suppliers": 0,
+    "new_paid_sales": 0,
+    "new_exhaustive_month_source_queries": 0,
+    "receipts": [
+      {
+        "case": "223fz:32616280467:lot1",
+        "url": "https://www.roseltorg.ru/procedure/32616280467",
+        "http": 200,
+        "sha": "0684e1fb1bd805373ef4bd04bf74dcbbda632f851e416922a98a4dcc4a71934d",
+        "new_sha": true,
+        "case_specific": true,
+        "receipt": "captures/223fz_32616280467_lot1/20261101T083701163434Z-40023873-0684e1fb1bd80537.bin.json"
+      },
+      {
+        "case": "223fz:32616280467:lot1",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616280467",
+        "http": 200,
+        "sha": "87f948cd4282a6f8e48dbee05e3f1e55cc975b39242fc8a88f2ed713bad7d818",
+        "new_sha": false,
+        "case_specific": true,
+        "receipt": "captures/223fz_32616280467_lot1/20261101T083701557472Z-7ff3b000-87f948cd4282a6f8.bin.json"
+      },
+      {
+        "case": "223fz:32616497692:lot1",
+        "url": "https://www.roseltorg.ru/procedure/32616497692",
+        "http": 200,
+        "sha": "d3aa23718331a9ad0e5c4699f01754dd661c48ecf556a8f6a5b7e418951cf2ff",
+        "new_sha": true,
+        "case_specific": true,
+        "receipt": "captures/223fz_32616497692_lot1/20261101T083701997189Z-18edd465-d3aa23718331a9ad.bin.json"
+      },
+      {
+        "case": "223fz:32616497692:lot1",
+        "url": "https://rosseti.roseltorg.ru/file/get/t/ProtocolFiles/id/299452/user/-1/name/HappenedRetrade_32616497692.rtf",
+        "http": 200,
+        "sha": "c6fb6317471d1bc0fff40d641152df09cacd734e188a4f12eb73153898eddbbb",
+        "new_sha": false,
+        "case_specific": true,
+        "receipt": "captures/223fz_32616497692_lot1/20261101T083723576700Z-c7ab6c01-c6fb6317471d1bc0.bin.json"
+      },
+      {
+        "case": "223fz:32616280467:lot1",
+        "url": "https://rosseti.roseltorg.ru/file/get/t/ProtocolFiles/id/292381/user/-1/name/%D0%9F%D1%80%D0%BE%D1%82%D0%BE%D0%BA%D0%BE%D0%BB_%D0%BF%D0%BE%D0%B4%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F_%D0%B8%D1%82%D0%BE%D0%B3%D0%BE%D0%B2_76.pdf",
+        "http": 200,
+        "sha": "5c161c4cffcef27e525e47896b55e1adeacee4d26fcf903fec36c95db21b20b1",
+        "new_sha": true,
+        "case_specific": true,
+        "receipt": "captures/223fz_32616280467_lot1/20261101T083732518708Z-b5b04a18-5c161c4cffcef27e.bin.json"
+      },
+      {
+        "case": "223fz:32616497692:lot1",
+        "url": "https://rosseti.roseltorg.ru/file/get/t/ProtocolFiles/id/299297/user/-1/name/%D0%9F%D1%80%D0%BE%D1%82%D0%BE%D0%BA%D0%BE%D0%BB_2_%D1%80%D0%B0%D1%81%D1%81%D0%BC_%D0%BF%D0%B5%D1%80%D0%B5%D1%82%D0%BE%D1%80%D0%B6%D0%BA%D0%B0_5237.zip",
+        "http": 200,
+        "sha": "2f5ad8ba337f60c1e50cb42bed4c6d420be608619f533c51850448db549ddd97",
+        "new_sha": false,
+        "case_specific": true,
+        "receipt": "captures/223fz_32616497692_lot1/20261101T083732840703Z-dc678f43-2f5ad8ba337f60c1.bin.json"
+      },
+      {
+        "case": "223fz:32616497692:lot1",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616497692",
+        "http": 200,
+        "sha": "98d81378c806355dcf55f73850e43bc19c9dfc7bca734b6efd5679569db8f1fb",
+        "new_sha": false,
+        "case_specific": true,
+        "receipt": "captures/223fz_32616497692_lot1/20261101T083733184379Z-0e70ccc1-98d81378c806355d.bin.json"
+      },
+      {
+        "case": "223fz:32616412267:lot1",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616412267",
+        "http": 200,
+        "sha": "cacbe542614a1cf68c9e5691b3e960847275e5c8113c9ab6b6d02584c6274fa2",
+        "new_sha": false,
+        "case_specific": true,
+        "receipt": "captures/223fz_32616412267_lot1/20261101T083906630840Z-d1dfc768-cacbe542614a1cf6.bin.json"
+      },
+      {
+        "case": "223fz:32616412267:lot1",
+        "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=53801006828260000720000",
+        "http": 200,
+        "sha": "a95df80e9044f5053756330c10a912d18001a79300c1fa0397f01fdd06c87f11",
+        "new_sha": false,
+        "case_specific": true,
+        "receipt": "captures/223fz_32616412267_lot1/20261101T083906951335Z-cc2037f2-a95df80e9044f505.bin.json"
+      },
+      {
+        "case": "223fz:32616355390:lot1",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616355390",
+        "http": 200,
+        "sha": "f1109aa34d9f00f845cb23f98ce4eb7e1f4e2b239cc47ff99cd8d2e72246a5f1",
+        "new_sha": false,
+        "case_specific": true,
+        "receipt": "captures/223fz_32616355390_lot1/20261101T083907277232Z-c1922451-f1109aa34d9f00f8.bin.json"
+      },
+      {
+        "case": "223fz:32616355390:lot1",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616355390",
+        "http": 200,
+        "sha": "5606b551d11da6a2953a938396c23081ec00eb7bc78935972772640e7b7d838c",
+        "new_sha": false,
+        "case_specific": true,
+        "receipt": "captures/223fz_32616355390_lot1/20261101T083907823017Z-e0b6897f-5606b551d11da6a2.bin.json"
+      },
+      {
+        "case": "commercial:4559984:lot1",
+        "url": "https://www.b2b-center.ru/app/market/zapros-kommercheskikh-predlozhenii-na-postavku-mtr-dlia-ob-ekta/tender-4559984/",
+        "http": 200,
+        "sha": "7f57b85b0466cfa6fb45d6a3022c0d7dade8f676eade8bdeaf52bb3da18ba90e",
+        "new_sha": true,
+        "case_specific": false,
+        "receipt": "captures/commercial_4559984_lot1/20261101T084006946048Z-a5e013f4-7f57b85b0466cfa6.bin.json"
+      },
+      {
+        "case": "223fz:32515584863:lot1",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32515584863",
+        "http": 200,
+        "sha": "916ae6462b343d87f26aec20ab0a074ad252ed16653cdf409f77f709310b6234",
+        "new_sha": false,
+        "case_specific": true,
+        "receipt": "captures/223fz_32515584863_lot1/20261101T084133623023Z-34e2c9b3-916ae6462b343d87.bin.json"
+      },
+      {
+        "case": "223fz:32615760238:lot1",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32615760238",
+        "http": 200,
+        "sha": "d230fc1a29457fdaa475ddc9fd35d8c519c3255ff64f8ae107d7157cf5a904c8",
+        "new_sha": false,
+        "case_specific": true,
+        "receipt": "captures/223fz_32615760238_lot1/20261101T084134039301Z-9a37cfaf-d230fc1a29457fda.bin.json"
+      },
+      {
+        "case": "223fz:32615937898:lot1",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32615937898",
+        "http": 200,
+        "sha": "69dd87365c4149bbd76a6f6323fd03bb074154dacd5d91750ba20a624f204445",
+        "new_sha": true,
+        "case_specific": true,
+        "receipt": "captures/223fz_32615937898_lot1/20261101T084134457028Z-44ce7f9b-69dd87365c4149bb.bin.json"
+      },
+      {
+        "case": "223fz:32515208744:lot1",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32515208744",
+        "http": 200,
+        "sha": "080e48e5aede0ff8d44cbdc59b43918644c2f76a935298b1974c5319be0fd18d",
+        "new_sha": false,
+        "case_specific": true,
+        "receipt": "captures/223fz_32515208744_lot1/20261101T084155986837Z-a6971248-080e48e5aede0ff8.bin.json"
+      },
+      {
+        "case": "223fz:32514947144:lot1",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32514947144",
+        "http": 200,
+        "sha": "154bcd752de22220a99d3add5ed5724188fdd64ce68cc107fe8e4387100ed5ca",
+        "new_sha": false,
+        "case_specific": true,
+        "receipt": "captures/223fz_32514947144_lot1/20261101T084156419721Z-dc87c19e-154bcd752de22220.bin.json"
+      },
+      {
+        "case": "223fz:32616433248:lot1",
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616433248",
+        "http": 200,
+        "sha": "2345e8a88ff2731c05a43a69af49b50e74a28cc44ae4ae714ac386111627f8e3",
+        "new_sha": true,
+        "case_specific": true,
+        "receipt": "captures/223fz_32616433248_lot1/20261101T084156793250Z-f85b2f21-2345e8a88ff2731c.bin.json"
+      }
+    ]
+  },
+  "verified": [
+    {
+      "case": "223fz:32514947144:lot1",
+      "scope": "filter capacitor components; not full PQ system",
+      "fields": [
+        "customer.inn=4716016979",
+        "source_urls"
+      ],
+      "sha": "154bcd752de22220a99d3add5ed5724188fdd64ce68cc107fe8e4387100ed5ca"
+    },
+    {
+      "case": "223fz:32616433248:lot1",
+      "scope": "mixed EPC with one UKRM 35 kV item",
+      "fields": [
+        "voltage_kv=35",
+        "source_urls"
+      ],
+      "sha": "2345e8a88ff2731c05a43a69af49b50e74a28cc44ae4ae714ac386111627f8e3"
+    }
+  ],
+  "additional_findings": [
+    "32616497692: first-party protocol 2 of 29.10.2026 admits one anonymous application; named bidder was already established previously, no final winner/signed contract.",
+    "32616280467: new SHA first-party protocol PDF 5 scanned pages without text layer; no new named winner.",
+    "32616355390: EIS contract register still shows no registered contract."
+  ],
+  "blocked_attempts": [
+    {
+      "count": 2,
+      "reason": "UnicodeEncodeError before HTTP for Cyrillic filenames; encoded retry succeeded"
+    },
+    {
+      "case": "commercial:4559984:lot1",
+      "http": 200,
+      "reason": "B2B-Center returned generic JS/login shell without case identity; already in corpus under another canonical ID"
+    }
+  ],
+  "backup": {
+    "manifest": "/Users/master/ArvectumSafe/backups/data-platform/data-platform-arvectum_data-20261101T084457Z-22983.dump.manifest.json",
+    "sha256": "6273752b0d748567252f4269ee76466ad37c9426ecc755ede9120e6e07e0d1e2",
+    "pg_restore_verified": true,
+    "cas_atomic": true,
+    "readback_verified": true,
+    "receipt": "receipts/pq-primary-gaps-20261101T084500.json"
+  },
+  "client_report": {
+    "version": "V32",
+    "snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261101_v32.json",
+    "audit": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261101_V32.json",
+    "pdf_ru": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_RU_20261101_V32.pdf",
+    "pdf_en": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_EN_20261101_V32.pdf",
+    "pages_each": 258,
+    "legacy_html_unchanged": true,
+    "prior_versions_unchanged": true
+  },
+  "tests": "7 targeted passed; Ruff passed; PT Sans and JetBrains Mono embedded",
+  "next_three": [
+    {
+      "case": "32616120582",
+      "retry_after_moscow": "2026-11-02 09:00",
+      "goal": "signed supplier identity, not mixed EPC price"
+    },
+    {
+      "case": "32616474682",
+      "retry_after_moscow": "2026-11-02 06:30",
+      "goal": "official final protocol"
+    },
+    {
+      "case": "AP125337",
+      "retry_after_moscow": "2026-11-02 09:00",
+      "goal": "GPB public original and voltage"
+    }
+  ],
+  "additional_retry": {
+    "case": "32616497692",
+    "retry_after_moscow": "2026-11-02 16:00",
+    "goal": "final protocol"
+  },
+  "safety": {
+    "gate": "pass",
+    "collection_only": "arvectum-market-pq-6-35kv",
+    "no_auto_merge": true,
+    "v29_historical_101_rows_unchanged": true
+  }
+}

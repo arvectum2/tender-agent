@@ -1,0 +1,160 @@
+{
+  "schema": "pq-watchdog-primary-research-run/1",
+  "run": 11,
+  "moscow_finished": "2026-10-31T15:45:10.853659+03:00",
+  "issue": 57,
+  "issue_comment_id": 6543427402,
+  "pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "last_tested_code_commit": "5950cfd4edc6dcd7cbc0a01f81380da653a05c11",
+  "acceptance_status": "pass",
+  "backup_manifest": "data-platform-arvectum_data-20261031T124332Z-76687.dump.manifest.json",
+  "backup_sha256": "80f9172e8059542617fb1f2bcd7df2c2518a0f1acebc3ff36360fc1f1e93664f",
+  "db_before": {
+    "unique_lots": 118,
+    "distinct_procedures": 107,
+    "eis_223_notices": 41
+  },
+  "db_after": {
+    "unique_lots": 118,
+    "distinct_procedures": 107,
+    "eis_223_notices": 41
+  },
+  "new_unique_lots": 0,
+  "new_distinct_projects": 0,
+  "new_verified_fields": 2,
+  "new_original_protocols_with_named_winner": 0,
+  "new_signed_suppliers": 0,
+  "new_executed_prices": 0,
+  "new_paid_sales": 0,
+  "new_months_exhaustively_covered": 0,
+  "first_party_requests": [
+    {
+      "case_id": "commercial:РН61004155:lot1",
+      "url_redacted": "https://www.tektorg.ru/rosneft/procedures?name=%D0%A0%D0%9D61004155",
+      "full_url_in_private_receipt": "captures/commercial___61004155_lot1/20261031T123719056975Z-f66a4d77-27cc6e64108cdd53.bin.json",
+      "http": 200,
+      "sha256": "27cc6e64108cdd535093ae1a0cf9cf4c9f19f6deaad13cdd64ae48f398a4c217",
+      "bytes": 287747,
+      "captured_utc": "2026-10-31T12:37:19.060274+00:00"
+    },
+    {
+      "case_id": "commercial:РН61004155:lot1",
+      "url_redacted": "https://www.tektorg.ru/rosneft/procedures/20068407",
+      "full_url_in_private_receipt": "captures/commercial___61004155_lot1/20261031T123732761220Z-f1c46bab-76c7de4a9bbaec9f.bin.json",
+      "http": 200,
+      "sha256": "76c7de4a9bbaec9feeefdfa9158732faa1d64df033f2a6812f998531ed3ec359",
+      "bytes": 275135,
+      "captured_utc": "2026-10-31T12:37:32.764394+00:00"
+    },
+    {
+      "case_id": "commercial:РН60805563:lot1",
+      "url_redacted": "https://www.tektorg.ru/rosneft/procedures?name=%D0%A0%D0%9D60805563",
+      "full_url_in_private_receipt": "captures/commercial___60805563_lot1/20261031T123733484798Z-a94b3637-c85e905c3f15b892.bin.json",
+      "http": 200,
+      "sha256": "c85e905c3f15b8927f61281c9022c94c00da4c058db578ae465bd8e6bde45a61",
+      "bytes": 271414,
+      "captured_utc": "2026-10-31T12:37:33.487384+00:00"
+    },
+    {
+      "case_id": "commercial:РН61004155:lot1",
+      "url_redacted": "https://www.tektorg.ru/files-storage/TG90RG9jdW1lbnRzL2U3NGRmOTMyLTRjNmYtNDEwNS04ZDkwLTY3YTJmYjA0M2UwMy_QlNCe0Jdf0JHQndCULTAyMzctMjAyNi43eg==/download?token=[redacted]",
+      "full_url_in_private_receipt": "captures/commercial___61004155_lot1/20261031T123808837025Z-43d86e35-8d534d2a2de2339f.bin.json",
+      "http": 200,
+      "sha256": "8d534d2a2de2339f0c3e495b0d81accf4d285b3d58a405dc9cabef10f03c368b",
+      "bytes": 5378067,
+      "captured_utc": "2026-10-31T12:38:08.842144+00:00"
+    },
+    {
+      "case_id": "commercial:РН61004155:lot1",
+      "url_redacted": "https://www.tektorg.ru/files-storage/TG90RG9jdW1lbnRzL2M3NjA5NzQ1LTJkZWItNDc4ZS05MmNlLWVhYzQ0YzdkNGI2Yi_QlNCe0Jdf0JHQndCULTAyMzctMjAyNlsxXS43eg==/download?token=[redacted]",
+      "full_url_in_private_receipt": "captures/commercial___61004155_lot1/20261031T123812065958Z-d747a532-8d534d2a2de2339f.bin.json",
+      "http": 200,
+      "sha256": "8d534d2a2de2339f0c3e495b0d81accf4d285b3d58a405dc9cabef10f03c368b",
+      "bytes": 5378067,
+      "captured_utc": "2026-10-31T12:38:12.072875+00:00"
+    }
+  ],
+  "first_party_request_count": 5,
+  "first_party_receipts": 5,
+  "distinct_new_source_shas": 4,
+  "technical_archive_unique_sha": "8d534d2a2de2339f0c3e495b0d81accf4d285b3d58a405dc9cabef10f03c368b",
+  "new_evidence": {
+    "case": "commercial:РН61004155:lot1",
+    "buyer": "ООО Башнефть-Добыча",
+    "inn": "0277106840",
+    "regime": "commercial",
+    "status": "open_for_offers_to_2026-11-03T12:00+03:00",
+    "equipment": "УКРМ 6 кВ",
+    "model_variants": [
+      "А450-3х150",
+      "Р900-450+2х225"
+    ],
+    "rated_power_kvar_variants": [
+      450,
+      900
+    ],
+    "model_count_not_unit_quantity": true,
+    "units_quantity_verified": false,
+    "initial_ceiling_verified": false,
+    "signed_contract_verified": false,
+    "source_card": "https://www.tektorg.ru/rosneft/procedures/20068407",
+    "writer_receipt": "docs/market_intelligence/PQ_TEK_TORG_RN61004155_ENRICHMENT_20261031.json",
+    "source_grade_before": "C",
+    "source_grade_after": "A"
+  },
+  "negative_or_blocked": [
+    {
+      "case": "commercial:РН60805563:lot1",
+      "observation": "Official TEK-Torg exact-number search HTTP200 but no matching procedure card in returned page; prior August secondary listing does not prove same or different project."
+    },
+    {
+      "case": "commercial:РН61004155:lot1",
+      "observation": "Official first-party card protocols=[]; procedure still accepting offers. No named winner, signed supplier or paid price."
+    },
+    {
+      "case": "commercial:1258722:lot1",
+      "observation": "23 Oct second-stage capacitor lead found only via secondary index; first-party Tender.Pro original not acquired, possible same underlying project as 1250321; no promotion."
+    }
+  ],
+  "field_coverage_before": {
+    "voltage_kv": 21,
+    "power": 5
+  },
+  "field_coverage_after": {
+    "voltage_kv": 22,
+    "power": 6
+  },
+  "client_report": {
+    "version": "V16",
+    "lots": 118,
+    "pages_ru": 258,
+    "pages_en": 258,
+    "snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261031_v16.json",
+    "audit": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261031_v16.json",
+    "pdf_ru": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_RU_20261031_V16.pdf",
+    "pdf_en": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_EN_20261031_V16.pdf"
+  },
+  "tests": "7 focused pytest passed; Ruff passed; 258 pages per PDF, PDF text shows UKRM-6 450/900 kvar",
+  "next_three": [
+    {
+      "case": "32616400421",
+      "retry_moscow": "2026-11-01 07:30",
+      "task": "First-party EIS outcome/contract and 6-35kV scope"
+    },
+    {
+      "case": "106044-TT",
+      "retry_moscow": "2026-11-01 09:00",
+      "task": "First-party ETP technical specification/protocol"
+    },
+    {
+      "case": "commercial:РН61004155:lot1",
+      "retry_moscow": "2026-11-03 12:00",
+      "task": "First-party TEK-Torg result, protocol, bidder/contract after closing"
+    }
+  ],
+  "no_report_html_churn": "No new unique DB lots; legacy HTML left unchanged",
+  "canonical_v29_rows_unchanged": 101,
+  "task_status": "in_progress",
+  "auto_merge": false
+}

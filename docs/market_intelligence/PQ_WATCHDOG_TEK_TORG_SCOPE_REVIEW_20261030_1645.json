@@ -1,0 +1,196 @@
+{
+  "schema_version": "pq-watchdog-first-party-scope/1",
+  "run_id": "20261030T1636-MSK-turn11",
+  "as_of_moscow": "2026-10-30T16:46:14+03:00",
+  "status": "in_progress",
+  "pr": 521,
+  "issue": 57,
+  "acceptance_gate": "pass",
+  "database": {
+    "unique_lots_before": 116,
+    "unique_lots_after": 116,
+    "distinct_procedures": 105,
+    "eis_223_notices": 39,
+    "new_unique_lots": 0,
+    "new_verified_core_lots": 0,
+    "new_signed_suppliers": 0,
+    "new_executed_pq_sales": 0,
+    "mutated": false
+  },
+  "requests": {
+    "first_party_http_get": 45,
+    "http_200": 45,
+    "new_distinct_month_source_coverage": 0,
+    "searches": "TEK-Torg rosneft/223-fz: УКРМ, СТАТКОМ, конденсатор, компенсации реактивной мощности, БСК, фильтрокомпенсирующая, статический компенсатор, реактивной мощности, компенсатор, гармоник, конденсаторная установка; page 1 only for paginated queries; not exhaustive",
+    "new_original_files": 13,
+    "distinct_new_original_sha": 11
+  },
+  "original_protocols": 2,
+  "named_winner_protocols": 0,
+  "new_underlying_projects_verified": 0,
+  "findings": [
+    {
+      "case": "commercial:ZP602955:lot1",
+      "url": "https://www.tektorg.ru/223-fz/procedures/17903967",
+      "buyer": "ООО Норильскникельсервис",
+      "date": "2026-02-10",
+      "scope": "excluded_low_voltage_400v",
+      "original_quote": "Конденсаторы реактивной мощности LKT 25-400 DB (31-10402) FRAKO",
+      "evidence": "RAR specification: 48 pieces, 25 kvar each, 3x165.8 microfarads, total nameplate 1200 kvar. FRAKO official product catalogue lists 31-10402 as 400 V. No award or signed contract.",
+      "archive_sha": "2b97dc39040d1ba171d5f313d6eb5aa190a21100c8ea9a08954038a61e28f7d3",
+      "member_sha": "c00f3ba51f382ce7c8df09f321c031edad9f267740c9e0f40fe06e18e2e186ca",
+      "catalog": "https://www.frako.com/fileadmin/Frako/Downloads/Katalog/en_katalog/95-00333_Product_Catalogue_2025_EN.pdf"
+    },
+    {
+      "case": "commercial:ZP509357:lot1",
+      "eis_notice": "32515185258",
+      "url": "https://www.tektorg.ru/223-fz/procedures/16081867",
+      "buyer": "ФГУП НИКИМП, Керченский филиал",
+      "date": "2025-09-04",
+      "scope": "excluded_0_4kv",
+      "original_quote": "Автоматическая регулируемая конденсаторная тиристорная установка КРМТ-0.4-300-25",
+      "evidence": "One 0.4kV 300kvar installation, step 25kvar, NMC 465000 RUB. Original 11.09.2025 commission protocol: no applications; no winner or signed supplier.",
+      "spec_sha": "38230dc9bef62eee92acc626fb23d50055f55ddd3cef269e881033ecce819cb2",
+      "protocol_sha": "fece2a48841c803289172729a2591bd0ae70e88b50404781b827d789d10a61e8"
+    },
+    {
+      "case": "commercial:ZP4081337:lot1",
+      "url": "https://www.tektorg.ru/223-fz/procedures/11800051",
+      "buyer": "ФГУП НИКИМП, Керченский филиал",
+      "date": "2024-08-16",
+      "scope": "excluded_0_4kv_price_inquiry",
+      "original_quote": "Автоматическая регулируемая конденсаторная тиристорная установка КРМТ-0.4-300-25",
+      "evidence": "Two 0.4kV 300kvar installations; original 23.08.2024 price inquiry opening protocol is not signed contract. Same buyer/model as 2025 but different quantity; project identity unproven.",
+      "spec_sha": "1636f86d7438956b3ce9d3e4b9a3d45fc124d33eb9cbb76a2aabffe756876a62",
+      "protocol_sha": "7fcae96446cea1cbaa24b0b863bc90466fb88da247b891927a68b25493ded070"
+    }
+  ],
+  "captures": [
+    {
+      "case_id": "commercial:ZP602955:lot1",
+      "source_url": "https://www.tektorg.ru/223-fz/procedures/17903967",
+      "relative_file": "captures/commercial_ZP602955_lot1/20261030T134137773399Z-e1bd33f8-e4a372ad4b0c2511.bin",
+      "sha256": "e4a372ad4b0c2511bfcf083a25f39b400fe0c5ce9b4270383633a6506d45cb72",
+      "bytes": 316548,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP602955:lot1",
+      "source_url": "https://api.tektorg.ru/open-api/documents/procedure/18679014",
+      "relative_file": "captures/commercial_ZP602955_lot1/20261030T134149762638Z-26fbeafb-a7d635ba1f908992.bin",
+      "sha256": "a7d635ba1f9089927bb80cc4c456742997b71356d92215780dfaf8edc8f2ade3",
+      "bytes": 43174,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP602955:lot1",
+      "source_url": "https://api.tektorg.ru/open-api/documents/procedure/18679015",
+      "relative_file": "captures/commercial_ZP602955_lot1/20261030T134150110968Z-b19a03c3-2b97dc39040d1ba1.bin",
+      "sha256": "2b97dc39040d1ba171d5f313d6eb5aa190a21100c8ea9a08954038a61e28f7d3",
+      "bytes": 266558,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP602955:lot1",
+      "source_url": "https://api.tektorg.ru/open-api/documents/procedure/18679012",
+      "relative_file": "captures/commercial_ZP602955_lot1/20261030T134150662992Z-b478a7cc-a7d635ba1f908992.bin",
+      "sha256": "a7d635ba1f9089927bb80cc4c456742997b71356d92215780dfaf8edc8f2ade3",
+      "bytes": 43174,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP602955:lot1",
+      "source_url": "https://api.tektorg.ru/open-api/documents/procedure/18679013",
+      "relative_file": "captures/commercial_ZP602955_lot1/20261030T134150935978Z-57906f3e-2b97dc39040d1ba1.bin",
+      "sha256": "2b97dc39040d1ba171d5f313d6eb5aa190a21100c8ea9a08954038a61e28f7d3",
+      "bytes": 266558,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP509357:lot1",
+      "source_url": "https://www.tektorg.ru/223-fz/procedures/16081867",
+      "relative_file": "captures/commercial_ZP509357_lot1/20261030T134325930023Z-23dba2d2-1d566481f412e672.bin",
+      "sha256": "1d566481f412e672b801ef0bfaf567af58360ca90fe7bd13ec9fc2f41f98c222",
+      "bytes": 289600,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP509357:lot1",
+      "source_url": "https://api.tektorg.ru/open-api/documents/procedure/17697376",
+      "relative_file": "captures/commercial_ZP509357_lot1/20261030T134338333202Z-bd3b975c-38230dc9bef62eee.bin",
+      "sha256": "38230dc9bef62eee92acc626fb23d50055f55ddd3cef269e881033ecce819cb2",
+      "bytes": 257024,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP509357:lot1",
+      "source_url": "https://api.tektorg.ru/open-api/documents/procedure/17697377",
+      "relative_file": "captures/commercial_ZP509357_lot1/20261030T134338689659Z-88a6f54a-6f1e1353e371768f.bin",
+      "sha256": "6f1e1353e371768fe4be52751f1117370f4fe02ea0945ce72d30637a6803b8f1",
+      "bytes": 31744,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP509357:lot1",
+      "source_url": "https://api.tektorg.ru/open-api/documents/procedure/17697378",
+      "relative_file": "captures/commercial_ZP509357_lot1/20261030T134339102314Z-52cfd85f-65b6817479d23cc5.bin",
+      "sha256": "65b6817479d23cc5807233c9fd448de5c18c991461b2f8f9eb14cd2ba4caa0db",
+      "bytes": 260608,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP509357:lot1",
+      "source_url": "https://api.tektorg.ru/open-api/documents/protocol/2059130",
+      "relative_file": "captures/commercial_ZP509357_lot1/20261030T134339656979Z-08657775-fece2a48841c8032.bin",
+      "sha256": "fece2a48841c803289172729a2591bd0ae70e88b50404781b827d789d10a61e8",
+      "bytes": 635305,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP4081337:lot1",
+      "source_url": "https://www.tektorg.ru/223-fz/procedures/11800051",
+      "relative_file": "captures/commercial_ZP4081337_lot1/20261030T134326370071Z-76dfe7ad-4219e1e806f62e64.bin",
+      "sha256": "4219e1e806f62e643e1d6ddba4f0993e93fe94e5c3f6f7db832693a393c126ce",
+      "bytes": 286904,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP4081337:lot1",
+      "source_url": "https://api.tektorg.ru/open-api/documents/procedure/15670476",
+      "relative_file": "captures/commercial_ZP4081337_lot1/20261030T134340044305Z-65b88aaa-1636f86d7438956b.bin",
+      "sha256": "1636f86d7438956b3ce9d3e4b9a3d45fc124d33eb9cbb76a2aabffe756876a62",
+      "bytes": 363520,
+      "http_status": 200
+    },
+    {
+      "case_id": "commercial:ZP4081337:lot1",
+      "source_url": "https://api.tektorg.ru/open-api/documents/protocol/1815120",
+      "relative_file": "captures/commercial_ZP4081337_lot1/20261030T134340628821Z-3bec6651-7fcae96446cea1cb.bin",
+      "sha256": "7fcae96446cea1cbaa24b0b863bc90466fb88da247b891927a68b25493ded070",
+      "bytes": 794788,
+      "http_status": 200
+    }
+  ],
+  "why_zero_core": "Three source-grounded candidates all 400 V/0.4 kV; no verified 6-35kV unique lot. Two protocols are no-bid/price-inquiry, not signed suppliers.",
+  "client_html_regenerated": false,
+  "backup_created": false,
+  "canonical_v29_rows_unchanged": 101,
+  "no_auto_merge": true,
+  "next": [
+    {
+      "case": "РН61003961",
+      "retry_msk": "2026-10-30 20:00",
+      "goal": "official award/contract"
+    },
+    {
+      "case": "ГП630876",
+      "retry_msk": "2026-10-30 23:40",
+      "goal": "original technical archive"
+    },
+    {
+      "case": "32615684088",
+      "retry_msk": "2026-10-31 09:00",
+      "goal": "original signed contract/supplier"
+    }
+  ]
+}

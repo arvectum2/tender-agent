@@ -1,0 +1,57 @@
+{
+  "schema_version": "pq-commercial-primary-incremental/1",
+  "base_db_expected_records": 109,
+  "cases": [
+    {
+      "canonical_id": "commercial:4617521:lot1",
+      "source_url": "https://www.b2b-center.ru/app/market-next/vybor-ispolnitelia-na-postavku-montazh-i-pnr-ustanovok-kompensatsii/tender-4617521/",
+      "private_source_relative": "captures/commercial_4617521_lot1/20261029T113645921211Z-5d9a6550-02d956e85a58cd25.bin",
+      "sha256": "02d956e85a58cd254b9e1503a892acc94bddb38849bf20f0b1ca721a679dc50f",
+      "bytes": 341908,
+      "exact_source_quotes": [
+        "№ 4617521",
+        "В процедуре объявлена переторжка",
+        "АО \"ТАНДЕР\"",
+        "Документация от организатора Доступно зарегистрированным пользователям."
+      ],
+      "family": "ukrm",
+      "scope": "mixed_supply_install_pnr",
+      "market_scope": "voltage_unverified_not_core_6_35kv",
+      "status": "retender_active",
+      "technical_voltage_kv": null,
+      "signed_supplier_verified": false,
+      "paid_verified": false,
+      "publication_date": "2026-09-28",
+      "buyer": "АО «Тандер»",
+      "description": "Поставка, монтаж и ПНР установок компенсации реактивной мощности для ТДХ Новотитаровская; переторжка 29.10.2026; документация закрыта",
+      "listed_price_rub": null,
+      "listed_price_type": null
+    },
+    {
+      "canonical_id": "commercial:4657777:lot1",
+      "source_url": "https://www.b2b-center.ru/market/postavka-blokov-kondensatornykh-dlia-nuzhd-po-btses-po-kes-ooo/tender-4657777/",
+      "private_source_relative": "captures/commercial_4657777_lot1/20261029T113646455922Z-3b80bdb8-a2b6ea5931172eeb.bin",
+      "sha256": "a2b6ea5931172eebda42c3876dacce7a4dae95b6b8df38d8798c60b3d3c183ea",
+      "bytes": 74321,
+      "exact_source_quotes": [
+        "№ 4657777",
+        "Поставка блоков конденсаторных для нужд",
+        "Количество: 6 шт",
+        "Общая стоимость закупки: 208 419,30 руб. (цена без НДС)",
+        "Всего заявок: 0"
+      ],
+      "family": "capacitor_blocks",
+      "scope": "component_supply_voltage_unknown",
+      "market_scope": "voltage_unverified_not_core_6_35kv",
+      "status": "accepting_bids",
+      "technical_voltage_kv": null,
+      "signed_supplier_verified": false,
+      "paid_verified": false,
+      "publication_date": "2026-10-27",
+      "buyer": "ООО «Башкирэнерго»",
+      "description": "Шесть конденсаторных блоков для ПО БцЭС и ПО КЭС; напряжение не раскрыто в публичной карточке",
+      "listed_price_rub": "208419.30",
+      "listed_price_type": "initial_listed_price_ex_vat_not_award"
+    }
+  ]
+}

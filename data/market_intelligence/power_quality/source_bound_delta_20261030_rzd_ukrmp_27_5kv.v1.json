@@ -1,0 +1,118 @@
+{
+  "schema_version": "mi-pq-source-bound-incremental/1",
+  "date": "2026-10-30",
+  "base_db_expected_records": 114,
+  "source": "official_tektorg_223fz_card_final_protocol_technical_cost_estimate",
+  "corpus": "power_quality_russia",
+  "new_cases": [
+    {
+      "source_record": {
+        "canonical_id": "223fz:32514565977:lot1",
+        "procedure_id": "32514565977",
+        "family": "ukrm",
+        "scope": "commissioning_service_existing_ukrm",
+        "market_scope": "core_27_5kv_commissioning_service_notice_not_equipment_supply",
+        "procurement_regime": "223-fz",
+        "platform": "ТЭК-Торг / 223-ФЗ",
+        "platform_procedure_id": "ЗП5022490",
+        "publication_date": "2025-02-28",
+        "customer": {
+          "name": "ОАО «РЖД»",
+          "inn": "7708503727"
+        },
+        "status": "2025_03_31_final_protocol_anonymous_participant_1_winner_no_signed_contract",
+        "description": "Пусконаладочные работы УКРМП-27,5 кВ на ПС Раздольное (Дальневосточная железная дорога). Первичный протокол от 31.03.2025 называет победителем участника №1 без юридического имени. Это услуги ПНР, а не новая поставка оборудования.",
+        "technical": {
+          "voltage_kv": 27.5,
+          "equipment": "УКРМП-27,5",
+          "site": "ПС Раздольное, Приморский край",
+          "work_type": "commissioning_only",
+          "evidence_cell": "Приложение 1.4 сметная документация / смета 1.xlsx A34,A36"
+        },
+        "project_key": "RZD:DVGZD:PS_Razdolnoe:UKRMP_27_5",
+        "project_relation": "Underlying equipment installation predates this commissioning tender; separate possible same-site later notice is not merged without first-party evidence",
+        "nmck_rub": 9625921.98,
+        "nmck_vat": "incl_20pct_vat_per_original_technical_spec_and_final_protocol",
+        "commission_bid_rub": 9529662.76,
+        "commission_bid_vat": "incl_20pct_vat_per_final_protocol",
+        "runner_up_offer_rub": 9577792.37,
+        "winning_bidder_label": "anonymous_participant_1_only",
+        "contract_registered_price_rub": null,
+        "signed_contract_price_rub": null,
+        "supplier_verified": false,
+        "signed_supplier_verified": false,
+        "paid_verified": false,
+        "realized_equipment_revenue_rub": null,
+        "market_population_complete": false,
+        "price_conflict_note": "TEK-Torg auction DOCX labels 9,625,921.98 as without VAT/NDFl, but official technical specification and signed final protocol explicitly include 20% VAT; final protocol used for bid VAT status. Not a signed sale.",
+        "evidence": [
+          {
+            "url": "https://www.tektorg.ru/223-fz/procedures/13319469",
+            "source_tier": "first_party_tektorg_card",
+            "sha256": "2a8b3a9045e943d1a136c95b755349012025b8625f75d7834186c00e963ca702"
+          },
+          {
+            "url": "https://api.tektorg.ru/open-api/documents/protocol/1961956",
+            "source_tier": "first_party_tektorg_final_protocol",
+            "sha256": "e6166f104aa5a45b4ca87c52b69e670fcd0fdd20631598f4dc71324d7e5bd51b"
+          },
+          {
+            "url": "https://api.tektorg.ru/open-api/documents/protocol/1951222",
+            "source_tier": "first_party_tektorg_auction_protocol",
+            "sha256": "69c75d4a3809a955d73283a45789728586c242fd250a93403e4dd73594b6f8eb"
+          },
+          {
+            "url": "https://api.tektorg.ru/open-api/documents/procedure/16740259",
+            "source_tier": "first_party_tektorg_technical_spec",
+            "sha256": "939459cd56e0704530aa6cf16ab2df9f05d15aef12cf7dc3994d1ce59be7f8c0"
+          },
+          {
+            "url": "https://api.tektorg.ru/open-api/documents/procedure/16740261",
+            "source_tier": "first_party_tektorg_cost_estimate",
+            "sha256": "2fa47c2ae36b5e6f20df1a0e91b2bc40ec26794aeda3f165cc1c1c148324ecc7"
+          }
+        ]
+      },
+      "verified_originals": [
+        {
+          "role": "card",
+          "private_relative": "captures/commercial_ZP5022490_lot1/20261030T083321997027Z-6357ca63-2a8b3a9045e943d1.bin",
+          "sha256": "2a8b3a9045e943d1a136c95b755349012025b8625f75d7834186c00e963ca702",
+          "bytes": 430127
+        },
+        {
+          "role": "final_protocol",
+          "private_relative": "captures/commercial_ZP5022490_lot1/20261030T083402733891Z-d904ee28-e6166f104aa5a45b.bin",
+          "sha256": "e6166f104aa5a45b4ca87c52b69e670fcd0fdd20631598f4dc71324d7e5bd51b",
+          "bytes": 204595
+        },
+        {
+          "role": "auction_protocol",
+          "private_relative": "captures/commercial_ZP5022490_lot1/20261030T083403014693Z-a320e203-69c75d4a3809a955.bin",
+          "sha256": "69c75d4a3809a955d73283a45789728586c242fd250a93403e4dd73594b6f8eb",
+          "bytes": 25769
+        },
+        {
+          "role": "second_parts",
+          "private_relative": "captures/commercial_ZP5022490_lot1/20261030T083403217470Z-ac0b7bba-e01dbcb39a07d658.bin",
+          "sha256": "e01dbcb39a07d658d7a359345fc3898edb76f52e7d447bfe035bc4c2f20da45f",
+          "bytes": 136593
+        },
+        {
+          "role": "technical_spec",
+          "private_relative": "captures/commercial_ZP5022490_lot1/20261030T083403756749Z-afbbf122-939459cd56e07045.bin",
+          "sha256": "939459cd56e0704530aa6cf16ab2df9f05d15aef12cf7dc3994d1ce59be7f8c0",
+          "bytes": 769024
+        },
+        {
+          "role": "cost_estimate",
+          "private_relative": "captures/commercial_ZP5022490_lot1/20261030T083516550155Z-0f7c1968-2fa47c2ae36b5e6f.bin",
+          "sha256": "2fa47c2ae36b5e6f20df1a0e91b2bc40ec26794aeda3f165cc1c1c148324ecc7",
+          "bytes": 365239
+        }
+      ],
+      "original_verification": "internal_APFS_sha256_byte_exact",
+      "review_scope": "source_bound_27_5kv_commissioning_only_not_signed_or_paid_sale"
+    }
+  ]
+}

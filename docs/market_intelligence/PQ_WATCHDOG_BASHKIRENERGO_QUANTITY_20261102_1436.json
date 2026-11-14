@@ -1,0 +1,383 @@
+{
+  "schema_version": "pq-watchdog-evidence-run/20261102",
+  "moscow_run_start": "2026-11-02T14:27:51+03:00",
+  "moscow_run_end": "2026-11-02T14:36:24.268043+03:00",
+  "issue_comment_id": 6575993883,
+  "single_pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "base_git_head": "0ab7d214112f00a7d9125513e5a7241019800c2d",
+  "preflight": "pass; Git clean; internal APFS source and backup fsync+rename; original SHA; live PG",
+  "db_before": {
+    "unique_lots": 123,
+    "distinct_procedures": 112,
+    "eis_223_notices": 45
+  },
+  "db_after": {
+    "unique_lots": 123,
+    "distinct_procedures": 112,
+    "eis_223_notices": 45
+  },
+  "new_unique_lots": 0,
+  "new_deduplicated_projects": 0,
+  "new_verified_db_fields": 1,
+  "new_signed_suppliers": 0,
+  "new_named_winners": 0,
+  "new_signed_contracts": 0,
+  "new_executed_or_paid_equipment_sales": 0,
+  "new_primary_protocols": 0,
+  "new_distinct_original_shas": 0,
+  "sha_verified_first_party_captures": 7,
+  "capture_originals": [
+    {
+      "case_id": "223fz:32313008364:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32313008364",
+      "http": 200,
+      "sha256": "66c9660f88eacc97df35a883a15cbcd1167a0caca873de736b549fa071c32a78",
+      "relative_file": "captures/223fz_32313008364_lot1/20261102T112843635934Z-51cca9ac-66c9660f88eacc97.bin",
+      "bytes": 146691
+    },
+    {
+      "case_id": "223fz:32413581034:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32413581034",
+      "http": 200,
+      "sha256": "3c3fe76cdebd2bbc2bc6d7d9623deada4f932636c0c3eade43c3af25319323fd",
+      "relative_file": "captures/223fz_32413581034_lot1/20261102T112844165919Z-a42462aa-3c3fe76cdebd2bbc.bin",
+      "bytes": 148184
+    },
+    {
+      "case_id": "223fz:32514720691:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32514720691",
+      "http": 200,
+      "sha256": "3e9c6b143ca4233f54bb96f2b07c59f83ab71a4ec7f5628f9ed4bfc98afe639e",
+      "relative_file": "captures/223fz_32514720691_lot1/20261102T113113477119Z-5e4ebf05-3e9c6b143ca4233f.bin",
+      "bytes": 132604
+    },
+    {
+      "case_id": "223fz:32514720691:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32514720691",
+      "http": 200,
+      "sha256": "de8f9582a336f2e89a9ff19cbe0dd780e4ea4fdf779c7558dfeb26436bde061b",
+      "relative_file": "captures/223fz_32514720691_lot1/20261102T113114743120Z-506237c4-de8f9582a336f2e8.bin",
+      "bytes": 135129
+    },
+    {
+      "case_id": "223fz:32514754857:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32514754857",
+      "http": 200,
+      "sha256": "089c4dc6cb10195cd2ef1378dda97dd3a5d8459168c3266e62daf7e7df59933c",
+      "relative_file": "captures/223fz_32514754857_lot1/20261102T113115384313Z-9a235d2f-089c4dc6cb10195c.bin",
+      "bytes": 132912
+    },
+    {
+      "case_id": "223fz:32514754857:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32514754857",
+      "http": 200,
+      "sha256": "9a1dbde7195d5ed05500890d3e85f96bcfe3eeb08366f924e9eae18e2a2c8b94",
+      "relative_file": "captures/223fz_32514754857_lot1/20261102T113116169951Z-f9f9b3be-9a1dbde7195d5ed0.bin",
+      "bytes": 146566
+    },
+    {
+      "case_id": "223fz:32515225588:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32515225588",
+      "http": 200,
+      "sha256": "953f9740005d2b10eaf618800cd4a820304299d243a14e31c7cb8e8d6c75e5f4",
+      "relative_file": "captures/223fz_32515225588_lot1/20261102T112844714165Z-ec22de1d-953f9740005d2b10.bin",
+      "bytes": 146688
+    }
+  ],
+  "first_party_month_queries": 10,
+  "first_party_search_http200": 12,
+  "first_party_searches": [
+    {
+      "private_journal": "month-first-party-search-20261102T113047Z-75214442.json",
+      "sha256": "decd6081e56ba6f09ba21211a0fb2d62ad7987338838819c9da2b608fbef618a",
+      "searches": [
+        {
+          "law": "fz223",
+          "query": "БСК",
+          "month": "2024-07",
+          "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.07.2024&publishDateTo=31.07.2024&searchString=%D0%91%D0%A1%D0%9A",
+          "page": 1,
+          "exhaustive": false,
+          "retrieved_utc": "2026-11-02T11:30:44.374361+00:00",
+          "http": 200,
+          "bytes": 362379,
+          "sha256": "202872457b7211ee9aa3520447c794a74a0ec17a05ae64671c3ea39bb6fc480b",
+          "notice_numbers": [
+            "32413819701",
+            "32413811812",
+            "32413809868",
+            "32413856192",
+            "32413818060",
+            "32413853052",
+            "32413853921",
+            "32413857917",
+            "32413847838",
+            "32413857052"
+          ],
+          "result_excerpt": "мационной системы Перейти к опросу Система торгов Сбербанк-АСТ SBERBANK-AST.RU Единая электронная торговая площадка ROSELTORG.RU Общероссийская система электронной торговли ETP.ZAKAZRF.RU Электронная площадка России RTS-TENDER.RU Электронная торговая площадка «Фабрикант» FABRIKANT.RU Всероссийская универсальная площадка GZ.LOT-ONLINE.RU Федеральная электронная площадка ТЭК-Торг TEKTORG.RU Электронная торговая площадка ГПБ ETPGPB.RU Специализированная электронная торговая площадка ГПБ etpgpb.ru Автоматизированная система торгов государственного оборонного заказа ASTGOZ.RU Специализированная электронная площадка ETPRF.RU Новости Поставщикам Заказчикам Органам контроля Опросы Статистика Карта сайта Отчет о посещаемости Часто задаваемые вопросы Единая информационная система в сфере закупок © Федеральное казначейство, 2026 Версия hotfix/16.3.2.58 revc33796ce от 30.10.2026 Официальные ресурсы Президент Российской Федерации Правительство Российской Федерации Министерство экономического развития Российской Федерации Министерство финансов Российской Федерации Федеральная антимонопольная служба Федеральное казначейство Техническая информация Техническая поддержка Ваши идеи по улучшению сайта",
+          "page_mentions_query": true,
+          "reported_count_fragments": []
+        },
+        {
+          "law": "fz223",
+          "query": "УКРМ",
+          "month": "2025-03",
+          "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.03.2025&publishDateTo=31.03.2025&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+          "page": 1,
+          "exhaustive": false,
+          "retrieved_utc": "2026-11-02T11:30:44.808018+00:00",
+          "http": 200,
+          "bytes": 247941,
+          "sha256": "e2d406b7e22c1e1c985da87d43d2f0e9e85688a0f7b9dbc5e587b2e70f296403",
+          "notice_numbers": [],
+          "result_excerpt": "мационной системы Перейти к опросу Система торгов Сбербанк-АСТ SBERBANK-AST.RU Единая электронная торговая площадка ROSELTORG.RU Общероссийская система электронной торговли ETP.ZAKAZRF.RU Электронная площадка России RTS-TENDER.RU Электронная торговая площадка «Фабрикант» FABRIKANT.RU Всероссийская универсальная площадка GZ.LOT-ONLINE.RU Федеральная электронная площадка ТЭК-Торг TEKTORG.RU Электронная торговая площадка ГПБ ETPGPB.RU Специализированная электронная торговая площадка ГПБ etpgpb.ru Автоматизированная система торгов государственного оборонного заказа ASTGOZ.RU Специализированная электронная площадка ETPRF.RU Новости Поставщикам Заказчикам Органам контроля Опросы Статистика Карта сайта Отчет о посещаемости Часто задаваемые вопросы Единая информационная система в сфере закупок © Федеральное казначейство, 2026 Версия hotfix/16.3.2.58 revc33796ce от 30.10.2026 Официальные ресурсы Президент Российской Федерации Правительство Российской Федерации Министерство экономического развития Российской Федерации Министерство финансов Российской Федерации Федеральная антимонопольная служба Федеральное казначейство Техническая информация Техническая поддержка Ваши идеи по улучшению сайта",
+          "page_mentions_query": false,
+          "reported_count_fragments": [
+            "результатов Параметры поиска Все параметры Сохраненные параметры В"
+          ]
+        },
+        {
+          "law": "fz223",
+          "query": "компенсация реактивной мощности",
+          "month": "2026-07",
+          "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.07.2026&publishDateTo=31.07.2026&searchString=%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%86%D0%B8%D1%8F+%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9+%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8",
+          "page": 1,
+          "exhaustive": false,
+          "retrieved_utc": "2026-11-02T11:30:45.146322+00:00",
+          "http": 200,
+          "bytes": 248145,
+          "sha256": "227c7bf9c54d2fe584e5684891c84201c96e3ab474dc212c20fa7c3c919577c1",
+          "notice_numbers": [],
+          "result_excerpt": "мационной системы Перейти к опросу Система торгов Сбербанк-АСТ SBERBANK-AST.RU Единая электронная торговая площадка ROSELTORG.RU Общероссийская система электронной торговли ETP.ZAKAZRF.RU Электронная площадка России RTS-TENDER.RU Электронная торговая площадка «Фабрикант» FABRIKANT.RU Всероссийская универсальная площадка GZ.LOT-ONLINE.RU Федеральная электронная площадка ТЭК-Торг TEKTORG.RU Электронная торговая площадка ГПБ ETPGPB.RU Специализированная электронная торговая площадка ГПБ etpgpb.ru Автоматизированная система торгов государственного оборонного заказа ASTGOZ.RU Специализированная электронная площадка ETPRF.RU Новости Поставщикам Заказчикам Органам контроля Опросы Статистика Карта сайта Отчет о посещаемости Часто задаваемые вопросы Единая информационная система в сфере закупок © Федеральное казначейство, 2026 Версия hotfix/16.3.2.58 revc33796ce от 30.10.2026 Официальные ресурсы Президент Российской Федерации Правительство Российской Федерации Министерство экономического развития Российской Федерации Министерство финансов Российской Федерации Федеральная антимонопольная служба Федеральное казначейство Техническая информация Техническая поддержка Ваши идеи по улучшению сайта",
+          "page_mentions_query": false,
+          "reported_count_fragments": [
+            "результатов Параметры поиска Все параметры Сохраненные параметры В"
+          ]
+        },
+        {
+          "law": "fz223",
+          "query": "конденсаторная установка",
+          "month": "2026-10",
+          "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.10.2026&publishDateTo=31.10.2026&searchString=%D0%BA%D0%BE%D0%BD%D0%B4%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80%D0%BD%D0%B0%D1%8F+%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0",
+          "page": 1,
+          "exhaustive": false,
+          "retrieved_utc": "2026-11-02T11:30:45.819022+00:00",
+          "http": 200,
+          "bytes": 266736,
+          "sha256": "cc7a5e7e66d60f9681dd63a7ce0f2f79df0f4012671224480eb18d05b47e48be",
+          "notice_numbers": [
+            "32616497692"
+          ],
+          "result_excerpt": "мационной системы Перейти к опросу Система торгов Сбербанк-АСТ SBERBANK-AST.RU Единая электронная торговая площадка ROSELTORG.RU Общероссийская система электронной торговли ETP.ZAKAZRF.RU Электронная площадка России RTS-TENDER.RU Электронная торговая площадка «Фабрикант» FABRIKANT.RU Всероссийская универсальная площадка GZ.LOT-ONLINE.RU Федеральная электронная площадка ТЭК-Торг TEKTORG.RU Электронная торговая площадка ГПБ ETPGPB.RU Специализированная электронная торговая площадка ГПБ etpgpb.ru Автоматизированная система торгов государственного оборонного заказа ASTGOZ.RU Специализированная электронная площадка ETPRF.RU Новости Поставщикам Заказчикам Органам контроля Опросы Статистика Карта сайта Отчет о посещаемости Часто задаваемые вопросы Единая информационная система в сфере закупок © Федеральное казначейство, 2026 Версия hotfix/16.3.2.58 revc33796ce от 30.10.2026 Официальные ресурсы Президент Российской Федерации Правительство Российской Федерации Министерство экономического развития Российской Федерации Министерство финансов Российской Федерации Федеральная антимонопольная служба Федеральное казначейство Техническая информация Техническая поддержка Ваши идеи по улучшению сайта",
+          "page_mentions_query": false,
+          "reported_count_fragments": []
+        },
+        {
+          "law": "fz44",
+          "query": "СТАТКОМ",
+          "month": "2025-02",
+          "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz44=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.02.2025&publishDateTo=28.02.2025&searchString=%D0%A1%D0%A2%D0%90%D0%A2%D0%9A%D0%9E%D0%9C",
+          "page": 1,
+          "exhaustive": false,
+          "retrieved_utc": "2026-11-02T11:30:46.177969+00:00",
+          "http": 200,
+          "bytes": 377559,
+          "sha256": "943e750caa3232316a91c9df46bd57d40139fc88b5523cac64d0112a751ffad2",
+          "notice_numbers": [],
+          "result_excerpt": "мационной системы Перейти к опросу Система торгов Сбербанк-АСТ SBERBANK-AST.RU Единая электронная торговая площадка ROSELTORG.RU Общероссийская система электронной торговли ETP.ZAKAZRF.RU Электронная площадка России RTS-TENDER.RU Электронная торговая площадка «Фабрикант» FABRIKANT.RU Всероссийская универсальная площадка GZ.LOT-ONLINE.RU Федеральная электронная площадка ТЭК-Торг TEKTORG.RU Электронная торговая площадка ГПБ ETPGPB.RU Специализированная электронная торговая площадка ГПБ etpgpb.ru Автоматизированная система торгов государственного оборонного заказа ASTGOZ.RU Специализированная электронная площадка ETPRF.RU Новости Поставщикам Заказчикам Органам контроля Опросы Статистика Карта сайта Отчет о посещаемости Часто задаваемые вопросы Единая информационная система в сфере закупок © Федеральное казначейство, 2026 Версия hotfix/16.3.2.58 revc33796ce от 30.10.2026 Официальные ресурсы Президент Российской Федерации Правительство Российской Федерации Министерство экономического развития Российской Федерации Министерство финансов Российской Федерации Федеральная антимонопольная служба Федеральное казначейство Техническая информация Техническая поддержка Ваши идеи по улучшению сайта",
+          "page_mentions_query": false,
+          "reported_count_fragments": []
+        },
+        {
+          "law": "fz44",
+          "query": "УКРМ",
+          "month": "2024-08",
+          "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz44=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.08.2024&publishDateTo=31.08.2024&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+          "page": 1,
+          "exhaustive": false,
+          "retrieved_utc": "2026-11-02T11:30:47.049557+00:00",
+          "http": 200,
+          "bytes": 247940,
+          "sha256": "dca601676822db32155deefa3cd3ad54dd38366a85280233e2ae0518a350e84f",
+          "notice_numbers": [],
+          "result_excerpt": "мационной системы Перейти к опросу Система торгов Сбербанк-АСТ SBERBANK-AST.RU Единая электронная торговая площадка ROSELTORG.RU Общероссийская система электронной торговли ETP.ZAKAZRF.RU Электронная площадка России RTS-TENDER.RU Электронная торговая площадка «Фабрикант» FABRIKANT.RU Всероссийская универсальная площадка GZ.LOT-ONLINE.RU Федеральная электронная площадка ТЭК-Торг TEKTORG.RU Электронная торговая площадка ГПБ ETPGPB.RU Специализированная электронная торговая площадка ГПБ etpgpb.ru Автоматизированная система торгов государственного оборонного заказа ASTGOZ.RU Специализированная электронная площадка ETPRF.RU Новости Поставщикам Заказчикам Органам контроля Опросы Статистика Карта сайта Отчет о посещаемости Часто задаваемые вопросы Единая информационная система в сфере закупок © Федеральное казначейство, 2026 Версия hotfix/16.3.2.58 revc33796ce от 30.10.2026 Официальные ресурсы Президент Российской Федерации Правительство Российской Федерации Министерство экономического развития Российской Федерации Министерство финансов Российской Федерации Федеральная антимонопольная служба Федеральное казначейство Техническая информация Техническая поддержка Ваши идеи по улучшению сайта",
+          "page_mentions_query": false,
+          "reported_count_fragments": [
+            "результатов Параметры поиска Все параметры Сохраненные параметры В"
+          ]
+        }
+      ]
+    },
+    {
+      "private_journal": "month-first-party-search-20261102T113534Z-ba43ec1e.json",
+      "sha256": "9157698a805795b8ac5785023118d9d33535a4c518507b64c4d58fe0403999a5",
+      "searches": [
+        {
+          "law": "fz223",
+          "query": "установка компенсации реактивной мощности",
+          "month": "2025-07",
+          "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.07.2025&publishDateTo=31.07.2025&searchString=%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%86%D0%B8%D0%B8+%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9+%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8",
+          "page": 1,
+          "exhaustive": false,
+          "retrieved_utc": "2026-11-02T11:35:32.610030+00:00",
+          "http": 200,
+          "sha256": "0ec2a7832cc455210b6ac35abc783ed289194ebc6072cc4319ec1fc509d3313a",
+          "total_reported": 0,
+          "first_page_cards": []
+        },
+        {
+          "law": "fz223",
+          "query": "УКРМ",
+          "month": "2026-08",
+          "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.08.2026&publishDateTo=31.08.2026&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+          "page": 1,
+          "exhaustive": false,
+          "retrieved_utc": "2026-11-02T11:35:32.948579+00:00",
+          "http": 200,
+          "sha256": "560c574e8cd4859b84aecb622a8441d7f2fa9513891dceef12486c72c1836cf3",
+          "total_reported": 0,
+          "first_page_cards": []
+        },
+        {
+          "law": "fz223",
+          "query": "фильтр гармоник",
+          "month": "2024-03",
+          "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.03.2024&publishDateTo=31.03.2024&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80+%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D0%BD%D0%B8%D0%BA",
+          "page": 1,
+          "exhaustive": false,
+          "retrieved_utc": "2026-11-02T11:35:33.265919+00:00",
+          "http": 200,
+          "sha256": "37616e90f643e4edb84da968b28c3a32c2ade15c415359ec8cab9e039042093b",
+          "total_reported": 0,
+          "first_page_cards": []
+        },
+        {
+          "law": "fz44",
+          "query": "статический компенсатор",
+          "month": "2026-04",
+          "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz44=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.04.2026&publishDateTo=30.04.2026&searchString=%D1%81%D1%82%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+          "page": 1,
+          "exhaustive": false,
+          "retrieved_utc": "2026-11-02T11:35:33.641730+00:00",
+          "http": 200,
+          "sha256": "bceaa61ac70e86f1deca81c28d39dce4e667509d6e5b48c013370f519b1522a4",
+          "total_reported": 2,
+          "first_page_cards": [
+            {
+              "number": "0137100001526000082",
+              "title": "Оказание услуг по диагностике, техническому обслуживанию и ремонту автотранспортных средств Брянской таможни, включая шиномонтажные работы, запасные части, специальные жидкости и расходные материалы"
+            },
+            {
+              "number": "0318100036826000005",
+              "title": "Оказание услуг по техническому обслуживанию и ремонту автотранспортных средств (ПАЗ, УАЗ, ГОЛАЗ, КАМАЗ)"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "newly_covered_exhaustive_months": 0,
+  "source_search_snapshot_originals": [
+    {
+      "relative_file": "search-snapshots/eis-223-2024-07-bsk-20261102T113101Z-9d2a09e4.html",
+      "sha256": "202872457b7211ee9aa3520447c794a74a0ec17a05ae64671c3ea39bb6fc480b",
+      "http": 200
+    },
+    {
+      "relative_file": "search-snapshots/eis-44-2025-02-statkom-20261102T113503Z-af0824d8.html",
+      "sha256": "943e750caa3232316a91c9df46bd57d40139fc88b5523cac64d0112a751ffad2",
+      "http": 200
+    }
+  ],
+  "source_negative_findings": [
+    {
+      "query": "БСК",
+      "law": "223-fz",
+      "month": "2024-07",
+      "reported_total": 223,
+      "first_page_inspected": 10,
+      "false_positive_titles": 10,
+      "reason": "БСК в именах Башкирская содовая/сетевая компания; ни одно название первых десяти не обозначает PQ; осталось 22 страницы непроверенных результатов"
+    },
+    {
+      "query": "СТАТКОМ",
+      "law": "44-fz",
+      "month": "2025-02",
+      "reported_total": 105,
+      "first_page_inspected": 10,
+      "false_positive_titles": 10,
+      "reason": "Лексический поиск находит оСТАТКОВ, а не STATCOM; кредитные услуги, вывоз порубочных остатков; остальные страницы не просмотрены"
+    },
+    {
+      "query": "статический компенсатор",
+      "law": "44-fz",
+      "month": "2026-04",
+      "reported_total": 2,
+      "first_page_inspected": 2,
+      "false_positive_titles": 2,
+      "reason": "Автомобильный сервис, не электроэнергетика"
+    },
+    {
+      "case_id": "223fz:32313008364:lot1",
+      "source_sha256": "66c9660f88eacc97df35a883a15cbcd1167a0caca873de736b549fa071c32a78",
+      "reason": "2023-11-27, обслуживание охлаждения STATCOM на ПС 220 кВ; вне периода и не новая PQ-поставка 6–35 кВ"
+    },
+    {
+      "case_id": "223fz:32413581034:lot2",
+      "source_sha256": "3c3fe76cdebd2bbc2bc6d7d9623deada4f932636c0c3eade43c3af25319323fd",
+      "reason": "220 кВ Хани mixed EPC, исходный лот №2; не отдельная подтверждённая продажа PQ 6–35 кВ"
+    },
+    {
+      "case_id": "223fz:32515225588:lot1",
+      "source_sha256": "953f9740005d2b10eaf618800cd4a820304299d243a14e31c7cb8e8d6c75e5f4",
+      "reason": "ПИР по замене 3 СТК на ПС 220 кВ; не поставка 6–35 кВ"
+    }
+  ],
+  "verified_field": {
+    "case_id": "223fz:32514720691:lot1",
+    "field": "quantity",
+    "value": 2,
+    "unit": "комплект УКРМ",
+    "source_url": "https://www.b2b-center.ru/market/view.html?id=4008815",
+    "source_sha256": "b679ed12340fad5673407a7d530309d858a3563d2439d96f926584db5df35232",
+    "exact_original_html": "<td width=40% class=\"fname\">Количество:</td><td>2&nbsp;компл</td>",
+    "source_was_already_sha_verified": true,
+    "old_null_verified": true,
+    "CAS_readback": true,
+    "db_receipt": "receipts/pq-bashkirenergo-quantity-20261102T1433.json",
+    "full_backup_sha256": "5d4ce19c8206760acfd53f74defded951541a5e42bbcd46ac17cb3f2c8f4f159"
+  },
+  "source_grades": {
+    "C": 62,
+    "A": 45,
+    "B": 8,
+    "D": 8
+  },
+  "quantity_coverage": 52,
+  "report_version": "V50",
+  "report_snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261102_v50.json",
+  "report_audit": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261102_V50.json",
+  "bilingual_pdf_pages_each": 268,
+  "targeted_tests": "17 passed; Ruff clean; git diff --check clean; PDF 268 pages each",
+  "client_html_unchanged": true,
+  "why_zero_new_original_sha": "Seven exact official captures repeated already SHA-preserved source versions; 2024-07 BSK and 2025-02 STATCOM first-page searches returned lexical false positives; other searches yielded no new verified 6–35kV lot. The only new verified fact is a previously null quantity in an existing source-bound lot.",
+  "next_targets": [
+    {
+      "case_id": "223fz:32514947144:lot1",
+      "gap": "signed supplier/INN and actual paid amount",
+      "retry": "only after a new official contract-registry revision or signed supplier attachment"
+    },
+    {
+      "case_id": "223fz:32514720691:lot1",
+      "gap": "6.3kV exact device model/power, signed supplier INN and paid amount",
+      "retry": "when first-party technical questionnaire or signed counterparty becomes newly available; no repeat existing SHA"
+    },
+    {
+      "case_id": "223fz:32616497692:lot1",
+      "gap": "final protocol, winner and signed supplier",
+      "retry": "2026-11-02 16:30 Europe/Moscow or later"
+    }
+  ],
+  "no_auto_merge": true
+}
