@@ -18,6 +18,26 @@ SOURCE = "sibur_public"
 COLLECTION = "tender-agent:sibur-public-research"
 
 
+def reconcile_meta(actual, proposed):
+    """Allow monotonic evidence additions, never removal or replacement."""
+    if actual == proposed:
+        return False
+    if not actual or set(actual) != set(proposed):
+        raise ValueError("existing metadata differs; explicit reconciliation required")
+    base = {"capture_receipts", "dp_index"}
+    if {k: v for k, v in actual.items() if k not in base} != {
+        k: v for k, v in proposed.items() if k not in base
+    }:
+        raise ValueError("existing metadata differs; explicit reconciliation required")
+    previous = {json.dumps(x, sort_keys=True, ensure_ascii=False) for x in actual["capture_receipts"]}
+    current = {json.dumps(x, sort_keys=True, ensure_ascii=False) for x in proposed["capture_receipts"]}
+    if not previous <= current:
+        raise ValueError("existing source receipt removed or replaced")
+    if actual["dp_index"] is not None and actual["dp_index"] != proposed["dp_index"]:
+        raise ValueError("existing DP index receipt removed or replaced")
+    return True
+
+
 def link(session, captures, indexed):
     tender = ProcurementTender.__table__
     doc = ProcurementTenderDocument.__table__
@@ -71,16 +91,10 @@ def link(session, captures, indexed):
         added += int(result.scalar_one_or_none() is not None)
         actual = session.execute(select(doc.c.raw_meta).where(
             doc.c.tender_id == t.id, doc.c.sha256 == sha).with_for_update()).scalar_one()
-        if actual != meta:
-            # Permit a one-way addition of independently verified DP indexing evidence.
-            # Never remove/replace a receipt or silently reconcile changed source references.
-            if (actual and actual.get("dp_index") is None and meta["dp_index"] is not None
-                    and {**actual, "dp_index": meta["dp_index"]} == meta):
-                session.execute(update(doc).where(
-                    doc.c.tender_id == t.id, doc.c.sha256 == sha).values(
-                        raw_meta=meta, updated_at=now))
-            else:
-                raise ValueError("existing metadata differs; explicit reconciliation required")
+        if reconcile_meta(actual, meta):
+            session.execute(update(doc).where(
+                doc.c.tender_id == t.id, doc.c.sha256 == sha).values(
+                    raw_meta=meta, updated_at=now))
     return {"inserted": added, "verified_links": len(groups),
             "distinct_originals": len({sha for _, sha in groups}),
             "indexed_links": sum(sha in indexed for _, sha in groups)}

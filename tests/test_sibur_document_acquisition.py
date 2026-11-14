@@ -58,3 +58,12 @@ def test_priority_changes_order_without_excluding_others():
         "https://www.sibur.ru/upload/tmp/example/a.pdf",
         "https://www.sibur.ru/upload/tmp/example/c.rar",
     ]
+
+
+def test_capture_only_signatures_not_execution():
+    assert type_matches(bytes.fromhex("d0cf11e0a1b11ae1"), ".doc")
+    assert type_matches(b"Rar!\x1a\x07\x01", ".rar")
+    assert type_matches(b"7z\xbc\xaf\x27\x1c", ".7z")
+    assert type_matches(b"PK\x03\x04", ".xlsm")
+    assert not type_matches(b"<html>", ".xls")
+    assert not type_matches(b"MZ", ".exe")
