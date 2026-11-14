@@ -3,12 +3,12 @@ status: in_progress
 goal: Establish verified primary public list acquisition for GEH and small procurement parallel to SIBUR.
 definition_of_done: [primary target lists and detail receipts, source-scoped stable identities, date and status validation, verified normalized samples, gated working DB ingestion]
 completed: [eight parallel source probes, GPB SSR card parser, real 20-card replay, 3 focused tests]
-current_stage: historical_protocol_decisions_persisted
+current_stage: historical_protocol_outcomes_58_verified
 remaining: [GPB customer-specific queries and actual date checks, TEK-Torg accessible lists, Moscow and EAT list contracts, source-separated import]
-last_verified_commit: 9c04754d3b53fc1be0830ee6ca7aa205d9bf3282
+last_verified_commit: 7677527e75de0c12af37ae46e240873e0b20780c
 latest_tests: 3 pytest passed; Ruff passed; 20 distinct primary observed cards; 13 future-dated observations quarantined
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources
-resume_instruction: Reuse 8206 GPB rows, 19 active and 80 historical verified details, 59 GPB document links and 40 structured source-bound best-bid decisions in procurement_tender_documents.raw_meta.protocol_decision. Historical 124 links include 45 protocol URL receipts; five review cases remain including unreadable ZIP and alternate member formats. Resolve etp:1294505,1293269,1293621,1293549,1293241 using bounded safe inspection, then continue historical detail batches and protocols; distinguish group leaders and participants, do not infer legal names or signed contracts. Continue active archive retries, earlier history, ZMO contracts and bounded DP processing.
+resume_instruction: Reuse 8206 GPB rows, 19 active and 110 historical details, 73 GPB document links, 59 captured protocols, 58 structured outcomes (55 best bids, 3 unsuccessful). One PDF scan etp:1293269 needs bounded OCR; no inferred legal identity or signed contract. Continue historical priority details from next unseen ID, verify remaining published protocol links, active archives, earlier dates and ZMO. Keep procedure-local ordinals separate from platform-global IDs.
 
 target_detail_receipts:
   detail_pages_verified: 2
@@ -138,3 +138,21 @@ geh_protocol_persistence:
   backup_sha256: 422193fd03b8996414960188d508f0fc92d5ce3b2a493a6cb816c6f889e7f542
   prewrite_gate: pass
   review_ids: ["etp:1294505", "etp:1293269", "etp:1293621", "etp:1293549", "etp:1293241"]
+
+geh_protocol_outcomes_batch4:
+  historical_verified_details: 110
+  protocols_captured: 59
+  structured_outcomes_db: 58
+  selected_best_bids: 55
+  unsuccessful: 3
+  individual_participants: 50
+  group_leaders: 3
+  procedure_local_ordinals: 2
+  distinct_platform_ids: 21
+  historical_links: 60
+  gpb_total_links: 73
+  pdf_scan_pending: etp:1293269
+  decision_replay_updated: 0
+  original_replay_inserted: 0
+  prewrite_gate: pass
+  backup_sha256: 27fa827268b23836ed4f772d4341c8a23c3acbe42e7337d3ac687b459f14bb91

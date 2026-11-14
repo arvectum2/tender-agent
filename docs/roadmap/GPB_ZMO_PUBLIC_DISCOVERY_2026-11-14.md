@@ -33,3 +33,7 @@ All 3 earlier parser failures resolved by allowlisting the published Protocols p
 ## Structured protocol decision persistence
 
 80 historical details, 124 published links, 45 protocol source receipts and 46 historical document links. The expanded parser handles longest explicit decision clauses, marketing research and group leaders, with tax basis preserved. All 22 prior protocols parsed; 40 of 45 total yield explicit decisions (37 participant, 3 leader, 19 distinct anonymous IDs). Five remaining reviews include one invalid ZIP, one alternate decision wording and three unsupported ZIP member configurations. Structured facts are source-bound document JSON metadata, not a new award table; exact original/member hashes and paragraph excerpts retained, no legal identity or signed contract inferred. 23 additional document links, 40 decision updates, repeat zero inserts/updates. GPB total 59 links; SIBUR 713.
+
+## Additional outcome types and direct DOCX
+
+110 historical details, 59 captured protocols, 58 source-bound persisted outcomes: 55 best bids and 3 unsuccessful procedures. Two MOEK local ordinal participants are explicitly not platform-wide identities; 21 distinct global IDs among other decisions. Direct DOCX supported independently of ZIP containers; one scanned PDF etp:1293269 lacks text layer and requires separate OCR. 60 historical links, 73 GPB links total. Repeat wrote zero.
