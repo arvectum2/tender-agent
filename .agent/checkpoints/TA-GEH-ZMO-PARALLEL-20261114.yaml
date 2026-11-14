@@ -3,12 +3,12 @@ status: in_progress
 goal: Establish verified primary public list acquisition for GEH and small procurement parallel to SIBUR.
 definition_of_done: [primary target lists and detail receipts, source-scoped stable identities, date and status validation, verified normalized samples, gated working DB ingestion]
 completed: [eight parallel source probes, GPB SSR card parser, real 20-card replay, 3 focused tests]
-current_stage: historical_protocol_pilot_verified
+current_stage: historical_protocol_decisions_persisted
 remaining: [GPB customer-specific queries and actual date checks, TEK-Torg accessible lists, Moscow and EAT list contracts, source-separated import]
-last_verified_commit: 7056155a79480284611a36d427393a12a1723cfd
+last_verified_commit: 9c04754d3b53fc1be0830ee6ca7aa205d9bf3282
 latest_tests: 3 pytest passed; Ruff passed; 20 distinct primary observed cards; 13 future-dated observations quarantined
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources
-resume_instruction: Reuse 8206 GЭХ rows, 19 active and 50 historical verified detail pages, 36 GPB DB document links. Historical detail receipts contain 63 links including 22 protocols, all 22 protocol ZIPs captured; 8 explicit best-bid decisions in private protocol-decisions-v2.json, 14 require alternate-form review. Distinguish anonymous platform participant IDs, best bids and signed contract amounts; link decision evidence to durable data model next. Continue historical detail collection beyond 50 and review older date windows, active archive failures, ZMO contracts. No speculative legal identities or award claims.
+resume_instruction: Reuse 8206 GPB rows, 19 active and 80 historical verified details, 59 GPB document links and 40 structured source-bound best-bid decisions in procurement_tender_documents.raw_meta.protocol_decision. Historical 124 links include 45 protocol URL receipts; five review cases remain including unreadable ZIP and alternate member formats. Resolve etp:1294505,1293269,1293621,1293549,1293241 using bounded safe inspection, then continue historical detail batches and protocols; distinguish group leaders and participants, do not infer legal names or signed contracts. Continue active archive retries, earlier history, ZMO contracts and bounded DP processing.
 
 target_detail_receipts:
   detail_pages_verified: 2
@@ -119,3 +119,22 @@ geh_protocol_pilot:
   prewrite_gate: pass
   backup_sha256: 43f6fae141f45f06665e7f94f198bbbfc269b40a2311230d97402e2aaf3c7360
   repeat_inserted: 0
+
+geh_protocol_persistence:
+  historical_verified_details: 80
+  historical_published_links: 124
+  protocol_url_receipts: 45
+  explicit_decisions_db: 40
+  participant_decisions: 37
+  group_leader_decisions: 3
+  distinct_anonymous_ids: 19
+  protocol_review: 5
+  historical_document_links: 46
+  gpb_document_links: 59
+  decision_schema: gpb_best_bid_v2
+  decision_location: procurement_tender_documents.raw_meta.protocol_decision
+  decision_replay_updated: 0
+  original_replay_inserted: 0
+  backup_sha256: 422193fd03b8996414960188d508f0fc92d5ce3b2a493a6cb816c6f889e7f542
+  prewrite_gate: pass
+  review_ids: ["etp:1294505", "etp:1293269", "etp:1293621", "etp:1293549", "etp:1293241"]
