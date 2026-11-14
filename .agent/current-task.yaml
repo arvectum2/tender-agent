@@ -633,3 +633,8 @@ owner_expansion_2026_11_14:
   preserve_parent_resume_and_existing_pq_work: true
   next_bounded_tasks: [TA-SIBUR-SOURCE-DISCOVERY-001, TA-GEH-SOURCE-DISCOVERY-001, TA-AI-TRADING-SOURCE-DISCOVERY-001]
   live_trade_authorized: false
+
+ci_mirror_recovery_2026_11_14:
+  child_checkpoint: .agent/checkpoints/TA-CI-MIRROR-20261114.yaml
+  parent_resume_preserved: true
+  scope: isolated_ci_recovery_and_mirror_verification

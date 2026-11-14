@@ -39,7 +39,17 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: '3.11'}
       # PDF assertions use pdftotext; R9 recovery acceptance uses pg_dump/pg_restore.
-      - run: sudo apt-get update && sudo apt-get install --yes poppler-utils postgresql-client
+      # The disposable recovery target is PostgreSQL 16. Newer pg_restore
+      # emits SET transaction_timeout, unsupported by PG16.
+      - name: Install PDF utilities and PostgreSQL 16 recovery client
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes poppler-utils postgresql-client-16
+          echo "/usr/lib/postgresql/16/bin" >> "$GITHUB_PATH"
+      - name: Verify recovery client major version
+        run: |
+          pg_dump --version | grep -E 'PostgreSQL\) 16\.'
+          pg_restore --version | grep -E 'PostgreSQL\) 16\.'
       - name: Install locked Python dependencies
         run: python -m pip install --require-hashes -r requirements.lock
       - run: make check
