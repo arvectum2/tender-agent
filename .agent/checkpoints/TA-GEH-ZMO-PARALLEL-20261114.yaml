@@ -3,12 +3,12 @@ status: in_progress
 goal: Establish verified primary public list acquisition for GEH and small procurement parallel to SIBUR.
 definition_of_done: [primary target lists and detail receipts, source-scoped stable identities, date and status validation, verified normalized samples, gated working DB ingestion]
 completed: [eight parallel source probes, GPB SSR card parser, real 20-card replay, 3 focused tests]
-current_stage: gpb_active_priority_documents_and_historical_detail_pilot_verified
+current_stage: historical_protocol_pilot_verified
 remaining: [GPB customer-specific queries and actual date checks, TEK-Torg accessible lists, Moscow and EAT list contracts, source-separated import]
-last_verified_commit: aa8b74da808f3953daaffd3b0ba6dec2f833b3c0
+last_verified_commit: 7056155a79480284611a36d427393a12a1723cfd
 latest_tests: 3 pytest passed; Ruff passed; 20 distinct primary observed cards; 13 future-dated observations quarantined
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources
-resume_instruction: Reuse all 400 historical and 16 active GEH group pages and 8206 committed rows. All 19 active lexical candidate details verified (14 accepting, 5 supplier review), 45 downloadable links and 2 label-only unavailable. 14 captured URL receipts, 13 distinct DB links, 14 remote-disconnect archive reviews, 17 yet unattempted published links. Continue bounded archive capture with source availability checks, investigate 3 historical detail parser failures and outcome-specific anchors; 17 historical details already captured. Expand historical date windows, ZMO source contracts. Never infer awards or submit bids.
+resume_instruction: Reuse 8206 GЭХ rows, 19 active and 50 historical verified detail pages, 36 GPB DB document links. Historical detail receipts contain 63 links including 22 protocols, all 22 protocol ZIPs captured; 8 explicit best-bid decisions in private protocol-decisions-v2.json, 14 require alternate-form review. Distinguish anonymous platform participant IDs, best bids and signed contract amounts; link decision evidence to durable data model next. Continue historical detail collection beyond 50 and review older date windows, active archive failures, ZMO contracts. No speculative legal identities or award claims.
 
 target_detail_receipts:
   detail_pages_verified: 2
@@ -99,3 +99,23 @@ geh_priority_documents_2026_11_14:
   db_replay_inserted: 0
   backup_sha256: da84db2b21415f1d9a292c64f2b4c2e580af4fa864ad50aad5522a515ea60906
   tests: 15 focused passed; Ruff passed
+
+geh_protocol_pilot:
+  historical_verified_details: 50
+  historical_prior_parser_failures_resolved: 3
+  historical_published_links: 63
+  historical_protocol_links: 22
+  historical_protocols_captured: 22
+  historical_original_links_in_db: 23
+  gpb_total_document_links: 36
+  explicit_best_bid_decisions: 8
+  protocol_review_required: 14
+  distinct_anonymous_participant_ids: 5
+  participant_ids_repeated: {"193863": 3, "540430": 2}
+  decision_artifact: protocol-decisions-v2.json
+  decisions_persisted_as_structured_db_facts: false
+  legal_supplier_identity_verified: false
+  signed_contract_amount_verified: false
+  prewrite_gate: pass
+  backup_sha256: 43f6fae141f45f06665e7f94f198bbbfc269b40a2311230d97402e2aaf3c7360
+  repeat_inserted: 0
