@@ -19,6 +19,8 @@ from src.modules.tender_connectors.sibur.parser import parse_page
 
 MAX_BYTES = 25 * 1024 * 1024
 SUPPORTED = {".docx", ".xlsx", ".pdf"}
+CAPTURE_ONLY = {".doc", ".xls", ".ppt", ".msg", ".xlsm", ".xlsb", ".pptx",
+                ".jpg", ".png", ".heic", ".rar", ".7z"}
 
 
 def source_refs(snapshot):
@@ -69,12 +71,37 @@ def fetch(opener, url):
 def type_matches(raw, ext):
     if ext == ".pdf":
         return raw.startswith(b"%PDF-")
-    if ext in {".docx", ".xlsx"}:
+    if ext in {".docx", ".xlsx", ".xlsm", ".xlsb", ".pptx"}:
         return raw.startswith(b"PK\x03\x04")
+    if ext in {".doc", ".xls", ".ppt", ".msg"}:
+        return raw.startswith(bytes.fromhex("d0cf11e0a1b11ae1"))
+    if ext == ".rar":
+        return raw.startswith(b"Rar!\x1a\x07")
+    if ext == ".7z":
+        return raw.startswith(b"7z\xbc\xaf\x27\x1c")
+    if ext == ".jpg":
+        return raw.startswith(b"\xff\xd8\xff")
+    if ext == ".png":
+        return raw.startswith(b"\x89PNG\r\n\x1a\n")
+    if ext == ".heic":
+        return len(raw) >= 12 and raw[4:8] == b"ftyp" and raw[8:12] in {
+            b"heic", b"heix", b"mif1", b"msf1", b"hevc", b"hevx"
+        }
     return False
 
 
-def acquire(snapshot, output, limit):
+def order_candidates(refs, priority_ids, allowed=SUPPORTED):
+    return sorted(
+        refs,
+        key=lambda u: (
+            Path(urlsplit(u).path).suffix.lower() not in allowed,
+            not any(r["external_id"] in priority_ids for r in refs[u]),
+            u,
+        ),
+    )
+
+
+def acquire(snapshot, output, limit, priority_ids=frozenset(), include_legacy=False):
     if not 1 <= limit <= 60:
         raise ValueError("invalid bounded batch")
     if output.resolve().is_relative_to(Path(__file__).resolve().parents[2]):
@@ -83,11 +110,12 @@ def acquire(snapshot, output, limit):
     refs = source_refs(snapshot)
     opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), NoRedirect(),
                                          urllib.request.HTTPSHandler(context=ssl.create_default_context()))
-    candidates = sorted(refs, key=lambda u: (Path(urlsplit(u).path).suffix.lower() not in SUPPORTED, u))
+    allowed = SUPPORTED | CAPTURE_ONLY if include_legacy else SUPPORTED
+    candidates = order_candidates(refs, priority_ids, allowed)
     count = 0
     for url in candidates:
         ext = Path(urlsplit(url).path).suffix.lower()
-        if ext not in SUPPORTED:
+        if ext not in allowed:
             continue
         identity = hashlib.sha256(url.encode()).hexdigest()
         receipt = output / f"{identity}.json"
@@ -136,9 +164,16 @@ def main():
     parser.add_argument("--snapshot", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--limit", type=int, default=30)
+    parser.add_argument("--priority-queue", type=Path)
+    parser.add_argument("--capture-legacy", action="store_true")
     args = parser.parse_args()
     os.umask(0o077)
-    print("attempted", acquire(args.snapshot, args.output, args.limit))
+    priority = frozenset()
+    if args.priority_queue:
+        priority = frozenset(
+            r["external_id"] for r in json.loads(args.priority_queue.read_text()) if r["priority"]
+        )
+    print("attempted", acquire(args.snapshot, args.output, args.limit, priority, args.capture_legacy))
 
 
 if __name__ == "__main__":

@@ -205,10 +205,16 @@ def retrieval_backend_name(config) -> str:
 
 
 def build_data_platform_client(config) -> DataPlatformClient:
+    consumer = getattr(config, "rag_data_platform_consumer", "")
+    consumer_key = getattr(config, "rag_data_platform_consumer_key", "")
+    if bool(consumer) != bool(consumer_key):
+        raise ValueError("Data Platform consumer and consumer key must be configured together")
+    identity = {"consumer": consumer, "consumer_key": consumer_key} if consumer else {}
     return DataPlatformClient(
         base_url=config.rag_data_platform_base_url,
         api_key=config.rag_data_platform_api_key,
         timeout_seconds=config.rag_data_platform_timeout_seconds,
+        **identity,
     )
 
 

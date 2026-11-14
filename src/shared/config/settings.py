@@ -90,6 +90,8 @@ class Settings(BaseSettings):
     rag_retrieval_backend: str = "data_platform"
     rag_data_platform_base_url: str = "http://127.0.0.1:8094"
     rag_data_platform_api_key: str = ""
+    rag_data_platform_consumer: str = ""
+    rag_data_platform_consumer_key: str = ""
     rag_data_platform_timeout_seconds: int = 30
     rag_use_llm: bool = False
     local_llm_base_url: str = "http://127.0.0.1:8088/v1"

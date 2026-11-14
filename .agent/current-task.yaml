@@ -642,15 +642,24 @@ ci_mirror_recovery_2026_11_14:
 source_discovery_2026_11_14:
   child_checkpoint: .agent/checkpoints/TA-SOURCE-DISCOVERY-20261114.yaml
   parent_resume_preserved: true
-  stage: sibur_document_acquisition_pilot_verified
+  stage: sibur_pdf_backpressure_and_gpb_history192_verified
   remaining: [document_acquisition, historical_coverage, dp_integration, geh_and_zmo_sources]
   no_live_trading: true
   owner_authorized_verified_working_db_import: true
-  no_mi_db_mutation: true
+  no_pq_collection_mutation: true
+  dedicated_sibur_dp_collection_mutated: true
 
 owner_am4_2026_11_14:
   owner_confirmed: true
   company_review_pr: 13
-  canonical_effect: pending_company_mirror_health
+  canonical_effect: merged_company_and_tender_agent_policy
+  company_merge_commit: 6af75d5a18ba21a34515eeaa323892685db26be1
+  tender_agent_merge_commit: 0d2b35a2aba026bec3f0dae03d641e5f8c218ddf
   explicit_owner_merges: [522, 523]
   preserve_existing_automatic_merge_gates: true
+
+parallel_source_discovery_2026_11_14:
+  pr: 528
+  branch: feat/gpb-public-discovery-20261114
+  checkpoint: .agent/checkpoints/TA-GEH-ZMO-PARALLEL-20261114.yaml
+  stage: gpb_group_history192_and_priority_details_verified

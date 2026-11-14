@@ -3,12 +3,12 @@ status: in_progress
 goal: Verify public source acquisition and normalize first-party procurement records for three tracks.
 definition_of_done: [source access matrix, first-party receipts, bounded normalization, verified next connector steps]
 completed: [10 source probes, 8 HTTP 200 pages, real AJAX pagination, 27 pages and 313 unique procedures, 516 document URLs, 2 sample OOXML documents, duplicate observation preservation, parser and bounded research probe]
-current_stage: sibur_document_acquisition_pilot_verified
+current_stage: sibur_pdf_backpressure_and_gpb_history192_verified
 remaining: [SIBUR document acquisition and historical coverage, production DP transport and monitoring integration, ETP GPB and TEK-Torg source access, EAT and Moscow list acquisition]
-last_verified_commit: 44ff2d1b3fca8d336be5b2854a937f76414807ee
+last_verified_commit: cae5fb6b25f39362c2ebc79280fa5ac09c5a1ad1
 latest_tests: "56 focused pytest PASS (11 SIBUR + 45 prior parser/Watchdog); Ruff PASS; real 27/27 SHA-bound replay 313 IDs / 314 rows / one duplicate; two original OOXML samples PASS; explicitly authorized TA DB seed verified; MI DB not mutated"
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114
-resume_instruction: Reconcile PRs 524 and 525; reuse existing 30 verified file receipts and 11 distinct DP results, acquire remaining supported documents in bounded batches, audit empty extraction, then persistent DP/TA linkage after prewrite gate. Continue historical coverage and GEH/ZMO public discovery. Never expose contacts or submit bids.
+resume_instruction: Reuse 516 source URL receipts, 513 unique hashes, 713 DB links, 351 DP processing receipts and 109 verified indexed originals. PDF OCR overload recovered after stopping own batch; use serial PDF and fail-fast transport handler, reconcile actual DP stats before repeat. Continue GEH history from page 193 (4053 rows committed). Review active GPB details and document retrieval contract, finish PDF and legacy formats, configure authorized consumer identity without weakening access policy.
 
 report: docs/roadmap/SIBUR_PUBLIC_REGISTRY_BASELINE_2026-11-14.md
 
@@ -35,3 +35,118 @@ document_acquisition_pilot:
   dp_persisted: false
   tests: 14 focused passed; Ruff passed
   report: docs/roadmap/SIBUR_DOCUMENT_ACQUISITION_2026-11-14.md
+
+document_persistence:
+  captured_originals: 90
+  linked_procedures: 81
+  ta_db_links: 116
+  repeat_inserted: 0
+  dp_collection: tender-agent:sibur-public-research
+  dp_indexed_originals: 1
+  dp_chunks: 1
+  dp_embeddings: 1
+  prewrite_gate: pass
+  dp_backup_sha256: 3eb6fbcc0f116e647fc483f2508f8beaf5c496a44021c58eb95b75f487346d80
+  ta_backup_sha256: 6848339e80419ffcd07a6a8add1168bd5281c6c35adb3d7dd3e91c3e9195ac60
+  report: docs/roadmap/SIBUR_DOCUMENT_LINKAGE_2026-11-14.md
+  latest_tests: 18 targeted passed; Ruff passed; live replay zero inserts and independent DB counts
+
+document_batch3:
+  captured_originals: 150
+  linked_procedures: 110
+  ta_db_links: 183
+  new_links: 67
+  repeat_inserted: 0
+  dp_indexed_originals: 4
+  dp_chunks: 8
+  dp_embeddings: 8
+  restricted_search_without_consumer_identity: HTTP 403 expected
+  authorized_search: pending existing authorized consumer credential configuration
+  priority_candidates: 67
+  other_procedures_retained: 246
+  priority_queue_scope: preliminary metadata lexical matches, not semantic acceptance
+  priority_queue_file: sibur-preliminary-priority-queue.json
+  dp_backup_sha256: bdd7b5fcc400e1fdc93e1ecbb5d117ee985f7218d311704b22be7c64e7cf29e4
+  ta_backup_sha256: 925c3e5c81da9f5130425c17445a5651a2ace486add4d9408876bb76348d3e38
+  next: prioritize document acquisition and indexing for candidate procedures; retain all public register rows
+
+document_batch4:
+  captured_originals: 210
+  linked_procedures: 127
+  ta_db_links: 252
+  new_links: 69
+  repeat_inserted: 0
+  dp_indexed_originals_previous_verified: 4
+  ta_backup_sha256: 9f3bc079db19b573df452ef1d2771c54decbfcb780dacc6637b0c4030277a512
+  parallel_gpb_pr: 528
+  parallel_gpb_commit: 9ef3db51c25b6bf789ba76cfb66a1fdae4950196
+  next: resume remaining documents with priority candidates first; parallel GPB customer-specific source discovery and ZMO list contracts
+
+document_batch5:
+  captured_originals: 270
+  linked_procedures: 205
+  ta_db_links: 427
+  repeat_inserted: 0
+  priority_urls_captured: 111
+  priority_procedures_covered: 56
+  dp_extracted: 22
+  dp_empty_review: 1
+  dp_indexed_originals: 13
+  dp_chunks: 30
+  dp_embeddings: 30
+  ta_indexed_links: 15
+  priority_order_test: pass
+  dp_backup_sha256: 69095a5d94155a7101e336f8ca4428ea7b712c06ce1119a852489578497afe64
+  ta_backup_sha256: 3b6971df6b20dd7ea85b722dce7b432d720595c90ef2f09a64066ac98b91263f
+  parallel_gpb_target_archived_details: 2
+  next: continue bounded priority capture, extraction and index; verify consumer-authenticated retrieval; targeted GPB lists and ZMO contracts
+
+sibur_complete_capture:
+  captured_urls: 516
+  unique_original_sha256: 513
+  linked_procedures: 229
+  ta_db_links: 713
+  repeat_inserted: 0
+  priority_procedures_covered: 57
+  dp_processed_originals: 337
+  dp_extracted_nonempty: 329
+  dp_empty_review: 8
+  possible_text_cap: 10
+  dp_indexed_originals: 106
+  dp_embeddings: 261
+  ta_indexed_links: 118
+  lexical_candidate_procedures: 79
+  document_only_candidates: 51
+  lexical_candidates_need_semantic_review: true
+  local_reasoning_pilot: timeout_30_seconds_no_accepted_result
+  authenticated_consumer_search: still_pending
+  ta_backup_sha256: 83350eeb793287f4b8135e306b75076e390a8e5e5698c85987c13731353d0f55
+  dp_backup_sha256: 485c4122963f9fbabca3b0bcd0e37f52c5fc17ae361b9c1b4d218b8209cb3e7e
+  parallel_gpb_commit: 0eaa3e4b1acf1cd29984b02e53989a3ae60a5d02
+  parallel_gpb_db_rows: 861
+  next: process remaining PDF and safely reviewed legacy formats; index remaining extracted originals; address capped documents, reasoning timeout and consumer-authenticated retrieval
+
+continuation_2026_11_14_1945:
+  dp_processed: 351
+  dp_extracted: 342
+  dp_empty: 7
+  dp_unsupported: 2
+  dp_possible_text_cap: 10
+  dp_indexed: 109
+  dp_embeddings: 268
+  ta_indexed_links: 123
+  ta_doc_links: 713
+  dp_health_after_stop: HTTP_200
+  dp_live_stats_reconciled: true
+  pdf_backpressure: serial_pdf_and_stop_on_transport_failure
+  consumer_configuration: optional_paired_identity_sdk_forwarding_tested
+  consumer_live_credential: not_configured_no_new_key_issued
+  gpb_rows: 4053
+  sibur_rows: 313
+  gpb_history_pages: 192
+  gpb_lexical_candidates: 583
+  gpb_active_priority_candidates: 19
+  gpb_primary_details_checked: 10
+  parallel_gpb_checkpoint_commit: b512ed0703b0249a964cfcaa5a6b5fd8a5947424
+  ta_backup_sha256: 1ec0ae2ec962cd50850fabd4d7627c0d1285fabeaf7f446d608f982c10f88dd0
+  latest_tests: 25 passed with standard conftest; Ruff passed
