@@ -206,3 +206,15 @@ continuation_2026_11_14_protocols:
   gpb_structured_decisions_db_persistence: pending
   parallel_gpb_checkpoint_commit: dd272ffc0bbc037704717004d207f90d12b9ef42
   next: review protocol variants and persist source-bound decisions, continue historical details and active attachments; safe DP index and processing, ZMO and older history remain pending
+
+continuation_2026_11_14_decisions:
+  ta_total_procurements: 8519
+  ta_sibur_document_links: 713
+  ta_gpb_document_links: 59
+  gpb_historical_verified_details: 80
+  gpb_protocol_receipts: 45
+  gpb_structured_decisions_db: 40
+  gpb_protocol_review: 5
+  dp_new_index_writes: 0
+  parallel_gpb_checkpoint_commit: 7d01b05dedbf651ede3d6899c520646011caebaf
+  next: five protocol review cases, continue historical detail and protocol capture; ZMO, older history and DP remainder still open
