@@ -3,12 +3,12 @@ status: in_progress
 goal: Verify public source acquisition and normalize first-party procurement records for three tracks.
 definition_of_done: [source access matrix, first-party receipts, bounded normalization, verified next connector steps]
 completed: [10 source probes, 8 HTTP 200 pages, real AJAX pagination, 27 pages and 313 unique procedures, 516 document URLs, 2 sample OOXML documents, duplicate observation preservation, parser and bounded research probe]
-current_stage: sibur_complete_capture_and_document_triage_verified
+current_stage: sibur_pdf_backpressure_and_gpb_history192_verified
 remaining: [SIBUR document acquisition and historical coverage, production DP transport and monitoring integration, ETP GPB and TEK-Torg source access, EAT and Moscow list acquisition]
-last_verified_commit: 9454fa627032ec6de1b563c8210079c4ca780a16
+last_verified_commit: cae5fb6b25f39362c2ebc79280fa5ac09c5a1ad1
 latest_tests: "56 focused pytest PASS (11 SIBUR + 45 prior parser/Watchdog); Ruff PASS; real 27/27 SHA-bound replay 313 IDs / 314 rows / one duplicate; two original OOXML samples PASS; explicitly authorized TA DB seed verified; MI DB not mutated"
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114
-resume_instruction: PR 525 merged; reconcile stacked PRs 524/526 and document linkage branch without repeating verified writes. Reuse 516 capture receipts, 513 distinct original hashes, 713 DB links and 106 indexed originals; prioritize 67 keyword candidates only for processing order, never discard remaining 246. Index remaining verified originals in bounded batches, append DP receipts, verify consumer-authenticated retrieval and file serving, classify source-grounded relevance; continue historical coverage and GEH/ZMO public discovery.
+resume_instruction: Reuse 516 source URL receipts, 513 unique hashes, 713 DB links, 351 DP processing receipts and 109 verified indexed originals. PDF OCR overload recovered after stopping own batch; use serial PDF and fail-fast transport handler, reconcile actual DP stats before repeat. Continue GEH history from page 193 (4053 rows committed). Review active GPB details and document retrieval contract, finish PDF and legacy formats, configure authorized consumer identity without weakening access policy.
 
 report: docs/roadmap/SIBUR_PUBLIC_REGISTRY_BASELINE_2026-11-14.md
 
@@ -125,3 +125,28 @@ sibur_complete_capture:
   parallel_gpb_commit: 0eaa3e4b1acf1cd29984b02e53989a3ae60a5d02
   parallel_gpb_db_rows: 861
   next: process remaining PDF and safely reviewed legacy formats; index remaining extracted originals; address capped documents, reasoning timeout and consumer-authenticated retrieval
+
+continuation_2026_11_14_1945:
+  dp_processed: 351
+  dp_extracted: 342
+  dp_empty: 7
+  dp_unsupported: 2
+  dp_possible_text_cap: 10
+  dp_indexed: 109
+  dp_embeddings: 268
+  ta_indexed_links: 123
+  ta_doc_links: 713
+  dp_health_after_stop: HTTP_200
+  dp_live_stats_reconciled: true
+  pdf_backpressure: serial_pdf_and_stop_on_transport_failure
+  consumer_configuration: optional_paired_identity_sdk_forwarding_tested
+  consumer_live_credential: not_configured_no_new_key_issued
+  gpb_rows: 4053
+  sibur_rows: 313
+  gpb_history_pages: 192
+  gpb_lexical_candidates: 583
+  gpb_active_priority_candidates: 19
+  gpb_primary_details_checked: 10
+  parallel_gpb_checkpoint_commit: b512ed0703b0249a964cfcaa5a6b5fd8a5947424
+  ta_backup_sha256: 1ec0ae2ec962cd50850fabd4d7627c0d1285fabeaf7f446d608f982c10f88dd0
+  latest_tests: 25 passed with standard conftest; Ruff passed
