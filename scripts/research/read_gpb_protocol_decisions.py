@@ -15,7 +15,7 @@ from xml.etree import ElementTree
 NS = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
 MONEY = r"([0-9][0-9 \u00a0]*,[0-9]{2})"
 DECISION = re.compile(
-    r"(?:определить лучшей заявку|выбрать наиболее выгодные условия (?:выполнения работ|оказания услуг) в заявке)"
+    r"(?:определить лучшей заявку|выбрать наиболее выгодные условия (?:выполнения работ|оказания услуг|поставки товара) в заявке)"
     r"\s+(?:участника с идентификационным номером\s+(?P<participant>\d+)|"
     r"Группы лиц\s*\(ID Лидера\s*[-–]\s*(?P<leader>\d+)\))",
     re.IGNORECASE,
@@ -64,9 +64,16 @@ def parse_decision_lines(lines, member, member_sha256):
     i, m = best[0]
     j, n = initial[0]
     prices = list(BID_PRICE.finditer(lines[i], m.end()))
-    if len(prices) != 1:
+    if len(prices) == 1:
+        bid = prices[0]
+        tax_tail = lines[i][bid.end():]
+    elif len(prices) == 2 and prices[0].group().lower().startswith("на общую сумму") and re.search(
+        r"с учетом единичных расценок\s*$", lines[i][prices[0].end():prices[1].start()], re.IGNORECASE
+    ):
+        bid = prices[0]
+        tax_tail = lines[i][bid.end():prices[1].start()]
+    else:
         raise ValueError("ambiguous or absent explicit bid price")
-    bid = prices[0]
     def tax_basis(line):
         if re.search(r"без учета НДС", line, re.IGNORECASE):
             return "excludes_vat"
@@ -86,7 +93,7 @@ def parse_decision_lines(lines, member, member_sha256):
             "participant_legal_identity": None,
             "initial_price_rub": price(n[1]), "best_bid_rub": price(bid[1]),
             "initial_price_tax_basis": tax_basis(lines[j]),
-            "best_bid_tax_basis": tax_basis(lines[i][bid.end():]),
+            "best_bid_tax_basis": tax_basis(tax_tail),
             "contract_amount": None, "best_bid_paragraph": i, "best_bid_evidence": lines[i],
             "initial_price_paragraph": j, "initial_price_evidence": lines[j]}
 

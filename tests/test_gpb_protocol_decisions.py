@@ -68,3 +68,11 @@ def test_local_ordinal_does_not_become_platform_id():
     assert row["participant_local_ordinal"] == "2"
     assert row["participant_platform_id"] is None
     assert row["best_bid_rub"] == "109.80"
+
+
+def test_explicit_total_not_unit_rates():
+    raw = protocol(para("Начальная (максимальная) цена договора: 1 000,00 руб., без учета НДС.") +
+                   para("Выбрать наиболее выгодные условия поставки товара в заявке участника с идентификационным номером 123, на общую сумму 900,00 руб., (без учета НДС), с учетом единичных расценок на сумму 300,00 руб., (с учетом НДС)."))
+    row = parse_protocol(raw)
+    assert row["best_bid_rub"] == "900.00"
+    assert row["best_bid_tax_basis"] == "excludes_vat"
