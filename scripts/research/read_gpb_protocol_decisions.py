@@ -14,7 +14,13 @@ from xml.etree import ElementTree
 
 NS = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
 MONEY = r"([0-9][0-9 \u00a0]*,[0-9]{2})"
-BEST = re.compile(r"Определить лучшей заявку участника с идентификационным номером\s+(\d+),\s+на (?:общую )?сумму\s+" + MONEY + r"\s*руб\.", re.IGNORECASE)
+DECISION = re.compile(
+    r"(?:определить лучшей заявку|выбрать наиболее выгодные условия (?:выполнения работ|оказания услуг) в заявке)"
+    r"\s+(?:участника с идентификационным номером\s+(?P<participant>\d+)|"
+    r"Группы лиц\s*\(ID Лидера\s*[-–]\s*(?P<leader>\d+)\))",
+    re.IGNORECASE,
+)
+BID_PRICE = re.compile(r"на (?:общую )?сумму\s+" + MONEY + r"\s*руб\.", re.IGNORECASE)
 INITIAL = re.compile(r"Начальная \(максимальная\) цена договора:\s*" + MONEY + r"\s*руб\.", re.IGNORECASE)
 
 
@@ -44,20 +50,36 @@ def parse_protocol(raw):
         member = members[0]
         content = z.read(member)
     lines = read_docx_member(content)
-    best = [(i, BEST.search(line)) for i, line in enumerate(lines) if BEST.search(line)]
+    best = [(i, DECISION.search(line)) for i, line in enumerate(lines) if DECISION.search(line)]
     initial = [(i, INITIAL.search(line)) for i, line in enumerate(lines) if INITIAL.search(line)]
     if len(best) != 1 or len(initial) != 1:
         raise ValueError("ambiguous or absent explicit decision")
     i, m = best[0]
     j, n = initial[0]
+    prices = list(BID_PRICE.finditer(lines[i], m.end()))
+    if len(prices) != 1:
+        raise ValueError("ambiguous or absent explicit bid price")
+    bid = prices[0]
+    def tax_basis(line):
+        if re.search(r"без учета НДС", line, re.IGNORECASE):
+            return "excludes_vat"
+        if re.search(r"с учетом НДС", line, re.IGNORECASE):
+            return "includes_vat"
+        if re.search(r"включая все налоги и платежи", line, re.IGNORECASE):
+            return "includes_all_taxes_and_payments"
+        return None
 
     def price(s):
         return str(Decimal(s.replace(" ", "").replace("\u00a0", "").replace(",", ".")))
 
     return {"member": member.filename, "member_sha256": hashlib.sha256(content).hexdigest(),
             "decision": "BEST_BID_SELECTED_NOT_SIGNED_CONTRACT",
-            "participant_platform_id": m[1], "participant_legal_identity": None,
-            "initial_price_rub": price(n[1]), "best_bid_rub": price(m[2]),
+            "participant_platform_id": m["participant"] or m["leader"],
+            "participant_role": "group_leader" if m["leader"] else "participant",
+            "participant_legal_identity": None,
+            "initial_price_rub": price(n[1]), "best_bid_rub": price(bid[1]),
+            "initial_price_tax_basis": tax_basis(lines[j]),
+            "best_bid_tax_basis": tax_basis(lines[i][bid.end():]),
             "contract_amount": None, "best_bid_paragraph": i, "best_bid_evidence": lines[i],
             "initial_price_paragraph": j, "initial_price_evidence": lines[j]}
 

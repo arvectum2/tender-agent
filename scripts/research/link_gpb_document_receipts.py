@@ -41,6 +41,8 @@ def prepare(root):
 
 def reconcile_capture_metadata(actual, proposed):
     """Preserve previous immutable receipts; allow only new equivalent-source links."""
+    if actual and "protocol_decision" in actual:
+        proposed["protocol_decision"] = actual["protocol_decision"]
     if actual == proposed:
         return False
     if not actual or actual.get("source") != "etp_gpb":
@@ -57,7 +59,7 @@ def reconcile_capture_metadata(actual, proposed):
                 for row in proposed["capture_receipts"]}
     if not old_keys <= new_keys:
         raise ValueError("existing receipt removed or changed")
-    if set(actual) - {"source", "capture_status", "capture_receipt", "capture_receipts", "dp_index"}:
+    if set(actual) - {"source", "capture_status", "capture_receipt", "capture_receipts", "dp_index", "protocol_decision"}:
         raise ValueError("unrecognized metadata")
     return True
 
