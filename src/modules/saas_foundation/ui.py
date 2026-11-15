@@ -83,6 +83,30 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 <strong id="qualification-verdict"></strong>
 <p id="qualification-source-note"></p>
 </div></section>
+<section><h2>4a. Портфель компании</h2>
+<p id="company-identity" role="status">Войдите и загрузите портфель.</p>
+<button id="company-load">Загрузить портфель</button><button id="company-more" disabled>Ещё закупки</button>
+<div id="company-save-panel" hidden><label>Номер ЕИС<input id="company-registry" inputmode="numeric" maxlength="20" autocomplete="off"></label>
+<button id="company-save">Добавить ссылку в портфель</button></div>
+<p id="company-count" aria-live="polite"></p>
+<label>Карточка<select id="company-case"><option value="">Выберите закупку</option></select></label>
+<button id="company-open">Открыть карточку</button>
+<div id="company-detail" hidden>
+<p id="company-case-state"></p><pre id="company-history" aria-live="polite"></pre>
+<div id="company-decision-panel" hidden>
+<div class="grid"><label>Решение<select id="company-action"><option value="GO">GO</option><option value="NO_GO">NO GO</option><option value="DEFER">Отложить</option></select></label>
+<label>Отложить до (местное время браузера)<input id="company-defer" type="datetime-local"></label></div>
+<label>Обоснование<textarea id="company-rationale" maxlength="2000"></textarea></label>
+<label><input id="company-confirm" type="checkbox" style="width:auto"> Подтверждаю решение для указанной компании и закупки. Это не подача заявки.</label>
+<button id="company-decide">Сохранить решение</button></div>
+<div id="company-evidence-panel" hidden><h3>Оригиналы и квалификация</h3>
+<p id="company-profile-state"></p><label>ID собственного прогона<input id="company-run-id" autocomplete="off"></label>
+<button id="company-bind">Привязать оригиналы к текущей версии профиля</button>
+<label>Привязка<select id="company-evidence"><option value="">Выберите привязку</option></select></label>
+<button id="company-read-evidence">Проверить сохранённые оригиналы и показать оценку</button>
+<p id="company-evidence-state" aria-live="polite"></p>
+<pre id="company-evidence-result" hidden></pre></div>
+</div><p>Сохранённый номер не подтверждает актуальность извещения, квалификацию или право подачи заявки. История решений общая для веб и iOS.</p></section>
 <section><h2>5. Мой пакет и лимиты</h2><button id="me">Мой кабинет</button>
 <button id="packages">Показать пакеты</button>
 <button id="usage">Остатки лимитов</button>
@@ -103,16 +127,21 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 "use strict";
 let token="";
 let legalVersions=null;
+let uiBusy=false;
+let sessionEpoch=0;
 const val=id=>document.getElementById(id).value.trim();
 const split=id=>val(id).split(",").map(x=>x.trim()).filter(Boolean);
 const num=id=>val(id)===""?null:Number(val(id));
 const output=(r)=>{document.getElementById("result").textContent=JSON.stringify(r,null,2)};
 async function call(path,{method="GET",body=null,auth=true,upload=false}={}){
- const options={method,credentials:"omit",headers:{"Accept":"application/json","Cache-Control":"no-store"}};
+ const epoch=sessionEpoch;
+ if(auth&&!token)throw Error("Сначала войдите в кабинет");
+ const options={method,credentials:"omit",cache:"no-store",redirect:"error",headers:{"Accept":"application/json","Cache-Control":"no-store"}};
  if(auth&&token)options.headers.Authorization="Bearer "+token;
  if(body!==null){options.body=upload?body:JSON.stringify(body);if(!upload)options.headers["Content-Type"]="application/json"}
  const r=await fetch(path,options);const d=await r.json().catch(()=>({error:"Non-JSON server response"}));
- if(!r.ok)throw Error("HTTP "+r.status+" "+JSON.stringify(d));return d;
+ if(epoch!==sessionEpoch)throw Error("Сессия изменена");
+ if(!r.ok){const error=Error("HTTP "+r.status+" "+JSON.stringify(d));error.status=r.status;throw error}return d;
 }
 function showQualification(reply){
  const item=reply?.qualification || (reply?.competitive_recommendation ? reply : null);
@@ -132,17 +161,18 @@ function showQualification(reply){
    "%. Источник: " + (item.source_status || "не подтверждён") +
    ". Это не юридический отказ, подпись ЕИС не проверена, подача заявки запрещена без решения человека.";
 }
-async function run(task){document.getElementById("state").textContent="Обработка…";try{
+async function run(task){if(uiBusy)return;uiBusy=true;const enabled=[...document.querySelectorAll("button,input,textarea,select")].filter(x=>!x.disabled);for(const el of enabled)el.disabled=true;document.getElementById("state").textContent="Обработка…";try{
  const result=await task();document.getElementById("state").textContent="Готово";output(result);showQualification(result);
-}catch(err){document.getElementById("state").textContent="Нужна проверка";output({error:err.message});document.getElementById("qualification-panel").hidden=true;}}
+}catch(err){if([401,402,403].includes(err.status))clearSession();document.getElementById("state").textContent="Нужна проверка";output({error:err.message});document.getElementById("qualification-panel").hidden=true;}finally{uiBusy=false;for(const el of enabled)el.disabled=false;syncCompanyControls();}}
 function bind(id,task){document.getElementById(id).addEventListener("click",()=>run(task))}
 bind("redeem",async()=>{
- const result=await call("/api/saas/invitations/redeem",{method:"POST",auth:false,body:{invitation_code:val("invite-code"),display_name:val("display-name")}});
- token=result.access_token;document.getElementById("invite-code").value="";return result;
+ const body={invitation_code:val("invite-code"),display_name:val("display-name")};clearSession();
+ const result=await call("/api/saas/invitations/redeem",{method:"POST",auth:false,body});
+ token=result.access_token;return result;
 });
-bind("use-token",async()=>{token=val("saved-token");document.getElementById("saved-token").value="";return call("/api/saas/me")});
-bind("rotate-token",async()=>{const rotated=await call("/api/saas/token/rotate",{method:"POST"});token=rotated.access_token;return rotated;});
-bind("logout",async()=>{try{return await call("/api/saas/logout",{method:"POST"})}finally{token="";}});
+bind("use-token",async()=>{const supplied=val("saved-token");clearSession();token=supplied;try{return await call("/api/saas/me")}catch(error){clearSession();throw error}});
+bind("rotate-token",async()=>{const rotated=await call("/api/saas/token/rotate",{method:"POST"});clearSession();token=rotated.access_token;return rotated;});
+bind("logout",async()=>{try{return await call("/api/saas/logout",{method:"POST"})}finally{clearSession();}});
 bind("accept",async()=>{
  if(!document.getElementById("legal-agree").checked)throw Error("Требуется явное ознакомление");
  const info=await call("/api/saas/legal");legalVersions=info;
@@ -300,4 +330,159 @@ bind("invite-member",()=>call("/api/saas/invitations",{method:"POST",body:{
 }}));
 bind("members-list",()=>call("/api/saas/members"));
 bind("revoke-member",()=>call("/api/saas/members/"+encodeURIComponent(val("revoke-member-id"))+"/revoke",{method:"POST"}));
+
+// All portfolio state belongs to the current in-memory SaaS session.
+let companyIdentity=null, companyItems=[], companyMore=false, companyOffset=0;
+let companyCase=null, companyProfile=null, companyEvidence=[], pendingCompanyDecision=null;
+const el=id=>document.getElementById(id);
+function blankSelect(id, label){
+ const select=el(id);select.replaceChildren();
+ const opt=document.createElement("option");opt.value="";opt.textContent=label;select.append(opt);
+}
+function resetCompanyDetail(){
+ companyCase=null;companyProfile=null;companyEvidence=[];pendingCompanyDecision=null;
+ el("company-detail").hidden=true;el("company-case-state").textContent="";
+ el("company-history").textContent="";el("company-profile-state").textContent="";
+ el("company-evidence-state").textContent="";el("company-evidence-result").textContent="";
+ el("company-evidence-result").hidden=true;blankSelect("company-evidence","Выберите привязку");
+ el("company-rationale").value="";el("company-defer").value="";el("company-confirm").checked=false;
+ el("company-action").value="GO";el("company-run-id").value="";
+}
+function clearCompany(){
+ companyIdentity=null;companyItems=[];companyMore=false;companyOffset=0;
+ blankSelect("company-case","Выберите закупку");resetCompanyDetail();
+ el("company-identity").textContent="Войдите и загрузите портфель.";el("company-count").textContent="";
+ el("company-registry").value="";syncCompanyControls();
+}
+function clearSession(){
+ token="";sessionEpoch++;legalVersions=null;referenceVersion=null;
+ // Clear also the legacy profile, references, file forms, and report output.
+ for(const field of document.querySelectorAll("input,textarea,select")){
+   if(field.type==="checkbox"||field.type==="radio")field.checked=field.defaultChecked;
+   else if(field.tagName==="SELECT")field.selectedIndex=0;
+   else field.value=field.type==="file"?"":field.defaultValue;
+ }
+ el("references-contracts").replaceChildren();el("reference-state").textContent="Список пока не загружен";
+ el("qualification-panel").hidden=true;el("qualification-verdict").textContent="";el("qualification-source-note").textContent="";
+ el("result").textContent="Данные предыдущей сессии очищены.";clearCompany();
+}
+function companyCanWrite(){return companyIdentity?.legal_accepted===true&&["owner","admin","analyst"].includes(companyIdentity.role)}
+function companyCanDecide(){return companyIdentity?.legal_accepted===true&&["owner","admin"].includes(companyIdentity.role)}
+function syncCompanyControls(){
+ const read=Boolean(companyIdentity?.legal_accepted), detail=Boolean(companyCase);
+ el("company-more").disabled=uiBusy||!read||!companyMore;
+ el("company-save-panel").hidden=!companyCanWrite();el("company-save").disabled=uiBusy||!companyCanWrite();
+ el("company-open").disabled=uiBusy||!read||!el("company-case").value;
+ el("company-decision-panel").hidden=!detail||!companyCanDecide();
+ el("company-decide").disabled=uiBusy||!detail||!companyCanDecide();
+ el("company-evidence-panel").hidden=!detail||!companyCanWrite();
+ el("company-bind").disabled=uiBusy||!detail||!companyCanWrite()||companyProfile?.profile_state!=="ACTIVE";
+ el("company-read-evidence").disabled=uiBusy||!detail||!companyCanWrite()||!el("company-evidence").value;
+}
+function requireCompany(){if(!companyIdentity?.legal_accepted)throw Error("Загрузите портфель после подтверждения условий пилота");return companyIdentity}
+function casePath(){requireCompany();if(!companyCase)throw Error("Откройте карточку");return "/api/saas/company-portfolio/cases/"+encodeURIComponent(companyCase.case_id)}
+function companyCaseText(item){return (item.registry_number||"Номер не указан")+" · "+(item.decision?.action||"Не решено")+" · v"+item.revision}
+function renderCompanyItems(){
+ blankSelect("company-case","Выберите закупку");
+ for(const item of companyItems){const opt=document.createElement("option");opt.value=item.case_id;opt.textContent=companyCaseText(item);el("company-case").append(opt)}
+ if(companyCase&&companyItems.some(x=>x.case_id===companyCase.case_id))el("company-case").value=companyCase.case_id;
+ el("company-count").textContent="Загружено карточек: "+companyItems.length+(companyMore?" (есть ещё)":"");
+}
+async function loadCompanyPage({restart=true}={}){
+ if(restart){clearCompany();const me=await call("/api/saas/me");
+   companyIdentity=me;el("company-identity").textContent=me.company_name+" · "+me.role;
+   if(!me.legal_accepted){el("company-count").textContent="Сначала подтвердите условия пилота.";return {portfolio_loaded:false}};
+ }
+ const identity=requireCompany();const page=await call("/api/saas/company-portfolio/cases?offset="+companyOffset+"&limit=50");
+ if(page.customer_id!==identity.customer_id){clearSession();throw Error("Ответ относится к другой компании. Сессия очищена.")}
+ const known=new Set(companyItems.map(x=>x.case_id));companyItems.push(...page.items.filter(x=>!known.has(x.case_id)));
+ companyOffset+=page.items.length;companyMore=Boolean(page.has_more);renderCompanyItems();return {loaded:companyItems.length,has_more:companyMore};
+}
+async function loadCompanyEvidence(path){
+ const profile=await call("/api/saas/company-portfolio/search-context");
+ if(profile.customer_id!==requireCompany().customer_id){clearSession();throw Error("Профиль другой компании. Сессия очищена.")}
+ const page=await call(path+"/evidence?limit=50");
+ if(page.items.some(x=>x.case_id!==companyCase.case_id)){clearSession();throw Error("Ответ не соответствует карточке. Сессия очищена.")}
+ companyProfile=profile;companyEvidence=page.items;el("company-profile-state").textContent="Профиль: "+profile.profile_state+" · версия "+(profile.profile_version??"—");
+ blankSelect("company-evidence","Выберите привязку");
+ for(const source of companyEvidence){const opt=document.createElement("option");opt.value=source.binding_id;opt.textContent=source.run_id+" · профиль v"+source.profile_version+" · "+source.profile_state;el("company-evidence").append(opt)}
+ el("company-evidence-state").textContent=companyEvidence.length===0?"Нет привязок":(page.has_more?"Первые 50 привязок":"Привязок: "+companyEvidence.length);
+}
+async function loadCompanyCase(id){
+ requireCompany();resetCompanyDetail();
+ if(!companyItems.some(x=>x.case_id===id))throw Error("Выберите карточку из своего портфеля");
+ const path="/api/saas/company-portfolio/cases/"+encodeURIComponent(id);
+ const item=await call(path);if(item.case_id!==id)throw Error("Ответ не соответствует карточке");
+ const history=await call(path+"/decisions?limit=50");
+ companyCase=item;companyItems=companyItems.map(x=>x.case_id===id?item:x);renderCompanyItems();
+ el("company-case-state").textContent=requireCompany().company_name+" · "+companyCaseText(item)+" · только внутреннее решение";
+ el("company-history").textContent=history.items.map(x=>"v"+x.revision+" · "+x.action+" · "+x.decided_at+"\\n"+x.rationale).join("\\n\\n")+(history.has_more?"\\nПервые 50 решений":"")||"История пуста";
+ el("company-detail").hidden=false;
+ if(companyCanWrite())await loadCompanyEvidence(path);
+ return {case_id:item.case_id,revision:item.revision};
+}
+bind("company-load",()=>loadCompanyPage());
+bind("company-more",()=>loadCompanyPage({restart:false}));
+el("company-case").addEventListener("change",()=>{resetCompanyDetail();syncCompanyControls()});
+el("company-evidence").addEventListener("change",()=>{el("company-evidence-result").hidden=true;el("company-evidence-result").textContent="";syncCompanyControls()});
+bind("company-open",()=>loadCompanyCase(val("company-case")));
+bind("company-save",async()=>{
+ if(!companyCanWrite())throw Error("Недостаточно прав");
+ const number=val("company-registry");if(!/^[0-9]{19,20}$/.test(number))throw Error("Введите 19 или 20 цифр номера ЕИС");
+ const saved=await call("/api/saas/company-portfolio/cases",{method:"POST",body:{registry_number:number}});
+ el("company-registry").value="";await loadCompanyPage();return {saved_case: saved.case_id};
+});
+bind("company-decide",async()=>{
+ if(!companyCanDecide())throw Error("Недостаточно прав");
+ if(!el("company-confirm").checked)throw Error("Подтвердите решение для текущей карточки");
+ const path=casePath();const id=companyCase.case_id;
+ const action=val("company-action"), rationale=val("company-rationale");
+ if(!rationale||!['GO','NO_GO','DEFER'].includes(action))throw Error("Укажите действие и обоснование");
+ let deferred=null;
+ if(action==="DEFER"){
+   const value=val("company-defer");const date=new Date(value);
+   if(!value||!Number.isFinite(date.getTime())||date.getTime()<=Date.now())throw Error("Укажите будущую дату отсрочки");
+   deferred=date.toISOString();
+ }
+ const body={action,rationale,deferred_until:deferred,expected_revision:companyCase.revision};
+ const signature=JSON.stringify([sessionEpoch,id,body]);
+ if(!pendingCompanyDecision||pendingCompanyDecision.signature!==signature){
+   if(!globalThis.crypto?.randomUUID)throw Error("Для сохранения решения требуется защищённый HTTPS-контекст");
+   pendingCompanyDecision={signature,key:globalThis.crypto.randomUUID()};
+ }
+ let saved;
+ try{saved=await call(path+"/decisions",{method:"POST",body:{...body,idempotency_key:pendingCompanyDecision.key}})}
+ catch(error){
+   if(error.status===409){resetCompanyDetail();throw Error("Решение изменилось или конфликтует. Откройте карточку заново и подтвердите новое решение.")}
+   // An uncertain network result keeps the same key for an explicit identical retry.
+   el("company-confirm").checked=false;throw error;
+ }
+ pendingCompanyDecision=null;el("company-confirm").checked=false;
+ // Never silently overwrite a more recent revision or present a successful refresh on failure.
+ try{await loadCompanyCase(id)}catch(error){
+   resetCompanyDetail();if([401,402,403].includes(error.status))clearSession();
+   else el("company-count").textContent="Решение сохранено, откройте карточку заново для обновления.";
+   return {saved_revision:saved.revision,refresh_required:true};
+ }
+ return {saved_revision:saved.revision,action:saved.action,external_submission_allowed:false};
+});
+bind("company-bind",async()=>{
+ if(!companyCanWrite()||companyProfile?.profile_state!=="ACTIVE")throw Error("Нужен действующий профиль компании");
+ const runId=val("company-run-id");if(!runId)throw Error("Укажите ID собственного прогона");
+ const path=casePath();const result=await call(path+"/evidence",{method:"POST",body:{run_id:runId,expected_profile_version:companyProfile.profile_version}});
+ if(result.case_id!==companyCase.case_id)throw Error("Ответ не соответствует карточке");
+ el("company-run-id").value="";await loadCompanyEvidence(path);
+ return {binding_id:result.binding_id,profile_version:result.profile_version,current_live_notice_status_verified:false};
+});
+bind("company-read-evidence",async()=>{
+ if(!companyCanWrite())throw Error("Недостаточно прав");
+ el("company-evidence-result").hidden=true;el("company-evidence-result").textContent="";
+ const id=val("company-evidence");if(!companyEvidence.some(x=>x.binding_id===id))throw Error("Выберите привязку из карточки");
+ const result=await call(casePath()+"/evidence/"+encodeURIComponent(id));
+ if(result.case_id!==companyCase.case_id||result.binding_id!==id)throw Error("Ответ не соответствует привязке");
+ el("company-evidence-state").textContent=result.archived_source_snapshot_verified===true?"Сохранённый архив проверен. Актуальный правовой статус не подтверждён.":"Оригиналы не подтверждены";
+ el("company-evidence-result").textContent=JSON.stringify({report_status:result.report_status,profile_state:result.profile_state,profile_version:result.profile_version,current_profile_version:result.current_profile_version,qualification_as_of:result.qualification_as_of,screening:result.screening,qualification:result.qualification},null,2);
+ el("company-evidence-result").hidden=false;return result;
+});
+syncCompanyControls();
 </script></body></html>"""
