@@ -725,3 +725,12 @@ sibur_sionika_whole_corpus_sales_matrix_20261115:
     AGHK and ongoing retrofit/service; process new exact original evidence. Current
     29 review candidates NOT qualified. Continue existing approved jobs; no actual
     bid, contact, spend, auto-merge or DP bypass.
+sibur_sionika_package_roles_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read project-document-review-v2.json, project-document-review-remaining-v1.json,
+    package-role-evidence-v1.json and project-package-missing-document-queue-v1.json.
+    Continue broad SIBUR/Sionika portfolio and EPC/recipient graph; prioritize missing
+    exact refs and annual service demand. Review existing acquisition state before
+    any new fetch, no worker duplicates. No actual bid/contact/spend, no unverified
+    award, no DP bypass or auto-merge.

@@ -46,14 +46,28 @@ completed:
 - Eight stage-based sales action entries with exact original registry IDs/status,
   manually reviewed official/external stage links and role evidence. Recommendations
   separate. AGHK launch delayed September 2026, revised date unknown.
-current_stage: expanded_project_matrix_and_29_current_review_candidates
+- '2026-11-15: checked disjoint 523 priority and 316 remaining project-package records
+  for exact original URL/source-row/hash binding: 245 covered, 115 unique original
+  SHA across both cohorts; 3 legacy format reviews. No blanket technical scope claim.
+  Five focused tests/Ruff pass in PR528 5e89b0c4. Administrative KRU false positive
+  filtered.'
+- 'Five exact document evidence records: 2146194/1 AGHK water treatment named designer
+  Progress Engineering, E-SCADA/AVR/KIP/ASUTP work; 2069073/1 and 2069139/1 same pipeline
+  object but different named general designers NIPIGAZ and Progress, preserve scope
+  conflict; 2081181/1 EP600 feed pipeline PNR 0.4kV; 2113738/1 DGP2 fire/automation
+  procedure references.'
+- Seven external observations, supplier/contractor self-reports and one aggregator-only
+  GP641489; no contract award inference. Five NPG SPR Energybase IDs absent from frozen
+  30394-record snapshot, require original registry reconciliation.
+current_stage: whole_package_document_coverage_review_and_role_evidence
 remaining:
-- Extract exact package contents and supplier qualification from 785 review packages,
-  initially NPG SPR, STYRENE and AGHK. Review legacy XLSB and DOC originals offline;
-  validate 29 current candidates and next snapshot.
-- Resolve actual EPC awards and service/maintenance opportunities; verify owner/contractor
-  roles, actual recipient; no inference from canceled procedures.
-- Support-services category coverage pending. DP blocked; no bypass.
+- Reconcile missing source references using project-package-missing-document-queue-v1.json;
+  exact source references may already have captured bytes, avoid duplicate worker/download.
+  Prioritize NPG/STYRENE/AGHK. Legacy XLSB review.
+- Verify primary source and scope of seven external role observations and five missing
+  publication IDs. Do not infer winner, legal role for the whole project, or prices.
+- Expand annual service/mod modernization map, support-services category coverage,
+  procurement chain and exact equipment lists. DP blocked unchanged.
 last_verified_commit: f43cbe72c187e1757c29f0cfa91db49c65789641
 test_results:
   focused: 3
@@ -89,8 +103,31 @@ test_results:
     project_mentions: 2852
     extra_electrical: 54
     project_package_review: 785
-resume_instruction: Read whole-corpus-project-sales-matrix-v1.json, sales-action-matrix-v1.json
-  and active-expanded-review-v1.json. Prioritize early sales entry NPG SPR, STYRENE,
-  AGHK and ongoing retrofit/service; process new exact original evidence. Current
-  29 review candidates NOT qualified. Continue existing approved jobs; no actual bid,
-  contact, spend, auto-merge or DP bypass.
+  package_document_review:
+    code_commit: 5e89b0c48a79013ac25de5139162b4c2116115a9
+    focused: 5
+    ruff: pass
+    cohorts:
+    - records: 523
+      covered: 189
+      originals: 53
+      sha256: ecfcdadfca5fd2e49eaa8f25965a4e98c77a16b6497adc3fa8818cf8250b5a85
+    - records: 316
+      covered: 56
+      originals: 68
+      sha256: b739f31d673a5bcee519783efcceb3c70ca6aa98b95edc671cc061050cd6f92d
+    unique_originals: 115
+    unique_statuses:
+      extracted: 112
+      review: 3
+    exact_role_evidence_sha256: deeaa81e324b649cc3652818786debdaa22381160c87bd4e635c7ae71305e2e4
+    missing_reference_queue_sha256: 7c5a05162fffc09183737b504af356197e5d9ed77dfbc68dc0bbca32b8bcd737
+    missing_unique_urls: 926
+    external_observations: 7
+    coverage_gap_observations: 5
+resume_instruction: Read project-document-review-v2.json, project-document-review-remaining-v1.json,
+  package-role-evidence-v1.json and project-package-missing-document-queue-v1.json.
+  Continue broad SIBUR/Sionika portfolio and EPC/recipient graph; prioritize missing
+  exact refs and annual service demand. Review existing acquisition state before any
+  new fetch, no worker duplicates. No actual bid/contact/spend, no unverified award,
+  no DP bypass or auto-merge.
