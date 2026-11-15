@@ -8,6 +8,7 @@ from datetime import datetime
 
 from sqlalchemy import (
     Boolean,
+    CheckConstraint,
     DateTime,
     ForeignKey,
     Index,
@@ -15,6 +16,7 @@ from sqlalchemy import (
     String,
     Text,
     UniqueConstraint,
+    event,
 )
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -138,3 +140,34 @@ class SaasAuditEvent(UUIDPrimaryKeyMixin, Base):
     detail: Mapped[str] = mapped_column(Text, nullable=False, default="")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
     __table_args__ = (Index("ix_saas_audit_tenant", "tenant_id", "created_at"),)
+
+
+class CompanyPortfolioDecision(UUIDPrimaryKeyMixin, Base):
+    """Append-only human business decision on an existing company-owned case."""
+    __tablename__ = "company_portfolio_decisions"
+
+    case_id: Mapped[str] = mapped_column(String(36), ForeignKey("procurement_cases.id"), nullable=False)
+    tenant_id: Mapped[str] = mapped_column(String(64), ForeignKey("saas_tenants.tenant_id"), nullable=False)
+    member_id: Mapped[str] = mapped_column(String(36), ForeignKey("saas_members.id"), nullable=False)
+    revision: Mapped[int] = mapped_column(Integer, nullable=False)
+    action: Mapped[str] = mapped_column(String(16), nullable=False)
+    rationale: Mapped[str] = mapped_column(Text, nullable=False)
+    deferred_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    idempotency_key: Mapped[str] = mapped_column(String(128), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    __table_args__ = (
+        UniqueConstraint("case_id", "revision", name="uq_company_case_decision_revision"),
+        UniqueConstraint("case_id", "idempotency_key", name="uq_company_case_decision_idem"),
+        CheckConstraint("revision > 0", name="ck_company_decision_revision"),
+        CheckConstraint("action IN ('GO', 'NO_GO', 'DEFER')", name="ck_company_decision_action"),
+        CheckConstraint("(action = 'DEFER' AND deferred_until IS NOT NULL) OR (action <> 'DEFER' AND deferred_until IS NULL)", name="ck_company_decision_defer"),
+        Index("ix_company_decisions_tenant_case", "tenant_id", "case_id"),
+    )
+
+
+def _immutable_company_decision(*_args):
+    raise ValueError("Company portfolio decision history is immutable")
+
+
+event.listen(CompanyPortfolioDecision, "before_update", _immutable_company_decision)
+event.listen(CompanyPortfolioDecision, "before_delete", _immutable_company_decision)

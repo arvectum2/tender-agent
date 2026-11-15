@@ -930,3 +930,76 @@ def test_http_source_bound_1c_qualification_through_tenant_roles(
         assert hashlib.sha256(pdf_source.read_bytes()).hexdigest() == (
             receipt["scoring_document_sha256"]
         )
+
+
+def test_company_portfolio_same_public_reference_distinct_cases_and_decisions(client, session):
+    from src.modules.customer_pilot.models import ProcurementCase
+    from src.modules.deal_registry.models import Deal
+    from src.modules.saas_foundation.models import CompanyPortfolioDecision
+
+    a, owner_a = _seed(client, "Изолированный тест A")
+    b, owner_b = _seed(client, "Изолированный тест B")
+    _legal(client, owner_a)
+    _legal(client, owner_b)
+    base = "/api/saas/company-portfolio/cases"
+    body = {"registry_number": "0123456789012345678"}
+    assert client.get(base).status_code == 401
+    assert client.post(base, headers=_auth(owner_a), json={**body, "customer_id": b["customer_id"]}).status_code == 422
+    ca = client.post(base, headers=_auth(owner_a), json=body)
+    cb = client.post(base, headers=_auth(owner_b), json=body)
+    assert ca.status_code == cb.status_code == 201, (ca.text, cb.text)
+    ca, cb = ca.json(), cb.json()
+    assert ca["case_id"] != cb["case_id"]
+    assert ca["registry_number"] == cb["registry_number"]
+    assert ca["source_verified"] is False and ca["decision"] is None
+    assert client.post(base, headers=_auth(owner_a), json=body).json()["case_id"] == ca["case_id"]
+    aa, bb = f"{base}/{ca['case_id']}", f"{base}/{cb['case_id']}"
+    go = {"action": "GO", "rationale": "Только A", "expected_revision": 0, "idempotency_key": "case-key-001"}
+    no = {**go, "action": "NO_GO", "rationale": "Только B"}
+    first = client.post(aa + "/decisions", headers=_auth(owner_a), json=go)
+    second = client.post(bb + "/decisions", headers=_auth(owner_b), json=no)
+    assert first.status_code == second.status_code == 200, (first.text, second.text)
+    assert client.post(aa + "/decisions", headers=_auth(owner_a), json=go).json() == first.json()
+    assert client.post(aa + "/decisions", headers=_auth(owner_a), json=no).status_code == 409
+    assert client.post(aa + "/decisions", headers=_auth(owner_a), json={**go, "idempotency_key": "other-key-001"}).status_code == 409
+    assert client.get(aa, headers=_auth(owner_b)).status_code == 404
+    assert client.get(aa + "/decisions", headers=_auth(owner_b)).status_code == 404
+    assert client.post(aa + "/decisions", headers=_auth(owner_b), json=no).status_code == 404
+    assert client.get(bb, headers=_auth(owner_a)).status_code == 404
+    list_a = client.get(base, headers=_auth(owner_a)).json()
+    list_b = client.get(base, headers=_auth(owner_b)).json()
+    assert list_a["customer_id"] == a["customer_id"]
+    assert [x["decision"]["action"] for x in list_a["items"]] == ["GO"]
+    assert [x["decision"]["action"] for x in list_b["items"]] == ["NO_GO"]
+    assert "Только B" not in str(list_a)
+    assert all(not x["external_submission_allowed"] for x in list_a["items"] + list_b["items"])
+    assert session.query(ProcurementCase).count() == 2
+    assert session.query(CompanyPortfolioDecision).count() == 2
+    assert session.query(Deal).count() == 0
+
+
+def test_company_portfolio_role_legal_history_and_defer(client, session):
+    _, owner = _seed(client, "Тест ролей портфеля")
+    base = "/api/saas/company-portfolio/cases"
+    body = {"registry_number": "0123456789012345678"}
+    assert client.post(base, headers=_auth(owner), json=body).status_code == 428
+    _legal(client, owner)
+    case = client.post(base, headers=_auth(owner), json=body).json()
+    path = f"{base}/{case['case_id']}/decisions"
+    invite = client.post("/api/saas/invitations", headers=_auth(owner), json={"role": "viewer", "acquisition_channel": "referral"}).json()
+    viewer = client.post("/api/saas/invitations/redeem", json={"invitation_code": invite["invitation_code"], "display_name": "Viewer"}).json()["access_token"]
+    _legal(client, viewer)
+    go = {"action": "GO", "rationale": "Подготовить проверку", "expected_revision": 0, "idempotency_key": "event-key-001"}
+    assert client.post(base, headers=_auth(viewer), json=body).status_code == 403
+    assert client.post(path, headers=_auth(viewer), json=go).status_code == 403
+    assert client.get(base, headers=_auth(viewer)).status_code == 200
+    assert client.post(path, headers=_auth(owner), json=go).status_code == 200
+    defer = {**go, "action": "DEFER", "expected_revision": 1, "idempotency_key": "event-key-002"}
+    assert client.post(path, headers=_auth(owner), json=defer).status_code == 422
+    assert client.post(path, headers=_auth(owner), json={**defer, "deferred_until": "2000-01-01T00:00:00Z"}).status_code == 422
+    future = (service.now_utc() + timedelta(days=1)).isoformat()
+    assert client.post(path, headers=_auth(owner), json={**defer, "deferred_until": future}).status_code == 200
+    history = client.get(path, headers=_auth(viewer)).json()["items"]
+    assert [x["action"] for x in history] == ["DEFER", "GO"]
+    assert [x["revision"] for x in history] == [2, 1]
+    assert client.get(path + "?limit=1", headers=_auth(owner)).json()["has_more"] is True

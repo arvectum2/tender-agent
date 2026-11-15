@@ -19,6 +19,7 @@ from fastapi import (
     Form,
     Header,
     HTTPException,
+    Query,
     Request,
     UploadFile,
 )
@@ -57,6 +58,7 @@ from src.modules.customer_onboarding.router import (
     revise_profile,
     upload_company_document,
 )
+from src.modules.saas_foundation import company_portfolio
 from src.modules.saas_foundation.models import (
     SaasAccessToken,
     SaasMember,
@@ -699,3 +701,28 @@ def saas_page() -> str:
     _enabled()
     from src.modules.saas_foundation.ui import render_saas_html
     return render_saas_html()
+
+
+@router.post("/api/saas/company-portfolio/cases", status_code=201, response_model=company_portfolio.CompanyCaseView)
+def save_company_case(payload: company_portfolio.SaveCompanyCase, principal: Member, session: DBSession) -> dict:
+    return company_portfolio.save_case(session, principal, payload)
+
+
+@router.get("/api/saas/company-portfolio/cases", response_model=company_portfolio.CompanyPortfolioPage)
+def list_company_cases(principal: Member, session: DBSession, offset: int = Query(0, ge=0), limit: int = Query(50, ge=1, le=100)) -> dict:
+    return company_portfolio.list_cases(session, principal, offset=offset, limit=limit)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}", response_model=company_portfolio.CompanyCaseView)
+def read_company_case(case_id: str, principal: Member, session: DBSession) -> dict:
+    return company_portfolio.get_case(session, principal, case_id)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/decisions", response_model=company_portfolio.CompanyDecisionPage)
+def read_company_case_decisions(case_id: str, principal: Member, session: DBSession, offset: int = Query(0, ge=0), limit: int = Query(50, ge=1, le=100)) -> dict:
+    return company_portfolio.decision_history(session, principal, case_id, offset=offset, limit=limit)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/decisions", response_model=company_portfolio.CompanyDecisionView)
+def write_company_case_decision(case_id: str, payload: company_portfolio.CompanyDecisionInput, principal: Member, session: DBSession) -> dict:
+    return company_portfolio.record_decision(session, principal, case_id, payload)

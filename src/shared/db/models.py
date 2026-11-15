@@ -66,6 +66,7 @@ from src.modules.ceo_approval.models import CEOApprovalCondition, CEOApprovalRec
 from src.modules.closing_docs.models import ClosingDocsFlag, ClosingDocsItem, ClosingDocsRecord, ClosingDocsSet
 from src.modules.compliance_matrix.models import ComplianceMatrix, ComplianceMatrixRow
 from src.modules.saas_foundation.models import (  # noqa: F401
+    CompanyPortfolioDecision,
     SaasAccessToken,
     SaasAuditEvent,
     SaasInvitation,
