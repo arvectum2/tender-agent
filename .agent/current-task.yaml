@@ -658,3 +658,8 @@ parallel_core_consolidation:
   task_id: TA-CORE-CONSOLIDATION-001
   status: in_progress
   checkpoint: .agent/checkpoints/TA-CORE-CONSOLIDATION-001.yaml
+
+parallel_dtr_product:
+  task_id: TA-DTR-PRODUCT-20261115
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-DTR-PRODUCT-20261115.yaml

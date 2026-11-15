@@ -1,0 +1,26 @@
+task_id: TA-DTR-PRODUCT-20261115
+status: in_progress
+goal: 'Owner-approved parallel product roadmap: DTR reliability, profile separation,
+  mobile API and SwiftUI, existing workspace UX, isolated acceptance; preserve live
+  SIBUR collection.'
+definition_of_done:
+- Reliable restartable DTR with truthful discovery and bounded concurrency
+- Profile-aware separation of company decisions and data, no unverified Sionika live
+  activation
+- Shared mobile/web contract and native client improvements
+- Isolated end-to-end acceptance; no live deployment without permission
+completed:
+- Canonical accepted main 35c44a89 audited; DTR existing modules and specification
+  inspected; uncovered dropped PENDING/RUNNING recovery, false-success discovery,
+  missing Docker profile config, profile-version reuse issue.
+current_stage: dtr_reliability
+remaining:
+- DTR recovery and source error regression
+- Profile context and isolation audit and implementation
+- Mobile API and SwiftUI integration
+- Operator Workspace UX and offline end-to-end
+last_verified_commit: 35c44a898b56c055bbcd50a8be25227459c08e58
+test_results: []
+resume_instruction: Work only in isolated DTR branch; preserve existing market research
+  and owner-approved conditional DP switch. Fix and verify prioritized reliability
+  regressions before advancing profile and mobile slices.
