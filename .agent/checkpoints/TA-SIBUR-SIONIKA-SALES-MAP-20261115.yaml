@@ -236,7 +236,8 @@ completed:
 - "V28: 3 explicit older NKS/KKS notices added to project (7 total, 18/18 supported links, 3 complete known packs), no union increase. Two original information cards verify New Resources as prospective contract party, qualification999_08, payment60d cap100d,10% retention EPB, 2020–25 experience. Owner/registry sources identify UETP-NKNH operator, New Resources PD author and DIATEK industrial-safety expert, not GCs. Service 2136325/1 direct operator route; old/new branch uncertain. 2 GCs/5 automation contractors unresolved, standalone KIP 332/333 unresolved; 7Z password required, not requested; PDF screenshot cache miss. V15 1650/2312 extracted,1826 complete packs,68 source hashes. No new signed price or award."
 - "V29: Sept2 media reports Yamata termination notice and potential Esta replacement, not confirmed final redistribution; owner Aug24 65% progress, domestic ASUTP, launch 2028. External 223-FZ telecom 32615735696 secondary indexed contract price 2.287827m, initial1.875268m, registry51681000024260001110000, winner/primary EIS card unavailable; separate related service, no strict price admission. Five site recipients not contractor roles. Three primary DOCX hash verified (unsigned NDA, cancelled gas analyzer submission instructions, nonbinding bank comfort form), current 2146492 closes Nov27 11 MSK per catalog. No new primary award evidence. V16 coverage and 69 source hashes verified."
 - "V30: isolated pyxlsb1.0.10 external SSD pilot reads both active originals 2146492/1, 20 sheets,1950 detailed rows (PC705+401,CM551+293). Individual test quantities 24 dry transformers,82 MV outgoing cells,2039 LV outgoing cells,6 MV and36 LV UKRM,933 LV three-phase and21 MV motors,30564 LV cable lines,15263 dispatch signals. Not installed asset count; PC/CM overlap stages; 10/6 code-unit differences and 2 repeat keys. No positive direct cost in detail. Catalyst 6 shared original URLs captured; 4 archive listing only,2 XLSM generic forms, no OL/award. V17 coverage;72 sources verified. No shared runtime change or DB mutation."
-current_stage: styrene_xlsb_quantitative_scope_and_pq
+- "V31: 26 explicit PQ archive publication IDs across 7 sites,20 closed intake,6 cancelled,5 budget estimates; excluded condensate tank BSK false positive. NPP Neftekhimia new P0 2128160/1 original TOR 3 regulated 6kV BSK RP115/116, engineering only. DGP2 2103585/1–2 same RFQ,2 10kV UKRM 4015-HK-CU-001/002, DDP Sep1 2025, qualification107-03-03,45d. Two 7Z captured/listed,2 XLSX members reviewed. Historical corporate standard 25yr life,5yr warranty,24h service. Three outcome searches failed to establish award or price. V18 1708/2312; 41 cards/2618 project IDs/8231 union. 74 source hashes verified. No DB mutation."
+current_stage: pq_demand_and_supplier_qualification
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -245,7 +246,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: 6b539a87
+last_verified_commit: e97a5d8a
 test_results:
   focused: 3
   ruff: pass
@@ -1049,4 +1050,22 @@ test_results:
       commercial-action-register-v24.json: d7ade144613f37d2f6622a772bb5c50c746ccdac4470d78fe98dbb09a8b359ef
       consolidated-project-report-v30.md: 499820e851560e780dfdb4918fdf940865a34d8caabedbd9a603738eca95da77
       project-coverage-dashboard-v17.json: eafc82b897761aa61e0477d862a47d287169c22262b8682eec6942b8f90a1e45
-resume_instruction: "Read V30 map/report, standalone V17 dashboard, V5 outcome queue unchanged membership. Continue exact winner and signed price research, PQ service and commissioning asset tag/BOQ reconciliation; XLSB pilot only, no shared importer or DB writes. Catalyst data sheets missing; inspect other exact notice packages, 8 plan gaps remain. Existing workers/gates and external SSD; UPS separate, no outreach. Nov17 consolidated report."
+  pq_v31:
+    project_cards: 41
+    project_publications: 2618
+    priority_union: 8231
+    priority_supported_urls_extracted: 1708
+    priority_supported_urls_total: 2312
+    priority_all_known_packages: 1846
+    pq_explicit_publications: 26
+    cumulative_reviewed_no_verified_outcome: 13
+    source_artifacts: 74
+    artifacts:
+      pq-demand-and-channels-v1.json: 1335b169a20d5116cc61054526e656f8d3518be8a09137307c6d0141b5e91309
+      pq-dgp2-pilot-v1/selected-members-v1.json: 33405adab0b7604a7a2be77a287cb8e240638d7657d094fca048d8d175be64fc
+      consolidated-project-map-v31.json: bdfd95cb4854bdf833569d93ff744088ae3623e0e44ac29bb5cb502e8718dd93
+      commercial-action-register-v25.json: 0ad01e214cdfd82e513623629cacf9eac4b118ef64e6d5930b3daa835914fdc7
+      consolidated-project-report-v31.md: de0d95118d749d7cae33c7792abf194b8d89c3196f0640ad60d668682e28431d
+      project-coverage-dashboard-v18.json: a78e36008bb99bfbb4bdba26145c23e0d442c76a41cd41ff191cdd9462a161af
+      commercial-outcome-queue-v6.json: 99b51d820448ed7f3ee6dd5b0225d8d62dc0777fdec8eab922ee68ee36d6ebd7
+resume_instruction: "Read V31 map/report, standalone V18 dashboard and V6 outcome queue. Continue independent exact prices/awards, qualified PQ manufacturers and references, specific P0 technical original gaps and eight plan gaps. NPP 3 BSK engineering, DGP2 2 UKRM same RFQ; not delivered. Remaining books and archives outside automated coverage. Preserve existing workers/gates and external SSD; no outreach, UPS separate. Prepare Nov17 consolidated report with actual coverage/limits."

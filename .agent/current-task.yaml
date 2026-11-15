@@ -1017,3 +1017,8 @@ sibur_v30_styrene_xlsb_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Continue V30 outcomes and quantitative technical scope.
+
+sibur_v31_pq_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Continue V31 manufacturer qualification and exact outcomes.
