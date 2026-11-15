@@ -652,3 +652,9 @@ source_discovery_2026_11_14:
   stage: sibur_public_snapshot_verified
   remaining: [document_acquisition, historical_coverage, dp_integration, geh_and_zmo_sources]
   no_live_trading_or_db_mutation: true
+
+# Parallel owner-approved engineering track; preserve existing roadmap history.
+parallel_core_consolidation:
+  task_id: TA-CORE-CONSOLIDATION-001
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-CORE-CONSOLIDATION-001.yaml
