@@ -10,9 +10,26 @@ definition_of_done:
 completed:
   - Official archive AJAX page reports 7917 pages of 12.
   - Eight category filters verified by first-party public responses.
-current_stage: implement_archive_capture
+current_stage: independent_archive_capture_and_append_only_import_running
 remaining:
   - implement and validate parser and capture
   - connect append-only import and verify
-last_verified_commit: 48644dca
-resume_instruction: Preserve the independent live current-source index worker. Do not mutate its files or queue. Use private sibur-archive-discovery runtime.
+last_verified_commit: 42fd627765b5417c3acea45ff3ec91de5d4b6745
+resume_instruction: Read live archive capture and import state first; both jobs independently process selected categories. Do not duplicate or edit running scripts. Continue source reviews and build a separate archive document acquisition/index queue after provenance checks. Retain original active observations, no unverified outcome inference.
+
+live_archive:
+  capture: com.arvectum.tender-agent-sibur-archive-capture
+  importer: com.arvectum.tender-agent-sibur-archive-import
+  capture_state: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/sibur-archive-discovery/categories/state.json
+  import_state: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/sibur-archive-discovery/categories/import/state.json
+  source_reported_pages_all: 7917
+  selected_category_pages: {107: 473, 108: 1075, 999_08: 151, 999_10: 203, 109: 202, 112: 942, 132: 787, 999_11: 214}
+  selected_advertised_pages_sum: 4047
+  scope: 8 profile categories, publication from 2024-01-01 for DB import; older observations retained privately.
+  source_completion_is_not_award: true
+  first_import: {pages: 25, observations: 300, inserted: 300, prior_count: 313, after_count: 613, replay_inserted: 0}
+  first_backup_sha256: 3b3744233c825afd48ccaeb7b363eea1d6d7cb0aea210933930e441baa163892
+  checks: 21 focused tests, Ruff, exact raw category replays, first transactional import and repeat passed
+  remaining: Capture all selected pages, audit drift and duplicate gaps. Import all eligible verified observations, documentation and source-linked technical triage; awards and signed prices unknown.
+  captured_rows_at_checkpoint: 1044
+  inserted_total_at_checkpoint: 300

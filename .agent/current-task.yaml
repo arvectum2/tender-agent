@@ -672,3 +672,9 @@ active_local_executor:
   initial_verified_index_receipts: 148
   initial_verified_server_documents: 149
   instruction: Check live executor and receipts before further work. Do not duplicate active batches or blind-retry ambiguous writes. Continue independent approved discovery and format processing after coordination.
+
+independent_sibur_archive:
+  checkpoint: .agent/checkpoints/TA-SIBUR-PUBLIC-ARCHIVE-20261115.yaml
+  capture_state: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/sibur-archive-discovery/categories/state.json
+  import_state: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/sibur-archive-discovery/categories/import/state.json
+  instruction: Read actual running states and never duplicate source capture or shared mutations. Existing current-source index worker remains independent.
