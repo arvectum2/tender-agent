@@ -237,7 +237,8 @@ completed:
 - "V29: Sept2 media reports Yamata termination notice and potential Esta replacement, not confirmed final redistribution; owner Aug24 65% progress, domestic ASUTP, launch 2028. External 223-FZ telecom 32615735696 secondary indexed contract price 2.287827m, initial1.875268m, registry51681000024260001110000, winner/primary EIS card unavailable; separate related service, no strict price admission. Five site recipients not contractor roles. Three primary DOCX hash verified (unsigned NDA, cancelled gas analyzer submission instructions, nonbinding bank comfort form), current 2146492 closes Nov27 11 MSK per catalog. No new primary award evidence. V16 coverage and 69 source hashes verified."
 - "V30: isolated pyxlsb1.0.10 external SSD pilot reads both active originals 2146492/1, 20 sheets,1950 detailed rows (PC705+401,CM551+293). Individual test quantities 24 dry transformers,82 MV outgoing cells,2039 LV outgoing cells,6 MV and36 LV UKRM,933 LV three-phase and21 MV motors,30564 LV cable lines,15263 dispatch signals. Not installed asset count; PC/CM overlap stages; 10/6 code-unit differences and 2 repeat keys. No positive direct cost in detail. Catalyst 6 shared original URLs captured; 4 archive listing only,2 XLSM generic forms, no OL/award. V17 coverage;72 sources verified. No shared runtime change or DB mutation."
 - "V31: 26 explicit PQ archive publication IDs across 7 sites,20 closed intake,6 cancelled,5 budget estimates; excluded condensate tank BSK false positive. NPP Neftekhimia new P0 2128160/1 original TOR 3 regulated 6kV BSK RP115/116, engineering only. DGP2 2103585/1–2 same RFQ,2 10kV UKRM 4015-HK-CU-001/002, DDP Sep1 2025, qualification107-03-03,45d. Two 7Z captured/listed,2 XLSX members reviewed. Historical corporate standard 25yr life,5yr warranty,24h service. Three outcome searches failed to establish award or price. V18 1708/2312; 41 cards/2618 project IDs/8231 union. 74 source hashes verified. No DB mutation."
-current_stage: pq_demand_and_supplier_qualification
+- "V32: six external evidence observations; NIPOM historic Tobolsk TP-204 integrated KTP with 150 kvar, VEDA exact AGHK 2101170/1 SKU BHE10004 and three noncomparable catalog price observations, Nyucon unverified candidate, Electronmash adjacent historical KRU supply. Two new exact outcome searches 2071747/1 and 2107092/1, no verified award or price, cumulative 15. 41 cards/8231 queue rows, 75 source artifact hashes verified. No DB writes, worker changes or new coverage measurement."
+current_stage: pq_manufacturer_and_commercial_outcome_review
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -246,7 +247,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: e97a5d8a
+last_verified_commit: caf097d9
 test_results:
   focused: 3
   ruff: pass
@@ -1068,4 +1069,15 @@ test_results:
       consolidated-project-report-v31.md: de0d95118d749d7cae33c7792abf194b8d89c3196f0640ad60d668682e28431d
       project-coverage-dashboard-v18.json: a78e36008bb99bfbb4bdba26145c23e0d442c76a41cd41ff191cdd9462a161af
       commercial-outcome-queue-v6.json: 99b51d820448ed7f3ee6dd5b0225d8d62dc0777fdec8eab922ee68ee36d6ebd7
-resume_instruction: "Read V31 map/report, standalone V18 dashboard and V6 outcome queue. Continue independent exact prices/awards, qualified PQ manufacturers and references, specific P0 technical original gaps and eight plan gaps. NPP 3 BSK engineering, DGP2 2 UKRM same RFQ; not delivered. Remaining books and archives outside automated coverage. Preserve existing workers/gates and external SSD; no outreach, UPS separate. Prepare Nov17 consolidated report with actual coverage/limits."
+  pq_v32:
+    project_cards: 41
+    priority_union: 8231
+    cumulative_reviewed_no_verified_outcome: 15
+    source_artifacts: 75
+    artifacts:
+      pq-manufacturer-and-catalog-evidence-v1.json: c97c5a5381fc565fc26aeea98d3c1f888ee75996e3a26bb35b4fea2fda1ff837
+      consolidated-project-map-v32.json: cc8877665ee3361669899f760cc63b11063f4fc63b056e1ca7db6fc0363581f1
+      commercial-outcome-queue-v7.json: 75014d4d259150a3c1952ea070772f4e1d8fa9500ee6cae140a3aa51c6ff04e8
+      commercial-action-register-v26.json: c529efce97359ab5cf314ae22b6663fecfac107f29ea689180a724710cb2e928
+      consolidated-project-report-v32.md: 0406432918ac10f6e069427795f6b82910420cdd0a4fb626e8ed46882c2c7dea
+resume_instruction: "Read V32 map and report, V26 action register and V7 outcome queue; use V18 dashboard as last verified coverage, refresh from actual receipts. Continue primary awards/contract prices, PQ and broader supplier qualification, Cryogenmash AGHK outsourced lifecycle, retrofit and KIP plan gaps 332/333. Preserve existing worker/gates and external SSD; no outreach or DB mutation without gate. Prepare Nov17 report."
