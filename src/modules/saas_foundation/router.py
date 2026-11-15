@@ -58,7 +58,11 @@ from src.modules.customer_onboarding.router import (
     revise_profile,
     upload_company_document,
 )
-from src.modules.saas_foundation import company_case_evidence, company_portfolio
+from src.modules.saas_foundation import (
+    company_case_evidence,
+    company_discovery,
+    company_portfolio,
+)
 from src.modules.saas_foundation.models import (
     SaasAccessToken,
     SaasMember,
@@ -746,3 +750,31 @@ def list_company_evidence(case_id: str, principal: Member, session: DBSession, o
 @router.get("/api/saas/company-portfolio/cases/{case_id}/evidence/{binding_id}")
 def read_company_evidence(case_id: str, binding_id: str, principal: Member, session: DBSession) -> dict:
     return company_case_evidence.read_evidence(session, principal, case_id, binding_id)
+
+
+
+def _company_discovery_enabled():
+    if not get_settings().saas_company_discovery_enabled:
+        raise HTTPException(404, "Company discovery is disabled")
+
+
+@router.post("/api/saas/company-portfolio/discovery/runs", status_code=201)
+def plan_company_discovery(payload: company_discovery.StartCompanyDiscovery, principal: Member, session: DBSession) -> dict:
+    _company_discovery_enabled()
+    return company_discovery.create_run(session, principal, payload)
+
+
+@router.get("/api/saas/company-portfolio/discovery/latest")
+def latest_company_discovery(principal: Member, session: DBSession) -> dict:
+    return {"enabled": get_settings().saas_company_discovery_enabled, "run": company_discovery.latest_run(session, principal)}
+
+
+@router.get("/api/saas/company-portfolio/discovery/runs/{run_id}")
+def read_company_discovery(run_id: str, principal: Member, session: DBSession) -> dict:
+    return company_discovery.read_run(session, principal, run_id)
+
+
+@router.post("/api/saas/company-portfolio/discovery/runs/{run_id}/step")
+def advance_company_discovery(run_id: str, payload: company_discovery.AdvanceCompanyDiscovery, principal: Member, session: DBSession) -> dict:
+    _company_discovery_enabled()
+    return company_discovery.advance_run(session, principal, run_id, payload)

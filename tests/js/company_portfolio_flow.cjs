@@ -28,6 +28,7 @@ const calls=[], history={a:[],b:[]};
 const fixture={a:{customer_id:'customer-a',tenant_id:'tenant-a',member_id:'a',company_name:'Компания A',role:'owner',legal_accepted:true},b:{customer_id:'customer-b',tenant_id:'tenant-b',member_id:'b',company_name:'Компания B',role:'viewer',legal_accepted:true}};
 const reply=(value,status=200)=>({ok:status>=200&&status<300,status,json:async()=>value});
 let lostResponse=false, mismatch=false, delayed=null;
+let discoveryRun=null, savedCandidate=null;
 const item=key=>({case_id:'case-'+key,registry_number:'0123456789012345678',revision:history[key].length,decision:history[key][0]||null,source_verified:false,external_submission_allowed:false});
 async function fetch(route,opts){
  const key=opts.headers.Authorization?.slice(-1), method=opts.method;
@@ -35,6 +36,20 @@ async function fetch(route,opts){
  assert.equal(opts.credentials,'omit');assert.equal(opts.redirect,'error');
  if(!fixture[key])return reply({detail:'invalid'},401);
  if(route==='/api/saas/me'){if(delayed)await delayed;return reply(fixture[key]);}
+ if(route==='/api/saas/company-portfolio/discovery/latest')return reply({enabled:true,run:key==='a'?discoveryRun:null});
+ if(route==='/api/saas/company-portfolio/discovery/runs'&&method==='POST'){
+  assert.equal(key,'a');assert.deepEqual(JSON.parse(opts.body),{expected_profile_version:1});
+  discoveryRun={run_id:'run-discovery-a',customer_id:'customer-a',run_day:'2026-11-16',status:'PENDING',plan:{profile_version:1,steps:[{query:'A'},{query:'B'}]},completed_steps:0,step_receipts:[],candidates:[],discovery_incomplete:true};
+  return reply(discoveryRun,201);
+ }
+ if(route==='/api/saas/company-portfolio/discovery/runs/run-discovery-a/step'){
+  assert.equal(key,'a');const index=JSON.parse(opts.body).expected_step;assert.equal(index,discoveryRun.completed_steps);
+  const candidate={registry_number:'0123456789012345678',title:'Кандидат A'};
+  discoveryRun={...discoveryRun,status:index===1?'PARTIAL':'IN_PROGRESS',completed_steps:index+1,candidates:[candidate],step_receipts:[...discoveryRun.step_receipts,{query:index?'B':'A',outcome:index?'source_unavailable':'success_with_results',coverage_complete:false,candidates:index?[]:[candidate]}]};return reply(discoveryRun);
+ }
+ if(route==='/api/saas/company-portfolio/cases'&&method==='POST'){
+  assert.equal(key,'a');savedCandidate=JSON.parse(opts.body).registry_number;return reply(item(key),201);
+ }
  if(route.startsWith('/api/saas/company-portfolio/cases?'))return reply({customer_id:mismatch?'foreign':fixture[key].customer_id,items:[item(key)],has_more:false});
  if(route==='/api/saas/company-portfolio/search-context')return reply({customer_id:fixture[key].customer_id,profile_state:'ACTIVE',profile_version:1});
  if(route.startsWith('/api/saas/company-portfolio/cases/case-'+key)){
@@ -62,6 +77,13 @@ async function selectAccount(key){get('saved-token').value='fixture-'+key;await 
 async function openCase(key){get('company-case').value='case-'+key;change('company-case');await click('company-open');}
 async function main(){
  await selectAccount('a');assert.match(get('company-identity').textContent,/Компания A/);
+ await click('company-search-refresh');assert.equal(get('company-search-start').disabled,false);await click('company-search-start');
+ assert.match(get('company-search-state').textContent,/Ожидает выполнения/);await click('company-search-run');
+ assert.match(get('company-search-state').textContent,/Выдача неполная/);assert.match(get('company-search-receipts').textContent,/source_unavailable/);
+ assert.equal(calls.filter(c=>c.route.endsWith('/step')).length,2);
+ get('company-search-candidate').value='0123456789012345678';change('company-search-candidate');await click('company-search-accept');
+ assert.equal(savedCandidate,'0123456789012345678');assert.match(get('company-search-state').textContent,/Выдача неполная/);
+
  assert.equal(get('company-save-panel').hidden,false);await openCase('a');
  assert.equal(get('company-decision-panel').hidden,false);assert.equal(get('company-evidence-panel').hidden,false);
  get('company-evidence').value='binding-a';change('company-evidence');await click('company-read-evidence');
@@ -73,10 +95,10 @@ async function main(){
  history.a.unshift({revision:2,action:'NO_GO',rationale:'other client',decided_at:'2026-11-15T01:00:00Z'});
  get('company-rationale').value='Устаревшее решение';get('company-confirm').checked=true;await click('company-decide');assert.equal(history.a.length,2);assert.equal(get('company-detail').hidden,true);assert.match(get('result').textContent,/Откройте карточку заново/);
  get('keywords').value='privately entered A';get('reference-state').textContent='private A';get('run-id').value='private-run-a';
- await selectAccount('b');assert.match(get('company-identity').textContent,/Компания B/);assert.equal(get('keywords').value,'');assert.equal(get('run-id').value,'');assert.equal(get('reference-state').textContent,'Список пока не загружен');assert.equal(get('company-history').textContent,'');assert.equal(get('company-evidence-result').textContent,'');
+ await selectAccount('b');assert.match(get('company-identity').textContent,/Компания B/);assert.equal(get('keywords').value,'');assert.equal(get('run-id').value,'');assert.equal(get('reference-state').textContent,'Список пока не загружен');assert.equal(get('company-history').textContent,'');assert.equal(get('company-evidence-result').textContent,'');assert.equal(get('company-search-receipts').textContent,'');assert.equal(get('company-search-candidate').children.length,1);
  await openCase('b');assert.equal(get('company-decision-panel').hidden,true);assert.equal(get('company-evidence-panel').hidden,true);assert.equal(get('company-save-panel').hidden,true);assert(!get('company-case').children.some(c=>c.value==='case-a'));
  mismatch=true;await click('company-load');assert.match(get('result').textContent,/другой компании/);assert.equal(get('company-detail').hidden,true);assert.equal(get('company-case').children.length,1);assert.equal(vm.runInContext('token',ctx),'');
  mismatch=false;let release;delayed=new Promise(r=>{release=r});get('saved-token').value='fixture-a';const first=click('use-token');get('saved-token').value='fixture-b';await click('use-token');release();await first;delayed=null;assert.equal(vm.runInContext('token',ctx),'fixture-a');
- console.log('Company cabinet JS flow PASS: role/identity, evidence, explicit decision, uncertain retry, stale conflict, session clearing, request serialization.');
+ console.log('Company cabinet JS flow PASS: bounded discovery, partial coverage, candidate acceptance, role/identity, evidence, explicit decision, uncertain retry, stale conflict, session clearing, request serialization.');
 }
 main().catch(error=>{console.error(error);process.exitCode=1});

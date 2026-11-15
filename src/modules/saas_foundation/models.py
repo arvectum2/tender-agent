@@ -7,6 +7,7 @@ from __future__ import annotations
 from datetime import datetime
 
 from sqlalchemy import (
+    JSON,
     Boolean,
     CheckConstraint,
     DateTime,
@@ -192,3 +193,21 @@ class CompanyPortfolioEvidence(UUIDPrimaryKeyMixin, Base):
 
 event.listen(CompanyPortfolioEvidence, "before_update", _immutable_company_decision)
 event.listen(CompanyPortfolioEvidence, "before_delete", _immutable_company_decision)
+
+
+class CompanyDiscoveryRun(UUIDPrimaryKeyMixin, Base):
+    """Bounded company search with a frozen profile and committed step receipts."""
+    __tablename__ = "company_discovery_runs"
+    tenant_id: Mapped[str] = mapped_column(String(64), ForeignKey("saas_tenants.tenant_id"), nullable=False)
+    member_id: Mapped[str] = mapped_column(String(36), ForeignKey("saas_members.id"), nullable=False)
+    profile_fact_id: Mapped[str] = mapped_column(String(36), ForeignKey("company_profile_fact_versions.id"), nullable=False)
+    run_day: Mapped[str] = mapped_column(String(10), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="PENDING")
+    plan_json: Mapped[dict] = mapped_column(JSON, nullable=False)
+    results_json: Mapped[list] = mapped_column(JSON, nullable=False, default=list)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    __table_args__ = (
+        UniqueConstraint("tenant_id", "run_day", name="uq_company_discovery_tenant_day"),
+        Index("ix_company_discovery_tenant_day", "tenant_id", "run_day"),
+    )

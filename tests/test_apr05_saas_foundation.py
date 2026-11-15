@@ -1140,3 +1140,109 @@ def test_company_portfolio_distinct_members_share_revisioned_decision_history(cl
     assert [d["revision"] for d in history] == [2, 1]
     assert len({d["decided_by_member_id"] for d in history}) == 2
     assert client.get(base, headers=_auth(owner)).json()["items"][0]["external_submission_allowed"] is False
+
+
+def _enable_company_discovery(monkeypatch):
+    settings = saas.get_settings().model_copy(update={"saas_company_discovery_enabled": True})
+    monkeypatch.setattr(saas, "get_settings", lambda: settings)
+
+
+def test_company_discovery_frozen_plan_scope_and_step_receipts(client, session, monkeypatch):
+    from src.modules.customer_pilot.models import ProcurementCase
+    from src.modules.deal_registry.models import Deal
+    from src.modules.saas_foundation import company_discovery as discovery
+    from src.modules.saas_foundation.models import CompanyDiscoveryRun
+
+    _, a = _seed(client, "Тест поиска A")
+    _, b = _seed(client, "Тест поиска B")
+    _legal(client, a)
+    _legal(client, b)
+    root = "/api/saas/company-portfolio/discovery"
+    payload = {"expected_profile_version": 1}
+    calls = []
+
+    def search(**kwargs):
+        calls.append(kwargs)
+        if kwargs["query"] == "сбой":
+            return {"outcome": "source_unavailable"}
+        cards = [{"reestr_number": "0123456789012345678", "title": "Разработка системы", "initial_price": 500000,
+                  "source": "public_eis_html_44fz", "law": "44fz", "relevance": {"global_private_score": 100}},
+                 {"reestr_number": "0123456789012345679", "title": "Разработка лицензия", "initial_price": 500000,
+                  "source": "public_eis_html_44fz", "law": "44fz"}]
+        return {"outcome": "success_with_results", "source": "public_eis_html_44fz", "cards": cards,
+                "has_more": True, "source_coverage_complete": False}
+
+    monkeypatch.setattr(discovery, "search_public_44fz", search)
+    assert client.post(root + "/runs", headers=_auth(a), json=payload).status_code == 404
+    assert not calls
+    _enable_company_discovery(monkeypatch)
+    assert client.post(root + "/runs", headers=_auth(a), json=payload).status_code == 409
+    profile = _profile()
+    profile["criteria"].update(keywords=["разработка", "доработка", "сбой"], stop_words=["лицензия"])
+    assert client.put("/api/saas/profile", headers=_auth(a), json=profile).status_code == 200
+    assert client.post(root + "/runs", headers=_auth(a), json={**payload, "query": "injected"}).status_code == 422
+    res = client.post(root + "/runs", headers=_auth(a), json=payload)
+    assert res.status_code == 201, res.text
+    run = res.json()
+    assert not calls and run["status"] == "PENDING"
+    assert client.post(root + "/runs", headers=_auth(a), json=payload).json()["run_id"] == run["run_id"]
+    path = root + "/runs/" + run["run_id"]
+    assert client.get(path, headers=_auth(b)).status_code == 404
+    assert client.post(path + "/step", headers=_auth(b), json={"expected_step": 0}).status_code == 404
+    assert client.get(root + "/latest", headers=_auth(b)).json()["run"] is None
+    assert client.post(path + "/step", headers=_auth(a), json={"expected_step": 2}).status_code == 409
+    initial = client.post(path + "/step", headers=_auth(a), json={"expected_step": 0})
+    assert initial.status_code == 200, initial.text
+    first = initial.json()
+    assert first["status"] == "IN_PROGRESS" and first["completed_steps"] == 1
+    assert first["discovery_incomplete"] is True
+    assert len(first["candidates"]) == 1 and first["step_receipts"][0]["excluded_cards"] == 1
+    assert "global_private_score" not in str(first)
+    assert calls[0]["query"] == "разработка" and calls[0]["region"] == "Москва"
+    assert calls[0]["apply_supplier_relevance"] is False and calls[0]["backfill_page_limit"] == 2
+    assert calls[0]["price_from"] == 100000 and calls[0]["price_to"] == 900000
+    assert client.post(path + "/step", headers=_auth(a), json={"expected_step": 0}).json() == first
+    assert len(calls) == 1
+    for index in (1, 2):
+        finished = client.post(path + "/step", headers=_auth(a), json={"expected_step": index}).json()
+    assert finished["status"] == "PARTIAL" and finished["completed_steps"] == 3
+    assert len(finished["candidates"]) == 1 and finished["candidates"][0]["matched_steps"] == [0, 1]
+    assert finished["step_receipts"][2]["outcome"] == "source_unavailable"
+    assert all(call["date_from"] == run["plan"]["date_from"] for call in calls)
+    assert len(calls) == 3
+    assert session.query(CompanyDiscoveryRun).count() == 1
+    assert session.query(ProcurementCase).count() == 0 and session.query(Deal).count() == 0
+    assert client.get(path, headers=_auth(a)).json() == finished
+    assert client.post("/api/saas/company-portfolio/cases", headers=_auth(a), json={"registry_number": finished["candidates"][0]["registry_number"]}).status_code == 201
+    assert session.query(ProcurementCase).count() == 1
+
+
+def test_company_discovery_stale_profile_and_explicit_empty(client, monkeypatch):
+    from src.modules.saas_foundation import company_discovery as discovery
+
+    _enable_company_discovery(monkeypatch)
+    _, a = _seed(client, "Тест устаревшего профиля")
+    _, b = _seed(client, "Тест пустого поиска")
+    _legal(client, a)
+    _legal(client, b)
+    profile = _profile()
+    profile["criteria"]["regions"] = []
+    for token in (a, b):
+        assert client.put("/api/saas/profile", headers=_auth(token), json=profile).status_code == 200
+    calls = []
+    def empty(**kwargs):
+        calls.append(kwargs)
+        return {"outcome": "success_empty", "source": "public_eis_html_44fz", "cards": [], "has_more": False, "source_coverage_complete": True}
+    monkeypatch.setattr(discovery, "search_public_44fz", empty)
+    root = "/api/saas/company-portfolio/discovery/runs"
+    payload = {"expected_profile_version": 1}
+    run_a = client.post(root, headers=_auth(a), json=payload).json()["run_id"]
+    run_b = client.post(root, headers=_auth(b), json=payload).json()["run_id"]
+    assert client.put("/api/saas/profile", headers=_auth(a), json=profile).status_code == 200
+    stale = client.post(f"{root}/{run_a}/step", headers=_auth(a), json={"expected_step": 0}).json()
+    assert stale["status"] == "STALE_PROFILE" and stale["completed_steps"] == 0
+    assert not calls
+    assert client.post(root, headers=_auth(a), json={"expected_profile_version": 2}).status_code == 409
+    completed = client.post(f"{root}/{run_b}/step", headers=_auth(b), json={"expected_step": 0}).json()
+    assert completed["status"] == "COMPLETED" and completed["discovery_incomplete"] is False
+    assert completed["candidates"] == [] and len(calls) == 1

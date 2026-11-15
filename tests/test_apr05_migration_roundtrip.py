@@ -140,3 +140,34 @@ def test_company_evidence_migration_preserves_profile_and_blocks_populated_downg
     finally:
         engine.dispose()
         invalidate_settings_cache()
+
+
+def test_company_discovery_migration_preserves_predecessor_and_receipts(tmp_path, monkeypatch):
+    import pytest
+
+    db_url = "sqlite:///" + str(tmp_path / "discovery.sqlite")
+    monkeypatch.setenv("AI_CORP_DATABASE_URL", db_url)
+    invalidate_settings_cache()
+    cfg = Config(str(Path(__file__).resolve().parents[1] / "alembic.ini"))
+    engine = create_engine(db_url)
+    try:
+        with engine.begin() as conn:
+            for table, identity in (("saas_tenants", "tenant_id"), ("saas_members", "id"), ("company_profile_fact_versions", "id")):
+                conn.execute(text(f"CREATE TABLE {table} ({identity} VARCHAR PRIMARY KEY)"))
+                conn.execute(text(f"INSERT INTO {table} ({identity}) VALUES ('existing')"))
+        command.stamp(cfg, "109_company_portfolio_evidence")
+        command.upgrade(cfg, "110_company_discovery_runs")
+        assert "company_discovery_runs" in inspect(engine).get_table_names()
+        command.downgrade(cfg, "109_company_portfolio_evidence")
+        assert "company_discovery_runs" not in inspect(engine).get_table_names()
+        command.upgrade(cfg, "110_company_discovery_runs")
+        with engine.begin() as conn:
+            assert conn.execute(text("SELECT count(*) FROM company_profile_fact_versions")).scalar_one() == 1
+            conn.execute(text("INSERT INTO company_discovery_runs (id, tenant_id, member_id, profile_fact_id, run_day, status, plan_json, results_json, created_at, updated_at) VALUES ('r1','existing','existing','existing','2026-11-16','PENDING','{}','[]','2026-11-16','2026-11-16')"))
+        with pytest.raises(RuntimeError, match="Cannot remove populated"):
+            command.downgrade(cfg, "109_company_portfolio_evidence")
+        with engine.connect() as conn:
+            assert conn.execute(text("SELECT count(*) FROM company_discovery_runs")).scalar_one() == 1
+    finally:
+        engine.dispose()
+        invalidate_settings_cache()

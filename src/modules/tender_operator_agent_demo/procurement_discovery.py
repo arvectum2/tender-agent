@@ -454,6 +454,8 @@ def search_public_44fz(
     cursor: str | None = None,
     seen_registry_numbers: list[str] | None = None,
     reference_date: date | None = None,
+    apply_supplier_relevance: bool = True,
+    backfill_page_limit: int = MAX_BACKFILL_PAGES,
 ) -> dict:
     normalized_law = normalize_public_eis_law(law)
     exact_procurement_number = _looks_like_exact_procurement_number(query)
@@ -461,6 +463,7 @@ def search_public_44fz(
     effective_page_size = min(max(page_size, 1), 50)
     requested_limit = min(max(max_results or effective_page_size, 1), 100)
     physical_eis_page_size = DEFAULT_SEARCH_PAGE_SIZE
+    effective_backfill_limit = min(max(backfill_page_limit, 1), MAX_BACKFILL_PAGES)
 
     status_filter_stage_flag = resolve_public_eis_stage_flag(status_filter)
     local_status_filter = status_filter if status_filter_stage_flag is None else None
@@ -553,6 +556,7 @@ def search_public_44fz(
             local_post_filter_applied=False,
             eis_pages_fetched=1 if ps else 0,
             has_more=False,
+            source_coverage_complete=bool(outcome_val == ProcurementSearchOutcome.SUCCESS_EMPTY and fetch_result.get("explicit_zero_count") is True and not cursor and not region),
             next_page=None,
             next_cursor=None,
             requested_limit=requested_limit,
@@ -609,7 +613,8 @@ def search_public_44fz(
     eis_has_more = True
     current_eis_page = next_eis_page
 
-    while len(valid_cards) < requested_limit and pages_fetched < MAX_BACKFILL_PAGES and eis_has_more:
+    backfill_failed = False
+    while len(valid_cards) < requested_limit and pages_fetched < effective_backfill_limit and eis_has_more:
         if pages_fetched == 0 and not cursor:
             fetch_url = first_fetch_url
             raw_html = fetch_result.get("html", "")
@@ -628,11 +633,13 @@ def search_public_44fz(
             )
             page_fetch = fetch_public_44fz_search_page(fetch_url)
             if page_fetch.get("status") != Public44FzSearchStatus.PARSED or not page_fetch.get("html"):
+                backfill_failed = True
                 break
             raw_html = page_fetch.get("html", "")
 
         page_cards = parse_44fz_search_results(raw_html)
         if not page_cards:
+            backfill_failed = True
             eis_has_more = False
             break
 
@@ -688,6 +695,7 @@ def search_public_44fz(
             local_post_filter_applied=True,
             eis_pages_fetched=pages_fetched,
             has_more=False,
+            source_coverage_complete=bool(fetch_result.get("explicit_zero_count") is True and parsed_total_count == 0 and total_raw_count == 0 and not cursor and not region),
             next_page=None,
             next_cursor=None,
             requested_limit=requested_limit,
@@ -701,7 +709,7 @@ def search_public_44fz(
         ).model_dump(mode="json")
 
     valid_cards = _sort_public_44fz_cards(valid_cards)
-    profile = None if exact_procurement_number else get_supplier_profile()
+    profile = None if exact_procurement_number or not apply_supplier_relevance else get_supplier_profile()
     scored_cards = []
     for card in valid_cards[:requested_limit]:
         card_with_relevance = dict(card)
@@ -779,6 +787,7 @@ def search_public_44fz(
         local_post_filter_applied=local_post_filter_applied,
         eis_pages_fetched=pages_fetched,
         has_more=has_more,
+        source_coverage_complete=bool(not cursor and not region and not backfill_failed and total_count_exact_for_displayed_filters and not has_more and len(valid_cards) <= requested_limit),
         next_page=None,
         next_cursor=next_cursor_val,
         requested_limit=requested_limit,
