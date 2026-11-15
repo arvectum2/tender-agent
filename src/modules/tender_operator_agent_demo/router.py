@@ -14,6 +14,15 @@ from src.modules.tender_operator_agent_demo.fast_preanalysis import (
     fast_cited_preanalysis,
     preanalysis_from_public_search,
 )
+from src.modules.tender_operator_agent_demo.operator_cost_scenarios import (
+    ExplicitCostScenarioRequest,
+    calculate_explicit_cost_thresholds,
+)
+from src.modules.tender_operator_agent_demo.operator_price_context import (
+    archived_competitive_price_context,
+    archived_website_price_cohort,
+    archived_website_workload_normalization,
+)
 from src.modules.tender_operator_agent_demo.operator_workspace_evidence import (
     get_operator_source_evidence,
 )
@@ -180,6 +189,44 @@ def operator_workspace_verify_quote(
     return verify_operator_run_quote(
         run_id=run_id, file_id=request.file_id, exact_quote=request.exact_quote,
     )
+
+
+@router.post(
+    "/api/demo/tender-agent/workspace/price-scenario/calculate",
+    dependencies=[Depends(require_private_workspace)],
+)
+def operator_workspace_explicit_price_scenario(
+    request: ExplicitCostScenarioRequest,
+) -> dict:
+    """Stateless what-if; no quote, company costs storage or ETP actions."""
+    return calculate_explicit_cost_thresholds(request)
+
+
+@router.get(
+    "/api/demo/tender-agent/workspace/website-workload-normalization",
+    dependencies=[Depends(require_private_workspace)],
+)
+def operator_workspace_website_workload_normalization() -> dict:
+    """Workload differences from original attested TЗ, not monetary quotes."""
+    return archived_website_workload_normalization()
+
+
+@router.get(
+    "/api/demo/tender-agent/workspace/website-price-cohort",
+    dependencies=[Depends(require_private_workspace)],
+)
+def operator_workspace_website_price_cohort() -> dict:
+    """Archived distinct original websites, not a blended procurement price."""
+    return archived_website_price_cohort()
+
+
+@router.get(
+    "/api/demo/tender-agent/workspace/competitive-prices/{registry_number}",
+    dependencies=[Depends(require_private_workspace)],
+)
+def operator_workspace_competitive_prices(registry_number: str) -> dict:
+    """Read-only independently checked archived one-procedure price evidence."""
+    return archived_competitive_price_context(registry_number)
 
 
 @router.get("/api/demo/tender-agent/workspace/registry", dependencies=[Depends(require_private_workspace)])
