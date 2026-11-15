@@ -1027,3 +1027,8 @@ sibur_v32_pq_manufacturers_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Continue V32 exact outcomes and qualification, refresh coverage, KIP plan gaps.
+
+sibur_v33_sionika_focus_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Sionika core portfolio first; Voltag/PQ background. Continue LSU, retrofit, KIP plan gaps, service and exact outcomes.
