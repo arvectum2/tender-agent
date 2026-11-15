@@ -773,3 +773,11 @@ independent_ups_market_20261115:
     from Sionika. Use ups-demand-review-v1, gpb-ups-channel-review-v1 and UPS public
     reference evidence. Expand authorized sources and exact scope, keep mixed allocation/manual
     review, retain no award/price if unsupported.
+sibur_support_services_installed_base_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Focus SIBUR as latest owner priority. Read support-services-review-v1 and
+    installed-base-service-evidence-v1 and private channel overlay. Continue installed-base
+    and lifecycle-service/EPC map; keep standalone UPS separate. Existing workers
+    untouched. Fresh shared backup, acceptance gate and replay before DB writes. No
+    DP bypass/contact/bid/spend/auto-merge.

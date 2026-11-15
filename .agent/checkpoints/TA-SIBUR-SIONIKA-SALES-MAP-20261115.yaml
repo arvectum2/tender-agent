@@ -117,14 +117,25 @@ completed:
   manual scope allocation, no supplier assignment. Generic router tests 7 passed/Ruff;
   6477 industrial,293 UPS/battery,38 overlap,6732 distinct records. No private relationship
   in source code.'
-current_stage: industrial_and_independent_ups_channels_split
+- Support services 999_19 verified in official archived filter and raw responses;
+  all five advertised pages captured, 59 distinct IDs, zero overlap with prior 30394
+  frozen records. 29 in 2024–26, 30 in 2022–23. Research supplement not DB imported.
+  Parser supports category; existing workers untouched. Two parser tests/Ruff pass.
+- Offline report refreshed from committed links, 237 new originals, 1163 total, 1158
+  extracted/5 review, 127 new report findings not all qualified scope. Nine source-bound
+  selected demand/maintenance cases with cancellation/mixed scope retained. VSK n-BuLi
+  attachment-only UPS and KTP installation scope, no proof of installation or award;
+  owner reports construction completed and PNR started, current launch unverified.
+current_stage: support_category_covered_and_installed_base_service_evidence
 remaining:
-- Preserve expanded user UPS profile, qualify 119 battery cases and 304 missing exact
-  links alongside broader industrial portfolio. Identify installed base and repeat
-  service opportunities.
-- Expand primary EPC purchasing evidence and direct channels; preserve relationship
-  overlay and separate AGPZ/AGHK. Existing worker ownership; no DP bypass.
-last_verified_commit: b3857ca927a098994424b47ad1d263dbe9af53a9
+- SIBUR priority per owner. Maintain independent UPS channel and industrial channel;
+  verify actual installed-base scope and EPC/recipient links. Supplemental 29 in-period
+  records await authorized import after fresh shared backup/acceptance gate; keep
+  older 30 as context.
+- Existing source acquisition and exact-link reconciliation, service recurrence and
+  awards/price/eligibility evidence still pending. DP blocked unchanged. No duplicate
+  workers.
+last_verified_commit: 2104ea4d2cad44fc90e9850fb2026e7c97736d7e
 test_results:
   focused: 3
   ruff: pass
@@ -228,8 +239,27 @@ test_results:
     private_overlay_sha256: 033e02396841e07b9246284bd7a18128946469134a7ac2dc80a644802581da30
     focused: 7
     ruff: pass
-resume_instruction: Read generic sales-channel-routing-v1.json and private commercial-channel-overlay-v2.json
-  before commercial classification. Standalone UPS/AKB not Sionika supply. Continue
-  industrial sales map and separate UPS battery market research child checkpoint .agent/checkpoints/TA-INDEPENDENT-UPS-MARKET-20261115.yaml.
-  Split mixed package scopes; no representation/contact/bid/spend without owner approval.
-  No duplicate worker or DP bypass.
+  support_services_and_installed_base:
+    support_services_sha256: c4fc07d212a4f8b9418783942c145f3c4347169aa22b4a2a70af56d9a0dd2fc8
+    years:
+      '2022': 7
+      '2023': 23
+      '2024': 16
+      '2025': 7
+      '2026': 6
+    pages: 5
+    new_source_ids: 59
+    in_period_2024_2026: 29
+    db_imported: false
+    technical_report_sha256: a92cd059ac08f8dfb073e1a7561446d7ac0e3b4282d5af81d7f679eab71eae4a
+    technical_originals: 1163
+    technical_extracted: 1158
+    technical_review: 5
+    selected_scope_sha256: 8dfe7b44e62a13e223f676dd643918b769552ecfcabc6e9e460bd880fcd2d2d3
+    selected_scope_count: 9
+    parser_tests: 2
+    ruff: pass
+resume_instruction: Focus SIBUR as latest owner priority. Read support-services-review-v1
+  and installed-base-service-evidence-v1 and private channel overlay. Continue installed-base
+  and lifecycle-service/EPC map; keep standalone UPS separate. Existing workers untouched.
+  Fresh shared backup, acceptance gate and replay before DB writes. No DP bypass/contact/bid/spend/auto-merge.
