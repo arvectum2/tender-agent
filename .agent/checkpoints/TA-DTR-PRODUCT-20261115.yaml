@@ -13,14 +13,33 @@ completed:
 - Canonical accepted main 35c44a89 audited; DTR existing modules and specification
   inspected; uncovered dropped PENDING/RUNNING recovery, false-success discovery,
   missing Docker profile config, profile-version reuse issue.
-current_stage: dtr_reliability
+- DTR same-run execution lock, PENDING/RUNNING recovery, original discovery window
+  retry, explicit incomplete-source result, frozen-profile snapshot dedupe, invalid
+  profile ID rejection, all image profile packaging.
+- Mobile digest now distinguishes queued run from no run and includes status/stage
+  and discovery completeness.
+- 39 targeted offline tests PASS, Ruff and make check PASS; isolated ARM64 image dtr-review-85937edb
+  loads arvectum-it v2 13 queries and mobile contract.
+- 'Profile isolation audit: global canonical intake/deal dedupe by procurement number
+  and deal-based decision identity; mobile projections unscoped; intake IT classification
+  hardcoded. No second company profile activated. Documented next design in docs/product/DTR_PARALLEL_PRODUCT_INCREMENT_2026-11-15.md.'
+current_stage: profile_company_scope_design
 remaining:
-- DTR recovery and source error regression
-- Profile context and isolation audit and implementation
-- Mobile API and SwiftUI integration
-- Operator Workspace UX and offline end-to-end
-last_verified_commit: 35c44a898b56c055bbcd50a8be25227459c08e58
-test_results: []
-resume_instruction: Work only in isolated DTR branch; preserve existing market research
-  and owner-approved conditional DP switch. Fix and verify prioritized reliability
-  regressions before advancing profile and mobile slices.
+- Check exact-head DTR review CI; PostgreSQL advisory lock still needs real isolated
+  concurrency acceptance (SQLite guard tested).
+- Design and implement minimal company-scoped decision/intake/profile authorization
+  model, migration and legacy behavior; negative cross-company tests before Sionika
+  activation.
+- Mobile API/SwiftUI integration of run state and company boundary, existing Workspace
+  UX, isolated E2E.
+last_verified_commit: 85937edbed02404c818e1af9acdc725a6d965944
+test_results:
+- 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
+  PASS
+- Offline network-none ARM64 build and packaged profile/digest validation PASS (sha256:fa60d6cadfbde364a28dd92dd7b72d000ef990ca9799be19161de240ef20f992)
+- No live PostgreSQL lock acceptance, live research ingestion, APNs or LLM invocation
+resume_instruction: DTR reliability PR review candidate already verified; check its
+  CI. Continue company-context design based on actual canonical Deal/intake, decision
+  and SaaS/company store contracts; do not activate Sionika or duplicate source records
+  until tested cross-company isolation. Preserve live research, DP conditional update
+  checkpoint and existing main runtime; no deployment without approval.
