@@ -688,3 +688,9 @@ archive_recovery_and_named_market_2026_11_15_0724:
   status: in_progress
   resume: Inspect live SIBUR archive and original index executor, verify pre-sync
     of 305 receipts, preserve source-specific provenance.
+ai_trading_offline_source_audit_2026_11_15:
+  checkpoint: .agent/checkpoints/TA-AI-TRADING-SOURCE-DISCOVERY-001.yaml
+  status: in_progress
+  resume: Use verified private mos-paper-source-audit-v2.json; masked bid identities
+    cannot verify legal winner. Continue authorized source inventory and contemporaneous
+    supplier price observations only. Never access restricted endpoints or place bids.
