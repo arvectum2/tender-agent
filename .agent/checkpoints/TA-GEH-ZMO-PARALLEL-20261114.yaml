@@ -3,12 +3,12 @@ status: in_progress
 goal: Establish verified primary public list acquisition for GEH and small procurement parallel to SIBUR.
 definition_of_done: [primary target lists and detail receipts, source-scoped stable identities, date and status validation, verified normalized samples, gated working DB ingestion]
 completed: [eight parallel source probes, GPB SSR card parser, real 20-card replay, 3 focused tests]
-current_stage: historical_protocol_outcomes_112_verified
+current_stage: historical_protocol_outcomes_133_verified
 remaining: [GPB customer-specific queries and actual date checks, TEK-Torg accessible lists, Moscow and EAT list contracts, source-separated import]
-last_verified_commit: 1310b83f09860f26d04ceaa151dcb455ef9b0d1f
+last_verified_commit: bc37019518c5811d8fa411e3000d09a420d61caf
 latest_tests: 3 pytest passed; Ruff passed; 20 distinct primary observed cards; 13 future-dated observations quarantined
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources
-resume_instruction: Reuse 8206 GPB rows, 19 active and 169 historical verified details, 129 GPB document links, all 115 published protocols captured, 112 structured outcomes (108 best bids, 4 unsuccessful). Review scanned PDF etp:1293269 and alternate decisions etp:1286980, etp:1284906. One detail failed in batch 6; retry after exact source review. Continue next unseen historical candidates, active attachments, older date windows, ZMO. No inferred supplier legal identity or signed contract. Preserve prior decisions and procedure-local versus platform participant IDs.
+resume_instruction: Reuse 8206 GPB rows, 19 active and 198 historical details, 149 links, 135 captured protocols, 133 outcomes (125 best bids, 8 unsuccessful). Review etp:1293269 and etp:1282317. Exclude sales from demand only; raw records unchanged. Listing reports 60048 offers with 400 exposed pages; 8000 observations NOT exhaustive. Discover verified partition filters, continue active attachments, ZMO and next demand candidates; no inferred identities or signed contracts.
 
 target_detail_receipts:
   detail_pages_verified: 2
@@ -209,3 +209,24 @@ geh_protocol_outcomes_batch6:
   repeat_updates: 0
   prewrite_gate: pass
   backup_sha256: ef28eb5a234e362221424a227bda2802a12237ba9d73be62b9c4d609d86ff964
+
+geh_protocol_outcomes_batch7:
+  historical_details: 198
+  published_protocols_captured: 135
+  structured_outcomes: 133
+  best_bids: 125
+  unsuccessful: 8
+  distinct_global_ids: 50
+  historical_document_links: 136
+  total_gpb_links: 149
+  old_112_decisions_unchanged: true
+  remaining_review: [etp:1293269, etp:1282317]
+  historical_list_reported_total: 60048
+  historical_exposed_pages: 400
+  historical_observed_cards: 8000
+  historical_scope_exhaustive: false
+  sales_excluded_from_demand_queue: 1
+  repeat_inserts: 0
+  repeat_updates: 0
+  prewrite_gate: pass
+  backup_sha256: 415f47249222e144f6db41276c68b087df39aa57985124f6cb812938fa30ebae
