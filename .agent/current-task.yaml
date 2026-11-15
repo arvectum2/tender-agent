@@ -840,3 +840,8 @@ sibur_cryogenmash_gpb_primary_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Read cryogenmash-gpb-primary-review-v2.json; five first-party details and explicit AGHK maintenance scope confirmed. Continue broad contractor mapping, retrofit P0 and separate UPS. No bypass or duplicate workers, no inferred awards or DB mutation without existing gate.
+
+sibur_automation_contractor_roles_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read automation-contractor-role-review-v1.json. Confirm identified entities' procurement channels and unresolved identities, refresh technical extraction and continue cross-stage retrofit scope. Preserve independent UPS, reserve only, no inferred awards, DB changes or duplicate workers.

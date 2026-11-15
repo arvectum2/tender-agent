@@ -202,14 +202,15 @@ completed:
   schedule not current inventory, cell count or award.
 - Five original GPB list/detail pairs captured and hash-verified for Cryogenmash: GP635240 active, GP634651/GP633537/GP634648/GP641489 archived. GP641489 was prior secondary observation, not additional demand. Original detail archive deadline label conflicts with list; use per-ID list deadlines. No price/award confirmed.
 - GP635240 original DOCX explicitly confirms AGHK title 6500, AO Cryogenmash organizer versus OOO Cryogenmash Development customer in TZ; 64 numbered asset lines plus separate UPS line. Six LV sections, six transformers, two capacitor installations, one 10kV soft starter, three AVR cabinets, nine compressors and four circulation pumps. Three years experience, qualified staff, 12h departure and 24-48h arrival; no eligibility claim. Fourteen other selected links closed connections, no bypass.
-current_stage: cryogenmash_primary_lifecycle_and_asset_evidence
+- Automation subcontractor review: 9 entity candidates, 6 INNs resolved, 12 first-party portfolio observations through Perm ASU Engineering, 7 exact related SIBUR archive identities with scope distinctions. MMUS 2024–27 electrical installation and commissioning; Ural-Controls V521 automation and design; Neftekhimnaladka EP600, Reksoft Kstovo, Gazproektinzhiniring BOV7, MIIMF; Naladchik and Sintegra identities pending. Separate similarly named Ufa ASU company excluded. No awards inferred. Five historical retrofit publication crosschecks, 4 additional owner Telegram crossreferences, including RP57 cancelled budget then solicitation; date typo retained. Company direct HTTP503; indexed official pages reviewed.
+current_stage: automation_subcontractor_and_retrofit_role_reconciliation
 remaining:
 - Continue broad SIBUR research, Cryogenmash/AGHK outsourced plant lifecycle, NKNH/Kstovo
   retrofit evidence and contractor 2024–26 purchases. Separate UPS channel, reserve
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: 001d91eda0fff6b2d08c5c8891939ab5e8bc13f7
+last_verified_commit: 2b7c3aec
 test_results:
   focused: 3
   ruff: pass
@@ -426,4 +427,12 @@ test_results:
     captured_originals: 1
     source_quote_anchors_verified: 10
     verification: Replayed saved list and detail SHA for all five IDs and original DOCX SHA; 10 exact quote anchors verified. No production code or DB mutation.
-resume_instruction: Read cryogenmash-gpb-primary-review-v2.json in existing private sales-map runtime. Continue broad contractor buyer mapping, NKNH/Kstovo retrofit P0 and separate UPS. Reconcile archived GPB deadlines and retry remaining original links only via normal bounded access when available; no bypass, duplicate workers, inferred awards, outreach, spending or auto-merge. Preserve existing archive workers and DB/DP gates.
+  automation_contractor_roles:
+    artifact_sha256: 70fa9cc41839f2b5112756fd03fd845bd8e61ab46e4be5a3eb5ccc1ad2f4e32c
+    entity_candidates: 9
+    resolved_inns: 6
+    portfolio_observations: 12
+    related_archive_ids: 7
+    retrofit_crosschecks: 5
+    verification: Existing frozen snapshot identity joins and source reference fields checked; company self-reports and archive records kept separate, no primary contract awards. No production code or DB change.
+resume_instruction: Read automation-contractor-role-review-v1.json in existing private sales-map runtime. Confirm procurement channels for identified legal entities (MMUS, Perm ASU Engineering, Ural-Controls, Neftekhimnaladka), resolve Naladchik/Sintegra/MIIMF identities and scope, continue broad SIBUR project and retrofit map. Refresh technical extraction from committed receipts; preserve independent UPS, reserve-only opportunities and existing workers. No inferred awards, duplicate jobs, contact, bid, spend, auto-merge, DP bypass or DB writes without existing gate.
