@@ -62,7 +62,7 @@ def document_parts(path, raw):
         raise ValueError("legacy or unsupported format")
 
 
-def run(root):
+def run(root, *, remaining=False):
     p=root/"sibur-sales-map-20261115"
     matrix=p/"whole-corpus-project-sales-matrix-v1.json"
     snapshot=p/"db-observation-snapshot-v1.json"
@@ -70,7 +70,7 @@ def run(root):
     if sha(snapshot.read_bytes())!=m["snapshot_sha256"]:
         raise ValueError("matrix snapshot mismatch")
     src={x["external_id"]:x["observations"] for x in read(snapshot)}
-    cases={r["external_id"]:r for r in m["records"] if TIERS & {r["tier"]} and PROJECTS & r["project_mentions"].keys()}
+    cases={r["external_id"]:r for r in m["records"] if r["tier"] in TIERS and bool(PROJECTS & r["project_mentions"].keys()) != remaining}
     captures=defaultdict(list)
     all_refs=defaultdict(set)
     for folder in [root/"documents",root/"sibur-archive-discovery/categories/documents"]:
