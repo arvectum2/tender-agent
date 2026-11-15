@@ -189,7 +189,7 @@ with e.connect() as c:
             update(status="stopped",step="operator STOP before linkage")
             return
         rows=captures(out,refs)
-        payload=json.dumps({"captures":rows,"indexed":{}},ensure_ascii=False).encode()
+        payload=json.dumps({"captures":rows,"indexed":{},"preserve_existing_index":True},ensure_ascii=False).encode()
         sha=hashlib.sha256(payload).hexdigest()
         if rows and state.get("sync_sha")!=sha:
             update(step="wait shared mutation lock",captures=len(rows),pending_sha=sha)

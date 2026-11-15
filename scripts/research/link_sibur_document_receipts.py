@@ -38,7 +38,20 @@ def reconcile_meta(actual, proposed):
     return True
 
 
-def link(session, captures, indexed):
+def preserve_index_for_capture_replay(actual, proposed, sha, indexed, enabled=False):
+    """Capture-only replay may retain existing verified index; never replace it."""
+    if not enabled or sha in indexed or not actual or actual.get("dp_index") is None:
+        return proposed
+    dp=actual["dp_index"]
+    if (dp.get("collection_id") != COLLECTION or dp.get("canonical_uri") != "content-sha256://"+sha
+            or dp.get("extraction_status") != "extracted" or not dp.get("embeddings")):
+        raise ValueError("invalid existing persistent DP receipt")
+    if proposed.get("dp_index") is not None:
+        raise ValueError("unexpected incoming index")
+    return {**proposed,"dp_index":dp}
+
+
+def link(session, captures, indexed, preserve_existing_index=False):
     tender = ProcurementTender.__table__
     doc = ProcurementTenderDocument.__table__
     groups = {}
@@ -91,6 +104,7 @@ def link(session, captures, indexed):
         added += int(result.scalar_one_or_none() is not None)
         actual = session.execute(select(doc.c.raw_meta).where(
             doc.c.tender_id == t.id, doc.c.sha256 == sha).with_for_update()).scalar_one()
+        meta = preserve_index_for_capture_replay(actual, meta, sha, indexed, preserve_existing_index)
         if reconcile_meta(actual, meta):
             session.execute(update(doc).where(
                 doc.c.tender_id == t.id, doc.c.sha256 == sha).values(
@@ -106,7 +120,8 @@ def main():
     with Session(engine) as session, session.begin():
         if session.execute(text("select current_database()")).scalar_one() != "arvectum_local":
             raise ValueError("unexpected database")
-        result = link(session, payload["captures"], payload["indexed"])
+        result = link(session, payload["captures"], payload["indexed"],
+                      preserve_existing_index=payload.get("preserve_existing_index") is True)
     print(json.dumps(result))
 
 
