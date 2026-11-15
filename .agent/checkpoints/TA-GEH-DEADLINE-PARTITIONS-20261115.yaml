@@ -1,0 +1,19 @@
+task_id: TA-GEH-DEADLINE-PARTITIONS-20261115
+status: in_progress
+goal: Extend public GEH archival observations through calendar deadline windows Jan 2024 through Nov 2025, separately from existing worker.
+definition_of_done:
+  - Source-verified deadline partition capture with exact query, count, page, unique source ID and SHA receipts.
+  - Capture and audit all eligible deadline months; split any capped or unstable partitions or retain review.
+  - Deduplicate against existing TA source IDs before source-specific import, after shared lock, fresh gate and verified backup.
+  - No automatic award inference; no claim of market-wide census.
+completed:
+  - Verified actual 2024 and 2025 date filters, 11202 and 8584 reported offers respectively.
+  - Four actual monthly first-page receipts; all advertised page counts below 400 and matching source count.
+  - Implemented checked resumable read-only archive capture, circuit breaker and focused tests.
+current_stage: launch_read_only_archive_capture
+remaining:
+  - complete month pages and identity audit
+  - build verified deduplicated import for novel source observations
+last_verified_commit: 64129c53142ef96d289f9699cb99f4dae599c4db
+runtime_root: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources/geh-deadline-archive
+resume_instruction: Inspect state.json and archive.lock before a restart; never duplicate the active archive capture or existing priority executor. Audit dated source receipts before any DB writes.
