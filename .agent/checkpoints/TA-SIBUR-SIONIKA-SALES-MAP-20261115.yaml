@@ -220,7 +220,8 @@ completed:
 - V13: refreshed all 27 official current list pages, 315 unique IDs, no observed changes vs earlier snapshot. Transport interrupted before receipt; reconstructed from full saved raw set, verified hashes and parser; no duplicate download. 20 selected current procedures and 7 original worksheets/8 URLs verified. Added KOS compressor control 2145701/1 and NKNH motor service 2145706/1 (2027–29, 12mo warranty), P0 routing now 15, 36 total. Exact plan links remain unproven for 8 unmatched rows, plan936 subject match only. No new signed prices, no new DB writes. V13 report refined in place of append-only history.
 - V14: owner-confirmed Progas general contractor and equipment supply VRU NKNH; two distinct procurement INNs, six independent B2B records with exact title identifiers, finance profiles separate. MPE-230 design New Resources and positive GEE, ASU Engineering self-reported audit not implementation. Court A57-10811/2026 propylene infrastructure contract chain, 107586664 RUB VAT incl spec, 109044502.18 accepted goods, 50658494.82 overpayment; product scope unknown, excluded from electrical amounts. Official Telegram 2111857/1 confirmed, live DB exact lookup absent, portal card cache miss, eight neighbor notices matched archive. Four P0 actions updated. No DB mutations.
 - V15: six previously generic NPG external notices resolved to scope, three new notices, nine observations in six families, eleven overall external NPG including pump and sewer packages. No additive revision counts, no signed prices. TESS Amur named in Amur region plan 378-r dated 2026-06-02, temporary network program 2022–30; six group portfolio scopes across four sites, finance identity checked. MChS fire license terminated; do not extrapolate. Regional direct source 403 and PDF screenshot cache miss documented. Six commercial actions revised. AGHK AuCom exact archive ID checked. No direct DB mutation.
-current_stage: npg_measurement_and_cross_site_service_channels
+- Read-only exact coverage dashboard: 30394 SIBUR records, 6477 industrial, 2599 project unique, 8223 priority union, 853 overlap and 5624 profile outside mapped projects. 1100/2299 supported distinct priority URLs fully extracted; 1580/8223 all known URLs extracted without unverified marker, not final research result. 36 per-project counts; 2475/10188 active acquisition attempts, 57/587 linked archive index documents. Reusable report_sibur_coverage module and dedup/unsupported/partial test passed. No DB mutation.
+current_stage: quantified_coverage_dashboard_and_remaining_priority_work
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -229,7 +230,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: 8dea500f
+last_verified_commit: 1aa3003f
 test_results:
   focused: 3
   ruff: pass
@@ -740,4 +741,21 @@ test_results:
       consolidated-project-map-v15.json: 7a45e1affea11b98216323b1f90a586bd129598950552678395f82aad8888d61
       commercial-action-register-v9.json: 8d172e9b0a359ec2fe93d1f5f311280f865d92231370d96928d5091125d1ba48
       consolidated-project-report-v15.md: 2e5da9e500493bae77e1531b5f5ea62a283a8082e256c8e158fd0260f1af1a40
-resume_instruction: "Read V15 map/report and commercial-action-register-v9.json. Continue award/contract evidence for AGHK, Styrene, MPE and Polief, exact equipment packages and eight unmatched plan rows. Review additional original archive docs as acquired; identify concrete bidders and purchase terms. Final consolidated Russian report by 17 Nov even with gaps. Verify running index worker; if blocked reconcile exact identities under gates/locks, never duplicate worker. Preserve UPS independent and private owner context. No inferred awards, contract prices or external outreach."
+  coverage_dashboard_v2:
+    total_sibur: 30394
+    industrial: 6477
+    projects: 36
+    project_publications: 2599
+    priority_union: 8223
+    priority_supported_urls_total: 2299
+    priority_supported_urls_extracted: 1100
+    priority_all_known_packages: 1580
+    archive_attempted: 2475
+    archive_target: 10188
+    bridge_indexed_linked: 57
+    bridge_targets: 587
+    tests: 1_passed
+    artifacts:
+      project-coverage-dashboard-v2.json: 4eca051fd220b39db2aafb88f4aa8b054430efba6084626d13191a4c3ce07e07
+      project-coverage-dashboard-v2.md: a2729bf00c757c9e1efce9ccac0f168da0a1ebb6b6cb4601bd1de8d34f4c5fe1
+resume_instruction: "Read V15 map/report and project-coverage-dashboard-v2.json. Continue multiple research blocks for P0, exact primary award/price evidence, remaining plan rows and equipment. At each major update run scripts.research.report_sibur_coverage --root runtime root --map latest consolidated map --output a new unique dashboard JSON; report per-project found/any extraction/all supported/all known and unique priority URLs, separately machine extraction and verified substantive outcomes. Use priority union dedup and known-format gaps; prioritize outstanding P0 and profile documents, 5624 profile publications outside current project cards (do not invent project identity). Existing collector/indexer continue, no duplicate jobs; GPB recovery queue exhausted, exceptions/new source coverage separate. Deadline 17 November for clean report, no false completeness or estimated delivery guarantee. Preserve UPS separate, private owner context, gates/locks. No inferred awards/prices."

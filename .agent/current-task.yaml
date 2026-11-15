@@ -932,3 +932,8 @@ sibur_npg_tess_v15_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Read V15 report and continue verified contract and equipment evidence; deadline 17 November.
+
+sibur_progress_dashboard_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Use V15 and coverage V2; update quantitative dashboard with each major research block, focus remaining unique priority URLs and actual outcomes.
