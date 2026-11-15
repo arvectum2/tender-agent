@@ -1062,3 +1062,8 @@ sibur_v40_quality_contract_20261116:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: V40 audited, screen originals for outcome evidence; report coverage.
+
+sibur_v41_original_outcome_screen_20261116:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: V41 outcome lexical audit complete; active package qualification and external contract channels.

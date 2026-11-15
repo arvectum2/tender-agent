@@ -1176,4 +1176,16 @@ test_results:
       commercial-action-register-v34.json: c18b00f3487d6afa7319400dcc18ce35117cc8b08f820e1ff11d6dd26a801400
       project-coverage-dashboard-v26.json: 66f8e4933275dc749279c4b6855de3489014ed7798ef025472fe6685e04fad34
       consolidated-project-report-v40.md: b575af88f0edbc25babf917a4f818a9a0bd611dc88b7217103ecb9bd94cad27e
-resume_instruction: "V40 verified; screen captured priority originals for actual outcome markers, then review candidates; no DB write. Report Nov17."
+  sionika_v41:
+    project_cards: 66
+    priority_union: 8244
+    source_artifacts: 92
+    completed_stage: "Screened 2017 archive originals; 1921 text readable; reviewed 25 hits, no verified awards; 96 unreadable."
+    artifacts:
+      sionika-priority-outcome-screen-v1.json: 5fecd3b2392d0e7efea18cad646479e0e965fb38567e455b058fae7d46d62812
+      consolidated-project-map-v41.json: 0daefd4f8a12dd7327708d2ff32aa7ac0705b1a6f4a1a26cc5139d05145a4826
+      commercial-outcome-queue-v16.json: afd129e3c2301b32fba0f234b7d63831f851cb9aaf9579e298e760c9335dabbb
+      commercial-action-register-v35.json: 932ae210ad826d57fa9428b0cf73582a917846e6b1230cae36d941cfd2762bff
+      project-coverage-dashboard-v27.json: 0fd0e98b9a6214e1970b437e7d4729d246f78999f20e81a04441217bba284bff
+      consolidated-project-report-v41.md: 70e37971f5a08faaeee826520b9821f73e2036735f2ee8d9ddd79122bdc39928
+resume_instruction: "V41 complete; next priority active packages, external contract ledger, fresh exact deadlines and report Nov17. No DB write without gate."
