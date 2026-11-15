@@ -87,3 +87,12 @@ def test_local_ordinal_competitive_selection():
     assert row["participant_platform_id"] is None
     assert row["participant_local_ordinal"] == "1"
     assert row["best_bid_rub"] == "97.60"
+
+
+def test_group_leader_nbsp_and_missing_closing_parenthesis():
+    raw = protocol(para("Начальная (максимальная) цена договора: 1 000,00 руб., без учета НДС.") +
+                   para("Выбрать наиболее выгодные условия оказания услуг в заявке Группы лиц (ID\u00a0Лидера - 123, которой присвоен первый порядковый номер, на сумму 900,00 руб., (без учета НДС)."))
+    row = parse_protocol(raw)
+    assert row["participant_platform_id"] == "123"
+    assert row["participant_role"] == "group_leader"
+    assert row["best_bid_rub"] == "900.00"

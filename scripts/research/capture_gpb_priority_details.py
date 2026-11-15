@@ -92,6 +92,15 @@ def capture(root, row):
             "published_document_links": links, "unavailable_document_labels": unavailable, "observed_at": datetime.now(UTC).isoformat()}
 
 
+def select_candidates(rows, priority, seen, limit):
+    """Preserve sale observations but do not queue them as procurement demand."""
+    pending = [e["observation"] for e in rows
+               if e["observation"]["external_id"] in priority - seen]
+    sales = [r for r in pending if r["external_id"].startswith("sale:")]
+    demand = [r for r in pending if not r["external_id"].startswith("sale:")]
+    return demand[:limit], sales
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--root", type=Path, required=True)
@@ -109,7 +118,9 @@ def main():
     seen = {r["external_id"] for r in existing if r.get("status") == 200}
     priority = {r["external_id"] for r in json.loads((root / "geh-metadata-priority-history400.json").read_text()) if r["stage"] == args.stage}
     rows = json.loads((root / "geh-verified-db-input-history400.json").read_text())["accepted"]
-    selected = [e["observation"] for e in rows if e["observation"]["external_id"] in priority - seen][:args.limit]
+    selected, sales = select_candidates(rows, priority, seen, args.limit)
+    if sales:
+        print("excluded_sale_observations", len(sales), flush=True)
 
     def run(row):
         try:
