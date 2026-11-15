@@ -49,15 +49,26 @@ completed:
   DP update in response to prior approval request. All exact heads green: TA529/530/531
   19/19 each, DP130 7/7. Active DP ingestion connection to embedding service observed;
   no restart permitted until safe idle.'
-current_stage: owner_approved_merge
+- 'Owner-approved REVIEW merges completed (not AM4 automatic): TA529 78be86422aab7cc7b5a869f45d431847c5551a61;
+  TA530 4e801b8f5e1710caac8fbf703596383aa3ba389d; TA531 35c44a898b56c055bbcd50a8be25227459c08e58;
+  DP130 3900d42cfe76ba47c4d0b7ec98ce7620a0f31f11. Each exact reviewed head CI SUCCESS
+  19/19 or 7/7; TA530 and TA531 retargeted to main and merge gate rechecked.'
+- TA main tree identical to tested aa2edbac. Built new ARM64 image core-accepted-35c44a89
+  from final main with network disabled; ID sha256:de78f7fc7e2d3684f8dbf79c29e4408584431c83cb092a32d72a28e09305b4dc;
+  SDK0.4.0, offline health/auth 200/401/200, all three evidence loaders PASS.
+- 'Approved DP coordinated update not executed: active embedding connection observed
+  at session start; subsequent DP operation logs recent, research still active, no
+  verified idle coordination. Live TA API still on old 89d4bb43 healthy.'
+current_stage: merged_main_offline_image_verified_dp_switch_pending_safe_idle
 remaining:
-- Confirm PR531 exact-head final CI.
-- Owner REVIEW approval of TA PR529,530,531 and DP PR130; coordinate live restart
-  only after research workload is safely idle.
-- Use minimal exact-release DP backport if explicitly approved; validate sustained
-  authorized HTTP responsiveness before bounded real-model acceptance; separate TA
-  runtime approval.
-last_verified_commit: 20144887f70a15c149e7418cca284b2200995126
+- DP update is owner-authorized conditional on safe idle; coordinate with active research
+  and verify no in-flight ingest or new caller race before switch. Use exact-release
+  tested backport; preserve old release and launcher rollback.
+- Verify live DP health and authenticated stats under controlled workload after update,
+  then bounded Gemma real-source acceptance.
+- Separate approval for TA live runtime switch; image exact main ready, verify current
+  backup/queue gates.
+last_verified_commit: 35c44a898b56c055bbcd50a8be25227459c08e58
 test_results:
 - 378 passed, 44 warnings, twice; final 8.30s; in-memory SQLite
 - make check PASS
@@ -65,8 +76,12 @@ test_results:
 - git diff --check PASS
 - GitHub PR529 19/19 and PR530 19/19 exact-head SUCCESS; both CLEAN
 - Live workspace schema head matches candidate, read-only inspection
-resume_instruction: Merge reviewed exact-head TA529 first, retarget TA530 to main
-  without deleting source branch, verify checks and merge; then TA531 similarly. DP130
-  independently merge at exact reviewed head. Record each result; never bypass protection.
-  DP switch only after verified idle and rollback readiness; do not infer TA live
-  deployment approval.
+- TA529/530/531 19/19 CI exact heads; DP130 7/7; all merged
+- Final main tree parity PASS, ARM64 isolated build and health/auth/evidence smoke
+  PASS
+resume_instruction: All four named PRs already merged. Do not merge them again or
+  rebuild unchanged image. Restore exact-release DP backport c09a10d (code 50f7b69)
+  and coordinate safe idle with research; do not restart while ingest is active or
+  uncoordinated. Owner authorized conditional DP switch, not TA live deployment. After
+  live DP verification, proceed to real Gemma acceptance. TA main 35c44a89 image core-accepted-35c44a89
+  ready for separate runtime acceptance.

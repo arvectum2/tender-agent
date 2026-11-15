@@ -29,12 +29,15 @@ completed:
   backport code 50f7b69, published c09a10d, 42 tests PASS with original release environment.
   Recent authorized SDK returned 86/86/86/86 in 53ms, health 200 in 20ms; not yet
   evidence of sustained availability.
-current_stage: blocked_pending_coordinated_live_dp_fix_acceptance
+- Owner approved coordinated DP update; canonical DP PR130 merged to main 3900d42cfe76ba47c4d0b7ec98ce7620a0f31f11.
+  Actual live release remains 9d4266d because active collection and recent embedding/ingest
+  observed; no safe coordinated restart window established.
+current_stage: blocked_on_safe_idle_for_owner_approved_dp_update
 remaining:
-- Coordinate approved update and verify sustained authenticated API responsiveness;
-  no restart of live service while collection active.
-- Run bounded real source-locked Gemma evaluation and review factual/citation
-  correctness only after readiness and no workload conflict.
+- Coordinate safe idle with existing ingestion/research; stage verified backport as
+  separate immutable release and preserve rollback. Update only if no active processing
+  and no uncoordinated callers.
+- Verify sustained authorized API, then bounded source-locked Gemma acceptance.
 last_verified_commit: d5eb8439811f9ca1dc41253f5a136c5aa9e36c92
 test_results:
 - 105/105 draft-only PASS
@@ -48,7 +51,7 @@ test_results:
 - DP 2 expected old-code failures; patched 44/44; Ruff/diff PASS
 - Exact release backport 42/42 PASS; DP PR130 CI 7/7; live SDK stats 86/86/86/86 in
   53ms (single observation)
-resume_instruction: Actual release and backport identified and tested; no further
-  duplicate read-only diagnostics needed unless state changes. Obtain separate approval
-  for DP switch, coordinate research idle, use isolated tested backport with rollback;
-  then validate original-source API and bounded model acceptance.
+resume_instruction: DP merge complete. No duplicate diagnostics or merge; conditional
+  owner authorization for DP restart exists, but safe idle coordination not confirmed.
+  Preserve active research; do not switch until no active work and rollback ready.
+  Verify live HTTP and original source before Gemma.
