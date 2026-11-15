@@ -1,0 +1,246 @@
+task_id: TA-GEH-ZMO-PARALLEL-20261114
+status: in_progress
+goal: Establish verified primary public list acquisition for GEH and small procurement parallel to SIBUR.
+definition_of_done: [primary target lists and detail receipts, source-scoped stable identities, date and status validation, verified normalized samples, gated working DB ingestion]
+completed: [eight parallel source probes, GPB SSR card parser, real 20-card replay, 3 focused tests]
+current_stage: historical_protocol_outcomes_133_verified
+remaining: [GPB customer-specific queries and actual date checks, TEK-Torg accessible lists, Moscow and EAT list contracts, source-separated import]
+last_verified_commit: bc37019518c5811d8fa411e3000d09a420d61caf
+latest_tests: 3 pytest passed; Ruff passed; 20 distinct primary observed cards; 13 future-dated observations quarantined
+evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources
+resume_instruction: Check active_local_executor state and launchd first; GPB worker advances the existing historical and active attachment queues autonomously. Do not manually duplicate its batches. Independently discovery older source partitions, ZMO and evidence gaps; reconcile any blocked lane before restart.
+
+target_detail_receipts:
+  detail_pages_verified: 2
+  notice_numbers: ["32414196205", "32414239479"]
+  customer: Mosenergoproekt
+  organizer: GEH Zakupki
+  status: archived
+  owner_filter: not_yet_verified
+  working_db_import: pending_target_detail_connector
+
+gpb_group_registry:
+  active_pages: 16
+  active_pages_advertised: 16
+  active_observations: 313
+  historical_pages: 32
+  historical_pages_advertised: 400
+  historical_observations: 640
+  total_observations: 953
+  accepted_db_rows: 861
+  accepting_verified_dates: 223
+  completed_verified_dates: 638
+  price_present: 496
+  quarantined: 92
+  repeat_inserted: 0
+  publication_range: 2026-05-27 to 2026-11-13
+  prewrite_gate: pass
+  ta_backup_sha256: f7a33cb85a3d21c76102d4a7e93f1dff104710934eca67720d94d3a62c99569b
+  owner_catalogs_verified: [geh_zakupki, mosenergoproekt]
+  remaining: [historical_pages_33_to_400, target_details, outcome_protocols, ZMO_acquisition]
+
+geh_history192:
+  active_pages: 16
+  historical_pages: 192
+  historical_total_advertised: 400
+  observed_cards: 4153
+  verified_db_rows: 4053
+  accepting: 223
+  completed: 3830
+  known_price: 2445
+  review_observations: 100
+  repeat_inserted: 0
+  priority_detail_pages: 10
+  detail_numbers_verified: 10
+  detail_document_labels_present: 9
+  direct_document_links_verified: 0
+  date_range: 2026-05-12 to 2026-11-13
+  prewrite_gate: pass
+  ta_backup_sha256: 9f09f3d81b6d5b3b583c98df1cf34698e375487e60fcecbefd075c24b1180e67
+  next: history pages 193 to 400; priority details and published document retrieval contract; ZMO
+
+geh_history400:
+  active_pages: 16
+  history_pages: 400
+  history_pages_advertised: 400
+  observed_cards: 8313
+  verified_db_rows: 8206
+  accepting: 223
+  completed: 7983
+  known_price: 4871
+  review_observations: 107
+  repeat_inserted: 0
+  publication_range: 2025-11-24 to 2026-11-13
+  lexical_candidates: 1225
+  active_lexical_candidates: 19
+  published_attachment_links: 24
+  verified_attachment_originals: 4
+  ta_document_links: 4
+  prewrite_gate: pass
+  history_backup_sha256: b9b2086d87156deb0e7f556951fbae169d0c11d5352d86d631132685b077eb2a
+  document_backup_sha256: 2016f62f033c04867d0818d446e1ac7b1b954224ad92ac1f5d7716db6094db5e
+  remaining: [older_history, other_priority_details, document_capture, semantic_classification, award_protocols, ZMO]
+
+geh_priority_documents_2026_11_14:
+  active_detail_pages: 19
+  active_confirmed_accepting: 14
+  active_supplier_review: 5
+  active_published_download_links: 45
+  active_unavailable_label_only: 2
+  active_capture_url_receipts: 14
+  active_unique_tender_hash_links: 13
+  active_procedures_with_originals: 6
+  active_archive_remote_disconnect_review: 14
+  active_unattempted_links: 17
+  historical_pilot_details: 17
+  historical_pilot_review: 3
+  historical_published_download_links: 1
+  historical_detail_statuses: {buyer_review: 14, expired: 1, order_preparation: 1, archived: 1}
+  db_replay_inserted: 0
+  backup_sha256: da84db2b21415f1d9a292c64f2b4c2e580af4fa864ad50aad5522a515ea60906
+  tests: 15 focused passed; Ruff passed
+
+geh_protocol_pilot:
+  historical_verified_details: 50
+  historical_prior_parser_failures_resolved: 3
+  historical_published_links: 63
+  historical_protocol_links: 22
+  historical_protocols_captured: 22
+  historical_original_links_in_db: 23
+  gpb_total_document_links: 36
+  explicit_best_bid_decisions: 8
+  protocol_review_required: 14
+  distinct_anonymous_participant_ids: 5
+  participant_ids_repeated: {"193863": 3, "540430": 2}
+  decision_artifact: protocol-decisions-v2.json
+  decisions_persisted_as_structured_db_facts: false
+  legal_supplier_identity_verified: false
+  signed_contract_amount_verified: false
+  prewrite_gate: pass
+  backup_sha256: 43f6fae141f45f06665e7f94f198bbbfc269b40a2311230d97402e2aaf3c7360
+  repeat_inserted: 0
+
+geh_protocol_persistence:
+  historical_verified_details: 80
+  historical_published_links: 124
+  protocol_url_receipts: 45
+  explicit_decisions_db: 40
+  participant_decisions: 37
+  group_leader_decisions: 3
+  distinct_anonymous_ids: 19
+  protocol_review: 5
+  historical_document_links: 46
+  gpb_document_links: 59
+  decision_schema: gpb_best_bid_v2
+  decision_location: procurement_tender_documents.raw_meta.protocol_decision
+  decision_replay_updated: 0
+  original_replay_inserted: 0
+  backup_sha256: 422193fd03b8996414960188d508f0fc92d5ce3b2a493a6cb816c6f889e7f542
+  prewrite_gate: pass
+  review_ids: ["etp:1294505", "etp:1293269", "etp:1293621", "etp:1293549", "etp:1293241"]
+
+geh_protocol_outcomes_batch4:
+  historical_verified_details: 110
+  protocols_captured: 59
+  structured_outcomes_db: 58
+  selected_best_bids: 55
+  unsuccessful: 3
+  individual_participants: 50
+  group_leaders: 3
+  procedure_local_ordinals: 2
+  distinct_platform_ids: 21
+  historical_links: 60
+  gpb_total_links: 73
+  pdf_scan_pending: etp:1293269
+  decision_replay_updated: 0
+  original_replay_inserted: 0
+  prewrite_gate: pass
+  backup_sha256: 27fa827268b23836ed4f772d4341c8a23c3acbe42e7337d3ac687b459f14bb91
+
+geh_protocol_outcomes_batch4_complete:
+  historical_details: 110
+  historical_published_links: 214
+  published_protocols_captured: 67
+  structured_outcomes: 65
+  best_bids: 62
+  unsuccessful: 3
+  individual_participants: 57
+  group_leaders: 3
+  procedure_local_ordinals: 2
+  distinct_global_ids: 23
+  remaining_review: [etp:1293269, etp:1290716]
+  historical_document_links: 68
+  total_gpb_links: 81
+  repeat_inserts: 0
+  repeat_updates: 0
+  backup_sha256: 866656b3e5586b597cd9295b010cdb144b4f3c02351172034fa0404d75d1aed0
+
+geh_protocol_outcomes_batch5:
+  historical_details: 140
+  published_protocols_captured: 95
+  structured_outcomes: 93
+  best_bids: 89
+  unsuccessful: 4
+  distinct_global_ids: 31
+  historical_document_links: 96
+  total_gpb_links: 109
+  old_65_decisions_unchanged: true
+  remaining_review: [etp:1293269, etp:1289266]
+  repeat_inserts: 0
+  repeat_updates: 0
+  prewrite_gate: pass
+  backup_sha256: 327947fae1b22334312d749abfad9c94b999b88e2b0bd3596ca9bc6f3d10ef7d
+
+geh_protocol_outcomes_batch6:
+  historical_details: 169
+  historical_detail_attempted: 30
+  historical_detail_new: 29
+  historical_detail_review: 1
+  published_protocols_captured: 115
+  structured_outcomes: 112
+  best_bids: 108
+  unsuccessful: 4
+  distinct_global_ids: 41
+  historical_document_links: 116
+  total_gpb_links: 129
+  old_93_decisions_unchanged: true
+  remaining_review: [etp:1293269, etp:1286980, etp:1284906]
+  repeat_inserts: 0
+  repeat_updates: 0
+  prewrite_gate: pass
+  backup_sha256: ef28eb5a234e362221424a227bda2802a12237ba9d73be62b9c4d609d86ff964
+
+geh_protocol_outcomes_batch7:
+  historical_details: 198
+  published_protocols_captured: 135
+  structured_outcomes: 133
+  best_bids: 125
+  unsuccessful: 8
+  distinct_global_ids: 50
+  historical_document_links: 136
+  total_gpb_links: 149
+  old_112_decisions_unchanged: true
+  remaining_review: [etp:1293269, etp:1282317]
+  historical_list_reported_total: 60048
+  historical_exposed_pages: 400
+  historical_observed_cards: 8000
+  historical_scope_exhaustive: false
+  sales_excluded_from_demand_queue: 1
+  repeat_inserts: 0
+  repeat_updates: 0
+  prewrite_gate: pass
+  backup_sha256: 415f47249222e144f6db41276c68b087df39aa57985124f6cb812938fa30ebae
+
+active_local_executor:
+  task_id: TA-AUTONOMOUS-RESEARCH-RUNNER-20261115
+  status_at_deployment: running
+  state_path: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/autonomous-runner/state.json
+  launchd_label: com.arvectum.tender-agent-research-executor
+  instruction: Check live worker and receipt ledgers first. Do not duplicate active source batches or blind-retry blocked or inflight mutations. Preserve parent and child research objectives.
+
+independent_archive_jobs:
+  checkpoint: .agent/checkpoints/TA-GEH-DEADLINE-PARTITIONS-20261115.yaml
+  capture_state: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources/geh-deadline-archive/state.json
+  import_state: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources/geh-deadline-archive/import/state.json
+  instruction: Inspect running archive and importer before further work; never duplicate active capture or writes.
+  zmo_public_contract: .agent/checkpoints/TA-ZMO-PUBLIC-CONTRACT-20261115.yaml

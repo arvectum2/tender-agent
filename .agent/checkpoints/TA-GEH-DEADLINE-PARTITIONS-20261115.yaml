@@ -1,0 +1,122 @@
+task_id: TA-GEH-DEADLINE-PARTITIONS-20261115
+status: in_progress
+goal: Extend public GEH archival observations through calendar deadline windows Jan
+  2024 through Nov 2025, separately from existing worker.
+definition_of_done:
+- Source-verified deadline partition capture with exact query, count, page, unique
+  source ID and SHA receipts.
+- Capture and audit all eligible deadline months; split any capped or unstable partitions
+  or retain review.
+- Deduplicate against existing TA source IDs before source-specific import, after
+  shared lock, fresh gate and verified backup.
+- No automatic award inference; no claim of market-wide census.
+completed:
+- Verified actual 2024 and 2025 date filters, 11202 and 8584 reported offers respectively.
+- Four actual monthly first-page receipts; all advertised page counts below 400 and
+  matching source count.
+- Implemented checked resumable read-only archive capture, circuit breaker and focused
+  tests.
+current_stage: deployed_archive_capture_and_append_only_import
+remaining:
+- complete month pages and identity audit
+- build verified deduplicated import for novel source observations
+last_verified_commit: 32c43302bbfa94b618b155daf54f848ecba7e515
+runtime_root: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources/geh-deadline-archive
+resume_instruction: Read live capture and import state plus launchd labels first.
+  Both finite jobs run independently, coordinate on locks, no duplicate execution.
+  Reconcile blocked or inflight imports before restart. Continue older-source and
+  other-platform discovery and build evidence-bound archive priority queue after actual
+  imported IDs are known.
+live_jobs:
+  capture_label: com.arvectum.tender-agent-geh-archive-capture
+  importer_label: com.arvectum.tender-agent-geh-archive-import
+  capture_state: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources/geh-deadline-archive/state.json
+  import_state: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources/geh-deadline-archive/import/state.json
+  scope: 23 monthly partitions from Jan 2024 through Nov 2025
+  filter_calendar: Europe/Moscow, verified Jan 31 and Feb 1 full-day public samples
+    (56 and 38 cards)
+  timestamps: original UTC unchanged
+  last_verified_january:
+    source_cards: 623
+    pages: 32
+    inserted: 622
+    review: 1
+    replay_inserted: 0
+  archive_import_gate: passed
+  first_ta_backup_sha256: 2abfb32b343fefa9082f9a66d0ca4ddf26bf9effe60559b996f720d3de1a0964
+  watchdog_coordination: updated existing hourly task
+  tests: 10 focused tests and Ruff passed
+  inserted_total_at_checkpoint: 622
+continuation_2026_11_15_0623:
+  april_repair:
+    source_pages: 52
+    unique_ids: 1039
+    replaced_pages:
+    - 20
+    - 21
+    original_capture_preserved: true
+    inserted: 1038
+    price_review: 1
+    replay_inserted: 0
+    receipt_root: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources/geh-deadline-archive/repair-april-complete-v1
+    backup_sha256: 0f2cdb717de6bc903454229ea30a24f1275a76158505baa5d422a7d65d7793b2
+  latest_archive_priority:
+    verified_db_rows: 7990
+    candidates: 1163
+    electrical: 154
+    automation: 217
+    epc: 830
+    sales_excluded: 8
+    queue_sha256: 8c74754fc2cdf576bf1fcf64ffdeb4dd57fc946a30d5f4aefc063a7ac14c6b19
+    queue_path: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources/geh-deadline-archive/archive-priority-v1.json
+    verification: source-bound lexical candidates only; categories overlap
+  august_review: 2024-08 retained for independent duplicate reconciliation
+  live_next: Do not duplicate running priority worker; regenerate archive queue from
+    committed receipts after archive progresses, then add distinct detail lane with
+    bounded source load. Resolve August and later duplicate reviews by immutable replacement-page
+    snapshots and full-month identity audit.
+continuation_2026_11_15_0646:
+  verified_months: 18
+  inserted_total: 16114
+  april_repair_inserted: 1038
+  remaining_review_months:
+  - 2024-08
+  - 2025-03
+  - 2025-06
+  - 2025-11
+  archive_detail_checkpoint: TA-ARCHIVE-DOCUMENT-EVIDENCE-20261115
+  source_completeness: false
+continuation_2026_11_15_0724:
+  august_verified_complete: true
+  august_inserted: 900
+  august_replay_inserted: 0
+  march_verified_unique: 950
+  march_import_pending: true
+  remaining_months:
+  - 2025-03
+  - 2025-06
+  - 2025-11
+  repair_root: repair-date-slices-complete-v1
+  source_bound_named_decisions: 154
+continuation_2026_11_15_0737:
+  march_inserted: 950
+  june_29_days_inserted: 726
+  november_source_verified: 759
+  november_import_pending: true
+  june04_source_accounted: 56
+  june04_normalizable: 55
+  june04_missing_notice_review: 1
+  june04_external_id: etp:1123151
+  june04_import_pending: true
+  repair_checkpoint: TA-ARCHIVE-DOCUMENT-EVIDENCE-20261115
+continuation_2026_11_15_0744:
+  november_unique: 759
+  november_inserted: 737
+  prior_changed_retained: 22
+  november_replay_inserted: 0
+  june04_inserted: 55
+  june04_replay_inserted: 0
+  june_total_valid: 781
+  june_source_review: 1
+  all_month_source_identities_accounted_for: true
+  normalized_complete: false

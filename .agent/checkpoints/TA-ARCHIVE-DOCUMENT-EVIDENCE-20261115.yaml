@@ -1,0 +1,255 @@
+task_id: TA-ARCHIVE-DOCUMENT-EVIDENCE-20261115
+status: in_progress
+goal: Extend the existing source-bound document and outcome processing to newly imported
+  archives without duplicate source or DB work.
+definition_of_done:
+- Repair observed archive duplicate months by audited replacement pages preserving
+  originals.
+- Build refreshed priority queue from committed exact DB hashes; exclude IDs reserved
+  by original GPB worker.
+- Verify archive detail capture and document/decision persistence with shared fresh
+  gate, backups, replay.
+- Prepare independent SIBUR archival document provenance and sample capture.
+- Tests, checkpoints, live state and failure reasons.
+completed:
+- 18 verified months imported (+16114); April 2024 repaired and imported separately
+  (+1038).
+- Independent historical GPB archive detail queue deployed; 2630 source-bound candidates
+  from 17152 imported exact identities; 75 details, 74 verified protocol links, 1
+  verified decision.
+- 'Audited 394 historical protocols for explicit participant identity labels: none
+  observed. No legal names inferred.'
+- Fixed byte-identical GPB protocol published at two receipt-verified URLs; semantic
+  conflicts still fail closed.
+- SIBUR archive document worker independently deployed; TLS CA mismatch repaired and
+  163 original failures retained; corrected GET validated 341649 bytes PDF; 12 captured
+  originals confirmed.
+- Recovered original blocked GPB lane as isolated launchd worker with shared lock,
+  original parent GPB state preserved blocked; first commit 21 new decisions, 453
+  URL receipts verified, replay zero.
+- Sliced August 2024 into three disjoint verified intervals, all 31 days/900 unique,
+  900 inserted, replay zero. March 2025 950 unique/31 days verified, import awaiting
+  lock at checkpoint.
+- Older protocol parser with exact procedure reference in header, detail title and
+  decision clause, published company name/address and explicit price/tax evidence.
+  154 named decisions persisted; all existing types preserved.
+- Private market report 143 named distinct source procedures, 68 normalized published
+  name-address pairs, 143 ex-VAT best-bid observations; report not contract awards
+  or unique INNs.
+- SIBUR archive document link replay verified; 149 originals and 4112 archive links.
+- 'DP exact readonly PG audit: 305 resources, 4383 matching vectors, 303 original
+  HTTP receipts, two recovered resources 27 and 101 vectors. Original bytes SHA verified;
+  no invented HTTP receipt. SIBUR restarted after exact reconciliation, pre-sync pending.'
+- March 2025 repaired and imported 950; June 2025 verified 29 days and imported 726;
+  November 2025 all 30 days/759 original distinct identities recovered, import pending
+  lock.
+- 'June 4 2025 all 56 unique identities accounted for: 55 normalizable entries, one
+  explicitly absent source notice. Isolated finite recovery import running; no invented
+  number. Exact detail etp:1123151 shows KO 2658/KO, 84182720.76 RUB, no published
+  notice number, private receipt saved.'
+- Bounded offline OOXML/ZIP/PDF text extraction, SHA-verified originals and members,
+  exact offset excerpts, macro-free, no OCR, unsupported members reviewed.
+- 194 archive SIBUR originals with DB-confirmed capture references processed, 193
+  extracted and 1 review; 4 originals containing PQ equipment terminology linked to
+  27 procedures, 10 broader requirement hits linked to 42 procedures. 2071747/1 direct
+  title and detailed 0.4-10 kV requirements; 2107966/3 contains work-unit specification
+  for UKRM 6-35 kV testing; shared general standards are not purchase-specific proof.
+- 343 current SIBUR DP preview texts rechecked, 7 empty, 2 unsupported. One SVC software
+  acronym false positive, one power factor calculation only, one explicitly excluded
+  compensation.
+- GPB independent technical capture finite 150, initial 20 attempts 6 originals captured,
+  14 review; preserve all remote disconnect receipts and do not retry blindly. It
+  does not write to DB or touch protocol worker.
+- November 2025 759 source identities verified, 737 inserted, 22 differing previously
+  stored observations preserved; replay zero. June04 all 56 accounted for, 55 inserted,
+  one missing notice review; replay zero. June 2025 781 valid records of 782 source
+  identities.
+- GPB delta sync recovered 23 missing links and decisions; 498 prior decisions validated,
+  521 total original historical decisions, zero pending after commit, no conflicts.
+- Data Platform read-only exact audit 313 resources/5073 matching vectors, 310 original
+  HTTP receipts and three recovered resources 322 vectors. Third recovered 194 chunks,
+  original manifest preserved.
+- Targeted PQ title/subject snapshot 27 source publications, 24 prefix groups, including
+  budget estimates, one meter-only observation and repeat publications. 21 direct
+  title hits. Source-bound queue 20 unique links, 19 acquired; six previously unsupported
+  archives/XLSM captured separately, no macros run.
+- 'DGP2 2103585/1 and /2 same source form: two 10kV units, exact tags 4015-HK-CU-001/002,
+  DDP Tobolsk, datasheet PDH2.15383-4015-EM21.DS-0001. Supplier price and signed contract
+  absent. Both publications bind same archive/member hash.'
+- GPB technical batch finished 150 attempts, 25 originals captured, 125 RemoteDisconnected
+  review; no blind retries. SIBUR offline refresh 222 originals/220 extracted/2 review;
+  27 linked lexical equipment candidates; no award inference.
+- '2026-11-15 09:18+ UTC: 629 newly processed archive originals in three bounded read-only
+  passes, 851/851 of eligible snapshot processed; 847 extracted, 4 review; previous
+  versioned reports preserved. 5 document sources with lexical PQ equipment hits,
+  29 linked procurement candidates; 15 broader requirement documents, 48 linked candidates.
+  Shared standards and acronyms not independent orders.'
+- '2026-11-15 09:36 UTC: SIBUR category import finished for all eight traversed categories;
+  duplicates/review gaps retained, not complete historical census. 75 new technical
+  originals processed, 926/926 eligible snapshot; 922 extracted and 4 review.'
+current_stage: archive_technical_snapshot_drained
+remaining:
+- Original index remains blocked after exact reconciliation; attempted separate deployment
+  was blocked by safety tooling; do not retry/circumvent that blocked operation. Confirm
+  supported recovery policy before further index mutation.
+- Complete priority direct PQ missing DOCX using existing approved capture lane and
+  extract bounded original member evidence; classify direct supply versus budget-estimate,
+  meter-only, shared standards, related work.
+- GPB delta recovery and separate archive detail lane running; inspect DB/receipt
+  deltas and review 125 disconnected technical originals without blind retry.
+- Expand SIBUR selected category capture, import, archive documentation and independently
+  verified offline scan. Archive index not yet started.
+- Refresh market report, exact source procurement-bound INN/award evidence; no inferred
+  awards; ZMO paper-only cost evidence remains outstanding.
+last_verified_commit: b6d3e0d3
+resume_instruction: Inspect actual state. Process new committed original technical
+  files only; SIBUR eight categories traversed with review and import finished. GPB
+  protocol and SIBUR original acquisition workers active at last check; do not duplicate.
+  DP blocked remains; no bypass or blind reindex. Prioritize contract-linked identities
+  and exact scope.
+test_results:
+  gpb_focused_before_recovery: 8
+  sibur_focused_before_recovery: 6
+  gpb_recovery: 3
+  sibur_recovery: 7
+  ruff: pass
+  live_db_counts:
+    etp_gpb: 25358
+    sibur_public: 3927
+    gpb_document_links: 575
+    gpb_protocol_decisions: 432
+  observed_sibur_index:
+    documents: 266
+    chunks: 2458
+    embeddings: 2458
+  continuation_2026_11_15_0724:
+    recovery_focused: 8
+    date_slice_focused: 7
+    named_parser_focused: 19
+    market_report_focused: 4
+    dp_reconciliation_focused: 9
+    note: test sets overlap; all final runs passed; Ruff and diff checks passed; latest
+      CI pending
+    live_db:
+      etp_gpb: 26258
+      sibur_public: 6327
+      gpb_document_links: 710
+      sibur_document_links: 4825
+      gpb_protocol_decisions: 615
+      gpb_named_decisions: 154
+      indexed_sibur_links_before_presync: 459
+    dp_verified:
+      documents: 305
+      original_ingest_http_receipts: 303
+      reconciled_resources: 2
+      chunks: 4383
+      embeddings: 4383
+      model: Qwen3-Embedding-4B
+      dimension: 2560
+  continuation_2026_11_15_0737:
+    focused_regression: 12
+    ruff: pass
+    live_db:
+      etp_gpb: 27934
+      sibur_public: 7825
+      gpb_document_links: 783
+      sibur_document_links: 7263
+      gpb_protocol_decisions: 677
+      gpb_named_decisions: 169
+      indexed_sibur_links: 482
+    dp_verified:
+      documents: 310
+      chunks: 4716
+      embeddings: 4716
+  continuation_2026_11_15_0744:
+    focused_regression: 8
+    ruff: pass
+    live_db:
+      etp_gpb: 28726
+      sibur_public: 11415
+      gpb_document_links: 835
+      sibur_document_links: 9629
+      gpb_protocol_decisions: 725
+      gpb_named_decisions: 188
+      indexed_sibur_links: 482
+    dp_verified:
+      documents: 313
+      chunks: 5073
+      embeddings: 5073
+      http_receipts: 310
+      reconciled_resources: 3
+    gpb_delta:
+      previous_verified: 498
+      updated: 23
+      pending_after: 0
+  continuation_2026_11_15_0918:
+    offline_technical_report_sha256: 601fc8d724744b5b3f7a57adbf2718949d612b396a2bbd926551631dcb8cbeb9
+    eligible_snapshot: 851
+    processed: 851
+    extracted: 847
+    review: 4
+    live_db_read_0918:
+      etp_gpb: 28726
+      sibur_public: 28869
+      gpb_document_links: 1490
+      sibur_document_links: 18947
+      gpb_protocol_decisions: 1132
+      gpb_named_decisions: 371
+      indexed_sibur_links: 482
+    prior_pr_ci:
+      '527': 19 SUCCESS at 314e8d2c
+      '528': 19 SUCCESS at 9bf3d250
+  continuation_2026_11_15_0936:
+    live_db:
+      etp_gpb: 28726
+      sibur_public: 30394
+      gpb_document_links: 1496
+      sibur_document_links: 19185
+      gpb_protocol_decisions: 1132
+      gpb_named_decisions: 371
+      indexed_sibur_links: 482
+    offline_snapshot:
+      processed: 926
+      extracted: 922
+      review: 4
+      pq_equipment_candidates: 30
+      pq_requirement_candidates: 49
+      report_sha256: 416be213f69a06c6c165459e3467956660cce9cd731e7a1dacd33656d6187d69
+live_recovery_2026_11_15_0724:
+  gpb_recovery_label: com.arvectum.tender-agent-gpb-recovery
+  gpb_recovery_state: autonomous-runner/gpb-recovery/state.json
+  original_gpb_must_remain_blocked: true
+  date_slice_label: com.arvectum.tender-agent-geh-date-slice-repair
+  date_slice_state: parallel-sources/geh-deadline-archive/repair-date-slices-complete-v1/state.json
+  named_market_report: parallel-sources/geh-deadline-archive/named-market/named-market-v1.json
+  named_market_sha256: 6d04e131699f35473d031d58086cbaa8d73ddcbc263ac825ecd1634c33921c0f
+  dp_reconcile_evidence: documents/dp-readonly-reconciliation-20261115-0724.json
+  dp_reconcile_sha256: abe4db9d22e679736a111ce2d2976e70f126a0d63039967c1dac30f3e9144f9b
+  dp_reconcile_manifest: documents/dp-reconciled-resources-v1.json
+technical_evidence_2026_11_15_0737:
+  june_repair_label: com.arvectum.tender-agent-geh-june04-repair
+  june_repair_state: parallel-sources/geh-deadline-archive/repair-june04-complete-v1/import/state.json
+  june_review_detail_sha256: 2e2145a0886bfa69e6cb47c3093989a0786f97d492a07631601778262f2774c3
+  gpb_label: com.arvectum.tender-agent-technical-gpb
+  gpb_state: technical-evidence/gpb/state.json
+  sibur_label: com.arvectum.tender-agent-technical-sibur
+  sibur_state: technical-evidence/sibur/state.json
+  sibur_report_sha256: 983fce924e4ad82403808dc643b07abda634692ef93a94ddfc1b0b1a28388855
+  current_preview_sha256: d8f09c3002c79aecfaeced4f28b5a290663040f13f40dc2bcf7984b25cebde84
+  direct_pq_procedure: 2071747/1
+  related_work_procedure: 2107966/3
+  verification: lexical source bound; direct title and technical clauses reviewed;
+    not award or contract
+pq_targeted_2026_11_15_0744:
+  queue: technical-evidence/sibur-pq-targeted-queue-v2.json
+  queue_sha256: 1bf2e9b4ebdd0d53ffffb6b3d36264f446ba1880cf229bbee63417d656e0f774
+  groups: 24
+  publications: 27
+  unique_urls: 20
+  captured_urls: 19
+  dgp2_evidence_sha256: 6d329c675f0b96d58b8196adba33801a19d599e4fb32f343e92053c7452e2bb2
+  member_sha256: a675e670f37f580bef40abb9e1ba9f8341ca3c8302bdb84233a6d6f758610b57
+  dp_readonly_evidence_sha256: b0e8c0072c3f45bbc791d47669d0060d804be9ed78eb6978c5e6257cc54197f7
+  dp_manifest: documents/dp-reconciled-resources-v1.json
+  dp_status: blocked; exact read-only reconciliation complete, separate deployment
+    not applied

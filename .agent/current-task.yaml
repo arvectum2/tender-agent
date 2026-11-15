@@ -652,3 +652,68 @@ source_discovery_2026_11_14:
   stage: sibur_public_snapshot_verified
   remaining: [document_acquisition, historical_coverage, dp_integration, geh_and_zmo_sources]
   no_live_trading_or_db_mutation: true
+
+geh_zmo_parallel_2026_11_14:
+  child_checkpoint: .agent/checkpoints/TA-GEH-ZMO-PARALLEL-20261114.yaml
+  stage: historical_protocol_outcomes_133_verified
+  parent_resume_preserved: true
+
+active_local_executor:
+  task_id: TA-AUTONOMOUS-RESEARCH-RUNNER-20261115
+  status_at_deployment: running
+  state_path: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/autonomous-runner/state.json
+  launchd_label: com.arvectum.tender-agent-research-executor
+  instruction: Check live worker and receipt ledgers first. Do not duplicate active source batches or blind-retry blocked or inflight mutations. Preserve parent and child research objectives.
+
+independent_archive_jobs:
+  checkpoint: .agent/checkpoints/TA-GEH-DEADLINE-PARTITIONS-20261115.yaml
+  capture_state: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources/geh-deadline-archive/state.json
+  import_state: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources/geh-deadline-archive/import/state.json
+  instruction: Inspect running archive and importer before further work; never duplicate active capture or writes.
+  zmo_public_contract: .agent/checkpoints/TA-ZMO-PUBLIC-CONTRACT-20261115.yaml
+
+independent_2026_11_15_0623:
+  paper_economics_checkpoint: .agent/checkpoints/TA-ZMO-PAPER-ECONOMICS-20261115.yaml
+  geh_archive_priority_checkpoint: .agent/checkpoints/TA-GEH-DEADLINE-PARTITIONS-20261115.yaml
+  sibur_archive_checkpoint_branch: feat/sibur-document-linkage-20261114
+  sibur_archive_checkpoint: .agent/checkpoints/TA-SIBUR-PUBLIC-ARCHIVE-20261115.yaml
+  instruction: Check both archive lane pairs and the existing executor before any fresh work. Do not edit live scripts or duplicate active captures. Continue independent evidence and review tasks.
+archive_document_evidence_2026_11_15_0646:
+  checkpoint: .agent/checkpoints/TA-ARCHIVE-DOCUMENT-EVIDENCE-20261115.yaml
+  status: in_progress
+  resume: Inspect live workers and follow child checkpoint; recover prior blocked
+    GPB only after safe shared executor boundary. Watchdog amended, same hourly task.
+archive_recovery_and_named_market_2026_11_15_0724:
+  checkpoint: .agent/checkpoints/TA-ARCHIVE-DOCUMENT-EVIDENCE-20261115.yaml
+  status: in_progress
+  resume: Read live worker states; separate GPB original recovery and original parent
+    SIBUR only; date-slice repair running, named decisions committed; follow child
+    checkpoint. Do not duplicate or clear unrelated blocked lanes.
+technical_evidence_2026_11_15_0737:
+  checkpoint: .agent/checkpoints/TA-ARCHIVE-DOCUMENT-EVIDENCE-20261115.yaml
+  status: in_progress
+  resume: Read live states; confirm June04 and November commits; technical GPB and
+    SIBUR offline jobs, inspect evidence reports, preserve private originals and avoid
+    duplicate work.
+pq_targeted_evidence_2026_11_15_0744:
+  checkpoint: .agent/checkpoints/TA-ARCHIVE-DOCUMENT-EVIDENCE-20261115.yaml
+  status: in_progress
+  resume: Inspect live state; completed June and November imports, GPB delta recovery,
+    24 source-group PQ queue. DP blocked, exact audit complete; no retry of blocked
+    deployment.
+archive_technical_snapshot_2026_11_15_0918:
+  checkpoint: .agent/checkpoints/TA-ARCHIVE-DOCUMENT-EVIDENCE-20261115.yaml
+  status: in_progress
+  resume: Read live worker states, canonical checkpoints and branch heads; offline
+    SIBUR snapshot 851 complete, process only new committed originals. Preserve reports
+    by exact SHA before refresh. GPB recovery and archive details running. DP remains
+    blocked; no blind retry or circumvent blocked deployment. Continue direct PQ evidence,
+    contractor/contract mapping and approved independent tracks.
+archive_snapshot_2026_11_15_0936:
+  checkpoint: .agent/checkpoints/TA-ARCHIVE-DOCUMENT-EVIDENCE-20261115.yaml
+  status: in_progress
+  resume: Inspect actual state. Process new committed original technical files only;
+    SIBUR eight categories traversed with review and import finished. GPB protocol
+    and SIBUR original acquisition workers active at last check; do not duplicate.
+    DP blocked remains; no bypass or blind reindex. Prioritize contract-linked identities
+    and exact scope.

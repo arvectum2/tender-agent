@@ -1,0 +1,19 @@
+task_id: TA-ZMO-PUBLIC-CONTRACT-20261115
+status: completed
+goal: Verify first-party historical Moscow Portal completed auction list and SKU-level details for paper trading, without bid or contract actions.
+definition_of_done:
+  - Reproducible first-party read-only list and detail contract.
+  - Source hashes, identity, state and price consistency checks; separate winner, offer and signed contract.
+  - Real bounded historical samples, regression checks and explicit unsupported cases.
+completed:
+  - Verified published JS and public runtime settings; official old public Query and new Auction/Get URLs.
+  - Source reported 1776584 list entries, 1392231 with chosen finished/offers-signed filter; not independently enumerated.
+  - Captured ten finished list observations; four verified matching details with 43 positions, 28 distinct SKU and four named winners with INN.
+  - Exact original SHA and normalized record replay verified; initial position sums match all four initial prices.
+  - Added strict source parser, bounded capture/replay, status mapping scoped to observed auction API.
+current_stage: public_contract_pilot_verified
+remaining: []
+last_verified_commit: fe52e2238592126ff2de44fcef6c528a7baa0596
+last_checks: four focused tests across MOS and GPB partition passed; Ruff and exact real-data replay passed.
+limitations: repeated public list query returned HTTP 400; seven detail attempts returned HTTP 402, including one previously successful auction; four distinct verified details total. No circumvention, no payment, no contract confirmation or allocated winning SKU unit price. Only private source evidence, no DB mutation. Production integration requires official access terms and larger verified sample.
+resume_instruction: Continue ZMO with the next stage; inspect official developer access terms and authorized public sources; build economic simulation with SKU matching and costs, keep signed prices and aggregate bids separate. No live bids.
