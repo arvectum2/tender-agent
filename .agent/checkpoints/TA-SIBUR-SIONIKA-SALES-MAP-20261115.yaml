@@ -154,15 +154,27 @@ completed:
   HALTON fire-damper drives discontinued, Siemens replacement specified; KOS PGU energy-block
   switching RZA/PA installation; ZSNH guaranteed-power commissioning from registry
   subject only. No award, live offer or supplier assignment.'
-current_stage: retrofit_reserve_preserved_and_broad_sibur_document_review
+- 'CRP2/ZSNH cross-stage scope review: nine distinct archive publications including
+  2026 separately related cancelled Chibis busduct, eight numeric prefixes, five exact-source-linked
+  docs coverage, 20 unresolved URLs across publications. Linked files manually inspected,
+  mostly templates/general requirements; no bidder/winner or specific installed quantities
+  inferred. Modens self-reports CRP2 and AGHK design, ETS named survey client in STP
+  reference Feb2024 contract 13-24, ETS self-reports 110kV ETPG design supporting
+  DGP2 in Apr2025; roles separate, no inferred contract hierarchy.'
+- Reconciled frozen project missing-doc queue 926 URLs with existing captures, 43
+  exact-ref URLs, 4 bytes without exact refs,879 not captured or prior review. 1153
+  remaining identity/URL pairs versus1212 previous, 59 restored exact bindings. No
+  new download or DB write.
+current_stage: project_chain_and_design_customer_mapping
 remaining:
-- Continue overall SIBUR map per owner, retrofit P0 retained and leads reserve only;
-  separate UPS/AKB. Further source-bound EPC, equipment, installed-base, service,
-  award and contract evidence.
-- Existing archive worker ownership unchanged. Supplemental 29 in-period IDs not DB
-  imported; fresh authorized backup/gate/replay required. Missing references and signed
-  awards remain; DP blocked unchanged.
-last_verified_commit: fca42151459f2b8d59043255fe949f44174bed87
+- 'Continue broad SIBUR map: cross-stage project chains, design organizations and
+  installation contractors. Priority retrofit P0, preserve independent UPS channel
+  and prior lead reserve. Verify real contractor relationships, award/price and project
+  status from primary evidence.'
+- Continue existing source worker and reference reconciliation, no redundant capture.
+  Support 29 in-period supplement awaits authorized fresh backup/gate/replay. DP blocked
+  unchanged.
+last_verified_commit: c881f9c403bb5099119f9581b3dc76cefbc03d85
 test_results:
   focused: 3
   ruff: pass
@@ -324,8 +336,19 @@ test_results:
     selected_cases: 4
     verification: Read-only page replay and source-bound artifact checks passed; no
       code changes.
-resume_instruction: Read retrofit-lead-reserve-v1.json and installed-base-model-evidence-v3.json.
-  Owner wants reserve only, general SIBUR research roadmap continues. Preserve P0
-  retrofit and independent UPS stream, no external market expansion at this stage.
-  Continue owner-approved acquisition, exact scope and EPC/service evidence; no bids/contact/spend/duplicate
-  workers/auto-merge/DP bypass.
+  crp2_project_chain_and_reconciliation:
+    chain_sha256: b8e0b09c2cfe22b871b21ee3c9493971b3d8a25477830c8f3b46e339041d92a7
+    reconciliation_sha256: 1fb77d73d93791dd4e0797565850e0b0c4252b0685596d80c35e1621442f60c3
+    chain_publications: 9
+    chain_covered_publications: 5
+    chain_missing_urls: 20
+    original_queue_urls: 926
+    unresolved_identity_url_pairs: 1153
+    restored_identity_url_pairs: 59
+    verification: Verified exact source refs and original SHA; read-only; no production
+      code changes.
+resume_instruction: Read zsn-crp2-procurement-chain-v1.json and package-link-reconciliation-v2.json.
+  Continue SIBUR cross-stage procurement chain and project design/installation actors,
+  use exact original refs; preserve P0 retrofit and independent UPS. Leads reserve
+  only. No contacts, bids, spend, auto-merge, duplicate workers or DP bypass. Fresh
+  shared backup/gate/replay before any DB writes.
