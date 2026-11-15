@@ -937,3 +937,8 @@ sibur_progress_dashboard_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Use V15 and coverage V2; update quantitative dashboard with each major research block, focus remaining unique priority URLs and actual outcomes.
+
+urgent_storage_migration_20261115:
+  checkpoint: .agent/checkpoints/TA-STORAGE-MIGRATION-20261115.yaml
+  status: in_progress
+  resume: Migrate runtime and backup root before more research.

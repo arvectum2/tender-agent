@@ -1,0 +1,16 @@
+task_id: TA-STORAGE-MIGRATION-20261115
+status: in_progress
+goal: Move research runtime and backup storage to ArvectumSSD, preserve paths and transactional safety
+definition_of_done:
+  - Copy and verify byte identities before switching
+  - Cooperative stop and no inflight DB writes
+  - Preserve old absolute paths and backup validation
+  - Restart only previously active workers, verify progress and free space
+  - Remove only verified redundant local copies
+completed_stages:
+  - Identified 19 GiB research runtime and 72 GiB Data Platform backups on internal volume
+current_stage: pre_copy_and_cooperative_quiescence
+remaining_stages: [copy, quiesce, verify, switch, restart, reclaim]
+last_verified_commit: dd84daf8
+last_tests: read-only disk inventory passed
+resume_instruction: Check migration journal on external SSD and resume first incomplete stage; never delete source without byte verification. Preserve V15 coverage research checkpoint.
