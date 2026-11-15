@@ -93,19 +93,30 @@ completed:
   and new module Ruff PASS, existing adapter lint baseline unchanged. Disposable PostgreSQL
   actual migrations 109/110 PASS, concurrent daily plan admission same ID PASS, concurrent
   step 409 and committed replay single source callback PASS. Temporary DB removed.
-current_stage: commercial_source_identity_and_public_candidates
+- Source-qualified commercial company cases for B2B-Center and Workspace reuse scoped
+  ProcurementCase with separate platform-specific projects, preserve exact original
+  URL audit reference, independent decisions, no EIS alias or global Deal. Existing
+  EIS API backward compatible.
+- Bounded daily discovery supports explicit public RSS and four allowlisted category
+  indexes, local company keyword/exclusion filter, qualified IDs and receipt SHA;
+  always conservative incomplete coverage. Web accepts selected commercial candidate
+  or exact reference URL; iOS displays platform/ID/URL and same decision API. No new
+  migration.
+- 54 passed, 1 skipped, 38 warnings; rendered JS workflow PASS including commercial
+  selection and EIS evidence panel suppression; Ruff/make check PASS; Xcode unsigned
+  build-for-testing PASS twice. No live HTTP, credentials, DB changes or application
+  install.
+current_stage: commercial_public_pilot_verified_next_scheduled_policy
 remaining:
-- Check exact-head CI of new stacked discovery PR; 532–538 CI 19/19 each at last check,
-  review-only.
-- Generalize scoped discovery source identity for commercial ETP without aliasing
-  EIS or existing global Deal; inspect existing normalized source registry and public/credential
-  policies. Add contract and tests, avoid live collection.
-- Unattended company scheduling and retry/backoff policy remain unimplemented; no
-  actual tenant or public source activation. Extend native company search view if
-  needed.
-- Isolated browser/simulator/Keychain and end-to-end acceptance; production migration/deploy
-  and conditional DP rollout remain distinct; preserve SIBUR.
-last_verified_commit: f3fabccb53f17a6c562735ecae52c52de092c0e4
+- Check exact-head PR539 and new commercial PR CI; PR532–538 previously 19/19 green,
+  review only.
+- Implement durable per-company opt-in schedule, bounded retry/backoff and scheduler
+  integration without creating a duplicate watchdog; do not activate production.
+- Expand source adapters beyond initial B2B-Center/Workspace and implement original
+  commercial card/document verification and eligibility separately.
+- Actual browser/simulator/Keychain and isolated end-to-end acceptance; coordinated
+  rollout and production migration remain separate.
+last_verified_commit: 64bdf5f68b51a4840cd16ecd2223e6670c9efc26
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -127,6 +138,10 @@ test_results:
 - 136 passed, 1 skipped, 76 warnings in 9.67s; Node rendered script flow/syntax PASS;
   Ruff/make check PASS; legacy adapter lint counts unchanged; PostgreSQL migrations
   109/110 and daily admission/step concurrency PASS
-resume_instruction: Implement separate source-qualified company reference identity
-  for B2B-Center/Workspace and bounded public category/RSS discovery, use existing
-  validated URL contracts; no live requests or global corpus mutations.
+- 54 passed, 1 skipped, 38 warnings in 6.63s; rendered JS, Ruff/make check/diff PASS;
+  unsigned Xcode build-for-testing PASS twice
+resume_instruction: Commercial reference and public index pilot verified offline.
+  Publish/check stacked review PR, then implement explicit per-company scheduled discovery
+  policy and guarded worker execution in isolated tests. No production activation,
+  external source requests, user provisioning, APNs, migration or deployment. Preserve
+  active SIBUR and existing watchdog.
