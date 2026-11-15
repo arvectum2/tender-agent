@@ -1,0 +1,20 @@
+task_id: TA-CORE-PRICE01-REVIEW-20261115
+status: in_progress
+goal: Reconcile PRICE01 PR478 on consolidated core without operating DB or runtime
+  changes.
+definition_of_done:
+- Isolated candidate preserves existing roadmap and original price evidence
+- Changed and combined offline tests plus JS and standard checks pass
+- Review-only branch published; no actual cost assertions or commercial action
+completed:
+- PR478 prior CI19/19; merge preflight conflicts documentation only
+current_stage: isolated_merge
+remaining:
+- merge candidate
+- offline security and price regressions
+- publish review candidate
+last_verified_commit: 20144887f70a15c149e7418cca284b2200995126
+test_results:
+- preflight conflicts limited to current-task and master roadmap
+resume_instruction: Merge PR478 in this separate worktree only, preserve current roadmap,
+  run offline tests and do not deploy.
