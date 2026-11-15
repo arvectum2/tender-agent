@@ -50,16 +50,22 @@ completed:
   for isolation. Existing qualification and source integrity suites included; migration
   SQLite upgrade/downgrade and populated rollback denial PASS. Ruff/make check PASS.
 - Evidence PR534 published at 305f43ad.
-current_stage: native_ios_digest_status
+- Native SwiftUI owner mobile fetches canonical DTR digest, distinguishes pending/running/incomplete/error/complete/unknown
+  old backend, separate unavailable state without dropping portfolio; refresh after
+  decision, clear on disconnect, configuration guard before digest assignment.
+- Actual Swift decoder/status runtime probes 6/6 PASS; unsigned generic iOS simulator
+  build-for-testing PASS twice with Xcode 27.1. No simulator XCTest execution or physical
+  device installation.
+current_stage: native_digest_verified_next_company_auth_and_projection
 remaining:
-- Review stacked PR532,533 and evidence candidate; check evidence CI and isolated
-  PostgreSQL migration 109 if needed.
-- Native iOS DTR status/completeness projection, then company-aware client/auth and
-  shared web projection.
-- Automatic company-scoped discovery and commercial source identity require separate
-  implementation; no activation in global owner DTR.
-- Isolated E2E; preserve live SIBUR and conditional DP rollout.
-last_verified_commit: 452d5a9a743b42e52ddb5811ca8a8adb0f36b372
+- Check CI for PR534 and native stacked PR; review prior PR532/533 green.
+- Implement actual tenant-scoped iOS client authentication and company portfolio/evidence
+  UI plus corresponding existing web projection; separate owner legacy token.
+- Company-scoped automatic discovery, commercial source identity, safe legacy mapping
+  and isolated end-to-end acceptance remain.
+- Production migration/deployment and conditional DP rollout remain separate; preserve
+  SIBUR collection.
+last_verified_commit: 383310e295c414e27530a6f66d73a2be8379a8f0
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -70,6 +76,10 @@ test_results:
   exactly one record PASS; DTR session advisory lock four checks PASS
 - 149 passed, 1 skipped, 91 warnings in 12.96s; Ruff and make check PASS; Alembic
   head 109
-resume_instruction: Implement read-only DTR latest digest state in existing native
-  client with backwards compatibility; keep legacy owner auth separate from SaaS customer
-  tokens and no live requests.
+- Xcode 27.1 generic simulator build-for-testing PASS (no signing); Swift runtime
+  decoder/status 6/6 PASS; diff check PASS. Native XCTest compiled not executed.
+resume_instruction: Native owner digest slice verified, publish stacked review PR;
+  check CI. Next company tenant-specific authentication and read-only scoped portfolio
+  UI, then shared web surface and automated scoped discovery. Never use legacy device
+  token for SaaS or activate live Sionika tenant, migration, APNs, model or research
+  changes.
