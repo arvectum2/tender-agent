@@ -17,6 +17,7 @@
       <button class="nav-btn active" data-tab="new" type="button"><span class="nav-icon">⊞</span> Новый анализ</button>
       <button class="nav-btn" data-tab="history" type="button"><span class="nav-icon">◷</span> История анализов</button>
       <button class="nav-btn" data-tab="registry" type="button"><span class="nav-icon">▤</span> База закупок</button>
+      <button class="nav-btn" data-tab="prices" type="button"><span class="nav-icon">₽</span> Цены и протоколы</button>
     </nav>
     <div class="sidebar-bottom">
       <span class="privacy-dot"></span> Приватный контур · Mac mini
@@ -91,7 +92,30 @@
           <section class="panel report-panel" id="report-panel" hidden>
             <div class="panel-title"><div><div class="eyebrow">РЕЗУЛЬТАТ АВТОМАТИЧЕСКОГО АНАЛИЗА · ПРОВЕРЬТЕ ИСТОЧНИКИ</div><h2>Результаты и доказательства</h2></div><div class="report-actions"><a id="download-pdf" class="button button-secondary" download>PDF ↓</a><a id="download-docx" class="button button-secondary" download>DOCX ↓</a></div></div>
             <p id="report-analysis-mode" role="status" class="muted"></p>
-            <div class="human-gate"><strong>Решение принимает человек.</strong> Модель не подписывает документы, не отправляет заявку и не подтверждает юридическую оценку. Неподтверждённые сведения обозначаются как UNKNOWN.</div>
+            <section class="panel" aria-labelledby="price-cost-scenario-title">
+          <div class="panel-title"><h2 id="price-cost-scenario-title">Сценарные пороги безубыточности</h2><span class="tag">ТОЛЬКО ЯВНЫЕ СУММЫ</span></div>
+          <p class="help-text">Все семь значений вводятся вручную, даже если это 0. Ставки налогов и ЭТП — только выбранные вами сценарные проценты, а не нормативная налоговая консультация. Данные не сохраняются. Результат не является ценой предложения или разрешением участвовать в торгах.</p>
+          <form id="price-cost-form" method="post" action="/api/demo/tender-agent/workspace/price-scenario/calculate" autocomplete="off">
+            <label for="cost-external">Прямые внешние затраты, ₽</label>
+            <input id="cost-external" name="external_direct_rub" type="text" inputmode="decimal" maxlength="15" required autocomplete="off" placeholder="Укажите сумму, ₽">
+            <label for="cost-labor">Стоимость собственного труда, ₽</label>
+            <input id="cost-labor" name="labor_rub" type="text" inputmode="decimal" maxlength="15" required autocomplete="off" placeholder="Укажите сумму, ₽">
+            <label for="cost-reserve">Резерв на риски, ₽</label>
+            <input id="cost-reserve" name="reserve_rub" type="text" inputmode="decimal" maxlength="15" required autocomplete="off" placeholder="Укажите сумму, ₽">
+            <label for="cost-fixed">Фиксированные сборы ЭТП и прочие комиссии, ₽</label>
+            <input id="cost-fixed" name="fixed_platform_fees_rub" type="text" inputmode="decimal" maxlength="15" required autocomplete="off" placeholder="Укажите сумму, ₽">
+            <label for="cost-tax">Предполагаемый налог от выручки, %</label>
+            <input id="cost-tax" name="revenue_tax_percent" type="text" inputmode="decimal" maxlength="8" required autocomplete="off" placeholder="Введите процент">
+            <label for="cost-variable">Предполагаемая переменная комиссия от выручки, %</label>
+            <input id="cost-variable" name="variable_platform_fee_percent" type="text" inputmode="decimal" maxlength="8" required autocomplete="off" placeholder="Введите процент">
+            <label for="cost-target">Желаемая абсолютная прибыль, ₽</label>
+            <input id="cost-target" name="target_profit_rub" type="text" inputmode="decimal" maxlength="15" required autocomplete="off" placeholder="Укажите сумму, ₽">
+            <label><input id="cost-scenario-confirm" type="checkbox" required> Подтверждаю, что это гипотетический расчёт по введённым мной допущениям, а не согласованная коммерческая ставка.</label>
+            <div class="actions"><button class="button button-primary" type="submit">Рассчитать три порога — без сохранения</button><button class="button button-secondary" id="cost-clear-btn" type="button">Очистить введённые значения</button></div>
+          </form>
+          <div id="price-cost-result" role="status" aria-live="polite" class="report-section"><p>Без явно введённых сумм расчёт не выполняется.</p></div>
+        </section>
+        <div class="human-gate"><strong>Решение принимает человек.</strong> Модель не подписывает документы, не отправляет заявку и не подтверждает юридическую оценку. Неподтверждённые сведения обозначаются как UNKNOWN.</div>
             <h3 id="report-recommendation"></h3><div id="executive-summary"></div>
             <div id="evidence-facts"></div>
             <details class="quote-review" id="quote-check" hidden>
@@ -126,6 +150,45 @@
           <div id="registry-list" class="registry-list"></div>
         </div>
         <section id="registry-detail-panel" class="panel" hidden><div class="panel-title"><h2>Карточка из базы</h2><span class="tag">Только чтение</span></div><div id="registry-detail"></div></section>
+      </section>
+      <section class="pane" id="pane-prices" hidden>
+        <div class="intro"><div class="eyebrow">PRICE-01 · РЕАЛЬНЫЕ ПРОТОКОЛЫ · READ ONLY</div>
+          <h1>Ценовой контекст</h1>
+          <p>Только проверенные завершённые закупки. Цены допущенных заявок и исторические НМЦК — разные источники. Конкурентная ставка не равна себестоимости.</p>
+        </div>
+        <section class="panel">
+          <div class="panel-title"><h2>Исходный протокол и исторические аналоги</h2><span class="tag">Без расчёта цены заявки</span></div>
+          <form id="price-form">
+            <label for="price-registry">Реестровый номер 44-ФЗ (19 цифр)</label>
+            <div class="input-row">
+              <input id="price-registry" maxlength="19" inputmode="numeric" pattern="[0-9]{19}" placeholder="0158300034526000388" required autocomplete="off">
+              <button class="button button-primary" type="submit">Проверить протокол</button>
+            </div>
+          </form>
+          <div class="actions"><button class="button button-secondary" id="price-historical-btn" type="button">Отдельно: исторические НМЦК (ARV-057)</button></div>
+          <p class="help-text">Протокол №0158300034526000388 от 14.10.2026 проверен по оригиналу ЕИС. Для остальных закупок нельзя подменять цифры чужим протоколом. Аналоги будут доступны только если пройдут собственный фильтр сопоставимости.</p>
+        </section>
+        <section class="panel" aria-labelledby="price-evidence-title">
+          <div class="panel-title"><h2 id="price-evidence-title">Конкурентные цены · допущенные заявки</h2><span class="tag">Исторический срез</span></div>
+          <div id="price-evidence" role="status" aria-live="polite" class="report-section"><p>Укажите номер закупки. Никаких предполагаемых ставок нет.</p></div>
+        </section>
+        <section class="panel" aria-labelledby="website-cohort-title">
+          <div class="panel-title"><h2 id="website-cohort-title">Другие сайты · отдельные исходные протоколы</h2><span class="tag">НЕЛЬЗЯ смешивать цены</span></div>
+          <button id="price-cohort-btn" class="button button-secondary" type="button">Показать 6 проверенных архивных сайтов</button>
+          <p class="help-text">Каждая карточка привязана к оригинальному XML ЕИС и исходному ТЗ, не является универсальной рыночной оценкой. Два ТЗ требуют нормализации, три имеют отличающийся объём или режим. Отсутствующая finalPrice не заменяется НМЦК.</p>
+          <div id="price-cohort" role="status" aria-live="polite" class="report-section"><p>Показ исторических данных выполняется только по запросу.</p></div>
+        </section>
+        <section class="panel" aria-labelledby="workload-normalization-title">
+          <div class="panel-title"><h2 id="workload-normalization-title">Сопоставление работ по оригинальным ТЗ</h2><span class="tag">НЕТ коэффициентов стоимости</span></div>
+          <button id="price-workload-btn" class="button button-secondary" type="button">Сравнить Аксай, Красноярск и «Чемал»</button>
+          <p class="help-text">Сравниваются только дословно подтверждённые объёмы, ограничения и обязательства. Рабочие дни контракта не равны человеко-дням разработки; лицензии, сопровождение и гарантия не приравниваются. Стоимость и трудозатраты неизвестны.</p>
+          <div id="price-workload" role="status" aria-live="polite" class="report-section"><p>Нажмите кнопку для просмотра доказательной матрицы ТЗ.</p></div>
+        </section>
+        <section class="panel" aria-labelledby="price-historical-title">
+          <div class="panel-title"><h2 id="price-historical-title">Исторические НМЦК аналогов · ARV-057</h2><span class="tag">Отдельная выборка</span></div>
+          <div id="price-historical" role="status" aria-live="polite" class="report-section"><p>Нажмите «Исторические НМЦК», чтобы запросить существующий API. НМЦК не являются ценами победителей.</p></div>
+        </section>
+        <div class="human-gate"><strong>Решение принимает человек.</strong> Не определены фактическая себестоимость, стоимость труда, комиссии, налоги и допустимая доходность ООО. Цена, вероятность победы, подача заявки и оплата не рассчитываются автоматически.</div>
       </section>
     </div>
   </main>

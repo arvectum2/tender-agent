@@ -1,0 +1,30 @@
+{
+  "schema_version": "ta-price01-source-verified-negative-comparator-v1",
+  "candidate_count": 1,
+  "approved_additional_comparable_procurements": 0,
+  "cross_procurement_compatible_count_for_aksay_website": 1,
+  "original_sources": [
+    {
+      "procurement_number": "0158300034526000388",
+      "original_eis_zip_sha256": "d25187191599e705427676cc9de64ce665029381efa2490607d65ff237837bb8",
+      "source_notice_member_sha256": "2fe41acb72bc73d3f165829aa06ecc43cffc225e5de0ef333c20ba51fd2ecc4b",
+      "notice_version": 5,
+      "original_procurement_subject": "Услуга по разработке веб сайта",
+      "source_is_original_verified_notice": true
+    },
+    {
+      "procurement_number": "0187200001726001304",
+      "original_eis_zip_sha256": "39fef1af482907b2c2382518d339d932e09197c2e36e68a6134fc5910ff7dd18",
+      "source_notice_member_sha256": "32c97a28d5eec1df7e5508c4f77ab741d963b5cc3aae37b4a1748259e333e33d",
+      "notice_version": 1,
+      "original_procurement_subject": "Оказание услуг по разработке модуля для определения пересечений границ земельных участков с землями лесного фонда для программного обеспечения «Автоматизированная географическая информационная система «Аксиома»",
+      "source_is_original_verified_notice": true
+    }
+  ],
+  "candidate_registry_number": "0187200001726001304",
+  "candidate_comparability": "EXCLUDED_SCOPE_MISMATCH",
+  "reason": "Aksay is a public website creation, Aksioma is a forestry land-parcel intersection module for an existing geographic information system; different deliverables and pricing basis.",
+  "candidate_price_must_not_be_in_aksay_website_distribution": true,
+  "price_forecast_performed": false,
+  "autonomous_bid_performed": false
+}
