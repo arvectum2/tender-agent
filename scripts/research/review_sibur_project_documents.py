@@ -38,6 +38,8 @@ def evidence(text):
         hits = []
         for m in re.finditer(pattern, text, re.IGNORECASE):
             start,end = max(0,m.start()-100),min(len(text),m.end()+150)
+            if key == "electrical_scope" and m.group().upper() == "КРУ" and re.search(r"казначейств|счетная\s+палата|бюджетн\w+\s+контрол",text[max(0,m.start()-100):m.start()], re.IGNORECASE):
+                continue
             hits.append({"start":start,"end":end,"excerpt":text[start:end]})
             if len(hits)>=8:
                 break

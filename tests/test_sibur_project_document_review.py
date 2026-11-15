@@ -10,3 +10,8 @@ def test_exact_spans_and_scope_signals():
 
 def test_unrelated_generic_text_not_equipment():
     assert "electrical_scope" not in evidence("Условия оплаты и порядок приемки работ")
+
+
+def test_budget_control_kru_is_not_switchgear():
+    assert "electrical_scope" not in evidence("Требования органов бюджетного контроля (Федеральное Казначейство, Счетная Палата, КРУ)")
+    assert "electrical_scope" in evidence("Поставка КРУ 10 кВ")
