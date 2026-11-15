@@ -233,7 +233,8 @@ completed:
 - "V25: judicial contracts reactor B KOS Peton/Centromontazhavtomatika 2023 approx 42.176m accepted 73.843m; excluded new-period values, electrical share unknown. PGU-250 KER/NPP Dvigatel 2025 ceiling 6m accepted 5.9991m, unpaid 0.9531m, related service separate, no exact tender award link. Prior strict priced electrical specs 20.077m unchanged. Catalyst 235 detailed BOQ title/zone blank, only 12/136 summary rows reconcile; exclude all quantity market estimates pending scope. Dashboard V12 1462/2299, 1713 full known packages, 64 source hashes verified."
 - "V26: 8 explicit archive notices added across 3 work groups: NKS/KKS ASUTP four, KOS CUP two, remote operator building two (separate until unified project proven). Four primary XLSX hash verified, 5 procedure/URL pairs. Two sets monitoring; repeated NKS label, different ITT; KKO cable24.5km/month trays2.3km/month. KOS survey payment 90% at45 days subject upstream, cap100d,10% retention, no advance. Plan332/333 linked to program only, 8 exact plan procurement links still unresolved. Three exact public outcomes searched with no verified award, ten cumulative queue statuses. V13 1488/2312 extracted, 1717 known packages; 40 cards/2614 project IDs/8231 union. 65 sources verified. No DB mutation."
 - "V27: five direct source pilot files captured/extracted, 2 XLSM KKS/NKS and 3 XLSX operator KOS. BOE 189/174 pieces and 2/2 sets customer supply, 130 pressure,75 gas,8 flow devices; 1064 BOQ rows. Not installed or contractor sales. 2094860/1 and owner reports tie stations to ethylene pipeline infrastructure; 2 GC and 5 automation installation contractors unidentified, actual launch unknown. KOS media design terms 90%45d cap100d,10% non-state expertise, schedule conflicting 2027 IFC vs 2026 completion, foreign header. Eight exact plan gaps remain. No new price or award. V14 dashboard and 67 source hashes verified."
-current_stage: compressor_customer_supply_and_project_overlap
+- "V28: 3 explicit older NKS/KKS notices added to project (7 total, 18/18 supported links, 3 complete known packs), no union increase. Two original information cards verify New Resources as prospective contract party, qualification999_08, payment60d cap100d,10% retention EPB, 2020–25 experience. Owner/registry sources identify UETP-NKNH operator, New Resources PD author and DIATEK industrial-safety expert, not GCs. Service 2136325/1 direct operator route; old/new branch uncertain. 2 GCs/5 automation contractors unresolved, standalone KIP 332/333 unresolved; 7Z password required, not requested; PDF screenshot cache miss. V15 1650/2312 extracted,1826 complete packs,68 source hashes. No new signed price or award."
+current_stage: pipeline_roles_and_historical_procurement
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -242,7 +243,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: ecb74482
+last_verified_commit: 72ffdca8
 test_results:
   focused: 3
   ruff: pass
@@ -997,4 +998,22 @@ test_results:
       commercial-action-register-v21.json: c98a02a9e834642d0af9fb764c39956cc316807d8fa7cf0ed0f08e90146fa5a7
       consolidated-project-report-v27.md: c8207d36fed79c0e77af5be6d4212e84159c86f1568803b20dd6efdfa59aef18
       project-coverage-dashboard-v14.json: f021a32daa29a48a977868b9b737e31ff1f91ac8cdf28c85ee05b4a34a879a1e
-resume_instruction: "Read V27 map/report, V14 dashboard, V4 outcome queue unchanged membership, compressor/operator scope. Prioritize standalone KIP procurement for plan 332/333, named 2 pipeline GCs and 5 automation contractors, exact award/price evidence, new projects/installed base. Five pilot originals outside automated coverage, no DB changes; eight exact plan gaps remain. Preserve existing workers/gates and SSD, separate UPS. Nov17 report with explicit overlap and limitations."
+  pipeline_v28:
+    project_cards: 40
+    project_publications: 2617
+    priority_union: 8231
+    priority_supported_urls_extracted: 1650
+    priority_supported_urls_total: 2312
+    priority_all_known_packages: 1826
+    compressor_supported_urls: 18
+    compressor_extracted_supported_urls: 18
+    closed_p0_candidates: 2167
+    source_artifacts: 68
+    artifacts:
+      pipeline-roles-compressor-history-v1.json: 482d17c95daa12a5740c2fa6808c4ecb8853cbd4cd2d7339d469181dfc8a8962
+      consolidated-project-map-v28.json: 127c5cfc9f6b75deea5e106f8ff8b26f291bd090bcba6b714dae8a7567441e8b
+      commercial-action-register-v22.json: ac43862c4406d98b567ed761de208546bee83cc26f259c8938a9a8d84d1c7d66
+      consolidated-project-report-v28.md: 5f891433110bdb6335e89332522cb2d255842ece9ebf76e48b05598c2d59a617
+      project-coverage-dashboard-v15.json: 9b1976ef34ee42a41a7c27dacecc129cf2e283e81242da88e3f8534d8f6a631e
+      commercial-outcome-queue-v5.json: f14f9d7814d4c7aa0c07c41706c8e51b1fb21abd0ecf22fd8b3311ead7b2c077
+resume_instruction: "Read V28 report/map, standalone coverage V15 and outcome queue V5; embedded map dashboard older. Continue agreed parallel work, prioritize other P0 projects with low coverage (catalyst, styrene) and exact contracts/price, standalone KIP procurement and 8 plan gaps. Avoid guessing names of 2 GCs and 5 ASUTP contractors. Existing workers/gates, ArvectumSSD, UPS separate. No outreach. Prepare Nov17 consolidated report."

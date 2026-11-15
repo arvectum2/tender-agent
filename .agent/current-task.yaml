@@ -1002,3 +1002,8 @@ sibur_v27_compressor_scope_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Continue V27 standalone supply and contractor identity research.
+
+sibur_v28_pipeline_roles_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Continue V28 commercial outcomes and low-coverage P0.
