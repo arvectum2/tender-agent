@@ -1,0 +1,18 @@
+task_id: TA-SIBUR-PUBLIC-ARCHIVE-20261115
+status: in_progress
+goal: Collect source-verified profile procurement archive on official SIBUR public registry; append novel identities after provenance audit.
+definition_of_done:
+  - Verify official archive URL and category filters, preserve page receipts and raw bytes.
+  - Run independent resumable category capture with bounded public request rate and stop-on-access-restriction.
+  - Audit duplicate identities and source changes, retain original observations.
+  - Append novel source IDs, never overwrite active registry; fresh MI gate and verified TA backup; replay zero inserts.
+  - Confirm actual progress, tests and checkpoint; no inferred award or credentials.
+completed:
+  - Official archive AJAX page reports 7917 pages of 12.
+  - Eight category filters verified by first-party public responses.
+current_stage: implement_archive_capture
+remaining:
+  - implement and validate parser and capture
+  - connect append-only import and verify
+last_verified_commit: 48644dca
+resume_instruction: Preserve the independent live current-source index worker. Do not mutate its files or queue. Use private sibur-archive-discovery runtime.
