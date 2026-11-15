@@ -82,7 +82,8 @@ completed:
   Xcode build-for-testing PASS twice. Combined SaaS and browser-script regression
   33 passed, 1 skipped. Separate members test verifies shared decision visibility,
   rejects stale revision and cross-member replay, preserves two history entries.
-current_stage: company_web_ios_decisions_verified_next_scoped_discovery
+- PR536–538 exact heads CI 19/19 CLEAN.
+current_stage: scoped_discovery_resumable_candidate_runs
 remaining:
 - Check exact-head CI of stacked PR532–538; review/merge requires separate owner approval.
 - Implement company-scoped automatic discovery using versioned criteria, safe identity/scope
@@ -111,8 +112,7 @@ test_results:
   PASS; node --check, Ruff, make check, diff PASS
 - 33 passed, 1 skipped, 34 warnings in 5.37s; Swift standalone 14/14 PASS; unsigned
   Xcode build-for-testing PASS twice; Ruff/diff PASS.
-resume_instruction: Native decisions and web cabinet verified offline; publish stacked
-  PR, check CI, proceed tenant-scoped discovery. Do not repeat static builds/test
-  unless changed. Do not activate real tenant or live collection. Actual UI/device/network
-  acceptance and migration 109 PostgreSQL acceptance still pending. No deployment
-  until approved.
+resume_instruction: Implement opt-in bounded per-tenant daily discovery run with immutable
+  profile reference, individual persisted steps, no global supplier score, honest
+  incomplete coverage, manual candidate acceptance; no live source requests or schedule
+  activation.
