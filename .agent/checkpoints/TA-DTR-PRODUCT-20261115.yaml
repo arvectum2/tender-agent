@@ -93,7 +93,7 @@ completed:
   and new module Ruff PASS, existing adapter lint baseline unchanged. Disposable PostgreSQL
   actual migrations 109/110 PASS, concurrent daily plan admission same ID PASS, concurrent
   step 409 and committed replay single source callback PASS. Temporary DB removed.
-current_stage: bounded_company_discovery_verified_next_commercial_source_identity
+current_stage: commercial_source_identity_and_public_candidates
 remaining:
 - Check exact-head CI of new stacked discovery PR; 532–538 CI 19/19 each at last check,
   review-only.
@@ -127,9 +127,6 @@ test_results:
 - 136 passed, 1 skipped, 76 warnings in 9.67s; Node rendered script flow/syntax PASS;
   Ruff/make check PASS; legacy adapter lint counts unchanged; PostgreSQL migrations
   109/110 and daily admission/step concurrency PASS
-resume_instruction: Bounded 44-FZ search and web candidate workflow verified, publish/check
-  stacked PR. Next design commercial source identity and safe scoped discovery from
-  existing source contracts, then scheduled policy and acceptance. No repeated tests
-  unless changed. Feature flag AI_CORP_SAAS_COMPANY_DISCOVERY_ENABLED false by default;
-  no live source calls or real tenant provisioning, automatic schedule, APNs, model,
-  DB or deployment changes.
+resume_instruction: Implement separate source-qualified company reference identity
+  for B2B-Center/Workspace and bounded public category/RSS discovery, use existing
+  validated URL contracts; no live requests or global corpus mutations.
