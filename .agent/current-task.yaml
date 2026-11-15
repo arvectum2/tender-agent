@@ -678,3 +678,8 @@ independent_sibur_archive:
   capture_state: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/sibur-archive-discovery/categories/state.json
   import_state: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/sibur-archive-discovery/categories/import/state.json
   instruction: Read actual running states and never duplicate source capture or shared mutations. Existing current-source index worker remains independent.
+archive_document_evidence_2026_11_15_0646:
+  checkpoint: .agent/checkpoints/TA-SIBUR-PUBLIC-ARCHIVE-20261115.yaml
+  status: in_progress
+  resume: Inspect live archive capture/import/documents states; verify archival linkage
+    replay, avoid duplicate worker or DP mutation.
