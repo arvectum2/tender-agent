@@ -56,16 +56,27 @@ completed:
 - Actual Swift decoder/status runtime probes 6/6 PASS; unsigned generic iOS simulator
   build-for-testing PASS twice with Xcode 27.1. No simulator XCTest execution or physical
   device installation.
-current_stage: native_company_auth_and_portfolio
+- 'Native Companies tab: existing SaaS token import, separate device-only Keychain
+  origin+credentials, account selection with fail-closed tenant/customer/member identity
+  comparison, explicit HTTPS origin trust and redirect denial, scoped paginated cases/read-only
+  decisions and role-gated evidence binding list. No owner token or global portfolio
+  fallback. Backend /api/saas/me now includes authenticated company name.'
+- 31 SaaS tests PASS, 1 optional skipped; Ruff PASS; actual Swift standalone identity/portfolio/HTTPS
+  checks 11/11; unsigned Xcode 27.1 build-for-testing PASS twice. Additional mock
+  account-switch scenario tool call declined; no live token, Keychain/device or simulator
+  execution performed.
+current_stage: native_company_readonly_verified_next_web_projection
 remaining:
-- Check CI for PR534 and native stacked PR; review prior PR532/533 green.
-- Implement actual tenant-scoped iOS client authentication and company portfolio/evidence
-  UI plus corresponding existing web projection; separate owner legacy token.
-- Company-scoped automatic discovery, commercial source identity, safe legacy mapping
-  and isolated end-to-end acceptance remain.
+- Check exact CI prior PR534/535 and new company PR; previous 532/533 green.
+- Run focused simulator account-switch/Keychain tests using isolated fixtures and
+  no real token; no live deployment.
+- Integrate existing SaaS web/Operator Workspace company-scoped portfolio and evidence,
+  then scoped human decision UI; avoid mixing owner Basic and SaaS tokens.
+- Implement company-scoped automated discovery and safe commercial identity, isolated
+  end-to-end acceptance.
 - Production migration/deployment and conditional DP rollout remain separate; preserve
   SIBUR collection.
-last_verified_commit: 383310e295c414e27530a6f66d73a2be8379a8f0
+last_verified_commit: bd975fe1a30c8f6454eeaffb65a97f5494502883
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -78,6 +89,10 @@ test_results:
   head 109
 - Xcode 27.1 generic simulator build-for-testing PASS (no signing); Swift runtime
   decoder/status 6/6 PASS; diff check PASS. Native XCTest compiled not executed.
-resume_instruction: Implement separate read-only iOS SaaS token login and scoped portfolios,
-  secure per-company Keychain, identity verification, no legacy fallback; test offline,
-  publish stacked review PR.
+- 31 SaaS passed, 1 skipped, 33 warnings; Ruff PASS; Swift standalone assertions 11/11;
+  native unsigned build-for-testing PASS; simulator XCTest compiled not executed.
+resume_instruction: Company native read-only slice verified, publish stacked review
+  PR and check CI. Proceed existing web company-scoped case/evidence projection; do
+  not repeat completed Swift build or backend tests unless changed. Simulator switching
+  and device Keychain validation remain acceptance gates. No production migration,
+  real tenant provisioning, live search, APNs or research changes.
