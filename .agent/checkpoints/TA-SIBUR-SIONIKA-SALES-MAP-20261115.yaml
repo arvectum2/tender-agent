@@ -126,16 +126,24 @@ completed:
   selected demand/maintenance cases with cancellation/mixed scope retained. VSK n-BuLi
   attachment-only UPS and KTP installation scope, no proof of installation or award;
   owner reports construction completed and PNR started, current launch unverified.
-current_stage: support_category_covered_and_installed_base_service_evidence
+- 'Lifecycle candidate review: 526 unique frozen procurement records, 509 industrial
+  and 22 UPS/battery, 5 overlap; nine manually reviewed clusters,19 distinct IDs,18
+  prefix groups, scope and revisions distinct. Siemens/Yokogawa ZSNH, AUMA NKNH and
+  STG, ABB NKNH, STG/ZSNH/KOS/Kstovo UPS, AGHK mixed. No confirmed recurring award.'
+- Offline technical evidence refresh 179 new originals,1342 total,1336 extracted/6
+  review;111 additional findings, 6 selected exact document scopes, including Siemens
+  8BD1 23 cells at RP57, AMS Emerson HART existing diagnostics, Siemens controller
+  planned, KOS workstation and UPS replacement, UPS diagnostics requirement, multi-platform
+  PNR. Evidence and source status saved; no inferred awards.
+current_stage: installed_base_lifecycle_and_model_evidence
 remaining:
-- SIBUR priority per owner. Maintain independent UPS channel and industrial channel;
-  verify actual installed-base scope and EPC/recipient links. Supplemental 29 in-period
-  records await authorized import after fresh shared backup/acceptance gate; keep
-  older 30 as context.
-- Existing source acquisition and exact-link reconciliation, service recurrence and
-  awards/price/eligibility evidence still pending. DP blocked unchanged. No duplicate
-  workers.
-last_verified_commit: 2104ea4d2cad44fc90e9850fb2026e7c97736d7e
+- Continue SIBUR priority, expand exact installed-base asset and lifecycle cohorts
+  including brand/service/retrofit and primary project roles; refresh current statuses.
+  Separate independent UPS channel and mixed scope allocation.
+- Support services supplement 29 in-period records remains not DB imported; authorized
+  shared gate required, current worker unchanged. Missing document references and
+  award/contract amounts remain unresolved. DP blocked unchanged.
+last_verified_commit: 5722454a41065a1df83b76630815961b957f84ea
 test_results:
   focused: 3
   ruff: pass
@@ -259,7 +267,22 @@ test_results:
     selected_scope_count: 9
     parser_tests: 2
     ruff: pass
-resume_instruction: Focus SIBUR as latest owner priority. Read support-services-review-v1
-  and installed-base-service-evidence-v1 and private channel overlay. Continue installed-base
-  and lifecycle-service/EPC map; keep standalone UPS separate. Existing workers untouched.
-  Fresh shared backup, acceptance gate and replay before DB writes. No DP bypass/contact/bid/spend/auto-merge.
+  installed_base_lifecycle:
+    lifecycle_sha256: a1f2f39e58560d2ba8a4c32a9c24dec8eaaf2ebef6ffac22d84c9c2682980057
+    model_evidence_sha256: 68d3b864ff21f1d17a03a953cabb8add08d83ad076666fd0d90a23feeef6a011
+    technical_report_sha256: 87fa7a451554960c2d685571262ee5f4337a71329db65aaadec65a0fd105a01f
+    candidate_rows: 526
+    industrial: 509
+    ups: 22
+    mixed_overlap: 5
+    selected_ids: 19
+    new_originals: 179
+    total_originals: 1342
+    extracted: 1336
+    review: 6
+    verification: Read-only original report/source reference validation; no code change.
+resume_instruction: Read installed-base-lifecycle-map-v1.json, installed-base-model-evidence-v2.json
+  and immutable latest technical report; expand SIBUR installed-base, service and
+  project chains. Private role/channel overlay authoritative. No supplier assignment,
+  no contacts, bids, spend, auto-merge, duplicate workers or DP bypass. Fresh shared
+  backup/gate/replay for any authorized DB mutation.

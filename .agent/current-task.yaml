@@ -781,3 +781,11 @@ sibur_support_services_installed_base_20261115:
     and lifecycle-service/EPC map; keep standalone UPS separate. Existing workers
     untouched. Fresh shared backup, acceptance gate and replay before DB writes. No
     DP bypass/contact/bid/spend/auto-merge.
+sibur_lifecycle_model_evidence_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read installed-base-lifecycle-map-v1.json, installed-base-model-evidence-v2.json
+    and immutable latest technical report; expand SIBUR installed-base, service and
+    project chains. Private role/channel overlay authoritative. No supplier assignment,
+    no contacts, bids, spend, auto-merge, duplicate workers or DP bypass. Fresh shared
+    backup/gate/replay for any authorized DB mutation.
