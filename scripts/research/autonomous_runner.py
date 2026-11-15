@@ -207,15 +207,24 @@ class Runner:
             if result["canonical_uri"] != "content-sha256://" + sha or not result["embeddings"]:
                 raise Blocked("invalid local index receipt")
             index[sha] = result
+        # Recovered resources have a distinct read-only per-chunk attestation,
+        # not a fabricated HTTP ingest response.
+        recovered = json.loads(subprocess.check_output(
+            [PY, "-m", "scripts.research.reconciled_sibur_index", str(self.docs)],
+            cwd=self.sibur, timeout=60))
+        if set(index) & set(recovered):
+            raise Blocked("source has both HTTP and reconciliation receipts")
+        index.update(recovered)
         return index
 
     def reconcile_index(self, index):
         stats = json.loads(self.cmd("sibur", "DP collection stats",
                            ["docker", "exec", API, "python", "-c", STATS], self.sibur, 30))
         recovered = read(self.docs / "dp-recovered-server-resource.json")
-        expected = {"documents": len(index) + 1,
-                    "chunks": sum(r["chunks"] for r in index.values()) + recovered["chunks"],
-                    "embeddings": sum(r["embeddings"] for r in index.values()) + recovered["chunks"]}
+        legacy = recovered["source_sha256"] not in index
+        expected = {"documents": len(index) + int(legacy),
+                    "chunks": sum(r["chunks"] for r in index.values()) + (recovered["chunks"] if legacy else 0),
+                    "embeddings": sum(r["embeddings"] for r in index.values()) + (recovered["chunks"] if legacy else 0)}
         if stats != expected:
             raise Blocked("DP receipt/aggregate discrepancy; reconcile exact server identities before retry")
         self.update("sibur", server=stats, full_receipts=len(index))
@@ -238,6 +247,13 @@ class Runner:
                 with self.mutation_guard():
                     before = self.local_index()
                     self.reconcile_index(before)
+                    # Close any receipt-to-TA linkage gap from a prior failed response
+                    # before submitting a new ingest.
+                    if self.state["lanes"][lane].get("synced_count") != len(before):
+                        self.gate(lane)
+                        self.backup_ta(lane)
+                        self.sibur_sync(before)
+                        self.update(lane, synced_count=len(before))
                     gate = self.gate(lane)
                     error = None
                     self.update(lane, index_inflight=True, index_baseline=len(before))
