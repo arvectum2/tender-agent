@@ -207,7 +207,8 @@ completed:
 - Combined research continuation: processed 268 additional originals since 1627 baseline, total 1895, extracted 1888, review 7. Prior saved v5 technical evidence reconciled by SHA without repeating extraction. Full AGHK historical annex parsed into 772 source rows, preserving duplicate candidate and UPS separation. Built industrial demand matrix for 6477 distinct source IDs across 11 overlapping categories and 482 service-source candidates with explicit site versus organizer-only evidence. Seven dated external project and supplier crosschecks, including SVEL historical production distinct from later nomination and award unknown.
 - Contract-chain research: two court-confirmed subcontract specifications at ZSNH (electrical installation GPP1/2, KRU10kV commissioning GF1), exact GF1 project match to 2076768/1 lot1, no award protocol. Historical AGHK temporary power chain separately. Owner context recorded privately, distinct from verified public evidence; 2083626/1 and two subsequent AGHK service notices remain unverified as to outcome and causation. Technical extraction refreshed to 1910 originals, 1903 extracted, 7 review.
 - Consolidated 17 project/program cards, 30 organizational/site coverage labels, 30 overlapping reviewed scope groups (51 distinct publications), official 2026 plan with 1005 positions and 177 direct category rows, 37 priority rows, and 177 qualification entries with 22 candidates. Verified two original XLSX hashes and map/report hashes. Current Watchdog updated in place for 17 November deadline; hourly schedule unchanged. No inferred awards.
-current_stage: consolidated_project_report_deadline
+- Screened all 37 priority plan rows against frozen archive and current source snapshot of 15 November 11:37 UTC: 29 rows with retained candidates, 155 distinct publication IDs, 6 current snapshot IDs; 25 manual scope judgments, 8 rejected pairs. No proven exact plan-to-contract link or award. Refreshed 162 originals to 2072, 2063 extracted, 2 partial, 7 review; three source-bound technical scopes. Resolved NPG SPR to Perm SIBUR-Khimprom project via official regional order; 41 archive candidate publications and six distinct secondary missing from snapshot, two false model-token positives excluded. Public role of Tekon Engineering confirmed. Added four programs, consolidated 21 unique project cards and versioned report v3.
+current_stage: priority_plan_reconciliation_and_expanded_project_map
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -216,7 +217,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: 800c53cc
+last_verified_commit: 8c861e7f
 test_results:
   focused: 3
   ruff: pass
@@ -495,4 +496,25 @@ test_results:
       consolidated-project-stage-v1.json: caac3e9dce7175bee8edb1a31cdcc7160412a6746bbebd2dcfae8b69aac32a5f
       consolidated-project-map-v1.json: 857fad5886dc6f44833fc0bb4c6e9686ca3b641cec4a648e362412903b2089b5
       consolidated-project-report-v1.md: 8959aaaa4e01fe188ddd3057183bb0b2c7588e21570a5382638ee52fa90f1922
-resume_instruction: Read consolidated-project-map-v1.json, consolidated-project-report-v1.md and owner-plan-qualification-matrix-v1.json. Match 37 priority plan rows to exact live/archive procedures, confirm purchaser roles, outcomes and prices only from source evidence; expand undercovered sites and contractor channels, validate qualification status and project time lines. Maintain separate UPS and private owner context, existing archive worker and all gates. Update consolidated report by 17 November. No duplicate jobs, spending, outreach or inferred awards.
+  actionable_project_map_v3:
+    project_cards: 21
+    priority_plan_rows: 37
+    candidate_rows: 29
+    distinct_candidate_publications: 155
+    current_snapshot_publications: 6
+    manual_scope_assessments: 25
+    original_documents: 2072
+    extracted: 2063
+    partial_review: 2
+    review: 7
+    npg_archive_candidates: 41
+    npg_external_secondary_observations: 6
+    artifacts:
+      plan-priority-reconciliation-v2.json: f3344d3684ecc9840024f0ac2a7770b11626531611f1aa5b6ecc1b2e0f62a762
+      installed-base-model-evidence-v6.json: 8a5048336d73f059eefc37a0386fd6f1f98eb043a159f749de70aced66838feb
+      npg-spr-project-resolution-v1.json: 0dadb77adc36e22f4ec539ce8a2b2920f2cb8e844de8afb4fbc6e57e2e35519a
+      additional-site-projects-review-v1.json: 3255ffa0706853c7f704b67043f024efe6c397fe0a7b71f0e0a48f7a9b2f5ec4
+      consolidated-project-map-v3.json: ab659b91cc98281e108ecc2502c15045a22c65e7d1d46cc22811c12d4e533960
+      consolidated-project-report-v3.md: cfd79a917a68aa4d04e2723dd34055ace8d6ba729852927042283223674e2013
+    verification: All map source artifact hashes replayed, exact technical original and text SHA linked, public indexed PDF text used with screenshot cache miss; no new verified contract or DB writes.
+resume_instruction: Read consolidated-project-map-v3.json and consolidated-project-report-v3.md. Expand project-specific contractor and package chains, prioritize Perm NPG SPR, Tomsk maximization and other undercovered sites, resolve eight plan rows with no retained candidate and compare 2026 archive gaps with external source cards. Confirm actual awards, signed prices, current eligibility and project timelines; maintain independent UPS, private owner context and existing archive worker. Deadline 17 Nov. No inferred awards, spending, outreach, duplicate jobs or ungated DB writes.

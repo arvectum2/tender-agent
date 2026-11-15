@@ -867,3 +867,8 @@ sibur_consolidated_project_report_deadline_20261115:
   status: in_progress
   target_report_date: 2026-11-17
   resume: Read consolidated-project-map-v1.json and consolidated-project-report-v1.md. Reconcile priority plan rows, exact procurement outcomes, project milestones and undercovered sites; preserve independent UPS, private owner data, existing workers and gates.
+
+sibur_project_map_v3_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read consolidated-project-map-v3.json and consolidated-project-report-v3.md; continue Perm NPG SPR package chains, undercovered sites, primary awards and plan gaps. Deadline 17 November. Preserve existing gates and independent UPS.
