@@ -228,7 +228,8 @@ completed:
 - "V20: seven original XLSX packages reviewed; NPG 29 units, 27 distinct tags, ASDKE title4810; MPE 23 NAMUR+3 boxes; AGHK busbar protection and AGPP interface KRU; overlapping heat-tracing budget vs tender periods, DGP2 warehouse RFQ author. 1481 GPB outcomes screened literal SIBUR names, zero candidate hits; 1290 best bids, 191 failed, 601 published participant names, no signed prices. Outcome research queue: 8223 IDs, 6856 closed intake incl 2151 P0, 1300 cancelled, 67 open as archived. Not all outstanding outcomes yet researched; no fabricated awards or prices. V7 coverage 1314/2299, 985 remaining, 468 P0. V20 53 source artifacts verified."
 - "V21 parallel market research: official NKNH combined operator-room program >12bn first-stage investment, 113 of 193 to 7, 3 launched as of Feb17; 8 explicit archive IDs and 4 HVAC candidates outside strict membership. New card 37, union 8227. SMK Severozapad INN7814292228 self-reported SNEMA subcontract, Progress explicitly named OVOС executor DGP2. ABB 2144277/1 retrofit separate from plan 817. Four exact outcome IDs reviewed, no verified award, all 8 plan gaps unresolved. Outcome queue V2 6860 closed, 2159 P0. Coverage 1329/2299. No DB mutation; existing workers continue."
 - "V22: 3 distinct automation counterparties enriched, two named EP600 commissioning buyers from ASU Engineering portfolio; Delight identity and 2025 finance, EPIK references and finance; published MPE 2024 design existing 6 OPS,2 shutdown,3 fire/gas panels and planned cabinets, visual PDF unavailable. Three operator procurement exact outcome searches no verified award, 2131406/1 outside strict project membership; 3 receipt pairs from 2 generic unsigned DOCX, technical 7z pending. Outcome queue V3 cumulative 7 marked without verified outcome. Dashboard V9 1388/2299, 37 projects 2606 IDs, 8227 union. No DB changes or outreach; 55 evidence files verified."
-current_stage: operator_automation_roles_and_installed_base
+- "V23: new named downstream procurer KIP-Elektromontazh 3448057936 on Bidzaar 148-474,168-094,168-886; 2025 revenue 4.992bn profit274.445m, approximate creditors2.89bn; no main award proof. October22 Lemaevskaya visit updated facility, acceptance unknown. Read-only separate 7Z pilot: 11/11 originals captured/listed, 2 TZ revisions and KKO safely streamed, exact hash and text diff dates only. Other archive members and unsupported formats not fully processed, no DB import. Dashboard 1432/2299, 1707 full known packages; 58 evidence artifacts verified. No signed prices."
+current_stage: operator_archive_pilot_and_subcontract_channel
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -237,7 +238,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: 997a0059
+last_verified_commit: 90815341
 test_results:
   focused: 3
   ruff: pass
@@ -912,4 +913,20 @@ test_results:
       consolidated-project-report-v22.md: 8f7821651d3d0bf9d452869d572dd031f914ccdd4f5d7056a5af61fc97a2bd49
       project-coverage-dashboard-v9.json: 77abd2d51f7e814d5dc26311c4a9a971f193ae77873b9acc1a505478634c162c
       commercial-outcome-queue-v3.json: f528bbc6fb30851b15e7e9e3e1e61707d66100ebf5d599639e09a5f62533ec2a
-resume_instruction: "Read V22 report/map, standalone coverage V9 and outcome queue V3; embedded dashboard references in map are earlier. Continue accepted parallel research allocation: contract/outcomes/price 35%, installed base 25%, projects 20%, commercial plan 20%. Prioritize new exact contract results, safe unsupported archive review, 8 plan gaps, P0 documents. Keep 7 reviewed outcomes distinct from unavailable price. Existing workers remain, gates/locks and external SSD; no duplicate tasks, no outreach or invented winners. Prepare consolidated Nov17 report."
+  operator_archive_v23:
+    project_cards: 37
+    priority_union: 8227
+    priority_supported_urls_extracted: 1432
+    priority_supported_urls_total: 2299
+    priority_all_known_packages: 1707
+    operator_archive_capture: 11
+    selected_archive_members_reviewed: 3
+    source_artifacts: 58
+    artifacts:
+      operator-archives-subcontract-review-v1.json: 5706de3e600bb18e283ff44a351fafad34229c1a4e32694edc303d9a2bc6605f
+      operator-7z-pilot-v1/selected-members-v1.json: 13f96e4755a5aebc05edc3676d32331bf2d1243f9429646e5bada218de23c70f
+      consolidated-project-map-v23.json: 4084b396b1c4e72ef2484ff711cfd2d90ac551ab108268ccf470f3e7cd197778
+      commercial-action-register-v17.json: ab0f682973e11097098359678121ea8b94b5c1aee8920632a24b6d7687592a95
+      consolidated-project-report-v23.md: 5348dad696af8243f04e696fd15cdbeb850b5e9afc15a921151e724aa9c9ef8f
+      project-coverage-dashboard-v10.json: c884bb2a7d1f2d1eca435bc7e09a2d22d54daf642b07fee654f8202ddad3ebf5
+resume_instruction: "Read V23 map/report, dashboard V10, outcome queue V3 unchanged membership; archive pilot manifest 11 originals, two TЗ and KKO extracted (other members pending). Continue parallel contract/outcome search 35%, installed base 25%, projects 20%, commercial plan 20%; focus 8 plan gaps and specific P0 commercial evidence. Extend safe bounded archive handling only after validation; no macros or untrusted execution, DB gate and existing workers. Preserve external SSD, UPS separate, no inferred awards/prices/outreach. Nov17 consolidated report."
