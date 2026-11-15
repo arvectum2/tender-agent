@@ -33,3 +33,24 @@ def test_duplicate_rejected():
     a=row("1/1","КРУ")
     with pytest.raises(ValueError):
         build([a,a],date(2026,11,15))
+
+
+def test_ups_priority_includes_it_and_specific_batteries_not_car_batteries():
+    from scripts.research.build_sibur_sales_map import UPS_FAMILY
+    r=build([row("10/1","ИБП для серверной","ИТ"),
+             row("11/1","ЗИП и АКБ для UPS"),
+             row("12/1","Техническое обслуживание системы бесперебойного электропитания"),
+             row("13/1","Стационарная аккумуляторная батарея"),
+             row("14/1","АКБ автомобильная"),
+             row("15/1","Оплата через СБП","ИТ")],date(2026,11,15))
+    got={i["external_id"]:i["ups_tags"] for i in r["candidates"] if UPS_FAMILY in i["core_tags"]}
+    assert set(got)=={"10/1","11/1","12/1","13/1"}
+    assert "components" in got["11/1"] and "service" in got["12/1"]
+    assert got["13/1"]==["stationary_battery_or_cabinet_review"]
+
+
+def test_battery_module_without_ups_is_review_not_confirmed_ups():
+    from scripts.research.build_sibur_sales_map import ups_tags
+    assert ups_tags("Модуль батарейный Eaton EXB", "Электрооборудование")==["battery_application_review"]
+    assert ups_tags("АКБ для погрузчика", "Электрооборудование")==[]
+    assert ups_tags("ТЗ на байпасы трубопроводов", "Строительные работы")==[]
