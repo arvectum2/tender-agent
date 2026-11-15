@@ -16,3 +16,15 @@ def test_reported_count():
     p=Count()
     p.feed("<div>1 234 предложения</div>")
     assert p.values == {1234}
+
+
+def test_explicit_auction_date_is_separate(monkeypatch):
+    from scripts.research.capture_gpb_history_partitions import archive_rows
+
+    original = "12 января 2024, 15:00 Z Дата торгов 26 января 2024, 07:00 Z"
+    monkeypatch.setattr("scripts.research.capture_gpb_history_partitions.parse_list",
+                        lambda raw, url: [{"deadline_raw": original}])
+    r = archive_rows(b"", "test")[0]
+    assert r["deadline_raw"] == "12 января 2024, 15:00 Z"
+    assert r["auction_date_raw"] == "26 января 2024, 07:00 Z"
+    assert r["deadline_raw_original"] == original

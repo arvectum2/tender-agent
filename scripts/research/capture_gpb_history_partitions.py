@@ -48,6 +48,21 @@ def source_url(month, page):
         "procedure[accepted_to]": last.strftime("%d.%m.%Y")})
 
 
+def archive_rows(raw, url):
+    rows = parse_list(raw, url)
+    for row in rows:
+        deadline = row.get("deadline_raw", "")
+        if " Дата торгов " in deadline:
+            left, right = deadline.split(" Дата торгов ", 1)
+            # These are two separately labelled source timestamps, not an inferred date.
+            parse_date(left)
+            parse_date(right)
+            row["deadline_raw_original"] = deadline
+            row["deadline_raw"] = left
+            row["auction_date_raw"] = right
+    return rows
+
+
 def inspect(raw, month, page):
     q = Count()
     q.feed(raw.decode())
@@ -56,7 +71,7 @@ def inspect(raw, month, page):
     total = q.values.pop()
     if total == 0:
         raise ValueError("zero-result month requires explicit review")
-    rows = parse_list(raw, source_url(month, page))
+    rows = archive_rows(raw, source_url(month, page))
     first, last = bounds(month)
     if any(not first <= parse_date(r["deadline_raw"]).date() <= last for r in rows):
         raise ValueError("deadline outside requested partition")
