@@ -717,3 +717,11 @@ sibur_sionika_project_channels_20261115:
     active-scope-review-v1 and external-role-evidence-v1 reports. Continue broad SIBUR/Sionika
     project map, exact roles, shortlist qualification and stage-based sales channels.
     No duplicate captures, automatic bids, contract inference or DP bypass.
+sibur_sionika_whole_corpus_sales_matrix_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read whole-corpus-project-sales-matrix-v1.json, sales-action-matrix-v1.json
+    and active-expanded-review-v1.json. Prioritize early sales entry NPG SPR, STYRENE,
+    AGHK and ongoing retrofit/service; process new exact original evidence. Current
+    29 review candidates NOT qualified. Continue existing approved jobs; no actual
+    bid, contact, spend, auto-merge or DP bypass.

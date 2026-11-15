@@ -35,15 +35,26 @@ completed:
   preview evidence records.
 - Verified limited public role and project-stage reports from government, owner and
   contractor sources; original external pages not privately archived.
-current_stage: project_and_active_scope_map_verified_priority_packages
+- 'Whole-corpus map 2852 unique publications across 11 project labels: 928 prior core,
+  54 expanded electrical candidates, 785 other project package review and 1085 context.
+  Explicit KOS catalyst vs NKNH metallocene PE separation; project mentions not awards.
+  7 focused tests and Ruff pass.'
+- Current snapshot full scan adds 5 review candidates beyond prior 24, all 13 published
+  links captured. ABB and generic electrical only standard contract; HVAC incomplete;
+  PNR water treatment and POLIOM lighting specific technical assignment. No eligible
+  bidder claim.
+- Eight stage-based sales action entries with exact original registry IDs/status,
+  manually reviewed official/external stage links and role evidence. Recommendations
+  separate. AGHK launch delayed September 2026, revised date unknown.
+current_stage: expanded_project_matrix_and_29_current_review_candidates
 remaining:
-- Detail 75 active originals, especially legacy DOC/XLSB/XLSM using bounded non-executing
-  parsers; four procedures lack direct verified URLs. Verify finance/equipment scope
-  and qualifications.
-- Expand project graph, recipient and roles, stage-level sales targets, brand/OEM
-  alternatives and service demand. Separate AGPZ and mixed records.
-- Resolve support services category coverage. DP blocked unchanged; no bypass.
-last_verified_commit: 5bb7cccdd8d2c9981085abe13a5ba205d71c6216
+- Extract exact package contents and supplier qualification from 785 review packages,
+  initially NPG SPR, STYRENE and AGHK. Review legacy XLSB and DOC originals offline;
+  validate 29 current candidates and next snapshot.
+- Resolve actual EPC awards and service/maintenance opportunities; verify owner/contractor
+  roles, actual recipient; no inference from canceled procedures.
+- Support-services category coverage pending. DP blocked; no bypass.
+last_verified_commit: f43cbe72c187e1757c29f0cfa91db49c65789641
 test_results:
   focused: 3
   ruff: pass
@@ -68,7 +79,18 @@ test_results:
     active-scope-review-v1_sha256: 7f3c1b4f846f545c0d2480815605fddcd277980dfcec68912fbc61293c5c697c
     external-role-evidence-v1_sha256: 372552919b766ed861f5a5b569c1204a1f3a897269b30259d8c186b0af8e8241
     current_registry_receipts_sha256: 5d4c8771320ce4e61b1caa26dfe98016dee73ffad8ff2950d19065562691d2b6
-resume_instruction: Read live checkpoints and project-channels-v2, active-document-coverage-v1,
-  active-scope-review-v1 and external-role-evidence-v1 reports. Continue broad SIBUR/Sionika
-  project map, exact roles, shortlist qualification and stage-based sales channels.
-  No duplicate captures, automatic bids, contract inference or DP bypass.
+  sales_action_matrix:
+    focused: 7
+    ruff: pass
+    project_matrix_sha256: 555c62761fd43db3a45461fe3376f0c74ad4c5cdce17b2e0b8b78b308f7c4b37
+    active_expanded_sha256: ddee19a2310dd2f42d20809b43c6d70c9f5b890a197f3060df4b816f367c93ce
+    sales_action_matrix_sha256: fdf5f18dce58251fb35f190a8ba06bbcbd368c33994cfa0d388d0ecba6ea17be
+    current_review_candidates: 29
+    project_mentions: 2852
+    extra_electrical: 54
+    project_package_review: 785
+resume_instruction: Read whole-corpus-project-sales-matrix-v1.json, sales-action-matrix-v1.json
+  and active-expanded-review-v1.json. Prioritize early sales entry NPG SPR, STYRENE,
+  AGHK and ongoing retrofit/service; process new exact original evidence. Current
+  29 review candidates NOT qualified. Continue existing approved jobs; no actual bid,
+  contact, spend, auto-merge or DP bypass.
