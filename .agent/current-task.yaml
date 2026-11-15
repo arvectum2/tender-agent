@@ -750,3 +750,11 @@ sibur_sionika_contractor_procurement_channels_20261115:
     Sionika contractor procurement/installed-base map, exact primary evidence and
     current project roles. Respect existing workers and no duplicate captures. No
     actual contact, bid, spend, auto-merge or DP bypass.
+sibur_external_channel_review_v2_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read contractor-procurement-channels-v2.json, isk-favorit-dossier-v1.json,
+    external-channel-coverage-v1.json and private owner overlay. Continue actual industrial
+    contractor procurement and direct buying channel evidence. Do not count SIBUR
+    mirrors or IT procurement as industrial demand. No contacts, bidding, spend, auto-merge
+    or DP bypass.

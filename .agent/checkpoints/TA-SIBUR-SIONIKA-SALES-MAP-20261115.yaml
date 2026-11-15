@@ -92,18 +92,21 @@ completed:
 - 'Reconciled all 926 unresolved URL references against existing acquisition receipts
   without new fetch: 3 exact-bound originals across 2 procedures, 4 bytes with missing
   exact ref, 2 prior review, 917 uncaptured; 1212 exact identity-URL pairs outstanding.'
-current_stage: contractor_procurement_channels_and_document_gap_reconciliation
+- 'External contractor channel registry 14 to 23 unique B2B IDs, six organizer INNs:
+  six Favorit AGHK packages, one SNEMA electroheating service (end site unresolved),
+  two NIPIGAZ 2024 B2B cards classified IT, results hidden or cancelled. No award/current
+  opportunity.'
+- Favorit financial dossier; Sfera no buyer records in checked catalogs, Pondera own
+  public procurement not found, Progress catalog overlaps SIBUR. No inference of absent
+  private demand.
+current_stage: external_contractor_procurement_registry_v2
 remaining:
-- Expand actual procurement history for Pondera, Progaz group, SNEMA and other EPC/service
-  contractors; reconcile exact legal entities and old names, distinguish project/end
-  site and external market, current status and historical closed procedures.
-- Check current construction role of Esta/Yamata and Wison exact package through primary
-  evidence. No inferred award or role conflict override.
-- Resolve 1212 exact URL/identity gaps via existing acquisition worker; four prior
-  captured originals need source reference audit, not redundant downloads; do not
-  blindly retry prior review.
-- Expand installed-base demand and support-services scope; DP remains blocked.
-last_verified_commit: 716e22e71af10866b2ca94885c33b59d00105a37
+- Expand primary industrial EPC procurement evidence, verify exact attachment scope
+  and direct acquisition channels for Favorit, Progaz, SNEMA, Pondera, Sfera. Preserve
+  owner roles.
+- Prior unresolved project roles/contract evidence, missing document references and
+  support category scope remain. DP blocked unchanged.
+last_verified_commit: 4e6487490d7ac63b78b0ff5ae21282c830308202
 test_results:
   focused: 3
   ruff: pass
@@ -179,8 +182,18 @@ test_results:
     unresolved_identity_url_pairs: 1212
     verification: Read-only research and artifact checks passed; no new production
       code.
-resume_instruction: Read contractor-procurement-channels-v1, pondera-industry-dossier-v1,
-  project-role-changes-review-v1, package-link-reconciliation-v1 and private owner
-  role overlay. Continue broad Sionika contractor procurement/installed-base map,
-  exact primary evidence and current project roles. Respect existing workers and no
-  duplicate captures. No actual contact, bid, spend, auto-merge or DP bypass.
+  external_channel_review_20261115:
+    artifacts:
+      contractor-procurement-channels-v2.json: ea333883049bfdca42fbdb1174cfbcb8862420b7ac08517972440dcb5b0edfff
+      isk-favorit-dossier-v1.json: e775467a186c053eb6ba28334bf930a3729f7b76c8e77c814be29515f5738d2e
+      external-channel-coverage-v1.json: a20929c208db9fbd1d2cc6ddd2f119abfc8d411b48eb6667c739757399db447d
+    unique_ids: 23
+    entities: 6
+    new_ids: 9
+    verification: Unique ID and legal entity joins checked; no code change; external
+      pages manually reviewed, original bytes not archived.
+resume_instruction: Read contractor-procurement-channels-v2.json, isk-favorit-dossier-v1.json,
+  external-channel-coverage-v1.json and private owner overlay. Continue actual industrial
+  contractor procurement and direct buying channel evidence. Do not count SIBUR mirrors
+  or IT procurement as industrial demand. No contacts, bidding, spend, auto-merge
+  or DP bypass.
