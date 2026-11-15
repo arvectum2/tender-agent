@@ -49,7 +49,8 @@ completed:
   synthetic original ZIP/XML/attachment files; report/qualification projection mocked
   for isolation. Existing qualification and source integrity suites included; migration
   SQLite upgrade/downgrade and populated rollback denial PASS. Ruff/make check PASS.
-current_stage: company_evidence_verified_next_mobile_digest
+- Evidence PR534 published at 305f43ad.
+current_stage: native_ios_digest_status
 remaining:
 - Review stacked PR532,533 and evidence candidate; check evidence CI and isolated
   PostgreSQL migration 109 if needed.
@@ -69,8 +70,6 @@ test_results:
   exactly one record PASS; DTR session advisory lock four checks PASS
 - 149 passed, 1 skipped, 91 warnings in 12.96s; Ruff and make check PASS; Alembic
   head 109
-resume_instruction: Evidence slice verified; do not repeat offline suite. Next add
-  native read-only DTR digest state to legacy owner mobile and then explicit separate
-  company authentication/projection; preserve company scope. Archived source receipt
-  is pinned, not a frozen report or current legal status proof. No live migration,
-  research, or Gemma run.
+resume_instruction: Implement read-only DTR latest digest state in existing native
+  client with backwards compatibility; keep legacy owner auth separate from SaaS customer
+  tokens and no live requests.
