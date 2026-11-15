@@ -702,3 +702,11 @@ b2b_indexed_discovery_2026_11_15:
   resume: Read source snapshot and existing gates; keep indexed candidates REVIEW_REQUIRED,
     no direct live attestation. Respect restrictions, continue other authorized sources
     and independent paper research.
+sibur_sionika_sales_map_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Use immutable private sibur-sales-map-20261115/sales-map-v2.json and document-coverage-v1.json;
+    user explicitly shifted priority from PQ to broad SIBUR map and all Sionika nomenclature.
+    Revalidate active shortlist and source-bound recipient/project facts, then EPC
+    chain. No DB mutation without fresh MI backup/gate and TA backup/replay. Preserve
+    existing workers and no auto-merge.

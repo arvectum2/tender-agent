@@ -1,0 +1,60 @@
+task_id: TA-SIBUR-SIONIKA-SALES-MAP-20261115
+status: in_progress
+goal: Map the entire available SIBUR procurement corpus before prioritizing Sionika
+  full industrial nomenclature; PQ only one segment.
+definition_of_done:
+- Reproducible source-bound organizer and category map
+- Separate end-site/project mentions from organizer, resolve actual recipient where
+  documents support it
+- Classify Sionika equipment, engineering, services and adjacent portfolio; validate
+  current shortlist and distinct publication revisions
+- Map EPC/procurement channels and exact contract/supplier evidence where available;
+  no inferred awards
+completed:
+- Read-only corpus 30394 source records, 33 organizer labels, 8 traversed primary
+  categories with review gaps. Organizer populated but normalized customer and NMCK
+  absent.
+- Central organizers 19599 observations; site mentions in 7354, multiple-site 311.
+  Source titles/subjects only, not verified recipients.
+- 6635 core lexical records, 5487 numerical prefix groups for review, 1434 adjacent-only,
+  496 core service signals, 228 budget signals, 1144 cancelled, 24 date/open-status
+  nonbudget candidates. Overlapping product tags not summed.
+- Fixed ПЧ false positives from fire brigades; added substation/energy supply and
+  subsegments. Three focused tests and Ruff passed.
+- Joined committed document coverage on exact source identities read-only.
+current_stage: sales_map_v2_ready_verify_actual_scope_and_recipient
+remaining:
+- Review active 24 source snapshots against authorized current source and technical
+  documents; prioritize high voltage/retrofit, drives, RZA and automation, not PQ
+  exclusively.
+- Resolve centralized end-recipient and project on source evidence, distinguish ambiguous
+  acronyms, extract equipment quantities and models from documents.
+- Extend map to EPC chains and suppliers using actual award/contract evidence. No
+  automatic legal identity or contract amount.
+- Check discrepancy between originally selected eight SAP categories (support services
+  included) and imported eight (construction included); extra support services coverage
+  not established.
+- DP blocked unchanged; no bypass. Continue legacy offline extraction and approved
+  worker queues.
+last_verified_commit: 3ea49913013e964aa739531b14005a5d340b3a90
+test_results:
+  focused: 3
+  ruff: pass
+  snapshot_sha256: addc0f26aea30abc267ab42078375900c6bda81e4c3bd14e34ae67380df9af23
+  report_sha256: 0e8f6d023105160ed16c3d0ccc4099c0f52b93645ceacac8d238a18fd92d5c05
+  document_coverage:
+    schema: sibur_sales_map_document_coverage_v1
+    source_map_sha256: 0e8f6d023105160ed16c3d0ccc4099c0f52b93645ceacac8d238a18fd92d5c05
+    core_records: 6635
+    core_with_linked_documents: 4419
+    core_link_count: 6169
+    core_protocol_outcomes: 0
+    candidate_years:
+      '2024': 3170
+      '2025': 2171
+      '2026': 1294
+resume_instruction: Use immutable private sibur-sales-map-20261115/sales-map-v2.json
+  and document-coverage-v1.json; user explicitly shifted priority from PQ to broad
+  SIBUR map and all Sionika nomenclature. Revalidate active shortlist and source-bound
+  recipient/project facts, then EPC chain. No DB mutation without fresh MI backup/gate
+  and TA backup/replay. Preserve existing workers and no auto-merge.
