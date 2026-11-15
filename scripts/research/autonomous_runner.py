@@ -23,7 +23,7 @@ DB = "arvectum-local-e2e-db-1"
 TASK = "TA-AUTONOMOUS-RESEARCH-RUNNER-20261115"
 STATS = """import os,json
 from arvectum_data_client import DataPlatformClient
-with DataPlatformClient(base_url=os.environ['AI_CORP_RAG_DATA_PLATFORM_BASE_URL'],api_key=os.environ['AI_CORP_RAG_DATA_PLATFORM_API_KEY'],timeout_seconds=15) as c:
+with DataPlatformClient(base_url=os.environ['AI_CORP_RAG_DATA_PLATFORM_BASE_URL'],api_key=os.environ['AI_CORP_RAG_DATA_PLATFORM_API_KEY'],timeout_seconds=60) as c:
  s=c.collection_stats('tender-agent:sibur-public-research')
  print(json.dumps({k:s[k] for k in ('documents','chunks','embeddings')}))
 """
@@ -219,7 +219,7 @@ class Runner:
 
     def reconcile_index(self, index):
         stats = json.loads(self.cmd("sibur", "DP collection stats",
-                           ["docker", "exec", API, "python", "-c", STATS], self.sibur, 30))
+                           ["docker", "exec", API, "python", "-c", STATS], self.sibur, 80))
         recovered = read(self.docs / "dp-recovered-server-resource.json")
         legacy = recovered["source_sha256"] not in index
         expected = {"documents": len(index) + int(legacy),
@@ -261,7 +261,7 @@ class Runner:
                         out = self.module(lane, self.sibur, "process_sibur_document_batch", *args,
                                           "--mode", "index", "--limit", 5, "--max-chunks", cap,
                                           "--formats", "docx", "xlsx", "pptx",
-                                          "--prewrite-receipt", gate, "--request-timeout", 120, timeout=680).decode()
+                                          "--prewrite-receipt", gate, "--request-timeout", 180, timeout=1050).decode()
                     except Blocked as exc:
                         error = exc
                     after = self.local_index()
