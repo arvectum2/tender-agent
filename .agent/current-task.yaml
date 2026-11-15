@@ -828,3 +828,10 @@ sibur_contractor_purchase_service_20261115:
     evidence, P0 retrofit, broader portfolio, independent UPS channel. Historical
     and external non-SIBUR records separate; no contact, bid, spend, duplicate workers,
     auto-merge or DP bypass.
+sibur_cryogenmash_cma_assets_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read cryogenmash-cma-channel-review-v1.json and installed-base-model-evidence-v4.json.
+    Continue broad SIBUR project/actual buyer mapping, retrofit P0, separate UPS channel,
+    private role overlay and reserve only. Preserve identity separation; no inferred
+    awards, contact, bid, spend, duplicate workers, auto-merge or DP bypass.

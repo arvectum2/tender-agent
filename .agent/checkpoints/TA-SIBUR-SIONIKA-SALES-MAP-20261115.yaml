@@ -187,16 +187,27 @@ completed:
   system operator confirms TEC3 110kV grid changes and two autotransformers. Owner
   capacity281MW authoritative. Direct historical SIBUR2140253/1 RZA maintenance confirmed
   in frozen archive, no linked originals yet, ended 8Sep2026.'
-current_stage: contractor_purchase_and_post_commissioning_service
+- 'Cryogenmash lifecycle channel: 2021 AGHK ASU EPC, lease and 22-year gas contract
+  per group news with development INN5001104523, manufacturer5001000066, IK2K self-reported
+  2023 contract. GP641489 2026 ASUTP supervision/commissioning aggregator linked to
+  exact project, prior observation not additive. CMA separate INNs; six 2026 ONLINECONTRACT
+  materials records NP1651040171, SIBUR end customer unproven. AO1658001164 court
+  case A65-16979/2025 NKNH third party and Profit subcontractor, no inferred exact
+  scope.'
+- Technical report refreshed 150 new originals,1627 total,1620 extracted/7 review,82
+  new lexical findings. Five exact source-bound cases:109 unique historical SAP RZA
+  entries Kstovo (47 SEPAM,40 TOR200,6 VIP30,16 other/unspecified), CRP114 KRU-2-10
+  turnkey relay panels, NKNH GPP1 two cells domestic IEC61850 RZA and vacuum breaker
+  budget, Biaksplen Gidrotorf BKTP, KOS Parus electro UPS/battery counts. Historical
+  schedule not current inventory, cell count or award.
+current_stage: contractor_channels_and_exact_retrofit_asset_schedule
 remaining:
-- Continue broad SIBUR map, especially other actual 2024–26 contractor equipment purchases
-  and service/retrofit plans. Tatem current public procurement channel not established;
-  Energoprogress SIBUR linked buying history still limited. Preserve owner role overlay
-  and independent UPS stream.
-- Existing acquisition worker untouched, exact reference gaps, awards and 29 supplemental
-  in-period publications pending; DB writes require fresh authorized shared backup/gate/replay.
-  DP blocked unchanged.
-last_verified_commit: 5845038f6a978fc597b4fa4586b116c0c9d2d23a
+- Continue broad SIBUR research, Cryogenmash/AGHK outsourced plant lifecycle, NKNH/Kstovo
+  retrofit evidence and contractor 2024–26 purchases. Separate UPS channel, reserve
+  only. Verify CMA roles, awards/prices and completion.
+- Existing worker untouched; 29 in-period support publications not imported, missing
+  links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
+last_verified_commit: defc1938fdc27f90a1e24a1ccf3027e4c1c0448e
 test_results:
   focused: 3
   ruff: pass
@@ -388,8 +399,20 @@ test_results:
     pguservice_exact_originals: 0
     verification: Full catalog rows checked, distinct IDs and archive join validated.
       No original external procurement bytes or signed awards, no code/DB changes.
-resume_instruction: Read tatem-energoprogress-procurement-review-v1.json and prior
-  energy chains. Continue SIBUR-linked 2024–26 contractor purchase and post-commissioning
-  service evidence, P0 retrofit, broader portfolio, independent UPS channel. Historical
-  and external non-SIBUR records separate; no contact, bid, spend, duplicate workers,
-  auto-merge or DP bypass.
+  cryogenmash_cma_asset_review:
+    contractor_review_sha256: 195b6365438d3e63d7923281fd27ad8c6768dfdae039b74f8ce28153cf36e71e
+    model_evidence_sha256: 52563411af3345635810f2592fa0f8ef27b30c2eaea870224eacd24479b24b62
+    technical_report_sha256: c6efd0345fd008ec8d243dc8fb3f0ce7ec50992c4bcbc45ec76a406f3c952037
+    contractor_records: 7
+    new_originals: 150
+    total_originals: 1627
+    extracted: 1620
+    review: 7
+    selected_document_scopes: 5
+    asset_schedule_entries: 109
+    verification: Read-only exact-reference, original SHA and distinct asset IDs checked.
+      No code or DB mutation.
+resume_instruction: Read cryogenmash-cma-channel-review-v1.json and installed-base-model-evidence-v4.json.
+  Continue broad SIBUR project/actual buyer mapping, retrofit P0, separate UPS channel,
+  private role overlay and reserve only. Preserve identity separation; no inferred
+  awards, contact, bid, spend, duplicate workers, auto-merge or DP bypass.

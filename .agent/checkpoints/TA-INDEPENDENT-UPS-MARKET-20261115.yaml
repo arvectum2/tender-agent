@@ -24,6 +24,9 @@ completed:
   without assigning actual supply.
 - SIBUR mixed notification RFI 2112547/1 specifies Systeme Electric 1000VA UPS and
   SNMP; ZSNH2090671/1 guaranteed power PNR subject. No actual supply or assignment.
+- 'KOS2079347/1 exact original equipment list: Parus electro 4 UPS3000VA,7 external
+  battery modules,4 SNMP cards; source power-unit typo retained for review, no verified
+  supply.'
 current_stage: sibur_lifecycle_review
 remaining:
 - Qualify stationary battery applications, mixed packages and actual technical specs;
@@ -32,7 +35,7 @@ remaining:
   recurring service cycles.
 - Private agency relationship is prospective, no assumption of actual engagement;
   no contacts or bids.
-last_verified_commit: fca42151459f2b8d59043255fe949f44174bed87
+last_verified_commit: defc1938fdc27f90a1e24a1ccf3027e4c1c0448e
 test_results:
   focused: 7
   ruff: pass
