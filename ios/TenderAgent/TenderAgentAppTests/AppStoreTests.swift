@@ -3,6 +3,28 @@ import XCTest
 
 @MainActor
 final class AppStoreTests: XCTestCase {
+    func testDailyDigestDistinguishesEmptyPartialPendingAndLegacy() throws {
+        let decoder = TenderAgentJSON.makeDecoder()
+        func digest(_ json: String) throws -> MobileDailyDigest {
+            try decoder.decode(MobileDailyDigest.self, from: Data(json.utf8))
+        }
+        let empty = try digest(#"{"run_id":"DTR-test","run_status":"COMPLETED","discovery_incomplete":false,"counts":{"discovered":0}}"#)
+        XCTAssertEqual(empty.statusLabel, "Новых закупок нет")
+        XCTAssertFalse(empty.needsReview)
+        let partial = try digest(#"{"run_id":"DTR-test","run_status":"WAITING_HUMAN","discovery_incomplete":true,"counts":{"discovered":3}}"#)
+        XCTAssertEqual(partial.statusLabel, "Поиск неполный")
+        XCTAssertTrue(partial.needsReview)
+        let pending = try digest(#"{"run_id":"DTR-test","run_status":"PENDING","current_stage":"DISCOVER","discovery_incomplete":null}"#)
+        XCTAssertEqual(pending.statusLabel, "Ожидает запуска")
+        XCTAssertNil(pending.discoveryIncomplete)
+        let legacy = try digest(#"{"run_id":"DTR-old","counts":{"discovered":0}}"#)
+        XCTAssertEqual(legacy.statusLabel, "Состояние требует уточнения")
+        XCTAssertNil(legacy.discoveryIncomplete)
+        let oldCompleted = try digest(#"{"run_id":"DTR-old","run_status":"COMPLETED","counts":{"discovered":0}}"#)
+        XCTAssertEqual(oldCompleted.statusLabel, "Полнота поиска неизвестна")
+        XCTAssertEqual(try digest(#"{"run_id":null}"#).statusLabel, "Нет данных о последнем запуске")
+    }
+
     func testMockModeIsExplicitWithoutBackend() {
         let store = AppStore(procurements: [makeProcurement()], apiClient: nil)
 

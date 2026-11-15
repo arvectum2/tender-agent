@@ -4,6 +4,7 @@ import Foundation
 @MainActor
 final class AppStore: ObservableObject {
     @Published private(set) var procurements: [Procurement]
+    @Published private(set) var dailyDigest: MobileDailyDigest?
     @Published private(set) var inboxSummary: MobileInboxSummary?
     @Published private(set) var portfolioSummary: MobilePortfolioSummary?
     @Published private(set) var isLive = false
@@ -155,6 +156,7 @@ final class AppStore: ObservableObject {
                 accessToken: response.accessToken
             )
             apiClient = TenderAgentAPIClient(configuration: configuration)
+            dailyDigest = nil
             lastError = nil
             await refresh()
             await syncPendingPushToken()
@@ -178,6 +180,7 @@ final class AppStore: ObservableObject {
 
         BackendCredentialStore.clear()
         apiClient = nil
+        dailyDigest = nil
         procurements = MockData.procurements
         inboxSummary = nil
         portfolioSummary = nil
@@ -195,6 +198,7 @@ final class AppStore: ObservableObject {
 
     func refresh() async {
         guard let apiClient else {
+            dailyDigest = nil
             isLive = false
             isMockData = true
             return
@@ -206,16 +210,30 @@ final class AppStore: ObservableObject {
         do {
             let portfolio = try await apiClient.fetchPortfolio()
             let inbox = try await apiClient.fetchInbox()
+            guard self.apiClient?.configuration.accessToken == apiClient.configuration.accessToken,
+                  self.apiClient?.configuration.baseURL == apiClient.configuration.baseURL else { return }
             procurements = portfolio.items.map(Procurement.fromAPI)
             portfolioSummary = portfolio.summary
             inboxSummary = inbox.summary
+            dailyDigest = nil
             isLive = true
             isMockData = false
             lastError = nil
+            await refreshDailyDigest(using: apiClient)
         } catch {
+            guard self.apiClient?.configuration.accessToken == apiClient.configuration.accessToken,
+                  self.apiClient?.configuration.baseURL == apiClient.configuration.baseURL else { return }
+            dailyDigest = nil
             isLive = false
             lastError = error.localizedDescription
         }
+    }
+
+    private func refreshDailyDigest(using client: TenderAgentAPIClient) async {
+        let digest = try? await client.fetchDailyDigest()
+        guard apiClient?.configuration.accessToken == client.configuration.accessToken,
+              apiClient?.configuration.baseURL == client.configuration.baseURL else { return }
+        dailyDigest = digest
     }
 
     func restorePushRegistrationIfAuthorized() async {
@@ -317,7 +335,10 @@ final class AppStore: ObservableObject {
                 procurements = portfolio.items.map(Procurement.fromAPI)
                 portfolioSummary = portfolio.summary
                 inboxSummary = inbox.summary
+                dailyDigest = nil
+                await refreshDailyDigest(using: apiClient)
             } catch {
+                dailyDigest = nil
                 lastError = "Решение сохранено, но портфель обновить не удалось: \(error.localizedDescription)"
             }
             return true

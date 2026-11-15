@@ -69,3 +69,7 @@ MOB-4 is a read/decision UX slice. It does not autonomously decide participation
 ## Verification
 
 The bounded MOB-4 verification covers the canonical mobile portfolio contract, portfolio metric/outcome projection, Swift metric/filter mapping, deep-link refresh coherence, generic simulator build and focused iPhone simulator tests. Physical-device verification is attempted when a connected signed device/profile is available; Apple provisioning limitations are recorded rather than bypassed.
+
+## DTR status projection (2026-11-15)
+
+The owner mobile client additionally reads `/mobile/v1/digest/latest`. Pending, running, incomplete-source, failed, completed, and unknown legacy states are distinguished. Only an explicitly complete discovery with zero discovered items can display a successful empty search. A digest request failure does not discard the canonical portfolio/inbox. This is the existing owner-only mobile token surface, not an implementation of tenant mobile login; company portfolio and SaaS tokens remain separate. Verified by native unsigned `build-for-testing` and six actual Swift decoder/status projections; simulator-device XCTest execution and live backend acceptance are separate gates.
