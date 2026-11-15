@@ -78,9 +78,9 @@ struct CompanyPortfolioView: View {
                             if let accountID = store.selectedID { selectedCase = CompanyCaseSelection(accountID: accountID, item: item) }
                         } label: {
                             VStack(alignment: .leading, spacing: 5) {
-                                Text(item.registryNumber ?? "Номер не указан").font(.headline)
+                                Text(item.displayReference.isEmpty ? "Номер не указан" : item.displayReference).font(.headline)
                                 Text(item.decision?.action ?? "Решение не принято")
-                                Text("Ссылка на ЕИС · требуется проверка").font(.caption).foregroundStyle(.secondary)
+                                Text(item.isCommercial ? "Коммерческая ссылка · требуется проверка" : "Ссылка на ЕИС · требуется проверка").font(.caption).foregroundStyle(.secondary)
                             }.foregroundStyle(.primary)
                         }.disabled(store.isBusy)
                     }
@@ -123,7 +123,8 @@ private struct CompanyCaseDetail: View {
         NavigationStack {
             List {
                 Section("Закупка") {
-                    Text(item.registryNumber ?? "Номер не указан")
+                    Text(item.displayReference.isEmpty ? "Номер не указан" : item.displayReference)
+                    if item.isCommercial, let url = item.sourceUrl { Text(url).font(.caption).textSelection(.enabled) }
                     Text("Идентификатор закупки не подтверждает актуальный правовой статус.").font(.caption).foregroundStyle(.secondary)
                 }
                 Section("Решение компании") {
@@ -159,7 +160,7 @@ private struct CompanyCaseDetail: View {
                     Section { Text("Карточка изменилась или недоступна. Откройте её заново.").foregroundStyle(.orange) }
                 }
                 if let decisionError { Section { Text(decisionError).foregroundStyle(.orange) } }
-                if let identity = store.identity, ["owner", "admin", "analyst"].contains(identity.role) {
+                if !item.isCommercial, let identity = store.identity, ["owner", "admin", "analyst"].contains(identity.role) {
                     Section("Привязанные источники") {
                         if let evidence {
                             if evidence.items.isEmpty { Text("Документы ещё не привязаны") }
@@ -191,12 +192,12 @@ private struct CompanyCaseDetail: View {
                 }
                 Button("Отмена", role: .cancel) { prepared = nil }
             } message: {
-                Text("\(store.identity?.companyName ?? "Компания") · \(item.registryNumber ?? "—") · \(prepared?.action ?? "—") · версия \(item.revision). Это не подача заявки.")
+                Text("\(store.identity?.companyName ?? "Компания") · \(item.displayReference) · \(prepared?.action ?? "—") · версия \(item.revision). Это не подача заявки.")
             }
             .onChange(of: store.selectedID) { _, value in if value != accountID { dismiss() } }
             .onChange(of: store.identity?.memberId) { _, value in if value == nil { dismiss() } }
             .task {
-                guard let identity = store.identity, ["owner", "admin", "analyst"].contains(identity.role) else { return }
+                guard !item.isCommercial, let identity = store.identity, ["owner", "admin", "analyst"].contains(identity.role) else { return }
                 do { evidence = try await store.evidence(for: item.caseId) }
                 catch { self.error = CompanyStore.safeError(error) }
             }

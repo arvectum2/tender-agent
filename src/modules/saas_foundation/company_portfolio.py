@@ -3,14 +3,20 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 from typing import Literal
+from uuid import uuid4
 
 from fastapi import HTTPException
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from src.modules.customer_pilot.models import PilotProject, ProcurementCase
+from src.modules.customer_pilot.models import (
+    PilotAuditEvent,
+    PilotProject,
+    ProcurementCase,
+)
 from src.modules.customer_pilot.procurement_import import import_procurement_case
+from src.modules.saas_foundation.commercial_sources import commercial_identity
 from src.modules.saas_foundation.models import CompanyPortfolioDecision, SaasTenant
 from src.modules.saas_foundation.service import (
     TenantPrincipal,
@@ -21,11 +27,18 @@ from src.modules.saas_foundation.service import (
 )
 
 _PROJECT_SLUG = "daily-tender-company-portfolio-v1"
+_COMMERCIAL_SLUGS = {p: _PROJECT_SLUG + "-" + p for p in ("workspace", "b2bcenter")}
+_PROJECT_SLUGS = (_PROJECT_SLUG, *_COMMERCIAL_SLUGS.values())
 
 
 class SaveCompanyCase(BaseModel):
     model_config = ConfigDict(extra="forbid")
     registry_number: str = Field(pattern=r"^[0-9]{19,20}$")
+
+
+class SaveCommercialCase(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    source_url: str = Field(min_length=20, max_length=650)
 
 
 class CompanyDecisionInput(BaseModel):
@@ -63,7 +76,10 @@ class CompanyDecisionView(BaseModel):
 class CompanyCaseView(BaseModel):
     case_id: str
     registry_number: str | None
-    source_kind: Literal["eis_registry_reference"]
+    source_kind: Literal["eis_registry_reference", "commercial_reference"]
+    source_platform: str = "eis"
+    external_id: str | None = None
+    source_url: str | None = None
     source_verified: Literal[False]
     revision: int
     decision: CompanyDecisionView | None
@@ -88,7 +104,7 @@ def _utc(moment: datetime | None) -> datetime | None:
     return moment.replace(tzinfo=UTC) if moment.tzinfo is None else moment.astimezone(UTC)
 
 
-def _project(session: Session, principal: TenantPrincipal, *, create: bool = False):
+def _project(session: Session, principal: TenantPrincipal, *, create: bool = False, slug: str = _PROJECT_SLUG):
     if create:
         tenant = session.scalar(select(SaasTenant).where(
             SaasTenant.tenant_id == principal.tenant_id,
@@ -98,9 +114,9 @@ def _project(session: Session, principal: TenantPrincipal, *, create: bool = Fal
             raise HTTPException(404, "Company portfolio not found")
     project = session.scalar(select(PilotProject).where(
         PilotProject.customer_id == principal.customer_id,
-        PilotProject.internal_slug == _PROJECT_SLUG))
+        PilotProject.internal_slug == slug))
     if project is None and create:
-        project = PilotProject(customer_id=principal.customer_id, name="Daily Tender Run", internal_slug=_PROJECT_SLUG)
+        project = PilotProject(customer_id=principal.customer_id, name="Daily Tender Run", internal_slug=slug)
         session.add(project)
         session.flush()
     return project
@@ -111,7 +127,7 @@ def _owned_case(session: Session, principal: TenantPrincipal, case_id: str, *, l
         ProcurementCase.id == case_id,
         ProcurementCase.customer_id == principal.customer_id,
         PilotProject.customer_id == principal.customer_id,
-        PilotProject.internal_slug == _PROJECT_SLUG,
+        PilotProject.internal_slug.in_(_PROJECT_SLUGS),
     )
     if lock:
         query = query.with_for_update(of=ProcurementCase)
@@ -140,8 +156,21 @@ def _decision_view(row: CompanyPortfolioDecision) -> dict:
 
 def _view(session: Session, principal: TenantPrincipal, case: ProcurementCase) -> dict:
     latest = _latest(session, principal, case.id)
-    return {"case_id": case.id, "registry_number": case.procurement_number,
-            "source_kind": "eis_registry_reference", "source_verified": False,
+    project = session.get(PilotProject, case.project_id)
+    platform = next((p for p, slug in _COMMERCIAL_SLUGS.items() if slug == project.internal_slug), "eis")
+    source_url = None
+    if platform != "eis":
+        event = session.scalar(select(PilotAuditEvent).where(PilotAuditEvent.customer_id == principal.customer_id, PilotAuditEvent.project_id == case.project_id, PilotAuditEvent.procurement_case_id == case.id, PilotAuditEvent.event_type == "commercial_reference_saved").order_by(PilotAuditEvent.created_at, PilotAuditEvent.id).limit(1))
+        if event:
+            candidate = event.payload.get("source_url")
+            try:
+                if commercial_identity(candidate) == (platform, case.procurement_number):
+                    source_url = candidate
+            except ValueError:
+                pass
+    return {"case_id": case.id, "registry_number": case.procurement_number if platform == "eis" else None,
+            "source_kind": "eis_registry_reference" if platform == "eis" else "commercial_reference",
+            "source_platform": platform, "external_id": case.procurement_number, "source_url": source_url, "source_verified": False,
             "revision": latest.revision if latest else 0,
             "decision": _decision_view(latest) if latest else None,
             "external_submission_allowed": False}
@@ -156,11 +185,32 @@ def save_case(session: Session, principal: TenantPrincipal, payload: SaveCompany
     return _view(session, principal, _owned_case(session, principal, imported["id"]))
 
 
+def save_commercial_case(session: Session, principal: TenantPrincipal, payload: SaveCommercialCase) -> dict:
+    role_required(principal, "owner", "admin", "analyst")
+    legal_required(session, principal)
+    try:
+        platform, external_id = commercial_identity(payload.source_url)
+    except ValueError as exc:
+        raise HTTPException(422, "Unsupported exact public commercial card URL") from exc
+    project = _project(session, principal, create=True, slug=_COMMERCIAL_SLUGS[platform])
+    case = session.scalar(select(ProcurementCase).where(ProcurementCase.customer_id == principal.customer_id,
+        ProcurementCase.project_id == project.id, ProcurementCase.procurement_number == external_id))
+    if case is None:
+        case = ProcurementCase(customer_id=principal.customer_id, project_id=project.id,
+                               procurement_number=external_id, artifact_key=f"c_{uuid4().hex}")
+        session.add(case)
+        session.flush()
+        session.add(PilotAuditEvent(customer_id=principal.customer_id, project_id=project.id, procurement_case_id=case.id, event_type="commercial_reference_saved", payload={"source_url": payload.source_url, "source_platform": platform, "external_id": external_id}))
+        audit(session, principal.tenant_id, "company_commercial_reference_saved", principal.member_id, detail=f"{case.id}:{platform}:{external_id}")
+    session.commit()
+    return _view(session, principal, case)
+
+
 def list_cases(session: Session, principal: TenantPrincipal, *, offset: int, limit: int) -> dict:
     legal_required(session, principal)
-    project = _project(session, principal)
-    cases = [] if project is None else list(session.scalars(select(ProcurementCase).where(
-        ProcurementCase.customer_id == principal.customer_id, ProcurementCase.project_id == project.id,
+    cases = list(session.scalars(select(ProcurementCase).join(PilotProject, PilotProject.id == ProcurementCase.project_id).where(
+        ProcurementCase.customer_id == principal.customer_id, PilotProject.customer_id == principal.customer_id,
+        PilotProject.internal_slug.in_(_PROJECT_SLUGS),
     ).order_by(ProcurementCase.created_at.desc(), ProcurementCase.id.desc()).offset(offset).limit(limit + 1)))
     return {"customer_id": principal.customer_id, "items": [_view(session, principal, c) for c in cases[:limit]],
             "has_more": len(cases) > limit, "external_submission_allowed": False}

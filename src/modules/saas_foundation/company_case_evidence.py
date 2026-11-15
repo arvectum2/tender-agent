@@ -115,6 +115,8 @@ def _authorize(session: Session, principal: TenantPrincipal):
 def bind_evidence(session: Session, principal: TenantPrincipal, case_id: str, payload: BindCaseEvidence) -> dict:
     _authorize(session, principal)
     case = _owned_case(session, principal, case_id, lock=True)
+    if not isinstance(case.procurement_number, str) or not re.fullmatch(r"[0-9]{19}", case.procurement_number):
+        raise HTTPException(409, "Original EIS evidence requires an EIS case")
     owned_run(session, principal, payload.run_id)
     profile = _latest_profile(session, principal)
     if profile is None or profile.version_no != payload.expected_profile_version or fact_state(profile, latest_version_no=profile.version_no)[2] != "ACTIVE":

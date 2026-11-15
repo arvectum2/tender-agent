@@ -766,7 +766,7 @@ def plan_company_discovery(payload: company_discovery.StartCompanyDiscovery, pri
 
 @router.get("/api/saas/company-portfolio/discovery/latest")
 def latest_company_discovery(principal: Member, session: DBSession) -> dict:
-    return {"enabled": get_settings().saas_company_discovery_enabled, "run": company_discovery.latest_run(session, principal)}
+    return {"enabled": get_settings().saas_company_discovery_enabled, "commercial_indexes": list(company_discovery.INDEXES), "run": company_discovery.latest_run(session, principal)}
 
 
 @router.get("/api/saas/company-portfolio/discovery/runs/{run_id}")
@@ -778,3 +778,8 @@ def read_company_discovery(run_id: str, principal: Member, session: DBSession) -
 def advance_company_discovery(run_id: str, payload: company_discovery.AdvanceCompanyDiscovery, principal: Member, session: DBSession) -> dict:
     _company_discovery_enabled()
     return company_discovery.advance_run(session, principal, run_id, payload)
+
+
+@router.post("/api/saas/company-portfolio/commercial-cases", status_code=201, response_model=company_portfolio.CompanyCaseView)
+def save_company_commercial_case(payload: company_portfolio.SaveCommercialCase, principal: Member, session: DBSession) -> dict:
+    return company_portfolio.save_commercial_case(session, principal, payload)

@@ -28,7 +28,9 @@ const calls=[], history={a:[],b:[]};
 const fixture={a:{customer_id:'customer-a',tenant_id:'tenant-a',member_id:'a',company_name:'Компания A',role:'owner',legal_accepted:true},b:{customer_id:'customer-b',tenant_id:'tenant-b',member_id:'b',company_name:'Компания B',role:'viewer',legal_accepted:true}};
 const reply=(value,status=200)=>({ok:status>=200&&status<300,status,json:async()=>value});
 let lostResponse=false, mismatch=false, delayed=null;
-let discoveryRun=null, savedCandidate=null;
+let discoveryRun=null, savedCandidate=null, savedCommercial=null;
+const commercialURL="https://workspace.ru/tenders/fixture-1234567/";
+const commercialItem={case_id:"commercial-a",registry_number:null,external_id:"1234567",source_platform:"workspace",source_kind:"commercial_reference",source_url:commercialURL,revision:0,decision:null,source_verified:false};
 const item=key=>({case_id:'case-'+key,registry_number:'0123456789012345678',revision:history[key].length,decision:history[key][0]||null,source_verified:false,external_submission_allowed:false});
 async function fetch(route,opts){
  const key=opts.headers.Authorization?.slice(-1), method=opts.method;
@@ -36,21 +38,23 @@ async function fetch(route,opts){
  assert.equal(opts.credentials,'omit');assert.equal(opts.redirect,'error');
  if(!fixture[key])return reply({detail:'invalid'},401);
  if(route==='/api/saas/me'){if(delayed)await delayed;return reply(fixture[key]);}
- if(route==='/api/saas/company-portfolio/discovery/latest')return reply({enabled:true,run:key==='a'?discoveryRun:null});
+ if(route==='/api/saas/company-portfolio/discovery/latest')return reply({enabled:true,commercial_indexes:["workspace_rss"],run:key==='a'?discoveryRun:null});
  if(route==='/api/saas/company-portfolio/discovery/runs'&&method==='POST'){
-  assert.equal(key,'a');assert.deepEqual(JSON.parse(opts.body),{expected_profile_version:1});
+  assert.equal(key,'a');assert.deepEqual(JSON.parse(opts.body),{expected_profile_version:1,commercial_indexes:["workspace_rss"]});
   discoveryRun={run_id:'run-discovery-a',customer_id:'customer-a',run_day:'2026-11-16',status:'PENDING',plan:{profile_version:1,steps:[{query:'A'},{query:'B'}]},completed_steps:0,step_receipts:[],candidates:[],discovery_incomplete:true};
   return reply(discoveryRun,201);
  }
  if(route==='/api/saas/company-portfolio/discovery/runs/run-discovery-a/step'){
   assert.equal(key,'a');const index=JSON.parse(opts.body).expected_step;assert.equal(index,discoveryRun.completed_steps);
   const candidate={registry_number:'0123456789012345678',title:'Кандидат A'};
-  discoveryRun={...discoveryRun,status:index===1?'PARTIAL':'IN_PROGRESS',completed_steps:index+1,candidates:[candidate],step_receipts:[...discoveryRun.step_receipts,{query:index?'B':'A',outcome:index?'source_unavailable':'success_with_results',coverage_complete:false,candidates:index?[]:[candidate]}]};return reply(discoveryRun);
+  discoveryRun={...discoveryRun,status:index===1?'PARTIAL':'IN_PROGRESS',completed_steps:index+1,candidates:index?[candidate,{registry_number:null,source_platform:"workspace",external_id:"1234567",source_url:commercialURL,title:"Commercial A"}]:[candidate],step_receipts:[...discoveryRun.step_receipts,{query:index?'B':'A',outcome:index?'source_unavailable':'success_with_results',coverage_complete:false,candidates:index?[]:[candidate]}]};return reply(discoveryRun);
  }
  if(route==='/api/saas/company-portfolio/cases'&&method==='POST'){
   assert.equal(key,'a');savedCandidate=JSON.parse(opts.body).registry_number;return reply(item(key),201);
  }
- if(route.startsWith('/api/saas/company-portfolio/cases?'))return reply({customer_id:mismatch?'foreign':fixture[key].customer_id,items:[item(key)],has_more:false});
+ if(route==='/api/saas/company-portfolio/commercial-cases'&&method==='POST'){assert.equal(key,'a');savedCommercial=JSON.parse(opts.body).source_url;return reply(commercialItem,201);}
+ if(route.startsWith('/api/saas/company-portfolio/cases/commercial-a')){assert.equal(key,'a');if(route.endsWith('/decisions?limit=50'))return reply({items:[],has_more:false});assert.equal(route,'/api/saas/company-portfolio/cases/commercial-a');return reply(commercialItem);}
+ if(route.startsWith('/api/saas/company-portfolio/cases?'))return reply({customer_id:mismatch?'foreign':fixture[key].customer_id,items:[item(key),...(key==='a'&&savedCommercial?[commercialItem]:[])],has_more:false});
  if(route==='/api/saas/company-portfolio/search-context')return reply({customer_id:fixture[key].customer_id,profile_state:'ACTIVE',profile_version:1});
  if(route.startsWith('/api/saas/company-portfolio/cases/case-'+key)){
   if(route.endsWith('/decisions?limit=50'))return reply({items:history[key],has_more:false});
@@ -77,12 +81,14 @@ async function selectAccount(key){get('saved-token').value='fixture-'+key;await 
 async function openCase(key){get('company-case').value='case-'+key;change('company-case');await click('company-open');}
 async function main(){
  await selectAccount('a');assert.match(get('company-identity').textContent,/Компания A/);
- await click('company-search-refresh');assert.equal(get('company-search-start').disabled,false);await click('company-search-start');
+ await click('company-search-refresh');assert.equal(get('company-search-start').disabled,false);get("company-search-index").value="workspace_rss";await click('company-search-start');
  assert.match(get('company-search-state').textContent,/Ожидает выполнения/);await click('company-search-run');
  assert.match(get('company-search-state').textContent,/Выдача неполная/);assert.match(get('company-search-receipts').textContent,/source_unavailable/);
  assert.equal(calls.filter(c=>c.route.endsWith('/step')).length,2);
  get('company-search-candidate').value='0123456789012345678';change('company-search-candidate');await click('company-search-accept');
  assert.equal(savedCandidate,'0123456789012345678');assert.match(get('company-search-state').textContent,/Выдача неполная/);
+ get('company-search-candidate').value='workspace:1234567';change('company-search-candidate');await click('company-search-accept');assert.equal(savedCommercial,commercialURL);
+ get('company-case').value='commercial-a';change('company-case');await click('company-open');assert.match(get('company-case-url').textContent,/workspace.ru/);assert.equal(get('company-evidence-panel').hidden,true);
 
  assert.equal(get('company-save-panel').hidden,false);await openCase('a');
  assert.equal(get('company-decision-panel').hidden,false);assert.equal(get('company-evidence-panel').hidden,false);

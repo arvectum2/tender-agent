@@ -14,6 +14,11 @@ from sqlalchemy.orm import Session
 from src.modules.company_profile_store.service import fact_state
 from src.modules.customer_onboarding.router import OnboardingProfile
 from src.modules.daily_tender_run.service import _run_execution_guard
+from src.modules.saas_foundation.commercial_sources import (
+    INDEXES,
+    commercial_identity,
+    search_index,
+)
 from src.modules.saas_foundation.company_case_evidence import _latest_profile
 from src.modules.saas_foundation.models import CompanyDiscoveryRun, SaasTenant
 from src.modules.saas_foundation.service import (
@@ -36,6 +41,8 @@ MOSCOW = ZoneInfo("Europe/Moscow")
 class StartCompanyDiscovery(BaseModel):
     model_config = ConfigDict(extra="forbid")
     expected_profile_version: int = Field(ge=1)
+    include_eis: bool = True
+    commercial_indexes: list[str] = Field(default_factory=list, max_length=5)
 
 
 class AdvanceCompanyDiscovery(BaseModel):
@@ -54,20 +61,26 @@ def _validate_terms(values, *, max_length=160):
     return terms
 
 
-def _plan(profile, day):
+def _plan(profile, day, request):
     criteria = OnboardingProfile.model_validate(profile.value_json).criteria
     keywords = _validate_terms(criteria.keywords)
     regions = _validate_terms(criteria.regions)
     exclusions = _validate_terms([*criteria.stop_words, *criteria.excluded_categories])
-    if not keywords or len(keywords) * max(len(regions), 1) > MAX_STEPS or len(exclusions) > 50:
+    indexes = list(dict.fromkeys(request.commercial_indexes))
+    if set(indexes) - INDEXES.keys():
+        raise HTTPException(422, "Unsupported commercial index")
+    steps = ([{"query": k, "region": r} for k in keywords for r in regions or [None]] if request.include_eis else [])
+    steps += [{"query": index, "region": None, "commercial_index": index} for index in indexes]
+    if not keywords or not steps or len(steps) > MAX_STEPS or len(exclusions) > 50:
         raise HTTPException(422, "Set explicit keywords; at most 8 keyword/region combinations and 50 exclusions per pilot day")
     lo, hi = criteria.price_min, criteria.price_max
     if any(v is not None and (not math.isfinite(v) or v < 0) for v in (lo, hi)) or (lo is not None and hi is not None and lo > hi):
         raise HTTPException(422, "Invalid company price criteria")
     return {"profile_version": profile.version_no, "date_from": (day - timedelta(days=2)).isoformat(),
             "date_to": day.isoformat(), "law": "44fz", "price_min": lo, "price_max": hi,
-            "excluded_title_terms": exclusions, "steps": [{"query": k, "region": r} for k in keywords for r in regions or [None]],
-            "search_limitations": ["44fz_only", "bounded_first_results", "literal_title_exclusions_only", "category_and_qualification_review_required", "region_filter_not_independently_verified", "no_live_notice_status_verification"]}
+            "excluded_title_terms": exclusions, "steps": steps, "keywords": keywords,
+            "commercial_indexes": indexes, "include_eis": request.include_eis,
+            "search_limitations": ["44fz_and_selected_public_indexes", "commercial_region_price_dates_not_verified", "bounded_first_results", "literal_title_exclusions_only", "category_and_qualification_review_required", "region_filter_not_independently_verified", "no_live_notice_status_verification"]}
 
 
 def _query(principal):
@@ -85,7 +98,7 @@ def _view(row, principal):
     candidates = {}
     for step in row.results_json:
         for candidate in step["candidates"]:
-            number = candidate["registry_number"]
+            number = (candidate.get("source_platform", "eis"), candidate.get("external_id") or candidate["registry_number"])
             if number not in candidates:
                 candidates[number] = {**candidate, "matched_steps": [step["step"]]}
             else:
@@ -108,12 +121,13 @@ def create_run(session: Session, principal: TenantPrincipal, payload: StartCompa
     if profile is None or profile.version_no != payload.expected_profile_version or fact_state(profile, latest_version_no=profile.version_no)[2] != "ACTIVE":
         raise HTTPException(409, "Current active profile required")
     existing = session.scalar(_query(principal).where(CompanyDiscoveryRun.run_day == day.isoformat()))
+    plan = _plan(profile, day, payload)
     if existing is not None:
-        if existing.profile_fact_id != profile.id:
+        if existing.profile_fact_id != profile.id or existing.plan_json.get("commercial_indexes", []) != plan["commercial_indexes"] or existing.plan_json.get("include_eis", True) != plan["include_eis"]:
             raise HTTPException(409, "Today's discovery used a different profile; next daily run required")
         return _view(existing, principal)
     row = CompanyDiscoveryRun(tenant_id=principal.tenant_id, member_id=principal.member_id, profile_fact_id=profile.id,
-                              run_day=day.isoformat(), plan_json=_plan(profile, day), results_json=[])
+                              run_day=day.isoformat(), plan_json=plan, results_json=[])
     session.add(row)
     session.flush()
     audit(session, principal.tenant_id, "company_discovery_planned", principal.member_id, detail=row.id)
@@ -143,8 +157,27 @@ def _receipt(plan, index, payload):
                "candidates": [], "observed_at": now_utc().isoformat()}
     if outcome not in {"success_empty", "success_with_results"}:
         return receipt
-    if not isinstance(cards, list) or bool(cards) != (outcome == "success_with_results") or payload.get("source") != "public_eis_html_44fz":
+    if not isinstance(cards, list) or bool(cards) != (outcome == "success_with_results") or payload.get("source") != plan["steps"][index].get("commercial_index", "public_eis_html_44fz"):
         receipt["outcome"] = "invalid_search_response"
+        return receipt
+    commercial = plan["steps"][index].get("commercial_index")
+    if commercial:
+        # Never trust source identity or arbitrary fields supplied by a parser.
+        seen_commercial = set()
+        for card in cards[:MAX_CARDS]:
+            try:
+                platform, identifier = commercial_identity(card["source_url"])
+                if platform != ("workspace" if commercial == "workspace_rss" else "b2bcenter") or (platform, identifier) != (card.get("source_platform"), card.get("external_id")) or not isinstance(card["title"], str) or not card["title"].strip():
+                    raise ValueError("Wrong candidate identity")
+            except (ValueError, KeyError, TypeError):
+                receipt["invalid_cards"] += 1
+                continue
+            if identifier not in seen_commercial:
+                receipt["candidates"].append({"source_platform": platform, "external_id": identifier, "source_url": card["source_url"], "registry_number": None, "title": card["title"][:500], "observed_price": None, "source": commercial, "source_verified": False, "human_review_required": True})
+                seen_commercial.add(identifier)
+        digest = payload.get("index_sha256")
+        if isinstance(digest, str) and re.fullmatch(r"[0-9a-f]{64}", digest):
+            receipt["index_sha256"] = digest
         return receipt
     seen = set()
     for card in cards[:MAX_CARDS]:
@@ -212,7 +245,10 @@ def advance_run(session: Session, principal: TenantPrincipal, run_id: str, paylo
             # Release the read transaction while the public HTTP request runs.
             session.rollback()
             try:
-                result = search_public_44fz(query=step["query"], law="44fz", region=step["region"],
+                if step.get("commercial_index"):
+                    result = search_index(step["commercial_index"], plan["keywords"], plan["excluded_title_terms"])
+                else:
+                    result = search_public_44fz(query=step["query"], law="44fz", region=step["region"],
                     date_from=plan["date_from"], date_to=plan["date_to"], price_from=plan["price_min"],
                     price_to=plan["price_max"], status_filter="Подача заявок", reference_date=_day(),
                     page=1, page_size=MAX_CARDS, max_results=MAX_CARDS, apply_supplier_relevance=False, backfill_page_limit=2)

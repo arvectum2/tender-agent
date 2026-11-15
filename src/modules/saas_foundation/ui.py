@@ -87,10 +87,10 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 <p id="company-identity" role="status">Войдите и загрузите портфель.</p>
 <button id="company-load">Загрузить портфель</button><button id="company-more" disabled>Ещё закупки</button>
 <div id="company-save-panel" hidden><label>Номер ЕИС<input id="company-registry" inputmode="numeric" maxlength="20" autocomplete="off"></label>
-<button id="company-save">Добавить ссылку в портфель</button></div>
+<button id="company-save">Добавить ссылку в портфель</button><label>Оригинальная ссылка B2B-Center / Workspace<input id="company-commercial-url" type="url" maxlength="650" autocomplete="off"></label><button id="company-commercial-save">Добавить коммерческую закупку</button></div>
 <details><summary>Поиск по сохранённому профилю компании</summary>
-<p>Пилотный поиск ЕИС 44-ФЗ: до 8 запросов за день и до 10 карточек на запрос. Не заменяет полное исследование рынка.</p>
-<button id="company-search-refresh">Состояние поиска</button><button id="company-search-start" disabled>Подготовить поиск</button><button id="company-search-run" disabled>Выполнить оставшиеся шаги</button>
+<p>Пилотный поиск ЕИС 44-ФЗ и выбранных публичных коммерческих индексов: до 8 шагов за день и до 10 карточек на шаг. Не заменяет полное исследование рынка.</p>
+<label><input id="company-search-eis" type="checkbox" checked style="width:auto"> ЕИС 44-ФЗ</label><label>Коммерческий индекс (необязательно)<select id="company-search-index"><option value="">Не подключать</option></select></label><button id="company-search-refresh">Состояние поиска</button><button id="company-search-start" disabled>Подготовить поиск</button><button id="company-search-run" disabled>Выполнить оставшиеся шаги</button>
 <p id="company-search-state" role="status">Загрузите портфель и состояние поиска.</p>
 <pre id="company-search-receipts"></pre>
 <label>Найденная закупка<select id="company-search-candidate"><option value="">Выберите кандидата</option></select></label><button id="company-search-accept" disabled>Добавить кандидата в портфель</button>
@@ -99,7 +99,7 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 <label>Карточка<select id="company-case"><option value="">Выберите закупку</option></select></label>
 <button id="company-open">Открыть карточку</button>
 <div id="company-detail" hidden>
-<p id="company-case-state"></p><pre id="company-history" aria-live="polite"></pre>
+<p id="company-case-state"></p><p id="company-case-url"></p><pre id="company-history" aria-live="polite"></pre>
 <div id="company-decision-panel" hidden>
 <div class="grid"><label>Решение<select id="company-action"><option value="GO">GO</option><option value="NO_GO">NO GO</option><option value="DEFER">Отложить</option></select></label>
 <label>Отложить до (местное время браузера)<input id="company-defer" type="datetime-local"></label></div>
@@ -349,7 +349,7 @@ function blankSelect(id, label){
 }
 function resetCompanyDetail(){
  companyCase=null;companyProfile=null;companyEvidence=[];pendingCompanyDecision=null;
- el("company-detail").hidden=true;el("company-case-state").textContent="";
+ el("company-detail").hidden=true;el("company-case-state").textContent="";el("company-case-url").textContent="";
  el("company-history").textContent="";el("company-profile-state").textContent="";
  el("company-evidence-state").textContent="";el("company-evidence-result").textContent="";
  el("company-evidence-result").hidden=true;blankSelect("company-evidence","Выберите привязку");
@@ -361,7 +361,7 @@ function clearCompany(){
  resetCompanySearch();
  blankSelect("company-case","Выберите закупку");resetCompanyDetail();
  el("company-identity").textContent="Войдите и загрузите портфель.";el("company-count").textContent="";
- el("company-registry").value="";syncCompanyControls();
+ el("company-registry").value="";el("company-commercial-url").value="";syncCompanyControls();
 }
 function clearSession(){
  token="";sessionEpoch++;legalVersions=null;referenceVersion=null;
@@ -384,14 +384,14 @@ function syncCompanyControls(){
  el("company-open").disabled=uiBusy||!read||!el("company-case").value;
  el("company-decision-panel").hidden=!detail||!companyCanDecide();
  el("company-decide").disabled=uiBusy||!detail||!companyCanDecide();
- el("company-evidence-panel").hidden=!detail||!companyCanWrite();
+ el("company-evidence-panel").hidden=!detail||!companyCanWrite()||companyCase?.source_kind==="commercial_reference";
  el("company-bind").disabled=uiBusy||!detail||!companyCanWrite()||companyProfile?.profile_state!=="ACTIVE";
  el("company-read-evidence").disabled=uiBusy||!detail||!companyCanWrite()||!el("company-evidence").value;
  syncCompanySearchControls();
 }
 function requireCompany(){if(!companyIdentity?.legal_accepted)throw Error("Загрузите портфель после подтверждения условий пилота");return companyIdentity}
 function casePath(){requireCompany();if(!companyCase)throw Error("Откройте карточку");return "/api/saas/company-portfolio/cases/"+encodeURIComponent(companyCase.case_id)}
-function companyCaseText(item){return (item.registry_number||"Номер не указан")+" · "+(item.decision?.action||"Не решено")+" · v"+item.revision}
+function companyCaseText(item){return ((item.source_platform&&item.source_platform!=="eis"?item.source_platform+":"+item.external_id:item.registry_number)||"Номер не указан")+" · "+(item.decision?.action||"Не решено")+" · v"+item.revision}
 function renderCompanyItems(){
  blankSelect("company-case","Выберите закупку");
  for(const item of companyItems){const opt=document.createElement("option");opt.value=item.case_id;opt.textContent=companyCaseText(item);el("company-case").append(opt)}
@@ -426,9 +426,10 @@ async function loadCompanyCase(id){
  const history=await call(path+"/decisions?limit=50");
  companyCase=item;companyItems=companyItems.map(x=>x.case_id===id?item:x);renderCompanyItems();
  el("company-case-state").textContent=requireCompany().company_name+" · "+companyCaseText(item)+" · только внутреннее решение";
+ el("company-case-url").textContent=item.source_kind==="commercial_reference"?"Сохранённая ссылка: "+(item.source_url||"недоступна")+" · оригиналы требуют отдельной проверки":"";
  el("company-history").textContent=history.items.map(x=>"v"+x.revision+" · "+x.action+" · "+x.decided_at+"\\n"+x.rationale).join("\\n\\n")+(history.has_more?"\\nПервые 50 решений":"")||"История пуста";
  el("company-detail").hidden=false;
- if(companyCanWrite())await loadCompanyEvidence(path);
+ if(companyCanWrite()&&item.source_kind!=="commercial_reference")await loadCompanyEvidence(path);
  return {case_id:item.case_id,revision:item.revision};
 }
 bind("company-load",()=>loadCompanyPage());
@@ -441,6 +442,11 @@ bind("company-save",async()=>{
  const number=val("company-registry");if(!/^[0-9]{19,20}$/.test(number))throw Error("Введите 19 или 20 цифр номера ЕИС");
  const saved=await call("/api/saas/company-portfolio/cases",{method:"POST",body:{registry_number:number}});
  el("company-registry").value="";await loadCompanyPage();return {saved_case: saved.case_id};
+});
+bind("company-commercial-save",async()=>{
+ if(!companyCanWrite())throw Error("Недостаточно прав");
+ const saved=await call("/api/saas/company-portfolio/commercial-cases",{method:"POST",body:{source_url:val("company-commercial-url")}});
+ el("company-commercial-url").value="";await loadCompanyPage();return {saved_case:saved.case_id};
 });
 bind("company-decide",async()=>{
  if(!companyCanDecide())throw Error("Недостаточно прав");
@@ -495,7 +501,7 @@ bind("company-read-evidence",async()=>{
  el("company-evidence-result").hidden=false;return result;
 });
 function resetCompanySearch(){
- discoveryRun=null;discoveryProfile=null;discoveryEnabled=false;
+ discoveryRun=null;discoveryProfile=null;discoveryEnabled=false;blankSelect("company-search-index","Не подключать");el("company-search-eis").checked=true;
  el("company-search-state").textContent="Загрузите портфель и состояние поиска.";
  el("company-search-receipts").textContent="";blankSelect("company-search-candidate","Выберите кандидата");
 }
@@ -513,18 +519,21 @@ function acceptDiscoveryReply(result){
  const state={PENDING:"Ожидает выполнения",IN_PROGRESS:"Выполняется",COMPLETED:"Выполнен заданный поиск",PARTIAL:"Выдача неполная",STALE_PROFILE:"Профиль изменился",EXPIRED_WINDOW:"Окно поиска истекло"}[result.status]||"Статус требует проверки";
  el("company-search-state").textContent=state+" · "+result.completed_steps+"/"+result.plan.steps.length+" · профиль v"+result.plan.profile_version+" · "+result.run_day+(result.discovery_incomplete?" · полнота не подтверждена":"")+(discoveryEnabled?"":" · новые запросы отключены");
  el("company-search-receipts").textContent=result.step_receipts.map(x=>x.query+" · "+(x.region||"все регионы")+" · "+x.outcome+" · кандидатов "+x.candidates.length+(x.coverage_complete?"":" · неполное покрытие")).join("\\n");
- for(const item of result.candidates){const option=document.createElement("option");option.value=item.registry_number;option.textContent=item.registry_number+" · "+item.title;el("company-search-candidate").append(option)}
+ for(const item of result.candidates){const option=document.createElement("option");option.value=item.registry_number||item.source_platform+":"+item.external_id;option.textContent=option.value+" · "+item.title;el("company-search-candidate").append(option)}
 }
 bind("company-search-refresh",async()=>{
  requireCompany();resetCompanySearch();const current=await call("/api/saas/company-portfolio/discovery/latest");
  discoveryEnabled=current.enabled===true;
+ for(const index of current.commercial_indexes||[]){const opt=document.createElement("option");opt.value=index;opt.textContent=index;el("company-search-index").append(opt)}
  const profile=await call("/api/saas/company-portfolio/search-context");
  if(profile.customer_id!==requireCompany().customer_id){clearSession();throw Error("Ответ профиля относится к другой компании")}
  discoveryProfile=profile;acceptDiscoveryReply(current.run);return {enabled:discoveryEnabled,status:discoveryRun?.status||"NOT_STARTED",profile_version:profile.profile_version};
 });
 bind("company-search-start",async()=>{
  if(!companyCanDecide()||!discoveryEnabled||discoveryProfile?.profile_state!=="ACTIVE")throw Error("Поиск недоступен");
- const result=await call("/api/saas/company-portfolio/discovery/runs",{method:"POST",body:{expected_profile_version:discoveryProfile.profile_version}});
+ const body={expected_profile_version:discoveryProfile.profile_version};
+ const index=val("company-search-index");if(index)body.commercial_indexes=[index];if(!el("company-search-eis").checked)body.include_eis=false;
+ const result=await call("/api/saas/company-portfolio/discovery/runs",{method:"POST",body});
  acceptDiscoveryReply(result);return {run_id:result.run_id,status:result.status};
 });
 bind("company-search-run",async()=>{
@@ -541,8 +550,9 @@ bind("company-search-run",async()=>{
 el("company-search-candidate").addEventListener("change",syncCompanySearchControls);
 bind("company-search-accept",async()=>{
  const number=val("company-search-candidate");
- if(!companyCanWrite()||!discoveryRun?.candidates.some(x=>x.registry_number===number))throw Error("Выберите кандидата из своего поиска");
- const saved=await call("/api/saas/company-portfolio/cases",{method:"POST",body:{registry_number:number}});
+ const candidate=discoveryRun?.candidates.find(x=>(x.registry_number||x.source_platform+":"+x.external_id)===number);
+ if(!companyCanWrite()||!candidate)throw Error("Выберите кандидата из своего поиска");
+ const saved=candidate.registry_number?await call("/api/saas/company-portfolio/cases",{method:"POST",body:{registry_number:candidate.registry_number}}):await call("/api/saas/company-portfolio/commercial-cases",{method:"POST",body:{source_url:candidate.source_url}});
  // Preserve the selected completed discovery while refreshing the same company's portfolio.
  const snapshot={run:discoveryRun,profile:discoveryProfile,enabled:discoveryEnabled,customer:requireCompany().customer_id};
  await loadCompanyPage();

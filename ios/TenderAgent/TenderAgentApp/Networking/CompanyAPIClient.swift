@@ -85,6 +85,11 @@ struct CompanyDecisionAttempt: Equatable, Sendable {
 struct CompanyCase: Decodable, Identifiable, Sendable {
     let caseId: String
     let registryNumber: String?
+    let sourcePlatform: String?
+    let externalId: String?
+    let sourceUrl: String?
+    var displayReference: String { registryNumber ?? [sourcePlatform, externalId].compactMap { $0 }.joined(separator: ":") }
+    var isCommercial: Bool { sourcePlatform != nil && sourcePlatform != "eis" }
     let sourceVerified: Bool
     let revision: Int
     let decision: CompanyDecision?

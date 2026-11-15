@@ -1246,3 +1246,92 @@ def test_company_discovery_stale_profile_and_explicit_empty(client, monkeypatch)
     completed = client.post(f"{root}/{run_b}/step", headers=_auth(b), json={"expected_step": 0}).json()
     assert completed["status"] == "COMPLETED" and completed["discovery_incomplete"] is False
     assert completed["candidates"] == [] and len(calls) == 1
+
+
+def test_company_commercial_identity_and_shared_portfolio(client, session):
+    from src.modules.customer_pilot.models import ProcurementCase
+    from src.modules.deal_registry.models import Deal
+
+    _, a = _seed(client, "Коммерция A")
+    _, b = _seed(client, "Коммерция B")
+    _legal(client, a)
+    _legal(client, b)
+    endpoint = "/api/saas/company-portfolio/commercial-cases"
+    b2b = "https://www.b2b-center.ru/app/market-next/fixture/tender-1234567/"
+    workspace = "https://workspace.ru/tenders/fixture-1234567/"
+    for bad in (b2b + "?token=fixture", "https://evil.invalid/tenders/fixture-1234567/", workspace + "#x", b2b.replace("www.b2b-center.ru", "www.b2b-center.ru.evil.invalid")):
+        assert client.post(endpoint, headers=_auth(a), json={"source_url": bad}).status_code == 422
+    def save(token, url):
+        r = client.post(endpoint, headers=_auth(token), json={"source_url": url})
+        assert r.status_code == 201, r.text
+        return r.json()
+    one, two, other = save(a, b2b), save(a, workspace), save(b, b2b)
+    assert len({one["case_id"], two["case_id"], other["case_id"]}) == 3
+    assert one["external_id"] == two["external_id"] == "1234567"
+    assert one["source_platform"] == "b2bcenter" and two["source_platform"] == "workspace"
+    assert one["registry_number"] is None and one["source_verified"] is False and one["source_url"] == b2b
+    assert save(a, b2b.replace("/app/market-next/fixture/", "/market/changed/"))["case_id"] == one["case_id"]
+    assert save(a, b2b)["source_url"] == b2b
+    base = "/api/saas/company-portfolio/cases"
+    eis = client.post(base, headers=_auth(a), json={"registry_number": "0123456789012345678"}).json()
+    assert eis["source_platform"] == "eis" and eis["external_id"] == eis["registry_number"]
+    assert {c["case_id"] for c in client.get(base, headers=_auth(a)).json()["items"]} == {one["case_id"], two["case_id"], eis["case_id"]}
+    path = f"{base}/{one['case_id']}"
+    assert client.get(path, headers=_auth(b)).status_code == 404
+    assert client.post(path + "/evidence", headers=_auth(a), json={"run_id": "toa-run-20261116000000-abcdef", "expected_profile_version": 1}).status_code == 409
+    decision = client.post(path + "/decisions", headers=_auth(a), json={"action": "GO", "rationale": "Внутренняя проверка", "expected_revision": 0, "idempotency_key": "commercial-fixture-1"})
+    assert decision.status_code == 200
+    assert client.get(f"{base}/{two['case_id']}", headers=_auth(a)).json()["decision"] is None
+    assert session.query(ProcurementCase).count() == 4 and session.query(Deal).count() == 0
+
+
+def test_company_mixed_commercial_discovery_uses_own_keywords_and_namespaces(client, session, monkeypatch):
+    from src.modules.saas_foundation import company_discovery as discovery
+    from src.modules.saas_foundation.commercial_sources import parse_index
+
+    _enable_company_discovery(monkeypatch)
+    _, a = _seed(client, "Поиск по индексу")
+    _legal(client, a)
+    profile = _profile()
+    profile["criteria"].update(keywords=["разработка"], stop_words=["лицензия"], regions=[])
+    assert client.put("/api/saas/profile", headers=_auth(a), json=profile).status_code == 200
+    b2b = "https://www.b2b-center.ru/market/fixture/tender-1234567/"
+    workspace = "https://workspace.ru/tenders/fixture-1234567/"
+    raw_rss = f'<rss><channel><item><title>разработка сайта</title><link>{workspace}</link></item><item><title>разработка лицензия</title><link>https://workspace.ru/tenders/other-1234568/</link></item></channel></rss>'.encode()
+    raw_b2b = f'<html><body><div>Опубликовано: 16.11.2026 Подать заявку до: 20.11.2026 Закупка №1234567 разработка сайта <a href="{b2b}">разработка</a></div></body></html>'.encode()
+    calls = []
+    def search(index, keywords, exclusions):
+        calls.append((index, keywords, exclusions))
+        return parse_index(index, raw_rss if index == "workspace_rss" else raw_b2b, keywords, exclusions)
+    monkeypatch.setattr(discovery, "search_index", search)
+    monkeypatch.setattr(discovery, "search_public_44fz", lambda **_: {"source": "public_eis_html_44fz", "outcome": "success_empty", "cards": [], "has_more": False, "source_coverage_complete": True})
+    endpoint = "/api/saas/company-portfolio/discovery/runs"
+    assert client.post(endpoint, headers=_auth(a), json={"expected_profile_version": 1, "commercial_indexes": ["https://evil.invalid/"]}).status_code == 422
+    res = client.post(endpoint, headers=_auth(a), json={"expected_profile_version": 1, "commercial_indexes": ["workspace_rss", "b2bcenter:crm-sistemy"]})
+    assert res.status_code == 201, res.text
+    run = res.json()
+    assert len(run["plan"]["steps"]) == 3
+    for i in range(3):
+        result = client.post(f"{endpoint}/{run['run_id']}/step", headers=_auth(a), json={"expected_step": i})
+        assert result.status_code == 200, result.text
+    result = result.json()
+    assert result["status"] == "PARTIAL" and result["discovery_incomplete"] is True
+    assert {(c["source_platform"], c["external_id"]) for c in result["candidates"]} == {("workspace", "1234567"), ("b2bcenter", "1234567")}
+    assert all(c["observed_price"] is None and c["source_verified"] is False for c in result["candidates"])
+    assert all(kw == ["разработка"] and exc == ["лицензия"] for _, kw, exc in calls)
+    assert len(result["step_receipts"][1]["index_sha256"]) == 64
+    assert client.post(endpoint, headers=_auth(a), json={"expected_profile_version": 1}).status_code == 409
+
+
+def test_commercial_index_rejects_ambiguous_card_and_unsafe_rss():
+    import pytest
+
+    from src.modules.saas_foundation.commercial_sources import parse_index
+
+    one = "https://www.b2b-center.ru/market/fixture/tender-1234567/"
+    two = "https://www.b2b-center.ru/market/fixture/tender-1234568/"
+    raw = f'<html><body><div>Опубликовано: 16.11.2026 Подать заявку до: 20.11.2026 Закупка №1234567 разработка <a href="{one}">A</a><a href="{two}">B</a></div></body></html>'.encode()
+    assert parse_index("b2bcenter:crm-sistemy", raw, ["разработка"], [])["cards"] == []
+    raw = b'<!DOCTYPE rss [<!ENTITY fixture "test">]><rss><channel><title>&fixture;</title></channel></rss>' + b' ' * 100
+    with pytest.raises(ValueError, match="XML declarations"):
+        parse_index("workspace_rss", raw, ["test"], [])
