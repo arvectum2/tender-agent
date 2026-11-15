@@ -8,7 +8,7 @@ remaining: [SIBUR document acquisition and historical coverage, production DP tr
 last_verified_commit: c52856bff1b4df35c887f5148172473ca6636d82
 latest_tests: "56 focused pytest PASS (11 SIBUR + 45 prior parser/Watchdog); Ruff PASS; real 27/27 SHA-bound replay 313 IDs / 314 rows / one duplicate; two original OOXML samples PASS; explicitly authorized TA DB seed verified; MI DB not mutated"
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114
-resume_instruction: Resume GEH after 140 historical details, 95 captured protocols and 93 structured outcomes. Two reviews remain. SIBUR 513 originals, 713 links, 126 full DP ingestion receipts (341 embeddings), 142 TA index links, plus recovered server resource; live DP127 docs/368 embeddings. Bounded sequential batch of 5 with max 5 preview chunks passed; require fresh MI backup/gate before DP writes and stop on errors. Continue remaining indexing and format coverage, consumer-authenticated retrieval, GEH older history/outcomes and other procurement platforms.
+resume_instruction: Continue GEH after 169 historical details, 115 captured protocols, 112 structured outcomes; three reviews and one detail failure remain. SIBUR 513 originals, 713 links, 133 full receipts (376 embeddings), 149 TA index links, one recovered resource; live DP 134 docs/403 embeddings. Seven remaining short OOXML index candidates passed, move to bounded longer documents after fresh MI backup/gate (max chunks as appropriate), stop on transport errors. Continue PDF/legacy formats, authenticated retrieval, older history, ZMO and other platforms.
 
 report: docs/roadmap/SIBUR_PUBLIC_REGISTRY_BASELINE_2026-11-14.md
 
@@ -258,3 +258,23 @@ continuation_2026_11_14_outcomes93:
   repeat_updates: 0
   gpb_checkpoint_commit: 001886f326b46b3807bb9d43212e56d3619fdc5b
   backup_sha256: 327947fae1b22334312d749abfad9c94b999b88e2b0bd3596ca9bc6f3d10ef7d
+
+continuation_2026_11_15_outcomes112:
+  ta_procurements: 8519
+  ta_sibur_links: 713
+  ta_gpb_links: 129
+  gpb_historical_details: 169
+  gpb_captured_protocols: 115
+  gpb_outcomes: 112
+  dp_full_ingest_receipts: 133
+  dp_receipt_embeddings: 376
+  dp_server_documents: 134
+  dp_server_embeddings: 403
+  dp_recovered_resource_per_chunk_embedding_proof_pending: true
+  ta_sibur_index_links: 149
+  small_index_batch_pass: 7
+  prewrite_gate: pass
+  repeat_inserts: 0
+  repeat_updates: 0
+  gpb_checkpoint_commit: 9428900eee1c499643e708e687877b153859cc0d
+  backup_sha256: ef28eb5a234e362221424a227bda2802a12237ba9d73be62b9c4d609d86ff964
