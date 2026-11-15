@@ -1,0 +1,21 @@
+task_id: TA-CORE-RUNTIME-PACKAGING-20261115
+status: in_progress
+goal: Build isolated ARM64 candidate with compatible dependency base and required
+  source receipts; do not switch existing services.
+definition_of_done:
+- Fail-closed stale dependency overlay guard
+- Required runtime receipts included in pilot and local images
+- Isolated network-disabled image build and receipt validation, rollback preparation
+completed:
+- Verified existing runtime SDK 0.3.0 versus candidate 0.4.0; compatible QA base SDK
+  0.4.0, pip check PASS; no schema migration delta.
+current_stage: fix_packaging
+remaining:
+- implement guard and asset copy
+- test and build
+- publish review candidate
+last_verified_commit: f57ded4252063f1fda27d041d6ff598a0b31871d
+test_results:
+- PR529 and PR530 exact-head CI 19/19 each
+resume_instruction: Fix local overlay dependency guard and missing runtime JSON receipts,
+  test with existing verified QA ARM64 base only; never touch current runtime or research.
