@@ -123,3 +123,18 @@ continuation_2026_11_15_0737:
   resume: Read live jobs and technical-evidence/sibur/state.json; GPB branch technical
     scan implementation de45c997. Do not mutate archive collection before original
     DP lane has reconciled.
+continuation_2026_11_15_0744:
+  db_total: 11415
+  db_document_links: 9629
+  offline_originals: 222
+  pq_title_records: 21
+  pq_title_subject_records: 27
+  pq_source_prefix_groups: 24
+  targeted_unique_urls: 20
+  captured: 19
+  dp_readonly_verified:
+    documents: 313
+    embeddings: 5073
+  dp_index_status: blocked; exact audit; deployment safety-blocked, no circumvent
+  resume: Continue approved archive capture and offline source evidence; targeted
+    queue v2 in GPB checkpoint. No new index mutation until supported safe recovery.
