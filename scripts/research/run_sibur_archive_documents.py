@@ -80,10 +80,17 @@ def source_refs(root, hashes):
     return dict(refs),priority,len(ids)
 
 
+def archive_tls_context():
+    # Use the verified Homebrew trust bundle on the Mac mini, not an
+    # incomplete CA set in the baseline venv. Keep TLS verification enabled.
+    bundle = Path("/opt/homebrew/etc/openssl@4/cert.pem")
+    return ssl.create_default_context(cafile=str(bundle) if bundle.is_file() else None)
+
+
 def acquire(out, refs, priority, limit):
     if not 1<=limit<=25:
         raise ValueError("bounded archive batch")
-    opener=build_opener(ProxyHandler({}),NoRedirect(),HTTPSHandler(context=ssl.create_default_context()))
+    opener=build_opener(ProxyHandler({}),NoRedirect(),HTTPSHandler(context=archive_tls_context()))
     done=[]
     candidates=sorted(refs,key=lambda u:(not any(r["external_id"] in priority for r in refs[u]),
                  Path(urlsplit(u).path).suffix.lower()==".pdf",u))
@@ -105,8 +112,10 @@ def acquire(out, refs, priority, limit):
                 if old["references"]!=refs[url]:
                     atomic(receipt,{**old,"references":refs[url]})
             continue
-        if (out/"STOP").exists() or len(done)>=limit:
+        if (out/"STOP").exists():
             break
+        if len(done)>=limit:
+            continue
         rc={"url":url,"references":refs[url],"observed_at":stamp()}
         try:
             raw,mime=fetch(opener,url)
@@ -176,6 +185,9 @@ with e.connect() as c:
                supported_urls=sum(Path(urlsplit(u).path).suffix.lower() in ALLOWED for u in refs),
                source_refs_sha256=digest)
         attempted=acquire(out,refs,priority,15)
+        if (out/"STOP").exists():
+            update(status="stopped",step="operator STOP before linkage")
+            return
         rows=captures(out,refs)
         payload=json.dumps({"captures":rows,"indexed":{}},ensure_ascii=False).encode()
         sha=hashlib.sha256(payload).hexdigest()
