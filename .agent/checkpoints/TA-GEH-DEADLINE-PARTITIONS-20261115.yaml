@@ -86,3 +86,15 @@ continuation_2026_11_15_0646:
   - 2025-11
   archive_detail_checkpoint: TA-ARCHIVE-DOCUMENT-EVIDENCE-20261115
   source_completeness: false
+continuation_2026_11_15_0724:
+  august_verified_complete: true
+  august_inserted: 900
+  august_replay_inserted: 0
+  march_verified_unique: 950
+  march_import_pending: true
+  remaining_months:
+  - 2025-03
+  - 2025-06
+  - 2025-11
+  repair_root: repair-date-slices-complete-v1
+  source_bound_named_decisions: 154

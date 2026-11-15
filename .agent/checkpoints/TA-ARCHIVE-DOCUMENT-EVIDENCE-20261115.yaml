@@ -24,21 +24,44 @@ completed:
 - SIBUR archive document worker independently deployed; TLS CA mismatch repaired and
   163 original failures retained; corrected GET validated 341649 bytes PDF; 12 captured
   originals confirmed.
-current_stage: archive_detail_processing_and_recovery
+- Recovered original blocked GPB lane as isolated launchd worker with shared lock,
+  original parent GPB state preserved blocked; first commit 21 new decisions, 453
+  URL receipts verified, replay zero.
+- Sliced August 2024 into three disjoint verified intervals, all 31 days/900 unique,
+  900 inserted, replay zero. March 2025 950 unique/31 days verified, import awaiting
+  lock at checkpoint.
+- Older protocol parser with exact procedure reference in header, detail title and
+  decision clause, published company name/address and explicit price/tax evidence.
+  154 named decisions persisted; all existing types preserved.
+- Private market report 143 named distinct source procedures, 68 normalized published
+  name-address pairs, 143 ex-VAT best-bid observations; report not contract awards
+  or unique INNs.
+- SIBUR archive document link replay verified; 149 originals and 4112 archive links.
+- 'DP exact readonly PG audit: 305 resources, 4383 matching vectors, 303 original
+  HTTP receipts, two recovered resources 27 and 101 vectors. Original bytes SHA verified;
+  no invented HTTP receipt. SIBUR restarted after exact reconciliation, pre-sync pending.'
+current_stage: named_historical_market_and_recovered_index
 remaining:
-- Reconcile and resume original GPB worker on safe shared-lock boundary without interrupting
-  SIBUR inflight DP indexing.
-- Repair remaining incomplete source partitions Aug2024, Mar/Jun/Nov2025 using auditable
-  smaller date slices.
-- Drain independent GPB archive detail queue and SIBUR archive document link queue,
-  verify first archive document DB linkage and zero-insert replay.
-- Only after separate existing DP index reconciliation plan archival indexing; no
-  unsupported legal supplier names or contract award claims.
-last_verified_commit: b37fbebca3484886ca9c518d1582165c39d7e973
-resume_instruction: Read exact live states and current heads first. Follow existing
-  shared mutation lock, fresh MI backup then gate, verified TA backup and replay.
-  Original GPB remains blocked pending safe recovery; do not kill active SIBUR indexing.
-  Do not duplicate archive jobs or infer awards.
+- Inspect live recovery, archive details, date-slice repair, SIBUR capture/import/doc
+  and combined SIBUR states; do not clear original GPB blocked state while independent
+  recovery exists.
+- Complete remaining March/June/November slice imports and audit malformed daily source.
+  Preserve mixed-slice original receipts; improve committed-receipt recovery before
+  any interrupted slice import retry.
+- Continue named protocol extraction and exact source-linked technical documents.
+  No INN or signed contract inferred; same name and address can identify multiple
+  legal entities. External identity candidate archival attempt was tool-blocked; do
+  not circumvent.
+- Confirm SIBUR pre-sync after exact DP reconciliation; drain original index, then
+  separately plan archive indexing and extraction. If a timeout occurs again, reconcile
+  exact server identities before retry.
+- Continue separate ZMO paper-only supplier time-valid cost evidence; existing access
+  restrictions unchanged.
+last_verified_commit: e13f74360792922b6e2f5e626a33ad4587457322
+resume_instruction: Read actual live state and branch heads first. Keep original parent
+  GPB blocked while separate recovery owns original sources. Use shared mutation.lock,
+  mandatory fresh MI backup then runtime gate, verified TA backup and replay. Continue
+  remaining items and do not duplicate active jobs. Watchdog already updated.
 test_results:
   gpb_focused_before_recovery: 8
   sibur_focused_before_recovery: 6
@@ -54,3 +77,38 @@ test_results:
     documents: 266
     chunks: 2458
     embeddings: 2458
+  continuation_2026_11_15_0724:
+    recovery_focused: 8
+    date_slice_focused: 7
+    named_parser_focused: 19
+    market_report_focused: 4
+    dp_reconciliation_focused: 9
+    note: test sets overlap; all final runs passed; Ruff and diff checks passed; latest
+      CI pending
+    live_db:
+      etp_gpb: 26258
+      sibur_public: 6327
+      gpb_document_links: 710
+      sibur_document_links: 4825
+      gpb_protocol_decisions: 615
+      gpb_named_decisions: 154
+      indexed_sibur_links_before_presync: 459
+    dp_verified:
+      documents: 305
+      original_ingest_http_receipts: 303
+      reconciled_resources: 2
+      chunks: 4383
+      embeddings: 4383
+      model: Qwen3-Embedding-4B
+      dimension: 2560
+live_recovery_2026_11_15_0724:
+  gpb_recovery_label: com.arvectum.tender-agent-gpb-recovery
+  gpb_recovery_state: autonomous-runner/gpb-recovery/state.json
+  original_gpb_must_remain_blocked: true
+  date_slice_label: com.arvectum.tender-agent-geh-date-slice-repair
+  date_slice_state: parallel-sources/geh-deadline-archive/repair-date-slices-complete-v1/state.json
+  named_market_report: parallel-sources/geh-deadline-archive/named-market/named-market-v1.json
+  named_market_sha256: 6d04e131699f35473d031d58086cbaa8d73ddcbc263ac825ecd1634c33921c0f
+  dp_reconcile_evidence: documents/dp-readonly-reconciliation-20261115-0724.json
+  dp_reconcile_sha256: abe4db9d22e679736a111ce2d2976e70f126a0d63039967c1dac30f3e9144f9b
+  dp_reconcile_manifest: documents/dp-reconciled-resources-v1.json
