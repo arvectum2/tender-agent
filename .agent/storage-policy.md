@@ -4,3 +4,5 @@
 - The 2026-11-15 migration targets `/Volumes/ArvectumSSD/Arvectum/storage/tender-agent-safe-20261115`. Compatibility paths may point there only after checked cutover. Check the actual mount and device, not just a directory name.
 - Retain internal Market Intelligence live acceptance workspace and a bounded set of fresh, independently verified Data Platform backups because the existing preflight requires trusted internal APFS. Historical copies must be archived and hash-verified before removing redundant local copies. Never weaken a mutation gate to force migration.
 - Check free space on both internal and external volumes; do not start duplicate collectors or relocate a live DB transaction. If external storage is missing/unhealthy, stop bulk writers rather than silently filling the internal disk.
+
+- macOS LaunchAgents must keep small bootstrap stdout/stderr logs under `/Users/master/ArvectumSafe/launchlogs/tender-agent/` (external StandardOutPath/StandardErrorPath caused EX_CONFIG). All bulk runner logs and artifacts stay on the external SSD.

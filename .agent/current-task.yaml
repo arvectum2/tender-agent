@@ -940,5 +940,5 @@ sibur_progress_dashboard_20261115:
 
 urgent_storage_migration_20261115:
   checkpoint: .agent/checkpoints/TA-STORAGE-MIGRATION-20261115.yaml
-  status: in_progress
-  resume: Migrate runtime and backup root before more research.
+  status: completed
+  resume: Verified migration complete; continue V15 on external storage.

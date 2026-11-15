@@ -1,5 +1,5 @@
 task_id: TA-STORAGE-MIGRATION-20261115
-status: in_progress
+status: completed
 goal: Move research runtime and backup storage to ArvectumSSD, preserve paths and transactional safety
 definition_of_done:
   - Copy and verify byte identities before switching
@@ -11,16 +11,21 @@ completed_stages:
   - Identified 19 GiB research runtime and 72 GiB Data Platform backups on internal volume
   - External device tested with fsync, atomic rename and readback; main runtime initial copy 19 GiB
   - Data Platform archive rotation committed df2223ab, tests 2 passed, historical copy verified by sha256; sample pg_restore --list passed using matching container version
-current_stage: verified_backup_transfer_and_runtime_cutover
+  - Quiesced writers; verified 28805 files and 20283883436 bytes; switched compatibility path to external volume
+  - Verified 785 historical backup pairs and retired 711 redundant internal pairs
+  - Fixed launchd EX_CONFIG by retaining local service startup stdout/stderr paths; bulk data and work logs remain external
+  - All active workers restarted; post-cutover database counts and MI gate passed
+  - Retired verified redundant internal runtime; acceptance and completion reports on external SSD
+current_stage: completed
 external_storage: /Volumes/ArvectumSSD/Arvectum/storage/tender-agent-safe-20261115
 runtime_migration_pid: 46950
 historical_backup_migration_pid: 47189
-runtime_stage_latest: await_cooperative_stop
-backup_verified_pairs_latest: 530
-backup_retired_bytes_latest: 44365927514
+runtime_stage_latest: completed
+backup_verified_pairs_latest: 785
+backup_retired_bytes_latest: 63793791692
 mi_git_commit: df2223ab
 mi_internal_gate_retained: true
-remaining_stages: [quiesce, final_checksum, switch, restart, verify_live_gate, reclaim_internal_redundant_runtime, complete_backup_archive]
-last_verified_commit: dd84daf8
-last_tests: read-only disk inventory passed
-resume_instruction: Inspect external runtime-migration.json and historical-backup-migration.json and existing process PIDs before any actions. Do not duplicate running workers. Only remove retained internal runtime after verified external copy, path switch, workers restarted and acceptance gate verified. Leave internal MI working root and latest verified backup copies for strict preflight. Continue V15 research only after migration.
+remaining_stages: []
+last_verified_commit: 40f6fec2
+last_tests: All 28805 files SHA256 matched; database counts unchanged; MI gate pass; fresh external backup hash pass; active workers resumed; duplicate retired; internal free 129 GiB.
+resume_instruction: Migration complete. Continue V15 research using the external runtime via compatibility symlink; retain strict MI acceptance preflight and bounded internal rolling copies. Do not duplicate workers.
