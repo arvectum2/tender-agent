@@ -165,16 +165,23 @@ completed:
   exact-ref URLs, 4 bytes without exact refs,879 not captured or prior review. 1153
   remaining identity/URL pairs versus1212 previous, 59 restored exact bindings. No
   new download or DB write.
-current_stage: project_chain_and_design_customer_mapping
+- 'Energy chain review: 12 groups across KOS/NKNH/ZSNH/STG,27 unique publications,14
+  exact-source-linked,48 missing identity-URL pairs. RP59 repeat RZA scope, KOS PGU
+  actuator service 2026, NKNH GPP4 DC cabinet revision, ZSNH multi-year substation
+  maintenance and STG.10510-39 repeated communication works. No award inferred. Tatem
+  direct customer references NKNH/KOS (GPP2/3/5 design at TANEKO, not NKNH); Energoprogress
+  223FZ purchasing channel KOS Lushnikovskaya PGU, 2.043748577bn listed whole lot
+  price, type unverified; 2 additional contract observations. Owner confirms late2025
+  permit, May2026 launch.'
+current_stage: nknh_kos_energy_project_and_contractor_chain
 remaining:
-- 'Continue broad SIBUR map: cross-stage project chains, design organizations and
-  installation contractors. Priority retrofit P0, preserve independent UPS channel
-  and prior lead reserve. Verify real contractor relationships, award/price and project
-  status from primary evidence.'
-- Continue existing source worker and reference reconciliation, no redundant capture.
-  Support 29 in-period supplement awaits authorized fresh backup/gate/replay. DP blocked
-  unchanged.
-last_verified_commit: c881f9c403bb5099119f9581b3dc76cefbc03d85
+- Continue SIBUR broad project and contractor buyer map, Energoprogress buying history
+  and protocols, Tatem qualification, evidence-backed retrofit and repeat service.
+  Preserve independent UPS channel, owner roles and saved lead reserve.
+- Existing capture worker untouched. Award and price gaps and 29 historical in-period
+  supplemental records remain pending; fresh shared backup/gate/replay required. DP
+  blocked unchanged.
+last_verified_commit: bd8f489e27f3df4acf6ac554b66a28aae5f1223a
 test_results:
   focused: 3
   ruff: pass
@@ -347,8 +354,17 @@ test_results:
     restored_identity_url_pairs: 59
     verification: Verified exact source refs and original SHA; read-only; no production
       code changes.
-resume_instruction: Read zsn-crp2-procurement-chain-v1.json and package-link-reconciliation-v2.json.
-  Continue SIBUR cross-stage procurement chain and project design/installation actors,
-  use exact original refs; preserve P0 retrofit and independent UPS. Leads reserve
-  only. No contacts, bids, spend, auto-merge, duplicate workers or DP bypass. Fresh
-  shared backup/gate/replay before any DB writes.
+  energy_chain_review:
+    sha256: 7a7fe5c0e5c6c9cef9c20df9cd86c7f704adc78d84eb5ca87526305bf16db93e
+    groups: 12
+    unique_publications: 27
+    linked_publications: 14
+    missing_identity_url_pairs: 48
+    external_observations: 3
+    verification: Read-only exact source refs and SHA validation. External public
+      source review. No code or DB changes.
+resume_instruction: Read nknh-kos-energy-project-chains-v1.json and prior CRP2 chain,
+  private role overlay. Continue SIBUR project and contractor buyer map, especially
+  public procurement evidence and lifecycle demand. P0 retrofit, independent UPS.
+  No external market diversion, contact, bid, spend, duplicate workers, auto-merge
+  or DP bypass.

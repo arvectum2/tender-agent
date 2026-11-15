@@ -813,3 +813,10 @@ sibur_design_project_chain_20261115:
     use exact original refs; preserve P0 retrofit and independent UPS. Leads reserve
     only. No contacts, bids, spend, auto-merge, duplicate workers or DP bypass. Fresh
     shared backup/gate/replay before any DB writes.
+sibur_nknh_kos_energy_chain_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read nknh-kos-energy-project-chains-v1.json and prior CRP2 chain, private
+    role overlay. Continue SIBUR project and contractor buyer map, especially public
+    procurement evidence and lifecycle demand. P0 retrofit, independent UPS. No external
+    market diversion, contact, bid, spend, duplicate workers, auto-merge or DP bypass.
