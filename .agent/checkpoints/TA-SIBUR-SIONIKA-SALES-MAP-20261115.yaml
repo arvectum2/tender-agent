@@ -222,7 +222,8 @@ completed:
 - V15: six previously generic NPG external notices resolved to scope, three new notices, nine observations in six families, eleven overall external NPG including pump and sewer packages. No additive revision counts, no signed prices. TESS Amur named in Amur region plan 378-r dated 2026-06-02, temporary network program 2022–30; six group portfolio scopes across four sites, finance identity checked. MChS fire license terminated; do not extrapolate. Regional direct source 403 and PDF screenshot cache miss documented. Six commercial actions revised. AGHK AuCom exact archive ID checked. No direct DB mutation.
 - Read-only exact coverage dashboard: 30394 SIBUR records, 6477 industrial, 2599 project unique, 8223 priority union, 853 overlap and 5624 profile outside mapped projects. 1100/2299 supported distinct priority URLs fully extracted; 1580/8223 all known URLs extracted without unverified marker, not final research result. 36 per-project counts; 2475/10188 active acquisition attempts, 57/587 linked archive index documents. Reusable report_sibur_coverage module and dedup/unsupported/partial test passed. No DB mutation.
 - "V16: verified external runtime after migration; coverage 1110/2299 priority URLs, 1189 remaining; exact 663 pending P0 and 611 unattempted candidates. 5624 industrial publications outside project cards grouped once: 2169 explicit, 544 organizer affiliation, 103 multi, 2807 unresolved, 1 conflict. Source-bound priority queue code tested (6 pass), activation requested via cooperative STOP; no duplicate worker. Styrene 2146492/1 two primary XLSX reviewed, 2 lots, 09 Feb 2027–30 Jun 2028, 60d payment/factoring, qualifications; no signed price."
-current_stage: priority_queue_activation_and_site_workload
+- "V17: priority collector restarted, 15 new P0 originals hash-verified after activation; linkage still pending. GPB prepare timeout reconciled read-only: 1375 exact existing receipts and 13 absent, no inflight, previous sync unchanged. GPB code c0028180 reuses validated originals and increases bounded prepare timeout; 6 tests passed; original agent restarted, first new sync not verified. Three qualification XLSX reviewed (two identical-text styrene questionnaires, valve repair evaluation options), no asserted award or eligibility. Coverage 1119/2299, full known priority packages 1585/8223. V17 45 source files verified."
+current_stage: verified_priority_capture_and_gpb_recovery
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -231,7 +232,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: 32449e3c
+last_verified_commit: 5077001c
 test_results:
   focused: 3
   ruff: pass
@@ -785,4 +786,25 @@ test_results:
       consolidated-project-map-v16.json: f76b6756d7600735c2bb1e39f01c54b4372cdc8e0b023bf11473c4a0bdcc6a1c
       commercial-action-register-v10.json: 0038815ad39ca3c250d3e90e1f1890c4b1838bd4ebb1ff051bd8648cc760cf5e
       consolidated-project-report-v16.md: 82dcb2d11f8a43e936e11ea56237e3723d036b67199a3d59eac4951c27281bee
-resume_instruction: "First inspect sibur-archive-discovery/categories/documents/priority-activation.json and existing worker before starting anything. If activation helper 54718 still running, do not duplicate it. If restarted, verify new PID, source-bound P0 captures and actual receipt links; if timeout old worker retained, re-evaluate safe restart. Do not bypass locks or gates. Read V16 report/map, action register V10, remaining-priority-work-v1 and coverage V3; further prioritize P0 original scopes and verified contract outcomes, 8 plan gaps, 5624 outside project groupings. Recompute coverage at major stages. Keep external storage policy; no inferred awards or prices, UPS separate. Deadline 17 November."
+  verified_priority_v17:
+    p0_captured_after_activation: 15
+    gpb_code_commit: c0028180
+    gpb_previous_exact_receipts: 1375
+    gpb_pending_originals: 13
+    gpb_status: running
+    gpb_step: "capture archive detail batch"
+    priority_supported_urls_extracted: 1119
+    priority_supported_urls_total: 2299
+    priority_all_known_packages: 1585
+    archive_indexed: 79
+    index_server: {"documents": 397, "chunks": 7287, "embeddings": 7287}
+    source_artifacts: 45
+    tests: 6_passed
+    artifacts:
+      project-coverage-dashboard-v4.json: 0abcc3afba5f1a3dfa329127f2a9cecd9a92297d1bc92313bdb050dd30afdf3b
+      qualification-comparison-v1.json: 8cc358826b28e826d775473c57bd8c8791645a5181fa9a57bbe30420178a2353
+      consolidated-project-map-v17.json: 60d30591671089521dd9b7fc30abc9a952a0bfb3c2318d63f51627ab9d8c57b8
+      commercial-action-register-v11.json: d5e444a997f651347a48cadfdd06f241d6c35f2d6ebf85487ea5d9fa6e9b5707
+      consolidated-project-report-v17.md: 9d139e90e99261d3029a1d6c0682f9796a7a92b52580bfe65b31513ea8bab242
+      priority-activation-proof-v1.json: 5a9adda245bc0a4d133a9c21de29421fbe33072fcef7734babd327d02a587647
+resume_instruction: "Read V17 map/report, coverage V4 and qualification comparison. Verify priority capture proof and actual DB linkage of new P0 originals; GPB existing archive detail lane restarted after read-only reconciliation, verify first full cycle; if blocked reconcile exact identities before any retry. Preserve capture source provenance, locks, prewrite gates and external SSD policy. Continue P0 technical packages and actual outcomes, 8 plan gaps, 5624 outside-project rows. Produce clean report by 17 November; record quantitative coverage, no inferred eligibility/award/price, UPS separate. No duplicate workers."
