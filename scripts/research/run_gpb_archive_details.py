@@ -123,8 +123,10 @@ with e.connect() as c:
         return len(tasks)
 
     def sync(self):
-        links=self.module(LANE,self.gpb,"link_gpb_document_receipts","--prepare",self.output,timeout=180)
-        decisions=self.module(LANE,self.gpb,"persist_gpb_protocol_decisions","--prepare",self.output,timeout=180)
+        # Verify the entire source set once, then parse decisions from those exact receipts.
+        prepared=json.loads(self.module(LANE,self.gpb,"prepare_gpb_archive_sync",self.output,timeout=600))
+        links=prepared["links_json"].encode()
+        decisions=prepared["decisions_json"].encode()
         sha=hashlib.sha256(links+decisions).hexdigest()
         if self.state["lanes"][LANE].get("sync_sha")==sha or not json.loads(links):
             return
