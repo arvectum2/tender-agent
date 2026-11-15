@@ -17,6 +17,7 @@ from pathlib import Path
 from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import HTTPSHandler, ProxyHandler, Request, build_opener
+from zoneinfo import ZoneInfo
 
 from scripts.research.capture_gpb_geh_pages import NoRedirect, page_markers
 from scripts.research.import_gpb_geh_snapshots import parse_date
@@ -63,6 +64,11 @@ def archive_rows(raw, url):
     return rows
 
 
+def deadline_calendar_date(value):
+    """Source filter days are MSK; Jan 31 and Feb 1 2024 full-day probes verified the boundary."""
+    return parse_date(value).astimezone(ZoneInfo("Europe/Moscow")).date()
+
+
 def inspect(raw, month, page):
     q = Count()
     q.feed(raw.decode())
@@ -73,7 +79,7 @@ def inspect(raw, month, page):
         raise ValueError("zero-result month requires explicit review")
     rows = archive_rows(raw, source_url(month, page))
     first, last = bounds(month)
-    if any(not first <= parse_date(r["deadline_raw"]).date() <= last for r in rows):
+    if any(not first <= deadline_calendar_date(r["deadline_raw"]) <= last for r in rows):
         raise ValueError("deadline outside requested partition")
     current, exposed = page_markers(raw) if total > 20 else (1, 1)
     if current != page or len(rows) > 20:
