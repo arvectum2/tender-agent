@@ -962,3 +962,8 @@ sibur_v19_equipment_and_service_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Continue V19 verified packages and coverage, remaining price/outcome evidence.
+
+sibur_v20_outcome_queue_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: V20; prioritize exact outcomes of closed P0 and remaining technical packages.

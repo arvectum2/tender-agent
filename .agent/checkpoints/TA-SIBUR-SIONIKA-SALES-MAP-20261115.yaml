@@ -225,7 +225,8 @@ completed:
 - "V17: priority collector restarted, 15 new P0 originals hash-verified after activation; linkage still pending. GPB prepare timeout reconciled read-only: 1375 exact existing receipts and 13 absent, no inflight, previous sync unchanged. GPB code c0028180 reuses validated originals and increases bounded prepare timeout; 6 tests passed; original agent restarted, first new sync not verified. Three qualification XLSX reviewed (two identical-text styrene questionnaires, valve repair evaluation options), no asserted award or eligibility. Coverage 1119/2299, full known priority packages 1585/8223. V17 45 source files verified."
 - "V18: first 15 P0 originals SHA256/technical extraction and exact DB 251 document-procedure pairs validated; 30 P0 captured since activation. Three AGPP SS370 project drawings establish AGPP design origin of 2118943/1; unknown actual destination, remove only strict AGHK association, retain industrial candidate; 15 other interface candidates flagged. MPE 2126540/1 Volga NIPITEK six new gas analyzers per OL. EP600 2080352/1 mechanical scope only. Coverage V5 1134/2299, 1589 complete known packages; 36 cards 2598 strict project candidates, 5625 outside. GPB preparation passed, first post-recovery transaction state recorded separately. No signed prices inferred. V18 report and six artifacts validated."
 - "V19: six original XLSX reviewed, 16 thermal cabinets 2108203/1, 17 control posts 2083019/1, 104 terminal boxes 2108149/1, Progress Engineering directly named as requesting party in two forms; 2080616/1 indivisible cast-insulated busduct DGP2 title4015; 2027–2030 AGHK heat tracing maintenance 2139286/1; 2140253/1 KOS relay protection maintenance. Owner 2025 250MW and 2026 281MW same Lushnikovskaya PГУ, STGT reference commissioning, not service award. Coverage 1179/2299, 1617 all known packages; no inferred signed price. 49 sources verified. GPB recovery progressing."
-current_stage: priority_equipment_services_and_coverage
+- "V20: seven original XLSX packages reviewed; NPG 29 units, 27 distinct tags, ASDKE title4810; MPE 23 NAMUR+3 boxes; AGHK busbar protection and AGPP interface KRU; overlapping heat-tracing budget vs tender periods, DGP2 warehouse RFQ author. 1481 GPB outcomes screened literal SIBUR names, zero candidate hits; 1290 best bids, 191 failed, 601 published participant names, no signed prices. Outcome research queue: 8223 IDs, 6856 closed intake incl 2151 P0, 1300 cancelled, 67 open as archived. Not all outstanding outcomes yet researched; no fabricated awards or prices. V7 coverage 1314/2299, 985 remaining, 468 P0. V20 53 source artifacts verified."
+current_stage: quantified_commercial_outcome_queue_and_package_review
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -234,7 +235,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: 96001778
+last_verified_commit: 9e80d737
 test_results:
   focused: 3
   ruff: pass
@@ -851,4 +852,29 @@ test_results:
       commercial-action-register-v13.json: ae58d1d3f83094e91d5c0ccb0384f0d2c4d75a831ded47b9df39ef980a77e14d
       consolidated-project-report-v19.md: db1c14f8c96f030d8ba83904f610b54294b9cc4fd1544c7633babbd1119b4f69
       project-coverage-dashboard-v6.json: 923fa35b0132f25728d7de87e842595b0313b589923a941c2f7aad79e874416b
-resume_instruction: "Read V19 map/report and coverage V6. Continue P0 original review, actual awarded prices and outcomes, scope interface candidates, eight plan gaps. Note V6 dashboard inputs refer to pre-enrichment V19 hash, membership unchanged; next dashboard generated from final V19. Refresh site allocations (5625 outside projects), and prepare consolidated report by Nov17. Existing workers only; retain locks/gates, external storage and independent UPS. No inferred awards or prices."
+  commercial_outcome_v20:
+    priority_union: 8223
+    priority_supported_urls_extracted: 1314
+    priority_supported_urls_total: 2299
+    priority_remaining_urls: 985
+    p0_remaining_urls: 468
+    priority_all_known_packages: 1687
+    closed_outcome_candidates: 6856
+    closed_p0_candidates: 2151
+    source_artifacts: 53
+    gpb_screened_protocols: 1481
+    gpb_sibur_literal_matches: 0
+    gpb_status: running
+    gpb_cycles: 141
+    archive_indexed: 202
+    index_server: {"documents": 517, "chunks": 8155, "embeddings": 8155}
+    original_files_processed: 2685
+    artifacts:
+      priority-package-and-outcome-review-v1.json: 0b31b3f842c7e1879cc7423a51095f6540790723335448cc993f39f7105e5c78
+      commercial-outcome-queue-v1.json: b2c6c01a3ea6c7a9cb285a04314fa92afc5024b6240f8c5fbf131bbecda0d855
+      project-coverage-dashboard-v7.json: 521b87088100265487fde302347ce4908b4713c76a933523c666ca3a5b2f7959
+      remaining-priority-work-v2.json: 34e31f431bda1110b587b120b69ceb02c6934bb98755d2625179c1f8c3f9874c
+      consolidated-project-map-v20.json: 52d7194832d847e15d06eb0ae1c9391448f76c1ca090fea8f9481e50c0f14d62
+      commercial-action-register-v14.json: ec6b30197d4db9ec73b280c939a9fa7aaa2a9df697bc8007c75f5f4549ecf4da
+      consolidated-project-report-v20.md: f02f0579a18a229e7518e679b8b432ee7e76681e7ba09bca5ada3a0a7e42067d
+resume_instruction: "Read V20 map/report, V7 coverage, remaining-priority-work-v2 and commercial outcome queue. Continue next original P0 packages and targeted public protocol/contract searches with exact lot IDs and buyer identities; mark outcomes per procedure including unavailable results, never infer contract prices from bids. Focus 2151 closed P0 and 8 plan gaps. Review AGPP interface and unresolved sites separately. Update quantitative coverage and prepare consolidated Nov17 report with honest limitations. Existing workers only; retain prewrite gates/locks and external SSD storage, UPS separate."
