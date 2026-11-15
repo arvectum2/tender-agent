@@ -5,6 +5,7 @@ from __future__ import annotations
 import re
 from collections.abc import Sequence
 
+from src.tender_research.rag.numeric_claim_evidence import _LABELED_NMCK_RUB
 from src.tender_research.rag.search_types import RagSearchHit
 
 # Require an *explicit* absence claim for a specific field, not a generic
@@ -28,6 +29,14 @@ _ABSENT = {
         re.IGNORECASE,
     ),
 }
+# Field-specific denial: source-bound NMC must not be falsely called unconfirmed.
+_NMCK_DENIAL = re.compile(
+    r"(?:\bнмцк\b|начальн\w*\s+(?:\(максимальн\w*\)\s*)?цен\w*"
+    r"(?:\s+контракт\w*)?)[^.!?\n]{0,140}"
+    r"(?:не\s+(?:подтвержден\w*|указан\w*|определен\w*|извест\w*)|отсутств\w*)",
+    re.IGNORECASE,
+)
+
 _NUMBER = r"\d[\d \u00a0]*(?:[.,]\d+)?"
 _EVIDENCE = {
     "quantity": re.compile(
@@ -48,6 +57,10 @@ def contradicted_absence(answer: str, contexts: Sequence[RagSearchHit]) -> str |
     False negatives are intentional; finding a numeric string cannot establish
     contractual applicability, legal effect or that the model is fully correct.
     """
+    if _NMCK_DENIAL.search(answer) and any(
+        _LABELED_NMCK_RUB.search(chunk.text) for chunk in contexts
+    ):
+        return "price"
     for field, denial in _ABSENT.items():
         if not denial.search(answer):
             continue

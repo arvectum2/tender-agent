@@ -376,7 +376,7 @@ def analyse_one(session: Session, src: PinnedSource, *,
     result = analyzer(
         src.procurement_ref, session=session, use_llm=True,
         save_report=True, record_history=True, history_source="source_queue",
-        analysis_mode="fast", llm_timeout_seconds=60,
+        analysis_mode="detailed", llm_timeout_seconds=420,
         llm_base_url=llm_base_url, llm_model=llm_model,
     )
     if not _real_success(result):

@@ -48,7 +48,9 @@ def test_analysis_mode_presets_have_expected_defaults() -> None:
 
     assert (fast.retrieval_limit, fast.max_context_chars_per_section) == (3, 4000)
     assert (balanced.retrieval_limit, balanced.max_context_chars_per_section) == (5, 7000)
-    assert (detailed.retrieval_limit, detailed.max_context_chars_per_section) == (8, 12000)
+    assert (detailed.retrieval_limit, detailed.max_context_chars_per_section) == (18, 22000)
+    assert detailed.max_chunks_per_section == 18
+    assert detailed.llm_timeout_seconds == 420
 
 
 def test_build_section_context_respects_limits_and_preserves_metadata() -> None:

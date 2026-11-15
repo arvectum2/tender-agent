@@ -4,11 +4,12 @@ import json
 import re
 import urllib.error
 import urllib.request
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import TYPE_CHECKING, Any
 
 from src.tender_research.rag.numeric_absence_guard import contradicted_absence
 from src.tender_research.rag.numeric_claim_evidence import (
+    _observed_values,
     unsupported_explicit_numeric_claim,
 )
 from src.tender_research.rag.numeric_claim_guard import contradicted_cited_quantity
@@ -38,6 +39,7 @@ class RagAnswer:
     used_chunks_count: int
     model: str
     error: str | None = None
+    attempt_count: int = 1
 
 
 def build_source_citations(contexts: Sequence[RagSearchHit]) -> list[SourceCitation]:
@@ -64,6 +66,7 @@ _CITED_UUID = re.compile(
     re.IGNORECASE,
 )
 _EXPLICIT_CHUNK_ID = re.compile(r"chunk_id\s*[:=]\s*([^\s,;]+)", re.IGNORECASE)
+_CITED_REGISTRY = re.compile(r"registry_number\s*[:=]\s*([0-9]{19,25})", re.IGNORECASE)
 
 
 def _validate_source_bound_completion(
@@ -92,6 +95,13 @@ def _validate_source_bound_completion(
         return "Local LLM answer has no verifiable source chunk citations."
     if any(item not in available for item in references):
         return "Local LLM answer cites unknown or modified source chunk identifiers."
+    known_registry_numbers = {
+        str(item.registry_number).strip()
+        for item in contexts if item.registry_number
+    }
+    cited_registry_numbers = _CITED_REGISTRY.findall(answer)
+    if any(item not in known_registry_numbers for item in cited_registry_numbers):
+        return "Local LLM answer cites unknown or modified procurement registry numbers."
     contradicted_field = contradicted_absence(answer, contexts)
     if contradicted_field:
         return (
@@ -157,11 +167,72 @@ class LocalChatLlmClient:
                 ),
             )
 
-        return self._generate_with_retry(
-            question,
-            selected_contexts,
+        initial = self._generate_with_retry(
+            question, selected_contexts,
             registry_number=registry_number,
             analysis_mode=analysis_mode,
+        )
+        if (
+            analysis_mode != "detailed" or not initial.error
+            or not self._is_repairable_evidence_error(initial.error)
+        ):
+            return initial
+        # A second call uses the SAME received evidence: never import a
+        # fabricated claim from the failed answer, and never disable guards.
+        repaired_question = self._evidence_repair_question(
+            question, selected_contexts, initial.error
+        )
+        corrected = self._generate_with_retry(
+            repaired_question, selected_contexts,
+            registry_number=registry_number,
+            analysis_mode=analysis_mode,
+        )
+        return replace(corrected, attempt_count=2)
+
+    @staticmethod
+    def _is_repairable_evidence_error(error: str) -> bool:
+        return any(marker in error for marker in (
+            "unknown or modified source chunk identifiers",
+            "no verifiable source chunk citations",
+            "unsupported explicit numeric value",
+            "incorrectly claims missing numeric evidence",
+            "numeric claim conflicts with its explicitly cited",
+            "unknown or modified procurement registry numbers",
+        ))
+
+    @staticmethod
+    def _evidence_repair_question(question: str, contexts: Sequence[RagSearchHit], error: str) -> str:
+        # An evidence-only lexical inventory. The number guard still checks
+        # every explicit unit value in the returned answer after both attempts.
+        cited = list(dict.fromkeys(str(h.chunk_id) for h in contexts if h.chunk_id))
+        observed = sorted({
+            (kind, value)
+            for hit in contexts for kind, value in _observed_values(hit.text)
+            if kind in {"rub", "percent"}
+        })
+        currencies = [v + " руб." for kind, v in observed if kind == "rub"]
+        percentages = [v + "%" for kind, v in observed if kind == "percent"]
+        return (
+            question
+            + "\n\nВАЖНО: Предыдущий ответ отклонён проверкой доказательств ("
+            + error + "). Напиши НОВЫЙ ответ только на основании тех же фрагментов. "
+            "НЕ воспроизводи отклонённый текст, НЕ рассчитывай числа, "
+            "НЕ выводи новые проценты или суммы в рублях из общих знаний. "
+            "Указывай денежную сумму или процент ТОЛЬКО если такое же число "
+            "с той же единицей явно приведено во входном контексте. "
+            "Иначе опускай величину и прямо укажи, что она не подтверждена "
+            "выбранными фрагментами. Полный список явно присутствующих денежных значений: "
+            + (", ".join(currencies) if currencies else "отсутствует")
+            + ". Полный список явно присутствующих процентных значений: "
+            + (", ".join(percentages) if percentages else "отсутствует")
+            + ". Если вопрос об оценке заявок, не выводи вычисленный общий вес "
+            "100% или дополнительные проценты: укажи только подтверждённые "
+            "значения и их исходные chunk_id. "
+            + ". Не путай стоимость закупки с порогом опыта участника. "
+            "В каждой ссылке скопируй chunk_id ПОСИМВОЛЬНО из точного списка: "
+            + ", ".join(cited)
+            + ". Не изменяй ни одного символа реестрового номера или chunk_id; "
+            "если доказательства не хватает, скажи это прямо."
         )
 
     def build_prompt_metrics(
@@ -368,6 +439,8 @@ class LocalChatLlmClient:
             "Ты отвечаешь на вопросы по закупочным документам.\n"
             "Отвечай только по предоставленным фрагментам.\n"
             "Не используй внешние знания и не додумывай факты.\n"
+            "Проценты, денежные суммы и единицы измерения переписывай из исходного "
+            "фрагмента без самостоятельного расчёта итогов или новых долей.\n"
             'Если данных недостаточно, напиши: "В найденных документах недостаточно информации для ответа."\n'
             "Не делай окончательных юридических выводов.\n"
             "Пиши деловым русским языком.\n"
@@ -435,7 +508,7 @@ def _extract_answer_text(payload: dict[str, Any]) -> str:
 def _read_http_error_body(exc: urllib.error.HTTPError) -> str:
     try:
         body = exc.read().decode("utf-8", errors="replace").strip()
-    except Exception:
+    except Exception:  # noqa: BLE001 - invalid remote HTTP error payload must not leak
         body = ""
     return body or exc.reason or "no details"
 
