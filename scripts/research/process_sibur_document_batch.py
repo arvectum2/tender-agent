@@ -14,6 +14,7 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 from scripts.research.acquire_sibur_documents import source_refs
+from scripts.research.reconciled_sibur_index import load as load_reconciled
 
 COLLECTION = "tender-agent:sibur-public-research"
 WORKER = """
@@ -117,6 +118,7 @@ def select_batch(directory, rows, priority, mode, limit, max_chunks):
         if hashlib.sha256(original_export.read_bytes()).hexdigest() != receipt["export_sha256"]:
             raise ValueError("recovered export receipt mismatch")
         indexed.add(receipt["source_sha256"])
+    indexed.update(load_reconciled(directory))
     result = []
     for sha, row in rows.items():
         if mode == "extract":
