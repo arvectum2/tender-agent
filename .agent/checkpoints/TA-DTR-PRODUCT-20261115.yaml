@@ -74,16 +74,25 @@ completed:
   pytest wrapper PASS, node syntax/Ruff/make check PASS. Actual browser visual acceptance
   not performed.
 - Web PR537 published at da99cde7.
-current_stage: native_scoped_human_decisions
+- 'Native company case decision write: owner/admin only, explicit confirmation of
+  identity/case/action/revision, rationale and DEFER date validation, exact-draft
+  account/case idempotency, response member/revision checks, refresh on success/conflict.
+  Shared SaaS API, no external action or legacy owner token.'
+- Swift standalone draft, idempotency, response and wire checks 14/14 PASS; unsigned
+  Xcode build-for-testing PASS twice. Combined SaaS and browser-script regression
+  33 passed, 1 skipped. Separate members test verifies shared decision visibility,
+  rejects stale revision and cross-member replay, preserves two history entries.
+current_stage: company_web_ios_decisions_verified_next_scoped_discovery
 remaining:
-- Review stacked PRs 532 through web candidate; exact-head CI pending on recent PRs.
-- Add native company human decision write using same API, explicit confirmation, stale
-  revision and identical retry idempotency.
-- Company-scoped automatic discovery and commercial identity; isolated browser/simulator
-  and end-to-end acceptance.
-- Production migration/deployment and conditional DP rollout remain separate; preserve
-  live SIBUR.
-last_verified_commit: 1967f264700ce2c3f90aabe9610b334225de917c
+- Check exact-head CI of stacked PR532–538; review/merge requires separate owner approval.
+- Implement company-scoped automatic discovery using versioned criteria, safe identity/scope
+  and no global Deal reuse; support commercial source identity separately. No live
+  search by unverified profiles.
+- Isolated browser/simulator/Keychain and full end-to-end acceptance of shared clients
+  and new migrations.
+- Production migration/deploy and conditional DP rollout remain distinct; do not disturb
+  SIBUR.
+last_verified_commit: 35adc722a6129678d1c2d1c3baa2706afbd2e5b7
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -100,6 +109,10 @@ test_results:
   native unsigned build-for-testing PASS; simulator XCTest compiled not executed.
 - 41 backend passed, 1 skipped; standalone rendered JS scenario and pytest wrapper
   PASS; node --check, Ruff, make check, diff PASS
-resume_instruction: Implement native company decision API, explicit confirmation and
-  stable retry identity, enforce scope and stale conflicts. Verify offline and publish;
-  no live decision or deployment.
+- 33 passed, 1 skipped, 34 warnings in 5.37s; Swift standalone 14/14 PASS; unsigned
+  Xcode build-for-testing PASS twice; Ruff/diff PASS.
+resume_instruction: Native decisions and web cabinet verified offline; publish stacked
+  PR, check CI, proceed tenant-scoped discovery. Do not repeat static builds/test
+  unless changed. Do not activate real tenant or live collection. Actual UI/device/network
+  acceptance and migration 109 PostgreSQL acceptance still pending. No deployment
+  until approved.
