@@ -76,3 +76,14 @@ def test_explicit_total_not_unit_rates():
     row = parse_protocol(raw)
     assert row["best_bid_rub"] == "900.00"
     assert row["best_bid_tax_basis"] == "excludes_vat"
+
+
+def test_local_ordinal_competitive_selection():
+    raw = protocol(para("Начальная (максимальная) цена договора:") +
+                   para("100,00 руб. без НДС;") + para("122,00 руб. с НДС.") +
+                   para("Комиссия приняла решение определить лучшей заявкой по Конкурентному отбору заявку Участника №1 (далее – Победитель) с ценовым предложением:") +
+                   para("80,00 руб. без НДС;") + para("97,60 руб. с НДС."))
+    row = parse_protocol(raw)
+    assert row["participant_platform_id"] is None
+    assert row["participant_local_ordinal"] == "1"
+    assert row["best_bid_rub"] == "97.60"

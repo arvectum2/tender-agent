@@ -108,7 +108,7 @@ def alternate_decision(lines, member, member_sha256):
         i, evidence = failed[0]
         return {**base, "decision": "PROCEDURE_DECLARED_UNSUCCESSFUL",
                 "decision_paragraph": i, "decision_evidence": evidence}
-    winner = [(i, re.search(r"Комиссия приняла решение о выборе наиболее выгодных условий.{0,220}в заявке Участника №\s*(\d+) с ценовым предложением", line, re.IGNORECASE))
+    winner = [(i, re.search(r"Комиссия приняла решение (?:о выборе наиболее выгодных условий.{0,220}в заявке|определить лучшей заявкой по Конкурентному отбору заявку) Участника №\s*(\d+)(?: \(далее [–-] Победитель\))? с ценовым предложением", line, re.IGNORECASE))
               for i, line in enumerate(lines)]
     winner = [(i, m) for i, m in winner if m]
     headers = [i for i, line in enumerate(lines) if re.search(
