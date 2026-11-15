@@ -1007,3 +1007,8 @@ sibur_v28_pipeline_roles_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Continue V28 commercial outcomes and low-coverage P0.
+
+sibur_v29_styrene_risk_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Continue V29 exact outcomes and primary documents.
