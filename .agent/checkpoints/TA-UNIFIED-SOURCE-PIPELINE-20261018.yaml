@@ -1,0 +1,57 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-UNIFIED-SOURCE-PIPELINE-20261018
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Build one bounded, recoverable, source-first Tender Agent procurement discovery-to-original-to-PostgreSQL pipeline using official EIS SOAP and first-party Workspace/B2B-Center, with dedup, failed-source visibility, analysis queue semantics and replay checks.
+definition_of_done:
+  - Read canonical checkpoint, verify latest PR #493 CI exact-head, Mac mini current run and unchanged canonical PostgreSQL.
+  - Add single config-driven orchestrator with explicit dry-run, protected apply, source-first stage, dedup and bounds for Workspace/B2B and EIS; no auto BID GO.
+  - Use existing official EIS getDocsIP and firstparty original collectors, not duplicate implementation or second DB; safety gate fail-closed and diagnostic error codes, avoid leaking private source tokens.
+  - Durable read-only/protected provenance receipt and pending-analysis queue metadata with reproducible replay; do not claim ChatGPT external chats auto-connected or run two LLMs without acceptance.
+  - Adversarial and integration tests including failures, restart, dedup, new versions, empty results and internal/external state counts.
+  - Safe pilot against actual original source indexes and canonical DB with private backup before any approved new production DB writes; verify no downstream side effect and backend health.
+  - Update docs/roadmap and parent checkpoint; push review-only PR, verify exact-head CI; no unauthorized merge or production backend/launchd deployment.
+completed:
+  - "2026-10-18 22:12 MSK previous 4 PRs #490..#493 19/19 exact-head CI PASS, all OPEN and not deployed; canonical DB 113, operator API 200; main origin d2a927ecebc9222bb3b38b47aa14c7024ccec4f0."
+current: "Unified bounded public-source discovery + canonical versioned original capture + recoverable real-analysis queue completed in review branch. One authorized live cycle added six source versions to existing DB."
+remaining: []
+last_verified_commit: 87118b6d2d4d614fc41c2081cfee61c223fb3722
+test_results:
+  - "2026-10-18 848 pertinent pytest PASS / 4 SKIP; Ruff PASS, bash -n PASS, plutil -lint PASS, git diff --check PASS, parent+child YAML verified."
+  - "Live discovery initial 4 original platform indexes OK (Workspace RSS + 3 B2B groups); first dry-run 9 exact original documents verified, 0 database changes."
+  - "Strict fail-closed and round-robin market selection both tested; 35+ targeted tests include EIS 44fz sampled real title gate, staging source queue, concurrency guard, private backup+receipt."
+  - "Live first real owner-approved apply after full pg_dump: 113 -> 119 canonical learning rows (+6 source versions: 5 new ref plus 1 revised), 3 existing official EIS ZIPs replayed as existing. 0 legal BID_GO and 0 training gold."
+  - "Real full database backup pg_dump custom SHA256 bed6cd2987b248b50f3e0ac80c3e494e49d677195fde956f5e7288d465932801, 2109508 bytes, validated pg_restore catalogue; private receipt file mode 0600."
+  - "Independent read-only audit validated all 11 saved marketplace and official EIS originals SHA256/path/mode0600; all owner_internal candidate_unreviewed, zero invented analysis."
+  - "Second real sampled public EIS 44fz discovery fetched six original search results, zero IT-heading qualified new EIS IDs; dry-run reported transient one EIS ZIP RuntimeError exit2, recovered in individual source retry, no DB write."
+  - "6-hour Mac mini launchd template created but deliberately NOT installed or deployed pending AM-4 review/merge; parent roadmap remains in_progress."
+
+resume_instruction: "Unified source pipeline PR code/tests ready and one real safe cycle executed: PostgreSQL 119 rows. Verify exact-head stacked PR CI and Company AM-4 merge/deployment authority. Next activate six-hour launchd only after authorized reviewed release, run read-only then guarded apply, verify canonical DB and private receipts. Separately implement actual Tender Agent analysis queue worker with source manifests, semantic business-eligibility triage, 223-FZ/public EIS expansion, and after verified product acceptance real independent ChatGPT/Tender Agent evaluations with human review. Never call source capture alone a full LLM training example."
+code_commit: 87118b6d2d4d614fc41c2081cfee61c223fb3722
+source_report: docs/roadmap/TENDER_AGENT_UNIFIED_SOURCE_PIPELINE_2026-10-18.md
+source_policy: docs/roadmap/source_pipeline_policy_v1.json
+source_entrypoint: scripts/procurement_llm/unified_source_pipeline.py
+source_mac_launchd_template: scripts/runtime/com.arvectum.source-intake.plist.template
+canonical_database: arvectum
+canonical_learning_rows_at_start: 113
+canonical_learning_rows_after_first_real_cycle: 119
+new_source_version_events: 6
+new_distinct_marketplace_ref_count: 5
+changed_previous_source_version_count: 1
+existing_official_eis_archives_replayed: 3
+existing_frozen_source_sha_verified: 11
+private_prewrite_backup_sha256: bed6cd2987b248b50f3e0ac80c3e494e49d677195fde956f5e7288d465932801
+private_prewrite_backup_bytes: 2109508
+source_cycle_receipt_created: true
+actual_pending_tender_agent_analysis_queue_size_after_first_cycle: 10
+source_first_successful_first_cycle: true
+public_44fz_sampled_search_status: success
+public_44fz_new_it_title_matches_in_second_cycle: 0
+private_snapshots_mode_0600_verified: true
+worker_actually_executing_tender_agent_analysis: false
+chatgpt_parallel_postacceptance_run_executed: false
+training_gold_promotions: 0
+authorized_bid_and_paid_actions: false
+autonomous_scheduled_runtime_installed: false
+review_gate: exact_head_ci_and_approved_am4_release_pending

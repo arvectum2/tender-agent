@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 import logging
-import os
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -16,6 +15,7 @@ from src.modules.customer_pilot import models as _customer_pilot_models  # noqa:
 from src.modules.customer_registry import (
     models as _customer_registry_models,  # noqa: F401
 )
+from src.modules.procurement_learning_corpus.service import learning_capture_enabled
 from src.tender_research.models import TenderAnalysisRun
 
 logger = logging.getLogger(__name__)
@@ -146,7 +146,7 @@ def record_analysis_run(
         updated_at=now,
     )
     session.add(run)
-    if os.environ.get("TENDER_LEARNING_CAPTURE_ENABLED") == "1":
+    if learning_capture_enabled():
         from src.modules.procurement_learning_corpus.service import (
             append_candidate,
             make_analysis_candidate,

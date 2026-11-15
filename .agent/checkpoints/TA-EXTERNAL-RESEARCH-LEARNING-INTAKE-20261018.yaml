@@ -1,0 +1,34 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-EXTERNAL-RESEARCH-LEARNING-INTAKE-20261018
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Provide a secure single-entry-point for future manually initiated external ChatGPT tender analyses, preserving privately stored standalone analysis artifacts and referenced original hashes in the existing canonical PostgreSQL procurement learning candidate table.
+definition_of_done:
+  - Read parent checkpoint/verify upstream PR and current database without reimporting historical observations.
+  - Implement an explicit owner-only local CLI which ingests standalone, independently produced analysis artifact metadata into existing manual-candidate-import schema, with source/provenance requirements and backup-friendly append-only idempotence.
+  - Store no raw chat, private user secrets, original source HTML or full analysis text in DB; require local private 0600 artifact and hash verification; distinguish verified original SHA from only a claimed URL.
+  - Dry-run by default, explicit owner-authorized apply to only existing arvectum; no new DB or outbound network; make failed/misleading/tenant claims fail closed.
+  - Adversarial local tests, roadmap report, complete checkpoint, review PR; no production runtime deployment/merge/bid/payment.
+completed:
+  - "2026-10-18 current upstream PR489 GitHub CI 19/19 PASS and PR490 new internal source capture still running, no CI failure at last check."
+  - "Current canonical PostgreSQL arvectum retains 108 unreviewed observations from previous owner-authorized 31-row import; no replay required."
+current: "Guarded single-external-ChatGPT-analysis provenance and SHA artifact CLI completed, dry-run and explicit canonical database application contract tested without live new observations."
+remaining: []
+last_verified_commit: e353ab98942eaadd299359bb02224dfa49fa7ed2
+test_results:
+  - "28 targeted security/provenance/SQLite transaction tests PASS, 740 broad Tender Research + learning corpus + pilot tests PASS / 2 SKIP; Ruff PASS, YAML and git diff --check PASS."
+  - "Owner-private analysis-artifacts directory created on ArvectumSSD with mode 0700; future analysis artifacts must be mode 0600 and no raw chat in learning SQL."
+  - "Current production database unchanged at previous 108 observations, no fabricated procurement analysis/event inserted."
+resume_instruction: "Guarded external ChatGPT research analysis intake CLI code is complete in review branch. Confirm stacked PR exact-head CI and AM-4 deploy approval; for next genuine externally produced procurement analysis prepare a separate sanitized owner-private 0600 MD/TXT artifact and real source manifest, dry-run, then apply into existing arvectum and verify inserted/existing. Do not invent analyses or claim automatic capture across all chats. Continue unified EIS SOAP, Workspace/B2B providers and future post-acceptance independent dual-run integration."
+source_report: docs/roadmap/PROCUREMENT_LLM_EXTERNAL_CHATGPT_CAPTURE_2026-10-18.md
+source_code: scripts/procurement_llm/capture_external_research.py
+verified_code_commit: e353ab98942eaadd299359bb02224dfa49fa7ed2
+private_artifact_dir: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/analysis-artifacts
+private_artifact_dir_mode: 0700
+existing_live_learning_rows_unmodified: 108
+new_real_external_procurement_analysis_imports_this_task: 0
+training_labels_promoted: 0
+all_external_chatgpt_chats_auto_connected: false
+code_production_deployment_completed: false
+review_gate: stacked_pr_exact_head_ci_and_am4_release_authority_pending

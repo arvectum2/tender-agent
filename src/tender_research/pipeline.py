@@ -10,6 +10,14 @@ from typing import Any
 
 from sqlalchemy.orm import Session
 
+from src.modules.procurement_learning_corpus.service import (
+    append_candidate,
+    learning_capture_enabled,
+)
+from src.modules.procurement_learning_corpus.web_source_capture import (
+    make_fetched_web_source_candidate,
+)
+
 from src.tender_research.browser.fetcher import WebPageFetcher
 from src.tender_research.browser.requests_fetcher import RequestsFetcher
 from src.tender_research.config import TenderResearchConfig, load_config
@@ -893,12 +901,24 @@ class TenderResearchPipeline:
             )
             wp_path = self._save_web_page(tender, fetch_result)
             wp_path["search_result_id"] = sr.id
-            self._repo.upsert_web_page(wp_path)
-            if fetch_result.status == "fetched":
-                fetched += 1
-            else:
-                failed += 1
-            self._session.flush()
+            try:
+                self._repo.upsert_web_page(wp_path)
+                if learning_capture_enabled():
+                    # The page and the unreviewed source evidence share one
+                    # PostgreSQL transaction; no separate store or legal GO.
+                    candidate = make_fetched_web_source_candidate(
+                        tender.registry_number or tender.external_id, fetch_result
+                    )
+                    if candidate is not None:
+                        append_candidate(self._session, candidate)
+                if fetch_result.status == "fetched":
+                    fetched += 1
+                else:
+                    failed += 1
+                self._session.flush()
+            except Exception:  # noqa: BLE001 - transaction rollback for any DB error
+                self._session.rollback()
+                raise
         self._session.commit()
         return {"fetched": fetched, "failed": failed}
 
