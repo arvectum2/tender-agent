@@ -215,7 +215,8 @@ completed:
 - Four judicial contract records, two manufacturer references, POLIEF RKOS fifth-source project package, map V8 with 34 cards. Legacy DP queue fully synchronized and exhausted 315/5283. Read-only readiness queue 639 technical candidates, 97 P0; no new ingestion or mutation.
 - Exact read-only bridge validated 587 OOXML originals and 932 committed captures, 92 P0, 52 PDF review. Code c595c96f and c334fb4a preserve verified DP receipt on explicit capture-only replay; 17 focused tests passed. Existing live archive worker has cached earlier linker; no deployment or DP mutations yet. Verified Styrene qualification 3 original spreadsheets/12 anchors, owner-confirmed Pondera role, SNEMA-Service B2B exact buyer, NKU-Energo 29 panel self report, 13 P0 qualification routes. V9 report.
 - V10: eight judicially identified contracts/specifications DGP2 and adjacent ZSNH objects; correction SPK Magistral terminated 2024-09-06, replacement unknown; Delta debt separated from electrical market. Ener Holding 2025 financial profile and historical procurement channel. Archive worker cooperatively restarted with updated linker, existing index executor activated on verified 587 OOXML bridge; 16 targeted tests passed, first extraction 3 docs, gate passed; first full index/link cycle not yet confirmed.
-current_stage: archive_index_activated_and_dgp2_contract_chains
+- Archive first full cycles passed, replay idempotent; SNEMA cross-project evidence for 8 sites, SMK Northwest subcontract matched by domain and SRO directory, two other contractor portfolios, 5 external procurement observations (2 outside SIBUR excluded), 10 exact archive scope records, no replacement SPK Magistral established. 21 tailored P1/P2 actions, all 34 cards now have specific actions. V11 sources and hashes checked.
+current_stage: cross_project_channel_and_action_register
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -224,7 +225,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: bcc78da6
+last_verified_commit: df8c1d6e
 test_results:
   focused: 3
   ruff: pass
@@ -645,4 +646,21 @@ test_results:
       consolidated-project-map-v10.json: cc0d94d90c566fec332269550d2f3903b611a14578334816dac7473c51fb011e
       commercial-action-register-v4.json: 65d9db758db0494ce7bee1d6ca7246e316de2372c1054bd25218d04eb708a99c
       consolidated-project-report-v10.md: 03a54904e1d4e21812fff9c2d426d5552b085fab5aec19577f623084315437eb
-resume_instruction: "Read V10 map/report and commercial-action-register-v4.json. Verify archive worker and existing gated index executor state, first archive index/link cycle and idempotent replay. If blocked or inflight unresolved, reconcile exact DP receipt identities before any retry, preserve shared locks and gates. Do not start duplicate workers. Continue primary contract outcomes, equipment/contractor chains and final clean consolidated report by 17 November; keep UPS independent and private owner data separate. No inferred awards or prices."
+  cross_project_channels_v11:
+    project_cards: 34
+    tailored_p1_p2_actions: 21
+    contractor_sites_snema: 8
+    external_purchase_observations: 5
+    archive_scope_records: 10
+    archive_index_cycles: 3
+    archive_indexed: 9
+    server: {"documents": 324, "chunks": 5352, "embeddings": 5352}
+    executor_status: running
+    archive_status: running
+    technical_originals: 2311
+    artifacts:
+      cross-project-contractor-channels-v1.json: 117ed3136d4b74e569e3ca0c4b17407ca81c50e39e94bdf2f6bbe359b1b441d8
+      consolidated-project-map-v11.json: 69e57a82bf980a5ca04ae295f2ef68ce5869aa6d4973ea0cae603c7601542410
+      commercial-action-register-v5.json: e7a45f0c1d9817ff80cb22d01d4a5f9eac9d2633f8c3e5956e663ad66074a226
+      consolidated-project-report-v11.md: 4c83b18db1b323879f320f99bf6d2f0f095db361c733212cfcea48001f88617b
+resume_instruction: "Read V11 map/report and commercial-action-register-v5.json. Consolidate site/project/contractor evidence into clean executive report and evidence tables, continue actual awards and signed prices, quantify only verified amounts and nonoverlapping scenario bounds. Deadline 17 Nov. Check ongoing archive index runner only for status or actual blocker; no duplicate workers. If timeout reconcile exact identities and preserve gates. Separate UPS and private owner context. No inferred awards or outreach."
