@@ -38,7 +38,9 @@ completed:
   PostgreSQL: DTR same-run guard held across commit, independent session rejected,
   release on normal and exception paths; actual migration 108 and concurrent decision
   race PASS (200/409, one stored row). Temporary DB containers removed.'
-current_stage: company_portfolio_foundation_verified_next_profile_binding
+- PR532 and PR533 exact heads CLEAN, CI 19/19 each. Existing supplier_profile fact
+  versions and source snapshot verifier identified for scoped case evidence.
+current_stage: company_profile_and_evidence_binding
 remaining:
 - Verify PR532 CI and stacked company portfolio PR CI; preserve review gates.
 - Bind saved profile/search and tenant-owned report/qualification evidence to scoped
@@ -55,9 +57,6 @@ test_results:
 - 79 passed, 1 skipped, 68 warnings (9.50s), Ruff/make check PASS
 - Disposable PostgreSQL actual migration 108 PASS; concurrent decision 200/409 and
   exactly one record PASS; DTR session advisory lock four checks PASS
-resume_instruction: Company portfolio first slice verified, check stacked review PR
-  CI. Next bind saved profile and company-specific qualification/report evidence to
-  existing scoped cases; preserve manual reference source_verified=false until authoritative
-  evidence. Legacy owner DTR/mobile unscoped and intentionally unchanged; no real
-  Sionika tenant or live scheduling/deployment. Preserve active SIBUR and separate
-  conditional DP rollout checkpoint.
+resume_instruction: Implement immutable case-to-owned-run and profile-version binding
+  with verified saved source snapshot and read-time verification; expose scoped search
+  criteria; do not start live search or credentialed source calls.
