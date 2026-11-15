@@ -65,18 +65,24 @@ completed:
   checks 11/11; unsigned Xcode 27.1 build-for-testing PASS twice. Additional mock
   account-switch scenario tool call declined; no live token, Keychain/device or simulator
   execution performed.
-current_stage: web_company_portfolio_and_decision
+- 'Existing /saas web cabinet extends canonical company portfolio routes: manual case,
+  paged list, history, explicit versioned human decision, source binding and qualified
+  evidence projection. Session replacement clears all prior private forms/reports
+  and portfolio, requests serialized, role/identity mismatches fail closed.'
+- 41 backend tests PASS, 1 optional skipped; rendered JS Node flow exercise identity
+  and session clearing, explicit confirmation, lost response replay and stale 409;
+  pytest wrapper PASS, node syntax/Ruff/make check PASS. Actual browser visual acceptance
+  not performed.
+current_stage: web_company_verified_next_native_decision_write
 remaining:
-- Check exact CI prior PR534/535 and new company PR; previous 532/533 green.
-- Run focused simulator account-switch/Keychain tests using isolated fixtures and
-  no real token; no live deployment.
-- Integrate existing SaaS web/Operator Workspace company-scoped portfolio and evidence,
-  then scoped human decision UI; avoid mixing owner Basic and SaaS tokens.
-- Implement company-scoped automated discovery and safe commercial identity, isolated
-  end-to-end acceptance.
+- Review stacked PRs 532 through web candidate; exact-head CI pending on recent PRs.
+- Add native company human decision write using same API, explicit confirmation, stale
+  revision and identical retry idempotency.
+- Company-scoped automatic discovery and commercial identity; isolated browser/simulator
+  and end-to-end acceptance.
 - Production migration/deployment and conditional DP rollout remain separate; preserve
-  SIBUR collection.
-last_verified_commit: bd975fe1a30c8f6454eeaffb65a97f5494502883
+  live SIBUR.
+last_verified_commit: 1967f264700ce2c3f90aabe9610b334225de917c
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -91,6 +97,9 @@ test_results:
   decoder/status 6/6 PASS; diff check PASS. Native XCTest compiled not executed.
 - 31 SaaS passed, 1 skipped, 33 warnings; Ruff PASS; Swift standalone assertions 11/11;
   native unsigned build-for-testing PASS; simulator XCTest compiled not executed.
-resume_instruction: Extend existing /saas company cabinet using canonical company-portfolio
-  routes; session state clearing and isolation, explicit human decision confirmation
-  and revision conflict. No owner Basic or production changes.
+- 41 backend passed, 1 skipped; standalone rendered JS scenario and pytest wrapper
+  PASS; node --check, Ruff, make check, diff PASS
+resume_instruction: Web company cabinet implemented; publish stacked PR, then implement
+  native scoped decision write and synchronize via backend. Do not route SaaS company
+  actions through legacy global Deal or owner credentials. No live tenant, research,
+  model, APNs, migration or deployment.
