@@ -1,6 +1,6 @@
 task_id: TA-CORE-GEMMA-REVIEW-20261115
 status: blocked
-goal: "Isolated review of draft PR497\u2013500; preserve real model quality gates."
+goal: Isolated review of draft PR497–500; preserve real model quality gates.
 definition_of_done:
 - Review candidate against consolidated core
 - Offline changed tests and standard checks
@@ -17,13 +17,18 @@ completed:
 - Pinned Smolensk case still has 86 SQL chunks in canonical arvectum database using
   read-only transaction. Authenticated collection stats attempted with 5s and 15s
   timeouts, neither returned a result; no LLM invoked.
-current_stage: blocked_on_real_collection_stats_timeout
+- Direct read-only DP DB connection PASS, exact pinned collection resources/documents/chunks/embeddings
+  86 each; all count queries under 10 ms.
+- Existing SDK stats raises DataPlatformUnavailableError; direct local health and
+  collection metadata timed out; curl health HTTP000 at 3s. Earlier health HTTP200;
+  intermittent HTTP availability, root cause unknown. No new LLM call.
+current_stage: blocked_on_intermittent_dp_http_availability
 remaining:
-- Diagnose bounded read-only existing Data Platform stats latency when research workload
-  permits; do not retry unboundedly or restart services.
-- Verify actual collection resources/embeddings and original source identity.
-- Run bounded source-locked live model evaluation when safe; retain prior model quality
-  and review gates.
+- Diagnose live HTTP service availability and request path without restarting or changing
+  active service; avoid repeated load.
+- After service stable, verify authenticated API returns exact 86/86/86/86 and validate
+  original-source identity.
+- Run bounded source-locked live model evaluation and semantic review.
 last_verified_commit: d5eb8439811f9ca1dc41253f5a136c5aa9e36c92
 test_results:
 - 105/105 draft-only PASS
@@ -31,8 +36,10 @@ test_results:
 - make check PASS; changed-file Ruff PASS; git diff --check PASS
 - Live read-only health/auth negative and positive controls PASS; actual collection
   stats NOT VERIFIED (5s and 15s timeout); SQL chunk count 86
-resume_instruction: 'Do not repeat credential setup: it matched and authenticated
-  local API probe passed. SQL 86 chunks confirmed. Diagnose existing Data Platform
-  stats latency (two timeouts; no new HTTP401 observed). Do not restart services,
-  mutate DB, bypass authentication, run concurrent heavy model or promote gold without
-  acceptance.'
+- Canonical DP direct SQL 86 resources,86 documents,86 chunks,86 embeddings; 2–9 ms
+  individual queries. SDK stats failed DataPlatformUnavailableError; HTTP health/metadata
+  timed out.
+resume_instruction: Do not repeat authorization setup, SQL counts or heavy tests.
+  SQL index exists; HTTP service intermittently unavailable, including health. Inspect
+  existing service latency when research allows and do not restart or modify production.
+  Only proceed to actual model after stable authorized API and evidence gate.
