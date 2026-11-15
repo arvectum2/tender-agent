@@ -845,3 +845,8 @@ sibur_automation_contractor_roles_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Read automation-contractor-role-review-v1.json. Confirm identified entities' procurement channels and unresolved identities, refresh technical extraction and continue cross-stage retrofit scope. Preserve independent UPS, reserve only, no inferred awards, DB changes or duplicate workers.
+
+sibur_contractor_finance_channels_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read contractor-channels-finance-v1.json; refresh source-bound technical extraction, expand independent contractor buyer channels, verify actual contracts and legal identities. No duplicate worker, DB mutation, contact or spend.

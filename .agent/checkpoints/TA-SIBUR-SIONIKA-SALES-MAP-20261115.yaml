@@ -203,14 +203,15 @@ completed:
 - Five original GPB list/detail pairs captured and hash-verified for Cryogenmash: GP635240 active, GP634651/GP633537/GP634648/GP641489 archived. GP641489 was prior secondary observation, not additional demand. Original detail archive deadline label conflicts with list; use per-ID list deadlines. No price/award confirmed.
 - GP635240 original DOCX explicitly confirms AGHK title 6500, AO Cryogenmash organizer versus OOO Cryogenmash Development customer in TZ; 64 numbered asset lines plus separate UPS line. Six LV sections, six transformers, two capacitor installations, one 10kV soft starter, three AVR cabinets, nine compressors and four circulation pumps. Three years experience, qualified staff, 12h departure and 24-48h arrival; no eligibility claim. Fourteen other selected links closed connections, no bypass.
 - Automation subcontractor review: 9 entity candidates, 6 INNs resolved, 12 first-party portfolio observations through Perm ASU Engineering, 7 exact related SIBUR archive identities with scope distinctions. MMUS 2024–27 electrical installation and commissioning; Ural-Controls V521 automation and design; Neftekhimnaladka EP600, Reksoft Kstovo, Gazproektinzhiniring BOV7, MIIMF; Naladchik and Sintegra identities pending. Separate similarly named Ufa ASU company excluded. No awards inferred. Five historical retrofit publication crosschecks, 4 additional owner Telegram crossreferences, including RP57 cancelled budget then solicitation; date typo retained. Company direct HTTP503; indexed official pages reviewed.
-current_stage: automation_subcontractor_and_retrofit_role_reconciliation
+- Contractor finance and channel screening: six 2025 financial profiles, Sintegra INN 1651065401 matched by official address and registry, 596 catalog publications (not contracts). Five unique procurement observations (one in 2026, four earlier); B2B-Center and ONLINECONTRACT. No primary award or end site verified. Naladchik and MIIMF probable identities, old liquidated MIIMF kept separate. Court A43-27052/2023 historical 2018 RusVinyl subcontract chain, not current. Other four independent procurement channels still unresolved. Archive worker observed 1855 captures and 1851 linked originals; extraction refresh pending.
+current_stage: contractor_finance_and_independent_procurement_channels
 remaining:
 - Continue broad SIBUR research, Cryogenmash/AGHK outsourced plant lifecycle, NKNH/Kstovo
   retrofit evidence and contractor 2024–26 purchases. Separate UPS channel, reserve
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: 2b7c3aec
+last_verified_commit: d0fa182c
 test_results:
   focused: 3
   ruff: pass
@@ -435,4 +436,14 @@ test_results:
     related_archive_ids: 7
     retrofit_crosschecks: 5
     verification: Existing frozen snapshot identity joins and source reference fields checked; company self-reports and archive records kept separate, no primary contract awards. No production code or DB change.
-resume_instruction: Read automation-contractor-role-review-v1.json in existing private sales-map runtime. Confirm procurement channels for identified legal entities (MMUS, Perm ASU Engineering, Ural-Controls, Neftekhimnaladka), resolve Naladchik/Sintegra/MIIMF identities and scope, continue broad SIBUR project and retrofit map. Refresh technical extraction from committed receipts; preserve independent UPS, reserve-only opportunities and existing workers. No inferred awards, duplicate jobs, contact, bid, spend, auto-merge, DP bypass or DB writes without existing gate.
+  contractor_finance_channels:
+    artifact_sha256: 2480d94be8c9de037a0227361ddea20cbbb5145706aa1077acd66e945808e88c
+    financial_profiles: 6
+    identity_observations: 3
+    exact_address_registry_matches: 1
+    probable_identity_matches: 2
+    independent_procurement_observations: 5
+    in_period_observations: 1
+    archive_linked_originals_observed: 1851
+    verification: Read back artifact, validated prior SHA and unique platform IDs. Secondary indexed records and company self-report only, no primary award, no DB mutation.
+resume_instruction: Read contractor-channels-finance-v1.json. Refresh extraction against existing committed receipt snapshots with established read-only extractor, verify source-linked equipment scope, then investigate other independent buyer channels and exact current contracts. Confirm probable legal identities by original documents, keep 2018/2022 historical data separate. Preserve independent UPS, existing worker, reserve-only opportunities; no DB writes without gate, no outreach, spending or inferred awards.
