@@ -204,7 +204,8 @@ completed:
 - GP635240 original DOCX explicitly confirms AGHK title 6500, AO Cryogenmash organizer versus OOO Cryogenmash Development customer in TZ; 64 numbered asset lines plus separate UPS line. Six LV sections, six transformers, two capacitor installations, one 10kV soft starter, three AVR cabinets, nine compressors and four circulation pumps. Three years experience, qualified staff, 12h departure and 24-48h arrival; no eligibility claim. Fourteen other selected links closed connections, no bypass.
 - Automation subcontractor review: 9 entity candidates, 6 INNs resolved, 12 first-party portfolio observations through Perm ASU Engineering, 7 exact related SIBUR archive identities with scope distinctions. MMUS 2024–27 electrical installation and commissioning; Ural-Controls V521 automation and design; Neftekhimnaladka EP600, Reksoft Kstovo, Gazproektinzhiniring BOV7, MIIMF; Naladchik and Sintegra identities pending. Separate similarly named Ufa ASU company excluded. No awards inferred. Five historical retrofit publication crosschecks, 4 additional owner Telegram crossreferences, including RP57 cancelled budget then solicitation; date typo retained. Company direct HTTP503; indexed official pages reviewed.
 - Contractor finance and channel screening: six 2025 financial profiles, Sintegra INN 1651065401 matched by official address and registry, 596 catalog publications (not contracts). Five unique procurement observations (one in 2026, four earlier); B2B-Center and ONLINECONTRACT. No primary award or end site verified. Naladchik and MIIMF probable identities, old liquidated MIIMF kept separate. Court A43-27052/2023 historical 2018 RusVinyl subcontract chain, not current. Other four independent procurement channels still unresolved. Archive worker observed 1855 captures and 1851 linked originals; extraction refresh pending.
-current_stage: contractor_finance_and_independent_procurement_channels
+- Combined research continuation: processed 268 additional originals since 1627 baseline, total 1895, extracted 1888, review 7. Prior saved v5 technical evidence reconciled by SHA without repeating extraction. Full AGHK historical annex parsed into 772 source rows, preserving duplicate candidate and UPS separation. Built industrial demand matrix for 6477 distinct source IDs across 11 overlapping categories and 482 service-source candidates with explicit site versus organizer-only evidence. Seven dated external project and supplier crosschecks, including SVEL historical production distinct from later nomination and award unknown.
+current_stage: consolidated_industrial_demand_and_lifecycle_mapping
 remaining:
 - Continue broad SIBUR research, Cryogenmash/AGHK outsourced plant lifecycle, NKNH/Kstovo
   retrofit evidence and contractor 2024–26 purchases. Separate UPS channel, reserve
@@ -446,4 +447,18 @@ test_results:
     in_period_observations: 1
     archive_linked_originals_observed: 1851
     verification: Read back artifact, validated prior SHA and unique platform IDs. Secondary indexed records and company self-report only, no primary award, no DB mutation.
-resume_instruction: Read contractor-channels-finance-v1.json. Refresh extraction against existing committed receipt snapshots with established read-only extractor, verify source-linked equipment scope, then investigate other independent buyer channels and exact current contracts. Confirm probable legal identities by original documents, keep 2018/2022 historical data separate. Preserve independent UPS, existing worker, reserve-only opportunities; no DB writes without gate, no outreach, spending or inferred awards.
+  combined_industrial_research:
+    original_documents: 1895
+    extracted: 1888
+    review: 7
+    industrial_publications: 6477
+    service_publications: 482
+    schedule_rows: 772
+    verification: Existing extractor finished; five private artifact hashes verified; exact source references retained; no new awards or prices, no DB mutation by research.
+    artifacts:
+      installed-base-model-evidence-v5.json: 46df5baf21c00105f7cd780ec155b1a99abde8fab67f060b514a93f5746e47ea
+      aghk-electrical-schedule-full-v1.json: 8aafa642eb5601f8c486e78e3b7e1edd1c7ad6e72ad1d8e76be4fb8ff0b760c8
+      industrial-demand-matrix-v1.json: 24b71b63327e25e79e7eeafd3b5ea920ee1a89740f6dc9b510dc7ffa3f07917a
+      industrial-service-site-matrix-v1.json: f89486fb85c9ea981c862f5e36a61e7ba50810f4f2b358bf760edd3d870f7cb1
+      project-stage-supplier-crosscheck-v1.json: e75d1f05be55beb3d0c826d45a3634a45a4f2527270c09999c87981fb89e80fc
+resume_instruction: Read combined artifacts in existing private sales-map runtime. Continue contract and supplier evidence, exact procurement access and latest project changes; fill actual buyer attribution gaps, prioritize service and retrofit P0, keep UPS independent. Use existing archive worker; no duplicate jobs, outreach, bid, spending, inferred awards or DB writes without gate.

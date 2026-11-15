@@ -850,3 +850,8 @@ sibur_contractor_finance_channels_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Read contractor-channels-finance-v1.json; refresh source-bound technical extraction, expand independent contractor buyer channels, verify actual contracts and legal identities. No duplicate worker, DB mutation, contact or spend.
+
+sibur_combined_industrial_research_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Reuse five verified private artifacts, continue contract and supplier evidence, buyer attribution and service demand. Keep independent UPS and existing worker, no inferred awards or duplicate jobs.
