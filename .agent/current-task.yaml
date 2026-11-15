@@ -987,3 +987,8 @@ sibur_v24_catalyst_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Continue V24 external award and technical scope review.
+
+sibur_v25_court_scope_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Continue V25 outcome and primary technical research.
