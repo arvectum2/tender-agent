@@ -22,13 +22,15 @@ completed:
 - Existing SDK stats raises DataPlatformUnavailableError; direct local health and
   collection metadata timed out; curl health HTTP000 at 3s. Earlier health HTTP200;
   intermittent HTTP availability, root cause unknown. No new LLM call.
-current_stage: blocked_on_intermittent_dp_http_availability
+- 'Data Platform candidate: both old-code HTTP concurrency regressions reproduced
+  blocking; Starlette run_in_threadpool fixes synchronous upload route calls; 44 API/SDK
+  tests passed. Draft DP PR130 head 650263f, not deployed.'
+current_stage: blocked_pending_dp_fix_review_and_live_acceptance
 remaining:
-- Diagnose live HTTP service availability and request path without restarting or changing
-  active service; avoid repeated load.
-- After service stable, verify authenticated API returns exact 86/86/86/86 and validate
-  original-source identity.
-- Run bounded source-locked live model evaluation and semantic review.
+- Verify DP PR130 CI and review; verify actual live runtime provenance and separate
+  update approval after research coordination.
+- Confirm authenticated health/stats responsiveness under controlled upload workload,
+  then bounded live Gemma evaluation.
 last_verified_commit: d5eb8439811f9ca1dc41253f5a136c5aa9e36c92
 test_results:
 - 105/105 draft-only PASS
@@ -39,7 +41,7 @@ test_results:
 - Canonical DP direct SQL 86 resources,86 documents,86 chunks,86 embeddings; 2–9 ms
   individual queries. SDK stats failed DataPlatformUnavailableError; HTTP health/metadata
   timed out.
-resume_instruction: Do not repeat authorization setup, SQL counts or heavy tests.
-  SQL index exists; HTTP service intermittently unavailable, including health. Inspect
-  existing service latency when research allows and do not restart or modify production.
-  Only proceed to actual model after stable authorized API and evidence gate.
+- DP 2 expected old-code failures; patched 44/44; Ruff/diff PASS
+resume_instruction: DP PR130 proves a blocking defect, not exclusive live incident
+  root cause. Do not repeat auth/SQL counts or synthetic regressions; verify CI, coordinate
+  review and separately approved runtime switch. No restart during research.

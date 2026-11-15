@@ -32,14 +32,17 @@ completed:
 - Current Operator Workspace image 89d4bb43 healthy, live workspace alembic revision
   107_add_procurement_learning_observations matches candidate head; old-to-candidate
   no migration or compose changes, Python lock and pyproject changed.
-current_stage: review_ready_and_dp_http_availability_blocked
+- 'Runtime packaging PR531 aa2edbac: 51 focused tests and offline ARM64 image verified;
+  GitVerse mirror failed HTTP504; failed-only rerun requested on run 43753810044.'
+- Data Platform upload event-loop blocking reproduced and fixed on separate canonical
+  DP branch; PR130 head 650263f; 44 API/SDK tests PASS.
+current_stage: review_ready_with_dp_fix_candidate
 remaining:
-- Obtain required REVIEW merge authorization for PR529/530; do not bypass draft gates.
-- Diagnose intermittent local Data Platform HTTP service availability with bounded
-  read-only checks after active research workload; direct SQL index counts verified.
-- Check dependency changes, prepare candidate image and safe rollback plan in isolation,
-  then separately authorize runtime switch.
-- Real source-locked Gemma quality acceptance remains pending.
+- Verify PR531 CI and mirror retry and DP PR130 exact-head CI.
+- Obtain required REVIEW merge approvals; preserve research and no live switch before
+  separate approval.
+- After safe DP rollout and authenticated live acceptance, verify Gemma and runtime
+  candidate.
 last_verified_commit: 20144887f70a15c149e7418cca284b2200995126
 test_results:
 - 378 passed, 44 warnings, twice; final 8.30s; in-memory SQLite
@@ -48,8 +51,8 @@ test_results:
 - git diff --check PASS
 - GitHub PR529 19/19 and PR530 19/19 exact-head SUCCESS; both CLEAN
 - Live workspace schema head matches candidate, read-only inspection
-resume_instruction: Both draft review PRs 529 and 530 CI green; preserve review authorization.
-  Do not repeat DP auth or SQL counts (86 each, verified); HTTP stats SDK and health
-  intermittently fail independently of fast SQL. Continue with safe diagnostics and
-  isolated runtime dependency/image review; no restarts or production mutation during
-  research.
+resume_instruction: Check TA PR531 exact head aa2edbac and failed-only mirror rerun
+  43753810044, DP PR130 at 650263f. PR529/530 green. Proven DP upload concurrency
+  fix not deployed; verify actual runtime source and controlled live acceptance after
+  coordination. Packaging branch has own completed checkpoint and rollback plan. No
+  live research or database changes.
