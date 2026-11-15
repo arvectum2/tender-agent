@@ -217,7 +217,8 @@ completed:
 - V10: eight judicially identified contracts/specifications DGP2 and adjacent ZSNH objects; correction SPK Magistral terminated 2024-09-06, replacement unknown; Delta debt separated from electrical market. Ener Holding 2025 financial profile and historical procurement channel. Archive worker cooperatively restarted with updated linker, existing index executor activated on verified 587 OOXML bridge; 16 targeted tests passed, first extraction 3 docs, gate passed; first full index/link cycle not yet confirmed.
 - Archive first full cycles passed, replay idempotent; SNEMA cross-project evidence for 8 sites, SMK Northwest subcontract matched by domain and SRO directory, two other contractor portfolios, 5 external procurement observations (2 outside SIBUR excluded), 10 exact archive scope records, no replacement SPK Magistral established. 21 tailored P1/P2 actions, all 34 cards now have specific actions. V11 sources and hashes checked.
 - V12 clean executive report rebuilt in 11 sections with 34 cards, 2597 unique project archive references and 37 SHA-verified source artifacts. Conditional plan band sums 36 rows 1.7–9.3bn, Q4 27 rows 0.8–4.8bn, direct-only subset separate, not market estimates. Two 2024/25 exact specification prices total 20,077,047.23 RUB incl VAT; debt/actual work/2023 estimates separate. Court verifies NaladkaPromService INN; new KOS InterSvet settlement, scope and total price unknown. Hexene reached rated 50kt/y, RP50 and four planned substations confirmed. Official Telegram 2111857/1 missing frozen archive documented. Existing workers running, no new DB action.
-current_stage: consolidated_executive_report_and_market_boundary
+- V13: refreshed all 27 official current list pages, 315 unique IDs, no observed changes vs earlier snapshot. Transport interrupted before receipt; reconstructed from full saved raw set, verified hashes and parser; no duplicate download. 20 selected current procedures and 7 original worksheets/8 URLs verified. Added KOS compressor control 2145701/1 and NKNH motor service 2145706/1 (2027–29, 12mo warranty), P0 routing now 15, 36 total. Exact plan links remain unproven for 8 unmatched rows, plan936 subject match only. No new signed prices, no new DB writes. V13 report refined in place of append-only history.
+current_stage: refreshed_current_procurement_and_technical_packages
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -226,7 +227,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: f0fe8e4f
+last_verified_commit: 267a7dda
 test_results:
   focused: 3
   ruff: pass
@@ -679,4 +680,25 @@ test_results:
       consolidated-project-map-v12.json: 37e137b59c88beb3331a66bae21386bbf3801f4a073248ab58c81e37fca1bceb
       commercial-action-register-v6.json: 9963cc398e00c5357a65e3f9921d475838ca879fad6a9592ef5e3aaece997124
       consolidated-project-report-v12.md: 1ea2e9fe488ac73216f49cff9add9c5729284dc463ba7dcc58211ea50146a1f1
-resume_instruction: "Read consolidated-project-report-v12.md, map V12, action register V6, market-value-boundary-v1.json. Continue project-specific award and price search, primary archive gap closure (2111857/1), confirmed contractor/production asset mapping, qualifications and current procurement refresh. Refine clean report rather than append duplicate summaries. Deadline 17 Nov. Existing workers continue; no duplicate jobs, preserve gates, UPS and private owner data separately. Do not equate full plan range sums with TAM or Sionika revenue."
+  current_procurement_v13:
+    project_cards: 36
+    p0: 15
+    p1: 20
+    p2: 1
+    current_publications: 315
+    selected_current: 20
+    primary_worksheets: 7
+    project_unique_archive_refs: 2599
+    source_artifacts: 38
+    unmatched_plan_rows: 8
+    archive_indexed: 38
+    server: {"documents": 353, "chunks": 5859, "embeddings": 5859}
+    executor_status: running
+    archive_status: running
+    technical_originals: 2371
+    artifacts:
+      active-refresh-and-qualification-v2.json: c68677e02e1115d5c7b2a82383abd24e2e95fbc0e31aa8412d9fbc3bc8637e45
+      consolidated-project-map-v13.json: f058b90252ea7e79e20232e13251c9a4450791c80c25b526aecfe0c74c36c774
+      commercial-action-register-v7.json: 9134df2c1570926771cb127fef4ac2e9258a3597eb516a50c28ef493f024932a
+      consolidated-project-report-v13.md: 6826f3b80564dcbc5f87e0b449d894c8412488766a85c98255cc3b1a3d37059e
+resume_instruction: "Read V13 map/report and commercial-action-register-v7.json; prioritize close-date procedures and project-specific award and price evidence, original archive gap 2111857/1, multi-source contractor chains and remaining plan mismatches. Final report deadline 17 November. Keep existing workers; no duplicate jobs, gated DB, UPS independent, private owner data separate. Recheck current deadlines when relevant; 15 Nov 15:54 UTC snapshot complete and unchanged. Do not infer award, eligibility or price."

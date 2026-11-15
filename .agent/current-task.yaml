@@ -917,3 +917,8 @@ sibur_executive_report_v12_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Read clean V12 report and market-value boundary; close evidence gaps and refresh live outcomes by 17 November.
+
+sibur_current_procurement_v13_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read latest V13 and continue contract/price and live procurement evidence; deadline 17 November.
