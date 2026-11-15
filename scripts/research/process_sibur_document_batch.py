@@ -20,13 +20,13 @@ WORKER = """
 import hashlib,json,os,sys
 from arvectum_data_client import DataPlatformClient
 raw=sys.stdin.buffer.read()
-mode,name,mime,sha=sys.argv[1:]
+mode,name,mime,sha,request_timeout=sys.argv[1:]
 if hashlib.sha256(raw).hexdigest()!=sha:
     raise ValueError("SHA mismatch")
 with DataPlatformClient(
     base_url=os.environ["AI_CORP_RAG_DATA_PLATFORM_BASE_URL"],
     api_key=os.environ["AI_CORP_RAG_DATA_PLATFORM_API_KEY"],
-    timeout_seconds=25,
+    timeout_seconds=int(request_timeout),
 ) as client:
     collection="tender-agent:sibur-public-research"
     uri="content-sha256://"+sha
@@ -142,10 +142,13 @@ def operate(directory, row, mode):
                        else "persistent-pilot-" + sha[:12] + ".json")
     try:
         raw = verified_bytes(f, sha)
+        request_timeout = int(os.environ.get("TA_BATCH_REQUEST_TIMEOUT", "25"))
+        if not 25 <= request_timeout <= 180:
+            raise ValueError("invalid request timeout")
         proc = subprocess.run(
             ["docker", "exec", "-i", "arvectum-local-e2e-api-1", "python", "-c", WORKER,
-             mode, f.name, mimetypes.guess_type(f.name)[0] or "application/octet-stream", sha],
-            input=raw, capture_output=True, timeout=30, check=True,
+             mode, f.name, mimetypes.guess_type(f.name)[0] or "application/octet-stream", sha, str(request_timeout)],
+            input=raw, capture_output=True, timeout=request_timeout + 10, check=True,
         )
         data = json.loads(proc.stdout)
         r = data["result"]
@@ -204,10 +207,12 @@ def main():
     p.add_argument("--formats", nargs="+", choices=["docx", "xlsx", "pdf", "pptx"],
                    default=["docx", "xlsx"])
     p.add_argument("--prewrite-receipt", type=Path)
+    p.add_argument("--request-timeout", type=int, default=25)
     a = p.parse_args()
     os.umask(0o077)
-    if not 1 <= a.limit <= 30 or not 1 <= a.max_chunks <= 100:
+    if not 1 <= a.limit <= 30 or not 1 <= a.max_chunks <= 100 or not 25 <= a.request_timeout <= 180:
         raise ValueError("invalid batch")
+    os.environ["TA_BATCH_REQUEST_TIMEOUT"] = str(a.request_timeout)
     if a.mode == "index":
         gate = json.loads(a.prewrite_receipt.read_text()) if a.prewrite_receipt else {}
         require_prewrite(gate)
