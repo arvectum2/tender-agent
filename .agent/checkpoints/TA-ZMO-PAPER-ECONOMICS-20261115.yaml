@@ -1,0 +1,15 @@
+task_id: TA-ZMO-PAPER-ECONOMICS-20261115
+status: in_progress
+goal: Build evidence-bound historical quotation-session economics without actual bids or unsupported price attribution.
+definition_of_done:
+  - Replay verified original public auction receipts, use exact decimal prices and identify actual historical bid versus hypothetical economics.
+  - Report basket cost thresholds and explicit missing inputs; avoid inventing vendor costs or SKU winning prices.
+  - Focused tests and live private pilot, code and checkpoint committed.
+completed:
+  - Source-specific public auction pilot verified four auction details in previous stage.
+current_stage: reuse_existing_economics_and_source_review
+remaining:
+  - inspect existing economics, implement and validate paper-only analysis
+  - review archive duplicates and other source availability independently
+last_verified_commit: 914e9ae871eccca34ad43afac86d591cb1e11ad1
+resume_instruction: Do not duplicate live workers. Inspect public auction evidence, existing commercial calculation modules and archived review pages.
