@@ -758,3 +758,11 @@ sibur_external_channel_review_v2_20261115:
     contractor procurement and direct buying channel evidence. Do not count SIBUR
     mirrors or IT procurement as industrial demand. No contacts, bidding, spend, auto-merge
     or DP bypass.
+sibur_sionika_ups_portfolio_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read sales-map-v4.json, ups-demand-review-v1.json, contractor-procurement-channels-v3.json
+    and private role overlay. UPS including IT is explicitly relevant; uncertain battery
+    applications marked separately. Continue broad Sionika procurement and direct
+    customer channels, source-bound exact scope and service cycles. No contact, bid,
+    spend, duplicate worker, auto-merge or DP bypass.

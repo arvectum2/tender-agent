@@ -99,14 +99,27 @@ completed:
 - Favorit financial dossier; Sfera no buyer records in checked catalogs, Pondera own
   public procurement not found, Progress catalog overlaps SIBUR. No inference of absent
   private demand.
-current_stage: external_contractor_procurement_registry_v2
+- Owner expanded portfolio to UPS, including IT/server UPS, batteries, spares and
+  service. New family UPS plus separate battery-application review; excludes car/forklift/tool/hydraulic
+  false matches. 30394 frozen publications reclassified, 6732 total core lexical/review
+  candidates (+97 unique), 174 explicit UPS and 119 uncertain battery applications,
+  23 service signals and 14 explicit components, 250 prefix groups. 9 focused tests
+  and Ruff pass.
+- '293 UPS/battery candidates source coverage: 228 with verified exact source references,
+  37 unique captured originals; 304 missing identity-URL pairs. Historical NIPIGAZ
+  2081424/1 47 requested UPS, 2141617/1 battery lot AGPZ external Gazprom; Progress
+  2115156/1 AGHK title6100 UPS/AKB; 2121831/1 STG 2026–28 service; 2144327/1 JOVYATLAS
+  exact model no analogues, one original linked. No awards inferred.'
+- External channel v3 retains 23 IDs and marks NIPIGAZ3735296 relevant UPS spares
+  independent of IT category; 3699009 typo/cancelled stays review.
+current_stage: ups_portfolio_expanded_and_document_coverage_review
 remaining:
-- Expand primary industrial EPC procurement evidence, verify exact attachment scope
-  and direct acquisition channels for Favorit, Progaz, SNEMA, Pondera, Sfera. Preserve
-  owner roles.
-- Prior unresolved project roles/contract evidence, missing document references and
-  support category scope remain. DP blocked unchanged.
-last_verified_commit: 4e6487490d7ac63b78b0ff5ae21282c830308202
+- Preserve expanded user UPS profile, qualify 119 battery cases and 304 missing exact
+  links alongside broader industrial portfolio. Identify installed base and repeat
+  service opportunities.
+- Expand primary EPC purchasing evidence and direct channels; preserve relationship
+  overlay and separate AGPZ/AGHK. Existing worker ownership; no DP bypass.
+last_verified_commit: b715a26b268446ad578773f9b48b4c396d00679e
 test_results:
   focused: 3
   ruff: pass
@@ -192,8 +205,21 @@ test_results:
     new_ids: 9
     verification: Unique ID and legal entity joins checked; no code change; external
       pages manually reviewed, original bytes not archived.
-resume_instruction: Read contractor-procurement-channels-v2.json, isk-favorit-dossier-v1.json,
-  external-channel-coverage-v1.json and private owner overlay. Continue actual industrial
-  contractor procurement and direct buying channel evidence. Do not count SIBUR mirrors
-  or IT procurement as industrial demand. No contacts, bidding, spend, auto-merge
-  or DP bypass.
+  ups_expansion:
+    artifacts:
+      sales-map-v4.json: 76476a7231ed3947ed0b809e5f1ab60fb813edafae6c80f4145e8398f88140e9
+      ups-demand-review-v1.json: 69169db6663d4579beccf3cda60842ebf14981322e468e859bfaf3527d053fe7
+      contractor-procurement-channels-v3.json: cdff238cbb46f140d7d1dc15e61f4883242227e33d9ea9aa6ef78007acf721af
+    focused_tests: 9
+    ruff: pass
+    core_review_candidates: 6732
+    explicit_ups: 174
+    battery_application_review: 119
+    document_covered: 228
+    originals: 37
+    missing_reference_pairs: 304
+resume_instruction: Read sales-map-v4.json, ups-demand-review-v1.json, contractor-procurement-channels-v3.json
+  and private role overlay. UPS including IT is explicitly relevant; uncertain battery
+  applications marked separately. Continue broad Sionika procurement and direct customer
+  channels, source-bound exact scope and service cycles. No contact, bid, spend, duplicate
+  worker, auto-merge or DP bypass.
