@@ -173,15 +173,30 @@ completed:
   223FZ purchasing channel KOS Lushnikovskaya PGU, 2.043748577bn listed whole lot
   price, type unverified; 2 additional contract observations. Owner confirms late2025
   permit, May2026 launch.'
-current_stage: nknh_kos_energy_project_and_contractor_chain
+- Tatem procurement buyer role validated from full public catalog rows, 10 distinct
+  ONLINECONTRACT 2020–2021 KOS records (outside primary period). Corrected search
+  snippet shifted-ID associations; 369000 Tatneft and 372204 general equipment and
+  376675 furniture excluded; 368671 catalyst,367768 reactor,372172 line D,375783 installation
+  materials for UPS not UPS supply. Tatem catalog711 historical, Energoprogress1554
+  March2026 catalog includes plans, not additive or period totals.
+- 'Energoprogress equipment buying channel: cancelled 32616321541 PTK ASUTP Kazan
+  TEC2 NMCK137265536.33 outside SIBUR, 32615817206 HV meter for capacitive-current
+  compensation GRU6–6.3kV listed1.5433m, end site and result unresolved; do not count
+  as SIBUR demand. Lushnikovskaya PGU supplier/commissioning roles: PSG self-report
+  SGen5/SIPROTEC5/Thyripol/SINAMICS GL150 and excitation UPS; STGT reported commissioning;
+  system operator confirms TEC3 110kV grid changes and two autotransformers. Owner
+  capacity281MW authoritative. Direct historical SIBUR2140253/1 RZA maintenance confirmed
+  in frozen archive, no linked originals yet, ended 8Sep2026.'
+current_stage: contractor_purchase_and_post_commissioning_service
 remaining:
-- Continue SIBUR broad project and contractor buyer map, Energoprogress buying history
-  and protocols, Tatem qualification, evidence-backed retrofit and repeat service.
-  Preserve independent UPS channel, owner roles and saved lead reserve.
-- Existing capture worker untouched. Award and price gaps and 29 historical in-period
-  supplemental records remain pending; fresh shared backup/gate/replay required. DP
-  blocked unchanged.
-last_verified_commit: bd8f489e27f3df4acf6ac554b66a28aae5f1223a
+- Continue broad SIBUR map, especially other actual 2024–26 contractor equipment purchases
+  and service/retrofit plans. Tatem current public procurement channel not established;
+  Energoprogress SIBUR linked buying history still limited. Preserve owner role overlay
+  and independent UPS stream.
+- Existing acquisition worker untouched, exact reference gaps, awards and 29 supplemental
+  in-period publications pending; DB writes require fresh authorized shared backup/gate/replay.
+  DP blocked unchanged.
+last_verified_commit: 5845038f6a978fc597b4fa4586b116c0c9d2d23a
 test_results:
   focused: 3
   ruff: pass
@@ -363,8 +378,18 @@ test_results:
     external_observations: 3
     verification: Read-only exact source refs and SHA validation. External public
       source review. No code or DB changes.
-resume_instruction: Read nknh-kos-energy-project-chains-v1.json and prior CRP2 chain,
-  private role overlay. Continue SIBUR project and contractor buyer map, especially
-  public procurement evidence and lifecycle demand. P0 retrofit, independent UPS.
-  No external market diversion, contact, bid, spend, duplicate workers, auto-merge
-  or DP bypass.
+  tatem_energoprogress_procurement_review:
+    sha256: ae356e06171a2da4c2adcf93124c899b10e25438291ebe636424397576ef9536
+    external_unique_publications: 12
+    tatem_historical: 10
+    energoprogress_other_or_unresolved: 2
+    role_observations: 3
+    pguservice_archive_verified: true
+    pguservice_exact_originals: 0
+    verification: Full catalog rows checked, distinct IDs and archive join validated.
+      No original external procurement bytes or signed awards, no code/DB changes.
+resume_instruction: Read tatem-energoprogress-procurement-review-v1.json and prior
+  energy chains. Continue SIBUR-linked 2024–26 contractor purchase and post-commissioning
+  service evidence, P0 retrofit, broader portfolio, independent UPS channel. Historical
+  and external non-SIBUR records separate; no contact, bid, spend, duplicate workers,
+  auto-merge or DP bypass.

@@ -820,3 +820,11 @@ sibur_nknh_kos_energy_chain_20261115:
     role overlay. Continue SIBUR project and contractor buyer map, especially public
     procurement evidence and lifecycle demand. P0 retrofit, independent UPS. No external
     market diversion, contact, bid, spend, duplicate workers, auto-merge or DP bypass.
+sibur_contractor_purchase_service_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read tatem-energoprogress-procurement-review-v1.json and prior energy chains.
+    Continue SIBUR-linked 2024–26 contractor purchase and post-commissioning service
+    evidence, P0 retrofit, broader portfolio, independent UPS channel. Historical
+    and external non-SIBUR records separate; no contact, bid, spend, duplicate workers,
+    auto-merge or DP bypass.
