@@ -240,6 +240,9 @@ class Runner:
         lane = "sibur"
         if self.state["lanes"].get(lane, {}).get("index_inflight"):
             raise Blocked("previous ingest interrupted before reconciliation; review exact DP resources")
+        if self.state["lanes"][lane].get("archive_bridge_sha256"):
+            self.archive_index_lane()
+            return
         args = ["--snapshot", self.root / "sibur-full-sweep-v2", "--directory", self.docs,
                 "--priority-queue", self.root / "sibur-preliminary-priority-queue.json"]
         for cap in (8, 12, 20, 40, 100):
@@ -285,7 +288,51 @@ class Runner:
             if self.stop_requested():
                 self.update(lane, status="stopped", step="operator STOP")
                 return
-        self.update(lane, status="exhausted", step="supported pre-extracted OOXML index queue drained; PDF/legacy review remains")
+        self.archive_index_lane()
+
+    def archive_index_lane(self):
+        lane="sibur"
+        digest=self.state["lanes"][lane].get("archive_bridge_sha256")
+        if not digest:
+            self.update(lane,status="exhausted",step="legacy queue drained; archive bridge not activated")
+            return
+        bridge=self.root/"sibur-sales-map-20261115/archive-index-bridge-v1.json"
+        raw=bridge.read_bytes()
+        if hashlib.sha256(raw).hexdigest()!=digest:raise Blocked("archive bridge changed")
+        rows=json.loads(raw)["ready"]
+        def sync(index):
+            selected=[r for r in rows if r["sha256"] in index]
+            if not selected:return
+            payload=json.dumps({"rows":selected,"indexed":{r["sha256"]:index[r["sha256"]] for r in selected}},ensure_ascii=False).encode()
+            linked=self.importer(lane,self.sibur,"link_sibur_archive_index",payload)
+            repeat=self.importer(lane,self.sibur,"link_sibur_archive_index",payload)
+            if repeat["updated"] or repeat["verified_links"]!=linked["verified_links"]:raise Blocked("archive index link replay mismatch")
+            self.update(lane,archive_indexed=len(selected),archive_links=linked,archive_synced_count=len(index))
+        while not self.stop_requested():
+            with self.mutation_guard():
+                before=self.local_index();self.reconcile_index(before)
+                if self.state["lanes"][lane].get("archive_synced_count")!=len(before):
+                    self.gate(lane);self.backup_ta(lane);sync(before)
+                gate=self.gate(lane)
+                # Process_document may have side effects: keep the same gate and
+                # reconcile the collection even after extraction transport failure.
+                self.update(lane,index_inflight=True,index_baseline=len(before))
+                error=None
+                try:
+                    x=self.module(lane,self.sibur,"archive_index_batch","--root",self.root,"--digest",digest,"--mode","extract","--gate",gate,"--limit",3,timeout=650).decode()
+                    self.reconcile_index(self.local_index())
+                    y=self.module(lane,self.sibur,"archive_index_batch","--root",self.root,"--digest",digest,"--mode","index","--gate",gate,"--limit",3,"--cap",100,timeout=650).decode()
+                except Blocked as exc:error=exc
+                after=self.local_index();self.reconcile_index(after)
+                if after!=before:
+                    self.gate(lane);self.backup_ta(lane);sync(after)
+                if error:raise error
+                self.update(lane,index_inflight=False,archive_cycles=self.state["lanes"][lane].get("archive_cycles",0)+1)
+                if not planned(x,"planned") and not planned(y,"planned"):
+                    self.update(lane,status="exhausted",step="archive supported queue drained; oversized and PDF review remains")
+                    return
+            time.sleep(1)
+        self.update(lane,status="stopped",step="operator STOP")
 
     def guarded(self, lane, callback):
         if self.state["lanes"].get(lane, {}).get("status") in {"blocked", "exhausted"}:
