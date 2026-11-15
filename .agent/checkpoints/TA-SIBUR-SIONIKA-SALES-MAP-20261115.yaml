@@ -74,18 +74,36 @@ completed:
   card identifies SNEMA-SERVIS as procurement organizer DGP2, aggregator evidence
   AGHK service and self-reported subcontractor chain; Wison directory-only pending
   primary source.'
-current_stage: commercial_roles_and_service_channels_review
+- 'Pondera Industry INN 7720433441: six self-reported SIBUR construction prime/package
+  roles, project-specific dates not verified actual completion. Financial source review
+  revenue 12.244752bn RUB/2025 net profit 349.644m, 2024 loss 462.996m, tax debt 199.572195m
+  as of 2026-09-01; P0 research target, no firm qualification or credit approval.'
+- Identified three distinct Progaz legal entities. Progaz Postavka and Progaz Engineering
+  same INN 9709111035 according to historical and current accounting/registry aggregators;
+  no duplicate. Four total INN including SNEMA. 14 distinct historical B2B procedure
+  IDs retained, five Progaz group and nine SNEMA, with source classes and project
+  evidence/uncertainty, three outside SIBUR and two Tobolsk unresolved. No current
+  or awarded claims. Owner confirms Progaz VRU general contractor/supplier and group
+  self-reports EPC/BOO.
+- Yamata September 2026 termination notice reported by press; Esta candidate only,
+  replacement award unverified. Pondera self-report construction package role does
+  not resolve Wison exact EPC role. Historical AGHK EPC/EP roles kept dated; no current
+  extension inferred.
+- 'Reconciled all 926 unresolved URL references against existing acquisition receipts
+  without new fetch: 3 exact-bound originals across 2 procedures, 4 bytes with missing
+  exact ref, 2 prior review, 917 uncaptured; 1212 exact identity-URL pairs outstanding.'
+current_stage: contractor_procurement_channels_and_document_gap_reconciliation
 remaining:
-- Honor private owner role overlay; focus on selling to EPC/other buyers, co-development
-  with known partner and competitor intelligence, no unilateral reclassification.
-- Verify new service/construction channel legal identities and procurement roles,
-  prioritize documented supply procurement; expand operating enterprise installed-base
-  and repeat maintenance demand, distinguish cancelled/budget work.
-- Reconcile missing 926 URL bindings with existing capture worker and frozen snapshot
-  gaps. Current source status must be refreshed. No blind retries or duplicate capture.
-- Complete SOP category coverage; resolve Data Platform through authorized recovery
-  only.
-last_verified_commit: d6eb6b18ae9bdab95c1d5096a90203305e029d12
+- Expand actual procurement history for Pondera, Progaz group, SNEMA and other EPC/service
+  contractors; reconcile exact legal entities and old names, distinguish project/end
+  site and external market, current status and historical closed procedures.
+- Check current construction role of Esta/Yamata and Wison exact package through primary
+  evidence. No inferred award or role conflict override.
+- Resolve 1212 exact URL/identity gaps via existing acquisition worker; four prior
+  captured originals need source reference audit, not redundant downloads; do not
+  blindly retry prior review.
+- Expand installed-base demand and support-services scope; DP remains blocked.
+last_verified_commit: 716e22e71af10866b2ca94885c33b59d00105a37
 test_results:
   focused: 3
   ruff: pass
@@ -149,8 +167,20 @@ test_results:
     additional-project-channel-observations-v1.json_sha256: 2976ba35ef5dbcc0d4ca8cc08b7fce6722777497268bd5cbdbfe333e20549d49
     verification: read-only evidence review, no runtime code changed; prior tests
       retained
-resume_instruction: Read private role overlay, Sfera dossier, service-demand-review-v1
-  and additional-project-channel-observations-v1. Prioritize full Sionika nomenclature
-  and EPC/maintenance customers. User commercial roles authoritative, separate from
-  documentary project roles; do not publish private relations. Continue existing acquisition
-  ownership and authorized research. No contact, bid, spend, auto-merge or DP bypass.
+  contractor_channel_review:
+    artifacts:
+      pondera-industry-dossier-v1.json: 7da9c3bfc7de0584eac8f1ff817f6d71f8e30d9b61be1513aff9d6c742fae7af
+      contractor-procurement-channels-v1.json: d7e09859676db870646d34da6d0a2b7e81520d09eb03dc5611be284ea1f6c1d9
+      project-role-changes-review-v1.json: a03f2497201f5f8761c511bccc9cb6f16696f1d7fba033a9222d620de11739d8
+      package-link-reconciliation-v1.json: 4bfc6fee8f585afd41d1d25412f625593809d6b41654b18c39f1c4d3422c6fb9
+    historical_b2b_ids: 14
+    entities: 4
+    new_exact_bound_originals: 3
+    unresolved_identity_url_pairs: 1212
+    verification: Read-only research and artifact checks passed; no new production
+      code.
+resume_instruction: Read contractor-procurement-channels-v1, pondera-industry-dossier-v1,
+  project-role-changes-review-v1, package-link-reconciliation-v1 and private owner
+  role overlay. Continue broad Sionika contractor procurement/installed-base map,
+  exact primary evidence and current project roles. Respect existing workers and no
+  duplicate captures. No actual contact, bid, spend, auto-merge or DP bypass.

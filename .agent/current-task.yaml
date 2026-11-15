@@ -742,3 +742,11 @@ sibur_sionika_commercial_roles_20261115:
     roles authoritative, separate from documentary project roles; do not publish private
     relations. Continue existing acquisition ownership and authorized research. No
     contact, bid, spend, auto-merge or DP bypass.
+sibur_sionika_contractor_procurement_channels_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read contractor-procurement-channels-v1, pondera-industry-dossier-v1, project-role-changes-review-v1,
+    package-link-reconciliation-v1 and private owner role overlay. Continue broad
+    Sionika contractor procurement/installed-base map, exact primary evidence and
+    current project roles. Respect existing workers and no duplicate captures. No
+    actual contact, bid, spend, auto-merge or DP bypass.
