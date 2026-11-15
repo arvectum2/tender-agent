@@ -709,3 +709,11 @@ archive_technical_snapshot_2026_11_15_0918:
     by exact SHA before refresh. GPB recovery and archive details running. DP remains
     blocked; no blind retry or circumvent blocked deployment. Continue direct PQ evidence,
     contractor/contract mapping and approved independent tracks.
+archive_snapshot_2026_11_15_0936:
+  checkpoint: .agent/checkpoints/TA-ARCHIVE-DOCUMENT-EVIDENCE-20261115.yaml
+  status: in_progress
+  resume: Inspect actual state. Process new committed original technical files only;
+    SIBUR eight categories traversed with review and import finished. GPB protocol
+    and SIBUR original acquisition workers active at last check; do not duplicate.
+    DP blocked remains; no bypass or blind reindex. Prioritize contract-linked identities
+    and exact scope.

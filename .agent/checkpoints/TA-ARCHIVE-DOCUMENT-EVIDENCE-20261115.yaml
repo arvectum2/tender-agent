@@ -84,6 +84,9 @@ completed:
   versioned reports preserved. 5 document sources with lexical PQ equipment hits,
   29 linked procurement candidates; 15 broader requirement documents, 48 linked candidates.
   Shared standards and acronyms not independent orders.'
+- '2026-11-15 09:36 UTC: SIBUR category import finished for all eight traversed categories;
+  duplicates/review gaps retained, not complete historical census. 75 new technical
+  originals processed, 926/926 eligible snapshot; 922 extracted and 4 review.'
 current_stage: archive_technical_snapshot_drained
 remaining:
 - Original index remains blocked after exact reconciliation; attempted separate deployment
@@ -99,11 +102,11 @@ remaining:
 - Refresh market report, exact source procurement-bound INN/award evidence; no inferred
   awards; ZMO paper-only cost evidence remains outstanding.
 last_verified_commit: b6d3e0d3
-resume_instruction: Read live worker states, canonical checkpoints and branch heads;
-  offline SIBUR snapshot 851 complete, process only new committed originals. Preserve
-  reports by exact SHA before refresh. GPB recovery and archive details running. DP
-  remains blocked; no blind retry or circumvent blocked deployment. Continue direct
-  PQ evidence, contractor/contract mapping and approved independent tracks.
+resume_instruction: Inspect actual state. Process new committed original technical
+  files only; SIBUR eight categories traversed with review and import finished. GPB
+  protocol and SIBUR original acquisition workers active at last check; do not duplicate.
+  DP blocked remains; no bypass or blind reindex. Prioritize contract-linked identities
+  and exact scope.
 test_results:
   gpb_focused_before_recovery: 8
   sibur_focused_before_recovery: 6
@@ -196,6 +199,22 @@ test_results:
     prior_pr_ci:
       '527': 19 SUCCESS at 314e8d2c
       '528': 19 SUCCESS at 9bf3d250
+  continuation_2026_11_15_0936:
+    live_db:
+      etp_gpb: 28726
+      sibur_public: 30394
+      gpb_document_links: 1496
+      sibur_document_links: 19185
+      gpb_protocol_decisions: 1132
+      gpb_named_decisions: 371
+      indexed_sibur_links: 482
+    offline_snapshot:
+      processed: 926
+      extracted: 922
+      review: 4
+      pq_equipment_candidates: 30
+      pq_requirement_candidates: 49
+      report_sha256: 416be213f69a06c6c165459e3467956660cce9cd731e7a1dacd33656d6187d69
 live_recovery_2026_11_15_0724:
   gpb_recovery_label: com.arvectum.tender-agent-gpb-recovery
   gpb_recovery_state: autonomous-runner/gpb-recovery/state.json
