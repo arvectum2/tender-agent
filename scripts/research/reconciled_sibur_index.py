@@ -17,18 +17,11 @@ def sha256(path):
         return hashlib.file_digest(f,"sha256").hexdigest()
 
 
-def load(directory):
-    manifest=directory/MANIFEST
-    if not manifest.exists():
-        return {}
-    m=json.loads(manifest.read_text())
-    if m.get("schema")!="sibur_dp_readonly_reconciliation_v1" or m.get("collection_id")!=COLLECTION:
-        raise ValueError("unexpected reconciliation manifest")
-    name=m["evidence_file"]
+def read_evidence(directory, name, digest):
     p=directory/name
     if p.parent!=directory or p.is_symlink() or not re.fullmatch(r"dp-readonly-reconciliation-[0-9-]+\.json",name):
         raise ValueError("unexpected evidence file")
-    if sha256(p)!=m["evidence_sha256"]:
+    if sha256(p)!=digest:
         raise ValueError("reconciled DB evidence hash mismatch")
     evidence=json.loads(p.read_text())
     if (evidence.get("collection_id")!=COLLECTION or evidence.get("provider")!="llama_cpp"
@@ -40,6 +33,18 @@ def load(directory):
         if uri in by or not re.fullmatch(r"content-sha256://[0-9a-f]{64}",uri):
             raise ValueError("invalid or duplicate resource identity")
         by[uri]=row
+    return evidence,by
+
+
+def load(directory):
+    manifest=directory/MANIFEST
+    if not manifest.exists():
+        return {}
+    m=json.loads(manifest.read_text())
+    if m.get("schema")!="sibur_dp_readonly_reconciliation_v1" or m.get("collection_id")!=COLLECTION:
+        raise ValueError("unexpected reconciliation manifest")
+    evidence,by=read_evidence(directory,m["evidence_file"],m["evidence_sha256"])
+    prior_cache={}
     result={}
     for item in m["reconciled_sources"]:
         sha=item["sha256"]
@@ -48,6 +53,20 @@ def load(directory):
             raise ValueError("recovered original source mismatch")
         uri="content-sha256://"+sha
         d=by[uri];n=d["chunks"]
+        # Preserve the original attestation identity when a later full collection
+        # snapshot confirms the same resource and every chunk/embedding identity.
+        proof_hash=m["evidence_sha256"]
+        if "prior_evidence_file" in item or "prior_evidence_sha256" in item:
+            if not all(k in item for k in ("prior_evidence_file","prior_evidence_sha256")):
+                raise ValueError("incomplete prior attestation")
+            key=(item["prior_evidence_file"],item["prior_evidence_sha256"])
+            if key not in prior_cache:
+                prior_cache[key]=read_evidence(directory,*key)[1]
+            prior=prior_cache[key].get(uri)
+            normalize=lambda row: {**row,"chunk_ids":sorted(row["chunk_ids"])}
+            if prior is None or normalize(prior)!=normalize(d):
+                raise ValueError("prior resource attestation differs from current evidence")
+            proof_hash=key[1]
         if (d["extraction_status"]!="extracted" or type(n) is not int or n<=0
                 or n!=d["embeddings"] or n!=d["matched_embeddings"] or n!=d["matched_chunk_ids"]
                 or n!=len(d["chunk_ids"]) or n!=len(set(d["chunk_ids"]))):
@@ -55,7 +74,7 @@ def load(directory):
         result[sha]={"collection_id":COLLECTION,"canonical_uri":uri,
                      "resource_id":d["resource_id"],"document_id":d["document_id"],
                      "chunks":n,"embeddings":n,"extraction_status":"extracted","verification":VERIFICATION,
-                     "source_db_evidence_sha256":m["evidence_sha256"],
+                     "source_db_evidence_sha256":proof_hash,
                      "embedding_provider":evidence["provider"],"embedding_model":evidence["model"],
                      "embedding_dimension":evidence["dimension"]}
     return result
