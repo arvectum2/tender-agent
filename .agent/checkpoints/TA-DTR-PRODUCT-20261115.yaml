@@ -25,21 +25,39 @@ completed:
   hardcoded. No second company profile activated. Documented next design in docs/product/DTR_PARALLEL_PRODUCT_INCREMENT_2026-11-15.md.'
 - Found existing scoped ProcurementCase/PilotProject and SaaS principal; reuse them,
   no global Deal rewrite.
-current_stage: implement_company_portfolio_boundary
+- 'Company portfolio foundation: reuse company-scoped PilotProject/ProcurementCase,
+  existing SaaS Bearer principal and legal/role gates; independent manual EIS reference
+  cases and typed API; no global Deal or source duplication.'
+- Migration 108 adds append-only case decision history, member/tenant binding, revision
+  conflict protection, idempotency and timezone-aware DEFER. No legacy backfill; populated
+  history downgrade prohibited.
+- 'Cross-company HTTP tests: same reference yields separate case IDs and decisions;
+  foreign case/history read and write denied; role and legal gates, replay, pagination,
+  optimistic conflict checked.'
+- '79 offline tests passed, 1 optional skipped, Ruff/make check/diff PASS. Disposable
+  PostgreSQL: DTR same-run guard held across commit, independent session rejected,
+  release on normal and exception paths; actual migration 108 and concurrent decision
+  race PASS (200/409, one stored row). Temporary DB containers removed.'
+current_stage: company_portfolio_foundation_verified_next_profile_binding
 remaining:
-- Check exact-head DTR review CI; PostgreSQL advisory lock still needs real isolated
-  concurrency acceptance (SQLite guard tested).
-- Design and implement minimal company-scoped decision/intake/profile authorization
-  model, migration and legacy behavior; negative cross-company tests before Sionika
-  activation.
-- Mobile API/SwiftUI integration of run state and company boundary, existing Workspace
-  UX, isolated E2E.
-last_verified_commit: 85937edbed02404c818e1af9acdc725a6d965944
+- Verify PR532 CI and stacked company portfolio PR CI; preserve review gates.
+- Bind saved profile/search and tenant-owned report/qualification evidence to scoped
+  case; design supported commercial source identity and safe legacy mapping; do not
+  activate Sionika in global DTR.
+- Connect shared company-aware mobile and existing web projection; native SwiftUI
+  and safe isolated E2E.
+last_verified_commit: 315a551ce270a3c8aff3651ea790494c6283b8a9
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
 - Offline network-none ARM64 build and packaged profile/digest validation PASS (sha256:fa60d6cadfbde364a28dd92dd7b72d000ef990ca9799be19161de240ef20f992)
 - No live PostgreSQL lock acceptance, live research ingestion, APNs or LLM invocation
-resume_instruction: Implement tenant-authenticated manual EIS shortlist and append-only
-  human decisions on existing company cases. Verify isolation and migration; no live
-  deployment.
+- 79 passed, 1 skipped, 68 warnings (9.50s), Ruff/make check PASS
+- Disposable PostgreSQL actual migration 108 PASS; concurrent decision 200/409 and
+  exactly one record PASS; DTR session advisory lock four checks PASS
+resume_instruction: Company portfolio first slice verified, check stacked review PR
+  CI. Next bind saved profile and company-specific qualification/report evidence to
+  existing scoped cases; preserve manual reference source_verified=false until authoritative
+  evidence. Legacy owner DTR/mobile unscoped and intentionally unchanged; no real
+  Sionika tenant or live scheduling/deployment. Preserve active SIBUR and separate
+  conditional DP rollout checkpoint.
