@@ -6,6 +6,8 @@ import json
 import re
 from collections import Counter, defaultdict
 
+from src.modules.tender_connectors.sibur.parser import parse_page
+
 PROJECTS = {
     "AGHK": r"\bАГХК\b|Амурск\w+\s+(?:газохимическ\w+\s+комплекс|ГХК)",
     "AGPZ": r"\bАГПЗ\b|Амурск\w+\s+(?:газоперерабатывающ\w+\s+завод|ГПЗ)",
@@ -15,7 +17,7 @@ PROJECTS = {
     "EP600": r"\bЭП[ -]?600\b|\bEP[ -]?600\b",
     "METALLOCENE_PE": r"металлоценов\w+\s+полиэтилен",
     "ETHYLENE_PIPE": r"этиленопровод\w*",
-    "NKNH_ASU": r"воздухоразделительн\w+\s+установк|\bВРУ\b",
+    "NKNH_VRU": r"воздухоразделительн\w+\s+установк|\bВРУ\b",
 }
 BRANDS = {
     "ABB": r"\bABB\b", "Siemens": r"\bSiemens\b|\bСименс\b",
@@ -45,8 +47,8 @@ def build(sales, current, receipts):
     for ident, r in old.items():
         text = " ".join([r["title"],*r["subject"]]).replace("_"," ")
         projects = matches(text, PROJECTS)
-        if "NKNH_ASU" in projects and not ("Нижнекамскнефтехим" in r["site_mentions"] or "Нижнекамскнефтехим" in r["organizer"]):
-            del projects["NKNH_ASU"]
+        if "NKNH_VRU" in projects and not ("Нижнекамскнефтехим" in r["site_mentions"] or "Нижнекамскнефтехим" in r["organizer"]):
+            del projects["NKNH_VRU"]
         brands = matches(text, BRANDS)
         brand_counts.update(brands.keys())
         if projects or brands:
@@ -99,11 +101,22 @@ def run(root):
     sales=root/"sales-map-v2.json"
     capture=root/"current-refresh-0953"
     receipts=load(capture/"receipts.json")
+    reconstructed = defaultdict(list)
     for p in receipts["pages"]:
         raw=(capture/f"page-{p['page']:03d}.json").read_bytes()
         if hashlib.sha256(raw).hexdigest()!=p["sha256"]:
             raise ValueError("page hash mismatch")
-    report=build(load(sales),load(capture/"normalized.json"),receipts)
+        page = parse_page(raw,p["page"])
+        if page.last_page != receipts["announced_pages"] or len(page.records)!=p["rows"]:
+            raise ValueError("page manifest mismatch")
+        for row in page.records:
+            reconstructed[row["external_id"]].append(row)
+    if len(reconstructed)!=receipts["unique_ids"] or len(receipts["pages"])!=receipts["announced_pages"]:
+        raise ValueError("refresh coverage mismatch")
+    current = load(capture/"normalized.json")
+    if current != [{"external_id":k,"observations":v} for k,v in reconstructed.items()]:
+        raise ValueError("normalized snapshot mismatch")
+    report=build(load(sales),current,receipts)
     report["sales_map_sha256"]=hashlib.sha256(sales.read_bytes()).hexdigest()
     report["refresh_receipts_sha256"]=hashlib.sha256((capture/"receipts.json").read_bytes()).hexdigest()
     return report
