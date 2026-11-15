@@ -11,17 +11,28 @@ completed:
 - 105 draft-only tests passed
 - 483 combined offline tests passed
 - make check and all changed draft-file Ruff checks passed
-current_stage: await_separate_authorized_source_locked_model_acceptance
+- '2026-11-15: current protected owner configurations agree; local Data Platform health
+  HTTP200. Nonexistent collection unauthenticated HTTP401, existing Tender Agent credential
+  HTTP404; no credential/body printed.'
+- Pinned Smolensk case still has 86 SQL chunks in canonical arvectum database using
+  read-only transaction. Authenticated collection stats attempted with 5s and 15s
+  timeouts, neither returned a result; no LLM invoked.
+current_stage: blocked_on_real_collection_stats_timeout
 remaining:
-- Verify existing authorized Data Platform API access (historical HTTP 401)
-- Run bounded original-source live model evaluation only when safe for parallel research
-- Review model quality; no promotion or deployment without acceptance
+- Diagnose bounded read-only existing Data Platform stats latency when research workload
+  permits; do not retry unboundedly or restart services.
+- Verify actual collection resources/embeddings and original source identity.
+- Run bounded source-locked live model evaluation when safe; retain prior model quality
+  and review gates.
 last_verified_commit: d5eb8439811f9ca1dc41253f5a136c5aa9e36c92
 test_results:
 - 105/105 draft-only PASS
 - 483/483 combined PASS, 44 warnings, 9.20s
 - make check PASS; changed-file Ruff PASS; git diff --check PASS
-resume_instruction: First reconcile PR529 exact-head CI and REVIEW gates; then verify
-  existing authorized Data Platform access without exposing credentials and rerun
-  bounded original-source test when no workload conflict. Historical PR500 fabricated
-  100% and HTTP401 remain unaccepted. No production or training promotion.
+- Live read-only health/auth negative and positive controls PASS; actual collection
+  stats NOT VERIFIED (5s and 15s timeout); SQL chunk count 86
+resume_instruction: 'Do not repeat credential setup: it matched and authenticated
+  local API probe passed. SQL 86 chunks confirmed. Diagnose existing Data Platform
+  stats latency (two timeouts; no new HTTP401 observed). Do not restart services,
+  mutate DB, bypass authentication, run concurrent heavy model or promote gold without
+  acceptance.'

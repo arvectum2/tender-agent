@@ -21,17 +21,22 @@ completed:
   11 of 19 CI checks success, 8 in progress at observation.
 - "Draft model PR497\u2013500 isolated in feat/ta-core-gemma-review-20261115; offline\
   \ combined 483 PASS, real-model gate remains blocked."
-current_stage: core_review_ci_and_model_gate
+- PRICE01 historical PR478 reconciled independently in stacked PR530 at f57ded4252063f1fda27d041d6ff598a0b31871d;
+  506 offline tests PASS and make check, Ruff, JS and diff PASS.
+- Data Platform current health/auth probe PASS; 86 pinned SQL chunks verified, real
+  collection stats timed out twice; model not run.
+current_stage: review_ci_and_readonly_dp_latency
 remaining:
-- verify PR529 exact-head CI and required review
-- resolve separate Gemma source-locked live acceptance, historical 401
-- review runtime compatibility and owner approval before deployment
+- verify PR529 and stacked PR530 exact-head CI and REVIEW authorization
+- resolve real collection stats latency, then source-locked model acceptance
+- runtime compatibility and separate deployment acceptance
 last_verified_commit: b88a3916895539d7ccb67dda55dd791f1ff5e692
 test_results:
 - 378 passed, 44 warnings, twice; final 8.30s; in-memory SQLite
 - make check PASS
 - extended Ruff PASS except baseline 22 pipeline diagnostics unchanged
 - git diff --check PASS
-resume_instruction: Open PR529, verify exact head and CI, reconcile REVIEW gates;
-  separate model branch checkpoint TA-CORE-GEMMA-REVIEW-20261115.yaml. Preserve active
-  market research and do not deploy or mutate production DB.
+resume_instruction: Check exact-head CI PR529 and PR530; PRICE01 review candidate
+  is already tested. Proceed with repository-only review and bounded read-only Data
+  Platform latency diagnosis, using TA-CORE-GEMMA-REVIEW-20261115.yaml. Preserve active
+  research workloads; no production mutation, restart or model acceptance shortcut.
