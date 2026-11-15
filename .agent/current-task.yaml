@@ -671,3 +671,10 @@ independent_archive_jobs:
   import_state: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources/geh-deadline-archive/import/state.json
   instruction: Inspect running archive and importer before further work; never duplicate active capture or writes.
   zmo_public_contract: .agent/checkpoints/TA-ZMO-PUBLIC-CONTRACT-20261115.yaml
+
+independent_2026_11_15_0623:
+  paper_economics_checkpoint: .agent/checkpoints/TA-ZMO-PAPER-ECONOMICS-20261115.yaml
+  geh_archive_priority_checkpoint: .agent/checkpoints/TA-GEH-DEADLINE-PARTITIONS-20261115.yaml
+  sibur_archive_checkpoint_branch: feat/sibur-document-linkage-20261114
+  sibur_archive_checkpoint: .agent/checkpoints/TA-SIBUR-PUBLIC-ARCHIVE-20261115.yaml
+  instruction: Check both archive lane pairs and the existing executor before any fresh work. Do not edit live scripts or duplicate active captures. Continue independent evidence and review tasks.

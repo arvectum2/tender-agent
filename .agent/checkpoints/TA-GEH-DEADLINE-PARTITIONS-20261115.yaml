@@ -32,3 +32,27 @@ live_jobs:
   watchdog_coordination: updated existing hourly task
   tests: 10 focused tests and Ruff passed
   inserted_total_at_checkpoint: 622
+
+continuation_2026_11_15_0623:
+  april_repair:
+    source_pages: 52
+    unique_ids: 1039
+    replaced_pages: [20,21]
+    original_capture_preserved: true
+    inserted: 1038
+    price_review: 1
+    replay_inserted: 0
+    receipt_root: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources/geh-deadline-archive/repair-april-complete-v1
+    backup_sha256: 0f2cdb717de6bc903454229ea30a24f1275a76158505baa5d422a7d65d7793b2
+  latest_archive_priority:
+    verified_db_rows: 7990
+    candidates: 1163
+    electrical: 154
+    automation: 217
+    epc: 830
+    sales_excluded: 8
+    queue_sha256: 8c74754fc2cdf576bf1fcf64ffdeb4dd57fc946a30d5f4aefc063a7ac14c6b19
+    queue_path: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources/geh-deadline-archive/archive-priority-v1.json
+    verification: source-bound lexical candidates only; categories overlap
+  august_review: 2024-08 retained for independent duplicate reconciliation
+  live_next: Do not duplicate running priority worker; regenerate archive queue from committed receipts after archive progresses, then add distinct detail lane with bounded source load. Resolve August and later duplicate reviews by immutable replacement-page snapshots and full-month identity audit.

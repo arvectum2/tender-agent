@@ -1,15 +1,20 @@
 task_id: TA-ZMO-PAPER-ECONOMICS-20261115
-status: in_progress
-goal: Build evidence-bound historical quotation-session economics without actual bids or unsupported price attribution.
+status: completed
+goal: Build and verify retrospective auction bid trace and conditional basket-cost thresholds without real trades.
 definition_of_done:
-  - Replay verified original public auction receipts, use exact decimal prices and identify actual historical bid versus hypothetical economics.
-  - Report basket cost thresholds and explicit missing inputs; avoid inventing vendor costs or SKU winning prices.
-  - Focused tests and live private pilot, code and checkpoint committed.
+  - Exact source SHA replay and observed bid sequence consistency.
+  - Final bidder identity cross-checked between public list supplierId and final detail ID/name.
+  - Explicit hypothetical cost assumptions, no invented supplier costs, winning SKU prices or signed contracts.
+  - Regression tests and actual deterministic private report.
 completed:
-  - Source-specific public auction pilot verified four auction details in previous stage.
-current_stage: reuse_existing_economics_and_source_review
-remaining:
-  - inspect existing economics, implement and validate paper-only analysis
-  - review archive duplicates and other source availability independently
-last_verified_commit: 914e9ae871eccca34ad43afac86d591cb1e11ad1
-resume_instruction: Do not duplicate live workers. Inspect public auction evidence, existing commercial calculation modules and archived review pages.
+  - Verified four public auctions, 139 consecutive bids, 100 auto-bid flags, 43 positions, 28 unique SKUs.
+  - All final bid values and final participant identities matched list and detail.
+  - Reused C5 heuristic rates (8 percent logistics, 7 percent overhead, 3/5/8 percent contingency, 12 percent markup on cost) only for scenario ceilings.
+  - Exact private report replay twice verified identical SHA.
+current_stage: retrospective_economics_verified
+remaining: []
+last_verified_commit: 68654ea1f519cd01fba6722c5f6aebfe9031db93
+report_sha256: 89f127ab94e22342185cd1f0fab8d21f026011e8fc61e901d6ff3786b8ac553a
+last_checks: Six focused paper-model, MOS and archive-triage tests passed; Ruff passed; exact report replay.
+limitations: Four-session pilot only, all supplier costs, signed contracts and actual profit unknown. Individual bid supplier IDs anonymized. Prices at historical close are ex-post benchmarks and do not prove counterfactual wins. No live bidder actions. HTTP 402 still limits source access.
+resume_instruction: Develop time-valid supplier/SKU quotation and stock evidence, cost/fee/tax and cash-gap inputs, then strictly out-of-sample paper-trading. Do not use contemporary web prices as historical costs. Inspect official developer API terms without payments or credentials.
