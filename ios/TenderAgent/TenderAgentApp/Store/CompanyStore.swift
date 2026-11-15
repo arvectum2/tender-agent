@@ -12,6 +12,8 @@ final class CompanyStore: ObservableObject {
     @Published private(set) var error: String?
     @Published private(set) var loaded = false
     @Published private(set) var storageReady = false
+    @Published private(set) var decisionNotice: String?
+    private var pendingDecision: CompanyDecisionAttempt?
 
     init() {
         do {
@@ -23,7 +25,9 @@ final class CompanyStore: ObservableObject {
     private var selected: CompanyConnection? { connections.first { $0.id == selectedID } }
 
     private func resetSelection(_ id: String? = nil) {
+        if selectedID != id { pendingDecision = nil }
         selectedID = id
+        decisionNotice = nil
         identity = nil
         items = []
         hasMore = false
@@ -105,6 +109,70 @@ final class CompanyStore: ObservableObject {
             connections = updated
             if selectedID == id { resetSelection() }
         } catch { self.error = CompanyConnectionError.storage.localizedDescription }
+    }
+
+    func canDecide(accountID: String, caseID: String, revision: Int) -> Bool {
+        guard selectedID == accountID, let identity, identity.legalAccepted,
+              ["owner", "admin"].contains(identity.role) else { return false }
+        return items.contains { $0.caseId == caseID && $0.revision == revision }
+    }
+
+    private func invalidateCompanyAccess() {
+        identity = nil
+        items = []
+        hasMore = false
+        loaded = false
+        pendingDecision = nil
+    }
+
+    func submitDecision(accountID: String, caseID: String, draft: CompanyDecisionDraft) async throws {
+        guard !isBusy, let account = selected, canDecide(accountID: accountID, caseID: caseID, revision: draft.expectedRevision) else {
+            throw CompanyConnectionError.http(409)
+        }
+        isBusy = true
+        defer { isBusy = false }
+        decisionNotice = nil
+        let client = try CompanyAPIClient(connection: account)
+        let actual: CompanyIdentity
+        do {
+            actual = try await client.verifiedIdentity(for: account.identity)
+        } catch {
+            invalidateCompanyAccess()
+            self.error = Self.safeError(error)
+            throw error
+        }
+        guard actual.legalAccepted, ["owner", "admin"].contains(actual.role) else {
+            invalidateCompanyAccess()
+            self.error = Self.safeError(CompanyConnectionError.http(403))
+            throw CompanyConnectionError.http(403)
+        }
+        let attempt = CompanyDecisionAttempt.prepare(previous: pendingDecision, accountID: accountID, caseID: caseID, draft: draft)
+        pendingDecision = attempt
+        let saved: CompanyDecision
+        do {
+            saved = try await client.recordDecision(attempt, for: actual)
+        } catch let failure as CompanyConnectionError {
+            switch failure {
+            case .http(409):
+                pendingDecision = nil
+                await load(account, offset: 0)
+                throw failure
+            case .http(401), .http(402), .http(403), .http(428), .identityMismatch:
+                invalidateCompanyAccess()
+                self.error = Self.safeError(failure)
+                throw failure
+            case .http(422), .invalidDecision:
+                pendingDecision = nil
+                throw failure
+            default:
+                throw CompanyConnectionError.decisionUncertain
+            }
+        } catch {
+            throw CompanyConnectionError.decisionUncertain
+        }
+        pendingDecision = nil
+        await load(account, offset: 0)
+        decisionNotice = loaded ? "Решение сохранено · v\(saved.revision)" : "Решение сохранено · v\(saved.revision). Обновите портфель."
     }
 
     func evidence(for caseId: String) async throws -> CompanyEvidencePage {

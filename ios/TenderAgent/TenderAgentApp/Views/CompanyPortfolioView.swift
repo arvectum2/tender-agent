@@ -1,10 +1,16 @@
 import SwiftUI
 
+private struct CompanyCaseSelection: Identifiable {
+    let accountID: String
+    let item: CompanyCase
+    var id: String { accountID + "|" + item.caseId }
+}
+
 struct CompanyPortfolioView: View {
     @StateObject private var store = CompanyStore()
     @State private var origin = BackendCredentialStore.defaultBaseURLString
     @State private var token = ""
-    @State private var selectedCase: CompanyCase?
+    @State private var selectedCase: CompanyCaseSelection?
     @State private var confirmedOrigin = false
     @State private var removal: CompanyConnection?
 
@@ -52,6 +58,7 @@ struct CompanyPortfolioView: View {
             if let error = store.error {
                 Section { Label(error, systemImage: "exclamationmark.triangle").foregroundStyle(.orange) }
             }
+            if let notice = store.decisionNotice { Section { Label(notice, systemImage: "checkmark.circle") } }
             if store.isBusy { Section { ProgressView("Проверяем доступ…") } }
             if let identity = store.identity {
                 Section("Текущая компания") {
@@ -67,7 +74,9 @@ struct CompanyPortfolioView: View {
                 Section("Портфель компании") {
                     if store.items.isEmpty { Text("В портфеле пока нет карточек.") }
                     ForEach(store.items) { item in
-                        Button { selectedCase = item } label: {
+                        Button {
+                            if let accountID = store.selectedID { selectedCase = CompanyCaseSelection(accountID: accountID, item: item) }
+                        } label: {
                             VStack(alignment: .leading, spacing: 5) {
                                 Text(item.registryNumber ?? "Номер не указан").font(.headline)
                                 Text(item.decision?.action ?? "Решение не принято")
@@ -81,7 +90,7 @@ struct CompanyPortfolioView: View {
         }
         .navigationTitle("Компании")
         .refreshable { await store.refresh() }
-        .sheet(item: $selectedCase) { item in CompanyCaseDetail(item: item, store: store) }
+        .sheet(item: $selectedCase) { choice in CompanyCaseDetail(item: choice.item, accountID: choice.accountID, store: store) }
         .alert("Удалить подключение с устройства?", isPresented: Binding(get: { removal != nil }, set: { if !$0 { removal = nil } })) {
             Button("Удалить", role: .destructive) {
                 if let account = removal { store.forget(account.id) }
@@ -94,10 +103,21 @@ struct CompanyPortfolioView: View {
 
 private struct CompanyCaseDetail: View {
     let item: CompanyCase
+    let accountID: String
     @ObservedObject var store: CompanyStore
     @Environment(\.dismiss) private var dismiss
     @State private var evidence: CompanyEvidencePage?
     @State private var error: String?
+    @State private var action: MobileDecisionAction = .go
+    @State private var rationale = ""
+    @State private var deferredUntil = Date().addingTimeInterval(86400)
+    @State private var decisionError: String?
+    @State private var prepared: CompanyDecisionDraft?
+    @State private var showConfirmation = false
+
+    private var canDecide: Bool {
+        store.canDecide(accountID: accountID, caseID: item.caseId, revision: item.revision)
+    }
 
     var body: some View {
         NavigationStack {
@@ -113,8 +133,32 @@ private struct CompanyCaseDetail: View {
                         LabeledContent("Версия", value: String(decision.revision))
                         if let due = decision.deferredUntil { Text(due, style: .date) }
                     } else { Text("Решение не принято") }
-                    Text("Только просмотр. Отправка заявок недоступна.").font(.caption).foregroundStyle(.secondary)
+                    Text("Внутреннее решение. Отправка заявок недоступна.").font(.caption).foregroundStyle(.secondary)
                 }
+                if canDecide {
+                    Section("Изменить решение") {
+                        Picker("Действие", selection: $action) {
+                            ForEach(MobileDecisionAction.allCases) { candidate in Text(candidate.displayTitle).tag(candidate) }
+                        }
+                        if action == .deferDecision {
+                            DatePicker("Отложить до", selection: $deferredUntil, in: Date()...)
+                        }
+                        TextField("Обоснование", text: $rationale, axis: .vertical).lineLimit(3...6)
+                        Button("Проверить и подтвердить") {
+                            decisionError = nil
+                            do {
+                                prepared = try CompanyDecisionDraft(action: action.rawValue, rationale: rationale,
+                                    deferredUntil: action == .deferDecision ? deferredUntil : nil, expectedRevision: item.revision)
+                                showConfirmation = true
+                            } catch { decisionError = CompanyStore.safeError(error) }
+                        }
+                        .disabled(store.isBusy || rationale.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    }
+                    .disabled(store.isBusy)
+                } else if let identity = store.identity, ["owner", "admin"].contains(identity.role) {
+                    Section { Text("Карточка изменилась или недоступна. Откройте её заново.").foregroundStyle(.orange) }
+                }
+                if let decisionError { Section { Text(decisionError).foregroundStyle(.orange) } }
                 if let identity = store.identity, ["owner", "admin", "analyst"].contains(identity.role) {
                     Section("Привязанные источники") {
                         if let evidence {
@@ -134,6 +178,23 @@ private struct CompanyCaseDetail: View {
             }
             .navigationTitle("Карточка компании")
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Готово") { dismiss() } } }
+            .alert("Подтвердить решение?", isPresented: $showConfirmation) {
+                Button("Сохранить") {
+                    guard let draft = prepared else { return }
+                    prepared = nil
+                    Task {
+                        do {
+                            try await store.submitDecision(accountID: accountID, caseID: item.caseId, draft: draft)
+                            dismiss()
+                        } catch { decisionError = CompanyStore.safeError(error) }
+                    }
+                }
+                Button("Отмена", role: .cancel) { prepared = nil }
+            } message: {
+                Text("\(store.identity?.companyName ?? "Компания") · \(item.registryNumber ?? "—") · \(prepared?.action ?? "—") · версия \(item.revision). Это не подача заявки.")
+            }
+            .onChange(of: store.selectedID) { _, value in if value != accountID { dismiss() } }
+            .onChange(of: store.identity?.memberId) { _, value in if value == nil { dismiss() } }
             .task {
                 guard let identity = store.identity, ["owner", "admin", "analyst"].contains(identity.role) else { return }
                 do { evidence = try await store.evidence(for: item.caseId) }

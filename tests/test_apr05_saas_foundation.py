@@ -1109,3 +1109,34 @@ def test_mobile_company_identity_comes_from_authenticated_principal(client):
         assert result.json()["company_name"] == expected
         assert result.json()["legal_accepted"] is False
     assert client.get("/api/saas/me", headers=_auth("mobile_fake_token")).status_code == 401
+
+
+def test_company_portfolio_distinct_members_share_revisioned_decision_history(client):
+    _, owner = _seed(client, "Тест общего журнала веб и iOS")
+    _legal(client, owner)
+    invite = client.post("/api/saas/invitations", headers=_auth(owner), json={"role": "admin", "acquisition_channel": "referral"}).json()
+    member = client.post("/api/saas/invitations/redeem", json={"invitation_code": invite["invitation_code"], "display_name": "Тестовый администратор"}).json()
+    admin = member["access_token"]
+    _legal(client, admin)
+    base = "/api/saas/company-portfolio/cases"
+    case = client.post(base, headers=_auth(owner), json={"registry_number": "0123456789012345678"}).json()
+    detail = f"{base}/{case['case_id']}"
+    owner_draft = {"action": "GO", "rationale": "Интерфейс A", "expected_revision": 0, "idempotency_key": "shared-fixture-001"}
+    before = client.get(detail, headers=_auth(admin)).json()
+    assert before["revision"] == 0
+    first = client.post(detail + "/decisions", headers=_auth(owner), json=owner_draft)
+    assert first.status_code == 200
+    assert client.get(detail, headers=_auth(admin)).json()["decision"] == first.json()
+    assert client.post(detail + "/decisions", headers=_auth(admin), json=owner_draft).status_code == 409
+    stale = {**owner_draft, "idempotency_key": "shared-fixture-002", "action": "NO_GO"}
+    assert client.post(detail + "/decisions", headers=_auth(admin), json=stale).status_code == 409
+    updated = {**stale, "rationale": "Интерфейс B", "expected_revision": 1}
+    second = client.post(detail + "/decisions", headers=_auth(admin), json=updated)
+    assert second.status_code == 200
+    assert second.json()["decided_by_member_id"] == member["member_id"]
+    assert client.get(detail, headers=_auth(owner)).json()["decision"] == second.json()
+    assert client.post(detail + "/decisions", headers=_auth(admin), json=updated).json() == second.json()
+    history = client.get(detail + "/decisions", headers=_auth(owner)).json()["items"]
+    assert [d["revision"] for d in history] == [2, 1]
+    assert len({d["decided_by_member_id"] for d in history}) == 2
+    assert client.get(base, headers=_auth(owner)).json()["items"][0]["external_submission_allowed"] is False

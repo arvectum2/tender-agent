@@ -42,6 +42,32 @@ final class AppStoreTests: XCTestCase {
         XCTAssertEqual(try CompanyAPIClient.validatedOrigin("https://EXAMPLE.invalid:443/").absoluteString, "https://example.invalid")
     }
 
+    func testCompanyDecisionAttemptIdentityAndRevision() throws {
+        let now = Date(timeIntervalSince1970: 1800000000)
+        let draft = try CompanyDecisionDraft(action: "GO", rationale: "  Проверено  ", deferredUntil: nil, expectedRevision: 2, now: now)
+        let first = CompanyDecisionAttempt.prepare(previous: nil, accountID: "account-A", caseID: "case-A", draft: draft)
+        XCTAssertEqual(first.draft.rationale, "Проверено")
+        XCTAssertEqual(CompanyDecisionAttempt.prepare(previous: first, accountID: "account-A", caseID: "case-A", draft: draft).key, first.key)
+        XCTAssertNotEqual(CompanyDecisionAttempt.prepare(previous: first, accountID: "account-B", caseID: "case-A", draft: draft).key, first.key)
+        let later = try CompanyDecisionDraft(action: "GO", rationale: "Проверено", deferredUntil: nil, expectedRevision: 3, now: now)
+        XCTAssertNotEqual(CompanyDecisionAttempt.prepare(previous: first, accountID: "account-A", caseID: "case-A", draft: later).key, first.key)
+        let response = try TenderAgentJSON.makeDecoder().decode(CompanyDecision.self, from: Data(#"{"revision":3,"action":"GO","rationale":"Проверено","deferred_until":null,"decided_at":"2026-11-15T00:00:00Z","decided_by_member_id":"member-A"}"#.utf8))
+        XCTAssertTrue(first.accepts(response, memberID: "member-A"))
+        XCTAssertFalse(first.accepts(response, memberID: "member-B"))
+        XCTAssertFalse(CompanyDecisionAttempt.prepare(previous: first, accountID: "account-A", caseID: "case-A", draft: later).accepts(response, memberID: "member-A"))
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        encoder.dateEncodingStrategy = .iso8601
+        let body = try XCTUnwrap(JSONSerialization.jsonObject(with: encoder.encode(first.payload)) as? [String: Any])
+        XCTAssertEqual(body["expected_revision"] as? Int, 2)
+        XCTAssertEqual(body["idempotency_key"] as? String, first.key)
+        XCTAssertEqual(body["action"] as? String, "GO")
+        XCTAssertThrowsError(try CompanyDecisionDraft(action: "DEFER", rationale: "Причина", deferredUntil: now, expectedRevision: 0, now: now))
+        XCTAssertThrowsError(try CompanyDecisionDraft(action: "GO", rationale: " ", deferredUntil: nil, expectedRevision: 0, now: now))
+        let deferDraft = try CompanyDecisionDraft(action: "DEFER", rationale: "Причина", deferredUntil: now.addingTimeInterval(86400.7), expectedRevision: 0, now: now)
+        XCTAssertEqual(deferDraft.deferredUntil, now.addingTimeInterval(86400))
+    }
+
     func testMockModeIsExplicitWithoutBackend() {
         let store = AppStore(procurements: [makeProcurement()], apiClient: nil)
 
