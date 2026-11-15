@@ -224,7 +224,8 @@ completed:
 - "V16: verified external runtime after migration; coverage 1110/2299 priority URLs, 1189 remaining; exact 663 pending P0 and 611 unattempted candidates. 5624 industrial publications outside project cards grouped once: 2169 explicit, 544 organizer affiliation, 103 multi, 2807 unresolved, 1 conflict. Source-bound priority queue code tested (6 pass), activation requested via cooperative STOP; no duplicate worker. Styrene 2146492/1 two primary XLSX reviewed, 2 lots, 09 Feb 2027–30 Jun 2028, 60d payment/factoring, qualifications; no signed price."
 - "V17: priority collector restarted, 15 new P0 originals hash-verified after activation; linkage still pending. GPB prepare timeout reconciled read-only: 1375 exact existing receipts and 13 absent, no inflight, previous sync unchanged. GPB code c0028180 reuses validated originals and increases bounded prepare timeout; 6 tests passed; original agent restarted, first new sync not verified. Three qualification XLSX reviewed (two identical-text styrene questionnaires, valve repair evaluation options), no asserted award or eligibility. Coverage 1119/2299, full known priority packages 1585/8223. V17 45 source files verified."
 - "V18: first 15 P0 originals SHA256/technical extraction and exact DB 251 document-procedure pairs validated; 30 P0 captured since activation. Three AGPP SS370 project drawings establish AGPP design origin of 2118943/1; unknown actual destination, remove only strict AGHK association, retain industrial candidate; 15 other interface candidates flagged. MPE 2126540/1 Volga NIPITEK six new gas analyzers per OL. EP600 2080352/1 mechanical scope only. Coverage V5 1134/2299, 1589 complete known packages; 36 cards 2598 strict project candidates, 5625 outside. GPB preparation passed, first post-recovery transaction state recorded separately. No signed prices inferred. V18 report and six artifacts validated."
-current_stage: priority_linkage_and_scope_corrections
+- "V19: six original XLSX reviewed, 16 thermal cabinets 2108203/1, 17 control posts 2083019/1, 104 terminal boxes 2108149/1, Progress Engineering directly named as requesting party in two forms; 2080616/1 indivisible cast-insulated busduct DGP2 title4015; 2027–2030 AGHK heat tracing maintenance 2139286/1; 2140253/1 KOS relay protection maintenance. Owner 2025 250MW and 2026 281MW same Lushnikovskaya PГУ, STGT reference commissioning, not service award. Coverage 1179/2299, 1617 all known packages; no inferred signed price. 49 sources verified. GPB recovery progressing."
+current_stage: priority_equipment_services_and_coverage
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -233,7 +234,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: 3266adf8
+last_verified_commit: 96001778
 test_results:
   focused: 3
   ruff: pass
@@ -830,4 +831,24 @@ test_results:
       commercial-action-register-v12.json: bd5264c57f1c50d35ae2ee8157191a004c1c0ab167878a8b435db048b9b81a72
       consolidated-project-report-v18.md: bb2b448a7f2d2154a2e70885e24d344cdc2b911ab6bc08932cb4e39712561385
       project-coverage-dashboard-v5.json: 03d0d2fab9f51a22dec8b76700e6c730e0af94f1c8cb7b658a23d4cde5c98c39
-resume_instruction: "Read V18 report/map, V5 coverage and priority scope/linkage proof. Verify GPB first successful post-recovery sync; if blocked reconcile exact sources and transaction before retry. Continue next P0 originals and distinguish AGPP interface from core AGHK, actual awards and signed prices, eight plan gaps. Refresh site allocations after one scope correction. Maintain 36-card quantitative dashboard, 8223 deduplicated industrial/project union. Existing workers only, gates and external SSD policy; no duplicate launch agents. Deliver consolidated report by 17 November, explicitly note incomplete coverage. UPS separate."
+  priority_equipment_v19:
+    priority_union: 8223
+    priority_supported_urls_extracted: 1179
+    priority_supported_urls_total: 2299
+    priority_all_known_packages: 1617
+    project_publications: 2598
+    source_artifacts: 49
+    gpb_status: running
+    gpb_cycles: 135
+    gpb_verified_outcomes: 732
+    archive_indexed: 130
+    index_server: {"documents": 445, "chunks": 7495, "embeddings": 7495}
+    original_files_processed: 2550
+    artifacts:
+      priority-equipment-and-service-review-v2.json: e72e0903e5588b2e079739d554ab2f26e90afae83e06639f585c6311948df4d7
+      kos-pgu-identity-service-v1.json: be8acc2eba2368b714d68ce19b0afd536834f28128435b5aba16375943b2f0dd
+      consolidated-project-map-v19.json: e400afbac2b0929d9a366a7daccc766aecb4a6150974b039263079f62469a18d
+      commercial-action-register-v13.json: ae58d1d3f83094e91d5c0ccb0384f0d2c4d75a831ded47b9df39ef980a77e14d
+      consolidated-project-report-v19.md: db1c14f8c96f030d8ba83904f610b54294b9cc4fd1544c7633babbd1119b4f69
+      project-coverage-dashboard-v6.json: 923fa35b0132f25728d7de87e842595b0313b589923a941c2f7aad79e874416b
+resume_instruction: "Read V19 map/report and coverage V6. Continue P0 original review, actual awarded prices and outcomes, scope interface candidates, eight plan gaps. Note V6 dashboard inputs refer to pre-enrichment V19 hash, membership unchanged; next dashboard generated from final V19. Refresh site allocations (5625 outside projects), and prepare consolidated report by Nov17. Existing workers only; retain locks/gates, external storage and independent UPS. No inferred awards or prices."

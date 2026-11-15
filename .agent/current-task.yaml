@@ -957,3 +957,8 @@ sibur_v18_scope_and_linkage_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Continue V18 and confirm GPB full sync; next P0 originals and scope/price evidence.
+
+sibur_v19_equipment_and_service_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Continue V19 verified packages and coverage, remaining price/outcome evidence.
