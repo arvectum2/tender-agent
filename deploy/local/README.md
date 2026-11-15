@@ -116,7 +116,11 @@ Compose override alone** uses `deploy/local/Dockerfile` as a thin layer
 over the previously verified local ARM64 image
 `arvectum/tender-agent:00df43958674a9eebee2bbd54e7f4116bb87173f`.
 It replaces the complete src, scripts and migrations source trees from the reviewed commit,
-sets exact revision/version OCI labels, and does not touch dependencies.
+sets exact revision/version OCI labels, packages the allowlisted PRICE01 and
+source-intake JSON receipts, and does not touch dependencies. The build now
+rejects mismatched base runtime dependency declarations and runs `pip check`.
+Choose an already verified compatible full base with `ARVECTUM_LOCAL_BASE_IMAGE`;
+never retag or overwrite the running image to satisfy this check.
 
 Use it only while `pyproject.toml` and runtime dependency requirements are
 unchanged. For a new dependency or for production, rebuild using the canonical
