@@ -912,3 +912,8 @@ sibur_cross_project_channels_v11_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Read latest V11; clean consolidated executive report and signed-price evidence, ongoing workers, deadline 17 November.
+
+sibur_executive_report_v12_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read clean V12 report and market-value boundary; close evidence gaps and refresh live outcomes by 17 November.
