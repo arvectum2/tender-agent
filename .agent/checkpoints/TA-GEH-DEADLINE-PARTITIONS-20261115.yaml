@@ -109,3 +109,14 @@ continuation_2026_11_15_0737:
   june04_external_id: etp:1123151
   june04_import_pending: true
   repair_checkpoint: TA-ARCHIVE-DOCUMENT-EVIDENCE-20261115
+continuation_2026_11_15_0744:
+  november_unique: 759
+  november_inserted: 737
+  prior_changed_retained: 22
+  november_replay_inserted: 0
+  june04_inserted: 55
+  june04_replay_inserted: 0
+  june_total_valid: 781
+  june_source_review: 1
+  all_month_source_identities_accounted_for: true
+  normalized_complete: false

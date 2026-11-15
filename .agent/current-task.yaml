@@ -695,3 +695,9 @@ technical_evidence_2026_11_15_0737:
   resume: Read live states; confirm June04 and November commits; technical GPB and
     SIBUR offline jobs, inspect evidence reports, preserve private originals and avoid
     duplicate work.
+pq_targeted_evidence_2026_11_15_0744:
+  checkpoint: .agent/checkpoints/TA-ARCHIVE-DOCUMENT-EVIDENCE-20261115.yaml
+  status: in_progress
+  resume: Inspect live state; completed June and November imports, GPB delta recovery,
+    24 source-group PQ queue. DP blocked, exact audit complete; no retry of blocked
+    deployment.

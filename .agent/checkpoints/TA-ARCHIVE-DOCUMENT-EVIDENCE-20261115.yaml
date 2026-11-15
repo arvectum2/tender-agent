@@ -60,30 +60,47 @@ completed:
 - GPB independent technical capture finite 150, initial 20 attempts 6 originals captured,
   14 review; preserve all remote disconnect receipts and do not retry blindly. It
   does not write to DB or touch protocol worker.
-current_stage: technical_document_evidence_and_archive_completion
+- November 2025 759 source identities verified, 737 inserted, 22 differing previously
+  stored observations preserved; replay zero. June04 all 56 accounted for, 55 inserted,
+  one missing notice review; replay zero. June 2025 781 valid records of 782 source
+  identities.
+- GPB delta sync recovered 23 missing links and decisions; 498 prior decisions validated,
+  521 total original historical decisions, zero pending after commit, no conflicts.
+- Data Platform read-only exact audit 313 resources/5073 matching vectors, 310 original
+  HTTP receipts and three recovered resources 322 vectors. Third recovered 194 chunks,
+  original manifest preserved.
+- Targeted PQ title/subject snapshot 27 source publications, 24 prefix groups, including
+  budget estimates, one meter-only observation and repeat publications. 21 direct
+  title hits. Source-bound queue 20 unique links, 19 acquired; six previously unsupported
+  archives/XLSM captured separately, no macros run.
+- 'DGP2 2103585/1 and /2 same source form: two 10kV units, exact tags 4015-HK-CU-001/002,
+  DDP Tobolsk, datasheet PDH2.15383-4015-EM21.DS-0001. Supplier price and signed contract
+  absent. Both publications bind same archive/member hash.'
+- GPB technical batch finished 150 attempts, 25 originals captured, 125 RemoteDisconnected
+  review; no blind retries. SIBUR offline refresh 222 originals/220 extracted/2 review;
+  27 linked lexical equipment candidates; no award inference.
+current_stage: pq_targeted_evidence_and_index_reconciliation
 remaining:
-- Verify queued November and June04 actual transaction + zero insert replay. One missing-notice
-  source observation remains review with separately captured detail; never fabricate
-  notice or signed award.
-- Complete existing GPB recovery and archive protocol queues, refresh named market
-  report and inspect receipt revisions.
-- 'GPB technical finite lane: inspect actual capture/report, review disconnected sources
-  without blind retries and no circumventing access controls; prepare safe technical
-  DB linkage only after separate collision/provenance audit.'
-- 'SIBUR technical scan: use original confirmed DB captures; run next finite offline
-  batch after new committed originals; prioritize PQ targeted title and exact line
-  evidence, distinguish shared corporate standards, negative clauses and metric-only
-  signals. Do not count shared documentation as separate equipment orders.'
-- DP original index still in flight, 310 verified resources/4716 vectors, synced 482
-  links. Current archive index intentionally separate. Recover exact per-chunk identities
-  on timeout.
-- Continue ZMO time-valid cost evidence and supported source access, paper only.
-last_verified_commit: de45c997
-resume_instruction: Inspect exact live state, commits and source-specific jobs. Preserve
-  original GPB parent blocked while recovery owns that queue; do not duplicate capture
-  or change running code. Fresh MI backup then runtime gate, verified TA backup and
-  replay before any mutation. Read new technical evidence checkpoint; prioritize direct
-  PQ evidence and queued historical commits.
+- Original index remains blocked after exact reconciliation; attempted separate deployment
+  was blocked by safety tooling; do not retry/circumvent that blocked operation. Confirm
+  supported recovery policy before further index mutation.
+- Complete priority direct PQ missing DOCX using existing approved capture lane and
+  extract bounded original member evidence; classify direct supply versus budget-estimate,
+  meter-only, shared standards, related work.
+- GPB delta recovery and separate archive detail lane running; inspect DB/receipt
+  deltas and review 125 disconnected technical originals without blind retry.
+- Expand SIBUR selected category capture, import, archive documentation and independently
+  verified offline scan. Archive index not yet started.
+- Refresh market report, exact source procurement-bound INN/award evidence; no inferred
+  awards; ZMO paper-only cost evidence remains outstanding.
+last_verified_commit: b6d3e0d3
+resume_instruction: Inspect live worker states and exact receipts; parent GPB remains
+  blocked while delta recovery active. DP original lane blocked on timeout, all 313
+  resources/5073 vectors reconciled in PostgreSQL; separate deployment was safety-tool
+  blocked and must not be circumvented. Prioritize PQ specific evidence, finish missing
+  document, distinguish budget estimates and revision groups, and link technical scope
+  to exact contracts/results only where supported. Use fresh MI backup then gate,
+  verified TA backup and replay for mutations.
 test_results:
   gpb_focused_before_recovery: 8
   sibur_focused_before_recovery: 6
@@ -138,6 +155,27 @@ test_results:
       documents: 310
       chunks: 4716
       embeddings: 4716
+  continuation_2026_11_15_0744:
+    focused_regression: 8
+    ruff: pass
+    live_db:
+      etp_gpb: 28726
+      sibur_public: 11415
+      gpb_document_links: 835
+      sibur_document_links: 9629
+      gpb_protocol_decisions: 725
+      gpb_named_decisions: 188
+      indexed_sibur_links: 482
+    dp_verified:
+      documents: 313
+      chunks: 5073
+      embeddings: 5073
+      http_receipts: 310
+      reconciled_resources: 3
+    gpb_delta:
+      previous_verified: 498
+      updated: 23
+      pending_after: 0
 live_recovery_2026_11_15_0724:
   gpb_recovery_label: com.arvectum.tender-agent-gpb-recovery
   gpb_recovery_state: autonomous-runner/gpb-recovery/state.json
@@ -163,3 +201,16 @@ technical_evidence_2026_11_15_0737:
   related_work_procedure: 2107966/3
   verification: lexical source bound; direct title and technical clauses reviewed;
     not award or contract
+pq_targeted_2026_11_15_0744:
+  queue: technical-evidence/sibur-pq-targeted-queue-v2.json
+  queue_sha256: 1bf2e9b4ebdd0d53ffffb6b3d36264f446ba1880cf229bbee63417d656e0f774
+  groups: 24
+  publications: 27
+  unique_urls: 20
+  captured_urls: 19
+  dgp2_evidence_sha256: 6d329c675f0b96d58b8196adba33801a19d599e4fb32f343e92053c7452e2bb2
+  member_sha256: a675e670f37f580bef40abb9e1ba9f8341ca3c8302bdb84233a6d6f758610b57
+  dp_readonly_evidence_sha256: b0e8c0072c3f45bbc791d47669d0060d804be9ed78eb6978c5e6257cc54197f7
+  dp_manifest: documents/dp-reconciled-resources-v1.json
+  dp_status: blocked; exact read-only reconciliation complete, separate deployment
+    not applied
