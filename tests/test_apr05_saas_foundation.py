@@ -1097,3 +1097,15 @@ def test_company_evidence_owned_archive_binding_profile_staleness_and_tamper(cli
     assert client.get(path, headers=_auth(a)).status_code == 409
     assert client.get(f"{own}/{fresh.json()['binding_id']}", headers=_auth(a)).status_code == 409
     assert len(observed) == 1
+
+
+def test_mobile_company_identity_comes_from_authenticated_principal(client):
+    a, token_a = _seed(client, "Тестовая компания Alpha")
+    b, token_b = _seed(client, "Тестовая компания Beta")
+    for tenant, token, expected in ((a, token_a, "Тестовая компания Alpha"), (b, token_b, "Тестовая компания Beta")):
+        result = client.get("/api/saas/me", headers=_auth(token), params={"customer_id": "foreign"})
+        assert result.status_code == 200
+        assert result.json()["customer_id"] == tenant["customer_id"]
+        assert result.json()["company_name"] == expected
+        assert result.json()["legal_accepted"] is False
+    assert client.get("/api/saas/me", headers=_auth("mobile_fake_token")).status_code == 401

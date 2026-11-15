@@ -25,6 +25,23 @@ final class AppStoreTests: XCTestCase {
         XCTAssertEqual(try digest(#"{"run_id":null}"#).statusLabel, "Нет данных о последнем запуске")
     }
 
+    func testCompanyProjectionAndIdentityBoundary() throws {
+        let decoder = TenderAgentJSON.makeDecoder()
+        let a = try decoder.decode(CompanyIdentity.self, from: Data(#"{"tenant_id":"a","customer_id":"a","member_id":"m","company_name":"Company A","role":"owner","legal_accepted":true}"#.utf8))
+        let b = try decoder.decode(CompanyIdentity.self, from: Data(#"{"tenant_id":"b","customer_id":"b","member_id":"m","company_name":"Company B","role":"owner","legal_accepted":true}"#.utf8))
+        let page = try decoder.decode(CompanyPortfolioPage.self, from: Data(#"{"customer_id":"a","items":[{"case_id":"case-a","registry_number":"0123456789012345678","source_verified":false,"revision":0,"decision":null}],"has_more":false}"#.utf8))
+        XCTAssertTrue(a.matchesAccount(a))
+        XCTAssertFalse(a.matchesAccount(b))
+        XCTAssertTrue(page.matchesCompany(a))
+        XCTAssertFalse(page.matchesCompany(b))
+        XCTAssertEqual(page.items.map(\.caseId), ["case-a"])
+        XCTAssertFalse(page.items[0].sourceVerified)
+        XCTAssertThrowsError(try CompanyAPIClient.validatedOrigin("http://example.invalid"))
+        XCTAssertThrowsError(try CompanyAPIClient.validatedOrigin("https://example.invalid/path"))
+        XCTAssertThrowsError(try CompanyAPIClient.validatedOrigin("https://user@example.invalid"))
+        XCTAssertEqual(try CompanyAPIClient.validatedOrigin("https://EXAMPLE.invalid:443/").absoluteString, "https://example.invalid")
+    }
+
     func testMockModeIsExplicitWithoutBackend() {
         let store = AppStore(procurements: [makeProcurement()], apiClient: nil)
 

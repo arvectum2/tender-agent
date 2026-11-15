@@ -315,6 +315,9 @@ def owned_run(session: Session, principal: TenantPrincipal, run_id: str) -> Saas
 
 
 def overview(session: Session, principal: TenantPrincipal) -> dict:
+    company = session.scalar(select(CustomerProfile).where(CustomerProfile.customer_id == principal.customer_id))
+    if company is None:
+        raise HTTPException(404, "Company not found")
     legal = session.scalar(select(SaasLegalAcceptance).where(
         SaasLegalAcceptance.member_id == principal.member_id,
         SaasLegalAcceptance.terms_version == TERMS_VERSION,
@@ -333,6 +336,7 @@ def overview(session: Session, principal: TenantPrincipal) -> dict:
     return {
         "tenant_id": principal.tenant_id, "role": principal.role,
         "customer_id": principal.customer_id, "member_id": principal.member_id,
+        "company_name": company.legal_name,
         "legal_accepted": bool(legal), "terms_version": TERMS_VERSION,
         "privacy_version": PRIVACY_VERSION,
         "usage": usage_view(session, principal),

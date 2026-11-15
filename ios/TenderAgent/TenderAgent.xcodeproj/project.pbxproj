@@ -17,9 +17,13 @@
 		4B2DD51A08B482214F785F8D /* PortfolioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5FDD05A123B0EC7E91002D /* PortfolioView.swift */; };
 		4E817B3599B477D8BDAA31E5 /* BackendCredentialStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5B9566E9BE57399B114C38 /* BackendCredentialStore.swift */; };
 		4F5593049C716B86B00FAE5C /* TenderAgentAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94335717CF8E25562261D61 /* TenderAgentAPIClient.swift */; };
+		5E5BA71AD485F988C7E72074 /* CompanyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA284560BDA6B7D1F19635D /* CompanyStore.swift */; };
+		620700DE0D708B2018964469 /* CompanyPortfolioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68AD8E804FF1A324390EAFA5 /* CompanyPortfolioView.swift */; };
 		6C0A749738C81384BE7548F8 /* ProcurementDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32E8008C90AD3ED0314B92B /* ProcurementDetailView.swift */; };
 		8C8BF9F58E4BE090420C219C /* AppStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E245B87A0AB371ED2929F4 /* AppStoreTests.swift */; };
+		9958FA1D75B88960723400CF /* CompanyAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0434DDCDBFEB8CB4EE2DD2 /* CompanyAPIClient.swift */; };
 		BB3FC37DDE15B30267B43B37 /* PushNotificationSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62BD5F703EEBD96D89896A7 /* PushNotificationSupport.swift */; };
+		D8D6E37139F084EFE8BBCE06 /* CompanyCredentialStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB9DABF86C3E2E2A381BEA /* CompanyCredentialStore.swift */; };
 		E59636291B9C3F5D72A7302F /* TenderAgentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D915C6B202A84FE1587C0E23 /* TenderAgentApp.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,7 +45,10 @@
 		1DC0CF601A87129A01E05070 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		42E245B87A0AB371ED2929F4 /* AppStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreTests.swift; sourceTree = "<group>"; };
 		4E77160366E78EE18C2E31F0 /* TenderAgent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TenderAgent.entitlements; sourceTree = "<group>"; };
+		68AD8E804FF1A324390EAFA5 /* CompanyPortfolioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyPortfolioView.swift; sourceTree = "<group>"; };
+		6BDB9DABF86C3E2E2A381BEA /* CompanyCredentialStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyCredentialStore.swift; sourceTree = "<group>"; };
 		7054265C24E8B3F24BA62996 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8F0434DDCDBFEB8CB4EE2DD2 /* CompanyAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyAPIClient.swift; sourceTree = "<group>"; };
 		AD03EAF94FE53BF82E4A5103 /* InboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxView.swift; sourceTree = "<group>"; };
 		B6DF06A61F85DBA5BC8DDFED /* Procurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Procurement.swift; sourceTree = "<group>"; };
 		BF5FDD05A123B0EC7E91002D /* PortfolioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioView.swift; sourceTree = "<group>"; };
@@ -52,12 +59,14 @@
 		F32E8008C90AD3ED0314B92B /* ProcurementDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcurementDetailView.swift; sourceTree = "<group>"; };
 		F597DEEA9726A7F68E108DFE /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		FC006CED5D95401AA55F5192 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		FFA284560BDA6B7D1F19635D /* CompanyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		189468A53AC224A3DC74283A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				68AD8E804FF1A324390EAFA5 /* CompanyPortfolioView.swift */,
 				AD03EAF94FE53BF82E4A5103 /* InboxView.swift */,
 				BF5FDD05A123B0EC7E91002D /* PortfolioView.swift */,
 				F32E8008C90AD3ED0314B92B /* ProcurementDetailView.swift */,
@@ -81,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				1DC0CF601A87129A01E05070 /* AppStore.swift */,
+				FFA284560BDA6B7D1F19635D /* CompanyStore.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -121,6 +131,8 @@
 			isa = PBXGroup;
 			children = (
 				0F5B9566E9BE57399B114C38 /* BackendCredentialStore.swift */,
+				8F0434DDCDBFEB8CB4EE2DD2 /* CompanyAPIClient.swift */,
+				6BDB9DABF86C3E2E2A381BEA /* CompanyCredentialStore.swift */,
 				E94335717CF8E25562261D61 /* TenderAgentAPIClient.swift */,
 			);
 			path = Networking;
@@ -234,6 +246,10 @@
 			files = (
 				2154BB37893C4764D4F23621 /* AppStore.swift in Sources */,
 				4E817B3599B477D8BDAA31E5 /* BackendCredentialStore.swift in Sources */,
+				9958FA1D75B88960723400CF /* CompanyAPIClient.swift in Sources */,
+				D8D6E37139F084EFE8BBCE06 /* CompanyCredentialStore.swift in Sources */,
+				620700DE0D708B2018964469 /* CompanyPortfolioView.swift in Sources */,
+				5E5BA71AD485F988C7E72074 /* CompanyStore.swift in Sources */,
 				20E45DDDE7C284356864313D /* InboxView.swift in Sources */,
 				29670F774487CF2C19240A83 /* MetricCard.swift in Sources */,
 				461A2123E5A53BB2E8BBC39F /* MockData.swift in Sources */,
