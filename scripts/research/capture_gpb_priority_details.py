@@ -80,10 +80,14 @@ def capture(root, row):
             raise ValueError("unexpected response")
     fields, links, unavailable = inspect(raw, row, final)
     file = root / (row["external_id"].replace(":", "-") + ".html")
-    with file.open("xb") as out:
-        out.write(raw)
-        out.flush()
-        os.fsync(out.fileno())
+    if file.exists():
+        if file.is_symlink() or file.read_bytes() != raw:
+            raise ValueError("orphan snapshot differs from current source; review required")
+    else:
+        with file.open("xb") as out:
+            out.write(raw)
+            out.flush()
+            os.fsync(out.fileno())
     time.sleep(0.5)
     return {"external_id": row["external_id"], "source_url": url, "final_url": final,
             "source_sha256": row["source_sha256"], "status": 200,
@@ -118,7 +122,10 @@ def main():
     seen = {r["external_id"] for r in existing if r.get("status") == 200}
     priority = {r["external_id"] for r in json.loads((root / "geh-metadata-priority-history400.json").read_text()) if r["stage"] == args.stage}
     rows = json.loads((root / "geh-verified-db-input-history400.json").read_text())["accepted"]
-    selected, sales = select_candidates(rows, priority, seen, args.limit)
+    review_file = output / "detail-review.json"
+    reviews = json.loads(review_file.read_text()) if review_file.exists() else {}
+    excluded = {k for k, v in reviews.items() if v["attempts"] >= 3}
+    selected, sales = select_candidates(rows, priority, seen | excluded, args.limit)
     if sales:
         print("excluded_sale_observations", len(sales), flush=True)
 
@@ -126,12 +133,20 @@ def main():
         try:
             return capture(output, row)
         except (OSError, ValueError) as exc:
-            return {"external_id": row["external_id"], "error": type(exc).__name__}
+            return {"external_id": row["external_id"], "error": type(exc).__name__, "reason": str(exc)[:200]}
 
     with ThreadPoolExecutor(max_workers=2) as pool:
         for receipt in pool.map(run, selected):
             if receipt.get("status") != 200:
-                print("review", receipt, flush=True)
+                key = receipt["external_id"]
+                reviews[key] = {**receipt, "attempts": reviews.get(key, {}).get("attempts", 0) + 1}
+                tmp_review = review_file.with_suffix(".partial")
+                with tmp_review.open("w") as out:
+                    json.dump(reviews, out, ensure_ascii=False, indent=2)
+                    out.flush()
+                    os.fsync(out.fileno())
+                tmp_review.replace(review_file)
+                print("review", reviews[key], flush=True)
                 continue
             existing.append(receipt)
             tmp = manifest.with_suffix(".partial")

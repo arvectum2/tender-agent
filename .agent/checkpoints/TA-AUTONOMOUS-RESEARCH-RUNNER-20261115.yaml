@@ -1,0 +1,17 @@
+task_id: TA-AUTONOMOUS-RESEARCH-RUNNER-20261115
+status: in_progress
+goal: Run existing approved research queues independently of each chat session on Mac mini.
+definition_of_done:
+  - Single durable local runner with process lock, atomic state and independent GPB and SIBUR lanes.
+  - Loop internal batches until exhausted, operator stop or explicit blocked state; no artificial chat-scale limit.
+  - Gate and verified backup before writes, monotonic import, no blind index timeout retry.
+  - Validate focused tests, start real process, verify state and actual progress in both lanes.
+  - Preserve original data, no automatic merge, paid actions, bidding or credential changes.
+completed:
+  - Inspected existing branch checkpoints and registered jobs.
+current_stage: implementation
+remaining:
+  - implement and verify runner, launch and confirm progress
+last_verified_commit: f34cc61ded923972167a18db562bef3f094b62c2
+last_checks: baseline worktrees clean, DP health 200, no competing research jobs
+resume_instruction: Continue implementing and validating the local runner; do not start a second instance.

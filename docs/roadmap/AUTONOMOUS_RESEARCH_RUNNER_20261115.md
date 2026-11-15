@@ -1,0 +1,12 @@
+# Autonomous local research executor
+
+Authorized scope: existing public GPB historical priority snapshot and active document acquisition, SIBUR public document index, no automatic merge or bid/action/credential changes. Separate GPB and SIBUR lane; one durable local worker, no additional ChatGPT schedule. Other sources need verified connectors and separate admissible queues.
+
+Mac mini runtime: `/Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/autonomous-runner/`.
+- `state.json` is the atomically replaced execution checkpoint (lane step, timestamps, counts, hashes, error, PID, source commits); original receipt manifests are the progress ledger.
+- `executor.lock` is exclusive across worker instances. `mutation.lock` serializes gate/backup/write batches; any other agent approaching these shared DB mutations must coordinate on this lock.
+- All writes go through original importers, a fresh MI backup/runtime acceptance gate, and TA verified pg_dump for TA updates. Replays are idempotent. Source originals never overwritten.
+- Each lane loops internal batches. A blocked lane remains blocked (no blind retries); its sibling continues. GPB per-card transient/error capture retries capped at three, then retained for review. No archive execution; source acquisition remains bounded. DP ingest is sequential; server collection totals reconciled before/after; interrupted or ambiguous writes stay blocked until exact resource reconciliation. One previously reconciled resource has aggregate, not individual embedding evidence.
+- The current SIBUR automatic scope is pre-extracted supported OOXML index. Unprocessed PDF/OCR and unsupported legacy formats require a separately tested processing lane. Historical source coverage beyond the known 400 pages and new ETP connectors require source-contract discovery, not fabricated API endpoints.
+- Inspect `launchctl print gui/501/com.arvectum.tender-agent-research-executor` and `state.json`; if running, do not start a second process or manually write same source/collection. To stop gracefully create `STOP` in runtime; it exits at batch boundary. Remove STOP and use launchctl kickstart only after checking no competing workers, no blocked/inflight writes and unchanged source receipts. Blocked status is an explicit recovery decision, never just delete the state. Do not use kickstart -k during writes.
+- launchd is the worker supervisor, not a new periodic watchdog or timer. Existing hourly Tender Agent Watchdog remains the single recovery watcher; report state, don't duplicate worker.
