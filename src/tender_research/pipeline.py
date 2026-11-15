@@ -916,7 +916,7 @@ class TenderResearchPipeline:
                 else:
                     failed += 1
                 self._session.flush()
-            except Exception:  # noqa: BLE001 - transaction rollback for any DB error
+            except Exception:  # Roll back the page and candidate atomically.
                 self._session.rollback()
                 raise
         self._session.commit()

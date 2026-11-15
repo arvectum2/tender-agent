@@ -191,4 +191,4 @@ def test_duplicate_current_notice_numbers_rejected():
 def test_naive_capture_time_refused():
     src, old, b2b = frozen()
     with pytest.raises(PublicStageError):
-        observe(src, old, b2b, observed=datetime(2026, 10, 18), fetch=safe_fetch)  # noqa: DTZ001 - negative test
+        observe(src, old, b2b, observed=datetime(2026, 10, 18), fetch=safe_fetch)  # Deliberately naive timestamp.
