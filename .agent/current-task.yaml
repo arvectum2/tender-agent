@@ -663,3 +663,12 @@ parallel_source_discovery_2026_11_14:
   branch: feat/gpb-public-discovery-20261114
   checkpoint: .agent/checkpoints/TA-GEH-ZMO-PARALLEL-20261114.yaml
   stage: historical_protocol_outcomes_133_verified
+
+active_local_executor:
+  task_id: TA-AUTONOMOUS-RESEARCH-RUNNER-20261115
+  status_at_deployment: running
+  state_path: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/autonomous-runner/state.json
+  launchd_label: com.arvectum.tender-agent-research-executor
+  initial_verified_index_receipts: 148
+  initial_verified_server_documents: 149
+  instruction: Check live executor and receipts before further work. Do not duplicate active batches or blind-retry ambiguous writes. Continue independent approved discovery and format processing after coordination.

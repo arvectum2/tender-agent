@@ -8,7 +8,7 @@ remaining: [SIBUR document acquisition and historical coverage, production DP tr
 last_verified_commit: c52856bff1b4df35c887f5148172473ca6636d82
 latest_tests: "56 focused pytest PASS (11 SIBUR + 45 prior parser/Watchdog); Ruff PASS; real 27/27 SHA-bound replay 313 IDs / 314 rows / one duplicate; two original OOXML samples PASS; explicitly authorized TA DB seed verified; MI DB not mutated"
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114
-resume_instruction: Continue GPB after 198 historical details, 135 captured protocols and 133 structured outcomes; 60048 reported offers versus 8000 observed historic cards, discover verified partitions. SIBUR 513 originals, 713 links, 138 full receipts/406 embeddings, 154 TA index links, one recovered resource; live DP139 docs/433 embeddings. Five serial longer OOXML candidates (six actual index chunks) passed. Require fresh MI backup/gate before DP writes; stop on transport failure. Continue GPB review and older history, remaining SIBUR processing/index, authenticated retrieval and ZMO/other platforms.
+resume_instruction: Check live active_local_executor state and launchd first. Running worker drains supported pre-extracted SIBUR OOXML queue and GPB snapshot. Do not duplicate its batches; reconcile blocked or inflight writes explicitly. Other source contracts and PDF/legacy processing remain open.
 
 report: docs/roadmap/SIBUR_PUBLIC_REGISTRY_BASELINE_2026-11-14.md
 
@@ -300,3 +300,12 @@ continuation_2026_11_15_outcomes133:
   repeat_updates: 0
   gpb_checkpoint_commit: f34cc61ded923972167a18db562bef3f094b62c2
   backup_sha256: 415f47249222e144f6db41276c68b087df39aa57985124f6cb812938fa30ebae
+
+active_local_executor:
+  task_id: TA-AUTONOMOUS-RESEARCH-RUNNER-20261115
+  status_at_deployment: running
+  state_path: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/autonomous-runner/state.json
+  launchd_label: com.arvectum.tender-agent-research-executor
+  initial_verified_index_receipts: 148
+  initial_verified_server_documents: 149
+  instruction: Check live executor and receipts before further work. Do not duplicate active batches or blind-retry ambiguous writes. Continue independent approved discovery and format processing after coordination.
