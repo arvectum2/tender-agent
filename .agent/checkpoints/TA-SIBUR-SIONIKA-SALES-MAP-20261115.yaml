@@ -209,7 +209,8 @@ completed:
 - Consolidated 17 project/program cards, 30 organizational/site coverage labels, 30 overlapping reviewed scope groups (51 distinct publications), official 2026 plan with 1005 positions and 177 direct category rows, 37 priority rows, and 177 qualification entries with 22 candidates. Verified two original XLSX hashes and map/report hashes. Current Watchdog updated in place for 17 November deadline; hourly schedule unchanged. No inferred awards.
 - Screened all 37 priority plan rows against frozen archive and current source snapshot of 15 November 11:37 UTC: 29 rows with retained candidates, 155 distinct publication IDs, 6 current snapshot IDs; 25 manual scope judgments, 8 rejected pairs. No proven exact plan-to-contract link or award. Refreshed 162 originals to 2072, 2063 extracted, 2 partial, 7 review; three source-bound technical scopes. Resolved NPG SPR to Perm SIBUR-Khimprom project via official regional order; 41 archive candidate publications and six distinct secondary missing from snapshot, two false model-token positives excluded. Public role of Tekon Engineering confirmed. Added four programs, consolidated 21 unique project cards and versioned report v3.
 - Perm NPG SPR reviewed original three revisions 2141372/1-3 and heat trace 2141353/1, with exact source/hash links; 4 transformers 2500kVA, 1 MV RU, 53 LV raw quantity, 3 repeat tags, 1 lighting cabinet. Heat trace physical sheet 123 rows, 2 controller cabinets,10 system cabinets,44 boards. Approx37bn CAPEX separate; GSI-Giprokauchuk FEED role, GSI group and local contractors separately documented; two external NPG notices outside snapshot, VSK existing ID non-additive; eight unmatched plan lines rechecked, no exact links. Refreshed to 2087 originals, 2075 extracted,5 partial,7 review. Map/report v4 verified; no new awards, prices or DB writes.
-current_stage: perm_package_and_contractor_mapping
+- Seven-site multi-block review: 45 archive records, six new cards, total 27. Four primary active originals, nine anchors. GPB three primary list/detail pairs, two unresolved, one verified failed-no-bids protocol; three possible cross-platform pairs not additive. Tomsk 2027 schedule and separate UPS confirmed.
+current_stage: multi_site_programs_and_cross_platform_protocol_review
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -218,7 +219,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: c103c910
+last_verified_commit: 98cfc950
 test_results:
   focused: 3
   ruff: pass
@@ -534,4 +535,18 @@ test_results:
       perm-contractor-and-external-package-review-v1.json: 242d246bd465699950963b8893b942b347c013f195e3914ccac359210eb23404
       consolidated-project-map-v4.json: 4ba83f85355b85191ea3f217f6530baaaef6ec2d2579e1406feb4e98edef29a7
       consolidated-project-report-v4.md: da4051b8d7e9dac389743fa7ebda582e05e431b73965b1ed7fd89c4186c4cabf
-resume_instruction: Read consolidated-project-map-v4.json and consolidated-project-report-v4.md; continue Tomsk, Perm styrene separate scope, other undercovered sites and contractor procurement channels; seek verified awards, updated stages and primary document packages; refine action ranking and qualification. Deadline 17 November. Preserve independent UPS, private owner context, existing workers and gates. No spending, outreach, inferred awards or duplicate jobs.
+  multi_site_review_v5:
+    program_cards: 27
+    site_reviews: 7
+    selected_archive_records: 45
+    primary_active_originals: 4
+    primary_gpb_details: 3
+    verified_failed_no_bids_protocols: 1
+    unresolved_gpb_details: 2
+    artifacts:
+      undercovered-sites-project-review-v1.json: 71ccc14f68443a63281ae6a959c04750cc4e78c88346c8e87824e6855ac3a8f2
+      poliom-gpb-protocol-review-v1.json: c4a196da2b1a082dc50195f4c169e31e70f1061ffaa63d0f9579fd874cbb2c65
+      undercovered-active-technical-evidence-v1.json: 23d210ef49207bec01d14ba64c448d3987b434f32b99a84065eec4e8bcb6bfa0
+      consolidated-project-map-v5.json: 3b92fb24b72ed0295b9d32d4e22c783c771209e875fec2754da89c6c8e58154a
+      consolidated-project-report-v5.md: 6699f7ecd7afb846275e1febfa2d00dd1d536791b0daf176e5c854a975d7d039
+resume_instruction: "Read consolidated-project-map-v5.json and consolidated-project-report-v5.md. Continue multiple blocks per cycle: STG and smaller sites; verified outcomes and prices on GPB and other official channels; project-wise commercial shortlist and qualification gaps; refresh committed originals with existing extractor. Deadline 17 November. Maintain existing gates, independent UPS, private owner context, no duplicate jobs or inferred awards."

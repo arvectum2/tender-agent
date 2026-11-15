@@ -877,3 +877,8 @@ sibur_perm_package_review_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Read consolidated-project-map-v4.json; Tomsk, Perm styrene, other sites and contractor channels; deadline 17 November.
+
+sibur_multi_site_v5_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read latest consolidated-project-map-v5.json and report; multiple research blocks each cycle until deadline.
