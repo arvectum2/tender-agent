@@ -8,7 +8,7 @@ remaining: [GPB customer-specific queries and actual date checks, TEK-Torg acces
 last_verified_commit: bc37019518c5811d8fa411e3000d09a420d61caf
 latest_tests: 3 pytest passed; Ruff passed; 20 distinct primary observed cards; 13 future-dated observations quarantined
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources
-resume_instruction: Reuse 8206 GPB rows, 19 active and 198 historical details, 149 links, 135 captured protocols, 133 outcomes (125 best bids, 8 unsuccessful). Review etp:1293269 and etp:1282317. Exclude sales from demand only; raw records unchanged. Listing reports 60048 offers with 400 exposed pages; 8000 observations NOT exhaustive. Discover verified partition filters, continue active attachments, ZMO and next demand candidates; no inferred identities or signed contracts.
+resume_instruction: Check active_local_executor state and launchd first; GPB worker advances the existing historical and active attachment queues autonomously. Do not manually duplicate its batches. Independently discovery older source partitions, ZMO and evidence gaps; reconcile any blocked lane before restart.
 
 target_detail_receipts:
   detail_pages_verified: 2
@@ -230,3 +230,10 @@ geh_protocol_outcomes_batch7:
   repeat_updates: 0
   prewrite_gate: pass
   backup_sha256: 415f47249222e144f6db41276c68b087df39aa57985124f6cb812938fa30ebae
+
+active_local_executor:
+  task_id: TA-AUTONOMOUS-RESEARCH-RUNNER-20261115
+  status_at_deployment: running
+  state_path: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/autonomous-runner/state.json
+  launchd_label: com.arvectum.tender-agent-research-executor
+  instruction: Check live worker and receipt ledgers first. Do not duplicate active source batches or blind-retry blocked or inflight mutations. Preserve parent and child research objectives.

@@ -657,3 +657,10 @@ geh_zmo_parallel_2026_11_14:
   child_checkpoint: .agent/checkpoints/TA-GEH-ZMO-PARALLEL-20261114.yaml
   stage: historical_protocol_outcomes_133_verified
   parent_resume_preserved: true
+
+active_local_executor:
+  task_id: TA-AUTONOMOUS-RESEARCH-RUNNER-20261115
+  status_at_deployment: running
+  state_path: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/autonomous-runner/state.json
+  launchd_label: com.arvectum.tender-agent-research-executor
+  instruction: Check live worker and receipt ledgers first. Do not duplicate active source batches or blind-retry blocked or inflight mutations. Preserve parent and child research objectives.

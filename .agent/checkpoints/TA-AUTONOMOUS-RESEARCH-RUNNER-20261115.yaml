@@ -1,17 +1,34 @@
 task_id: TA-AUTONOMOUS-RESEARCH-RUNNER-20261115
-status: in_progress
-goal: Run existing approved research queues independently of each chat session on Mac mini.
+status: completed
+goal: Deploy verified continuous independent execution of the existing GPB and SIBUR research queues.
 definition_of_done:
-  - Single durable local runner with process lock, atomic state and independent GPB and SIBUR lanes.
-  - Loop internal batches until exhausted, operator stop or explicit blocked state; no artificial chat-scale limit.
-  - Gate and verified backup before writes, monotonic import, no blind index timeout retry.
-  - Validate focused tests, start real process, verify state and actual progress in both lanes.
-  - Preserve original data, no automatic merge, paid actions, bidding or credential changes.
+  - Durable local worker with singleton lock, atomic checkpoint and independent lanes.
+  - Autonomous batch continuation, bounded retries and isolated failures.
+  - Fresh MI acceptance/backup and verified TA backup before writes, idempotent replay, no blind timeout retry.
+  - Focused tests and actual live progress verified in both lanes.
+  - Existing hourly Watchdog coordinates recovery without an extra schedule.
 completed:
-  - Inspected existing branch checkpoints and registered jobs.
-current_stage: implementation
-remaining:
-  - implement and verify runner, launch and confirm progress
-last_verified_commit: f34cc61ded923972167a18db562bef3f094b62c2
-last_checks: baseline worktrees clean, DP health 200, no competing research jobs
-resume_instruction: Continue implementing and validating the local runner; do not start a second instance.
+  - Implemented and tested worker, source review retry, lock and recovery guard.
+  - Installed live launchd agent and verified duplicate invocation cannot run.
+  - Verified live GPB 30 new details, 27 new protocol originals, 25 additional DB decisions (158 total).
+  - Verified two sequential SIBUR batches with 10 new index receipts, 149 server resources and 495 aggregate embeddings; 164 linked documents.
+  - Updated the existing hourly Watchdog without changing its schedule or previous scope.
+current_stage: deployment_verified
+remaining: []
+last_verified_commit: 13262eff779eca50189a490e4827f26bfa23eadc
+sibur_worker_commit: 0b6b679ef8523bfb71384d7d7acbfea79cfe056f
+last_checks: 31 GPB plus 26 SIBUR focused tests passed; Ruff passed; live singleton, fresh backup gates, GPB replay, DP aggregate reconciliation and two successive ingestion batches passed
+live_execution:
+  launchd_label: com.arvectum.tender-agent-research-executor
+  initial_pid: 11993
+  state_path: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/autonomous-runner/state.json
+  watchdog_id: 6aa7ef95fc9c8191beaa71fea17dc372
+  verified_at_utc: 2026-11-15T06:01:51Z
+  data_work_status: in_progress
+  gpb_historical_details: 228
+  gpb_structured_outcomes: 158
+  sibur_verified_index_receipts: 148
+  sibur_server_documents: 149
+  sibur_server_embeddings: 495
+limitations: Public snapshot scope is not entire historical archive; other source discovery, PDF and legacy format processing, ambiguous protocol and download reviews and signed supplier identification remain separate research work. No auto-merge.
+resume_instruction: First read live state and launchd status. If running do not duplicate the worker, manually run its batches or edit its executing scripts. Resume only from actual receipts and explicitly reconcile any blocked or inflight writes; respect STOP and shared mutation lock. Continue independent approved source discovery.
