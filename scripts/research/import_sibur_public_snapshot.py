@@ -6,6 +6,7 @@ import json
 import sys
 import uuid
 from datetime import UTC, datetime
+from urllib.parse import parse_qs, urlsplit
 
 from sqlalchemy import create_engine, func, select
 from sqlalchemy.dialects.postgresql import insert
@@ -17,7 +18,24 @@ SOURCE = "sibur_public"
 PLATFORM = "SIBUR public procurement registry"
 
 
-def build_rows(groups):
+def source_scope(url, archive):
+    if not archive:
+        return url.startswith("https://www.sibur.ru/ru/procurement/buy/?")
+    u = urlsplit(url)
+    q = parse_qs(u.query)
+    groups = {"107": "1", "108": "1", "109": "1", "112": "1", "132": "1",
+              "999_08": "5", "999_10": "5", "999_11": "5"}
+    cat = q.get("catNMK", [""])[0]
+    page = q.get("PAGEN_1", [""])[0]
+    return (u.scheme == "https" and u.netloc == "www.sibur.ru"
+            and u.path == "/ru/procurement/buy/archive/" and not u.fragment
+            and set(q) == {"PAGEN_1", "count", "catMTR", "catNMK"}
+            and all(len(v) == 1 for v in q.values()) and q["count"] == ["12"]
+            and cat in groups and q["catMTR"] == [groups[cat]]
+            and page.isdecimal() and 1 <= int(page) <= 10000)
+
+
+def build_rows(groups, *, archive=False):
     rows = []
     seen = set()
     allowed = {
@@ -35,7 +53,7 @@ def build_rows(groups):
         for row in observations:
             if (row["external_id"] != identity or row["source"] != SOURCE
                     or row["verification"] != "PUBLIC_SNAPSHOT_ONLY"
-                    or not row["source_url"].startswith("https://www.sibur.ru/ru/procurement/buy/?")
+                    or not source_scope(row["source_url"], archive)
                     or len(row["source_sha256"]) != 64 or set(row) != allowed):
                 raise ValueError("source or shape mismatch")
         def agreed(key, observations=observations):
@@ -49,6 +67,8 @@ def build_rows(groups):
             "deadline_timezone_verified": False,
             "platform_scope": "public registry; authenticated SAP SRM not verified",
         }
+        if archive:
+            payload["platform_scope"] = "public archive observation; award and signed contract not verified"
         digest = hashlib.sha256(json.dumps(payload, ensure_ascii=False, sort_keys=True,
                                            separators=(",", ":")).encode()).hexdigest()
         now = datetime.now(UTC)

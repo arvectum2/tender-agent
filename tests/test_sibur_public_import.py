@@ -33,3 +33,27 @@ def test_import_rejects_cross_source_or_unknown_fields(change):
     row = {**observation(), **change}
     with pytest.raises(ValueError):
         build_rows([{"external_id": "1234567/1", "observations": [row]}])
+
+
+def test_archive_scope_explicit_and_default_unchanged():
+    row = observation()
+    row["source_url"]="https://www.sibur.ru/ru/procurement/buy/archive/?PAGEN_1=1&count=12&catMTR=1&catNMK=107"
+    g=[{"external_id": row["external_id"], "observations":[row]}]
+    with pytest.raises(ValueError):
+        build_rows(g)
+    result=build_rows(g,archive=True)[0]
+    assert result["raw_payload"]["platform_scope"].endswith("award and signed contract not verified")
+    row["source_url"]=row["source_url"].replace("catNMK=107","catNMK=999_08")
+    with pytest.raises(ValueError):
+        build_rows(g,archive=True)
+
+
+def test_archive_preserves_existing_rows():
+    from scripts.research.import_sibur_archive import separate
+
+    rows=[{"external_id":"a","content_hash":"new"},{"external_id":"b","content_hash":"old"},
+          {"external_id":"c","content_hash":"fresh"}]
+    new,exact,changed=separate(rows,{"a":"old","b":"old"})
+    assert new==[rows[2]]
+    assert exact==["b"]
+    assert changed==[{"external_id":"a","prior_hash":"old","incoming_hash":"new"}]
