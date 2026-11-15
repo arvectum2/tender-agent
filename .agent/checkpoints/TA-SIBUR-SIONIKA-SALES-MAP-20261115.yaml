@@ -213,7 +213,8 @@ completed:
 - STG seven scope groups, 14 archive IDs, verified LRT-40 workbook and owner program evidence, V6 map/report. Existing technical SIBUR LaunchAgent now StartInterval 120s; original plist backed up; verified recurring successful runs. Reconciled 313 DP resources/5073 chunks and embeddings with fresh read-only PostgreSQL export; repaired preservation of first attestation hashes for two previously linked resources, four focused tests passed, code commit 241992cb. Existing runner restarted with gate and backups, GPB recovery/archive worker unchanged. Verify post-restart actual linkage/index progress before declaring recovery complete.
 - Six smaller-site program cards: Krasnoyarsk KZSK, Portenergo, PETF, YUP, NPP, S-Yug; 26 archive IDs and 2 external observations (one non-electrical). Ownership conflicts corrected with 2023 Solvay transaction; JV boundary retained. Commercial action register covers 33 cards, 12 P0,20 P1,1 P2. V7 map and report. DP repeat timeout recovered by exact resource identities, 315 documents/5283 chunks, 4 recovered receipts; preserved old proofs. Shared lock acquired safely on retry; existing runner resumed. GPB worktree cd52f39b increases bounded request timeout 180s and stats 60s. No direct DB writes.
 - Four judicial contract records, two manufacturer references, POLIEF RKOS fifth-source project package, map V8 with 34 cards. Legacy DP queue fully synchronized and exhausted 315/5283. Read-only readiness queue 639 technical candidates, 97 P0; no new ingestion or mutation.
-current_stage: contract_supplier_evidence_and_archive_index_readiness
+- Exact read-only bridge validated 587 OOXML originals and 932 committed captures, 92 P0, 52 PDF review. Code c595c96f and c334fb4a preserve verified DP receipt on explicit capture-only replay; 17 focused tests passed. Existing live archive worker has cached earlier linker; no deployment or DP mutations yet. Verified Styrene qualification 3 original spreadsheets/12 anchors, owner-confirmed Pondera role, SNEMA-Service B2B exact buyer, NKU-Energo 29 panel self report, 13 P0 qualification routes. V9 report.
+current_stage: archive_bridge_validated_and_p0_qualification
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -222,7 +223,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: 7c53feca
+last_verified_commit: c334fb4a
 test_results:
   focused: 3
   ruff: pass
@@ -608,4 +609,21 @@ test_results:
       consolidated-project-map-v8.json: 1a928bf1a0a2adc32dd4cd71a0f088275d487c397a32f020377d6d9f5559403a
       commercial-action-register-v2.json: 771d31c11619fcce47c56cb480aff85b8c680b1b9396abb9c20df0a4b33add01
       consolidated-project-report-v8.md: eac144d0d21865a16a3f54ca51a9738f13f68797061def9b6c6de3a1bf4f34d1
-resume_instruction: "Read consolidated-project-map-v8.json, consolidated-project-report-v8.md, commercial-action-register-v2.json and archive-index-readiness-v1.json. Implement/test archive-to-existing DP queue bridge using exact committed receipt identities, no duplicate jobs, preserve gate/backup/rollback. Then continue verified contracts, vendor references, qualification and final clean project report by 17 Nov; existing workers continue, separate UPS and private owner input, no inferred awards or prices."
+  archive_bridge_and_p0_qualification_v9:
+    project_cards: 34
+    p0_qualification_routes: 13
+    archive_bridge_ready: 587
+    archive_bridge_committed_links: 932
+    archive_bridge_p0: 92
+    pdf_review: 52
+    technical_originals_latest: 2296
+    tests: 17_passed
+    activation: pending_coordinated_safe_reload_and_gated_executor_integration
+    artifacts:
+      archive-index-bridge-v1.json: 13899bfe8ade859ff3106ed6527b469ca9d0c58f2b9072b7fc8d0a98732c69f4
+      styrene-dgp2-channel-and-qualification-v1.json: 18051aa5c70b427ba5e812f64db02aef08175e1d8d3adcef6715a55f398fcd11
+      p0-qualification-routing-v1.json: b8e92aabb020173480c9ef51a044055d9b411c2ac03c3ef61a5ffa0a010e5e84
+      consolidated-project-map-v9.json: 7ee3687cc8f6573c2c0ace1f63199431e12fba6cb08c657c789d1ce5312d7bb4
+      commercial-action-register-v3.json: 86c7e00c9c7f8a1834b1e622fecb800ade61b8d296016b986a3eac438627c07e
+      consolidated-project-report-v9.md: 618db3e3d9b32b5755baa7ccfacb32f11f2db5d061347c4120ad9d2e11f85b1f
+resume_instruction: "Read V9 map/report, commercial-action-register-v3.json and archive-index-bridge-v1.json. Complete gated archive index integration and tests, then coordinate archive capture worker reload only at safe non-inflight boundary, preserve prior receipts and shared locks, no duplicate workers. Existing archive and GPB continue. Continue project-specific evidence, signed prices and final clean commercial report by 17 November. Keep UPS independent and private owner context separate; no invented awards."

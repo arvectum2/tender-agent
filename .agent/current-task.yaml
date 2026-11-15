@@ -897,3 +897,8 @@ sibur_contract_and_index_v8_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Read latest V8 and readiness queue; safely extend existing DP index, continue contract and project report by 17 November.
+
+sibur_bridge_qualification_v9_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Validate and complete gated index integration; V9 P0 commercial routing, deadline 17 November.
