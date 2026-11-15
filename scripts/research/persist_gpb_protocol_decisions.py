@@ -46,8 +46,16 @@ def attach_decision(meta, row):
             or row.get("participant_legal_identity") is not None
             or row.get("contract_amount") is not None):
         raise ValueError("unsupported or unverified decision")
-    if "protocol_decision" in meta and meta["protocol_decision"] != row:
-        raise ValueError("prior decision conflicts")
+    if "protocol_decision" in meta:
+        prior = meta["protocol_decision"]
+        # The same immutable original may have several publication URLs.
+        # Validate the incoming receipt above, keep the first verified decision,
+        # and never allow any semantic field to change.
+        if {k: v for k, v in prior.items() if k != "document_url"} != {
+            k: v for k, v in row.items() if k != "document_url"
+        }:
+            raise ValueError("prior decision conflicts")
+        return meta
     return {**meta, "protocol_decision": row}
 
 
