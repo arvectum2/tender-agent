@@ -56,7 +56,7 @@ completed:
 - Actual Swift decoder/status runtime probes 6/6 PASS; unsigned generic iOS simulator
   build-for-testing PASS twice with Xcode 27.1. No simulator XCTest execution or physical
   device installation.
-current_stage: native_digest_verified_next_company_auth_and_projection
+current_stage: native_company_auth_and_portfolio
 remaining:
 - Check CI for PR534 and native stacked PR; review prior PR532/533 green.
 - Implement actual tenant-scoped iOS client authentication and company portfolio/evidence
@@ -78,8 +78,6 @@ test_results:
   head 109
 - Xcode 27.1 generic simulator build-for-testing PASS (no signing); Swift runtime
   decoder/status 6/6 PASS; diff check PASS. Native XCTest compiled not executed.
-resume_instruction: Native owner digest slice verified, publish stacked review PR;
-  check CI. Next company tenant-specific authentication and read-only scoped portfolio
-  UI, then shared web surface and automated scoped discovery. Never use legacy device
-  token for SaaS or activate live Sionika tenant, migration, APNs, model or research
-  changes.
+resume_instruction: Implement separate read-only iOS SaaS token login and scoped portfolios,
+  secure per-company Keychain, identity verification, no legacy fallback; test offline,
+  publish stacked review PR.
