@@ -1,5 +1,5 @@
 task_id: TA-CORE-GEMMA-REVIEW-20261115
-status: in_progress
+status: blocked
 goal: "Isolated review of draft PR497\u2013500; preserve real model quality gates."
 definition_of_done:
 - Review candidate against consolidated core
@@ -8,13 +8,20 @@ definition_of_done:
   production.
 completed:
 - Merged only into isolated experimental branch; no production effects
-current_stage: offline_tests
+- 105 draft-only tests passed
+- 483 combined offline tests passed
+- make check and all changed draft-file Ruff checks passed
+current_stage: await_separate_authorized_source_locked_model_acceptance
 remaining:
-- offline tests
-- document blocking real-model gate
-last_verified_commit: f973d720bb99b1db91e3d228448c69a2467ad8c1
+- Verify existing authorized Data Platform API access (historical HTTP 401)
+- Run bounded original-source live model evaluation only when safe for parallel research
+- Review model quality; no promotion or deployment without acceptance
+last_verified_commit: d5eb8439811f9ca1dc41253f5a136c5aa9e36c92
 test_results:
-- git diff --cached --check PASS
-resume_instruction: Run changed tests in in-memory SQLite; never promote this branch
-  or execute live model without authorized Data Platform access and separate model
-  readiness review.
+- 105/105 draft-only PASS
+- 483/483 combined PASS, 44 warnings, 9.20s
+- make check PASS; changed-file Ruff PASS; git diff --check PASS
+resume_instruction: First reconcile PR529 exact-head CI and REVIEW gates; then verify
+  existing authorized Data Platform access without exposing credentials and rerun
+  bounded original-source test when no workload conflict. Historical PR500 fabricated
+  100% and HTTP401 remain unaccepted. No production or training promotion.

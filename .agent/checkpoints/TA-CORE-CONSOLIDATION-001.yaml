@@ -12,23 +12,26 @@ completed:
 - main 0d2b35a2 verified against remote; historical PR chain identified.
 - Dedicated worktree created; no research worktree modified.
 - Exact PR refs fetched; merge-tree found only checkpoint/roadmap conflicts.
-- Review-only candidate includes PR481,482 and stacked PR484–496, code merged without
-  conflicts; preserved current main roadmap and checkpoint in conflicts.
+- "Review-only candidate includes PR481,482 and stacked PR484\u2013496, code merged\
+  \ without conflicts; preserved current main roadmap and checkpoint in conflicts."
 - Historical roadmap notes retained separately, November roadmap ordering unchanged.
 - 'Integrated candidate verified: 378 focused tests passed twice; make check passed;
   extended Ruff passed except unchanged 22 legacy findings in pipeline.py.'
-current_stage: publish_review_candidate_and_check_draft_model_gates
+- Review-only integration draft PR529 published at exact head 20144887f70a15c149e7418cca284b2200995126;
+  11 of 19 CI checks success, 8 in progress at observation.
+- "Draft model PR497\u2013500 isolated in feat/ta-core-gemma-review-20261115; offline\
+  \ combined 483 PASS, real-model gate remains blocked."
+current_stage: core_review_ci_and_model_gate
 remaining:
-- publish review-only integration PR and verify exact-head CI
-- assess separate draft PR497–500; keep blocked real-model gate intact
-- review readiness and decide deployment separately
+- verify PR529 exact-head CI and required review
+- resolve separate Gemma source-locked live acceptance, historical 401
+- review runtime compatibility and owner approval before deployment
 last_verified_commit: b88a3916895539d7ccb67dda55dd791f1ff5e692
 test_results:
 - 378 passed, 44 warnings, twice; final 8.30s; in-memory SQLite
 - make check PASS
 - extended Ruff PASS except baseline 22 pipeline diagnostics unchanged
 - git diff --check PASS
-resume_instruction: Verify draft integration PR exact-head CI; treat PR497–500 as
-  separate unaccepted model-quality track (PR500 source probe blocked Data Platform
-  HTTP401 and unsupported model percentages). Do not rerun live model while research
-  is active, promote gold, auto-merge REVIEW work, deploy, or mutate production DB.
+resume_instruction: Open PR529, verify exact head and CI, reconcile REVIEW gates;
+  separate model branch checkpoint TA-CORE-GEMMA-REVIEW-20261115.yaml. Preserve active
+  market research and do not deploy or mutate production DB.
