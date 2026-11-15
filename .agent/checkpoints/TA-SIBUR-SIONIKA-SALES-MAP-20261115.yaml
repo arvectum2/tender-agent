@@ -22,21 +22,28 @@ completed:
 - Fixed ПЧ false positives from fire brigades; added substation/energy supply and
   subsegments. Three focused tests and Ruff passed.
 - Joined committed document coverage on exact source identities read-only.
-current_stage: sales_map_v2_ready_verify_actual_scope_and_recipient
+- Fresh registry 27/27 pages, 316 rows/315 IDs. All 24 prior candidates status/deadline
+  reverified from reconstructed originals; 4 technical/no-price, 20 commercial/work
+  review candidates, eligibility unverified. 76 URL captures /75 unique SHA; 20 procedures
+  with all verified published URLs, 4 with no verified direct URLs.
+- Project layer 913 unique core publications with project mentions, AGHK 675, DGP2
+  90, external AGPZ 123, EP600 17, NPG_SPR 6, ethylene pipelines 5, STYRENE 2, METALLOCENE_PE
+  2, NKNH_VRU 2; 7 mixed AGHK/AGPZ. Brand mentions not suppliers.
+- Reviewed four active packages, NKNH styrene 2 lots 2027-02-09 to 2028-06-30 and
+  60-day payment; NKNH motors 1 lot 2027-01-16 to 2029-12-31 and 45-day payment, 12-month
+  warranty; Tomsk 2 lots 2027-01-25 to 2027-12-12; AUMA 4 GPP branches. Six SHA-bound
+  preview evidence records.
+- Verified limited public role and project-stage reports from government, owner and
+  contractor sources; original external pages not privately archived.
+current_stage: project_and_active_scope_map_verified_priority_packages
 remaining:
-- Review active 24 source snapshots against authorized current source and technical
-  documents; prioritize high voltage/retrofit, drives, RZA and automation, not PQ
-  exclusively.
-- Resolve centralized end-recipient and project on source evidence, distinguish ambiguous
-  acronyms, extract equipment quantities and models from documents.
-- Extend map to EPC chains and suppliers using actual award/contract evidence. No
-  automatic legal identity or contract amount.
-- Check discrepancy between originally selected eight SAP categories (support services
-  included) and imported eight (construction included); extra support services coverage
-  not established.
-- DP blocked unchanged; no bypass. Continue legacy offline extraction and approved
-  worker queues.
-last_verified_commit: 3ea49913013e964aa739531b14005a5d340b3a90
+- Detail 75 active originals, especially legacy DOC/XLSB/XLSM using bounded non-executing
+  parsers; four procedures lack direct verified URLs. Verify finance/equipment scope
+  and qualifications.
+- Expand project graph, recipient and roles, stage-level sales targets, brand/OEM
+  alternatives and service demand. Separate AGPZ and mixed records.
+- Resolve support services category coverage. DP blocked unchanged; no bypass.
+last_verified_commit: 5bb7cccdd8d2c9981085abe13a5ba205d71c6216
 test_results:
   focused: 3
   ruff: pass
@@ -53,8 +60,15 @@ test_results:
       '2024': 3170
       '2025': 2171
       '2026': 1294
-resume_instruction: Use immutable private sibur-sales-map-20261115/sales-map-v2.json
-  and document-coverage-v1.json; user explicitly shifted priority from PQ to broad
-  SIBUR map and all Sionika nomenclature. Revalidate active shortlist and source-bound
-  recipient/project facts, then EPC chain. No DB mutation without fresh MI backup/gate
-  and TA backup/replay. Preserve existing workers and no auto-merge.
+  project_channels:
+    focused: 5
+    ruff: pass
+    project-channels-v2_sha256: 1c0db69bed399425e489126979bbb69f3012a922903f7f68b8aa044bd41fb8bd
+    active-document-coverage-v1_sha256: 350fd41110d5bb75b9eac5ec586f8bd6dc44833dec28b26f71ad3406582aaa24
+    active-scope-review-v1_sha256: 7f3c1b4f846f545c0d2480815605fddcd277980dfcec68912fbc61293c5c697c
+    external-role-evidence-v1_sha256: 372552919b766ed861f5a5b569c1204a1f3a897269b30259d8c186b0af8e8241
+    current_registry_receipts_sha256: 5d4c8771320ce4e61b1caa26dfe98016dee73ffad8ff2950d19065562691d2b6
+resume_instruction: Read live checkpoints and project-channels-v2, active-document-coverage-v1,
+  active-scope-review-v1 and external-role-evidence-v1 reports. Continue broad SIBUR/Sionika
+  project map, exact roles, shortlist qualification and stage-based sales channels.
+  No duplicate captures, automatic bids, contract inference or DP bypass.

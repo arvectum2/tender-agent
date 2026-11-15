@@ -710,3 +710,10 @@ sibur_sionika_sales_map_20261115:
     Revalidate active shortlist and source-bound recipient/project facts, then EPC
     chain. No DB mutation without fresh MI backup/gate and TA backup/replay. Preserve
     existing workers and no auto-merge.
+sibur_sionika_project_channels_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read live checkpoints and project-channels-v2, active-document-coverage-v1,
+    active-scope-review-v1 and external-role-evidence-v1 reports. Continue broad SIBUR/Sionika
+    project map, exact roles, shortlist qualification and stage-based sales channels.
+    No duplicate captures, automatic bids, contract inference or DP bypass.
