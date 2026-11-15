@@ -1,0 +1,16 @@
+task_id: TA-ARCHIVE-DOCUMENT-EVIDENCE-20261115
+status: in_progress
+goal: Extend the existing source-bound document and outcome processing to newly imported archives without duplicate source or DB work.
+definition_of_done:
+  - Repair observed archive duplicate months by audited replacement pages preserving originals.
+  - Build refreshed priority queue from committed exact DB hashes; exclude IDs reserved by original GPB worker.
+  - Verify archive detail capture and document/decision persistence with shared fresh gate, backups, replay.
+  - Prepare independent SIBUR archival document provenance and sample capture.
+  - Tests, checkpoints, live state and failure reasons.
+completed:
+  - Existing workers active; August 2024 repeated source ID isolated on pages 37 and 38.
+current_stage: repair_and_queue
+remaining:
+  - bounded repair and archive document pilot; new lane only after verification
+last_verified_commit: 011ca22395eaabb97191c810ca1938e569aa2d32
+resume_instruction: Inspect actual worker and archive states; preserve locks, private originals and existing active queues.
