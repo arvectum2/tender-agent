@@ -1,0 +1,20 @@
+task_id: TA-CORE-GEMMA-REVIEW-20261115
+status: in_progress
+goal: "Isolated review of draft PR497\u2013500; preserve real model quality gates."
+definition_of_done:
+- Review candidate against consolidated core
+- Offline changed tests and standard checks
+- Document unresolved source-locked model and authorization gates without enabling
+  production.
+completed:
+- Merged only into isolated experimental branch; no production effects
+current_stage: offline_tests
+remaining:
+- offline tests
+- document blocking real-model gate
+last_verified_commit: f973d720bb99b1db91e3d228448c69a2467ad8c1
+test_results:
+- git diff --cached --check PASS
+resume_instruction: Run changed tests in in-memory SQLite; never promote this branch
+  or execute live model without authorized Data Platform access and separate model
+  readiness review.
