@@ -79,7 +79,12 @@ completed:
 - GPB technical batch finished 150 attempts, 25 originals captured, 125 RemoteDisconnected
   review; no blind retries. SIBUR offline refresh 222 originals/220 extracted/2 review;
   27 linked lexical equipment candidates; no award inference.
-current_stage: pq_targeted_evidence_and_index_reconciliation
+- '2026-11-15 09:18+ UTC: 629 newly processed archive originals in three bounded read-only
+  passes, 851/851 of eligible snapshot processed; 847 extracted, 4 review; previous
+  versioned reports preserved. 5 document sources with lexical PQ equipment hits,
+  29 linked procurement candidates; 15 broader requirement documents, 48 linked candidates.
+  Shared standards and acronyms not independent orders.'
+current_stage: archive_technical_snapshot_drained
 remaining:
 - Original index remains blocked after exact reconciliation; attempted separate deployment
   was blocked by safety tooling; do not retry/circumvent that blocked operation. Confirm
@@ -94,13 +99,11 @@ remaining:
 - Refresh market report, exact source procurement-bound INN/award evidence; no inferred
   awards; ZMO paper-only cost evidence remains outstanding.
 last_verified_commit: b6d3e0d3
-resume_instruction: Inspect live worker states and exact receipts; parent GPB remains
-  blocked while delta recovery active. DP original lane blocked on timeout, all 313
-  resources/5073 vectors reconciled in PostgreSQL; separate deployment was safety-tool
-  blocked and must not be circumvented. Prioritize PQ specific evidence, finish missing
-  document, distinguish budget estimates and revision groups, and link technical scope
-  to exact contracts/results only where supported. Use fresh MI backup then gate,
-  verified TA backup and replay for mutations.
+resume_instruction: Read live worker states, canonical checkpoints and branch heads;
+  offline SIBUR snapshot 851 complete, process only new committed originals. Preserve
+  reports by exact SHA before refresh. GPB recovery and archive details running. DP
+  remains blocked; no blind retry or circumvent blocked deployment. Continue direct
+  PQ evidence, contractor/contract mapping and approved independent tracks.
 test_results:
   gpb_focused_before_recovery: 8
   sibur_focused_before_recovery: 6
@@ -176,6 +179,23 @@ test_results:
       previous_verified: 498
       updated: 23
       pending_after: 0
+  continuation_2026_11_15_0918:
+    offline_technical_report_sha256: 601fc8d724744b5b3f7a57adbf2718949d612b396a2bbd926551631dcb8cbeb9
+    eligible_snapshot: 851
+    processed: 851
+    extracted: 847
+    review: 4
+    live_db_read_0918:
+      etp_gpb: 28726
+      sibur_public: 28869
+      gpb_document_links: 1490
+      sibur_document_links: 18947
+      gpb_protocol_decisions: 1132
+      gpb_named_decisions: 371
+      indexed_sibur_links: 482
+    prior_pr_ci:
+      '527': 19 SUCCESS at 314e8d2c
+      '528': 19 SUCCESS at 9bf3d250
 live_recovery_2026_11_15_0724:
   gpb_recovery_label: com.arvectum.tender-agent-gpb-recovery
   gpb_recovery_state: autonomous-runner/gpb-recovery/state.json

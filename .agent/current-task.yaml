@@ -701,3 +701,11 @@ pq_targeted_evidence_2026_11_15_0744:
   resume: Inspect live state; completed June and November imports, GPB delta recovery,
     24 source-group PQ queue. DP blocked, exact audit complete; no retry of blocked
     deployment.
+archive_technical_snapshot_2026_11_15_0918:
+  checkpoint: .agent/checkpoints/TA-ARCHIVE-DOCUMENT-EVIDENCE-20261115.yaml
+  status: in_progress
+  resume: Read live worker states, canonical checkpoints and branch heads; offline
+    SIBUR snapshot 851 complete, process only new committed originals. Preserve reports
+    by exact SHA before refresh. GPB recovery and archive details running. DP remains
+    blocked; no blind retry or circumvent blocked deployment. Continue direct PQ evidence,
+    contractor/contract mapping and approved independent tracks.
