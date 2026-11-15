@@ -226,7 +226,8 @@ completed:
 - "V18: first 15 P0 originals SHA256/technical extraction and exact DB 251 document-procedure pairs validated; 30 P0 captured since activation. Three AGPP SS370 project drawings establish AGPP design origin of 2118943/1; unknown actual destination, remove only strict AGHK association, retain industrial candidate; 15 other interface candidates flagged. MPE 2126540/1 Volga NIPITEK six new gas analyzers per OL. EP600 2080352/1 mechanical scope only. Coverage V5 1134/2299, 1589 complete known packages; 36 cards 2598 strict project candidates, 5625 outside. GPB preparation passed, first post-recovery transaction state recorded separately. No signed prices inferred. V18 report and six artifacts validated."
 - "V19: six original XLSX reviewed, 16 thermal cabinets 2108203/1, 17 control posts 2083019/1, 104 terminal boxes 2108149/1, Progress Engineering directly named as requesting party in two forms; 2080616/1 indivisible cast-insulated busduct DGP2 title4015; 2027–2030 AGHK heat tracing maintenance 2139286/1; 2140253/1 KOS relay protection maintenance. Owner 2025 250MW and 2026 281MW same Lushnikovskaya PГУ, STGT reference commissioning, not service award. Coverage 1179/2299, 1617 all known packages; no inferred signed price. 49 sources verified. GPB recovery progressing."
 - "V20: seven original XLSX packages reviewed; NPG 29 units, 27 distinct tags, ASDKE title4810; MPE 23 NAMUR+3 boxes; AGHK busbar protection and AGPP interface KRU; overlapping heat-tracing budget vs tender periods, DGP2 warehouse RFQ author. 1481 GPB outcomes screened literal SIBUR names, zero candidate hits; 1290 best bids, 191 failed, 601 published participant names, no signed prices. Outcome research queue: 8223 IDs, 6856 closed intake incl 2151 P0, 1300 cancelled, 67 open as archived. Not all outstanding outcomes yet researched; no fabricated awards or prices. V7 coverage 1314/2299, 985 remaining, 468 P0. V20 53 source artifacts verified."
-current_stage: quantified_commercial_outcome_queue_and_package_review
+- "V21 parallel market research: official NKNH combined operator-room program >12bn first-stage investment, 113 of 193 to 7, 3 launched as of Feb17; 8 explicit archive IDs and 4 HVAC candidates outside strict membership. New card 37, union 8227. SMK Severozapad INN7814292228 self-reported SNEMA subcontract, Progress explicitly named OVOС executor DGP2. ABB 2144277/1 retrofit separate from plan 817. Four exact outcome IDs reviewed, no verified award, all 8 plan gaps unresolved. Outcome queue V2 6860 closed, 2159 P0. Coverage 1329/2299. No DB mutation; existing workers continue."
+current_stage: parallel_market_and_outcome_search
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -235,7 +236,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: 9e80d737
+last_verified_commit: 67cdfc2b
 test_results:
   focused: 3
   ruff: pass
@@ -877,4 +878,21 @@ test_results:
       consolidated-project-map-v20.json: 52d7194832d847e15d06eb0ae1c9391448f76c1ca090fea8f9481e50c0f14d62
       commercial-action-register-v14.json: ec6b30197d4db9ec73b280c939a9fa7aaa2a9df697bc8007c75f5f4549ecf4da
       consolidated-project-report-v20.md: f02f0579a18a229e7518e679b8b432ee7e76681e7ba09bca5ada3a0a7e42067d
-resume_instruction: "Read V20 map/report, V7 coverage, remaining-priority-work-v2 and commercial outcome queue. Continue next original P0 packages and targeted public protocol/contract searches with exact lot IDs and buyer identities; mark outcomes per procedure including unavailable results, never infer contract prices from bids. Focus 2151 closed P0 and 8 plan gaps. Review AGPP interface and unresolved sites separately. Update quantitative coverage and prepare consolidated Nov17 report with honest limitations. Existing workers only; retain prewrite gates/locks and external SSD storage, UPS separate."
+  parallel_market_v21:
+    project_cards: 37
+    project_publications: 2606
+    priority_union: 8227
+    priority_supported_urls_extracted: 1329
+    priority_supported_urls_total: 2299
+    priority_all_known_packages: 1691
+    closed_outcome_candidates: 6860
+    closed_p0_candidates: 2159
+    exact_outcome_reviews_without_verification: 4
+    artifacts:
+      parallel-market-review-v1.json: 093c1d1b0c48ed81773a4bc87ab40fadcc419080140e85c5815c2b8e039427c1
+      consolidated-project-map-v21.json: 638e65e0bdb2fdf06416e55c9383d41fe0cf4df94dacc6490e754951a4dcf71c
+      commercial-action-register-v15.json: c1b59b1700d9b98573e8b5a8fece8dc1b1d0c9d1572f3b5dd500512aa382d1d5
+      consolidated-project-report-v21.md: 9b9313aca9dfc94c159da6f40e5863c129b1d867aed1b6209b14bf712ff5112a
+      project-coverage-dashboard-v8.json: 17b14363bb95d4d2a3cea14c7987b4b3fb43343f5b8e1c7734f6d14ed761a6b2
+      commercial-outcome-queue-v2.json: fbbb249e1a101345779e5ca1edf7f48559ae4d9f3fe81f4b008fbc877abce910
+resume_instruction: "Read V21 report/map and coverage V8 and outcome queue V2 (newest standalone artifacts, V21 embedded historical dashboard refers to V7). Continue independently of collector: exact contract and protocol searches, NKNH operator-room original documents including unsupported formats reviewed safely, role chains, 8 plan gaps, remaining source-bound P0 originals. Carry four reviewed_no_verified_outcome statuses forward; update denominator when new projects identified. Do not infer award prices or send outreach. Preserve running workers, gates, external SSD, separate UPS. Prepare consolidated Nov17 report."
