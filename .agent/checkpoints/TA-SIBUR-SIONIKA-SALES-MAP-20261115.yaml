@@ -1152,4 +1152,16 @@ test_results:
       commercial-action-register-v32.json: 6fa4aaade4a173eca40624668ccf8cd56ce5e0f9d3fee888d1ad8f98ac2b808a
       project-coverage-dashboard-v24.json: 1da9b47d509355d7923df3c3fae032beff3f2c7dfbd174a4e9a23f2d2e7e1fd5
       consolidated-project-report-v38.md: 34b6708700eb3181c2ff0e9ad7aa6f4a6d91ad19c5bf4cb6c9771c937845e96c
-resume_instruction: "V38 completed; in same session continue V39 active leads/motors/AUMA and V40 evidence quality plus contractor ledger. Use V38 map, V32 actions, V13 queue and V24 coverage; show whole and priority percentages. No DB mutation without gate. Nov17 report."
+  sionika_v39:
+    project_cards: 66
+    priority_union: 8244
+    source_artifacts: 88
+    completed_stage: "Motor and AUMA reference rows, Tomsk division of supplies, AGHK PNR qualification. No new award or price."
+    artifacts:
+      sionika-active-service-v1.json: 262a77ef78be1eda2de75a0bf47720c49c08b420306b07dc443609774f16c4ee
+      consolidated-project-map-v39.json: a15b98edb7704f32289960c57d1df4ea3301e5fecd63ce4bc2587d4f1d89601e
+      commercial-outcome-queue-v14.json: 9aa07128e3846fab8abfb5032746ee45140cea67c975bc75c39458acb6025a53
+      commercial-action-register-v33.json: 1aadfcfd6c2bdb1ecad201cb7c0fc547ac4c5be13f1db923fb54197c641fe64f
+      project-coverage-dashboard-v25.json: 3d7afa8a3280240db58efad223408b92306791931d81505b52a958515edd9805
+      consolidated-project-report-v39.md: 255d9dfa020662644691f3c5412ce6d6f350fe17a61b8cd68c52fa80d26335d3
+resume_instruction: "V39 completed; continue V40 quality audit and contractor ledger from V39 map/V33 actions/V14 queue/V25 coverage. No DB mutation without gate. Nov17 report."
