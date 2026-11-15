@@ -952,3 +952,8 @@ sibur_v17_priority_and_gpb_recovery_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Verify actual P0 linkage and GPB first sync; continue V17 research.
+
+sibur_v18_scope_and_linkage_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Continue V18 and confirm GPB full sync; next P0 originals and scope/price evidence.
