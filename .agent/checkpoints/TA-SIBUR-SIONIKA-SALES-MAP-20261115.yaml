@@ -231,7 +231,8 @@ completed:
 - "V23: new named downstream procurer KIP-Elektromontazh 3448057936 on Bidzaar 148-474,168-094,168-886; 2025 revenue 4.992bn profit274.445m, approximate creditors2.89bn; no main award proof. October22 Lemaevskaya visit updated facility, acceptance unknown. Read-only separate 7Z pilot: 11/11 originals captured/listed, 2 TZ revisions and KKO safely streamed, exact hash and text diff dates only. Other archive members and unsupported formats not fully processed, no DB import. Dashboard 1432/2299, 1707 full known packages; 58 evidence artifacts verified. No signed prices."
 - "V24: two precise external self-reported awards 2087534 and 2086884 by NTC PB (7701843266), chrome completion reported Apr28 2025; neither in frozen snapshot, no protocol or signed prices. Official municipal text confirms different buyers, New Resources designer/OVOS, 60t/y MCE GEE registry. 7 pilot captures, 2 archive listings, 6 inspected docs 5 full/1 partial; commisioning summary mixed with unrelated wastewater materials, do not count quantities without boundary validation. Dashboard 1447/2299, 1710 complete known packs, 61 source hashes verified."
 - "V25: judicial contracts reactor B KOS Peton/Centromontazhavtomatika 2023 approx 42.176m accepted 73.843m; excluded new-period values, electrical share unknown. PGU-250 KER/NPP Dvigatel 2025 ceiling 6m accepted 5.9991m, unpaid 0.9531m, related service separate, no exact tender award link. Prior strict priced electrical specs 20.077m unchanged. Catalyst 235 detailed BOQ title/zone blank, only 12/136 summary rows reconcile; exclude all quantity market estimates pending scope. Dashboard V12 1462/2299, 1713 full known packages, 64 source hashes verified."
-current_stage: court_contract_chains_and_scope_reconciliation
+- "V26: 8 explicit archive notices added across 3 work groups: NKS/KKS ASUTP four, KOS CUP two, remote operator building two (separate until unified project proven). Four primary XLSX hash verified, 5 procedure/URL pairs. Two sets monitoring; repeated NKS label, different ITT; KKO cable24.5km/month trays2.3km/month. KOS survey payment 90% at45 days subject upstream, cap100d,10% retention, no advance. Plan332/333 linked to program only, 8 exact plan procurement links still unresolved. Three exact public outcomes searched with no verified award, ten cumulative queue statuses. V13 1488/2312 extracted, 1717 known packages; 40 cards/2614 project IDs/8231 union. 65 sources verified. No DB mutation."
+current_stage: plan_gap_related_programs_and_commercial_groups
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -240,7 +241,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: a3218a07
+last_verified_commit: 1dd9cb96
 test_results:
   focused: 3
   ruff: pass
@@ -961,4 +962,23 @@ test_results:
       commercial-action-register-v19.json: 768a80552b8f0fe2a186806d305f75f03ebd0fd34388314cfa73cf407e252837
       consolidated-project-report-v25.md: 2d89961998579d6279e4ec77c20ce25a2d2dd03a7b6671c85caada9029e9c3e6
       project-coverage-dashboard-v12.json: 5e202695ff7a3fea4bcb32ea700b1123d4f8f114c2b2d87920cfa2bfb1aa331c
-resume_instruction: "Read V25 map/report, V12 dashboard, court contract scope and catalyst BOQ reconciliation. Continue independent outcome searches and P0 acquisition, 8 plan gaps, unsupported formats; prioritize true exact awards and actual accepted prices; do not re-add ambiguous catalyst totals or 2023 contract to in-period market. Existing workers, gates and SSD storage unchanged, UPS separate. Prepare Nov17 consolidated delivery."
+  plan_gap_v26:
+    project_cards: 40
+    project_publications: 2614
+    priority_union: 8231
+    priority_supported_urls_extracted: 1488
+    priority_supported_urls_total: 2312
+    priority_all_known_packages: 1717
+    exact_plan_gaps: 8
+    plan_gaps_with_related_program_evidence: 2
+    closed_outcome_candidates: 6864
+    cumulative_reviewed_no_verified_outcome: 10
+    source_artifacts: 65
+    artifacts:
+      plan-gap-programs-v1.json: a3991ab6e6bbf166c65afbee36b78267d1ea32354838259a50616845cd7f01f8
+      consolidated-project-map-v26.json: 0d2be76d0a414d9c9e69adcdede142430e7f76c2a4bbdd8bd27c1fe4610074e0
+      commercial-action-register-v20.json: 96d41130ed9d96f0bd906de3db8e8ac211b0ca1c52996899bb5f06e47dbe2091
+      consolidated-project-report-v26.md: ffe5ba67dbf0ec4620af3e41fc6e68cf9bb1a1269b408b933bb9456b84fc0916
+      project-coverage-dashboard-v13.json: affbf25633a5983b2e1402c4a4fe3908beaf5567b5ec98b11636aa3d5fe2aeea
+      commercial-outcome-queue-v4.json: 34b5a8de7e4de6d37fafe9b5570ca9ba7a9edf9b142e517fd32566295183dd64
+resume_instruction: "Read V26 map/report, standalone V13 coverage and V4 outcome queue; embedded dashboard is prior V12, use latest standalone. Continue targeted outcome research, installed base, projects and commercial plan per agreed allocation. All eight exact plan gaps unresolved; 332/333 have related program evidence. Verify two unsupported XLSM for 2137920/1 and three remaining supported links remote operator. Keep two KOS groups separate until proven same project. Maintain external storage, existing workers, prewrite gates, no outreach or invented awards/prices. Prepare Nov17 report."

@@ -992,3 +992,8 @@ sibur_v25_court_scope_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Continue V25 outcome and primary technical research.
+
+sibur_v26_plan_group_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Continue V26 three groups and exact plan/outcome research.
