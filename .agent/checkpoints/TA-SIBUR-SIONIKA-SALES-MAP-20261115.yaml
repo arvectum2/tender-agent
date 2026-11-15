@@ -214,7 +214,8 @@ completed:
 - Six smaller-site program cards: Krasnoyarsk KZSK, Portenergo, PETF, YUP, NPP, S-Yug; 26 archive IDs and 2 external observations (one non-electrical). Ownership conflicts corrected with 2023 Solvay transaction; JV boundary retained. Commercial action register covers 33 cards, 12 P0,20 P1,1 P2. V7 map and report. DP repeat timeout recovered by exact resource identities, 315 documents/5283 chunks, 4 recovered receipts; preserved old proofs. Shared lock acquired safely on retry; existing runner resumed. GPB worktree cd52f39b increases bounded request timeout 180s and stats 60s. No direct DB writes.
 - Four judicial contract records, two manufacturer references, POLIEF RKOS fifth-source project package, map V8 with 34 cards. Legacy DP queue fully synchronized and exhausted 315/5283. Read-only readiness queue 639 technical candidates, 97 P0; no new ingestion or mutation.
 - Exact read-only bridge validated 587 OOXML originals and 932 committed captures, 92 P0, 52 PDF review. Code c595c96f and c334fb4a preserve verified DP receipt on explicit capture-only replay; 17 focused tests passed. Existing live archive worker has cached earlier linker; no deployment or DP mutations yet. Verified Styrene qualification 3 original spreadsheets/12 anchors, owner-confirmed Pondera role, SNEMA-Service B2B exact buyer, NKU-Energo 29 panel self report, 13 P0 qualification routes. V9 report.
-current_stage: archive_bridge_validated_and_p0_qualification
+- V10: eight judicially identified contracts/specifications DGP2 and adjacent ZSNH objects; correction SPK Magistral terminated 2024-09-06, replacement unknown; Delta debt separated from electrical market. Ener Holding 2025 financial profile and historical procurement channel. Archive worker cooperatively restarted with updated linker, existing index executor activated on verified 587 OOXML bridge; 16 targeted tests passed, first extraction 3 docs, gate passed; first full index/link cycle not yet confirmed.
+current_stage: archive_index_activated_and_dgp2_contract_chains
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -223,7 +224,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: c334fb4a
+last_verified_commit: bcc78da6
 test_results:
   focused: 3
   ruff: pass
@@ -626,4 +627,22 @@ test_results:
       consolidated-project-map-v9.json: 7ee3687cc8f6573c2c0ace1f63199431e12fba6cb08c657c789d1ce5312d7bb4
       commercial-action-register-v3.json: 86c7e00c9c7f8a1834b1e622fecb800ade61b8d296016b986a3eac438627c07e
       consolidated-project-report-v9.md: 618db3e3d9b32b5755baa7ccfacb32f11f2db5d061347c4120ad9d2e11f85b1f
-resume_instruction: "Read V9 map/report, commercial-action-register-v3.json and archive-index-bridge-v1.json. Complete gated archive index integration and tests, then coordinate archive capture worker reload only at safe non-inflight boundary, preserve prior receipts and shared locks, no duplicate workers. Existing archive and GPB continue. Continue project-specific evidence, signed prices and final clean commercial report by 17 November. Keep UPS independent and private owner context separate; no invented awards."
+  archive_activation_and_dgp2_v10:
+    project_cards: 34
+    new_contract_records: 8
+    archive_bridge_ready: 587
+    archive_worker_pid: 30277
+    executor_status: running
+    executor_step: "MI backup"
+    archive_indexed_last_verified: 0
+    server_last_verified: {"documents": 318, "chunks": 5303, "embeddings": 5303}
+    first_extraction_documents: 3
+    targeted_tests: 16_passed
+    gpb_executor_commit: a3b3473e
+    technical_originals: 2311
+    artifacts:
+      dgp2-contract-chains-v1.json: 60c89491c166d9b5d0c07bc6ed4716a1c9f9e6603e8cea5c041d6ad9abbc4751
+      consolidated-project-map-v10.json: cc0d94d90c566fec332269550d2f3903b611a14578334816dac7473c51fb011e
+      commercial-action-register-v4.json: 65d9db758db0494ce7bee1d6ca7246e316de2372c1054bd25218d04eb708a99c
+      consolidated-project-report-v10.md: 03a54904e1d4e21812fff9c2d426d5552b085fab5aec19577f623084315437eb
+resume_instruction: "Read V10 map/report and commercial-action-register-v4.json. Verify archive worker and existing gated index executor state, first archive index/link cycle and idempotent replay. If blocked or inflight unresolved, reconcile exact DP receipt identities before any retry, preserve shared locks and gates. Do not start duplicate workers. Continue primary contract outcomes, equipment/contractor chains and final clean consolidated report by 17 November; keep UPS independent and private owner data separate. No inferred awards or prices."
