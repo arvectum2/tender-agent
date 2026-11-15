@@ -206,14 +206,17 @@ completed:
 - Contractor finance and channel screening: six 2025 financial profiles, Sintegra INN 1651065401 matched by official address and registry, 596 catalog publications (not contracts). Five unique procurement observations (one in 2026, four earlier); B2B-Center and ONLINECONTRACT. No primary award or end site verified. Naladchik and MIIMF probable identities, old liquidated MIIMF kept separate. Court A43-27052/2023 historical 2018 RusVinyl subcontract chain, not current. Other four independent procurement channels still unresolved. Archive worker observed 1855 captures and 1851 linked originals; extraction refresh pending.
 - Combined research continuation: processed 268 additional originals since 1627 baseline, total 1895, extracted 1888, review 7. Prior saved v5 technical evidence reconciled by SHA without repeating extraction. Full AGHK historical annex parsed into 772 source rows, preserving duplicate candidate and UPS separation. Built industrial demand matrix for 6477 distinct source IDs across 11 overlapping categories and 482 service-source candidates with explicit site versus organizer-only evidence. Seven dated external project and supplier crosschecks, including SVEL historical production distinct from later nomination and award unknown.
 - Contract-chain research: two court-confirmed subcontract specifications at ZSNH (electrical installation GPP1/2, KRU10kV commissioning GF1), exact GF1 project match to 2076768/1 lot1, no award protocol. Historical AGHK temporary power chain separately. Owner context recorded privately, distinct from verified public evidence; 2083626/1 and two subsequent AGHK service notices remain unverified as to outcome and causation. Technical extraction refreshed to 1910 originals, 1903 extracted, 7 review.
-current_stage: judicial_contract_chain_and_award_reconciliation
+- Consolidated 17 project/program cards, 30 organizational/site coverage labels, 30 overlapping reviewed scope groups (51 distinct publications), official 2026 plan with 1005 positions and 177 direct category rows, 37 priority rows, and 177 qualification entries with 22 candidates. Verified two original XLSX hashes and map/report hashes. Current Watchdog updated in place for 17 November deadline; hourly schedule unchanged. No inferred awards.
+current_stage: consolidated_project_report_deadline
+target_report_date: 2026-11-17
 remaining:
+- Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
 - Continue broad SIBUR research, Cryogenmash/AGHK outsourced plant lifecycle, NKNH/Kstovo
   retrofit evidence and contractor 2024–26 purchases. Separate UPS channel, reserve
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: d0fa182c
+last_verified_commit: 800c53cc
 test_results:
   focused: 3
   ruff: pass
@@ -473,4 +476,23 @@ test_results:
     extracted: 1903
     review: 7
     verification: Exact frozen archive identifiers, two court case excerpts and separate contract values, source-hash checked. Public award protocols and full court copies not yet obtained. Private owner context kept separate. No production DB modification.
-resume_instruction: Read contract-chain-evidence-v1.json; preserve separate private owner context. Seek exact awards and main contract prices across industrial families, using independent public court decisions and verified source records; continue equipment scope and qualification, resolve unmatched contractor identities and service sites, preserve independent UPS and existing archive worker. Do not infer second transformer winner or release private input. No duplicate jobs, outreach, spending or ungated DB writes.
+  consolidated_project_deadline:
+    deadline: 2026-11-17
+    watchdog: updated_existing_hourly_task
+    original_workbooks_verified: 2
+    plan_rows: 1005
+    direct_category_rows: 177
+    priority_rows: 37
+    qualification_rows: 177
+    qualification_candidates: 22
+    project_cards: 17
+    coverage_labels: 30
+    reviewed_scope_groups: 30
+    distinct_scope_publications: 51
+    validation: source SHA, artifact SHA, JSON readback and row counts passed
+    artifacts:
+      owner-plan-qualification-matrix-v1.json: f54e4f6c58da6798ca44000aa4a9fe1c74f50740c198ae45ee29a1d8bae6ded2
+      consolidated-project-stage-v1.json: caac3e9dce7175bee8edb1a31cdcc7160412a6746bbebd2dcfae8b69aac32a5f
+      consolidated-project-map-v1.json: 857fad5886dc6f44833fc0bb4c6e9686ca3b641cec4a648e362412903b2089b5
+      consolidated-project-report-v1.md: 8959aaaa4e01fe188ddd3057183bb0b2c7588e21570a5382638ee52fa90f1922
+resume_instruction: Read consolidated-project-map-v1.json, consolidated-project-report-v1.md and owner-plan-qualification-matrix-v1.json. Match 37 priority plan rows to exact live/archive procedures, confirm purchaser roles, outcomes and prices only from source evidence; expand undercovered sites and contractor channels, validate qualification status and project time lines. Maintain separate UPS and private owner context, existing archive worker and all gates. Update consolidated report by 17 November. No duplicate jobs, spending, outreach or inferred awards.

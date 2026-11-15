@@ -860,3 +860,10 @@ sibur_judicial_contract_chain_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Read contract-chain-evidence-v1.json. Expand exact public contract prices and contractor chains; separate private owner context from verified sources, preserve UPS and archive worker; no inferred awards.
+
+# Deadline-focused consolidated SIBUR report
+sibur_consolidated_project_report_deadline_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  target_report_date: 2026-11-17
+  resume: Read consolidated-project-map-v1.json and consolidated-project-report-v1.md. Reconcile priority plan rows, exact procurement outcomes, project milestones and undercovered sites; preserve independent UPS, private owner data, existing workers and gates.
