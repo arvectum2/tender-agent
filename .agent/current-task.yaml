@@ -789,3 +789,11 @@ sibur_lifecycle_model_evidence_20261115:
     project chains. Private role/channel overlay authoritative. No supplier assignment,
     no contacts, bids, spend, auto-merge, duplicate workers or DP bypass. Fresh shared
     backup/gate/replay for any authorized DB mutation.
+sibur_switchgear_retrofit_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read switchgear-retrofit-discovery-v1.json and switchgear-retrofit-priority-map-v1.json.
+    Owner specifically prioritizes switchgear retrofit; expand SIBUR 6-10kV and LV
+    switchgear, RZA, breaker replacement project chains and suppliers, keep other
+    portfolio and separate UPS channel. No contact, bids, spend, duplicate acquisition,
+    auto-merge or DP bypass.

@@ -135,15 +135,22 @@ completed:
   8BD1 23 cells at RP57, AMS Emerson HART existing diagnostics, Siemens controller
   planned, KOS workstation and UPS replacement, UPS diagnostics requirement, multi-platform
   PNR. Evidence and source status saved; no inferred awards.
-current_stage: installed_base_lifecycle_and_model_evidence
+- Owner high priority retrofit switchgear. Dedicated classifier tested 2/Ruff pass;
+  61 lexical candidates/58 numeric prefix groups, 23 direct lexical /25 related electrical
+  /12 ambiguous /1 breaker replacement. Not a full census and not 61 qualified leads.
+  Manual priority map 18 reviewed scope groups including 23 Siemens 8BD1 and 19 SESh70
+  documented demand, DGP2 LV two kits from title, cancelled/reissued pairs, NKNH recent
+  IDs. External historical Elektrojar reference and Tavrida seminar only, not recent
+  awards.
+current_stage: switchgear_retrofit_priority_P0
 remaining:
-- Continue SIBUR priority, expand exact installed-base asset and lifecycle cohorts
-  including brand/service/retrofit and primary project roles; refresh current statuses.
-  Separate independent UPS channel and mixed scope allocation.
-- Support services supplement 29 in-period records remains not DB imported; authorized
-  shared gate required, current worker unchanged. Missing document references and
-  award/contract amounts remain unresolved. DP blocked unchanged.
-last_verified_commit: 5722454a41065a1df83b76630815961b957f84ea
+- Prioritize P0 switchgear retrofit and RZA, while retaining full SIBUR nomenclature
+  and separate UPS. Review ambiguous/related candidates, source attachments, accurate
+  asset quantities, repeat demand, and buyer/award/competitor evidence. Refresh live
+  statuses; no actual bidding.
+- Unresolved document and price/award gaps; support supplement awaits authorized import
+  with fresh backup/gate. DP blocked unchanged; existing capture worker untouched.
+last_verified_commit: b492c84f4f1565866e9817ccd76a7cc7b7ec7115
 test_results:
   focused: 3
   ruff: pass
@@ -281,8 +288,17 @@ test_results:
     extracted: 1336
     review: 6
     verification: Read-only original report/source reference validation; no code change.
-resume_instruction: Read installed-base-lifecycle-map-v1.json, installed-base-model-evidence-v2.json
-  and immutable latest technical report; expand SIBUR installed-base, service and
-  project chains. Private role/channel overlay authoritative. No supplier assignment,
-  no contacts, bids, spend, auto-merge, duplicate workers or DP bypass. Fresh shared
-  backup/gate/replay for any authorized DB mutation.
+  switchgear_retrofit:
+    discovery_sha256: 6643cde2e432137aeba8ab7a73183c917ac17e4f10094c5675b037a60d66181c
+    priority_map_sha256: 8ba95da4ea8c9b8bef1cbbb050a719a0f41750ef992ad01a20c07f263624465c
+    candidate_records: 61
+    prefix_groups: 58
+    manual_groups: 18
+    manual_unique_ids: 30
+    focused_tests: 2
+    ruff: pass
+resume_instruction: Read switchgear-retrofit-discovery-v1.json and switchgear-retrofit-priority-map-v1.json.
+  Owner specifically prioritizes switchgear retrofit; expand SIBUR 6-10kV and LV switchgear,
+  RZA, breaker replacement project chains and suppliers, keep other portfolio and
+  separate UPS channel. No contact, bids, spend, duplicate acquisition, auto-merge
+  or DP bypass.
