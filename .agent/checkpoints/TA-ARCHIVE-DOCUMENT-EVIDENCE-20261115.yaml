@@ -1,16 +1,56 @@
 task_id: TA-ARCHIVE-DOCUMENT-EVIDENCE-20261115
 status: in_progress
-goal: Extend the existing source-bound document and outcome processing to newly imported archives without duplicate source or DB work.
+goal: Extend the existing source-bound document and outcome processing to newly imported
+  archives without duplicate source or DB work.
 definition_of_done:
-  - Repair observed archive duplicate months by audited replacement pages preserving originals.
-  - Build refreshed priority queue from committed exact DB hashes; exclude IDs reserved by original GPB worker.
-  - Verify archive detail capture and document/decision persistence with shared fresh gate, backups, replay.
-  - Prepare independent SIBUR archival document provenance and sample capture.
-  - Tests, checkpoints, live state and failure reasons.
+- Repair observed archive duplicate months by audited replacement pages preserving
+  originals.
+- Build refreshed priority queue from committed exact DB hashes; exclude IDs reserved
+  by original GPB worker.
+- Verify archive detail capture and document/decision persistence with shared fresh
+  gate, backups, replay.
+- Prepare independent SIBUR archival document provenance and sample capture.
+- Tests, checkpoints, live state and failure reasons.
 completed:
-  - Existing workers active; August 2024 repeated source ID isolated on pages 37 and 38.
-current_stage: repair_and_queue
+- 18 verified months imported (+16114); April 2024 repaired and imported separately
+  (+1038).
+- Independent historical GPB archive detail queue deployed; 2630 source-bound candidates
+  from 17152 imported exact identities; 75 details, 74 verified protocol links, 1
+  verified decision.
+- 'Audited 394 historical protocols for explicit participant identity labels: none
+  observed. No legal names inferred.'
+- Fixed byte-identical GPB protocol published at two receipt-verified URLs; semantic
+  conflicts still fail closed.
+- SIBUR archive document worker independently deployed; TLS CA mismatch repaired and
+  163 original failures retained; corrected GET validated 341649 bytes PDF; 12 captured
+  originals confirmed.
+current_stage: archive_detail_processing_and_recovery
 remaining:
-  - bounded repair and archive document pilot; new lane only after verification
-last_verified_commit: 011ca22395eaabb97191c810ca1938e569aa2d32
-resume_instruction: Inspect actual worker and archive states; preserve locks, private originals and existing active queues.
+- Reconcile and resume original GPB worker on safe shared-lock boundary without interrupting
+  SIBUR inflight DP indexing.
+- Repair remaining incomplete source partitions Aug2024, Mar/Jun/Nov2025 using auditable
+  smaller date slices.
+- Drain independent GPB archive detail queue and SIBUR archive document link queue,
+  verify first archive document DB linkage and zero-insert replay.
+- Only after separate existing DP index reconciliation plan archival indexing; no
+  unsupported legal supplier names or contract award claims.
+last_verified_commit: b37fbebca3484886ca9c518d1582165c39d7e973
+resume_instruction: Read exact live states and current heads first. Follow existing
+  shared mutation lock, fresh MI backup then gate, verified TA backup and replay.
+  Original GPB remains blocked pending safe recovery; do not kill active SIBUR indexing.
+  Do not duplicate archive jobs or infer awards.
+test_results:
+  gpb_focused_before_recovery: 8
+  sibur_focused_before_recovery: 6
+  gpb_recovery: 3
+  sibur_recovery: 7
+  ruff: pass
+  live_db_counts:
+    etp_gpb: 25358
+    sibur_public: 3927
+    gpb_document_links: 575
+    gpb_protocol_decisions: 432
+  observed_sibur_index:
+    documents: 266
+    chunks: 2458
+    embeddings: 2458
