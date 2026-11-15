@@ -1,0 +1,132 @@
+{
+  "contract_version": "b2b_internal_prebid_opportunity_cost_v1",
+  "status": "REPRODUCIBLE_INTERNAL_ASSUMPTIONS_NOT_CUSTOMER_PRICE",
+  "assumed_role_rates_not_market_facts": true,
+  "tax_fraction_is_scenario_not_tax_advice": "0.06",
+  "source_archived_legal_currentness_confirmed": false,
+  "contract_bid_authorized": false,
+  "external_communications_count": 0,
+  "original_contract_or_tender_text_republished": false,
+  "case_results": [
+    {
+      "id": "0163200000326005243",
+      "source_kind": "official_EIS_getDocsIP_archived_notice_v2",
+      "source_revision_is_current_verified": false,
+      "full_scope_is_confirmed": false,
+      "owner_legal_and_commercial_bid_go": false,
+      "work_package_count": 12,
+      "blocking_unknowns": [
+        "actual current EIS edition/status",
+        "Bitrix deployed edition and developer access",
+        "verified team or company Bitrix experience",
+        "documented comparable fulfilled contracts and exact scorer",
+        "migration volume and content quality",
+        "guarantee defects frequency",
+        "non-cash surety and bid security",
+        "acceptance timing and VAT/tax treatment"
+      ],
+      "scenarios": {
+        "low": {
+          "hours_total": 252,
+          "imputed_labor_opportunity_cost_rub": "522000.00",
+          "risk_allowance_rub": "52200.00",
+          "assumed_other_cash_cost_rub": "0.00",
+          "estimated_total_economic_cost_rub": "574200.00",
+          "hypothetical_revenue_to_cover_imputed_costs_rub": "610851.07",
+          "published_budget_ceiling_rub": "497178.33",
+          "headroom_at_published_ceiling_after_assumed_tax_and_cost_rub": "-106852.37",
+          "cash_before_labor_at_published_ceiling_rub": "467347.63",
+          "owner_approval_for_price": false,
+          "offer_sent": false
+        },
+        "base": {
+          "hours_total": 592,
+          "imputed_labor_opportunity_cost_rub": "1230450.00",
+          "risk_allowance_rub": "270699.00",
+          "assumed_other_cash_cost_rub": "15000.00",
+          "estimated_total_economic_cost_rub": "1516149.00",
+          "hypothetical_revenue_to_cover_imputed_costs_rub": "1612924.47",
+          "published_budget_ceiling_rub": "497178.33",
+          "headroom_at_published_ceiling_after_assumed_tax_and_cost_rub": "-1048801.37",
+          "cash_before_labor_at_published_ceiling_rub": "452347.63",
+          "owner_approval_for_price": false,
+          "offer_sent": false
+        },
+        "high": {
+          "hours_total": 1086,
+          "imputed_labor_opportunity_cost_rub": "2260000.00",
+          "risk_allowance_rub": "791000.00",
+          "assumed_other_cash_cost_rub": "70000.00",
+          "estimated_total_economic_cost_rub": "3121000.00",
+          "hypothetical_revenue_to_cover_imputed_costs_rub": "3320212.77",
+          "published_budget_ceiling_rub": "497178.33",
+          "headroom_at_published_ceiling_after_assumed_tax_and_cost_rub": "-2653652.37",
+          "cash_before_labor_at_published_ceiling_rub": "397347.63",
+          "owner_approval_for_price": false,
+          "offer_sent": false
+        }
+      }
+    },
+    {
+      "id": "4643484",
+      "source_kind": "b2b_center_primary_public_card",
+      "source_revision_is_current_verified": false,
+      "full_scope_is_confirmed": false,
+      "owner_legal_and_commercial_bid_go": false,
+      "work_package_count": 7,
+      "blocking_unknowns": [
+        "actual requested pages and functions unknown",
+        "content volume and copywriting unknown",
+        "CMS/hosting/brand requirements unknown",
+        "security and personal data obligations unknown",
+        "revisions and acceptance stages unknown",
+        "warranty term unknown",
+        "customer budget unknown",
+        "documented comparable portfolio for proposed bidder unknown",
+        "platform membership entitlement and paid fee unknown"
+      ],
+      "scenarios": {
+        "low": {
+          "hours_total": 140,
+          "imputed_labor_opportunity_cost_rub": "266400.00",
+          "risk_allowance_rub": "26640.00",
+          "assumed_other_cash_cost_rub": "0.00",
+          "estimated_total_economic_cost_rub": "293040.00",
+          "hypothetical_revenue_to_cover_imputed_costs_rub": "311744.69",
+          "published_budget_ceiling_rub": null,
+          "headroom_at_published_ceiling_after_assumed_tax_and_cost_rub": null,
+          "cash_before_labor_at_published_ceiling_rub": null,
+          "owner_approval_for_price": false,
+          "offer_sent": false
+        },
+        "base": {
+          "hours_total": 298,
+          "imputed_labor_opportunity_cost_rub": "564900.00",
+          "risk_allowance_rub": "124278.00",
+          "assumed_other_cash_cost_rub": "15000.00",
+          "estimated_total_economic_cost_rub": "704178.00",
+          "hypothetical_revenue_to_cover_imputed_costs_rub": "749125.54",
+          "published_budget_ceiling_rub": null,
+          "headroom_at_published_ceiling_after_assumed_tax_and_cost_rub": null,
+          "cash_before_labor_at_published_ceiling_rub": null,
+          "owner_approval_for_price": false,
+          "offer_sent": false
+        },
+        "high": {
+          "hours_total": 575,
+          "imputed_labor_opportunity_cost_rub": "1099250.00",
+          "risk_allowance_rub": "384737.50",
+          "assumed_other_cash_cost_rub": "70000.00",
+          "estimated_total_economic_cost_rub": "1553987.50",
+          "hypothetical_revenue_to_cover_imputed_costs_rub": "1653178.20",
+          "published_budget_ceiling_rub": null,
+          "headroom_at_published_ceiling_after_assumed_tax_and_cost_rub": null,
+          "cash_before_labor_at_published_ceiling_rub": null,
+          "owner_approval_for_price": false,
+          "offer_sent": false
+        }
+      }
+    }
+  ],
+  "source_assumption_input_sha256": "458ad3959f619ef161f247b5cc24af9aada40bdfa626f4f72d23ef7f6cbd1f68"
+}

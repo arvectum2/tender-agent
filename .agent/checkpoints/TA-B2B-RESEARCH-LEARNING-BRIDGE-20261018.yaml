@@ -1,0 +1,34 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-RESEARCH-LEARNING-BRIDGE-20261018
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Connect existing source-backed read-only manual public tender research receipts to the canonical Procurement LLM owner-internal unreviewed candidate intake, without creating parallel storage or mutating live DB without distinct authority.
+definition_of_done:
+  - Verify actual canonical PostgreSQL learning store and existing guarded import/capture paths; reconcile evidence gap after latest public research.
+  - Implement reproducible offline source receipt to existing manual-candidate-import-v1 adapter with source SHA and immutable deduplicated original procurement keys, not rewriting legal-gold or model-training truth.
+  - Cover recently inspected Workspace, 44-FZ/EIS and B2B-Center original public observations with source lineage, exclude blind and sensitive/raw data; preserve doubts / source status and distinguish source-attested RFI from qualified bids.
+  - Run dry-run with existing importer and safety/adversarial tests; generate private JSON only on Mac mini with restrictive permissions and no Git raw events; document correct actual saved vs pending volume.
+  - Finish child checkpoint, update parent/roadmap and push stacked review PR, no live DB write, bid, paid access, signature, deployment, merge or LLM training.
+completed:
+  - "2026-10-18 19:52 MSK current main d2a927ecebc9222bb3b38b47aa14c7024ccec4f0; prior B2B primary source PR487 all 19 CI green open, code head af0588ecb2248f3b6158d86c4deb81eea0fc9604."
+  - "Canonical Python sources found: scripts/procurement_llm/import_candidates.py, src/modules/procurement_learning_corpus/service.py; 2026-10-16 recorded 74 source candidates in PG arvectum with guarded Alembic 107, conditional analysis run capture."
+current: "Completed: 31 metadata-only private pending intake, canonical importer dry-run, live PostgreSQL read-only integrity audit and safe tests."
+remaining: []
+last_verified_commit: 5cff75a20fc47e3bed2b507a1e8e6ccc2777457c
+test_results:
+  - "Canonical Docker PostgreSQL arvectum inspected READ ONLY: 77 learning observations (20 DEV, 45 saved runs, 10 manual, 2 legacy), 0 new ta-research observations."
+  - "31 owner_internal private manual-candidate-import-v1 source metadata: 21 Workspace, 3 EIS, 7 B2B-Center, private mode 0600. Existing official importer dry-run PASS 31 candidates / 31 unique IDs, zero production database writes."
+  - "146 related pytest PASS, Ruff PASS, YAML parse PASS, git diff --check PASS."
+  - "No model training, LoRA/QLoRA, source truth promotion, owner/legal bid GO, signature, production deploy, second database/UI or messages."
+resume_instruction: "Source research candidate bridge completed with private 31 pending and live DB still at 77. Verify stacked review PR exact-head CI. Next: owner-authorized production import with explicit DB authorization and preflight, THEN runtime collector provider integration. Never claim all searches run in TA, all candidates in PostgreSQL, trained weights or legal gold before independently proven."
+report: docs/roadmap/B2B_RESEARCH_TO_PROCUREMENT_LLM_INTAKE_2026-10-18.md
+source_code: scripts/procurement_llm/build_research_intake.py
+private_pending_batch: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/pending-manual-evidence/research-firstparty-snapshots-20261018.json
+private_batch_unreviewed_candidates: 31
+canonical_pg_rows_readonly_before_and_after: 77
+canonical_pg_new_research_rows: 0
+training_labels_created: 0
+future_automatic_source_pipeline_integration_done: false
+review_gate: stacked_pr_exact_head_ci_and_authorized_merge_pending
+external_side_effects: false

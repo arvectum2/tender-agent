@@ -1,0 +1,35 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-CENTER-NEW-ORIGINALS-20261018
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Expand 15-20 target pipeline with several *new* exact first-party original B2B-Center current public IT procurement cards, excluding the existing #4643484 and false closed/expired items, without overstating company bid qualification.
+definition_of_done:
+  - Discover new first-party exact B2B-Center category-index links, verify individual card HTTP200 and source identity; fixed small read-only allowlist.
+  - Deduplicate original procurement IDs against previous evidence and each other, distinguish visible accepting status, printed deadline and customer eligibility.
+  - Produce timestamped source card SHA receipts and grounded triage, no private/paywalled documents or guessed prices.
+  - Implement fail-closed source tests and report with exact current/caveat metadata; update master roadmap/parent and completed child checkpoint.
+  - Push a stacked review PR; no external bids, payments, credentials, signatures, production changes, second UI or unauthorized merge.
+completed:
+  - "2026-10-18 parent source stage completed PR486, 121 pytest PASS, 3 SKIP. Current EIS stage HTTP404; primary B2B-Center 4643484 visibly accepting."
+  - "Previous three EIS archived originals only two new versus Oct17; dedupe corrected."
+current: "Read-only bounded 6-card first-party category/detail audit and fail-closed pipeline filter completed."
+remaining: []
+last_verified_commit: d4f6c831cc82b15e1cff578987b6784bb200df33
+test_results:
+  - "137 relevant pytest PASS / 3 SKIP, Ruff PASS, git diff --check PASS, no native production changes."
+  - "6 new original B2B-Center detail HTTP200 + official category index SHA and UTC provenance; 5/6 parsed stage/deadline, 1 numbering/stage conflict remains unknown."
+  - "1 X5 CRM public-market RFI deadline 23.10 14:30 MSK, not a contract bid; 1 license-only open nonfit; 3 past deadline; 1 number alias conflict; strict company bid go zero."
+resume_instruction: "Bounded primary-source marketplace audit complete. Verify stacked PR exact-head CI; no merge without valid Company AM-4 review. Continue parent 15-20 truly qualified IT opportunities from *new* official primary listings, and review X5 RFI only as market research, not a contract award. Do not send responses, pay, sign, bid, register or deploy without Owner GO."
+source_report: docs/roadmap/B2BCENTER_SIX_NEW_FIRSTPARTY_TRIAGE_2026-10-18.md
+source_receipt: docs/roadmap/b2bcenter_six_primary_oct18.json
+source_watchlist: docs/roadmap/b2bcenter_watchlist_oct18.json
+source_card_http200_count: 6
+original_stage_and_date_parsed_count: 5
+public_market_rfi_count: 1
+license_resale_nonfit_count: 1
+past_deadline_count: 3
+source_stage_or_number_alias_unverified_count: 1
+strictly_qualified_owner_bid_go: 0
+review_gate: stacked_pull_request_exact_head_ci_and_merge_authority_pending
+external_side_effects: false

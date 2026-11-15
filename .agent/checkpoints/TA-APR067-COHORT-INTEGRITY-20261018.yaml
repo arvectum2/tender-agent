@@ -1,0 +1,27 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR067-COHORT-INTEGRITY-20261018
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Add a deterministic, fail-closed, source-bound consistency gate for frozen 20 historical actual-LLM development case metrics and append-only case13 report correction.
+definition_of_done:
+  - Reconcile existing 20-case original vs corrected frozen public source receipts without changing them or original private data.
+  - Implement a single offline verifier that checks originals, correction history, unique case IDs, exact aggregate counters and model-only latency denominators.
+  - Fail closed for tampering, unsupported promotions, malformed claims and mismatched source digest; never imply legal/human gold, rolling SLO or current EIS.
+  - Write focused adversarial tests, run local quality checks, save safe acceptance evidence and update roadmap; submit review-ready PR.
+completed:
+  - "2026-10-18 read canonical main d2a927ecebc9222bb3b38b47aa14c7024ccec4f0 and APR06/07 source receipts; PR480/481 19/19 green and open."
+  - "Identified no existing strict append-only audit between original 19-of-20 and corrected 20-of-20 published development snapshots."
+current: "Bounded snapshot consistency gate implemented, source truth unchanged, awaiting PR review and exact-head CI."
+remaining: []
+last_verified_commit: a17c96ba00ad6468402c1036e1e64c37ccc78901
+test_results:
+  - "67 relevant pytest PASS; Ruff PASS; diff check PASS."
+  - "Byte-identical machine receipt regenerated; 20 distinct cases, 80 model calls, 210 source file records, 60 critical XML fact citation records."
+  - "Corrected case13 source-only append revision verified; zero new LLM calls; original and corrected input digests pinned."
+  - "Model-only median 351.655 sec and nearest-rank P90 389.27 sec; NOT workflow SLO/legal human gold."
+resume_instruction: "Bounded DEVELOPMENT-cohort integrity gate complete. Check the new PR exact-head GitHub CI once; never merge without valid Company AM-4 and queue authority. Resume parent remaining APR-06/07 independent evaluation/real production SLO or B2B source-qualified 15-20 leads; do not invent human/legal gold."
+source_acceptance_report: docs/quality/APR067_CORRECTED_20_COHORT_INTEGRITY_2026-10-18.md
+source_receipt: docs/quality/APR067_CORRECTED_20_COHORT_INTEGRITY_2026-10-18.json
+review_gate: exact_head_ci_and_merge_pending
+external_side_effects: false

@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import os
 import re
 from datetime import UTC, datetime
 from uuid import uuid4
@@ -35,6 +34,7 @@ from src.modules.customer_pilot.models import (
     ProcurementCase,
 )
 from src.modules.customer_registry.models import CustomerProfile
+from src.modules.procurement_learning_corpus.service import learning_capture_enabled
 from src.shared.api.dependencies import DBSession
 from src.shared.config.settings import get_settings
 from src.shared.db.base import utcnow
@@ -569,7 +569,7 @@ def complete_run(
             "reason": "analysis_completed_operator_review",
         },
     )
-    if os.environ.get("TENDER_LEARNING_CAPTURE_ENABLED") == "1":
+    if learning_capture_enabled():
         # Capture the authenticated tenant's completed run, not the
         # in-progress placeholder or private original documents.
         # Failure rolls back the completion and candidate together.
