@@ -200,14 +200,16 @@ completed:
   turnkey relay panels, NKNH GPP1 two cells domestic IEC61850 RZA and vacuum breaker
   budget, Biaksplen Gidrotorf BKTP, KOS Parus electro UPS/battery counts. Historical
   schedule not current inventory, cell count or award.
-current_stage: contractor_channels_and_exact_retrofit_asset_schedule
+- Five original GPB list/detail pairs captured and hash-verified for Cryogenmash: GP635240 active, GP634651/GP633537/GP634648/GP641489 archived. GP641489 was prior secondary observation, not additional demand. Original detail archive deadline label conflicts with list; use per-ID list deadlines. No price/award confirmed.
+- GP635240 original DOCX explicitly confirms AGHK title 6500, AO Cryogenmash organizer versus OOO Cryogenmash Development customer in TZ; 64 numbered asset lines plus separate UPS line. Six LV sections, six transformers, two capacitor installations, one 10kV soft starter, three AVR cabinets, nine compressors and four circulation pumps. Three years experience, qualified staff, 12h departure and 24-48h arrival; no eligibility claim. Fourteen other selected links closed connections, no bypass.
+current_stage: cryogenmash_primary_lifecycle_and_asset_evidence
 remaining:
 - Continue broad SIBUR research, Cryogenmash/AGHK outsourced plant lifecycle, NKNH/Kstovo
   retrofit evidence and contractor 2024–26 purchases. Separate UPS channel, reserve
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: defc1938fdc27f90a1e24a1ccf3027e4c1c0448e
+last_verified_commit: 001d91eda0fff6b2d08c5c8891939ab5e8bc13f7
 test_results:
   focused: 3
   ruff: pass
@@ -412,7 +414,16 @@ test_results:
     asset_schedule_entries: 109
     verification: Read-only exact-reference, original SHA and distinct asset IDs checked.
       No code or DB mutation.
-resume_instruction: Read cryogenmash-cma-channel-review-v1.json and installed-base-model-evidence-v4.json.
-  Continue broad SIBUR project/actual buyer mapping, retrofit P0, separate UPS channel,
-  private role overlay and reserve only. Preserve identity separation; no inferred
-  awards, contact, bid, spend, duplicate workers, auto-merge or DP bypass.
+  cryogenmash_gpb_primary:
+    review_sha256: aa661c8abb6804211d05029e5d032fa414b8401f559f37846f72a7b5ba388533
+    detail_receipts_sha256: bdf8a38586471c83a0ee82562604f353cbf74630961b241e6dacb70392d7c652
+    document_receipts_sha256: e7a904d439f8d5dd6677293e18f71e1e0ea999a6f101dd99ab3fee6886bd12f0
+    tz_sha256: c3b8a70fee3c06f35626ae21b043b1aefe27f3707a6745bc20e21a4f79d15925
+    exact_list_and_detail_pairs: 5
+    active: 1
+    archive: 4
+    selected_document_links: 15
+    captured_originals: 1
+    source_quote_anchors_verified: 10
+    verification: Replayed saved list and detail SHA for all five IDs and original DOCX SHA; 10 exact quote anchors verified. No production code or DB mutation.
+resume_instruction: Read cryogenmash-gpb-primary-review-v2.json in existing private sales-map runtime. Continue broad contractor buyer mapping, NKNH/Kstovo retrofit P0 and separate UPS. Reconcile archived GPB deadlines and retry remaining original links only via normal bounded access when available; no bypass, duplicate workers, inferred awards, outreach, spending or auto-merge. Preserve existing archive workers and DB/DP gates.

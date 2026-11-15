@@ -835,3 +835,8 @@ sibur_cryogenmash_cma_assets_20261115:
     Continue broad SIBUR project/actual buyer mapping, retrofit P0, separate UPS channel,
     private role overlay and reserve only. Preserve identity separation; no inferred
     awards, contact, bid, spend, duplicate workers, auto-merge or DP bypass.
+
+sibur_cryogenmash_gpb_primary_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read cryogenmash-gpb-primary-review-v2.json; five first-party details and explicit AGHK maintenance scope confirmed. Continue broad contractor mapping, retrofit P0 and separate UPS. No bypass or duplicate workers, no inferred awards or DB mutation without existing gate.
