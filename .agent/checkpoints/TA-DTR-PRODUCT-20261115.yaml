@@ -23,7 +23,9 @@ completed:
 - 'Profile isolation audit: global canonical intake/deal dedupe by procurement number
   and deal-based decision identity; mobile projections unscoped; intake IT classification
   hardcoded. No second company profile activated. Documented next design in docs/product/DTR_PARALLEL_PRODUCT_INCREMENT_2026-11-15.md.'
-current_stage: profile_company_scope_design
+- Found existing scoped ProcurementCase/PilotProject and SaaS principal; reuse them,
+  no global Deal rewrite.
+current_stage: implement_company_portfolio_boundary
 remaining:
 - Check exact-head DTR review CI; PostgreSQL advisory lock still needs real isolated
   concurrency acceptance (SQLite guard tested).
@@ -38,8 +40,6 @@ test_results:
   PASS
 - Offline network-none ARM64 build and packaged profile/digest validation PASS (sha256:fa60d6cadfbde364a28dd92dd7b72d000ef990ca9799be19161de240ef20f992)
 - No live PostgreSQL lock acceptance, live research ingestion, APNs or LLM invocation
-resume_instruction: DTR reliability PR review candidate already verified; check its
-  CI. Continue company-context design based on actual canonical Deal/intake, decision
-  and SaaS/company store contracts; do not activate Sionika or duplicate source records
-  until tested cross-company isolation. Preserve live research, DP conditional update
-  checkpoint and existing main runtime; no deployment without approval.
+resume_instruction: Implement tenant-authenticated manual EIS shortlist and append-only
+  human decisions on existing company cases. Verify isolation and migration; no live
+  deployment.
