@@ -210,7 +210,8 @@ completed:
 - Screened all 37 priority plan rows against frozen archive and current source snapshot of 15 November 11:37 UTC: 29 rows with retained candidates, 155 distinct publication IDs, 6 current snapshot IDs; 25 manual scope judgments, 8 rejected pairs. No proven exact plan-to-contract link or award. Refreshed 162 originals to 2072, 2063 extracted, 2 partial, 7 review; three source-bound technical scopes. Resolved NPG SPR to Perm SIBUR-Khimprom project via official regional order; 41 archive candidate publications and six distinct secondary missing from snapshot, two false model-token positives excluded. Public role of Tekon Engineering confirmed. Added four programs, consolidated 21 unique project cards and versioned report v3.
 - Perm NPG SPR reviewed original three revisions 2141372/1-3 and heat trace 2141353/1, with exact source/hash links; 4 transformers 2500kVA, 1 MV RU, 53 LV raw quantity, 3 repeat tags, 1 lighting cabinet. Heat trace physical sheet 123 rows, 2 controller cabinets,10 system cabinets,44 boards. Approx37bn CAPEX separate; GSI-Giprokauchuk FEED role, GSI group and local contractors separately documented; two external NPG notices outside snapshot, VSK existing ID non-additive; eight unmatched plan lines rechecked, no exact links. Refreshed to 2087 originals, 2075 extracted,5 partial,7 review. Map/report v4 verified; no new awards, prices or DB writes.
 - Seven-site multi-block review: 45 archive records, six new cards, total 27. Four primary active originals, nine anchors. GPB three primary list/detail pairs, two unresolved, one verified failed-no-bids protocol; three possible cross-platform pairs not additive. Tomsk 2027 schedule and separate UPS confirmed.
-current_stage: multi_site_programs_and_cross_platform_protocol_review
+- STG seven scope groups, 14 archive IDs, verified LRT-40 workbook and owner program evidence, V6 map/report. Existing technical SIBUR LaunchAgent now StartInterval 120s; original plist backed up; verified recurring successful runs. Reconciled 313 DP resources/5073 chunks and embeddings with fresh read-only PostgreSQL export; repaired preservation of first attestation hashes for two previously linked resources, four focused tests passed, code commit 241992cb. Existing runner restarted with gate and backups, GPB recovery/archive worker unchanged. Verify post-restart actual linkage/index progress before declaring recovery complete.
+current_stage: continuous_local_processing_and_stg_scope_review
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -219,7 +220,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: 98cfc950
+last_verified_commit: 241992cb
 test_results:
   focused: 3
   ruff: pass
@@ -549,4 +550,21 @@ test_results:
       undercovered-active-technical-evidence-v1.json: 23d210ef49207bec01d14ba64c448d3987b434f32b99a84065eec4e8bcb6bfa0
       consolidated-project-map-v5.json: 3b92fb24b72ed0295b9d32d4e22c783c771209e875fec2754da89c6c8e58154a
       consolidated-project-report-v5.md: 6699f7ecd7afb846275e1febfa2d00dd1d536791b0daf176e5c854a975d7d039
-resume_instruction: "Read consolidated-project-map-v5.json and consolidated-project-report-v5.md. Continue multiple blocks per cycle: STG and smaller sites; verified outcomes and prices on GPB and other official channels; project-wise commercial shortlist and qualification gaps; refresh committed originals with existing extractor. Deadline 17 November. Maintain existing gates, independent UPS, private owner context, no duplicate jobs or inferred awards."
+  continuous_local_processing_v6:
+    program_cards: 27
+    stg_scope_groups: 7
+    stg_archive_ids: 14
+    local_technical_interval_seconds: 120
+    technical_originals_latest: 2177
+    dp_reconciled_documents: 313
+    dp_reconciled_chunks_embeddings: 5073
+    dp_fresh_evidence_sha256: 83dac93e3a6cd2668625161c6905d3531a94d94329d5b362a35edef6d2b06876
+    dp_preserved_proof_manifest_sha256: 60c30a2f298b3e8ed6033b807d651bc95f9b0fc217ddaeb733222bc38e4a88db
+    dp_last_observed_status: running
+    dp_last_observed_step: "process_sibur_document_batch"
+    focused_tests: 4_passed
+    artifacts:
+      stg-site-programs-review-v1.json: dfdcfa0e15a0a8738cc0769b6ed7e37e791dcaa96cc9a074bfcea9d36cef70a7
+      consolidated-project-map-v6.json: 825bff8b97ee0151119cdef357ea678c61d3cfb5e627ac21e230c788ca14e527
+      consolidated-project-report-v6.md: 8f3d526fc06ab3f1315ca004a6aebf1e5cb318fb854747fc2455c0db20616868
+resume_instruction: "Read consolidated-project-map-v6.json and consolidated-project-report-v6.md. First verify existing SIBUR index runner state and live receipt counts, then continue missing sites, contract/protocol research and commercial ranking. Existing technical launch agent is scheduled every 120 seconds; do not start duplicate extractor. Existing SIBUR archive and GPB recovery workers remain unchanged. Preserve all mutation gates; if index blocked reconcile exact identities before retry. Deadline 17 November. Continue multiple independent blocks each cycle."
