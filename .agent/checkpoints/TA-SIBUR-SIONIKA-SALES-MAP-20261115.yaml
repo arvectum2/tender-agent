@@ -59,16 +59,33 @@ completed:
 - Seven external observations, supplier/contractor self-reports and one aggregator-only
   GP641489; no contract award inference. Five NPG SPR Energybase IDs absent from frozen
   30394-record snapshot, require original registry reconciliation.
-current_stage: whole_package_document_coverage_review_and_role_evidence
+- Owner-provided commercial-role overlay saved separately in private runtime; never
+  overwrite user classifications with inferred project roles or publish private relationships.
+- Sfera-Stroy legal identity confirmed across sources; four owner-contractor AGHK
+  contract numbers self-reported, one subcontract court case verified, one material
+  debt judgment at appeal stage identified, latest registry move to Moscow reported;
+  risk and current due diligence explicit.
+- Service/retrofit demand cohort 496 records classified offline with overlapping service
+  types; 224 repair/maintenance, 158 modernization/replacement signals, 136 installation,
+  80 commissioning, 63 design. 104 cancelled, 385 intake closed, 7 open in frozen
+  snapshot. Not contract awards.
+- 'Seven additional project-role source observations: owner identifies Progaz and
+  Tekon at NKNH VRU, Progress Engineering named OZH executor at DGP2; B2B indexed
+  card identifies SNEMA-SERVIS as procurement organizer DGP2, aggregator evidence
+  AGHK service and self-reported subcontractor chain; Wison directory-only pending
+  primary source.'
+current_stage: commercial_roles_and_service_channels_review
 remaining:
-- Reconcile missing source references using project-package-missing-document-queue-v1.json;
-  exact source references may already have captured bytes, avoid duplicate worker/download.
-  Prioritize NPG/STYRENE/AGHK. Legacy XLSB review.
-- Verify primary source and scope of seven external role observations and five missing
-  publication IDs. Do not infer winner, legal role for the whole project, or prices.
-- Expand annual service/mod modernization map, support-services category coverage,
-  procurement chain and exact equipment lists. DP blocked unchanged.
-last_verified_commit: f43cbe72c187e1757c29f0cfa91db49c65789641
+- Honor private owner role overlay; focus on selling to EPC/other buyers, co-development
+  with known partner and competitor intelligence, no unilateral reclassification.
+- Verify new service/construction channel legal identities and procurement roles,
+  prioritize documented supply procurement; expand operating enterprise installed-base
+  and repeat maintenance demand, distinguish cancelled/budget work.
+- Reconcile missing 926 URL bindings with existing capture worker and frozen snapshot
+  gaps. Current source status must be refreshed. No blind retries or duplicate capture.
+- Complete SOP category coverage; resolve Data Platform through authorized recovery
+  only.
+last_verified_commit: d6eb6b18ae9bdab95c1d5096a90203305e029d12
 test_results:
   focused: 3
   ruff: pass
@@ -125,9 +142,15 @@ test_results:
     missing_unique_urls: 926
     external_observations: 7
     coverage_gap_observations: 5
-resume_instruction: Read project-document-review-v2.json, project-document-review-remaining-v1.json,
-  package-role-evidence-v1.json and project-package-missing-document-queue-v1.json.
-  Continue broad SIBUR/Sionika portfolio and EPC/recipient graph; prioritize missing
-  exact refs and annual service demand. Review existing acquisition state before any
-  new fetch, no worker duplicates. No actual bid/contact/spend, no unverified award,
-  no DP bypass or auto-merge.
+  commercial_role_and_service_map:
+    sionika-commercial-role-overlay-v1.json_sha256: 719cec7c1ec6147579424502e3063c4296e2793ea22688a347e078404a56a896
+    sfera-stroy-dossier-v1.json_sha256: 7c7f7ecc9eea23d4cd8429b4d80e5196b1b3d1b8e8703e29a4928325772be329
+    service-demand-review-v1.json_sha256: e4eae2a93c177aafc66f356016f269e0e7ddcb764f318b6989c3bc894a332765
+    additional-project-channel-observations-v1.json_sha256: 2976ba35ef5dbcc0d4ca8cc08b7fce6722777497268bd5cbdbfe333e20549d49
+    verification: read-only evidence review, no runtime code changed; prior tests
+      retained
+resume_instruction: Read private role overlay, Sfera dossier, service-demand-review-v1
+  and additional-project-channel-observations-v1. Prioritize full Sionika nomenclature
+  and EPC/maintenance customers. User commercial roles authoritative, separate from
+  documentary project roles; do not publish private relations. Continue existing acquisition
+  ownership and authorized research. No contact, bid, spend, auto-merge or DP bypass.

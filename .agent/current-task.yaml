@@ -734,3 +734,11 @@ sibur_sionika_package_roles_20261115:
     exact refs and annual service demand. Review existing acquisition state before
     any new fetch, no worker duplicates. No actual bid/contact/spend, no unverified
     award, no DP bypass or auto-merge.
+sibur_sionika_commercial_roles_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read private role overlay, Sfera dossier, service-demand-review-v1 and additional-project-channel-observations-v1.
+    Prioritize full Sionika nomenclature and EPC/maintenance customers. User commercial
+    roles authoritative, separate from documentary project roles; do not publish private
+    relations. Continue existing acquisition ownership and authorized research. No
+    contact, bid, spend, auto-merge or DP bypass.
