@@ -887,3 +887,8 @@ sibur_continuous_processing_v6_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Read latest V6 report and validate index runner progress; keep local interval and existing workers, continue multiple research blocks.
+
+sibur_commercial_register_v7_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read latest V7 and commercial action register; continue primary awards, contractors and qualification, validate DP recovery; deadline 17 November.

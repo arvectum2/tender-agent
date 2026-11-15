@@ -211,7 +211,8 @@ completed:
 - Perm NPG SPR reviewed original three revisions 2141372/1-3 and heat trace 2141353/1, with exact source/hash links; 4 transformers 2500kVA, 1 MV RU, 53 LV raw quantity, 3 repeat tags, 1 lighting cabinet. Heat trace physical sheet 123 rows, 2 controller cabinets,10 system cabinets,44 boards. Approx37bn CAPEX separate; GSI-Giprokauchuk FEED role, GSI group and local contractors separately documented; two external NPG notices outside snapshot, VSK existing ID non-additive; eight unmatched plan lines rechecked, no exact links. Refreshed to 2087 originals, 2075 extracted,5 partial,7 review. Map/report v4 verified; no new awards, prices or DB writes.
 - Seven-site multi-block review: 45 archive records, six new cards, total 27. Four primary active originals, nine anchors. GPB three primary list/detail pairs, two unresolved, one verified failed-no-bids protocol; three possible cross-platform pairs not additive. Tomsk 2027 schedule and separate UPS confirmed.
 - STG seven scope groups, 14 archive IDs, verified LRT-40 workbook and owner program evidence, V6 map/report. Existing technical SIBUR LaunchAgent now StartInterval 120s; original plist backed up; verified recurring successful runs. Reconciled 313 DP resources/5073 chunks and embeddings with fresh read-only PostgreSQL export; repaired preservation of first attestation hashes for two previously linked resources, four focused tests passed, code commit 241992cb. Existing runner restarted with gate and backups, GPB recovery/archive worker unchanged. Verify post-restart actual linkage/index progress before declaring recovery complete.
-current_stage: continuous_local_processing_and_stg_scope_review
+- Six smaller-site program cards: Krasnoyarsk KZSK, Portenergo, PETF, YUP, NPP, S-Yug; 26 archive IDs and 2 external observations (one non-electrical). Ownership conflicts corrected with 2023 Solvay transaction; JV boundary retained. Commercial action register covers 33 cards, 12 P0,20 P1,1 P2. V7 map and report. DP repeat timeout recovered by exact resource identities, 315 documents/5283 chunks, 4 recovered receipts; preserved old proofs. Shared lock acquired safely on retry; existing runner resumed. GPB worktree cd52f39b increases bounded request timeout 180s and stats 60s. No direct DB writes.
+current_stage: expanded_site_coverage_commercial_action_register
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -220,7 +221,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: 241992cb
+last_verified_commit: 401dbdeb
 test_results:
   focused: 3
   ruff: pass
@@ -567,4 +568,24 @@ test_results:
       stg-site-programs-review-v1.json: dfdcfa0e15a0a8738cc0769b6ed7e37e791dcaa96cc9a074bfcea9d36cef70a7
       consolidated-project-map-v6.json: 825bff8b97ee0151119cdef357ea678c61d3cfb5e627ac21e230c788ca14e527
       consolidated-project-report-v6.md: 8f3d526fc06ab3f1315ca004a6aebf1e5cb318fb854747fc2455c0db20616868
-resume_instruction: "Read consolidated-project-map-v6.json and consolidated-project-report-v6.md. First verify existing SIBUR index runner state and live receipt counts, then continue missing sites, contract/protocol research and commercial ranking. Existing technical launch agent is scheduled every 120 seconds; do not start duplicate extractor. Existing SIBUR archive and GPB recovery workers remain unchanged. Preserve all mutation gates; if index blocked reconcile exact identities before retry. Deadline 17 November. Continue multiple independent blocks each cycle."
+  expanded_site_commercial_v7:
+    project_cards: 33
+    p0: 12
+    p1: 20
+    p2: 1
+    selected_archive_ids: 26
+    external_observations: 2
+    technical_originals_latest: 2221
+    dp_reconciled_documents: 315
+    dp_reconciled_chunks: 5283
+    dp_reconciliation_sha256: fa3ee75793697241c14cd6c0afb8822f16b5d77381f61ab809edde6dbb8366d0
+    dp_manifest_sha256: fd9ca67231f8eea38b5a3319c58a0f6b00760dd1828e790536fa86dd82f6f261
+    dp_runner_commit: cd52f39b
+    dp_last_status: running
+    dp_last_step: "MI backup"
+    artifacts:
+      small-site-programs-review-v1.json: ab975a6d04cd010dd402b23feec8f217b2c2eda1be16faedca76e2305cc497cf
+      consolidated-project-map-v7.json: 4c21735fe6046b78339b9daa444847fe075760ce765a106631dfae7209127905
+      commercial-action-register-v1.json: f6c08dcd54d7433083f428319b6169c8201304ad0ffbf955365027ed899249ed
+      consolidated-project-report-v7.md: 8f05e6e86442c7bec5a009dc55946ea04f3d0b9e91f40f2acc0e01c0087130a0
+resume_instruction: "Read consolidated-project-map-v7.json, consolidated-project-report-v7.md and commercial-action-register-v1.json. Verify index runner status and receipt progress, no duplicate extractor. Continue multiple blocks: verified awards/contract prices and contractor channels, project-stage and package gaps, qualification and eight unresolved plan rows; build clean consolidated report with detailed per-project action and avoid double count. Deadline 17 Nov. Preserve independent UPS, private owner context, all gates and existing workers. If index times out reconcile exact identities under locks before restart."
