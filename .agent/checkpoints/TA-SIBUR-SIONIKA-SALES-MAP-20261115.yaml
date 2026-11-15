@@ -1164,4 +1164,16 @@ test_results:
       commercial-action-register-v33.json: 1aadfcfd6c2bdb1ecad201cb7c0fc547ac4c5be13f1db923fb54197c641fe64f
       project-coverage-dashboard-v25.json: 3d7afa8a3280240db58efad223408b92306791931d81505b52a958515edd9805
       consolidated-project-report-v39.md: 255d9dfa020662644691f3c5412ce6d6f350fe17a61b8cd68c52fa80d26335d3
-resume_instruction: "V39 completed; continue V40 quality audit and contractor ledger from V39 map/V33 actions/V14 queue/V25 coverage. No DB mutation without gate. Nov17 report."
+  sionika_v40:
+    project_cards: 66
+    priority_union: 8244
+    source_artifacts: 90
+    completed_stage: "Corpus audit, separate 223-FZ comparator prices and contractor roles; no exact awards. Corrected project IDs to 2659."
+    artifacts:
+      sionika-contract-corpus-audit-v1.json: 2327f270b4240fec91f13cd858f532d44f8b3743b6f1f972725775468edebc1b
+      consolidated-project-map-v40.json: 69933d2d8ef37c97853a809a78c3cc2b7b70dfd3e414901450f5049814694dca
+      commercial-outcome-queue-v15.json: 1aa9e97153ded6dff243276729422fbacd721a254e35142761f6a78f67a9378d
+      commercial-action-register-v34.json: c18b00f3487d6afa7319400dcc18ce35117cc8b08f820e1ff11d6dd26a801400
+      project-coverage-dashboard-v26.json: 66f8e4933275dc749279c4b6855de3489014ed7798ef025472fe6685e04fad34
+      consolidated-project-report-v40.md: b575af88f0edbc25babf917a4f818a9a0bd611dc88b7217103ecb9bd94cad27e
+resume_instruction: "V40 verified; screen captured priority originals for actual outcome markers, then review candidates; no DB write. Report Nov17."
