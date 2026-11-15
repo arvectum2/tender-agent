@@ -142,15 +142,27 @@ completed:
   documented demand, DGP2 LV two kits from title, cancelled/reissued pairs, NKNH recent
   IDs. External historical Elektrojar reference and Tavrida seminar only, not recent
   awards.
-current_stage: switchgear_retrofit_priority_P0
+- Owner requested save previous retrofit leads and continue broad SIBUR roadmap, not
+  bid. Reserve six observations (3 closed NKNH,2 prior external observations unrefreshed,1
+  adjacent currently open styrene PNR). Restored Mac-mini transport. Independently
+  verified fresh official page bytes and exact reconstructed list 27 pages/315 IDs,
+  no retrofit classifier candidates; NKNH2146492/1 open to 27 November 11:00. External
+  reserve no fresh status or eligibility verification.
+- 'Technical evidence refreshed 135 additional committed originals, 1477 total,1471
+  extracted/6 review,90 new report findings. Four selected historical demand signals:
+  NKNH notification RFI UPS Systeme Electric 1000VA and SNMP one each; RusVinyl 2
+  HALTON fire-damper drives discontinued, Siemens replacement specified; KOS PGU energy-block
+  switching RZA/PA installation; ZSNH guaranteed-power commissioning from registry
+  subject only. No award, live offer or supplier assignment.'
+current_stage: retrofit_reserve_preserved_and_broad_sibur_document_review
 remaining:
-- Prioritize P0 switchgear retrofit and RZA, while retaining full SIBUR nomenclature
-  and separate UPS. Review ambiguous/related candidates, source attachments, accurate
-  asset quantities, repeat demand, and buyer/award/competitor evidence. Refresh live
-  statuses; no actual bidding.
-- Unresolved document and price/award gaps; support supplement awaits authorized import
-  with fresh backup/gate. DP blocked unchanged; existing capture worker untouched.
-last_verified_commit: b492c84f4f1565866e9817ccd76a7cc7b7ec7115
+- Continue overall SIBUR map per owner, retrofit P0 retained and leads reserve only;
+  separate UPS/AKB. Further source-bound EPC, equipment, installed-base, service,
+  award and contract evidence.
+- Existing archive worker ownership unchanged. Supplemental 29 in-period IDs not DB
+  imported; fresh authorized backup/gate/replay required. Missing references and signed
+  awards remain; DP blocked unchanged.
+last_verified_commit: fca42151459f2b8d59043255fe949f44174bed87
 test_results:
   focused: 3
   ruff: pass
@@ -297,8 +309,23 @@ test_results:
     manual_unique_ids: 30
     focused_tests: 2
     ruff: pass
-resume_instruction: Read switchgear-retrofit-discovery-v1.json and switchgear-retrofit-priority-map-v1.json.
-  Owner specifically prioritizes switchgear retrofit; expand SIBUR 6-10kV and LV switchgear,
-  RZA, breaker replacement project chains and suppliers, keep other portfolio and
-  separate UPS channel. No contact, bids, spend, duplicate acquisition, auto-merge
-  or DP bypass.
+  retrofit_reserve_and_document_refresh:
+    reserve_sha256: b5ae9fa4ad9923093b870e97b21fc06dcec2eb6ce43fae9bdf5db2dab10d0bb5
+    current_receipts_sha256: 77d3055745496b84a5f2e971b5336467e64317f7f152e95fb5838da2329372e5
+    current_pages: 27
+    current_ids: 315
+    current_retrofit_classifier_candidates: 0
+    model_evidence_sha256: b3d6dd9eff3707b7516f95ea5b5b4cf5e76edc974eccc480765a8e6c0b839482
+    technical_report_sha256: 6241788ca7e9d9cad0fa70fbaac1b7eb65f5bf145fd7c544efad4176f50ebb1b
+    originals: 1477
+    extracted: 1471
+    review: 6
+    new_originals: 135
+    selected_cases: 4
+    verification: Read-only page replay and source-bound artifact checks passed; no
+      code changes.
+resume_instruction: Read retrofit-lead-reserve-v1.json and installed-base-model-evidence-v3.json.
+  Owner wants reserve only, general SIBUR research roadmap continues. Preserve P0
+  retrofit and independent UPS stream, no external market expansion at this stage.
+  Continue owner-approved acquisition, exact scope and EPC/service evidence; no bids/contact/spend/duplicate
+  workers/auto-merge/DP bypass.

@@ -797,3 +797,11 @@ sibur_switchgear_retrofit_20261115:
     switchgear, RZA, breaker replacement project chains and suppliers, keep other
     portfolio and separate UPS channel. No contact, bids, spend, duplicate acquisition,
     auto-merge or DP bypass.
+sibur_retrofit_reserve_continue_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read retrofit-lead-reserve-v1.json and installed-base-model-evidence-v3.json.
+    Owner wants reserve only, general SIBUR research roadmap continues. Preserve P0
+    retrofit and independent UPS stream, no external market expansion at this stage.
+    Continue owner-approved acquisition, exact scope and EPC/service evidence; no
+    bids/contact/spend/duplicate workers/auto-merge/DP bypass.

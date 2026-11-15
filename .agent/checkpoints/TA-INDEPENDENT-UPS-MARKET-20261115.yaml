@@ -22,6 +22,8 @@ completed:
 - SIBUR lifecycle 22 UPS channel candidates including 5 mixed, reviewed STG, ZSNH,
   KOS, Kstovo and AGHK; two additional attachment-based UPS contexts retained separately
   without assigning actual supply.
+- SIBUR mixed notification RFI 2112547/1 specifies Systeme Electric 1000VA UPS and
+  SNMP; ZSNH2090671/1 guaranteed power PNR subject. No actual supply or assignment.
 current_stage: sibur_lifecycle_review
 remaining:
 - Qualify stationary battery applications, mixed packages and actual technical specs;
@@ -30,7 +32,7 @@ remaining:
   recurring service cycles.
 - Private agency relationship is prospective, no assumption of actual engagement;
   no contacts or bids.
-last_verified_commit: 5722454a41065a1df83b76630815961b957f84ea
+last_verified_commit: fca42151459f2b8d59043255fe949f44174bed87
 test_results:
   focused: 7
   ruff: pass
