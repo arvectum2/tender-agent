@@ -109,3 +109,34 @@ def test_company_portfolio_migration_preserves_legacy_and_blocks_history_downgra
     finally:
         engine.dispose()
         invalidate_settings_cache()
+
+
+def test_company_evidence_migration_preserves_profile_and_blocks_populated_downgrade(tmp_path, monkeypatch):
+    import pytest
+
+    db_url = "sqlite:///" + str(tmp_path / "company_evidence.sqlite")
+    monkeypatch.setenv("AI_CORP_DATABASE_URL", db_url)
+    invalidate_settings_cache()
+    cfg = Config(str(Path(__file__).resolve().parents[1] / "alembic.ini"))
+    engine = create_engine(db_url)
+    try:
+        with engine.begin() as conn:
+            for table, identity in (("procurement_cases", "id"), ("saas_tenants", "tenant_id"), ("saas_members", "id"), ("saas_runs", "run_id"), ("company_profile_fact_versions", "id")):
+                conn.execute(text(f"CREATE TABLE {table} ({identity} VARCHAR PRIMARY KEY)"))
+                conn.execute(text(f"INSERT INTO {table} ({identity}) VALUES ('existing')"))
+        command.stamp(cfg, "108_company_portfolio_decisions")
+        command.upgrade(cfg, "109_company_portfolio_evidence")
+        assert "company_portfolio_evidence" in inspect(engine).get_table_names()
+        command.downgrade(cfg, "108_company_portfolio_decisions")
+        assert "company_portfolio_evidence" not in inspect(engine).get_table_names()
+        command.upgrade(cfg, "109_company_portfolio_evidence")
+        with engine.begin() as conn:
+            assert conn.execute(text("SELECT count(*) FROM company_profile_fact_versions")).scalar_one() == 1
+            conn.execute(text("INSERT INTO company_portfolio_evidence (id, case_id, tenant_id, member_id, run_id, profile_fact_id, source_snapshot_sha256, created_at) VALUES ('e1','existing','existing','existing','existing','existing',:sha,'2026-11-15 00:00:00')"), {"sha": "a" * 64})
+        with pytest.raises(RuntimeError, match="Cannot remove populated"):
+            command.downgrade(cfg, "108_company_portfolio_decisions")
+        with engine.connect() as conn:
+            assert conn.execute(text("SELECT count(*) FROM company_portfolio_evidence")).scalar_one() == 1
+    finally:
+        engine.dispose()
+        invalidate_settings_cache()

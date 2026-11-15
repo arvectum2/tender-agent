@@ -7,6 +7,7 @@ from types import SimpleNamespace
 
 import pytest
 from sqlalchemy import select
+from test_apr03b_archived_eis_full_source_integrity import case as archived_case  # noqa: F401
 
 from src.modules.customer_onboarding import router as onboarding
 from src.modules.saas_foundation import router as saas
@@ -1003,3 +1004,96 @@ def test_company_portfolio_role_legal_history_and_defer(client, session):
     assert [x["action"] for x in history] == ["DEFER", "GO"]
     assert [x["revision"] for x in history] == [2, 1]
     assert client.get(path + "?limit=1", headers=_auth(owner)).json()["has_more"] is True
+
+
+def test_company_search_context_reads_only_own_versioned_criteria(client):
+    _, a = _seed(client, "Тест поиска A")
+    _, b = _seed(client, "Тест поиска B")
+    path = "/api/saas/company-portfolio/search-context"
+    assert client.get(path, headers=_auth(a)).status_code == 428
+    _legal(client, a)
+    _legal(client, b)
+    assert client.get(path, headers=_auth(a)).json()["profile_state"] == "MISSING"
+    assert client.put("/api/saas/profile", json=_profile(), headers=_auth(a)).status_code == 200
+    own = client.get(path, headers=_auth(a)).json()
+    assert own["profile_version"] == 1 and own["criteria"]["keywords"] == ["разработка"]
+    assert own["automatic_search_enabled"] is False
+    other = client.get(path, headers=_auth(b)).json()
+    assert other["criteria"] is None and other["profile_state"] == "MISSING"
+    assert "qualification" not in own and "commercial" not in own
+
+
+def test_company_evidence_owned_archive_binding_profile_staleness_and_tamper(client, session, monkeypatch, archived_case):  # noqa: F811
+    from fastapi import HTTPException
+    from test_apr03b_archived_eis_full_source_integrity import NUMBER, RUN
+
+    from src.modules.saas_foundation import company_case_evidence as evidence
+    from src.modules.saas_foundation.models import (
+        CompanyPortfolioEvidence,
+        SaasMember,
+        SaasRun,
+    )
+
+    tenant_a, a = _seed(client, "Тест доказательств A")
+    _, b = _seed(client, "Тест доказательств B")
+    _legal(client, a)
+    _legal(client, b)
+    for token in (a, b):
+        assert client.put("/api/saas/profile", headers=_auth(token), json=_profile()).status_code == 200
+    owner = session.scalar(select(SaasMember).where(SaasMember.tenant_id == tenant_a["tenant_id"]))
+    session.add(SaasRun(tenant_id=tenant_a["tenant_id"], run_id=RUN, created_by_member_id=owner.id))
+    session.commit()
+    base = "/api/saas/company-portfolio/cases"
+    def make(token, number):
+        res = client.post(base, headers=_auth(token), json={"registry_number": number})
+        assert res.status_code == 201, res.text
+        return f"{base}/{res.json()['case_id']}/evidence"
+    own, foreign, mismatch = make(a, NUMBER), make(b, NUMBER), make(a, "0123456789012345678")
+    payload = {"run_id": RUN, "expected_profile_version": 1}
+    assert client.post(own, headers=_auth(b), json=payload).status_code == 404
+    assert client.post(foreign, headers=_auth(b), json=payload).status_code == 404
+    assert client.post(mismatch, headers=_auth(a), json=payload).status_code == 409
+    assert client.post(own, headers=_auth(a), json={**payload, "expected_profile_version": 2}).status_code == 409
+    assert client.post(own, headers=_auth(a), json={**payload, "source_snapshot_sha256": "fake"}).status_code == 422
+    bound = client.post(own, headers=_auth(a), json=payload)
+    assert bound.status_code == 201, bound.text
+    binding = bound.json()
+    assert binding["profile_version"] == 1 and binding["current_live_notice_status_verified"] is False
+    replay = client.post(own, headers=_auth(a), json=payload)
+    assert replay.json()["binding_id"] == binding["binding_id"]
+    path = f"{own}/{binding['binding_id']}"
+    assert client.get(path, headers=_auth(b)).status_code == 404
+    assert client.get(f"{foreign}/{binding['binding_id']}", headers=_auth(b)).status_code == 404
+    assert client.get(foreign, headers=_auth(b)).json()["items"] == []
+    def missing_report(run_id):
+        raise HTTPException(404, "Report not available")
+    monkeypatch.setattr(evidence, "get_uploaded_demo_report", missing_report)
+    absent = client.get(path, headers=_auth(a)).json()
+    assert absent["report_status"] == "REPORT_UNAVAILABLE" and absent["qualification"] is None
+    observed = []
+    monkeypatch.setattr(evidence, "get_uploaded_demo_report", lambda _: SimpleNamespace(run_id=RUN, decision_core={"procurement_regime": "44fz"}))
+    def qualify(session, *, run_id, customer_id, as_of):
+        observed.append((run_id, customer_id))
+        return {"competitive_recommendation": "NOT_ASSESSED", "external_action_allowed": False}
+    monkeypatch.setattr(evidence, "assess_owned_run_qualification", qualify)
+    read = client.get(path, headers=_auth(a))
+    assert read.status_code == 200, read.text
+    assert read.json()["archived_source_snapshot_verified"] is True
+    assert read.json()["screening"]["customer_id"] == tenant_a["customer_id"]
+    assert read.json()["screening"]["decision"] == "HUMAN_REVIEW_REQUIRED"
+    assert observed == [(RUN, tenant_a["customer_id"])]
+    assert client.put("/api/saas/profile", headers=_auth(a), json=_profile()).status_code == 200
+    stale = client.get(path, headers=_auth(a)).json()
+    assert stale["profile_state"] == "SUPERSEDED" and stale["current_profile_version"] == 2
+    assert stale["report_status"] == "PROFILE_REVIEW_REQUIRED" and stale["screening"] is None
+    assert len(observed) == 1
+    assert client.post(own, headers=_auth(a), json=payload).status_code == 409
+    fresh = client.post(own, headers=_auth(a), json={**payload, "expected_profile_version": 2})
+    assert fresh.status_code == 201 and fresh.json()["binding_id"] != binding["binding_id"]
+    assert session.query(CompanyPortfolioEvidence).count() == 2
+    root, _ = archived_case
+    attachment = root / "input/original-2.bin"
+    attachment.write_bytes(b"x" * attachment.stat().st_size)
+    assert client.get(path, headers=_auth(a)).status_code == 409
+    assert client.get(f"{own}/{fresh.json()['binding_id']}", headers=_auth(a)).status_code == 409
+    assert len(observed) == 1

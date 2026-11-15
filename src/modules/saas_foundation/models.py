@@ -171,3 +171,24 @@ def _immutable_company_decision(*_args):
 
 event.listen(CompanyPortfolioDecision, "before_update", _immutable_company_decision)
 event.listen(CompanyPortfolioDecision, "before_delete", _immutable_company_decision)
+
+
+class CompanyPortfolioEvidence(UUIDPrimaryKeyMixin, Base):
+    """Immutable reference to an owned run and the supplier profile used with it."""
+    __tablename__ = "company_portfolio_evidence"
+
+    case_id: Mapped[str] = mapped_column(String(36), ForeignKey("procurement_cases.id"), nullable=False)
+    tenant_id: Mapped[str] = mapped_column(String(64), ForeignKey("saas_tenants.tenant_id"), nullable=False)
+    member_id: Mapped[str] = mapped_column(String(36), ForeignKey("saas_members.id"), nullable=False)
+    run_id: Mapped[str] = mapped_column(String(128), ForeignKey("saas_runs.run_id"), nullable=False)
+    profile_fact_id: Mapped[str] = mapped_column(String(36), ForeignKey("company_profile_fact_versions.id"), nullable=False)
+    source_snapshot_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    __table_args__ = (
+        UniqueConstraint("case_id", "run_id", "profile_fact_id", name="uq_company_case_run_profile"),
+        Index("ix_company_evidence_tenant_case", "tenant_id", "case_id"),
+    )
+
+
+event.listen(CompanyPortfolioEvidence, "before_update", _immutable_company_decision)
+event.listen(CompanyPortfolioEvidence, "before_delete", _immutable_company_decision)

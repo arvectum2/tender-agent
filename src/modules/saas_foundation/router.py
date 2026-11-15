@@ -58,7 +58,7 @@ from src.modules.customer_onboarding.router import (
     revise_profile,
     upload_company_document,
 )
-from src.modules.saas_foundation import company_portfolio
+from src.modules.saas_foundation import company_case_evidence, company_portfolio
 from src.modules.saas_foundation.models import (
     SaasAccessToken,
     SaasMember,
@@ -726,3 +726,23 @@ def read_company_case_decisions(case_id: str, principal: Member, session: DBSess
 @router.post("/api/saas/company-portfolio/cases/{case_id}/decisions", response_model=company_portfolio.CompanyDecisionView)
 def write_company_case_decision(case_id: str, payload: company_portfolio.CompanyDecisionInput, principal: Member, session: DBSession) -> dict:
     return company_portfolio.record_decision(session, principal, case_id, payload)
+
+
+@router.get("/api/saas/company-portfolio/search-context", response_model=company_case_evidence.SearchContext)
+def company_search_context(principal: Member, session: DBSession):
+    return company_case_evidence.search_context(session, principal)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/evidence", status_code=201)
+def bind_company_evidence(case_id: str, payload: company_case_evidence.BindCaseEvidence, principal: Member, session: DBSession) -> dict:
+    return company_case_evidence.bind_evidence(session, principal, case_id, payload)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/evidence")
+def list_company_evidence(case_id: str, principal: Member, session: DBSession, offset: int = Query(0, ge=0), limit: int = Query(50, ge=1, le=100)) -> dict:
+    return company_case_evidence.list_evidence(session, principal, case_id, offset=offset, limit=limit)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/evidence/{binding_id}")
+def read_company_evidence(case_id: str, binding_id: str, principal: Member, session: DBSession) -> dict:
+    return company_case_evidence.read_evidence(session, principal, case_id, binding_id)

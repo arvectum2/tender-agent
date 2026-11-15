@@ -67,6 +67,7 @@ from src.modules.closing_docs.models import ClosingDocsFlag, ClosingDocsItem, Cl
 from src.modules.compliance_matrix.models import ComplianceMatrix, ComplianceMatrixRow
 from src.modules.saas_foundation.models import (  # noqa: F401
     CompanyPortfolioDecision,
+    CompanyPortfolioEvidence,
     SaasAccessToken,
     SaasAuditEvent,
     SaasInvitation,
