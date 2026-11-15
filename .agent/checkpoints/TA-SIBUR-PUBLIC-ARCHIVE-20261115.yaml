@@ -18,7 +18,7 @@ current_stage: independent_archive_capture_and_append_only_import_running
 remaining:
 - implement and validate parser and capture
 - connect append-only import and verify
-last_verified_commit: af930b53d5006c91d3ba63000913a86aac8772de
+last_verified_commit: 04a6f785490fe3d35a0a70ffd984a16fff3928ce
 resume_instruction: Read live archive capture and import state first; both jobs independently
   process selected categories. Do not duplicate or edit running scripts. Continue
   source reviews and build a separate archive document acquisition/index queue after
@@ -76,3 +76,24 @@ document_lane_2026_11_15_0646:
   checks: 6 initial focused and 7 recovery focused tests passed, Ruff clean
   remaining: Verify first linkage and replay; drain archive queue. Separate archive
     indexing after existing DP collection reconciliation.
+continuation_2026_11_15_0724:
+  archive_inserted: 6014
+  archive_captured_originals: 149
+  archive_verified_links: 4112
+  archive_indexed_links: 0
+  archive_captured_electrical_pages: 473
+  archive_captured_automation_pages: 856
+  electrical_repeated_rows: 19
+  dp_exact_reconciliation:
+    documents: 305
+    original_http_receipts: 303
+    read_only_recovered_resources: 2
+    matched_chunks: 4383
+    matched_embeddings: 4383
+    model: Qwen3-Embedding-4B
+    dimension: 2560
+    evidence_sha256: abe4db9d22e679736a111ce2d2976e70f126a0d63039967c1dac30f3e9144f9b
+  tests: 9 focused tests passed, Ruff and diff clean
+  resume: Check live SIBUR pre-sync and indexing; original executor restarted from
+    exact attestation, never blind reingest. Archive linkage independent; do not start
+    archive DP mutation until current scope finishes and is reconciled.

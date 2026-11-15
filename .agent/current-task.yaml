@@ -683,3 +683,8 @@ archive_document_evidence_2026_11_15_0646:
   status: in_progress
   resume: Inspect live archive capture/import/documents states; verify archival linkage
     replay, avoid duplicate worker or DP mutation.
+archive_recovery_and_named_market_2026_11_15_0724:
+  checkpoint: .agent/checkpoints/TA-SIBUR-PUBLIC-ARCHIVE-20261115.yaml
+  status: in_progress
+  resume: Inspect live SIBUR archive and original index executor, verify pre-sync
+    of 305 receipts, preserve source-specific provenance.
