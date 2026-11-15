@@ -3,11 +3,14 @@ from __future__ import annotations
 
 import argparse
 import fcntl
+import hashlib
+import json
 import os
 from contextlib import contextmanager
 from pathlib import Path
 
 from scripts.research.autonomous_runner import Blocked, Runner, atomic, read
+from scripts.research.gpb_delta_sync import db_snapshot, plan, verify_plan_empty
 
 EXPECTED_ERROR = "persist_gpb_protocol_decisions: exit 1; see private log"
 
@@ -38,6 +41,36 @@ class Recovery(Runner):
         if lane.get("status") != "blocked" or lane.get("error") != EXPECTED_ERROR:
             raise Blocked("parent lane no longer in known terminal blocked state")
         return lane
+
+    def gpb_sync(self, stage):
+        lane = "gpb"
+        folder = self.gpb_root / stage
+        links = self.module(lane, self.gpb, "link_gpb_document_receipts", "--prepare", folder, timeout=180)
+        decisions = self.module(lane, self.gpb, "persist_gpb_protocol_decisions", "--prepare", folder, timeout=180)
+        fingerprint = hashlib.sha256(links + decisions).hexdigest()
+        key = stage + "_sync_sha"
+        if self.state["lanes"][lane].get(key) == fingerprint:
+            return
+        all_links, all_decisions = json.loads(links), json.loads(decisions)
+        with self.mutation_guard():
+            ldelta, ddelta = plan(all_links, all_decisions, db_snapshot())
+            self.update(lane, step="source-bound delta reconciliation",
+                        pending_links=len(ldelta), pending_decisions=len(ddelta))
+            linked = {"inserted": 0, "verified_links": len({(r["external_id"],r["sha256"]) for r in all_links}),
+                      "verified_url_receipts": len(all_links)}
+            outcomes = {"updated": 0, "verified": len(all_decisions)}
+            if ldelta or ddelta:
+                self.gate(lane)
+                self.backup_ta(lane)
+                self.update(lane, inflight=True, pending_sha=fingerprint)
+                if ldelta:
+                    linked["inserted"] = self.importer(lane, self.gpb, "link_gpb_document_receipts", json.dumps(ldelta).encode())["inserted"]
+                if ddelta:
+                    outcomes["updated"] = self.importer(lane, self.gpb, "persist_gpb_protocol_decisions", json.dumps(ddelta).encode())["updated"]
+                verify_plan_empty(all_links, all_decisions, db_snapshot())
+                atomic(self.run / ("delta-"+fingerprint+".json"), {"links":linked,"outcomes":outcomes,"verified_pending_after":0})
+                self.update(lane, inflight=False)
+            self.update(lane, **{key:fingerprint, stage+"_links":linked, stage+"_outcomes":outcomes})
 
     def lane(self):
         prior = self.parent_blocked()
