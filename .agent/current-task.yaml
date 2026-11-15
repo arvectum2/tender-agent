@@ -655,5 +655,5 @@ source_discovery_2026_11_14:
 
 geh_zmo_parallel_2026_11_14:
   child_checkpoint: .agent/checkpoints/TA-GEH-ZMO-PARALLEL-20261114.yaml
-  stage: historical_protocol_outcomes_93_verified
+  stage: historical_protocol_outcomes_112_verified
   parent_resume_preserved: true

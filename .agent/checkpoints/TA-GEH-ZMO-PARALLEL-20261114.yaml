@@ -3,12 +3,12 @@ status: in_progress
 goal: Establish verified primary public list acquisition for GEH and small procurement parallel to SIBUR.
 definition_of_done: [primary target lists and detail receipts, source-scoped stable identities, date and status validation, verified normalized samples, gated working DB ingestion]
 completed: [eight parallel source probes, GPB SSR card parser, real 20-card replay, 3 focused tests]
-current_stage: historical_protocol_outcomes_93_verified
+current_stage: historical_protocol_outcomes_112_verified
 remaining: [GPB customer-specific queries and actual date checks, TEK-Torg accessible lists, Moscow and EAT list contracts, source-separated import]
-last_verified_commit: 6608bbe76dbdd13eaac6c9ed4bb724858099c022
+last_verified_commit: 1310b83f09860f26d04ceaa151dcb455ef9b0d1f
 latest_tests: 3 pytest passed; Ruff passed; 20 distinct primary observed cards; 13 future-dated observations quarantined
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources
-resume_instruction: Reuse 8206 GPB rows, 19 active and 140 historical verified details, 109 GPB document links, all 95 published protocols captured, 93 structured outcomes (89 best bids, 4 unsuccessful). Review scanned PDF etp:1293269 and alternate decision etp:1289266. Continue next unseen historical candidates, active attachments, older date windows and ZMO. No inferred supplier legal identity or signed contract. Preserve exact old decisions; total bid distinct from unit-rate sums.
+resume_instruction: Reuse 8206 GPB rows, 19 active and 169 historical verified details, 129 GPB document links, all 115 published protocols captured, 112 structured outcomes (108 best bids, 4 unsuccessful). Review scanned PDF etp:1293269 and alternate decisions etp:1286980, etp:1284906. One detail failed in batch 6; retry after exact source review. Continue next unseen historical candidates, active attachments, older date windows, ZMO. No inferred supplier legal identity or signed contract. Preserve prior decisions and procedure-local versus platform participant IDs.
 
 target_detail_receipts:
   detail_pages_verified: 2
@@ -190,3 +190,22 @@ geh_protocol_outcomes_batch5:
   repeat_updates: 0
   prewrite_gate: pass
   backup_sha256: 327947fae1b22334312d749abfad9c94b999b88e2b0bd3596ca9bc6f3d10ef7d
+
+geh_protocol_outcomes_batch6:
+  historical_details: 169
+  historical_detail_attempted: 30
+  historical_detail_new: 29
+  historical_detail_review: 1
+  published_protocols_captured: 115
+  structured_outcomes: 112
+  best_bids: 108
+  unsuccessful: 4
+  distinct_global_ids: 41
+  historical_document_links: 116
+  total_gpb_links: 129
+  old_93_decisions_unchanged: true
+  remaining_review: [etp:1293269, etp:1286980, etp:1284906]
+  repeat_inserts: 0
+  repeat_updates: 0
+  prewrite_gate: pass
+  backup_sha256: ef28eb5a234e362221424a227bda2802a12237ba9d73be62b9c4d609d86ff964

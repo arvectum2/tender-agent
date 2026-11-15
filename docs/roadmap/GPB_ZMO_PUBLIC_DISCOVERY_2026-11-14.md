@@ -43,3 +43,7 @@ Completed remaining eight published protocols for 110 historical details. 67/67 
 ## Protocol batch 5
 
 140 historical details, all 95 published protocols captured, 93 source-bound outcomes (89 best bids, 4 unsuccessful). 31 distinct platform IDs, 109 GPB DB links. Explicit total bid distinguished from unit-rate sum when both are published; prior 65 decisions replay unchanged. Two reviews remain (scanned PDF and alternate decision). Repeat writes zero.
+
+## Protocol batch 6
+
+169 historical details (29 additional IDs, one review), 115 published protocol originals captured, 112 source-bound outcomes (108 best bids, four unsuccessful). 41 distinct global participant identifiers and 129 GPB DB document links. Competitive selection of a procedure-local ordinal is recognized with explicit gross bid price; prior 93 outcomes unchanged. Three protocol reviews remain. Repeat writes zero.
