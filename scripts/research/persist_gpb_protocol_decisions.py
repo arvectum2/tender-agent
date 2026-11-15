@@ -12,7 +12,9 @@ from xml.etree import ElementTree
 
 
 def prepare(root):
+    from scripts.research.capture_gpb_priority_details import Visible
     from scripts.research.link_gpb_document_receipts import prepare as prepare_originals
+    from scripts.research.read_gpb_named_decisions import parse_named_protocol
     from scripts.research.read_gpb_protocol_decisions import parse_protocol
 
     rows = []
@@ -25,7 +27,15 @@ def prepare(root):
         try:
             decision = parse_protocol(raw)
         except (ValueError, KeyError, zipfile.BadZipFile, ElementTree.ParseError):
-            continue
+            try:
+                detail_raw = (root / (receipt["external_id"].replace(":", "-") + ".html")).read_bytes()
+                if hashlib.sha256(detail_raw).hexdigest() != receipt["detail_sha256"]:
+                    raise ValueError("detail original mismatch")
+                visible = Visible()
+                visible.feed(detail_raw.decode("utf8"))
+                decision = parse_named_protocol(raw, visible.tokens[0])
+            except (ValueError, KeyError, IndexError, zipfile.BadZipFile, ElementTree.ParseError):
+                continue
         rows.append({"external_id": receipt["external_id"], "protocol_sha256": receipt["sha256"],
                      "document_url": receipt["document_url"], "parser_schema": "gpb_best_bid_v2",
                      **decision})
@@ -42,10 +52,18 @@ def attach_decision(meta, row):
                and r.get("document_role") == "published_protocol" for r in refs):
         raise ValueError("protocol capture evidence mismatch")
     if (row.get("decision") not in {"BEST_BID_SELECTED_NOT_SIGNED_CONTRACT", "PROCEDURE_DECLARED_UNSUCCESSFUL"}
-            or row.get("parser_schema") not in {"gpb_best_bid_v2", "gpb_outcome_v3"}
+            or row.get("parser_schema") not in {"gpb_best_bid_v2", "gpb_outcome_v3", "gpb_named_outcome_v4"}
             or row.get("participant_legal_identity") is not None
             or row.get("contract_amount") is not None):
         raise ValueError("unsupported or unverified decision")
+    if row["parser_schema"] == "gpb_named_outcome_v4" and (
+        row.get("decision") != "BEST_BID_SELECTED_NOT_SIGNED_CONTRACT"
+        or row.get("participant_platform_id") is not None
+        or row.get("participant_identity_verification") != "PUBLISHED_NAME_AND_ADDRESS_IN_EXPLICIT_DECISION_NOT_INN_VERIFIED"
+        or not all(row.get(k) for k in ("participant_name_as_published", "participant_address_as_published",
+                                        "protocol_procedure_reference", "detail_title_evidence", "protocol_reference_evidence"))
+    ):
+        raise ValueError("unverified named participant")
     if "protocol_decision" in meta:
         prior = meta["protocol_decision"]
         # The same immutable original may have several publication URLs.
