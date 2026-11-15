@@ -972,3 +972,8 @@ sibur_v21_parallel_market_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Parallel work on outcome evidence, equipment, project and supplier map while existing workers collect.
+
+sibur_v22_operator_automation_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Continue V22 parallel commercial research and coverage.

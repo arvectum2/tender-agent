@@ -227,7 +227,8 @@ completed:
 - "V19: six original XLSX reviewed, 16 thermal cabinets 2108203/1, 17 control posts 2083019/1, 104 terminal boxes 2108149/1, Progress Engineering directly named as requesting party in two forms; 2080616/1 indivisible cast-insulated busduct DGP2 title4015; 2027–2030 AGHK heat tracing maintenance 2139286/1; 2140253/1 KOS relay protection maintenance. Owner 2025 250MW and 2026 281MW same Lushnikovskaya PГУ, STGT reference commissioning, not service award. Coverage 1179/2299, 1617 all known packages; no inferred signed price. 49 sources verified. GPB recovery progressing."
 - "V20: seven original XLSX packages reviewed; NPG 29 units, 27 distinct tags, ASDKE title4810; MPE 23 NAMUR+3 boxes; AGHK busbar protection and AGPP interface KRU; overlapping heat-tracing budget vs tender periods, DGP2 warehouse RFQ author. 1481 GPB outcomes screened literal SIBUR names, zero candidate hits; 1290 best bids, 191 failed, 601 published participant names, no signed prices. Outcome research queue: 8223 IDs, 6856 closed intake incl 2151 P0, 1300 cancelled, 67 open as archived. Not all outstanding outcomes yet researched; no fabricated awards or prices. V7 coverage 1314/2299, 985 remaining, 468 P0. V20 53 source artifacts verified."
 - "V21 parallel market research: official NKNH combined operator-room program >12bn first-stage investment, 113 of 193 to 7, 3 launched as of Feb17; 8 explicit archive IDs and 4 HVAC candidates outside strict membership. New card 37, union 8227. SMK Severozapad INN7814292228 self-reported SNEMA subcontract, Progress explicitly named OVOС executor DGP2. ABB 2144277/1 retrofit separate from plan 817. Four exact outcome IDs reviewed, no verified award, all 8 plan gaps unresolved. Outcome queue V2 6860 closed, 2159 P0. Coverage 1329/2299. No DB mutation; existing workers continue."
-current_stage: parallel_market_and_outcome_search
+- "V22: 3 distinct automation counterparties enriched, two named EP600 commissioning buyers from ASU Engineering portfolio; Delight identity and 2025 finance, EPIK references and finance; published MPE 2024 design existing 6 OPS,2 shutdown,3 fire/gas panels and planned cabinets, visual PDF unavailable. Three operator procurement exact outcome searches no verified award, 2131406/1 outside strict project membership; 3 receipt pairs from 2 generic unsigned DOCX, technical 7z pending. Outcome queue V3 cumulative 7 marked without verified outcome. Dashboard V9 1388/2299, 37 projects 2606 IDs, 8227 union. No DB changes or outreach; 55 evidence files verified."
+current_stage: operator_automation_roles_and_installed_base
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -236,7 +237,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: 67cdfc2b
+last_verified_commit: 997a0059
 test_results:
   focused: 3
   ruff: pass
@@ -895,4 +896,20 @@ test_results:
       consolidated-project-report-v21.md: 9b9313aca9dfc94c159da6f40e5863c129b1d867aed1b6209b14bf712ff5112a
       project-coverage-dashboard-v8.json: 17b14363bb95d4d2a3cea14c7987b4b3fb43343f5b8e1c7734f6d14ed761a6b2
       commercial-outcome-queue-v2.json: fbbb249e1a101345779e5ca1edf7f48559ae4d9f3fe81f4b008fbc877abce910
-resume_instruction: "Read V21 report/map and coverage V8 and outcome queue V2 (newest standalone artifacts, V21 embedded historical dashboard refers to V7). Continue independently of collector: exact contract and protocol searches, NKNH operator-room original documents including unsupported formats reviewed safely, role chains, 8 plan gaps, remaining source-bound P0 originals. Carry four reviewed_no_verified_outcome statuses forward; update denominator when new projects identified. Do not infer award prices or send outreach. Preserve running workers, gates, external SSD, separate UPS. Prepare consolidated Nov17 report."
+  operator_automation_v22:
+    project_cards: 37
+    priority_union: 8227
+    priority_supported_urls_extracted: 1388
+    priority_supported_urls_total: 2299
+    priority_all_known_packages: 1701
+    closed_outcome_candidates: 6860
+    cumulative_exact_outcome_reviews_without_verification: 7
+    source_artifacts: 55
+    artifacts:
+      operator-automation-channels-v1.json: 27dca96783695e619c371dd803b0352eb4481065522cc78944cc2224ec3f267f
+      consolidated-project-map-v22.json: fe1b5f847a4474b41fb3a51f8ffafd0c42f72fe1b48ead88f1fca8ed9c4e8e3e
+      commercial-action-register-v16.json: 0a0e3c77a184738b6f7de9490097e24afea616df10dc6bae30d7d5e9cd96965e
+      consolidated-project-report-v22.md: 8f7821651d3d0bf9d452869d572dd031f914ccdd4f5d7056a5af61fc97a2bd49
+      project-coverage-dashboard-v9.json: 77abd2d51f7e814d5dc26311c4a9a971f193ae77873b9acc1a505478634c162c
+      commercial-outcome-queue-v3.json: f528bbc6fb30851b15e7e9e3e1e61707d66100ebf5d599639e09a5f62533ec2a
+resume_instruction: "Read V22 report/map, standalone coverage V9 and outcome queue V3; embedded dashboard references in map are earlier. Continue accepted parallel research allocation: contract/outcomes/price 35%, installed base 25%, projects 20%, commercial plan 20%. Prioritize new exact contract results, safe unsupported archive review, 8 plan gaps, P0 documents. Keep 7 reviewed outcomes distinct from unavailable price. Existing workers remain, gates/locks and external SSD; no duplicate tasks, no outreach or invented winners. Prepare consolidated Nov17 report."
