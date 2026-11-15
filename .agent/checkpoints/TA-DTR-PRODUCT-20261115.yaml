@@ -73,7 +73,8 @@ completed:
   and session clearing, explicit confirmation, lost response replay and stale 409;
   pytest wrapper PASS, node syntax/Ruff/make check PASS. Actual browser visual acceptance
   not performed.
-current_stage: web_company_verified_next_native_decision_write
+- Web PR537 published at da99cde7.
+current_stage: native_scoped_human_decisions
 remaining:
 - Review stacked PRs 532 through web candidate; exact-head CI pending on recent PRs.
 - Add native company human decision write using same API, explicit confirmation, stale
@@ -99,7 +100,6 @@ test_results:
   native unsigned build-for-testing PASS; simulator XCTest compiled not executed.
 - 41 backend passed, 1 skipped; standalone rendered JS scenario and pytest wrapper
   PASS; node --check, Ruff, make check, diff PASS
-resume_instruction: Web company cabinet implemented; publish stacked PR, then implement
-  native scoped decision write and synchronize via backend. Do not route SaaS company
-  actions through legacy global Deal or owner credentials. No live tenant, research,
-  model, APNs, migration or deployment.
+resume_instruction: Implement native company decision API, explicit confirmation and
+  stable retry identity, enforce scope and stale conflicts. Verify offline and publish;
+  no live decision or deployment.
