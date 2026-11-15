@@ -40,28 +40,50 @@ completed:
 - 'DP exact readonly PG audit: 305 resources, 4383 matching vectors, 303 original
   HTTP receipts, two recovered resources 27 and 101 vectors. Original bytes SHA verified;
   no invented HTTP receipt. SIBUR restarted after exact reconciliation, pre-sync pending.'
-current_stage: named_historical_market_and_recovered_index
+- March 2025 repaired and imported 950; June 2025 verified 29 days and imported 726;
+  November 2025 all 30 days/759 original distinct identities recovered, import pending
+  lock.
+- 'June 4 2025 all 56 unique identities accounted for: 55 normalizable entries, one
+  explicitly absent source notice. Isolated finite recovery import running; no invented
+  number. Exact detail etp:1123151 shows KO 2658/KO, 84182720.76 RUB, no published
+  notice number, private receipt saved.'
+- Bounded offline OOXML/ZIP/PDF text extraction, SHA-verified originals and members,
+  exact offset excerpts, macro-free, no OCR, unsupported members reviewed.
+- 194 archive SIBUR originals with DB-confirmed capture references processed, 193
+  extracted and 1 review; 4 originals containing PQ equipment terminology linked to
+  27 procedures, 10 broader requirement hits linked to 42 procedures. 2071747/1 direct
+  title and detailed 0.4-10 kV requirements; 2107966/3 contains work-unit specification
+  for UKRM 6-35 kV testing; shared general standards are not purchase-specific proof.
+- 343 current SIBUR DP preview texts rechecked, 7 empty, 2 unsupported. One SVC software
+  acronym false positive, one power factor calculation only, one explicitly excluded
+  compensation.
+- GPB independent technical capture finite 150, initial 20 attempts 6 originals captured,
+  14 review; preserve all remote disconnect receipts and do not retry blindly. It
+  does not write to DB or touch protocol worker.
+current_stage: technical_document_evidence_and_archive_completion
 remaining:
-- Inspect live recovery, archive details, date-slice repair, SIBUR capture/import/doc
-  and combined SIBUR states; do not clear original GPB blocked state while independent
-  recovery exists.
-- Complete remaining March/June/November slice imports and audit malformed daily source.
-  Preserve mixed-slice original receipts; improve committed-receipt recovery before
-  any interrupted slice import retry.
-- Continue named protocol extraction and exact source-linked technical documents.
-  No INN or signed contract inferred; same name and address can identify multiple
-  legal entities. External identity candidate archival attempt was tool-blocked; do
-  not circumvent.
-- Confirm SIBUR pre-sync after exact DP reconciliation; drain original index, then
-  separately plan archive indexing and extraction. If a timeout occurs again, reconcile
-  exact server identities before retry.
-- Continue separate ZMO paper-only supplier time-valid cost evidence; existing access
-  restrictions unchanged.
-last_verified_commit: e13f74360792922b6e2f5e626a33ad4587457322
-resume_instruction: Read actual live state and branch heads first. Keep original parent
-  GPB blocked while separate recovery owns original sources. Use shared mutation.lock,
-  mandatory fresh MI backup then runtime gate, verified TA backup and replay. Continue
-  remaining items and do not duplicate active jobs. Watchdog already updated.
+- Verify queued November and June04 actual transaction + zero insert replay. One missing-notice
+  source observation remains review with separately captured detail; never fabricate
+  notice or signed award.
+- Complete existing GPB recovery and archive protocol queues, refresh named market
+  report and inspect receipt revisions.
+- 'GPB technical finite lane: inspect actual capture/report, review disconnected sources
+  without blind retries and no circumventing access controls; prepare safe technical
+  DB linkage only after separate collision/provenance audit.'
+- 'SIBUR technical scan: use original confirmed DB captures; run next finite offline
+  batch after new committed originals; prioritize PQ targeted title and exact line
+  evidence, distinguish shared corporate standards, negative clauses and metric-only
+  signals. Do not count shared documentation as separate equipment orders.'
+- DP original index still in flight, 310 verified resources/4716 vectors, synced 482
+  links. Current archive index intentionally separate. Recover exact per-chunk identities
+  on timeout.
+- Continue ZMO time-valid cost evidence and supported source access, paper only.
+last_verified_commit: de45c997
+resume_instruction: Inspect exact live state, commits and source-specific jobs. Preserve
+  original GPB parent blocked while recovery owns that queue; do not duplicate capture
+  or change running code. Fresh MI backup then runtime gate, verified TA backup and
+  replay before any mutation. Read new technical evidence checkpoint; prioritize direct
+  PQ evidence and queued historical commits.
 test_results:
   gpb_focused_before_recovery: 8
   sibur_focused_before_recovery: 6
@@ -101,6 +123,21 @@ test_results:
       embeddings: 4383
       model: Qwen3-Embedding-4B
       dimension: 2560
+  continuation_2026_11_15_0737:
+    focused_regression: 12
+    ruff: pass
+    live_db:
+      etp_gpb: 27934
+      sibur_public: 7825
+      gpb_document_links: 783
+      sibur_document_links: 7263
+      gpb_protocol_decisions: 677
+      gpb_named_decisions: 169
+      indexed_sibur_links: 482
+    dp_verified:
+      documents: 310
+      chunks: 4716
+      embeddings: 4716
 live_recovery_2026_11_15_0724:
   gpb_recovery_label: com.arvectum.tender-agent-gpb-recovery
   gpb_recovery_state: autonomous-runner/gpb-recovery/state.json
@@ -112,3 +149,17 @@ live_recovery_2026_11_15_0724:
   dp_reconcile_evidence: documents/dp-readonly-reconciliation-20261115-0724.json
   dp_reconcile_sha256: abe4db9d22e679736a111ce2d2976e70f126a0d63039967c1dac30f3e9144f9b
   dp_reconcile_manifest: documents/dp-reconciled-resources-v1.json
+technical_evidence_2026_11_15_0737:
+  june_repair_label: com.arvectum.tender-agent-geh-june04-repair
+  june_repair_state: parallel-sources/geh-deadline-archive/repair-june04-complete-v1/import/state.json
+  june_review_detail_sha256: 2e2145a0886bfa69e6cb47c3093989a0786f97d492a07631601778262f2774c3
+  gpb_label: com.arvectum.tender-agent-technical-gpb
+  gpb_state: technical-evidence/gpb/state.json
+  sibur_label: com.arvectum.tender-agent-technical-sibur
+  sibur_state: technical-evidence/sibur/state.json
+  sibur_report_sha256: 983fce924e4ad82403808dc643b07abda634692ef93a94ddfc1b0b1a28388855
+  current_preview_sha256: d8f09c3002c79aecfaeced4f28b5a290663040f13f40dc2bcf7984b25cebde84
+  direct_pq_procedure: 2071747/1
+  related_work_procedure: 2107966/3
+  verification: lexical source bound; direct title and technical clauses reviewed;
+    not award or contract

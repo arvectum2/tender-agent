@@ -98,3 +98,14 @@ continuation_2026_11_15_0724:
   - 2025-11
   repair_root: repair-date-slices-complete-v1
   source_bound_named_decisions: 154
+continuation_2026_11_15_0737:
+  march_inserted: 950
+  june_29_days_inserted: 726
+  november_source_verified: 759
+  november_import_pending: true
+  june04_source_accounted: 56
+  june04_normalizable: 55
+  june04_missing_notice_review: 1
+  june04_external_id: etp:1123151
+  june04_import_pending: true
+  repair_checkpoint: TA-ARCHIVE-DOCUMENT-EVIDENCE-20261115
