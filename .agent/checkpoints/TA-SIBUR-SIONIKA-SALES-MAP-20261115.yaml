@@ -219,7 +219,8 @@ completed:
 - V12 clean executive report rebuilt in 11 sections with 34 cards, 2597 unique project archive references and 37 SHA-verified source artifacts. Conditional plan band sums 36 rows 1.7–9.3bn, Q4 27 rows 0.8–4.8bn, direct-only subset separate, not market estimates. Two 2024/25 exact specification prices total 20,077,047.23 RUB incl VAT; debt/actual work/2023 estimates separate. Court verifies NaladkaPromService INN; new KOS InterSvet settlement, scope and total price unknown. Hexene reached rated 50kt/y, RP50 and four planned substations confirmed. Official Telegram 2111857/1 missing frozen archive documented. Existing workers running, no new DB action.
 - V13: refreshed all 27 official current list pages, 315 unique IDs, no observed changes vs earlier snapshot. Transport interrupted before receipt; reconstructed from full saved raw set, verified hashes and parser; no duplicate download. 20 selected current procedures and 7 original worksheets/8 URLs verified. Added KOS compressor control 2145701/1 and NKNH motor service 2145706/1 (2027–29, 12mo warranty), P0 routing now 15, 36 total. Exact plan links remain unproven for 8 unmatched rows, plan936 subject match only. No new signed prices, no new DB writes. V13 report refined in place of append-only history.
 - V14: owner-confirmed Progas general contractor and equipment supply VRU NKNH; two distinct procurement INNs, six independent B2B records with exact title identifiers, finance profiles separate. MPE-230 design New Resources and positive GEE, ASU Engineering self-reported audit not implementation. Court A57-10811/2026 propylene infrastructure contract chain, 107586664 RUB VAT incl spec, 109044502.18 accepted goods, 50658494.82 overpayment; product scope unknown, excluded from electrical amounts. Official Telegram 2111857/1 confirmed, live DB exact lookup absent, portal card cache miss, eight neighbor notices matched archive. Four P0 actions updated. No DB mutations.
-current_stage: nknh_epc_and_independent_procurement_channels
+- V15: six previously generic NPG external notices resolved to scope, three new notices, nine observations in six families, eleven overall external NPG including pump and sewer packages. No additive revision counts, no signed prices. TESS Amur named in Amur region plan 378-r dated 2026-06-02, temporary network program 2022–30; six group portfolio scopes across four sites, finance identity checked. MChS fire license terminated; do not extrapolate. Regional direct source 403 and PDF screenshot cache miss documented. Six commercial actions revised. AGHK AuCom exact archive ID checked. No direct DB mutation.
+current_stage: npg_measurement_and_cross_site_service_channels
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -228,7 +229,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: 15a2bb88
+last_verified_commit: 8dea500f
 test_results:
   focused: 3
   ruff: pass
@@ -721,4 +722,22 @@ test_results:
       consolidated-project-map-v14.json: 33900d3ced909f3a5389261eb4bda022d56092585eb8a67ac8244d988f4d0056
       commercial-action-register-v8.json: 2a4a2f50393a15d24ef02887501f396fd6a76d1df258d4954a2454a27479133e
       consolidated-project-report-v14.md: 3ad06d30d6771fd1da54386d8d7d911594968c2abddde168f3501d94436a27cd
-resume_instruction: "Read V14 map/report and commercial-action-register-v8.json. Continue multiple research blocks: exact contract outcomes and vendor chain across P0 (AGHK, Styrene, MPE, Perm NPG, Polief), Progas electrical procurement results and remaining equipment families, 8 unmatched plan rows. Preserve verified 2111857/1 Telegram source as gap, do not fabricate portal archive. Prepare clean consolidated Russian report by 17 November even with known gaps. Existing local workers continue; do not duplicate. Preserve independent UPS, private owner context, approvals and all mutation gates."
+  npg_tess_v15:
+    project_cards: 36
+    source_artifacts: 40
+    external_npg_observations_reviewed: 9
+    npg_scope_families: 6
+    new_external_npg_ids: 3
+    tess_portfolio_roles: 6
+    actions_refined: 6
+    archive_indexed: 54
+    server: {"documents": 369, "chunks": 6376, "embeddings": 6376}
+    executor_status: running
+    archive_status: running
+    technical_originals: 2416
+    artifacts:
+      npg-measurement-and-tess-channels-v1.json: 100b33d07e72f881e062b57384d0640436e9ecd1b5806d05c9cd53c541c67bf9
+      consolidated-project-map-v15.json: 7a45e1affea11b98216323b1f90a586bd129598950552678395f82aad8888d61
+      commercial-action-register-v9.json: 8d172e9b0a359ec2fe93d1f5f311280f865d92231370d96928d5091125d1ba48
+      consolidated-project-report-v15.md: 2e5da9e500493bae77e1531b5f5ea62a283a8082e256c8e158fd0260f1af1a40
+resume_instruction: "Read V15 map/report and commercial-action-register-v9.json. Continue award/contract evidence for AGHK, Styrene, MPE and Polief, exact equipment packages and eight unmatched plan rows. Review additional original archive docs as acquired; identify concrete bidders and purchase terms. Final consolidated Russian report by 17 Nov even with gaps. Verify running index worker; if blocked reconcile exact identities under gates/locks, never duplicate worker. Preserve UPS independent and private owner context. No inferred awards, contract prices or external outreach."

@@ -927,3 +927,8 @@ sibur_nknh_channels_v14_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Read V14 and continue verified price and supplier evidence; deadline 17 November.
+
+sibur_npg_tess_v15_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read V15 report and continue verified contract and equipment evidence; deadline 17 November.
