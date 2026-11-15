@@ -138,3 +138,13 @@ continuation_2026_11_15_0744:
   dp_index_status: blocked; exact audit; deployment safety-blocked, no circumvent
   resume: Continue approved archive capture and offline source evidence; targeted
     queue v2 in GPB checkpoint. No new index mutation until supported safe recovery.
+continuation_2026_11_15_0918:
+  technical_snapshot_processed: 851
+  extracted: 847
+  review: 4
+  pq_equipment_lexical_documents: 5
+  pq_equipment_linked_candidates: 29
+  pq_requirement_linked_candidates: 48
+  report_sha256: 601fc8d724744b5b3f7a57adbf2718949d612b396a2bbd926551631dcb8cbeb9
+  resume: Process only newly committed originals. Keep lexical evidence distinct from
+    confirmed procurement scope. DP blocked unchanged.
