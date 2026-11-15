@@ -65,7 +65,7 @@ completed:
   checks 11/11; unsigned Xcode 27.1 build-for-testing PASS twice. Additional mock
   account-switch scenario tool call declined; no live token, Keychain/device or simulator
   execution performed.
-current_stage: native_company_readonly_verified_next_web_projection
+current_stage: web_company_portfolio_and_decision
 remaining:
 - Check exact CI prior PR534/535 and new company PR; previous 532/533 green.
 - Run focused simulator account-switch/Keychain tests using isolated fixtures and
@@ -91,8 +91,6 @@ test_results:
   decoder/status 6/6 PASS; diff check PASS. Native XCTest compiled not executed.
 - 31 SaaS passed, 1 skipped, 33 warnings; Ruff PASS; Swift standalone assertions 11/11;
   native unsigned build-for-testing PASS; simulator XCTest compiled not executed.
-resume_instruction: Company native read-only slice verified, publish stacked review
-  PR and check CI. Proceed existing web company-scoped case/evidence projection; do
-  not repeat completed Swift build or backend tests unless changed. Simulator switching
-  and device Keychain validation remain acceptance gates. No production migration,
-  real tenant provisioning, live search, APNs or research changes.
+resume_instruction: Extend existing /saas company cabinet using canonical company-portfolio
+  routes; session state clearing and isolation, explicit human decision confirmation
+  and revision conflict. No owner Basic or production changes.
