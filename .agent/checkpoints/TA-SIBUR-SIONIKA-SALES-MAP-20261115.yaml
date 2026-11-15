@@ -212,7 +212,8 @@ completed:
 - Seven-site multi-block review: 45 archive records, six new cards, total 27. Four primary active originals, nine anchors. GPB three primary list/detail pairs, two unresolved, one verified failed-no-bids protocol; three possible cross-platform pairs not additive. Tomsk 2027 schedule and separate UPS confirmed.
 - STG seven scope groups, 14 archive IDs, verified LRT-40 workbook and owner program evidence, V6 map/report. Existing technical SIBUR LaunchAgent now StartInterval 120s; original plist backed up; verified recurring successful runs. Reconciled 313 DP resources/5073 chunks and embeddings with fresh read-only PostgreSQL export; repaired preservation of first attestation hashes for two previously linked resources, four focused tests passed, code commit 241992cb. Existing runner restarted with gate and backups, GPB recovery/archive worker unchanged. Verify post-restart actual linkage/index progress before declaring recovery complete.
 - Six smaller-site program cards: Krasnoyarsk KZSK, Portenergo, PETF, YUP, NPP, S-Yug; 26 archive IDs and 2 external observations (one non-electrical). Ownership conflicts corrected with 2023 Solvay transaction; JV boundary retained. Commercial action register covers 33 cards, 12 P0,20 P1,1 P2. V7 map and report. DP repeat timeout recovered by exact resource identities, 315 documents/5283 chunks, 4 recovered receipts; preserved old proofs. Shared lock acquired safely on retry; existing runner resumed. GPB worktree cd52f39b increases bounded request timeout 180s and stats 60s. No direct DB writes.
-current_stage: expanded_site_coverage_commercial_action_register
+- Four judicial contract records, two manufacturer references, POLIEF RKOS fifth-source project package, map V8 with 34 cards. Legacy DP queue fully synchronized and exhausted 315/5283. Read-only readiness queue 639 technical candidates, 97 P0; no new ingestion or mutation.
+current_stage: contract_supplier_evidence_and_archive_index_readiness
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -221,7 +222,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: 401dbdeb
+last_verified_commit: 7c53feca
 test_results:
   focused: 3
   ruff: pass
@@ -588,4 +589,23 @@ test_results:
       consolidated-project-map-v7.json: 4c21735fe6046b78339b9daa444847fe075760ce765a106631dfae7209127905
       commercial-action-register-v1.json: f6c08dcd54d7433083f428319b6169c8201304ad0ffbf955365027ed899249ed
       consolidated-project-report-v7.md: 8f05e6e86442c7bec5a009dc55946ea04f3d0b9e91f40f2acc0e01c0087130a0
-resume_instruction: "Read consolidated-project-map-v7.json, consolidated-project-report-v7.md and commercial-action-register-v1.json. Verify index runner status and receipt progress, no duplicate extractor. Continue multiple blocks: verified awards/contract prices and contractor channels, project-stage and package gaps, qualification and eight unresolved plan rows; build clean consolidated report with detailed per-project action and avoid double count. Deadline 17 Nov. Preserve independent UPS, private owner context, all gates and existing workers. If index times out reconcile exact identities under locks before restart."
+  contract_and_index_readiness_v8:
+    project_cards: 34
+    p0: 13
+    p1: 20
+    p2: 1
+    judicial_records: 4
+    manufacturer_references: 2
+    technical_originals_latest: 2266
+    dp_legacy_documents: 315
+    dp_legacy_chunks: 5283
+    dp_status: exhausted
+    archive_index_candidates: 639
+    archive_index_p0: 97
+    artifacts:
+      court-and-supplier-evidence-v2.json: 8df00b1718f1b1dab649d33dda3231dd7f427d33c9fefc6f281a3a321ecd4c47
+      archive-index-readiness-v1.json: 4fe989d2bc37d17b9a3e9dbfc09fce9edbb908f19ab98a912f662817596bceea
+      consolidated-project-map-v8.json: 1a928bf1a0a2adc32dd4cd71a0f088275d487c397a32f020377d6d9f5559403a
+      commercial-action-register-v2.json: 771d31c11619fcce47c56cb480aff85b8c680b1b9396abb9c20df0a4b33add01
+      consolidated-project-report-v8.md: eac144d0d21865a16a3f54ca51a9738f13f68797061def9b6c6de3a1bf4f34d1
+resume_instruction: "Read consolidated-project-map-v8.json, consolidated-project-report-v8.md, commercial-action-register-v2.json and archive-index-readiness-v1.json. Implement/test archive-to-existing DP queue bridge using exact committed receipt identities, no duplicate jobs, preserve gate/backup/rollback. Then continue verified contracts, vendor references, qualification and final clean project report by 17 Nov; existing workers continue, separate UPS and private owner input, no inferred awards or prices."
