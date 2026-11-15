@@ -1052,3 +1052,8 @@ sibur_v37_relay_metering_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: V37 relay/metering complete, continue exact outcomes and KIP/ZRA plan gaps; show coverage.
+
+sibur_v38_kip_valve_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: active leads, AUMA, motors, quality audit and contractor ledger.

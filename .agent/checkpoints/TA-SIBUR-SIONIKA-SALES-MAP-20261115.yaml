@@ -243,7 +243,7 @@ completed:
 - "V35: KOS CCC compressor and hydrogen KCA2 original TOR source-specific technical scopes, cancelled, planned 2027; Coperion V5214 information card and blank price form; NKNH 2133075 change sheet pricing years 2027/28; packaged LSU 2124267 new ID. 11/14 original URLs SHA verified. Five new cards, 49 total; 8237 priority IDs, 80 map sources; no award or price. V21 whole corpus 16050 extracted/30394, 5632 all known, 3043/10555 supported, 702 indexed. Priority 5572 any/8237, 1867 complete known, 1776/2314 URLs, 257 indexed. DMZ external notices separate, exact plan links remain unresolved. No DB writes or outreach."
 - "V36: recovered all 3 missing V35 originals. NKNH PGU top-level ASUTP 18 systems, 1706.25 hours/year 2026-28 and 5118.75 total reference; exclude unrelated ZSNH worksheet. Kstovo drive service lot2 89 reference units, 26 UPP/63 VFD. KOS CRP5 2 lots, 92h each in 2028; source inconsistencies preserved. V5214 Unisab III/Omron CP1L and 3 COOPER Maestro Legend original scopes, five KOS budget estimates verified official announcements; no awards/prices. 8 pilot originals verified, no DB writes or outreach. 51 project cards, 8237 IDs, 82 map source hashes. V22 whole corpus 16095/30394 any extracted, 5640 all known, 3129/10555 supported, 715 indexed. Priority 5613/8237 any, 1875 complete known, 1862/2314 supported, 262 indexed."
 - "V37: 128 terminals RusVinyl (125 Siemens/3 ABB), source date conflict; KOS PGU 5802.622 reference hours 17 groups; AGHK metering four rounds one scope and two manufacturers via registry mirrors; ZSNH PS500/GPP1/2 service 2025–29; adjacent contractor references TESS and ASU Engineering. Six added cards, 57 total, 8238 IDs, 84 source hashes. V23 whole corpus 16095/30394 extracted, 5640 complete known, 3129/10555 links, 717 indexed. Priority 5613/8238, 1875 complete, 1862/2315 URLs, 263 indexed. Two pilot originals verified; 4 exact public checks no outcome, cumulative 22. No DB writes, no outreach."
-current_stage: sionika_relay_metering_service
+current_stage: sionika_kip_valve_skdn
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -252,7 +252,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: f2eebbf6
+last_verified_commit: fd0819f5
 test_results:
   focused: 3
   ruff: pass
@@ -1140,4 +1140,16 @@ test_results:
       commercial-action-register-v31.json: 13bb5cb04f44611e87a0eb8418646124075b26d24f389b3a13763d4611c2d67c
       project-coverage-dashboard-v23.json: e739e0302a45a42f30be4018f5127e971a012f976d9ae1190749d051d27eef72
       consolidated-project-report-v37.md: d7394a0cf31975f067fc851e18f8d251384027ce9f68f24682fb5455cb2043ae
-resume_instruction: "Use V37 map/report, V31 actions, V12 outcome queue, V23 dashboard. Show corpus and priority coverage each iteration. Next exact outcomes especially KIP/ZRA plans 332/333, 817/823/1002; expand factual contract chains and named service contractors, not only scopes. Verify live status and source conflicts. Sionika senior priority; Voltag/PQ background. No DB mutation without gate, preserve existing workers. Nov17 report."
+  sionika_v38:
+    project_cards: 64
+    priority_union: 8244
+    source_artifacts: 86
+    completed_stage: "SKDN OTR 2112381/1, Tekon clause, KIP groups and ZRA/PSV; 19 listed vs minimum 20; ENER court chain revalidated not new; plan links unresolved."
+    artifacts:
+      sionika-kip-valve-skdn-v1.json: 2f3dc895390261f4d918cc59e6d0f0df97aa52044b454c2288d9c9da0cb7fb8d
+      consolidated-project-map-v38.json: bab8a29d62e89fab45cc3d6f173fa843a58469351d34a71d7c85a886e406ed1f
+      commercial-outcome-queue-v13.json: 3a0dd19e1a1859339806397a00cee073a2a76d7578ec2e9a8d26c2cef56fa54c
+      commercial-action-register-v32.json: 6fa4aaade4a173eca40624668ccf8cd56ce5e0f9d3fee888d1ad8f98ac2b808a
+      project-coverage-dashboard-v24.json: 1da9b47d509355d7923df3c3fae032beff3f2c7dfbd174a4e9a23f2d2e7e1fd5
+      consolidated-project-report-v38.md: 34b6708700eb3181c2ff0e9ad7aa6f4a6d91ad19c5bf4cb6c9771c937845e96c
+resume_instruction: "V38 completed; in same session continue V39 active leads/motors/AUMA and V40 evidence quality plus contractor ledger. Use V38 map, V32 actions, V13 queue and V24 coverage; show whole and priority percentages. No DB mutation without gate. Nov17 report."
