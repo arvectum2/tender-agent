@@ -1032,3 +1032,8 @@ sibur_v33_sionika_focus_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Sionika core portfolio first; Voltag/PQ background. Continue LSU, retrofit, KIP plan gaps, service and exact outcomes.
+
+sibur_v34_coverage_retrofit_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Continue Sionika portfolio, KOS and NKNH plan gaps; report whole-base and priority coverage every iteration.

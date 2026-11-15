@@ -239,7 +239,8 @@ completed:
 - "V31: 26 explicit PQ archive publication IDs across 7 sites,20 closed intake,6 cancelled,5 budget estimates; excluded condensate tank BSK false positive. NPP Neftekhimia new P0 2128160/1 original TOR 3 regulated 6kV BSK RP115/116, engineering only. DGP2 2103585/1–2 same RFQ,2 10kV UKRM 4015-HK-CU-001/002, DDP Sep1 2025, qualification107-03-03,45d. Two 7Z captured/listed,2 XLSX members reviewed. Historical corporate standard 25yr life,5yr warranty,24h service. Three outcome searches failed to establish award or price. V18 1708/2312; 41 cards/2618 project IDs/8231 union. 74 source hashes verified. No DB mutation."
 - "V32: six external evidence observations; NIPOM historic Tobolsk TP-204 integrated KTP with 150 kvar, VEDA exact AGHK 2101170/1 SKU BHE10004 and three noncomparable catalog price observations, Nyucon unverified candidate, Electronmash adjacent historical KRU supply. Two new exact outcome searches 2071747/1 and 2107092/1, no verified award or price, cumulative 15. 41 cards/8231 queue rows, 75 source artifact hashes verified. No DB writes, worker changes or new coverage measurement."
 - "V33 owner reprioritization: primary Sionika industrial portfolio, Voltаg/PQ/UPS background. New NKNH LSU RK704/705A 2124601/1 strict archive outside prior lexical queue; original 138439-byte DOCX CRC/SHA checked, unsigned generic contract only. HPP and NEXT own adjacent project references, TEKON FAT site, no inferred award. Reverified five prior Cryogenmash GPB primary details and GP635240 TOR; additional GP623442/633121 secondary only. 42 project cards, 8232 unique IDs including one manual scope overlay; 76 source hashes verified, coverage V18 not refreshed; exact plan links 332/333/817/823/1002 unresolved. No DB mutations or outreach."
-current_stage: sionika_lsu_and_operation_market
+- "V34: six NKNH retrofit archive IDs and separate monomer LSU 2144333/1; four manual additions to priority queue, two new project cards, prior reserve preserved. Primary archived status prevails over secondary deadline discrepancies. Two secondary exact ID checks without awards. 44 cards, 8236 unique IDs, 78 map source hashes. Fresh V20 coverage all 30394: 16050 any extracted, 5632 all known no unverified, 3043/10555 supported URLs, 698 indexed; priority 8236: 5572 any, 1867 all known, 1776/2313 supported, 255 indexed. User requires percentage progress per iteration. No DB mutation or outreach."
+current_stage: sionika_retrofit_monomer_lsu
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -248,7 +249,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: 0bbeff0d
+last_verified_commit: eac82ad8
 test_results:
   focused: 3
   ruff: pass
@@ -1091,4 +1092,16 @@ test_results:
       commercial-outcome-queue-v8.json: 59cffdba0d9669aca475186261307ff2c86e79a7ca861ac015798233ca6707f5
       commercial-action-register-v27.json: 27a245baebf42b150d022aee4fa4435376bb69ab9b724290f5d8fae418f56363
       consolidated-project-report-v33.md: df3b8b8e9ddf76a1382e5a75cd7d71472f1bf54af2155e63123ba237c15a1cb7
-resume_instruction: "Use V33 map/report and V27 action register. Owner priority Sionika industrial portfolio: automation, KIP, drives, RZA, electrical, engineering, commissioning and maintenance; Voltag, UPS and PQ background. Next verify GP635240 remaining documentation and qualification, NKNH LSU procurement outcome/contractor, plan 332/333/817/823/1002, other retrofit/service channels and fresh coverage. Preserve existing workers, no DB mutation without gate. Nov17 report."
+  sionika_v34:
+    project_cards: 44
+    priority_union: 8236
+    source_artifacts: 78
+    artifacts:
+      nknh-retrofit-monomer-lsu-review-v1.json: 558a19dc526a994488453a9814bb70c899893c5264ee1f52c3aaf9e87ae7e5fd
+      consolidated-project-map-v34.json: c366531fb516eb5fe81b30b81cdc1a35fa2ce202b6f7329dbeeef91944df7082
+      commercial-outcome-queue-v9.json: 5db08a6071561d04b6c2fc8c5c07b54c0cf58c521ed9bf043aa64838b31cc43d
+      commercial-action-register-v28.json: e70435dbf3fa5b8de9e81cf269eb65b8d5c4298846a5fa4cbd6ce2ad1140eb12
+      project-coverage-dashboard-v19.json: a42f3c05c867ae475d7c8b2e65146365dc3af8fd7df378927ee9350ac2c6e11b
+      project-coverage-dashboard-v20.json: f6fa62c5dfe952d1fbe9b962116a809324efc9090d7b74f42ce46538c4ef9806
+      consolidated-project-report-v34.md: e94f0bbacc801fb0beff9914404557d862947533fa158a8b623035e621d553cf
+resume_instruction: "Use V34 map/report, V28 action register, V9 outcome queue and fresh V20 coverage. Every iteration show overall coverage against 30394 frozen IDs and priority cohort separately, including any extracted, all known and index. Sionika core portfolio first, Voltag/PQ background. Next KOS 1002, NKNH plan 332/333/817/823, drives, RZA, technical docs and verified awards/contract prices; no duplicate acquisition, no DB write without gate. Nov17 report."
