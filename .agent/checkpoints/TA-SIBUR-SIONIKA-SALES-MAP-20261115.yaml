@@ -208,7 +208,8 @@ completed:
 - Contract-chain research: two court-confirmed subcontract specifications at ZSNH (electrical installation GPP1/2, KRU10kV commissioning GF1), exact GF1 project match to 2076768/1 lot1, no award protocol. Historical AGHK temporary power chain separately. Owner context recorded privately, distinct from verified public evidence; 2083626/1 and two subsequent AGHK service notices remain unverified as to outcome and causation. Technical extraction refreshed to 1910 originals, 1903 extracted, 7 review.
 - Consolidated 17 project/program cards, 30 organizational/site coverage labels, 30 overlapping reviewed scope groups (51 distinct publications), official 2026 plan with 1005 positions and 177 direct category rows, 37 priority rows, and 177 qualification entries with 22 candidates. Verified two original XLSX hashes and map/report hashes. Current Watchdog updated in place for 17 November deadline; hourly schedule unchanged. No inferred awards.
 - Screened all 37 priority plan rows against frozen archive and current source snapshot of 15 November 11:37 UTC: 29 rows with retained candidates, 155 distinct publication IDs, 6 current snapshot IDs; 25 manual scope judgments, 8 rejected pairs. No proven exact plan-to-contract link or award. Refreshed 162 originals to 2072, 2063 extracted, 2 partial, 7 review; three source-bound technical scopes. Resolved NPG SPR to Perm SIBUR-Khimprom project via official regional order; 41 archive candidate publications and six distinct secondary missing from snapshot, two false model-token positives excluded. Public role of Tekon Engineering confirmed. Added four programs, consolidated 21 unique project cards and versioned report v3.
-current_stage: priority_plan_reconciliation_and_expanded_project_map
+- Perm NPG SPR reviewed original three revisions 2141372/1-3 and heat trace 2141353/1, with exact source/hash links; 4 transformers 2500kVA, 1 MV RU, 53 LV raw quantity, 3 repeat tags, 1 lighting cabinet. Heat trace physical sheet 123 rows, 2 controller cabinets,10 system cabinets,44 boards. Approx37bn CAPEX separate; GSI-Giprokauchuk FEED role, GSI group and local contractors separately documented; two external NPG notices outside snapshot, VSK existing ID non-additive; eight unmatched plan lines rechecked, no exact links. Refreshed to 2087 originals, 2075 extracted,5 partial,7 review. Map/report v4 verified; no new awards, prices or DB writes.
+current_stage: perm_package_and_contractor_mapping
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -217,7 +218,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: 8c861e7f
+last_verified_commit: c103c910
 test_results:
   focused: 3
   ruff: pass
@@ -517,4 +518,20 @@ test_results:
       consolidated-project-map-v3.json: ab659b91cc98281e108ecc2502c15045a22c65e7d1d46cc22811c12d4e533960
       consolidated-project-report-v3.md: cfd79a917a68aa4d04e2723dd34055ace8d6ba729852927042283223674e2013
     verification: All map source artifact hashes replayed, exact technical original and text SHA linked, public indexed PDF text used with screenshot cache miss; no new verified contract or DB writes.
-resume_instruction: Read consolidated-project-map-v3.json and consolidated-project-report-v3.md. Expand project-specific contractor and package chains, prioritize Perm NPG SPR, Tomsk maximization and other undercovered sites, resolve eight plan rows with no retained candidate and compare 2026 archive gaps with external source cards. Confirm actual awards, signed prices, current eligibility and project timelines; maintain independent UPS, private owner context and existing archive worker. Deadline 17 Nov. No inferred awards, spending, outreach, duplicate jobs or ungated DB writes.
+  perm_package_review:
+    original_documents: 2087
+    extracted: 2075
+    partial_review: 5
+    review: 7
+    primary_package_documents: 4
+    heat_trace_rows: 123
+    contractor_role_records: 5
+    new_external_npg_observations: 2
+    unmatched_plan_rechecked: 8
+    verification: map sources SHA replayed, original spreadsheet rows validated; public plan PDF screenshot cache miss, indexed text used; no verified award.
+    artifacts:
+      npg-spr-package-evidence-v2.json: a104d89ba6d5cabf3c498cd9d27ab76f9cca776f5952ef989c985620ceeb1114
+      perm-contractor-and-external-package-review-v1.json: 242d246bd465699950963b8893b942b347c013f195e3914ccac359210eb23404
+      consolidated-project-map-v4.json: 4ba83f85355b85191ea3f217f6530baaaef6ec2d2579e1406feb4e98edef29a7
+      consolidated-project-report-v4.md: da4051b8d7e9dac389743fa7ebda582e05e431b73965b1ed7fd89c4186c4cabf
+resume_instruction: Read consolidated-project-map-v4.json and consolidated-project-report-v4.md; continue Tomsk, Perm styrene separate scope, other undercovered sites and contractor procurement channels; seek verified awards, updated stages and primary document packages; refine action ranking and qualification. Deadline 17 November. Preserve independent UPS, private owner context, existing workers and gates. No spending, outreach, inferred awards or duplicate jobs.

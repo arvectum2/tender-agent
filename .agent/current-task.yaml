@@ -872,3 +872,8 @@ sibur_project_map_v3_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Read consolidated-project-map-v3.json and consolidated-project-report-v3.md; continue Perm NPG SPR package chains, undercovered sites, primary awards and plan gaps. Deadline 17 November. Preserve existing gates and independent UPS.
+
+sibur_perm_package_review_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Read consolidated-project-map-v4.json; Tomsk, Perm styrene, other sites and contractor channels; deadline 17 November.
