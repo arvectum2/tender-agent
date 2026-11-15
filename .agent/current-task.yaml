@@ -942,3 +942,8 @@ urgent_storage_migration_20261115:
   checkpoint: .agent/checkpoints/TA-STORAGE-MIGRATION-20261115.yaml
   status: completed
   resume: Verified migration complete; continue V15 on external storage.
+
+sibur_v16_priority_queue_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Verify existing P0 queue activation, then continue V16 research and quantitative coverage.
