@@ -229,7 +229,8 @@ completed:
 - "V21 parallel market research: official NKNH combined operator-room program >12bn first-stage investment, 113 of 193 to 7, 3 launched as of Feb17; 8 explicit archive IDs and 4 HVAC candidates outside strict membership. New card 37, union 8227. SMK Severozapad INN7814292228 self-reported SNEMA subcontract, Progress explicitly named OVOС executor DGP2. ABB 2144277/1 retrofit separate from plan 817. Four exact outcome IDs reviewed, no verified award, all 8 plan gaps unresolved. Outcome queue V2 6860 closed, 2159 P0. Coverage 1329/2299. No DB mutation; existing workers continue."
 - "V22: 3 distinct automation counterparties enriched, two named EP600 commissioning buyers from ASU Engineering portfolio; Delight identity and 2025 finance, EPIK references and finance; published MPE 2024 design existing 6 OPS,2 shutdown,3 fire/gas panels and planned cabinets, visual PDF unavailable. Three operator procurement exact outcome searches no verified award, 2131406/1 outside strict project membership; 3 receipt pairs from 2 generic unsigned DOCX, technical 7z pending. Outcome queue V3 cumulative 7 marked without verified outcome. Dashboard V9 1388/2299, 37 projects 2606 IDs, 8227 union. No DB changes or outreach; 55 evidence files verified."
 - "V23: new named downstream procurer KIP-Elektromontazh 3448057936 on Bidzaar 148-474,168-094,168-886; 2025 revenue 4.992bn profit274.445m, approximate creditors2.89bn; no main award proof. October22 Lemaevskaya visit updated facility, acceptance unknown. Read-only separate 7Z pilot: 11/11 originals captured/listed, 2 TZ revisions and KKO safely streamed, exact hash and text diff dates only. Other archive members and unsupported formats not fully processed, no DB import. Dashboard 1432/2299, 1707 full known packages; 58 evidence artifacts verified. No signed prices."
-current_stage: operator_archive_pilot_and_subcontract_channel
+- "V24: two precise external self-reported awards 2087534 and 2086884 by NTC PB (7701843266), chrome completion reported Apr28 2025; neither in frozen snapshot, no protocol or signed prices. Official municipal text confirms different buyers, New Resources designer/OVOS, 60t/y MCE GEE registry. 7 pilot captures, 2 archive listings, 6 inspected docs 5 full/1 partial; commisioning summary mixed with unrelated wastewater materials, do not count quantities without boundary validation. Dashboard 1447/2299, 1710 complete known packs, 61 source hashes verified."
+current_stage: catalyst_lines_and_external_award_evidence
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
@@ -238,7 +239,7 @@ remaining:
   only. Verify CMA roles, awards/prices and completion.
 - Existing worker untouched; 29 in-period support publications not imported, missing
   links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
-last_verified_commit: 90815341
+last_verified_commit: 1aea766a
 test_results:
   focused: 3
   ruff: pass
@@ -929,4 +930,19 @@ test_results:
       commercial-action-register-v17.json: ab0f682973e11097098359678121ea8b94b5c1aee8920632a24b6d7687592a95
       consolidated-project-report-v23.md: 5348dad696af8243f04e696fd15cdbeb850b5e9afc15a921151e724aa9c9ef8f
       project-coverage-dashboard-v10.json: c884bb2a7d1f2d1eca435bc7e09a2d22d54daf642b07fee654f8202ddad3ebf5
-resume_instruction: "Read V23 map/report, dashboard V10, outcome queue V3 unchanged membership; archive pilot manifest 11 originals, two TЗ and KKO extracted (other members pending). Continue parallel contract/outcome search 35%, installed base 25%, projects 20%, commercial plan 20%; focus 8 plan gaps and specific P0 commercial evidence. Extend safe bounded archive handling only after validation; no macros or untrusted execution, DB gate and existing workers. Preserve external SSD, UPS separate, no inferred awards/prices/outreach. Nov17 consolidated report."
+  catalyst_v24:
+    priority_union: 8227
+    priority_supported_urls_extracted: 1447
+    priority_supported_urls_total: 2299
+    priority_all_known_packages: 1710
+    external_exact_self_reported_awards: 2
+    pilot_direct_files: 7
+    source_artifacts: 61
+    artifacts:
+      catalyst-scope-outcomes-v1.json: 1c8455831c709f179f47f73e00410b3bb4ab8f7602e3597320637e34c9729035
+      catalyst-pilot-v1/technical-text-v1.json: a9f48e1fca70c3e420a7fb0075cc06a237a4aef605de76e6c442e3d249fb9074
+      consolidated-project-map-v24.json: f5a3b9f4a7b9b790bdeed9e1992e8a278637ecb4dd8d12e4d7725cc56b557701
+      commercial-action-register-v18.json: e10954fe835f30217ae12ddf69774dd9cfba1efa0dbfbea769151bc43f7d65e0
+      consolidated-project-report-v24.md: ad121bcf30f75b6884b8de398b0a2b9e35a2fc1d55075e71a93eba47a1282458
+      project-coverage-dashboard-v11.json: c3f9d26c3fe9248b8aa25c0be1f2ba99e7c92e28f056c869f4d1385b0e31d066
+resume_instruction: "Read V24 map/report, V11 dashboard, external award claims; outcomes V3 remains unchanged frozen membership. Continue parallel plan and exact winner/contract searches; verify catalyst PNR detailed boundary, seven pilot receipts not committed, 8 plan gaps. P0 collector and DP existing workers remain, preserve gates and external storage, no inferred prices, UPS separate. Deliver Nov17 consolidated report."

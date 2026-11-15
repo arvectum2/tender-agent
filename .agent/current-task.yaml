@@ -982,3 +982,8 @@ sibur_v23_operator_archives_20261115:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: Continue V23 contract routes and safe archive review.
+
+sibur_v24_catalyst_20261115:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: Continue V24 external award and technical scope review.
