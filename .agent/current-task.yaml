@@ -696,3 +696,9 @@ ai_trading_offline_source_audit_2026_11_15:
     SKU crosswalk, stock/validity/delivery. Do not use web snippets or past-session
     future quotes as costs. Continue authorized ZMO source inventory and offline shadow
     simulation; no real orders, bids, spend or contact.
+b2b_indexed_discovery_2026_11_15:
+  checkpoint: .agent/checkpoints/TA-B2B-INDEXED-DISCOVERY-20261115.yaml
+  status: in_progress
+  resume: Read source snapshot and existing gates; keep indexed candidates REVIEW_REQUIRED,
+    no direct live attestation. Respect restrictions, continue other authorized sources
+    and independent paper research.

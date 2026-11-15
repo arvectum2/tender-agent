@@ -1,0 +1,39 @@
+task_id: TA-B2B-INDEXED-DISCOVERY-20261115
+status: in_progress
+goal: Continue authorized corporate IT discovery with source-first qualification,
+  without representing indexed search as original source evidence.
+definition_of_done:
+- Independent verified original platform cards for 15-20 suitable current corporate
+  opportunities
+- Verify current status and fair eligibility; retain uncertain and terminal observations
+  separately
+- No payment, contact, registration, proposal submission, or unsupported live status
+  claim
+completed:
+- 'Nine new indexed Workspace observations: eight apparent open candidates, one terminal
+  indexed catalog observation excluded from pursuit; six individual card URLs, three
+  catalog-only entries. Original direct catalog access returned HTTP403; no live source
+  receipt.'
+- Source gate adapter explicitly discards search observation timestamps; never promotes
+  indexed cards to PUBLIC_CANDIDATE_ONLY. 42 focused existing/new tests pass, Ruff
+  pass.
+- Main APR03B/07 actual model acceptance still blocked by prior HTTP401 Data Platform;
+  APR04/05 completed bounded development reviews not repeated.
+current_stage: indexed_discovery_review_only
+remaining:
+- Use only authorized access for exact individual original cards, verify attachments
+  and eligibility; respect HTTP403 and PRO restriction.
+- Add other lawful sources with original evidence; 15-20 qualified opportunities goal
+  not met.
+- Main model acceptance remains blocked; no authentication bypass. Continue independent
+  approved tracks.
+last_verified_commit: 480a6a2a4c44e8d731449e4bf4c7ee5779d74db0
+test_results:
+  focused: 42
+  ruff: pass
+  new_indexed_observations: 9
+  qualified_current_opportunities: 0
+  snapshot_sha256: 190e471a59418cfc34339a5fb21a19d843055f56bc0200cdbe63d2594878ca06
+resume_instruction: Read source snapshot and existing gates; keep indexed candidates
+  REVIEW_REQUIRED, no direct live attestation. Respect restrictions, continue other
+  authorized sources and independent paper research.
