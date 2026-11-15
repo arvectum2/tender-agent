@@ -40,15 +40,25 @@ completed:
   race PASS (200/409, one stored row). Temporary DB containers removed.'
 - PR532 and PR533 exact heads CLEAN, CI 19/19 each. Existing supplier_profile fact
   versions and source snapshot verifier identified for scoped case evidence.
-current_stage: company_profile_and_evidence_binding
+- PR532/533 exact head CI 19/19 CLEAN. Company search-context API reads own versioned
+  criteria; migration 109 binds existing company case to owned SaaS run and immutable
+  supplier-profile fact, with pinned local saved-source receipt fingerprint. Foreign
+  requests rejected; same EIS number required; profile updates make old evidence historical;
+  tamper rejected.
+- 149 offline tests passed, 1 optional skipped. Integrated HTTP test verifies actual
+  synthetic original ZIP/XML/attachment files; report/qualification projection mocked
+  for isolation. Existing qualification and source integrity suites included; migration
+  SQLite upgrade/downgrade and populated rollback denial PASS. Ruff/make check PASS.
+current_stage: company_evidence_verified_next_mobile_digest
 remaining:
-- Verify PR532 CI and stacked company portfolio PR CI; preserve review gates.
-- Bind saved profile/search and tenant-owned report/qualification evidence to scoped
-  case; design supported commercial source identity and safe legacy mapping; do not
-  activate Sionika in global DTR.
-- Connect shared company-aware mobile and existing web projection; native SwiftUI
-  and safe isolated E2E.
-last_verified_commit: 315a551ce270a3c8aff3651ea790494c6283b8a9
+- Review stacked PR532,533 and evidence candidate; check evidence CI and isolated
+  PostgreSQL migration 109 if needed.
+- Native iOS DTR status/completeness projection, then company-aware client/auth and
+  shared web projection.
+- Automatic company-scoped discovery and commercial source identity require separate
+  implementation; no activation in global owner DTR.
+- Isolated E2E; preserve live SIBUR and conditional DP rollout.
+last_verified_commit: 452d5a9a743b42e52ddb5811ca8a8adb0f36b372
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -57,6 +67,10 @@ test_results:
 - 79 passed, 1 skipped, 68 warnings (9.50s), Ruff/make check PASS
 - Disposable PostgreSQL actual migration 108 PASS; concurrent decision 200/409 and
   exactly one record PASS; DTR session advisory lock four checks PASS
-resume_instruction: Implement immutable case-to-owned-run and profile-version binding
-  with verified saved source snapshot and read-time verification; expose scoped search
-  criteria; do not start live search or credentialed source calls.
+- 149 passed, 1 skipped, 91 warnings in 12.96s; Ruff and make check PASS; Alembic
+  head 109
+resume_instruction: Evidence slice verified; do not repeat offline suite. Next add
+  native read-only DTR digest state to legacy owner mobile and then explicit separate
+  company authentication/projection; preserve company scope. Archived source receipt
+  is pinned, not a frozen report or current legal status proof. No live migration,
+  research, or Gemma run.
