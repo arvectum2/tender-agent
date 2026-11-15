@@ -83,17 +83,29 @@ completed:
   33 passed, 1 skipped. Separate members test verifies shared decision visibility,
   rejects stale revision and cross-member replay, preserves two history entries.
 - PR536–538 exact heads CI 19/19 CLEAN.
-current_stage: scoped_discovery_resumable_candidate_runs
+- Opt-in bounded company discovery with current frozen supplier profile, daily run
+  and persisted query receipts, per-run advisory lock, committed replay without repeated
+  source request, fail-closed stale profile/window. Source adapter optional global
+  scoring bypass and conservative coverage proof, bounded page calls, no raw global
+  relevance persisted. Web existing company cabinet executes steps on explicit request
+  and accepts selected unverified EIS candidate into scoped portfolio.
+- 136 offline tests PASS, 1 optional skipped; Node rendered workflow PASS; make check
+  and new module Ruff PASS, existing adapter lint baseline unchanged. Disposable PostgreSQL
+  actual migrations 109/110 PASS, concurrent daily plan admission same ID PASS, concurrent
+  step 409 and committed replay single source callback PASS. Temporary DB removed.
+current_stage: bounded_company_discovery_verified_next_commercial_source_identity
 remaining:
-- Check exact-head CI of stacked PR532–538; review/merge requires separate owner approval.
-- Implement company-scoped automatic discovery using versioned criteria, safe identity/scope
-  and no global Deal reuse; support commercial source identity separately. No live
-  search by unverified profiles.
-- Isolated browser/simulator/Keychain and full end-to-end acceptance of shared clients
-  and new migrations.
-- Production migration/deploy and conditional DP rollout remain distinct; do not disturb
-  SIBUR.
-last_verified_commit: 35adc722a6129678d1c2d1c3baa2706afbd2e5b7
+- Check exact-head CI of new stacked discovery PR; 532–538 CI 19/19 each at last check,
+  review-only.
+- Generalize scoped discovery source identity for commercial ETP without aliasing
+  EIS or existing global Deal; inspect existing normalized source registry and public/credential
+  policies. Add contract and tests, avoid live collection.
+- Unattended company scheduling and retry/backoff policy remain unimplemented; no
+  actual tenant or public source activation. Extend native company search view if
+  needed.
+- Isolated browser/simulator/Keychain and end-to-end acceptance; production migration/deploy
+  and conditional DP rollout remain distinct; preserve SIBUR.
+last_verified_commit: f3fabccb53f17a6c562735ecae52c52de092c0e4
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -112,7 +124,12 @@ test_results:
   PASS; node --check, Ruff, make check, diff PASS
 - 33 passed, 1 skipped, 34 warnings in 5.37s; Swift standalone 14/14 PASS; unsigned
   Xcode build-for-testing PASS twice; Ruff/diff PASS.
-resume_instruction: Implement opt-in bounded per-tenant daily discovery run with immutable
-  profile reference, individual persisted steps, no global supplier score, honest
-  incomplete coverage, manual candidate acceptance; no live source requests or schedule
-  activation.
+- 136 passed, 1 skipped, 76 warnings in 9.67s; Node rendered script flow/syntax PASS;
+  Ruff/make check PASS; legacy adapter lint counts unchanged; PostgreSQL migrations
+  109/110 and daily admission/step concurrency PASS
+resume_instruction: Bounded 44-FZ search and web candidate workflow verified, publish/check
+  stacked PR. Next design commercial source identity and safe scoped discovery from
+  existing source contracts, then scheduled policy and acceptance. No repeated tests
+  unless changed. Feature flag AI_CORP_SAAS_COMPANY_DISCOVERY_ENABLED false by default;
+  no live source calls or real tenant provisioning, automatic schedule, APNs, model,
+  DB or deployment changes.
