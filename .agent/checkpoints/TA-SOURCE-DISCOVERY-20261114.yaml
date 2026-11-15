@@ -3,12 +3,12 @@ status: in_progress
 goal: Verify public source acquisition and normalize first-party procurement records for three tracks.
 definition_of_done: [source access matrix, first-party receipts, bounded normalization, verified next connector steps]
 completed: [10 source probes, 8 HTTP 200 pages, real AJAX pagination, 27 pages and 313 unique procedures, 516 document URLs, 2 sample OOXML documents, duplicate observation preservation, parser and bounded research probe]
-current_stage: dp_resource_reconciled_and_gpb_priority_details_verified
+current_stage: geh_outcomes133_and_sibur_index138
 remaining: [SIBUR document acquisition and historical coverage, production DP transport and monitoring integration, ETP GPB and TEK-Torg source access, EAT and Moscow list acquisition]
 last_verified_commit: c52856bff1b4df35c887f5148172473ca6636d82
 latest_tests: "56 focused pytest PASS (11 SIBUR + 45 prior parser/Watchdog); Ruff PASS; real 27/27 SHA-bound replay 313 IDs / 314 rows / one duplicate; two original OOXML samples PASS; explicitly authorized TA DB seed verified; MI DB not mutated"
 evidence_location: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114
-resume_instruction: Continue GEH after 169 historical details, 115 captured protocols, 112 structured outcomes; three reviews and one detail failure remain. SIBUR 513 originals, 713 links, 133 full receipts (376 embeddings), 149 TA index links, one recovered resource; live DP 134 docs/403 embeddings. Seven remaining short OOXML index candidates passed, move to bounded longer documents after fresh MI backup/gate (max chunks as appropriate), stop on transport errors. Continue PDF/legacy formats, authenticated retrieval, older history, ZMO and other platforms.
+resume_instruction: Continue GPB after 198 historical details, 135 captured protocols and 133 structured outcomes; 60048 reported offers versus 8000 observed historic cards, discover verified partitions. SIBUR 513 originals, 713 links, 138 full receipts/406 embeddings, 154 TA index links, one recovered resource; live DP139 docs/433 embeddings. Five serial longer OOXML candidates (six actual index chunks) passed. Require fresh MI backup/gate before DP writes; stop on transport failure. Continue GPB review and older history, remaining SIBUR processing/index, authenticated retrieval and ZMO/other platforms.
 
 report: docs/roadmap/SIBUR_PUBLIC_REGISTRY_BASELINE_2026-11-14.md
 
@@ -278,3 +278,25 @@ continuation_2026_11_15_outcomes112:
   repeat_updates: 0
   gpb_checkpoint_commit: 9428900eee1c499643e708e687877b153859cc0d
   backup_sha256: ef28eb5a234e362221424a227bda2802a12237ba9d73be62b9c4d609d86ff964
+
+continuation_2026_11_15_outcomes133:
+  ta_procurements: 8519
+  ta_sibur_links: 713
+  ta_gpb_links: 149
+  gpb_historical_details: 198
+  gpb_captured_protocols: 135
+  gpb_outcomes: 133
+  gpb_reported_historical_offers: 60048
+  gpb_historical_observed_cards: 8000
+  dp_full_ingest_receipts: 138
+  dp_receipt_embeddings: 406
+  dp_server_documents: 139
+  dp_server_embeddings: 433
+  dp_recovered_resource_per_chunk_embedding_proof_pending: true
+  ta_sibur_index_links: 154
+  longer_index_batch_pass: 5
+  prewrite_gate: pass
+  repeat_inserts: 0
+  repeat_updates: 0
+  gpb_checkpoint_commit: f34cc61ded923972167a18db562bef3f094b62c2
+  backup_sha256: 415f47249222e144f6db41276c68b087df39aa57985124f6cb812938fa30ebae
