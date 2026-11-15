@@ -4,6 +4,7 @@ x-local-build: &local-build
   context: ../..
   dockerfile: deploy/local/Dockerfile
   args:
+    BASE_IMAGE: "${ARVECTUM_LOCAL_BASE_IMAGE:-arvectum/tender-agent:00df43958674a9eebee2bbd54e7f4116bb87173f}"
     REVISION: "${ARVECTUM_IMAGE_REVISION:?}"
     VERSION: "${ARVECTUM_IMAGE_VERSION:?}"
 services:
