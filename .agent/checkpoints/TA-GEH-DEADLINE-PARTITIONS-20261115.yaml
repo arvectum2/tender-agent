@@ -10,10 +10,25 @@ completed:
   - Verified actual 2024 and 2025 date filters, 11202 and 8584 reported offers respectively.
   - Four actual monthly first-page receipts; all advertised page counts below 400 and matching source count.
   - Implemented checked resumable read-only archive capture, circuit breaker and focused tests.
-current_stage: launch_read_only_archive_capture
+current_stage: deployed_archive_capture_and_append_only_import
 remaining:
   - complete month pages and identity audit
   - build verified deduplicated import for novel source observations
-last_verified_commit: 64129c53142ef96d289f9699cb99f4dae599c4db
+last_verified_commit: 32c43302bbfa94b618b155daf54f848ecba7e515
 runtime_root: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources/geh-deadline-archive
-resume_instruction: Inspect state.json and archive.lock before a restart; never duplicate the active archive capture or existing priority executor. Audit dated source receipts before any DB writes.
+resume_instruction: Read live capture and import state plus launchd labels first. Both finite jobs run independently, coordinate on locks, no duplicate execution. Reconcile blocked or inflight imports before restart. Continue older-source and other-platform discovery and build evidence-bound archive priority queue after actual imported IDs are known.
+
+live_jobs:
+  capture_label: com.arvectum.tender-agent-geh-archive-capture
+  importer_label: com.arvectum.tender-agent-geh-archive-import
+  capture_state: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources/geh-deadline-archive/state.json
+  import_state: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources/geh-deadline-archive/import/state.json
+  scope: 23 monthly partitions from Jan 2024 through Nov 2025
+  filter_calendar: Europe/Moscow, verified Jan 31 and Feb 1 full-day public samples (56 and 38 cards)
+  timestamps: original UTC unchanged
+  last_verified_january: {source_cards: 623, pages: 32, inserted: 622, review: 1, replay_inserted: 0}
+  archive_import_gate: passed
+  first_ta_backup_sha256: 2abfb32b343fefa9082f9a66d0ca4ddf26bf9effe60559b996f720d3de1a0964
+  watchdog_coordination: updated existing hourly task
+  tests: 10 focused tests and Ruff passed
+  inserted_total_at_checkpoint: 622

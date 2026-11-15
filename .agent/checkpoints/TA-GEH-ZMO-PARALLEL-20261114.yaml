@@ -237,3 +237,10 @@ active_local_executor:
   state_path: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/autonomous-runner/state.json
   launchd_label: com.arvectum.tender-agent-research-executor
   instruction: Check live worker and receipt ledgers first. Do not duplicate active source batches or blind-retry blocked or inflight mutations. Preserve parent and child research objectives.
+
+independent_archive_jobs:
+  checkpoint: .agent/checkpoints/TA-GEH-DEADLINE-PARTITIONS-20261115.yaml
+  capture_state: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources/geh-deadline-archive/state.json
+  import_state: /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources/geh-deadline-archive/import/state.json
+  instruction: Inspect running archive and importer before further work; never duplicate active capture or writes.
+  zmo_public_contract: .agent/checkpoints/TA-ZMO-PUBLIC-CONTRACT-20261115.yaml

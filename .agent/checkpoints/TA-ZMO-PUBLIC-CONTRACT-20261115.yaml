@@ -13,7 +13,7 @@ completed:
   - Added strict source parser, bounded capture/replay, status mapping scoped to observed auction API.
 current_stage: public_contract_pilot_verified
 remaining: []
-last_verified_commit: 64129c53142ef96d289f9699cb99f4dae599c4db
+last_verified_commit: fe52e2238592126ff2de44fcef6c528a7baa0596
 last_checks: four focused tests across MOS and GPB partition passed; Ruff and exact real-data replay passed.
 limitations: repeated public list query returned HTTP 400; seven detail attempts returned HTTP 402, including one previously successful auction; four distinct verified details total. No circumvention, no payment, no contract confirmation or allocated winning SKU unit price. Only private source evidence, no DB mutation. Production integration requires official access terms and larger verified sample.
 resume_instruction: Continue ZMO with the next stage; inspect official developer access terms and authorized public sources; build economic simulation with SKU matching and costs, keep signed prices and aggregate bids separate. No live bids.
