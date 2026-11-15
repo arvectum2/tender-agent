@@ -61,8 +61,8 @@ def main() -> int:
             "WAITING_OUTCOME",
             "COMPLETED",
         }
-        resumed_ok = all(item.status in non_error_waits for item in resumed)
-        if resumed_ok and response.status in non_error_waits:
+        resumed_ok = all(item.status in non_error_waits and not item.error_summary for item in resumed)
+        if resumed_ok and response.status in non_error_waits and not response.error_summary:
             return 0
         return 20
 

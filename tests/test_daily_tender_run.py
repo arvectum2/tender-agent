@@ -413,7 +413,7 @@ def test_daily_tender_run_item_failure_isolated_from_other_procurements(
     monkeypatch.setattr(
         service,
         "search_public_44fz",
-        lambda **kwargs: {"cards": [dict(card) for card in cards]},
+        lambda **kwargs: {"cards": [dict(card) for card in cards], "outcome": "success_with_results"},
     )
     monkeypatch.setattr(
         service.TenderResearchPipeline,
@@ -486,7 +486,7 @@ def test_daily_tender_run_all_failures_complete_with_errors_and_retry(
     monkeypatch.setattr(
         service,
         "search_public_44fz",
-        lambda **kwargs: {"cards": [dict(card)]},
+        lambda **kwargs: {"cards": [dict(card)], "outcome": "success_with_results"},
     )
     monkeypatch.setattr(
         service.TenderResearchPipeline,
@@ -903,3 +903,119 @@ def test_dtr3_post_go_tracks_only_verified_submission_and_grounded_outcome(
         session.query(PostSubmissionTrackerSet).filter_by(deal_id=deal_id).count()
         == trackers_before
     )
+
+
+def test_dtr_source_error_is_not_successful_empty_and_retries_same_window(client, monkeypatch):
+    from src.modules.daily_tender_run import service
+
+    search = Mock(return_value={"cards": [], "outcome": "source_unavailable"})
+    monkeypatch.setattr(service, "search_public_44fz", search)
+    created = client.post("/api/daily-tender-runs", json={"run_now": True}).json()
+    assert created["status"] == "COMPLETED_WITH_ERRORS"
+    assert created["counts"]["discovery_incomplete"] == 1
+    assert created["digest"]["discovery_incomplete"] is True
+    assert created["error_summary"]
+    app.dependency_overrides[require_mobile_bearer] = lambda: "device-dtr-discovery"
+    digest = client.get("/mobile/v1/digest/latest").json()
+    assert digest["run_status"] == "COMPLETED_WITH_ERRORS"
+    assert digest["discovery_incomplete"] is True
+    window = (search.call_args.kwargs["date_from"], search.call_args.kwargs["date_to"])
+    search.return_value = {"cards": [], "outcome": "success_empty"}
+    resumed = client.post(f"/api/daily-tender-runs/{created['run_id']}/resume?retry_failed=true").json()
+    assert resumed["status"] == "COMPLETED"
+    assert resumed["counts"]["discovery_incomplete"] == 0
+    assert resumed["error_summary"] is None
+    assert (search.call_args.kwargs["date_from"], search.call_args.kwargs["date_to"]) == window
+
+
+def test_dtr_recovery_includes_pending_and_interrupted_runs(session, monkeypatch):
+    from src.modules.daily_tender_run import service
+    from src.modules.daily_tender_run.schemas import StartDailyTenderRunRequest
+
+    search = Mock(return_value={"cards": [], "outcome": "success_empty"})
+    monkeypatch.setattr(service, "search_public_44fz", search)
+    pending = service.create_daily_tender_run(session, StartDailyTenderRunRequest(run_now=False))
+    interrupted = service.create_daily_tender_run(session, StartDailyTenderRunRequest(run_now=False))
+    interrupted.status = "RUNNING"
+    session.commit()
+    resumed = service.resume_pending_daily_tender_runs(session, profile_id="arvectum-it")
+    assert {r.run_id for r in resumed} == {pending.run_id, interrupted.run_id}
+    assert all(r.status == "COMPLETED" for r in resumed)
+    assert search.call_count == 2 * len(load_daily_tender_profile("arvectum-it").queries)
+
+
+def test_dtr_same_run_execution_guard_rejects_overlap_and_releases(session, monkeypatch):
+    import pytest
+
+    from src.modules.daily_tender_run import service
+    from src.modules.daily_tender_run.schemas import StartDailyTenderRunRequest
+    from src.shared.errors import ConflictError
+
+    monkeypatch.setattr(service, "search_public_44fz", lambda **kw: {"cards": [], "outcome": "success_empty"})
+    run = service.create_daily_tender_run(session, StartDailyTenderRunRequest(run_now=False))
+    with service._run_execution_guard(session, run.run_id), pytest.raises(ConflictError):
+        service.execute_daily_tender_run(session, run.run_id)
+    assert service.execute_daily_tender_run(session, run.run_id).status == "COMPLETED"
+
+
+def test_dtr_profile_revision_change_invalidates_unchanged_card_reuse(client, monkeypatch):
+    from src.modules.daily_tender_run import service
+
+    analyze = _install_happy_path(monkeypatch)
+    first = client.post("/api/daily-tender-runs", json={"run_now": True}).json()
+    assert first["counts"]["deep_analyzed"] == 1
+    profile = load_daily_tender_profile("arvectum-it").model_copy(update={"version": "test-new-version"})
+    monkeypatch.setattr(service, "load_daily_tender_profile", lambda _: profile)
+    second = client.post("/api/daily-tender-runs", json={"run_now": True}).json()
+    assert second["counts"]["duplicates"] == 0
+    assert second["counts"]["deep_analyzed"] == 1
+    assert analyze.call_count == 2
+
+
+def test_dtr_invalid_profile_and_runtime_packaging(client):
+    from pathlib import Path
+
+    response = client.post("/api/daily-tender-runs", json={"profile_id": "../arvectum-it"})
+    assert response.status_code == 422
+    root = Path(__file__).resolve().parents[1]
+    for dockerfile in ("Dockerfile", "deploy/local/Dockerfile", "deploy/pilot/Dockerfile"):
+        assert "COPY " in (root / dockerfile).read_text()
+        assert "config/daily_tender_profiles" in (root / dockerfile).read_text()
+
+
+def test_dtr_partial_discovery_failure_keeps_ready_items_and_retry_does_not_reanalyze(client, monkeypatch):
+    from src.modules.daily_tender_run import service
+
+    analyze = _install_happy_path(monkeypatch)
+    profile = load_daily_tender_profile("arvectum-it").model_copy(update={"queries": ["good", "failed"]})
+    monkeypatch.setattr(service, "load_daily_tender_profile", lambda _: profile)
+    state = {"failed": True}
+
+    def search(**kwargs):
+        if kwargs["query"] == "failed" and state["failed"]:
+            return {"cards": [], "outcome": "source_error"}
+        return {"cards": [_search_card()], "outcome": "success_with_results"}
+
+    monkeypatch.setattr(service, "search_public_44fz", search)
+    created = client.post("/api/daily-tender-runs", json={"run_now": True}).json()
+    assert created["status"] == "WAITING_HUMAN"
+    assert created["counts"]["needs_manager"] == 1
+    assert created["counts"]["discovery_incomplete"] == 1
+    state["failed"] = False
+    resumed = client.post(f"/api/daily-tender-runs/{created['run_id']}/resume?retry_failed=true").json()
+    assert resumed["counts"]["discovery_incomplete"] == 0
+    assert resumed["items"][0]["query_hits"] == ["good", "failed"]
+    assert analyze.call_count == 1
+
+
+def test_mobile_digest_distinguishes_pending_run_from_no_run(client):
+    app.dependency_overrides[require_mobile_bearer] = lambda: "device-dtr-pending"
+    empty = client.get("/mobile/v1/digest/latest").json()
+    assert empty["run_id"] is None
+    assert empty["discovery_incomplete"] is None
+    pending = client.post("/api/daily-tender-runs", json={"run_now": False}).json()
+    digest = client.get("/mobile/v1/digest/latest").json()
+    assert digest["run_id"] == pending["run_id"]
+    assert digest["run_status"] == "PENDING"
+    assert digest["current_stage"] == "DISCOVER"
+    assert digest["discovery_incomplete"] is None

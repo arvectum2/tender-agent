@@ -8,6 +8,7 @@ WORKDIR /app
 COPY pyproject.toml README.md ./
 COPY alembic.ini ./
 COPY src ./src
+COPY config/daily_tender_profiles ./config/daily_tender_profiles
 COPY scripts ./scripts
 COPY docs ./docs
 COPY demo_data ./demo_data
