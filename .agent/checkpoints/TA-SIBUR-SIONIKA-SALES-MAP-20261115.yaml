@@ -112,14 +112,19 @@ completed:
   exact model no analogues, one original linked. No awards inferred.'
 - External channel v3 retains 23 IDs and marks NIPIGAZ3735296 relevant UPS spares
   independent of IT category; 3699009 typo/cancelled stays review.
-current_stage: ups_portfolio_expanded_and_document_coverage_review
+- 'Portfolio correction: standalone UPS/AKB research split into independent equipment
+  channel, separate private commercial mapping supplied by user; mixed packages retained
+  manual scope allocation, no supplier assignment. Generic router tests 7 passed/Ruff;
+  6477 industrial,293 UPS/battery,38 overlap,6732 distinct records. No private relationship
+  in source code.'
+current_stage: industrial_and_independent_ups_channels_split
 remaining:
 - Preserve expanded user UPS profile, qualify 119 battery cases and 304 missing exact
   links alongside broader industrial portfolio. Identify installed base and repeat
   service opportunities.
 - Expand primary EPC purchasing evidence and direct channels; preserve relationship
   overlay and separate AGPZ/AGHK. Existing worker ownership; no DP bypass.
-last_verified_commit: b715a26b268446ad578773f9b48b4c396d00679e
+last_verified_commit: b3857ca927a098994424b47ad1d263dbe9af53a9
 test_results:
   focused: 3
   ruff: pass
@@ -218,8 +223,13 @@ test_results:
     document_covered: 228
     originals: 37
     missing_reference_pairs: 304
-resume_instruction: Read sales-map-v4.json, ups-demand-review-v1.json, contractor-procurement-channels-v3.json
-  and private role overlay. UPS including IT is explicitly relevant; uncertain battery
-  applications marked separately. Continue broad Sionika procurement and direct customer
-  channels, source-bound exact scope and service cycles. No contact, bid, spend, duplicate
-  worker, auto-merge or DP bypass.
+  separate_channels:
+    routing_sha256: cd835c7f2af413bc73e66e226a43ae3784b13833e4d2ae77427fdbc2c62fb65d
+    private_overlay_sha256: 033e02396841e07b9246284bd7a18128946469134a7ac2dc80a644802581da30
+    focused: 7
+    ruff: pass
+resume_instruction: Read generic sales-channel-routing-v1.json and private commercial-channel-overlay-v2.json
+  before commercial classification. Standalone UPS/AKB not Sionika supply. Continue
+  industrial sales map and separate UPS battery market research child checkpoint .agent/checkpoints/TA-INDEPENDENT-UPS-MARKET-20261115.yaml.
+  Split mixed package scopes; no representation/contact/bid/spend without owner approval.
+  No duplicate worker or DP bypass.

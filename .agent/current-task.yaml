@@ -766,3 +766,10 @@ sibur_sionika_ups_portfolio_20261115:
     applications marked separately. Continue broad Sionika procurement and direct
     customer channels, source-bound exact scope and service cycles. No contact, bid,
     spend, duplicate worker, auto-merge or DP bypass.
+independent_ups_market_20261115:
+  checkpoint: .agent/checkpoints/TA-INDEPENDENT-UPS-MARKET-20261115.yaml
+  status: in_progress
+  resume: Read private commercial-channel-overlay-v2.json; UPS channel is distinct
+    from Sionika. Use ups-demand-review-v1, gpb-ups-channel-review-v1 and UPS public
+    reference evidence. Expand authorized sources and exact scope, keep mixed allocation/manual
+    review, retain no award/price if unsupported.

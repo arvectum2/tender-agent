@@ -1,0 +1,44 @@
+task_id: TA-INDEPENDENT-UPS-MARKET-20261115
+status: in_progress
+goal: Build separate independent UPS and storage-battery demand and competitor evidence
+  channel, not Sionika portfolio.
+definition_of_done:
+- Historical procurement corpus across SIBUR, GEH, EIS and authorized commercial platforms,
+  deduplicated by original IDs
+- Classified industrial UPS, stationary batteries, DC systems, IT UPS, service, installation,
+  modernization, mixed/unknown scope
+- Exact source evidence for quantities, specs, buyer, winner and price where available;
+  no inferred awards
+- Independent commercial routing and installed-base maintenance map. No automated
+  commercial action.
+completed:
+- 293 SIBUR UPS/battery candidates (174 explicit UPS,119 battery review), 228 source-linked
+  publications and 37 original files.
+- 137 GEH GPB title candidates reviewed separately, classifications retained.
+- Public manufacturer reference 64 AGHK OZH systems; official YANOS protocol text
+  identifies named winner 323-СС-2025, screenshot failed; no signed contract or amount.
+current_stage: cross_source_candidate_review
+remaining:
+- Qualify stationary battery applications, mixed packages and actual technical specs;
+  reconcile exact source references and existing captures.
+- Expand EIS and commercial procurement history, primary contract/award evidence and
+  recurring service cycles.
+- Private agency relationship is prospective, no assumption of actual engagement;
+  no contacts or bids.
+last_verified_commit: b3857ca927a098994424b47ad1d263dbe9af53a9
+test_results:
+  focused: 7
+  ruff: pass
+  private_overlay_sha256: 033e02396841e07b9246284bd7a18128946469134a7ac2dc80a644802581da30
+  gpb_snapshot_sha256: fde98a91202a6266e961c11727f7fe83002bd5a221b925b1446f128ef4e97000
+  gpb_review_sha256: 5025df76ea7da8f3ba4ace434e48642ba57871f03d9760c455703b28b31fb63a
+  public_references_sha256: 7cb982be0decf58589520066a70998b6539f2d157a3d17ce58e355e1d3b2aff2
+  gpb_scope_counts:
+    explicit_ups: 71
+    station_dc_system_review: 22
+    battery_application_review: 37
+    unrelated_battery_review: 7
+resume_instruction: Read private commercial-channel-overlay-v2.json; UPS channel is
+  distinct from Sionika. Use ups-demand-review-v1, gpb-ups-channel-review-v1 and UPS
+  public reference evidence. Expand authorized sources and exact scope, keep mixed
+  allocation/manual review, retain no award/price if unsupported.
