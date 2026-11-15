@@ -87,13 +87,34 @@ def archive_tls_context():
     return ssl.create_default_context(cafile=str(bundle) if bundle.is_file() else None)
 
 
+def acquisition_order(refs, priority, requested=()):
+    """Prefer requested procedure/URL pairs only when already source-bound."""
+    ranks={}
+    for row in requested:
+        url=row["url"]
+        if url in refs and set(row["ids"]) & {r["external_id"] for r in refs[url]}:
+            ranks[url]=min(ranks.get(url,3),0 if row["p0"] else 1)
+    return sorted(refs,key=lambda u:(ranks.get(u,2),not any(r["external_id"] in priority for r in refs[u]),Path(urlsplit(u).path).suffix.lower()==".pdf",u))
+
+
+def requested_order(out):
+    p=out/"priority-queue.json"
+    if not p.exists():
+        return []
+    if p.is_symlink():
+        raise ValueError("unsafe priority queue path")
+    d=json.loads(p.read_text())
+    if d.get("schema")!="sibur_source_bound_acquisition_priority_v1" or not isinstance(d.get("rows"),list) or len(d["rows"])>20000:
+        raise ValueError("invalid priority queue")
+    return d["rows"]
+
+
 def acquire(out, refs, priority, limit):
     if not 1<=limit<=25:
         raise ValueError("bounded archive batch")
     opener=build_opener(ProxyHandler({}),NoRedirect(),HTTPSHandler(context=archive_tls_context()))
     done=[]
-    candidates=sorted(refs,key=lambda u:(not any(r["external_id"] in priority for r in refs[u]),
-                 Path(urlsplit(u).path).suffix.lower()==".pdf",u))
+    candidates=acquisition_order(refs,priority,requested_order(out))
     for url in candidates:
         ext=Path(urlsplit(url).path).suffix.lower()
         if ext not in ALLOWED:
