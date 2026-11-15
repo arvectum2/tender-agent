@@ -45,14 +45,16 @@ def audit(row, detail):
         if b["auctionId"] != ident or b["isBlocked"] is not False or p >= previous or not t <= dt <= end:
             raise ValueError("invalid bid sequence")
         previous, t = p, dt
-        participants.add(b["supplier"]["id"])
+        token = b["supplier"]["id"]
+        if token is not None:
+            participants.add(token)
     if previous != final or bets[-1]["id"] != detail["lastBetId"]:
         raise ValueError("final bid mismatch")
     return {"auction_id":str(ident),"initial_rub":str(start),"last_bid_rub":str(final),
             "reduction_percent":str(((start-final)/start*100).quantize(Decimal(".01"))),
             "positions":len(items),"positions_with_platform_sku_id":sum(x.get("skuId") is not None for x in items),
             "bids":len(bets),"automatic_bids":sum(x["isAutoBet"] is True for x in bets),
-            "reported_participants":detail["uniqueSupplierCount"],"distinct_bid_supplier_tokens":len(participants),"participant_count_matches":len(participants)==detail["uniqueSupplierCount"],"winner_summary_matches_bid_supplier":bets[-1]["supplier"]["id"]==detail["lastBetSupplier"]["id"],"contract_amount_rub":None,"actual_profit_rub":None,
+            "reported_participants":detail["uniqueSupplierCount"],"distinct_bid_supplier_tokens":len(participants),"participant_count_matches":all(b["supplier"]["id"] is not None for b in bets) and len(participants)==detail["uniqueSupplierCount"],"winner_summary_matches_bid_supplier":bets[-1]["supplier"]["id"] is not None and bets[-1]["supplier"]["id"]==detail["lastBetSupplier"]["id"],"contract_amount_rub":None,"actual_profit_rub":None,
             "verification":"OBSERVED_BID_SEQUENCE_NOT_CONTRACT","execution_allowed":False}
 
 

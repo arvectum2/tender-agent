@@ -34,3 +34,13 @@ def test_identity_disagreement_retained_not_resolved():
     assert not r["participant_count_matches"]
     assert not r["winner_summary_matches_bid_supplier"]
     assert r["execution_allowed"] is False
+
+
+def test_anonymous_tokens_are_not_participants():
+    a,b=example()
+    b["bets"][0]["supplier"]["id"]=None
+    b["lastBetSupplier"]["id"]=None
+    r=audit(a,b)
+    assert r["distinct_bid_supplier_tokens"]==0
+    assert not r["participant_count_matches"]
+    assert not r["winner_summary_matches_bid_supplier"]
