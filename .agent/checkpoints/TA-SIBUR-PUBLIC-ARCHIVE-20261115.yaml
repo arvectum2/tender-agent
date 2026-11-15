@@ -97,3 +97,29 @@ continuation_2026_11_15_0724:
   resume: Check live SIBUR pre-sync and indexing; original executor restarted from
     exact attestation, never blind reingest. Archive linkage independent; do not start
     archive DP mutation until current scope finishes and is reconciled.
+continuation_2026_11_15_0737:
+  archive_inserted: 7512
+  archive_captured_originals: 209
+  verified_archive_originals: 194
+  archive_verified_links: 6550
+  archive_indexed_links: 0
+  electrical_advertised_pages_traversed: 473
+  automation_advertised_pages_traversed: 1075
+  duplicates_electrical: 19
+  offline_scan:
+    verified_originals: 194
+    extracted: 193
+    review: 1
+    pq_equipment_documents: 4
+    pq_equipment_linked_candidates: 27
+    pq_requirement_documents: 10
+    direct_title_pq: 2071747/1
+    technical_work_related: 2107966/3
+    warning: Shared general standards do not establish separate equipment demand.
+  dp_verified:
+    documents: 310
+    embeddings: 4716
+    indexed_links: 482
+  resume: Read live jobs and technical-evidence/sibur/state.json; GPB branch technical
+    scan implementation de45c997. Do not mutate archive collection before original
+    DP lane has reconciled.
