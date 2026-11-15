@@ -5,6 +5,7 @@ No network, DB mutations, live bids, or inferred contract performance.
 """
 from __future__ import annotations
 
+import hashlib
 import re
 from datetime import datetime
 from decimal import Decimal, InvalidOperation
@@ -27,7 +28,7 @@ def aware(value):
         return None
 
 
-def assess(position, offer, decision_at):
+def assess(position, offer, decision_at, *, original_bytes=None):
     reasons = []
     cutoff = aware(decision_at)
     observed = aware(offer.get("observed_at"))
@@ -42,6 +43,8 @@ def assess(position, offer, decision_at):
     url = urlsplit(offer.get("source_url") or "")
     if not isinstance(sha,str) or not re.fullmatch("[0-9a-f]{64}",sha) or url.scheme!="https" or not url.hostname:
         reasons.append("SOURCE_PROVENANCE_MISSING")
+    if not isinstance(original_bytes, bytes) or not original_bytes or hashlib.sha256(original_bytes).hexdigest() != sha:
+        reasons.append("SOURCE_ORIGINAL_NOT_HASH_VERIFIED")
     # A marketplace-local SKU is not a manufacturer article. A human-verified
     # crosswalk and exact variant/unit evidence are required, not fuzzy titles.
     if (offer.get("position_id") != position.get("position_id")
