@@ -45,7 +45,11 @@ completed:
   PASS; published branch head c09a10d6d306bcfc8928cfe96596a824d6c6390e.
 - Authorized live SDK stats now returned 86 resources/documents/chunks/embeddings
   in 53ms; health 200 in 20ms. Intermittency not resolved because live release unchanged.
-current_stage: review_and_coordinated_rollout_gate
+- 'Owner explicitly approved the four named review PR merges and coordinated safe
+  DP update in response to prior approval request. All exact heads green: TA529/530/531
+  19/19 each, DP130 7/7. Active DP ingestion connection to embedding service observed;
+  no restart permitted until safe idle.'
+current_stage: owner_approved_merge
 remaining:
 - Confirm PR531 exact-head final CI.
 - Owner REVIEW approval of TA PR529,530,531 and DP PR130; coordinate live restart
@@ -61,8 +65,8 @@ test_results:
 - git diff --check PASS
 - GitHub PR529 19/19 and PR530 19/19 exact-head SUCCESS; both CLEAN
 - Live workspace schema head matches candidate, read-only inspection
-resume_instruction: Check PR531 exact head aa2edbac (mirror already SUCCESS), do not
-  repeat DP authorization, SQL counts, synthetic tests or release provenance. DP main
-  PR130 CI green; exact release backport branch fix/dp-http-runtime-backport-20261115
-  at c09a10d, code 50f7b69 tested 42/42. No live mutation or service switch without
-  explicit approval and workload coordination. Preserve research.
+resume_instruction: Merge reviewed exact-head TA529 first, retarget TA530 to main
+  without deleting source branch, verify checks and merge; then TA531 similarly. DP130
+  independently merge at exact reviewed head. Record each result; never bypass protection.
+  DP switch only after verified idle and rollback readiness; do not infer TA live
+  deployment approval.
