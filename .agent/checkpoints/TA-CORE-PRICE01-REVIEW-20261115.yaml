@@ -8,13 +8,21 @@ definition_of_done:
 - Review-only branch published; no actual cost assertions or commercial action
 completed:
 - PR478 prior CI19/19; merge preflight conflicts documentation only
-current_stage: isolated_merge
+- Merged PR478 into isolated review branch; resolved only shared documentation conflicts;
+  historical notes retained
+- 506 combined offline tests PASS; standard make check, changed-file Ruff, JS syntax
+  and git diff checks PASS
+current_stage: published_review_candidate
 remaining:
-- merge candidate
-- offline security and price regressions
-- publish review candidate
-last_verified_commit: 20144887f70a15c149e7418cca284b2200995126
+- Review before merge; authenticated real operator E2E acceptance after shared runtime
+  approval
+last_verified_commit: 0f5ba2ba
 test_results:
-- preflight conflicts limited to current-task and master roadmap
-resume_instruction: Merge PR478 in this separate worktree only, preserve current roadmap,
-  run offline tests and do not deploy.
+- 506 passed, 44 warnings, 9.80s; in-memory SQLite
+- make check PASS
+- changed-file Ruff PASS
+- node --check PASS
+- git diff --check PASS
+resume_instruction: After core PR529 is accepted, reconcile stacked PRICE01 candidate
+  and verify exact-head CI. Keep explicit user inputs, protected stateless calculator,
+  no real price inference or external commercial action.
