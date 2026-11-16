@@ -247,7 +247,7 @@ completed:
   digest, current scoped manager upload with explicit user-copy confirmation and document
   type, bounded import/export and SHA/size, analyst read/download and immutable retry.
   Shared verified native downloads and session/view invalidation.'
-current_stage: price01_cost_evidence_native_verified_next_actual_costs
+current_stage: price01_actual_cost_snapshot_backend
 remaining:
 - PRICE-01 explicit actual expense and labor records, scoped immutable provenance
   and estimate-vs-actual comparison; inspect existing cost ledger before implementing,
@@ -383,12 +383,10 @@ test_results:
   corrupt bytes and oversize. Final unsigned Xcode build-for-testing PASS including
   new XCTest compilation. git diff --check PASS. PR566 exact 2350aa9c 17 success/2
   running. No simulator XCTest/physical iPhone/live API E2E.
-resume_instruction: Native cost evidence controls built and Python/Swift digest/integrity
-  contract verified. Next inspect existing actual expense/labor ledger and implement
-  scoped versioned actual cost recording and plan-vs-actual comparison with explicit
-  provenance and no automatic verified payment claim; then norm samples and historical
-  comparable normalization. Keep prior history/flags and no production deployment
-  or source/model calls. Product only.
+resume_instruction: Implement immutable scoped cumulative actual-cost snapshots against
+  exact saved itemized baseline; explicit missing/zero, Decimal variance, source notes,
+  no complete contract or payment claim. Reuse existing price engine; isolated regression
+  and migration. No external actions.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
