@@ -322,14 +322,18 @@ completed:
 - 'Actual reviewed first-party CDN scope and isolated browser pilot: 19/19 static
   HTTP200, 2538847 bytes, exact card GET HTTP200. No rendered card number or documented
   download controls; account remains unverified. Shared counter 27 cumulative HTTP200.'
-current_stage: b2b_render_diagnostics
+- 'GitHub publication restored: PR583 and PR584 published and remote refs verified.
+  Real CDN diagnostics identified four missing static JS modules. Reviewed supplemental
+  scope implemented; 23/23 static HTTP200, prior module-loading error resolved. Actual
+  UI/card identity and account remain unverified. Manual UI observation helper prepared.'
+current_stage: b2b_module_loading_verified_manual_ui_review_pending
 remaining:
-- Review actual authorized UI/session and exact required read-only dynamic request
-  scope. No repeat static pilot without new evidence; no guessed endpoints or authentication
-  bypass.
-- Documented archive acquisition and recurring runtime cutover acceptance.
+- Perform user-driven exact card UI observation in dedicated Mac mini browser, verify
+  own company and visible controls; review legitimate dynamic read-only requirements.
+  Do not enable unknown POST or guess routes.
+- Complete documented archive acquisition and recurring runtime cutover acceptance.
 - PRICE-01 normative samples and comparable normalization.
-last_verified_commit: 94ce9eca
+last_verified_commit: a1d4952e
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -520,14 +524,21 @@ test_results:
   PR581 17 success/2 running at start.
 - 284 focused passed,2 skipped,130 warnings in 17.18s; actual Chrome offline fixture
   PASS with 2 charged static resources and blocked unreviewed fetch. Ruff/diff PASS.
-resume_instruction: 'Publication recovered: PR583 and PR584 created, exact commits
-  verified remotely; PR582 CI 19/19. Diagnose rendered UI with bounded static/error
-  metadata and strict HTML field evidence. No guessed private endpoints or unreviewed
-  network requests.'
+- 286 focused passed,2 skipped,130 warnings in 16.39s; actual Chrome offline fixture
+  PASS; Ruff/diff PASS. PR583/584 each 17 success/2 running at last check; PR582 19/19.
+  Real rendered UI hydration timeout remains after 23 static resources; unknown other-origin
+  POST and same-origin document GET denied.
+resume_instruction: Publication recovered, PR583/584. Latest code a1d4952e resolves
+  four missing CDN modules; 23/23 static HTTP200, but actual page and account unverified.
+  Use local manual UI observation helper in dedicated Mac mini profile, no automatic
+  navigation, no credential output; owner verifies own account/card and confirms ARVECTUM.
+  Review observed read-only requirements only. Do not repeat static live pilots without
+  new evidence. See latest docs/product/DTR_PARALLEL_PRODUCT_INCREMENT_2026-11-15.md
+  section. No production deployment. PRICE-01 preserved.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
-  status: approved_cdn_verified_dynamic_scope_pending
+  status: approved_pending_manual_ui_and_dynamic_scope_review
   support_ticket: PN-1356710-26
   support_response: 'Operator written approval relayed by owner: Козырькова Валерия
     Андреевна, 2026-11-16 14:51:30. Internal partial automation allowed subject to
