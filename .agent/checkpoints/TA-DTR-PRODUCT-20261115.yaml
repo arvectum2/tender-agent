@@ -277,7 +277,7 @@ completed:
   retry and scoped state clearing.'
 - B2B operator permission received from owner for submitted internal browser agent
   specification, PN-1356710-26; PR573 exact ddf92b0a CI 19/19 successful.
-current_stage: b2b_operator_approved_next_offline_network_enforcement
+current_stage: b2b_offline_network_guard
 remaining:
 - 'B2B offline egress limiter/acceptance: shared rolling 60 requests/60s per IP across
   all agent HTTP requests, redirect/download accounting, 429 Retry-After, fail-closed
@@ -443,13 +443,9 @@ test_results:
   corrupt bytes and false payment rejection. Xcode unsigned build-for-testing PASS
   including XCTest compilation; git diff --check PASS. PR572 exact a6724300 CI 19/19
   success. No physical device or simulator XCTest execution/live API E2E.
-resume_instruction: Operator approval PN-1356710-26 received. Next implement and prove
-  B2B offline egress enforcement with strict shared 60/rolling 60s per IP, including
-  redirects, browser background and downloads, 429 Retry-After and fail-closed accounting.
-  Existing pilot script only allowlists routes; no proven comprehensive limiter. Keep
-  live automation off until offline acceptance and dedicated authorized session ready.
-  Resume PRICE-01 deduplicated norms alongside independent integration, preserve existing
-  completed work. No production deployment.
+resume_instruction: Implement persistent shared sliding-window gate and audited explicit
+  read-only HTTP broker, redirect and retry accounting, offline acceptance; keep old
+  B2B pilot blocked until actual browser integration proven.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
