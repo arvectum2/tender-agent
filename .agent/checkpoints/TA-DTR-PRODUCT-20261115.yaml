@@ -319,7 +319,7 @@ completed:
   quarantine completed. First real B2B pilot procurement 4664540 returned HTTP200,
   exactly one charged request, no redirects/retry/download/submission; no visible
   card ID or documented controls, server auth unverified.
-current_stage: b2b_first_one_card_http200_next_review_resource_scope
+current_stage: b2b_reviewed_resource_inventory
 remaining:
 - Review exact required page resource scope from dedicated manual B2B browser with
   sanitized metadata/inventory, no endpoint guessing, no session secret output. Verify
@@ -519,15 +519,9 @@ test_results:
   B2B request 1, HTTP200, durable pending=false. No relevant active launchctl labels
   observed before bounded pilot; not distributed per-IP/production cutover proof.
   PR581 17 success/2 running at start.
-resume_instruction: Owner login done; local dedicated Mac mini session candidate recovered
-  (12 accepted cookies), first actual supervised B2B one-card pilot 4664540 HTTP200,
-  exact 1 charged request, card ID and controls not visible, account/session not server-verified.
-  Next prepare sanitized exact resource inventory on dedicated authorized browser
-  and positively review required resources, then scoped read-only retry only after
-  gate/operational acceptance. Do not expose cookie values or access MacBook, guess
-  private endpoints, perform signing/submission or claim HTTP200 proves login. Legacy
-  runtime cutover before recurring B2B automation; no production deployment. Permission
-  PN-1356710-26, 60/rolling minute per IP. PRICE-01 preserved.
+resume_instruction: Inspect exact card original HTML via shared canonical egress,
+  metadata only; review referenced static resources and implement bounded read-only
+  renderer. No arbitrary private endpoint discovery or credential disclosure.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:

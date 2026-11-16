@@ -663,6 +663,6 @@ parallel_dtr_product:
   task_id: TA-DTR-PRODUCT-20261115
   status: in_progress
   checkpoint: .agent/checkpoints/TA-DTR-PRODUCT-20261115.yaml
-  current_stage: b2b_first_one_card_http200_next_review_resource_scope
-  branch: feat/ta-b2b-one-card-pilot-20261116
+  current_stage: b2b_reviewed_resource_inventory
+  branch: feat/ta-b2b-reviewed-resource-pilot-20261116
   owner_priority: Product development only in this chat; research separate; Gemma paused
