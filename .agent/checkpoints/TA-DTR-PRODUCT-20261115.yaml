@@ -234,7 +234,7 @@ completed:
 - 'Native PRICE-01 itemized editor: bounded rows, zero category and provenance acknowledgement,
   typed Decimal rollup verification, scoped mixed history, explicit manager save and
   exact projection/replay; legacy aggregate supported.'
-current_stage: price01_itemized_native_verified_next_cost_evidence
+current_stage: price01_cost_evidence_backend
 remaining:
 - Scoped immutable document-level cost evidence links for each saved estimate row,
   bounded format/integrity and explicit user-reported provenance; actual expense and
@@ -357,12 +357,10 @@ test_results:
   source changes, exact retry, legacy record, wire fields); final Xcode unsigned build-for-testing
   PASS including new XCTest compilation. git diff --check PASS. PR563 exact 31f1e6e0
   CI 19/19. No simulator XCTest, physical device or live E2E execution.
-resume_instruction: Native itemized estimate built and actual Swift contract PASS.
-  Next scope immutable cost evidence links to saved scenario revision and line ordinal;
-  reuse existing evidence storage/validation where possible, preserve user-provided
-  origin and no independently verified cost claim. Then Web/native evidence controls,
-  historical comparable normalization and real-case acceptance. No production deployment
-  or external source/model calls. Product only.
+resume_instruction: Implement scoped immutable user-copy evidence attached to exact
+  saved itemized scenario and line ordinal/digest. Reuse bounded file inspector and
+  streaming, manager-only writes/current role, read/download integrity, migration
+  and tests. No production deployment or external calls.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
