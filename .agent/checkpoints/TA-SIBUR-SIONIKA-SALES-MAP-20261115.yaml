@@ -1429,6 +1429,25 @@ test_results:
       eject/repair/reboot. Root cause unknown. Archive PID 56279 active with executor lock; previous technical PID
       66923 no longer exists. Forward progress not yet verified. DP switched gracefully to internal SSD exact backport,
       PID 78297, health/auth and known collection read-only checks PASS. No database mutation.'
-resume_instruction: External SSD access restored and V41 control hashes match; no reboot needed now. Inspect existing
-  archive and technical runner state, rerun read-only coverage and mandatory acceptance gate before DB mutation,
-  then resume pending V42. Do not restart DP or duplicate active archive worker.
+post_storage_recovery_20261116:
+  coverage_dashboard: project-coverage-dashboard-v28-post-storage-recovery.json
+  sha256: 481d650720cd39b68cd2b9725e2c5d8d9ad121291b0218720072800f78ebaf87
+  processed_originals: 4875
+  extracted: 4686
+  source_links: 25074
+  linked_procedures: 17062
+  committed_document_rows: 25783
+  indexed_procedures: 738
+  indexed_originals: 764
+  captured_receipts: 4908
+  review_receipts: 12
+  attempts_last_hour: 210
+  priority_eligible: 5804
+  priority_all_supported_extracted: 5560
+  priority_all_known_no_unverified: 1909
+  status: processing_resumed_verified
+resume_instruction: SSD access restored and actual processing verified. V28 post-recovery read-only coverage saved
+  SHA 481d650720cd39b68cd2b9725e2c5d8d9ad121291b0218720072800f78ebaf87; 4875 originals processed, 25074 source links,
+  4686 extracted. Priority union 8244, eligible 5804, 5560 all supported extracted, 1909 all known/no unverified.
+  Existing archive PID 56279 active, do not duplicate. Resume V42 source corrections and map update using V41 and
+  pending findings; no DB mutation without mandatory gate.
