@@ -205,3 +205,27 @@ def test_offline_browser_proxy_only_approved_routes(gate):
     try:
         with pytest.raises(GuardError):OfflineBrowserBridge(other)
     finally:other.close()
+
+
+def test_tls_fixture_proxy_rejects_nonloopback_and_connect(gate):
+    import ssl
+
+    from scripts.research.b2b_https_fixture_bridge import OfflineTLSBridge
+
+    g,_clock=gate
+    def no_network(request):raise AssertionError('Unexpected upstream request')
+    context=ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    for origin in ('http://127.0.0.1:49111','https://outside.invalid','https://localhost:49111','https://127.0.0.1'):
+        broker=ReadOnlyBroker(g,origin=origin,permitted=lambda *_:True,transport=httpx.MockTransport(no_network))
+        try:
+            with pytest.raises(GuardError):OfflineTLSBridge(broker,context=context)
+        finally:broker.close()
+    broker=ReadOnlyBroker(g,origin='https://127.0.0.1:49111',permitted=lambda *_:True,transport=httpx.MockTransport(no_network))
+    try:
+        bridge=OfflineTLSBridge(broker,context=context)
+        with bridge.serve() as proxy,httpx.Client(proxy=proxy,trust_env=False,timeout=3) as client:
+            assert client.get('http://127.0.0.1:49111/').status_code==403
+            with pytest.raises(httpx.ProxyError):client.get('https://outside.invalid/')
+            with pytest.raises(httpx.ProxyError):client.get('https://127.0.0.1:49112/')
+        assert bridge.events==['BLOCKED']*3 and json.loads(g.state.read_text())['receipts']==[]
+    finally:broker.close()
