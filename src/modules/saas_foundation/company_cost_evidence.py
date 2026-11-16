@@ -33,7 +33,7 @@ def _line(session,principal,case_id,scenario_id,ordinal):
     scenario=session.scalar(price._query(principal,case_id).where(CompanyPriceScenario.id==scenario_id).execution_options(populate_existing=True))
     if scenario is None:
         raise HTTPException(404,'Saved scenario not found')
-    view=price._view(principal,scenario)
+    view=price._view(principal,scenario,session)
     estimate=view.get('itemized_estimate')
     if estimate is None:
         raise HTTPException(409,'Saved itemized scenario required')

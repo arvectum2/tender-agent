@@ -1037,6 +1037,9 @@ def company_price_itemized_preview(case_id: str, payload: company_price_scenario
     settings=get_settings()
     if not (settings.saas_company_price_scenarios_enabled and settings.saas_company_price_itemized_enabled):
         raise HTTPException(404, "Itemized price scenarios disabled")
+    if company_price_scenarios.has_norm_bindings(payload):
+        _cost_norms_enabled()
+        if not settings.saas_company_cost_norm_binding_enabled:raise HTTPException(404,"Norm estimate binding disabled")
     return company_price_scenarios.preview_itemized(session, principal, case_id, payload)
 
 
@@ -1045,6 +1048,9 @@ def company_price_itemized_save(case_id: str, payload: company_price_scenarios.I
     settings=get_settings()
     if not (settings.saas_company_price_scenarios_enabled and settings.saas_company_price_itemized_enabled):
         raise HTTPException(404, "Itemized price scenarios disabled")
+    if company_price_scenarios.has_norm_bindings(payload.estimate):
+        _cost_norms_enabled()
+        if not settings.saas_company_cost_norm_binding_enabled:raise HTTPException(404,"Norm estimate binding disabled")
     return company_price_scenarios.save_itemized(session,principal,case_id,payload)
 
 

@@ -2325,13 +2325,14 @@ def test_actual_evidence_separate_rows_revisions_and_integrity(client,session,mo
 
 
 def test_actual_samples_preview_explicit_distinct_sources(client,session,monkeypatch):
+    from copy import deepcopy
 
     from sqlalchemy import update
 
     from src.modules.saas_foundation.models import CompanyActualCostSnapshot
 
     _,a=_seed(client,'Sample A');_,b=_seed(client,'Sample B');_legal(client,a);_legal(client,b)
-    settings=saas.get_settings().model_copy(update={'saas_company_price_scenarios_enabled':True,'saas_company_price_itemized_enabled':True,'saas_company_actual_costs_enabled':True,'saas_company_actual_evidence_enabled':True})
+    settings=saas.get_settings().model_copy(update={'saas_company_price_scenarios_enabled':True,'saas_company_price_itemized_enabled':True,'saas_company_actual_costs_enabled':True,'saas_company_actual_evidence_enabled':True,'saas_company_cost_evidence_enabled':True})
     monkeypatch.setattr(saas,'get_settings',lambda:settings)
     headers=_auth(a);cases='/api/saas/company-portfolio/cases';endpoint='/api/saas/company-portfolio/actual-samples/preview'
     estimate={'lines':[{'category':'own_labor_rub','title':'Development','unit':'h','quantity':'10','rate_rub':'1000','source_kind':'ASSUMPTION','source_note':'Synthetic plan'},{'category':'external_direct_rub','title':'License','unit':'unit','quantity':'1','rate_rub':'100','source_kind':'ASSUMPTION','source_note':'Synthetic plan'}],'zero_cost_categories':['cash_overhead_rub','reserve_rub','fixed_platform_fees_rub','guarantee_financing_cost_rub'],'terms':{'revenue_tax_percent':'6','variable_platform_fee_percent':'0','minimum_profit_rub':'0','target_profit_rub':'0','manual_bid_prices_rub':[],'assumption_note':'Synthetic plan','accept_hypothetical_assumptions_only':True},'confirm_no_double_count':True}
@@ -2389,6 +2390,45 @@ def test_actual_samples_preview_explicit_distinct_sources(client,session,monkeyp
     assert client.get(norms+'/'+key,headers=_auth(b)).status_code==404
     assert client.get(norms,headers=_auth(b)).json()['items']==[]
     assert client.get(norms,headers=headers).json()['items']==[approved]
+    # Bind an explicitly selected current approval to a new estimate, never use a median.
+    prices=cases+'/'+first['case_id']+'/price-scenarios'
+    from src.modules.saas_foundation.models import CompanyPriceScenario
+    def bound_estimate(record):
+        e=deepcopy(estimate);r=record['result']
+        e['lines'][0].update(category=r['category'],title=r['title'],unit=r['unit'],quantity=r['norm_quantity'],rate_rub=r['norm_rate_rub'],source_kind='APPROVED_CORPORATE_NORM',source_note='Explicit fixture norm selection',norm_binding={k:record[k] for k in ('norm_id','norm_key','revision','record_sha256')})
+        return e
+    def estimate_preview(e,case=first['case_id'],token=a):
+        return client.post(cases+'/'+case+'/price-scenarios/itemized/preview',headers=_auth(token),json=e)
+    def save_estimate(e,revision,key):
+        return client.post(prices+'/itemized',headers=headers,json={'estimate':e,'expected_revision':revision,'idempotency_key':key})
+    bound=bound_estimate(approved)
+    assert estimate_preview(bound).status_code==404
+    settings=settings.model_copy(update={'saas_company_cost_norm_binding_enabled':True})
+    count=session.query(CompanyPriceScenario).count()
+    rr=estimate_preview(bound);assert rr.status_code==200,rr.text
+    projected=rr.json()['itemized_estimate']
+    assert projected['lines'][0]['norm_binding']==bound['lines'][0]['norm_binding']
+    assert projected['lines'][0]['amount_rub']=='16895.00'
+    assert projected['category_totals_rub']['own_labor_rub']=='16895.00'
+    assert 'norm_binding' not in projected['lines'][1]
+    assert session.query(CompanyPriceScenario).count()==count
+    for field,value in [('quantity','15.50'),('rate_rub','1091'),('title','Other work'),('unit','H')]:
+        bad=deepcopy(bound);bad['lines'][0][field]=value
+        assert estimate_preview(bad).status_code==409,field
+    for field,value in [('record_sha256','0'*64),('norm_key','0'*64),('revision',2),('norm_id','foreign')]:
+        bad=deepcopy(bound);bad['lines'][0]['norm_binding'][field]=value
+        assert estimate_preview(bad).status_code==409,field
+    bad=deepcopy(bound);bad['lines'][0].pop('norm_binding');assert estimate_preview(bad).status_code==422
+    bad=deepcopy(bound);bad['lines'][0]['source_kind']='ASSUMPTION';assert estimate_preview(bad).status_code==422
+    bad=deepcopy(bound);bad['lines'].append({**bad['lines'][0],'source_note':'Different note'});assert estimate_preview(bad).status_code==422
+    assert estimate_preview(bound,case=foreign['case_id'],token=b).status_code==409
+    rr=save_estimate(bound,1,'norm-bound-estimate-1');assert rr.status_code==201,rr.text
+    saved_bound=rr.json();assert saved_bound['itemized_estimate']==projected
+    assert save_estimate(bound,1,'norm-bound-estimate-1').json()==saved_bound
+    baseline_url=prices+'/'+saved_bound['scenario_id']+'/actual-costs'
+    assert client.get(baseline_url,headers=headers).status_code==200
+    evidence_url=prices+'/'+saved_bound['scenario_id']+'/lines/1/evidence'
+    assert client.get(evidence_url,headers=headers).status_code==200
     newer=advance(1,'sample-snapshot-2');assert preview().status_code==409
     assert normpreview().status_code==409
     assert approve(decision).json()==approved
@@ -2397,6 +2437,11 @@ def test_actual_samples_preview_explicit_distinct_sources(client,session,monkeyp
     updated={**decision,'proposal':current_proposal,'preview_sha256':draft2['preview_sha256'],'expected_revision':1,'idempotency_key':'norm-approval-2'}
     r=approve(updated);assert r.status_code==201,r.text
     second_approval=r.json();assert second_approval['revision']==2
+    assert estimate_preview(bound).status_code==409
+    assert save_estimate(bound,2,'norm-bound-estimate-2').status_code==409
+    assert save_estimate(bound,1,'norm-bound-estimate-1').json()==saved_bound
+    bound2=bound_estimate(second_approval);assert estimate_preview(bound2).status_code==200
+
     withdraw={'expected_revision':2,'idempotency_key':'norm-withdraw-1','rationale':'Explicitly withdraw fixture normative rate','confirm_withdrawal':True}
     assert savedrop(key,{**withdraw,'expected_revision':1}).status_code==409
     r=savedrop(key,withdraw);assert r.status_code==201,r.text
@@ -2407,6 +2452,21 @@ def test_actual_samples_preview_explicit_distinct_sources(client,session,monkeyp
     assert client.get(norms+'/'+key,headers=headers).json()['items']==[revoked,second_approval,approved]
     assert client.get(norms+'/'+key+'?limit=1',headers=headers).json()['has_more']
     assert session.query(CompanyCostNormVersion).count()==3
+    assert estimate_preview(bound2).status_code==409
+    assert save_estimate(bound2,2,'norm-bound-estimate-2').status_code==409
+    assert save_estimate(bound,1,'norm-bound-estimate-1').json()==saved_bound
+    settings=settings.model_copy(update={'saas_company_cost_norm_binding_enabled':False})
+    history=client.get(prices,headers=headers).json()['items']
+    assert history[0]==saved_bound
+    assert 'norm_binding' not in history[1]['itemized_estimate']['lines'][0]
+    assert client.get(baseline_url,headers=headers).status_code==200
+    assert client.get(evidence_url,headers=headers).status_code==200
+    # The original saved estimate remains verifiable after withdrawal, but not after corruption.
+    session.execute(update(CompanyCostNormVersion).where(CompanyCostNormVersion.id==approved['norm_id']).values(record_sha256='0'*64));session.commit()
+    assert client.get(prices,headers=headers).status_code==409
+    session.execute(update(CompanyCostNormVersion).where(CompanyCostNormVersion.id==approved['norm_id']).values(record_sha256=approved['record_sha256']));session.commit()
+    assert client.get(prices,headers=headers).status_code==200
+
     assert preview({**payload,'samples':[newer,second]}).status_code==200
     for role in ('viewer','analyst'):
         invite=client.post('/api/saas/invitations',headers=headers,json={'role':role,'acquisition_channel':'referral'}).json();token=client.post('/api/saas/invitations/redeem',json={'invitation_code':invite['invitation_code'],'display_name':role}).json()['access_token'];_legal(client,token)

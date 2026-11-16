@@ -77,7 +77,7 @@ def _baseline(session,principal,case_id,scenario_id):
     _authorized(session,principal);portfolio._owned_case(session,principal,case_id)
     row=session.scalar(price._query(principal,case_id).where(CompanyPriceScenario.id==scenario_id).execution_options(populate_existing=True))
     if row is None:raise HTTPException(404,'Saved scenario not found')
-    estimate=price._view(principal,row).get('itemized_estimate')
+    estimate=price._view(principal,row,session).get('itemized_estimate')
     if estimate is None:raise HTTPException(409,'Saved itemized baseline required')
     canonical=json.dumps({'scenario_id':row.id,'revision':row.revision,'estimate':estimate},sort_keys=True,ensure_ascii=False,separators=(',',':')).encode('utf-8')
     return row,estimate,hashlib.sha256(canonical).hexdigest()
