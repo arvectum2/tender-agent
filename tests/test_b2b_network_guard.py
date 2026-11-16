@@ -386,3 +386,49 @@ def test_one_card_worker_enforces_exact_single_get(tmp_path):
     assert 'offline-only' not in json.dumps(result) and len(g._read()['receipts'])==1
     for bad in ('https://workspace.ru/tenders/fixture-1234/',card+'?x=1',card+'#other'):
         with pytest.raises(GuardError):manifest_for(bad)
+
+
+def test_expired_cookie_omitted_not_renewed_and_inventory_sanitized():
+    from scripts.research.b2b_resource_inventory import inventory
+    from scripts.research.b2b_session_policy import cookie_jar
+
+    item={'name':'valid','value':'synthetic-only','domain':'www.b2b-center.ru','path':'/','expires':100,'secure':True,'httpOnly':True,'sameSite':'Strict'}
+    old={**item,'name':'expired','expires':10}
+    jar=cookie_jar({'cookies':[old,item],'origins':[]},now=20)
+    assert [c.name for c in jar.jar]==['valid'] and next(iter(jar.jar)).expires==100
+    with pytest.raises(GuardError):cookie_jar({'cookies':[old],'origins':[]},now=20)
+    card='https://www.b2b-center.ru/app/market-next/fixture/tender-4664540/'
+    body=b'<html><script src="/static/a.js"></script><link rel="stylesheet" href="/static/a.css"><script src="https://foreign.invalid/x.js"></script><script src="/secret.js?token=secret"></script><body>4664540</body></html>'
+    result=inventory(card,body)
+    assert len(result['static_candidates'])==2 and result['omitted_references']==2 and result['card_id_in_visible_text'] and 'secret' not in str(result)
+
+
+def test_resource_inventory_reuses_strict_evidence_parser():
+    from datetime import UTC, datetime
+
+    from scripts.research.b2b_readonly_broker import Receipt
+    from scripts.research.b2b_resource_inventory import card_evidence
+
+    card='https://www.b2b-center.ru/app/market-next/fixture/tender-4664540/'
+    raw='<html><body><h1>Разработка сайта № 4664540</h1><div>Приём заявок</div><div>до 21.11.2026 06:00, по МСК</div><section>Организатор:<strong>АО ФИКСТУРА</strong></section><a href="/docs/a.pdf">ТЗ</a><script src="https://foreign.invalid/a.js?secret=token"></script></body></html>'.encode()
+    r=card_evidence(card,Receipt(200,(),raw,0,card),datetime(2026,11,16,tzinfo=UTC))
+    assert r['card_observation']['external_id']=='4664540' and r['attachment_candidate_count']==1 and r['attachment_coverage_complete'] is False
+    assert r['foreign_host_counts']=={'foreign.invalid':1} and 'secret' not in str(r)
+    bad=raw.replace(b'4664540',b'4664541');r=card_evidence(card,Receipt(200,(),bad,0,card),datetime(2026,11,16,tzinfo=UTC))
+    assert r['card_observation'] is None and r['parser_field']=='heading'
+
+
+def test_partial_card_evidence_does_not_promote_unknown_organizer():
+    from datetime import UTC, datetime
+
+    from scripts.research.b2b_readonly_broker import Receipt
+    from scripts.research.b2b_resource_inventory import card_evidence
+
+    card='https://www.b2b-center.ru/app/market-next/fixture/tender-4664540/'
+    raw=f'<html><head><link rel="canonical" href="{card}"></head><body><h1>Разработка платформы</h1><span>4664540</span><div>Приём заявок</div><div>до 21.11.2026 06:00, по МСК</div><a href="/docs/a.pdf">ТЗ</a></body></html>'.encode()
+    r=card_evidence(card,Receipt(200,(),raw,0,card),datetime(2026,11,16,tzinfo=UTC))
+    assert r['card_observation'] is None and r['parser_field']=='organizer'
+    partial=r['partial_card_observation'];assert partial['external_id']=='4664540' and partial['displayed_deadline']=='2026-11-21T06:00:00+03:00' and partial['organizer_name_literal'] is None
+    assert not partial['organizer_verified'] and not partial['account_identity_verified'] and not partial['external_submission_allowed'] and r['attachment_candidate_count']==1
+    bad=raw.replace(b'<span>4664540</span>',b'<span hidden>4664540</span>')
+    assert 'partial_card_observation' not in card_evidence(card,Receipt(200,(),bad,0,card),datetime(2026,11,16,tzinfo=UTC))

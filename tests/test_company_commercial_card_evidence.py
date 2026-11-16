@@ -166,3 +166,12 @@ def test_attachment_inventory_caps_untrusted_links():
     r = attachment_inventory(WORKSPACE,raw)
     assert len(r['candidates'])==20 and r['scanned_links']==500 and r['link_scan_truncated']
     assert r['rejected_or_opaque_links']==480
+
+
+def test_b2b_market_next_separate_exact_number_requires_canonical():
+    raw=b2b(heading='Разработка цифровой платформы').replace(b'<html>',f'<html><head><link rel="canonical" href="{B2B}"></head>'.encode()).replace(b'<body>',b'<body><span>4643484</span>')
+    result=verify(raw,B2B)
+    assert result['external_id']=='4643484' and result['title']=='Разработка цифровой платформы'
+    assert not result['legal_identity_verified'] and not result['current_live_notice_status_verified']
+    for bad in (raw.replace(b'rel="canonical"',b'rel="alternate"'),raw.replace(b'<span>4643484</span>',b'<span>14643484</span>'),raw.replace(b'<span>4643484</span>',b'<span hidden>4643484</span>'),raw.replace(b'<span>4643484</span>',b'<span>4643484</span><span>4643484</span>'),raw.replace(B2B.encode(),B2B.replace('4643484','4643485').encode())):
+        with pytest.raises(ValueError):verify(bad,B2B)

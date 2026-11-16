@@ -93,10 +93,14 @@ def verify_card_snapshot(*, requested_url: str, final_url: str, status_code: int
         precision = "date_only"
         organizer_type, organizer_name = organizer, None
     else:
-        # Existing B2B original-card observations contain the procurement number
-        # in the heading and exact displayed stage/deadline text. Do not infer buyer status.
-        if not re.search(r"(?<![0-9])" + re.escape(external_id) + r"(?![0-9])", title):
-            raise ValueError("B2B heading does not corroborate requested number")
+        # Legacy cards include the number in the heading. Observed market-next
+        # layout instead uses a separate visible exact ID and a canonical URL.
+        # Do not accept an incidental substring, hidden ID, or ambiguous match.
+        heading_matches = bool(re.search(r"(?<![0-9])" + re.escape(external_id) + r"(?![0-9])", title))
+        if not heading_matches:
+            standalone = [v for v in visible[:150] if re.fullmatch(r"(?:№\s*|N\s*|Номер(?: закупки)?:?\s*)?" + re.escape(external_id), v, re.IGNORECASE)]
+            if not declared or len(standalone) != 1:
+                raise ValueError("B2B heading or canonical standalone number does not corroborate requested number")
         stage = _one([v for v in visible[:100] if _norm(v) in RECEIVING | TERMINAL], "stage")
         deadline_literal = _one([v for v in visible[:120] if re.fullmatch(r"до \d{2}\.\d{2}\.20\d{2} \d{2}:\d{2}, по МСК", v)], "deadline")
         deadline = datetime.strptime(deadline_literal, "до %d.%m.%Y %H:%M, по МСК").replace(tzinfo=MOSCOW).isoformat()

@@ -37,7 +37,7 @@ def cookie_jar(state,*,now=None):
     """Import only ordinary secure B2B cookies from a dedicated local state.
 
     Origin/localStorage tokens and partitioned cookies deliberately unsupported.
-    Uncertain or expired credentials are rejected, not silently reconstructed.
+    Invalid credentials are rejected. Expired cookies are omitted as in a normal browser; never renewed or reconstructed.
     """
     now=time.time() if now is None else now
     if not isinstance(state,dict) or set(state)!={'cookies','origins'} or state['origins']!=[] or not isinstance(state['cookies'],list) or not 1<=len(state['cookies'])<=100:raise GuardError('Dedicated cookie-only session required')
@@ -47,12 +47,14 @@ def cookie_jar(state,*,now=None):
         name=c['name'];value=c['value'];domain=c['domain'];path=c['path'];expires=c['expires']
         if not isinstance(name,str) or not name or len(name)>256 or any(ord(x)<33 or ord(x)>126 or x in '=;, ' for x in name) or not isinstance(value,str) or not value or len(value)>8192 or any(ord(x)<33 or ord(x)>126 or x in ';,' for x in value):raise GuardError('Invalid cookie')
         if domain not in (HOST,'b2b-center.ru','.b2b-center.ru','.'+HOST) or not isinstance(path,str) or not path.startswith('/') or len(path)>512 or any(ord(x)<32 or ord(x)>126 for x in path) or c['secure'] is not True or type(c['httpOnly']) is not bool or c['sameSite'] not in ('Strict','Lax','None'):raise GuardError('Unsupported cookie scope')
-        if type(expires) not in (int,float) or not math.isfinite(expires) or expires!=-1 and (expires<=now or expires>253402300799):raise GuardError('Invalid or expired cookie')
+        if type(expires) not in (int,float) or not math.isfinite(expires) or expires!=-1 and (expires<0 or expires>253402300799):raise GuardError('Invalid cookie expiry')
+        if expires!=-1 and expires<=now:continue
         # Use exact host only, even for a broader source cookie. No credentials sent to other hosts.
         identity=(name,path)
         if identity in seen:raise GuardError('Ambiguous cookie identity')
         seen.add(identity)
         jar.jar.set_cookie(Cookie(0,name,value,None,False,HOST,False,False,path,True,True,None if expires==-1 else int(expires),expires==-1,None,None,{'HttpOnly':c['httpOnly'],'SameSite':c['sameSite']},False))
+    if not list(jar.jar):raise GuardError('No unexpired supported cookies; manual login required')
     return jar
 
 
