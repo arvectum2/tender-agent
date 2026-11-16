@@ -201,7 +201,7 @@ completed:
   including versioned support references; exact digest, explicit partial-scope acknowledgement,
   stale detection, separate default-off commercial submission recording gate. No full
   qualification/source claims.
-current_stage: readiness_evidence_backend_verified_next_receipt_artifacts
+current_stage: lifecycle_receipt_protocol_artifacts
 remaining:
 - Scoped immutable original receipt/protocol user-copy storage and event linkage;
   independently verified source provenance still separate. Web/native readiness and
@@ -292,11 +292,10 @@ test_results:
 - 118 passed, 2 skipped, 99 warnings in 12.44s; sequential profile/document version
   staleness, missing review, replay, rebind, cross-company, optional gate, SQLite
   migration rollback guard; Ruff/diff PASS. New hosted CI pending.
-resume_instruction: Readiness backend and sequential SQLite regression verified. Next
-  bounded original receipt/protocol user-copy artifact capture and lifecycle link,
-  then web/native readiness and receipt controls; no promotion to platform originals
-  or full qualification. Keep optional mandatory gate off until client and PG concurrency
-  acceptance. Continue PRICE-01. Product only in this chat; no research operations.
+resume_instruction: Implement bounded immutable receipt/protocol user-copy per owned
+  lifecycle event; authorized metadata and exact-byte download, no source authentication
+  claim. Test scope, replay, integrity, migration. Product only, no production or
+  external source/model calls.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
