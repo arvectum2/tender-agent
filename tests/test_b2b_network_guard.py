@@ -176,3 +176,32 @@ def test_staggered_windows_charge_failed_attempts(gate):
     clock[0]+=500_000_000
     assert g.dispatch(send,method='HEAD')=='ok'
     assert len(sent)==62 and all(sum(t-WINDOW<s<=t for s in sent)<=60 for t in sent)
+
+
+def test_offline_browser_proxy_only_approved_routes(gate):
+    from scripts.research.b2b_browser_bridge import OfflineBrowserBridge
+
+    g,_clock=gate;seen=[];origin='http://127.0.0.1:49111'
+    def handler(request):
+        seen.append(request.url.path)
+        if request.url.path=='/redirect':return httpx.Response(302,headers={'Location':'/file'})
+        if request.url.path=='/foreign':return httpx.Response(302,headers={'Location':'https://outside.invalid/'})
+        return httpx.Response(200,stream=httpx.ByteStream(b'fixture'))
+    broker=ReadOnlyBroker(g,origin=origin,permitted=lambda url,method:httpx.URL(url).path in ('/redirect','/file','/foreign'),transport=httpx.MockTransport(handler))
+    try:
+        bridge=OfflineBrowserBridge(broker)
+        with bridge.serve() as proxy, httpx.Client(proxy=proxy,trust_env=False,follow_redirects=True,timeout=3) as client:
+            assert client.get(origin+'/redirect').content==b'fixture'
+            assert client.get(origin+'/unapproved').status_code==403
+            assert client.post(origin+'/file',content=b'x').status_code==403
+            assert client.get('http://outside.invalid/').status_code==403
+            with pytest.raises(httpx.ProxyError):client.get('https://outside.invalid/')
+            assert client.get(origin+'/foreign').status_code==403
+            assert bridge.stopped and client.get(origin+'/file').status_code==403
+        assert seen==['/redirect','/file','/foreign']
+        assert len(json.loads(g.state.read_text())['receipts'])==3
+    finally:broker.close()
+    other=ReadOnlyBroker(g,origin='https://outside.invalid',permitted=lambda *_:True,transport=httpx.MockTransport(handler))
+    try:
+        with pytest.raises(GuardError):OfflineBrowserBridge(other)
+    finally:other.close()

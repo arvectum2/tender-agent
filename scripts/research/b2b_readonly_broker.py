@@ -1,6 +1,6 @@
 """Explicit read-only HTTP broker; transport supplied only by offline acceptance.
 
-Not yet attached to the browser. Every redirect hop is an independent admission;
+Attached to the offline HTTP browser fixture only. Every redirect hop is an independent admission;
 no implicit redirect/retry/proxy from the HTTP client. Never expose response or
 request secrets in error messages or the rate log.
 """
@@ -60,29 +60,37 @@ class ReadOnlyBroker:
             if (p.scheme,p.netloc)!=self.origin or (normalized.scheme,normalized.netloc)!=self.origin or p.username or p.password or p.fragment or method not in ('GET','HEAD') or not self.permitted(str(httpx.URL(url)),method):raise ValueError
         except (ValueError,TypeError,httpx.InvalidURL) as exc:raise GuardError('Blocked unapproved HTTP route') from exc
 
+    def fetch_one(self,url,method='GET'):
+        """Exactly one charged hop; browser bridge may return the redirect to UI."""
+        self._check(url,method)
+        def attempt():
+            try:
+                with self.client.stream(method,url,follow_redirects=False) as response:
+                    status=response.status_code
+                    headers=tuple(response.headers.multi_items())
+                    if status==429:
+                        return Receipt(status,headers,b'',0,url),status,retry_delay(response.headers.get('retry-after'),wall_clock=self.wall_clock)
+                    if status in REDIRECTS:
+                        return Receipt(status,headers,b'',0,url),status,0
+                    if response.headers.get('content-encoding','identity').lower() not in ('','identity'):
+                        raise GuardError('Unsupported response encoding')
+                    data=bytearray()
+                    for part in response.iter_raw():
+                        if len(data)+len(part)>MAX_RESPONSE:raise GuardError('Bounded response exceeded')
+                        data.extend(part)
+                    return Receipt(status,headers,bytes(data),0,url),status,0
+            except httpx.HTTPError:raise GuardError('HTTP transport failed; attempt charged') from None
+        return self.gate.dispatch(attempt,method=method)
+
+    def redirect_target(self,result,method):
+        locations=[v for k,v in result.headers if k.lower()=='location']
+        if result.status not in REDIRECTS or len(locations)!=1:raise GuardError('Redirect missing or ambiguous')
+        target=urljoin(result.final_url,locations[0]);self._check(target,method);return target
+
     def fetch(self,url,method='GET'):
         for hop in range(MAX_REDIRECTS+1):
-            self._check(url,method)
-            def attempt(url=url,hop=hop):
-                try:
-                    with self.client.stream(method,url,follow_redirects=False) as response:
-                        status=response.status_code
-                        headers=tuple(response.headers.multi_items())
-                        if status==429:
-                            return Receipt(status,headers,b'',hop,url),status,retry_delay(response.headers.get('retry-after'),wall_clock=self.wall_clock)
-                        if status in REDIRECTS:
-                            return Receipt(status,headers,b'',hop,url),status,0
-                        if response.headers.get('content-encoding','identity').lower() not in ('','identity'):
-                            raise GuardError('Unsupported response encoding')
-                        data=bytearray()
-                        for part in response.iter_raw():
-                            if len(data)+len(part)>MAX_RESPONSE:raise GuardError('Bounded response exceeded')
-                            data.extend(part)
-                        return Receipt(status,headers,bytes(data),hop,url),status,0
-                except httpx.HTTPError:raise GuardError('HTTP transport failed; attempt charged') from None
-            result=self.gate.dispatch(attempt,method=method)
-            if result.status not in REDIRECTS:return result
-            locations=[v for k,v in result.headers if k.lower()=='location']
-            if len(locations)!=1 or hop==MAX_REDIRECTS:raise GuardError('Redirect missing, ambiguous or limit exceeded')
-            url=urljoin(url,locations[0])
+            result=self.fetch_one(url,method)
+            if result.status not in REDIRECTS:return Receipt(result.status,result.headers,result.data,hop,result.final_url)
+            if hop==MAX_REDIRECTS:raise GuardError('Redirect limit exceeded')
+            url=self.redirect_target(result,method)
         raise GuardError('Redirect limit exceeded')
