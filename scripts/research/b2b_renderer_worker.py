@@ -9,6 +9,7 @@ import base64
 import errno
 import http.client
 import json
+import re
 import socket
 import sys
 from pathlib import Path
@@ -57,7 +58,10 @@ def render(cfg):
             # A local operator must verify the account outside this renderer.
             if cfg['mode']=='case-review':
                 result=observe(page,card,authenticated=False)
-                return {'state':result['state'],'visible_controls':result['visible_controls'],'body_sha256':result['body_sha256'],'external_id':result['external_id'],'account_identity_verified':False,'external_submission_allowed':False,'events':events,'sandbox_negative_probe':True}
+                body=page.locator('body').inner_text(timeout=3000)
+                if len(body)>500000:raise RuntimeError('Bounded body exceeded')
+                normalized=' '.join(body.casefold().replace('ё','е').split())
+                return {'state':result['state'],'visible_controls':result['visible_controls'],'body_sha256':result['body_sha256'],'external_id':result['external_id'],'card_id_visible':bool(re.search(r'(?<!\d)'+result['external_id']+r'(?!\d)',body)),'login_text_seen':any(x in normalized for x in ('войти в систему','вход в личный кабинет','введите логин','введите пароль')),'account_identity_verified':False,'external_submission_allowed':False,'events':events,'sandbox_negative_probe':True}
             if cfg['mode']!='offline-fixture':raise RuntimeError('Unknown renderer workflow')
             assert page.locator('h1').inner_text()=='Authorized fixture'
             page.locator('#background').click();page.wait_for_function("document.querySelector('#result').textContent === 'background-ok'",timeout=5000)

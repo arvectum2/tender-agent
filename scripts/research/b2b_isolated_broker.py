@@ -20,15 +20,18 @@ from scripts.research.b2b_readonly_broker import MAX_REDIRECTS, REDIRECTS
 
 
 class RendererBroker:
-    def __init__(self,broker,scope,*,seconds=65):
+    def __init__(self,broker,scope,*,seconds=65,max_dispatches=None):
         if not 1<=seconds<=120:raise GuardError('Invalid pilot deadline')
         self.broker=broker;self.scope=scope;self.deadline=time.monotonic()+seconds
+        if max_dispatches not in (None,1):raise GuardError('Unsupported dispatch budget')
+        self.max_dispatches=max_dispatches;self.dispatched=0
         self.token=secrets.token_hex(32);self.lock=threading.Lock();self.stopped=False;self.events=[]
 
     def fetch(self,url,method):
         with self.lock:
             if self.stopped or time.monotonic()>=self.deadline:raise GuardError('Pilot stopped or expired')
             if not self.scope(url,method):raise GuardError('Unreviewed renderer route')
+            if self.max_dispatches is not None and (self.dispatched>=self.max_dispatches or method!='GET' or self.scope.kind(url)!='page'):raise GuardError('One-card dispatch budget exhausted')
             try:
                 kind=self.scope.kind(url)
                 if kind=='archive':
@@ -40,13 +43,15 @@ class RendererBroker:
                         if r.status not in REDIRECTS:break
                         if hop==MAX_REDIRECTS:raise GuardError('Archive redirect limit exceeded')
                         target=self.broker.redirect_target(r,method)
-                else:r=self.broker.fetch_one(url,method)
+                else:
+                    self.dispatched+=1;r=self.broker.fetch_one(url,method)
+                self.events.append(r.status)
                 if r.status in REDIRECTS:raise GuardError('Navigation redirect requires explicit reviewed navigation')
                 if r.status in (401,403,429):self.stopped=True
                 if time.monotonic()>=self.deadline:raise GuardError('Pilot deadline exceeded')
                 headers={k:v for k,v in r.headers if k.lower() in ('content-type','content-disposition','retry-after','cache-control')}
                 if kind=='archive' and r.status==200 and (not r.data.startswith(b'PK') or 'attachment' not in headers.get('content-disposition','').lower()):raise GuardError('Invalid archive response')
-                self.events.append(r.status);return r.status,headers,r.data
+                return r.status,headers,r.data
             except (GuardError,OSError):self.stopped=True;raise
 
     @contextmanager

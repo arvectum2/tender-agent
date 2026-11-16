@@ -359,3 +359,30 @@ def test_legacy_b2b_egress_refused_before_transport(monkeypatch):
     for fn,arg in ((audit._public_get,card),(watch.fetch_public,card),(market.fetch_original,card),(unified.read_index,unified.B2B_INDEX.format('razrabotka-sajtov')),(commercial_capture.fetch_card,card),(commercial_sources.read_index,'b2bcenter:razrabotka-sajtov')):
         with pytest.raises(ValueError,match='guarded adapter required'):fn(arg)
     assert stage._read_public(card)=={'http_state':'GUARDED_ACCESS_REQUIRED','raw':None}
+
+
+def test_one_card_worker_enforces_exact_single_get(tmp_path):
+    from scripts.research.b2b_manual_session import save_private
+    from scripts.research.b2b_network_guard import EgressGate
+    from scripts.research.b2b_one_card import manifest_for, run_worker
+
+    card='https://www.b2b-center.ru/app/market-next/fixture/tender-4664540/'
+    root=tmp_path.resolve()/'private';root.mkdir(mode=0o700);path=root/'egress';path.mkdir(mode=0o700)
+    g=EgressGate(path);g.initialize();s=g._read();s['blocked_until']=s['last_ns'];g._write(s)
+    save_private(root/'session.json',{'origins':[],'cookies':[{'name':'session','value':'offline-only','domain':'www.b2b-center.ru','path':'/','expires':-1,'secure':True,'httpOnly':True,'sameSite':'Strict'}]})
+    seen=[]
+    def request(req):
+        assert str(req.url)==card and req.method=='GET'
+        assert req.headers['cookie']=='session=offline-only';seen.append(req.method)
+        return httpx.Response(200,headers={'content-type':'text/html'},stream=httpx.ByteStream(b'<html>Fixture</html>'))
+    def render(bridge,**kwargs):
+        for url,method in ((card+'?extra=1','GET'),(card,'HEAD'),(card,'POST')):
+            with pytest.raises(GuardError):bridge.fetch(url,method)
+        assert bridge.fetch(card,'GET')[0]==200
+        with pytest.raises(GuardError):bridge.fetch(card,'GET')
+        return {'state':'fixture','card_id_visible':True,'sandbox_negative_probe':True}
+    result=run_worker(card,root,transport=httpx.MockTransport(request),render=render)
+    assert result['http_statuses']==[200] and result['upstream_attempts']==1 and result['card_id_visible'] and not result['session_server_verified'] and seen==['GET']
+    assert 'offline-only' not in json.dumps(result) and len(g._read()['receipts'])==1
+    for bad in ('https://workspace.ru/tenders/fixture-1234/',card+'?x=1',card+'#other'):
+        with pytest.raises(GuardError):manifest_for(bad)
