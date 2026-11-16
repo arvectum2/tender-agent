@@ -74,6 +74,8 @@ class Runner:
         self.last_link_input = self.docs / "verified-ta-link-input-138.json"
         self.member_plan = None
         self.member_plan_sha = None
+        self.member_queue = False
+        self.member_batch_limit = 3
 
     def record_heads(self):
         with self.mutex:
@@ -361,7 +363,7 @@ class Runner:
         self.update(lane,index_inflight=True,index_baseline=len(before),member_pilot_status="in_progress",member_plan_sha256=self.member_plan_sha)
         args=["--root",self.root,"--plan",self.member_plan,"--digest",self.member_plan_sha]
         def batch(mode):
-            return self.cmd(lane,"member_index_batch_"+mode,[MI_PY,"-m","scripts.research.member_index_batch",*map(str,args),"--mode",mode,"--gate",str(gate),"--limit","3"],self.sibur,1000).decode()
+            return self.cmd(lane,"member_index_batch_"+mode,[MI_PY,"-m","scripts.research.member_index_batch",*map(str,args),"--mode",mode,"--gate",str(gate),"--limit",str(self.member_batch_limit)],self.sibur,2050).decode()
         error=None
         try:
             x=batch("extract");self.reconcile_index(self.local_index());y=batch("index")
@@ -379,6 +381,29 @@ class Runner:
             raise Blocked("member registry replay mismatch")
         self.update(lane,index_inflight=False,member_pilot_status="completed",member_pilot_completed_sha256=self.member_plan_sha,member_pilot={"extracted_planned":planned(x,"planned"),"indexed_planned":planned(y,"planned"),"new_receipts":len(after)-len(before),"registry":linked,"replay":repeat})
         return True
+
+    def member_queue_cycle(self, sync):
+        """Select and process a fresh bounded queue from verified receipts."""
+        if not self.member_queue or self.stop_requested():return False
+        lane="sibur";state=self.state["lanes"][lane]
+        if state.get("index_inflight"):raise Blocked("member queue has unreconciled ingest")
+        result=json.loads(self.cmd(lane,"prepare member queue",[MI_PY,"-m","scripts.research.prepare_sibur_member_queue","--root",str(self.root),"--limit","10"],self.sibur,180))
+        self.update(lane,member_queue=result)
+        if not result.get("file"):
+            if result.get("new_review",0):return True
+            return False
+        folder=self.root/"sibur-sales-map-20261115";p=folder/result["file"];digest=result["digest"]
+        if p.parent!=folder or p.is_symlink() or not re.fullmatch(r"member-index-auto-[0-9]{8}T[0-9]{12}Z\.json",p.name) or hashlib.sha256(p.read_bytes()).hexdigest()!=digest:raise Blocked("member queue plan identity mismatch")
+        if state.get("member_pilot_completed_sha256")==digest:raise Blocked("member queue repeated completed plan")
+        self.member_plan=p;self.member_plan_sha=digest;self.member_batch_limit=10
+        try:
+            if not self.member_index_pilot(sync):return False
+            receipt=self.state["lanes"][lane]["member_pilot"]
+            if not (receipt["extracted_planned"] or receipt["indexed_planned"] or receipt["registry"]["updated"]):raise Blocked("member queue made no progress")
+            self.update(lane,member_queue_cycles=state.get("member_queue_cycles",0)+1,member_queue_last_receipt=receipt)
+            return True
+        finally:
+            self.member_plan=None;self.member_plan_sha=None;self.member_batch_limit=3
 
     def archive_index_lane(self):
         lane="sibur"
@@ -431,8 +456,10 @@ class Runner:
                             break
                         if self.member_index_pilot(sync):
                             continue
+                        if self.member_queue_cycle(sync):
+                            continue
                     collector = self.root / "sibur-archive-discovery/categories/documents/state.json"
-                    if not collector.exists() or read(collector).get("status") != "running":
+                    if not self.member_queue and (not collector.exists() or read(collector).get("status") != "running"):
                         self.update(lane,status="exhausted",step="committed priority queue drained; collector not running; review remains")
                         return
                     self.update(lane,step="waiting for committed archive receipts",deadline_seconds=60)
@@ -499,7 +526,9 @@ def main():
     p.add_argument("--resume-sibur-refresh", action="store_true", help="recover only a reconciled pre-ingest refresh failure")
     p.add_argument("--member-plan", type=Path)
     p.add_argument("--member-plan-sha256")
+    p.add_argument("--member-queue", action="store_true", help="continuously process bounded source-bound member plans")
     args = p.parse_args()
+    if args.member_queue and args.member_plan:p.error("choose a pilot or continuous queue")
     if bool(args.member_plan)!=bool(args.member_plan_sha256):p.error("member plan and digest must be supplied together")
     if args.member_plan and (args.member_plan.is_symlink() or not re.fullmatch(r"[a-f0-9]{64}",args.member_plan_sha256) or hashlib.sha256(args.member_plan.read_bytes()).hexdigest()!=args.member_plan_sha256):p.error("member plan identity mismatch")
     os.umask(0o077)
@@ -512,6 +541,7 @@ def main():
             print("Executor already running")
             return
         r = Runner(args.root, args.gpb, args.sibur, args.mi)
+        r.member_queue=args.member_queue
         r.member_plan=args.member_plan
         r.member_plan_sha=args.member_plan_sha256
         if args.resume_sibur_refresh:

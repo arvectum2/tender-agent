@@ -218,3 +218,20 @@ def test_member_pilot_gated_reconciled_and_idempotent(tmp_path,monkeypatch):
     assert r.state['lanes']['sibur']['index_inflight'] is False
     assert r.state['lanes']['sibur']['member_pilot']['new_receipts']==1
     assert not r.member_index_pilot(sync)
+
+
+def test_member_queue_uses_new_authenticated_plan_and_requires_progress(tmp_path,monkeypatch):
+    import hashlib
+    r=Runner(tmp_path,tmp_path,tmp_path,tmp_path);r.member_queue=True;r.update('sibur',index_inflight=False)
+    f=tmp_path/'sibur-sales-map-20261115';f.mkdir();p=f/'member-index-auto-20261116T223304950437Z.json';atomic(p,{})
+    result={'file':p.name,'digest':hashlib.sha256(p.read_bytes()).hexdigest(),'new_review':0}
+    monkeypatch.setattr(r,'cmd',lambda *a:json.dumps(result).encode())
+    def pilot(sync):
+        assert r.member_plan==p and r.member_batch_limit==10
+        r.update('sibur',member_pilot_completed_sha256=result['digest'],member_pilot={'extracted_planned':1,'indexed_planned':1,'registry':{'updated':1}});return True
+    monkeypatch.setattr(r,'member_index_pilot',pilot)
+    assert r.member_queue_cycle(None) and r.state['lanes']['sibur']['member_queue_cycles']==1
+    assert r.member_plan is None
+    with pytest.raises(Blocked,match='repeated'):r.member_queue_cycle(None)
+    result.update(file=None,digest=None,new_review=1);assert r.member_queue_cycle(None)
+    result['new_review']=0;assert not r.member_queue_cycle(None)
