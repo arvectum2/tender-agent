@@ -432,3 +432,42 @@ def test_partial_card_evidence_does_not_promote_unknown_organizer():
     assert not partial['organizer_verified'] and not partial['account_identity_verified'] and not partial['external_submission_allowed'] and r['attachment_candidate_count']==1
     bad=raw.replace(b'<span>4664540</span>',b'<span hidden>4664540</span>')
     assert 'partial_card_observation' not in card_evidence(card,Receipt(200,(),bad,0,card),datetime(2026,11,16,tzinfo=UTC))
+
+
+def test_exact_cdn_static_resources_are_credential_free_and_charged(gate):
+    from scripts.research.b2b_cdn_resources import ReviewedCardRenderer, references
+    from scripts.research.b2b_readonly_broker import Receipt
+
+    g,_clock=gate;card='https://www.b2b-center.ru/app/market-next/fixture/tender-4664540/'
+    js='https://cdn.b2b-center.ru/static/app.js';css='https://cdn.b2b-center.ru/static/app.css'
+    raw=f'<html><script src="{js}"></script><link rel="stylesheet" href="{css}"><script src="{js}?token=fixture"></script><script src="https://else.invalid/x.js"></script><script src="https://cdn.b2b-center.ru/api/x"></script></html>'.encode()
+    reviewed=references(card,raw);assert reviewed=={js:'script',css:'style'}
+    seen=[]
+    def handler(req):
+        assert 'cookie' not in req.headers and 'authorization' not in req.headers
+        seen.append(str(req.url))
+        return httpx.Response(200,headers={'content-type':'text/css' if str(req.url)==css else 'application/javascript','set-cookie':'fixture=not-forwarded'},stream=httpx.ByteStream(b'fixture'))
+    bridge=ReviewedCardRenderer(card,Receipt(200,(('content-type','text/html'),('content-security-policy',"default-src 'self'"),('set-cookie','secret=fixture')),raw,0,card),g,reviewed,transport_factory=lambda:httpx.MockTransport(handler))
+    status,headers,data=bridge.fetch(card,'GET');assert status==200 and data==raw and 'set-cookie' not in headers and 'content-security-policy' in headers
+    for url,method in ((card,'GET'),(js,'POST'),(js+'?x=1','GET'),('https://cdn.b2b-center.ru/static/other.js','GET')):
+        with pytest.raises(GuardError):bridge.fetch(url,method)
+    assert bridge.fetch(js,'GET')[2]==b'fixture' and bridge.fetch(css,'GET')[2]==b'fixture'
+    with pytest.raises(GuardError):bridge.fetch(js,'GET')
+    assert seen==[js,css] and len(g._read()['receipts'])==2
+    with pytest.raises(GuardError):ReviewedCardRenderer(card,Receipt(200,(),raw,0,card),g,{js:'script','https://cdn.b2b-center.ru/static/other.js':'script'})
+
+
+@pytest.mark.parametrize('mode',['redirect','wrong-mime','oversized'])
+def test_cdn_fails_closed_without_redirect_or_repeat(gate,monkeypatch,mode):
+    from scripts.research import b2b_cdn_resources as cdn
+
+    g,_=gate;url='https://cdn.b2b-center.ru/static/a.js';seen=[]
+    monkeypatch.setattr(cdn,'MAX_ASSET_BYTES',8)
+    def handler(req):
+        seen.append(str(req.url));assert 'cookie' not in req.headers
+        if mode=='redirect':return httpx.Response(302,headers={'location':'https://cdn.b2b-center.ru/static/b.js'})
+        return httpx.Response(200,headers={'content-type':'text/html' if mode=='wrong-mime' else 'application/javascript'},stream=httpx.ByteStream(b'123456789' if mode=='oversized' else b'fixture'))
+    fetcher=cdn.StaticFetcher(g,{url:'script'},transport_factory=lambda:httpx.MockTransport(handler))
+    with pytest.raises(GuardError):fetcher.fetch(url,'GET')
+    with pytest.raises(GuardError):fetcher.fetch(url,'GET')
+    assert seen==[url] and fetcher.stopped and len(g._read()['receipts'])==1

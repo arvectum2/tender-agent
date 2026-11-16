@@ -12,7 +12,9 @@ import json
 import re
 import socket
 import sys
+from collections import Counter
 from pathlib import Path
+from urllib.parse import urlsplit
 
 from scripts.research.b2b_browser_bridge import launch_options
 from scripts.research.commercial_document_acquisition import observe
@@ -30,16 +32,25 @@ def assert_restricted(port):
 def render(cfg):
     from playwright.sync_api import sync_playwright
 
-    port=cfg['port'];assert_restricted(port);token=cfg['token'];origin=cfg['origin'];card=cfg['card'];root=Path(cfg['directory']);events=[]
+    port=cfg['port'];assert_restricted(port);token=cfg['token'];origin=cfg['origin'];card=cfg['card'];root=Path(cfg['directory']);events=[];blocked=Counter()
+    def note_block(request):
+        if cfg['mode']=='reviewed-cdn':
+            p=urlsplit(request.url)
+            domain='card-origin' if p.scheme=='https' and p.netloc=='www.b2b-center.ru' else 'cdn-origin' if p.scheme=='https' and p.netloc=='cdn.b2b-center.ru' else 'other'
+            resource=request.resource_type if request.resource_type in ('document','script','stylesheet','xhr','fetch','image','font','media','websocket','eventsource') else 'other'
+            method=request.method if request.method in ('GET','HEAD','POST') else 'other'
+            blocked[domain+'|'+resource+'|'+method]+=1
+
     def route_request(route):
         request=route.request
-        if request.method not in ('GET','HEAD') or not request.url.startswith(origin+'/') or request.resource_type in ('websocket','eventsource','media'):
-            events.append('blocked');route.abort();return
+        cdn_asset=cfg['mode']=='reviewed-cdn' and urlsplit(request.url).netloc=='cdn.b2b-center.ru' and urlsplit(request.url).scheme=='https' and request.resource_type in ('script','stylesheet')
+        if request.method not in ('GET','HEAD') or not (request.url.startswith(origin+'/') or cdn_asset) or request.resource_type in ('websocket','eventsource','media'):
+            events.append('blocked');note_block(request);route.abort();return
         c=http.client.HTTPConnection('127.0.0.1',port,timeout=25)
         try:
             c.request('POST','/fetch',json.dumps({'url':request.url,'method':request.method}),headers={'Authorization':'Bearer '+token,'Content-Type':'application/json'})
             r=c.getresponse()
-            if r.status!=200:events.append('blocked');route.abort();return
+            if r.status!=200:events.append('blocked');note_block(request);route.abort();return
             meta=json.loads(base64.b64decode(r.getheader('X-Renderer-Receipt'),validate=True));size=int(r.getheader('Content-Length'))
             if not 0<=size<=MAX_RESPONSE:raise ValueError
             data=r.read(MAX_RESPONSE+1)
@@ -56,12 +67,12 @@ def render(cfg):
             if page.url!=card or response is None or response.status!=200:raise RuntimeError('Page identity or navigation failed')
             # Candidate one-card workflow: no downloads, navigation or submission.
             # A local operator must verify the account outside this renderer.
-            if cfg['mode']=='case-review':
+            if cfg['mode'] in ('case-review','reviewed-cdn'):
                 result=observe(page,card,authenticated=False)
                 body=page.locator('body').inner_text(timeout=3000)
                 if len(body)>500000:raise RuntimeError('Bounded body exceeded')
                 normalized=' '.join(body.casefold().replace('ё','е').split())
-                return {'state':result['state'],'visible_controls':result['visible_controls'],'body_sha256':result['body_sha256'],'external_id':result['external_id'],'card_id_visible':bool(re.search(r'(?<!\d)'+result['external_id']+r'(?!\d)',body)),'login_text_seen':any(x in normalized for x in ('войти в систему','вход в личный кабинет','введите логин','введите пароль')),'account_identity_verified':False,'external_submission_allowed':False,'events':events,'sandbox_negative_probe':True}
+                return {'state':result['state'],'visible_controls':result['visible_controls'],'body_sha256':result['body_sha256'],'external_id':result['external_id'],'card_id_visible':bool(re.search(r'(?<!\d)'+result['external_id']+r'(?!\d)',body)),'login_text_seen':any(x in normalized for x in ('войти в систему','вход в личный кабинет','введите логин','введите пароль')),'account_identity_verified':False,'external_submission_allowed':False,'events':events,'blocked_request_classes':dict(blocked),'sandbox_negative_probe':True}
             if cfg['mode']!='offline-fixture':raise RuntimeError('Unknown renderer workflow')
             assert page.locator('h1').inner_text()=='Authorized fixture'
             page.locator('#background').click();page.wait_for_function("document.querySelector('#result').textContent === 'background-ok'",timeout=5000)

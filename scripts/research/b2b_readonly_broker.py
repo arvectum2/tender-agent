@@ -43,12 +43,14 @@ class Receipt:
 
 
 class ReadOnlyBroker:
-    def __init__(self,gate,*,origin,permitted,transport,wall_clock=time.time,cookies=None):
+    def __init__(self,gate,*,origin,permitted,transport,wall_clock=time.time,cookies=None,max_response_bytes=MAX_RESPONSE):
         # No default live transport. A separately accepted browser integration
         # must provide the dedicated transport and its egress/timeout guarantees.
         parsed=urlsplit(origin)
         if parsed.scheme not in ('https','http') or not parsed.netloc or parsed.path not in ('','/') or parsed.query or parsed.fragment or parsed.username or parsed.password:raise GuardError('Invalid broker origin')
         if parsed.scheme=='http' and parsed.hostname not in ('127.0.0.1','::1','localhost'):raise GuardError('HTTP only for localhost fixture')
+        if type(max_response_bytes) is not int or not 1<=max_response_bytes<=MAX_RESPONSE:raise GuardError('Invalid response byte bound')
+        self.max_response_bytes=max_response_bytes
         self.origin=(parsed.scheme,parsed.netloc);self.gate=gate;self.permitted=permitted;self.wall_clock=wall_clock
         self.client=httpx.Client(transport=transport,follow_redirects=False,trust_env=False,timeout=httpx.Timeout(10.0),cookies=cookies,headers={'Accept-Encoding':'identity'})
 
@@ -76,7 +78,7 @@ class ReadOnlyBroker:
                         raise GuardError('Unsupported response encoding')
                     data=bytearray()
                     for part in response.iter_raw():
-                        if len(data)+len(part)>MAX_RESPONSE:raise GuardError('Bounded response exceeded')
+                        if len(data)+len(part)>self.max_response_bytes:raise GuardError('Bounded response exceeded')
                         data.extend(part)
                     return Receipt(status,headers,bytes(data),0,url),status,0
             except httpx.HTTPError:raise GuardError('HTTP transport failed; attempt charged') from None

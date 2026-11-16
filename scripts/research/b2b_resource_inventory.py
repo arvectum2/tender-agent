@@ -17,6 +17,7 @@ import httpx
 from lxml import html
 from lxml.etree import LxmlError
 
+from scripts.research.b2b_cdn_resources import references
 from scripts.research.b2b_guarded_runner import (
     canonical_root,
     private_dir,
@@ -96,6 +97,7 @@ def core_observation(card,response,observed_at):
 
 def card_evidence(card,response,observed_at):
     result=inventory(card,response.data)
+    result['cdn_review_candidates']=references(card,response.data)
     try:
         receipt=verify_card_snapshot(requested_url=card,final_url=response.final_url,status_code=response.status,tls_verified=True,content_type='text/html',raw=response.data,observed_at=observed_at)
         docs=attachment_inventory(card,response.data)
