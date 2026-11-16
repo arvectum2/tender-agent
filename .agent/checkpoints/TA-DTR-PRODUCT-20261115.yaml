@@ -157,7 +157,7 @@ completed:
   from hosted evidence Docker Hub HTTP502 pgvector pull; bounded hosted pre-pull retry
   added, unchanged acceptance gate. Existing audit proves 17 EIS official attachments
   only, no commercial download contract.
-current_stage: case_matrix_verified_offline_next_source_contracts_and_ci
+current_stage: commercial_api_first_and_browser_fallback_contract
 remaining:
 - Check current exact-head hosted CI (Node, R8 and mirror); fix only confirmed regressions.
   Docker Hub 502 pre-pull retry not yet tested hosted.
@@ -225,11 +225,9 @@ test_results:
   copy, unsupported PDF, scoped pagination and stale review; Ruff/diff and workflow
   YAML PASS. Hosted exact-head acceptance pending, local Node unavailable. PR547 amended
   head observed 14 success,4 running, mirror only failure.
-resume_instruction: Case matrix implemented and offline accepted. Hosted CI verify
-  exact head and mirror diagnosis. Actual first-party commercial attachment acquisition
-  remains blocked on validated platform contract; verify permitted public originals
-  independently of SIBUR, then build bounded downloader. No speculative URL or source
-  claims, live models or production changes. Existing SIBUR executor 818/17574 synced
-  healthy at last check; preserve.
+resume_instruction: Owner requests automatic originals API first, Playwright fallback.
+  Research official API and actual public access gates; implement bounded source observations
+  and safe browser fallback with explicit access outcomes. No procurement submissions,
+  purchases, credential guessing, production changes or model calls.
 owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
   Product changes isolated, offline and bounded.
