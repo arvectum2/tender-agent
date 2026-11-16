@@ -2003,3 +2003,59 @@ def test_lifecycle_artifact_bytes_scope_and_immutability(client, session, monkey
     session.execute(update(CompanyLifecycleArtifact).where(CompanyLifecycleArtifact.id==first['artifact_id']).values(raw_bytes=raw.replace(b'1 0 obj',b'9 0 obj')));session.commit()
     assert client.get(url,headers=headers).status_code==409
     assert client.get(url+'/download',headers=headers).status_code==409
+
+
+def test_company_price_scenarios_exact_economics_and_scope(client, session, monkeypatch):
+    from src.modules.saas_foundation.models import CompanyPriceScenario
+
+    _, a=_seed(client,'PRICE A'); _, b=_seed(client,'PRICE B')
+    _legal(client,a);_legal(client,b)
+    settings=saas.get_settings();monkeypatch.setattr(saas,'get_settings',lambda:settings)
+    cases='/api/saas/company-portfolio/cases';headers=_auth(a)
+    def create(token,n):
+        r=client.post(cases,headers=_auth(token),json={'registry_number':f'{n:019d}'});assert r.status_code==201,r.text
+        return cases+'/'+r.json()['case_id']+'/price-scenarios'
+    path=create(a,1);foreign=create(b,1);same=create(a,2)
+    assert client.get(path,headers=headers).status_code==404
+    settings=settings.model_copy(update={'saas_company_price_scenarios_enabled':True})
+    inputs={'external_direct_rub':'60000','own_labor_rub':'20000','cash_overhead_rub':'10000','reserve_rub':'5000','fixed_platform_fees_rub':'2000','guarantee_financing_cost_rub':'3000','revenue_tax_percent':'6','variable_platform_fee_percent':'4','minimum_profit_rub':'5000','target_profit_rub':'20000','reference_ceiling_rub':'120000','manual_bid_prices_rub':['80000','100000','120000'],'assumption_note':'Synthetic test only, explicit revenue-based shares, reserve and guarantee cost','accept_hypothetical_assumptions_only':True}
+    def preview(body,token=a,url=path):return client.post(url+'/preview',headers=_auth(token),json=body)
+    def save(body,rev=0,key='price-fixture-1',url=path,token=a):return client.post(url,headers=_auth(token),json={'scenario':body,'expected_revision':rev,'idempotency_key':key})
+    r=preview(inputs);assert r.status_code==200,r.text
+    result=r.json()['result'];assert not r.json()['inputs_stored'] and session.query(CompanyPriceScenario).count()==0
+    assert result['cash_fixed_and_reserved_rub']=='80000.00' and result['full_economic_cost_before_revenue_rates_rub']=='100000.00'
+    assert [x['price_rub'] for x in result['scenarios'][:4]]==['88888.89','111111.12','116666.67','133333.34']
+    assert result['scenarios'][0]['cash_break_even_met'] and not result['scenarios'][0]['full_break_even_met']
+    assert result['scenarios'][1]['full_break_even_met'] and result['scenarios'][2]['minimum_profit_met'] and result['scenarios'][3]['target_profit_met']
+    assert result['scenarios'][3]['within_user_reference_ceiling'] is False
+    assert [x['economic_profit_rub'] for x in result['scenarios'][4:]]==['-28000.00','-10000.00','8000.00']
+    assert result['scenarios'][-1]['economic_margin_percent']=='6.6666'
+    assert all(result[k] is False for k in ('tax_model_verified','market_comparables_used','probability_of_winning_estimated','is_procurement_bid_recommendation','commercial_owner_go','external_submission_allowed'))
+    for bad in ({'revenue_tax_percent':'96'},{'own_labor_rub':'-1'},{'external_direct_rub':'1.001'},{'accept_hypothetical_assumptions_only':False},{'minimum_profit_rub':'20001'},{'manual_bid_prices_rub':['100','100.00']},{'manual_bid_prices_rub':['0']},{'reference_ceiling_rub':'0'},{'assumption_note':'   '}):
+        assert preview({**inputs,**bad}).status_code==422,bad
+    for field in ('revenue_tax_percent','guarantee_financing_cost_rub','manual_bid_prices_rub'):
+        assert preview({k:v for k,v in inputs.items() if k!=field}).status_code==422
+    assert preview(inputs,token=b).status_code==404 and save(inputs,url=foreign).status_code==404
+    r=save(inputs);assert r.status_code==201,r.text
+    first=r.json();assert first['result']==result and first['revision']==1 and first['origin']=='EXPLICIT_USER_ASSUMPTIONS'
+    assert save(inputs).json()==first
+    changed={**inputs,'own_labor_rub':'30000'}
+    assert save(changed).status_code==409 and save(inputs,rev=1).status_code==409
+    assert save(changed,key='price-fixture-2').status_code==409
+    assert save(changed,rev=1,key='price-fixture-2').status_code==201
+    page=client.get(path,headers=headers,params={'limit':1}).json();assert page['has_more'] and page['items'][0]['revision']==2
+    assert client.get(path,headers=headers,params={'offset':1}).json()['items']==[first]
+    assert client.get(path,headers=_auth(b)).status_code==404
+    assert client.get(same,headers=headers).json()['items']==[]
+    invite=client.post('/api/saas/invitations',headers=headers,json={'role':'viewer','acquisition_channel':'referral'}).json()
+    viewer=client.post('/api/saas/invitations/redeem',json={'invitation_code':invite['invitation_code'],'display_name':'viewer'}).json()['access_token'];_legal(client,viewer)
+    assert client.get(path,headers=_auth(viewer)).status_code==403 and preview(inputs,token=viewer).status_code==403
+    invite=client.post('/api/saas/invitations',headers=headers,json={'role':'analyst','acquisition_channel':'referral'}).json()
+    analyst=client.post('/api/saas/invitations/redeem',json={'invitation_code':invite['invitation_code'],'display_name':'analyst'}).json()['access_token'];_legal(client,analyst)
+    assert client.get(path,headers=_auth(analyst)).status_code==200 and preview(inputs,token=analyst).status_code==200
+    assert save(inputs,rev=2,key='price-fixture-3',token=analyst).status_code==403
+    assert save(inputs,rev=2,key='price-fixture-3',token=viewer).status_code==403
+    assert session.query(CompanyPriceScenario).count()==2
+    from sqlalchemy import update
+    session.execute(update(CompanyPriceScenario).where(CompanyPriceScenario.id==first['scenario_id']).values(result_json={}))
+    session.commit();assert client.get(path,headers=headers).status_code==409

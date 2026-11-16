@@ -77,6 +77,7 @@ from src.modules.saas_foundation.models import (  # noqa: F401
     CompanyPortfolioEvidence,
     CompanyReadinessEvidence,
     CompanyLifecycleArtifact,
+    CompanyPriceScenario,
     SaasAccessToken,
     SaasAuditEvent,
     SaasInvitation,

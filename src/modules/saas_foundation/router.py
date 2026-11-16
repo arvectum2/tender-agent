@@ -69,6 +69,7 @@ from src.modules.saas_foundation import (
     company_lifecycle,
     company_lifecycle_artifacts,
     company_portfolio,
+    company_price_scenarios,
     company_readiness,
     company_schedule,
 )
@@ -998,3 +999,24 @@ def download_lifecycle_artifact(case_id: str, event_id: str, principal: Member, 
         raise HTTPException(404, "Lifecycle artifacts disabled")
     raw, format_hint, sha=company_lifecycle_artifacts.download(session, principal, case_id, event_id)
     return Response(content=raw, media_type="application/octet-stream", headers={"Content-Disposition": f'attachment; filename="lifecycle-{sha[:16]}.{format_hint}"', "Cache-Control": "private, no-store", "X-Content-Type-Options": "nosniff", "X-Artifact-SHA256": sha})
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/preview")
+def company_price_preview(case_id: str, payload: company_price_scenarios.ScenarioInput, principal: Member, session: DBSession) -> dict:
+    if not get_settings().saas_company_price_scenarios_enabled:
+        raise HTTPException(404, "Price scenarios disabled")
+    return company_price_scenarios.preview(session, principal, case_id, payload)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/price-scenarios")
+def company_price_history(case_id: str, principal: Member, session: DBSession, offset: int = Query(0, ge=0, le=30), limit: int = Query(10, ge=1, le=30)) -> dict:
+    if not get_settings().saas_company_price_scenarios_enabled:
+        raise HTTPException(404, "Price scenarios disabled")
+    return company_price_scenarios.history(session, principal, case_id, offset, limit)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/price-scenarios", status_code=201)
+def company_price_save(case_id: str, payload: company_price_scenarios.SaveInput, principal: Member, session: DBSession) -> dict:
+    if not get_settings().saas_company_price_scenarios_enabled:
+        raise HTTPException(404, "Price scenarios disabled")
+    return company_price_scenarios.save(session, principal, case_id, payload)

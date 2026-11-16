@@ -361,3 +361,26 @@ def test_lifecycle_artifact_migration_preserves_bytes(tmp_path, monkeypatch):
         with engine.connect() as conn:assert conn.scalar(text('SELECT raw_bytes FROM company_lifecycle_artifacts'))==raw
     finally:
         engine.dispose();invalidate_settings_cache()
+
+
+def test_price_scenario_migration_preserves_versions(tmp_path, monkeypatch):
+    import pytest
+
+    db_url='sqlite:///'+str(tmp_path/'price.sqlite')
+    monkeypatch.setenv('AI_CORP_DATABASE_URL',db_url);invalidate_settings_cache()
+    cfg=Config(str(Path(__file__).resolve().parents[1]/'alembic.ini'));engine=create_engine(db_url)
+    try:
+        with engine.begin() as conn:
+            for table,identity in (('procurement_cases','id'),('saas_tenants','tenant_id'),('saas_members','id')):
+                conn.execute(text(f'CREATE TABLE {table} ({identity} VARCHAR PRIMARY KEY)'))
+                conn.execute(text(f"INSERT INTO {table} ({identity}) VALUES ('fixture')"))
+        command.stamp(cfg,'117_company_lifecycle_artifacts');command.upgrade(cfg,'118_company_price_scenarios')
+        assert 'company_price_scenarios' in inspect(engine).get_table_names()
+        command.downgrade(cfg,'117_company_lifecycle_artifacts');command.upgrade(cfg,'118_company_price_scenarios')
+        with engine.begin() as conn:
+            conn.execute(text("INSERT INTO company_price_scenarios (id,case_id,tenant_id,member_id,revision,idempotency_key,input_json,result_json,created_at) VALUES ('e','fixture','fixture','fixture',1,'fixture-key','{}','{}','2026-11-16')"))
+        with pytest.raises(RuntimeError,match='Cannot discard'):
+            command.downgrade(cfg,'117_company_lifecycle_artifacts')
+        with engine.connect() as conn:assert conn.scalar(text('SELECT count(*) FROM company_price_scenarios'))==1
+    finally:
+        engine.dispose();invalidate_settings_cache()

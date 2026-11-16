@@ -354,3 +354,26 @@ class CompanyLifecycleArtifact(UUIDPrimaryKeyMixin, Base):
 
 event.listen(CompanyLifecycleArtifact, "before_update", _immutable_company_decision)
 event.listen(CompanyLifecycleArtifact, "before_delete", _immutable_company_decision)
+
+
+class CompanyPriceScenario(UUIDPrimaryKeyMixin, Base):
+    """Immutable owner-input economics, separate from verified market facts."""
+    __tablename__ = "company_price_scenarios"
+    case_id: Mapped[str] = mapped_column(String(36), ForeignKey("procurement_cases.id"), nullable=False)
+    tenant_id: Mapped[str] = mapped_column(String(64), ForeignKey("saas_tenants.tenant_id"), nullable=False)
+    member_id: Mapped[str] = mapped_column(String(36), ForeignKey("saas_members.id"), nullable=False)
+    revision: Mapped[int] = mapped_column(Integer, nullable=False)
+    idempotency_key: Mapped[str] = mapped_column(String(128), nullable=False)
+    input_json: Mapped[dict] = mapped_column(JSON, nullable=False)
+    result_json: Mapped[dict] = mapped_column(JSON, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    __table_args__ = (
+        UniqueConstraint("case_id", "revision", name="uq_company_price_revision"),
+        UniqueConstraint("case_id", "idempotency_key", name="uq_company_price_replay"),
+        CheckConstraint("revision BETWEEN 1 AND 30", name="ck_company_price_revision"),
+        Index("ix_company_price_tenant_case", "tenant_id", "case_id"),
+    )
+
+
+event.listen(CompanyPriceScenario, "before_update", _immutable_company_decision)
+event.listen(CompanyPriceScenario, "before_delete", _immutable_company_decision)

@@ -26,6 +26,7 @@ class Settings(BaseSettings):
     saas_company_lifecycle_enabled: bool = False
     saas_company_readiness_evidence_enabled: bool = False
     saas_company_lifecycle_artifacts_enabled: bool = False
+    saas_company_price_scenarios_enabled: bool = False
     saas_company_commercial_readiness_required: bool = False
     saas_commercial_requirement_review_enabled: bool = False
     saas_commercial_text_projection_enabled: bool = False
