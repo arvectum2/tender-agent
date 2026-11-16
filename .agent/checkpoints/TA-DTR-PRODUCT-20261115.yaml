@@ -119,7 +119,7 @@ completed:
   PostgreSQL 110/111 migration upgrade/empty downgrade/re-upgrade, populated downgrade
   denial, concurrent global tick lock, pre-request reservation and daily replay PASS;
   database removed.
-current_stage: company_schedule_verified_next_commercial_original_evidence
+current_stage: commercial_card_offline_verification_contract
 remaining:
 - Check exact-head PR539–541 CI, prior PR532–538 green; all review-only, no merge
   approval for this stack.
@@ -157,8 +157,9 @@ test_results:
 - 113 passed, 1 skipped, 84 warnings in 9.76s; Node workflow, Ruff/make check/diff
   PASS; disabled CLI no-op PASS; disposable PG migration 111, downgrade guard, concurrency
   and reserved attempt/daily replay PASS
-resume_instruction: Schedule policy and bounded tick verified offline, publish/check
-  stacked review PR. Next implement commercial first-party evidence verification and
-  scoped source binding, using existing original card contracts; no live source requests
-  or owner-private corpus copying. Do not activate tenant, production migration, scheduler,
-  APNs, model or deployment. Existing watchdog unchanged.
+resume_instruction: Implement pure first-party public card verification with exact
+  URL, observed transport identity, original bytes, unambiguous field provenance and
+  no bid-ready claims; verify only synthetic fixtures. Plan scoped evidence persistence
+  separately.
+owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
+  Product changes isolated, offline and bounded.
