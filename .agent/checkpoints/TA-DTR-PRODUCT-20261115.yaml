@@ -211,15 +211,21 @@ completed:
 - Native readiness partial projection, current/stale binding, explicit acknowledgment;
   scoped event file import/export controls, 2 MiB limit, SHA and size response validation,
   authenticated bounded streaming, no trusted provenance claims.
-current_stage: price01_scoped_economic_scenarios
+- PRICE-01 scoped preview and append-only scenario history, migration 118, reuse existing
+  Decimal engine; six explicit cost categories, explicit revenue rates, minimum and
+  target profit, optional ceiling and manual bid prices, four economic thresholds
+  and profit/margin; no tax/market verification or bid/GO claim. Owner/admin/analyst
+  read/preview, manager save, viewer restricted.
+current_stage: price01_backend_verified_next_web_native
 remaining:
-- 'PRICE-01 cost/pricing: inspect existing pricing models and roadmap, scoped versioned
-  explainable bid economics with explicit assumptions, no uncalibrated forecast.'
-- Hosted CI/mirror, PostgreSQL concurrency, real browser/device file transfer, full
-  E2E acceptance; native readiness drilldown and independent source authentication/multi-file
-  correction remaining. Keep gates off until acceptance.
-- B2B written operator consent pending; product only, no production deploy.
-last_verified_commit: 7f616d91f13128eb1c3013f8edaeef83d7f5ca3a
+- PRICE-01 web/native scenario preview, explicit save and history; cost decomposition
+  units/hours/rates and independent evidence refs, real expenses and comparable procurement
+  normalization, no unsupported automatic market estimate.
+- Hosted exact-head CI, PG concurrency, real browser/device and full E2E acceptance.
+  Keep gates off; no production deploy.
+- B2B detailed escalation sent, operator consent pending, no automated requests. Product
+  work only; research separate.
+last_verified_commit: a2f9abdda590a7266822ced1b0c1cb79e126f9a3
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -313,9 +319,14 @@ test_results:
   Swift contract scope/readiness/digest/limits executed on macOS PASS; diff PASS.
   PR557 exact ec399596 18 success/1 pending. Simulator and real iPhone transfer not
   run.
-resume_instruction: Extend existing Decimal engine with scoped versioned price scenarios,
-  explicit cost/tax inputs, manual bid evaluations, provenance and no forecast, offline
-  tests. Product only; no external calls or production changes.
+- 150 passed, 2 skipped, 111 warnings in 11.16s including historical competitive protocol
+  regression, exact economics, role/scope, replay/version, stored result mismatch
+  and SQLite migration rollback guard. Ruff/diff PASS. New hosted CI pending.
+resume_instruction: PRICE-01 scenario backend tested with Decimal core and migration
+  118. Next web then native input/preview/save/history controls; preserve explicit
+  input and cost provenance constraints. Do not declare PRICE-01 complete until real
+  expenses/comparable source and E2E acceptance. B2B detailed escalation sent; no
+  automated traffic. Product-only scope.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
