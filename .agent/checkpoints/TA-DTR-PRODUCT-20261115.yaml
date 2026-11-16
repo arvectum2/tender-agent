@@ -326,14 +326,19 @@ completed:
   Real CDN diagnostics identified four missing static JS modules. Reviewed supplemental
   scope implemented; 23/23 static HTTP200, prior module-loading error resolved. Actual
   UI/card identity and account remain unverified. Manual UI observation helper prepared.'
-current_stage: b2b_manual_review_identity_receipt_fix
+- Owner reported completed manual review. Dedicated history confirms same card path
+  and title with query at 20:14:14Z; previous full URL check would reject it. Fixed
+  manual-only observed identity, visible number requirement and durable progress/failure
+  metadata. Actual offline Chrome query variant test PASS.
+current_stage: b2b_manual_ui_receipt_verified_pending_actual_view
 remaining:
-- Perform user-driven exact card UI observation in dedicated Mac mini browser, verify
-  own company and visible controls; review legitimate dynamic read-only requirements.
-  Do not enable unknown POST or guess routes.
-- Complete documented archive acquisition and recurring runtime cutover acceptance.
+- Capture real manual UI control observation using corrected helper. Owner confirmed
+  previous visit; no need for repeat credentials unless platform requires. Prior final
+  report absent, session and controls not independently verified.
+- Review legitimate dynamic requirements and complete documented archive acquisition,
+  legacy cutover.
 - PRICE-01 normative samples and comparable normalization.
-last_verified_commit: a1d4952e
+last_verified_commit: 99064c4c
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -528,15 +533,18 @@ test_results:
   PASS; Ruff/diff PASS. PR583/584 each 17 success/2 running at last check; PR582 19/19.
   Real rendered UI hydration timeout remains after 23 static resources; unknown other-origin
   POST and same-origin document GET denied.
-resume_instruction: Owner completed manual browser visit; dedicated profile history
-  confirms same card path and matching title, but actual URL has query, exact string
-  check refused final receipt. Fix local observation-only identity matching with visible
-  number, durable progress and bounded sanitized failure reason, no change to network
-  scope. No MacBook.
+- 287 passed,2 skipped,130 warnings in 23.41s; Ruff/diff PASS. Actual Chrome offline
+  manual URL variant PASS. PR583/584/585 CI success; no new automated B2B traffic.
+resume_instruction: Read corrected manual UI progress/report (metadata only) in Mac
+  mini private root. Owner previous manual visit confirmed in dedicated history, URL
+  parameters explain likely receipt refusal; corrected observer tested offline. If
+  actual report missing, inspect progress failure metadata and avoid needless re-logins.
+  Do not weaken upstream scope or repeat static pilots. See latest product increment
+  docs. Mac mini only; no publication of secrets, no submissions; PRICE-01 preserved.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
-  status: approved_pending_manual_ui_and_dynamic_scope_review
+  status: approved_manual_observer_fixed_actual_controls_pending
   support_ticket: PN-1356710-26
   support_response: 'Operator written approval relayed by owner: Козырькова Валерия
     Андреевна, 2026-11-16 14:51:30. Internal partial automation allowed subject to
