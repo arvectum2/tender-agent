@@ -106,7 +106,7 @@ completed:
   selection and EIS evidence panel suppression; Ruff/make check PASS; Xcode unsigned
   build-for-testing PASS twice. No live HTTP, credentials, DB changes or application
   install.
-current_stage: commercial_public_pilot_verified_next_scheduled_policy
+current_stage: company_schedule_and_durable_retries
 remaining:
 - Check exact-head PR539 and new commercial PR CI; PR532–538 previously 19/19 green,
   review only.
@@ -140,8 +140,5 @@ test_results:
   109/110 and daily admission/step concurrency PASS
 - 54 passed, 1 skipped, 38 warnings in 6.63s; rendered JS, Ruff/make check/diff PASS;
   unsigned Xcode build-for-testing PASS twice
-resume_instruction: Commercial reference and public index pilot verified offline.
-  Publish/check stacked review PR, then implement explicit per-company scheduled discovery
-  policy and guarded worker execution in isolated tests. No production activation,
-  external source requests, user provisioning, APNs, migration or deployment. Preserve
-  active SIBUR and existing watchdog.
+resume_instruction: Build explicit owner grant, bounded schedule worker and persisted
+  attempts; default disabled. Test only isolated source fixtures and DB.
