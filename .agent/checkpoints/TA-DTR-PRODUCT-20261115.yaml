@@ -222,7 +222,7 @@ completed:
 - Native PRICE-01 explicit costs/rates, server result comparison, version history
   and explicit manager save; scope, actor, payload/result and replay validation. Actual
   server-generated fixture tested in Swift.
-current_stage: price01_native_verified_next_itemized_costs
+current_stage: price01_itemized_cost_estimate
 remaining:
 - Itemized PRICE-01 cost estimates with quantities/units/hours/rates and versioned
   provenance mapping into existing cost categories; real expense evidence and comparable
@@ -333,11 +333,11 @@ test_results:
 - Final Xcode unsigned build-for-testing PASS incl new XCTest compilation; macOS Swift
   PRICE-01 server fixture contract PASS, git diff --check PASS. PR560 exact f36f2175
   17 success, 2 in progress; no physical device/simulator XCTest or live network acceptance.
-resume_instruction: Native PRICE-01 controls built and server-fixture Swift contract
-  verified. Next implement bounded itemized cost estimates with explicit quantity,
-  unit, rate, source note and category rollup to existing Decimal engine; preserve
-  immutable history, prior scenario compatibility, no invented cost or market forecast.
-  Product-only scope; B2B consent pending.
+resume_instruction: Implement bounded itemized estimate with explicit quantities,
+  units, rates, source notes and explicit zero categories. Reuse existing Decimal
+  scenarios and shared immutable revision history without migration; preserve old
+  client aggregate input/result contract. Verify exact rounding, scope, replay and
+  legacy compatibility. No external calls/deploy.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
