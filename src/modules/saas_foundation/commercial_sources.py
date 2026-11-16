@@ -39,6 +39,8 @@ def read_index(index):
             raise ValueError("Unexpected index redirect")
 
     url = INDEXES[index]
+    if index.startswith("b2bcenter:"):
+        raise ValueError("B2B direct network access disabled; guarded adapter required")
     request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
     with urllib.request.build_opener(NoRedirect()).open(request, timeout=15) as response:
         if response.status != 200 or response.geturl() != url:

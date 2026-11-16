@@ -2,15 +2,14 @@
 from __future__ import annotations
 
 import json
-import os
 import ssl
-import subprocess
 import sys
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
 import httpx
 
+from scripts.research.b2b_guarded_runner import sandbox_renderer, single_runner
 from scripts.research.b2b_https_fixture import (
     PATHS,
     SYNTHETIC_COOKIE,
@@ -35,18 +34,15 @@ def main():
                 # Explicit reviewed initial navigation via verified upstream TLS.
                 initial=broker.fetch_one(origin+'/session');assert initial.status==302 and broker.redirect_target(initial,'GET')==origin+'/card'
                 adapter=RendererBroker(broker,scope)
-                with adapter.serve() as port:
-                    profile=f'(version 1)(allow default)(deny network*)(allow network-bind (local unix-socket))(allow network-outbound (remote tcp "localhost:{port}"))'
-                    cfg={'port':port,'token':adapter.token,'origin':origin,'card':origin+'/card','directory':str(root),'mode':'offline-fixture'}
-                    result=subprocess.run(['/usr/bin/sandbox-exec','-p',profile,sys.executable,'-m','scripts.research.b2b_renderer_worker'],input=json.dumps(cfg),text=True,capture_output=True,timeout=45,env=os.environ.copy(),check=False)
-                    assert result.returncode==0,result.stdout[-1000:]+' '+result.stderr[-1500:]
-                    receipt=json.loads(result.stdout);assert receipt['sandbox_negative_probe'] and receipt['page_identity']
+                with single_runner(root.resolve()):
+                    receipt=sandbox_renderer(adapter,origin=origin,card=origin+'/card',directory=root,mode='offline-fixture')
+                    assert receipt['sandbox_negative_probe'] and receipt['page_identity']
                 assert seen==['/session','/card','/style.css','/background','/archive','/file.zip','/limited'],seen
                 assert (root/'fixture.zip').read_bytes()==archive
                 logged=json.loads(gate.state.read_text())['receipts'];assert len(logged)==len(seen) and logged[-1]['status']==429
                 assert SYNTHETIC_COOKIE not in gate.state.read_text() and adapter.stopped
-                print('ISOLATED CHROME HTTPS PASS',json.dumps({'origin_requests':len(seen),'charged':len(logged),'TLS_interception':False,'certificate_exception':False,'sandbox_negative_probe':True,'download_bytes':len(archive)}))
+                return {'state':'OFFLINE_BROWSER_ACCEPTANCE','origin_requests':len(seen),'charged':len(logged),'TLS_interception':False,'certificate_exception':False,'sandbox_negative_probe':True,'download_bytes':len(archive),'live_network_performed':False}
             finally:broker.close()
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':print(json.dumps(main()))

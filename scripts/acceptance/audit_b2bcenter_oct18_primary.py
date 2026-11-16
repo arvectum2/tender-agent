@@ -9,7 +9,6 @@ import argparse
 import hashlib
 import json
 import re
-import urllib.request
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -71,14 +70,7 @@ def verify(index: bytes, detail: bytes, *, observed_at: datetime) -> dict:
 
 
 def _public_get(url: str) -> bytes:
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req, timeout=16) as response:
-        if response.status != 200 or response.geturl() != url:
-            raise PrimaryMarketError("platform redirect / non-200")
-        blob = response.read(_MAX + 1)
-        if len(blob) > _MAX:
-            raise PrimaryMarketError("original HTML exceeds byte bound")
-        return blob
+    raise PrimaryMarketError("B2B direct network access disabled; guarded adapter required")
 
 
 def main() -> int:

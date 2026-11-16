@@ -111,6 +111,8 @@ class _NoRedirect(urllib.request.HTTPRedirectHandler):
 def fetch_original(url: str) -> tuple[bytes, str]:
     # Recheck caller-provided public target against exact known source contracts
     # before this function is used by the CLI's controlled allowlist.
+    if urlsplit(url).netloc != "workspace.ru":
+        raise PublicOriginalError("B2B or unreviewed direct network access disabled; guarded adapter required")
     opener = urllib.request.build_opener(_NoRedirect)
     request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
     try:

@@ -58,7 +58,8 @@ class SourceResponse:
 
 
 def fetch_card(url: str) -> SourceResponse:
-    commercial_identity(url)
+    if commercial_identity(url)[0] == "b2bcenter":
+        raise ValueError("B2B direct network access disabled; guarded adapter required")
     started = monotonic()
     # Explicit TLS, no ambient proxy or auth, no redirects or subresource requests.
     with (httpx.Client(verify=True, trust_env=False, follow_redirects=False, timeout=httpx.Timeout(5.0, connect=5.0)) as client,

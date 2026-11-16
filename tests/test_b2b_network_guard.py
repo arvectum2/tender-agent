@@ -327,3 +327,35 @@ def test_eds_dedicated_profile_never_reuses_unmarked_or_foreign_profile(tmp_path
     with pytest.raises(GuardError):dedicated_profile(link)
     (p/'.tender-agent-b2b-eds-profile').chmod(0o644)
     with pytest.raises(GuardError):dedicated_profile(p)
+
+
+def test_supervised_runner_lock_deadline_and_private_receipt(tmp_path):
+    import sys
+    import time
+
+    from scripts.research.b2b_guarded_runner import single_runner, supervise
+
+    root=tmp_path.resolve()/'canonical';root.mkdir(mode=0o700)
+    with single_runner(root), pytest.raises(GuardError,match='Another B2B runner'), single_runner(root):pass
+    assert supervise([sys.executable,'-c','import json,sys;json.load(sys.stdin);print(json.dumps({"test":True}))'],{},seconds=3)=={'test':True}
+    begin=time.monotonic()
+    with pytest.raises(GuardError,match='deadline exceeded'):supervise([sys.executable,'-c','import time;time.sleep(30)'],{},seconds=0.2)
+    assert time.monotonic()-begin<4
+    with pytest.raises(GuardError,match='Invalid runner receipt'):supervise([sys.executable,'-c','print("not json")'],{},seconds=3)
+
+
+def test_legacy_b2b_egress_refused_before_transport(monkeypatch):
+    from scripts.acceptance import audit_b2bcenter_oct18_primary as audit
+    from scripts.ops import b2b_public_current_card_gate as stage
+    from scripts.ops import b2bcenter_oct18_primary_watch as watch
+    from scripts.procurement_llm import collect_public_market_originals as market
+    from scripts.procurement_llm import unified_source_pipeline as unified
+    from src.modules.saas_foundation import commercial_capture, commercial_sources
+
+    card='https://www.b2b-center.ru/app/market-next/fixture/tender-4664540/'
+    def forbidden(*args,**kwargs):raise AssertionError('Unexpected HTTP transport')
+    import urllib.request
+    monkeypatch.setattr(urllib.request,'urlopen',forbidden);monkeypatch.setattr(urllib.request,'build_opener',forbidden);monkeypatch.setattr(commercial_capture.httpx,'Client',forbidden);monkeypatch.setattr(stage.subprocess,'run',forbidden)
+    for fn,arg in ((audit._public_get,card),(watch.fetch_public,card),(market.fetch_original,card),(unified.read_index,unified.B2B_INDEX.format('razrabotka-sajtov')),(commercial_capture.fetch_card,card),(commercial_sources.read_index,'b2bcenter:razrabotka-sajtov')):
+        with pytest.raises(ValueError,match='guarded adapter required'):fn(arg)
+    assert stage._read_public(card)=={'http_state':'GUARDED_ACCESS_REQUIRED','raw':None}
