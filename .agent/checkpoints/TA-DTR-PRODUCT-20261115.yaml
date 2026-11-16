@@ -239,7 +239,7 @@ completed:
   confirmation, manager writes and scoped owner/admin/analyst reads, size/quota, exact
   retry, verified stored-byte download. No inheritance or independent cost/payment/source
   authentication claim.'
-current_stage: price01_cost_evidence_backend_verified_next_web_native
+current_stage: price01_cost_evidence_web
 remaining:
 - Web and native cost evidence controls for saved itemized version/line, explicit
   user-copy origin and document type, exact digest/size transfer; multiple attachments/correction
@@ -365,11 +365,9 @@ test_results:
 - 153 passed,2 skipped,118 warnings in 13.20s; SQLite migration rollback protection,
   version/line scope, role, quota, replay, invalid/oversize and corrupted binding/bytes
   tested. Ruff/diff PASS. Alembic head 119. PR564 exact 1a48dae8 17 success,2 running.
-resume_instruction: Cost evidence backend and migration 119 verified. Next implement
-  Web then native read/upload/download on selected saved itemized scenario/line, verify
-  returned scope, line digest, byte size/SHA and no trusted-origin/cost/payment claims;
-  preserve immutable history and exact replay. Then actual expense and comparable
-  normalization. No production deployment or source/model calls.
+resume_instruction: Build scoped Web evidence editor on saved itemized scenario/line,
+  canonical line digest, explicit file purpose and consent, verified upload/download,
+  mixed history and session invalidation. Offline tests only.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
