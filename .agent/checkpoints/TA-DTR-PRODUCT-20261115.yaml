@@ -335,14 +335,17 @@ completed:
   and client-side decimal recomputation, no persistence or automatic approved norms.
 - Native PRICE-01 actual-cost sample selection and preview, typed exact row and decimal
   validation, ephemeral company cohort and explicit confirmations.
-current_stage: price01_approved_norm_backend
+- PRICE-01 corporate norm approval, catalog, immutable history and withdrawal backend
+  implemented, migration 122. Explicit manager-selected quantities/rates, source sample
+  and preview digests, tenant role and optimistic concurrency, no automatic estimate
+  use.
+current_stage: price01_approved_norm_backend_verified_next_web
 remaining:
-- Implement explicit corporate norm approval model with provenance/evidence and role
-  boundaries; historical comparable procurement normalization and acceptance.
-- B2B manual UI/account observation, authorized read-only access and document download,
-  legacy runtime cutover. Latest manual observation incomplete; no repeated pilot
-  without new evidence.
-last_verified_commit: 124a3baccda183334a2e5d5730786cac80cf1c57
+- Implement corporate norm approval and history/catalog Web and iOS UI, explicit user-selected
+  application to estimate with source binding; historical comparables and final acceptance.
+- B2B manual authorized UI observation and document acquisition, then legacy runtime
+  cutover. No repeat live pilot without new evidence.
+last_verified_commit: a3568612424272528d2ea0ae8a538591016388d3
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -545,9 +548,14 @@ test_results:
 - Standalone Swift actual evidence/sample contract PASS; Xcode iOS Simulator build-for-testing
   with updated XCTest assertions PASS; git diff check PASS. PR587 all 19 CI checks
   successful. XCTest simulator execution and real device acceptance not performed.
-resume_instruction: Implement explicit immutable corporate norm versions, source sample
-  digest, owner/admin approval, tenant-bound reads, idempotency and optimistic concurrency.
-  Default off; isolated migrations and tests, no production activation. B2B pending.
+- 289 focused/regression tests pass, 2 skipped, 136 warnings, 16.58s; Ruff/diff PASS;
+  SQLite migration 122 upgrade/downgrade and retention guard PASS. PR588 CI 19/19.
+  No production PostgreSQL or migration execution.
+resume_instruction: PRICE-01 corporate norm backend code a3568612 verified. Next implement
+  Web approval flow, catalog/history/withdrawal with exact preview digest and tenant
+  checks, followed by iOS. Default-off. No automatic cost norm adoption. B2B authorized
+  observation incomplete; no MacBook, no production changes. Read latest product increment
+  docs.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
