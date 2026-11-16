@@ -294,19 +294,26 @@ completed:
   broker cookie session isolation. 7/7 received HTTP requests charged plus one failed
   TLS attempt; exact 133-byte ZIP, untrusted TLS refused, forbidden POST/path blocked,
   stop after 429. No real-site interception or credential support.
-current_stage: b2b_isolated_readonly_adapter
+- 'Verified isolated Chrome renderer and direct TLS broker candidate: exact reviewed
+  routes, private authenticated local IPC, no upstream credentials in renderer, no
+  live TLS interception/cert exception, network sandbox port restriction, explicit
+  archive redirect namespace, stop on 401/403/429, real loopback 7/7 counted and exact
+  ZIP. Private cookie-only state validation, manual local session CLI, one-card manifest
+  preflight without live activation.'
+current_stage: b2b_isolated_adapter_verified_next_guarded_one_card_runner
 remaining:
-- Select and verify maintainable live HTTPS transport/session architecture without
-  unauthorized credential interception or global certificate changes; exact site endpoint/session
-  contract, isolated canonical sole egress host/IP and OS-level no-direct-egress proof,
-  total operation deadline, bounded redirect/queue and fail-closed unknown response.
-  Synthetic loopback TLS fixture is NOT a live adapter.
-- Dedicated authorized Arvectum-only session and limited read-only pilot only after
-  technical acceptance; no external submission or other tenant use.
+- Complete actual guarded single-card live runner with exact reviewed scope, hard
+  deadline/queue/accounting, canonical shared egress state and sole designated host/IP;
+  audit/disable all legacy unguarded B2B HTTP access in candidate before activation.
+  Current browser isolation and verified TLS only accepted against loopback.
+- Prepare locally reviewed B2B endpoint inventory, use manual dedicated Arvectum session
+  CLI (not password or cookies in chat), verify own account and run limited read-only
+  pilot after technical acceptance. No other tenants, submission or signature.
 - PRICE-01 corporate normative samples and historical comparable normalization; preserve
   completed work.
-- Hosted CI, PostgreSQL concurrency, real browser/device and E2E acceptance. No deployment.
-last_verified_commit: 54b63d9261bac742dda699dcd1e6bfaaf1ae7baf
+- Hosted CI, PostgreSQL concurrency, real browser/device and E2E acceptance. No production
+  deployment.
+last_verified_commit: 7934b5f2e281018fc42fb8c828cb5729708da9ca
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -472,13 +479,24 @@ test_results:
 - 165 focused passed, 2 skipped, 130 warnings in 17.05s; actual Chrome TLS loopback
   PASS, separate broker 401, invalid browser and upstream cert refusal, nonloopback/foreign
   CONNECT rejected, Ruff/diff PASS. PR576 exact 22e2859c CI 19/19. No platform requests.
-resume_instruction: Implement direct verified TLS broker with exact reviewed endpoint
-  inventory and bounded private session; separate isolated Playwright worker, offline
-  acceptance, preserve live refusal until actual scope/session acceptance.
+- 169 focused tests passed,2 skipped,130 warnings in 14.42s; actual isolated Chrome
+  HTTPS fixture PASS 7/7 charged plus ZIP and negative network probe, no TLS interception/exception.
+  First sandbox launch denied Chrome UNIX bind; allowed UNIX bind only and reran PASS.
+  Session privacy/expiry/foreign domain, exact routes, IPC token/redirect rejection,
+  local preflight and exclusive state save tests PASS. Ruff/diff PASS. PR577 exact
+  b7368728 CI 19/19 successful.
+resume_instruction: Isolated browser/verified TLS broker candidate and private manual
+  session preflight verified. Next implement guarded single-card runner and canonical
+  egress state, hard overall deadline/queue, audit/disable legacy unguarded B2B access
+  and exact reviewed endpoint inventory. Use existing manual session preparation when
+  owner can sign in locally; no password/cookies through chat, no live credentials
+  yet. Keep live gate until actual candidate technical acceptance; then limited own-org
+  read-only pilot. PN-1356710-26 approval, hard 60/rolling minute/IP. PRICE-01 norms
+  preserved. No production deployment.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
-  status: approved_pending_live_transport_and_session_acceptance
+  status: approved_pending_guarded_live_runner_and_local_session
   support_ticket: PN-1356710-26
   support_response: 'Operator written approval relayed by owner: Козырькова Валерия
     Андреевна, 2026-11-16 14:51:30. Internal partial automation allowed subject to
@@ -486,11 +504,11 @@ b2b_dependency:
     более 60 HTTP-запросов в минуту с одного IP-адреса». IP approval not required;
     no separate download restrictions; own account or optional additional user. Earlier
     response: no additional fee or alternative API for stated actions.'
-  owner_action: Operator written approval recorded. HTTP and HTTPS loopback browser
-    accounting verified, synthetic broker session isolation tested; live transport,
-    actual account session and OS-level egress enforcement not accepted. No B2B traffic.
-    Keep strict 60/rolling 60s/IP; no IP rotation, submissions/signatures or other
-    tenant use.
+  owner_action: Written permission received. Local isolated Chrome/TLS direct broker
+    fixture verified; preparation CLI and exact manifest preflight ready. No actual
+    local Arvectum session or reviewed live endpoint inventory yet; prior unguarded
+    access paths must be gated before pilot. No external traffic or login executed.
+    Retain 60/rolling 60s/IP.
 sibur_readonly_observation_20261116:
   status: exhausted
   step: archive supported queue drained; oversized and PDF review remains
