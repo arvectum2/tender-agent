@@ -157,18 +157,27 @@ completed:
   from hosted evidence Docker Hub HTTP502 pgvector pull; bounded hosted pre-pull retry
   added, unchanged acceptance gate. Existing audit proves 17 EIS official attachments
   only, no commercial download contract.
-current_stage: commercial_api_first_and_browser_fallback_contract
+- Official B2B web service/API exists; methods/XML examples and tariffs require cabinet.
+  Modern Positions/Download as file/Procurement documentation documented. Workspace
+  public attachment restrictions confirmed. Exact live anonymous HTTP and Chromium
+  observations on B2B 4664540, Workspace 19019 returned 200, no authorized attachment
+  access.
+- 'Standalone bounded B2B Playwright operator pilot: private dedicated explicitly
+  authorized session, exact visible documented controls, restricted requests, ZIP
+  CRC/path/size/member/SHA checks, offline Chromium synthetic exact-byte download
+  verified. Workspace diagnostic only. No actual authenticated original download or
+  API contract.'
+current_stage: commercial_browser_pilot_verified_awaiting_authorized_source_contract
 remaining:
-- Check current exact-head hosted CI (Node, R8 and mirror); fix only confirmed regressions.
-  Docker Hub 502 pre-pull retry not yet tested hosted.
-- Acquire genuine public first-party B2B-Center/Workspace attachment endpoint and
-  byte evidence using independently validated source-specific contracts; current audits
-  insufficient, no automatic downloader or user-copy promotion.
-- Consolidate complete document extraction and source-attested qualification decisions;
-  review across all pages, PG concurrency/browser/iOS; no production rollout without
-  approval.
-- SIBUR/Qwen priority; Gemma paused.
-last_verified_commit: 8f7187a2a2f290ddaf3c4c79406e569463229305
+- Obtain official B2B cabinet API method list/XML and tariff/permissions for notice
+  documents, only with an existing authorized company account. Prefer permitted read-only
+  service; otherwise run one authorized B2B browser original pilot with dedicated
+  session, prove exact bytes and source identity; verify Workspace already entitled
+  session and actual file UI separately. No purchases, bids or login bypass.
+- Then integrate proven collectors with scoped evidence, bounded retries and immutable
+  receipt/version storage; full extraction, quality/PG/browser acceptance pending.
+- Resolve mirror and check exact-head CI. SIBUR/Qwen priority; Gemma paused; no deployment.
+last_verified_commit: d3253f96902ded935ad3adcb8f57462bcfea5179
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -225,9 +234,16 @@ test_results:
   copy, unsupported PDF, scoped pagination and stale review; Ruff/diff and workflow
   YAML PASS. Hosted exact-head acceptance pending, local Node unavailable. PR547 amended
   head observed 14 success,4 running, mirror only failure.
-resume_instruction: Owner requests automatic originals API first, Playwright fallback.
-  Research official API and actual public access gates; implement bounded source observations
-  and safe browser fallback with explicit access outcomes. No procurement submissions,
-  purchases, credential guessing, production changes or model calls.
+- 47 focused tests passed in 0.12s, Ruff/diff PASS, actual Chromium offline synthetic
+  ZIP 131 bytes exact match and CRC, public probe B2B_AUTHORIZED_UI_OR_API_REQUIRED
+  and WORKSPACE_ENTITLEMENT_REQUIRED. SIBUR 823 originals/17785 embeddings synchronized
+  and OK. PR547 17 success,1 running,mirror failure; PR548 16 success,2 running,mirror
+  failure.
+resume_instruction: API-first B2B/Workspace discovery and standalone pilot verified
+  publicly and via synthetic Chromium ZIP. Actual commercial originals require cabinet
+  method contract or an explicitly authorized existing company session; no guessed
+  endpoints or user-copy promotion. Use independent approved session profile and verify
+  one real original before production wiring. Continue other offline roadmap if access
+  blocked, preserve SIBUR/Qwen, Gemma paused.
 owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
   Product changes isolated, offline and bounded.
