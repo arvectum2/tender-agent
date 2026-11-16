@@ -431,3 +431,27 @@ def test_actual_cost_migration_preserves_snapshot(tmp_path, monkeypatch):
         with engine.connect() as conn:assert conn.scalar(text('SELECT count(*) FROM company_actual_cost_snapshots'))==1
     finally:
         engine.dispose();invalidate_settings_cache()
+
+
+def test_actual_evidence_migration_preserves_bytes(tmp_path, monkeypatch):
+    import pytest
+
+    db_url='sqlite:///'+str(tmp_path/'actual-evidence.sqlite')
+    monkeypatch.setenv('AI_CORP_DATABASE_URL',db_url);invalidate_settings_cache()
+    cfg=Config(str(Path(__file__).resolve().parents[1]/'alembic.ini'));engine=create_engine(db_url)
+    try:
+        with engine.begin() as conn:
+            for table in ('company_actual_cost_snapshots','saas_members'):
+                conn.execute(text(f'CREATE TABLE {table} (id VARCHAR PRIMARY KEY)'))
+                conn.execute(text(f"INSERT INTO {table} (id) VALUES ('fixture')"))
+        command.stamp(cfg,'120_company_actual_costs');command.upgrade(cfg,'121_company_actual_evidence')
+        assert 'company_actual_cost_evidence' in inspect(engine).get_table_names()
+        command.downgrade(cfg,'120_company_actual_costs');command.upgrade(cfg,'121_company_actual_evidence')
+        raw=b'%PDF-1.4\nfixture\n%%EOF'
+        with engine.begin() as conn:
+            conn.execute(text("INSERT INTO company_actual_cost_evidence (id,snapshot_id,row_kind,line_ordinal,line_sha256,member_id,document_kind,format_hint,raw_bytes,inspection_json,created_at) VALUES ('e','fixture','PLANNED',1,:digest,'fixture','TIMESHEET','pdf',:raw,'{}','2026-11-16')"),{'raw':raw,'digest':'a'*64})
+        with pytest.raises(RuntimeError,match='Cannot discard actual cost evidence'):
+            command.downgrade(cfg,'120_company_actual_costs')
+        with engine.connect() as conn:assert conn.scalar(text('SELECT raw_bytes FROM company_actual_cost_evidence'))==raw
+    finally:
+        engine.dispose();invalidate_settings_cache()

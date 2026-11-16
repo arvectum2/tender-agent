@@ -2251,3 +2251,74 @@ def test_actual_cost_snapshots_partial_complete_and_scope(client,session,monkeyp
     assert client.get(path,headers=headers,params={'limit':30}).json()['items']==[legacy,second,first]
     session.execute(update(CompanyActualCostSnapshot).where(CompanyActualCostSnapshot.id==row['snapshot_id']).values(result_json={}));session.commit()
     assert client.get(u,headers=headers).status_code==409
+
+
+def test_actual_evidence_separate_rows_revisions_and_integrity(client,session,monkeypatch):
+    import hashlib
+
+    from sqlalchemy import update
+
+    from src.modules.saas_foundation import company_actual_evidence as evidence
+    from src.modules.saas_foundation.models import CompanyActualCostEvidence
+
+    _,a=_seed(client,'Actual evidence A');_,b=_seed(client,'Actual evidence B');_legal(client,a);_legal(client,b)
+    settings=saas.get_settings().model_copy(update={'saas_company_price_scenarios_enabled':True,'saas_company_price_itemized_enabled':True,'saas_company_actual_costs_enabled':True});monkeypatch.setattr(saas,'get_settings',lambda:settings)
+    headers=_auth(a);cases='/api/saas/company-portfolio/cases'
+    def create(token,n):
+        r=client.post(cases,headers=_auth(token),json={'registry_number':f'{n:019d}'});assert r.status_code==201,r.text
+        return cases+'/'+r.json()['case_id']+'/price-scenarios'
+    path=create(a,1);other=create(a,2);foreign=create(b,1)
+    def cost(category,title,kind):
+        return {'category':category,'title':title,'unit':'h','quantity':'2.5','rate_rub':'2000','source_kind':kind,'source_note':'Synthetic source'}
+    estimate={'lines':[cost('own_labor_rub','Development','ASSUMPTION'),cost('external_direct_rub','License','USER_REPORTED_QUOTE')],'zero_cost_categories':['cash_overhead_rub','reserve_rub','fixed_platform_fees_rub','guarantee_financing_cost_rub'],'terms':{'revenue_tax_percent':'6','variable_platform_fee_percent':'0','minimum_profit_rub':'0','target_profit_rub':'1000','manual_bid_prices_rub':[],'assumption_note':'Synthetic plan','accept_hypothetical_assumptions_only':True},'confirm_no_double_count':True}
+    def plan(revision,key):
+        r=client.post(path+'/itemized',headers=headers,json={'estimate':estimate,'expected_revision':revision,'idempotency_key':key});assert r.status_code==201,r.text;return r.json()
+    first=plan(0,'act-ev-plan-1');second=plan(1,'act-ev-plan-2');base=path+'/'+first['scenario_id']+'/actual-costs';different=path+'/'+second['scenario_id']+'/actual-costs'
+    digest=client.get(base,headers=headers).json()['baseline_sha256']
+    snapshot={'baseline_sha256':digest,'as_of':'2026-11-15','observations':[{'ordinal':1,'quantity':'3','rate_rub':'2000','source_note':'Reported timesheet'}],'unplanned_costs':[cost('cash_overhead_rub','Extra','USER_REPORTED_ACTUAL')],'note':'Synthetic report','confirm_cumulative_user_report':True,'confirm_no_double_count':True}
+    def report(rev,key,payload=snapshot):
+        r=client.post(base,headers=headers,json={'snapshot':payload,'expected_revision':rev,'idempotency_key':key});assert r.status_code==201,r.text;return r.json()
+    r1=report(0,'act-ev-report-1');r2=report(1,'act-ev-report-2',{**snapshot,'observations':[{'ordinal':1,'quantity':'0','rate_rub':'0','source_note':'Correction, no expense'}]})
+    def url(row=r1,kind='PLANNED',ordinal=1,root=base):return root+'/'+row['snapshot_id']+f'/rows/{kind}/{ordinal}/evidence'
+    u=url();v=url(r2);extra=url(kind='UNPLANNED');assert client.get(u,headers=headers).status_code==404
+    settings=settings.model_copy(update={'saas_company_actual_evidence_enabled':True})
+    binding=client.get(u,headers=headers).json();line_digest=binding['line_sha256'];assert len(line_digest)==64 and binding['actual_amount_rub']=='6000.00' and binding['evidence'] is None
+    assert client.get(v,headers=headers).json()['actual_amount_rub']=='0.00'
+    extra_digest=client.get(extra,headers=headers).json()['line_sha256'];assert extra_digest!=line_digest and client.get(v,headers=headers).json()['line_sha256']!=line_digest
+    assert client.get(url(ordinal=2),headers=headers).status_code==409
+    assert client.get(url(ordinal=3),headers=headers).status_code==404
+    assert client.get(url(kind='INVALID'),headers=headers).status_code==422
+    assert client.get(url(root=different),headers=headers).status_code==404
+    raw=b'%PDF-1.4\n1 0 obj<<>>endobj\n%%EOF';sha=hashlib.sha256(raw).hexdigest()
+    params={'line_sha256':line_digest,'format_hint':'pdf','document_kind':'TIMESHEET','confirm_user_supplied':True}
+    def upload(target=u,body=raw,token=a,**overrides):return client.post(target,headers=_auth(token),params={**params,**overrides},content=body)
+    assert upload(confirm_user_supplied=False).status_code==422 and upload(target=v).status_code==409 and upload(target=extra).status_code==409
+    assert upload(body=b'not pdf').status_code==422 and upload(body=b'x'*(2*1024*1024+1)).status_code==413
+    assert upload(document_kind='QUOTE').status_code==422 and upload(target=url(ordinal=2)).status_code==409
+    assert upload(token=b).status_code==404 and upload(target=url(root=different)).status_code==404
+    assert upload(target=url(root=other+'/'+first['scenario_id']+'/actual-costs')).status_code==404
+    assert upload(target=url(root=foreign+'/'+first['scenario_id']+'/actual-costs'),token=b).status_code==404
+    assert client.get(u+'/download',headers=headers).status_code==404
+    res=upload();assert res.status_code==201,res.text
+    saved=res.json();assert saved['inspection']['sha256']==sha and saved['snapshot_id']==r1['snapshot_id'] and saved['row_kind']=='PLANNED'
+    assert saved['stored_bytes_reverified'] and saved['origin']=='USER_SUPPLIED_UNATTESTED' and all(saved[k] is False for k in ('actual_amount_verified','payment_verified','document_origin_verified','contract_execution_verified','external_submission_allowed'))
+    assert 'text_preview' not in saved['inspection'] and upload().json()==saved
+    assert upload(document_kind='INVOICE').status_code==409 and upload(body=raw.replace(b'1 0 obj',b'2 0 obj')).status_code==409
+    dl=client.get(u+'/download',headers=headers);assert dl.status_code==200 and dl.content==raw and dl.headers['x-artifact-sha256']==sha and dl.headers['cache-control']=='private, no-store'
+    assert client.get(u+'/download',headers=_auth(b)).status_code==404
+    res=upload(target=extra,line_sha256=extra_digest,document_kind='PAYMENT_RECORD');assert res.status_code==201,res.text
+    assert res.json()['row_kind']=='UNPLANNED' and res.json()['payment_verified'] is False
+    assert client.get(v,headers=headers).json()['evidence'] is None
+    for role in ('viewer','analyst'):
+        invite=client.post('/api/saas/invitations',headers=headers,json={'role':role,'acquisition_channel':'referral'}).json();token=client.post('/api/saas/invitations/redeem',json={'invitation_code':invite['invitation_code'],'display_name':role}).json()['access_token'];_legal(client,token)
+        assert client.get(u,headers=_auth(token)).status_code==(403 if role=='viewer' else 200)
+        assert client.get(u+'/download',headers=_auth(token)).status_code==(403 if role=='viewer' else 200)
+        assert upload(token=token).status_code==403
+    monkeypatch.setattr(evidence,'MAX_DOCUMENTS_PER_TENANT',2)
+    assert upload(target=v,line_sha256=client.get(v,headers=headers).json()['line_sha256']).status_code==429
+    assert upload().json()==saved and session.query(CompanyActualCostEvidence).count()==2
+    assert client.get(base,headers=headers).json()['items']==[r2,r1]
+    session.execute(update(CompanyActualCostEvidence).where(CompanyActualCostEvidence.id==saved['evidence_id']).values(line_sha256='0'*64));session.commit()
+    assert client.get(u,headers=headers).status_code==409 and client.get(u+'/download',headers=headers).status_code==409
+    session.execute(update(CompanyActualCostEvidence).where(CompanyActualCostEvidence.id==saved['evidence_id']).values(line_sha256=line_digest,raw_bytes=raw.replace(b'1 0 obj',b'9 0 obj')));session.commit()
+    assert client.get(u,headers=headers).status_code==409 and client.get(u+'/download',headers=headers).status_code==409

@@ -65,6 +65,7 @@ from src.modules.saas_foundation import (
     commercial_capture,
     commercial_requirement_review,
     company_actual_costs,
+    company_actual_evidence,
     company_case_evidence,
     company_cost_evidence,
     company_discovery,
@@ -1100,3 +1101,35 @@ def actual_cost_preview(case_id: str, scenario_id: str, payload: company_actual_
 def actual_cost_save(case_id: str, scenario_id: str, payload: company_actual_costs.SaveInput, principal: Member, session: DBSession) -> dict:
     _actual_costs_enabled()
     return company_actual_costs.save(session,principal,case_id,scenario_id,payload)
+
+
+def _actual_evidence_enabled():
+    _actual_costs_enabled()
+    if not get_settings().saas_company_actual_evidence_enabled:
+        raise HTTPException(404,"Actual cost evidence disabled")
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/{scenario_id}/actual-costs/{snapshot_id}/rows/{row_kind}/{ordinal}/evidence")
+def read_actual_evidence(case_id: str, scenario_id: str, snapshot_id: str, row_kind: company_actual_evidence.RowKind, ordinal: int, principal: Member, session: DBSession) -> dict:
+    _actual_evidence_enabled()
+    return company_actual_evidence.read(session,principal,case_id,scenario_id,snapshot_id,row_kind,ordinal)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/{scenario_id}/actual-costs/{snapshot_id}/rows/{row_kind}/{ordinal}/evidence",status_code=201)
+async def upload_actual_evidence(case_id: str, scenario_id: str, snapshot_id: str, row_kind: company_actual_evidence.RowKind, ordinal: int, request: Request, principal: Member, session: DBSession, format_hint: company_cost_evidence.FormatHint, document_kind: company_actual_evidence.DocumentKind, line_sha256: Annotated[str,Query(pattern=r"^[0-9a-f]{64}$")], confirm_user_supplied: bool=Query(False)) -> dict:
+    _actual_evidence_enabled()
+    role_required(principal,"owner","admin")
+    scope=company_actual_evidence.target(session,principal,case_id,scenario_id,snapshot_id,row_kind,ordinal)
+    if scope['line_sha256']!=line_sha256:
+        raise HTTPException(409,"Actual row binding changed; refresh")
+    if not confirm_user_supplied:
+        raise HTTPException(422,"Confirm user-supplied unverified origin")
+    raw=await _bounded_evidence_upload(request,session)
+    return await run_in_threadpool(company_actual_evidence.save,session,principal,case_id,scenario_id,snapshot_id,row_kind,ordinal,raw,format_hint,document_kind,line_sha256)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/{scenario_id}/actual-costs/{snapshot_id}/rows/{row_kind}/{ordinal}/evidence/download")
+def download_actual_evidence(case_id: str, scenario_id: str, snapshot_id: str, row_kind: company_actual_evidence.RowKind, ordinal: int, principal: Member, session: DBSession):
+    _actual_evidence_enabled()
+    raw,format_hint,sha=company_actual_evidence.download(session,principal,case_id,scenario_id,snapshot_id,row_kind,ordinal)
+    return Response(content=raw,media_type="application/octet-stream",headers={"Content-Disposition":f'attachment; filename="actual-{sha[:16]}.{format_hint}"',"Cache-Control":"private, no-store","X-Content-Type-Options":"nosniff","X-Artifact-SHA256":sha})

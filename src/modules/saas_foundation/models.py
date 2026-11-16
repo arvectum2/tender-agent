@@ -422,3 +422,28 @@ class CompanyActualCostSnapshot(UUIDPrimaryKeyMixin, Base):
 
 event.listen(CompanyActualCostSnapshot, "before_update", _immutable_company_decision)
 event.listen(CompanyActualCostSnapshot, "before_delete", _immutable_company_decision)
+
+
+class CompanyActualCostEvidence(UUIDPrimaryKeyMixin, Base):
+    """Immutable user-copy support for one reported actual cost row."""
+    __tablename__ = "company_actual_cost_evidence"
+    snapshot_id: Mapped[str] = mapped_column(String(36), ForeignKey("company_actual_cost_snapshots.id"), nullable=False)
+    row_kind: Mapped[str] = mapped_column(String(12), nullable=False)
+    line_ordinal: Mapped[int] = mapped_column(Integer, nullable=False)
+    line_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    member_id: Mapped[str] = mapped_column(String(36), ForeignKey("saas_members.id"), nullable=False)
+    document_kind: Mapped[str] = mapped_column(String(24), nullable=False)
+    format_hint: Mapped[str] = mapped_column(String(8), nullable=False)
+    raw_bytes: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
+    inspection_json: Mapped[dict] = mapped_column(JSON, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    __table_args__ = (
+        UniqueConstraint("snapshot_id", "row_kind", "line_ordinal", name="uq_actual_evidence_line"),
+        CheckConstraint("(row_kind = 'PLANNED' AND line_ordinal BETWEEN 1 AND 60) OR (row_kind = 'UNPLANNED' AND line_ordinal BETWEEN 1 AND 30)", name="ck_actual_evidence_line"),
+        CheckConstraint("document_kind IN ('INVOICE','CONTRACT','TIMESHEET','ACCEPTANCE_ACT','PAYMENT_RECORD','OTHER')", name="ck_actual_evidence_kind"),
+        CheckConstraint("format_hint IN ('pdf','docx','xlsx')", name="ck_actual_evidence_format"),
+    )
+
+
+event.listen(CompanyActualCostEvidence, "before_update", _immutable_company_decision)
+event.listen(CompanyActualCostEvidence, "before_delete", _immutable_company_decision)

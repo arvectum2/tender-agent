@@ -80,6 +80,7 @@ from src.modules.saas_foundation.models import (  # noqa: F401
     CompanyPriceScenario,
     CompanyCostEvidence,
     CompanyActualCostSnapshot,
+    CompanyActualCostEvidence,
     SaasAccessToken,
     SaasAuditEvent,
     SaasInvitation,
