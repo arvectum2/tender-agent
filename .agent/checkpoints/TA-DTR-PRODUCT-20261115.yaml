@@ -128,7 +128,7 @@ completed:
   and ten/company/day, immutable scoped capture outcomes, authorization recheck and
   offline original integrity recheck. HTTP returns observations only. No live source
   or production changes.'
-current_stage: commercial_capture_verified_next_attachment_evidence_and_ui
+current_stage: commercial_capture_ui_and_attachment_contract_review
 remaining:
 - Publish/check PRs 542/543; review previous stack mirror failure without deploying.
 - Complete scoped web capture controls and source original attachment evidence/version
@@ -172,10 +172,8 @@ test_results:
   refusal, HTTP fixture replay/isolation/tamper/crash, transport mock limits and regression
   UI; Ruff and diff PASS. Actual PG admission concurrency and live platform acceptance
   pending.
-resume_instruction: Commercial original card capture backend and migration 112 verified
-  offline; next add web capture/recheck controls and original attachment evidence,
-  then profile-aware lifecycle. Do not repeat completed tests unless changes. Default
-  disabled; no production fetches/migration, model calls, new scheduler, or deployment;
-  preserve SIBUR workers and current Data Platform.
+resume_instruction: Implement explicit company-scoped capture/recheck UI with default-off
+  gate and saved-historical semantics. Review actual attachment contracts before enabling
+  any downloader. Offline tests only.
 owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
   Product changes isolated, offline and bounded.
