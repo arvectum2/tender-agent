@@ -1,4 +1,5 @@
 import Foundation
+import CryptoKit
 
 struct CompanyIdentity: Codable, Equatable, Sendable {
     let tenantId: String
@@ -342,6 +343,101 @@ struct CompanyLifecycleMetrics: Decodable, Sendable {
     }
 }
 
+struct CompanyReadinessProjection: Decodable, Sendable {
+    let schema: String
+    let customerId: String
+    let caseId: String
+    let attemptId: String
+    let cardSha256: String
+    let candidateCount: Int
+    let rejectedOrOpaqueLinks: Int
+    let issues: [String]
+    let partialReviewResolved: Bool
+    let coverageComplete: Bool
+    let platformOriginalVerified: Bool
+    let qualificationVerified: Bool
+    let externalSubmissionAllowed: Bool
+}
+
+struct CompanyReadinessBinding: Decodable, Sendable {
+    let readyEventId: String
+    let projectionSha256: String
+    let projection: CompanyReadinessProjection
+    let bindingId: String?
+    let boundProjectionSha256: String?
+    let bindingCurrent: Bool
+    let qualificationVerified: Bool
+    let externalSubmissionAllowed: Bool
+    func matches(_ identity: CompanyIdentity, item: CompanyCase, event: CompanyLifecycleEvent) -> Bool {
+        let p = projection
+        return item.isCommercial && event.matches(caseID: item.caseId) && event.stage == .ready && !event.readinessStale && readyEventId == event.eventId &&
+            p.schema == "commercial_readiness_partial_v1" && p.customerId == identity.customerId && p.caseId == item.caseId &&
+            CompanyArtifactBytes.validDigest(projectionSha256) && CompanyArtifactBytes.validDigest(p.cardSha256) &&
+            p.candidateCount >= 0 && p.rejectedOrOpaqueLinks >= 0 && p.partialReviewResolved == p.issues.isEmpty &&
+            !p.coverageComplete && !p.platformOriginalVerified && !p.qualificationVerified && !p.externalSubmissionAllowed && !qualificationVerified && !externalSubmissionAllowed &&
+            (bindingId == nil ? boundProjectionSha256 == nil : boundProjectionSha256.map(CompanyArtifactBytes.validDigest) == true) &&
+            bindingCurrent == (bindingId != nil && boundProjectionSha256 == projectionSha256 && p.partialReviewResolved)
+    }
+    var canBind: Bool { projection.partialReviewResolved && bindingId == nil }
+}
+
+struct CompanyArtifactBytes: Sendable {
+    static let limit = 2 * 1024 * 1024
+    static let formats = ["pdf", "docx", "xlsx"]
+    let data: Data
+    let format: String
+    var sha256: String { Self.digest(data) }
+    static func digest(_ data: Data) -> String { SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined() }
+    static func validDigest(_ s: String) -> Bool { s.utf8.count == 64 && s.utf8.allSatisfy { (48...57).contains($0) || (97...102).contains($0) } }
+    init(data: Data, format: String) throws {
+        guard Self.formats.contains(format), !data.isEmpty, data.count <= Self.limit else { throw CompanyConnectionError.invalidArtifact }
+        self.data = data; self.format = format
+    }
+    static func read(_ url: URL) throws -> Self {
+        let scoped = url.startAccessingSecurityScopedResource()
+        defer { if scoped { url.stopAccessingSecurityScopedResource() } }
+        let format = url.pathExtension.lowercased()
+        guard formats.contains(format), try url.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true else { throw CompanyConnectionError.invalidArtifact }
+        let handle = try FileHandle(forReadingFrom: url); defer { try? handle.close() }
+        var data = Data()
+        while data.count <= limit {
+            guard let chunk = try handle.read(upToCount: min(65536, limit + 1 - data.count)), !chunk.isEmpty else { break }
+            data.append(chunk)
+        }
+        return try Self(data: data, format: format)
+    }
+}
+
+struct CompanyEventArtifact: Decodable, Sendable {
+    struct Inspection: Decodable, Sendable {
+        let sha256: String
+        let sizeBytes: Int
+        let formatHint: String
+    }
+    let customerId: String
+    let caseId: String
+    let eventId: String
+    let eventRevision: Int
+    let eventStage: CompanyLifecycleStage
+    let artifactId: String
+    let artifactKind: String
+    let formatHint: String
+    let inspection: Inspection
+    let origin: String
+    let storedBytesReverified: Bool
+    let platformOriginalVerified: Bool
+    let externalFactVerified: Bool
+    let externalSubmissionAllowed: Bool
+    func matches(_ identity: CompanyIdentity, event: CompanyLifecycleEvent) -> Bool {
+        customerId == identity.customerId && event.matches(caseID: caseId) && eventId == event.eventId && eventRevision == event.revision && eventStage == event.stage &&
+        !event.stage.isPreparation && artifactKind == (event.stage == .submitted ? "SUBMISSION_RECEIPT" : "OUTCOME_PROTOCOL") &&
+        CompanyArtifactBytes.formats.contains(formatHint) && inspection.formatHint == formatHint && CompanyArtifactBytes.validDigest(inspection.sha256) &&
+        (1...CompanyArtifactBytes.limit).contains(inspection.sizeBytes) && origin == "USER_SUPPLIED_UNATTESTED" && storedBytesReverified && !platformOriginalVerified && !externalFactVerified && !externalSubmissionAllowed
+    }
+    func accepts(_ bytes: CompanyArtifactBytes) -> Bool { formatHint == bytes.format && inspection.sizeBytes == bytes.data.count && inspection.sha256 == bytes.sha256 }
+    var filename: String { "lifecycle-\(inspection.sha256.prefix(16)).\(formatHint)" }
+}
+
 struct CompanyEvidence: Decodable, Identifiable, Sendable {
     let bindingId: String
     let caseId: String
@@ -358,7 +454,7 @@ struct CompanyEvidencePage: Decodable, Sendable {
 }
 
 enum CompanyConnectionError: LocalizedError {
-    case invalidOrigin, invalidToken, identityMismatch, invalidResponse, http(Int), storage, invalidDecision, decisionUncertain, invalidLifecycle, lifecycleUncertain
+    case invalidOrigin, invalidToken, identityMismatch, invalidResponse, http(Int), storage, invalidDecision, decisionUncertain, invalidLifecycle, lifecycleUncertain, invalidArtifact
 
     var errorDescription: String? {
         switch self {
@@ -372,6 +468,7 @@ enum CompanyConnectionError: LocalizedError {
         case .http(428): "Подтвердите условия пилота в веб-кабинете."
         case .storage: "Не удалось сохранить подключения в Keychain."
         case .invalidDecision: "Укажите действие, обоснование и будущую дату отсрочки, если она нужна."
+        case .invalidArtifact: "Допустимы PDF, DOCX и XLSX до 2 МБ; проверка файла не пройдена."
         case .invalidLifecycle: "Проверьте допустимое состояние, обоснование, ссылку и дату события."
         case .lifecycleUncertain: "Ответ о записи не получен. Проверьте журнал или повторите ту же запись."
         case .decisionUncertain: "Ответ о сохранении не получен. Проверьте карточку или явно повторите то же решение."
@@ -498,14 +595,65 @@ struct CompanyAPIClient: Sendable {
         return event
     }
 
-    private func get<T: Decodable>(_ path: String, query: [URLQueryItem] = [], method: String = "GET", body: Data? = nil) async throws -> T {
+    func readiness(item: CompanyCase, event: CompanyLifecycleEvent, identity: CompanyIdentity, bind: CompanyReadinessBinding? = nil) async throws -> CompanyReadinessBinding {
+        guard UUID(uuidString: item.caseId) != nil, UUID(uuidString: event.eventId) != nil, item.isCommercial, event.stage == .ready, !event.readinessStale else { throw CompanyConnectionError.invalidResponse }
+        var body: Data?
+        if let bind {
+            guard identity.legalAccepted, ["owner", "admin"].contains(identity.role), bind.matches(identity, item: item, event: event), bind.canBind else { throw CompanyConnectionError.http(409) }
+            body = try JSONSerialization.data(withJSONObject: ["ready_event_id": bind.readyEventId, "projection_sha256": bind.projectionSha256, "acknowledge_partial_coverage": true])
+        }
+        let result: CompanyReadinessBinding = try await get("api/saas/company-portfolio/cases/\(item.caseId)/readiness-evidence", method: body == nil ? "GET" : "POST", body: body)
+        guard result.matches(identity, item: item, event: event) else { throw CompanyConnectionError.identityMismatch }
+        if let bind, !result.bindingCurrent || result.projectionSha256 != bind.projectionSha256 { throw CompanyConnectionError.http(409) }
+        return result
+    }
+
+    private func artifactPath(_ event: CompanyLifecycleEvent, item: CompanyCase) throws -> String {
+        guard UUID(uuidString: item.caseId) != nil, UUID(uuidString: event.eventId) != nil, event.matches(caseID: item.caseId), !event.stage.isPreparation else { throw CompanyConnectionError.invalidResponse }
+        return "api/saas/company-portfolio/cases/\(item.caseId)/lifecycle/\(event.eventId)/artifact"
+    }
+
+    func eventArtifact(item: CompanyCase, event: CompanyLifecycleEvent, identity: CompanyIdentity, upload: CompanyArtifactBytes? = nil) async throws -> CompanyEventArtifact {
+        let path = try artifactPath(event, item: item)
+        var query: [URLQueryItem] = []
+        if let upload {
+            guard identity.legalAccepted, ["owner", "admin"].contains(identity.role) else { throw CompanyConnectionError.http(403) }
+            query = [URLQueryItem(name:"format_hint",value:upload.format), URLQueryItem(name:"confirm_user_supplied",value:"true")]
+        }
+        let result: CompanyEventArtifact = try await get(path, query: query, method: upload == nil ? "GET" : "POST", body: upload?.data, contentType: "application/octet-stream")
+        guard result.matches(identity, event: event), upload.map(result.accepts) ?? true else { throw CompanyConnectionError.identityMismatch }
+        return result
+    }
+
+    func downloadEventArtifact(item: CompanyCase, event: CompanyLifecycleEvent, identity: CompanyIdentity, artifact: CompanyEventArtifact) async throws -> CompanyArtifactBytes {
+        guard artifact.matches(identity, event: event) else { throw CompanyConnectionError.identityMismatch }
+        let path = try artifactPath(event, item: item) + "/download"
+        var request = URLRequest(url: baseURL.appending(path: path), cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 20)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/octet-stream", forHTTPHeaderField: "Accept")
+        let (stream, response) = try await session.bytes(for: request)
+        defer { stream.task.cancel() }
+        guard let http = response as? HTTPURLResponse else { throw CompanyConnectionError.invalidResponse }
+        guard (200..<300).contains(http.statusCode) else { throw CompanyConnectionError.http(http.statusCode) }
+        guard http.value(forHTTPHeaderField: "X-Artifact-SHA256") == artifact.inspection.sha256 else { throw CompanyConnectionError.invalidArtifact }
+        var data = Data(); data.reserveCapacity(artifact.inspection.sizeBytes)
+        for try await byte in stream {
+            guard data.count < artifact.inspection.sizeBytes else { throw CompanyConnectionError.invalidArtifact }
+            data.append(byte)
+        }
+        let bytes = try CompanyArtifactBytes(data: data, format: artifact.formatHint)
+        guard artifact.accepts(bytes) else { throw CompanyConnectionError.invalidArtifact }
+        return bytes
+    }
+
+    private func get<T: Decodable>(_ path: String, query: [URLQueryItem] = [], method: String = "GET", body: Data? = nil, contentType: String = "application/json") async throws -> T {
         guard var parts = URLComponents(url: baseURL.appending(path: path), resolvingAgainstBaseURL: false) else { throw CompanyConnectionError.invalidOrigin }
         if !query.isEmpty { parts.queryItems = query }
         guard let url = parts.url else { throw CompanyConnectionError.invalidOrigin }
         var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 20)
         request.httpMethod = method
         request.httpBody = body
-        if body != nil { request.setValue("application/json", forHTTPHeaderField: "Content-Type") }
+        if body != nil { request.setValue(contentType, forHTTPHeaderField: "Content-Type") }
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         let (data, response) = try await session.data(for: request)

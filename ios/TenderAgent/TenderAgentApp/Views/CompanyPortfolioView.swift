@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 
 private struct CompanyCaseSelection: Identifiable {
     let accountID: String
@@ -289,6 +290,12 @@ private struct CompanyLifecycleSection: View {
                         } catch { notice = CompanyStore.safeError(error) }
                     }.disabled(store.isBusy || rationale.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
+                if item.isCommercial, let latest = state.latest, latest.stage == .ready, !latest.readinessStale {
+                    CompanyReadyEvidenceView(item: item, accountID: accountID, event: latest, store: store).id(latest.eventId)
+                }
+                ForEach((history?.items ?? [state.latest].compactMap { $0 }).filter { !$0.stage.isPreparation }) { event in
+                    CompanyEventFileView(item: item, accountID: accountID, event: event, store: store).id(event.eventId)
+                }
                 Button("История событий") {
                     Task {
                         history = nil
@@ -331,5 +338,120 @@ private struct CompanyLifecycleSection: View {
         }
         .onChange(of: store.selectedID) { _, _ in state = nil; history = nil; clearForm() }
         .onChange(of: store.identity?.memberId) { _, value in if value == nil { state = nil; history = nil; clearForm() } }
+    }
+}
+
+private struct CompanyReadyEvidenceView: View {
+    let item: CompanyCase
+    let accountID: String
+    let event: CompanyLifecycleEvent
+    @ObservedObject var store: CompanyStore
+    @State private var binding: CompanyReadinessBinding?
+    @State private var acknowledge = false
+    @State private var notice: String?
+    private var canWrite: Bool { store.canDecide(accountID: accountID, caseID: item.caseId, revision: item.revision) }
+    private func load(bind: CompanyReadinessBinding? = nil) async {
+        binding = nil; acknowledge = false; notice = nil
+        do { binding = try await store.readiness(accountID: accountID, item: item, event: event, bind: bind) }
+        catch { notice = CompanyStore.safeError(error) }
+    }
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Документальное подтверждение READY").font(.headline)
+            Button("Проверить матрицу") { Task { await load() } }.disabled(store.isBusy)
+            if let binding {
+                Text(binding.bindingCurrent ? "Снимок актуален (частичная проверка)" : binding.bindingId != nil ? "Снимок устарел. Создайте новую запись READY." : binding.canBind ? "Можно связать частичную матрицу с READY" : "Есть нерешённые требования")
+                Text("Документов: \(binding.projection.candidateCount); непрозрачных ссылок: \(binding.projection.rejectedOrOpaqueLinks)").font(.caption)
+                ForEach(binding.projection.issues, id: \.self) { issue in Text(Self.issueLabels[issue] ?? issue).font(.caption) }
+                if canWrite && binding.canBind {
+                    Toggle("Подтверждаю частичное покрытие, не полную квалификацию", isOn: $acknowledge)
+                    Button("Связать проверку с READY") { Task { await load(bind: binding) } }.disabled(!acknowledge || store.isBusy)
+                }
+            }
+            if let notice { Text(notice).font(.caption).foregroundStyle(.orange) }
+            Text("Не означает полного соответствия ТЗ или подтверждения оригиналов ЭТП.").font(.caption).foregroundStyle(.secondary)
+        }
+        .onChange(of: store.selectedID) { _, _ in binding = nil; acknowledge = false; notice = nil }
+        .onChange(of: store.identity?.memberId) { _, value in if value == nil { binding = nil; acknowledge = false; notice = nil } }
+    }
+    private static let issueLabels = ["ACTIVE_PROFILE_REQUIRED":"Нет активного профиля", "DOCUMENT_BOUND_EXCEEDED":"Превышен лимит документов", "NO_DISCOVERED_DOCUMENTS":"Не обнаружены документы", "MISSING_USER_COPIES":"Нет копий документов", "TRUNCATED_LINK_SCAN":"Поиск ссылок неполный", "DOCUMENT_NOT_REVIEWABLE":"Документ не поддерживается", "UNREVIEWED_FRAGMENT":"Есть непроверенные фрагменты", "STALE_REVIEW":"Оценка устарела", "UNRESOLVED_REQUIREMENT":"Есть нерешённые требования", "NO_RECORDED_SUPPORT":"Нет записанного подтверждения"]
+}
+
+private struct CompanyExportDocument: FileDocument {
+    static var readableContentTypes: [UTType] { [.data] }
+    static var writableContentTypes: [UTType] { CompanyArtifactBytes.formats.compactMap { UTType(filenameExtension: $0) } + [.data] }
+    let data: Data
+    init(data: Data) { self.data = data }
+    init(configuration: ReadConfiguration) throws { throw CompanyConnectionError.invalidArtifact }
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper { FileWrapper(regularFileWithContents: data) }
+}
+
+private struct CompanyEventFileView: View {
+    let item: CompanyCase
+    let accountID: String
+    let event: CompanyLifecycleEvent
+    @ObservedObject var store: CompanyStore
+    @State private var artifact: CompanyEventArtifact?
+    @State private var missing = false
+    @State private var selected: CompanyArtifactBytes?
+    @State private var importing = false
+    @State private var acknowledge = false
+    @State private var notice: String?
+    @State private var export: CompanyExportDocument?
+    @State private var exporting = false
+    private var canWrite: Bool { store.canDecide(accountID: accountID, caseID: item.caseId, revision: item.revision) }
+    private func reset() { artifact = nil; missing = false; selected = nil; acknowledge = false; notice = nil; export = nil; exporting = false; importing = false }
+    private func load() async {
+        reset()
+        do { artifact = try await store.eventArtifact(accountID: accountID, item: item, event: event) }
+        catch CompanyConnectionError.http(404) { missing = true; notice = "Копия не найдена или функция отключена." }
+        catch { notice = CompanyStore.safeError(error) }
+    }
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("v\(event.revision) · \(event.stage == .submitted ? "Квитанция" : "Протокол")").font(.headline)
+            Button("Проверить файл события") { Task { await load() } }.disabled(store.isBusy)
+            if let artifact {
+                Text("\(artifact.formatHint.uppercased()) · \(artifact.inspection.sizeBytes) байт")
+                Text(artifact.inspection.sha256).font(.caption2).textSelection(.enabled)
+                Button("Скачать проверенную копию") {
+                    Task {
+                        export = nil; notice = nil
+                        do {
+                            let bytes = try await store.downloadEventArtifact(accountID: accountID, item: item, event: event, artifact: artifact)
+                            guard store.selectedID == accountID, store.identity != nil else { return }
+                            export = CompanyExportDocument(data: bytes.data); exporting = true
+                        } catch { notice = CompanyStore.safeError(error) }
+                    }
+                }.disabled(store.isBusy)
+            } else if missing && canWrite {
+                Button("Выбрать PDF, DOCX или XLSX") { importing = true }.disabled(store.isBusy)
+                if let selected {
+                    Text("\(selected.format.uppercased()) · \(selected.data.count) байт")
+                    Toggle("Копия сотрудника, происхождение на ЭТП не проверено", isOn: $acknowledge)
+                    Button("Сохранить файл события") {
+                        acknowledge = false; notice = nil
+                        Task {
+                            do { artifact = try await store.eventArtifact(accountID: accountID, item: item, event: event, upload: selected); self.selected = nil; missing = false }
+                            catch { notice = CompanyStore.safeError(error) }
+                        }
+                    }.disabled(!acknowledge || store.isBusy)
+                }
+            }
+            if let notice { Text(notice).font(.caption).foregroundStyle(.orange) }
+            Text("Подлинность и электронная подпись не проверены.").font(.caption).foregroundStyle(.secondary)
+        }
+        .fileImporter(isPresented: $importing, allowedContentTypes: CompanyArtifactBytes.formats.compactMap { UTType(filenameExtension: $0) }) { result in
+            selected = nil; acknowledge = false
+            do { guard canWrite else { return }; selected = try CompanyArtifactBytes.read(result.get()) }
+            catch { notice = CompanyStore.safeError(error) }
+        }
+        .fileExporter(isPresented: $exporting, document: export, contentType: artifact.flatMap { UTType(filenameExtension: $0.formatHint) } ?? .data, defaultFilename: artifact?.filename ?? "lifecycle") { result in
+            export = nil
+            if case .failure(let error) = result { notice = CompanyStore.safeError(error) }
+        }
+        .onChange(of: exporting) { _, value in if !value { export = nil } }
+        .onChange(of: store.selectedID) { _, _ in reset() }
+        .onChange(of: store.identity?.memberId) { _, value in if value == nil { reset() } }
     }
 }

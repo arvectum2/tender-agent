@@ -42,6 +42,44 @@ final class AppStoreTests: XCTestCase {
         XCTAssertEqual(try CompanyAPIClient.validatedOrigin("https://EXAMPLE.invalid:443/").absoluteString, "https://example.invalid")
     }
 
+    func testCompanyReadinessAndArtifactContract() throws {
+        let decoder = TenderAgentJSON.makeDecoder()
+        let identity = try decoder.decode(CompanyIdentity.self, from: Data(#"{"tenant_id":"a","customer_id":"a","member_id":"m","company_name":"A","role":"owner","legal_accepted":true}"#.utf8))
+        let item = try decoder.decode(CompanyCase.self, from: Data(#"{"case_id":"case-a","source_platform":"workspace","external_id":"1234567","source_verified":false,"revision":1,"decision":{"action":"GO","revision":1,"rationale":"fixture","decided_at":"2026-11-15T00:00:00Z"}}"#.utf8))
+        let base = #"{"case_id":"case-a","event_id":"event-a","revision":1,"stage":"READY","member_id":"m","created_at":"2026-11-16T10:00:00Z","attestation":{"stage":"READY","rationale":"fixture","expected_revision":0,"expected_decision_revision":1,"correct_outcome":false,"idempotency_key":"fixture-ready"},"readiness_stale":false,"origin":"HUMAN_ATTESTATION","external_fact_verified":false,"external_submission_allowed":false}"#
+        let ready = try decoder.decode(CompanyLifecycleEvent.self, from: Data(base.utf8))
+        let digest = String(repeating: "a", count: 64)
+        let projection: [String: Any] = ["schema":"commercial_readiness_partial_v1","customer_id":"a","case_id":"case-a","attempt_id":"attempt-a","card_sha256":digest,"candidate_count":1,"rejected_or_opaque_links":0,"issues":[],"partial_review_resolved":true,"coverage_complete":false,"platform_original_verified":false,"qualification_verified":false,"external_submission_allowed":false]
+        var binding: [String: Any] = ["ready_event_id":"event-a","projection_sha256":digest,"projection":projection,"binding_id":NSNull(),"bound_projection_sha256":NSNull(),"binding_current":false,"qualification_verified":false,"external_submission_allowed":false]
+        func decodeBinding() throws -> CompanyReadinessBinding { try decoder.decode(CompanyReadinessBinding.self, from: JSONSerialization.data(withJSONObject:binding)) }
+        XCTAssertTrue(try decodeBinding().matches(identity,item:item,event:ready))
+        XCTAssertTrue(try decodeBinding().canBind)
+        binding["binding_id"] = "binding-a"; binding["bound_projection_sha256"] = digest; binding["binding_current"] = true
+        XCTAssertTrue(try decodeBinding().matches(identity,item:item,event:ready))
+        XCTAssertFalse(try decodeBinding().canBind)
+        binding["bound_projection_sha256"] = String(repeating:"b",count:64)
+        XCTAssertFalse(try decodeBinding().matches(identity,item:item,event:ready))
+        binding["binding_current"] = false
+        XCTAssertTrue(try decodeBinding().matches(identity,item:item,event:ready))
+        XCTAssertFalse(try decodeBinding().canBind)
+        binding["ready_event_id"] = "wrong"
+        XCTAssertFalse(try decodeBinding().matches(identity,item:item,event:ready))
+        let submitted = try decoder.decode(CompanyLifecycleEvent.self, from: Data(base.replacingOccurrences(of:"READY",with:"SUBMITTED").utf8))
+        let bytes = try CompanyArtifactBytes(data:Data("abc".utf8),format:"pdf")
+        XCTAssertEqual(bytes.sha256,"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad")
+        var artifact: [String:Any] = ["customer_id":"a","case_id":"case-a","event_id":"event-a","event_revision":1,"event_stage":"SUBMITTED","artifact_kind":"SUBMISSION_RECEIPT","artifact_id":"artifact-a","format_hint":"pdf","inspection":["format_hint":"pdf","sha256":bytes.sha256,"size_bytes":3],"origin":"USER_SUPPLIED_UNATTESTED","stored_bytes_reverified":true,"platform_original_verified":false,"external_fact_verified":false,"external_submission_allowed":false]
+        func decodeArtifact() throws -> CompanyEventArtifact { try decoder.decode(CompanyEventArtifact.self,from:JSONSerialization.data(withJSONObject:artifact)) }
+        XCTAssertTrue(try decodeArtifact().matches(identity,event:submitted))
+        XCTAssertTrue(try decodeArtifact().accepts(bytes))
+        XCTAssertFalse(try decodeArtifact().accepts(CompanyArtifactBytes(data:Data("xyz".utf8),format:"pdf")))
+        XCTAssertFalse(try decodeArtifact().matches(identity,event:ready))
+        artifact["customer_id"] = "foreign"
+        XCTAssertFalse(try decodeArtifact().matches(identity,event:submitted))
+        XCTAssertThrowsError(try CompanyArtifactBytes(data:Data(),format:"pdf"))
+        XCTAssertThrowsError(try CompanyArtifactBytes(data:Data(repeating:0,count:CompanyArtifactBytes.limit+1),format:"pdf"))
+        XCTAssertThrowsError(try CompanyArtifactBytes(data:Data("abc".utf8),format:"zip"))
+    }
+
     func testCompanyLifecycleContract() throws {
         let decoder = TenderAgentJSON.makeDecoder()
         let identity = try decoder.decode(CompanyIdentity.self, from: Data(#"{"tenant_id":"a","customer_id":"a","member_id":"m","company_name":"A","role":"owner","legal_accepted":true}"#.utf8))

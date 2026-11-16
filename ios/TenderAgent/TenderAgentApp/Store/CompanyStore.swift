@@ -285,6 +285,33 @@ final class CompanyStore: ObservableObject {
         } catch { throw CompanyConnectionError.lifecycleUncertain }
     }
 
+    func readiness(accountID: String, item: CompanyCase, event: CompanyLifecycleEvent, bind: CompanyReadinessBinding? = nil) async throws -> CompanyReadinessBinding {
+        guard !isBusy else { throw CompanyConnectionError.http(409) }
+        isBusy = true; defer { isBusy = false }
+        do {
+            let (client, actual) = try await lifecycleAccess(accountID: accountID, item: item, write: bind != nil)
+            return try await client.readiness(item: item, event: event, identity: actual, bind: bind)
+        } catch { handleLifecycleError(error); throw error }
+    }
+
+    func eventArtifact(accountID: String, item: CompanyCase, event: CompanyLifecycleEvent, upload: CompanyArtifactBytes? = nil) async throws -> CompanyEventArtifact {
+        guard !isBusy else { throw CompanyConnectionError.http(409) }
+        isBusy = true; defer { isBusy = false }
+        do {
+            let (client, actual) = try await lifecycleAccess(accountID: accountID, item: item, write: upload != nil)
+            return try await client.eventArtifact(item: item, event: event, identity: actual, upload: upload)
+        } catch { handleLifecycleError(error); throw error }
+    }
+
+    func downloadEventArtifact(accountID: String, item: CompanyCase, event: CompanyLifecycleEvent, artifact: CompanyEventArtifact) async throws -> CompanyArtifactBytes {
+        guard !isBusy else { throw CompanyConnectionError.http(409) }
+        isBusy = true; defer { isBusy = false }
+        do {
+            let (client, actual) = try await lifecycleAccess(accountID: accountID, item: item)
+            return try await client.downloadEventArtifact(item: item, event: event, identity: actual, artifact: artifact)
+        } catch { handleLifecycleError(error); throw error }
+    }
+
     static func safeError(_ error: Error) -> String {
         if let known = error as? CompanyConnectionError { return known.localizedDescription }
         return "Не удалось получить данные компании. Проверьте подключение."
