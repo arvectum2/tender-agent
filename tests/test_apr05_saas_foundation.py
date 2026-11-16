@@ -1775,3 +1775,55 @@ def test_requirement_review_matrix_versions_scope_and_replay(client, session, mo
     assert session.query(CommercialRequirementReview).count()==2
     assert client.get(route+'/'+key,headers=_auth(b)).status_code==404
     assert not client.get(foreign,headers=_auth(b)).json()['items'][0]['review']
+
+
+def test_company_manager_inbox_due_and_latest_decision_scope(client, session, monkeypatch):
+    from src.modules.saas_foundation import company_portfolio as portfolio
+    from src.modules.saas_foundation.models import CompanyPortfolioDecision
+
+    _, owner = _seed(client, 'Manager inbox A')
+    _, other = _seed(client, 'Manager inbox B')
+    route = '/api/saas/company-portfolio/manager-inbox'
+    cases = '/api/saas/company-portfolio/cases'
+    assert client.get(route, headers=_auth(owner)).status_code == 428
+    _legal(client, owner); _legal(client, other)
+    moment = [service.now_utc()]
+    monkeypatch.setattr(portfolio, 'now_utc', lambda: moment[0])
+    def save(token, number):
+        r = client.post(cases, headers=_auth(token), json={'registry_number': number})
+        assert r.status_code == 201, r.text
+        return r.json()['case_id']
+    def decision(case_id, action, rev, until=None):
+        r = client.post(f'{cases}/{case_id}/decisions', headers=_auth(owner), json={'action':action, 'expected_revision':rev, 'rationale':'Fixture only', 'idempotency_key':f'inbox-fixture-{rev+1}', 'deferred_until':until.isoformat() if until else None})
+        assert r.status_code == 200,r.text
+    ids = [save(owner, f'{i+1:019d}') for i in range(5)]
+    foreign = save(other, '0000000000000000001')
+    commercial = client.post('/api/saas/company-portfolio/commercial-cases', headers=_auth(owner), json={'source_url':'https://workspace.ru/tenders/fixture-19019/'}).json()['case_id']
+    decision(ids[1], 'DEFER', 0, moment[0]+timedelta(hours=1))
+    decision(ids[2], 'DEFER', 0, moment[0]+timedelta(days=2))
+    decision(ids[3], 'DEFER', 0, moment[0]+timedelta(hours=1))
+    decision(ids[3], 'GO', 1)
+    decision(ids[4], 'NO_GO', 0)
+    moment[0] += timedelta(hours=1)
+    first = client.get(route, headers=_auth(owner), params={'limit':1})
+    assert first.status_code == 200, first.text
+    data = first.json()
+    assert data['summary'] == {'undecided':2,'deferred_due':1,'deferred_future':1,'go':1,'no_go':1,'attention':3,'all':6}
+    assert data['items'][0]['case_id']==ids[1] and data['items'][0]['inbox_state']=='deferred_due' and data['has_more']
+    later = client.get(route, headers=_auth(owner), params={'offset':1,'limit':2}).json()
+    assert {x['case_id'] for x in later['items']}=={ids[0],commercial} and not later['has_more']
+    assert not data['external_submission_allowed'] and not data['live_deadline_verified'] and not data['market_coverage_complete']
+    for view, expected in [('go',ids[3]),('no_go',ids[4]),('deferred_future',ids[2]),('deferred_due',ids[1])]:
+        r=client.get(route,headers=_auth(owner),params={'view':view}).json()
+        assert [x['case_id'] for x in r['items']]==[expected] and r['summary']==data['summary']
+    assert client.get(route,headers=_auth(other)).json()['items'][0]['case_id']==foreign
+    assert client.get(route,headers=_auth(other)).json()['summary']['all']==1
+    assert client.get(route,headers=_auth(owner),params={'view':'won'}).status_code==422
+    assert session.query(CompanyPortfolioDecision).count()==5
+    invite=client.post('/api/saas/invitations',headers=_auth(owner),json={'role':'viewer','acquisition_channel':'referral'}).json()
+    viewer=client.post('/api/saas/invitations/redeem',json={'invitation_code':invite['invitation_code'],'display_name':'viewer'}).json()['access_token']
+    _legal(client,viewer)
+    assert client.get(route,headers=_auth(viewer)).json()['summary']==data['summary']
+    decision(ids[1],'GO',1)
+    updated=client.get(route,headers=_auth(owner)).json()
+    assert updated['summary']['attention']==2 and updated['summary']['go']==2 and updated['summary']['deferred_due']==0

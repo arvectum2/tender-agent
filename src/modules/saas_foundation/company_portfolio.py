@@ -7,8 +7,9 @@ from uuid import uuid4
 
 from fastapi import HTTPException
 from pydantic import BaseModel, ConfigDict, Field, model_validator
-from sqlalchemy import select
-from sqlalchemy.orm import Session
+from sqlalchemy import case as sql_case
+from sqlalchemy import func, select
+from sqlalchemy.orm import Session, aliased
 
 from src.modules.customer_pilot.models import (
     PilotAuditEvent,
@@ -155,7 +156,10 @@ def _decision_view(row: CompanyPortfolioDecision) -> dict:
 
 
 def _view(session: Session, principal: TenantPrincipal, case: ProcurementCase) -> dict:
-    latest = _latest(session, principal, case.id)
+    return _case_view(session, principal, case, _latest(session, principal, case.id))
+
+
+def _case_view(session, principal, case, latest):
     project = session.get(PilotProject, case.project_id)
     platform = next((p for p, slug in _COMMERCIAL_SLUGS.items() if slug == project.internal_slug), "eis")
     source_url = None
@@ -255,3 +259,44 @@ def record_decision(session: Session, principal: TenantPrincipal, case_id: str, 
     audit(session, principal.tenant_id, "company_portfolio_decision", principal.member_id, detail=row.id)
     session.commit()
     return _decision_view(row)
+
+
+InboxFilter = Literal["attention", "undecided", "deferred_due", "deferred_future", "go", "no_go", "all"]
+
+
+def manager_inbox(session: Session, principal: TenantPrincipal, *, view: InboxFilter, offset: int, limit: int) -> dict:
+    """Only owned saved references and current human decisions, not agent recommendations."""
+    legal_required(session, principal)
+    as_of = now_utc()
+    latest = aliased(CompanyPortfolioDecision)
+    choice = aliased(CompanyPortfolioDecision)
+    latest_id = (select(choice.id).where(choice.case_id == ProcurementCase.id,
+                 choice.tenant_id == principal.tenant_id).order_by(choice.revision.desc()).limit(1)
+                 .correlate(ProcurementCase).scalar_subquery())
+    state = sql_case((latest.id.is_(None), "undecided"),
+                     (latest.action == "GO", "go"), (latest.action == "NO_GO", "no_go"),
+                     (latest.deferred_until <= as_of, "deferred_due"), else_="deferred_future")
+    base = (select(ProcurementCase, latest, state.label("inbox_state"))
+        .join(PilotProject, PilotProject.id == ProcurementCase.project_id)
+        .outerjoin(latest, latest.id == latest_id)
+        .where(ProcurementCase.customer_id == principal.customer_id,
+               PilotProject.customer_id == principal.customer_id,
+               PilotProject.internal_slug.in_(_PROJECT_SLUGS)))
+    # Counts are independent of pagination and use the same server timestamp.
+    count_q = base.with_only_columns(state.label("state"), func.count()).group_by(state)
+    counts = {k: 0 for k in ("undecided", "deferred_due", "deferred_future", "go", "no_go")}
+    counts.update(dict(session.execute(count_q).all()))
+    counts["attention"] = counts["undecided"] + counts["deferred_due"]
+    counts["all"] = sum(counts[k] for k in ("undecided", "deferred_due", "deferred_future", "go", "no_go"))
+    if view == "attention":
+        base = base.where(state.in_(("undecided", "deferred_due")))
+    elif view != "all":
+        base = base.where(state == view)
+    priority = sql_case((state == "deferred_due", 0), (state == "undecided", 1), else_=2)
+    due_order = sql_case((state == "deferred_due", latest.deferred_until), else_=None)
+    rows = session.execute(base.order_by(priority, due_order.asc().nulls_last(), ProcurementCase.created_at.desc(), ProcurementCase.id.desc()).offset(offset).limit(limit + 1)).all()
+    items = [{**_case_view(session, principal, case, decision), "inbox_state": item_state} for case, decision, item_state in rows[:limit]]
+    return {"customer_id": principal.customer_id, "as_of": as_of, "view": view, "offset": offset, "limit": limit,
+            "summary": counts, "items": items, "has_more": len(rows) > limit,
+            "scope": "SAVED_COMPANY_REFERENCES_AND_HUMAN_DECISIONS", "market_coverage_complete": False,
+            "live_deadline_verified": False, "external_submission_allowed": False}

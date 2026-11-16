@@ -91,6 +91,12 @@ async function fetch(route,opts){
   assert(['','?previous_attempt_id=capture-old'].includes(route.split('/commercial-captures/capture-a')[1]));return reply({...captureReceipt,original_reverified:true,attachment_intake_enabled:attachmentEnabled,text_projection_enabled:projectionEnabled,requirement_review_enabled:projectionEnabled,attachment_inventory:{candidates:[candidate],coverage_complete:false},...(route.includes('?')?{comparison:{previous_attempt_id:'capture-old',html_changed:true}}:{})});
  }
  if(route.startsWith('/api/saas/company-portfolio/cases/commercial-a')){assert.equal(key,'a');if(route.endsWith('/decisions?limit=50'))return reply({items:[],has_more:false});assert.equal(route,'/api/saas/company-portfolio/cases/commercial-a');return reply(commercialItem);}
+ if(route.startsWith('/api/saas/company-portfolio/manager-inbox?')){
+  const view=route.match(/view=([^&]+)/)[1],offset=Number(route.match(/offset=(\d+)/)[1]);
+  const current=item(key),state=current.decision?.action==='GO'?'go':'undecided';
+  const items=view==='attention'||view==='undecided'||view==='go'?((view==='go'&&state!=='go')||(view!=='go'&&state==='go')?[]:[{...current,inbox_state:state}]):[];
+  return reply({customer_id:mismatch?'foreign':fixture[key].customer_id,view,offset,scope:'SAVED_COMPANY_REFERENCES_AND_HUMAN_DECISIONS',external_submission_allowed:false,as_of:'2026-11-16T10:00:00Z',summary:{all:1,attention:state==='undecided'?1:0,undecided:state==='undecided'?1:0,deferred_due:0,deferred_future:0,go:state==='go'?1:0,no_go:0},items,has_more:false});
+ }
  if(route.startsWith('/api/saas/company-portfolio/cases?'))return reply({customer_id:mismatch?'foreign':fixture[key].customer_id,items:[item(key),...(key==='a'&&savedCommercial?[commercialItem]:[])],has_more:false});
  if(route==='/api/saas/company-portfolio/search-context')return reply({customer_id:fixture[key].customer_id,profile_state:'ACTIVE',profile_version:1});
  if(route.startsWith('/api/saas/company-portfolio/cases/case-'+key)){
@@ -118,6 +124,10 @@ async function selectAccount(key){get('saved-token').value='fixture-'+key;await 
 async function openCase(key){get('company-case').value='case-'+key;change('company-case');await click('company-open');}
 async function main(){
  await selectAccount('a');assert.match(get('company-identity').textContent,/Компания A/);
+ await click('company-inbox-load');assert.match(get('company-inbox-summary').textContent,/Требуют внимания: 1/);assert.equal(get('company-case').children[1].value,'case-a');
+ get('company-inbox-filter').value='go';await click('company-inbox-load');assert.equal(get('company-case').children.length,1);
+ mismatch=true;await click('company-inbox-load');assert.equal(vm.runInContext('token',ctx),'');assert.equal(get('company-inbox-summary').textContent,'');mismatch=false;await selectAccount('a');
+
  await click('company-search-refresh');assert.equal(get('company-search-start').disabled,false);get("company-search-index").value="workspace_rss";
  await click('company-schedule-refresh');get('company-schedule-hour').value='9';await click('company-schedule-enable');assert.equal(scheduleState.revision,0);
  get('company-schedule-confirm').checked=true;await click('company-schedule-enable');assert.equal(scheduleState.enabled,true);assert.match(get('company-schedule-state').textContent,/Разрешено владельцем/);

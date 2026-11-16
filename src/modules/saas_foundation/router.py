@@ -900,3 +900,8 @@ def commercial_case_requirement_matrix(case_id: str, attempt_id: str, principal:
     if not get_settings().saas_commercial_requirement_review_enabled:
         raise HTTPException(404, "Requirement review disabled")
     return commercial_requirement_review.case_matrix(session, principal, case_id, attempt_id, offset=offset, limit=limit)
+
+
+@router.get("/api/saas/company-portfolio/manager-inbox")
+def company_manager_inbox(principal: Member, session: DBSession, view: company_portfolio.InboxFilter = "attention", offset: int = Query(0, ge=0), limit: int = Query(50, ge=1, le=100)) -> dict:
+    return company_portfolio.manager_inbox(session, principal, view=view, offset=offset, limit=limit)

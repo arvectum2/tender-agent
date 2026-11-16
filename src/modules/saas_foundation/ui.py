@@ -86,6 +86,7 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 <section><h2>4a. Портфель компании</h2>
 <p id="company-identity" role="status">Войдите и загрузите портфель.</p>
 <button id="company-load">Загрузить портфель</button><button id="company-more" disabled>Ещё закупки</button>
+<label>Очередь руководителя<select id="company-inbox-filter"><option value="attention">Требуют внимания</option><option value="undecided">Без решения</option><option value="deferred_due">Пора вернуться к решению</option><option value="deferred_future">Отложены</option><option value="go">GO</option><option value="no_go">NO GO</option><option value="all">Все сохранённые</option></select></label><button id="company-inbox-load" disabled>Показать очередь</button><p id="company-inbox-summary" aria-live="polite"></p><p>Только сохранённые закупки и внутренние решения. Срок возврата к решению не является сроком подачи заявки.</p>
 <div id="company-save-panel" hidden><label>Номер ЕИС<input id="company-registry" inputmode="numeric" maxlength="20" autocomplete="off"></label>
 <button id="company-save">Добавить ссылку в портфель</button><label>Оригинальная ссылка B2B-Center / Workspace<input id="company-commercial-url" type="url" maxlength="650" autocomplete="off"></label><button id="company-commercial-save">Добавить коммерческую закупку</button></div>
 <details><summary>Поиск по сохранённому профилю компании</summary>
@@ -368,7 +369,7 @@ bind("members-list",()=>call("/api/saas/members"));
 bind("revoke-member",()=>call("/api/saas/members/"+encodeURIComponent(val("revoke-member-id"))+"/revoke",{method:"POST"}));
 
 // All portfolio state belongs to the current in-memory SaaS session.
-let companyIdentity=null, companyItems=[], companyMore=false, companyOffset=0;
+let companyIdentity=null, companyItems=[], companyMore=false, companyOffset=0, companyInboxView=null;
 let companyCase=null, companyProfile=null, companyEvidence=[], pendingCompanyDecision=null;
 let captureEnabled=false, captureAttempts=[];
 let attachmentParent=null, attachmentCandidates=[], attachmentRecords=[], attachmentIntakeEnabled=false, textProjectionEnabled=false;
@@ -391,7 +392,8 @@ function resetCompanyDetail(){
  el("company-action").value="GO";el("company-run-id").value="";
 }
 function clearCompany(){
- companyIdentity=null;companyItems=[];companyMore=false;companyOffset=0;
+ companyIdentity=null;companyItems=[];companyMore=false;companyOffset=0;companyInboxView=null;
+ el("company-inbox-summary").textContent="";el("company-inbox-filter").value="attention";
  resetCompanySearch();
  blankSelect("company-case","Выберите закупку");resetCompanyDetail();
  el("company-identity").textContent="Войдите и загрузите портфель.";el("company-count").textContent="";
@@ -414,6 +416,8 @@ function companyCanDecide(){return companyIdentity?.legal_accepted===true&&["own
 function syncCompanyControls(){
  const read=Boolean(companyIdentity?.legal_accepted), detail=Boolean(companyCase);
  el("company-more").disabled=uiBusy||!read||!companyMore;
+ el("company-inbox-load").disabled=uiBusy||!read;
+ el("company-inbox-filter").disabled=uiBusy||!read;
  el("company-save-panel").hidden=!companyCanWrite();el("company-save").disabled=uiBusy||!companyCanWrite();
  el("company-open").disabled=uiBusy||!read||!el("company-case").value;
  el("company-decision-panel").hidden=!detail||!companyCanDecide();
@@ -446,7 +450,7 @@ function syncCompanyControls(){
 }
 function requireCompany(){if(!companyIdentity?.legal_accepted)throw Error("Загрузите портфель после подтверждения условий пилота");return companyIdentity}
 function casePath(){requireCompany();if(!companyCase)throw Error("Откройте карточку");return "/api/saas/company-portfolio/cases/"+encodeURIComponent(companyCase.case_id)}
-function companyCaseText(item){return ((item.source_platform&&item.source_platform!=="eis"?item.source_platform+":"+item.external_id:item.registry_number)||"Номер не указан")+" · "+(item.decision?.action||"Не решено")+" · v"+item.revision}
+function companyCaseText(item){return ((item.source_platform&&item.source_platform!=="eis"?item.source_platform+":"+item.external_id:item.registry_number)||"Номер не указан")+" · "+(item.decision?.action||"Не решено")+" · v"+item.revision+(item.inbox_state==="deferred_due"?" · пора вернуться":"")}
 function renderCompanyItems(){
  blankSelect("company-case","Выберите закупку");
  for(const item of companyItems){const opt=document.createElement("option");opt.value=item.case_id;opt.textContent=companyCaseText(item);el("company-case").append(opt)}
@@ -462,6 +466,16 @@ async function loadCompanyPage({restart=true}={}){
  if(page.customer_id!==identity.customer_id){clearSession();throw Error("Ответ относится к другой компании. Сессия очищена.")}
  const known=new Set(companyItems.map(x=>x.case_id));companyItems.push(...page.items.filter(x=>!known.has(x.case_id)));
  companyOffset+=page.items.length;companyMore=Boolean(page.has_more);renderCompanyItems();return {loaded:companyItems.length,has_more:companyMore};
+}
+async function loadCompanyInbox({restart=true}={}){
+ const identity=requireCompany();const selected=restart?val("company-inbox-filter"):companyInboxView;
+ if(!["attention","undecided","deferred_due","deferred_future","go","no_go","all"].includes(selected))throw Error("Выберите очередь");
+ if(restart){companyItems=[];companyOffset=0;companyMore=false;companyInboxView=null;resetCompanyDetail();renderCompanyItems();el("company-inbox-summary").textContent=""}
+ const page=await call("/api/saas/company-portfolio/manager-inbox?view="+encodeURIComponent(selected)+"&offset="+companyOffset+"&limit=50");
+ if(page.customer_id!==identity.customer_id||page.view!==selected||page.offset!==companyOffset||page.external_submission_allowed!==false||page.scope!=="SAVED_COMPANY_REFERENCES_AND_HUMAN_DECISIONS"){clearSession();throw Error("Ответ очереди относится к другой компании или выборке")}
+ companyInboxView=selected;const known=new Set(companyItems.map(x=>x.case_id));companyItems.push(...page.items.filter(x=>!known.has(x.case_id)));companyOffset+=page.items.length;companyMore=Boolean(page.has_more);
+ const c=page.summary;el("company-inbox-summary").textContent="Сохранено: "+c.all+" · Требуют внимания: "+c.attention+" · Без решения: "+c.undecided+" · Пора вернуться: "+c.deferred_due+" · Отложены: "+c.deferred_future+" · GO: "+c.go+" · NO GO: "+c.no_go+". На "+page.as_of+". Обновите очередь после изменений.";
+ renderCompanyItems();return {loaded:companyItems.length,has_more:companyMore};
 }
 async function loadCompanyEvidence(path){
  const profile=await call("/api/saas/company-portfolio/search-context");
@@ -638,7 +652,8 @@ async function loadCompanyCase(id){
  return {case_id:item.case_id,revision:item.revision};
 }
 bind("company-load",()=>loadCompanyPage());
-bind("company-more",()=>loadCompanyPage({restart:false}));
+bind("company-more",()=>companyInboxView?loadCompanyInbox({restart:false}):loadCompanyPage({restart:false}));
+bind("company-inbox-load",()=>loadCompanyInbox());
 el("company-case").addEventListener("change",()=>{resetCompanyDetail();syncCompanyControls()});
 el("company-evidence").addEventListener("change",()=>{el("company-evidence-result").hidden=true;el("company-evidence-result").textContent="";syncCompanyControls()});
 bind("company-open",()=>loadCompanyCase(val("company-case")));
@@ -680,7 +695,7 @@ bind("company-decide",async()=>{
  }
  pendingCompanyDecision=null;el("company-confirm").checked=false;
  // Never silently overwrite a more recent revision or present a successful refresh on failure.
- try{await loadCompanyCase(id)}catch(error){
+ try{if(companyInboxView){el("company-inbox-filter").value=companyInboxView;await loadCompanyInbox()}else await loadCompanyCase(id)}catch(error){
    resetCompanyDetail();if([401,402,403].includes(error.status))clearSession();
    else el("company-count").textContent="Решение сохранено, откройте карточку заново для обновления.";
    return {saved_revision:saved.revision,refresh_required:true};
