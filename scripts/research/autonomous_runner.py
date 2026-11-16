@@ -302,10 +302,11 @@ class Runner:
         if result["prior_digest"] != digest or result["indexed_count"] != len(self.local_index()):
             raise Blocked("archive refresh baseline changed")
         count = result["new_ready"]
-        if not count:
+        reviews = result.get("new_review", 0)
+        if not count and not result.get("file"):
             self.update(lane, archive_refresh=result)
             return None
-        if not 1 <= count <= 160:
+        if type(count) is not int or type(reviews) is not int or min(count,reviews)<0 or not 1 <= count+reviews <= 160:
             raise Blocked("archive refresh exceeds bound")
         path = bridge.parent / result["file"]
         if path.parent != bridge.parent or not re.fullmatch(r"archive-index-bridge-auto-[0-9]{8}T[0-9]{12}Z\.json", path.name) or path.is_symlink():
@@ -316,11 +317,14 @@ class Runner:
         n = len(old["ready"])
         if (new_digest != result["digest"] or new["schema"] != old["schema"]
                 or new["ready"][:n] != old["ready"] or len(new["ready"]) != n + count
-                or new["review"][:len(old["review"])] != old["review"]):
+                or new["review"][:len(old["review"])] != old["review"]
+                or len(new["review"]) != len(old["review"])+reviews):
             raise Blocked("prepared bridge identity mismatch")
         added = [r["sha256"] for r in new["ready"][n:]]
         if len(set(added)) != count or set(added) & ({r["sha256"] for r in old["ready"]} | set(self.local_index())):
             raise Blocked("duplicate archive refresh entry")
+        if not count and not any(r["reason"]=="structure_review" for r in new["review"][len(old["review"]):]):
+            raise Blocked("review-only refresh without structural progress")
         stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%S%fZ")
         saved = bridge.parent / ("archive-index-bridge-before-auto-" + stamp + ".json")
         state_saved = self.run / ("state-before-auto-refresh-" + stamp + ".json")

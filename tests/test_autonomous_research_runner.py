@@ -131,3 +131,23 @@ def test_drained_archive_refresh_continues_without_restart(tmp_path, monkeypatch
     assert refreshes == [digest, "b"*64]
     assert r.state["lanes"]["sibur"]["status"] == "exhausted"
     assert r.state["lanes"]["sibur"]["index_inflight"] is False
+
+
+def test_review_only_refresh_commits_bounded_structural_progress(tmp_path, monkeypatch):
+    import hashlib,json
+    from scripts.research.autonomous_runner import Runner
+    import inspect
+    # Construct the minimal runner state in the same way as the append test.
+    r=Runner(tmp_path,tmp_path,tmp_path,tmp_path)
+    r.run.mkdir(parents=True,exist_ok=True)
+    bridge=tmp_path/"archive-index-bridge-v1.json"
+    old={"schema":"sibur_archive_index_bridge_v1","ready":[],"review":[]}
+    bridge.write_text(json.dumps(old));digest=hashlib.sha256(bridge.read_bytes()).hexdigest()
+    new={**old,"review":[{"sha256":"a"*64,"reason":"structure_review"}]}
+    p=tmp_path/"archive-index-bridge-auto-20261116T160000000001Z.json";p.write_text(json.dumps(new))
+    new_digest=hashlib.sha256(p.read_bytes()).hexdigest()
+    r.state_path.write_text(json.dumps(r.state))
+    monkeypatch.setattr(r,"local_index",lambda:{})
+    monkeypatch.setattr(r,"module",lambda *a,**k:json.dumps({"new_ready":0,"new_review":1,"prior_digest":digest,"indexed_count":0,"file":p.name,"digest":new_digest}))
+    assert r.refresh_archive_bridge("sibur",bridge,digest)==(new_digest,[])
+    assert json.loads(bridge.read_text())==new
