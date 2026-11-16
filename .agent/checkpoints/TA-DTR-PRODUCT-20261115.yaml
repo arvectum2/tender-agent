@@ -219,7 +219,7 @@ completed:
 - 'PRICE-01 web controls: explicit blank inputs and provenance, server Decimal comparison,
   stateless preview, explicit version save, immutable history, exact replay/result
   validation and scope clearing.'
-current_stage: price01_web_verified_next_native
+current_stage: price01_native_controls
 remaining:
 - Native PRICE-01 input/preview/save/history; detailed units/hours/rates and evidence-linked
   costs, comparable procurement normalization and real-case acceptance.
@@ -326,10 +326,9 @@ test_results:
 - 150 passed,2 skipped,111 warnings in 11.55s; extended actual JS fixture PASS for
   preview/save, uncertain replay, changed input invalidation, disabled feature and
   foreign scope. Ruff/diff PASS. PR559 exact ad906f54 CI 19/19.
-resume_instruction: PRICE-01 web controls tested, next native scoped scenarios then
-  cost decomposition/real evidence and comparable-source normalization. No automatic
-  competitive forecast or bid. No production changes; B2B consent pending; product-only
-  scope.
+resume_instruction: Native scoped price scenario input/preview/save/history, explicit
+  assumptions and role gate, exact replay/result validation. Run Swift contracts and
+  Xcode build; no production changes.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
