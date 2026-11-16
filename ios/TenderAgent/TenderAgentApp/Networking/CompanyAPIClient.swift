@@ -91,6 +91,7 @@ struct CompanyCase: Decodable, Identifiable, Sendable {
     var displayReference: String { registryNumber ?? [sourcePlatform, externalId].compactMap { $0 }.joined(separator: ":") }
     var isCommercial: Bool { sourcePlatform != nil && sourcePlatform != "eis" }
     let sourceVerified: Bool
+    let inboxState: String?
     let revision: Int
     let decision: CompanyDecision?
     var id: String { caseId }
@@ -102,6 +103,79 @@ struct CompanyPortfolioPage: Decodable, Sendable {
     let hasMore: Bool
 
     func matchesCompany(_ identity: CompanyIdentity) -> Bool { customerId == identity.customerId }
+}
+
+enum CompanyInboxFilter: String, CaseIterable, Identifiable, Sendable {
+    case attention, undecided, deferredDue = "deferred_due", deferredFuture = "deferred_future", go, noGo = "no_go", all
+    var id: String { rawValue }
+    var title: String {
+        switch self {
+        case .attention: "Требуют внимания"
+        case .undecided: "Без решения"
+        case .deferredDue: "Пора вернуться"
+        case .deferredFuture: "Отложены"
+        case .go: "GO"
+        case .noGo: "NO GO"
+        case .all: "Все закупки"
+        }
+    }
+}
+
+struct CompanyInboxSummary: Decodable, Sendable {
+    let undecided: Int
+    let deferredDue: Int
+    let deferredFuture: Int
+    let go: Int
+    let noGo: Int
+    let attention: Int
+    let all: Int
+
+    var valid: Bool {
+        let counts = [undecided, deferredDue, deferredFuture, go, noGo, attention, all]
+        return counts.allSatisfy { $0 >= 0 && $0 <= Int.max / 8 } &&
+            attention == undecided + deferredDue && all == undecided + deferredDue + deferredFuture + go + noGo
+    }
+}
+
+struct CompanyInboxPage: Decodable, Sendable {
+    let customerId: String
+    let asOf: Date
+    let view: String
+    let offset: Int
+    let limit: Int
+    let summary: CompanyInboxSummary
+    let items: [CompanyCase]
+    let hasMore: Bool
+    let scope: String
+    let marketCoverageComplete: Bool
+    let liveDeadlineVerified: Bool
+    let externalSubmissionAllowed: Bool
+
+    func matches(_ identity: CompanyIdentity, filter: CompanyInboxFilter, offset expectedOffset: Int) -> Bool {
+        guard customerId == identity.customerId, view == filter.rawValue, offset == expectedOffset,
+              scope == "SAVED_COMPANY_REFERENCES_AND_HUMAN_DECISIONS", !externalSubmissionAllowed,
+              !marketCoverageComplete, !liveDeadlineVerified, summary.valid, limit == 50,
+              items.count <= limit, Set(items.map(\.caseId)).count == items.count,
+              !hasMore || items.count == limit else { return false }
+        return items.allSatisfy { item in
+            let state: String
+            if let action = item.decision {
+                guard item.revision == action.revision else { return false }
+                switch action.action {
+                case "GO": state = "go"
+                case "NO_GO": state = "no_go"
+                case "DEFER":
+                    guard let due = action.deferredUntil else { return false }
+                    state = due <= asOf ? "deferred_due" : "deferred_future"
+                default: return false
+                }
+            } else {
+                guard item.revision == 0 else { return false }
+                state = "undecided"
+            }
+            return item.inboxState == state && (filter == .all || (filter == .attention ? ["undecided", "deferred_due"].contains(state) : filter.rawValue == state))
+        }
+    }
 }
 
 struct CompanyEvidence: Decodable, Identifiable, Sendable {
@@ -198,6 +272,13 @@ struct CompanyAPIClient: Sendable {
     func portfolio(for identity: CompanyIdentity, offset: Int = 0) async throws -> CompanyPortfolioPage {
         let page: CompanyPortfolioPage = try await get("api/saas/company-portfolio/cases", query: [URLQueryItem(name: "offset", value: String(offset))])
         guard page.matchesCompany(identity) else { throw CompanyConnectionError.identityMismatch }
+        return page
+    }
+
+    func inbox(for identity: CompanyIdentity, filter: CompanyInboxFilter, offset: Int = 0) async throws -> CompanyInboxPage {
+        let page: CompanyInboxPage = try await get("api/saas/company-portfolio/manager-inbox", query: [
+            URLQueryItem(name: "view", value: filter.rawValue), URLQueryItem(name: "offset", value: String(offset)), URLQueryItem(name: "limit", value: "50")])
+        guard page.matches(identity, filter: filter, offset: offset) else { throw CompanyConnectionError.identityMismatch }
         return page
     }
 

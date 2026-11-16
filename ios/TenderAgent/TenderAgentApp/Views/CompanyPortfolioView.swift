@@ -71,8 +71,24 @@ struct CompanyPortfolioView: View {
                 }
             }
             if store.loaded {
-                Section("Портфель компании") {
-                    if store.items.isEmpty { Text("В портфеле пока нет карточек.") }
+                Section("Очередь руководителя") {
+                    Picker("Показывать", selection: Binding(get: { store.inboxFilter }, set: { filter in
+                        selectedCase = nil
+                        Task { await store.setInboxFilter(filter) }
+                    })) {
+                        ForEach(CompanyInboxFilter.allCases) { filter in Text(filter.title).tag(filter) }
+                    }.disabled(store.isBusy)
+                    if let summary = store.inboxSummary {
+                        LabeledContent("Требуют внимания", value: String(summary.attention))
+                        LabeledContent("Пора вернуться", value: String(summary.deferredDue))
+                        LabeledContent("GO / NO GO", value: "\(summary.go) / \(summary.noGo)")
+                        LabeledContent("Всего сохранено", value: String(summary.all))
+                    }
+                    if let asOf = store.inboxAsOf {
+                        Text("На \(asOf.formatted(date: .abbreviated, time: .shortened)). Обновите после изменений.").font(.caption).foregroundStyle(.secondary)
+                    }
+                    Text("Внутренние решения. Срок возврата не является сроком подачи заявки.").font(.caption).foregroundStyle(.secondary)
+                    if store.items.isEmpty { Text("В этой очереди пока нет карточек.") }
                     ForEach(store.items) { item in
                         Button {
                             if let accountID = store.selectedID { selectedCase = CompanyCaseSelection(accountID: accountID, item: item) }
@@ -80,6 +96,7 @@ struct CompanyPortfolioView: View {
                             VStack(alignment: .leading, spacing: 5) {
                                 Text(item.displayReference.isEmpty ? "Номер не указан" : item.displayReference).font(.headline)
                                 Text(item.decision?.action ?? "Решение не принято")
+                                if item.inboxState == "deferred_due" { Label("Пора вернуться к решению", systemImage: "clock").foregroundStyle(.orange).font(.caption) }
                                 Text(item.isCommercial ? "Коммерческая ссылка · требуется проверка" : "Ссылка на ЕИС · требуется проверка").font(.caption).foregroundStyle(.secondary)
                             }.foregroundStyle(.primary)
                         }.disabled(store.isBusy)

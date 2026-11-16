@@ -13,6 +13,10 @@ final class CompanyStore: ObservableObject {
     @Published private(set) var loaded = false
     @Published private(set) var storageReady = false
     @Published private(set) var decisionNotice: String?
+    @Published private(set) var inboxFilter: CompanyInboxFilter = .attention
+    @Published private(set) var inboxSummary: CompanyInboxSummary?
+    @Published private(set) var inboxAsOf: Date?
+    private var nextOffset = 0
     private var pendingDecision: CompanyDecisionAttempt?
 
     init() {
@@ -25,11 +29,12 @@ final class CompanyStore: ObservableObject {
     private var selected: CompanyConnection? { connections.first { $0.id == selectedID } }
 
     private func resetSelection(_ id: String? = nil) {
-        if selectedID != id { pendingDecision = nil }
+        if selectedID != id { pendingDecision = nil; inboxFilter = .attention }
         selectedID = id
         decisionNotice = nil
         identity = nil
         items = []
+        inboxSummary = nil; inboxAsOf = nil; nextOffset = 0
         hasMore = false
         loaded = false
         error = nil
@@ -71,7 +76,16 @@ final class CompanyStore: ObservableObject {
         guard !isBusy, loaded, hasMore, let account = selected else { return }
         isBusy = true
         defer { isBusy = false }
-        await load(account, offset: items.count)
+        await load(account, offset: nextOffset)
+    }
+
+    func setInboxFilter(_ filter: CompanyInboxFilter) async {
+        guard !isBusy, let account = selected else { return }
+        isBusy = true
+        defer { isBusy = false }
+        resetSelection(account.id)
+        inboxFilter = filter
+        await load(account, offset: 0)
     }
 
     private func load(_ account: CompanyConnection, offset: Int) async {
@@ -81,13 +95,17 @@ final class CompanyStore: ObservableObject {
             guard actual.legalAccepted else {
                 identity = actual
                 items = []
+                inboxSummary = nil; inboxAsOf = nil; nextOffset = 0
                 hasMore = false
                 loaded = false
                 return
             }
-            let page = try await client.portfolio(for: actual, offset: offset)
+            let page = try await client.inbox(for: actual, filter: inboxFilter, offset: offset)
             identity = actual
-            items = offset == 0 ? page.items : items + page.items
+            let seen = Set(items.map(\.caseId))
+            items = offset == 0 ? page.items : items + page.items.filter { !seen.contains($0.caseId) }
+            nextOffset = offset + page.items.count
+            inboxSummary = page.summary; inboxAsOf = page.asOf
             hasMore = page.hasMore
             loaded = true
             error = nil
@@ -95,6 +113,7 @@ final class CompanyStore: ObservableObject {
             // No fallback to the owner's global portfolio or stale company data.
             identity = nil
             items = []
+            inboxSummary = nil; inboxAsOf = nil; nextOffset = 0
             hasMore = false
             loaded = false
             self.error = Self.safeError(error)
@@ -120,6 +139,7 @@ final class CompanyStore: ObservableObject {
     private func invalidateCompanyAccess() {
         identity = nil
         items = []
+        inboxSummary = nil; inboxAsOf = nil; nextOffset = 0
         hasMore = false
         loaded = false
         pendingDecision = nil

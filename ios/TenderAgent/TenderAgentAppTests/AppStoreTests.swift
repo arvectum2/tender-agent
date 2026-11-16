@@ -42,6 +42,20 @@ final class AppStoreTests: XCTestCase {
         XCTAssertEqual(try CompanyAPIClient.validatedOrigin("https://EXAMPLE.invalid:443/").absoluteString, "https://example.invalid")
     }
 
+    func testCompanyInboxScopeAndServerTime() throws {
+        let decoder = TenderAgentJSON.makeDecoder()
+        let identity = try decoder.decode(CompanyIdentity.self, from: Data(#"{"tenant_id":"a","customer_id":"a","member_id":"m","company_name":"Company A","role":"owner","legal_accepted":true}"#.utf8))
+        let fixture = #"{"customer_id":"a","as_of":"2026-11-16T10:00:00Z","view":"attention","offset":0,"limit":50,"scope":"SAVED_COMPANY_REFERENCES_AND_HUMAN_DECISIONS","market_coverage_complete":false,"live_deadline_verified":false,"external_submission_allowed":false,"summary":{"undecided":1,"deferred_due":1,"deferred_future":0,"go":1,"no_go":0,"attention":2,"all":3},"items":[{"case_id":"case-a","registry_number":"0123456789012345678","source_verified":false,"revision":1,"inbox_state":"deferred_due","decision":{"revision":1,"action":"DEFER","rationale":"Fixture","deferred_until":"2026-11-16T10:00:00Z","decided_at":"2026-11-15T00:00:00Z"}}],"has_more":false}"#
+        func page(_ text: String) throws -> CompanyInboxPage { try decoder.decode(CompanyInboxPage.self, from: Data(text.utf8)) }
+        XCTAssertTrue(try page(fixture).matches(identity, filter: .attention, offset: 0))
+        XCTAssertFalse(try page(fixture).matches(identity, filter: .go, offset: 0))
+        XCTAssertFalse(try page(fixture).matches(identity, filter: .attention, offset: 50))
+        XCTAssertFalse(try page(fixture.replacingOccurrences(of: #""customer_id":"a""#, with: #""customer_id":"b""#)).matches(identity, filter: .attention, offset: 0))
+        XCTAssertFalse(try page(fixture.replacingOccurrences(of: #""all":3"#, with: #""all":4"#)).matches(identity, filter: .attention, offset: 0))
+        XCTAssertFalse(try page(fixture.replacingOccurrences(of: #""inbox_state":"deferred_due""#, with: #""inbox_state":"deferred_future""#)).matches(identity, filter: .attention, offset: 0))
+        XCTAssertFalse(try page(fixture.replacingOccurrences(of: #""external_submission_allowed":false"#, with: #""external_submission_allowed":true"#)).matches(identity, filter: .attention, offset: 0))
+    }
+
     func testCompanyDecisionAttemptIdentityAndRevision() throws {
         let now = Date(timeIntervalSince1970: 1800000000)
         let draft = try CompanyDecisionDraft(action: "GO", rationale: "  Проверено  ", deferredUntil: nil, expectedRevision: 2, now: now)
