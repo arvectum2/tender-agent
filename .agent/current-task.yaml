@@ -663,6 +663,6 @@ parallel_dtr_product:
   task_id: TA-DTR-PRODUCT-20261115
   status: in_progress
   checkpoint: .agent/checkpoints/TA-DTR-PRODUCT-20261115.yaml
-  current_stage: price01_actual_cost_web_verified_next_native
-  branch: feat/ta-dtr-price01-actual-web-20261116
+  current_stage: price01_actual_cost_native
+  branch: feat/ta-dtr-price01-actual-native-20261116
   owner_priority: Product development only in this chat; research separate; Gemma paused

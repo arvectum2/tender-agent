@@ -256,7 +256,7 @@ completed:
   explicit cumulative date/quantity/rate/source/zero vs missing, separate unplanned
   expenses, server preview verified with BigInt cents and half-up percentage, explicit
   manager version save and exact retry, history and scope clearing.'
-current_stage: price01_actual_cost_web_verified_next_native
+current_stage: price01_actual_cost_native
 remaining:
 - Native actual cost snapshot UI/typed contracts, baseline digest and Decimal variance
   validation; explicit missing/zero, unplanned costs, versioned history and manager
@@ -400,11 +400,8 @@ test_results:
   PASS using Python-generated actual-cost results, missing vs zero, unplanned precision,
   replay, history, tamper and disabled gate. Ruff/diff PASS. PR568 exact 8d695d02
   17 success/2 running.
-resume_instruction: Web actual snapshot workflow verified. Next native exact saved
-  baseline, Python canonical digest, typed cumulative observations/extra costs, explicit
-  missing-vs-zero, preview verification, paginated history, manager confirmed exact
-  replay. Then actual evidence and deduplicated labor/expense norms and comparable
-  normalization. No production or external source/model calls.
+resume_instruction: Implement scoped native actual cost snapshot UI and exact baseline/Decimal
+  contracts; test Python fixture and Xcode. No deployment.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
