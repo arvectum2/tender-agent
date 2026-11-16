@@ -149,19 +149,26 @@ completed:
   and document version, missing evidence/human support/gap/not-requirement states,
   optimistic revision, replay protection, history and stale flags, web matrix controls.
   Migration 114. No automated qualification scoring or claims of original ETP evidence.
-current_stage: bounded_case_snapshot_requirement_matrix
+- Case-wide historical requirement matrix for exact owned card snapshot, 3 documents/page,
+  missing user copies and unsupported formats explicit, per-page review gap/stale
+  counts, web pagination and invalidation after writes. No mixed revisions or new
+  migrations.
+- PR547 JS fixture routing correction pushed a396fcc1. PR546 R8 failure confirmed
+  from hosted evidence Docker Hub HTTP502 pgvector pull; bounded hosted pre-pull retry
+  added, unchanged acceptance gate. Existing audit proves 17 EIS official attachments
+  only, no commercial download contract.
+current_stage: case_matrix_verified_offline_next_source_contracts_and_ci
 remaining:
-- Investigate PR546 r8 integration failure from completed job logs; fix root cause
-  and check exact-head hosted JS/CI for current branch. Mirror failure unresolved.
-- Verify actual original attachment acquisition contracts; bounded trusted downloader
-  and full extraction remain pending. No speculative URLs or promoting user copies.
-- Extend requirement matrix across documents and verified source-specific requirements,
-  qualify actual company artifacts and references independently; PDF stable extraction
-  review, full coverage and scoring remain pending.
-- Isolated PG concurrent admission, real browser/iOS, integration acceptance and production
+- Check current exact-head hosted CI (Node, R8 and mirror); fix only confirmed regressions.
+  Docker Hub 502 pre-pull retry not yet tested hosted.
+- Acquire genuine public first-party B2B-Center/Workspace attachment endpoint and
+  byte evidence using independently validated source-specific contracts; current audits
+  insufficient, no automatic downloader or user-copy promotion.
+- Consolidate complete document extraction and source-attested qualification decisions;
+  review across all pages, PG concurrency/browser/iOS; no production rollout without
   approval.
-- SIBUR/Qwen priority, Gemma explicitly paused.
-last_verified_commit: 0dc38c6822a0eddf61296e8f174664812002307a
+- SIBUR/Qwen priority; Gemma paused.
+last_verified_commit: 8f7187a2a2f290ddaf3c4c79406e569463229305
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -214,9 +221,15 @@ test_results:
   document version staleness test PASS. Ruff/diff PASS. Hosted JS pending. PR546 16
   success, 1 running, 2 failures (Mirror repository, r8-acceptance-integration); logs
   unavailable as run still active.
-resume_instruction: Aggregate owned attachments for one reverified historical card
-  snapshot, expose incomplete coverage and gaps, no merging across versions. Fix hosted
-  fixture routing; inspect remaining CI logs. Offline, preserve SIBUR/Qwen and Gemma
-  pause.
+- 111 passed, 2 skipped, 86 warnings in 10.15s; aggregate fixture 4 links, missing
+  copy, unsupported PDF, scoped pagination and stale review; Ruff/diff and workflow
+  YAML PASS. Hosted exact-head acceptance pending, local Node unavailable. PR547 amended
+  head observed 14 success,4 running, mirror only failure.
+resume_instruction: Case matrix implemented and offline accepted. Hosted CI verify
+  exact head and mirror diagnosis. Actual first-party commercial attachment acquisition
+  remains blocked on validated platform contract; verify permitted public originals
+  independently of SIBUR, then build bounded downloader. No speculative URL or source
+  claims, live models or production changes. Existing SIBUR executor 818/17574 synced
+  healthy at last check; preserve.
 owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
   Product changes isolated, offline and bounded.
