@@ -61,3 +61,71 @@ def test_gpb_multiple_batches_are_one_run(tmp_path, monkeypatch):
     assert len(detail_calls) == 3
     assert r.state["lanes"]["gpb"]["cycles"] == 3
     assert r.state["lanes"]["gpb"]["status"] == "exhausted"
+
+
+def test_archive_refresh_append_preserves_and_checks_identity(tmp_path, monkeypatch):
+    import hashlib
+    r = Runner(tmp_path, tmp_path, tmp_path, tmp_path)
+    folder = tmp_path / "sibur-sales-map-20261115"
+    folder.mkdir()
+    bridge = folder / "archive-index-bridge-v1.json"
+    old = {"schema": "sibur_archive_index_bridge_v1", "ready": [{"sha256": "a"*64}], "review": []}
+    atomic(bridge, old)
+    digest = hashlib.sha256(bridge.read_bytes()).hexdigest()
+    r.update("sibur", status="running", archive_bridge_sha256=digest)
+    prepared = folder / "archive-index-bridge-auto-20261116000000Z.json"
+    new = {**old, "ready": old["ready"] + [{"sha256": "b"*64}]}
+    atomic(prepared, new)
+    new_digest = hashlib.sha256(prepared.read_bytes()).hexdigest()
+    monkeypatch.setattr(r, "local_index", lambda: {"a"*64: {}})
+    result = {"prior_digest": digest, "indexed_count": 1, "new_ready": 1,
+              "file": prepared.name, "digest": new_digest}
+    monkeypatch.setattr(r, "module", lambda *a, **k: json.dumps(result).encode())
+    assert r.refresh_archive_bridge("sibur", bridge, digest) == (new_digest, new["ready"])
+    assert json.loads(bridge.read_text()) == new
+    assert r.state["lanes"]["sibur"]["archive_bridge_sha256"] == new_digest
+    assert len(list(folder.glob("archive-index-bridge-before-auto-*.json"))) == 1
+    with pytest.raises(Blocked, match="changed"):
+        r.refresh_archive_bridge("sibur", bridge, digest)
+
+
+def test_archive_refresh_empty_does_not_change_bridge(tmp_path, monkeypatch):
+    import hashlib
+    r = Runner(tmp_path, tmp_path, tmp_path, tmp_path)
+    bridge = tmp_path / "bridge.json"
+    atomic(bridge, {"ready": []})
+    digest = hashlib.sha256(bridge.read_bytes()).hexdigest()
+    monkeypatch.setattr(r, "local_index", lambda: {})
+    monkeypatch.setattr(r, "module", lambda *a, **k: json.dumps({"prior_digest": digest, "indexed_count": 0, "new_ready": 0}).encode())
+    assert r.refresh_archive_bridge("sibur", bridge, digest) is None
+    assert hashlib.sha256(bridge.read_bytes()).hexdigest() == digest
+
+
+def test_drained_archive_refresh_continues_without_restart(tmp_path, monkeypatch):
+    import hashlib
+    r = Runner(tmp_path, tmp_path, tmp_path, tmp_path)
+    folder = tmp_path / "sibur-sales-map-20261115"
+    folder.mkdir()
+    bridge = folder / "archive-index-bridge-v1.json"
+    atomic(bridge, {"ready": []})
+    digest = hashlib.sha256(bridge.read_bytes()).hexdigest()
+    r.update("sibur", archive_bridge_sha256=digest, archive_synced_count=0)
+    monkeypatch.setattr(r, "local_index", lambda: {})
+    monkeypatch.setattr(r, "reconcile_index", lambda _: None)
+    monkeypatch.setattr(r, "gate", lambda _: tmp_path / "gate.json")
+    monkeypatch.setattr("scripts.research.autonomous_runner.time.sleep", lambda _: None)
+    calls = []
+    def module(lane, repo, name, *args, **kwargs):
+        calls.append(args[args.index("--digest")+1])
+        return b"planned 0\n"
+    monkeypatch.setattr(r, "module", module)
+    refreshes = []
+    def refresh(lane, path, sha):
+        refreshes.append(sha)
+        return ("b"*64, []) if len(refreshes)==1 else None
+    monkeypatch.setattr(r, "refresh_archive_bridge", refresh)
+    r.archive_index_lane()
+    assert calls == [digest, digest, "b"*64, "b"*64]
+    assert refreshes == [digest, "b"*64]
+    assert r.state["lanes"]["sibur"]["status"] == "exhausted"
+    assert r.state["lanes"]["sibur"]["index_inflight"] is False

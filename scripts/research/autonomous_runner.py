@@ -290,6 +290,53 @@ class Runner:
                 return
         self.archive_index_lane()
 
+    def refresh_archive_bridge(self, lane, bridge, digest):
+        """Called under executor and mutation locks, with reconciled receipts."""
+        before = bridge.read_bytes()
+        if hashlib.sha256(before).hexdigest() != digest:
+            raise Blocked("archive bridge changed before refresh")
+        result = json.loads(self.module(lane, self.sibur, "refresh_sibur_archive_index",
+                                        "--root", self.root, "--digest", digest, timeout=150))
+        if result["prior_digest"] != digest or result["indexed_count"] != len(self.local_index()):
+            raise Blocked("archive refresh baseline changed")
+        count = result["new_ready"]
+        if not count:
+            self.update(lane, archive_refresh=result)
+            return None
+        if not 1 <= count <= 160:
+            raise Blocked("archive refresh exceeds bound")
+        path = bridge.parent / result["file"]
+        if path.parent != bridge.parent or not re.fullmatch(r"archive-index-bridge-auto-[0-9]+Z\.json", path.name) or path.is_symlink():
+            raise Blocked("invalid prepared bridge path")
+        raw = path.read_bytes()
+        new_digest = hashlib.sha256(raw).hexdigest()
+        old, new = json.loads(before), json.loads(raw)
+        n = len(old["ready"])
+        if (new_digest != result["digest"] or new["schema"] != old["schema"]
+                or new["ready"][:n] != old["ready"] or len(new["ready"]) != n + count
+                or new["review"][:len(old["review"])] != old["review"]):
+            raise Blocked("prepared bridge identity mismatch")
+        added = [r["sha256"] for r in new["ready"][n:]]
+        if len(set(added)) != count or set(added) & ({r["sha256"] for r in old["ready"]} | set(self.local_index())):
+            raise Blocked("duplicate archive refresh entry")
+        stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%S%fZ")
+        saved = bridge.parent / ("archive-index-bridge-before-auto-" + stamp + ".json")
+        state_saved = self.run / ("state-before-auto-refresh-" + stamp + ".json")
+        for target, data in ((saved, before), (state_saved, self.state_path.read_bytes())):
+            with target.open("xb") as f:
+                f.write(data); f.flush(); os.fsync(f.fileno())
+        # A crash between the two atomic replacements fails closed on digest
+        # mismatch at the next launch. The immutable prepared and prior files
+        # remain available for explicit reconciliation.
+        tmp = bridge.with_suffix(".refresh-partial")
+        with tmp.open("xb") as f:
+            f.write(raw); f.flush(); os.fsync(f.fileno())
+        tmp.replace(bridge)
+        self.update(lane, archive_bridge_sha256=new_digest,
+                    archive_refresh={**result, "prior_bridge": saved.name,
+                                     "prior_state": state_saved.name})
+        return new_digest, new["ready"]
+
     def archive_index_lane(self):
         lane="sibur"
         digest=self.state["lanes"][lane].get("archive_bridge_sha256")
@@ -328,9 +375,27 @@ class Runner:
                     self.gate(lane);self.backup_ta(lane);sync(after)
                 if error:raise error
                 self.update(lane,index_inflight=False,archive_cycles=self.state["lanes"][lane].get("archive_cycles",0)+1)
-                if not planned(x,"planned") and not planned(y,"planned"):
-                    self.update(lane,status="exhausted",step="archive supported queue drained; oversized and PDF review remains")
-                    return
+                drained = not planned(x,"planned") and not planned(y,"planned")
+            if drained:
+                # The archive collector is independent; when the fixed queue
+                # drains, refresh from committed receipts rather than exit.
+                while not self.stop_requested():
+                    with self.mutation_guard():
+                        self.reconcile_index(self.local_index())
+                        refreshed = self.refresh_archive_bridge(lane, bridge, digest)
+                        if refreshed:
+                            digest, rows = refreshed
+                            break
+                    collector = self.root / "sibur-archive-discovery/categories/documents/state.json"
+                    if not collector.exists() or read(collector).get("status") != "running":
+                        self.update(lane,status="exhausted",step="committed priority queue drained; collector not running; review remains")
+                        return
+                    self.update(lane,step="waiting for committed archive receipts",deadline_seconds=60)
+                    # No database mutation lock or backup while waiting.
+                    for _ in range(12):
+                        if self.stop_requested():
+                            break
+                        time.sleep(5)
             time.sleep(1)
         self.update(lane,status="stopped",step="operator STOP")
 
