@@ -252,18 +252,21 @@ completed:
   vs reported zero, separate unplanned costs, exact Decimal rollup and matched/full-plan
   variance, manager-only version save, analyst read/preview, identical retry and date/scope
   validation. No payment/accounting/whole-contract completeness claim.'
-current_stage: price01_actual_cost_web
+- 'PRICE-01 Web actual snapshot controls: exact saved baseline and canonical digest,
+  explicit cumulative date/quantity/rate/source/zero vs missing, separate unplanned
+  expenses, server preview verified with BigInt cents and half-up percentage, explicit
+  manager version save and exact retry, history and scope clearing.'
+current_stage: price01_actual_cost_web_verified_next_native
 remaining:
-- Web and native actual cost snapshot input/preview/save/history with explicit baseline
-  and missing-vs-zero, unplanned cost tracking and cumulative report semantics.
-- Actual-specific evidence links (prior estimate evidence is not proof of payment),
-  normalized labor/expense normative samples with de-duplication across cumulative
-  versions and baselines, historical comparable procurement normalization and real-case
-  acceptance.
-- Hosted exact-head CI, PG concurrency, real browser/device and E2E acceptance. Keep
-  gates off; no production deployment.
-- B2B operator consent pending; no automated requests. Product only.
-last_verified_commit: 6b82f1ab60ef4b42eefb94fd3e03251dd324bbae
+- Native actual cost snapshot UI/typed contracts, baseline digest and Decimal variance
+  validation; explicit missing/zero, unplanned costs, versioned history and manager
+  confirmation.
+- Actual-specific evidence links, deduplicated norm samples, historical comparable
+  normalization and real-case acceptance.
+- Hosted exact-head CI, PG concurrency, real browser/device E2E. Keep gates off; no
+  production deploy.
+- B2B consent pending; product only.
+last_verified_commit: 811b14befbec5522033549dbfcd975e0e185f7ee
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -393,9 +396,15 @@ test_results:
   precision, scope/role, replay/stale/date, corruption and SQLite rollback guard tests.
   Existing actual JS fixture PASS, Ruff/diff PASS; Alembic head 120_company_actual_costs.
   PR567 exact 2ed5e958 17 success,2 running.
-resume_instruction: Web actual snapshot controls for saved itemized baseline; explicit
-  missing/zero, unplanned lines, canonical digest, exact result/replay and scope,
-  history. Test offline.
+- 155 passed,2 skipped,124 warnings in 13.82s; actual extended JS cabinet fixture
+  PASS using Python-generated actual-cost results, missing vs zero, unplanned precision,
+  replay, history, tamper and disabled gate. Ruff/diff PASS. PR568 exact 8d695d02
+  17 success/2 running.
+resume_instruction: Web actual snapshot workflow verified. Next native exact saved
+  baseline, Python canonical digest, typed cumulative observations/extra costs, explicit
+  missing-vs-zero, preview verification, paginated history, manager confirmed exact
+  replay. Then actual evidence and deduplicated labor/expense norms and comparable
+  normalization. No production or external source/model calls.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
