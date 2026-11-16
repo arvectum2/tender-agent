@@ -252,7 +252,7 @@ completed:
   vs reported zero, separate unplanned costs, exact Decimal rollup and matched/full-plan
   variance, manager-only version save, analyst read/preview, identical retry and date/scope
   validation. No payment/accounting/whole-contract completeness claim.'
-current_stage: price01_actual_cost_backend_verified_next_web_native
+current_stage: price01_actual_cost_web
 remaining:
 - Web and native actual cost snapshot input/preview/save/history with explicit baseline
   and missing-vs-zero, unplanned cost tracking and cumulative report semantics.
@@ -393,12 +393,9 @@ test_results:
   precision, scope/role, replay/stale/date, corruption and SQLite rollback guard tests.
   Existing actual JS fixture PASS, Ruff/diff PASS; Alembic head 120_company_actual_costs.
   PR567 exact 2ed5e958 17 success,2 running.
-resume_instruction: Actual cost snapshot backend and migration 120 verified. Next
-  Web then native workflow for exact saved itemized baseline, history, explicit observed
-  quantity/rate vs not reported, unplanned expenses and stateless preview/manager-confirmed
-  version save; never sum cumulative snapshots or call incomplete delta total savings.
-  Then actual evidence and deduplicated normative samples and comparable normalization.
-  No production deployment or external source/model calls.
+resume_instruction: Web actual snapshot controls for saved itemized baseline; explicit
+  missing/zero, unplanned lines, canonical digest, exact result/replay and scope,
+  history. Test offline.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
