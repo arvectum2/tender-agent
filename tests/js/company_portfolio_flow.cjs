@@ -28,6 +28,8 @@ const calls=[], history={a:[],b:[]};
 const fixture={a:{customer_id:'customer-a',tenant_id:'tenant-a',member_id:'a',company_name:'Компания A',role:'owner',legal_accepted:true},b:{customer_id:'customer-b',tenant_id:'tenant-b',member_id:'b',company_name:'Компания B',role:'viewer',legal_accepted:true}};
 const reply=(value,status=200)=>({ok:status>=200&&status<300,status,json:async()=>value});
 let lostResponse=false, mismatch=false, delayed=null;
+let lifecycleEnabled=true, lifecycleLost=false, lifecycleMismatch=false;
+const lifecycleRows={a:[],b:[]};
 let discoveryRun=null, savedCandidate=null, savedCommercial=null;
 let captureEnabled=true, captureReceipt=null, captureMismatch=false;
 let attachmentEnabled=true, attachmentRecord=null, projectionEnabled=true, requirementReview=null;
@@ -99,6 +101,23 @@ async function fetch(route,opts){
  }
  if(route.startsWith('/api/saas/company-portfolio/cases?'))return reply({customer_id:mismatch?'foreign':fixture[key].customer_id,items:[item(key),...(key==='a'&&savedCommercial?[commercialItem]:[])],has_more:false});
  if(route==='/api/saas/company-portfolio/search-context')return reply({customer_id:fixture[key].customer_id,profile_state:'ACTIVE',profile_version:1});
+ if(route==='/api/saas/company-portfolio/lifecycle-metrics'){
+  if(!lifecycleEnabled)return reply({detail:'disabled'},404);
+  const stage=lifecycleRows[key][0]?.stage,submitted=['SUBMITTED','WON','LOST','REJECTED','WITHDRAWN','CANCELLED'].includes(stage)?1:0,go=history[key].some(x=>x.action==='GO')?1:0,win=stage==='WON'?1:0,decided=['WON','LOST','REJECTED'].includes(stage)?1:0;
+  return reply({customer_id:fixture[key].customer_id,scope:'ALL_TIME_SAVED_CASES_HUMAN_ATTESTATIONS',external_facts_verified:false,market_coverage_complete:false,contract_revenue_verified:false,saved_cases:1,ever_go_cases:go,recorded_submissions:submitted,go_to_submission:{numerator:submitted,denominator:go,rate:go?submitted/go:null},win_rate:{numerator:win,denominator:decided,rate:decided?win/decided:null},stage_counts:{SUBMITTED:stage==='SUBMITTED'?1:0,WITHDRAWN:0,CANCELLED:0},as_of:'2026-11-16T10:00:00Z'});
+ }
+ if(route===('/api/saas/company-portfolio/cases/case-'+key+'/lifecycle')||route===('/api/saas/company-portfolio/cases/case-'+key+'/lifecycle/history?limit=50')){
+  if(!lifecycleEnabled)return reply({detail:'disabled'},404);
+  const rows=lifecycleRows[key],current=item(key),scope={customer_id:lifecycleMismatch?'foreign':fixture[key].customer_id,case_id:current.case_id,external_submission_allowed:false};
+  if(method==='POST'){
+   assert.equal(key,'a');const body=JSON.parse(opts.body),prior=rows.find(x=>x.attestation.idempotency_key===body.idempotency_key);if(prior)return reply(prior,201);
+   assert.equal(body.expected_revision,rows.length);assert.equal(body.expected_decision_revision,current.revision);
+   const record={event_id:'lifecycle-'+rows.length,case_id:current.case_id,revision:rows.length+1,stage:body.stage,attestation:body,origin:'HUMAN_ATTESTATION',readiness_stale:false,external_fact_verified:false,external_submission_allowed:false};rows.unshift(record);
+   if(lifecycleLost){lifecycleLost=false;throw Error('network interrupted after lifecycle write')}return reply(record,201);
+  }
+  if(route.includes('/history?'))return reply({...scope,items:rows,has_more:false});
+  return reply({...scope,revision:rows.length,decision_revision:current.revision,decision_action:current.decision?.action??null,latest:rows[0]??null});
+ }
  if(route.startsWith('/api/saas/company-portfolio/cases/case-'+key)){
   if(route.endsWith('/decisions?limit=50'))return reply({items:history[key],has_more:false});
   if(route.endsWith('/decisions')&&method==='POST'){
@@ -159,11 +178,23 @@ async function main(){
  get('company-confirm').checked=true;lostResponse=true;await click('company-decide');assert.equal(history.a.length,1);assert.equal(get('company-confirm').checked,false);
  get('company-confirm').checked=true;await click('company-decide');assert.equal(history.a.length,1);assert.match(get('company-history').textContent,/Решение A/);
  const writes=calls.filter(c=>c.method==='POST'&&c.route.endsWith('/decisions'));assert.equal(writes.length,2);assert.equal(writes[0].body.idempotency_key,writes[1].body.idempotency_key);
+ lifecycleEnabled=false;await click('company-lifecycle-load');assert.match(get('company-lifecycle-state').textContent,/отключён/);assert.equal(get('company-lifecycle-editor').hidden,true);
+ lifecycleEnabled=true;await click('company-lifecycle-load');assert.equal(get('company-lifecycle-editor').hidden,false);assert(!get('company-lifecycle-stage').children.some(x=>x.value==='SUBMITTED'));
+ get('company-lifecycle-stage').value='READY';change('company-lifecycle-stage');get('company-lifecycle-rationale').value='Готовность A';await click('company-lifecycle-save');assert.equal(lifecycleRows.a.length,0);
+ get('company-lifecycle-confirm').checked=true;change('company-lifecycle-confirm');lifecycleLost=true;await click('company-lifecycle-save');assert.equal(lifecycleRows.a.length,1);assert.equal(get('company-lifecycle-confirm').checked,false);
+ get('company-lifecycle-confirm').checked=true;change('company-lifecycle-confirm');await click('company-lifecycle-save');assert.equal(lifecycleRows.a.length,1);assert.match(get('company-lifecycle-state').textContent,/Готовность подтверждена/);
+ const lifeWrites=calls.filter(c=>c.method==='POST'&&c.route.endsWith('/lifecycle'));assert.equal(lifeWrites.length,2);assert.equal(lifeWrites[0].body.idempotency_key,lifeWrites[1].body.idempotency_key);
+ get('company-lifecycle-stage').value='SUBMITTED';change('company-lifecycle-stage');get('company-lifecycle-rationale').value='Подача A';get('company-lifecycle-confirm').checked=true;await click('company-lifecycle-save');assert.equal(lifecycleRows.a.length,1);
+ get('company-lifecycle-ref').value='receipt A';get('company-lifecycle-date').value='2026-01-01T10:00';await click('company-lifecycle-save');assert.equal(lifecycleRows.a[0].stage,'SUBMITTED');
+ get('company-lifecycle-stage').value='WON';change('company-lifecycle-stage');get('company-lifecycle-rationale').value='Победа A';get('company-lifecycle-ref').value='protocol A';get('company-lifecycle-date').value='2026-01-02T10:00';get('company-lifecycle-confirm').checked=true;await click('company-lifecycle-save');assert.equal(lifecycleRows.a[0].stage,'WON');
+ await click('company-lifecycle-history');assert.match(get('company-lifecycle-history-result').textContent,/receipt A/);await click('company-metrics-load');assert.match(get('company-metrics-result').textContent,/100.0%/);assert.match(get('company-metrics-result').textContent,/по сведениям сотрудников/);
+ get('company-lifecycle-stage').value='LOST';change('company-lifecycle-stage');get('company-lifecycle-rationale').value='Коррекция A';get('company-lifecycle-ref').value='protocol corrected A';get('company-lifecycle-date').value='2026-01-03T10:00';get('company-lifecycle-confirm').checked=true;await click('company-lifecycle-save');assert.equal(lifecycleRows.a[0].attestation.correct_outcome,true);assert.equal(get('company-metrics-result').textContent,'');await click('company-metrics-load');assert.match(get('company-metrics-result').textContent,/0.0%/);
  history.a.unshift({revision:2,action:'NO_GO',rationale:'other client',decided_at:'2026-11-15T01:00:00Z'});
  get('company-rationale').value='Устаревшее решение';get('company-confirm').checked=true;await click('company-decide');assert.equal(history.a.length,2);assert.equal(get('company-detail').hidden,true);assert.match(get('result').textContent,/Откройте карточку заново/);
  get('keywords').value='privately entered A';get('reference-state').textContent='private A';get('run-id').value='private-run-a';
  await selectAccount('b');assert.match(get('company-identity').textContent,/Компания B/);assert.equal(get('keywords').value,'');assert.equal(get('run-id').value,'');assert.equal(get('reference-state').textContent,'Список пока не загружен');assert.equal(get('company-history').textContent,'');assert.equal(get('company-capture-result').textContent,'');assert.equal(get('company-capture-attempt').children.length,1);assert.equal(get('company-evidence-result').textContent,'');assert.equal(get('company-search-receipts').textContent,'');assert.equal(get('company-search-candidate').children.length,1);
- await openCase('b');assert.equal(get('company-decision-panel').hidden,true);assert.equal(get('company-evidence-panel').hidden,true);assert.equal(get('company-save-panel').hidden,true);assert(!get('company-case').children.some(c=>c.value==='case-a'));
+ await openCase('b');await click('company-lifecycle-load');assert.equal(get('company-lifecycle-editor').hidden,true);assert.equal(get('company-lifecycle-current').textContent,'');await click('company-metrics-load');assert.match(get('company-metrics-result').textContent,/нет данных/);assert.equal(get('company-decision-panel').hidden,true);assert.equal(get('company-evidence-panel').hidden,true);assert.equal(get('company-save-panel').hidden,true);assert(!get('company-case').children.some(c=>c.value==='case-a'));
+ lifecycleMismatch=true;await click('company-lifecycle-load');assert.equal(vm.runInContext('token',ctx),'');assert.equal(get('company-metrics-result').textContent,'');lifecycleMismatch=false;await selectAccount('b');
  mismatch=true;await click('company-load');assert.match(get('result').textContent,/другой компании/);assert.equal(get('company-detail').hidden,true);assert.equal(get('company-case').children.length,1);assert.equal(vm.runInContext('token',ctx),'');
  mismatch=false;let release;delayed=new Promise(r=>{release=r});get('saved-token').value='fixture-a';const first=click('use-token');get('saved-token').value='fixture-b';await click('use-token');release();await first;delayed=null;assert.equal(vm.runInContext('token',ctx),'fixture-a');
  console.log('Company cabinet JS flow PASS: bounded discovery, partial coverage, candidate acceptance, role/identity, evidence, explicit decision, uncertain retry, stale conflict, session clearing, request serialization.');

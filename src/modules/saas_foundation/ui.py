@@ -87,6 +87,7 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 <p id="company-identity" role="status">Войдите и загрузите портфель.</p>
 <button id="company-load">Загрузить портфель</button><button id="company-more" disabled>Ещё закупки</button>
 <label>Очередь руководителя<select id="company-inbox-filter"><option value="attention">Требуют внимания</option><option value="undecided">Без решения</option><option value="deferred_due">Пора вернуться к решению</option><option value="deferred_future">Отложены</option><option value="go">GO</option><option value="no_go">NO GO</option><option value="all">Все сохранённые</option></select></label><button id="company-inbox-load" disabled>Показать очередь</button><p id="company-inbox-summary" aria-live="polite"></p><p>Только сохранённые закупки и внутренние решения. Срок возврата к решению не является сроком подачи заявки.</p>
+<button id="company-metrics-load" disabled>Коммерческая статистика</button><pre id="company-metrics-result" hidden></pre>
 <div id="company-save-panel" hidden><label>Номер ЕИС<input id="company-registry" inputmode="numeric" maxlength="20" autocomplete="off"></label>
 <button id="company-save">Добавить ссылку в портфель</button><label>Оригинальная ссылка B2B-Center / Workspace<input id="company-commercial-url" type="url" maxlength="650" autocomplete="off"></label><button id="company-commercial-save">Добавить коммерческую закупку</button></div>
 <details><summary>Поиск по сохранённому профилю компании</summary>
@@ -112,6 +113,7 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 <label>Обоснование<textarea id="company-rationale" maxlength="2000"></textarea></label>
 <label><input id="company-confirm" type="checkbox" style="width:auto"> Подтверждаю решение для указанной компании и закупки. Это не подача заявки.</label>
 <button id="company-decide">Сохранить решение</button></div>
+<section><h3>Подготовка, подача и результат</h3><button id="company-lifecycle-load" disabled>Обновить состояние заявки</button><p id="company-lifecycle-state" aria-live="polite"></p><div id="company-lifecycle-panel" hidden><pre id="company-lifecycle-current"></pre><div id="company-lifecycle-editor" hidden><label>Состояние<select id="company-lifecycle-stage"></select></label><label>Обоснование<textarea id="company-lifecycle-rationale" maxlength="2000"></textarea></label><div id="company-lifecycle-external" hidden><label>Номер квитанции или ссылка на протокол<input id="company-lifecycle-ref" maxlength="500"></label><label>Дата события (местное время браузера)<input id="company-lifecycle-date" type="datetime-local"></label></div><label><input type="checkbox" id="company-lifecycle-confirm" style="width:auto"> Подтверждаю запись сведений для этой компании и закупки. Это не действие на ЭТП.</label><button id="company-lifecycle-save" disabled>Записать состояние</button></div><button id="company-lifecycle-history" disabled>История событий</button><pre id="company-lifecycle-history-result" hidden></pre><p>Готовность и результаты указываются сотрудником. Оригиналы квитанций и протоколов независимо не проверены.</p></div></section>
 <div id="company-evidence-panel" hidden><h3>Оригиналы и квалификация</h3>
 <p id="company-profile-state"></p><label>ID собственного прогона<input id="company-run-id" autocomplete="off"></label>
 <button id="company-bind">Привязать оригиналы к текущей версии профиля</button>
@@ -375,6 +377,7 @@ let captureEnabled=false, captureAttempts=[];
 let attachmentParent=null, attachmentCandidates=[], attachmentRecords=[], attachmentIntakeEnabled=false, textProjectionEnabled=false;
 let requirementEnabled=false, requirementMatrix=null, pendingRequirement=null;
 let caseMatrixPage=null;
+let lifecycleState=null, pendingLifecycle=null;
 let discoveryEnabled=false, discoveryRun=null, discoveryProfile=null, companySchedule=null;
 const el=id=>document.getElementById(id);
 function blankSelect(id, label){
@@ -382,6 +385,7 @@ function blankSelect(id, label){
  const opt=document.createElement("option");opt.value="";opt.textContent=label;select.append(opt);
 }
 function resetCompanyDetail(){
+ resetLifecycle();
  companyCase=null;companyProfile=null;companyEvidence=[];pendingCompanyDecision=null;
  resetCommercialCaptures();
  el("company-detail").hidden=true;el("company-case-state").textContent="";el("company-case-url").textContent="";
@@ -392,6 +396,7 @@ function resetCompanyDetail(){
  el("company-action").value="GO";el("company-run-id").value="";
 }
 function clearCompany(){
+ clearMetrics();
  companyIdentity=null;companyItems=[];companyMore=false;companyOffset=0;companyInboxView=null;
  el("company-inbox-summary").textContent="";el("company-inbox-filter").value="attention";
  resetCompanySearch();
@@ -422,6 +427,7 @@ function syncCompanyControls(){
  el("company-open").disabled=uiBusy||!read||!el("company-case").value;
  el("company-decision-panel").hidden=!detail||!companyCanDecide();
  el("company-decide").disabled=uiBusy||!detail||!companyCanDecide();
+ syncLifecycleControls(read,detail);
  el("company-evidence-panel").hidden=!detail||!companyCanWrite()||companyCase?.source_kind==="commercial_reference";
  el("company-bind").disabled=uiBusy||!detail||!companyCanWrite()||companyProfile?.profile_state!=="ACTIVE";
  el("company-read-evidence").disabled=uiBusy||!detail||!companyCanWrite()||!el("company-evidence").value;
@@ -468,6 +474,7 @@ async function loadCompanyPage({restart=true}={}){
  companyOffset+=page.items.length;companyMore=Boolean(page.has_more);renderCompanyItems();return {loaded:companyItems.length,has_more:companyMore};
 }
 async function loadCompanyInbox({restart=true}={}){
+ if(restart)clearMetrics();
  const identity=requireCompany();const selected=restart?val("company-inbox-filter"):companyInboxView;
  if(!["attention","undecided","deferred_due","deferred_future","go","no_go","all"].includes(selected))throw Error("Выберите очередь");
  if(restart){companyItems=[];companyOffset=0;companyMore=false;companyInboxView=null;resetCompanyDetail();renderCompanyItems();el("company-inbox-summary").textContent=""}
@@ -636,6 +643,71 @@ bind("company-requirement-history",async()=>{
  if(result.qualification_verified!==false||!result.items.every(x=>x.fragment_key===item.fragment_key)){clearSession();throw Error("Несоответствие истории")}
  el("company-requirement-result").textContent=JSON.stringify(result.items,null,2);return {items:result.items.length};
 });
+const lifecycleLabels={PREPARING:"Подготовка",BLOCKED:"Заблокирована",READY:"Готовность подтверждена сотрудником",SUBMITTED:"Подача зарегистрирована",WON:"Победа",LOST:"Проигрыш",REJECTED:"Отклонена",WITHDRAWN:"Отозвана",CANCELLED:"Отменена"};
+const lifecyclePre=["PREPARING","BLOCKED","READY"], lifecycleOutcomes=["WON","LOST","REJECTED","WITHDRAWN","CANCELLED"];
+function clearMetrics(){el("company-metrics-result").hidden=true;el("company-metrics-result").textContent=""}
+function resetLifecycle(){
+ lifecycleState=null;pendingLifecycle=null;el("company-lifecycle-state").textContent="";el("company-lifecycle-panel").hidden=true;el("company-lifecycle-current").textContent="";el("company-lifecycle-history-result").hidden=true;el("company-lifecycle-history-result").textContent="";
+ blankSelect("company-lifecycle-stage","Выберите состояние");for(const id of ["company-lifecycle-rationale","company-lifecycle-ref","company-lifecycle-date"])el(id).value="";el("company-lifecycle-confirm").checked=false;
+}
+function lifecycleOptions(){
+ const st=lifecycleState;if(!st||!companyCanDecide()||!companyCase||st.decision_revision!==companyCase.revision||st.revision>=50)return [];
+ const latest=st.latest?.stage;
+ if(latest==="SUBMITTED")return lifecycleOutcomes;
+ if(lifecycleOutcomes.includes(latest))return lifecycleOutcomes.filter(x=>x!==latest);
+ if(st.decision_action!=="GO")return [];
+ return [...lifecyclePre,...(latest==="READY"&&!st.latest.readiness_stale?["SUBMITTED"]:[])];
+}
+function syncLifecycleControls(read,detail){
+ const options=lifecycleOptions(),stage=val("company-lifecycle-stage"), canEdit=Boolean(detail&&options.length);
+ el("company-metrics-load").disabled=uiBusy||!read;
+ el("company-lifecycle-load").disabled=uiBusy||!read||!detail;
+ el("company-lifecycle-history").disabled=uiBusy||!detail||!lifecycleState;
+ el("company-lifecycle-editor").hidden=!canEdit;
+ el("company-lifecycle-external").hidden=!options.includes(stage)||lifecyclePre.includes(stage);
+ el("company-lifecycle-save").disabled=uiBusy||!canEdit||!options.includes(stage)||!el("company-lifecycle-confirm").checked;
+}
+function lifecycleEventMatches(event,caseId){return event?.case_id===caseId&&event.origin==="HUMAN_ATTESTATION"&&event.external_fact_verified===false&&event.external_submission_allowed===false&&Object.hasOwn(lifecycleLabels,event.stage)&&Number.isSafeInteger(event.revision)&&event.revision>0&&event.revision<=50}
+async function loadLifecycle(){
+ const path=casePath(),id=companyCase.case_id;resetLifecycle();let st;
+ try{st=await call(path+"/lifecycle")}catch(error){if(error.status===404){el("company-lifecycle-state").textContent="Журнал недоступен или отключён сервером.";return {available:false}}throw error}
+ if(st.customer_id!==requireCompany().customer_id||st.case_id!==id||st.external_submission_allowed!==false||!Number.isSafeInteger(st.revision)||st.revision<0||st.revision>50||(st.revision===0?st.latest!==null:!lifecycleEventMatches(st.latest,id)||st.latest.revision!==st.revision)){clearSession();throw Error("Ответ журнала относится к другой компании или карточке")}
+ if(st.decision_revision!==companyCase.revision||st.decision_action!==(companyCase.decision?.action??null)){resetCompanyDetail();throw Error("Решение изменилось. Откройте карточку заново.")}
+ lifecycleState=st;el("company-lifecycle-panel").hidden=false;el("company-lifecycle-state").textContent=st.latest?lifecycleLabels[st.latest.stage]+(st.latest.readiness_stale?" · готовность устарела":"")+" · v"+st.revision:"Записей пока нет";
+ el("company-lifecycle-current").textContent=st.latest?JSON.stringify(st.latest,null,2):"";
+ for(const stage of lifecycleOptions()){const opt=document.createElement("option");opt.value=stage;opt.textContent=lifecycleLabels[stage]+(lifecycleOutcomes.includes(st.latest?.stage)?" (исправление результата)":"");el("company-lifecycle-stage").append(opt)}
+ return {available:true,revision:st.revision};
+}
+bind("company-lifecycle-load",loadLifecycle);
+el("company-lifecycle-stage").addEventListener("change",()=>{el("company-lifecycle-confirm").checked=false;syncCompanyControls()});
+el("company-lifecycle-confirm").addEventListener("change",syncCompanyControls);
+bind("company-lifecycle-save",async()=>{
+ const path=casePath(),id=companyCase.case_id,st=lifecycleState,stage=val("company-lifecycle-stage"),rationale=val("company-lifecycle-rationale");
+ if(!companyCanDecide()||!st||!lifecycleOptions().includes(stage)||!el("company-lifecycle-confirm").checked||!rationale)throw Error("Укажите состояние, обоснование и подтвердите запись");
+ const external=!lifecyclePre.includes(stage),source=external?val("company-lifecycle-ref"):null;let occurred=null;
+ if(external){const date=new Date(val("company-lifecycle-date"));if(!source||!Number.isFinite(date.getTime())||date.getTime()>Date.now())throw Error("Укажите квитанцию/протокол и дату события");occurred=date.toISOString()}
+ const body={stage,rationale,source_ref:source,occurred_at:occurred,expected_revision:st.revision,expected_decision_revision:st.decision_revision,correct_outcome:lifecycleOutcomes.includes(st.latest?.stage)};
+ const signature=JSON.stringify([sessionEpoch,id,body]);if(pendingLifecycle?.signature!==signature){if(!globalThis.crypto?.randomUUID)throw Error("Требуется защищённый HTTPS");pendingLifecycle={signature,key:globalThis.crypto.randomUUID()}}
+ clearMetrics();let saved;try{saved=await call(path+"/lifecycle",{method:"POST",body:{...body,idempotency_key:pendingLifecycle.key}})}catch(err){el("company-lifecycle-confirm").checked=false;if(err.status===409)resetLifecycle();throw err}
+ if(!lifecycleEventMatches(saved,id)||saved.stage!==stage||saved.revision!==st.revision+1){clearSession();throw Error("Несоответствие записи журнала")}
+ clearMetrics();pendingLifecycle=null;el("company-lifecycle-confirm").checked=false;
+ try{await loadLifecycle()}catch(err){if(!token||[401,402,403].includes(err.status))throw err;resetLifecycle();el("company-lifecycle-state").textContent="Запись сохранена; обновите состояние журнала.";return {saved_revision:saved.revision,refresh_required:true}}
+ return {saved_revision:saved.revision,stage:saved.stage,external_fact_verified:false};
+});
+bind("company-lifecycle-history",async()=>{
+ const id=companyCase?.case_id;if(!lifecycleState||!id)throw Error("Откройте журнал");
+ const result=await call(casePath()+"/lifecycle/history?limit=50");
+ if(result.customer_id!==requireCompany().customer_id||result.case_id!==id||result.external_submission_allowed!==false||!Array.isArray(result.items)||result.items.length>50||!result.items.every(x=>lifecycleEventMatches(x,id))){clearSession();throw Error("Несоответствие истории событий")}
+ el("company-lifecycle-history-result").textContent=JSON.stringify(result.items,null,2);el("company-lifecycle-history-result").hidden=false;return {events:result.items.length,has_more:result.has_more};
+});
+bind("company-metrics-load",async()=>{
+ clearMetrics();let m;try{m=await call("/api/saas/company-portfolio/lifecycle-metrics")}catch(err){if(err.status===404){el("company-metrics-result").hidden=false;el("company-metrics-result").textContent="Статистика отключена сервером.";return {available:false}}throw err}
+ const count=x=>Number.isSafeInteger(x)&&x>=0;const validRate=x=>x&&count(x.numerator)&&count(x.denominator)&&x.numerator<=x.denominator&&(x.denominator===0?x.rate===null:Number.isFinite(x.rate)&&Math.abs(x.rate-x.numerator/x.denominator)<1e-9);
+ if(m.customer_id!==requireCompany().customer_id||m.scope!=="ALL_TIME_SAVED_CASES_HUMAN_ATTESTATIONS"||m.external_facts_verified!==false||m.market_coverage_complete!==false||m.contract_revenue_verified!==false||![m.saved_cases,m.ever_go_cases,m.recorded_submissions].every(count)||!validRate(m.go_to_submission)||!validRate(m.win_rate)||!m.stage_counts||![m.stage_counts.SUBMITTED,m.stage_counts.WITHDRAWN,m.stage_counts.CANCELLED].every(count)){clearSession();throw Error("Несоответствие статистики компании")}
+ const rate=x=>x.denominator===0?"нет данных":(100*x.rate).toFixed(1)+"% ("+x.numerator+"/"+x.denominator+")";
+ el("company-metrics-result").hidden=false;el("company-metrics-result").textContent="За всё время, по сведениям сотрудников.\\nСохранено: "+m.saved_cases+"\\nКогда-либо GO: "+m.ever_go_cases+"\\nЗарегистрировано заявок: "+m.recorded_submissions+"\\nGO → подача: "+rate(m.go_to_submission)+"\\nWin rate (победы / (победы + проигрыши + отклонения)): "+rate(m.win_rate)+"\\nВ ожидании: "+m.stage_counts.SUBMITTED+"; отозваны: "+m.stage_counts.WITHDRAWN+"; отменены: "+m.stage_counts.CANCELLED+"\\nНа "+m.as_of+". Не подтверждённая выручка и не полная статистика рынка.";
+ return {available:true,saved_cases:m.saved_cases,recorded_submissions:m.recorded_submissions};
+});
 async function loadCompanyCase(id){
  requireCompany();resetCompanyDetail();
  if(!companyItems.some(x=>x.case_id===id))throw Error("Выберите карточку из своего портфеля");
@@ -686,6 +758,7 @@ bind("company-decide",async()=>{
    if(!globalThis.crypto?.randomUUID)throw Error("Для сохранения решения требуется защищённый HTTPS-контекст");
    pendingCompanyDecision={signature,key:globalThis.crypto.randomUUID()};
  }
+ clearMetrics();
  let saved;
  try{saved=await call(path+"/decisions",{method:"POST",body:{...body,idempotency_key:pendingCompanyDecision.key}})}
  catch(error){
