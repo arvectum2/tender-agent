@@ -313,3 +313,17 @@ def test_manual_session_capture_filters_and_never_overwrites(tmp_path):
     root=tmp_path/'private';root.mkdir(mode=0o700);p=root/'session.json';save_private(p,selected);assert p.stat().st_mode&0o777==0o600 and private_json(p)==selected
     with pytest.raises(FileExistsError):save_private(p,selected)
     with pytest.raises(GuardError):select_cookie_state([{**item,'domain':'outside.invalid'}])
+
+
+def test_eds_dedicated_profile_never_reuses_unmarked_or_foreign_profile(tmp_path):
+    from scripts.research.b2b_manual_session import dedicated_profile
+
+    root=tmp_path/'private';root.mkdir(mode=0o700);p=root/'eds-profile'
+    assert dedicated_profile(p)==p and p.stat().st_mode&0o777==0o700
+    assert dedicated_profile(p)==p
+    other=root/'ordinary-browser';other.mkdir(mode=0o700)
+    with pytest.raises(OSError):dedicated_profile(other)
+    link=root/'link';link.symlink_to(p,target_is_directory=True)
+    with pytest.raises(GuardError):dedicated_profile(link)
+    (p/'.tender-agent-b2b-eds-profile').chmod(0o644)
+    with pytest.raises(GuardError):dedicated_profile(p)
