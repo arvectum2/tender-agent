@@ -27,6 +27,8 @@ def main():
     platform,_=commercial_identity(args.card)
     if platform=='b2bcenter' and not (args.operator_consent_reference or '').strip():
         parser.error('B2B-Center regulation 5.4 requires written operator consent before automated access')
+    if platform=='b2bcenter':
+        parser.error('B2B live pilot blocked until browser-wide egress enforcement and offline acceptance are integrated')
     download=bool(args.download_dir)
     if download and (platform!='b2bcenter' or not args.confirm_authorized_download or not args.storage_state):
         parser.error('B2B download requires explicit authorization and an authorized session')
