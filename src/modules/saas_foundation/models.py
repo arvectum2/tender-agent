@@ -205,9 +205,25 @@ class CompanyDiscoveryRun(UUIDPrimaryKeyMixin, Base):
     status: Mapped[str] = mapped_column(String(32), nullable=False, default="PENDING")
     plan_json: Mapped[dict] = mapped_column(JSON, nullable=False)
     results_json: Mapped[list] = mapped_column(JSON, nullable=False, default=list)
+    attempts_json: Mapped[list] = mapped_column(JSON, nullable=False, default=list, server_default="[]")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
     __table_args__ = (
         UniqueConstraint("tenant_id", "run_day", name="uq_company_discovery_tenant_day"),
         Index("ix_company_discovery_tenant_day", "tenant_id", "run_day"),
     )
+
+
+class CompanyDiscoverySchedule(UUIDPrimaryKeyMixin, Base):
+    """Explicit revocable company-owner grant for unattended public discovery."""
+    __tablename__ = "company_discovery_schedules"
+    tenant_id: Mapped[str] = mapped_column(String(64), ForeignKey("saas_tenants.tenant_id"), unique=True, nullable=False)
+    member_id: Mapped[str] = mapped_column(String(36), ForeignKey("saas_members.id"), nullable=False)
+    profile_fact_id: Mapped[str | None] = mapped_column(String(36), ForeignKey("company_profile_fact_versions.id"))
+    enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    revision: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    hour_moscow: Mapped[int] = mapped_column(Integer, nullable=False, default=8)
+    sources_json: Mapped[dict] = mapped_column(JSON, nullable=False, default=dict)
+    last_tick_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    __table_args__ = (CheckConstraint("hour_moscow >= 0 AND hour_moscow <= 23", name="ck_company_schedule_hour"), Index("ix_company_schedule_due", "enabled", "last_tick_at"))

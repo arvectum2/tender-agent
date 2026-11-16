@@ -1335,3 +1335,140 @@ def test_commercial_index_rejects_ambiguous_card_and_unsafe_rss():
     raw = b'<!DOCTYPE rss [<!ENTITY fixture "test">]><rss><channel><title>&fixture;</title></channel></rss>' + b' ' * 100
     with pytest.raises(ValueError, match="XML declarations"):
         parse_index("workspace_rss", raw, ["test"], [])
+
+
+def test_company_schedule_opt_in_scoped_retry_and_resume(client, session, monkeypatch):
+    from src.modules.saas_foundation import company_discovery as discovery
+    from src.modules.saas_foundation import company_schedule as schedule
+    from src.modules.saas_foundation.models import CompanyDiscoverySchedule
+
+    tenant, a = _seed(client, "Расписание A")
+    _, b = _seed(client, "Расписание B")
+    _legal(client, a)
+    _legal(client, b)
+    profile = _profile()
+    profile["criteria"]["regions"] = []
+    assert client.put("/api/saas/profile", headers=_auth(a), json=profile).status_code == 200
+    root = "/api/saas/company-portfolio/discovery/schedule"
+    payload = {"enabled": True, "expected_revision": 0, "expected_profile_version": 1, "hour_moscow": 0, "confirm_unattended_public_search": True}
+    assert client.put(root, headers=_auth(a), json=payload).status_code == 409
+    assert session.query(CompanyDiscoverySchedule).count() == 0
+    settings = saas.get_settings().model_copy(update={"saas_company_discovery_enabled": True, "saas_company_schedule_enabled": True})
+    monkeypatch.setattr(saas, "get_settings", lambda: settings)
+    assert client.put(root, headers=_auth(a), json={**payload, "confirm_unattended_public_search": False}).status_code == 409
+    assert client.put(root, headers=_auth(a), json={**payload, "expected_profile_version": 2}).status_code == 409
+    saved = client.put(root, headers=_auth(a), json=payload)
+    assert saved.status_code == 200, saved.text
+    assert saved.json()["enabled"] and saved.json()["revision"] == 1
+    assert client.put(root, headers=_auth(a), json=payload).status_code == 409
+    assert client.get(root, headers=_auth(b)).json()["enabled"] is False
+    moment = [service.now_utc().replace(hour=0, minute=0, second=0, microsecond=0)]
+    monkeypatch.setattr(schedule, "now_utc", lambda: moment[0])
+    monkeypatch.setattr(discovery, "now_utc", lambda: moment[0])
+    calls = []
+    def source(**kwargs):
+        calls.append(kwargs)
+        if len(calls) < 2:
+            return {"outcome": "source_unavailable"}
+        return {"outcome": "success_empty", "source": "public_eis_html_44fz", "cards": [], "source_coverage_complete": True, "has_more": False}
+    monkeypatch.setattr(discovery, "search_public_44fz", source)
+    assert schedule.tick(session, settings.model_copy(update={"saas_company_schedule_enabled": False}))["considered"] == 0
+    assert not calls
+    assert schedule.tick(session, settings)["outcomes"] == {"IN_PROGRESS": 1}
+    latest = "/api/saas/company-portfolio/discovery/latest"
+    run = client.get(latest, headers=_auth(a)).json()["run"]
+    assert run["completed_steps"] == 0 and len(run["attempt_receipts"]) == 1
+    assert run["attempt_receipts"][0]["outcome"] == "source_unavailable"
+    assert client.get(latest, headers=_auth(b)).json()["run"] is None
+    assert schedule.tick(session, settings)["outcomes"] == {"IN_PROGRESS": 1}
+    assert len(calls) == 1
+    moment[0] += timedelta(minutes=5)
+    assert schedule.tick(session, settings)["outcomes"] == {"COMPLETED": 1}
+    run = client.get(latest, headers=_auth(a)).json()["run"]
+    assert run["completed_steps"] == 1 and len(run["attempt_receipts"]) == 2
+    assert schedule.tick(session, settings)["outcomes"] == {"already_finished": 1}
+    assert len(calls) == 2
+    moment[0] += timedelta(days=1)
+    assert client.put("/api/saas/profile", headers=_auth(a), json=profile).status_code == 200
+    assert schedule.tick(session, settings)["outcomes"] == {"blocked_409": 1}
+    assert len(calls) == 2
+    disabled = client.put(root, headers=_auth(a), json={"enabled": False, "expected_revision": 1})
+    assert disabled.status_code == 200 and disabled.json()["revision"] == 2
+    assert schedule.tick(session, settings)["considered"] == 0
+    assert session.query(CompanyDiscoverySchedule).one().tenant_id == tenant["tenant_id"]
+
+
+def test_company_schedule_retry_budget_and_crash_reservation(client, session, monkeypatch):
+    from src.modules.saas_foundation import company_discovery as discovery
+    from src.modules.saas_foundation import company_schedule as schedule
+    from src.modules.saas_foundation.models import CompanyDiscoveryRun
+
+    _, token = _seed(client, "Расписание авария")
+    _legal(client, token)
+    profile = _profile()
+    profile["criteria"]["regions"] = []
+    assert client.put("/api/saas/profile", headers=_auth(token), json=profile).status_code == 200
+    settings = saas.get_settings().model_copy(update={"saas_company_discovery_enabled": True, "saas_company_schedule_enabled": True})
+    monkeypatch.setattr(saas, "get_settings", lambda: settings)
+    payload = {"enabled": True, "expected_revision": 0, "expected_profile_version": 1, "hour_moscow": 0, "confirm_unattended_public_search": True}
+    assert client.put("/api/saas/company-portfolio/discovery/schedule", headers=_auth(token), json=payload).status_code == 200
+    moment = [service.now_utc().replace(hour=0, minute=0, second=0, microsecond=0)]
+    monkeypatch.setattr(schedule, "now_utc", lambda: moment[0])
+    monkeypatch.setattr(discovery, "now_utc", lambda: moment[0])
+    calls = []
+    class SimulatedExit(BaseException):
+        pass
+    def source(**kwargs):
+        calls.append(kwargs)
+        if len(calls) == 3:
+            raise SimulatedExit()
+        return {"outcome": "source_error"}
+    monkeypatch.setattr(discovery, "search_public_44fz", source)
+    schedule.tick(session, settings)
+    moment[0] += timedelta(minutes=5)
+    schedule.tick(session, settings)
+    moment[0] += timedelta(minutes=15)
+    with pytest.raises(SimulatedExit):
+        schedule.tick(session, settings)
+    session.expire_all()
+    row = session.query(CompanyDiscoveryRun).one()
+    assert len(row.attempts_json) == 3 and row.attempts_json[-1]["outcome"] == "IN_FLIGHT"
+    assert row.results_json == []
+    assert schedule.tick(session, settings)["outcomes"] == {"IN_PROGRESS": 1}
+    moment[0] += timedelta(minutes=15)
+    assert schedule.tick(session, settings)["outcomes"] == {"PARTIAL": 1}
+    session.expire_all()
+    assert row.results_json[0]["outcome"] == "source_error" and row.attempts_json[-1]["outcome"] == "ABANDONED_AFTER_CRASH"
+    assert len(calls) == 3
+
+
+def test_company_schedule_revalidates_owner_and_entitlement(client, session, monkeypatch):
+    from src.modules.saas_foundation import company_discovery as discovery
+    from src.modules.saas_foundation import company_schedule as schedule
+    from src.modules.saas_foundation.models import SaasMember
+
+    tenant, owner = _seed(client, "Расписание права")
+    _legal(client, owner)
+    invitation = client.post("/api/saas/invitations", headers=_auth(owner), json={"role": "admin", "acquisition_channel": "referral"}).json()
+    admin = client.post("/api/saas/invitations/redeem", json={"invitation_code": invitation["invitation_code"], "display_name": "Fixture administrator"}).json()["access_token"]
+    _legal(client, admin)
+    settings = saas.get_settings().model_copy(update={"saas_company_discovery_enabled": True, "saas_company_schedule_enabled": True})
+    monkeypatch.setattr(saas, "get_settings", lambda: settings)
+    assert client.put("/api/saas/profile", headers=_auth(owner), json=_profile()).status_code == 200
+    root = "/api/saas/company-portfolio/discovery/schedule"
+    body = {"enabled": True, "expected_revision": 0, "expected_profile_version": 1, "hour_moscow": 0, "confirm_unattended_public_search": True}
+    assert client.put(root, headers=_auth(admin), json=body).status_code == 403
+    assert client.put(root, headers=_auth(owner), json=body).status_code == 200
+    calls = []
+    monkeypatch.setattr(discovery, "search_public_44fz", lambda **kw: calls.append(kw))
+    company = session.scalar(select(SaasTenant).where(SaasTenant.tenant_id == tenant["tenant_id"]))
+    member = session.scalar(select(SaasMember).where(SaasMember.tenant_id == tenant["tenant_id"], SaasMember.role == "owner"))
+    company.trial_ends_at = service.now_utc() - timedelta(days=1)
+    session.commit()
+    assert schedule.tick(session, settings)["outcomes"] == {"blocked_402": 1}
+    company.trial_ends_at = service.now_utc() + timedelta(days=1)
+    session.commit()
+    member.active = False
+    session.commit()
+    assert schedule.tick(session, settings)["outcomes"] == {"blocked_403": 1}
+    assert not calls

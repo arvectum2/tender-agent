@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import math
 import re
-from datetime import timedelta
+from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 from fastapi import HTTPException
@@ -35,6 +35,8 @@ from src.shared.errors import ConflictError
 
 MAX_STEPS = 8
 MAX_CARDS = 10
+MAX_ATTEMPTS = 3
+RETRYABLE = {"source_unavailable", "source_error", "invalid_search_response"}
 MOSCOW = ZoneInfo("Europe/Moscow")
 
 
@@ -105,9 +107,9 @@ def _view(row, principal):
                 candidates[number]["matched_steps"].append(step["step"])
     return {"run_id": row.id, "customer_id": principal.customer_id, "status": row.status,
             "run_day": row.run_day, "plan": row.plan_json, "completed_steps": len(row.results_json),
-            "step_receipts": row.results_json, "candidates": list(candidates.values()),
+            "step_receipts": row.results_json, "attempt_receipts": row.attempts_json or [], "candidates": list(candidates.values()),
             "discovery_incomplete": row.status != "COMPLETED", "external_submission_allowed": False,
-            "automatic_scheduling_enabled": False}
+            "scheduled_execution_attempted": bool(row.attempts_json)}
 
 
 def create_run(session: Session, principal: TenantPrincipal, payload: StartCompanyDiscovery):
@@ -225,7 +227,7 @@ def _check_window(session, principal, row):
     return True
 
 
-def advance_run(session: Session, principal: TenantPrincipal, run_id: str, payload: AdvanceCompanyDiscovery):
+def advance_run(session: Session, principal: TenantPrincipal, run_id: str, payload: AdvanceCompanyDiscovery, *, scheduled=False, authorize=None):
     role_required(principal, "owner", "admin")
     legal_required(session, principal)
     _owned(session, principal, run_id)
@@ -240,24 +242,63 @@ def advance_run(session: Session, principal: TenantPrincipal, run_id: str, paylo
                 raise HTTPException(409, "Refresh discovery checkpoint")
             if row.status not in {"PENDING", "IN_PROGRESS"} or not _check_window(session, principal, row):
                 return _view(row, principal)
+            if authorize is not None:
+                authorize(session)
             plan = row.plan_json
             step = plan["steps"][index]
+            attempts = list(row.attempts_json or [])
+            prior = [a for a in attempts if a["step"] == index]
+            durable = scheduled or bool(prior)
+            exhausted = False
+            if durable:
+                now = now_utc()
+                if prior and now < datetime.fromisoformat(prior[-1]["retry_after"]):
+                    return _view(row, principal)
+                if len(prior) >= MAX_ATTEMPTS:
+                    # A crash after reservation consumes the attempt even without a response.
+                    exhausted = True
+                else:
+                    attempt = {"step": index, "attempt": len(prior) + 1, "started_at": now.isoformat(),
+                               "retry_after": (now + timedelta(minutes=5 if not prior else 15)).isoformat(),
+                               "outcome": "IN_FLIGHT"}
+                    row.attempts_json = [*attempts, attempt]
+                    row.status = "IN_PROGRESS"
+                    row.updated_at = now
+                    session.commit()
             # Release the read transaction while the public HTTP request runs.
             session.rollback()
             try:
-                if step.get("commercial_index"):
+                if exhausted:
+                    result = {"outcome": "source_error"}
+                elif step.get("commercial_index"):
                     result = search_index(step["commercial_index"], plan["keywords"], plan["excluded_title_terms"])
                 else:
                     result = search_public_44fz(query=step["query"], law="44fz", region=step["region"],
                     date_from=plan["date_from"], date_to=plan["date_to"], price_from=plan["price_min"],
                     price_to=plan["price_max"], status_filter="Подача заявок", reference_date=_day(),
                     page=1, page_size=MAX_CARDS, max_results=MAX_CARDS, apply_supplier_relevance=False, backfill_page_limit=2)
-            except Exception:  # noqa: BLE001 - record only safe source outcome, never raw exception or URL
+            except Exception:  # noqa: BLE001 - sanitized transport outcome
                 result = {"outcome": "source_error"}
             row = _owned(session, principal, run_id)
+            if authorize is not None:
+                authorize(session)
             if not _check_window(session, principal, row):
                 return _view(row, principal)
             receipt = _receipt(plan, index, result)
+            if exhausted:
+                ledger = list(row.attempts_json or [])
+                ledger[-1] = {**ledger[-1], "outcome": "ABANDONED_AFTER_CRASH", "finished_at": now_utc().isoformat()}
+                row.attempts_json = ledger
+            if durable and not exhausted:
+                ledger = list(row.attempts_json or [])
+                ledger[-1] = {**ledger[-1], "outcome": receipt["outcome"], "finished_at": now_utc().isoformat()}
+                row.attempts_json = ledger
+                if receipt["outcome"] in RETRYABLE and ledger[-1]["attempt"] < MAX_ATTEMPTS:
+                    row.updated_at = now_utc()
+                    audit(session, principal.tenant_id, "company_discovery_retry_wait", principal.member_id, detail=f"{row.id}:{index}:{receipt['outcome']}")
+                    session.commit()
+                    return _view(row, principal)
+
             row.results_json = [*row.results_json, receipt]
             if len(row.results_json) == len(plan["steps"]):
                 row.status = "COMPLETED" if all(r["coverage_complete"] for r in row.results_json) else "PARTIAL"

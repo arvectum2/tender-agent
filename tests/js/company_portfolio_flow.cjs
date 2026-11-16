@@ -29,6 +29,7 @@ const fixture={a:{customer_id:'customer-a',tenant_id:'tenant-a',member_id:'a',co
 const reply=(value,status=200)=>({ok:status>=200&&status<300,status,json:async()=>value});
 let lostResponse=false, mismatch=false, delayed=null;
 let discoveryRun=null, savedCandidate=null, savedCommercial=null;
+let scheduleState={enabled:false,execution_enabled:true,revision:0,hour_moscow:8,sources:{},profile_current:false};
 const commercialURL="https://workspace.ru/tenders/fixture-1234567/";
 const commercialItem={case_id:"commercial-a",registry_number:null,external_id:"1234567",source_platform:"workspace",source_kind:"commercial_reference",source_url:commercialURL,revision:0,decision:null,source_verified:false};
 const item=key=>({case_id:'case-'+key,registry_number:'0123456789012345678',revision:history[key].length,decision:history[key][0]||null,source_verified:false,external_submission_allowed:false});
@@ -38,6 +39,14 @@ async function fetch(route,opts){
  assert.equal(opts.credentials,'omit');assert.equal(opts.redirect,'error');
  if(!fixture[key])return reply({detail:'invalid'},401);
  if(route==='/api/saas/me'){if(delayed)await delayed;return reply(fixture[key]);}
+ if(route==='/api/saas/company-portfolio/discovery/schedule'){
+  if(method==='PUT'){
+   assert.equal(key,'a');const body=JSON.parse(opts.body);assert.equal(body.expected_revision,scheduleState.revision);
+   if(body.enabled){assert.equal(body.confirm_unattended_public_search,true);assert.equal(body.expected_profile_version,1);assert.equal(body.hour_moscow,9);assert.deepEqual(body.commercial_indexes,['workspace_rss']);}
+   scheduleState={...scheduleState,enabled:body.enabled,revision:scheduleState.revision+1,hour_moscow:body.hour_moscow||8,sources:body.enabled?{include_eis:body.include_eis,commercial_indexes:body.commercial_indexes}:{},profile_current:body.enabled};
+  }
+  return reply({...scheduleState,customer_id:fixture[key].customer_id});
+ }
  if(route==='/api/saas/company-portfolio/discovery/latest')return reply({enabled:true,commercial_indexes:["workspace_rss"],run:key==='a'?discoveryRun:null});
  if(route==='/api/saas/company-portfolio/discovery/runs'&&method==='POST'){
   assert.equal(key,'a');assert.deepEqual(JSON.parse(opts.body),{expected_profile_version:1,commercial_indexes:["workspace_rss"]});
@@ -81,7 +90,11 @@ async function selectAccount(key){get('saved-token').value='fixture-'+key;await 
 async function openCase(key){get('company-case').value='case-'+key;change('company-case');await click('company-open');}
 async function main(){
  await selectAccount('a');assert.match(get('company-identity').textContent,/Компания A/);
- await click('company-search-refresh');assert.equal(get('company-search-start').disabled,false);get("company-search-index").value="workspace_rss";await click('company-search-start');
+ await click('company-search-refresh');assert.equal(get('company-search-start').disabled,false);get("company-search-index").value="workspace_rss";
+ await click('company-schedule-refresh');get('company-schedule-hour').value='9';await click('company-schedule-enable');assert.equal(scheduleState.revision,0);
+ get('company-schedule-confirm').checked=true;await click('company-schedule-enable');assert.equal(scheduleState.enabled,true);assert.match(get('company-schedule-state').textContent,/Разрешено владельцем/);
+ await click('company-schedule-disable');assert.equal(scheduleState.enabled,false);assert.equal(scheduleState.revision,2);
+ await click('company-search-start');
  assert.match(get('company-search-state').textContent,/Ожидает выполнения/);await click('company-search-run');
  assert.match(get('company-search-state').textContent,/Выдача неполная/);assert.match(get('company-search-receipts').textContent,/source_unavailable/);
  assert.equal(calls.filter(c=>c.route.endsWith('/step')).length,2);

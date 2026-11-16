@@ -20,6 +20,7 @@ class Settings(BaseSettings):
     pilot_auth_password: str | None = None
     saas_foundation_enabled: bool = False  # Opt-in internal pilot only, not public SaaS
     saas_company_discovery_enabled: bool = False  # Separate opt-in for source requests
+    saas_company_schedule_enabled: bool = False  # Independent unattended execution gate
     market_intelligence_report_delivery_enabled: bool = False  # Additional opt-in gate
     pilot_auth_protected_prefixes: str = "/api,/demo,/pilot,/customers,/docs,/redoc,/openapi.json,/health/ready"
     pilot_auth_public_paths: str = "/health"

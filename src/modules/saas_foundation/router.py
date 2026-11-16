@@ -62,6 +62,7 @@ from src.modules.saas_foundation import (
     company_case_evidence,
     company_discovery,
     company_portfolio,
+    company_schedule,
 )
 from src.modules.saas_foundation.models import (
     SaasAccessToken,
@@ -783,3 +784,13 @@ def advance_company_discovery(run_id: str, payload: company_discovery.AdvanceCom
 @router.post("/api/saas/company-portfolio/commercial-cases", status_code=201, response_model=company_portfolio.CompanyCaseView)
 def save_company_commercial_case(payload: company_portfolio.SaveCommercialCase, principal: Member, session: DBSession) -> dict:
     return company_portfolio.save_commercial_case(session, principal, payload)
+
+
+@router.get("/api/saas/company-portfolio/discovery/schedule")
+def read_company_schedule(principal: Member, session: DBSession) -> dict:
+    return company_schedule.read_schedule(session, principal, execution_enabled=company_schedule.execution_enabled(get_settings()))
+
+
+@router.put("/api/saas/company-portfolio/discovery/schedule")
+def update_company_schedule(payload: company_schedule.ScheduleInput, principal: Member, session: DBSession) -> dict:
+    return company_schedule.update_schedule(session, principal, payload, execution_enabled=company_schedule.execution_enabled(get_settings()))

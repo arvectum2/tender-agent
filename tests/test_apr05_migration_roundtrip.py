@@ -171,3 +171,39 @@ def test_company_discovery_migration_preserves_predecessor_and_receipts(tmp_path
     finally:
         engine.dispose()
         invalidate_settings_cache()
+
+
+def test_company_schedule_migration_preserves_existing_runs_and_blocks_data_loss(tmp_path, monkeypatch):
+    import pytest
+
+    db_url = "sqlite:///" + str(tmp_path / "schedule.sqlite")
+    monkeypatch.setenv("AI_CORP_DATABASE_URL", db_url)
+    invalidate_settings_cache()
+    cfg = Config(str(Path(__file__).resolve().parents[1] / "alembic.ini"))
+    engine = create_engine(db_url)
+    try:
+        with engine.begin() as conn:
+            for table, identity in (("saas_tenants", "tenant_id"), ("saas_members", "id"), ("company_profile_fact_versions", "id")):
+                conn.execute(text(f"CREATE TABLE {table} ({identity} VARCHAR PRIMARY KEY)"))
+                conn.execute(text(f"INSERT INTO {table} ({identity}) VALUES ('existing')"))
+        command.stamp(cfg, "109_company_portfolio_evidence")
+        command.upgrade(cfg, "110_company_discovery_runs")
+        with engine.begin() as conn:
+            conn.execute(text("INSERT INTO company_discovery_runs (id, tenant_id, member_id, profile_fact_id, run_day, status, plan_json, results_json, created_at, updated_at) VALUES ('r1','existing','existing','existing','2026-11-16','PENDING','{}','[]','2026-11-16','2026-11-16')"))
+        command.upgrade(cfg, "111_company_discovery_schedule")
+        with engine.connect() as conn:
+            assert conn.scalar(text("SELECT attempts_json FROM company_discovery_runs")) == "[]"
+            assert conn.scalar(text("SELECT count(*) FROM company_discovery_schedules")) == 0
+        command.downgrade(cfg, "110_company_discovery_runs")
+        assert "company_discovery_schedules" not in inspect(engine).get_table_names()
+        command.upgrade(cfg, "111_company_discovery_schedule")
+        with engine.begin() as conn:
+            assert conn.scalar(text("SELECT count(*) FROM company_discovery_runs")) == 1
+            conn.execute(text("UPDATE company_discovery_runs SET attempts_json = :attempt"), {"attempt": '[{"step":0}]'})
+        with pytest.raises(RuntimeError, match="Cannot discard"):
+            command.downgrade(cfg, "110_company_discovery_runs")
+        with engine.connect() as conn:
+            assert conn.scalar(text("SELECT attempts_json FROM company_discovery_runs")) == '[{"step":0}]'
+    finally:
+        engine.dispose()
+        invalidate_settings_cache()
