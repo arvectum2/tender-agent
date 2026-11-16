@@ -268,19 +268,21 @@ completed:
 - B2B PN-1356710-26 new operator response and sent technical specification recorded;
   60 HTTP requests per 60 seconds per IP target, written approval still pending; no
   traffic.
-current_stage: price01_actual_evidence_web
+- 'PRICE-01 Web actual evidence: exact saved snapshot/date/row namespace and canonical
+  digest, missing vs zero, explicit manager upload and user-copy consent, validated
+  metadata and SHA/size, shared verified download, uncertain retry and state clearing.'
+current_stage: price01_actual_evidence_web_verified_next_native
 remaining:
-- Web and native actual evidence controls on selected saved actual snapshot and reported
-  planned/unplanned row; exact canonical binding and byte SHA, explicit user copy,
-  no payment verification.
-- Deduplicated labor/expense normative samples, historical comparable normalization
-  and real-case acceptance.
-- Hosted CI, real PG concurrency, browser/device and E2E acceptance. Keep gates off;
-  no deployment.
-- B2B written approval pending; shared sliding 60 requests/60s per-IP limiter including
-  background/download requests and offline acceptance before any authorized pilot.
-  No automated platform requests. Product only.
-last_verified_commit: aef7a500e52baab2fb956cda5606d22235bae5c9
+- Native actual evidence controls for selected saved actual snapshot and reported
+  planned/unplanned row; exact canonical binding, byte SHA/size, explicit user copy,
+  no independent payment claim.
+- Deduplicated labor/expense normative samples and historical comparable procurement
+  normalization; real-case acceptance.
+- Hosted CI, PostgreSQL concurrency, real browser/device and E2E acceptance. Keep
+  flags off and no production deployment.
+- B2B written approval pending; shared sliding 60 requests/60s per-IP limiter and
+  offline enforcement before approved pilot. No automated traffic. Product only.
+last_verified_commit: 9ed983a0c657c4da7acf77eff96f31c0f3c5d424
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -424,9 +426,17 @@ test_results:
   baseline/snapshot/tenant/role scope, replay, quota, corruption and guarded migration
   roundtrip tested. Existing JS fixture PASS; Ruff/diff PASS; Alembic head 121_company_actual_evidence.
   PR570 exact 6bd87d80 CI 19/19 successful.
-resume_instruction: Implement Web actual evidence on exact saved report/row, canonical
-  digest, explicit immutable user copy, verified bounded transfers and state clearing;
-  offline tests.
+- 157 passed,2 skipped,130 warnings in 15.48s; extended JS fixture PASS with Python
+  canonical binding and actual projection, missing/zero, planned/unplanned revision
+  isolation, consent, retry, corrupt/oversized downloads and false payment flag rejection.
+  Ruff/diff PASS. PR571 exact aa74d86c 17 success/2 running.
+resume_instruction: Web actual evidence controls verified. Next native read/upload/download
+  on saved actual snapshot and reported planned/unplanned row, Python-compatible canonical
+  digest, explicit document type/user-copy consent and verified bounded transfers;
+  reuse native cost document components and preserve session invalidation. Then deduplicated
+  normative samples and historical comparable normalization. B2B approval pending,
+  60 requests/60s per IP target; no automated traffic. No production or source/model
+  calls. Product only.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
