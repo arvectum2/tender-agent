@@ -683,7 +683,10 @@ private struct CompanyPriceSection: View {
                             LabeledContent("Минимальная прибыль", value:row.inputs.minimumProfitRub + " ₽")
                             LabeledContent("Целевая прибыль", value:row.inputs.targetProfitRub + " ₽")
                             LabeledContent("Предел цены", value:row.inputs.referenceCeilingRub.map { $0 + " ₽" } ?? "Не задан")
-                            if let detail=row.itemizedEstimate { itemizedDetail(detail) }
+                            if let detail=row.itemizedEstimate {
+                                itemizedDetail(detail)
+                                CompanyCostDocumentsView(item:item,accountID:accountID,scenario:row,store:store).id(row.id)
+                            }
                             comparison(row.result)
                         }
                     }
@@ -706,5 +709,117 @@ private struct CompanyPriceSection: View {
         .onChange(of:ceiling) { _,_ in invalidate() }
         .onChange(of:store.selectedID) { _,_ in reset() }
         .onChange(of:store.identity?.memberId) { _,value in if value == nil { reset() } }
+    }
+}
+
+private struct CompanyCostDocumentsView: View {
+    let item: CompanyCase
+    let accountID: String
+    let scenario: CompanyPriceRecord
+    @ObservedObject var store: CompanyStore
+    @State private var ordinal = 0
+    var body: some View {
+        if let estimate=scenario.itemizedEstimate {
+            DisclosureGroup("Документы сохранённой сметы v\(scenario.revision)") {
+                Text("Одна копия на строку, без замены. Подлинность, сумма и оплата независимо не проверены.").font(.caption).foregroundStyle(.secondary)
+                Picker("Позиция",selection:$ordinal) {
+                    Text("Выберите строку").tag(0)
+                    ForEach(estimate.lines) { line in Text("\(line.ordinal). \(line.title) · \(line.amountRub) ₽").tag(line.ordinal) }
+                }
+                if let line=estimate.lines.first(where:{$0.ordinal==ordinal}) {
+                    CompanyCostDocumentView(item:item,accountID:accountID,target:.init(scenario:scenario,line:line),store:store).id(line.ordinal)
+                }
+            }
+            .onChange(of:store.selectedID) { _,_ in ordinal=0 }
+            .onChange(of:store.identity?.memberId) { _,_ in ordinal=0 }
+        }
+    }
+}
+
+private struct CompanyCostDocumentView: View {
+    let item: CompanyCase
+    let accountID: String
+    let target: CompanyCostTarget
+    @ObservedObject var store: CompanyStore
+    @State private var binding: CompanyCostBinding?
+    @State private var evidence: CompanyCostEvidence?
+    @State private var kind: CompanyCostDocumentKind?
+    @State private var bytes: CompanyArtifactBytes?
+    @State private var acknowledge=false
+    @State private var importing=false
+    @State private var exporting=false
+    @State private var export: CompanyExportDocument?
+    @State private var notice: String?
+    @State private var generation=UUID()
+    private var canWrite: Bool { store.canDecide(accountID:accountID,caseID:item.caseId,revision:item.revision) }
+    private func active(_ g: UUID) -> Bool {
+        guard g==generation,store.selectedID==accountID,let identity=store.identity,identity.legalAccepted,["owner","admin","analyst"].contains(identity.role) else { return false }
+        return target.matches(identity,caseID:item.caseId)
+    }
+    private func reset() {
+        generation=UUID(); binding=nil; evidence=nil; kind=nil; bytes=nil; acknowledge=false; importing=false; exporting=false; export=nil; notice=nil
+    }
+    private func load() async {
+        reset(); let g=generation
+        do {
+            let result=try await store.costBinding(accountID:accountID,item:item,target:target)
+            guard active(g) else { return }; binding=result; evidence=result.evidence
+            notice=result.evidence==nil ? "Копия не приложена к этой строке." : "Копия сохранена. Проверена целостность байтов, не стоимость или оплата."
+        } catch CompanyConnectionError.http(404) { if active(g) { notice="Функция недоступна или строка не найдена." } }
+        catch { if active(g) { notice=CompanyStore.safeError(error) } }
+    }
+    private func save() async {
+        guard canWrite, acknowledge, let binding, binding.evidence==nil, evidence==nil, let kind, let bytes else { return }
+        acknowledge=false; notice=nil; let g=generation
+        do {
+            let result=try await store.saveCostEvidence(accountID:accountID,item:item,target:target,binding:binding,kind:kind,bytes:bytes)
+            guard active(g) else { return }; evidence=result; self.bytes=nil; notice="Копия сохранена. Подлинность, сумма и оплата не проверены."
+        } catch CompanyConnectionError.http(409) {
+            if active(g) { reset(); notice="Привязка изменилась или документ уже приложен. Проверьте строку повторно." }
+        } catch { if active(g) { notice="Запись не подтверждена. Проверьте строку или повторите тот же файл и вид документа. " + CompanyStore.safeError(error) } }
+    }
+    private func download() async {
+        guard let evidence else { return }; export=nil; notice=nil; let g=generation
+        do {
+            let result=try await store.downloadCostEvidence(accountID:accountID,item:item,target:target,evidence:evidence)
+            guard active(g), self.evidence==evidence else { return }
+            export=CompanyExportDocument(data:result.data); exporting=true
+        } catch { if active(g) { notice=CompanyStore.safeError(error) } }
+    }
+    var body: some View {
+        VStack(alignment:.leading,spacing:8) {
+            Text("v\(target.scenario.revision) · строка \(target.line.ordinal) · \(target.line.amountRub) ₽").font(.caption)
+            Button("Проверить документ") { Task { await load() } }.disabled(store.isBusy)
+            if let evidence {
+                Text(evidence.documentKind.title + " · " + evidence.formatHint.uppercased() + " · \(evidence.inspection.sizeBytes) байт")
+                Text(evidence.inspection.sha256).font(.caption2).textSelection(.enabled)
+                Button("Скачать проверенные байты") { Task { await download() } }.disabled(store.isBusy)
+            } else if binding != nil && canWrite {
+                Picker("Вид документа",selection:$kind) {
+                    Text("Выберите вид").tag(CompanyCostDocumentKind?.none)
+                    ForEach(CompanyCostDocumentKind.allCases) { Text($0.title).tag(Optional($0)) }
+                }
+                Button("Выбрать PDF, DOCX или XLSX (до 2 МБ)") { importing=true }.disabled(store.isBusy)
+                if let bytes { Text("\(bytes.format.uppercased()) · \(bytes.data.count) байт").font(.caption) }
+                Toggle("Привязать пользовательскую копию без возможности замены. Источник и сумма не проверены.",isOn:$acknowledge)
+                Button("Прикрепить документ") { Task { await save() } }.disabled(store.isBusy || !acknowledge || bytes==nil || kind==nil)
+            }
+            if let notice { Text(notice).font(.caption).foregroundStyle(.secondary) }
+        }
+        .fileImporter(isPresented:$importing,allowedContentTypes:CompanyArtifactBytes.formats.compactMap { UTType(filenameExtension:$0) }) { result in
+            self.bytes=nil; acknowledge=false
+            do { guard canWrite,binding != nil,evidence==nil,active(generation) else { return }; bytes=try CompanyArtifactBytes.read(result.get()) }
+            catch { notice=CompanyStore.safeError(error) }
+        }
+        .fileExporter(isPresented:$exporting,document:export,contentType:evidence.flatMap { UTType(filenameExtension:$0.formatHint) } ?? .data,defaultFilename:evidence?.filename ?? "cost") { result in
+            export=nil
+            if case .failure(let error)=result { notice=CompanyStore.safeError(error) }
+        }
+        .onChange(of:exporting) { _,value in if !value { export=nil } }
+        .onChange(of:kind) { _,_ in acknowledge=false }
+        .onChange(of:store.selectedID) { _,_ in reset() }
+        .onChange(of:store.identity?.memberId) { _,_ in reset() }
+        .onChange(of:store.identity?.role) { _,_ in reset() }
+        .onDisappear { reset() }
     }
 }

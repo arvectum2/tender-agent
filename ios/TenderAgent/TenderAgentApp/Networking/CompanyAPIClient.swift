@@ -675,6 +675,113 @@ struct CompanyPriceRecord: Decodable, Identifiable, Sendable {
     }
 }
 
+enum CompanyCostDocumentKind: String, Codable, CaseIterable, Identifiable, Sendable {
+    case quote = "QUOTE", invoice = "INVOICE", contract = "CONTRACT", timesheet = "TIMESHEET", other = "OTHER"
+    var id: String { rawValue }
+    var title: String { switch self { case .quote: "Коммерческое предложение"; case .invoice: "Счёт"; case .contract: "Договор"; case .timesheet: "Табель трудозатрат"; case .other: "Прочее" } }
+}
+
+struct CompanyCostTarget: Sendable {
+    let scenario: CompanyPriceRecord
+    let line: CompanyProjectedCostLine
+    // Python json.dumps(ensure_ascii=False, sort_keys=True, separators=(',', ':')).
+    private static func quote(_ value: String) -> String {
+        var out = "\""
+        for scalar in value.unicodeScalars {
+            switch scalar.value {
+            case 34: out += "\\\""
+            case 92: out += "\\\\"
+            case 8: out += "\\b"
+            case 9: out += "\\t"
+            case 10: out += "\\n"
+            case 12: out += "\\f"
+            case 13: out += "\\r"
+            case 0...31: out += String(format:"\\u%04x",scalar.value)
+            default: out.unicodeScalars.append(scalar)
+            }
+        }
+        return out + "\""
+    }
+    var digest: String {
+        let values = ["amount_rub":line.amountRub,"category":line.category.rawValue,"quantity":line.quantity,"rate_rub":line.rateRub,"source_kind":line.sourceKind.rawValue,"source_note":line.sourceNote,"title":line.title,"unit":line.unit]
+        let keys = (Array(values.keys) + ["ordinal"]).sorted()
+        let row = keys.map { Self.quote($0) + ":" + ($0 == "ordinal" ? String(line.ordinal) : Self.quote(values[$0]!)) }.joined(separator:",")
+        let text = "{\"line\":{\(row)},\"revision\":\(scenario.revision),\"scenario_id\":\(Self.quote(scenario.scenarioId))}"
+        return CompanyArtifactBytes.digest(Data(text.utf8))
+    }
+    func matches(_ identity: CompanyIdentity, caseID: String) -> Bool {
+        scenario.matches(identity,caseID:caseID) && scenario.itemizedEstimate?.lines.contains(line) == true
+    }
+}
+
+struct CompanyCostScope: Decodable, Equatable, Sendable {
+    let customerId: String
+    let caseId: String
+    let scenarioId: String
+    let scenarioRevision: Int
+    let lineOrdinal: Int
+    let lineSha256: String
+    let lineTitle: String
+    let lineAmountRub: String
+    let externalSubmissionAllowed: Bool
+    func matches(_ identity: CompanyIdentity, caseID: String, target: CompanyCostTarget) -> Bool {
+        target.matches(identity,caseID:caseID) && customerId==identity.customerId && self.caseId==caseID && scenarioId==target.scenario.scenarioId && scenarioRevision==target.scenario.revision && lineOrdinal==target.line.ordinal && lineTitle==target.line.title && lineAmountRub==target.line.amountRub && lineSha256==target.digest && !externalSubmissionAllowed
+    }
+}
+struct CompanyCostInspection: Decodable, Equatable, Sendable {
+    let schema: String
+    let sha256: String
+    let sizeBytes: Int
+    let formatHint: String
+    let formatCheck: String
+    let textPreviewComplete: Bool
+    let requirementsVerified: Bool
+    let malwareFreeVerified: Bool
+    let digitalSignatureVerified: Bool
+    private enum CodingKeys: String,CodingKey { case schema,sha256,sizeBytes,formatHint,formatCheck,textPreviewComplete,requirementsVerified,malwareFreeVerified,digitalSignatureVerified,textPreview }
+    init(from decoder: Decoder) throws {
+        let c=try decoder.container(keyedBy:CodingKeys.self)
+        guard !c.contains(.textPreview) else { throw CompanyConnectionError.invalidArtifact }
+        schema=try c.decode(String.self,forKey:.schema); sha256=try c.decode(String.self,forKey:.sha256); sizeBytes=try c.decode(Int.self,forKey:.sizeBytes); formatHint=try c.decode(String.self,forKey:.formatHint); formatCheck=try c.decode(String.self,forKey:.formatCheck)
+        textPreviewComplete=try c.decode(Bool.self,forKey:.textPreviewComplete); requirementsVerified=try c.decode(Bool.self,forKey:.requirementsVerified); malwareFreeVerified=try c.decode(Bool.self,forKey:.malwareFreeVerified); digitalSignatureVerified=try c.decode(Bool.self,forKey:.digitalSignatureVerified)
+    }
+    var valid: Bool { schema=="commercial_attachment_inspection_v1" && CompanyArtifactBytes.validDigest(sha256) && (1...CompanyArtifactBytes.limit).contains(sizeBytes) && CompanyArtifactBytes.formats.contains(formatHint) && formatCheck==(formatHint=="pdf" ? "PDF_HEADER_AND_EOF_ONLY" : "BOUNDED_OOXML_PACKAGE_CHECK") && !textPreviewComplete && !requirementsVerified && !malwareFreeVerified && !digitalSignatureVerified }
+}
+struct CompanyCostEvidence: Decodable, Equatable, Sendable {
+    let scope: CompanyCostScope
+    let evidenceId: String
+    let memberId: String
+    let documentKind: CompanyCostDocumentKind
+    let formatHint: String
+    let inspection: CompanyCostInspection
+    let origin: String
+    let storedBytesReverified: Bool
+    let documentOriginVerified: Bool
+    let costAmountVerified: Bool
+    let paymentVerified: Bool
+    private enum CodingKeys: String,CodingKey { case evidenceId,memberId,documentKind,formatHint,inspection,origin,storedBytesReverified,documentOriginVerified,costAmountVerified,paymentVerified }
+    init(from decoder: Decoder) throws {
+        scope=try CompanyCostScope(from:decoder); let c=try decoder.container(keyedBy:CodingKeys.self)
+        evidenceId=try c.decode(String.self,forKey:.evidenceId); memberId=try c.decode(String.self,forKey:.memberId); documentKind=try c.decode(CompanyCostDocumentKind.self,forKey:.documentKind); formatHint=try c.decode(String.self,forKey:.formatHint); inspection=try c.decode(CompanyCostInspection.self,forKey:.inspection); origin=try c.decode(String.self,forKey:.origin); storedBytesReverified=try c.decode(Bool.self,forKey:.storedBytesReverified); documentOriginVerified=try c.decode(Bool.self,forKey:.documentOriginVerified); costAmountVerified=try c.decode(Bool.self,forKey:.costAmountVerified); paymentVerified=try c.decode(Bool.self,forKey:.paymentVerified)
+    }
+    func matches(_ identity: CompanyIdentity, caseID: String,target: CompanyCostTarget) -> Bool {
+        scope.matches(identity,caseID:caseID,target:target) && UUID(uuidString:evidenceId) != nil && !memberId.isEmpty && inspection.valid && formatHint==inspection.formatHint && origin=="USER_SUPPLIED_UNATTESTED" && storedBytesReverified && !documentOriginVerified && !costAmountVerified && !paymentVerified
+    }
+    func accepts(_ bytes: CompanyArtifactBytes) -> Bool { formatHint==bytes.format && inspection.sizeBytes==bytes.data.count && inspection.sha256==bytes.sha256 }
+    var filename: String { "cost-\(inspection.sha256.prefix(16)).\(formatHint)" }
+}
+struct CompanyCostBinding: Decodable, Sendable {
+    let scope: CompanyCostScope
+    let evidence: CompanyCostEvidence?
+    private enum CodingKeys: String,CodingKey { case evidence }
+    init(from decoder: Decoder) throws {
+        scope=try CompanyCostScope(from:decoder); let c=try decoder.container(keyedBy:CodingKeys.self)
+        guard c.contains(.evidence) else { throw CompanyConnectionError.invalidResponse }
+        evidence=try c.decodeIfPresent(CompanyCostEvidence.self,forKey:.evidence)
+    }
+    func matches(_ identity: CompanyIdentity, caseID: String,target: CompanyCostTarget) -> Bool { scope.matches(identity,caseID:caseID,target:target) && (evidence.map { $0.scope==scope && $0.matches(identity,caseID:caseID,target:target) } ?? true) }
+}
+
 struct CompanyPriceHistory: Decodable, Sendable {
     let customerId: String
     let caseId: String
@@ -900,6 +1007,11 @@ struct CompanyAPIClient: Sendable {
     func downloadEventArtifact(item: CompanyCase, event: CompanyLifecycleEvent, identity: CompanyIdentity, artifact: CompanyEventArtifact) async throws -> CompanyArtifactBytes {
         guard artifact.matches(identity, event: event) else { throw CompanyConnectionError.identityMismatch }
         let path = try artifactPath(event, item: item) + "/download"
+        return try await downloadVerifiedFile(path:path,sha:artifact.inspection.sha256,size:artifact.inspection.sizeBytes,format:artifact.formatHint)
+    }
+
+    private func downloadVerifiedFile(path: String, sha: String, size: Int, format: String) async throws -> CompanyArtifactBytes {
+        guard CompanyArtifactBytes.validDigest(sha), (1...CompanyArtifactBytes.limit).contains(size), CompanyArtifactBytes.formats.contains(format) else { throw CompanyConnectionError.invalidArtifact }
         var request = URLRequest(url: baseURL.appending(path: path), cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 20)
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         request.setValue("application/octet-stream", forHTTPHeaderField: "Accept")
@@ -907,14 +1019,14 @@ struct CompanyAPIClient: Sendable {
         defer { stream.task.cancel() }
         guard let http = response as? HTTPURLResponse else { throw CompanyConnectionError.invalidResponse }
         guard (200..<300).contains(http.statusCode) else { throw CompanyConnectionError.http(http.statusCode) }
-        guard http.value(forHTTPHeaderField: "X-Artifact-SHA256") == artifact.inspection.sha256 else { throw CompanyConnectionError.invalidArtifact }
-        var data = Data(); data.reserveCapacity(artifact.inspection.sizeBytes)
+        guard http.value(forHTTPHeaderField: "X-Artifact-SHA256") == sha else { throw CompanyConnectionError.invalidArtifact }
+        var data = Data(); data.reserveCapacity(size)
         for try await byte in stream {
-            guard data.count < artifact.inspection.sizeBytes else { throw CompanyConnectionError.invalidArtifact }
+            guard data.count < size else { throw CompanyConnectionError.invalidArtifact }
             data.append(byte)
         }
-        let bytes = try CompanyArtifactBytes(data: data, format: artifact.formatHint)
-        guard artifact.accepts(bytes) else { throw CompanyConnectionError.invalidArtifact }
+        let bytes = try CompanyArtifactBytes(data: data, format: format)
+        guard bytes.sha256==sha, bytes.data.count==size else { throw CompanyConnectionError.invalidArtifact }
         return bytes
     }
 
@@ -954,6 +1066,30 @@ struct CompanyAPIClient: Sendable {
         } else { reply = try await get(path,method:"POST",body:encoder.encode(attempt.payload)) }
         guard attempt.accepts(reply,identity:identity) else { throw CompanyConnectionError.identityMismatch }
         return reply
+    }
+
+    private func costPath(caseID: String, identity: CompanyIdentity, target: CompanyCostTarget, write: Bool = false) throws -> String {
+        guard target.matches(identity,caseID:caseID) else { throw CompanyConnectionError.identityMismatch }
+        return try pricePath(caseID:caseID,identity:identity,write:write)+"/\(target.scenario.scenarioId)/lines/\(target.line.ordinal)/evidence"
+    }
+
+    func costBinding(caseID: String, identity: CompanyIdentity,target: CompanyCostTarget) async throws -> CompanyCostBinding {
+        let result: CompanyCostBinding = try await get(try costPath(caseID:caseID,identity:identity,target:target))
+        guard result.matches(identity,caseID:caseID,target:target) else { throw CompanyConnectionError.identityMismatch }; return result
+    }
+
+    func saveCostEvidence(caseID: String, identity: CompanyIdentity,target: CompanyCostTarget,binding: CompanyCostBinding,kind: CompanyCostDocumentKind,bytes: CompanyArtifactBytes) async throws -> CompanyCostEvidence {
+        guard binding.matches(identity,caseID:caseID,target:target), binding.evidence==nil else { throw CompanyConnectionError.http(409) }
+        let path=try costPath(caseID:caseID,identity:identity,target:target,write:true)
+        let query=[URLQueryItem(name:"format_hint",value:bytes.format),URLQueryItem(name:"document_kind",value:kind.rawValue),URLQueryItem(name:"line_sha256",value:target.digest),URLQueryItem(name:"confirm_user_supplied",value:"true")]
+        let result: CompanyCostEvidence = try await get(path,query:query,method:"POST",body:bytes.data,contentType:"application/octet-stream")
+        guard result.matches(identity,caseID:caseID,target:target), result.scope==binding.scope, result.memberId==identity.memberId, result.documentKind==kind, result.accepts(bytes) else { throw CompanyConnectionError.identityMismatch }; return result
+    }
+
+    func downloadCostEvidence(caseID: String, identity: CompanyIdentity,target: CompanyCostTarget,evidence: CompanyCostEvidence) async throws -> CompanyArtifactBytes {
+        guard evidence.matches(identity,caseID:caseID,target:target) else { throw CompanyConnectionError.identityMismatch }
+        let path=try costPath(caseID:caseID,identity:identity,target:target)+"/download"
+        return try await downloadVerifiedFile(path:path,sha:evidence.inspection.sha256,size:evidence.inspection.sizeBytes,format:evidence.formatHint)
     }
 
     private func get<T: Decodable>(_ path: String, query: [URLQueryItem] = [], method: String = "GET", body: Data? = nil, contentType: String = "application/json") async throws -> T {

@@ -312,6 +312,22 @@ final class CompanyStore: ObservableObject {
         } catch { handleLifecycleError(error); throw error }
     }
 
+    func costBinding(accountID: String,item: CompanyCase,target: CompanyCostTarget) async throws -> CompanyCostBinding {
+        guard !isBusy else { throw CompanyConnectionError.http(409) }; isBusy=true; defer { isBusy=false }
+        do { let (client,actual)=try await lifecycleAccess(accountID:accountID,item:item); return try await client.costBinding(caseID:item.caseId,identity:actual,target:target) }
+        catch { handleLifecycleError(error); throw error }
+    }
+    func saveCostEvidence(accountID: String,item: CompanyCase,target: CompanyCostTarget,binding: CompanyCostBinding,kind: CompanyCostDocumentKind,bytes: CompanyArtifactBytes) async throws -> CompanyCostEvidence {
+        guard !isBusy else { throw CompanyConnectionError.http(409) }; isBusy=true; defer { isBusy=false }
+        do { let (client,actual)=try await lifecycleAccess(accountID:accountID,item:item,write:true); return try await client.saveCostEvidence(caseID:item.caseId,identity:actual,target:target,binding:binding,kind:kind,bytes:bytes) }
+        catch { handleLifecycleError(error); throw error }
+    }
+    func downloadCostEvidence(accountID: String,item: CompanyCase,target: CompanyCostTarget,evidence: CompanyCostEvidence) async throws -> CompanyArtifactBytes {
+        guard !isBusy else { throw CompanyConnectionError.http(409) }; isBusy=true; defer { isBusy=false }
+        do { let (client,actual)=try await lifecycleAccess(accountID:accountID,item:item); return try await client.downloadCostEvidence(caseID:item.caseId,identity:actual,target:target,evidence:evidence) }
+        catch { handleLifecycleError(error); throw error }
+    }
+
     func pricePreview(accountID: String, item: CompanyCase, input: CompanyPriceInput) async throws -> CompanyPricePreview {
         guard !isBusy else { throw CompanyConnectionError.http(409) }
         isBusy = true; defer { isBusy = false }
