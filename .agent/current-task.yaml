@@ -1810,3 +1810,8 @@ sibur_v43_plan_service_reconciliation_20261116:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: storage recovered, V43 verified; continue exact plan/award evidence and coverage.
+
+sibur_v44_subcontract_mounting_20261116:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: V44 verified, continue primary contract and plan evidence.

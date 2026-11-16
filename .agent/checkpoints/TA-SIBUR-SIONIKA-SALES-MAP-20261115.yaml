@@ -1484,4 +1484,19 @@ sionika_v43:
     commercial-action-register-v37.json: 6bb5285808797d041978e2f7a2ce95a09344b93e705ec4e2e6333558405c5b94
     project-coverage-dashboard-v30.json: 803a0ece84ef747a67b6f496f962c869c8a0c202aaf35541e70ef6b35abe5088
     consolidated-project-report-v43.md: bff1c05f9b0df6f249d94ef6108f2b756d2dfb93f11a8627247e9ba5295fa7b9
-resume_instruction: "V43 verified. Read latest coverage V30, verify worker and DP status; continue 37 plan reconciliation, prioritize exact contracts and named suppliers, 332/333/817/823/1002, and newly extracted originals. Final commercial report Nov17. No DB writes without gate, no duplicate worker. External checkpoint-only claims provisional."
+
+sionika_v44:
+  status: in_progress
+  completed_stage: "Two original mounting TKP filled volumes, material boundaries, cross-project SNEMA channel reverified; no exact corporate award or price."
+  project_cards: 70
+  priority_union: 8244
+  source_artifacts: 99
+  last_verified_commit: 431a27ae
+  artifacts:
+    sionika-subcontract-compressor-mounting-v1.json: 1deab4fe730e2c9517683f02747db486a9feaa23ba1fd90886bb118a65e197ad
+    consolidated-project-map-v44.json: 89ab07d270399c4f000cc6cc93e577f18d2dfe67e9be0206c94790984c8c68a7
+    commercial-outcome-queue-v19.json: da7fe89adc78a55cc94160a33479cf97cd6534fbbea7246ad338695437c0071e
+    commercial-action-register-v38.json: e61e272ee0615063200da55c9e7bb3aff927d5c7e381ea24a34bea2e4c97ffc9
+    project-coverage-dashboard-v31.json: 89eba4c11493b25c27f01a20260eaeac3154f46f6ca65e968bb086566f99d246
+    consolidated-project-report-v44.md: df2317dd2a9e3af7c469d5ec68909dbc2bb8fa35e5defd99d889b77c851b2990
+resume_instruction: "V44 verified. Continue evidence for named contractors and exact awards, plan 817/1002 and 332/333/823 gaps; review newly captured priority originals. Use V44 map, V38 actions, V19 queue, V31 coverage. Nov17 report. No DB writes without gate, no duplicate workers. External observations without source content provisional."
