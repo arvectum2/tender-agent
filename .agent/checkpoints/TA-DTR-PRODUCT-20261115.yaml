@@ -275,19 +275,21 @@ completed:
   Python-compatible digest with exact baseline/snapshot/date/namespace, explicit manager
   user-copy upload, verified bounded transfer, analyst read/download, immutable exact
   retry and scoped state clearing.'
-current_stage: price01_actual_evidence_native_verified_next_norm_samples
+- B2B operator permission received from owner for submitted internal browser agent
+  specification, PN-1356710-26; PR573 exact ddf92b0a CI 19/19 successful.
+current_stage: b2b_operator_approved_next_offline_network_enforcement
 remaining:
-- 'Corporate normative labor/expense samples: inspect existing schemas and derive
-  only explicitly selected, deduplicated reported actual observations, never sum or
-  treat repeated cumulative snapshots or alternate baselines of one case as independent,
-  preserve exact source and unverified provenance, explicit work/resource/unit normalization
-  and bounded input/outputs. Web/native controls.'
-- Historical comparable procurement normalization and competitive price ranges with
-  evidence and real-case acceptance.
-- Hosted CI, real PostgreSQL concurrency, real browser/device and E2E acceptance.
-  Keep feature flags off; no deployment.
-- B2B written approval pending; shared sliding 60 requests/60s per-IP limiter and
-  offline enforcement before approved pilot. No automated traffic. Product only.
+- 'B2B offline egress limiter/acceptance: shared rolling 60 requests/60s per IP across
+  all agent HTTP requests, redirect/download accounting, 429 Retry-After, fail-closed
+  unaccounted traffic, no rotation, sanitized activity log, auth session isolation.
+  Prove using local fixture before live pilot; explicit own organization account access
+  and no submissions.'
+- Then limited authorized B2B read-only pilot and verified documentation acquisition;
+  separate operator approval before other tenant deployment.
+- Corporate normative labor/expense samples and comparable normalization as previously
+  planned; preserve PRICE-01 progress.
+- Hosted CI, PostgreSQL concurrency, real browser/device and E2E acceptance. No production
+  deployment.
 last_verified_commit: 5032b7b541a3c65788bd0499e93f06a3da709edf
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
@@ -441,27 +443,30 @@ test_results:
   corrupt bytes and false payment rejection. Xcode unsigned build-for-testing PASS
   including XCTest compilation; git diff --check PASS. PR572 exact a6724300 CI 19/19
   success. No physical device or simulator XCTest execution/live API E2E.
-resume_instruction: Native actual evidence workflow built and Python/Swift contract
-  verified. Next inspect existing cost/norm models and implement tenant-scoped normative
-  observation collection from explicit selected saved actual snapshots/rows, with
-  canonical provenance, deduplication across cumulative versions and alternate baselines,
-  explicit work/resource categories and units, no automatically verified expense or
-  payment, no unsupported forecast. Then Web/native norms and historical comparable
-  normalization. B2B written approval pending, 60 requests/60s per-IP target and offline
-  enforcement before pilot, no platform traffic. No production deployment or source/model
-  calls. Product only.
+resume_instruction: Operator approval PN-1356710-26 received. Next implement and prove
+  B2B offline egress enforcement with strict shared 60/rolling 60s per IP, including
+  redirects, browser background and downloads, 429 Retry-After and fail-closed accounting.
+  Existing pilot script only allowlists routes; no proven comprehensive limiter. Keep
+  live automation off until offline acceptance and dedicated authorized session ready.
+  Resume PRICE-01 deduplicated norms alongside independent integration, preserve existing
+  completed work. No production deployment.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
-  status: blocked
+  status: approved_pending_technical_acceptance
   support_ticket: PN-1356710-26
-  support_response: Owner reports operator requests agent technical characteristics
-    for approval; after agent authorization maximum 60 HTTP requests per minute per
-    IP; no extra fee; no alternative API for described actions.
-  owner_action: Owner sent final technical specification on 2026-11-16, awaiting written
-    approval. Implement shared sliding 60 requests/60 seconds per IP (including agent
-    background/download requests) before any approved live pilot; no automated B2B
-    traffic.
+  support_response: 'Operator written approval relayed by owner: Козырькова Валерия
+    Андреевна, 2026-11-16 14:51:30. Internal partial automation allowed subject to
+    submitted technical characteristics. Exact ambiguous phrase: «за исключением не
+    более 60 HTTP-запросов в минуту с одного IP-адреса». IP approval not required;
+    no separate download restrictions; own account or optional additional user. Earlier
+    response: no additional fee or alternative API for stated actions.'
+  owner_action: Keep submitted 60 HTTP requests/rolling 60 seconds/IP as hard cap
+    pending clarification of exception phrase, including background requests, redirects
+    and archive downloads. Authorization scoped to submitted internal Arvectum workflow,
+    no external submission/signing/CAPTCHA circumvention, no other organizations.
+    Live pilot remains gated on verified offline network limit, dedicated authorized
+    session and approved scope. Do not treat consent reference alone as release readiness.
 sibur_readonly_observation_20261116:
   status: exhausted
   step: archive supported queue drained; oversized and PDF review remains
