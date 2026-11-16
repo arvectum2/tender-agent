@@ -405,6 +405,41 @@ class Runner:
             time.sleep(1)
         self.update(lane,status="stopped",step="operator STOP")
 
+    def resume_sibur_refresh(self):
+        """Recover only the known pre-ingest refresh failure, under executor lock."""
+        lane = "sibur"
+        state = self.state["lanes"].get(lane, {})
+        if (state.get("status") != "blocked"
+                or state.get("step") != "refresh_sibur_archive_index"
+                or state.get("error") != "refresh_sibur_archive_index: exit 1; see private log"
+                or state.get("index_inflight") is not False
+                or self.stop_requested()):
+            raise Blocked("not an eligible pre-ingest refresh recovery")
+        bridge = self.root / "sibur-sales-map-20261115/archive-index-bridge-v1.json"
+        digest = state.get("archive_bridge_sha256")
+        if not digest or hashlib.sha256(bridge.read_bytes()).hexdigest() != digest:
+            raise Blocked("archive bridge changed before recovery")
+        with self.mutation_guard():
+            index = self.local_index()
+            if state.get("archive_synced_count") != len(index):
+                raise Blocked("unreconciled archive receipts before recovery")
+            stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%S%fZ")
+            saved = self.run / ("state-before-refresh-recovery-" + stamp + ".json")
+            with saved.open("xb") as f:
+                f.write(self.state_path.read_bytes()); f.flush(); os.fsync(f.fileno())
+            try:
+                self.reconcile_index(index)
+                refreshed = self.refresh_archive_bridge(lane, bridge, digest)
+                if refreshed is None:
+                    raise Blocked("no verified refresh progress")
+            except Exception as exc:
+                self.update(lane, status="blocked", step="refresh_sibur_archive_index",
+                            error="refresh recovery failed; review private log",
+                            error_type=type(exc).__name__)
+                raise
+            self.update(lane, status="running", step="verified refresh recovery",
+                        error=None, error_type=None, refresh_recovery_state=saved.name)
+
     def guarded(self, lane, callback):
         if self.state["lanes"].get(lane, {}).get("status") in {"blocked", "exhausted"}:
             return
@@ -422,6 +457,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     for name in ("root", "gpb", "sibur", "mi"):
         p.add_argument("--" + name, type=Path, required=True)
+    p.add_argument("--resume-sibur-refresh", action="store_true", help="recover only a reconciled pre-ingest refresh failure")
     args = p.parse_args()
     os.umask(0o077)
     folder = args.root / "autonomous-runner"
@@ -433,6 +469,8 @@ def main():
             print("Executor already running")
             return
         r = Runner(args.root, args.gpb, args.sibur, args.mi)
+        if args.resume_sibur_refresh:
+            r.resume_sibur_refresh()
         r.record_heads()
         with ThreadPoolExecutor(max_workers=2) as pool:
             jobs = [pool.submit(r.guarded, "gpb", r.gpb_lane),

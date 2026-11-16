@@ -151,3 +151,46 @@ def test_review_only_refresh_commits_bounded_structural_progress(tmp_path, monke
     monkeypatch.setattr(r,"module",lambda *a,**k:json.dumps({"new_ready":0,"new_review":1,"prior_digest":digest,"indexed_count":0,"file":p.name,"digest":new_digest}))
     assert r.refresh_archive_bridge("sibur",bridge,digest)==(new_digest,[])
     assert json.loads(bridge.read_text())==new
+
+
+def test_resume_refresh_only_after_reconciled_progress(tmp_path, monkeypatch):
+    import hashlib
+    r = Runner(tmp_path, tmp_path, tmp_path, tmp_path)
+    folder = tmp_path / "sibur-sales-map-20261115"
+    folder.mkdir()
+    bridge = folder / "archive-index-bridge-v1.json"
+    atomic(bridge, {"ready": []})
+    digest = hashlib.sha256(bridge.read_bytes()).hexdigest()
+    r.update("sibur", status="blocked", step="refresh_sibur_archive_index",
+             error="refresh_sibur_archive_index: exit 1; see private log",
+             index_inflight=False, archive_synced_count=1, archive_bridge_sha256=digest)
+    calls = []
+    monkeypatch.setattr(r, "local_index", lambda: {"a": {}})
+    monkeypatch.setattr(r, "reconcile_index", lambda x: calls.append("reconcile"))
+    monkeypatch.setattr(r, "refresh_archive_bridge", lambda *a: (calls.append("refresh") or ("b", [])))
+    r.resume_sibur_refresh()
+    assert calls == ["reconcile", "refresh"]
+    assert r.state["lanes"]["sibur"]["status"] == "running"
+    assert len(list(r.run.glob("state-before-refresh-recovery-*.json"))) == 1
+    with pytest.raises(Blocked):
+        r.resume_sibur_refresh()
+
+
+def test_resume_refresh_refuses_unreconciled_or_inflight(tmp_path, monkeypatch):
+    import hashlib
+    r = Runner(tmp_path, tmp_path, tmp_path, tmp_path)
+    folder = tmp_path / "sibur-sales-map-20261115"
+    folder.mkdir()
+    bridge = folder / "archive-index-bridge-v1.json"
+    atomic(bridge, {"ready": []})
+    digest = hashlib.sha256(bridge.read_bytes()).hexdigest()
+    r.update("sibur", status="blocked", step="refresh_sibur_archive_index",
+             error="refresh_sibur_archive_index: exit 1; see private log",
+             index_inflight=True, archive_synced_count=2, archive_bridge_sha256=digest)
+    with pytest.raises(Blocked):
+        r.resume_sibur_refresh()
+    r.update("sibur", index_inflight=False)
+    monkeypatch.setattr(r, "local_index", lambda: {"a": {}})
+    with pytest.raises(Blocked, match="unreconciled"):
+        r.resume_sibur_refresh()
+    assert r.state["lanes"]["sibur"]["status"] == "blocked"
