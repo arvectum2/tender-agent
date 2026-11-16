@@ -1188,4 +1188,16 @@ test_results:
       commercial-action-register-v35.json: 932ae210ad826d57fa9428b0cf73582a917846e6b1230cae36d941cfd2762bff
       project-coverage-dashboard-v27.json: 0fd0e98b9a6214e1970b437e7d4729d246f78999f20e81a04441217bba284bff
       consolidated-project-report-v41.md: 70e37971f5a08faaeee826520b9821f73e2036735f2ee8d9ddd79122bdc39928
-resume_instruction: "V41 complete; next priority active packages, external contract ledger, fresh exact deadlines and report Nov17. No DB write without gate."
+  sionika_v42_pending:
+    status: blocked
+    observed_date: "2026-11-16"
+    last_verified_map: consolidated-project-map-v41.json
+    last_verified_commit: e2cef1ff
+    coverage_dashboard: project-coverage-dashboard-v27.json
+    findings:
+      - "2145701/1 is budget estimate per SIBUR Telegram https://t.me/s/siburholdingprocurement?before=927; original deadline Nov13, Kontur Nov16 14 MSK https://zakupki.kontur.ru/IS87179384; Energybase shows similar title Nov20 but precise ID not established. Do not infer extension or a committed order."
+      - "2139750/1 is gas safety emergency rescue and gas laboratory control, not gas analyzer supply; exclude from core. Official announcement https://t.me/s/siburholdingprocurement; Kontur https://zakupki.kontur.ru/IS88434448 deadline Nov24 15 MSK."
+      - "Five active candidate deadlines rechecked, not actual eligibility: 2145723/1 Nov17 11 MSK https://zakupki.kontur.ru/IS87286268; 2146167/1 Nov18 14 MSK https://zakupki.kontur.ru/IS88558503; 2146194/1 Nov18 15 MSK https://zakupki.kontur.ru/IS88650131; 2145706/1 Nov23 11 MSK https://energybase.ru/tender/01a1afc8-37e7-73e3-95aa-284a8792580d; 2146492/1 Nov27 11 MSK https://www.sibur.ru/ru/procurement/buy/."
+      - "NPP TEC self-reported RemTEK actuator references Tomskneftekhim 2004-2024, STG 2024, AGHK 2020-2023; PDF text-only https://www.npptec.ru/upload/iblock/08c/ts50ps6k0ihb8s2hd7s7203a7hxhdl1r.pdf; screenshot unavailable; not verified award or AUMA service winner."
+    blocker: "ARC commands timed out; RDC Mac mini online, archive and technical workers exist, but runtime file stat and git status hang. No new coverage measurement. Do not restart workers or mutate DB without gate."
+resume_instruction: "V41 durable; apply pending V42 corrections after storage is responsive, verify fresh coverage, exact ID and deadlines, deduplicate supplier reference, build V42 and update root checkpoint. Keep Sionika core first; UPS/PQ background. Nov17 report. No DB mutation without gate."
