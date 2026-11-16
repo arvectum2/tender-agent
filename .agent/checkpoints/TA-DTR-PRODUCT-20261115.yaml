@@ -227,17 +227,18 @@ completed:
   per-line ceil kopecks followed by category aggregation, existing Decimal engine
   and immutable shared revision history. Legacy aggregate records intact; tagged new
   history allows old clients to read aggregate.'
-current_stage: price01_itemized_web_controls
+- 'PRICE-01 itemized web editor: aggregate/itemized mode, bounded row add/edit/remove/cancel,
+  explicit zero categories and source notes, no-double-count acknowledgement, exact
+  BigInt line/rollup verification of server projection, existing immutable history
+  and preview/save/replay, session clearing.'
+current_stage: price01_itemized_web_verified_next_native
 remaining:
-- Itemized estimate web and iOS create/preview/save/history controls and detailed
-  line display; document-level evidence links for declared cost sources and actual
-  expense data.
+- Native itemized cost editor and detailed mixed history; scoped document-level evidence
+  links and real expenses.
 - Comparable procurement normalization and real-case acceptance; no uncalibrated forecast.
-- Hosted exact-head CI, PostgreSQL concurrency, real device/browser E2E. Keep gates
-  off until acceptance. No server rollback to reader without tagged itemized support
-  after itemized writes; no production deploy.
-- B2B consent pending; no automated requests. Product only.
-last_verified_commit: b28e7c5d938f4ac74b78baa30b0a30da1d902a27
+- Hosted CI, PG concurrency, real web/device E2E. Gates off; no production deploy.
+- B2B operator consent pending; product only.
+last_verified_commit: 57773b418f880bf8fa6e6c3f6e76b6561ff8f79f
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -343,9 +344,14 @@ test_results:
 - 151 passed,2 skipped,112 warnings in 12.50s; old JS cabinet PASS, actual Swift decoder
   mixed itemized/aggregate server fixture PASS. Ruff/diff PASS; Alembic head unchanged
   118. PR561 exact 4e1946a5 17 success,2 running.
-resume_instruction: Implement web itemized mode with explicit source notes and zero
-  categories; validate exact server projection, shared history/replay, regression.
-  No deployment.
+- 151 passed, 2 skipped, 112 warnings in 12.90s; actual extended JS fixture PASS with
+  server-generated itemized response, row editing, zero category refusal, amount verification,
+  retry, history, invalidation and tampered projection rejection. Ruff/diff PASS.
+  PR562 exact 93b21b60 17 success,2 running.
+resume_instruction: Web itemized editor verified, next iOS itemized form and mixed
+  history with exact Decimal/kopeck projection validation and same shared revision/replay
+  rules. Then immutable evidence links and historical comparable normalization. No
+  production deployment or source/model calls.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
