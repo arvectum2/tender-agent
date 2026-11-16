@@ -271,18 +271,24 @@ completed:
 - 'PRICE-01 Web actual evidence: exact saved snapshot/date/row namespace and canonical
   digest, missing vs zero, explicit manager upload and user-copy consent, validated
   metadata and SHA/size, shared verified download, uncertain retry and state clearing.'
-current_stage: price01_actual_evidence_native
+- 'Native PRICE-01 actual cost evidence: reported planned/unplanned snapshot row selector,
+  Python-compatible digest with exact baseline/snapshot/date/namespace, explicit manager
+  user-copy upload, verified bounded transfer, analyst read/download, immutable exact
+  retry and scoped state clearing.'
+current_stage: price01_actual_evidence_native_verified_next_norm_samples
 remaining:
-- Native actual evidence controls for selected saved actual snapshot and reported
-  planned/unplanned row; exact canonical binding, byte SHA/size, explicit user copy,
-  no independent payment claim.
-- Deduplicated labor/expense normative samples and historical comparable procurement
-  normalization; real-case acceptance.
-- Hosted CI, PostgreSQL concurrency, real browser/device and E2E acceptance. Keep
-  flags off and no production deployment.
+- 'Corporate normative labor/expense samples: inspect existing schemas and derive
+  only explicitly selected, deduplicated reported actual observations, never sum or
+  treat repeated cumulative snapshots or alternate baselines of one case as independent,
+  preserve exact source and unverified provenance, explicit work/resource/unit normalization
+  and bounded input/outputs. Web/native controls.'
+- Historical comparable procurement normalization and competitive price ranges with
+  evidence and real-case acceptance.
+- Hosted CI, real PostgreSQL concurrency, real browser/device and E2E acceptance.
+  Keep feature flags off; no deployment.
 - B2B written approval pending; shared sliding 60 requests/60s per-IP limiter and
   offline enforcement before approved pilot. No automated traffic. Product only.
-last_verified_commit: 9ed983a0c657c4da7acf77eff96f31c0f3c5d424
+last_verified_commit: 5032b7b541a3c65788bd0499e93f06a3da709edf
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -430,9 +436,20 @@ test_results:
   canonical binding and actual projection, missing/zero, planned/unplanned revision
   isolation, consent, retry, corrupt/oversized downloads and false payment flag rejection.
   Ruff/diff PASS. PR571 exact aa74d86c 17 success/2 running.
-resume_instruction: Implement native actual evidence scoped to stored snapshot and
-  reported planned/unplanned row; exact Python digest, bounded transfer, user-copy
-  consent, offline Swift contract and Xcode build.
+- Actual standalone macOS Swift contract PASS against Python snapshot/digest/inspection
+  fixture, zero vs missing, planned/unplanned separation, cross case/stale revision,
+  corrupt bytes and false payment rejection. Xcode unsigned build-for-testing PASS
+  including XCTest compilation; git diff --check PASS. PR572 exact a6724300 CI 19/19
+  success. No physical device or simulator XCTest execution/live API E2E.
+resume_instruction: Native actual evidence workflow built and Python/Swift contract
+  verified. Next inspect existing cost/norm models and implement tenant-scoped normative
+  observation collection from explicit selected saved actual snapshots/rows, with
+  canonical provenance, deduplication across cumulative versions and alternate baselines,
+  explicit work/resource categories and units, no automatically verified expense or
+  payment, no unsupported forecast. Then Web/native norms and historical comparable
+  normalization. B2B written approval pending, 60 requests/60s per-IP target and offline
+  enforcement before pilot, no platform traffic. No production deployment or source/model
+  calls. Product only.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
