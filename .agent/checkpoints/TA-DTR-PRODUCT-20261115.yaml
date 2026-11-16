@@ -123,19 +123,23 @@ completed:
   observation contract, corroborated source identity, unambiguous fields, conservative
   historical status/deadline classification and raw SHA. No new source network calls,
   original storage or tenant binding.'
-current_stage: commercial_server_capture_and_scoped_original_storage
+- 'Migration 112 and default-off explicit commercial card capture: trusted saved URL,
+  TLS no credentials/redirects, bounded original bytes, durable per-case/day reservation
+  and ten/company/day, immutable scoped capture outcomes, authorization recheck and
+  offline original integrity recheck. HTTP returns observations only. No live source
+  or production changes.'
+current_stage: commercial_capture_verified_next_attachment_evidence_and_ui
 remaining:
-- Add trusted bounded server capture and scoped immutable original-card evidence storage/recheck;
-  no client-provided transport attestation.
-- Validate strict source anchors on permitted actual originals in a safe research
-  window; add document/attachment evidence separately.
-- Expand verified commercial ETP contracts, real browser/simulator and isolated E2E
-  acceptance.
-- 'Review stacked PRs: 539/540 green 19/19, 541 18/19 (Mirror repository failed; no
-  code test failure observed), no merge authorization.'
-- Production rollout only after approval. Gemma explicitly paused; prioritize SIBUR
-  corpus.
-last_verified_commit: 8af8d95e4a59d840db5d05408e1f0e73763da633
+- Publish/check PRs 542/543; review previous stack mirror failure without deploying.
+- Complete scoped web capture controls and source original attachment evidence/version
+  contracts, bounded transport and immutable receipts. Validate permitted real source
+  layouts only in approved window.
+- Expand source adapters and connect scoped commercial evidence to analysis/reports
+  without live models.
+- Separate isolated PostgreSQL concurrency and full E2E acceptance, browser/iOS, production
+  approval.
+- Gemma paused. Prioritize SIBUR/Qwen, avoid heavy local tests and runtime changes.
+last_verified_commit: d78f9a38872c3c050dd8b179e55fe382539cee97
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -164,8 +168,14 @@ test_results:
   and reserved attempt/daily replay PASS
 - 37 focused offline fixture tests passed, 1 warning; Ruff and diff check PASS; no
   live model or DB calls.
-resume_instruction: Implement original public card capture, separate default-off feature
-  gate, bounded durable admission, tenant-scoped original bytes and deterministic
-  recheck. Offline fixtures only; preserve SIBUR and Qwen.
+- 92 passed, 2 skipped, 73 warnings in 8.39s; SQLite migration 112 upgrade/empty downgrade/re-upgrade/populated
+  refusal, HTTP fixture replay/isolation/tamper/crash, transport mock limits and regression
+  UI; Ruff and diff PASS. Actual PG admission concurrency and live platform acceptance
+  pending.
+resume_instruction: Commercial original card capture backend and migration 112 verified
+  offline; next add web capture/recheck controls and original attachment evidence,
+  then profile-aware lifecycle. Do not repeat completed tests unless changes. Default
+  disabled; no production fetches/migration, model calls, new scheduler, or deployment;
+  preserve SIBUR workers and current Data Platform.
 owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
   Product changes isolated, offline and bounded.
