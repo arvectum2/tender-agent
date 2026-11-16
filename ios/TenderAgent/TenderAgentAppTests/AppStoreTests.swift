@@ -42,6 +42,36 @@ final class AppStoreTests: XCTestCase {
         XCTAssertEqual(try CompanyAPIClient.validatedOrigin("https://EXAMPLE.invalid:443/").absoluteString, "https://example.invalid")
     }
 
+    func testCompanyLifecycleContract() throws {
+        let decoder = TenderAgentJSON.makeDecoder()
+        let identity = try decoder.decode(CompanyIdentity.self, from: Data(#"{"tenant_id":"a","customer_id":"a","member_id":"m","company_name":"A","role":"owner","legal_accepted":true}"#.utf8))
+        let item = try decoder.decode(CompanyCase.self, from: Data(#"{"case_id":"case-a","registry_number":"0123456789012345678","source_verified":false,"revision":1,"decision":{"action":"GO","revision":1,"rationale":"fixture","decided_at":"2026-11-15T00:00:00Z"}}"#.utf8))
+        let raw = #"{"customer_id":"a","case_id":"case-a","decision_revision":1,"decision_action":"GO","revision":0,"latest":null,"external_submission_allowed":false}"#
+        let state = try decoder.decode(CompanyLifecycleState.self, from: Data(raw.utf8))
+        XCTAssertTrue(state.matches(identity, item: item))
+        XCTAssertFalse(state.options.contains(.submitted))
+        let draft = try CompanyLifecycleDraft(stage: .ready, rationale: "Ready A", sourceRef: nil, occurredAt: nil, state: state)
+        let attempt = CompanyLifecycleAttempt.prepare(previous: nil, accountID: "a", caseID: item.caseId, draft: draft)
+        XCTAssertEqual(attempt, CompanyLifecycleAttempt.prepare(previous: attempt, accountID: "a", caseID: item.caseId, draft: draft))
+        XCTAssertNotEqual(attempt.key, CompanyLifecycleAttempt.prepare(previous: attempt, accountID: "b", caseID: item.caseId, draft: draft).key)
+        XCTAssertThrowsError(try CompanyLifecycleDraft(stage: .submitted, rationale: "invalid", sourceRef: "receipt", occurredAt: Date(), state: state))
+        let encoder = JSONEncoder(); encoder.keyEncodingStrategy = .convertToSnakeCase; encoder.dateEncodingStrategy = .iso8601
+        let attestation = try JSONSerialization.jsonObject(with: encoder.encode(attempt.payload))
+        let eventData = try JSONSerialization.data(withJSONObject: ["event_id":"e", "case_id":"case-a", "revision":1, "stage":"READY", "member_id":"m", "created_at":"2026-11-16T10:00:00Z", "attestation":attestation, "readiness_stale":false, "origin":"HUMAN_ATTESTATION", "external_fact_verified":false, "external_submission_allowed":false])
+        let event = try decoder.decode(CompanyLifecycleEvent.self, from: eventData)
+        XCTAssertTrue(attempt.accepts(event, memberID: "m"))
+        XCTAssertFalse(attempt.accepts(event, memberID: "other"))
+        let stateObject = try JSONSerialization.jsonObject(with: eventData)
+        let ready = try decoder.decode(CompanyLifecycleState.self, from: JSONSerialization.data(withJSONObject:["customer_id":"a","case_id":"case-a","decision_revision":1,"decision_action":"GO","revision":1,"latest":stateObject,"external_submission_allowed":false]))
+        XCTAssertTrue(ready.matches(identity, item: item))
+        XCTAssertTrue(ready.options.contains(.submitted))
+        XCTAssertThrowsError(try CompanyLifecycleDraft(stage: .submitted, rationale: "submitted", sourceRef: nil, occurredAt: Date(), state: ready))
+        let metrics = #"{"customer_id":"a","as_of":"2026-11-16T10:00:00Z","scope":"ALL_TIME_SAVED_CASES_HUMAN_ATTESTATIONS","saved_cases":3,"ever_go_cases":2,"recorded_submissions":1,"stage_counts":{"PREPARING":0,"BLOCKED":0,"READY":1,"SUBMITTED":0,"WON":1,"LOST":0,"REJECTED":0,"WITHDRAWN":0,"CANCELLED":0,"UNRECORDED":1},"go_to_submission":{"numerator":1,"denominator":2,"rate":0.5},"win_rate":{"numerator":1,"denominator":1,"rate":1},"external_facts_verified":false,"market_coverage_complete":false,"contract_revenue_verified":false}"#
+        XCTAssertTrue(try decoder.decode(CompanyLifecycleMetrics.self, from: Data(metrics.utf8)).matches(identity))
+        XCTAssertFalse(try decoder.decode(CompanyLifecycleMetrics.self, from: Data(metrics.replacingOccurrences(of: #""rate":0.5"#, with: #""rate":0.9"#).utf8)).matches(identity))
+        XCTAssertFalse(try decoder.decode(CompanyLifecycleMetrics.self, from: Data(metrics.replacingOccurrences(of: #""customer_id":"a""#, with: #""customer_id":"b""#).utf8)).matches(identity))
+    }
+
     func testCompanyInboxScopeAndServerTime() throws {
         let decoder = TenderAgentJSON.makeDecoder()
         let identity = try decoder.decode(CompanyIdentity.self, from: Data(#"{"tenant_id":"a","customer_id":"a","member_id":"m","company_name":"Company A","role":"owner","legal_accepted":true}"#.utf8))

@@ -178,6 +178,170 @@ struct CompanyInboxPage: Decodable, Sendable {
     }
 }
 
+enum CompanyLifecycleStage: String, Codable, CaseIterable, Identifiable, Sendable {
+    case preparing = "PREPARING", blocked = "BLOCKED", ready = "READY", submitted = "SUBMITTED"
+    case won = "WON", lost = "LOST", rejected = "REJECTED", withdrawn = "WITHDRAWN", cancelled = "CANCELLED"
+    var id: String { rawValue }
+    var isPreparation: Bool { [.preparing, .blocked, .ready].contains(self) }
+    var isOutcome: Bool { !isPreparation && self != .submitted }
+    var title: String {
+        switch self {
+        case .preparing: "Подготовка"
+        case .blocked: "Заблокирована"
+        case .ready: "Готовность подтверждена сотрудником"
+        case .submitted: "Подача зарегистрирована"
+        case .won: "Победа"
+        case .lost: "Проигрыш"
+        case .rejected: "Отклонена"
+        case .withdrawn: "Отозвана"
+        case .cancelled: "Отменена"
+        }
+    }
+}
+
+struct CompanyLifecycleDraft: Codable, Equatable, Sendable {
+    let stage: CompanyLifecycleStage
+    let rationale: String
+    let sourceRef: String?
+    let occurredAt: Date?
+    let expectedRevision: Int
+    let expectedDecisionRevision: Int
+    let correctOutcome: Bool
+
+    init(stage: CompanyLifecycleStage, rationale: String, sourceRef: String?, occurredAt: Date?, state: CompanyLifecycleState, now: Date = Date()) throws {
+        let text = rationale.trimmingCharacters(in: .whitespacesAndNewlines)
+        let ref = sourceRef?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let date = occurredAt.map { Date(timeIntervalSince1970: floor($0.timeIntervalSince1970)) }
+        guard state.options.contains(stage), !text.isEmpty, text.count <= 2000 else { throw CompanyConnectionError.invalidLifecycle }
+        if stage.isPreparation {
+            guard ref == nil, date == nil else { throw CompanyConnectionError.invalidLifecycle }
+        } else {
+            guard let ref, !ref.isEmpty, ref.count <= 500, let date, date <= now else { throw CompanyConnectionError.invalidLifecycle }
+        }
+        self.stage = stage; self.rationale = text; self.sourceRef = ref; self.occurredAt = date
+        expectedRevision = state.revision; expectedDecisionRevision = state.decisionRevision
+        correctOutcome = state.latest?.stage.isOutcome == true
+    }
+}
+
+struct CompanyLifecycleAttestation: Codable, Equatable, Sendable {
+    let stage: CompanyLifecycleStage
+    let rationale: String
+    let sourceRef: String?
+    let occurredAt: Date?
+    let expectedRevision: Int
+    let expectedDecisionRevision: Int
+    let correctOutcome: Bool
+    let idempotencyKey: String
+
+    init(draft: CompanyLifecycleDraft, key: String) {
+        stage = draft.stage; rationale = draft.rationale; sourceRef = draft.sourceRef; occurredAt = draft.occurredAt
+        expectedRevision = draft.expectedRevision; expectedDecisionRevision = draft.expectedDecisionRevision
+        correctOutcome = draft.correctOutcome; idempotencyKey = key
+    }
+}
+
+struct CompanyLifecycleEvent: Decodable, Identifiable, Sendable {
+    let eventId: String
+    let caseId: String
+    let revision: Int
+    let stage: CompanyLifecycleStage
+    let memberId: String
+    let createdAt: Date
+    let attestation: CompanyLifecycleAttestation
+    let readinessStale: Bool
+    let origin: String
+    let externalFactVerified: Bool
+    let externalSubmissionAllowed: Bool
+    var id: String { eventId }
+    func matches(caseID: String) -> Bool {
+        caseId == caseID && revision > 0 && revision <= 50 && origin == "HUMAN_ATTESTATION" &&
+        !externalFactVerified && !externalSubmissionAllowed && attestation.stage == stage && attestation.expectedRevision == revision - 1
+    }
+}
+
+struct CompanyLifecycleState: Decodable, Sendable {
+    let customerId: String
+    let caseId: String
+    let decisionRevision: Int
+    let decisionAction: String?
+    let revision: Int
+    let latest: CompanyLifecycleEvent?
+    let externalSubmissionAllowed: Bool
+    func matches(_ identity: CompanyIdentity, item: CompanyCase) -> Bool {
+        customerId == identity.customerId && caseId == item.caseId && !externalSubmissionAllowed &&
+        decisionRevision == item.revision && decisionAction == item.decision?.action &&
+        (0...50).contains(revision) && (revision == 0 ? latest == nil : latest?.matches(caseID: caseId) == true && latest?.revision == revision)
+    }
+    var options: [CompanyLifecycleStage] {
+        guard revision < 50, decisionRevision > 0 else { return [] }
+        if latest?.stage == .submitted { return CompanyLifecycleStage.allCases.filter(\.isOutcome) }
+        if let stage = latest?.stage, stage.isOutcome { return CompanyLifecycleStage.allCases.filter { $0.isOutcome && $0 != stage } }
+        guard decisionAction == "GO" else { return [] }
+        return [.preparing, .blocked, .ready] + (latest?.stage == .ready && latest?.readinessStale == false ? [.submitted] : [])
+    }
+}
+
+struct CompanyLifecycleAttempt: Equatable, Sendable {
+    let accountID: String
+    let caseID: String
+    let draft: CompanyLifecycleDraft
+    let key: String
+    static func prepare(previous: Self?, accountID: String, caseID: String, draft: CompanyLifecycleDraft) -> Self {
+        if let previous, previous.accountID == accountID, previous.caseID == caseID, previous.draft == draft { return previous }
+        return Self(accountID: accountID, caseID: caseID, draft: draft, key: UUID().uuidString)
+    }
+    var payload: CompanyLifecycleAttestation { .init(draft: draft, key: key) }
+    func accepts(_ event: CompanyLifecycleEvent, memberID: String) -> Bool {
+        event.matches(caseID: caseID) && event.memberId == memberID && event.attestation == payload
+    }
+}
+
+struct CompanyLifecycleHistory: Decodable, Sendable {
+    let customerId: String
+    let caseId: String
+    let items: [CompanyLifecycleEvent]
+    let hasMore: Bool
+    let externalSubmissionAllowed: Bool
+    func matches(_ identity: CompanyIdentity, caseID: String) -> Bool {
+        customerId == identity.customerId && caseId == caseID && !externalSubmissionAllowed && items.count <= 50 && items.allSatisfy { $0.matches(caseID: caseID) } && Set(items.map(\.revision)).count == items.count
+    }
+}
+
+struct CompanyLifecycleRate: Decodable, Sendable {
+    let numerator: Int
+    let denominator: Int
+    let rate: Double?
+    var valid: Bool {
+        numerator >= 0 && denominator >= numerator && (denominator == 0 ? rate == nil : rate.map { $0.isFinite && abs($0 - Double(numerator)/Double(denominator)) < 1e-9 } == true)
+    }
+    var display: String { rate.map { String(format: "%.1f%%", $0*100) + " (\(numerator)/\(denominator))" } ?? "Нет данных" }
+}
+
+struct CompanyLifecycleMetrics: Decodable, Sendable {
+    let customerId: String
+    let asOf: Date
+    let scope: String
+    let savedCases: Int
+    let everGoCases: Int
+    let recordedSubmissions: Int
+    let stageCounts: [String: Int]
+    let goToSubmission: CompanyLifecycleRate
+    let winRate: CompanyLifecycleRate
+    let externalFactsVerified: Bool
+    let marketCoverageComplete: Bool
+    let contractRevenueVerified: Bool
+    func matches(_ identity: CompanyIdentity) -> Bool {
+        let stages = Set(CompanyLifecycleStage.allCases.map(\.rawValue) + ["UNRECORDED"])
+        guard customerId == identity.customerId, scope == "ALL_TIME_SAVED_CASES_HUMAN_ATTESTATIONS", !externalFactsVerified, !marketCoverageComplete, !contractRevenueVerified,
+              Set(stageCounts.keys) == stages, stageCounts.values.allSatisfy({ $0 >= 0 && $0 <= Int.max/16 }),
+              savedCases == stageCounts.values.reduce(0,+), savedCases >= everGoCases, everGoCases >= recordedSubmissions, recordedSubmissions >= 0,
+              goToSubmission.valid, winRate.valid, goToSubmission.numerator == recordedSubmissions, goToSubmission.denominator == everGoCases else { return false }
+        let submissions = CompanyLifecycleStage.allCases.filter { !$0.isPreparation }.reduce(0) { $0 + (stageCounts[$1.rawValue] ?? 0) }
+        return submissions == recordedSubmissions && winRate.numerator == stageCounts["WON"] && winRate.denominator == ["WON","LOST","REJECTED"].reduce(0) { $0 + (stageCounts[$1] ?? 0) }
+    }
+}
+
 struct CompanyEvidence: Decodable, Identifiable, Sendable {
     let bindingId: String
     let caseId: String
@@ -194,7 +358,7 @@ struct CompanyEvidencePage: Decodable, Sendable {
 }
 
 enum CompanyConnectionError: LocalizedError {
-    case invalidOrigin, invalidToken, identityMismatch, invalidResponse, http(Int), storage, invalidDecision, decisionUncertain
+    case invalidOrigin, invalidToken, identityMismatch, invalidResponse, http(Int), storage, invalidDecision, decisionUncertain, invalidLifecycle, lifecycleUncertain
 
     var errorDescription: String? {
         switch self {
@@ -208,6 +372,8 @@ enum CompanyConnectionError: LocalizedError {
         case .http(428): "Подтвердите условия пилота в веб-кабинете."
         case .storage: "Не удалось сохранить подключения в Keychain."
         case .invalidDecision: "Укажите действие, обоснование и будущую дату отсрочки, если она нужна."
+        case .invalidLifecycle: "Проверьте допустимое состояние, обоснование, ссылку и дату события."
+        case .lifecycleUncertain: "Ответ о записи не получен. Проверьте журнал или повторите ту же запись."
         case .decisionUncertain: "Ответ о сохранении не получен. Проверьте карточку или явно повторите то же решение."
         case .http(409): "Решение уже изменилось. Откройте обновлённую карточку и подтвердите заново."
         case let .http(code): "Сервер вернул HTTP \(code)."
@@ -299,6 +465,37 @@ struct CompanyAPIClient: Sendable {
                                                    method: "POST", body: encoder.encode(attempt.payload))
         guard attempt.accepts(result, memberID: identity.memberId) else { throw CompanyConnectionError.decisionUncertain }
         return result
+    }
+
+    func lifecycle(for item: CompanyCase, identity: CompanyIdentity) async throws -> CompanyLifecycleState {
+        guard UUID(uuidString: item.caseId) != nil else { throw CompanyConnectionError.invalidResponse }
+        let state: CompanyLifecycleState = try await get("api/saas/company-portfolio/cases/\(item.caseId)/lifecycle")
+        guard state.customerId == identity.customerId, state.caseId == item.caseId else { throw CompanyConnectionError.identityMismatch }
+        guard state.decisionRevision == item.revision else { throw CompanyConnectionError.http(409) }
+        guard state.matches(identity, item: item) else { throw CompanyConnectionError.identityMismatch }
+        return state
+    }
+
+    func lifecycleHistory(caseID: String, identity: CompanyIdentity) async throws -> CompanyLifecycleHistory {
+        guard UUID(uuidString: caseID) != nil else { throw CompanyConnectionError.invalidResponse }
+        let result: CompanyLifecycleHistory = try await get("api/saas/company-portfolio/cases/\(caseID)/lifecycle/history")
+        guard result.matches(identity, caseID: caseID) else { throw CompanyConnectionError.identityMismatch }
+        return result
+    }
+
+    func lifecycleMetrics(for identity: CompanyIdentity) async throws -> CompanyLifecycleMetrics {
+        let result: CompanyLifecycleMetrics = try await get("api/saas/company-portfolio/lifecycle-metrics")
+        guard result.matches(identity) else { throw CompanyConnectionError.identityMismatch }
+        return result
+    }
+
+    func recordLifecycle(_ attempt: CompanyLifecycleAttempt, identity: CompanyIdentity) async throws -> CompanyLifecycleEvent {
+        guard UUID(uuidString: attempt.caseID) != nil else { throw CompanyConnectionError.invalidResponse }
+        guard identity.legalAccepted, ["owner", "admin"].contains(identity.role) else { throw CompanyConnectionError.http(403) }
+        let encoder = JSONEncoder(); encoder.keyEncodingStrategy = .convertToSnakeCase; encoder.dateEncodingStrategy = .iso8601
+        let event: CompanyLifecycleEvent = try await get("api/saas/company-portfolio/cases/\(attempt.caseID)/lifecycle", method: "POST", body: encoder.encode(attempt.payload))
+        guard attempt.accepts(event, memberID: identity.memberId) else { throw CompanyConnectionError.identityMismatch }
+        return event
     }
 
     private func get<T: Decodable>(_ path: String, query: [URLQueryItem] = [], method: String = "GET", body: Data? = nil) async throws -> T {

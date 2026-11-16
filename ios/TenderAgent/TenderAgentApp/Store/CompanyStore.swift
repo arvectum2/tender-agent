@@ -18,6 +18,9 @@ final class CompanyStore: ObservableObject {
     @Published private(set) var inboxAsOf: Date?
     private var nextOffset = 0
     private var pendingDecision: CompanyDecisionAttempt?
+    private var pendingLifecycle: CompanyLifecycleAttempt?
+    @Published private(set) var lifecycleMetrics: CompanyLifecycleMetrics?
+    @Published private(set) var lifecycleNotice: String?
 
     init() {
         do {
@@ -29,9 +32,10 @@ final class CompanyStore: ObservableObject {
     private var selected: CompanyConnection? { connections.first { $0.id == selectedID } }
 
     private func resetSelection(_ id: String? = nil) {
-        if selectedID != id { pendingDecision = nil; inboxFilter = .attention }
+        if selectedID != id { pendingDecision = nil; pendingLifecycle = nil; inboxFilter = .attention }
         selectedID = id
         decisionNotice = nil
+        lifecycleMetrics = nil; lifecycleNotice = nil
         identity = nil
         items = []
         inboxSummary = nil; inboxAsOf = nil; nextOffset = 0
@@ -93,6 +97,7 @@ final class CompanyStore: ObservableObject {
             let client = try CompanyAPIClient(connection: account)
             let actual = try await client.verifiedIdentity(for: account.identity)
             guard actual.legalAccepted else {
+                lifecycleMetrics = nil; lifecycleNotice = nil
                 identity = actual
                 items = []
                 inboxSummary = nil; inboxAsOf = nil; nextOffset = 0
@@ -111,6 +116,7 @@ final class CompanyStore: ObservableObject {
             error = nil
         } catch {
             // No fallback to the owner's global portfolio or stale company data.
+            lifecycleMetrics = nil; lifecycleNotice = nil
             identity = nil
             items = []
             inboxSummary = nil; inboxAsOf = nil; nextOffset = 0
@@ -142,7 +148,8 @@ final class CompanyStore: ObservableObject {
         inboxSummary = nil; inboxAsOf = nil; nextOffset = 0
         hasMore = false
         loaded = false
-        pendingDecision = nil
+        pendingDecision = nil; pendingLifecycle = nil
+        lifecycleMetrics = nil; lifecycleNotice = nil
     }
 
     func submitDecision(accountID: String, caseID: String, draft: CompanyDecisionDraft) async throws {
@@ -152,6 +159,7 @@ final class CompanyStore: ObservableObject {
         isBusy = true
         defer { isBusy = false }
         decisionNotice = nil
+        lifecycleMetrics = nil
         let client = try CompanyAPIClient(connection: account)
         let actual: CompanyIdentity
         do {
@@ -205,6 +213,76 @@ final class CompanyStore: ObservableObject {
         let actual = try await client.verifiedIdentity(for: account.identity)
         guard actual.legalAccepted, ["owner", "admin", "analyst"].contains(actual.role) else { throw CompanyConnectionError.http(403) }
         return try await client.evidence(caseId: caseId)
+    }
+
+    private func lifecycleAccess(accountID: String, item: CompanyCase? = nil, write: Bool = false) async throws -> (CompanyAPIClient, CompanyIdentity) {
+        guard let account = selected, account.id == accountID, identity?.legalAccepted == true,
+              item.map({ choice in items.contains { $0.caseId == choice.caseId && $0.revision == choice.revision } }) ?? true else { throw CompanyConnectionError.http(409) }
+        let client = try CompanyAPIClient(connection: account)
+        let actual = try await client.verifiedIdentity(for: account.identity)
+        guard actual.legalAccepted, !write || ["owner", "admin"].contains(actual.role) else { throw CompanyConnectionError.http(403) }
+        identity = actual
+        return (client, actual)
+    }
+
+    private func handleLifecycleError(_ failure: Error) {
+        if let known = failure as? CompanyConnectionError {
+            switch known {
+            case .identityMismatch, .http(401), .http(402), .http(403), .http(428): invalidateCompanyAccess()
+            default: break
+            }
+        }
+        lifecycleMetrics = nil
+    }
+
+    func loadLifecycle(accountID: String, item: CompanyCase) async throws -> CompanyLifecycleState {
+        guard !isBusy else { throw CompanyConnectionError.http(409) }
+        isBusy = true; defer { isBusy = false }
+        do {
+            let (client, actual) = try await lifecycleAccess(accountID: accountID, item: item)
+            return try await client.lifecycle(for: item, identity: actual)
+        } catch { handleLifecycleError(error); throw error }
+    }
+
+    func loadLifecycleHistory(accountID: String, item: CompanyCase) async throws -> CompanyLifecycleHistory {
+        guard !isBusy else { throw CompanyConnectionError.http(409) }
+        isBusy = true; defer { isBusy = false }
+        do {
+            let (client, actual) = try await lifecycleAccess(accountID: accountID, item: item)
+            return try await client.lifecycleHistory(caseID: item.caseId, identity: actual)
+        } catch { handleLifecycleError(error); throw error }
+    }
+
+    func refreshLifecycleMetrics() async {
+        guard !isBusy, let id = selectedID else { return }
+        isBusy = true; defer { isBusy = false }
+        lifecycleMetrics = nil; lifecycleNotice = nil
+        do {
+            let (client, actual) = try await lifecycleAccess(accountID: id)
+            lifecycleMetrics = try await client.lifecycleMetrics(for: actual)
+        } catch { handleLifecycleError(error); lifecycleNotice = Self.safeError(error) }
+    }
+
+    func submitLifecycle(accountID: String, item: CompanyCase, draft: CompanyLifecycleDraft) async throws -> CompanyLifecycleEvent {
+        guard !isBusy, canDecide(accountID: accountID, caseID: item.caseId, revision: draft.expectedDecisionRevision) else { throw CompanyConnectionError.http(409) }
+        isBusy = true; defer { isBusy = false }
+        lifecycleMetrics = nil; lifecycleNotice = nil
+        let client: CompanyAPIClient, actual: CompanyIdentity
+        do { (client, actual) = try await lifecycleAccess(accountID: accountID, item: item, write: true) }
+        catch { handleLifecycleError(error); throw error }
+        let attempt = CompanyLifecycleAttempt.prepare(previous: pendingLifecycle, accountID: accountID, caseID: item.caseId, draft: draft)
+        pendingLifecycle = attempt
+        do {
+            let saved = try await client.recordLifecycle(attempt, identity: actual)
+            pendingLifecycle = nil
+            return saved
+        } catch let failure as CompanyConnectionError {
+            switch failure {
+            case .http(409), .http(422), .http(404): pendingLifecycle = nil; throw failure
+            case .identityMismatch, .http(401), .http(402), .http(403), .http(428): handleLifecycleError(failure); throw failure
+            default: throw CompanyConnectionError.lifecycleUncertain
+            }
+        } catch { throw CompanyConnectionError.lifecycleUncertain }
     }
 
     static func safeError(_ error: Error) -> String {

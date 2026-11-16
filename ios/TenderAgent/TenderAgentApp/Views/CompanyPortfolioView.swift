@@ -71,6 +71,18 @@ struct CompanyPortfolioView: View {
                 }
             }
             if store.loaded {
+                Section("Коммерческая статистика") {
+                    Button("Обновить статистику") { Task { await store.refreshLifecycleMetrics() } }.disabled(store.isBusy)
+                    if let metrics = store.lifecycleMetrics {
+                        LabeledContent("Сохранено", value: String(metrics.savedCases))
+                        LabeledContent("Когда-либо GO", value: String(metrics.everGoCases))
+                        LabeledContent("Зарегистрировано заявок", value: String(metrics.recordedSubmissions))
+                        LabeledContent("GO → подача", value: metrics.goToSubmission.display)
+                        LabeledContent("Win rate", value: metrics.winRate.display)
+                        Text("Победы / (победы + проигрыши + отклонения). За всё время, по сведениям сотрудников, на \(metrics.asOf.formatted()). Не проверенная выручка и не статистика всего рынка.").font(.caption).foregroundStyle(.secondary)
+                    }
+                    if let notice = store.lifecycleNotice { Text(notice).font(.caption).foregroundStyle(.orange) }
+                }
                 Section("Очередь руководителя") {
                     Picker("Показывать", selection: Binding(get: { store.inboxFilter }, set: { filter in
                         selectedCase = nil
@@ -176,6 +188,7 @@ private struct CompanyCaseDetail: View {
                 } else if let identity = store.identity, ["owner", "admin"].contains(identity.role) {
                     Section { Text("Карточка изменилась или недоступна. Откройте её заново.").foregroundStyle(.orange) }
                 }
+                CompanyLifecycleSection(item: item, accountID: accountID, store: store)
                 if let decisionError { Section { Text(decisionError).foregroundStyle(.orange) } }
                 if !item.isCommercial, let identity = store.identity, ["owner", "admin", "analyst"].contains(identity.role) {
                     Section("Привязанные источники") {
@@ -219,5 +232,104 @@ private struct CompanyCaseDetail: View {
                 catch { self.error = CompanyStore.safeError(error) }
             }
         }
+    }
+}
+
+private struct CompanyLifecycleSection: View {
+    let item: CompanyCase
+    let accountID: String
+    @ObservedObject var store: CompanyStore
+    @State private var state: CompanyLifecycleState?
+    @State private var history: CompanyLifecycleHistory?
+    @State private var stage: CompanyLifecycleStage = .preparing
+    @State private var rationale = ""
+    @State private var sourceRef = ""
+    @State private var occurredAt = Date()
+    @State private var notice: String?
+    @State private var draft: CompanyLifecycleDraft?
+    @State private var confirm = false
+
+    private var canWrite: Bool { store.canDecide(accountID: accountID, caseID: item.caseId, revision: item.revision) }
+    private func reload() async {
+        state = nil; history = nil; draft = nil
+        notice = nil
+        do {
+            let result = try await store.loadLifecycle(accountID: accountID, item: item)
+            state = result
+            if let first = result.options.first { stage = first }
+        } catch { notice = CompanyStore.safeError(error) }
+    }
+    private func clearForm() {
+        rationale = ""; sourceRef = ""; occurredAt = Date(); draft = nil
+    }
+
+    var body: some View {
+        Section("Подготовка, подача и результат") {
+            Button("Обновить журнал") { Task { await reload() } }.disabled(store.isBusy)
+            if let state {
+                if let latest = state.latest {
+                    LabeledContent("Состояние", value: latest.stage.title)
+                    Text(latest.attestation.rationale)
+                    if latest.readinessStale { Text("Готовность устарела").foregroundStyle(.orange) }
+                } else { Text("Записей пока нет") }
+                if canWrite && !state.options.isEmpty {
+                    Picker("Состояние", selection: $stage) {
+                        ForEach(state.options) { option in Text(option.title + (state.latest?.stage.isOutcome == true ? " (исправление)" : "")).tag(option) }
+                    }
+                    TextField("Обоснование", text: $rationale, axis: .vertical).lineLimit(3...6)
+                    if !stage.isPreparation {
+                        TextField("Номер квитанции или ссылка на протокол", text: $sourceRef)
+                        DatePicker("Дата события", selection: $occurredAt, in: ...Date())
+                    }
+                    Button("Проверить и подтвердить запись") {
+                        do {
+                            draft = try CompanyLifecycleDraft(stage: stage, rationale: rationale, sourceRef: stage.isPreparation ? nil : sourceRef,
+                                                              occurredAt: stage.isPreparation ? nil : occurredAt, state: state)
+                            confirm = true
+                        } catch { notice = CompanyStore.safeError(error) }
+                    }.disabled(store.isBusy || rationale.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                }
+                Button("История событий") {
+                    Task {
+                        history = nil
+                        do { history = try await store.loadLifecycleHistory(accountID: accountID, item: item) }
+                        catch { notice = CompanyStore.safeError(error) }
+                    }
+                }.disabled(store.isBusy)
+                if let history {
+                    ForEach(history.items) { event in
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("v\(event.revision) · \(event.stage.title)").font(.headline)
+                            Text(event.attestation.rationale)
+                            if let reference = event.attestation.sourceRef { Text(reference).font(.caption).textSelection(.enabled) }
+                            if let date = event.attestation.occurredAt { Text(date.formatted()).font(.caption) }
+                        }
+                    }
+                    if history.hasMore { Text("Первые 50 событий").font(.caption) }
+                }
+            }
+            if let notice { Text(notice).foregroundStyle(.orange).font(.caption) }
+            Text("Внутренние записи сотрудника. Квитанции и протоколы независимо не проверены. Это не действие на ЭТП.").font(.caption).foregroundStyle(.secondary)
+        }
+        .disabled(store.isBusy)
+        .alert("Подтвердить запись?", isPresented: $confirm) {
+            Button("Сохранить") {
+                guard let prepared = draft else { return }
+                Task {
+                    do {
+                        _ = try await store.submitLifecycle(accountID: accountID, item: item, draft: prepared)
+                        clearForm(); await reload()
+                    } catch {
+                        if case CompanyConnectionError.http(409) = error { state = nil; history = nil; draft = nil }
+                        notice = CompanyStore.safeError(error)
+                    }
+                }
+            }
+            Button("Отмена", role: .cancel) { draft = nil }
+        } message: {
+            Text("\(store.identity?.companyName ?? "Компания") · \(item.displayReference) · \(draft?.stage.title ?? "—"). Это запись сведений, не подача заявки.")
+        }
+        .onChange(of: store.selectedID) { _, _ in state = nil; history = nil; clearForm() }
+        .onChange(of: store.identity?.memberId) { _, value in if value == nil { state = nil; history = nil; clearForm() } }
     }
 }
