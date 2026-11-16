@@ -247,17 +247,23 @@ completed:
   digest, current scoped manager upload with explicit user-copy confirmation and document
   type, bounded import/export and SHA/size, analyst read/download and immutable retry.
   Shared verified native downloads and session/view invalidation.'
-current_stage: price01_actual_cost_snapshot_backend
+- 'PRICE-01 actual cost backend (migration 120): exact saved itemized baseline SHA,
+  immutable cumulative snapshots with explicit per-line quantity/rate/source, missing
+  vs reported zero, separate unplanned costs, exact Decimal rollup and matched/full-plan
+  variance, manager-only version save, analyst read/preview, identical retry and date/scope
+  validation. No payment/accounting/whole-contract completeness claim.'
+current_stage: price01_actual_cost_backend_verified_next_web_native
 remaining:
-- PRICE-01 explicit actual expense and labor records, scoped immutable provenance
-  and estimate-vs-actual comparison; inspect existing cost ledger before implementing,
-  do not infer payments or actuals from user copies.
-- Comparable procurement normalization and real-case acceptance; no unsupported forecast.
-  Multiple document/correction policy and independent verification still pending.
-- Hosted CI, PG concurrency, physical web/iOS and full E2E acceptance. Keep gates
-  off; no production deployment.
-- B2B written consent pending; no automated requests. Product-only scope.
-last_verified_commit: 21bad6ecf72748e4a477e98062db36135f4d6c7e
+- Web and native actual cost snapshot input/preview/save/history with explicit baseline
+  and missing-vs-zero, unplanned cost tracking and cumulative report semantics.
+- Actual-specific evidence links (prior estimate evidence is not proof of payment),
+  normalized labor/expense normative samples with de-duplication across cumulative
+  versions and baselines, historical comparable procurement normalization and real-case
+  acceptance.
+- Hosted exact-head CI, PG concurrency, real browser/device and E2E acceptance. Keep
+  gates off; no production deployment.
+- B2B operator consent pending; no automated requests. Product only.
+last_verified_commit: 6b82f1ab60ef4b42eefb94fd3e03251dd324bbae
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -383,10 +389,16 @@ test_results:
   corrupt bytes and oversize. Final unsigned Xcode build-for-testing PASS including
   new XCTest compilation. git diff --check PASS. PR566 exact 2350aa9c 17 success/2
   running. No simulator XCTest/physical iPhone/live API E2E.
-resume_instruction: Implement immutable scoped cumulative actual-cost snapshots against
-  exact saved itemized baseline; explicit missing/zero, Decimal variance, source notes,
-  no complete contract or payment claim. Reuse existing price engine; isolated regression
-  and migration. No external actions.
+- 155 passed,2 skipped,124 warnings in 13.42s; actual cost partial/complete/zero/unplanned,
+  precision, scope/role, replay/stale/date, corruption and SQLite rollback guard tests.
+  Existing actual JS fixture PASS, Ruff/diff PASS; Alembic head 120_company_actual_costs.
+  PR567 exact 2ed5e958 17 success,2 running.
+resume_instruction: Actual cost snapshot backend and migration 120 verified. Next
+  Web then native workflow for exact saved itemized baseline, history, explicit observed
+  quantity/rate vs not reported, unplanned expenses and stateless preview/manager-confirmed
+  version save; never sum cumulative snapshots or call incomplete delta total savings.
+  Then actual evidence and deduplicated normative samples and comparable normalization.
+  No production deployment or external source/model calls.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
