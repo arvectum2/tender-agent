@@ -208,7 +208,7 @@ completed:
 - 'Web readiness and event file controls: explicit partial acknowledgement, bound/stale
   snapshot, event-scoped user-copy upload with SHA match, authorized bounded binary
   download checked before save, case/session clearing. No backend/migration changes.'
-current_stage: web_readiness_artifacts_verified_next_native
+current_stage: native_readiness_and_event_files
 remaining:
 - Native iOS readiness binding and lifecycle file upload/download with owned scope
   and SHA integrity; actual Swift contract and build verification. Keep default-off
@@ -307,10 +307,9 @@ test_results:
   binding and stale refusal, explicit file confirmation, SHA and corrupted download
   rejection, valid download and clearing. Ruff/diff PASS. PR556 exact f6f7a705 18
   success, mirror failure.
-resume_instruction: Web readiness and artifact controls tested with actual JS fixture
-  and offline regression. Next native controls using same API, bounded file transfer
-  and checksum, then PRICE-01. No production deployment or research operations; B2B
-  consent pending.
+resume_instruction: Implement native readiness binding and scoped event file transfer
+  with digest and explicit provenance, bounded reads, test build and contracts. Product
+  only, no production/source changes.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
