@@ -1,257 +1,410 @@
 task_id: TA-SIBUR-SIONIKA-SALES-MAP-20261115
 status: in_progress
-goal: Map the entire available SIBUR procurement corpus before prioritizing Sionika
-  full industrial nomenclature; PQ only one segment.
+goal: Map the entire available SIBUR procurement corpus before prioritizing Sionika full industrial nomenclature;
+  PQ only one segment.
 definition_of_done:
 - Reproducible source-bound organizer and category map
-- Separate end-site/project mentions from organizer, resolve actual recipient where
-  documents support it
-- Classify Sionika equipment, engineering, services and adjacent portfolio; validate
-  current shortlist and distinct publication revisions
-- Map EPC/procurement channels and exact contract/supplier evidence where available;
-  no inferred awards
+- Separate end-site/project mentions from organizer, resolve actual recipient where documents support it
+- Classify Sionika equipment, engineering, services and adjacent portfolio; validate current shortlist and distinct
+  publication revisions
+- Map EPC/procurement channels and exact contract/supplier evidence where available; no inferred awards
 completed:
-- Read-only corpus 30394 source records, 33 organizer labels, 8 traversed primary
-  categories with review gaps. Organizer populated but normalized customer and NMCK
-  absent.
-- Central organizers 19599 observations; site mentions in 7354, multiple-site 311.
-  Source titles/subjects only, not verified recipients.
-- 6635 core lexical records, 5487 numerical prefix groups for review, 1434 adjacent-only,
-  496 core service signals, 228 budget signals, 1144 cancelled, 24 date/open-status
-  nonbudget candidates. Overlapping product tags not summed.
-- Fixed ПЧ false positives from fire brigades; added substation/energy supply and
-  subsegments. Three focused tests and Ruff passed.
+- Read-only corpus 30394 source records, 33 organizer labels, 8 traversed primary categories with review gaps. Organizer
+  populated but normalized customer and NMCK absent.
+- Central organizers 19599 observations; site mentions in 7354, multiple-site 311. Source titles/subjects only,
+  not verified recipients.
+- 6635 core lexical records, 5487 numerical prefix groups for review, 1434 adjacent-only, 496 core service signals,
+  228 budget signals, 1144 cancelled, 24 date/open-status nonbudget candidates. Overlapping product tags not summed.
+- Fixed ПЧ false positives from fire brigades; added substation/energy supply and subsegments. Three focused tests
+  and Ruff passed.
 - Joined committed document coverage on exact source identities read-only.
-- Fresh registry 27/27 pages, 316 rows/315 IDs. All 24 prior candidates status/deadline
-  reverified from reconstructed originals; 4 technical/no-price, 20 commercial/work
-  review candidates, eligibility unverified. 76 URL captures /75 unique SHA; 20 procedures
-  with all verified published URLs, 4 with no verified direct URLs.
-- Project layer 913 unique core publications with project mentions, AGHK 675, DGP2
-  90, external AGPZ 123, EP600 17, NPG_SPR 6, ethylene pipelines 5, STYRENE 2, METALLOCENE_PE
-  2, NKNH_VRU 2; 7 mixed AGHK/AGPZ. Brand mentions not suppliers.
-- Reviewed four active packages, NKNH styrene 2 lots 2027-02-09 to 2028-06-30 and
-  60-day payment; NKNH motors 1 lot 2027-01-16 to 2029-12-31 and 45-day payment, 12-month
-  warranty; Tomsk 2 lots 2027-01-25 to 2027-12-12; AUMA 4 GPP branches. Six SHA-bound
-  preview evidence records.
-- Verified limited public role and project-stage reports from government, owner and
-  contractor sources; original external pages not privately archived.
-- 'Whole-corpus map 2852 unique publications across 11 project labels: 928 prior core,
-  54 expanded electrical candidates, 785 other project package review and 1085 context.
-  Explicit KOS catalyst vs NKNH metallocene PE separation; project mentions not awards.
-  7 focused tests and Ruff pass.'
-- Current snapshot full scan adds 5 review candidates beyond prior 24, all 13 published
-  links captured. ABB and generic electrical only standard contract; HVAC incomplete;
-  PNR water treatment and POLIOM lighting specific technical assignment. No eligible
-  bidder claim.
-- Eight stage-based sales action entries with exact original registry IDs/status,
-  manually reviewed official/external stage links and role evidence. Recommendations
-  separate. AGHK launch delayed September 2026, revised date unknown.
-- '2026-11-15: checked disjoint 523 priority and 316 remaining project-package records
-  for exact original URL/source-row/hash binding: 245 covered, 115 unique original
-  SHA across both cohorts; 3 legacy format reviews. No blanket technical scope claim.
-  Five focused tests/Ruff pass in PR528 5e89b0c4. Administrative KRU false positive
-  filtered.'
-- 'Five exact document evidence records: 2146194/1 AGHK water treatment named designer
-  Progress Engineering, E-SCADA/AVR/KIP/ASUTP work; 2069073/1 and 2069139/1 same pipeline
-  object but different named general designers NIPIGAZ and Progress, preserve scope
-  conflict; 2081181/1 EP600 feed pipeline PNR 0.4kV; 2113738/1 DGP2 fire/automation
-  procedure references.'
-- Seven external observations, supplier/contractor self-reports and one aggregator-only
-  GP641489; no contract award inference. Five NPG SPR Energybase IDs absent from frozen
-  30394-record snapshot, require original registry reconciliation.
-- Owner-provided commercial-role overlay saved separately in private runtime; never
-  overwrite user classifications with inferred project roles or publish private relationships.
-- Sfera-Stroy legal identity confirmed across sources; four owner-contractor AGHK
-  contract numbers self-reported, one subcontract court case verified, one material
-  debt judgment at appeal stage identified, latest registry move to Moscow reported;
-  risk and current due diligence explicit.
-- Service/retrofit demand cohort 496 records classified offline with overlapping service
-  types; 224 repair/maintenance, 158 modernization/replacement signals, 136 installation,
-  80 commissioning, 63 design. 104 cancelled, 385 intake closed, 7 open in frozen
-  snapshot. Not contract awards.
-- 'Seven additional project-role source observations: owner identifies Progaz and
-  Tekon at NKNH VRU, Progress Engineering named OZH executor at DGP2; B2B indexed
-  card identifies SNEMA-SERVIS as procurement organizer DGP2, aggregator evidence
-  AGHK service and self-reported subcontractor chain; Wison directory-only pending
-  primary source.'
-- 'Pondera Industry INN 7720433441: six self-reported SIBUR construction prime/package
-  roles, project-specific dates not verified actual completion. Financial source review
-  revenue 12.244752bn RUB/2025 net profit 349.644m, 2024 loss 462.996m, tax debt 199.572195m
-  as of 2026-09-01; P0 research target, no firm qualification or credit approval.'
-- Identified three distinct Progaz legal entities. Progaz Postavka and Progaz Engineering
-  same INN 9709111035 according to historical and current accounting/registry aggregators;
-  no duplicate. Four total INN including SNEMA. 14 distinct historical B2B procedure
-  IDs retained, five Progaz group and nine SNEMA, with source classes and project
-  evidence/uncertainty, three outside SIBUR and two Tobolsk unresolved. No current
-  or awarded claims. Owner confirms Progaz VRU general contractor/supplier and group
-  self-reports EPC/BOO.
-- Yamata September 2026 termination notice reported by press; Esta candidate only,
-  replacement award unverified. Pondera self-report construction package role does
-  not resolve Wison exact EPC role. Historical AGHK EPC/EP roles kept dated; no current
-  extension inferred.
-- 'Reconciled all 926 unresolved URL references against existing acquisition receipts
-  without new fetch: 3 exact-bound originals across 2 procedures, 4 bytes with missing
-  exact ref, 2 prior review, 917 uncaptured; 1212 exact identity-URL pairs outstanding.'
-- 'External contractor channel registry 14 to 23 unique B2B IDs, six organizer INNs:
-  six Favorit AGHK packages, one SNEMA electroheating service (end site unresolved),
-  two NIPIGAZ 2024 B2B cards classified IT, results hidden or cancelled. No award/current
-  opportunity.'
-- Favorit financial dossier; Sfera no buyer records in checked catalogs, Pondera own
-  public procurement not found, Progress catalog overlaps SIBUR. No inference of absent
-  private demand.
-- Owner expanded portfolio to UPS, including IT/server UPS, batteries, spares and
-  service. New family UPS plus separate battery-application review; excludes car/forklift/tool/hydraulic
-  false matches. 30394 frozen publications reclassified, 6732 total core lexical/review
-  candidates (+97 unique), 174 explicit UPS and 119 uncertain battery applications,
-  23 service signals and 14 explicit components, 250 prefix groups. 9 focused tests
-  and Ruff pass.
-- '293 UPS/battery candidates source coverage: 228 with verified exact source references,
-  37 unique captured originals; 304 missing identity-URL pairs. Historical NIPIGAZ
-  2081424/1 47 requested UPS, 2141617/1 battery lot AGPZ external Gazprom; Progress
-  2115156/1 AGHK title6100 UPS/AKB; 2121831/1 STG 2026–28 service; 2144327/1 JOVYATLAS
-  exact model no analogues, one original linked. No awards inferred.'
-- External channel v3 retains 23 IDs and marks NIPIGAZ3735296 relevant UPS spares
-  independent of IT category; 3699009 typo/cancelled stays review.
-- 'Portfolio correction: standalone UPS/AKB research split into independent equipment
-  channel, separate private commercial mapping supplied by user; mixed packages retained
-  manual scope allocation, no supplier assignment. Generic router tests 7 passed/Ruff;
-  6477 industrial,293 UPS/battery,38 overlap,6732 distinct records. No private relationship
-  in source code.'
-- Support services 999_19 verified in official archived filter and raw responses;
-  all five advertised pages captured, 59 distinct IDs, zero overlap with prior 30394
-  frozen records. 29 in 2024–26, 30 in 2022–23. Research supplement not DB imported.
-  Parser supports category; existing workers untouched. Two parser tests/Ruff pass.
-- Offline report refreshed from committed links, 237 new originals, 1163 total, 1158
-  extracted/5 review, 127 new report findings not all qualified scope. Nine source-bound
-  selected demand/maintenance cases with cancellation/mixed scope retained. VSK n-BuLi
-  attachment-only UPS and KTP installation scope, no proof of installation or award;
+- Fresh registry 27/27 pages, 316 rows/315 IDs. All 24 prior candidates status/deadline reverified from reconstructed
+  originals; 4 technical/no-price, 20 commercial/work review candidates, eligibility unverified. 76 URL captures
+  /75 unique SHA; 20 procedures with all verified published URLs, 4 with no verified direct URLs.
+- Project layer 913 unique core publications with project mentions, AGHK 675, DGP2 90, external AGPZ 123, EP600
+  17, NPG_SPR 6, ethylene pipelines 5, STYRENE 2, METALLOCENE_PE 2, NKNH_VRU 2; 7 mixed AGHK/AGPZ. Brand mentions
+  not suppliers.
+- Reviewed four active packages, NKNH styrene 2 lots 2027-02-09 to 2028-06-30 and 60-day payment; NKNH motors 1
+  lot 2027-01-16 to 2029-12-31 and 45-day payment, 12-month warranty; Tomsk 2 lots 2027-01-25 to 2027-12-12; AUMA
+  4 GPP branches. Six SHA-bound preview evidence records.
+- Verified limited public role and project-stage reports from government, owner and contractor sources; original
+  external pages not privately archived.
+- 'Whole-corpus map 2852 unique publications across 11 project labels: 928 prior core, 54 expanded electrical candidates,
+  785 other project package review and 1085 context. Explicit KOS catalyst vs NKNH metallocene PE separation; project
+  mentions not awards. 7 focused tests and Ruff pass.'
+- Current snapshot full scan adds 5 review candidates beyond prior 24, all 13 published links captured. ABB and
+  generic electrical only standard contract; HVAC incomplete; PNR water treatment and POLIOM lighting specific technical
+  assignment. No eligible bidder claim.
+- Eight stage-based sales action entries with exact original registry IDs/status, manually reviewed official/external
+  stage links and role evidence. Recommendations separate. AGHK launch delayed September 2026, revised date unknown.
+- '2026-11-15: checked disjoint 523 priority and 316 remaining project-package records for exact original URL/source-row/hash
+  binding: 245 covered, 115 unique original SHA across both cohorts; 3 legacy format reviews. No blanket technical
+  scope claim. Five focused tests/Ruff pass in PR528 5e89b0c4. Administrative KRU false positive filtered.'
+- 'Five exact document evidence records: 2146194/1 AGHK water treatment named designer Progress Engineering, E-SCADA/AVR/KIP/ASUTP
+  work; 2069073/1 and 2069139/1 same pipeline object but different named general designers NIPIGAZ and Progress,
+  preserve scope conflict; 2081181/1 EP600 feed pipeline PNR 0.4kV; 2113738/1 DGP2 fire/automation procedure references.'
+- Seven external observations, supplier/contractor self-reports and one aggregator-only GP641489; no contract award
+  inference. Five NPG SPR Energybase IDs absent from frozen 30394-record snapshot, require original registry reconciliation.
+- Owner-provided commercial-role overlay saved separately in private runtime; never overwrite user classifications
+  with inferred project roles or publish private relationships.
+- Sfera-Stroy legal identity confirmed across sources; four owner-contractor AGHK contract numbers self-reported,
+  one subcontract court case verified, one material debt judgment at appeal stage identified, latest registry move
+  to Moscow reported; risk and current due diligence explicit.
+- Service/retrofit demand cohort 496 records classified offline with overlapping service types; 224 repair/maintenance,
+  158 modernization/replacement signals, 136 installation, 80 commissioning, 63 design. 104 cancelled, 385 intake
+  closed, 7 open in frozen snapshot. Not contract awards.
+- 'Seven additional project-role source observations: owner identifies Progaz and Tekon at NKNH VRU, Progress Engineering
+  named OZH executor at DGP2; B2B indexed card identifies SNEMA-SERVIS as procurement organizer DGP2, aggregator
+  evidence AGHK service and self-reported subcontractor chain; Wison directory-only pending primary source.'
+- 'Pondera Industry INN 7720433441: six self-reported SIBUR construction prime/package roles, project-specific dates
+  not verified actual completion. Financial source review revenue 12.244752bn RUB/2025 net profit 349.644m, 2024
+  loss 462.996m, tax debt 199.572195m as of 2026-09-01; P0 research target, no firm qualification or credit approval.'
+- Identified three distinct Progaz legal entities. Progaz Postavka and Progaz Engineering same INN 9709111035 according
+  to historical and current accounting/registry aggregators; no duplicate. Four total INN including SNEMA. 14 distinct
+  historical B2B procedure IDs retained, five Progaz group and nine SNEMA, with source classes and project evidence/uncertainty,
+  three outside SIBUR and two Tobolsk unresolved. No current or awarded claims. Owner confirms Progaz VRU general
+  contractor/supplier and group self-reports EPC/BOO.
+- Yamata September 2026 termination notice reported by press; Esta candidate only, replacement award unverified.
+  Pondera self-report construction package role does not resolve Wison exact EPC role. Historical AGHK EPC/EP roles
+  kept dated; no current extension inferred.
+- 'Reconciled all 926 unresolved URL references against existing acquisition receipts without new fetch: 3 exact-bound
+  originals across 2 procedures, 4 bytes with missing exact ref, 2 prior review, 917 uncaptured; 1212 exact identity-URL
+  pairs outstanding.'
+- 'External contractor channel registry 14 to 23 unique B2B IDs, six organizer INNs: six Favorit AGHK packages,
+  one SNEMA electroheating service (end site unresolved), two NIPIGAZ 2024 B2B cards classified IT, results hidden
+  or cancelled. No award/current opportunity.'
+- Favorit financial dossier; Sfera no buyer records in checked catalogs, Pondera own public procurement not found,
+  Progress catalog overlaps SIBUR. No inference of absent private demand.
+- Owner expanded portfolio to UPS, including IT/server UPS, batteries, spares and service. New family UPS plus separate
+  battery-application review; excludes car/forklift/tool/hydraulic false matches. 30394 frozen publications reclassified,
+  6732 total core lexical/review candidates (+97 unique), 174 explicit UPS and 119 uncertain battery applications,
+  23 service signals and 14 explicit components, 250 prefix groups. 9 focused tests and Ruff pass.
+- '293 UPS/battery candidates source coverage: 228 with verified exact source references, 37 unique captured originals;
+  304 missing identity-URL pairs. Historical NIPIGAZ 2081424/1 47 requested UPS, 2141617/1 battery lot AGPZ external
+  Gazprom; Progress 2115156/1 AGHK title6100 UPS/AKB; 2121831/1 STG 2026–28 service; 2144327/1 JOVYATLAS exact model
+  no analogues, one original linked. No awards inferred.'
+- External channel v3 retains 23 IDs and marks NIPIGAZ3735296 relevant UPS spares independent of IT category; 3699009
+  typo/cancelled stays review.
+- 'Portfolio correction: standalone UPS/AKB research split into independent equipment channel, separate private
+  commercial mapping supplied by user; mixed packages retained manual scope allocation, no supplier assignment.
+  Generic router tests 7 passed/Ruff; 6477 industrial,293 UPS/battery,38 overlap,6732 distinct records. No private
+  relationship in source code.'
+- Support services 999_19 verified in official archived filter and raw responses; all five advertised pages captured,
+  59 distinct IDs, zero overlap with prior 30394 frozen records. 29 in 2024–26, 30 in 2022–23. Research supplement
+  not DB imported. Parser supports category; existing workers untouched. Two parser tests/Ruff pass.
+- Offline report refreshed from committed links, 237 new originals, 1163 total, 1158 extracted/5 review, 127 new
+  report findings not all qualified scope. Nine source-bound selected demand/maintenance cases with cancellation/mixed
+  scope retained. VSK n-BuLi attachment-only UPS and KTP installation scope, no proof of installation or award;
   owner reports construction completed and PNR started, current launch unverified.
-- 'Lifecycle candidate review: 526 unique frozen procurement records, 509 industrial
-  and 22 UPS/battery, 5 overlap; nine manually reviewed clusters,19 distinct IDs,18
-  prefix groups, scope and revisions distinct. Siemens/Yokogawa ZSNH, AUMA NKNH and
-  STG, ABB NKNH, STG/ZSNH/KOS/Kstovo UPS, AGHK mixed. No confirmed recurring award.'
-- Offline technical evidence refresh 179 new originals,1342 total,1336 extracted/6
-  review;111 additional findings, 6 selected exact document scopes, including Siemens
-  8BD1 23 cells at RP57, AMS Emerson HART existing diagnostics, Siemens controller
-  planned, KOS workstation and UPS replacement, UPS diagnostics requirement, multi-platform
-  PNR. Evidence and source status saved; no inferred awards.
-- Owner high priority retrofit switchgear. Dedicated classifier tested 2/Ruff pass;
-  61 lexical candidates/58 numeric prefix groups, 23 direct lexical /25 related electrical
-  /12 ambiguous /1 breaker replacement. Not a full census and not 61 qualified leads.
-  Manual priority map 18 reviewed scope groups including 23 Siemens 8BD1 and 19 SESh70
-  documented demand, DGP2 LV two kits from title, cancelled/reissued pairs, NKNH recent
-  IDs. External historical Elektrojar reference and Tavrida seminar only, not recent
-  awards.
-- Owner requested save previous retrofit leads and continue broad SIBUR roadmap, not
-  bid. Reserve six observations (3 closed NKNH,2 prior external observations unrefreshed,1
-  adjacent currently open styrene PNR). Restored Mac-mini transport. Independently
-  verified fresh official page bytes and exact reconstructed list 27 pages/315 IDs,
-  no retrofit classifier candidates; NKNH2146492/1 open to 27 November 11:00. External
-  reserve no fresh status or eligibility verification.
-- 'Technical evidence refreshed 135 additional committed originals, 1477 total,1471
-  extracted/6 review,90 new report findings. Four selected historical demand signals:
-  NKNH notification RFI UPS Systeme Electric 1000VA and SNMP one each; RusVinyl 2
-  HALTON fire-damper drives discontinued, Siemens replacement specified; KOS PGU energy-block
-  switching RZA/PA installation; ZSNH guaranteed-power commissioning from registry
-  subject only. No award, live offer or supplier assignment.'
-- 'CRP2/ZSNH cross-stage scope review: nine distinct archive publications including
-  2026 separately related cancelled Chibis busduct, eight numeric prefixes, five exact-source-linked
-  docs coverage, 20 unresolved URLs across publications. Linked files manually inspected,
-  mostly templates/general requirements; no bidder/winner or specific installed quantities
-  inferred. Modens self-reports CRP2 and AGHK design, ETS named survey client in STP
-  reference Feb2024 contract 13-24, ETS self-reports 110kV ETPG design supporting
-  DGP2 in Apr2025; roles separate, no inferred contract hierarchy.'
-- Reconciled frozen project missing-doc queue 926 URLs with existing captures, 43
-  exact-ref URLs, 4 bytes without exact refs,879 not captured or prior review. 1153
-  remaining identity/URL pairs versus1212 previous, 59 restored exact bindings. No
-  new download or DB write.
-- 'Energy chain review: 12 groups across KOS/NKNH/ZSNH/STG,27 unique publications,14
-  exact-source-linked,48 missing identity-URL pairs. RP59 repeat RZA scope, KOS PGU
-  actuator service 2026, NKNH GPP4 DC cabinet revision, ZSNH multi-year substation
-  maintenance and STG.10510-39 repeated communication works. No award inferred. Tatem
-  direct customer references NKNH/KOS (GPP2/3/5 design at TANEKO, not NKNH); Energoprogress
-  223FZ purchasing channel KOS Lushnikovskaya PGU, 2.043748577bn listed whole lot
-  price, type unverified; 2 additional contract observations. Owner confirms late2025
-  permit, May2026 launch.'
-- Tatem procurement buyer role validated from full public catalog rows, 10 distinct
-  ONLINECONTRACT 2020–2021 KOS records (outside primary period). Corrected search
-  snippet shifted-ID associations; 369000 Tatneft and 372204 general equipment and
-  376675 furniture excluded; 368671 catalyst,367768 reactor,372172 line D,375783 installation
-  materials for UPS not UPS supply. Tatem catalog711 historical, Energoprogress1554
-  March2026 catalog includes plans, not additive or period totals.
-- 'Energoprogress equipment buying channel: cancelled 32616321541 PTK ASUTP Kazan
-  TEC2 NMCK137265536.33 outside SIBUR, 32615817206 HV meter for capacitive-current
-  compensation GRU6–6.3kV listed1.5433m, end site and result unresolved; do not count
-  as SIBUR demand. Lushnikovskaya PGU supplier/commissioning roles: PSG self-report
-  SGen5/SIPROTEC5/Thyripol/SINAMICS GL150 and excitation UPS; STGT reported commissioning;
-  system operator confirms TEC3 110kV grid changes and two autotransformers. Owner
-  capacity281MW authoritative. Direct historical SIBUR2140253/1 RZA maintenance confirmed
+- 'Lifecycle candidate review: 526 unique frozen procurement records, 509 industrial and 22 UPS/battery, 5 overlap;
+  nine manually reviewed clusters,19 distinct IDs,18 prefix groups, scope and revisions distinct. Siemens/Yokogawa
+  ZSNH, AUMA NKNH and STG, ABB NKNH, STG/ZSNH/KOS/Kstovo UPS, AGHK mixed. No confirmed recurring award.'
+- Offline technical evidence refresh 179 new originals,1342 total,1336 extracted/6 review;111 additional findings,
+  6 selected exact document scopes, including Siemens 8BD1 23 cells at RP57, AMS Emerson HART existing diagnostics,
+  Siemens controller planned, KOS workstation and UPS replacement, UPS diagnostics requirement, multi-platform PNR.
+  Evidence and source status saved; no inferred awards.
+- Owner high priority retrofit switchgear. Dedicated classifier tested 2/Ruff pass; 61 lexical candidates/58 numeric
+  prefix groups, 23 direct lexical /25 related electrical /12 ambiguous /1 breaker replacement. Not a full census
+  and not 61 qualified leads. Manual priority map 18 reviewed scope groups including 23 Siemens 8BD1 and 19 SESh70
+  documented demand, DGP2 LV two kits from title, cancelled/reissued pairs, NKNH recent IDs. External historical
+  Elektrojar reference and Tavrida seminar only, not recent awards.
+- Owner requested save previous retrofit leads and continue broad SIBUR roadmap, not bid. Reserve six observations
+  (3 closed NKNH,2 prior external observations unrefreshed,1 adjacent currently open styrene PNR). Restored Mac-mini
+  transport. Independently verified fresh official page bytes and exact reconstructed list 27 pages/315 IDs, no
+  retrofit classifier candidates; NKNH2146492/1 open to 27 November 11:00. External reserve no fresh status or eligibility
+  verification.
+- 'Technical evidence refreshed 135 additional committed originals, 1477 total,1471 extracted/6 review,90 new report
+  findings. Four selected historical demand signals: NKNH notification RFI UPS Systeme Electric 1000VA and SNMP
+  one each; RusVinyl 2 HALTON fire-damper drives discontinued, Siemens replacement specified; KOS PGU energy-block
+  switching RZA/PA installation; ZSNH guaranteed-power commissioning from registry subject only. No award, live
+  offer or supplier assignment.'
+- 'CRP2/ZSNH cross-stage scope review: nine distinct archive publications including 2026 separately related cancelled
+  Chibis busduct, eight numeric prefixes, five exact-source-linked docs coverage, 20 unresolved URLs across publications.
+  Linked files manually inspected, mostly templates/general requirements; no bidder/winner or specific installed
+  quantities inferred. Modens self-reports CRP2 and AGHK design, ETS named survey client in STP reference Feb2024
+  contract 13-24, ETS self-reports 110kV ETPG design supporting DGP2 in Apr2025; roles separate, no inferred contract
+  hierarchy.'
+- Reconciled frozen project missing-doc queue 926 URLs with existing captures, 43 exact-ref URLs, 4 bytes without
+  exact refs,879 not captured or prior review. 1153 remaining identity/URL pairs versus1212 previous, 59 restored
+  exact bindings. No new download or DB write.
+- 'Energy chain review: 12 groups across KOS/NKNH/ZSNH/STG,27 unique publications,14 exact-source-linked,48 missing
+  identity-URL pairs. RP59 repeat RZA scope, KOS PGU actuator service 2026, NKNH GPP4 DC cabinet revision, ZSNH
+  multi-year substation maintenance and STG.10510-39 repeated communication works. No award inferred. Tatem direct
+  customer references NKNH/KOS (GPP2/3/5 design at TANEKO, not NKNH); Energoprogress 223FZ purchasing channel KOS
+  Lushnikovskaya PGU, 2.043748577bn listed whole lot price, type unverified; 2 additional contract observations.
+  Owner confirms late2025 permit, May2026 launch.'
+- Tatem procurement buyer role validated from full public catalog rows, 10 distinct ONLINECONTRACT 2020–2021 KOS
+  records (outside primary period). Corrected search snippet shifted-ID associations; 369000 Tatneft and 372204
+  general equipment and 376675 furniture excluded; 368671 catalyst,367768 reactor,372172 line D,375783 installation
+  materials for UPS not UPS supply. Tatem catalog711 historical, Energoprogress1554 March2026 catalog includes plans,
+  not additive or period totals.
+- 'Energoprogress equipment buying channel: cancelled 32616321541 PTK ASUTP Kazan TEC2 NMCK137265536.33 outside
+  SIBUR, 32615817206 HV meter for capacitive-current compensation GRU6–6.3kV listed1.5433m, end site and result
+  unresolved; do not count as SIBUR demand. Lushnikovskaya PGU supplier/commissioning roles: PSG self-report SGen5/SIPROTEC5/Thyripol/SINAMICS
+  GL150 and excitation UPS; STGT reported commissioning; system operator confirms TEC3 110kV grid changes and two
+  autotransformers. Owner capacity281MW authoritative. Direct historical SIBUR2140253/1 RZA maintenance confirmed
   in frozen archive, no linked originals yet, ended 8Sep2026.'
-- 'Cryogenmash lifecycle channel: 2021 AGHK ASU EPC, lease and 22-year gas contract
-  per group news with development INN5001104523, manufacturer5001000066, IK2K self-reported
-  2023 contract. GP641489 2026 ASUTP supervision/commissioning aggregator linked to
-  exact project, prior observation not additive. CMA separate INNs; six 2026 ONLINECONTRACT
-  materials records NP1651040171, SIBUR end customer unproven. AO1658001164 court
-  case A65-16979/2025 NKNH third party and Profit subcontractor, no inferred exact
-  scope.'
-- Technical report refreshed 150 new originals,1627 total,1620 extracted/7 review,82
-  new lexical findings. Five exact source-bound cases:109 unique historical SAP RZA
-  entries Kstovo (47 SEPAM,40 TOR200,6 VIP30,16 other/unspecified), CRP114 KRU-2-10
-  turnkey relay panels, NKNH GPP1 two cells domestic IEC61850 RZA and vacuum breaker
-  budget, Biaksplen Gidrotorf BKTP, KOS Parus electro UPS/battery counts. Historical
-  schedule not current inventory, cell count or award.
-- Five original GPB list/detail pairs captured and hash-verified for Cryogenmash: GP635240 active, GP634651/GP633537/GP634648/GP641489 archived. GP641489 was prior secondary observation, not additional demand. Original detail archive deadline label conflicts with list; use per-ID list deadlines. No price/award confirmed.
-- GP635240 original DOCX explicitly confirms AGHK title 6500, AO Cryogenmash organizer versus OOO Cryogenmash Development customer in TZ; 64 numbered asset lines plus separate UPS line. Six LV sections, six transformers, two capacitor installations, one 10kV soft starter, three AVR cabinets, nine compressors and four circulation pumps. Three years experience, qualified staff, 12h departure and 24-48h arrival; no eligibility claim. Fourteen other selected links closed connections, no bypass.
-- Automation subcontractor review: 9 entity candidates, 6 INNs resolved, 12 first-party portfolio observations through Perm ASU Engineering, 7 exact related SIBUR archive identities with scope distinctions. MMUS 2024–27 electrical installation and commissioning; Ural-Controls V521 automation and design; Neftekhimnaladka EP600, Reksoft Kstovo, Gazproektinzhiniring BOV7, MIIMF; Naladchik and Sintegra identities pending. Separate similarly named Ufa ASU company excluded. No awards inferred. Five historical retrofit publication crosschecks, 4 additional owner Telegram crossreferences, including RP57 cancelled budget then solicitation; date typo retained. Company direct HTTP503; indexed official pages reviewed.
-- Contractor finance and channel screening: six 2025 financial profiles, Sintegra INN 1651065401 matched by official address and registry, 596 catalog publications (not contracts). Five unique procurement observations (one in 2026, four earlier); B2B-Center and ONLINECONTRACT. No primary award or end site verified. Naladchik and MIIMF probable identities, old liquidated MIIMF kept separate. Court A43-27052/2023 historical 2018 RusVinyl subcontract chain, not current. Other four independent procurement channels still unresolved. Archive worker observed 1855 captures and 1851 linked originals; extraction refresh pending.
-- Combined research continuation: processed 268 additional originals since 1627 baseline, total 1895, extracted 1888, review 7. Prior saved v5 technical evidence reconciled by SHA without repeating extraction. Full AGHK historical annex parsed into 772 source rows, preserving duplicate candidate and UPS separation. Built industrial demand matrix for 6477 distinct source IDs across 11 overlapping categories and 482 service-source candidates with explicit site versus organizer-only evidence. Seven dated external project and supplier crosschecks, including SVEL historical production distinct from later nomination and award unknown.
-- Contract-chain research: two court-confirmed subcontract specifications at ZSNH (electrical installation GPP1/2, KRU10kV commissioning GF1), exact GF1 project match to 2076768/1 lot1, no award protocol. Historical AGHK temporary power chain separately. Owner context recorded privately, distinct from verified public evidence; 2083626/1 and two subsequent AGHK service notices remain unverified as to outcome and causation. Technical extraction refreshed to 1910 originals, 1903 extracted, 7 review.
-- Consolidated 17 project/program cards, 30 organizational/site coverage labels, 30 overlapping reviewed scope groups (51 distinct publications), official 2026 plan with 1005 positions and 177 direct category rows, 37 priority rows, and 177 qualification entries with 22 candidates. Verified two original XLSX hashes and map/report hashes. Current Watchdog updated in place for 17 November deadline; hourly schedule unchanged. No inferred awards.
-- Screened all 37 priority plan rows against frozen archive and current source snapshot of 15 November 11:37 UTC: 29 rows with retained candidates, 155 distinct publication IDs, 6 current snapshot IDs; 25 manual scope judgments, 8 rejected pairs. No proven exact plan-to-contract link or award. Refreshed 162 originals to 2072, 2063 extracted, 2 partial, 7 review; three source-bound technical scopes. Resolved NPG SPR to Perm SIBUR-Khimprom project via official regional order; 41 archive candidate publications and six distinct secondary missing from snapshot, two false model-token positives excluded. Public role of Tekon Engineering confirmed. Added four programs, consolidated 21 unique project cards and versioned report v3.
-- Perm NPG SPR reviewed original three revisions 2141372/1-3 and heat trace 2141353/1, with exact source/hash links; 4 transformers 2500kVA, 1 MV RU, 53 LV raw quantity, 3 repeat tags, 1 lighting cabinet. Heat trace physical sheet 123 rows, 2 controller cabinets,10 system cabinets,44 boards. Approx37bn CAPEX separate; GSI-Giprokauchuk FEED role, GSI group and local contractors separately documented; two external NPG notices outside snapshot, VSK existing ID non-additive; eight unmatched plan lines rechecked, no exact links. Refreshed to 2087 originals, 2075 extracted,5 partial,7 review. Map/report v4 verified; no new awards, prices or DB writes.
-- Seven-site multi-block review: 45 archive records, six new cards, total 27. Four primary active originals, nine anchors. GPB three primary list/detail pairs, two unresolved, one verified failed-no-bids protocol; three possible cross-platform pairs not additive. Tomsk 2027 schedule and separate UPS confirmed.
-- STG seven scope groups, 14 archive IDs, verified LRT-40 workbook and owner program evidence, V6 map/report. Existing technical SIBUR LaunchAgent now StartInterval 120s; original plist backed up; verified recurring successful runs. Reconciled 313 DP resources/5073 chunks and embeddings with fresh read-only PostgreSQL export; repaired preservation of first attestation hashes for two previously linked resources, four focused tests passed, code commit 241992cb. Existing runner restarted with gate and backups, GPB recovery/archive worker unchanged. Verify post-restart actual linkage/index progress before declaring recovery complete.
-- Six smaller-site program cards: Krasnoyarsk KZSK, Portenergo, PETF, YUP, NPP, S-Yug; 26 archive IDs and 2 external observations (one non-electrical). Ownership conflicts corrected with 2023 Solvay transaction; JV boundary retained. Commercial action register covers 33 cards, 12 P0,20 P1,1 P2. V7 map and report. DP repeat timeout recovered by exact resource identities, 315 documents/5283 chunks, 4 recovered receipts; preserved old proofs. Shared lock acquired safely on retry; existing runner resumed. GPB worktree cd52f39b increases bounded request timeout 180s and stats 60s. No direct DB writes.
-- Four judicial contract records, two manufacturer references, POLIEF RKOS fifth-source project package, map V8 with 34 cards. Legacy DP queue fully synchronized and exhausted 315/5283. Read-only readiness queue 639 technical candidates, 97 P0; no new ingestion or mutation.
-- Exact read-only bridge validated 587 OOXML originals and 932 committed captures, 92 P0, 52 PDF review. Code c595c96f and c334fb4a preserve verified DP receipt on explicit capture-only replay; 17 focused tests passed. Existing live archive worker has cached earlier linker; no deployment or DP mutations yet. Verified Styrene qualification 3 original spreadsheets/12 anchors, owner-confirmed Pondera role, SNEMA-Service B2B exact buyer, NKU-Energo 29 panel self report, 13 P0 qualification routes. V9 report.
-- V10: eight judicially identified contracts/specifications DGP2 and adjacent ZSNH objects; correction SPK Magistral terminated 2024-09-06, replacement unknown; Delta debt separated from electrical market. Ener Holding 2025 financial profile and historical procurement channel. Archive worker cooperatively restarted with updated linker, existing index executor activated on verified 587 OOXML bridge; 16 targeted tests passed, first extraction 3 docs, gate passed; first full index/link cycle not yet confirmed.
-- Archive first full cycles passed, replay idempotent; SNEMA cross-project evidence for 8 sites, SMK Northwest subcontract matched by domain and SRO directory, two other contractor portfolios, 5 external procurement observations (2 outside SIBUR excluded), 10 exact archive scope records, no replacement SPK Magistral established. 21 tailored P1/P2 actions, all 34 cards now have specific actions. V11 sources and hashes checked.
-- V12 clean executive report rebuilt in 11 sections with 34 cards, 2597 unique project archive references and 37 SHA-verified source artifacts. Conditional plan band sums 36 rows 1.7–9.3bn, Q4 27 rows 0.8–4.8bn, direct-only subset separate, not market estimates. Two 2024/25 exact specification prices total 20,077,047.23 RUB incl VAT; debt/actual work/2023 estimates separate. Court verifies NaladkaPromService INN; new KOS InterSvet settlement, scope and total price unknown. Hexene reached rated 50kt/y, RP50 and four planned substations confirmed. Official Telegram 2111857/1 missing frozen archive documented. Existing workers running, no new DB action.
-- V13: refreshed all 27 official current list pages, 315 unique IDs, no observed changes vs earlier snapshot. Transport interrupted before receipt; reconstructed from full saved raw set, verified hashes and parser; no duplicate download. 20 selected current procedures and 7 original worksheets/8 URLs verified. Added KOS compressor control 2145701/1 and NKNH motor service 2145706/1 (2027–29, 12mo warranty), P0 routing now 15, 36 total. Exact plan links remain unproven for 8 unmatched rows, plan936 subject match only. No new signed prices, no new DB writes. V13 report refined in place of append-only history.
-- V14: owner-confirmed Progas general contractor and equipment supply VRU NKNH; two distinct procurement INNs, six independent B2B records with exact title identifiers, finance profiles separate. MPE-230 design New Resources and positive GEE, ASU Engineering self-reported audit not implementation. Court A57-10811/2026 propylene infrastructure contract chain, 107586664 RUB VAT incl spec, 109044502.18 accepted goods, 50658494.82 overpayment; product scope unknown, excluded from electrical amounts. Official Telegram 2111857/1 confirmed, live DB exact lookup absent, portal card cache miss, eight neighbor notices matched archive. Four P0 actions updated. No DB mutations.
-- V15: six previously generic NPG external notices resolved to scope, three new notices, nine observations in six families, eleven overall external NPG including pump and sewer packages. No additive revision counts, no signed prices. TESS Amur named in Amur region plan 378-r dated 2026-06-02, temporary network program 2022–30; six group portfolio scopes across four sites, finance identity checked. MChS fire license terminated; do not extrapolate. Regional direct source 403 and PDF screenshot cache miss documented. Six commercial actions revised. AGHK AuCom exact archive ID checked. No direct DB mutation.
-- Read-only exact coverage dashboard: 30394 SIBUR records, 6477 industrial, 2599 project unique, 8223 priority union, 853 overlap and 5624 profile outside mapped projects. 1100/2299 supported distinct priority URLs fully extracted; 1580/8223 all known URLs extracted without unverified marker, not final research result. 36 per-project counts; 2475/10188 active acquisition attempts, 57/587 linked archive index documents. Reusable report_sibur_coverage module and dedup/unsupported/partial test passed. No DB mutation.
-- "V16: verified external runtime after migration; coverage 1110/2299 priority URLs, 1189 remaining; exact 663 pending P0 and 611 unattempted candidates. 5624 industrial publications outside project cards grouped once: 2169 explicit, 544 organizer affiliation, 103 multi, 2807 unresolved, 1 conflict. Source-bound priority queue code tested (6 pass), activation requested via cooperative STOP; no duplicate worker. Styrene 2146492/1 two primary XLSX reviewed, 2 lots, 09 Feb 2027–30 Jun 2028, 60d payment/factoring, qualifications; no signed price."
-- "V17: priority collector restarted, 15 new P0 originals hash-verified after activation; linkage still pending. GPB prepare timeout reconciled read-only: 1375 exact existing receipts and 13 absent, no inflight, previous sync unchanged. GPB code c0028180 reuses validated originals and increases bounded prepare timeout; 6 tests passed; original agent restarted, first new sync not verified. Three qualification XLSX reviewed (two identical-text styrene questionnaires, valve repair evaluation options), no asserted award or eligibility. Coverage 1119/2299, full known priority packages 1585/8223. V17 45 source files verified."
-- "V18: first 15 P0 originals SHA256/technical extraction and exact DB 251 document-procedure pairs validated; 30 P0 captured since activation. Three AGPP SS370 project drawings establish AGPP design origin of 2118943/1; unknown actual destination, remove only strict AGHK association, retain industrial candidate; 15 other interface candidates flagged. MPE 2126540/1 Volga NIPITEK six new gas analyzers per OL. EP600 2080352/1 mechanical scope only. Coverage V5 1134/2299, 1589 complete known packages; 36 cards 2598 strict project candidates, 5625 outside. GPB preparation passed, first post-recovery transaction state recorded separately. No signed prices inferred. V18 report and six artifacts validated."
-- "V19: six original XLSX reviewed, 16 thermal cabinets 2108203/1, 17 control posts 2083019/1, 104 terminal boxes 2108149/1, Progress Engineering directly named as requesting party in two forms; 2080616/1 indivisible cast-insulated busduct DGP2 title4015; 2027–2030 AGHK heat tracing maintenance 2139286/1; 2140253/1 KOS relay protection maintenance. Owner 2025 250MW and 2026 281MW same Lushnikovskaya PГУ, STGT reference commissioning, not service award. Coverage 1179/2299, 1617 all known packages; no inferred signed price. 49 sources verified. GPB recovery progressing."
-- "V20: seven original XLSX packages reviewed; NPG 29 units, 27 distinct tags, ASDKE title4810; MPE 23 NAMUR+3 boxes; AGHK busbar protection and AGPP interface KRU; overlapping heat-tracing budget vs tender periods, DGP2 warehouse RFQ author. 1481 GPB outcomes screened literal SIBUR names, zero candidate hits; 1290 best bids, 191 failed, 601 published participant names, no signed prices. Outcome research queue: 8223 IDs, 6856 closed intake incl 2151 P0, 1300 cancelled, 67 open as archived. Not all outstanding outcomes yet researched; no fabricated awards or prices. V7 coverage 1314/2299, 985 remaining, 468 P0. V20 53 source artifacts verified."
-- "V21 parallel market research: official NKNH combined operator-room program >12bn first-stage investment, 113 of 193 to 7, 3 launched as of Feb17; 8 explicit archive IDs and 4 HVAC candidates outside strict membership. New card 37, union 8227. SMK Severozapad INN7814292228 self-reported SNEMA subcontract, Progress explicitly named OVOС executor DGP2. ABB 2144277/1 retrofit separate from plan 817. Four exact outcome IDs reviewed, no verified award, all 8 plan gaps unresolved. Outcome queue V2 6860 closed, 2159 P0. Coverage 1329/2299. No DB mutation; existing workers continue."
-- "V22: 3 distinct automation counterparties enriched, two named EP600 commissioning buyers from ASU Engineering portfolio; Delight identity and 2025 finance, EPIK references and finance; published MPE 2024 design existing 6 OPS,2 shutdown,3 fire/gas panels and planned cabinets, visual PDF unavailable. Three operator procurement exact outcome searches no verified award, 2131406/1 outside strict project membership; 3 receipt pairs from 2 generic unsigned DOCX, technical 7z pending. Outcome queue V3 cumulative 7 marked without verified outcome. Dashboard V9 1388/2299, 37 projects 2606 IDs, 8227 union. No DB changes or outreach; 55 evidence files verified."
-- "V23: new named downstream procurer KIP-Elektromontazh 3448057936 on Bidzaar 148-474,168-094,168-886; 2025 revenue 4.992bn profit274.445m, approximate creditors2.89bn; no main award proof. October22 Lemaevskaya visit updated facility, acceptance unknown. Read-only separate 7Z pilot: 11/11 originals captured/listed, 2 TZ revisions and KKO safely streamed, exact hash and text diff dates only. Other archive members and unsupported formats not fully processed, no DB import. Dashboard 1432/2299, 1707 full known packages; 58 evidence artifacts verified. No signed prices."
-- "V24: two precise external self-reported awards 2087534 and 2086884 by NTC PB (7701843266), chrome completion reported Apr28 2025; neither in frozen snapshot, no protocol or signed prices. Official municipal text confirms different buyers, New Resources designer/OVOS, 60t/y MCE GEE registry. 7 pilot captures, 2 archive listings, 6 inspected docs 5 full/1 partial; commisioning summary mixed with unrelated wastewater materials, do not count quantities without boundary validation. Dashboard 1447/2299, 1710 complete known packs, 61 source hashes verified."
-- "V25: judicial contracts reactor B KOS Peton/Centromontazhavtomatika 2023 approx 42.176m accepted 73.843m; excluded new-period values, electrical share unknown. PGU-250 KER/NPP Dvigatel 2025 ceiling 6m accepted 5.9991m, unpaid 0.9531m, related service separate, no exact tender award link. Prior strict priced electrical specs 20.077m unchanged. Catalyst 235 detailed BOQ title/zone blank, only 12/136 summary rows reconcile; exclude all quantity market estimates pending scope. Dashboard V12 1462/2299, 1713 full known packages, 64 source hashes verified."
-- "V26: 8 explicit archive notices added across 3 work groups: NKS/KKS ASUTP four, KOS CUP two, remote operator building two (separate until unified project proven). Four primary XLSX hash verified, 5 procedure/URL pairs. Two sets monitoring; repeated NKS label, different ITT; KKO cable24.5km/month trays2.3km/month. KOS survey payment 90% at45 days subject upstream, cap100d,10% retention, no advance. Plan332/333 linked to program only, 8 exact plan procurement links still unresolved. Three exact public outcomes searched with no verified award, ten cumulative queue statuses. V13 1488/2312 extracted, 1717 known packages; 40 cards/2614 project IDs/8231 union. 65 sources verified. No DB mutation."
-- "V27: five direct source pilot files captured/extracted, 2 XLSM KKS/NKS and 3 XLSX operator KOS. BOE 189/174 pieces and 2/2 sets customer supply, 130 pressure,75 gas,8 flow devices; 1064 BOQ rows. Not installed or contractor sales. 2094860/1 and owner reports tie stations to ethylene pipeline infrastructure; 2 GC and 5 automation installation contractors unidentified, actual launch unknown. KOS media design terms 90%45d cap100d,10% non-state expertise, schedule conflicting 2027 IFC vs 2026 completion, foreign header. Eight exact plan gaps remain. No new price or award. V14 dashboard and 67 source hashes verified."
-- "V28: 3 explicit older NKS/KKS notices added to project (7 total, 18/18 supported links, 3 complete known packs), no union increase. Two original information cards verify New Resources as prospective contract party, qualification999_08, payment60d cap100d,10% retention EPB, 2020–25 experience. Owner/registry sources identify UETP-NKNH operator, New Resources PD author and DIATEK industrial-safety expert, not GCs. Service 2136325/1 direct operator route; old/new branch uncertain. 2 GCs/5 automation contractors unresolved, standalone KIP 332/333 unresolved; 7Z password required, not requested; PDF screenshot cache miss. V15 1650/2312 extracted,1826 complete packs,68 source hashes. No new signed price or award."
-- "V29: Sept2 media reports Yamata termination notice and potential Esta replacement, not confirmed final redistribution; owner Aug24 65% progress, domestic ASUTP, launch 2028. External 223-FZ telecom 32615735696 secondary indexed contract price 2.287827m, initial1.875268m, registry51681000024260001110000, winner/primary EIS card unavailable; separate related service, no strict price admission. Five site recipients not contractor roles. Three primary DOCX hash verified (unsigned NDA, cancelled gas analyzer submission instructions, nonbinding bank comfort form), current 2146492 closes Nov27 11 MSK per catalog. No new primary award evidence. V16 coverage and 69 source hashes verified."
-- "V30: isolated pyxlsb1.0.10 external SSD pilot reads both active originals 2146492/1, 20 sheets,1950 detailed rows (PC705+401,CM551+293). Individual test quantities 24 dry transformers,82 MV outgoing cells,2039 LV outgoing cells,6 MV and36 LV UKRM,933 LV three-phase and21 MV motors,30564 LV cable lines,15263 dispatch signals. Not installed asset count; PC/CM overlap stages; 10/6 code-unit differences and 2 repeat keys. No positive direct cost in detail. Catalyst 6 shared original URLs captured; 4 archive listing only,2 XLSM generic forms, no OL/award. V17 coverage;72 sources verified. No shared runtime change or DB mutation."
-- "V31: 26 explicit PQ archive publication IDs across 7 sites,20 closed intake,6 cancelled,5 budget estimates; excluded condensate tank BSK false positive. NPP Neftekhimia new P0 2128160/1 original TOR 3 regulated 6kV BSK RP115/116, engineering only. DGP2 2103585/1–2 same RFQ,2 10kV UKRM 4015-HK-CU-001/002, DDP Sep1 2025, qualification107-03-03,45d. Two 7Z captured/listed,2 XLSX members reviewed. Historical corporate standard 25yr life,5yr warranty,24h service. Three outcome searches failed to establish award or price. V18 1708/2312; 41 cards/2618 project IDs/8231 union. 74 source hashes verified. No DB mutation."
-- "V32: six external evidence observations; NIPOM historic Tobolsk TP-204 integrated KTP with 150 kvar, VEDA exact AGHK 2101170/1 SKU BHE10004 and three noncomparable catalog price observations, Nyucon unverified candidate, Electronmash adjacent historical KRU supply. Two new exact outcome searches 2071747/1 and 2107092/1, no verified award or price, cumulative 15. 41 cards/8231 queue rows, 75 source artifact hashes verified. No DB writes, worker changes or new coverage measurement."
-- "V33 owner reprioritization: primary Sionika industrial portfolio, Voltаg/PQ/UPS background. New NKNH LSU RK704/705A 2124601/1 strict archive outside prior lexical queue; original 138439-byte DOCX CRC/SHA checked, unsigned generic contract only. HPP and NEXT own adjacent project references, TEKON FAT site, no inferred award. Reverified five prior Cryogenmash GPB primary details and GP635240 TOR; additional GP623442/633121 secondary only. 42 project cards, 8232 unique IDs including one manual scope overlay; 76 source hashes verified, coverage V18 not refreshed; exact plan links 332/333/817/823/1002 unresolved. No DB mutations or outreach."
-- "V34: six NKNH retrofit archive IDs and separate monomer LSU 2144333/1; four manual additions to priority queue, two new project cards, prior reserve preserved. Primary archived status prevails over secondary deadline discrepancies. Two secondary exact ID checks without awards. 44 cards, 8236 unique IDs, 78 map source hashes. Fresh V20 coverage all 30394: 16050 any extracted, 5632 all known no unverified, 3043/10555 supported URLs, 698 indexed; priority 8236: 5572 any, 1867 all known, 1776/2313 supported, 255 indexed. User requires percentage progress per iteration. No DB mutation or outreach."
-- "V35: KOS CCC compressor and hydrogen KCA2 original TOR source-specific technical scopes, cancelled, planned 2027; Coperion V5214 information card and blank price form; NKNH 2133075 change sheet pricing years 2027/28; packaged LSU 2124267 new ID. 11/14 original URLs SHA verified. Five new cards, 49 total; 8237 priority IDs, 80 map sources; no award or price. V21 whole corpus 16050 extracted/30394, 5632 all known, 3043/10555 supported, 702 indexed. Priority 5572 any/8237, 1867 complete known, 1776/2314 URLs, 257 indexed. DMZ external notices separate, exact plan links remain unresolved. No DB writes or outreach."
-- "V36: recovered all 3 missing V35 originals. NKNH PGU top-level ASUTP 18 systems, 1706.25 hours/year 2026-28 and 5118.75 total reference; exclude unrelated ZSNH worksheet. Kstovo drive service lot2 89 reference units, 26 UPP/63 VFD. KOS CRP5 2 lots, 92h each in 2028; source inconsistencies preserved. V5214 Unisab III/Omron CP1L and 3 COOPER Maestro Legend original scopes, five KOS budget estimates verified official announcements; no awards/prices. 8 pilot originals verified, no DB writes or outreach. 51 project cards, 8237 IDs, 82 map source hashes. V22 whole corpus 16095/30394 any extracted, 5640 all known, 3129/10555 supported, 715 indexed. Priority 5613/8237 any, 1875 complete known, 1862/2314 supported, 262 indexed."
-- "V37: 128 terminals RusVinyl (125 Siemens/3 ABB), source date conflict; KOS PGU 5802.622 reference hours 17 groups; AGHK metering four rounds one scope and two manufacturers via registry mirrors; ZSNH PS500/GPP1/2 service 2025–29; adjacent contractor references TESS and ASU Engineering. Six added cards, 57 total, 8238 IDs, 84 source hashes. V23 whole corpus 16095/30394 extracted, 5640 complete known, 3129/10555 links, 717 indexed. Priority 5613/8238, 1875 complete, 1862/2315 URLs, 263 indexed. Two pilot originals verified; 4 exact public checks no outcome, cumulative 22. No DB writes, no outreach."
+- 'Cryogenmash lifecycle channel: 2021 AGHK ASU EPC, lease and 22-year gas contract per group news with development
+  INN5001104523, manufacturer5001000066, IK2K self-reported 2023 contract. GP641489 2026 ASUTP supervision/commissioning
+  aggregator linked to exact project, prior observation not additive. CMA separate INNs; six 2026 ONLINECONTRACT
+  materials records NP1651040171, SIBUR end customer unproven. AO1658001164 court case A65-16979/2025 NKNH third
+  party and Profit subcontractor, no inferred exact scope.'
+- Technical report refreshed 150 new originals,1627 total,1620 extracted/7 review,82 new lexical findings. Five
+  exact source-bound cases:109 unique historical SAP RZA entries Kstovo (47 SEPAM,40 TOR200,6 VIP30,16 other/unspecified),
+  CRP114 KRU-2-10 turnkey relay panels, NKNH GPP1 two cells domestic IEC61850 RZA and vacuum breaker budget, Biaksplen
+  Gidrotorf BKTP, KOS Parus electro UPS/battery counts. Historical schedule not current inventory, cell count or
+  award.
+- Five original GPB list/detail pairs captured and hash-verified for Cryogenmash: GP635240 active, GP634651/GP633537/GP634648/GP641489
+    archived. GP641489 was prior secondary observation, not additional demand. Original detail archive deadline
+    label conflicts with list; use per-ID list deadlines. No price/award confirmed.
+- GP635240 original DOCX explicitly confirms AGHK title 6500, AO Cryogenmash organizer versus OOO Cryogenmash Development
+  customer in TZ; 64 numbered asset lines plus separate UPS line. Six LV sections, six transformers, two capacitor
+  installations, one 10kV soft starter, three AVR cabinets, nine compressors and four circulation pumps. Three years
+  experience, qualified staff, 12h departure and 24-48h arrival; no eligibility claim. Fourteen other selected links
+  closed connections, no bypass.
+- Automation subcontractor review: 9 entity candidates, 6 INNs resolved, 12 first-party portfolio observations through
+    Perm ASU Engineering, 7 exact related SIBUR archive identities with scope distinctions. MMUS 2024–27 electrical
+    installation and commissioning; Ural-Controls V521 automation and design; Neftekhimnaladka EP600, Reksoft Kstovo,
+    Gazproektinzhiniring BOV7, MIIMF; Naladchik and Sintegra identities pending. Separate similarly named Ufa ASU
+    company excluded. No awards inferred. Five historical retrofit publication crosschecks, 4 additional owner Telegram
+    crossreferences, including RP57 cancelled budget then solicitation; date typo retained. Company direct HTTP503;
+    indexed official pages reviewed.
+- Contractor finance and channel screening: six 2025 financial profiles, Sintegra INN 1651065401 matched by official
+    address and registry, 596 catalog publications (not contracts). Five unique procurement observations (one in
+    2026, four earlier); B2B-Center and ONLINECONTRACT. No primary award or end site verified. Naladchik and MIIMF
+    probable identities, old liquidated MIIMF kept separate. Court A43-27052/2023 historical 2018 RusVinyl subcontract
+    chain, not current. Other four independent procurement channels still unresolved. Archive worker observed 1855
+    captures and 1851 linked originals; extraction refresh pending.
+- Combined research continuation: processed 268 additional originals since 1627 baseline, total 1895, extracted
+    1888, review 7. Prior saved v5 technical evidence reconciled by SHA without repeating extraction. Full AGHK
+    historical annex parsed into 772 source rows, preserving duplicate candidate and UPS separation. Built industrial
+    demand matrix for 6477 distinct source IDs across 11 overlapping categories and 482 service-source candidates
+    with explicit site versus organizer-only evidence. Seven dated external project and supplier crosschecks, including
+    SVEL historical production distinct from later nomination and award unknown.
+- Contract-chain research: two court-confirmed subcontract specifications at ZSNH (electrical installation GPP1/2,
+    KRU10kV commissioning GF1), exact GF1 project match to 2076768/1 lot1, no award protocol. Historical AGHK temporary
+    power chain separately. Owner context recorded privately, distinct from verified public evidence; 2083626/1
+    and two subsequent AGHK service notices remain unverified as to outcome and causation. Technical extraction
+    refreshed to 1910 originals, 1903 extracted, 7 review.
+- Consolidated 17 project/program cards, 30 organizational/site coverage labels, 30 overlapping reviewed scope groups
+  (51 distinct publications), official 2026 plan with 1005 positions and 177 direct category rows, 37 priority rows,
+  and 177 qualification entries with 22 candidates. Verified two original XLSX hashes and map/report hashes. Current
+  Watchdog updated in place for 17 November deadline; hourly schedule unchanged. No inferred awards.
+- Screened all 37 priority plan rows against frozen archive and current source snapshot of 15 November 11:37 UTC: 29
+    rows with retained candidates, 155 distinct publication IDs, 6 current snapshot IDs; 25 manual scope judgments,
+    8 rejected pairs. No proven exact plan-to-contract link or award. Refreshed 162 originals to 2072, 2063 extracted,
+    2 partial, 7 review; three source-bound technical scopes. Resolved NPG SPR to Perm SIBUR-Khimprom project via
+    official regional order; 41 archive candidate publications and six distinct secondary missing from snapshot,
+    two false model-token positives excluded. Public role of Tekon Engineering confirmed. Added four programs, consolidated
+    21 unique project cards and versioned report v3.
+- Perm NPG SPR reviewed original three revisions 2141372/1-3 and heat trace 2141353/1, with exact source/hash links;
+  4 transformers 2500kVA, 1 MV RU, 53 LV raw quantity, 3 repeat tags, 1 lighting cabinet. Heat trace physical sheet
+  123 rows, 2 controller cabinets,10 system cabinets,44 boards. Approx37bn CAPEX separate; GSI-Giprokauchuk FEED
+  role, GSI group and local contractors separately documented; two external NPG notices outside snapshot, VSK existing
+  ID non-additive; eight unmatched plan lines rechecked, no exact links. Refreshed to 2087 originals, 2075 extracted,5
+  partial,7 review. Map/report v4 verified; no new awards, prices or DB writes.
+- Seven-site multi-block review: 45 archive records, six new cards, total 27. Four primary active originals, nine
+    anchors. GPB three primary list/detail pairs, two unresolved, one verified failed-no-bids protocol; three possible
+    cross-platform pairs not additive. Tomsk 2027 schedule and separate UPS confirmed.
+- STG seven scope groups, 14 archive IDs, verified LRT-40 workbook and owner program evidence, V6 map/report. Existing
+  technical SIBUR LaunchAgent now StartInterval 120s; original plist backed up; verified recurring successful runs.
+  Reconciled 313 DP resources/5073 chunks and embeddings with fresh read-only PostgreSQL export; repaired preservation
+  of first attestation hashes for two previously linked resources, four focused tests passed, code commit 241992cb.
+  Existing runner restarted with gate and backups, GPB recovery/archive worker unchanged. Verify post-restart actual
+  linkage/index progress before declaring recovery complete.
+- Six smaller-site program cards: Krasnoyarsk KZSK, Portenergo, PETF, YUP, NPP, S-Yug; 26 archive IDs and 2 external
+    observations (one non-electrical). Ownership conflicts corrected with 2023 Solvay transaction; JV boundary retained.
+    Commercial action register covers 33 cards, 12 P0,20 P1,1 P2. V7 map and report. DP repeat timeout recovered
+    by exact resource identities, 315 documents/5283 chunks, 4 recovered receipts; preserved old proofs. Shared
+    lock acquired safely on retry; existing runner resumed. GPB worktree cd52f39b increases bounded request timeout
+    180s and stats 60s. No direct DB writes.
+- Four judicial contract records, two manufacturer references, POLIEF RKOS fifth-source project package, map V8
+  with 34 cards. Legacy DP queue fully synchronized and exhausted 315/5283. Read-only readiness queue 639 technical
+  candidates, 97 P0; no new ingestion or mutation.
+- Exact read-only bridge validated 587 OOXML originals and 932 committed captures, 92 P0, 52 PDF review. Code c595c96f
+  and c334fb4a preserve verified DP receipt on explicit capture-only replay; 17 focused tests passed. Existing live
+  archive worker has cached earlier linker; no deployment or DP mutations yet. Verified Styrene qualification 3
+  original spreadsheets/12 anchors, owner-confirmed Pondera role, SNEMA-Service B2B exact buyer, NKU-Energo 29 panel
+  self report, 13 P0 qualification routes. V9 report.
+- V10: eight judicially identified contracts/specifications DGP2 and adjacent ZSNH objects; correction SPK Magistral
+    terminated 2024-09-06, replacement unknown; Delta debt separated from electrical market. Ener Holding 2025 financial
+    profile and historical procurement channel. Archive worker cooperatively restarted with updated linker, existing
+    index executor activated on verified 587 OOXML bridge; 16 targeted tests passed, first extraction 3 docs, gate
+    passed; first full index/link cycle not yet confirmed.
+- Archive first full cycles passed, replay idempotent; SNEMA cross-project evidence for 8 sites, SMK Northwest subcontract
+  matched by domain and SRO directory, two other contractor portfolios, 5 external procurement observations (2 outside
+  SIBUR excluded), 10 exact archive scope records, no replacement SPK Magistral established. 21 tailored P1/P2 actions,
+  all 34 cards now have specific actions. V11 sources and hashes checked.
+- V12 clean executive report rebuilt in 11 sections with 34 cards, 2597 unique project archive references and 37
+  SHA-verified source artifacts. Conditional plan band sums 36 rows 1.7–9.3bn, Q4 27 rows 0.8–4.8bn, direct-only
+  subset separate, not market estimates. Two 2024/25 exact specification prices total 20,077,047.23 RUB incl VAT;
+  debt/actual work/2023 estimates separate. Court verifies NaladkaPromService INN; new KOS InterSvet settlement,
+  scope and total price unknown. Hexene reached rated 50kt/y, RP50 and four planned substations confirmed. Official
+  Telegram 2111857/1 missing frozen archive documented. Existing workers running, no new DB action.
+- V13: refreshed all 27 official current list pages, 315 unique IDs, no observed changes vs earlier snapshot. Transport
+    interrupted before receipt; reconstructed from full saved raw set, verified hashes and parser; no duplicate
+    download. 20 selected current procedures and 7 original worksheets/8 URLs verified. Added KOS compressor control
+    2145701/1 and NKNH motor service 2145706/1 (2027–29, 12mo warranty), P0 routing now 15, 36 total. Exact plan
+    links remain unproven for 8 unmatched rows, plan936 subject match only. No new signed prices, no new DB writes.
+    V13 report refined in place of append-only history.
+- V14: owner-confirmed Progas general contractor and equipment supply VRU NKNH; two distinct procurement INNs, six
+    independent B2B records with exact title identifiers, finance profiles separate. MPE-230 design New Resources
+    and positive GEE, ASU Engineering self-reported audit not implementation. Court A57-10811/2026 propylene infrastructure
+    contract chain, 107586664 RUB VAT incl spec, 109044502.18 accepted goods, 50658494.82 overpayment; product scope
+    unknown, excluded from electrical amounts. Official Telegram 2111857/1 confirmed, live DB exact lookup absent,
+    portal card cache miss, eight neighbor notices matched archive. Four P0 actions updated. No DB mutations.
+- V15: six previously generic NPG external notices resolved to scope, three new notices, nine observations in six
+    families, eleven overall external NPG including pump and sewer packages. No additive revision counts, no signed
+    prices. TESS Amur named in Amur region plan 378-r dated 2026-06-02, temporary network program 2022–30; six group
+    portfolio scopes across four sites, finance identity checked. MChS fire license terminated; do not extrapolate.
+    Regional direct source 403 and PDF screenshot cache miss documented. Six commercial actions revised. AGHK AuCom
+    exact archive ID checked. No direct DB mutation.
+- Read-only exact coverage dashboard: 30394 SIBUR records, 6477 industrial, 2599 project unique, 8223 priority union,
+    853 overlap and 5624 profile outside mapped projects. 1100/2299 supported distinct priority URLs fully extracted;
+    1580/8223 all known URLs extracted without unverified marker, not final research result. 36 per-project counts;
+    2475/10188 active acquisition attempts, 57/587 linked archive index documents. Reusable report_sibur_coverage
+    module and dedup/unsupported/partial test passed. No DB mutation.
+- 'V16: verified external runtime after migration; coverage 1110/2299 priority URLs, 1189 remaining; exact 663 pending
+  P0 and 611 unattempted candidates. 5624 industrial publications outside project cards grouped once: 2169 explicit,
+  544 organizer affiliation, 103 multi, 2807 unresolved, 1 conflict. Source-bound priority queue code tested (6
+  pass), activation requested via cooperative STOP; no duplicate worker. Styrene 2146492/1 two primary XLSX reviewed,
+  2 lots, 09 Feb 2027–30 Jun 2028, 60d payment/factoring, qualifications; no signed price.'
+- 'V17: priority collector restarted, 15 new P0 originals hash-verified after activation; linkage still pending.
+  GPB prepare timeout reconciled read-only: 1375 exact existing receipts and 13 absent, no inflight, previous sync
+  unchanged. GPB code c0028180 reuses validated originals and increases bounded prepare timeout; 6 tests passed;
+  original agent restarted, first new sync not verified. Three qualification XLSX reviewed (two identical-text styrene
+  questionnaires, valve repair evaluation options), no asserted award or eligibility. Coverage 1119/2299, full known
+  priority packages 1585/8223. V17 45 source files verified.'
+- 'V18: first 15 P0 originals SHA256/technical extraction and exact DB 251 document-procedure pairs validated; 30
+  P0 captured since activation. Three AGPP SS370 project drawings establish AGPP design origin of 2118943/1; unknown
+  actual destination, remove only strict AGHK association, retain industrial candidate; 15 other interface candidates
+  flagged. MPE 2126540/1 Volga NIPITEK six new gas analyzers per OL. EP600 2080352/1 mechanical scope only. Coverage
+  V5 1134/2299, 1589 complete known packages; 36 cards 2598 strict project candidates, 5625 outside. GPB preparation
+  passed, first post-recovery transaction state recorded separately. No signed prices inferred. V18 report and six
+  artifacts validated.'
+- 'V19: six original XLSX reviewed, 16 thermal cabinets 2108203/1, 17 control posts 2083019/1, 104 terminal boxes
+  2108149/1, Progress Engineering directly named as requesting party in two forms; 2080616/1 indivisible cast-insulated
+  busduct DGP2 title4015; 2027–2030 AGHK heat tracing maintenance 2139286/1; 2140253/1 KOS relay protection maintenance.
+  Owner 2025 250MW and 2026 281MW same Lushnikovskaya PГУ, STGT reference commissioning, not service award. Coverage
+  1179/2299, 1617 all known packages; no inferred signed price. 49 sources verified. GPB recovery progressing.'
+- 'V20: seven original XLSX packages reviewed; NPG 29 units, 27 distinct tags, ASDKE title4810; MPE 23 NAMUR+3 boxes;
+  AGHK busbar protection and AGPP interface KRU; overlapping heat-tracing budget vs tender periods, DGP2 warehouse
+  RFQ author. 1481 GPB outcomes screened literal SIBUR names, zero candidate hits; 1290 best bids, 191 failed, 601
+  published participant names, no signed prices. Outcome research queue: 8223 IDs, 6856 closed intake incl 2151
+  P0, 1300 cancelled, 67 open as archived. Not all outstanding outcomes yet researched; no fabricated awards or
+  prices. V7 coverage 1314/2299, 985 remaining, 468 P0. V20 53 source artifacts verified.'
+- 'V21 parallel market research: official NKNH combined operator-room program >12bn first-stage investment, 113
+  of 193 to 7, 3 launched as of Feb17; 8 explicit archive IDs and 4 HVAC candidates outside strict membership. New
+  card 37, union 8227. SMK Severozapad INN7814292228 self-reported SNEMA subcontract, Progress explicitly named
+  OVOС executor DGP2. ABB 2144277/1 retrofit separate from plan 817. Four exact outcome IDs reviewed, no verified
+  award, all 8 plan gaps unresolved. Outcome queue V2 6860 closed, 2159 P0. Coverage 1329/2299. No DB mutation;
+  existing workers continue.'
+- 'V22: 3 distinct automation counterparties enriched, two named EP600 commissioning buyers from ASU Engineering
+  portfolio; Delight identity and 2025 finance, EPIK references and finance; published MPE 2024 design existing
+  6 OPS,2 shutdown,3 fire/gas panels and planned cabinets, visual PDF unavailable. Three operator procurement exact
+  outcome searches no verified award, 2131406/1 outside strict project membership; 3 receipt pairs from 2 generic
+  unsigned DOCX, technical 7z pending. Outcome queue V3 cumulative 7 marked without verified outcome. Dashboard
+  V9 1388/2299, 37 projects 2606 IDs, 8227 union. No DB changes or outreach; 55 evidence files verified.'
+- 'V23: new named downstream procurer KIP-Elektromontazh 3448057936 on Bidzaar 148-474,168-094,168-886; 2025 revenue
+  4.992bn profit274.445m, approximate creditors2.89bn; no main award proof. October22 Lemaevskaya visit updated
+  facility, acceptance unknown. Read-only separate 7Z pilot: 11/11 originals captured/listed, 2 TZ revisions and
+  KKO safely streamed, exact hash and text diff dates only. Other archive members and unsupported formats not fully
+  processed, no DB import. Dashboard 1432/2299, 1707 full known packages; 58 evidence artifacts verified. No signed
+  prices.'
+- 'V24: two precise external self-reported awards 2087534 and 2086884 by NTC PB (7701843266), chrome completion
+  reported Apr28 2025; neither in frozen snapshot, no protocol or signed prices. Official municipal text confirms
+  different buyers, New Resources designer/OVOS, 60t/y MCE GEE registry. 7 pilot captures, 2 archive listings, 6
+  inspected docs 5 full/1 partial; commisioning summary mixed with unrelated wastewater materials, do not count
+  quantities without boundary validation. Dashboard 1447/2299, 1710 complete known packs, 61 source hashes verified.'
+- 'V25: judicial contracts reactor B KOS Peton/Centromontazhavtomatika 2023 approx 42.176m accepted 73.843m; excluded
+  new-period values, electrical share unknown. PGU-250 KER/NPP Dvigatel 2025 ceiling 6m accepted 5.9991m, unpaid
+  0.9531m, related service separate, no exact tender award link. Prior strict priced electrical specs 20.077m unchanged.
+  Catalyst 235 detailed BOQ title/zone blank, only 12/136 summary rows reconcile; exclude all quantity market estimates
+  pending scope. Dashboard V12 1462/2299, 1713 full known packages, 64 source hashes verified.'
+- 'V26: 8 explicit archive notices added across 3 work groups: NKS/KKS ASUTP four, KOS CUP two, remote operator
+  building two (separate until unified project proven). Four primary XLSX hash verified, 5 procedure/URL pairs.
+  Two sets monitoring; repeated NKS label, different ITT; KKO cable24.5km/month trays2.3km/month. KOS survey payment
+  90% at45 days subject upstream, cap100d,10% retention, no advance. Plan332/333 linked to program only, 8 exact
+  plan procurement links still unresolved. Three exact public outcomes searched with no verified award, ten cumulative
+  queue statuses. V13 1488/2312 extracted, 1717 known packages; 40 cards/2614 project IDs/8231 union. 65 sources
+  verified. No DB mutation.'
+- 'V27: five direct source pilot files captured/extracted, 2 XLSM KKS/NKS and 3 XLSX operator KOS. BOE 189/174 pieces
+  and 2/2 sets customer supply, 130 pressure,75 gas,8 flow devices; 1064 BOQ rows. Not installed or contractor sales.
+  2094860/1 and owner reports tie stations to ethylene pipeline infrastructure; 2 GC and 5 automation installation
+  contractors unidentified, actual launch unknown. KOS media design terms 90%45d cap100d,10% non-state expertise,
+  schedule conflicting 2027 IFC vs 2026 completion, foreign header. Eight exact plan gaps remain. No new price or
+  award. V14 dashboard and 67 source hashes verified.'
+- 'V28: 3 explicit older NKS/KKS notices added to project (7 total, 18/18 supported links, 3 complete known packs),
+  no union increase. Two original information cards verify New Resources as prospective contract party, qualification999_08,
+  payment60d cap100d,10% retention EPB, 2020–25 experience. Owner/registry sources identify UETP-NKNH operator,
+  New Resources PD author and DIATEK industrial-safety expert, not GCs. Service 2136325/1 direct operator route;
+  old/new branch uncertain. 2 GCs/5 automation contractors unresolved, standalone KIP 332/333 unresolved; 7Z password
+  required, not requested; PDF screenshot cache miss. V15 1650/2312 extracted,1826 complete packs,68 source hashes.
+  No new signed price or award.'
+- 'V29: Sept2 media reports Yamata termination notice and potential Esta replacement, not confirmed final redistribution;
+  owner Aug24 65% progress, domestic ASUTP, launch 2028. External 223-FZ telecom 32615735696 secondary indexed contract
+  price 2.287827m, initial1.875268m, registry51681000024260001110000, winner/primary EIS card unavailable; separate
+  related service, no strict price admission. Five site recipients not contractor roles. Three primary DOCX hash
+  verified (unsigned NDA, cancelled gas analyzer submission instructions, nonbinding bank comfort form), current
+  2146492 closes Nov27 11 MSK per catalog. No new primary award evidence. V16 coverage and 69 source hashes verified.'
+- 'V30: isolated pyxlsb1.0.10 external SSD pilot reads both active originals 2146492/1, 20 sheets,1950 detailed
+  rows (PC705+401,CM551+293). Individual test quantities 24 dry transformers,82 MV outgoing cells,2039 LV outgoing
+  cells,6 MV and36 LV UKRM,933 LV three-phase and21 MV motors,30564 LV cable lines,15263 dispatch signals. Not installed
+  asset count; PC/CM overlap stages; 10/6 code-unit differences and 2 repeat keys. No positive direct cost in detail.
+  Catalyst 6 shared original URLs captured; 4 archive listing only,2 XLSM generic forms, no OL/award. V17 coverage;72
+  sources verified. No shared runtime change or DB mutation.'
+- 'V31: 26 explicit PQ archive publication IDs across 7 sites,20 closed intake,6 cancelled,5 budget estimates; excluded
+  condensate tank BSK false positive. NPP Neftekhimia new P0 2128160/1 original TOR 3 regulated 6kV BSK RP115/116,
+  engineering only. DGP2 2103585/1–2 same RFQ,2 10kV UKRM 4015-HK-CU-001/002, DDP Sep1 2025, qualification107-03-03,45d.
+  Two 7Z captured/listed,2 XLSX members reviewed. Historical corporate standard 25yr life,5yr warranty,24h service.
+  Three outcome searches failed to establish award or price. V18 1708/2312; 41 cards/2618 project IDs/8231 union.
+  74 source hashes verified. No DB mutation.'
+- 'V32: six external evidence observations; NIPOM historic Tobolsk TP-204 integrated KTP with 150 kvar, VEDA exact
+  AGHK 2101170/1 SKU BHE10004 and three noncomparable catalog price observations, Nyucon unverified candidate, Electronmash
+  adjacent historical KRU supply. Two new exact outcome searches 2071747/1 and 2107092/1, no verified award or price,
+  cumulative 15. 41 cards/8231 queue rows, 75 source artifact hashes verified. No DB writes, worker changes or new
+  coverage measurement.'
+- 'V33 owner reprioritization: primary Sionika industrial portfolio, Voltаg/PQ/UPS background. New NKNH LSU RK704/705A
+  2124601/1 strict archive outside prior lexical queue; original 138439-byte DOCX CRC/SHA checked, unsigned generic
+  contract only. HPP and NEXT own adjacent project references, TEKON FAT site, no inferred award. Reverified five
+  prior Cryogenmash GPB primary details and GP635240 TOR; additional GP623442/633121 secondary only. 42 project
+  cards, 8232 unique IDs including one manual scope overlay; 76 source hashes verified, coverage V18 not refreshed;
+  exact plan links 332/333/817/823/1002 unresolved. No DB mutations or outreach.'
+- 'V34: six NKNH retrofit archive IDs and separate monomer LSU 2144333/1; four manual additions to priority queue,
+  two new project cards, prior reserve preserved. Primary archived status prevails over secondary deadline discrepancies.
+  Two secondary exact ID checks without awards. 44 cards, 8236 unique IDs, 78 map source hashes. Fresh V20 coverage
+  all 30394: 16050 any extracted, 5632 all known no unverified, 3043/10555 supported URLs, 698 indexed; priority
+  8236: 5572 any, 1867 all known, 1776/2313 supported, 255 indexed. User requires percentage progress per iteration.
+  No DB mutation or outreach.'
+- 'V35: KOS CCC compressor and hydrogen KCA2 original TOR source-specific technical scopes, cancelled, planned 2027;
+  Coperion V5214 information card and blank price form; NKNH 2133075 change sheet pricing years 2027/28; packaged
+  LSU 2124267 new ID. 11/14 original URLs SHA verified. Five new cards, 49 total; 8237 priority IDs, 80 map sources;
+  no award or price. V21 whole corpus 16050 extracted/30394, 5632 all known, 3043/10555 supported, 702 indexed.
+  Priority 5572 any/8237, 1867 complete known, 1776/2314 URLs, 257 indexed. DMZ external notices separate, exact
+  plan links remain unresolved. No DB writes or outreach.'
+- 'V36: recovered all 3 missing V35 originals. NKNH PGU top-level ASUTP 18 systems, 1706.25 hours/year 2026-28 and
+  5118.75 total reference; exclude unrelated ZSNH worksheet. Kstovo drive service lot2 89 reference units, 26 UPP/63
+  VFD. KOS CRP5 2 lots, 92h each in 2028; source inconsistencies preserved. V5214 Unisab III/Omron CP1L and 3 COOPER
+  Maestro Legend original scopes, five KOS budget estimates verified official announcements; no awards/prices. 8
+  pilot originals verified, no DB writes or outreach. 51 project cards, 8237 IDs, 82 map source hashes. V22 whole
+  corpus 16095/30394 any extracted, 5640 all known, 3129/10555 supported, 715 indexed. Priority 5613/8237 any, 1875
+  complete known, 1862/2314 supported, 262 indexed.'
+- 'V37: 128 terminals RusVinyl (125 Siemens/3 ABB), source date conflict; KOS PGU 5802.622 reference hours 17 groups;
+  AGHK metering four rounds one scope and two manufacturers via registry mirrors; ZSNH PS500/GPP1/2 service 2025–29;
+  adjacent contractor references TESS and ASU Engineering. Six added cards, 57 total, 8238 IDs, 84 source hashes.
+  V23 whole corpus 16095/30394 extracted, 5640 complete known, 3129/10555 links, 717 indexed. Priority 5613/8238,
+  1875 complete, 1862/2315 URLs, 263 indexed. Two pilot originals verified; 4 exact public checks no outcome, cumulative
+  22. No DB writes, no outreach.'
 current_stage: sionika_kip_valve_skdn
 target_report_date: 2026-11-17
 remaining:
-- Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification, ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November even with explicitly marked evidence gaps.
-- Continue broad SIBUR research, Cryogenmash/AGHK outsourced plant lifecycle, NKNH/Kstovo
-  retrofit evidence and contractor 2024–26 purchases. Separate UPS channel, reserve
-  only. Verify CMA roles, awards/prices and completion.
-- Existing worker untouched; 29 in-period support publications not imported, missing
-  links and awards. Fresh shared backup/gate/replay before DB writes; DP blocked.
+- Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification,
+  ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November
+  even with explicitly marked evidence gaps.
+- Continue broad SIBUR research, Cryogenmash/AGHK outsourced plant lifecycle, NKNH/Kstovo retrofit evidence and
+  contractor 2024–26 purchases. Separate UPS channel, reserve only. Verify CMA roles, awards/prices and completion.
+- Existing worker untouched; 29 in-period support publications not imported, missing links and awards. Fresh shared
+  backup/gate/replay before DB writes; DP blocked.
 last_verified_commit: fd0819f5
 test_results:
   focused: 3
@@ -314,8 +467,7 @@ test_results:
     sfera-stroy-dossier-v1.json_sha256: 7c7f7ecc9eea23d4cd8429b4d80e5196b1b3d1b8e8703e29a4928325772be329
     service-demand-review-v1.json_sha256: e4eae2a93c177aafc66f356016f269e0e7ddcb764f318b6989c3bc894a332765
     additional-project-channel-observations-v1.json_sha256: 2976ba35ef5dbcc0d4ca8cc08b7fce6722777497268bd5cbdbfe333e20549d49
-    verification: read-only evidence review, no runtime code changed; prior tests
-      retained
+    verification: read-only evidence review, no runtime code changed; prior tests retained
   contractor_channel_review:
     artifacts:
       pondera-industry-dossier-v1.json: 7da9c3bfc7de0584eac8f1ff817f6d71f8e30d9b61be1513aff9d6c742fae7af
@@ -326,8 +478,7 @@ test_results:
     entities: 4
     new_exact_bound_originals: 3
     unresolved_identity_url_pairs: 1212
-    verification: Read-only research and artifact checks passed; no new production
-      code.
+    verification: Read-only research and artifact checks passed; no new production code.
   external_channel_review_20261115:
     artifacts:
       contractor-procurement-channels-v2.json: ea333883049bfdca42fbdb1174cfbcb8862420b7ac08517972440dcb5b0edfff
@@ -336,8 +487,8 @@ test_results:
     unique_ids: 23
     entities: 6
     new_ids: 9
-    verification: Unique ID and legal entity joins checked; no code change; external
-      pages manually reviewed, original bytes not archived.
+    verification: Unique ID and legal entity joins checked; no code change; external pages manually reviewed, original
+      bytes not archived.
   ups_expansion:
     artifacts:
       sales-map-v4.json: 76476a7231ed3947ed0b809e5f1ab60fb813edafae6c80f4145e8398f88140e9
@@ -412,8 +563,7 @@ test_results:
     review: 6
     new_originals: 135
     selected_cases: 4
-    verification: Read-only page replay and source-bound artifact checks passed; no
-      code changes.
+    verification: Read-only page replay and source-bound artifact checks passed; no code changes.
   crp2_project_chain_and_reconciliation:
     chain_sha256: b8e0b09c2cfe22b871b21ee3c9493971b3d8a25477830c8f3b46e339041d92a7
     reconciliation_sha256: 1fb77d73d93791dd4e0797565850e0b0c4252b0685596d80c35e1621442f60c3
@@ -423,8 +573,7 @@ test_results:
     original_queue_urls: 926
     unresolved_identity_url_pairs: 1153
     restored_identity_url_pairs: 59
-    verification: Verified exact source refs and original SHA; read-only; no production
-      code changes.
+    verification: Verified exact source refs and original SHA; read-only; no production code changes.
   energy_chain_review:
     sha256: 7a7fe5c0e5c6c9cef9c20df9cd86c7f704adc78d84eb5ca87526305bf16db93e
     groups: 12
@@ -432,8 +581,7 @@ test_results:
     linked_publications: 14
     missing_identity_url_pairs: 48
     external_observations: 3
-    verification: Read-only exact source refs and SHA validation. External public
-      source review. No code or DB changes.
+    verification: Read-only exact source refs and SHA validation. External public source review. No code or DB changes.
   tatem_energoprogress_procurement_review:
     sha256: ae356e06171a2da4c2adcf93124c899b10e25438291ebe636424397576ef9536
     external_unique_publications: 12
@@ -442,8 +590,8 @@ test_results:
     role_observations: 3
     pguservice_archive_verified: true
     pguservice_exact_originals: 0
-    verification: Full catalog rows checked, distinct IDs and archive join validated.
-      No original external procurement bytes or signed awards, no code/DB changes.
+    verification: Full catalog rows checked, distinct IDs and archive join validated. No original external procurement
+      bytes or signed awards, no code/DB changes.
   cryogenmash_cma_asset_review:
     contractor_review_sha256: 195b6365438d3e63d7923281fd27ad8c6768dfdae039b74f8ce28153cf36e71e
     model_evidence_sha256: 52563411af3345635810f2592fa0f8ef27b30c2eaea870224eacd24479b24b62
@@ -455,8 +603,7 @@ test_results:
     review: 7
     selected_document_scopes: 5
     asset_schedule_entries: 109
-    verification: Read-only exact-reference, original SHA and distinct asset IDs checked.
-      No code or DB mutation.
+    verification: Read-only exact-reference, original SHA and distinct asset IDs checked. No code or DB mutation.
   cryogenmash_gpb_primary:
     review_sha256: aa661c8abb6804211d05029e5d032fa414b8401f559f37846f72a7b5ba388533
     detail_receipts_sha256: bdf8a38586471c83a0ee82562604f353cbf74630961b241e6dacb70392d7c652
@@ -468,7 +615,8 @@ test_results:
     selected_document_links: 15
     captured_originals: 1
     source_quote_anchors_verified: 10
-    verification: Replayed saved list and detail SHA for all five IDs and original DOCX SHA; 10 exact quote anchors verified. No production code or DB mutation.
+    verification: Replayed saved list and detail SHA for all five IDs and original DOCX SHA; 10 exact quote anchors
+      verified. No production code or DB mutation.
   automation_contractor_roles:
     artifact_sha256: 70fa9cc41839f2b5112756fd03fd845bd8e61ab46e4be5a3eb5ccc1ad2f4e32c
     entity_candidates: 9
@@ -476,7 +624,8 @@ test_results:
     portfolio_observations: 12
     related_archive_ids: 7
     retrofit_crosschecks: 5
-    verification: Existing frozen snapshot identity joins and source reference fields checked; company self-reports and archive records kept separate, no primary contract awards. No production code or DB change.
+    verification: Existing frozen snapshot identity joins and source reference fields checked; company self-reports
+      and archive records kept separate, no primary contract awards. No production code or DB change.
   contractor_finance_channels:
     artifact_sha256: 2480d94be8c9de037a0227361ddea20cbbb5145706aa1077acd66e945808e88c
     financial_profiles: 6
@@ -486,7 +635,8 @@ test_results:
     independent_procurement_observations: 5
     in_period_observations: 1
     archive_linked_originals_observed: 1851
-    verification: Read back artifact, validated prior SHA and unique platform IDs. Secondary indexed records and company self-report only, no primary award, no DB mutation.
+    verification: Read back artifact, validated prior SHA and unique platform IDs. Secondary indexed records and
+      company self-report only, no primary award, no DB mutation.
   combined_industrial_research:
     original_documents: 1895
     extracted: 1888
@@ -494,7 +644,8 @@ test_results:
     industrial_publications: 6477
     service_publications: 482
     schedule_rows: 772
-    verification: Existing extractor finished; five private artifact hashes verified; exact source references retained; no new awards or prices, no DB mutation by research.
+    verification: Existing extractor finished; five private artifact hashes verified; exact source references retained;
+      no new awards or prices, no DB mutation by research.
     artifacts:
       installed-base-model-evidence-v5.json: 46df5baf21c00105f7cd780ec155b1a99abde8fab67f060b514a93f5746e47ea
       aghk-electrical-schedule-full-v1.json: 8aafa642eb5601f8c486e78e3b7e1edd1c7ad6e72ad1d8e76be4fb8ff0b760c8
@@ -511,7 +662,9 @@ test_results:
     technical_originals: 1910
     extracted: 1903
     review: 7
-    verification: Exact frozen archive identifiers, two court case excerpts and separate contract values, source-hash checked. Public award protocols and full court copies not yet obtained. Private owner context kept separate. No production DB modification.
+    verification: Exact frozen archive identifiers, two court case excerpts and separate contract values, source-hash
+      checked. Public award protocols and full court copies not yet obtained. Private owner context kept separate.
+      No production DB modification.
   consolidated_project_deadline:
     deadline: 2026-11-17
     watchdog: updated_existing_hourly_task
@@ -551,7 +704,8 @@ test_results:
       additional-site-projects-review-v1.json: 3255ffa0706853c7f704b67043f024efe6c397fe0a7b71f0e0a48f7a9b2f5ec4
       consolidated-project-map-v3.json: ab659b91cc98281e108ecc2502c15045a22c65e7d1d46cc22811c12d4e533960
       consolidated-project-report-v3.md: cfd79a917a68aa4d04e2723dd34055ace8d6ba729852927042283223674e2013
-    verification: All map source artifact hashes replayed, exact technical original and text SHA linked, public indexed PDF text used with screenshot cache miss; no new verified contract or DB writes.
+    verification: All map source artifact hashes replayed, exact technical original and text SHA linked, public
+      indexed PDF text used with screenshot cache miss; no new verified contract or DB writes.
   perm_package_review:
     original_documents: 2087
     extracted: 2075
@@ -562,7 +716,8 @@ test_results:
     contractor_role_records: 5
     new_external_npg_observations: 2
     unmatched_plan_rechecked: 8
-    verification: map sources SHA replayed, original spreadsheet rows validated; public plan PDF screenshot cache miss, indexed text used; no verified award.
+    verification: map sources SHA replayed, original spreadsheet rows validated; public plan PDF screenshot cache
+      miss, indexed text used; no verified award.
     artifacts:
       npg-spr-package-evidence-v2.json: a104d89ba6d5cabf3c498cd9d27ab76f9cca776f5952ef989c985620ceeb1114
       perm-contractor-and-external-package-review-v1.json: 242d246bd465699950963b8893b942b347c013f195e3914ccac359210eb23404
@@ -593,7 +748,7 @@ test_results:
     dp_fresh_evidence_sha256: 83dac93e3a6cd2668625161c6905d3531a94d94329d5b362a35edef6d2b06876
     dp_preserved_proof_manifest_sha256: 60c30a2f298b3e8ed6033b807d651bc95f9b0fc217ddaeb733222bc38e4a88db
     dp_last_observed_status: running
-    dp_last_observed_step: "process_sibur_document_batch"
+    dp_last_observed_step: process_sibur_document_batch
     focused_tests: 4_passed
     artifacts:
       stg-site-programs-review-v1.json: dfdcfa0e15a0a8738cc0769b6ed7e37e791dcaa96cc9a074bfcea9d36cef70a7
@@ -613,7 +768,7 @@ test_results:
     dp_manifest_sha256: fd9ca67231f8eea38b5a3319c58a0f6b00760dd1828e790536fa86dd82f6f261
     dp_runner_commit: cd52f39b
     dp_last_status: running
-    dp_last_step: "MI backup"
+    dp_last_step: MI backup
     artifacts:
       small-site-programs-review-v1.json: ab975a6d04cd010dd402b23feec8f217b2c2eda1be16faedca76e2305cc497cf
       consolidated-project-map-v7.json: 4c21735fe6046b78339b9daa444847fe075760ce765a106631dfae7209127905
@@ -661,9 +816,12 @@ test_results:
     archive_bridge_ready: 587
     archive_worker_pid: 30277
     executor_status: running
-    executor_step: "MI backup"
+    executor_step: MI backup
     archive_indexed_last_verified: 0
-    server_last_verified: {"documents": 318, "chunks": 5303, "embeddings": 5303}
+    server_last_verified:
+      documents: 318
+      chunks: 5303
+      embeddings: 5303
     first_extraction_documents: 3
     targeted_tests: 16_passed
     gpb_executor_commit: a3b3473e
@@ -681,7 +839,10 @@ test_results:
     archive_scope_records: 10
     archive_index_cycles: 3
     archive_indexed: 9
-    server: {"documents": 324, "chunks": 5352, "embeddings": 5352}
+    server:
+      documents: 324
+      chunks: 5352
+      embeddings: 5352
     executor_status: running
     archive_status: running
     technical_originals: 2311
@@ -696,7 +857,10 @@ test_results:
     source_artifacts: 37
     priced_specifications_rub: 20077047.23
     archive_indexed: 29
-    server: {"documents": 344, "chunks": 5614, "embeddings": 5614}
+    server:
+      documents: 344
+      chunks: 5614
+      embeddings: 5614
     executor_status: running
     archive_status: running
     technical_originals: 2356
@@ -717,7 +881,10 @@ test_results:
     source_artifacts: 38
     unmatched_plan_rows: 8
     archive_indexed: 38
-    server: {"documents": 353, "chunks": 5859, "embeddings": 5859}
+    server:
+      documents: 353
+      chunks: 5859
+      embeddings: 5859
     executor_status: running
     archive_status: running
     technical_originals: 2371
@@ -733,10 +900,13 @@ test_results:
     external_progas_notices: 6
     telegram_archive_crosschecks: 8
     p0_actions_refined: 4
-    general_scope_specification_rub: 107586664.00
+    general_scope_specification_rub: 107586664.0
     electrical_scope_verified: false
     archive_indexed: 50
-    server: {"documents": 365, "chunks": 6166, "embeddings": 6166}
+    server:
+      documents: 365
+      chunks: 6166
+      embeddings: 6166
     executor_status: running
     archive_status: running
     technical_originals: 2401
@@ -754,7 +924,10 @@ test_results:
     tess_portfolio_roles: 6
     actions_refined: 6
     archive_indexed: 54
-    server: {"documents": 369, "chunks": 6376, "embeddings": 6376}
+    server:
+      documents: 369
+      chunks: 6376
+      embeddings: 6376
     executor_status: running
     archive_status: running
     technical_originals: 2416
@@ -797,8 +970,11 @@ test_results:
     site_unresolved_or_conflict: 2808
     multi_site: 103
     tests: 6_passed
-    server: {"documents": 388, "chunks": 7275, "embeddings": 7275}
-    archive_step: "wait shared mutation lock"
+    server:
+      documents: 388
+      chunks: 7275
+      embeddings: 7275
+    archive_step: wait shared mutation lock
     artifacts:
       project-coverage-dashboard-v3.json: 959c26a5c74295773804e5d4c906bc6ca1997e61b76138eff0df2cc8a6378816
       remaining-priority-work-v1.json: fb948fd592cbf8cc65b3d8a27d9f5ce579a55eb81af2e872d545d26034a19a86
@@ -812,12 +988,15 @@ test_results:
     gpb_previous_exact_receipts: 1375
     gpb_pending_originals: 13
     gpb_status: running
-    gpb_step: "capture archive detail batch"
+    gpb_step: capture archive detail batch
     priority_supported_urls_extracted: 1119
     priority_supported_urls_total: 2299
     priority_all_known_packages: 1585
     archive_indexed: 79
-    index_server: {"documents": 397, "chunks": 7287, "embeddings": 7287}
+    index_server:
+      documents: 397
+      chunks: 7287
+      embeddings: 7287
     source_artifacts: 45
     tests: 6_passed
     artifacts:
@@ -832,7 +1011,7 @@ test_results:
     exact_document_procedure_pairs: 251
     p0_captured: 30
     gpb_status: running
-    gpb_step: "capture archive detail batch"
+    gpb_step: capture archive detail batch
     gpb_cycles: 134
     project_publications: 2598
     priority_union: 8223
@@ -840,7 +1019,10 @@ test_results:
     priority_supported_urls_total: 2299
     priority_all_known_packages: 1589
     source_artifacts: 46
-    index_server: {"documents": 412, "chunks": 7338, "embeddings": 7338}
+    index_server:
+      documents: 412
+      chunks: 7338
+      embeddings: 7338
     archive_indexed: 97
     artifacts:
       priority-original-scope-review-v1.json: 7167859f76f971365e82b4f6dd6d983f365f04fe2ee6a44a2f4fe6b1927bc461
@@ -860,7 +1042,10 @@ test_results:
     gpb_cycles: 135
     gpb_verified_outcomes: 732
     archive_indexed: 130
-    index_server: {"documents": 445, "chunks": 7495, "embeddings": 7495}
+    index_server:
+      documents: 445
+      chunks: 7495
+      embeddings: 7495
     original_files_processed: 2550
     artifacts:
       priority-equipment-and-service-review-v2.json: e72e0903e5588b2e079739d554ab2f26e90afae83e06639f585c6311948df4d7
@@ -884,7 +1069,10 @@ test_results:
     gpb_status: running
     gpb_cycles: 141
     archive_indexed: 202
-    index_server: {"documents": 517, "chunks": 8155, "embeddings": 8155}
+    index_server:
+      documents: 517
+      chunks: 8155
+      embeddings: 8155
     original_files_processed: 2685
     artifacts:
       priority-package-and-outcome-review-v1.json: 0b31b3f842c7e1879cc7423a51095f6540790723335448cc993f39f7105e5c78
@@ -1144,7 +1332,8 @@ test_results:
     project_cards: 64
     priority_union: 8244
     source_artifacts: 86
-    completed_stage: "SKDN OTR 2112381/1, Tekon clause, KIP groups and ZRA/PSV; 19 listed vs minimum 20; ENER court chain revalidated not new; plan links unresolved."
+    completed_stage: SKDN OTR 2112381/1, Tekon clause, KIP groups and ZRA/PSV; 19 listed vs minimum 20; ENER court
+      chain revalidated not new; plan links unresolved.
     artifacts:
       sionika-kip-valve-skdn-v1.json: 2f3dc895390261f4d918cc59e6d0f0df97aa52044b454c2288d9c9da0cb7fb8d
       consolidated-project-map-v38.json: bab8a29d62e89fab45cc3d6f173fa843a58469351d34a71d7c85a886e406ed1f
@@ -1156,7 +1345,8 @@ test_results:
     project_cards: 66
     priority_union: 8244
     source_artifacts: 88
-    completed_stage: "Motor and AUMA reference rows, Tomsk division of supplies, AGHK PNR qualification. No new award or price."
+    completed_stage: Motor and AUMA reference rows, Tomsk division of supplies, AGHK PNR qualification. No new award
+      or price.
     artifacts:
       sionika-active-service-v1.json: 262a77ef78be1eda2de75a0bf47720c49c08b420306b07dc443609774f16c4ee
       consolidated-project-map-v39.json: a15b98edb7704f32289960c57d1df4ea3301e5fecd63ce4bc2587d4f1d89601e
@@ -1168,7 +1358,8 @@ test_results:
     project_cards: 66
     priority_union: 8244
     source_artifacts: 90
-    completed_stage: "Corpus audit, separate 223-FZ comparator prices and contractor roles; no exact awards. Corrected project IDs to 2659."
+    completed_stage: Corpus audit, separate 223-FZ comparator prices and contractor roles; no exact awards. Corrected
+      project IDs to 2659.
     artifacts:
       sionika-contract-corpus-audit-v1.json: 2327f270b4240fec91f13cd858f532d44f8b3743b6f1f972725775468edebc1b
       consolidated-project-map-v40.json: 69933d2d8ef37c97853a809a78c3cc2b7b70dfd3e414901450f5049814694dca
@@ -1180,7 +1371,8 @@ test_results:
     project_cards: 66
     priority_union: 8244
     source_artifacts: 92
-    completed_stage: "Screened 2017 archive originals; 1921 text readable; reviewed 25 hits, no verified awards; 96 unreadable."
+    completed_stage: Screened 2017 archive originals; 1921 text readable; reviewed 25 hits, no verified awards;
+      96 unreadable.
     artifacts:
       sionika-priority-outcome-screen-v1.json: 5fecd3b2392d0e7efea18cad646479e0e965fb38567e455b058fae7d46d62812
       consolidated-project-map-v41.json: 0daefd4f8a12dd7327708d2ff32aa7ac0705b1a6f4a1a26cc5139d05145a4826
@@ -1190,22 +1382,53 @@ test_results:
       consolidated-project-report-v41.md: 70e37971f5a08faaeee826520b9821f73e2036735f2ee8d9ddd79122bdc39928
   sionika_v42_pending:
     status: blocked
-    observed_date: "2026-11-16"
+    observed_date: '2026-11-16'
     last_verified_map: consolidated-project-map-v41.json
     last_verified_commit: e2cef1ff
     coverage_dashboard: project-coverage-dashboard-v27.json
     findings:
-      - "2145701/1 is budget estimate per SIBUR Telegram https://t.me/s/siburholdingprocurement?before=927; original deadline Nov13, Kontur Nov16 14 MSK https://zakupki.kontur.ru/IS87179384; Energybase shows similar title Nov20 but precise ID not established. Do not infer extension or a committed order."
-      - "2139750/1 is gas safety emergency rescue and gas laboratory control, not gas analyzer supply; exclude from core. Official announcement https://t.me/s/siburholdingprocurement; Kontur https://zakupki.kontur.ru/IS88434448 deadline Nov24 15 MSK."
-      - "Five active candidate deadlines rechecked, not actual eligibility: 2145723/1 Nov17 11 MSK https://zakupki.kontur.ru/IS87286268; 2146167/1 Nov18 14 MSK https://zakupki.kontur.ru/IS88558503; 2146194/1 Nov18 15 MSK https://zakupki.kontur.ru/IS88650131; 2145706/1 Nov23 11 MSK https://energybase.ru/tender/01a1afc8-37e7-73e3-95aa-284a8792580d; 2146492/1 Nov27 11 MSK https://www.sibur.ru/ru/procurement/buy/."
-      - "NPP TEC self-reported RemTEK actuator references Tomskneftekhim 2004-2024, STG 2024, AGHK 2020-2023; PDF text-only https://www.npptec.ru/upload/iblock/08c/ts50ps6k0ihb8s2hd7s7203a7hxhdl1r.pdf; screenshot unavailable; not verified award or AUMA service winner."
-      - "SOV-NKNH 223-FZ comparator prices, separate from corporate exact awards: 51651052730260000540000, 18.08.2026, maintenance of 761 COMPACT IC ion chromatographs, 218502 RUB https://zakupki.kontur.ru/D51651052730260000540000; 51651052730260000580000, 03.09.2026, 650 m cable AVVGng(A)-LS 4x25, 160439.76 RUB https://zakupki.kontur.ru/D51651052730260000580000; adjacent valve 51651052730260000470000, 06.07.2026, KMO301NZH50NZU 1 pc 345845.60 RUB https://zakupki.kontur.ru/D51651052730260000470000. Secondary EIS mirror, supplier identity masked; deduplicate against V40 by registry ID."
-      - "V40 existing four comparator prices independently rechecked on Kontur exact register/notice pages; winner names masked. Two additional core comparators above and one adjacent; not NKNH direct spend. NPP TEC identity verified INN 7020037139 official https://npptec.ru/contacts/ ; Surgut service center and regulated product references from official site, not AUMA authorization."
-    blocker: "ARC commands timed out; RDC Mac mini online, archive and technical workers exist, but runtime file stat and git status hang. No new coverage measurement. Do not restart workers or mutate DB without gate."
+    - 2145701/1 is budget estimate per SIBUR Telegram https://t.me/s/siburholdingprocurement?before=927; original
+      deadline Nov13, Kontur Nov16 14 MSK https://zakupki.kontur.ru/IS87179384; Energybase shows similar title Nov20
+      but precise ID not established. Do not infer extension or a committed order.
+    - 2139750/1 is gas safety emergency rescue and gas laboratory control, not gas analyzer supply; exclude from
+      core. Official announcement https://t.me/s/siburholdingprocurement; Kontur https://zakupki.kontur.ru/IS88434448
+      deadline Nov24 15 MSK.
+    - 'Five active candidate deadlines rechecked, not actual eligibility: 2145723/1 Nov17 11 MSK https://zakupki.kontur.ru/IS87286268;
+      2146167/1 Nov18 14 MSK https://zakupki.kontur.ru/IS88558503; 2146194/1 Nov18 15 MSK https://zakupki.kontur.ru/IS88650131;
+      2145706/1 Nov23 11 MSK https://energybase.ru/tender/01a1afc8-37e7-73e3-95aa-284a8792580d; 2146492/1 Nov27
+      11 MSK https://www.sibur.ru/ru/procurement/buy/.'
+    - NPP TEC self-reported RemTEK actuator references Tomskneftekhim 2004-2024, STG 2024, AGHK 2020-2023; PDF text-only
+      https://www.npptec.ru/upload/iblock/08c/ts50ps6k0ihb8s2hd7s7203a7hxhdl1r.pdf; screenshot unavailable; not
+      verified award or AUMA service winner.
+    - 'SOV-NKNH 223-FZ comparator prices, separate from corporate exact awards: 51651052730260000540000, 18.08.2026,
+      maintenance of 761 COMPACT IC ion chromatographs, 218502 RUB https://zakupki.kontur.ru/D51651052730260000540000;
+      51651052730260000580000, 03.09.2026, 650 m cable AVVGng(A)-LS 4x25, 160439.76 RUB https://zakupki.kontur.ru/D51651052730260000580000;
+      adjacent valve 51651052730260000470000, 06.07.2026, KMO301NZH50NZU 1 pc 345845.60 RUB https://zakupki.kontur.ru/D51651052730260000470000.
+      Secondary EIS mirror, supplier identity masked; deduplicate against V40 by registry ID.'
+    - V40 existing four comparator prices independently rechecked on Kontur exact register/notice pages; winner
+      names masked. Two additional core comparators above and one adjacent; not NKNH direct spend. NPP TEC identity
+      verified INN 7020037139 official https://npptec.ru/contacts/ ; Surgut service center and regulated product
+      references from official site, not AUMA authorization.
+    blocker: ARC commands timed out; RDC Mac mini online, archive and technical workers exist, but runtime file
+      stat and git status hang. No new coverage measurement. Do not restart workers or mutate DB without gate.
   storage_incident_20261116:
-    status: blocked
-    observed_msk: "2026-11-16 08:02"
-    verified: "External disk6 4 TB detected; APFS container disk7; directory and file metadata stat succeeds; opening dashboard and unrelated arvectum-site/package.json hangs. sample ls PID 73466 and technical worker PID 66923 both in kernel open; diskutil info disk6 PID 74030 also in kernel open. No device I/O error in sampled 20-minute kernel log, only APFS tx_flush messages. Internal SSD checkpoint readable and writable, 132 GiB free at last df. Archive worker 56279 still exists and CPU regex activity observed; forward progress not established."
-    decisions: "No forced eject, filesystem repair, remapping, duplicate worker or DB mutation. Normal controlled restart of Mac mini requires operator coordination because other services are running and remote restart is blocked."
-    next_steps: "After controlled restart verify disk6/actual new identifier, APFS volume accessibility, read existing V41 dashboard and unrelated repo file, verify hashes, inspect runner state and acceptance gate; resume existing worker configuration without duplicate and verify fresh coverage. If disk remains unresponsive, inspect connection/enclosure, backup before repair."
-resume_instruction: "V42 pending preserved; external storage OS-level open blockage must be resolved before V42 merge. After controlled restart validate storage and workers, rerun read-only coverage, then continue the Sionika report. No DB mutation without gate."
+    status: access_restored_without_reboot
+    observed_msk: 2026-11-16 08:02
+    verified: External disk6 4 TB detected; APFS container disk7; directory and file metadata stat succeeds; opening
+      dashboard and unrelated arvectum-site/package.json hangs. sample ls PID 73466 and technical worker PID 66923
+      both in kernel open; diskutil info disk6 PID 74030 also in kernel open. No device I/O error in sampled 20-minute
+      kernel log, only APFS tx_flush messages. Internal SSD checkpoint readable and writable, 132 GiB free at last
+      df. Archive worker 56279 still exists and CPU regex activity observed; forward progress not established.
+    decisions: No forced eject, filesystem repair, remapping, duplicate worker or DB mutation. Normal controlled
+      restart of Mac mini requires operator coordination because other services are running and remote restart is
+      blocked.
+    next_steps: Recheck actual archive progress and technical executor outcome, run read-only coverage before V42
+      merge; reuse existing runner without duplicate; investigate disk if read timeouts recur.
+    recovery_verified: '2026-11-16: bounded reads of unrelated repository, DP original source and Python executable
+      succeeded; V41 map, dashboard v27 and report V41 SHA256 all match. Original disk remains mounted; no forced
+      eject/repair/reboot. Root cause unknown. Archive PID 56279 active with executor lock; previous technical PID
+      66923 no longer exists. Forward progress not yet verified. DP switched gracefully to internal SSD exact backport,
+      PID 78297, health/auth and known collection read-only checks PASS. No database mutation.'
+resume_instruction: External SSD access restored and V41 control hashes match; no reboot needed now. Inspect existing
+  archive and technical runner state, rerun read-only coverage and mandatory acceptance gate before DB mutation,
+  then resume pending V42. Do not restart DP or duplicate active archive worker.

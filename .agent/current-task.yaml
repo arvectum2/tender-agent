@@ -1076,4 +1076,4 @@ sibur_v42_review_pending_20261116:
 sibur_storage_incident_20261116:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: blocked
-  resume: external SSD open syscall stalls across repos; controlled restart and verification required, preserve workers and data.
+  resume: external SSD access restored without reboot; V41 hashes verified; verify actual worker progress and resume pending V42, preserve existing worker and data.
