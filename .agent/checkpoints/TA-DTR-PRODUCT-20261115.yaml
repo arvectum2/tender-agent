@@ -201,16 +201,20 @@ completed:
   including versioned support references; exact digest, explicit partial-scope acknowledgement,
   stale detection, separate default-off commercial submission recording gate. No full
   qualification/source claims.
-current_stage: lifecycle_receipt_protocol_artifacts
+- Default-off immutable event-bound receipt/protocol user-copy artifact intake (migration
+  117), bounded PDF/DOCX/XLSX, manager-only writes, current authorization recheck,
+  per-tenant quota, exact replay, SHA/integrity verification and authenticated exact-byte
+  attachment download. No platform-origin or signature claims.
+current_stage: lifecycle_artifacts_backend_verified_next_web_native_evidence
 remaining:
-- Scoped immutable original receipt/protocol user-copy storage and event linkage;
-  independently verified source provenance still separate. Web/native readiness and
-  receipt controls. Cross-module PostgreSQL concurrency and real E2E acceptance, keep
-  mandatory gate disabled until ready.
+- Web and native readiness binding and lifecycle file intake/download controls; keep
+  default-off gates until UI and PG acceptance. Independent original receipt/protocol
+  verification, multi-document/correction policy remains.
 - PRICE-01 cost/pricing and explainable bid economics.
-- Hosted CI/mirror and browser/device acceptance. B2B written operator consent pending;
-  no automated B2B traffic. Product only, no production deployment.
-last_verified_commit: 633b2dd6572ad3fedba12fef6fb5374bd6658d42
+- Hosted CI/mirror, PostgreSQL concurrency, real browser/device and E2E acceptance.
+  B2B operator consent pending; no automated requests. Product only, no production
+  deployment.
+last_verified_commit: 43a2421888eb36d28032bbd9c75956d5c21466f1
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -292,10 +296,15 @@ test_results:
 - 118 passed, 2 skipped, 99 warnings in 12.44s; sequential profile/document version
   staleness, missing review, replay, rebind, cross-company, optional gate, SQLite
   migration rollback guard; Ruff/diff PASS. New hosted CI pending.
-resume_instruction: Implement bounded immutable receipt/protocol user-copy per owned
-  lifecycle event; authorized metadata and exact-byte download, no source authentication
-  claim. Test scope, replay, integrity, migration. Product only, no production or
-  external source/model calls.
+- 120 passed, 2 skipped, 105 warnings in 12.47s; additional focused viewer read-only
+  and owned download test PASS. Migration rollback guard, corruption rejection, scope,
+  limits and byte equality tested. Ruff/diff PASS. PR555 exact head 959c5899 18/19
+  success, Mirror repository failed.
+resume_instruction: Lifecycle artifact backend and SQLite byte/permission/rollback
+  tests verified. Next implement web then native readiness/receipt controls, retain
+  explicit unattested origin, verify actual JS and Swift contracts. Then PRICE-01.
+  Do not operate/report SIBUR in this chat; B2B consent pending. No external actions
+  or production changes.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
