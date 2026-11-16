@@ -502,3 +502,48 @@ def test_manual_ui_observation_metadata_has_no_sensitive_url_parts():
     assert r['origin']=='other.invalid' and not r['same_origin_reviewable'] and 'opaque-sensitive-path' not in str(r)
     r=request_metadata('https://www.b2b-center.ru/card','GET','document')
     assert r['same_origin_reviewable']
+
+
+def test_manual_review_matches_observed_card_only_and_preserves_private_receipt(tmp_path):
+    from collections import Counter
+
+    from scripts.research.b2b_manual_ui_observation import (
+        build_report,
+        manual_card_match,
+        manual_observe,
+        write_receipt,
+    )
+
+    card='https://www.b2b-center.ru/app/market-next/fixture/tender-4664540/'
+    actual=card+'?view=fixture-secret'
+    assert manual_card_match(card,actual)
+    assert manual_card_match(card,card.rstrip('/'))
+    for bad in (card.replace('4664540','4664541'),card.replace('https://','http://'),card.replace('www.b2b-center.ru','other.invalid'),card+'extra/'):
+        assert not manual_card_match(card,bad)
+
+    class Body:
+        def inner_text(self,**kwargs):return 'Закупка 4664540'
+    class Controls:
+        def count(self):return 0
+    class Page:
+        url=actual
+        def locator(self,selector):return Body()
+        def get_by_text(self,text,exact):return Controls()
+    snapshot=manual_observe(Page(),card)
+    assert snapshot['card_id_visible'] and snapshot['url_query_present'] and snapshot['external_id']=='4664540'
+    pending=build_report(snapshot,Counter(),0,confirmed=False,stage='CARD_OBSERVED')
+    confirmed=build_report(snapshot,Counter(),0,confirmed=True,stage='MANUAL_UI_REVIEW')
+    assert not pending['owner_account_attested'] and confirmed['owner_account_attested']
+    assert not confirmed['account_identity_independently_verified'] and not confirmed['automatic_route_approval']
+    assert 'fixture-secret' not in json.dumps(confirmed) and actual not in json.dumps(confirmed)
+    root=tmp_path.resolve()/'private';root.mkdir(mode=0o700)
+    progress=root/'progress.json';final=root/'report.json'
+    write_receipt(progress,pending,replace=True);write_receipt(progress,confirmed,replace=True);write_receipt(final,confirmed)
+    assert json.loads(progress.read_text())==confirmed and final.stat().st_mode&0o777==0o600
+    with pytest.raises(FileExistsError):write_receipt(final,pending)
+    assert json.loads(final.read_text())==confirmed
+    class WrongBody(Body):
+        def inner_text(self,**kwargs):return 'Закупка 14664540'
+    class WrongPage(Page):
+        def locator(self,selector):return WrongBody()
+    with pytest.raises(GuardError):manual_observe(WrongPage(),card)
