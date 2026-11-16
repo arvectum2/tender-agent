@@ -22,8 +22,11 @@ def main():
     parser.add_argument('--storage-state',type=Path)
     parser.add_argument('--download-dir',type=Path)
     parser.add_argument('--confirm-authorized-download',action='store_true')
+    parser.add_argument('--operator-consent-reference',help='Reference to written B2B-Center permission for this automated access; required even for public probes')
     args=parser.parse_args()
     platform,_=commercial_identity(args.card)
+    if platform=='b2bcenter' and not (args.operator_consent_reference or '').strip():
+        parser.error('B2B-Center regulation 5.4 requires written operator consent before automated access')
     download=bool(args.download_dir)
     if download and (platform!='b2bcenter' or not args.confirm_authorized_download or not args.storage_state):
         parser.error('B2B download requires explicit authorization and an authorized session')
