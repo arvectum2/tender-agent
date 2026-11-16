@@ -119,18 +119,23 @@ completed:
   PostgreSQL 110/111 migration upgrade/empty downgrade/re-upgrade, populated downgrade
   denial, concurrent global tick lock, pre-request reservation and daily replay PASS;
   database removed.
-current_stage: commercial_card_offline_verification_contract
+- 'Commercial B2B-Center/Workspace bounded pure observation parser: exact URL/TLS
+  observation contract, corroborated source identity, unambiguous fields, conservative
+  historical status/deadline classification and raw SHA. No new source network calls,
+  original storage or tenant binding.'
+current_stage: commercial_card_observation_verified_next_scoped_capture
 remaining:
-- Check exact-head PR539–541 CI, prior PR532–538 green; all review-only, no merge
-  approval for this stack.
-- Extend commercial first-party card/document verification and evidence binding, additional
-  ETP source adapters based on verified original contracts.
-- Real browser/simulator/Keychain and isolated end-to-end acceptance including migrations
-  and scheduled cadence; production approval distinct.
-- No active schedule or new watchdog; deploy-approved existing scheduler invocation
-  and actual live source acceptance outstanding. Preserve SIBUR and conditional DP
-  rollout.
-last_verified_commit: 8a60e685fc6f4bc7c26b13f349f818136905efd9
+- Add trusted bounded server capture and scoped immutable original-card evidence storage/recheck;
+  no client-provided transport attestation.
+- Validate strict source anchors on permitted actual originals in a safe research
+  window; add document/attachment evidence separately.
+- Expand verified commercial ETP contracts, real browser/simulator and isolated E2E
+  acceptance.
+- 'Review stacked PRs: 539/540 green 19/19, 541 18/19 (Mirror repository failed; no
+  code test failure observed), no merge authorization.'
+- Production rollout only after approval. Gemma explicitly paused; prioritize SIBUR
+  corpus.
+last_verified_commit: 8af8d95e4a59d840db5d05408e1f0e73763da633
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -157,9 +162,12 @@ test_results:
 - 113 passed, 1 skipped, 84 warnings in 9.76s; Node workflow, Ruff/make check/diff
   PASS; disabled CLI no-op PASS; disposable PG migration 111, downgrade guard, concurrency
   and reserved attempt/daily replay PASS
-resume_instruction: Implement pure first-party public card verification with exact
-  URL, observed transport identity, original bytes, unambiguous field provenance and
-  no bid-ready claims; verify only synthetic fixtures. Plan scoped evidence persistence
-  separately.
+- 37 focused offline fixture tests passed, 1 warning; Ruff and diff check PASS; no
+  live model or DB calls.
+resume_instruction: Continue scoped trusted commercial capture and original evidence
+  persistence in isolated development branch. Pure parser verified offline; no need
+  to rerun unchanged tests. Full SIBUR research and Qwen indexing take precedence;
+  no live inference, no production data or service changes, no new scheduler. Preserve
+  existing workers and watchdog. Gemma requires explicit owner resume.
 owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
   Product changes isolated, offline and bounded.
