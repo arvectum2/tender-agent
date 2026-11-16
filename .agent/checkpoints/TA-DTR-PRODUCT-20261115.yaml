@@ -192,7 +192,7 @@ completed:
 - Explicit scoped web lifecycle state/valid transitions, manual receipt and protocol
   reference, timestamp, history, terminal correction, confirmation and replay, recorded-fact
   commercial metrics; server gate, viewer read-only, stale and session clearing.
-current_stage: company_lifecycle_web_verified_next_native
+current_stage: native_lifecycle_and_metrics
 remaining:
 - Native iOS scoped lifecycle state and read/write controls, same recorded-fact metrics;
   actual receipt/outcome evidence and readiness linkage, multi-lot and rebid policy.
@@ -277,12 +277,11 @@ test_results:
 - 116 passed, 2 skipped, 93 warnings in 10.64s; extended actual JS cabinet fixture
   PASS (isolated Playwright Node), Ruff/diff PASS. PR552 16 SUCCESS,2 IN_PROGRESS,mirror
   FAILURE.
-resume_instruction: Web lifecycle/backend/JS verified. Continue native lifecycle/metrics
-  using existing API; separately resume SIBUR remaining PDF/oversized corpus review
-  with safe bounds, do not claim full corpus done. No production DB modifications
-  or rollout. B2B consent follow-up sent, wait separately; Gemma paused.
-owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
-  Product changes isolated, offline and bounded.
+resume_instruction: Implement native lifecycle controls and metrics with scoped contracts,
+  explicit attestation and replay protection. Check build and decoder; no live runtime
+  changes. Do not operate or report SIBUR in this chat.
+owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
+  paused; isolated engineering only.
 b2b_dependency:
   status: blocked
   support_ticket: PN-1356710-26

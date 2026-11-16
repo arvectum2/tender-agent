@@ -663,6 +663,6 @@ parallel_dtr_product:
   task_id: TA-DTR-PRODUCT-20261115
   status: in_progress
   checkpoint: .agent/checkpoints/TA-DTR-PRODUCT-20261115.yaml
-  current_stage: company_lifecycle_web_verified_next_native
-  branch: feat/ta-dtr-company-lifecycle-web-20261116
-  owner_priority: SIBUR corpus first; Gemma paused; isolated product work only
+  current_stage: native_lifecycle_and_metrics
+  branch: feat/ta-dtr-native-lifecycle-20261116
+  owner_priority: Product development only in this chat; research separate; Gemma paused
