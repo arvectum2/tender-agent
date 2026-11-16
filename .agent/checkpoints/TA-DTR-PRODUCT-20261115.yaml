@@ -260,17 +260,27 @@ completed:
   baseline digest, typed independently verified Decimal line/category variance, missing
   vs explicit zero, unplanned costs, scoped manager-confirmed save and exact replay,
   paginated bounded history and view/session clearing.'
-current_stage: price01_actual_evidence_backend
+- 'PRICE-01 actual evidence backend (migration 121): immutable user-copy PDF/DOCX/XLSX
+  for exact saved snapshot/date/baseline and reported planned or unplanned row SHA;
+  no inheritance or missing-row attachment, explicit consent, manager writes, analyst/manager
+  reads, bounded file and per-tenant quota, exact replay and verified-byte download.
+  No independent amount/payment/origin verification.'
+- B2B PN-1356710-26 new operator response and sent technical specification recorded;
+  60 HTTP requests per 60 seconds per IP target, written approval still pending; no
+  traffic.
+current_stage: price01_actual_evidence_backend_verified_next_web_native
 remaining:
-- Actual-specific immutable evidence links to exact saved actual snapshot revision
-  and reported planned/unplanned row; no proof of payment by attachment alone. Web/native
-  controls.
-- Deduplicated labor/expense normative samples (never sum repeated cumulative snapshots
-  or baselines), comparable procurement normalization and real-case acceptance.
-- Hosted exact-head CI, PG concurrency, real browser/device and E2E acceptance. Keep
-  flags off, no production deployment.
-- B2B written consent pending; no automated requests. Product only.
-last_verified_commit: 03affb65f803fb76a6180b475a03a9cbe5343641
+- Web and native actual evidence controls on selected saved actual snapshot and reported
+  planned/unplanned row; exact canonical binding and byte SHA, explicit user copy,
+  no payment verification.
+- Deduplicated labor/expense normative samples, historical comparable normalization
+  and real-case acceptance.
+- Hosted CI, real PG concurrency, browser/device and E2E acceptance. Keep gates off;
+  no deployment.
+- B2B written approval pending; shared sliding 60 requests/60s per-IP limiter including
+  background/download requests and offline acceptance before any authorized pilot.
+  No automated platform requests. Product only.
+last_verified_commit: aef7a500e52baab2fb956cda5606d22235bae5c9
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -410,9 +420,17 @@ test_results:
   fixed; final Xcode unsigned build-for-testing PASS including new XCTest compilation.
   git diff --check PASS. PR569 exact 09c73f8e 17 success/2 running. No simulator XCTest,
   physical device or live API E2E.
-resume_instruction: Implement immutable actual snapshot evidence for reported planned/unplanned
-  rows; canonical binding, role, byte validation, bounded upload/download and migration,
-  isolated tests. No deployment.
+- 157 passed,2 skipped,130 warnings in 15.91s; actual evidence row namespaces, missing/zero,
+  baseline/snapshot/tenant/role scope, replay, quota, corruption and guarded migration
+  roundtrip tested. Existing JS fixture PASS; Ruff/diff PASS; Alembic head 121_company_actual_evidence.
+  PR570 exact 6bd87d80 CI 19/19 successful.
+resume_instruction: 'Actual-specific evidence backend and migration 121 verified.
+  Next Web then native evidence controls: exact saved snapshot, PLANNED/UNPLANNED
+  row and digest, explicit document kind/user-copy consent, verified bounded transfer/replay
+  and state clearing. Then deduplicated normative samples and historical comparative
+  procurement. B2B technical specification sent; await written approval, 60 HTTP requests
+  per 60s per IP target and offline enforcement before pilot; no platform traffic.
+  No production deployment or external source/model calls. Product only.'
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
