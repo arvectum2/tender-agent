@@ -294,7 +294,7 @@ completed:
   broker cookie session isolation. 7/7 received HTTP requests charged plus one failed
   TLS attempt; exact 133-byte ZIP, untrusted TLS refused, forbidden POST/path blocked,
   stop after 429. No real-site interception or credential support.
-current_stage: b2b_offline_https_verified_next_live_transport_design
+current_stage: b2b_isolated_readonly_adapter
 remaining:
 - Select and verify maintainable live HTTPS transport/session architecture without
   unauthorized credential interception or global certificate changes; exact site endpoint/session
@@ -472,14 +472,9 @@ test_results:
 - 165 focused passed, 2 skipped, 130 warnings in 17.05s; actual Chrome TLS loopback
   PASS, separate broker 401, invalid browser and upstream cert refusal, nonloopback/foreign
   CONNECT rejected, Ruff/diff PASS. PR576 exact 22e2859c CI 19/19. No platform requests.
-resume_instruction: Offline Chrome HTTPS request-level and broker synthetic session
-  fixture verified. Next implement live-safe transport design, prioritizing explicitly
-  gated broker requests with verified upstream TLS and browser isolation over real-site
-  TLS interception; exact endpoint/session policy, bounded total operation/redirects/queues,
-  canonical shared egress state and no-direct-egress proof. Do not use fixture SPKI
-  exception or TLS termination for real B2B. Live pilot remains blocked until true
-  acceptance and authorized dedicated account session. Permission PN-1356710-26, strict
-  60/rolling minute/IP. PRICE-01 norms preserved. No production deployment.
+resume_instruction: Implement direct verified TLS broker with exact reviewed endpoint
+  inventory and bounded private session; separate isolated Playwright worker, offline
+  acceptance, preserve live refusal until actual scope/session acceptance.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
