@@ -227,7 +227,7 @@ completed:
   per-line ceil kopecks followed by category aggregation, existing Decimal engine
   and immutable shared revision history. Legacy aggregate records intact; tagged new
   history allows old clients to read aggregate.'
-current_stage: price01_itemized_backend_verified_next_web_native
+current_stage: price01_itemized_web_controls
 remaining:
 - Itemized estimate web and iOS create/preview/save/history controls and detailed
   line display; document-level evidence links for declared cost sources and actual
@@ -343,11 +343,9 @@ test_results:
 - 151 passed,2 skipped,112 warnings in 12.50s; old JS cabinet PASS, actual Swift decoder
   mixed itemized/aggregate server fixture PASS. Ruff/diff PASS; Alembic head unchanged
   118. PR561 exact 4e1946a5 17 success,2 running.
-resume_instruction: Itemized PRICE-01 backend verified, API preserves mixed aggregate/itemized
-  history. Next Web then native forms for up to 60 lines, explicit zero categories
-  and source notes, server projections and immutable shared version save. Then evidence-linked
-  costs and real-case comparable-source work. Never claim independently verified prices
-  from notes. No production changes or source/model calls. Product only.
+resume_instruction: Implement web itemized mode with explicit source notes and zero
+  categories; validate exact server projection, shared history/replay, regression.
+  No deployment.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
