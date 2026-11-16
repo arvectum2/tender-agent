@@ -305,22 +305,26 @@ completed:
   state, no ordinary profile reuse/key access or automatic signing), verified two
   real Chrome starts/restart offline on Mac mini. Legacy direct B2B fetch entrypoints
   audited and recorded for activation gate.
-current_stage: b2b_guarded_one_card_runner
+- Supervised B2B offline runner with canonical private root convention, single-runner
+  lock and hard process deadline, actual isolated HTTPS Chrome fixture PASS; seven
+  former direct HTTP paths fail closed in candidate branch before transport. MacBook
+  read-only runtime inspection confirms Chrome/Python3.12/uv/sandbox/CryptoPro; Playwright
+  absent in default Python.
+current_stage: b2b_supervised_runner_verified_next_macbook_runtime
 remaining:
-- Complete guarded single-card runner with hard deadline, canonical shared egress
-  state and one designated MacBook host/IP; gate/migrate all legacy direct B2B egress
-  paths documented in product increment (preserve other sources/fixtures/history).
-  Test isolated broker and runner offline.
-- Prepare local MacBook runtime and dedicated profile for user-interactive EDS sign-in;
-  verify own Arvectum organization, cookie-only session sufficiency and lifetime in
-  permitted one-card pilot after technical acceptance. No key or PIN export, no automatic
-  signature, no ordinary profile access, no unsupported token reconstruction. Session
-  remains MacBook-local by default; Mac mini analyzes permitted artifacts. Do not
-  assume cross-device portability.
-- PRICE-01 corporate normative samples and historical comparable normalization.
-- Hosted CI, PostgreSQL concurrency and real browser/device/E2E acceptance. No production
-  deployment.
-last_verified_commit: dbf647cb09b7592ca4dbe1c991529751555815e8
+- Prepare dedicated MacBook checkout/runtime and private path via explicitly approved
+  device operations as required, run supervised offline acceptance on MacBook. User
+  performs manual EDS via dedicated profile, no key/PIN inspection or transfer, no
+  secret to chat.
+- Complete guarded real single-card activation and review exact endpoint inventory/actual
+  own-organization session; confirm canonical shared state and no other live legacy
+  schedules on designated egress host/IP before any live request. Candidate CLI only
+  local check/offline acceptance until then; seven code paths gated but not deployed.
+  Strict unified run may fail closed until B2B guarded adapter integrated.
+- PRICE-01 corporate normative samples and historical comparable normalization; preserve
+  completed work.
+- Hosted CI, PostgreSQL and real device/browser acceptance, no production deployment.
+last_verified_commit: 0bfd2f89c4d267bb5653fd5b142375118b90c7bc
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -496,13 +500,23 @@ test_results:
   launch/relaunch PASS on Mac mini via rejecting proxy; dedicated marker/symlink/permission
   tests PASS; Ruff/diff PASS. PR578 exact 889506a7 CI 19/19. No MacBook EDS or live
   B2B test yet.
-resume_instruction: Build single-card supervised runner, hard runtime deadline, canonical
-  local egress lock, legacy paths fail closed, offline actual browser verification.
-  MacBook EDS remains manual and live activation gated.
+- 275 focused tests pass,2 skipped,130 warnings in 17.22s, including legacy source
+  parsers, Workspace/EIS paths and seven B2B direct refusals, supervisor timeout/lock/receipt.
+  Actual supervised offline Chrome fixture 7/7, exact ZIP 133B; Ruff/diff PASS. PR579
+  exact ae4cb0b4 CI 19/19. No live requests or deployment.
+resume_instruction: Supervised offline runner and seven legacy direct egress gates
+  verified in candidate branch. Next prepare MacBook Air private isolated Python3.12
+  Playwright environment and reviewed checkout with owner approval for required device
+  writes, then run actual offline acceptance there. MacBook online with Chrome/uv/sandbox/CryptoPro
+  installed; default Python lacks Playwright. Manual owner EDS login follows when
+  ready, no signing-key/PIN export or existing profile extraction. Complete actual
+  guarded one-card runner/approved endpoint scope and deployed schedule cutover before
+  live operation. Keep session MacBook-local and 60 requests per rolling 60s/IP. No
+  live B2B/production changes today; PRICE-01 preserved.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
-  status: approved_pending_guarded_runner_and_macbook_eds_login
+  status: approved_pending_macbook_runtime_and_live_acceptance
   support_ticket: PN-1356710-26
   support_response: 'Operator written approval relayed by owner: Козырькова Валерия
     Андреевна, 2026-11-16 14:51:30. Internal partial automation allowed subject to
@@ -510,11 +524,10 @@ b2b_dependency:
     более 60 HTTP-запросов в минуту с одного IP-адреса». IP approval not required;
     no separate download restrictions; own account or optional additional user. Earlier
     response: no additional fee or alternative API for stated actions.'
-  owner_action: Owner will manually authorize via EDS on MacBook. Dedicated profile
-    code ready, offline launch/relaunch verified on Mac mini; MacBook runtime/provider
-    and real session not yet tested. Keep session local by default; no signing key/PIN
-    export or token transfer to chat. Legacy egress audit recorded; gates and guarded
-    runner next.
+  owner_action: 'Owner manual EDS on MacBook as planned. MacBook read-only check:
+    available, Chrome/Python3.12/uv/sandbox/CryptoPro, missing Playwright in default
+    interpreter. Dedicated runtime not installed. Supervised offline candidate and
+    legacy gates verified; not deployed. No actual session or live requests.'
 sibur_readonly_observation_20261116:
   status: exhausted
   step: archive supported queue drained; oversized and PDF review remains
