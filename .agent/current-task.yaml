@@ -1076,4 +1076,4 @@ sibur_v42_review_pending_20261116:
 sibur_storage_incident_20261116:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: blocked
-  resume: SSD recovery verified with fresh V28 coverage and live original processing; 4875 processed, 5560/5804 priority eligible procedures all supported extracted. Resume V42; preserve existing worker and data.
+  resume: SSD recovery and V42 verified, 66 cards and 8244 priority queue rows. Continue award/qualification evidence; preserve existing worker and data.

@@ -1381,7 +1381,7 @@ test_results:
       project-coverage-dashboard-v27.json: 0fd0e98b9a6214e1970b437e7d4729d246f78999f20e81a04441217bba284bff
       consolidated-project-report-v41.md: 70e37971f5a08faaeee826520b9821f73e2036735f2ee8d9ddd79122bdc39928
   sionika_v42_pending:
-    status: blocked
+    status: superseded_by_verified_v42
     observed_date: '2026-11-16'
     last_verified_map: consolidated-project-map-v41.json
     last_verified_commit: e2cef1ff
@@ -1446,8 +1446,30 @@ post_storage_recovery_20261116:
   priority_all_supported_extracted: 5560
   priority_all_known_no_unverified: 1909
   status: processing_resumed_verified
-resume_instruction: SSD access restored and actual processing verified. V28 post-recovery read-only coverage saved
-  SHA 481d650720cd39b68cd2b9725e2c5d8d9ad121291b0218720072800f78ebaf87; 4875 originals processed, 25074 source links,
-  4686 extracted. Priority union 8244, eligible 5804, 5560 all supported extracted, 1909 all known/no unverified.
-  Existing archive PID 56279 active, do not duplicate. Resume V42 source corrections and map update using V41 and
-  pending findings; no DB mutation without mandatory gate.
+sionika_v42_verified_20261116:
+  status: completed_increment
+  project_cards: 66
+  project_unique_publications: 2659
+  project_memberships: 2685
+  priority_union: 8244
+  priority_counts:
+    P0: 39
+    P1: 25
+    P2: 2
+  core_comparator_count: 6
+  core_comparator_rub: '1173379.20'
+  adjacent_comparator_rub: '345845.60'
+  exact_awards_unchanged: true
+  artifacts:
+    sionika-v42-source-observations-v1.json: 666520744eb52f319849a1d655676cc86fd3a3a81e26c4175497e373751a8ca6
+    consolidated-project-map-v42.json: e244c5edb712875e7adafd41e63d75ee6c02788034e48d2f8e883f18d224b1cc
+    commercial-outcome-queue-v17.json: 6844507d78af8f9dc7a019ef60c8102af0604a4c00c2889f0636f302c41d1896
+    commercial-action-register-v36.json: e7c7e98c915de845f573952625db8d1a05dbcbccb9d1af987fe930070300ef67
+    consolidated-project-report-v42.md: 3c74774ebedd222302e498459b7b6657faf2229c34bc2f338536a8717a3ce101
+    project-coverage-dashboard-v28-post-storage-recovery.json: 481d650720cd39b68cd2b9725e2c5d8d9ad121291b0218720072800f78ebaf87
+  verification: V41 source hashes matched, V42 map/queue/action hashes consistent, frozen memberships and award
+    fields preserved; no DB writes or live source rechecks.
+resume_instruction: V42 complete on internal research branch. Continue 37 priority plan reconciliation and primary
+  award/entity evidence, preserve source boundaries; work toward 17 Nov consolidated commercial acceptance. Read
+  current archive and technical state, do not duplicate active worker; no DB mutation without gate. V42 is not final
+  acceptance.
