@@ -66,6 +66,7 @@ from src.modules.saas_foundation import (
     commercial_requirement_review,
     company_actual_costs,
     company_actual_evidence,
+    company_actual_samples,
     company_case_evidence,
     company_cost_evidence,
     company_discovery,
@@ -1133,3 +1134,11 @@ def download_actual_evidence(case_id: str, scenario_id: str, snapshot_id: str, r
     _actual_evidence_enabled()
     raw,format_hint,sha=company_actual_evidence.download(session,principal,case_id,scenario_id,snapshot_id,row_kind,ordinal)
     return Response(content=raw,media_type="application/octet-stream",headers={"Content-Disposition":f'attachment; filename="actual-{sha[:16]}.{format_hint}"',"Cache-Control":"private, no-store","X-Content-Type-Options":"nosniff","X-Artifact-SHA256":sha})
+
+
+@router.post("/api/saas/company-portfolio/actual-samples/preview")
+def actual_sample_preview(payload: company_actual_samples.PreviewInput, principal: Member, session: DBSession) -> dict:
+    _actual_costs_enabled()
+    if not get_settings().saas_company_actual_samples_enabled:
+        raise HTTPException(404,"Actual sample preview disabled")
+    return company_actual_samples.preview(session,principal,payload)

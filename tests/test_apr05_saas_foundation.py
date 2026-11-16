@@ -2322,3 +2322,51 @@ def test_actual_evidence_separate_rows_revisions_and_integrity(client,session,mo
     assert client.get(u,headers=headers).status_code==409 and client.get(u+'/download',headers=headers).status_code==409
     session.execute(update(CompanyActualCostEvidence).where(CompanyActualCostEvidence.id==saved['evidence_id']).values(line_sha256=line_digest,raw_bytes=raw.replace(b'1 0 obj',b'9 0 obj')));session.commit()
     assert client.get(u,headers=headers).status_code==409 and client.get(u+'/download',headers=headers).status_code==409
+
+
+def test_actual_samples_preview_explicit_distinct_sources(client,session,monkeypatch):
+
+    from sqlalchemy import update
+
+    from src.modules.saas_foundation.models import CompanyActualCostSnapshot
+
+    _,a=_seed(client,'Sample A');_,b=_seed(client,'Sample B');_legal(client,a);_legal(client,b)
+    settings=saas.get_settings().model_copy(update={'saas_company_price_scenarios_enabled':True,'saas_company_price_itemized_enabled':True,'saas_company_actual_costs_enabled':True,'saas_company_actual_evidence_enabled':True})
+    monkeypatch.setattr(saas,'get_settings',lambda:settings)
+    headers=_auth(a);cases='/api/saas/company-portfolio/cases';endpoint='/api/saas/company-portfolio/actual-samples/preview'
+    estimate={'lines':[{'category':'own_labor_rub','title':'Development','unit':'h','quantity':'10','rate_rub':'1000','source_kind':'ASSUMPTION','source_note':'Synthetic plan'},{'category':'external_direct_rub','title':'License','unit':'unit','quantity':'1','rate_rub':'100','source_kind':'ASSUMPTION','source_note':'Synthetic plan'}],'zero_cost_categories':['cash_overhead_rub','reserve_rub','fixed_platform_fees_rub','guarantee_financing_cost_rub'],'terms':{'revenue_tax_percent':'6','variable_platform_fee_percent':'0','minimum_profit_rub':'0','target_profit_rub':'0','manual_bid_prices_rub':[],'assumption_note':'Synthetic plan','accept_hypothetical_assumptions_only':True},'confirm_no_double_count':True}
+    def create(n,quantity,rate,token=a):
+        h=_auth(token);r=client.post(cases,headers=h,json={'registry_number':f'{n:019d}'});assert r.status_code==201,r.text
+        case=r.json()['case_id'];r=client.post(cases+'/'+case+'/price-scenarios/itemized',headers=h,json={'estimate':estimate,'expected_revision':0,'idempotency_key':'sample-baseline-1'});assert r.status_code==201,r.text
+        scenario=r.json()['scenario_id'];u=cases+'/'+case+'/price-scenarios/'+scenario+'/actual-costs';digest=client.get(u,headers=h).json()['baseline_sha256']
+        snapshot={'baseline_sha256':digest,'as_of':'2026-11-15','observations':[{'ordinal':1,'quantity':quantity,'rate_rub':rate,'source_note':'Synthetic actual'}],'unplanned_costs':[],'note':'Cumulative synthetic report','confirm_cumulative_user_report':True,'confirm_no_double_count':True}
+        def save(rev,key):
+            r=client.post(u,headers=h,json={'snapshot':snapshot,'expected_revision':rev,'idempotency_key':key});assert r.status_code==201,r.text
+            sid=r.json()['snapshot_id'];r=client.get(u+'/'+sid+'/rows/PLANNED/1/evidence',headers=h);assert r.status_code==200,r.text
+            return {'case_id':case,'scenario_id':scenario,'snapshot_id':sid,'row_kind':'PLANNED','ordinal':1,'line_sha256':r.json()['line_sha256']}
+        return save(0,'sample-snapshot-1'),save
+    first,advance=create(1,'12','1000');second,_=create(2,'20','1200');foreign,_=create(3,'10','1000',b)
+    payload={'category':'own_labor_rub','title':'Development','unit':'h','samples':[first,second],'confirm_comparable_reported_rows':True,'confirm_one_cumulative_row_per_case':True}
+    def preview(body=payload,token=a):return client.post(endpoint,headers=_auth(token),json=body)
+    assert preview().status_code==404
+    settings=settings.model_copy(update={'saas_company_actual_samples_enabled':True})
+    original_count=session.query(CompanyActualCostSnapshot).count()
+    r=preview();assert r.status_code==200,r.text
+    result=r.json();assert result['distinct_case_count']==2 and result['reported_quantity_distribution']=={'minimum':'12.0000','median':'16.0000','maximum':'20.0000'}
+    assert result['reported_unit_rate_distribution_rub']=={'minimum':'1000.000','median':'1100.000','maximum':'1200.000'}
+    assert result['reported_amount_distribution_rub']['median']=='18000.000'
+    assert result['small_sample_warning'] and result['recommended_rate'] is None
+    assert all(result[k] is False for k in ('approved_norm','comparability_independently_verified','actual_amounts_independently_verified','contract_execution_verified','inputs_stored','external_submission_allowed'))
+    assert session.query(CompanyActualCostSnapshot).count()==original_count
+    assert preview({**payload,'samples':[first,first]}).status_code==422
+    assert preview({**payload,'samples':[first,foreign]}).status_code==404
+    for changes in ({'unit':'H'},{'unit':'час'},{'title':'Different work'},{'category':'external_direct_rub'},{'confirm_comparable_reported_rows':False},{'samples':[first]*21}):
+        assert preview({**payload,**changes}).status_code==422,changes
+    assert preview({**payload,'samples':[{**first,'line_sha256':'0'*64}]}).status_code==409
+    newer=advance(1,'sample-snapshot-2');assert preview().status_code==409
+    assert preview({**payload,'samples':[newer,second]}).status_code==200
+    for role in ('viewer','analyst'):
+        invite=client.post('/api/saas/invitations',headers=headers,json={'role':role,'acquisition_channel':'referral'}).json();token=client.post('/api/saas/invitations/redeem',json={'invitation_code':invite['invitation_code'],'display_name':role}).json()['access_token'];_legal(client,token)
+        assert preview({**payload,'samples':[newer,second]},token=token).status_code==(403 if role=='viewer' else 200)
+    session.execute(update(CompanyActualCostSnapshot).where(CompanyActualCostSnapshot.id==newer['snapshot_id']).values(result_json={}));session.commit()
+    assert preview({**payload,'samples':[newer,second]}).status_code==409
