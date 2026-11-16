@@ -260,7 +260,7 @@ completed:
   baseline digest, typed independently verified Decimal line/category variance, missing
   vs explicit zero, unplanned costs, scoped manager-confirmed save and exact replay,
   paginated bounded history and view/session clearing.'
-current_stage: price01_actual_cost_native_verified_next_actual_evidence
+current_stage: price01_actual_evidence_backend
 remaining:
 - Actual-specific immutable evidence links to exact saved actual snapshot revision
   and reported planned/unplanned row; no proof of payment by attachment alone. Web/native
@@ -410,23 +410,21 @@ test_results:
   fixed; final Xcode unsigned build-for-testing PASS including new XCTest compilation.
   git diff --check PASS. PR569 exact 09c73f8e 17 success/2 running. No simulator XCTest,
   physical device or live API E2E.
-resume_instruction: Native actual cost snapshot workflow built and actual Python/Swift
-  contract PASS. Next implement scoped immutable evidence on each saved actual snapshot
-  row (reported planned or unplanned), exact revision and digest, bounded user-copy
-  format/bytes validation and current role/tenant scope; reuse cost evidence patterns
-  without treating plan documents as actuals or declaring verified payment. Then Web/native
-  actual evidence controls and deduplicated norm samples, historical comparable normalization.
-  No production deployment or external source/model calls. Product only.
+resume_instruction: Implement immutable actual snapshot evidence for reported planned/unplanned
+  rows; canonical binding, role, byte validation, bounded upload/download and migration,
+  isolated tests. No deployment.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
   status: blocked
   support_ticket: PN-1356710-26
-  support_response: Supplier API active participated IDs and recommended IDs; no personal
-    invitations or document download/submission; paid Maximum Opportunities or Professional
-    Supplier. General search not confirmed.
-  owner_action: Owner resent detailed browser automation use case and escalation request;
-    await written response. No automated B2B traffic.
+  support_response: Owner reports operator requests agent technical characteristics
+    for approval; after agent authorization maximum 60 HTTP requests per minute per
+    IP; no extra fee; no alternative API for described actions.
+  owner_action: Owner sent final technical specification on 2026-11-16, awaiting written
+    approval. Implement shared sliding 60 requests/60 seconds per IP (including agent
+    background/download requests) before any approved live pilot; no automated B2B
+    traffic.
 sibur_readonly_observation_20261116:
   status: exhausted
   step: archive supported queue drained; oversized and PDF review remains
