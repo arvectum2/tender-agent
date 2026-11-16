@@ -2059,3 +2059,69 @@ def test_company_price_scenarios_exact_economics_and_scope(client, session, monk
     from sqlalchemy import update
     session.execute(update(CompanyPriceScenario).where(CompanyPriceScenario.id==first['scenario_id']).values(result_json={}))
     session.commit();assert client.get(path,headers=headers).status_code==409
+
+
+def test_price_itemized_rollup_history_and_scope(client, session, monkeypatch):
+    from copy import deepcopy
+
+    from sqlalchemy import update
+
+    from src.modules.saas_foundation.models import CompanyPriceScenario
+
+    _, a=_seed(client,'Itemized A'); _, b=_seed(client,'Itemized B')
+    _legal(client,a);_legal(client,b)
+    settings=saas.get_settings().model_copy(update={'saas_company_price_scenarios_enabled':True});monkeypatch.setattr(saas,'get_settings',lambda:settings)
+    headers=_auth(a);cases='/api/saas/company-portfolio/cases'
+    def create(token,n):
+        r=client.post(cases,headers=_auth(token),json={'registry_number':f'{n:019d}'});assert r.status_code==201,r.text
+        return cases+'/'+r.json()['case_id']+'/price-scenarios'
+    path=create(a,1);other=create(a,2);foreign=create(b,1)
+    terms={'revenue_tax_percent':'6','variable_platform_fee_percent':'4','minimum_profit_rub':'5000','target_profit_rub':'20000','reference_ceiling_rub':'120000','manual_bid_prices_rub':['120000'],'assumption_note':' Synthetic itemized estimate only ','accept_hypothetical_assumptions_only':True}
+    def line(category,title,unit,quantity,rate,source_kind='ASSUMPTION'):
+        return {'category':category,'title':title,'unit':unit,'quantity':quantity,'rate_rub':rate,'source_kind':source_kind,'source_note':'Fixture basis, not independently verified'}
+    estimate={'lines':[line('external_direct_rub','Paid services','h','40','1500','USER_REPORTED_QUOTE'),line('external_direct_rub','Fraction A','unit','0.3333','0.01'),line('external_direct_rub','Fraction B','unit','0.3333','0.01'),line('own_labor_rub','Own labor','h','10','2000','USER_REPORTED_ACTUAL'),line('cash_overhead_rub','Hosting','month','2','5000'),line('reserve_rub','Reserve','lot','1','5000')],'zero_cost_categories':['fixed_platform_fees_rub','guarantee_financing_cost_rub'],'terms':terms,'confirm_no_double_count':True}
+    def preview(body=estimate,token=a,url=path):return client.post(url+'/itemized/preview',headers=_auth(token),json=body)
+    def save(body=estimate,rev=0,key='estimate-fixture-1',token=a,url=path):return client.post(url+'/itemized',headers=_auth(token),json={'estimate':body,'expected_revision':rev,'idempotency_key':key})
+    assert preview().status_code==404
+    settings=settings.model_copy(update={'saas_company_price_itemized_enabled':True})
+    r=preview();assert r.status_code==200,r.text
+    out=r.json();detail=out['itemized_estimate'];aggregate=out['inputs']
+    assert out['inputs_stored'] is False and session.query(CompanyPriceScenario).count()==0
+    assert detail['schema']=='company_price_itemized_v1' and detail['rounding_policy']=='CEIL_EACH_LINE_TO_KOPECKS_THEN_SUM'
+    assert not detail['source_notes_independently_verified'] and not detail['double_count_independently_checked'] and not detail['external_submission_allowed']
+    assert [row['amount_rub'] for row in detail['lines']]==['60000.00','0.01','0.01','20000.00','10000.00','5000.00']
+    assert detail['lines'][0]['source_kind']=='USER_REPORTED_QUOTE' and detail['lines'][3]['source_kind']=='USER_REPORTED_ACTUAL'
+    assert detail['category_totals_rub']=={k:aggregate[k] for k in ('external_direct_rub','own_labor_rub','cash_overhead_rub','reserve_rub','fixed_platform_fees_rub','guarantee_financing_cost_rub')}
+    assert aggregate['external_direct_rub']=='60000.02' and aggregate['fixed_platform_fees_rub']=='0.00' and aggregate['assumption_note']=='Synthetic itemized estimate only'
+    legacy=client.post(path+'/preview',headers=headers,json=aggregate);assert legacy.status_code==200 and legacy.json()['result']==out['result']
+    invalid_cases=[]
+    for field,value in [('quantity','0'),('quantity','0.00001'),('rate_rub','0'),('rate_rub','1.001'),('unit','   '),('source_note',''),('source_kind','VERIFIED_QUOTE'),('quantity',1.5)]:
+        x=deepcopy(estimate);x['lines'][0][field]=value;invalid_cases.append(x)
+    for zeros in ([],['external_direct_rub','fixed_platform_fees_rub','guarantee_financing_cost_rub'],['fixed_platform_fees_rub','fixed_platform_fees_rub','guarantee_financing_cost_rub']):
+        invalid_cases.append({**estimate,'zero_cost_categories':zeros})
+    invalid_cases += [{**estimate,'confirm_no_double_count':False},{**estimate,'lines':[estimate['lines'][0]]*61},{**estimate,'lines':estimate['lines']+[estimate['lines'][0]]},{**estimate,'terms':{**terms,'external_direct_rub':'100'}},{**estimate,'terms':{**terms,'revenue_tax_percent':'96'}}]
+    huge=deepcopy(estimate);huge['lines'][0].update(quantity='999999999',rate_rub='999999999999.99');invalid_cases.append(huge)
+    for invalid in invalid_cases:
+        assert preview(invalid).status_code==422,invalid
+    assert preview(token=b).status_code==404 and save(url=foreign).status_code==404
+    old=client.post(path,headers=headers,json={'scenario':aggregate,'expected_revision':0,'idempotency_key':'legacy-fixture'});assert old.status_code==201,old.text
+    old_row=old.json();assert 'itemized_estimate' not in old_row
+    assert save().status_code==409
+    r=save(rev=1);assert r.status_code==201,r.text
+    row=r.json();assert row['revision']==2 and row['inputs']==aggregate and row['result']==out['result'] and row['itemized_estimate']==detail
+    assert save(rev=1).json()==row
+    changed=deepcopy(estimate);changed['lines'][0]['source_note']='Different statement'
+    assert save(changed,rev=1).status_code==409
+    assert client.post(path,headers=headers,json={'scenario':aggregate,'expected_revision':1,'idempotency_key':'estimate-fixture-1'}).status_code==409
+    assert client.get(path,headers=headers,params={'limit':30}).json()['items']==[row,old_row]
+    assert client.get(other,headers=headers).json()['items']==[] and client.get(path,headers=_auth(b)).status_code==404
+    for role in ('viewer','analyst'):
+        invite=client.post('/api/saas/invitations',headers=headers,json={'role':role,'acquisition_channel':'referral'}).json()
+        token=client.post('/api/saas/invitations/redeem',json={'invitation_code':invite['invitation_code'],'display_name':role}).json()['access_token'];_legal(client,token)
+        assert preview(token=token).status_code==(403 if role=='viewer' else 200)
+        assert save(rev=2,key='role-fixture',token=token).status_code==403
+    settings=settings.model_copy(update={'saas_company_price_itemized_enabled':False})
+    assert preview().status_code==404 and client.get(path,headers=headers,params={'limit':30}).json()['items']==[row,old_row]
+    stored=session.get(CompanyPriceScenario,row['scenario_id']);damaged=deepcopy(stored.input_json);damaged['scenario']['external_direct_rub']='0.00'
+    session.execute(update(CompanyPriceScenario).where(CompanyPriceScenario.id==row['scenario_id']).values(input_json=damaged));session.commit()
+    assert client.get(path,headers=headers).status_code==409

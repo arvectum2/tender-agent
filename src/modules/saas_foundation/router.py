@@ -1020,3 +1020,19 @@ def company_price_save(case_id: str, payload: company_price_scenarios.SaveInput,
     if not get_settings().saas_company_price_scenarios_enabled:
         raise HTTPException(404, "Price scenarios disabled")
     return company_price_scenarios.save(session, principal, case_id, payload)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/itemized/preview")
+def company_price_itemized_preview(case_id: str, payload: company_price_scenarios.ItemizedInput, principal: Member, session: DBSession) -> dict:
+    settings=get_settings()
+    if not (settings.saas_company_price_scenarios_enabled and settings.saas_company_price_itemized_enabled):
+        raise HTTPException(404, "Itemized price scenarios disabled")
+    return company_price_scenarios.preview_itemized(session, principal, case_id, payload)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/itemized", status_code=201)
+def company_price_itemized_save(case_id: str, payload: company_price_scenarios.ItemizedSaveInput, principal: Member, session: DBSession) -> dict:
+    settings=get_settings()
+    if not (settings.saas_company_price_scenarios_enabled and settings.saas_company_price_itemized_enabled):
+        raise HTTPException(404, "Itemized price scenarios disabled")
+    return company_price_scenarios.save_itemized(session,principal,case_id,payload)
