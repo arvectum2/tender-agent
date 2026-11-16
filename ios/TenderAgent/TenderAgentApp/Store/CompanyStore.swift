@@ -312,6 +312,40 @@ final class CompanyStore: ObservableObject {
         } catch { handleLifecycleError(error); throw error }
     }
 
+    func pricePreview(accountID: String, item: CompanyCase, input: CompanyPriceInput) async throws -> CompanyPricePreview {
+        guard !isBusy else { throw CompanyConnectionError.http(409) }
+        isBusy = true; defer { isBusy = false }
+        do {
+            let (client, actual) = try await lifecycleAccess(accountID: accountID, item: item)
+            return try await client.pricePreview(caseID: item.caseId, identity: actual, input: input)
+        } catch { handleLifecycleError(error); throw error }
+    }
+
+    func priceHistory(accountID: String, item: CompanyCase) async throws -> CompanyPriceHistory {
+        guard !isBusy else { throw CompanyConnectionError.http(409) }
+        isBusy = true; defer { isBusy = false }
+        do {
+            let (client, actual) = try await lifecycleAccess(accountID: accountID, item: item)
+            return try await client.priceHistory(caseID:item.caseId,identity:actual)
+        } catch { handleLifecycleError(error); throw error }
+    }
+
+    func savePrice(accountID: String, item: CompanyCase, attempt: CompanyPriceAttempt) async throws -> CompanyPriceRecord {
+        guard !isBusy, accountID == attempt.accountID, item.caseId == attempt.caseID, canDecide(accountID: accountID, caseID: item.caseId, revision: item.revision) else { throw CompanyConnectionError.http(409) }
+        isBusy = true; defer { isBusy = false }
+        let client: CompanyAPIClient, actual: CompanyIdentity
+        do { (client, actual) = try await lifecycleAccess(accountID: accountID, item: item, write:true) }
+        catch { handleLifecycleError(error); throw error }
+        do { return try await client.savePrice(attempt,identity:actual) }
+        catch let failure as CompanyConnectionError {
+            switch failure {
+            case .http(409), .http(422), .http(404): throw failure
+            case .identityMismatch, .http(401), .http(402), .http(403), .http(428): handleLifecycleError(failure); throw failure
+            default: throw CompanyConnectionError.priceUncertain
+            }
+        } catch { throw CompanyConnectionError.priceUncertain }
+    }
+
     static func safeError(_ error: Error) -> String {
         if let known = error as? CompanyConnectionError { return known.localizedDescription }
         return "Не удалось получить данные компании. Проверьте подключение."

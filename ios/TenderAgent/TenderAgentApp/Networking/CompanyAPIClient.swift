@@ -438,6 +438,159 @@ struct CompanyEventArtifact: Decodable, Sendable {
     var filename: String { "lifecycle-\(inspection.sha256.prefix(16)).\(formatHint)" }
 }
 
+struct CompanyPriceInput: Codable, Equatable, Sendable {
+    var externalDirectRub = ""
+    var ownLaborRub = ""
+    var cashOverheadRub = ""
+    var reserveRub = ""
+    var fixedPlatformFeesRub = ""
+    var guaranteeFinancingCostRub = ""
+    var revenueTaxPercent = ""
+    var variablePlatformFeePercent = ""
+    var minimumProfitRub = ""
+    var targetProfitRub = ""
+    var referenceCeilingRub: String?
+    var manualBidPricesRub: [String] = []
+    var assumptionNote = ""
+    var acceptHypotheticalAssumptionsOnly = false
+
+    static func money(_ value: String) -> Bool { value.range(of: #"^[0-9]{1,12}(\.[0-9]{1,2})?$"#, options: .regularExpression) != nil }
+    static func percent(_ value: String) -> Bool { value.range(of: #"^[0-9]{1,3}(\.[0-9]{1,4})?$"#, options: .regularExpression) != nil }
+    static func normalize(_ value: String) -> String { value.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: ",", with: ".") }
+    static func decimal(_ value: String) -> Decimal? { Decimal(string: value, locale: Locale(identifier: "en_US_POSIX")) }
+    var valid: Bool {
+        let costs = [externalDirectRub, ownLaborRub, cashOverheadRub, reserveRub, fixedPlatformFeesRub, guaranteeFinancingCostRub]
+        guard (costs + [minimumProfitRub, targetProfitRub]).allSatisfy(Self.money), costs.contains(where: { (Self.decimal($0) ?? 0) > 0 }),
+              [revenueTaxPercent, variablePlatformFeePercent].allSatisfy(Self.percent),
+              let tax = Self.decimal(revenueTaxPercent), let fee = Self.decimal(variablePlatformFeePercent), tax + fee < 100,
+              let minimum = Self.decimal(minimumProfitRub), let target = Self.decimal(targetProfitRub), minimum <= target,
+              manualBidPricesRub.count <= 8, manualBidPricesRub.allSatisfy({ Self.money($0) && (Self.decimal($0) ?? 0) > 0 }),
+              Set(manualBidPricesRub.compactMap(Self.decimal)).count == manualBidPricesRub.count,
+              !assumptionNote.isEmpty, assumptionNote.count <= 2000, assumptionNote == assumptionNote.trimmingCharacters(in: .whitespacesAndNewlines), acceptHypotheticalAssumptionsOnly else { return false }
+        return referenceCeilingRub.map { Self.money($0) && (Self.decimal($0) ?? 0) > 0 } ?? true
+    }
+}
+
+struct CompanyPriceRow: Codable, Equatable, Sendable, Identifiable {
+    let kind: String
+    let priceRub: String
+    let cashSurplusRub: String
+    let economicProfitRub: String
+    let economicMarginPercent: String?
+    let cashBreakEvenMet: Bool
+    let fullBreakEvenMet: Bool
+    let minimumProfitMet: Bool
+    let targetProfitMet: Bool
+    let withinUserReferenceCeiling: Bool?
+    var id: String { kind + ":" + priceRub }
+    var title: String {
+        switch kind {
+        case "CASH_BREAK_EVEN": "Денежная безубыточность"
+        case "FULL_BREAK_EVEN": "Полная безубыточность"
+        case "STRATEGIC_MINIMUM_PROFIT": "Минимальная прибыль"
+        case "COMMERCIAL_TARGET_PROFIT": "Целевая прибыль"
+        default: "Ручная цена"
+        }
+    }
+}
+
+struct CompanyPriceResult: Codable, Equatable, Sendable {
+    static let kinds = ["CASH_BREAK_EVEN", "FULL_BREAK_EVEN", "STRATEGIC_MINIMUM_PROFIT", "COMMERCIAL_TARGET_PROFIT"]
+    let schema: String
+    let currency: String
+    let cashFixedAndReservedRub: String
+    let ownLaborRub: String
+    let fullEconomicCostBeforeRevenueRatesRub: String
+    let revenueRetentionRate: String
+    let thresholdsRoundedUpToKopecks: Bool
+    let profitsRoundedDownToKopecks: Bool
+    let scenarios: [CompanyPriceRow]
+    let referenceCeilingUserSupplied: Bool
+    let assumptionsIndependentlyVerified: Bool
+    let taxModelVerified: Bool
+    let marketComparablesUsed: Bool
+    let probabilityOfWinningEstimated: Bool
+    let isProcurementBidRecommendation: Bool
+    let commercialOwnerGo: Bool
+    let externalSubmissionAllowed: Bool
+    func matches(_ input: CompanyPriceInput) -> Bool {
+        func money(_ s: String) -> Bool { s.range(of: #"^-?[0-9]{1,21}\.[0-9]{2}$"#, options: .regularExpression) != nil }
+        guard input.valid, schema == "company_price_scenario_v1", currency == "RUB", thresholdsRoundedUpToKopecks, profitsRoundedDownToKopecks,
+              !assumptionsIndependentlyVerified, !taxModelVerified, !marketComparablesUsed, !probabilityOfWinningEstimated, !isProcurementBidRecommendation, !commercialOwnerGo, !externalSubmissionAllowed,
+              referenceCeilingUserSupplied == (input.referenceCeilingRub != nil),
+              [cashFixedAndReservedRub, ownLaborRub, fullEconomicCostBeforeRevenueRatesRub].allSatisfy(money),
+              let retention = CompanyPriceInput.decimal(revenueRetentionRate), retention > 0, retention <= 1,
+              scenarios.count == 4 + input.manualBidPricesRub.count else { return false }
+        for (i,row) in scenarios.enumerated() {
+            guard row.kind == (i < 4 ? Self.kinds[i] : "MANUAL_PRICE"), [row.priceRub,row.cashSurplusRub,row.economicProfitRub].allSatisfy(money),
+                  let price = CompanyPriceInput.decimal(row.priceRub), price >= 0,
+                  (price == 0 ? row.economicMarginPercent == nil : row.economicMarginPercent?.range(of: #"^-?[0-9]{1,24}\.[0-9]{4}$"#, options: .regularExpression) != nil),
+                  row.withinUserReferenceCeiling == input.referenceCeilingRub.flatMap(CompanyPriceInput.decimal).map({ price <= $0 }) else { return false }
+            if i >= 4, price != CompanyPriceInput.decimal(input.manualBidPricesRub[i-4]) { return false }
+        }
+        return true
+    }
+}
+
+struct CompanyPricePreview: Decodable, Sendable {
+    let customerId: String
+    let caseId: String
+    let inputsStored: Bool
+    let result: CompanyPriceResult
+    func matches(_ identity: CompanyIdentity, caseID: String, input: CompanyPriceInput) -> Bool {
+        customerId == identity.customerId && caseId == caseID && !inputsStored && result.matches(input)
+    }
+}
+
+struct CompanyPriceRecord: Decodable, Identifiable, Sendable {
+    let customerId: String
+    let caseId: String
+    let scenarioId: String
+    let revision: Int
+    let memberId: String
+    let createdAt: Date
+    let inputs: CompanyPriceInput
+    let result: CompanyPriceResult
+    let origin: String
+    let externalSubmissionAllowed: Bool
+    var id: String { scenarioId }
+    func matches(_ identity: CompanyIdentity, caseID: String) -> Bool {
+        customerId == identity.customerId && caseId == caseID && UUID(uuidString: scenarioId) != nil && (1...30).contains(revision) && origin == "EXPLICIT_USER_ASSUMPTIONS" && !externalSubmissionAllowed && result.matches(inputs)
+    }
+}
+
+struct CompanyPriceHistory: Decodable, Sendable {
+    let customerId: String
+    let caseId: String
+    let items: [CompanyPriceRecord]
+    let hasMore: Bool
+    let externalSubmissionAllowed: Bool
+    func matches(_ identity: CompanyIdentity, caseID: String) -> Bool {
+        customerId == identity.customerId && caseId == caseID && !hasMore && !externalSubmissionAllowed && items.count <= 30 && Set(items.map(\.id)).count == items.count && items.enumerated().allSatisfy { $0.element.matches(identity, caseID: caseID) && $0.element.revision == items.count - $0.offset }
+    }
+}
+
+struct CompanyPriceSavePayload: Codable, Equatable, Sendable {
+    let expectedRevision: Int
+    let idempotencyKey: String
+    let scenario: CompanyPriceInput
+}
+
+struct CompanyPriceAttempt: Equatable, Sendable {
+    let accountID: String
+    let caseID: String
+    let payload: CompanyPriceSavePayload
+    let preview: CompanyPriceResult
+    static func prepare(previous: Self?, accountID: String, caseID: String, revision: Int, input: CompanyPriceInput, result: CompanyPriceResult) throws -> Self {
+        guard (0..<30).contains(revision), result.matches(input) else { throw CompanyConnectionError.invalidPrice }
+        if let previous, previous.accountID == accountID, previous.caseID == caseID, previous.payload.expectedRevision == revision, previous.payload.scenario == input, previous.preview == result { return previous }
+        return Self(accountID:accountID,caseID:caseID,payload:.init(expectedRevision:revision,idempotencyKey:UUID().uuidString,scenario:input),preview:result)
+    }
+    func accepts(_ row: CompanyPriceRecord, identity: CompanyIdentity) -> Bool {
+        row.matches(identity,caseID:caseID) && row.memberId == identity.memberId && row.revision == payload.expectedRevision + 1 && row.inputs == payload.scenario && row.result == preview
+    }
+}
+
 struct CompanyEvidence: Decodable, Identifiable, Sendable {
     let bindingId: String
     let caseId: String
@@ -454,7 +607,7 @@ struct CompanyEvidencePage: Decodable, Sendable {
 }
 
 enum CompanyConnectionError: LocalizedError {
-    case invalidOrigin, invalidToken, identityMismatch, invalidResponse, http(Int), storage, invalidDecision, decisionUncertain, invalidLifecycle, lifecycleUncertain, invalidArtifact
+    case invalidOrigin, invalidToken, identityMismatch, invalidResponse, http(Int), storage, invalidDecision, decisionUncertain, invalidLifecycle, lifecycleUncertain, invalidArtifact, invalidPrice, priceUncertain
 
     var errorDescription: String? {
         switch self {
@@ -468,6 +621,8 @@ enum CompanyConnectionError: LocalizedError {
         case .http(428): "Подтвердите условия пилота в веб-кабинете."
         case .storage: "Не удалось сохранить подключения в Keychain."
         case .invalidDecision: "Укажите действие, обоснование и будущую дату отсрочки, если она нужна."
+        case .invalidPrice: "Заполните явные расходы, ставки, цены и обоснование. Проверьте допущения."
+        case .priceUncertain: "Ответ о сохранении не получен. Повторите тот же расчёт или проверьте историю."
         case .invalidArtifact: "Допустимы PDF, DOCX и XLSX до 2 МБ; проверка файла не пройдена."
         case .invalidLifecycle: "Проверьте допустимое состояние, обоснование, ссылку и дату события."
         case .lifecycleUncertain: "Ответ о записи не получен. Проверьте журнал или повторите ту же запись."
@@ -644,6 +799,32 @@ struct CompanyAPIClient: Sendable {
         let bytes = try CompanyArtifactBytes(data: data, format: artifact.formatHint)
         guard artifact.accepts(bytes) else { throw CompanyConnectionError.invalidArtifact }
         return bytes
+    }
+
+    private func pricePath(caseID: String, identity: CompanyIdentity, write: Bool = false) throws -> String {
+        guard UUID(uuidString: caseID) != nil, identity.legalAccepted, (write ? ["owner", "admin"] : ["owner", "admin", "analyst"]).contains(identity.role) else { throw CompanyConnectionError.http(403) }
+        return "api/saas/company-portfolio/cases/\(caseID)/price-scenarios"
+    }
+
+    func pricePreview(caseID: String, identity: CompanyIdentity, input: CompanyPriceInput) async throws -> CompanyPricePreview {
+        guard input.valid else { throw CompanyConnectionError.invalidPrice }
+        let encoder = JSONEncoder(); encoder.keyEncodingStrategy = .convertToSnakeCase
+        let reply: CompanyPricePreview = try await get(try pricePath(caseID: caseID, identity: identity) + "/preview", method: "POST", body: encoder.encode(input))
+        guard reply.matches(identity, caseID: caseID, input: input) else { throw CompanyConnectionError.identityMismatch }
+        return reply
+    }
+
+    func priceHistory(caseID: String, identity: CompanyIdentity) async throws -> CompanyPriceHistory {
+        let reply: CompanyPriceHistory = try await get(try pricePath(caseID: caseID, identity: identity), query: [URLQueryItem(name:"limit", value:"30")])
+        guard reply.matches(identity, caseID: caseID) else { throw CompanyConnectionError.identityMismatch }
+        return reply
+    }
+
+    func savePrice(_ attempt: CompanyPriceAttempt, identity: CompanyIdentity) async throws -> CompanyPriceRecord {
+        let encoder = JSONEncoder(); encoder.keyEncodingStrategy = .convertToSnakeCase
+        let reply: CompanyPriceRecord = try await get(try pricePath(caseID: attempt.caseID, identity: identity, write: true), method: "POST", body: encoder.encode(attempt.payload))
+        guard attempt.accepts(reply,identity:identity) else { throw CompanyConnectionError.identityMismatch }
+        return reply
     }
 
     private func get<T: Decodable>(_ path: String, query: [URLQueryItem] = [], method: String = "GET", body: Data? = nil, contentType: String = "application/json") async throws -> T {

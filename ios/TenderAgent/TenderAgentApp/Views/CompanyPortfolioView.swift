@@ -190,6 +190,9 @@ private struct CompanyCaseDetail: View {
                     Section { Text("Карточка изменилась или недоступна. Откройте её заново.").foregroundStyle(.orange) }
                 }
                 CompanyLifecycleSection(item: item, accountID: accountID, store: store)
+                if let identity = store.identity, identity.legalAccepted, ["owner", "admin", "analyst"].contains(identity.role) {
+                    CompanyPriceSection(item: item, accountID: accountID, store: store)
+                }
                 if let decisionError { Section { Text(decisionError).foregroundStyle(.orange) } }
                 if !item.isCommercial, let identity = store.identity, ["owner", "admin", "analyst"].contains(identity.role) {
                     Section("Привязанные источники") {
@@ -453,5 +456,165 @@ private struct CompanyEventFileView: View {
         .onChange(of: exporting) { _, value in if !value { export = nil } }
         .onChange(of: store.selectedID) { _, _ in reset() }
         .onChange(of: store.identity?.memberId) { _, value in if value == nil { reset() } }
+    }
+}
+
+private struct CompanyPriceSection: View {
+    let item: CompanyCase
+    let accountID: String
+    @ObservedObject var store: CompanyStore
+    @State private var input = CompanyPriceInput()
+    @State private var manual = ""
+    @State private var ceiling = ""
+    @State private var preview: CompanyPriceResult?
+    @State private var previewInput: CompanyPriceInput?
+    @State private var history: [CompanyPriceRecord]?
+    @State private var pending: CompanyPriceAttempt?
+    @State private var confirmSave = false
+    @State private var notice: String?
+    @State private var selectedVersion: String = ""
+
+    private var canSave: Bool { store.canDecide(accountID: accountID,caseID:item.caseId,revision:item.revision) }
+    private var draft: CompanyPriceInput {
+        var value = input
+        value.externalDirectRub = CompanyPriceInput.normalize(value.externalDirectRub)
+        value.ownLaborRub = CompanyPriceInput.normalize(value.ownLaborRub)
+        value.cashOverheadRub = CompanyPriceInput.normalize(value.cashOverheadRub)
+        value.reserveRub = CompanyPriceInput.normalize(value.reserveRub)
+        value.fixedPlatformFeesRub = CompanyPriceInput.normalize(value.fixedPlatformFeesRub)
+        value.guaranteeFinancingCostRub = CompanyPriceInput.normalize(value.guaranteeFinancingCostRub)
+        value.revenueTaxPercent = CompanyPriceInput.normalize(value.revenueTaxPercent)
+        value.variablePlatformFeePercent = CompanyPriceInput.normalize(value.variablePlatformFeePercent)
+        value.minimumProfitRub = CompanyPriceInput.normalize(value.minimumProfitRub)
+        value.targetProfitRub = CompanyPriceInput.normalize(value.targetProfitRub)
+        let limit = CompanyPriceInput.normalize(ceiling)
+        value.referenceCeilingRub = limit.isEmpty ? nil : limit
+        value.manualBidPricesRub = manual.components(separatedBy: .newlines).map(CompanyPriceInput.normalize).filter { !$0.isEmpty }
+        value.assumptionNote = value.assumptionNote.trimmingCharacters(in:.whitespacesAndNewlines)
+        return value
+    }
+    private func invalidate() { preview = nil; previewInput = nil; pending = nil; confirmSave = false; notice = nil }
+    private func reset() { invalidate(); input = CompanyPriceInput(); manual = ""; ceiling = ""; history = nil; selectedVersion = "" }
+    private func calculate() async {
+        invalidate(); let value = draft
+        guard value.valid else { notice = CompanyConnectionError.invalidPrice.localizedDescription; return }
+        do {
+            let response = try await store.pricePreview(accountID:accountID,item:item,input:value)
+            guard store.selectedID == accountID, store.identity != nil, draft == value else { return }
+            preview = response.result; previewInput = value
+            notice = "Предварительный расчёт, не сохранён."
+        } catch { notice = CompanyStore.safeError(error) }
+    }
+    private func loadHistory() async {
+        history = nil; pending = nil; selectedVersion = ""; notice = nil
+        do { history = try await store.priceHistory(accountID:accountID,item:item).items }
+        catch { notice = CompanyStore.safeError(error) }
+    }
+    private func prepareSave() {
+        guard canSave, let result = preview, let value = previewInput, value == draft, let history else { return }
+        do {
+            pending = try CompanyPriceAttempt.prepare(previous:pending,accountID:accountID,caseID:item.caseId,revision:history.first?.revision ?? 0,input:value,result:result)
+            confirmSave = true
+        } catch { notice = CompanyStore.safeError(error) }
+    }
+    private func save() async {
+        guard canSave, let attempt = pending, attempt.payload.scenario == draft, attempt.preview == preview else { return }
+        do {
+            let row = try await store.savePrice(accountID:accountID,item:item,attempt:attempt)
+            history = [row] + (history ?? []); selectedVersion = row.id
+            invalidate(); notice = "Версия v\(row.revision) сохранена. Не утверждение ставки."
+        } catch {
+            if case CompanyConnectionError.http(409) = error { invalidate(); history = nil; selectedVersion = ""; notice = "Версия изменилась. Обновите историю и пересчитайте." }
+            else { notice = CompanyStore.safeError(error) }
+        }
+    }
+
+    private func amount(_ title: String, _ value: Binding<String>) -> some View {
+        TextField(title,text:value).keyboardType(.decimalPad)
+    }
+    @ViewBuilder private func comparison(_ result: CompanyPriceResult) -> some View {
+        LabeledContent("Расходы и резерв",value:result.cashFixedAndReservedRub + " ₽")
+        LabeledContent("Полная себестоимость",value:result.fullEconomicCostBeforeRevenueRatesRub + " ₽")
+        ForEach(result.scenarios) { row in
+            VStack(alignment:.leading,spacing:4) {
+                Text(row.title).font(.headline)
+                LabeledContent("Цена",value:row.priceRub + " ₽")
+                LabeledContent("Денежный остаток",value:row.cashSurplusRub + " ₽")
+                LabeledContent("Экономическая прибыль",value:row.economicProfitRub + " ₽")
+                LabeledContent("Маржа",value:row.economicMarginPercent.map { $0 + "%" } ?? "—")
+                if let within = row.withinUserReferenceCeiling { Text(within ? "В пределах заданной цены" : "Выше заданного предела").font(.caption) }
+            }
+        }
+    }
+
+    var body: some View {
+        Section("Экономика предложения · PRICE-01") {
+            Text("Заполните все обязательные поля, включая явные нули. Не учитывайте расходы дважды. Сценарные допущения, не налоговый расчёт и не прогноз победы.").font(.caption).foregroundStyle(.secondary)
+            DisclosureGroup("Себестоимость и ставки") {
+                amount("Прямые расходы, ₽",$input.externalDirectRub)
+                amount("Дополнительная стоимость собственного труда, ₽",$input.ownLaborRub)
+                amount("Денежные накладные расходы, ₽",$input.cashOverheadRub)
+                amount("Резерв риска, ₽",$input.reserveRub)
+                amount("Фиксированные сборы ЭТП, ₽",$input.fixedPlatformFeesRub)
+                amount("Стоимость финансирования и гарантий, ₽",$input.guaranteeFinancingCostRub)
+                Text("Учитывайте стоимость финансирования, не сумму обеспечения.").font(.caption).foregroundStyle(.secondary)
+                amount("Налог от выручки, %",$input.revenueTaxPercent)
+                amount("Переменная комиссия, %",$input.variablePlatformFeePercent)
+                amount("Минимальная прибыль, ₽",$input.minimumProfitRub)
+                amount("Целевая прибыль, ₽",$input.targetProfitRub)
+                amount("Предел цены, ₽ (необязательно)",$ceiling)
+                TextField("До 8 цен, каждая с новой строки",text:$manual,axis:.vertical).lineLimit(2...8)
+                TextField("Источники и обоснование допущений",text:$input.assumptionNote,axis:.vertical).lineLimit(3...8)
+                Toggle("Подтверждаю сценарные допущения, не утверждённую цену",isOn:$input.acceptHypotheticalAssumptionsOnly)
+            }
+            Button("Рассчитать") { Task { await calculate() } }.disabled(store.isBusy || !input.acceptHypotheticalAssumptionsOnly)
+            Button("Загрузить историю расчётов") { Task { await loadHistory() } }.disabled(store.isBusy)
+            if let preview {
+                comparison(preview)
+                if canSave {
+                    Button("Проверить и сохранить версию") { prepareSave() }.disabled(store.isBusy || history == nil || (history?.first?.revision ?? 0) >= 30)
+                    if history == nil { Text("Для сохранения загрузите историю.").font(.caption).foregroundStyle(.secondary) }
+                }
+            }
+            if let history {
+                if history.isEmpty { Text("Сохранённых версий нет.").font(.caption) }
+                else {
+                    Picker("Версия",selection:$selectedVersion) {
+                        Text("Выберите версию").tag("")
+                        ForEach(history) { row in Text("v\(row.revision) · \(row.createdAt.formatted(date:.abbreviated,time:.shortened))").tag(row.id) }
+                    }
+                    if let row = history.first(where: { $0.id == selectedVersion }) {
+                        DisclosureGroup("Сохранённые допущения и результаты") {
+                            Text(row.inputs.assumptionNote).textSelection(.enabled)
+                            LabeledContent("Прямые расходы", value:row.inputs.externalDirectRub + " ₽")
+                            LabeledContent("Собственный труд", value:row.inputs.ownLaborRub + " ₽")
+                            LabeledContent("Накладные расходы", value:row.inputs.cashOverheadRub + " ₽")
+                            LabeledContent("Резерв", value:row.inputs.reserveRub + " ₽")
+                            LabeledContent("Сборы ЭТП", value:row.inputs.fixedPlatformFeesRub + " ₽")
+                            LabeledContent("Финансирование", value:row.inputs.guaranteeFinancingCostRub + " ₽")
+                            LabeledContent("Налог", value:row.inputs.revenueTaxPercent + "%")
+                            LabeledContent("Комиссия", value:row.inputs.variablePlatformFeePercent + "%")
+                            LabeledContent("Минимальная прибыль", value:row.inputs.minimumProfitRub + " ₽")
+                            LabeledContent("Целевая прибыль", value:row.inputs.targetProfitRub + " ₽")
+                            LabeledContent("Предел цены", value:row.inputs.referenceCeilingRub.map { $0 + " ₽" } ?? "Не задан")
+                            comparison(row.result)
+                        }
+                    }
+                }
+            }
+            if let notice { Text(notice).font(.caption).foregroundStyle(.secondary) }
+        }
+        .disabled(store.isBusy)
+        .alert("Сохранить версию расчёта?",isPresented:$confirmSave) {
+            Button("Сохранить") { Task { await save() } }
+            Button("Отмена",role:.cancel) {}
+        } message: {
+            Text("\(store.identity?.companyName ?? "Компания") · \(item.displayReference). Это внутренняя оценка, не утверждение цены и не подача заявки.")
+        }
+        .onChange(of:input) { _,_ in invalidate() }
+        .onChange(of:manual) { _,_ in invalidate() }
+        .onChange(of:ceiling) { _,_ in invalidate() }
+        .onChange(of:store.selectedID) { _,_ in reset() }
+        .onChange(of:store.identity?.memberId) { _,value in if value == nil { reset() } }
     }
 }
