@@ -72,6 +72,8 @@ class Runner:
         self.gpb_root = root / "parallel-sources"
         self.docs = root / "documents"
         self.last_link_input = self.docs / "verified-ta-link-input-138.json"
+        self.member_plan = None
+        self.member_plan_sha = None
 
     def record_heads(self):
         with self.mutex:
@@ -343,6 +345,41 @@ class Runner:
                                      "prior_state": state_saved.name})
         return new_digest, new["ready"]
 
+    def member_index_pilot(self, sync):
+        """Single opt-in bounded batch, under the existing mutation lock."""
+        lane="sibur";state=self.state["lanes"][lane]
+        if not self.member_plan or state.get("member_pilot_completed_sha256")==self.member_plan_sha:
+            return False
+        if self.stop_requested() or state.get("index_inflight"):
+            return False
+        if self.member_plan.is_symlink() or hashlib.sha256(self.member_plan.read_bytes()).hexdigest()!=self.member_plan_sha:
+            raise Blocked("member plan identity mismatch")
+        before=self.local_index();self.reconcile_index(before)
+        if state.get("archive_synced_count")!=len(before):
+            raise Blocked("member pilot requires synchronized direct receipts")
+        gate=self.gate(lane)
+        self.update(lane,index_inflight=True,index_baseline=len(before),member_pilot_status="in_progress",member_plan_sha256=self.member_plan_sha)
+        args=["--root",self.root,"--plan",self.member_plan,"--digest",self.member_plan_sha]
+        def batch(mode):
+            return self.cmd(lane,"member_index_batch_"+mode,[MI_PY,"-m","scripts.research.member_index_batch",*map(str,args),"--mode",mode,"--gate",str(gate),"--limit","3"],self.sibur,1000).decode()
+        error=None
+        try:
+            x=batch("extract");self.reconcile_index(self.local_index());y=batch("index")
+        except Blocked as exc:error=exc
+        after=self.local_index();self.reconcile_index(after)
+        if after!=before:
+            self.gate(lane);self.backup_ta(lane);sync(after)
+            if self.state["lanes"][lane].get("archive_synced_count")!=len(after):
+                raise Blocked("member pilot direct sync did not reconcile")
+        if error:raise error
+        cmd=[MI_PY,"-m","scripts.research.link_sibur_member_index",*map(str,args)]
+        linked=json.loads(self.cmd(lane,"member registry",cmd,self.sibur,180))
+        repeat=json.loads(self.cmd(lane,"member registry replay",cmd,self.sibur,180))
+        if repeat["updated"] or any(repeat[k]!=linked[k] for k in ("members","procedure_member_pairs","source_links","registry_sha256")):
+            raise Blocked("member registry replay mismatch")
+        self.update(lane,index_inflight=False,member_pilot_status="completed",member_pilot_completed_sha256=self.member_plan_sha,member_pilot={"extracted_planned":planned(x,"planned"),"indexed_planned":planned(y,"planned"),"new_receipts":len(after)-len(before),"registry":linked,"replay":repeat})
+        return True
+
     def archive_index_lane(self):
         lane="sibur"
         digest=self.state["lanes"][lane].get("archive_bridge_sha256")
@@ -392,6 +429,8 @@ class Runner:
                         if refreshed:
                             digest, rows = refreshed
                             break
+                        if self.member_index_pilot(sync):
+                            continue
                     collector = self.root / "sibur-archive-discovery/categories/documents/state.json"
                     if not collector.exists() or read(collector).get("status") != "running":
                         self.update(lane,status="exhausted",step="committed priority queue drained; collector not running; review remains")
@@ -458,7 +497,11 @@ def main():
     for name in ("root", "gpb", "sibur", "mi"):
         p.add_argument("--" + name, type=Path, required=True)
     p.add_argument("--resume-sibur-refresh", action="store_true", help="recover only a reconciled pre-ingest refresh failure")
+    p.add_argument("--member-plan", type=Path)
+    p.add_argument("--member-plan-sha256")
     args = p.parse_args()
+    if bool(args.member_plan)!=bool(args.member_plan_sha256):p.error("member plan and digest must be supplied together")
+    if args.member_plan and (args.member_plan.is_symlink() or not re.fullmatch(r"[a-f0-9]{64}",args.member_plan_sha256) or hashlib.sha256(args.member_plan.read_bytes()).hexdigest()!=args.member_plan_sha256):p.error("member plan identity mismatch")
     os.umask(0o077)
     folder = args.root / "autonomous-runner"
     folder.mkdir(mode=0o700, exist_ok=True)
@@ -469,6 +512,8 @@ def main():
             print("Executor already running")
             return
         r = Runner(args.root, args.gpb, args.sibur, args.mi)
+        r.member_plan=args.member_plan
+        r.member_plan_sha=args.member_plan_sha256
         if args.resume_sibur_refresh:
             r.resume_sibur_refresh()
         r.record_heads()

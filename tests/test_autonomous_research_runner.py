@@ -194,3 +194,27 @@ def test_resume_refresh_refuses_unreconciled_or_inflight(tmp_path, monkeypatch):
     with pytest.raises(Blocked, match="unreconciled"):
         r.resume_sibur_refresh()
     assert r.state["lanes"]["sibur"]["status"] == "blocked"
+
+
+def test_member_pilot_gated_reconciled_and_idempotent(tmp_path,monkeypatch):
+    import hashlib
+    r=Runner(tmp_path,tmp_path,tmp_path,tmp_path);r.member_plan=tmp_path/'plan.json';atomic(r.member_plan,{})
+    r.member_plan_sha=hashlib.sha256(r.member_plan.read_bytes()).hexdigest();r.update('sibur',archive_synced_count=1,index_inflight=False)
+    index={'old':{}};calls=[]
+    monkeypatch.setattr(r,'local_index',lambda:dict(index))
+    monkeypatch.setattr(r,'reconcile_index',lambda i:calls.append('reconcile'))
+    monkeypatch.setattr(r,'gate',lambda lane:(calls.append('gate') or tmp_path/'gate.json'))
+    monkeypatch.setattr(r,'backup_ta',lambda lane:calls.append('backup'))
+    def cmd(lane,step,args,cwd,timeout):
+        calls.append(step)
+        assert r.state['lanes']['sibur']['index_inflight']
+        if step=='member_index_batch_index':index['new']={}
+        if step.startswith('member_index_batch'):return b'planned 1\n'
+        return json.dumps({'updated':int(step=='member registry'),'members':2,'procedure_member_pairs':3,'source_links':3,'registry_sha256':'test'}).encode()
+    monkeypatch.setattr(r,'cmd',cmd)
+    def sync(i):calls.append('sync');r.update('sibur',archive_synced_count=len(i))
+    assert r.member_index_pilot(sync)
+    assert calls==['reconcile','gate','member_index_batch_extract','reconcile','member_index_batch_index','reconcile','gate','backup','sync','member registry','member registry replay']
+    assert r.state['lanes']['sibur']['index_inflight'] is False
+    assert r.state['lanes']['sibur']['member_pilot']['new_receipts']==1
+    assert not r.member_index_pilot(sync)
