@@ -144,7 +144,7 @@ completed:
   source SHA and locators, unreviewed literal requirement categories, current scoped
   supplier profile version/state, explicit web button. Both extraction flags default
   off; no direct ETP acquisition.
-current_stage: multiformat_text_projection_verified_next_requirement_review_and_source_contracts
+current_stage: source_linked_requirement_review_and_company_fact_binding
 remaining:
 - Review exact-head hosted CI and mandatory Node fixture for new PR; fix regressions.
 - Implement source-linked human reviewed requirement register, explicit matching to
@@ -202,10 +202,9 @@ test_results:
   XLSX literal/formula/hidden-sheet behavior, DOCX bounds, API default-off and tenant
   isolation, SQLite migration regression; Ruff/diff PASS. Current hosted Node/CI pending.
   PR545 hosted JS and quality PASS, 18/19, mirror only failure.
-resume_instruction: Continue source-linked requirement review/qualification facts
-  integration and real source contracts when permitted. New offline projections verified;
-  preserve old receipt schema. Check hosted CI, no local Node repair during indexing.
-  PDF parser separate default-off gate, not hardened sandbox. No model calls, production
-  DB changes or deployment. Gemma paused.
+resume_instruction: Implement bounded scoped append-only human requirement matrix,
+  DOCX/XLSX untruncated fragments only, explicit profile and optional document/reference
+  fact version, stale detection and optimistic revision. Offline tests; no binding
+  implies verified qualification. Investigate PR546 CI failure when logs ready.
 owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
   Product changes isolated, offline and bounded.
