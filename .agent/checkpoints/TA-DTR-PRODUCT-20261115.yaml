@@ -189,16 +189,19 @@ completed:
   participated/recommended IDs only as described; no invitation/document downloads
   or submission; paid maximum/pro supplier tariff. Prefer permitted browser path;
   no written operator consent granted.'
-current_stage: company_lifecycle_web_controls
+- Explicit scoped web lifecycle state/valid transitions, manual receipt and protocol
+  reference, timestamp, history, terminal correction, confirmation and replay, recorded-fact
+  commercial metrics; server gate, viewer read-only, stale and session clearing.
+current_stage: company_lifecycle_web_verified_next_native
 remaining:
-- Web and iOS lifecycle controls, metrics with explicit human-attested provenance;
-  complete readiness evidence relationships, receipt/outcome original verification
-  and multi-lot/rebid/correction policy.
-- Hosted exact-head CI and mirror; PG concurrent admission and actual browser/device
-  E2E acceptance.
-- B2B operator browser consent pending, no automated requests. SIBUR/Qwen priority,
-  Gemma paused; no production deployment.
-last_verified_commit: 6e8c9e6be9c12fd0e1a43bfe3cfaa4e044eda952
+- Native iOS scoped lifecycle state and read/write controls, same recorded-fact metrics;
+  actual receipt/outcome evidence and readiness linkage, multi-lot and rebid policy.
+- Hosted exact-head CI and mirror; PG concurrency and actual browser/device E2E acceptance.
+- B2B operator written browser consent follow-up sent; await response, no automated
+  B2B traffic.
+- SIBUR current supported queue drained (849/18975 synced), PDF/oversized and remaining
+  corpus review priority; Gemma paused, no production deploy.
+last_verified_commit: 74a054750ce2bb3b3f0b3e59ec89f51398e7c292
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -271,9 +274,13 @@ test_results:
   boot or device install. git diff --check PASS.
 - 116 passed, 2 skipped, 93 warnings in 11.20s; SQLite migration 115 forward/replay/nonempty
   rollback guard, scope, GO staleness, history/correction and metrics; Ruff/diff PASS.
-resume_instruction: Implement scoped web lifecycle state, explicit human attestation,
-  history and metrics. Run actual JS and offline regression tests. Proceed native
-  next. B2B follow-up sent; no production or model calls.
+- 116 passed, 2 skipped, 93 warnings in 10.64s; extended actual JS cabinet fixture
+  PASS (isolated Playwright Node), Ruff/diff PASS. PR552 16 SUCCESS,2 IN_PROGRESS,mirror
+  FAILURE.
+resume_instruction: Web lifecycle/backend/JS verified. Continue native lifecycle/metrics
+  using existing API; separately resume SIBUR remaining PDF/oversized corpus review
+  with safe bounds, do not claim full corpus done. No production DB modifications
+  or rollout. B2B consent follow-up sent, wait separately; Gemma paused.
 owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
   Product changes isolated, offline and bounded.
 b2b_dependency:
@@ -285,11 +292,12 @@ b2b_dependency:
   owner_action: Owner sent follow-up to support requesting written browser automation
     consent; await response. No automated B2B traffic.
 sibur_readonly_observation_20261116:
-  status: running
-  full_receipts: 845
-  archive_synced_count: 844
+  status: exhausted
+  step: archive supported queue drained; oversized and PDF review remains
+  full_receipts: 849
+  archive_synced_count: 849
   server:
-    documents: 845
-    chunks: 18829
-    embeddings: 18829
+    documents: 849
+    chunks: 18975
+    embeddings: 18975
   error: null
