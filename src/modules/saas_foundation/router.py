@@ -893,3 +893,10 @@ def commercial_requirement_history(case_id: str, attempt_id: str, candidate_id: 
     if not get_settings().saas_commercial_requirement_review_enabled:
         raise HTTPException(404, "Requirement review disabled")
     return commercial_requirement_review.history(session, principal, case_id, attempt_id, candidate_id, fragment_key)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}/requirement-matrix")
+def commercial_case_requirement_matrix(case_id: str, attempt_id: str, principal: Member, session: DBSession, offset: int = Query(0, ge=0, le=20), limit: int = Query(3, ge=1, le=3)) -> dict:
+    if not get_settings().saas_commercial_requirement_review_enabled:
+        raise HTTPException(404, "Requirement review disabled")
+    return commercial_requirement_review.case_matrix(session, principal, case_id, attempt_id, offset=offset, limit=limit)

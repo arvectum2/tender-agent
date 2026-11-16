@@ -193,3 +193,52 @@ def history(session,principal,case_id,attempt_id,candidate_id,fragment_key):
     rows=list(session.scalars(_reviews(attachment.id).where(CommercialRequirementReview.fragment_key==fragment_key).order_by(CommercialRequirementReview.revision.desc())))
     if any(row.review_json['fragment']!=items[fragment_key] for row in rows):raise HTTPException(409,'Review source binding mismatch')
     return {'items':[_view(session,principal,row,profile,reference) for row in rows],'qualification_verified':False}
+
+
+MAX_MATRIX_DOCUMENTS = 3
+
+
+def case_matrix(session, principal, case_id, attempt_id, *, offset=0, limit=MAX_MATRIX_DOCUMENTS):
+    """One historical snapshot at a time; bounded pages, never mix document versions."""
+    capture._authorized(session,principal)
+    parent=capture.recheck(session,principal,case_id,attempt_id)
+    if not parent['original_reverified']:
+        raise HTTPException(409,'Verified historical card required')
+    inventory=parent['attachment_inventory']
+    candidates=inventory['candidates']
+    metadata=attachments.list_evidence(session,principal,case_id,attempt_id)['items']
+    saved={row['candidate_id']:row for row in metadata}
+    if len(saved)!=len(metadata) or set(saved)-{c['candidate_id'] for c in candidates}:
+        raise HTTPException(409,'Stored attachment inventory mismatch')
+    limit=min(max(limit,1),MAX_MATRIX_DOCUMENTS)
+    documents=[]
+    summary={'unreviewed':0,'needs_evidence':0,'human_gap_recorded':0,'human_support_recorded':0,'not_requirement':0}
+    for item in candidates[offset:offset+limit]:
+        row=saved.get(item['candidate_id'])
+        document={'candidate_id':item['candidate_id'],'source_url':item['source_url'],'display_label':item['display_label'],'format_hint':item['format_hint'],'stored_evidence_id':row['evidence_id'] if row else None,'platform_original_verified':False,'items':[]}
+        if not row:
+            document['state']='MISSING_USER_COPY'
+        elif item['format_hint'] not in {'docx','xlsx'}:
+            document['state']='REVIEW_FORMAT_UNSUPPORTED'
+        else:
+            # Any source-integrity conflict fails closed rather than hiding a changed file.
+            result=matrix(session,principal,case_id,attempt_id,item['candidate_id'])
+            if result['attachment_id']!=row['evidence_id']:
+                raise HTTPException(409,'Attachment changed during matrix projection')
+            document['items']=result['items']
+            document['state']='PARTIAL_REVIEW_CANDIDATES' if result['items'] else 'NO_REVIEWABLE_CANDIDATES_IN_PARTIAL_PREVIEW'
+            for key in ('unreviewed','needs_evidence','human_gap_recorded'):
+                summary[key]+=result['summary'][key]
+            for fragment in result['items']:
+                review=fragment['review']
+                if review and not review['stale_reasons']:
+                    if review['assessment']=='HUMAN_SUPPORT_RECORDED':summary['human_support_recorded']+=1
+                    elif review['assessment']=='NOT_REQUIREMENT':summary['not_requirement']+=1
+        documents.append(document)
+    return {'customer_id':principal.customer_id,'case_id':case_id,'attempt_id':attempt_id,
+        'observed_at':parent['receipt']['observed_at'],'card_sha256':parent['receipt']['html_sha256'],
+        'candidate_count':len(candidates),'stored_copy_count':len(saved),'missing_copy_count':len(candidates)-len(saved),
+        'rejected_or_opaque_links':inventory['rejected_or_opaque_links'],'link_scan_truncated':inventory['link_scan_truncated'],
+        'offset':offset,'limit':limit,'has_more':offset+len(documents)<len(candidates),
+        'documents':documents,'page_summary':summary,'summary_scope':'CURRENT_PAGE_ONLY',
+        'coverage_complete':False,'platform_original_verified':False,'qualification_verified':False,'external_submission_allowed':False}

@@ -1711,7 +1711,7 @@ def test_requirement_review_matrix_versions_scope_and_replay(client, session, mo
         assert client.put('/api/saas/profile',headers=_auth(token),json=_profile()).status_code==200
     settings=saas.get_settings().model_copy(update={'saas_commercial_capture_enabled':True,'saas_commercial_attachment_intake_enabled':True})
     monkeypatch.setattr(saas,'get_settings',lambda:settings)
-    card=workspace().replace(b'</body>',b'<a href="/docs/spec.docx">spec</a></body>')
+    card=workspace().replace(b'</body>',b'<a href="/docs/spec.docx">spec</a><a href="/docs/contract.docx">contract</a><a href="/docs/missing.pdf">missing</a><a href="/docs/other.pdf">other</a></body>')
     monkeypatch.setattr(capture,'fetch_card',lambda url:capture.SourceResponse(url,'text/html',200,service.now_utc(),card))
     def setup(token):
         base='/api/saas/company-portfolio'
@@ -1722,6 +1722,15 @@ def test_requirement_review_matrix_versions_scope_and_replay(client, session, mo
         assert client.post(path,headers=_auth(token),params={'confirm_user_supplied':True},content=docx_fixture('Поставщик должен иметь опыт поставки')).status_code==201
         return path+'/requirements'
     route,foreign=setup(a),setup(b)
+    case_route=route.split('/attachments/')[0]+'/requirement-matrix'
+    parent=route.split('/attachments/')[0]
+    candidates=client.get(parent,headers=_auth(a)).json()['attachment_inventory']['candidates']
+    second=parent+'/attachments/'+candidates[1]['candidate_id']
+    assert client.post(second,headers=_auth(a),params={'confirm_user_supplied':True},content=docx_fixture('Срок поставки 30 дней')).status_code==201
+    fourth=parent+'/attachments/'+candidates[3]['candidate_id']
+    assert client.post(fourth,headers=_auth(a),params={'confirm_user_supplied':True},content=b'%PDF-1.4\nfixture\n%%EOF').status_code==201
+    assert client.get(case_route,headers=_auth(a)).status_code==404
+
     assert client.get(route,headers=_auth(a)).status_code==404
     settings=settings.model_copy(update={'saas_commercial_requirement_review_enabled':True})
     def reference(token,version=0):
@@ -1731,6 +1740,13 @@ def test_requirement_review_matrix_versions_scope_and_replay(client, session, mo
     for token in (a,b):
         r=client.post('/api/saas/documents',headers=_auth(token),data={'document_key':'license_fixture','document_type':'LICENSE','display_name':'Fixture'},files={'file':('fixture.pdf',b'%PDF-1.4\n1 0 obj<<>>endobj\n%%EOF','application/pdf')});assert r.status_code==201,r.text
     first=client.get(route,headers=_auth(a));assert first.status_code==200,first.text
+    combined=client.get(case_route,headers=_auth(a));assert combined.status_code==200,combined.text
+    aggregate=combined.json();assert aggregate['candidate_count']==4 and aggregate['stored_copy_count']==3 and aggregate['missing_copy_count']==1
+    assert aggregate['page_summary']['unreviewed']==2 and aggregate['has_more'] and not aggregate['coverage_complete']
+    assert [d['state'] for d in aggregate['documents']]==['PARTIAL_REVIEW_CANDIDATES','PARTIAL_REVIEW_CANDIDATES','MISSING_USER_COPY']
+    assert client.get(case_route,headers=_auth(b)).status_code==404
+    page=client.get(case_route,headers=_auth(a),params={'offset':3}).json();assert not page['has_more'] and page['documents'][0]['state']=='REVIEW_FORMAT_UNSUPPORTED'
+    assert client.get(case_route,headers=_auth(a),params={'limit':4}).status_code==422
     matrix=first.json();foreign_matrix=client.get(foreign,headers=_auth(b)).json();item=matrix['items'][0];key=item['fragment_key'];doc=matrix['document_options'][0]['document_version_id']
     assert matrix['summary']['unreviewed']==1 and matrix['reference_list']['fact_id']==ref
     body={'fragment_key':key,'profile_fact_id':matrix['profile']['fact_id'],'expected_revision':0,'assessment':'HUMAN_SUPPORT_RECORDED','reference_fact_id':ref,'document_version_id':doc,'rationale':'Human review fixture, not qualification proof','idempotency_key':'review-first'}
@@ -1752,6 +1768,7 @@ def test_requirement_review_matrix_versions_scope_and_replay(client, session, mo
     session.commit()
     new=client.get(route,headers=_auth(a)).json();review=new['items'][0]['review'];assert set(review['stale_reasons'])=={'PROFILE_CHANGED_OR_INACTIVE','REFERENCE_LIST_CHANGED_OR_INACTIVE','DOCUMENT_CHANGED_OR_INACTIVE'}
     assert new['summary']['needs_evidence']==1
+    combined=client.get(case_route,headers=_auth(a)).json();assert combined['page_summary']['needs_evidence']==1 and combined['page_summary']['unreviewed']==1
     updated={**body,'profile_fact_id':new['profile']['fact_id'],'reference_fact_id':newref,'expected_revision':1,'idempotency_key':'review-second','assessment':'NEEDS_EVIDENCE','document_version_id':None}
     r=client.post(route,headers=_auth(a),json=updated);assert r.status_code==201,r.text
     h=client.get(route+'/'+key,headers=_auth(a)).json();assert [x['revision'] for x in h['items']]==[2,1]

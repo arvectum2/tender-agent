@@ -127,6 +127,7 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 <label>Сравнить с более ранним снимком (необязательно)<select id="company-capture-previous"><option value="">Без сравнения</option></select></label>
 <button id="company-capture-recheck" disabled>Проверить сохранённый снимок</button>
 <pre id="company-capture-result" hidden></pre>
+<button id="company-case-matrix" disabled>Общая матрица закупки</button><button id="company-case-matrix-prev" disabled>Предыдущие документы</button><button id="company-case-matrix-next" disabled>Следующие документы</button><pre id="company-case-matrix-result" hidden></pre>
 <div id="company-attachment-panel" hidden><h4>Файлы, переданные компанией</h4><p id="company-attachment-state" aria-live="polite"></p>
 <label>Обнаруженная ссылка<select id="company-attachment-candidate"><option value="">Выберите ссылку</option></select></label>
 <label>Файл (PDF, DOCX, XLSX, PPTX, до 2 МБ)<input id="company-attachment-file" type="file" accept=".pdf,.docx,.xlsx,.pptx"></label>
@@ -372,6 +373,7 @@ let companyCase=null, companyProfile=null, companyEvidence=[], pendingCompanyDec
 let captureEnabled=false, captureAttempts=[];
 let attachmentParent=null, attachmentCandidates=[], attachmentRecords=[], attachmentIntakeEnabled=false, textProjectionEnabled=false;
 let requirementEnabled=false, requirementMatrix=null, pendingRequirement=null;
+let caseMatrixPage=null;
 let discoveryEnabled=false, discoveryRun=null, discoveryProfile=null, companySchedule=null;
 const el=id=>document.getElementById(id);
 function blankSelect(id, label){
@@ -431,6 +433,9 @@ function syncCompanyControls(){
  el("company-attachment-save").disabled=uiBusy||!attachmentReady||!attachmentIntakeEnabled||!selected||!el("company-attachment-confirm").checked||!el("company-attachment-file").files?.length;
  el("company-attachment-read").disabled=uiBusy||!attachmentReady||!attachmentRecords.some(x=>x.candidate_id===selected?.candidate_id);
  el("company-attachment-text").disabled=el("company-attachment-read").disabled||!textProjectionEnabled;
+ el("company-case-matrix").disabled=uiBusy||!attachmentReady||!requirementEnabled;
+ el("company-case-matrix-prev").disabled=el("company-case-matrix").disabled||!(caseMatrixPage?.offset>0);
+ el("company-case-matrix-next").disabled=el("company-case-matrix").disabled||caseMatrixPage?.has_more!==true;
  el("company-requirement-load").disabled=el("company-attachment-read").disabled||!requirementEnabled||!["docx","xlsx"].includes(selected?.format_hint);
  const req=Boolean(requirementMatrix&&requirementMatrix.candidate_id===selected?.candidate_id&&attachmentReady);
  el("company-requirement-panel").hidden=!req;
@@ -524,7 +529,9 @@ bind("company-capture-recheck",async()=>{
  if(result.original_reverified===true){el("company-capture-result").textContent=JSON.stringify({receipt:result.receipt,attachment_inventory:result.attachment_inventory,comparison:result.comparison},null,2);el("company-capture-result").hidden=false;await loadAttachments(result)}
  return {attempt_id:id,original_reverified:result.original_reverified===true};
 });
+function clearCaseMatrix(){caseMatrixPage=null;el("company-case-matrix-result").hidden=true;el("company-case-matrix-result").textContent=""}
 function resetAttachments(){
+ clearCaseMatrix();
  attachmentParent=null;attachmentCandidates=[];attachmentRecords=[];attachmentIntakeEnabled=false;textProjectionEnabled=false;requirementEnabled=false;resetRequirements();
  blankSelect("company-attachment-candidate","Выберите ссылку");el("company-attachment-file").value="";el("company-attachment-confirm").checked=false;
  el("company-attachment-panel").hidden=true;el("company-attachment-state").textContent="";el("company-attachment-result").hidden=true;el("company-attachment-result").textContent="";
@@ -551,7 +558,7 @@ bind("company-attachment-save",async()=>{
  const path=attachmentPath(),id=val("company-attachment-candidate"),file=el("company-attachment-file").files?.[0];
  if(!attachmentIntakeEnabled||!attachmentCandidates.some(x=>x.candidate_id===id)||!el("company-attachment-confirm").checked||!file||file.size<=0||file.size>2097152)throw Error("Выберите файл до 2 МБ и подтвердите происхождение");
  el("company-attachment-confirm").checked=false;const result=await call(path+"/"+encodeURIComponent(id)+"?confirm_user_supplied=true",{method:"POST",body:file,upload:true});attachmentIdentity(result,id);
- el("company-attachment-file").value="";await refreshAttachmentRecords();el("company-attachment-result").textContent=JSON.stringify(result,null,2);el("company-attachment-result").hidden=false;return {evidence_id:result.evidence_id};
+ clearCaseMatrix();el("company-attachment-file").value="";await refreshAttachmentRecords();el("company-attachment-result").textContent=JSON.stringify(result,null,2);el("company-attachment-result").hidden=false;return {evidence_id:result.evidence_id};
 });
 bind("company-attachment-read",async()=>{
  const path=attachmentPath(),id=val("company-attachment-candidate"),previous=val("company-capture-previous");if(!attachmentRecords.some(x=>x.candidate_id===id))throw Error("Сначала сохраните копию");
@@ -568,6 +575,16 @@ bind("company-attachment-text",async()=>{
  el("company-attachment-result").textContent=JSON.stringify({text_projection:result.text_projection,supplier_profile_context:result.supplier_profile_context},null,2);el("company-attachment-result").hidden=false;
  return {status:result.text_projection.status,candidates:result.text_projection.requirement_candidates.length};
 });
+async function loadCaseMatrix(offset){
+ if(!requirementEnabled||!attachmentParent||attachmentParent!==val("company-capture-attempt"))throw Error("Сначала проверьте снимок закупки");
+ const result=await call(casePath()+"/commercial-captures/"+encodeURIComponent(attachmentParent)+"/requirement-matrix?offset="+offset+"&limit=3");
+ if(result.customer_id!==requireCompany().customer_id||result.case_id!==companyCase.case_id||result.attempt_id!==attachmentParent||result.offset!==offset||result.coverage_complete!==false||result.qualification_verified!==false){clearSession();throw Error("Несоответствие сводной матрицы")}
+ caseMatrixPage=result;el("company-case-matrix-result").hidden=false;el("company-case-matrix-result").textContent=JSON.stringify(result,null,2);
+ return {candidate_count:result.candidate_count,missing_copy_count:result.missing_copy_count,page_summary:result.page_summary};
+}
+bind("company-case-matrix",()=>loadCaseMatrix(0));
+bind("company-case-matrix-prev",()=>loadCaseMatrix(Math.max(0,(caseMatrixPage?.offset||0)-3)));
+bind("company-case-matrix-next",()=>loadCaseMatrix((caseMatrixPage?.offset||0)+3));
 function resetRequirements(){
  requirementMatrix=null;pendingRequirement=null;blankSelect("company-requirement-fragment","Выберите фрагмент");blankSelect("company-requirement-document","Без документа");
  for(const id of ["company-requirement-summary","company-requirement-source","company-requirement-result"])el(id).textContent="";
@@ -597,7 +614,7 @@ bind("company-requirement-save",async()=>{
  const signature=JSON.stringify(body);if(pendingRequirement?.signature!==signature){if(!globalThis.crypto?.randomUUID)throw Error("Требуется защищённый HTTPS");pendingRequirement={signature,key:globalThis.crypto.randomUUID()}}
  const saved=await call(requirementPath(),{method:"POST",body:{...body,idempotency_key:pendingRequirement.key}});
  if(saved.fragment_key!==item.fragment_key||saved.revision!==item.revision+1||saved.qualification_verified!==false){clearSession();throw Error("Несоответствие результата оценки")}
- await loadRequirementMatrix();el("company-requirement-result").textContent=JSON.stringify(saved,null,2);return {revision:saved.revision};
+ clearCaseMatrix();await loadRequirementMatrix();el("company-requirement-result").textContent=JSON.stringify(saved,null,2);return {revision:saved.revision};
 });
 bind("company-requirement-history",async()=>{
  const item=reqFragment();if(!item)throw Error("Выберите фрагмент");
