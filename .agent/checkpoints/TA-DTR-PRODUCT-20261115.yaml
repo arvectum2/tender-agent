@@ -345,7 +345,7 @@ completed:
 - Corporate normative catalog, history, explicit preview, approval and withdrawal
   implemented in iOS; typed tenant/role and canonical preview/record SHA256/source
   validation, in-memory retry keys and state clearing.
-current_stage: price01_approved_norm_ios_verified_next_estimate_binding
+current_stage: price01_explicit_norm_binding_backend
 remaining:
 - Implement explicit version-bound norm application in itemized estimates, retaining
   immutable provenance and refusing stale/withdrawn selections at binding; backend/Web/iOS
@@ -567,11 +567,10 @@ test_results:
   Python-generated canonical approval/withdrawal records; Xcode generic iOS Simulator
   build-for-testing including new assertions PASS; git diff check PASS. PR590 CI 19/19.
   Simulator UI execution/device/server-connected acceptance not performed.
-resume_instruction: PRICE-01 corporate norm approval backend, Web and iOS verified,
-  native code 24c886fb. Next inspect itemized estimate source-kind model and implement
-  explicit norm version/digest binding, preserving historical estimates; no automatic
-  rate adoption, no production changes. B2B manual authorized UI unresolved. See latest
-  product increment docs.
+resume_instruction: Implement explicit norm version bindings in itemized estimate
+  inputs, backward-compatible historical projections and locked current-version validation
+  for preview/new save, preserving idempotent historical retry. Test backend; then
+  Web/iOS. No automatic adoption or production changes. PR591 CI 19/19.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
