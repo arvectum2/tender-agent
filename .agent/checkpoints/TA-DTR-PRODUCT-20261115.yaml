@@ -348,15 +348,17 @@ completed:
 - Explicit approved corporate norm version binding in itemized estimate backend, immutable
   original norm verification on historical reads, current-version checks on preview/new
   save under tenant-before-case locking. Legacy lines/projections unchanged.
-current_stage: price01_norm_binding_web
+- Web explicit selected normative version added to open itemized estimate, validated
+  provenance and immutable bound row, duplicate protection, compatible historical
+  rendering.
+current_stage: price01_norm_binding_web_verified_next_ios
 remaining:
-- Web and iOS explicit approved norm selection and rendering, update typed estimate/digest
-  validations to accept version-bound source. Keep feature default off until both
-  clients and acceptance verified.
+- iOS typed approved norm selection, source provenance verification and compatible
+  historical estimate/evidence/actual baseline decoding and digest; test Swift/build.
+  Default-off until acceptance.
 - Historical comparable procurement normalization and final PRICE-01 acceptance.
-- B2B manual authorized UI observation, document acquisition and legacy cutover. No
-  repeated live pilot without new evidence.
-last_verified_commit: febc7e5251dfd885e043f91a4be4bbcc97bd819c
+- B2B authorized manual observation and document acquisition; no repeat live pilot.
+last_verified_commit: ef5bad3e4c6ed52bebd17fcddb9da18f08c2c8e7
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -574,10 +576,13 @@ test_results:
   exact amount/source, tenant separation, stale and withdrawn rejection, historical
   replay/evidence/actual reads, corruption tests. PR591 CI 19/19. PostgreSQL concurrency
   not run.
-resume_instruction: Implement Web explicit approved norm selection into itemized estimate;
-  accept verified historic source shape, display provenance, block bound-row edits/duplicates,
-  invalidate preview as needed. Backend febc7e52 verified. Test Node fixture and regression.
-  Default-off.
+- 289 focused tests passed, 2 skipped, 136 warnings in 18.94s; Node cabinet flow PASS
+  including bound Python projection/save, withdrawal and historical read; Ruff/diff
+  PASS. PR592 17 success/2 running. No real-browser acceptance.
+resume_instruction: Backend and Web explicit norm binding verified; Web code ef5bad3e.
+  Next iOS typed binding and line selection, confirm Python-compatible estimate, row
+  and actual baseline digests. Keep feature default off. No MacBook, production changes
+  or new B2B traffic.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
