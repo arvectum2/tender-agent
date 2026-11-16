@@ -2363,10 +2363,59 @@ def test_actual_samples_preview_explicit_distinct_sources(client,session,monkeyp
     for changes in ({'unit':'H'},{'unit':'час'},{'title':'Different work'},{'category':'external_direct_rub'},{'confirm_comparable_reported_rows':False},{'samples':[first]*21}):
         assert preview({**payload,**changes}).status_code==422,changes
     assert preview({**payload,'samples':[{**first,'line_sha256':'0'*64}]}).status_code==409
+    from src.modules.saas_foundation.models import CompanyCostNormVersion
+    norms='/api/saas/company-portfolio/cost-norms'
+    proposal={'sample':payload,'norm_quantity':'15.5','norm_rate_rub':'1090','rationale':'Manager explicit internal fixture decision','confirm_reported_source_limits':True}
+    assert client.get(norms,headers=headers).status_code==404
+    settings=settings.model_copy(update={'saas_company_cost_norms_enabled':True})
+    def normpreview(p=proposal,token=a):return client.post(norms+'/preview',headers=_auth(token),json=p)
+    def approve(p,token=a):return client.post(norms,headers=_auth(token),json=p)
+    def savedrop(key,p,token=a):return client.post(norms+'/'+key+'/withdraw',headers=_auth(token),json=p)
+    r=normpreview();assert r.status_code==200,r.text
+    draft=r.json();key=draft['norm_key'];assert draft['expected_revision']==0 and not draft['approved_norm'] and not draft['inputs_stored']
+    assert draft['sample_observation']==result
+    assert session.query(CompanyCostNormVersion).count()==0
+    decision={'proposal':proposal,'preview_sha256':draft['preview_sha256'],'expected_revision':0,'idempotency_key':'norm-approval-1','confirm_internal_approval':True}
+    assert approve({**decision,'preview_sha256':'0'*64}).status_code==409
+    assert approve({**decision,'confirm_internal_approval':False}).status_code==422
+    assert approve(decision,token=b).status_code==404
+    assert normpreview({**proposal,'norm_quantity':'0'}).status_code==422
+    r=approve(decision);assert r.status_code==201,r.text
+    approved=r.json();assert approved['revision']==1 and approved['action']=='APPROVED' and approved['result']['norm_rate_rub']=='1090'
+    assert approved['result']['sample_observation']==result and approved['result']['approved_norm']
+    assert not approved['automatically_applied'] and not approved['result']['actual_amounts_independently_verified']
+    assert approve(decision).json()==approved
+    assert approve({**decision,'idempotency_key':'norm-approval-2'}).status_code==409
+    assert client.get(norms+'/'+key,headers=_auth(b)).status_code==404
+    assert client.get(norms,headers=_auth(b)).json()['items']==[]
+    assert client.get(norms,headers=headers).json()['items']==[approved]
     newer=advance(1,'sample-snapshot-2');assert preview().status_code==409
+    assert normpreview().status_code==409
+    assert approve(decision).json()==approved
+    current_proposal={**proposal,'sample':{**payload,'samples':[newer,second]}}
+    draft2=normpreview(current_proposal).json();assert draft2['expected_revision']==1
+    updated={**decision,'proposal':current_proposal,'preview_sha256':draft2['preview_sha256'],'expected_revision':1,'idempotency_key':'norm-approval-2'}
+    r=approve(updated);assert r.status_code==201,r.text
+    second_approval=r.json();assert second_approval['revision']==2
+    withdraw={'expected_revision':2,'idempotency_key':'norm-withdraw-1','rationale':'Explicitly withdraw fixture normative rate','confirm_withdrawal':True}
+    assert savedrop(key,{**withdraw,'expected_revision':1}).status_code==409
+    r=savedrop(key,withdraw);assert r.status_code==201,r.text
+    revoked=r.json();assert revoked['revision']==3 and revoked['action']=='WITHDRAWN' and not revoked['result']['approved_norm'] and revoked['result']['withdrawn_norm_id']==second_approval['norm_id']
+    assert savedrop(key,withdraw).json()==revoked
+    assert savedrop(key,{**withdraw,'expected_revision':3,'idempotency_key':'norm-withdraw-2'}).status_code==409
+    assert client.get(norms,headers=headers).json()['items']==[revoked]
+    assert client.get(norms+'/'+key,headers=headers).json()['items']==[revoked,second_approval,approved]
+    assert client.get(norms+'/'+key+'?limit=1',headers=headers).json()['has_more']
+    assert session.query(CompanyCostNormVersion).count()==3
     assert preview({**payload,'samples':[newer,second]}).status_code==200
     for role in ('viewer','analyst'):
         invite=client.post('/api/saas/invitations',headers=headers,json={'role':role,'acquisition_channel':'referral'}).json();token=client.post('/api/saas/invitations/redeem',json={'invitation_code':invite['invitation_code'],'display_name':role}).json()['access_token'];_legal(client,token)
         assert preview({**payload,'samples':[newer,second]},token=token).status_code==(403 if role=='viewer' else 200)
+        assert client.get(norms,headers=_auth(token)).status_code==(403 if role=='viewer' else 200)
+        assert approve(updated,token=token).status_code==403
+        assert savedrop(key,withdraw,token=token).status_code==403
+    session.execute(update(CompanyCostNormVersion).where(CompanyCostNormVersion.id==revoked['norm_id']).values(result_json={}));session.commit()
+    assert client.get(norms,headers=headers).status_code==409
+
     session.execute(update(CompanyActualCostSnapshot).where(CompanyActualCostSnapshot.id==newer['snapshot_id']).values(result_json={}));session.commit()
     assert preview({**payload,'samples':[newer,second]}).status_code==409

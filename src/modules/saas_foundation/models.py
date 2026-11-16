@@ -447,3 +447,28 @@ class CompanyActualCostEvidence(UUIDPrimaryKeyMixin, Base):
 
 event.listen(CompanyActualCostEvidence, "before_update", _immutable_company_decision)
 event.listen(CompanyActualCostEvidence, "before_delete", _immutable_company_decision)
+
+
+class CompanyCostNormVersion(UUIDPrimaryKeyMixin, Base):
+    """Append-only internal manager decision; not an automatically applied price."""
+    __tablename__ = "company_cost_norm_versions"
+    tenant_id: Mapped[str] = mapped_column(String(64), ForeignKey("saas_tenants.tenant_id"), nullable=False)
+    member_id: Mapped[str] = mapped_column(String(36), ForeignKey("saas_members.id"), nullable=False)
+    norm_key: Mapped[str] = mapped_column(String(64), nullable=False)
+    revision: Mapped[int] = mapped_column(Integer, nullable=False)
+    action: Mapped[str] = mapped_column(String(12), nullable=False)
+    idempotency_key: Mapped[str] = mapped_column(String(128), nullable=False)
+    input_json: Mapped[dict] = mapped_column(JSON, nullable=False)
+    result_json: Mapped[dict] = mapped_column(JSON, nullable=False)
+    record_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    __table_args__ = (
+        UniqueConstraint("tenant_id","norm_key","revision",name="uq_cost_norm_revision"),
+        UniqueConstraint("tenant_id","idempotency_key",name="uq_cost_norm_replay"),
+        CheckConstraint("revision BETWEEN 1 AND 100",name="ck_cost_norm_revision"),
+        CheckConstraint("action IN ('APPROVED','WITHDRAWN')",name="ck_cost_norm_action"),
+    )
+
+
+event.listen(CompanyCostNormVersion,"before_update",_immutable_company_decision)
+event.listen(CompanyCostNormVersion,"before_delete",_immutable_company_decision)

@@ -455,3 +455,26 @@ def test_actual_evidence_migration_preserves_bytes(tmp_path, monkeypatch):
         with engine.connect() as conn:assert conn.scalar(text('SELECT raw_bytes FROM company_actual_cost_evidence'))==raw
     finally:
         engine.dispose();invalidate_settings_cache()
+
+
+def test_cost_norm_migration_preserves_approval_history(tmp_path, monkeypatch):
+    import pytest
+
+    db_url='sqlite:///'+str(tmp_path/'cost-norm.sqlite')
+    monkeypatch.setenv('AI_CORP_DATABASE_URL',db_url);invalidate_settings_cache()
+    cfg=Config(str(Path(__file__).resolve().parents[1]/'alembic.ini'));engine=create_engine(db_url)
+    try:
+        with engine.begin() as conn:
+            for table,identity in (('saas_tenants','tenant_id'),('saas_members','id')):
+                conn.execute(text(f'CREATE TABLE {table} ({identity} VARCHAR PRIMARY KEY)'))
+                conn.execute(text(f"INSERT INTO {table} ({identity}) VALUES ('fixture')"))
+        command.stamp(cfg,'121_company_actual_evidence');command.upgrade(cfg,'122_company_cost_norms')
+        assert 'company_cost_norm_versions' in inspect(engine).get_table_names()
+        command.downgrade(cfg,'121_company_actual_evidence');command.upgrade(cfg,'122_company_cost_norms')
+        with engine.begin() as conn:
+            conn.execute(text("INSERT INTO company_cost_norm_versions (id,tenant_id,member_id,norm_key,revision,action,idempotency_key,input_json,result_json,record_sha256,created_at) VALUES ('e','fixture','fixture',:key,1,'APPROVED','fixture-key','{}','{}',:digest,'2026-11-17')"),{'key':'a'*64,'digest':'b'*64})
+        with pytest.raises(RuntimeError,match='Cannot discard corporate norm history'):
+            command.downgrade(cfg,'121_company_actual_evidence')
+        with engine.connect() as conn:assert conn.scalar(text('SELECT count(*) FROM company_cost_norm_versions'))==1
+    finally:
+        engine.dispose();invalidate_settings_cache()

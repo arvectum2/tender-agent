@@ -69,6 +69,7 @@ from src.modules.saas_foundation import (
     company_actual_samples,
     company_case_evidence,
     company_cost_evidence,
+    company_cost_norms,
     company_discovery,
     company_lifecycle,
     company_lifecycle_artifacts,
@@ -1142,3 +1143,39 @@ def actual_sample_preview(payload: company_actual_samples.PreviewInput, principa
     if not get_settings().saas_company_actual_samples_enabled:
         raise HTTPException(404,"Actual sample preview disabled")
     return company_actual_samples.preview(session,principal,payload)
+
+def _cost_norms_enabled():
+    _actual_costs_enabled()
+    settings=get_settings()
+    if not (settings.saas_company_actual_samples_enabled and settings.saas_company_cost_norms_enabled):
+        raise HTTPException(404,"Corporate cost norms disabled")
+
+
+@router.post("/api/saas/company-portfolio/cost-norms/preview")
+def cost_norm_preview(payload: company_cost_norms.Proposal, principal: Member, session: DBSession) -> dict:
+    _cost_norms_enabled()
+    return company_cost_norms.preview(session,principal,payload)
+
+
+@router.post("/api/saas/company-portfolio/cost-norms",status_code=201)
+def cost_norm_approve(payload: company_cost_norms.Approval, principal: Member, session: DBSession) -> dict:
+    _cost_norms_enabled()
+    return company_cost_norms.approve(session,principal,payload)
+
+
+@router.get("/api/saas/company-portfolio/cost-norms")
+def cost_norm_catalog(principal: Member, session: DBSession, offset: int=Query(0,ge=0,le=500), limit: int=Query(10,ge=1,le=20)) -> dict:
+    _cost_norms_enabled()
+    return company_cost_norms.catalog(session,principal,offset,limit)
+
+
+@router.get("/api/saas/company-portfolio/cost-norms/{norm_key}")
+def cost_norm_history(norm_key: company_actual_costs.Digest, principal: Member, session: DBSession, offset: int=Query(0,ge=0,le=100), limit: int=Query(10,ge=1,le=20)) -> dict:
+    _cost_norms_enabled()
+    return company_cost_norms.history(session,principal,norm_key,offset,limit)
+
+
+@router.post("/api/saas/company-portfolio/cost-norms/{norm_key}/withdraw",status_code=201)
+def cost_norm_withdraw(norm_key: company_actual_costs.Digest, payload: company_cost_norms.Withdrawal, principal: Member, session: DBSession) -> dict:
+    _cost_norms_enabled()
+    return company_cost_norms.withdraw(session,principal,norm_key,payload)
