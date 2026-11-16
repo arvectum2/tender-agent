@@ -330,7 +330,7 @@ completed:
   and title with query at 20:14:14Z; previous full URL check would reject it. Fixed
   manual-only observed identity, visible number requirement and durable progress/failure
   metadata. Actual offline Chrome query variant test PASS.
-current_stage: price01_corporate_actual_sample_preview
+current_stage: price01_actual_sample_web
 remaining:
 - Capture real manual UI control observation using corrected helper. Owner confirmed
   previous visit; no need for repeat credentials unless platform requires. Prior final
@@ -338,7 +338,7 @@ remaining:
 - Review legitimate dynamic requirements and complete documented archive acquisition,
   legacy cutover.
 - PRICE-01 normative samples and comparable normalization.
-last_verified_commit: 99064c4c
+last_verified_commit: d06c553d81fb88287b58bfbb5a9ee117d7d8aba3
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -535,11 +535,9 @@ test_results:
   POST and same-origin document GET denied.
 - 287 passed,2 skipped,130 warnings in 23.41s; Ruff/diff PASS. Actual Chrome offline
   manual URL variant PASS. PR583/584/585 CI success; no new automated B2B traffic.
-resume_instruction: 'B2B manual observer running, waiting for actual card. In parallel
-  implement PRICE-01 corporate actual sample preview: explicit same-category/title/unit,
-  one latest saved reported row per distinct case, bounded selection, evidence digest
-  and descriptive distributions only. No automatic suggested rate or persistence;
-  isolated tests; retain B2B pending state.'
+resume_instruction: Implement and verify Web selection UI for actual-cost descriptive
+  sample API. Backend local commit d06c553d tested 288 pass/2 skip; no new B2B traffic,
+  manual review incomplete. Preserve tenant/session isolation and explicit confirmation.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
