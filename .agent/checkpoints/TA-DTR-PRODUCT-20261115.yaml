@@ -243,16 +243,21 @@ completed:
   binding digest, explicit manager upload and source acknowledgement, file SHA/size,
   bounded verified download, exact retry and state clearing; analyst read/download,
   viewer restricted.'
-current_stage: price01_cost_evidence_native
+- 'Native PRICE-01 cost evidence: saved version/line picker, Python-compatible canonical
+  digest, current scoped manager upload with explicit user-copy confirmation and document
+  type, bounded import/export and SHA/size, analyst read/download and immutable retry.
+  Shared verified native downloads and session/view invalidation.'
+current_stage: price01_cost_evidence_native_verified_next_actual_costs
 remaining:
-- Native cost evidence read/upload/download on saved itemized version and ordinal,
-  canonical digest/scope/size validation and explicit provenance. Multiple attachments/correction
-  policy and independently verified expense/payment data remain.
+- PRICE-01 explicit actual expense and labor records, scoped immutable provenance
+  and estimate-vs-actual comparison; inspect existing cost ledger before implementing,
+  do not infer payments or actuals from user copies.
 - Comparable procurement normalization and real-case acceptance; no unsupported forecast.
-- Hosted exact-head CI, PG concurrency, physical browser/device E2E; keep gates off
-  and no production deployment.
-- B2B written consent pending; product only.
-last_verified_commit: 78f200502983573c11b05832772d6420b71a178d
+  Multiple document/correction policy and independent verification still pending.
+- Hosted CI, PG concurrency, physical web/iOS and full E2E acceptance. Keep gates
+  off; no production deployment.
+- B2B written consent pending; no automated requests. Product-only scope.
+last_verified_commit: 21bad6ecf72748e4a477e98062db36135f4d6c7e
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -373,9 +378,17 @@ test_results:
   canonical binding, consent, uncertain retry, changed digest, corrupted/oversized
   download and valid file, version/session clearing. Ruff/diff PASS. PR565 exact 282ab08f
   17 success/2 running.
-resume_instruction: Implement native saved scenario/line cost document binding, canonical
-  digest, bounded import/export, current role and scope, explicit immutable user-copy
-  consent; test actual Python/Swift contract and Xcode build. No deployment.
+- Actual macOS Swift Python-generated cost evidence contract PASS including Unicode
+  canonical digest, scope/stale revision, false verification flag, malformed metadata,
+  corrupt bytes and oversize. Final unsigned Xcode build-for-testing PASS including
+  new XCTest compilation. git diff --check PASS. PR566 exact 2350aa9c 17 success/2
+  running. No simulator XCTest/physical iPhone/live API E2E.
+resume_instruction: Native cost evidence controls built and Python/Swift digest/integrity
+  contract verified. Next inspect existing actual expense/labor ledger and implement
+  scoped versioned actual cost recording and plan-vs-actual comparison with explicit
+  provenance and no automatic verified payment claim; then norm samples and historical
+  comparable normalization. Keep prior history/flags and no production deployment
+  or source/model calls. Product only.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
