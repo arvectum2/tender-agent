@@ -14,6 +14,7 @@ from sqlalchemy import (
     ForeignKey,
     Index,
     Integer,
+    LargeBinary,
     String,
     Text,
     UniqueConstraint,
@@ -227,3 +228,31 @@ class CompanyDiscoverySchedule(UUIDPrimaryKeyMixin, Base):
     last_tick_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
     __table_args__ = (CheckConstraint("hour_moscow >= 0 AND hour_moscow <= 23", name="ck_company_schedule_hour"), Index("ix_company_schedule_due", "enabled", "last_tick_at"))
+
+
+class CommercialCaptureAttempt(UUIDPrimaryKeyMixin, Base):
+    """Durable public source request reservation; no automatic retry."""
+    __tablename__ = "commercial_capture_attempts"
+    tenant_id: Mapped[str] = mapped_column(String(64), ForeignKey("saas_tenants.tenant_id"), nullable=False)
+    case_id: Mapped[str] = mapped_column(String(36), ForeignKey("procurement_cases.id"), nullable=False)
+    member_id: Mapped[str] = mapped_column(String(36), ForeignKey("saas_members.id"), nullable=False)
+    capture_day: Mapped[str] = mapped_column(String(10), nullable=False)
+    source_url: Mapped[str] = mapped_column(String(650), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    __table_args__ = (UniqueConstraint("case_id", "capture_day", name="uq_commercial_capture_case_day"), Index("ix_commercial_capture_tenant_day", "tenant_id", "capture_day"))
+
+
+class CommercialCardSnapshot(UUIDPrimaryKeyMixin, Base):
+    """Append-only outcome: original HTML only for a verified public observation."""
+    __tablename__ = "commercial_card_snapshots"
+    attempt_id: Mapped[str] = mapped_column(String(36), ForeignKey("commercial_capture_attempts.id"), nullable=False, unique=True)
+    outcome: Mapped[str] = mapped_column(String(32), nullable=False)
+    original_html: Mapped[bytes | None] = mapped_column(LargeBinary)
+    receipt_json: Mapped[dict | None] = mapped_column(JSON)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    __table_args__ = (CheckConstraint("outcome IN ('CAPTURED', 'SOURCE_UNAVAILABLE', 'UNSUPPORTED_CARD')", name="ck_commercial_snapshot_outcome"),)
+
+
+for _commercial_immutable in (CommercialCaptureAttempt, CommercialCardSnapshot):
+    event.listen(_commercial_immutable, "before_update", _immutable_company_decision)
+    event.listen(_commercial_immutable, "before_delete", _immutable_company_decision)

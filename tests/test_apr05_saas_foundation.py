@@ -1472,3 +1472,113 @@ def test_company_schedule_revalidates_owner_and_entitlement(client, session, mon
     session.commit()
     assert schedule.tick(session, settings)["outcomes"] == {"blocked_403": 1}
     assert not calls
+
+
+def test_commercial_capture_original_replay_and_scope(client, session, monkeypatch):
+    from sqlalchemy import text
+    from test_company_commercial_card_evidence import WORKSPACE, workspace
+
+    from src.modules.saas_foundation import commercial_capture as capture
+    from src.modules.saas_foundation.models import (
+        CommercialCaptureAttempt,
+        CommercialCardSnapshot,
+    )
+
+    _, a = _seed(client, 'Capture A')
+    _, b = _seed(client, 'Capture B')
+    _legal(client, a)
+    _legal(client, b)
+    base = '/api/saas/company-portfolio'
+    case = client.post(base+'/commercial-cases', headers=_auth(a), json={'source_url': WORKSPACE}).json()['case_id']
+    foreign = client.post(base+'/commercial-cases', headers=_auth(b), json={'source_url': WORKSPACE}).json()['case_id']
+    path = f'{base}/cases/{case}/commercial-captures'
+    body = {'confirm_public_capture': True}
+    calls = []
+
+    def source(url):
+        calls.append(url)
+        assert session.query(CommercialCaptureAttempt).count() == 1
+        assert session.query(CommercialCardSnapshot).count() == 0
+        return capture.SourceResponse(url, 'text/html', 200, service.now_utc(), workspace())
+
+    monkeypatch.setattr(capture, 'fetch_card', source)
+    assert client.post(path, headers=_auth(a), json=body).status_code == 404
+    settings = saas.get_settings().model_copy(update={'saas_commercial_capture_enabled': True})
+    monkeypatch.setattr(saas, 'get_settings', lambda: settings)
+    assert client.post(path, headers=_auth(a), json={'confirm_public_capture':False}).status_code == 422
+    assert client.post(path, headers=_auth(a), json={**body, 'source_url': 'https://evil.invalid'}).status_code == 422
+    assert client.post(path, headers=_auth(b), json=body).status_code == 404
+    assert not calls
+    first = client.post(path, headers=_auth(a), json=body)
+    assert first.status_code == 201, first.text
+    result = first.json()
+    assert result['outcome'] == 'CAPTURED' and result['receipt']['external_id'] == '19043'
+    assert result['current_live_notice_status_verified'] is False
+    assert 'original_html' not in result
+    assert client.post(path, headers=_auth(a), json=body).json() == result
+    assert calls == [WORKSPACE]
+    detail = path+'/'+result['attempt_id']
+    assert client.get(detail, headers=_auth(a)).json()['original_reverified'] is True
+    assert client.get(detail, headers=_auth(b)).status_code == 404
+    assert client.get(f'{base}/cases/{foreign}/commercial-captures/{result["attempt_id"]}', headers=_auth(b)).status_code == 404
+    assert client.get(path, headers=_auth(a)).json()['items'] == [result]
+    row = session.query(CommercialCardSnapshot).one()
+    assert row.original_html == workspace()
+    with pytest.raises(ValueError, match='immutable'):
+        row.original_html = b'changed'
+        session.flush()
+    session.rollback()
+    session.execute(text('UPDATE commercial_card_snapshots SET original_html=:raw'), {'raw':workspace()+b' '})
+    session.commit()
+    assert client.get(detail, headers=_auth(a)).status_code == 409
+    assert calls == [WORKSPACE]
+
+
+def test_commercial_capture_failed_and_crash_reservations_are_not_retried(client, session, monkeypatch):
+    from src.modules.saas_foundation import commercial_capture as capture
+    from src.modules.saas_foundation.models import (
+        CommercialCaptureAttempt,
+        CommercialCardSnapshot,
+    )
+
+    _, a = _seed(client, 'Capture retries')
+    _legal(client, a)
+    settings = saas.get_settings().model_copy(update={'saas_commercial_capture_enabled': True})
+    monkeypatch.setattr(saas, 'get_settings', lambda: settings)
+    monkeypatch.setattr(capture, 'MAX_DAILY_PER_TENANT', 3)
+    base = '/api/saas/company-portfolio'
+    paths = []
+    for i in range(4):
+        url = f'https://workspace.ru/tenders/fixture-{19043+i}/'
+        saved = client.post(base+'/commercial-cases', headers=_auth(a), json={'source_url':url})
+        assert saved.status_code == 201
+        paths.append(f'{base}/cases/{saved.json()["case_id"]}/commercial-captures')
+    calls = []
+
+    class Crash(BaseException):
+        pass
+
+    def source(url):
+        calls.append(url)
+        if len(calls)==1:
+            raise ValueError('unavailable')
+        if len(calls)==2:
+            return capture.SourceResponse(url, 'text/html', 200, service.now_utc(), b'<html><body>login</body></html>')
+        raise Crash()
+
+    monkeypatch.setattr(capture, 'fetch_card', source)
+    body = {'confirm_public_capture':True}
+    for path, outcome in zip(paths, ('SOURCE_UNAVAILABLE','UNSUPPORTED_CARD'), strict=False):
+        first = client.post(path, headers=_auth(a), json=body).json()
+        assert first['outcome'] == outcome and first['receipt'] is None
+        assert client.post(path, headers=_auth(a), json=body).json() == first
+    # Simulate process interruption at the service boundary, not the ASGI event loop.
+    principal = service.require_tenant(session, a)
+    with pytest.raises(Crash):
+        capture.capture(session, principal, paths[2].split("/")[-2], capture.CaptureRequest(**body))
+    session.rollback()
+    session.expire_all()
+    assert client.post(paths[2], headers=_auth(a), json=body).json()['outcome'] == 'UNCONFIRMED_ATTEMPT'
+    assert client.post(paths[3], headers=_auth(a), json=body).status_code == 429
+    assert len(calls)==3 and session.query(CommercialCaptureAttempt).count()==3
+    assert all(x.original_html is None and x.receipt_json is None for x in session.query(CommercialCardSnapshot).all())

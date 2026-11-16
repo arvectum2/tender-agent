@@ -98,3 +98,40 @@ def test_b2b_exact_number_deadline_and_literal_organizer():
 def test_ambiguous_or_mismatched_b2b_card_rejected(raw):
     with pytest.raises(ValueError):
         verify(raw, B2B)
+
+
+@pytest.mark.parametrize('mode', ['ok','redirect','wrong_mime','compressed','oversized','timeout'])
+def test_public_capture_transport_is_bounded_and_credential_free(monkeypatch, mode):
+    import httpx
+
+    from src.modules.saas_foundation import commercial_capture as capture
+
+    requests = []
+    original = httpx.Client
+
+    def respond(request):
+        requests.append(request)
+        assert str(request.url) == WORKSPACE and request.method == 'GET'
+        assert 'authorization' not in request.headers and 'cookie' not in request.headers
+        assert request.headers['accept-encoding'] == 'identity'
+        if mode == 'timeout':
+            raise httpx.ReadTimeout('fixture')
+        if mode == 'redirect':
+            return httpx.Response(302, headers={'location':'https://evil.invalid/'})
+        h = {'content-type': 'application/json' if mode == 'wrong_mime' else 'text/html'}
+        if mode == 'compressed':
+            h['content-encoding'] = 'gzip'
+        raw = b'x' * (capture.MAX_CARD_BYTES+1) if mode == 'oversized' else workspace()
+        return httpx.Response(200, headers=h, stream=httpx.ByteStream(raw))
+
+    def client(**kwargs):
+        assert kwargs['verify'] is True and kwargs['trust_env'] is False and kwargs['follow_redirects'] is False
+        return original(transport=httpx.MockTransport(respond), **kwargs)
+
+    monkeypatch.setattr(capture.httpx, 'Client', client)
+    if mode == 'ok':
+        assert capture.fetch_card(WORKSPACE).raw == workspace()
+    else:
+        with pytest.raises((ValueError, httpx.HTTPError)):
+            capture.fetch_card(WORKSPACE)
+    assert len(requests)==1

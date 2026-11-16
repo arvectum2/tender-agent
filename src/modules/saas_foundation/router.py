@@ -59,6 +59,7 @@ from src.modules.customer_onboarding.router import (
     upload_company_document,
 )
 from src.modules.saas_foundation import (
+    commercial_capture,
     company_case_evidence,
     company_discovery,
     company_portfolio,
@@ -794,3 +795,20 @@ def read_company_schedule(principal: Member, session: DBSession) -> dict:
 @router.put("/api/saas/company-portfolio/discovery/schedule")
 def update_company_schedule(payload: company_schedule.ScheduleInput, principal: Member, session: DBSession) -> dict:
     return company_schedule.update_schedule(session, principal, payload, execution_enabled=company_schedule.execution_enabled(get_settings()))
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/commercial-captures", status_code=201)
+def capture_company_commercial_card(case_id: str, payload: commercial_capture.CaptureRequest, principal: Member, session: DBSession) -> dict:
+    if not get_settings().saas_commercial_capture_enabled:
+        raise HTTPException(404, "Commercial capture disabled")
+    return commercial_capture.capture(session, principal, case_id, payload)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/commercial-captures")
+def list_company_commercial_captures(case_id: str, principal: Member, session: DBSession, offset: int = Query(0, ge=0), limit: int = Query(10, ge=1, le=20)) -> dict:
+    return commercial_capture.list_captures(session, principal, case_id, offset=offset, limit=limit)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}")
+def recheck_company_commercial_capture(case_id: str, attempt_id: str, principal: Member, session: DBSession) -> dict:
+    return commercial_capture.recheck(session, principal, case_id, attempt_id)
