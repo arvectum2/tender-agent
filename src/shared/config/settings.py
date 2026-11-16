@@ -23,6 +23,7 @@ class Settings(BaseSettings):
     saas_company_schedule_enabled: bool = False  # Independent unattended execution gate
     saas_commercial_capture_enabled: bool = False  # Explicit public card capture gate
     saas_commercial_attachment_intake_enabled: bool = False  # Explicit user-provided bytes only
+    saas_commercial_requirement_review_enabled: bool = False
     saas_commercial_text_projection_enabled: bool = False
     saas_commercial_pdf_projection_enabled: bool = False  # Separate parser process gate
     market_intelligence_report_delivery_enabled: bool = False  # Additional opt-in gate

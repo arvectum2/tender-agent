@@ -268,3 +268,26 @@ def test_commercial_attachment_migration_preserves_originals(tmp_path, monkeypat
     finally:
         engine.dispose()
         invalidate_settings_cache()
+
+
+def test_requirement_review_migration_preserves_history(tmp_path, monkeypatch):
+    import pytest
+
+    db_url='sqlite:///'+str(tmp_path/'review.sqlite')
+    monkeypatch.setenv('AI_CORP_DATABASE_URL',db_url);invalidate_settings_cache()
+    cfg=Config(str(Path(__file__).resolve().parents[1]/'alembic.ini'));engine=create_engine(db_url)
+    try:
+        with engine.begin() as conn:
+            for table in ('commercial_attachment_evidence','saas_members','company_profile_fact_versions','company_document_versions'):
+                conn.execute(text(f'CREATE TABLE {table} (id VARCHAR PRIMARY KEY)'))
+                conn.execute(text(f"INSERT INTO {table} (id) VALUES ('fixture')"))
+        command.stamp(cfg,'113_commercial_attachment_evidence');command.upgrade(cfg,'114_commercial_requirement_reviews')
+        assert 'commercial_requirement_reviews' in inspect(engine).get_table_names()
+        command.downgrade(cfg,'113_commercial_attachment_evidence');command.upgrade(cfg,'114_commercial_requirement_reviews')
+        with engine.begin() as conn:
+            conn.execute(text("INSERT INTO commercial_requirement_reviews (id,attachment_id,member_id,fragment_key,revision,idempotency_key,profile_fact_id,review_json,created_at) VALUES ('r','fixture','fixture','fragment',1,'replay','fixture','{}','2026-11-16')"))
+        with pytest.raises(RuntimeError,match='Cannot discard'):
+            command.downgrade(cfg,'113_commercial_attachment_evidence')
+        with engine.connect() as conn:assert conn.scalar(text('SELECT count(*) FROM commercial_requirement_reviews'))==1
+    finally:
+        engine.dispose();invalidate_settings_cache()

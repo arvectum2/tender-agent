@@ -132,7 +132,14 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 <label>Файл (PDF, DOCX, XLSX, PPTX, до 2 МБ)<input id="company-attachment-file" type="file" accept=".pdf,.docx,.xlsx,.pptx"></label>
 <label><input id="company-attachment-confirm" type="checkbox" style="width:auto"> Подтверждаю, что передаю собственную копию. Её происхождение с ЭТП не проверено.</label>
 <button id="company-attachment-save" disabled>Сохранить копию</button><button id="company-attachment-read" disabled>Проверить и сравнить копии</button><button id="company-attachment-text" disabled>Извлечь фрагменты требований</button>
-<pre id="company-attachment-result" hidden></pre><p>Извлечение DOCX, XLSX и PDF ограничено; найденные фрагменты не являются проверенными требованиями. Скачивание с ЭТП не включено.</p></div>
+<pre id="company-attachment-result" hidden></pre>
+<button id="company-requirement-load" disabled>Матрица требований</button>
+<div id="company-requirement-panel" hidden><p>Ручная оценка фрагмента, не подтверждение допуска или полноты ТЗ.</p><pre id="company-requirement-summary"></pre>
+<label>Фрагмент<select id="company-requirement-fragment"></select></label><pre id="company-requirement-source"></pre>
+<label>Оценка<select id="company-requirement-assessment"><option value="NEEDS_EVIDENCE">Нужны доказательства</option><option value="HUMAN_SUPPORT_RECORDED">Специалист указал подтверждение</option><option value="HUMAN_GAP_RECORDED">Специалист указал несоответствие</option><option value="NOT_REQUIREMENT">Не требование</option></select></label>
+<label>Документ компании<select id="company-requirement-document"></select></label><label><input type="checkbox" id="company-requirement-reference" style="width:auto"> Сослаться на текущий референс-лист</label>
+<label>Обоснование<textarea id="company-requirement-rationale" maxlength="2000"></textarea></label>
+<button id="company-requirement-save" disabled>Записать оценку</button><button id="company-requirement-history" disabled>История оценок</button><pre id="company-requirement-result"></pre></div><p>Извлечение DOCX, XLSX и PDF ограничено; найденные фрагменты не являются проверенными требованиями. Скачивание с ЭТП не включено.</p></div>
 <p>Не более одной попытки на закупку в сутки по Москве. Снимок не подтверждает текущий статус конкурса, полный комплект документов, квалификацию или допуск.</p></div>
 </div><p>Сохранённый номер не подтверждает актуальность извещения, квалификацию или право подачи заявки. История решений общая для веб и iOS.</p></section>
 <section><h2>5. Мой пакет и лимиты</h2><button id="me">Мой кабинет</button>
@@ -364,6 +371,7 @@ let companyIdentity=null, companyItems=[], companyMore=false, companyOffset=0;
 let companyCase=null, companyProfile=null, companyEvidence=[], pendingCompanyDecision=null;
 let captureEnabled=false, captureAttempts=[];
 let attachmentParent=null, attachmentCandidates=[], attachmentRecords=[], attachmentIntakeEnabled=false, textProjectionEnabled=false;
+let requirementEnabled=false, requirementMatrix=null, pendingRequirement=null;
 let discoveryEnabled=false, discoveryRun=null, discoveryProfile=null, companySchedule=null;
 const el=id=>document.getElementById(id);
 function blankSelect(id, label){
@@ -423,6 +431,12 @@ function syncCompanyControls(){
  el("company-attachment-save").disabled=uiBusy||!attachmentReady||!attachmentIntakeEnabled||!selected||!el("company-attachment-confirm").checked||!el("company-attachment-file").files?.length;
  el("company-attachment-read").disabled=uiBusy||!attachmentReady||!attachmentRecords.some(x=>x.candidate_id===selected?.candidate_id);
  el("company-attachment-text").disabled=el("company-attachment-read").disabled||!textProjectionEnabled;
+ el("company-requirement-load").disabled=el("company-attachment-read").disabled||!requirementEnabled||!["docx","xlsx"].includes(selected?.format_hint);
+ const req=Boolean(requirementMatrix&&requirementMatrix.candidate_id===selected?.candidate_id&&attachmentReady);
+ el("company-requirement-panel").hidden=!req;
+ const frag=req?requirementMatrix.items.find(x=>x.fragment_key===el("company-requirement-fragment").value):null;
+ el("company-requirement-save").disabled=uiBusy||!frag||requirementMatrix?.profile?.state!=="ACTIVE";
+ el("company-requirement-history").disabled=uiBusy||!frag;
  syncCompanySearchControls();
 }
 function requireCompany(){if(!companyIdentity?.legal_accepted)throw Error("Загрузите портфель после подтверждения условий пилота");return companyIdentity}
@@ -511,7 +525,7 @@ bind("company-capture-recheck",async()=>{
  return {attempt_id:id,original_reverified:result.original_reverified===true};
 });
 function resetAttachments(){
- attachmentParent=null;attachmentCandidates=[];attachmentRecords=[];attachmentIntakeEnabled=false;textProjectionEnabled=false;
+ attachmentParent=null;attachmentCandidates=[];attachmentRecords=[];attachmentIntakeEnabled=false;textProjectionEnabled=false;requirementEnabled=false;resetRequirements();
  blankSelect("company-attachment-candidate","Выберите ссылку");el("company-attachment-file").value="";el("company-attachment-confirm").checked=false;
  el("company-attachment-panel").hidden=true;el("company-attachment-state").textContent="";el("company-attachment-result").hidden=true;el("company-attachment-result").textContent="";
 }
@@ -526,12 +540,12 @@ async function refreshAttachmentRecords(){
  el("company-attachment-state").textContent=(attachmentIntakeEnabled?"Приём копий разрешён.":"Приём копий отключён.")+" Сохранено: "+attachmentRecords.length+". Происхождение не подтверждено.";
 }
 async function loadAttachments(result){
- attachmentParent=result.attempt_id;attachmentIntakeEnabled=result.attachment_intake_enabled===true;textProjectionEnabled=result.text_projection_enabled===true;
+ attachmentParent=result.attempt_id;attachmentIntakeEnabled=result.attachment_intake_enabled===true;textProjectionEnabled=result.text_projection_enabled===true;requirementEnabled=result.requirement_review_enabled===true;
  attachmentCandidates=(result.attachment_inventory?.candidates||[]).filter(x=>["pdf","docx","xlsx","pptx"].includes(x.format_hint)&&typeof x.candidate_id==="string");
  for(const item of attachmentCandidates){const opt=document.createElement("option");opt.value=item.candidate_id;opt.textContent=(item.display_label||item.source_url)+" · "+item.format_hint;el("company-attachment-candidate").append(opt)}
  await refreshAttachmentRecords();
 }
-el("company-attachment-candidate").addEventListener("change",()=>{el("company-attachment-file").value="";el("company-attachment-confirm").checked=false;el("company-attachment-result").hidden=true;el("company-attachment-result").textContent="";syncCompanyControls()});
+el("company-attachment-candidate").addEventListener("change",()=>{resetRequirements();el("company-attachment-file").value="";el("company-attachment-confirm").checked=false;el("company-attachment-result").hidden=true;el("company-attachment-result").textContent="";syncCompanyControls()});
 el("company-attachment-file").addEventListener("change",syncCompanyControls);el("company-attachment-confirm").addEventListener("change",syncCompanyControls);
 bind("company-attachment-save",async()=>{
  const path=attachmentPath(),id=val("company-attachment-candidate"),file=el("company-attachment-file").files?.[0];
@@ -553,6 +567,43 @@ bind("company-attachment-text",async()=>{
  if(result.text_projection?.source_sha256!==result.inspection?.sha256||result.text_projection?.requirements_verified!==false){clearSession();throw Error("Несоответствие текстового доказательства")}
  el("company-attachment-result").textContent=JSON.stringify({text_projection:result.text_projection,supplier_profile_context:result.supplier_profile_context},null,2);el("company-attachment-result").hidden=false;
  return {status:result.text_projection.status,candidates:result.text_projection.requirement_candidates.length};
+});
+function resetRequirements(){
+ requirementMatrix=null;pendingRequirement=null;blankSelect("company-requirement-fragment","Выберите фрагмент");blankSelect("company-requirement-document","Без документа");
+ for(const id of ["company-requirement-summary","company-requirement-source","company-requirement-result"])el(id).textContent="";
+ el("company-requirement-rationale").value="";el("company-requirement-reference").checked=false;el("company-requirement-assessment").value="NEEDS_EVIDENCE";el("company-requirement-panel").hidden=true;
+}
+function requirementPath(){return attachmentPath()+"/"+encodeURIComponent(val("company-attachment-candidate"))+"/requirements"}
+function reqScope(result){
+ if(result.customer_id!==requireCompany().customer_id||result.case_id!==companyCase.case_id||result.attempt_id!==attachmentParent||result.candidate_id!==val("company-attachment-candidate")||result.qualification_verified!==false){clearSession();throw Error("Несоответствие матрицы компании")}
+}
+function reqFragment(){return requirementMatrix?.items.find(x=>x.fragment_key===val("company-requirement-fragment"))}
+function showReqFragment(){const item=reqFragment();el("company-requirement-source").textContent=item?JSON.stringify(item,null,2):"";el("company-requirement-result").textContent="";el("company-requirement-rationale").value="";el("company-requirement-document").value="";el("company-requirement-reference").checked=false;el("company-requirement-assessment").value="NEEDS_EVIDENCE";pendingRequirement=null;syncCompanyControls()}
+async function loadRequirementMatrix(){
+ if(!requirementEnabled)throw Error("Реестр отключён");
+ const result=await call(requirementPath());reqScope(result);resetRequirements();requirementMatrix=result;
+ for(const item of result.items){const opt=document.createElement("option");opt.value=item.fragment_key;opt.textContent=(item.review?.assessment||"Не проверено")+" · "+item.fragment.text.slice(0,100);el("company-requirement-fragment").append(opt)}
+ for(const doc of result.document_options.filter(x=>x.state==="ACTIVE")){const opt=document.createElement("option");opt.value=doc.document_version_id;opt.textContent=doc.display_name+" · v"+doc.version;el("company-requirement-document").append(opt)}
+ el("company-requirement-reference").disabled=!result.reference_list?.selectable;
+ el("company-requirement-summary").textContent=JSON.stringify({profile:result.profile,reference_list:result.reference_list,summary:result.summary,coverage_complete:false},null,2);
+ return {items:result.items.length};
+}
+bind("company-requirement-load",loadRequirementMatrix);
+el("company-requirement-fragment").addEventListener("change",showReqFragment);
+bind("company-requirement-save",async()=>{
+ const item=reqFragment(),profile=requirementMatrix?.profile;if(!item||profile?.state!=="ACTIVE")throw Error("Выберите фрагмент и актуальный профиль");
+ const body={fragment_key:item.fragment_key,expected_revision:item.revision,profile_fact_id:profile.fact_id,reference_fact_id:el("company-requirement-reference").checked?requirementMatrix.reference_list?.fact_id:null,document_version_id:val("company-requirement-document")||null,assessment:val("company-requirement-assessment"),rationale:val("company-requirement-rationale").trim()};
+ if(!body.rationale)throw Error("Введите обоснование");
+ const signature=JSON.stringify(body);if(pendingRequirement?.signature!==signature){if(!globalThis.crypto?.randomUUID)throw Error("Требуется защищённый HTTPS");pendingRequirement={signature,key:globalThis.crypto.randomUUID()}}
+ const saved=await call(requirementPath(),{method:"POST",body:{...body,idempotency_key:pendingRequirement.key}});
+ if(saved.fragment_key!==item.fragment_key||saved.revision!==item.revision+1||saved.qualification_verified!==false){clearSession();throw Error("Несоответствие результата оценки")}
+ await loadRequirementMatrix();el("company-requirement-result").textContent=JSON.stringify(saved,null,2);return {revision:saved.revision};
+});
+bind("company-requirement-history",async()=>{
+ const item=reqFragment();if(!item)throw Error("Выберите фрагмент");
+ const result=await call(requirementPath()+"/"+encodeURIComponent(item.fragment_key));
+ if(result.qualification_verified!==false||!result.items.every(x=>x.fragment_key===item.fragment_key)){clearSession();throw Error("Несоответствие истории")}
+ el("company-requirement-result").textContent=JSON.stringify(result.items,null,2);return {items:result.items.length};
 });
 async function loadCompanyCase(id){
  requireCompany();resetCompanyDetail();

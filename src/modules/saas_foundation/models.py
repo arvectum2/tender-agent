@@ -273,3 +273,27 @@ class CommercialAttachmentEvidence(UUIDPrimaryKeyMixin, Base):
 
 event.listen(CommercialAttachmentEvidence, "before_update", _immutable_company_decision)
 event.listen(CommercialAttachmentEvidence, "before_delete", _immutable_company_decision)
+
+
+class CommercialRequirementReview(UUIDPrimaryKeyMixin, Base):
+    """Append-only human judgement on a literal fragment, not a qualification verdict."""
+    __tablename__ = "commercial_requirement_reviews"
+    attachment_id: Mapped[str] = mapped_column(String(36), ForeignKey("commercial_attachment_evidence.id"), nullable=False)
+    member_id: Mapped[str] = mapped_column(String(36), ForeignKey("saas_members.id"), nullable=False)
+    fragment_key: Mapped[str] = mapped_column(String(64), nullable=False)
+    revision: Mapped[int] = mapped_column(Integer, nullable=False)
+    idempotency_key: Mapped[str] = mapped_column(String(128), nullable=False)
+    profile_fact_id: Mapped[str] = mapped_column(String(36), ForeignKey("company_profile_fact_versions.id"), nullable=False)
+    reference_fact_id: Mapped[str | None] = mapped_column(String(36), ForeignKey("company_profile_fact_versions.id"))
+    document_version_id: Mapped[str | None] = mapped_column(String(36), ForeignKey("company_document_versions.id"))
+    review_json: Mapped[dict] = mapped_column(JSON, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    __table_args__ = (
+        UniqueConstraint("attachment_id", "fragment_key", "revision", name="uq_commercial_review_revision"),
+        UniqueConstraint("attachment_id", "idempotency_key", name="uq_commercial_review_replay"),
+        CheckConstraint("revision > 0", name="ck_commercial_review_revision"),
+    )
+
+
+event.listen(CommercialRequirementReview, "before_update", _immutable_company_decision)
+event.listen(CommercialRequirementReview, "before_delete", _immutable_company_decision)

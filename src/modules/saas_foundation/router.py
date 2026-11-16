@@ -63,6 +63,7 @@ from src.modules.customer_onboarding.router import (
 from src.modules.saas_foundation import (
     commercial_attachment_service,
     commercial_capture,
+    commercial_requirement_review,
     company_case_evidence,
     company_discovery,
     company_portfolio,
@@ -821,7 +822,8 @@ def recheck_company_commercial_capture(case_id: str, attempt_id: str, principal:
     else:
         result = commercial_capture.recheck(session, principal, case_id, attempt_id)
     return {**result, "attachment_intake_enabled": get_settings().saas_commercial_attachment_intake_enabled,
-            "text_projection_enabled": get_settings().saas_commercial_text_projection_enabled}
+            "text_projection_enabled": get_settings().saas_commercial_text_projection_enabled,
+            "requirement_review_enabled": get_settings().saas_commercial_requirement_review_enabled}
 
 
 @router.post("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}/attachments/{candidate_id}", status_code=201)
@@ -870,3 +872,24 @@ def read_company_commercial_text_evidence(case_id: str, attempt_id: str, candida
         raise HTTPException(404, "Commercial text projection disabled")
     return commercial_attachment_service.text_evidence(session, principal, case_id, attempt_id, candidate_id,
         pdf_enabled=settings.saas_commercial_pdf_projection_enabled)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}/attachments/{candidate_id}/requirements")
+def commercial_requirement_matrix(case_id: str, attempt_id: str, candidate_id: str, principal: Member, session: DBSession) -> dict:
+    if not get_settings().saas_commercial_requirement_review_enabled:
+        raise HTTPException(404, "Requirement review disabled")
+    return commercial_requirement_review.matrix(session, principal, case_id, attempt_id, candidate_id)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}/attachments/{candidate_id}/requirements", status_code=201)
+def commercial_requirement_submit(case_id: str, attempt_id: str, candidate_id: str, payload: commercial_requirement_review.ReviewInput, principal: Member, session: DBSession) -> dict:
+    if not get_settings().saas_commercial_requirement_review_enabled:
+        raise HTTPException(404, "Requirement review disabled")
+    return commercial_requirement_review.submit(session, principal, case_id, attempt_id, candidate_id, payload)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}/attachments/{candidate_id}/requirements/{fragment_key}")
+def commercial_requirement_history(case_id: str, attempt_id: str, candidate_id: str, fragment_key: str, principal: Member, session: DBSession) -> dict:
+    if not get_settings().saas_commercial_requirement_review_enabled:
+        raise HTTPException(404, "Requirement review disabled")
+    return commercial_requirement_review.history(session, principal, case_id, attempt_id, candidate_id, fragment_key)

@@ -69,6 +69,7 @@ from src.modules.saas_foundation.models import (  # noqa: F401
     CommercialAttachmentEvidence,
     CommercialCaptureAttempt,
     CommercialCardSnapshot,
+    CommercialRequirementReview,
     CompanyDiscoveryRun,
     CompanyDiscoverySchedule,
     CompanyPortfolioDecision,

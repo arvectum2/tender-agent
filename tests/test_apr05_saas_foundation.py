@@ -1696,3 +1696,65 @@ def test_commercial_attachment_intake_provenance_replay_revision_and_isolation(c
     row=session.query(CommercialAttachmentEvidence).filter_by(id=evidence['evidence_id']).one();assert row.raw_bytes==body
     session.execute(text('UPDATE commercial_attachment_evidence SET raw_bytes=:raw WHERE id=:id'),{'raw':docx_fixture('tampered'),'id':row.id});session.commit()
     assert client.get(attach(old),headers=_auth(a)).status_code==409
+
+
+def test_requirement_review_matrix_versions_scope_and_replay(client, session, monkeypatch):
+    from test_commercial_attachment_bytes import docx_fixture
+    from test_company_commercial_card_evidence import WORKSPACE, workspace
+
+    from src.modules.saas_foundation import commercial_capture as capture
+    from src.modules.saas_foundation.models import CommercialRequirementReview
+
+    _, a = _seed(client,'Requirement A'); _, b = _seed(client,'Requirement B')
+    for token in (a,b):
+        _legal(client,token)
+        assert client.put('/api/saas/profile',headers=_auth(token),json=_profile()).status_code==200
+    settings=saas.get_settings().model_copy(update={'saas_commercial_capture_enabled':True,'saas_commercial_attachment_intake_enabled':True})
+    monkeypatch.setattr(saas,'get_settings',lambda:settings)
+    card=workspace().replace(b'</body>',b'<a href="/docs/spec.docx">spec</a></body>')
+    monkeypatch.setattr(capture,'fetch_card',lambda url:capture.SourceResponse(url,'text/html',200,service.now_utc(),card))
+    def setup(token):
+        base='/api/saas/company-portfolio'
+        case=client.post(base+'/commercial-cases',headers=_auth(token),json={'source_url':WORKSPACE}).json()['case_id']
+        cap=f'{base}/cases/{case}/commercial-captures';attempt=client.post(cap,headers=_auth(token),json={'confirm_public_capture':True}).json()['attempt_id']
+        parent=cap+'/'+attempt;candidate=client.get(parent,headers=_auth(token)).json()['attachment_inventory']['candidates'][0]['candidate_id']
+        path=parent+'/attachments/'+candidate
+        assert client.post(path,headers=_auth(token),params={'confirm_user_supplied':True},content=docx_fixture('Поставщик должен иметь опыт поставки')).status_code==201
+        return path+'/requirements'
+    route,foreign=setup(a),setup(b)
+    assert client.get(route,headers=_auth(a)).status_code==404
+    settings=settings.model_copy(update={'saas_commercial_requirement_review_enabled':True})
+    def reference(token,version=0):
+        r=client.post('/api/saas/qualification/references',headers=_auth(token),json={'expected_version':version,'source_ref':'fixture','snapshot':{'schema_version':'completed-contract-references-v1','as_of_date':'2026-11-16','completeness':'PARTIAL','owner_confirmed':False,'contracts':[]}})
+        assert r.status_code==201,r.text;return r.json()['fact_id']
+    ref,other_ref=reference(a),reference(b)
+    for token in (a,b):
+        r=client.post('/api/saas/documents',headers=_auth(token),data={'document_key':'license_fixture','document_type':'LICENSE','display_name':'Fixture'},files={'file':('fixture.pdf',b'%PDF-1.4\n1 0 obj<<>>endobj\n%%EOF','application/pdf')});assert r.status_code==201,r.text
+    first=client.get(route,headers=_auth(a));assert first.status_code==200,first.text
+    matrix=first.json();foreign_matrix=client.get(foreign,headers=_auth(b)).json();item=matrix['items'][0];key=item['fragment_key'];doc=matrix['document_options'][0]['document_version_id']
+    assert matrix['summary']['unreviewed']==1 and matrix['reference_list']['fact_id']==ref
+    body={'fragment_key':key,'profile_fact_id':matrix['profile']['fact_id'],'expected_revision':0,'assessment':'HUMAN_SUPPORT_RECORDED','reference_fact_id':ref,'document_version_id':doc,'rationale':'Human review fixture, not qualification proof','idempotency_key':'review-first'}
+    assert client.get(route,headers=_auth(b)).status_code==404
+    assert client.post(route,headers=_auth(a),json={**body,'reference_fact_id':other_ref}).status_code==409
+    assert client.post(route,headers=_auth(a),json={**body,'document_version_id':foreign_matrix['document_options'][0]['document_version_id']}).status_code==409
+    assert client.post(route,headers=_auth(a),json={**body,'reference_fact_id':None,'document_version_id':None}).status_code==422
+    r=client.post(route,headers=_auth(a),json=body);assert r.status_code==201,r.text
+    saved=r.json();assert saved['revision']==1 and not saved['qualification_verified'] and not saved['stale_reasons']
+    assert client.post(route,headers=_auth(a),json=body).json()==saved
+    assert client.post(route,headers=_auth(a),json={**body,'rationale':'different'}).status_code==409
+    assert client.post(route,headers=_auth(a),json={**body,'idempotency_key':'review-second'}).status_code==409
+    assert client.put('/api/saas/profile',headers=_auth(a),json=_profile()).status_code==200
+    newref=reference(a,1)
+    # Synthetic metadata for a new document version: this test does not assert artifact bytes.
+    from src.modules.company_profile_store.models import CompanyDocumentVersion
+    old_doc=session.get(CompanyDocumentVersion,doc)
+    session.add(CompanyDocumentVersion(company_document_id=old_doc.company_document_id,version_no=2,artifact_version_no=2,source_type='CUSTOMER_PROVIDED',source_ref='fixture-new-version'))
+    session.commit()
+    new=client.get(route,headers=_auth(a)).json();review=new['items'][0]['review'];assert set(review['stale_reasons'])=={'PROFILE_CHANGED_OR_INACTIVE','REFERENCE_LIST_CHANGED_OR_INACTIVE','DOCUMENT_CHANGED_OR_INACTIVE'}
+    assert new['summary']['needs_evidence']==1
+    updated={**body,'profile_fact_id':new['profile']['fact_id'],'reference_fact_id':newref,'expected_revision':1,'idempotency_key':'review-second','assessment':'NEEDS_EVIDENCE','document_version_id':None}
+    r=client.post(route,headers=_auth(a),json=updated);assert r.status_code==201,r.text
+    h=client.get(route+'/'+key,headers=_auth(a)).json();assert [x['revision'] for x in h['items']]==[2,1]
+    assert session.query(CommercialRequirementReview).count()==2
+    assert client.get(route+'/'+key,headers=_auth(b)).status_code==404
+    assert not client.get(foreign,headers=_auth(b)).json()['items'][0]['review']
