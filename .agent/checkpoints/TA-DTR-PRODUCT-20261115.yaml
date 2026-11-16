@@ -222,15 +222,22 @@ completed:
 - Native PRICE-01 explicit costs/rates, server result comparison, version history
   and explicit manager save; scope, actor, payload/result and replay validation. Actual
   server-generated fixture tested in Swift.
-current_stage: price01_itemized_cost_estimate
+- 'PRICE-01 itemized estimates backend: up to 60 cost lines with quantity/unit/rate/category
+  and declared source type/note, explicit zero categories and no-double-count acknowledgement,
+  per-line ceil kopecks followed by category aggregation, existing Decimal engine
+  and immutable shared revision history. Legacy aggregate records intact; tagged new
+  history allows old clients to read aggregate.'
+current_stage: price01_itemized_backend_verified_next_web_native
 remaining:
-- Itemized PRICE-01 cost estimates with quantities/units/hours/rates and versioned
-  provenance mapping into existing cost categories; real expense evidence and comparable
-  procurement normalization.
-- Hosted exact-head CI, PG concurrency, real web/iOS and full E2E acceptance; keep
-  gates off and no production deploy.
-- B2B written operator consent pending; no automated requests. Product-only scope.
-last_verified_commit: fee62835b11d86d2167ba879d6fcb6efef0aef59
+- Itemized estimate web and iOS create/preview/save/history controls and detailed
+  line display; document-level evidence links for declared cost sources and actual
+  expense data.
+- Comparable procurement normalization and real-case acceptance; no uncalibrated forecast.
+- Hosted exact-head CI, PostgreSQL concurrency, real device/browser E2E. Keep gates
+  off until acceptance. No server rollback to reader without tagged itemized support
+  after itemized writes; no production deploy.
+- B2B consent pending; no automated requests. Product only.
+last_verified_commit: b28e7c5d938f4ac74b78baa30b0a30da1d902a27
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -333,11 +340,14 @@ test_results:
 - Final Xcode unsigned build-for-testing PASS incl new XCTest compilation; macOS Swift
   PRICE-01 server fixture contract PASS, git diff --check PASS. PR560 exact f36f2175
   17 success, 2 in progress; no physical device/simulator XCTest or live network acceptance.
-resume_instruction: Implement bounded itemized estimate with explicit quantities,
-  units, rates, source notes and explicit zero categories. Reuse existing Decimal
-  scenarios and shared immutable revision history without migration; preserve old
-  client aggregate input/result contract. Verify exact rounding, scope, replay and
-  legacy compatibility. No external calls/deploy.
+- 151 passed,2 skipped,112 warnings in 12.50s; old JS cabinet PASS, actual Swift decoder
+  mixed itemized/aggregate server fixture PASS. Ruff/diff PASS; Alembic head unchanged
+  118. PR561 exact 4e1946a5 17 success,2 running.
+resume_instruction: Itemized PRICE-01 backend verified, API preserves mixed aggregate/itemized
+  history. Next Web then native forms for up to 60 lines, explicit zero categories
+  and source notes, server projections and immutable shared version save. Then evidence-linked
+  costs and real-case comparable-source work. Never claim independently verified prices
+  from notes. No production changes or source/model calls. Product only.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
