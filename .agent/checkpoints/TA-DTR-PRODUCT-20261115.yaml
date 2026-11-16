@@ -174,7 +174,7 @@ completed:
   found in inspected cabinet menus. B2B regulation 5.4 requires written operator permission
   for automated collection, 60 HTTP requests/minute/IP cap; separate pilot CLI refuses
   B2B network access without explicit permission reference.'
-current_stage: b2b_authenticated_notice_confirmed_operator_consent_and_api_contract_required
+current_stage: company_scoped_manager_inbox
 remaining:
 - Request operator written authorization, official read-only API method documentation,
   pricing, quotas and storage/use rights, including search/archives, notice histories,
@@ -249,9 +249,12 @@ test_results:
 - Authorized search UI and exact procurement card inspected; no downloaded bytes,
   no automated bulk access, no new payment/consent/applications. CLI negative test
   exit 2 before browser, Ruff/diff PASS.
-resume_instruction: B2B authorized cabinet search and notice UI verified, API menu
-  not found; written operator approval and API documentation required. No automated
-  B2B traffic pending approval. Pilot gate is assertion only, not verification. Continue
-  other offline product roadmap; no deployment or model calls; maintain SIBUR priority.
+resume_instruction: Implement read-only company-scoped actionable manager inbox, latest
+  human decisions and due deferrals, bounded filters and summary; no unsupported lifecycle
+  claims. Verify offline. B2B support inquiry sent; other tracks continue.
 owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
   Product changes isolated, offline and bounded.
+b2b_dependency:
+  status: blocked
+  owner_action: Support inquiry sent; await written operator consent and official
+    API contract. No automated B2B requests.
