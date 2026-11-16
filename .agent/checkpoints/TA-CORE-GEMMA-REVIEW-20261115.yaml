@@ -1,5 +1,5 @@
 task_id: TA-CORE-GEMMA-REVIEW-20261115
-status: blocked
+status: in_progress
 goal: Isolated review of draft PR497–500; preserve real model quality gates.
 definition_of_done:
 - Review candidate against consolidated core
@@ -32,12 +32,23 @@ completed:
 - Owner approved coordinated DP update; canonical DP PR130 merged to main 3900d42cfe76ba47c4d0b7ec98ce7620a0f31f11.
   Actual live release remains 9d4266d because active collection and recent embedding/ingest
   observed; no safe coordinated restart window established.
-current_stage: blocked_on_safe_idle_for_owner_approved_dp_update
+- Owner explicitly authorized Data Platform restart without host reboot on 2026-11-16.
+  Staged exact release backport 50f7b69d5d3d33413de2599f7c21c79bffe36541 plus pinned
+  original dependency bytes on internal SSD; removed external editable path and verified
+  no external symlinks. 42/42 tests PASS twice.
+- Original launcher backed up; verified healthy original listener and no established
+  TCP clients at final admission; atomic launcher replacement and graceful SIGTERM
+  through existing launchd KeepAlive. PID 1535 -> 78297, port 8094 unchanged. No host
+  reboot, database migration, model request or Tender Agent deployment.
+- Live auth 401/404 controls PASS. Three health and real collection statistics probes
+  show 86 resources/documents/chunks/embeddings, 25/52/50 ms aggregate. Native module
+  paths map to internal release; no startup error lines. Tender Agent old image healthy.
+current_stage: dp_backport_live_verified_next_source_locked_acceptance
 remaining:
-- Coordinate safe idle with existing ingestion/research; stage verified backport as
-  separate immutable release and preserve rollback. Update only if no active processing
-  and no uncoordinated callers.
-- Verify sustained authorized API, then bounded source-locked Gemma acceptance.
+- Verify sustained responsiveness under real ingestion when an authorized operation
+  occurs; no synthetic live ingestion.
+- Verify original-source identity and bounded source-locked Gemma acceptance. Separate
+  TA runtime deployment approval required.
 last_verified_commit: d5eb8439811f9ca1dc41253f5a136c5aa9e36c92
 test_results:
 - 105/105 draft-only PASS
@@ -51,7 +62,17 @@ test_results:
 - DP 2 expected old-code failures; patched 44/44; Ruff/diff PASS
 - Exact release backport 42/42 PASS; DP PR130 CI 7/7; live SDK stats 86/86/86/86 in
   53ms (single observation)
-resume_instruction: DP merge complete. No duplicate diagnostics or merge; conditional
-  owner authorization for DP restart exists, but safe idle coordination not confirmed.
-  Preserve active research; do not switch until no active work and rollback ready.
-  Verify live HTTP and original source before Gemma.
+- 42 passed, 1 warning in 2.70s on staged internal release; post-switch live health/auth
+  and preserved collection 86/86/86/86 three times PASS
+resume_instruction: Data Platform exact-release threadpool backport is LIVE on internal
+  SSD. Do not re-stage/restart. Verify sustained real ingestion and original-source
+  identity before bounded Gemma acceptance; do not mutate DB without gate. TA production
+  remains unchanged.
+runtime_rollout_20261116:
+  release: /Users/master/ArvectumSafe/runtime-releases/data-platform-20261116-50f7b69
+  revision: 50f7b69d5d3d33413de2599f7c21c79bffe36541
+  pid: 78297
+  port: 8094
+  rollback_launcher: /Users/master/ArvectumSafe/runtime-releases/data-platform-20261116-50f7b69/launcher.rollback.sh
+  rollback_sha256: 010fcd9f76dfae420e12768c47fd551842ea3e1586fa197bfec6a5dc961055d8
+  status: live_verified_read_only

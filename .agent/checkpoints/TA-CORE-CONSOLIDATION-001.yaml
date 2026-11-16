@@ -59,15 +59,13 @@ completed:
 - 'Approved DP coordinated update not executed: active embedding connection observed
   at session start; subsequent DP operation logs recent, research still active, no
   verified idle coordination. Live TA API still on old 89d4bb43 healthy.'
-current_stage: merged_main_offline_image_verified_dp_switch_pending_safe_idle
+- DP exact-release threadpool backport deployed on owner request; internal SSD release
+  50f7b69, graceful restart, live auth and collection stats 86/86/86/86 PASS x3. See
+  TA-CORE-GEMMA-REVIEW-20261115 checkpoint.
+current_stage: accepted_main_image_verified_dp_runtime_updated
 remaining:
-- DP update is owner-authorized conditional on safe idle; coordinate with active research
-  and verify no in-flight ingest or new caller race before switch. Use exact-release
-  tested backport; preserve old release and launcher rollback.
-- Verify live DP health and authenticated stats under controlled workload after update,
-  then bounded Gemma real-source acceptance.
-- Separate approval for TA live runtime switch; image exact main ready, verify current
-  backup/queue gates.
+- Sustained actual DP ingestion and source-locked Gemma acceptance.
+- Tender Agent candidate runtime deployment separately authorized; preserve research.
 last_verified_commit: 35c44a898b56c055bbcd50a8be25227459c08e58
 test_results:
 - 378 passed, 44 warnings, twice; final 8.30s; in-memory SQLite
@@ -79,9 +77,6 @@ test_results:
 - TA529/530/531 19/19 CI exact heads; DP130 7/7; all merged
 - Final main tree parity PASS, ARM64 isolated build and health/auth/evidence smoke
   PASS
-resume_instruction: All four named PRs already merged. Do not merge them again or
-  rebuild unchanged image. Restore exact-release DP backport c09a10d (code 50f7b69)
-  and coordinate safe idle with research; do not restart while ingest is active or
-  uncoordinated. Owner authorized conditional DP switch, not TA live deployment. After
-  live DP verification, proceed to real Gemma acceptance. TA main 35c44a89 image core-accepted-35c44a89
-  ready for separate runtime acceptance.
+resume_instruction: Do not repeat approved merges, image build or DP runtime switch.
+  DP updated and read-only acceptance passed. Continue source-locked acceptance only
+  under existing gates; separate TA deployment approval.
