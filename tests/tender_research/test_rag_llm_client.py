@@ -189,3 +189,15 @@ def test_local_chat_llm_client_reports_prompt_metrics() -> None:
 
     assert metrics["context_chars"] > 0
     assert metrics["prompt_chars"] >= metrics["user_prompt_chars"]
+
+
+def test_formula_conditions_are_preserved_in_every_prompt_mode():
+    client = LocalChatLlmClient(base_url="http://127.0.0.1:8088/v1", model_name="fixture")
+    for mode in ("fast", "balanced", "detailed"):
+        payload, _ = client._build_payload("Как рассчитываются баллы?", _hits(),
+                                          registry_number="123", analysis_mode=mode)
+        prompt = payload["messages"][0]["content"]
+        assert "Не объединяй разные ветви формулы" in prompt
+        assert "не распространяй правило знака на другие переменные" in prompt
+        assert "Порог начисления баллов не равен условию допуска" in prompt
+        assert "не восстанавливай её по аналогии" in prompt
