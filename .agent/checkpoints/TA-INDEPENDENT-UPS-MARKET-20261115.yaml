@@ -1,0 +1,54 @@
+task_id: TA-INDEPENDENT-UPS-MARKET-20261115
+status: in_progress
+goal: Build separate independent UPS and storage-battery demand and competitor evidence
+  channel, not Sionika portfolio.
+definition_of_done:
+- Historical procurement corpus across SIBUR, GEH, EIS and authorized commercial platforms,
+  deduplicated by original IDs
+- Classified industrial UPS, stationary batteries, DC systems, IT UPS, service, installation,
+  modernization, mixed/unknown scope
+- Exact source evidence for quantities, specs, buyer, winner and price where available;
+  no inferred awards
+- Independent commercial routing and installed-base maintenance map. No automated
+  commercial action.
+completed:
+- 293 SIBUR UPS/battery candidates (174 explicit UPS,119 battery review), 228 source-linked
+  publications and 37 original files.
+- 137 GEH GPB title candidates reviewed separately, classifications retained.
+- Public manufacturer reference 64 AGHK OZH systems; official YANOS protocol text
+  identifies named winner 323-СС-2025, screenshot failed; no signed contract or amount.
+- 'SIBUR priority: VSK n-BuLi 2071090/1 cancelled complex construction package attachment
+  specifies two UPS installation, not actual supply. Evidence in installed-base-service-evidence-v1.'
+- SIBUR lifecycle 22 UPS channel candidates including 5 mixed, reviewed STG, ZSNH,
+  KOS, Kstovo and AGHK; two additional attachment-based UPS contexts retained separately
+  without assigning actual supply.
+- SIBUR mixed notification RFI 2112547/1 specifies Systeme Electric 1000VA UPS and
+  SNMP; ZSNH2090671/1 guaranteed power PNR subject. No actual supply or assignment.
+- 'KOS2079347/1 exact original equipment list: Parus electro 4 UPS3000VA,7 external
+  battery modules,4 SNMP cards; source power-unit typo retained for review, no verified
+  supply.'
+current_stage: sibur_lifecycle_review
+remaining:
+- Qualify stationary battery applications, mixed packages and actual technical specs;
+  reconcile exact source references and existing captures.
+- Expand EIS and commercial procurement history, primary contract/award evidence and
+  recurring service cycles.
+- Private agency relationship is prospective, no assumption of actual engagement;
+  no contacts or bids.
+last_verified_commit: defc1938fdc27f90a1e24a1ccf3027e4c1c0448e
+test_results:
+  focused: 7
+  ruff: pass
+  private_overlay_sha256: 033e02396841e07b9246284bd7a18128946469134a7ac2dc80a644802581da30
+  gpb_snapshot_sha256: fde98a91202a6266e961c11727f7fe83002bd5a221b925b1446f128ef4e97000
+  gpb_review_sha256: 5025df76ea7da8f3ba4ace434e48642ba57871f03d9760c455703b28b31fb63a
+  public_references_sha256: 7cb982be0decf58589520066a70998b6539f2d157a3d17ce58e355e1d3b2aff2
+  gpb_scope_counts:
+    explicit_ups: 71
+    station_dc_system_review: 22
+    battery_application_review: 37
+    unrelated_battery_review: 7
+  sibur_lifecycle_sha256: a1f2f39e58560d2ba8a4c32a9c24dec8eaaf2ebef6ffac22d84c9c2682980057
+resume_instruction: Owner prioritizes SIBUR now. Continue separate UPS/AKB market
+  and attachment-only packages there. Other sources deferred until scope changes;
+  no commercial action.

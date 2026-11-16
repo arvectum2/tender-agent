@@ -1,0 +1,1551 @@
+task_id: TA-SIBUR-SIONIKA-SALES-MAP-20261115
+status: in_progress
+goal: Map the entire available SIBUR procurement corpus before prioritizing Sionika full industrial nomenclature;
+  PQ only one segment.
+definition_of_done:
+- Reproducible source-bound organizer and category map
+- Separate end-site/project mentions from organizer, resolve actual recipient where documents support it
+- Classify Sionika equipment, engineering, services and adjacent portfolio; validate current shortlist and distinct
+  publication revisions
+- Map EPC/procurement channels and exact contract/supplier evidence where available; no inferred awards
+completed:
+- Read-only corpus 30394 source records, 33 organizer labels, 8 traversed primary categories with review gaps. Organizer
+  populated but normalized customer and NMCK absent.
+- Central organizers 19599 observations; site mentions in 7354, multiple-site 311. Source titles/subjects only,
+  not verified recipients.
+- 6635 core lexical records, 5487 numerical prefix groups for review, 1434 adjacent-only, 496 core service signals,
+  228 budget signals, 1144 cancelled, 24 date/open-status nonbudget candidates. Overlapping product tags not summed.
+- Fixed ПЧ false positives from fire brigades; added substation/energy supply and subsegments. Three focused tests
+  and Ruff passed.
+- Joined committed document coverage on exact source identities read-only.
+- Fresh registry 27/27 pages, 316 rows/315 IDs. All 24 prior candidates status/deadline reverified from reconstructed
+  originals; 4 technical/no-price, 20 commercial/work review candidates, eligibility unverified. 76 URL captures
+  /75 unique SHA; 20 procedures with all verified published URLs, 4 with no verified direct URLs.
+- Project layer 913 unique core publications with project mentions, AGHK 675, DGP2 90, external AGPZ 123, EP600
+  17, NPG_SPR 6, ethylene pipelines 5, STYRENE 2, METALLOCENE_PE 2, NKNH_VRU 2; 7 mixed AGHK/AGPZ. Brand mentions
+  not suppliers.
+- Reviewed four active packages, NKNH styrene 2 lots 2027-02-09 to 2028-06-30 and 60-day payment; NKNH motors 1
+  lot 2027-01-16 to 2029-12-31 and 45-day payment, 12-month warranty; Tomsk 2 lots 2027-01-25 to 2027-12-12; AUMA
+  4 GPP branches. Six SHA-bound preview evidence records.
+- Verified limited public role and project-stage reports from government, owner and contractor sources; original
+  external pages not privately archived.
+- 'Whole-corpus map 2852 unique publications across 11 project labels: 928 prior core, 54 expanded electrical candidates,
+  785 other project package review and 1085 context. Explicit KOS catalyst vs NKNH metallocene PE separation; project
+  mentions not awards. 7 focused tests and Ruff pass.'
+- Current snapshot full scan adds 5 review candidates beyond prior 24, all 13 published links captured. ABB and
+  generic electrical only standard contract; HVAC incomplete; PNR water treatment and POLIOM lighting specific technical
+  assignment. No eligible bidder claim.
+- Eight stage-based sales action entries with exact original registry IDs/status, manually reviewed official/external
+  stage links and role evidence. Recommendations separate. AGHK launch delayed September 2026, revised date unknown.
+- '2026-11-15: checked disjoint 523 priority and 316 remaining project-package records for exact original URL/source-row/hash
+  binding: 245 covered, 115 unique original SHA across both cohorts; 3 legacy format reviews. No blanket technical
+  scope claim. Five focused tests/Ruff pass in PR528 5e89b0c4. Administrative KRU false positive filtered.'
+- 'Five exact document evidence records: 2146194/1 AGHK water treatment named designer Progress Engineering, E-SCADA/AVR/KIP/ASUTP
+  work; 2069073/1 and 2069139/1 same pipeline object but different named general designers NIPIGAZ and Progress,
+  preserve scope conflict; 2081181/1 EP600 feed pipeline PNR 0.4kV; 2113738/1 DGP2 fire/automation procedure references.'
+- Seven external observations, supplier/contractor self-reports and one aggregator-only GP641489; no contract award
+  inference. Five NPG SPR Energybase IDs absent from frozen 30394-record snapshot, require original registry reconciliation.
+- Owner-provided commercial-role overlay saved separately in private runtime; never overwrite user classifications
+  with inferred project roles or publish private relationships.
+- Sfera-Stroy legal identity confirmed across sources; four owner-contractor AGHK contract numbers self-reported,
+  one subcontract court case verified, one material debt judgment at appeal stage identified, latest registry move
+  to Moscow reported; risk and current due diligence explicit.
+- Service/retrofit demand cohort 496 records classified offline with overlapping service types; 224 repair/maintenance,
+  158 modernization/replacement signals, 136 installation, 80 commissioning, 63 design. 104 cancelled, 385 intake
+  closed, 7 open in frozen snapshot. Not contract awards.
+- 'Seven additional project-role source observations: owner identifies Progaz and Tekon at NKNH VRU, Progress Engineering
+  named OZH executor at DGP2; B2B indexed card identifies SNEMA-SERVIS as procurement organizer DGP2, aggregator
+  evidence AGHK service and self-reported subcontractor chain; Wison directory-only pending primary source.'
+- 'Pondera Industry INN 7720433441: six self-reported SIBUR construction prime/package roles, project-specific dates
+  not verified actual completion. Financial source review revenue 12.244752bn RUB/2025 net profit 349.644m, 2024
+  loss 462.996m, tax debt 199.572195m as of 2026-09-01; P0 research target, no firm qualification or credit approval.'
+- Identified three distinct Progaz legal entities. Progaz Postavka and Progaz Engineering same INN 9709111035 according
+  to historical and current accounting/registry aggregators; no duplicate. Four total INN including SNEMA. 14 distinct
+  historical B2B procedure IDs retained, five Progaz group and nine SNEMA, with source classes and project evidence/uncertainty,
+  three outside SIBUR and two Tobolsk unresolved. No current or awarded claims. Owner confirms Progaz VRU general
+  contractor/supplier and group self-reports EPC/BOO.
+- Yamata September 2026 termination notice reported by press; Esta candidate only, replacement award unverified.
+  Pondera self-report construction package role does not resolve Wison exact EPC role. Historical AGHK EPC/EP roles
+  kept dated; no current extension inferred.
+- 'Reconciled all 926 unresolved URL references against existing acquisition receipts without new fetch: 3 exact-bound
+  originals across 2 procedures, 4 bytes with missing exact ref, 2 prior review, 917 uncaptured; 1212 exact identity-URL
+  pairs outstanding.'
+- 'External contractor channel registry 14 to 23 unique B2B IDs, six organizer INNs: six Favorit AGHK packages,
+  one SNEMA electroheating service (end site unresolved), two NIPIGAZ 2024 B2B cards classified IT, results hidden
+  or cancelled. No award/current opportunity.'
+- Favorit financial dossier; Sfera no buyer records in checked catalogs, Pondera own public procurement not found,
+  Progress catalog overlaps SIBUR. No inference of absent private demand.
+- Owner expanded portfolio to UPS, including IT/server UPS, batteries, spares and service. New family UPS plus separate
+  battery-application review; excludes car/forklift/tool/hydraulic false matches. 30394 frozen publications reclassified,
+  6732 total core lexical/review candidates (+97 unique), 174 explicit UPS and 119 uncertain battery applications,
+  23 service signals and 14 explicit components, 250 prefix groups. 9 focused tests and Ruff pass.
+- '293 UPS/battery candidates source coverage: 228 with verified exact source references, 37 unique captured originals;
+  304 missing identity-URL pairs. Historical NIPIGAZ 2081424/1 47 requested UPS, 2141617/1 battery lot AGPZ external
+  Gazprom; Progress 2115156/1 AGHK title6100 UPS/AKB; 2121831/1 STG 2026–28 service; 2144327/1 JOVYATLAS exact model
+  no analogues, one original linked. No awards inferred.'
+- External channel v3 retains 23 IDs and marks NIPIGAZ3735296 relevant UPS spares independent of IT category; 3699009
+  typo/cancelled stays review.
+- 'Portfolio correction: standalone UPS/AKB research split into independent equipment channel, separate private
+  commercial mapping supplied by user; mixed packages retained manual scope allocation, no supplier assignment.
+  Generic router tests 7 passed/Ruff; 6477 industrial,293 UPS/battery,38 overlap,6732 distinct records. No private
+  relationship in source code.'
+- Support services 999_19 verified in official archived filter and raw responses; all five advertised pages captured,
+  59 distinct IDs, zero overlap with prior 30394 frozen records. 29 in 2024–26, 30 in 2022–23. Research supplement
+  not DB imported. Parser supports category; existing workers untouched. Two parser tests/Ruff pass.
+- Offline report refreshed from committed links, 237 new originals, 1163 total, 1158 extracted/5 review, 127 new
+  report findings not all qualified scope. Nine source-bound selected demand/maintenance cases with cancellation/mixed
+  scope retained. VSK n-BuLi attachment-only UPS and KTP installation scope, no proof of installation or award;
+  owner reports construction completed and PNR started, current launch unverified.
+- 'Lifecycle candidate review: 526 unique frozen procurement records, 509 industrial and 22 UPS/battery, 5 overlap;
+  nine manually reviewed clusters,19 distinct IDs,18 prefix groups, scope and revisions distinct. Siemens/Yokogawa
+  ZSNH, AUMA NKNH and STG, ABB NKNH, STG/ZSNH/KOS/Kstovo UPS, AGHK mixed. No confirmed recurring award.'
+- Offline technical evidence refresh 179 new originals,1342 total,1336 extracted/6 review;111 additional findings,
+  6 selected exact document scopes, including Siemens 8BD1 23 cells at RP57, AMS Emerson HART existing diagnostics,
+  Siemens controller planned, KOS workstation and UPS replacement, UPS diagnostics requirement, multi-platform PNR.
+  Evidence and source status saved; no inferred awards.
+- Owner high priority retrofit switchgear. Dedicated classifier tested 2/Ruff pass; 61 lexical candidates/58 numeric
+  prefix groups, 23 direct lexical /25 related electrical /12 ambiguous /1 breaker replacement. Not a full census
+  and not 61 qualified leads. Manual priority map 18 reviewed scope groups including 23 Siemens 8BD1 and 19 SESh70
+  documented demand, DGP2 LV two kits from title, cancelled/reissued pairs, NKNH recent IDs. External historical
+  Elektrojar reference and Tavrida seminar only, not recent awards.
+- Owner requested save previous retrofit leads and continue broad SIBUR roadmap, not bid. Reserve six observations
+  (3 closed NKNH,2 prior external observations unrefreshed,1 adjacent currently open styrene PNR). Restored Mac-mini
+  transport. Independently verified fresh official page bytes and exact reconstructed list 27 pages/315 IDs, no
+  retrofit classifier candidates; NKNH2146492/1 open to 27 November 11:00. External reserve no fresh status or eligibility
+  verification.
+- 'Technical evidence refreshed 135 additional committed originals, 1477 total,1471 extracted/6 review,90 new report
+  findings. Four selected historical demand signals: NKNH notification RFI UPS Systeme Electric 1000VA and SNMP
+  one each; RusVinyl 2 HALTON fire-damper drives discontinued, Siemens replacement specified; KOS PGU energy-block
+  switching RZA/PA installation; ZSNH guaranteed-power commissioning from registry subject only. No award, live
+  offer or supplier assignment.'
+- 'CRP2/ZSNH cross-stage scope review: nine distinct archive publications including 2026 separately related cancelled
+  Chibis busduct, eight numeric prefixes, five exact-source-linked docs coverage, 20 unresolved URLs across publications.
+  Linked files manually inspected, mostly templates/general requirements; no bidder/winner or specific installed
+  quantities inferred. Modens self-reports CRP2 and AGHK design, ETS named survey client in STP reference Feb2024
+  contract 13-24, ETS self-reports 110kV ETPG design supporting DGP2 in Apr2025; roles separate, no inferred contract
+  hierarchy.'
+- Reconciled frozen project missing-doc queue 926 URLs with existing captures, 43 exact-ref URLs, 4 bytes without
+  exact refs,879 not captured or prior review. 1153 remaining identity/URL pairs versus1212 previous, 59 restored
+  exact bindings. No new download or DB write.
+- 'Energy chain review: 12 groups across KOS/NKNH/ZSNH/STG,27 unique publications,14 exact-source-linked,48 missing
+  identity-URL pairs. RP59 repeat RZA scope, KOS PGU actuator service 2026, NKNH GPP4 DC cabinet revision, ZSNH
+  multi-year substation maintenance and STG.10510-39 repeated communication works. No award inferred. Tatem direct
+  customer references NKNH/KOS (GPP2/3/5 design at TANEKO, not NKNH); Energoprogress 223FZ purchasing channel KOS
+  Lushnikovskaya PGU, 2.043748577bn listed whole lot price, type unverified; 2 additional contract observations.
+  Owner confirms late2025 permit, May2026 launch.'
+- Tatem procurement buyer role validated from full public catalog rows, 10 distinct ONLINECONTRACT 2020–2021 KOS
+  records (outside primary period). Corrected search snippet shifted-ID associations; 369000 Tatneft and 372204
+  general equipment and 376675 furniture excluded; 368671 catalyst,367768 reactor,372172 line D,375783 installation
+  materials for UPS not UPS supply. Tatem catalog711 historical, Energoprogress1554 March2026 catalog includes plans,
+  not additive or period totals.
+- 'Energoprogress equipment buying channel: cancelled 32616321541 PTK ASUTP Kazan TEC2 NMCK137265536.33 outside
+  SIBUR, 32615817206 HV meter for capacitive-current compensation GRU6–6.3kV listed1.5433m, end site and result
+  unresolved; do not count as SIBUR demand. Lushnikovskaya PGU supplier/commissioning roles: PSG self-report SGen5/SIPROTEC5/Thyripol/SINAMICS
+  GL150 and excitation UPS; STGT reported commissioning; system operator confirms TEC3 110kV grid changes and two
+  autotransformers. Owner capacity281MW authoritative. Direct historical SIBUR2140253/1 RZA maintenance confirmed
+  in frozen archive, no linked originals yet, ended 8Sep2026.'
+- 'Cryogenmash lifecycle channel: 2021 AGHK ASU EPC, lease and 22-year gas contract per group news with development
+  INN5001104523, manufacturer5001000066, IK2K self-reported 2023 contract. GP641489 2026 ASUTP supervision/commissioning
+  aggregator linked to exact project, prior observation not additive. CMA separate INNs; six 2026 ONLINECONTRACT
+  materials records NP1651040171, SIBUR end customer unproven. AO1658001164 court case A65-16979/2025 NKNH third
+  party and Profit subcontractor, no inferred exact scope.'
+- Technical report refreshed 150 new originals,1627 total,1620 extracted/7 review,82 new lexical findings. Five
+  exact source-bound cases:109 unique historical SAP RZA entries Kstovo (47 SEPAM,40 TOR200,6 VIP30,16 other/unspecified),
+  CRP114 KRU-2-10 turnkey relay panels, NKNH GPP1 two cells domestic IEC61850 RZA and vacuum breaker budget, Biaksplen
+  Gidrotorf BKTP, KOS Parus electro UPS/battery counts. Historical schedule not current inventory, cell count or
+  award.
+- Five original GPB list/detail pairs captured and hash-verified for Cryogenmash: GP635240 active, GP634651/GP633537/GP634648/GP641489
+    archived. GP641489 was prior secondary observation, not additional demand. Original detail archive deadline
+    label conflicts with list; use per-ID list deadlines. No price/award confirmed.
+- GP635240 original DOCX explicitly confirms AGHK title 6500, AO Cryogenmash organizer versus OOO Cryogenmash Development
+  customer in TZ; 64 numbered asset lines plus separate UPS line. Six LV sections, six transformers, two capacitor
+  installations, one 10kV soft starter, three AVR cabinets, nine compressors and four circulation pumps. Three years
+  experience, qualified staff, 12h departure and 24-48h arrival; no eligibility claim. Fourteen other selected links
+  closed connections, no bypass.
+- Automation subcontractor review: 9 entity candidates, 6 INNs resolved, 12 first-party portfolio observations through
+    Perm ASU Engineering, 7 exact related SIBUR archive identities with scope distinctions. MMUS 2024–27 electrical
+    installation and commissioning; Ural-Controls V521 automation and design; Neftekhimnaladka EP600, Reksoft Kstovo,
+    Gazproektinzhiniring BOV7, MIIMF; Naladchik and Sintegra identities pending. Separate similarly named Ufa ASU
+    company excluded. No awards inferred. Five historical retrofit publication crosschecks, 4 additional owner Telegram
+    crossreferences, including RP57 cancelled budget then solicitation; date typo retained. Company direct HTTP503;
+    indexed official pages reviewed.
+- Contractor finance and channel screening: six 2025 financial profiles, Sintegra INN 1651065401 matched by official
+    address and registry, 596 catalog publications (not contracts). Five unique procurement observations (one in
+    2026, four earlier); B2B-Center and ONLINECONTRACT. No primary award or end site verified. Naladchik and MIIMF
+    probable identities, old liquidated MIIMF kept separate. Court A43-27052/2023 historical 2018 RusVinyl subcontract
+    chain, not current. Other four independent procurement channels still unresolved. Archive worker observed 1855
+    captures and 1851 linked originals; extraction refresh pending.
+- Combined research continuation: processed 268 additional originals since 1627 baseline, total 1895, extracted
+    1888, review 7. Prior saved v5 technical evidence reconciled by SHA without repeating extraction. Full AGHK
+    historical annex parsed into 772 source rows, preserving duplicate candidate and UPS separation. Built industrial
+    demand matrix for 6477 distinct source IDs across 11 overlapping categories and 482 service-source candidates
+    with explicit site versus organizer-only evidence. Seven dated external project and supplier crosschecks, including
+    SVEL historical production distinct from later nomination and award unknown.
+- Contract-chain research: two court-confirmed subcontract specifications at ZSNH (electrical installation GPP1/2,
+    KRU10kV commissioning GF1), exact GF1 project match to 2076768/1 lot1, no award protocol. Historical AGHK temporary
+    power chain separately. Owner context recorded privately, distinct from verified public evidence; 2083626/1
+    and two subsequent AGHK service notices remain unverified as to outcome and causation. Technical extraction
+    refreshed to 1910 originals, 1903 extracted, 7 review.
+- Consolidated 17 project/program cards, 30 organizational/site coverage labels, 30 overlapping reviewed scope groups
+  (51 distinct publications), official 2026 plan with 1005 positions and 177 direct category rows, 37 priority rows,
+  and 177 qualification entries with 22 candidates. Verified two original XLSX hashes and map/report hashes. Current
+  Watchdog updated in place for 17 November deadline; hourly schedule unchanged. No inferred awards.
+- Screened all 37 priority plan rows against frozen archive and current source snapshot of 15 November 11:37 UTC: 29
+    rows with retained candidates, 155 distinct publication IDs, 6 current snapshot IDs; 25 manual scope judgments,
+    8 rejected pairs. No proven exact plan-to-contract link or award. Refreshed 162 originals to 2072, 2063 extracted,
+    2 partial, 7 review; three source-bound technical scopes. Resolved NPG SPR to Perm SIBUR-Khimprom project via
+    official regional order; 41 archive candidate publications and six distinct secondary missing from snapshot,
+    two false model-token positives excluded. Public role of Tekon Engineering confirmed. Added four programs, consolidated
+    21 unique project cards and versioned report v3.
+- Perm NPG SPR reviewed original three revisions 2141372/1-3 and heat trace 2141353/1, with exact source/hash links;
+  4 transformers 2500kVA, 1 MV RU, 53 LV raw quantity, 3 repeat tags, 1 lighting cabinet. Heat trace physical sheet
+  123 rows, 2 controller cabinets,10 system cabinets,44 boards. Approx37bn CAPEX separate; GSI-Giprokauchuk FEED
+  role, GSI group and local contractors separately documented; two external NPG notices outside snapshot, VSK existing
+  ID non-additive; eight unmatched plan lines rechecked, no exact links. Refreshed to 2087 originals, 2075 extracted,5
+  partial,7 review. Map/report v4 verified; no new awards, prices or DB writes.
+- Seven-site multi-block review: 45 archive records, six new cards, total 27. Four primary active originals, nine
+    anchors. GPB three primary list/detail pairs, two unresolved, one verified failed-no-bids protocol; three possible
+    cross-platform pairs not additive. Tomsk 2027 schedule and separate UPS confirmed.
+- STG seven scope groups, 14 archive IDs, verified LRT-40 workbook and owner program evidence, V6 map/report. Existing
+  technical SIBUR LaunchAgent now StartInterval 120s; original plist backed up; verified recurring successful runs.
+  Reconciled 313 DP resources/5073 chunks and embeddings with fresh read-only PostgreSQL export; repaired preservation
+  of first attestation hashes for two previously linked resources, four focused tests passed, code commit 241992cb.
+  Existing runner restarted with gate and backups, GPB recovery/archive worker unchanged. Verify post-restart actual
+  linkage/index progress before declaring recovery complete.
+- Six smaller-site program cards: Krasnoyarsk KZSK, Portenergo, PETF, YUP, NPP, S-Yug; 26 archive IDs and 2 external
+    observations (one non-electrical). Ownership conflicts corrected with 2023 Solvay transaction; JV boundary retained.
+    Commercial action register covers 33 cards, 12 P0,20 P1,1 P2. V7 map and report. DP repeat timeout recovered
+    by exact resource identities, 315 documents/5283 chunks, 4 recovered receipts; preserved old proofs. Shared
+    lock acquired safely on retry; existing runner resumed. GPB worktree cd52f39b increases bounded request timeout
+    180s and stats 60s. No direct DB writes.
+- Four judicial contract records, two manufacturer references, POLIEF RKOS fifth-source project package, map V8
+  with 34 cards. Legacy DP queue fully synchronized and exhausted 315/5283. Read-only readiness queue 639 technical
+  candidates, 97 P0; no new ingestion or mutation.
+- Exact read-only bridge validated 587 OOXML originals and 932 committed captures, 92 P0, 52 PDF review. Code c595c96f
+  and c334fb4a preserve verified DP receipt on explicit capture-only replay; 17 focused tests passed. Existing live
+  archive worker has cached earlier linker; no deployment or DP mutations yet. Verified Styrene qualification 3
+  original spreadsheets/12 anchors, owner-confirmed Pondera role, SNEMA-Service B2B exact buyer, NKU-Energo 29 panel
+  self report, 13 P0 qualification routes. V9 report.
+- V10: eight judicially identified contracts/specifications DGP2 and adjacent ZSNH objects; correction SPK Magistral
+    terminated 2024-09-06, replacement unknown; Delta debt separated from electrical market. Ener Holding 2025 financial
+    profile and historical procurement channel. Archive worker cooperatively restarted with updated linker, existing
+    index executor activated on verified 587 OOXML bridge; 16 targeted tests passed, first extraction 3 docs, gate
+    passed; first full index/link cycle not yet confirmed.
+- Archive first full cycles passed, replay idempotent; SNEMA cross-project evidence for 8 sites, SMK Northwest subcontract
+  matched by domain and SRO directory, two other contractor portfolios, 5 external procurement observations (2 outside
+  SIBUR excluded), 10 exact archive scope records, no replacement SPK Magistral established. 21 tailored P1/P2 actions,
+  all 34 cards now have specific actions. V11 sources and hashes checked.
+- V12 clean executive report rebuilt in 11 sections with 34 cards, 2597 unique project archive references and 37
+  SHA-verified source artifacts. Conditional plan band sums 36 rows 1.7–9.3bn, Q4 27 rows 0.8–4.8bn, direct-only
+  subset separate, not market estimates. Two 2024/25 exact specification prices total 20,077,047.23 RUB incl VAT;
+  debt/actual work/2023 estimates separate. Court verifies NaladkaPromService INN; new KOS InterSvet settlement,
+  scope and total price unknown. Hexene reached rated 50kt/y, RP50 and four planned substations confirmed. Official
+  Telegram 2111857/1 missing frozen archive documented. Existing workers running, no new DB action.
+- V13: refreshed all 27 official current list pages, 315 unique IDs, no observed changes vs earlier snapshot. Transport
+    interrupted before receipt; reconstructed from full saved raw set, verified hashes and parser; no duplicate
+    download. 20 selected current procedures and 7 original worksheets/8 URLs verified. Added KOS compressor control
+    2145701/1 and NKNH motor service 2145706/1 (2027–29, 12mo warranty), P0 routing now 15, 36 total. Exact plan
+    links remain unproven for 8 unmatched rows, plan936 subject match only. No new signed prices, no new DB writes.
+    V13 report refined in place of append-only history.
+- V14: owner-confirmed Progas general contractor and equipment supply VRU NKNH; two distinct procurement INNs, six
+    independent B2B records with exact title identifiers, finance profiles separate. MPE-230 design New Resources
+    and positive GEE, ASU Engineering self-reported audit not implementation. Court A57-10811/2026 propylene infrastructure
+    contract chain, 107586664 RUB VAT incl spec, 109044502.18 accepted goods, 50658494.82 overpayment; product scope
+    unknown, excluded from electrical amounts. Official Telegram 2111857/1 confirmed, live DB exact lookup absent,
+    portal card cache miss, eight neighbor notices matched archive. Four P0 actions updated. No DB mutations.
+- V15: six previously generic NPG external notices resolved to scope, three new notices, nine observations in six
+    families, eleven overall external NPG including pump and sewer packages. No additive revision counts, no signed
+    prices. TESS Amur named in Amur region plan 378-r dated 2026-06-02, temporary network program 2022–30; six group
+    portfolio scopes across four sites, finance identity checked. MChS fire license terminated; do not extrapolate.
+    Regional direct source 403 and PDF screenshot cache miss documented. Six commercial actions revised. AGHK AuCom
+    exact archive ID checked. No direct DB mutation.
+- Read-only exact coverage dashboard: 30394 SIBUR records, 6477 industrial, 2599 project unique, 8223 priority union,
+    853 overlap and 5624 profile outside mapped projects. 1100/2299 supported distinct priority URLs fully extracted;
+    1580/8223 all known URLs extracted without unverified marker, not final research result. 36 per-project counts;
+    2475/10188 active acquisition attempts, 57/587 linked archive index documents. Reusable report_sibur_coverage
+    module and dedup/unsupported/partial test passed. No DB mutation.
+- 'V16: verified external runtime after migration; coverage 1110/2299 priority URLs, 1189 remaining; exact 663 pending
+  P0 and 611 unattempted candidates. 5624 industrial publications outside project cards grouped once: 2169 explicit,
+  544 organizer affiliation, 103 multi, 2807 unresolved, 1 conflict. Source-bound priority queue code tested (6
+  pass), activation requested via cooperative STOP; no duplicate worker. Styrene 2146492/1 two primary XLSX reviewed,
+  2 lots, 09 Feb 2027–30 Jun 2028, 60d payment/factoring, qualifications; no signed price.'
+- 'V17: priority collector restarted, 15 new P0 originals hash-verified after activation; linkage still pending.
+  GPB prepare timeout reconciled read-only: 1375 exact existing receipts and 13 absent, no inflight, previous sync
+  unchanged. GPB code c0028180 reuses validated originals and increases bounded prepare timeout; 6 tests passed;
+  original agent restarted, first new sync not verified. Three qualification XLSX reviewed (two identical-text styrene
+  questionnaires, valve repair evaluation options), no asserted award or eligibility. Coverage 1119/2299, full known
+  priority packages 1585/8223. V17 45 source files verified.'
+- 'V18: first 15 P0 originals SHA256/technical extraction and exact DB 251 document-procedure pairs validated; 30
+  P0 captured since activation. Three AGPP SS370 project drawings establish AGPP design origin of 2118943/1; unknown
+  actual destination, remove only strict AGHK association, retain industrial candidate; 15 other interface candidates
+  flagged. MPE 2126540/1 Volga NIPITEK six new gas analyzers per OL. EP600 2080352/1 mechanical scope only. Coverage
+  V5 1134/2299, 1589 complete known packages; 36 cards 2598 strict project candidates, 5625 outside. GPB preparation
+  passed, first post-recovery transaction state recorded separately. No signed prices inferred. V18 report and six
+  artifacts validated.'
+- 'V19: six original XLSX reviewed, 16 thermal cabinets 2108203/1, 17 control posts 2083019/1, 104 terminal boxes
+  2108149/1, Progress Engineering directly named as requesting party in two forms; 2080616/1 indivisible cast-insulated
+  busduct DGP2 title4015; 2027–2030 AGHK heat tracing maintenance 2139286/1; 2140253/1 KOS relay protection maintenance.
+  Owner 2025 250MW and 2026 281MW same Lushnikovskaya PГУ, STGT reference commissioning, not service award. Coverage
+  1179/2299, 1617 all known packages; no inferred signed price. 49 sources verified. GPB recovery progressing.'
+- 'V20: seven original XLSX packages reviewed; NPG 29 units, 27 distinct tags, ASDKE title4810; MPE 23 NAMUR+3 boxes;
+  AGHK busbar protection and AGPP interface KRU; overlapping heat-tracing budget vs tender periods, DGP2 warehouse
+  RFQ author. 1481 GPB outcomes screened literal SIBUR names, zero candidate hits; 1290 best bids, 191 failed, 601
+  published participant names, no signed prices. Outcome research queue: 8223 IDs, 6856 closed intake incl 2151
+  P0, 1300 cancelled, 67 open as archived. Not all outstanding outcomes yet researched; no fabricated awards or
+  prices. V7 coverage 1314/2299, 985 remaining, 468 P0. V20 53 source artifacts verified.'
+- 'V21 parallel market research: official NKNH combined operator-room program >12bn first-stage investment, 113
+  of 193 to 7, 3 launched as of Feb17; 8 explicit archive IDs and 4 HVAC candidates outside strict membership. New
+  card 37, union 8227. SMK Severozapad INN7814292228 self-reported SNEMA subcontract, Progress explicitly named
+  OVOС executor DGP2. ABB 2144277/1 retrofit separate from plan 817. Four exact outcome IDs reviewed, no verified
+  award, all 8 plan gaps unresolved. Outcome queue V2 6860 closed, 2159 P0. Coverage 1329/2299. No DB mutation;
+  existing workers continue.'
+- 'V22: 3 distinct automation counterparties enriched, two named EP600 commissioning buyers from ASU Engineering
+  portfolio; Delight identity and 2025 finance, EPIK references and finance; published MPE 2024 design existing
+  6 OPS,2 shutdown,3 fire/gas panels and planned cabinets, visual PDF unavailable. Three operator procurement exact
+  outcome searches no verified award, 2131406/1 outside strict project membership; 3 receipt pairs from 2 generic
+  unsigned DOCX, technical 7z pending. Outcome queue V3 cumulative 7 marked without verified outcome. Dashboard
+  V9 1388/2299, 37 projects 2606 IDs, 8227 union. No DB changes or outreach; 55 evidence files verified.'
+- 'V23: new named downstream procurer KIP-Elektromontazh 3448057936 on Bidzaar 148-474,168-094,168-886; 2025 revenue
+  4.992bn profit274.445m, approximate creditors2.89bn; no main award proof. October22 Lemaevskaya visit updated
+  facility, acceptance unknown. Read-only separate 7Z pilot: 11/11 originals captured/listed, 2 TZ revisions and
+  KKO safely streamed, exact hash and text diff dates only. Other archive members and unsupported formats not fully
+  processed, no DB import. Dashboard 1432/2299, 1707 full known packages; 58 evidence artifacts verified. No signed
+  prices.'
+- 'V24: two precise external self-reported awards 2087534 and 2086884 by NTC PB (7701843266), chrome completion
+  reported Apr28 2025; neither in frozen snapshot, no protocol or signed prices. Official municipal text confirms
+  different buyers, New Resources designer/OVOS, 60t/y MCE GEE registry. 7 pilot captures, 2 archive listings, 6
+  inspected docs 5 full/1 partial; commisioning summary mixed with unrelated wastewater materials, do not count
+  quantities without boundary validation. Dashboard 1447/2299, 1710 complete known packs, 61 source hashes verified.'
+- 'V25: judicial contracts reactor B KOS Peton/Centromontazhavtomatika 2023 approx 42.176m accepted 73.843m; excluded
+  new-period values, electrical share unknown. PGU-250 KER/NPP Dvigatel 2025 ceiling 6m accepted 5.9991m, unpaid
+  0.9531m, related service separate, no exact tender award link. Prior strict priced electrical specs 20.077m unchanged.
+  Catalyst 235 detailed BOQ title/zone blank, only 12/136 summary rows reconcile; exclude all quantity market estimates
+  pending scope. Dashboard V12 1462/2299, 1713 full known packages, 64 source hashes verified.'
+- 'V26: 8 explicit archive notices added across 3 work groups: NKS/KKS ASUTP four, KOS CUP two, remote operator
+  building two (separate until unified project proven). Four primary XLSX hash verified, 5 procedure/URL pairs.
+  Two sets monitoring; repeated NKS label, different ITT; KKO cable24.5km/month trays2.3km/month. KOS survey payment
+  90% at45 days subject upstream, cap100d,10% retention, no advance. Plan332/333 linked to program only, 8 exact
+  plan procurement links still unresolved. Three exact public outcomes searched with no verified award, ten cumulative
+  queue statuses. V13 1488/2312 extracted, 1717 known packages; 40 cards/2614 project IDs/8231 union. 65 sources
+  verified. No DB mutation.'
+- 'V27: five direct source pilot files captured/extracted, 2 XLSM KKS/NKS and 3 XLSX operator KOS. BOE 189/174 pieces
+  and 2/2 sets customer supply, 130 pressure,75 gas,8 flow devices; 1064 BOQ rows. Not installed or contractor sales.
+  2094860/1 and owner reports tie stations to ethylene pipeline infrastructure; 2 GC and 5 automation installation
+  contractors unidentified, actual launch unknown. KOS media design terms 90%45d cap100d,10% non-state expertise,
+  schedule conflicting 2027 IFC vs 2026 completion, foreign header. Eight exact plan gaps remain. No new price or
+  award. V14 dashboard and 67 source hashes verified.'
+- 'V28: 3 explicit older NKS/KKS notices added to project (7 total, 18/18 supported links, 3 complete known packs),
+  no union increase. Two original information cards verify New Resources as prospective contract party, qualification999_08,
+  payment60d cap100d,10% retention EPB, 2020–25 experience. Owner/registry sources identify UETP-NKNH operator,
+  New Resources PD author and DIATEK industrial-safety expert, not GCs. Service 2136325/1 direct operator route;
+  old/new branch uncertain. 2 GCs/5 automation contractors unresolved, standalone KIP 332/333 unresolved; 7Z password
+  required, not requested; PDF screenshot cache miss. V15 1650/2312 extracted,1826 complete packs,68 source hashes.
+  No new signed price or award.'
+- 'V29: Sept2 media reports Yamata termination notice and potential Esta replacement, not confirmed final redistribution;
+  owner Aug24 65% progress, domestic ASUTP, launch 2028. External 223-FZ telecom 32615735696 secondary indexed contract
+  price 2.287827m, initial1.875268m, registry51681000024260001110000, winner/primary EIS card unavailable; separate
+  related service, no strict price admission. Five site recipients not contractor roles. Three primary DOCX hash
+  verified (unsigned NDA, cancelled gas analyzer submission instructions, nonbinding bank comfort form), current
+  2146492 closes Nov27 11 MSK per catalog. No new primary award evidence. V16 coverage and 69 source hashes verified.'
+- 'V30: isolated pyxlsb1.0.10 external SSD pilot reads both active originals 2146492/1, 20 sheets,1950 detailed
+  rows (PC705+401,CM551+293). Individual test quantities 24 dry transformers,82 MV outgoing cells,2039 LV outgoing
+  cells,6 MV and36 LV UKRM,933 LV three-phase and21 MV motors,30564 LV cable lines,15263 dispatch signals. Not installed
+  asset count; PC/CM overlap stages; 10/6 code-unit differences and 2 repeat keys. No positive direct cost in detail.
+  Catalyst 6 shared original URLs captured; 4 archive listing only,2 XLSM generic forms, no OL/award. V17 coverage;72
+  sources verified. No shared runtime change or DB mutation.'
+- 'V31: 26 explicit PQ archive publication IDs across 7 sites,20 closed intake,6 cancelled,5 budget estimates; excluded
+  condensate tank BSK false positive. NPP Neftekhimia new P0 2128160/1 original TOR 3 regulated 6kV BSK RP115/116,
+  engineering only. DGP2 2103585/1–2 same RFQ,2 10kV UKRM 4015-HK-CU-001/002, DDP Sep1 2025, qualification107-03-03,45d.
+  Two 7Z captured/listed,2 XLSX members reviewed. Historical corporate standard 25yr life,5yr warranty,24h service.
+  Three outcome searches failed to establish award or price. V18 1708/2312; 41 cards/2618 project IDs/8231 union.
+  74 source hashes verified. No DB mutation.'
+- 'V32: six external evidence observations; NIPOM historic Tobolsk TP-204 integrated KTP with 150 kvar, VEDA exact
+  AGHK 2101170/1 SKU BHE10004 and three noncomparable catalog price observations, Nyucon unverified candidate, Electronmash
+  adjacent historical KRU supply. Two new exact outcome searches 2071747/1 and 2107092/1, no verified award or price,
+  cumulative 15. 41 cards/8231 queue rows, 75 source artifact hashes verified. No DB writes, worker changes or new
+  coverage measurement.'
+- 'V33 owner reprioritization: primary Sionika industrial portfolio, Voltаg/PQ/UPS background. New NKNH LSU RK704/705A
+  2124601/1 strict archive outside prior lexical queue; original 138439-byte DOCX CRC/SHA checked, unsigned generic
+  contract only. HPP and NEXT own adjacent project references, TEKON FAT site, no inferred award. Reverified five
+  prior Cryogenmash GPB primary details and GP635240 TOR; additional GP623442/633121 secondary only. 42 project
+  cards, 8232 unique IDs including one manual scope overlay; 76 source hashes verified, coverage V18 not refreshed;
+  exact plan links 332/333/817/823/1002 unresolved. No DB mutations or outreach.'
+- 'V34: six NKNH retrofit archive IDs and separate monomer LSU 2144333/1; four manual additions to priority queue,
+  two new project cards, prior reserve preserved. Primary archived status prevails over secondary deadline discrepancies.
+  Two secondary exact ID checks without awards. 44 cards, 8236 unique IDs, 78 map source hashes. Fresh V20 coverage
+  all 30394: 16050 any extracted, 5632 all known no unverified, 3043/10555 supported URLs, 698 indexed; priority
+  8236: 5572 any, 1867 all known, 1776/2313 supported, 255 indexed. User requires percentage progress per iteration.
+  No DB mutation or outreach.'
+- 'V35: KOS CCC compressor and hydrogen KCA2 original TOR source-specific technical scopes, cancelled, planned 2027;
+  Coperion V5214 information card and blank price form; NKNH 2133075 change sheet pricing years 2027/28; packaged
+  LSU 2124267 new ID. 11/14 original URLs SHA verified. Five new cards, 49 total; 8237 priority IDs, 80 map sources;
+  no award or price. V21 whole corpus 16050 extracted/30394, 5632 all known, 3043/10555 supported, 702 indexed.
+  Priority 5572 any/8237, 1867 complete known, 1776/2314 URLs, 257 indexed. DMZ external notices separate, exact
+  plan links remain unresolved. No DB writes or outreach.'
+- 'V36: recovered all 3 missing V35 originals. NKNH PGU top-level ASUTP 18 systems, 1706.25 hours/year 2026-28 and
+  5118.75 total reference; exclude unrelated ZSNH worksheet. Kstovo drive service lot2 89 reference units, 26 UPP/63
+  VFD. KOS CRP5 2 lots, 92h each in 2028; source inconsistencies preserved. V5214 Unisab III/Omron CP1L and 3 COOPER
+  Maestro Legend original scopes, five KOS budget estimates verified official announcements; no awards/prices. 8
+  pilot originals verified, no DB writes or outreach. 51 project cards, 8237 IDs, 82 map source hashes. V22 whole
+  corpus 16095/30394 any extracted, 5640 all known, 3129/10555 supported, 715 indexed. Priority 5613/8237 any, 1875
+  complete known, 1862/2314 supported, 262 indexed.'
+- 'V37: 128 terminals RusVinyl (125 Siemens/3 ABB), source date conflict; KOS PGU 5802.622 reference hours 17 groups;
+  AGHK metering four rounds one scope and two manufacturers via registry mirrors; ZSNH PS500/GPP1/2 service 2025–29;
+  adjacent contractor references TESS and ASU Engineering. Six added cards, 57 total, 8238 IDs, 84 source hashes.
+  V23 whole corpus 16095/30394 extracted, 5640 complete known, 3129/10555 links, 717 indexed. Priority 5613/8238,
+  1875 complete, 1862/2315 URLs, 263 indexed. Two pilot originals verified; 4 exact public checks no outcome, cumulative
+  22. No DB writes, no outreach.'
+current_stage: full_corpus_collection_extraction_and_indexing_priority
+target_report_date: 2026-11-17
+remaining:
+- Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification,
+  ongoing project phases, undercovered sites and contractor channels. Deliver consolidated report on 17 November
+  even with explicitly marked evidence gaps.
+- Continue broad SIBUR research, Cryogenmash/AGHK outsourced plant lifecycle, NKNH/Kstovo retrofit evidence and
+  contractor 2024–26 purchases. Separate UPS channel, reserve only. Verify CMA roles, awards/prices and completion.
+- Existing worker untouched; 29 in-period support publications not imported, missing links and awards. Fresh shared
+  backup/gate/replay before DB writes; DP blocked.
+last_verified_commit: fd0819f5
+test_results:
+  focused: 3
+  ruff: pass
+  snapshot_sha256: addc0f26aea30abc267ab42078375900c6bda81e4c3bd14e34ae67380df9af23
+  report_sha256: 0e8f6d023105160ed16c3d0ccc4099c0f52b93645ceacac8d238a18fd92d5c05
+  document_coverage:
+    schema: sibur_sales_map_document_coverage_v1
+    source_map_sha256: 0e8f6d023105160ed16c3d0ccc4099c0f52b93645ceacac8d238a18fd92d5c05
+    core_records: 6635
+    core_with_linked_documents: 4419
+    core_link_count: 6169
+    core_protocol_outcomes: 0
+    candidate_years:
+      '2024': 3170
+      '2025': 2171
+      '2026': 1294
+  project_channels:
+    focused: 5
+    ruff: pass
+    project-channels-v2_sha256: 1c0db69bed399425e489126979bbb69f3012a922903f7f68b8aa044bd41fb8bd
+    active-document-coverage-v1_sha256: 350fd41110d5bb75b9eac5ec586f8bd6dc44833dec28b26f71ad3406582aaa24
+    active-scope-review-v1_sha256: 7f3c1b4f846f545c0d2480815605fddcd277980dfcec68912fbc61293c5c697c
+    external-role-evidence-v1_sha256: 372552919b766ed861f5a5b569c1204a1f3a897269b30259d8c186b0af8e8241
+    current_registry_receipts_sha256: 5d4c8771320ce4e61b1caa26dfe98016dee73ffad8ff2950d19065562691d2b6
+  sales_action_matrix:
+    focused: 7
+    ruff: pass
+    project_matrix_sha256: 555c62761fd43db3a45461fe3376f0c74ad4c5cdce17b2e0b8b78b308f7c4b37
+    active_expanded_sha256: ddee19a2310dd2f42d20809b43c6d70c9f5b890a197f3060df4b816f367c93ce
+    sales_action_matrix_sha256: fdf5f18dce58251fb35f190a8ba06bbcbd368c33994cfa0d388d0ecba6ea17be
+    current_review_candidates: 29
+    project_mentions: 2852
+    extra_electrical: 54
+    project_package_review: 785
+  package_document_review:
+    code_commit: 5e89b0c48a79013ac25de5139162b4c2116115a9
+    focused: 5
+    ruff: pass
+    cohorts:
+    - records: 523
+      covered: 189
+      originals: 53
+      sha256: ecfcdadfca5fd2e49eaa8f25965a4e98c77a16b6497adc3fa8818cf8250b5a85
+    - records: 316
+      covered: 56
+      originals: 68
+      sha256: b739f31d673a5bcee519783efcceb3c70ca6aa98b95edc671cc061050cd6f92d
+    unique_originals: 115
+    unique_statuses:
+      extracted: 112
+      review: 3
+    exact_role_evidence_sha256: deeaa81e324b649cc3652818786debdaa22381160c87bd4e635c7ae71305e2e4
+    missing_reference_queue_sha256: 7c5a05162fffc09183737b504af356197e5d9ed77dfbc68dc0bbca32b8bcd737
+    missing_unique_urls: 926
+    external_observations: 7
+    coverage_gap_observations: 5
+  commercial_role_and_service_map:
+    sionika-commercial-role-overlay-v1.json_sha256: 719cec7c1ec6147579424502e3063c4296e2793ea22688a347e078404a56a896
+    sfera-stroy-dossier-v1.json_sha256: 7c7f7ecc9eea23d4cd8429b4d80e5196b1b3d1b8e8703e29a4928325772be329
+    service-demand-review-v1.json_sha256: e4eae2a93c177aafc66f356016f269e0e7ddcb764f318b6989c3bc894a332765
+    additional-project-channel-observations-v1.json_sha256: 2976ba35ef5dbcc0d4ca8cc08b7fce6722777497268bd5cbdbfe333e20549d49
+    verification: read-only evidence review, no runtime code changed; prior tests retained
+  contractor_channel_review:
+    artifacts:
+      pondera-industry-dossier-v1.json: 7da9c3bfc7de0584eac8f1ff817f6d71f8e30d9b61be1513aff9d6c742fae7af
+      contractor-procurement-channels-v1.json: d7e09859676db870646d34da6d0a2b7e81520d09eb03dc5611be284ea1f6c1d9
+      project-role-changes-review-v1.json: a03f2497201f5f8761c511bccc9cb6f16696f1d7fba033a9222d620de11739d8
+      package-link-reconciliation-v1.json: 4bfc6fee8f585afd41d1d25412f625593809d6b41654b18c39f1c4d3422c6fb9
+    historical_b2b_ids: 14
+    entities: 4
+    new_exact_bound_originals: 3
+    unresolved_identity_url_pairs: 1212
+    verification: Read-only research and artifact checks passed; no new production code.
+  external_channel_review_20261115:
+    artifacts:
+      contractor-procurement-channels-v2.json: ea333883049bfdca42fbdb1174cfbcb8862420b7ac08517972440dcb5b0edfff
+      isk-favorit-dossier-v1.json: e775467a186c053eb6ba28334bf930a3729f7b76c8e77c814be29515f5738d2e
+      external-channel-coverage-v1.json: a20929c208db9fbd1d2cc6ddd2f119abfc8d411b48eb6667c739757399db447d
+    unique_ids: 23
+    entities: 6
+    new_ids: 9
+    verification: Unique ID and legal entity joins checked; no code change; external pages manually reviewed, original
+      bytes not archived.
+  ups_expansion:
+    artifacts:
+      sales-map-v4.json: 76476a7231ed3947ed0b809e5f1ab60fb813edafae6c80f4145e8398f88140e9
+      ups-demand-review-v1.json: 69169db6663d4579beccf3cda60842ebf14981322e468e859bfaf3527d053fe7
+      contractor-procurement-channels-v3.json: cdff238cbb46f140d7d1dc15e61f4883242227e33d9ea9aa6ef78007acf721af
+    focused_tests: 9
+    ruff: pass
+    core_review_candidates: 6732
+    explicit_ups: 174
+    battery_application_review: 119
+    document_covered: 228
+    originals: 37
+    missing_reference_pairs: 304
+  separate_channels:
+    routing_sha256: cd835c7f2af413bc73e66e226a43ae3784b13833e4d2ae77427fdbc2c62fb65d
+    private_overlay_sha256: 033e02396841e07b9246284bd7a18128946469134a7ac2dc80a644802581da30
+    focused: 7
+    ruff: pass
+  support_services_and_installed_base:
+    support_services_sha256: c4fc07d212a4f8b9418783942c145f3c4347169aa22b4a2a70af56d9a0dd2fc8
+    years:
+      '2022': 7
+      '2023': 23
+      '2024': 16
+      '2025': 7
+      '2026': 6
+    pages: 5
+    new_source_ids: 59
+    in_period_2024_2026: 29
+    db_imported: false
+    technical_report_sha256: a92cd059ac08f8dfb073e1a7561446d7ac0e3b4282d5af81d7f679eab71eae4a
+    technical_originals: 1163
+    technical_extracted: 1158
+    technical_review: 5
+    selected_scope_sha256: 8dfe7b44e62a13e223f676dd643918b769552ecfcabc6e9e460bd880fcd2d2d3
+    selected_scope_count: 9
+    parser_tests: 2
+    ruff: pass
+  installed_base_lifecycle:
+    lifecycle_sha256: a1f2f39e58560d2ba8a4c32a9c24dec8eaaf2ebef6ffac22d84c9c2682980057
+    model_evidence_sha256: 68d3b864ff21f1d17a03a953cabb8add08d83ad076666fd0d90a23feeef6a011
+    technical_report_sha256: 87fa7a451554960c2d685571262ee5f4337a71329db65aaadec65a0fd105a01f
+    candidate_rows: 526
+    industrial: 509
+    ups: 22
+    mixed_overlap: 5
+    selected_ids: 19
+    new_originals: 179
+    total_originals: 1342
+    extracted: 1336
+    review: 6
+    verification: Read-only original report/source reference validation; no code change.
+  switchgear_retrofit:
+    discovery_sha256: 6643cde2e432137aeba8ab7a73183c917ac17e4f10094c5675b037a60d66181c
+    priority_map_sha256: 8ba95da4ea8c9b8bef1cbbb050a719a0f41750ef992ad01a20c07f263624465c
+    candidate_records: 61
+    prefix_groups: 58
+    manual_groups: 18
+    manual_unique_ids: 30
+    focused_tests: 2
+    ruff: pass
+  retrofit_reserve_and_document_refresh:
+    reserve_sha256: b5ae9fa4ad9923093b870e97b21fc06dcec2eb6ce43fae9bdf5db2dab10d0bb5
+    current_receipts_sha256: 77d3055745496b84a5f2e971b5336467e64317f7f152e95fb5838da2329372e5
+    current_pages: 27
+    current_ids: 315
+    current_retrofit_classifier_candidates: 0
+    model_evidence_sha256: b3d6dd9eff3707b7516f95ea5b5b4cf5e76edc974eccc480765a8e6c0b839482
+    technical_report_sha256: 6241788ca7e9d9cad0fa70fbaac1b7eb65f5bf145fd7c544efad4176f50ebb1b
+    originals: 1477
+    extracted: 1471
+    review: 6
+    new_originals: 135
+    selected_cases: 4
+    verification: Read-only page replay and source-bound artifact checks passed; no code changes.
+  crp2_project_chain_and_reconciliation:
+    chain_sha256: b8e0b09c2cfe22b871b21ee3c9493971b3d8a25477830c8f3b46e339041d92a7
+    reconciliation_sha256: 1fb77d73d93791dd4e0797565850e0b0c4252b0685596d80c35e1621442f60c3
+    chain_publications: 9
+    chain_covered_publications: 5
+    chain_missing_urls: 20
+    original_queue_urls: 926
+    unresolved_identity_url_pairs: 1153
+    restored_identity_url_pairs: 59
+    verification: Verified exact source refs and original SHA; read-only; no production code changes.
+  energy_chain_review:
+    sha256: 7a7fe5c0e5c6c9cef9c20df9cd86c7f704adc78d84eb5ca87526305bf16db93e
+    groups: 12
+    unique_publications: 27
+    linked_publications: 14
+    missing_identity_url_pairs: 48
+    external_observations: 3
+    verification: Read-only exact source refs and SHA validation. External public source review. No code or DB changes.
+  tatem_energoprogress_procurement_review:
+    sha256: ae356e06171a2da4c2adcf93124c899b10e25438291ebe636424397576ef9536
+    external_unique_publications: 12
+    tatem_historical: 10
+    energoprogress_other_or_unresolved: 2
+    role_observations: 3
+    pguservice_archive_verified: true
+    pguservice_exact_originals: 0
+    verification: Full catalog rows checked, distinct IDs and archive join validated. No original external procurement
+      bytes or signed awards, no code/DB changes.
+  cryogenmash_cma_asset_review:
+    contractor_review_sha256: 195b6365438d3e63d7923281fd27ad8c6768dfdae039b74f8ce28153cf36e71e
+    model_evidence_sha256: 52563411af3345635810f2592fa0f8ef27b30c2eaea870224eacd24479b24b62
+    technical_report_sha256: c6efd0345fd008ec8d243dc8fb3f0ce7ec50992c4bcbc45ec76a406f3c952037
+    contractor_records: 7
+    new_originals: 150
+    total_originals: 1627
+    extracted: 1620
+    review: 7
+    selected_document_scopes: 5
+    asset_schedule_entries: 109
+    verification: Read-only exact-reference, original SHA and distinct asset IDs checked. No code or DB mutation.
+  cryogenmash_gpb_primary:
+    review_sha256: aa661c8abb6804211d05029e5d032fa414b8401f559f37846f72a7b5ba388533
+    detail_receipts_sha256: bdf8a38586471c83a0ee82562604f353cbf74630961b241e6dacb70392d7c652
+    document_receipts_sha256: e7a904d439f8d5dd6677293e18f71e1e0ea999a6f101dd99ab3fee6886bd12f0
+    tz_sha256: c3b8a70fee3c06f35626ae21b043b1aefe27f3707a6745bc20e21a4f79d15925
+    exact_list_and_detail_pairs: 5
+    active: 1
+    archive: 4
+    selected_document_links: 15
+    captured_originals: 1
+    source_quote_anchors_verified: 10
+    verification: Replayed saved list and detail SHA for all five IDs and original DOCX SHA; 10 exact quote anchors
+      verified. No production code or DB mutation.
+  automation_contractor_roles:
+    artifact_sha256: 70fa9cc41839f2b5112756fd03fd845bd8e61ab46e4be5a3eb5ccc1ad2f4e32c
+    entity_candidates: 9
+    resolved_inns: 6
+    portfolio_observations: 12
+    related_archive_ids: 7
+    retrofit_crosschecks: 5
+    verification: Existing frozen snapshot identity joins and source reference fields checked; company self-reports
+      and archive records kept separate, no primary contract awards. No production code or DB change.
+  contractor_finance_channels:
+    artifact_sha256: 2480d94be8c9de037a0227361ddea20cbbb5145706aa1077acd66e945808e88c
+    financial_profiles: 6
+    identity_observations: 3
+    exact_address_registry_matches: 1
+    probable_identity_matches: 2
+    independent_procurement_observations: 5
+    in_period_observations: 1
+    archive_linked_originals_observed: 1851
+    verification: Read back artifact, validated prior SHA and unique platform IDs. Secondary indexed records and
+      company self-report only, no primary award, no DB mutation.
+  combined_industrial_research:
+    original_documents: 1895
+    extracted: 1888
+    review: 7
+    industrial_publications: 6477
+    service_publications: 482
+    schedule_rows: 772
+    verification: Existing extractor finished; five private artifact hashes verified; exact source references retained;
+      no new awards or prices, no DB mutation by research.
+    artifacts:
+      installed-base-model-evidence-v5.json: 46df5baf21c00105f7cd780ec155b1a99abde8fab67f060b514a93f5746e47ea
+      aghk-electrical-schedule-full-v1.json: 8aafa642eb5601f8c486e78e3b7e1edd1c7ad6e72ad1d8e76be4fb8ff0b760c8
+      industrial-demand-matrix-v1.json: 24b71b63327e25e79e7eeafd3b5ea920ee1a89740f6dc9b510dc7ffa3f07917a
+      industrial-service-site-matrix-v1.json: f89486fb85c9ea981c862f5e36a61e7ba50810f4f2b358bf760edd3d870f7cb1
+      project-stage-supplier-crosscheck-v1.json: e75d1f05be55beb3d0c826d45a3634a45a4f2527270c09999c87981fb89e80fc
+  judicial_contract_chain:
+    artifact_sha256: 15e07f44f7bd17440fc9b454a978384ce2b535faba14cacc085d86b939edc6f7
+    report_sha256: 59f76b725a2ac417d4495f1add5a7bf4414d938aba6c2aed395db1dbf8372538
+    court_records: 3
+    in_period_subcontract_specs: 2
+    exact_project_scope_match: 1
+    historical_chain_records: 1
+    technical_originals: 1910
+    extracted: 1903
+    review: 7
+    verification: Exact frozen archive identifiers, two court case excerpts and separate contract values, source-hash
+      checked. Public award protocols and full court copies not yet obtained. Private owner context kept separate.
+      No production DB modification.
+  consolidated_project_deadline:
+    deadline: 2026-11-17
+    watchdog: updated_existing_hourly_task
+    original_workbooks_verified: 2
+    plan_rows: 1005
+    direct_category_rows: 177
+    priority_rows: 37
+    qualification_rows: 177
+    qualification_candidates: 22
+    project_cards: 17
+    coverage_labels: 30
+    reviewed_scope_groups: 30
+    distinct_scope_publications: 51
+    validation: source SHA, artifact SHA, JSON readback and row counts passed
+    artifacts:
+      owner-plan-qualification-matrix-v1.json: f54e4f6c58da6798ca44000aa4a9fe1c74f50740c198ae45ee29a1d8bae6ded2
+      consolidated-project-stage-v1.json: caac3e9dce7175bee8edb1a31cdcc7160412a6746bbebd2dcfae8b69aac32a5f
+      consolidated-project-map-v1.json: 857fad5886dc6f44833fc0bb4c6e9686ca3b641cec4a648e362412903b2089b5
+      consolidated-project-report-v1.md: 8959aaaa4e01fe188ddd3057183bb0b2c7588e21570a5382638ee52fa90f1922
+  actionable_project_map_v3:
+    project_cards: 21
+    priority_plan_rows: 37
+    candidate_rows: 29
+    distinct_candidate_publications: 155
+    current_snapshot_publications: 6
+    manual_scope_assessments: 25
+    original_documents: 2072
+    extracted: 2063
+    partial_review: 2
+    review: 7
+    npg_archive_candidates: 41
+    npg_external_secondary_observations: 6
+    artifacts:
+      plan-priority-reconciliation-v2.json: f3344d3684ecc9840024f0ac2a7770b11626531611f1aa5b6ecc1b2e0f62a762
+      installed-base-model-evidence-v6.json: 8a5048336d73f059eefc37a0386fd6f1f98eb043a159f749de70aced66838feb
+      npg-spr-project-resolution-v1.json: 0dadb77adc36e22f4ec539ce8a2b2920f2cb8e844de8afb4fbc6e57e2e35519a
+      additional-site-projects-review-v1.json: 3255ffa0706853c7f704b67043f024efe6c397fe0a7b71f0e0a48f7a9b2f5ec4
+      consolidated-project-map-v3.json: ab659b91cc98281e108ecc2502c15045a22c65e7d1d46cc22811c12d4e533960
+      consolidated-project-report-v3.md: cfd79a917a68aa4d04e2723dd34055ace8d6ba729852927042283223674e2013
+    verification: All map source artifact hashes replayed, exact technical original and text SHA linked, public
+      indexed PDF text used with screenshot cache miss; no new verified contract or DB writes.
+  perm_package_review:
+    original_documents: 2087
+    extracted: 2075
+    partial_review: 5
+    review: 7
+    primary_package_documents: 4
+    heat_trace_rows: 123
+    contractor_role_records: 5
+    new_external_npg_observations: 2
+    unmatched_plan_rechecked: 8
+    verification: map sources SHA replayed, original spreadsheet rows validated; public plan PDF screenshot cache
+      miss, indexed text used; no verified award.
+    artifacts:
+      npg-spr-package-evidence-v2.json: a104d89ba6d5cabf3c498cd9d27ab76f9cca776f5952ef989c985620ceeb1114
+      perm-contractor-and-external-package-review-v1.json: 242d246bd465699950963b8893b942b347c013f195e3914ccac359210eb23404
+      consolidated-project-map-v4.json: 4ba83f85355b85191ea3f217f6530baaaef6ec2d2579e1406feb4e98edef29a7
+      consolidated-project-report-v4.md: da4051b8d7e9dac389743fa7ebda582e05e431b73965b1ed7fd89c4186c4cabf
+  multi_site_review_v5:
+    program_cards: 27
+    site_reviews: 7
+    selected_archive_records: 45
+    primary_active_originals: 4
+    primary_gpb_details: 3
+    verified_failed_no_bids_protocols: 1
+    unresolved_gpb_details: 2
+    artifacts:
+      undercovered-sites-project-review-v1.json: 71ccc14f68443a63281ae6a959c04750cc4e78c88346c8e87824e6855ac3a8f2
+      poliom-gpb-protocol-review-v1.json: c4a196da2b1a082dc50195f4c169e31e70f1061ffaa63d0f9579fd874cbb2c65
+      undercovered-active-technical-evidence-v1.json: 23d210ef49207bec01d14ba64c448d3987b434f32b99a84065eec4e8bcb6bfa0
+      consolidated-project-map-v5.json: 3b92fb24b72ed0295b9d32d4e22c783c771209e875fec2754da89c6c8e58154a
+      consolidated-project-report-v5.md: 6699f7ecd7afb846275e1febfa2d00dd1d536791b0daf176e5c854a975d7d039
+  continuous_local_processing_v6:
+    program_cards: 27
+    stg_scope_groups: 7
+    stg_archive_ids: 14
+    local_technical_interval_seconds: 120
+    technical_originals_latest: 2177
+    dp_reconciled_documents: 313
+    dp_reconciled_chunks_embeddings: 5073
+    dp_fresh_evidence_sha256: 83dac93e3a6cd2668625161c6905d3531a94d94329d5b362a35edef6d2b06876
+    dp_preserved_proof_manifest_sha256: 60c30a2f298b3e8ed6033b807d651bc95f9b0fc217ddaeb733222bc38e4a88db
+    dp_last_observed_status: running
+    dp_last_observed_step: process_sibur_document_batch
+    focused_tests: 4_passed
+    artifacts:
+      stg-site-programs-review-v1.json: dfdcfa0e15a0a8738cc0769b6ed7e37e791dcaa96cc9a074bfcea9d36cef70a7
+      consolidated-project-map-v6.json: 825bff8b97ee0151119cdef357ea678c61d3cfb5e627ac21e230c788ca14e527
+      consolidated-project-report-v6.md: 8f3d526fc06ab3f1315ca004a6aebf1e5cb318fb854747fc2455c0db20616868
+  expanded_site_commercial_v7:
+    project_cards: 33
+    p0: 12
+    p1: 20
+    p2: 1
+    selected_archive_ids: 26
+    external_observations: 2
+    technical_originals_latest: 2221
+    dp_reconciled_documents: 315
+    dp_reconciled_chunks: 5283
+    dp_reconciliation_sha256: fa3ee75793697241c14cd6c0afb8822f16b5d77381f61ab809edde6dbb8366d0
+    dp_manifest_sha256: fd9ca67231f8eea38b5a3319c58a0f6b00760dd1828e790536fa86dd82f6f261
+    dp_runner_commit: cd52f39b
+    dp_last_status: running
+    dp_last_step: MI backup
+    artifacts:
+      small-site-programs-review-v1.json: ab975a6d04cd010dd402b23feec8f217b2c2eda1be16faedca76e2305cc497cf
+      consolidated-project-map-v7.json: 4c21735fe6046b78339b9daa444847fe075760ce765a106631dfae7209127905
+      commercial-action-register-v1.json: f6c08dcd54d7433083f428319b6169c8201304ad0ffbf955365027ed899249ed
+      consolidated-project-report-v7.md: 8f05e6e86442c7bec5a009dc55946ea04f3d0b9e91f40f2acc0e01c0087130a0
+  contract_and_index_readiness_v8:
+    project_cards: 34
+    p0: 13
+    p1: 20
+    p2: 1
+    judicial_records: 4
+    manufacturer_references: 2
+    technical_originals_latest: 2266
+    dp_legacy_documents: 315
+    dp_legacy_chunks: 5283
+    dp_status: exhausted
+    archive_index_candidates: 639
+    archive_index_p0: 97
+    artifacts:
+      court-and-supplier-evidence-v2.json: 8df00b1718f1b1dab649d33dda3231dd7f427d33c9fefc6f281a3a321ecd4c47
+      archive-index-readiness-v1.json: 4fe989d2bc37d17b9a3e9dbfc09fce9edbb908f19ab98a912f662817596bceea
+      consolidated-project-map-v8.json: 1a928bf1a0a2adc32dd4cd71a0f088275d487c397a32f020377d6d9f5559403a
+      commercial-action-register-v2.json: 771d31c11619fcce47c56cb480aff85b8c680b1b9396abb9c20df0a4b33add01
+      consolidated-project-report-v8.md: eac144d0d21865a16a3f54ca51a9738f13f68797061def9b6c6de3a1bf4f34d1
+  archive_bridge_and_p0_qualification_v9:
+    project_cards: 34
+    p0_qualification_routes: 13
+    archive_bridge_ready: 587
+    archive_bridge_committed_links: 932
+    archive_bridge_p0: 92
+    pdf_review: 52
+    technical_originals_latest: 2296
+    tests: 17_passed
+    activation: pending_coordinated_safe_reload_and_gated_executor_integration
+    artifacts:
+      archive-index-bridge-v1.json: 13899bfe8ade859ff3106ed6527b469ca9d0c58f2b9072b7fc8d0a98732c69f4
+      styrene-dgp2-channel-and-qualification-v1.json: 18051aa5c70b427ba5e812f64db02aef08175e1d8d3adcef6715a55f398fcd11
+      p0-qualification-routing-v1.json: b8e92aabb020173480c9ef51a044055d9b411c2ac03c3ef61a5ffa0a010e5e84
+      consolidated-project-map-v9.json: 7ee3687cc8f6573c2c0ace1f63199431e12fba6cb08c657c789d1ce5312d7bb4
+      commercial-action-register-v3.json: 86c7e00c9c7f8a1834b1e622fecb800ade61b8d296016b986a3eac438627c07e
+      consolidated-project-report-v9.md: 618db3e3d9b32b5755baa7ccfacb32f11f2db5d061347c4120ad9d2e11f85b1f
+  archive_activation_and_dgp2_v10:
+    project_cards: 34
+    new_contract_records: 8
+    archive_bridge_ready: 587
+    archive_worker_pid: 30277
+    executor_status: running
+    executor_step: MI backup
+    archive_indexed_last_verified: 0
+    server_last_verified:
+      documents: 318
+      chunks: 5303
+      embeddings: 5303
+    first_extraction_documents: 3
+    targeted_tests: 16_passed
+    gpb_executor_commit: a3b3473e
+    technical_originals: 2311
+    artifacts:
+      dgp2-contract-chains-v1.json: 60c89491c166d9b5d0c07bc6ed4716a1c9f9e6603e8cea5c041d6ad9abbc4751
+      consolidated-project-map-v10.json: cc0d94d90c566fec332269550d2f3903b611a14578334816dac7473c51fb011e
+      commercial-action-register-v4.json: 65d9db758db0494ce7bee1d6ca7246e316de2372c1054bd25218d04eb708a99c
+      consolidated-project-report-v10.md: 03a54904e1d4e21812fff9c2d426d5552b085fab5aec19577f623084315437eb
+  cross_project_channels_v11:
+    project_cards: 34
+    tailored_p1_p2_actions: 21
+    contractor_sites_snema: 8
+    external_purchase_observations: 5
+    archive_scope_records: 10
+    archive_index_cycles: 3
+    archive_indexed: 9
+    server:
+      documents: 324
+      chunks: 5352
+      embeddings: 5352
+    executor_status: running
+    archive_status: running
+    technical_originals: 2311
+    artifacts:
+      cross-project-contractor-channels-v1.json: 117ed3136d4b74e569e3ca0c4b17407ca81c50e39e94bdf2f6bbe359b1b441d8
+      consolidated-project-map-v11.json: 69e57a82bf980a5ca04ae295f2ef68ce5869aa6d4973ea0cae603c7601542410
+      commercial-action-register-v5.json: e7a45f0c1d9817ff80cb22d01d4a5f9eac9d2633f8c3e5956e663ad66074a226
+      consolidated-project-report-v11.md: 4c83b18db1b323879f320f99bf6d2f0f095db361c733212cfcea48001f88617b
+  executive_report_v12:
+    project_cards: 34
+    project_unique_archive_refs: 2597
+    source_artifacts: 37
+    priced_specifications_rub: 20077047.23
+    archive_indexed: 29
+    server:
+      documents: 344
+      chunks: 5614
+      embeddings: 5614
+    executor_status: running
+    archive_status: running
+    technical_originals: 2356
+    artifacts:
+      market-value-boundary-v1.json: b716035395a5d475a83c6588df09beae5e07a376446ae4f61a6d42c8eb44cdd0
+      consolidated-project-map-v12.json: 37e137b59c88beb3331a66bae21386bbf3801f4a073248ab58c81e37fca1bceb
+      commercial-action-register-v6.json: 9963cc398e00c5357a65e3f9921d475838ca879fad6a9592ef5e3aaece997124
+      consolidated-project-report-v12.md: 1ea2e9fe488ac73216f49cff9add9c5729284dc463ba7dcc58211ea50146a1f1
+  current_procurement_v13:
+    project_cards: 36
+    p0: 15
+    p1: 20
+    p2: 1
+    current_publications: 315
+    selected_current: 20
+    primary_worksheets: 7
+    project_unique_archive_refs: 2599
+    source_artifacts: 38
+    unmatched_plan_rows: 8
+    archive_indexed: 38
+    server:
+      documents: 353
+      chunks: 5859
+      embeddings: 5859
+    executor_status: running
+    archive_status: running
+    technical_originals: 2371
+    artifacts:
+      active-refresh-and-qualification-v2.json: c68677e02e1115d5c7b2a82383abd24e2e95fbc0e31aa8412d9fbc3bc8637e45
+      consolidated-project-map-v13.json: f058b90252ea7e79e20232e13251c9a4450791c80c25b526aecfe0c74c36c774
+      commercial-action-register-v7.json: 9134df2c1570926771cb127fef4ac2e9258a3597eb516a50c28ef493f024932a
+      consolidated-project-report-v13.md: 6826f3b80564dcbc5f87e0b449d894c8412488766a85c98255cc3b1a3d37059e
+  nknh_channels_v14:
+    project_cards: 36
+    p0: 15
+    source_artifacts: 39
+    external_progas_notices: 6
+    telegram_archive_crosschecks: 8
+    p0_actions_refined: 4
+    general_scope_specification_rub: 107586664.0
+    electrical_scope_verified: false
+    archive_indexed: 50
+    server:
+      documents: 365
+      chunks: 6166
+      embeddings: 6166
+    executor_status: running
+    archive_status: running
+    technical_originals: 2401
+    artifacts:
+      nknh-contractor-and-supply-evidence-v1.json: 9b0f21ad2b57b321c770b0b22eabf72bf6ce9c088807c5b2a9cd6672f3e90bd2
+      consolidated-project-map-v14.json: 33900d3ced909f3a5389261eb4bda022d56092585eb8a67ac8244d988f4d0056
+      commercial-action-register-v8.json: 2a4a2f50393a15d24ef02887501f396fd6a76d1df258d4954a2454a27479133e
+      consolidated-project-report-v14.md: 3ad06d30d6771fd1da54386d8d7d911594968c2abddde168f3501d94436a27cd
+  npg_tess_v15:
+    project_cards: 36
+    source_artifacts: 40
+    external_npg_observations_reviewed: 9
+    npg_scope_families: 6
+    new_external_npg_ids: 3
+    tess_portfolio_roles: 6
+    actions_refined: 6
+    archive_indexed: 54
+    server:
+      documents: 369
+      chunks: 6376
+      embeddings: 6376
+    executor_status: running
+    archive_status: running
+    technical_originals: 2416
+    artifacts:
+      npg-measurement-and-tess-channels-v1.json: 100b33d07e72f881e062b57384d0640436e9ecd1b5806d05c9cd53c541c67bf9
+      consolidated-project-map-v15.json: 7a45e1affea11b98216323b1f90a586bd129598950552678395f82aad8888d61
+      commercial-action-register-v9.json: 8d172e9b0a359ec2fe93d1f5f311280f865d92231370d96928d5091125d1ba48
+      consolidated-project-report-v15.md: 2e5da9e500493bae77e1531b5f5ea62a283a8082e256c8e158fd0260f1af1a40
+  coverage_dashboard_v2:
+    total_sibur: 30394
+    industrial: 6477
+    projects: 36
+    project_publications: 2599
+    priority_union: 8223
+    priority_supported_urls_total: 2299
+    priority_supported_urls_extracted: 1100
+    priority_all_known_packages: 1580
+    archive_attempted: 2475
+    archive_target: 10188
+    bridge_indexed_linked: 57
+    bridge_targets: 587
+    tests: 1_passed
+    artifacts:
+      project-coverage-dashboard-v2.json: 4eca051fd220b39db2aafb88f4aa8b054430efba6084626d13191a4c3ce07e07
+      project-coverage-dashboard-v2.md: a2729bf00c757c9e1efce9ccac0f168da0a1ebb6b6cb4601bd1de8d34f4c5fe1
+  remaining_work_v16:
+    source_artifacts: 43
+    project_cards: 36
+    priority_supported_urls_extracted: 1110
+    priority_supported_urls_total: 2299
+    remaining_urls: 1189
+    p0_remaining_urls: 663
+    p0_unattempted_urls: 611
+    queue_entries: 1059
+    queue_sha256: b12793c3faad1fa55db1b1139b27b91dda68be58639298079b76ad60fcde15ef
+    activation_pid: 54718
+    activation_stage: awaiting_existing_worker_safe_stop
+    site_explicit: 2169
+    organizer_affiliation: 544
+    site_unresolved_or_conflict: 2808
+    multi_site: 103
+    tests: 6_passed
+    server:
+      documents: 388
+      chunks: 7275
+      embeddings: 7275
+    archive_step: wait shared mutation lock
+    artifacts:
+      project-coverage-dashboard-v3.json: 959c26a5c74295773804e5d4c906bc6ca1997e61b76138eff0df2cc8a6378816
+      remaining-priority-work-v1.json: fb948fd592cbf8cc65b3d8a27d9f5ce579a55eb81af2e872d545d26034a19a86
+      styrene-commissioning-commercial-terms-v1.json: 77608ed34669ce8ddebd31c3155a90bc5cf73e20279cf4db7c7b76ce87594e90
+      consolidated-project-map-v16.json: f76b6756d7600735c2bb1e39f01c54b4372cdc8e0b023bf11473c4a0bdcc6a1c
+      commercial-action-register-v10.json: 0038815ad39ca3c250d3e90e1f1890c4b1838bd4ebb1ff051bd8648cc760cf5e
+      consolidated-project-report-v16.md: 82dcb2d11f8a43e936e11ea56237e3723d036b67199a3d59eac4951c27281bee
+  verified_priority_v17:
+    p0_captured_after_activation: 15
+    gpb_code_commit: c0028180
+    gpb_previous_exact_receipts: 1375
+    gpb_pending_originals: 13
+    gpb_status: running
+    gpb_step: capture archive detail batch
+    priority_supported_urls_extracted: 1119
+    priority_supported_urls_total: 2299
+    priority_all_known_packages: 1585
+    archive_indexed: 79
+    index_server:
+      documents: 397
+      chunks: 7287
+      embeddings: 7287
+    source_artifacts: 45
+    tests: 6_passed
+    artifacts:
+      project-coverage-dashboard-v4.json: 0abcc3afba5f1a3dfa329127f2a9cecd9a92297d1bc92313bdb050dd30afdf3b
+      qualification-comparison-v1.json: 8cc358826b28e826d775473c57bd8c8791645a5181fa9a57bbe30420178a2353
+      consolidated-project-map-v17.json: 60d30591671089521dd9b7fc30abc9a952a0bfb3c2318d63f51627ab9d8c57b8
+      commercial-action-register-v11.json: d5e444a997f651347a48cadfdd06f241d6c35f2d6ebf85487ea5d9fa6e9b5707
+      consolidated-project-report-v17.md: 9d139e90e99261d3029a1d6c0682f9796a7a92b52580bfe65b31513ea8bab242
+      priority-activation-proof-v1.json: 5a9adda245bc0a4d133a9c21de29421fbe33072fcef7734babd327d02a587647
+  priority_scope_v18:
+    first_batch_originals: 15
+    exact_document_procedure_pairs: 251
+    p0_captured: 30
+    gpb_status: running
+    gpb_step: capture archive detail batch
+    gpb_cycles: 134
+    project_publications: 2598
+    priority_union: 8223
+    priority_supported_urls_extracted: 1134
+    priority_supported_urls_total: 2299
+    priority_all_known_packages: 1589
+    source_artifacts: 46
+    index_server:
+      documents: 412
+      chunks: 7338
+      embeddings: 7338
+    archive_indexed: 97
+    artifacts:
+      priority-original-scope-review-v1.json: 7167859f76f971365e82b4f6dd6d983f365f04fe2ee6a44a2f4fe6b1927bc461
+      priority-linkage-proof-v1.json: db2a4686b05b1882cc75597533cc9319e3abb44cffdce80d945390b2465882d7
+      consolidated-project-map-v18.json: c64128780cbd3a33896c7896b0fccdbc1acc0ddb2c029635cce2d8229b87df22
+      commercial-action-register-v12.json: bd5264c57f1c50d35ae2ee8157191a004c1c0ab167878a8b435db048b9b81a72
+      consolidated-project-report-v18.md: bb2b448a7f2d2154a2e70885e24d344cdc2b911ab6bc08932cb4e39712561385
+      project-coverage-dashboard-v5.json: 03d0d2fab9f51a22dec8b76700e6c730e0af94f1c8cb7b658a23d4cde5c98c39
+  priority_equipment_v19:
+    priority_union: 8223
+    priority_supported_urls_extracted: 1179
+    priority_supported_urls_total: 2299
+    priority_all_known_packages: 1617
+    project_publications: 2598
+    source_artifacts: 49
+    gpb_status: running
+    gpb_cycles: 135
+    gpb_verified_outcomes: 732
+    archive_indexed: 130
+    index_server:
+      documents: 445
+      chunks: 7495
+      embeddings: 7495
+    original_files_processed: 2550
+    artifacts:
+      priority-equipment-and-service-review-v2.json: e72e0903e5588b2e079739d554ab2f26e90afae83e06639f585c6311948df4d7
+      kos-pgu-identity-service-v1.json: be8acc2eba2368b714d68ce19b0afd536834f28128435b5aba16375943b2f0dd
+      consolidated-project-map-v19.json: e400afbac2b0929d9a366a7daccc766aecb4a6150974b039263079f62469a18d
+      commercial-action-register-v13.json: ae58d1d3f83094e91d5c0ccb0384f0d2c4d75a831ded47b9df39ef980a77e14d
+      consolidated-project-report-v19.md: db1c14f8c96f030d8ba83904f610b54294b9cc4fd1544c7633babbd1119b4f69
+      project-coverage-dashboard-v6.json: 923fa35b0132f25728d7de87e842595b0313b589923a941c2f7aad79e874416b
+  commercial_outcome_v20:
+    priority_union: 8223
+    priority_supported_urls_extracted: 1314
+    priority_supported_urls_total: 2299
+    priority_remaining_urls: 985
+    p0_remaining_urls: 468
+    priority_all_known_packages: 1687
+    closed_outcome_candidates: 6856
+    closed_p0_candidates: 2151
+    source_artifacts: 53
+    gpb_screened_protocols: 1481
+    gpb_sibur_literal_matches: 0
+    gpb_status: running
+    gpb_cycles: 141
+    archive_indexed: 202
+    index_server:
+      documents: 517
+      chunks: 8155
+      embeddings: 8155
+    original_files_processed: 2685
+    artifacts:
+      priority-package-and-outcome-review-v1.json: 0b31b3f842c7e1879cc7423a51095f6540790723335448cc993f39f7105e5c78
+      commercial-outcome-queue-v1.json: b2c6c01a3ea6c7a9cb285a04314fa92afc5024b6240f8c5fbf131bbecda0d855
+      project-coverage-dashboard-v7.json: 521b87088100265487fde302347ce4908b4713c76a933523c666ca3a5b2f7959
+      remaining-priority-work-v2.json: 34e31f431bda1110b587b120b69ceb02c6934bb98755d2625179c1f8c3f9874c
+      consolidated-project-map-v20.json: 52d7194832d847e15d06eb0ae1c9391448f76c1ca090fea8f9481e50c0f14d62
+      commercial-action-register-v14.json: ec6b30197d4db9ec73b280c939a9fa7aaa2a9df697bc8007c75f5f4549ecf4da
+      consolidated-project-report-v20.md: f02f0579a18a229e7518e679b8b432ee7e76681e7ba09bca5ada3a0a7e42067d
+  parallel_market_v21:
+    project_cards: 37
+    project_publications: 2606
+    priority_union: 8227
+    priority_supported_urls_extracted: 1329
+    priority_supported_urls_total: 2299
+    priority_all_known_packages: 1691
+    closed_outcome_candidates: 6860
+    closed_p0_candidates: 2159
+    exact_outcome_reviews_without_verification: 4
+    artifacts:
+      parallel-market-review-v1.json: 093c1d1b0c48ed81773a4bc87ab40fadcc419080140e85c5815c2b8e039427c1
+      consolidated-project-map-v21.json: 638e65e0bdb2fdf06416e55c9383d41fe0cf4df94dacc6490e754951a4dcf71c
+      commercial-action-register-v15.json: c1b59b1700d9b98573e8b5a8fece8dc1b1d0c9d1572f3b5dd500512aa382d1d5
+      consolidated-project-report-v21.md: 9b9313aca9dfc94c159da6f40e5863c129b1d867aed1b6209b14bf712ff5112a
+      project-coverage-dashboard-v8.json: 17b14363bb95d4d2a3cea14c7987b4b3fb43343f5b8e1c7734f6d14ed761a6b2
+      commercial-outcome-queue-v2.json: fbbb249e1a101345779e5ca1edf7f48559ae4d9f3fe81f4b008fbc877abce910
+  operator_automation_v22:
+    project_cards: 37
+    priority_union: 8227
+    priority_supported_urls_extracted: 1388
+    priority_supported_urls_total: 2299
+    priority_all_known_packages: 1701
+    closed_outcome_candidates: 6860
+    cumulative_exact_outcome_reviews_without_verification: 7
+    source_artifacts: 55
+    artifacts:
+      operator-automation-channels-v1.json: 27dca96783695e619c371dd803b0352eb4481065522cc78944cc2224ec3f267f
+      consolidated-project-map-v22.json: fe1b5f847a4474b41fb3a51f8ffafd0c42f72fe1b48ead88f1fca8ed9c4e8e3e
+      commercial-action-register-v16.json: 0a0e3c77a184738b6f7de9490097e24afea616df10dc6bae30d7d5e9cd96965e
+      consolidated-project-report-v22.md: 8f7821651d3d0bf9d452869d572dd031f914ccdd4f5d7056a5af61fc97a2bd49
+      project-coverage-dashboard-v9.json: 77abd2d51f7e814d5dc26311c4a9a971f193ae77873b9acc1a505478634c162c
+      commercial-outcome-queue-v3.json: f528bbc6fb30851b15e7e9e3e1e61707d66100ebf5d599639e09a5f62533ec2a
+  operator_archive_v23:
+    project_cards: 37
+    priority_union: 8227
+    priority_supported_urls_extracted: 1432
+    priority_supported_urls_total: 2299
+    priority_all_known_packages: 1707
+    operator_archive_capture: 11
+    selected_archive_members_reviewed: 3
+    source_artifacts: 58
+    artifacts:
+      operator-archives-subcontract-review-v1.json: 5706de3e600bb18e283ff44a351fafad34229c1a4e32694edc303d9a2bc6605f
+      operator-7z-pilot-v1/selected-members-v1.json: 13f96e4755a5aebc05edc3676d32331bf2d1243f9429646e5bada218de23c70f
+      consolidated-project-map-v23.json: 4084b396b1c4e72ef2484ff711cfd2d90ac551ab108268ccf470f3e7cd197778
+      commercial-action-register-v17.json: ab0f682973e11097098359678121ea8b94b5c1aee8920632a24b6d7687592a95
+      consolidated-project-report-v23.md: 5348dad696af8243f04e696fd15cdbeb850b5e9afc15a921151e724aa9c9ef8f
+      project-coverage-dashboard-v10.json: c884bb2a7d1f2d1eca435bc7e09a2d22d54daf642b07fee654f8202ddad3ebf5
+  catalyst_v24:
+    priority_union: 8227
+    priority_supported_urls_extracted: 1447
+    priority_supported_urls_total: 2299
+    priority_all_known_packages: 1710
+    external_exact_self_reported_awards: 2
+    pilot_direct_files: 7
+    source_artifacts: 61
+    artifacts:
+      catalyst-scope-outcomes-v1.json: 1c8455831c709f179f47f73e00410b3bb4ab8f7602e3597320637e34c9729035
+      catalyst-pilot-v1/technical-text-v1.json: a9f48e1fca70c3e420a7fb0075cc06a237a4aef605de76e6c442e3d249fb9074
+      consolidated-project-map-v24.json: f5a3b9f4a7b9b790bdeed9e1992e8a278637ecb4dd8d12e4d7725cc56b557701
+      commercial-action-register-v18.json: e10954fe835f30217ae12ddf69774dd9cfba1efa0dbfbea769151bc43f7d65e0
+      consolidated-project-report-v24.md: ad121bcf30f75b6884b8de398b0a2b9e35a2fc1d55075e71a93eba47a1282458
+      project-coverage-dashboard-v11.json: c3f9d26c3fe9248b8aa25c0be1f2ba99e7c92e28f056c869f4d1385b0e31d066
+  court_scope_v25:
+    priority_union: 8227
+    priority_supported_urls_extracted: 1462
+    priority_supported_urls_total: 2299
+    priority_all_known_packages: 1713
+    new_court_contract_chains: 2
+    in_period_related_service_accepted_rub: 5999100
+    source_artifacts: 64
+    artifacts:
+      court-contract-scope-v1.json: 570e2f4e6f6aba8ad445bf9d5a54002213f057c71145d9b56af73c0c53f1fa01
+      catalyst-boq-reconciliation-v1.json: 6ba138cba57d6efe9f3bf8c7f352a0522319ed85bce5f9d9671ec19fac2fb066
+      consolidated-project-map-v25.json: 4127f2c4072b99e43c720f04f579ecb441d915eabc3b7e4f8b3f1776ac8fd45a
+      commercial-action-register-v19.json: 768a80552b8f0fe2a186806d305f75f03ebd0fd34388314cfa73cf407e252837
+      consolidated-project-report-v25.md: 2d89961998579d6279e4ec77c20ce25a2d2dd03a7b6671c85caada9029e9c3e6
+      project-coverage-dashboard-v12.json: 5e202695ff7a3fea4bcb32ea700b1123d4f8f114c2b2d87920cfa2bfb1aa331c
+  plan_gap_v26:
+    project_cards: 40
+    project_publications: 2614
+    priority_union: 8231
+    priority_supported_urls_extracted: 1488
+    priority_supported_urls_total: 2312
+    priority_all_known_packages: 1717
+    exact_plan_gaps: 8
+    plan_gaps_with_related_program_evidence: 2
+    closed_outcome_candidates: 6864
+    cumulative_reviewed_no_verified_outcome: 10
+    source_artifacts: 65
+    artifacts:
+      plan-gap-programs-v1.json: a3991ab6e6bbf166c65afbee36b78267d1ea32354838259a50616845cd7f01f8
+      consolidated-project-map-v26.json: 0d2be76d0a414d9c9e69adcdede142430e7f76c2a4bbdd8bd27c1fe4610074e0
+      commercial-action-register-v20.json: 96d41130ed9d96f0bd906de3db8e8ac211b0ca1c52996899bb5f06e47dbe2091
+      consolidated-project-report-v26.md: ffe5ba67dbf0ec4620af3e41fc6e68cf9bb1a1269b408b933bb9456b84fc0916
+      project-coverage-dashboard-v13.json: affbf25633a5983b2e1402c4a4fe3908beaf5567b5ec98b11636aa3d5fe2aeea
+      commercial-outcome-queue-v4.json: 34b5a8de7e4de6d37fafe9b5570ca9ba7a9edf9b142e517fd32566295183dd64
+  compressor_operator_v27:
+    project_cards: 40
+    priority_union: 8231
+    priority_supported_urls_extracted: 1593
+    priority_supported_urls_total: 2312
+    priority_all_known_packages: 1811
+    pilot_originals: 5
+    source_artifacts: 67
+    artifacts:
+      compressor-operator-scope-v1.json: 1d6ded061cf989ed66f2e0c086a9505f6bf001240814f9dfb82cdb639691c9db
+      compressor-operator-pilot-v1/technical-text-v1.json: 141eab6756251ab6c7753a72ddb2368c9ed09f53319616360dbace4a2b1f115d
+      consolidated-project-map-v27.json: 1cbee027591d6f98cc08cced74ec0279b1b5d7e6b30999d5fae4fc3afe94b070
+      commercial-action-register-v21.json: c98a02a9e834642d0af9fb764c39956cc316807d8fa7cf0ed0f08e90146fa5a7
+      consolidated-project-report-v27.md: c8207d36fed79c0e77af5be6d4212e84159c86f1568803b20dd6efdfa59aef18
+      project-coverage-dashboard-v14.json: f021a32daa29a48a977868b9b737e31ff1f91ac8cdf28c85ee05b4a34a879a1e
+  pipeline_v28:
+    project_cards: 40
+    project_publications: 2617
+    priority_union: 8231
+    priority_supported_urls_extracted: 1650
+    priority_supported_urls_total: 2312
+    priority_all_known_packages: 1826
+    compressor_supported_urls: 18
+    compressor_extracted_supported_urls: 18
+    closed_p0_candidates: 2167
+    source_artifacts: 68
+    artifacts:
+      pipeline-roles-compressor-history-v1.json: 482d17c95daa12a5740c2fa6808c4ecb8853cbd4cd2d7339d469181dfc8a8962
+      consolidated-project-map-v28.json: 127c5cfc9f6b75deea5e106f8ff8b26f291bd090bcba6b714dae8a7567441e8b
+      commercial-action-register-v22.json: ac43862c4406d98b567ed761de208546bee83cc26f259c8938a9a8d84d1c7d66
+      consolidated-project-report-v28.md: 5f891433110bdb6335e89332522cb2d255842ece9ebf76e48b05598c2d59a617
+      project-coverage-dashboard-v15.json: 9b1976ef34ee42a41a7c27dacecc129cf2e283e81242da88e3f8534d8f6a631e
+      commercial-outcome-queue-v5.json: f14f9d7814d4c7aa0c07c41706c8e51b1fb21abd0ecf22fd8b3311ead7b2c077
+  styrene_v29:
+    project_cards: 40
+    priority_union: 8231
+    priority_supported_urls_extracted: 1650
+    priority_supported_urls_total: 2312
+    priority_all_known_packages: 1826
+    secondary_related_contract_price_rub: 2287827.11
+    source_artifacts: 69
+    artifacts:
+      styrene-channel-risk-v1.json: 688c48fa9ad20e5cb8b4c41e6414709b86c42648bb04b5b082e9ce0b994b77bb
+      consolidated-project-map-v29.json: dc91c44c6e2e2d014aa0fa8e7e0bf7e2293b99686622a5aef26444176a19dab7
+      commercial-action-register-v23.json: efc62acf196ecaa212fc58c2323b7b789957ca3472f8aedde5409b2e23129aac
+      consolidated-project-report-v29.md: fcc5cbda1a50da9a776e95173aceb27fbf669d33a77cca9c8655c82708cd9d54
+      project-coverage-dashboard-v16.json: 2d0c1c4ca4a92cd85730059f5c4f14f660ee545b868ceb893e745efd4c168546
+  styrene_xlsb_v30:
+    project_cards: 40
+    priority_union: 8231
+    priority_supported_urls_extracted: 1671
+    priority_supported_urls_total: 2312
+    priority_all_known_packages: 1834
+    styrene_detail_rows: 1950
+    catalyst_pilot_originals: 6
+    source_artifacts: 72
+    artifacts:
+      styrene-xlsb-technical-scope-v1.json: f4419c6ef4b5182c49ecc875e0a1ba4f9498f1d828864f431959a35d8ea3569e
+      styrene-xlsb-cell-review-v1.json: 2f844bc7462b47afe78b3c28bb250e67f08c6a45902a5d90a7cf460d8ef2dcbb
+      catalyst-instruments-pilot-v1/review-v1.json: 9e34affbba70f66c207db5bffc01a9a5658662a112ead61c30ed602536416e85
+      consolidated-project-map-v30.json: 7dfc9f545e321936f707fcb2f2a34cf712afafa0ef7a58d320b1d38996123c18
+      commercial-action-register-v24.json: d7ade144613f37d2f6622a772bb5c50c746ccdac4470d78fe98dbb09a8b359ef
+      consolidated-project-report-v30.md: 499820e851560e780dfdb4918fdf940865a34d8caabedbd9a603738eca95da77
+      project-coverage-dashboard-v17.json: eafc82b897761aa61e0477d862a47d287169c22262b8682eec6942b8f90a1e45
+  pq_v31:
+    project_cards: 41
+    project_publications: 2618
+    priority_union: 8231
+    priority_supported_urls_extracted: 1708
+    priority_supported_urls_total: 2312
+    priority_all_known_packages: 1846
+    pq_explicit_publications: 26
+    cumulative_reviewed_no_verified_outcome: 13
+    source_artifacts: 74
+    artifacts:
+      pq-demand-and-channels-v1.json: 1335b169a20d5116cc61054526e656f8d3518be8a09137307c6d0141b5e91309
+      pq-dgp2-pilot-v1/selected-members-v1.json: 33405adab0b7604a7a2be77a287cb8e240638d7657d094fca048d8d175be64fc
+      consolidated-project-map-v31.json: bdfd95cb4854bdf833569d93ff744088ae3623e0e44ac29bb5cb502e8718dd93
+      commercial-action-register-v25.json: 0ad01e214cdfd82e513623629cacf9eac4b118ef64e6d5930b3daa835914fdc7
+      consolidated-project-report-v31.md: de0d95118d749d7cae33c7792abf194b8d89c3196f0640ad60d668682e28431d
+      project-coverage-dashboard-v18.json: a78e36008bb99bfbb4bdba26145c23e0d442c76a41cd41ff191cdd9462a161af
+      commercial-outcome-queue-v6.json: 99b51d820448ed7f3ee6dd5b0225d8d62dc0777fdec8eab922ee68ee36d6ebd7
+  pq_v32:
+    project_cards: 41
+    priority_union: 8231
+    cumulative_reviewed_no_verified_outcome: 15
+    source_artifacts: 75
+    artifacts:
+      pq-manufacturer-and-catalog-evidence-v1.json: c97c5a5381fc565fc26aeea98d3c1f888ee75996e3a26bb35b4fea2fda1ff837
+      consolidated-project-map-v32.json: cc8877665ee3361669899f760cc63b11063f4fc63b056e1ca7db6fc0363581f1
+      commercial-outcome-queue-v7.json: 75014d4d259150a3c1952ea070772f4e1d8fa9500ee6cae140a3aa51c6ff04e8
+      commercial-action-register-v26.json: c529efce97359ab5cf314ae22b6663fecfac107f29ea689180a724710cb2e928
+      consolidated-project-report-v32.md: 0406432918ac10f6e069427795f6b82910420cdd0a4fb626e8ed46882c2c7dea
+  sionika_v33:
+    project_cards: 42
+    priority_union: 8232
+    source_artifacts: 76
+    artifacts:
+      sionika-lsu-and-service-review-v1.json: 743b6b57a88ec3effcb2e5627340b14b7448843763b9edd055ba7c0ff23f00bb
+      consolidated-project-map-v33.json: f11d58330ab21e6c39afc76cd70d44763b9c805af2e5a9793c67800f77116d1f
+      commercial-outcome-queue-v8.json: 59cffdba0d9669aca475186261307ff2c86e79a7ca861ac015798233ca6707f5
+      commercial-action-register-v27.json: 27a245baebf42b150d022aee4fa4435376bb69ab9b724290f5d8fae418f56363
+      consolidated-project-report-v33.md: df3b8b8e9ddf76a1382e5a75cd7d71472f1bf54af2155e63123ba237c15a1cb7
+  sionika_v34:
+    project_cards: 44
+    priority_union: 8236
+    source_artifacts: 78
+    artifacts:
+      nknh-retrofit-monomer-lsu-review-v1.json: 558a19dc526a994488453a9814bb70c899893c5264ee1f52c3aaf9e87ae7e5fd
+      consolidated-project-map-v34.json: c366531fb516eb5fe81b30b81cdc1a35fa2ce202b6f7329dbeeef91944df7082
+      commercial-outcome-queue-v9.json: 5db08a6071561d04b6c2fc8c5c07b54c0cf58c521ed9bf043aa64838b31cc43d
+      commercial-action-register-v28.json: e70435dbf3fa5b8de9e81cf269eb65b8d5c4298846a5fa4cbd6ce2ad1140eb12
+      project-coverage-dashboard-v19.json: a42f3c05c867ae475d7c8b2e65146365dc3af8fd7df378927ee9350ac2c6e11b
+      project-coverage-dashboard-v20.json: f6fa62c5dfe952d1fbe9b962116a809324efc9090d7b74f42ce46538c4ef9806
+      consolidated-project-report-v34.md: e94f0bbacc801fb0beff9914404557d862947533fa158a8b623035e621d553cf
+  sionika_v35:
+    project_cards: 49
+    priority_union: 8237
+    source_artifacts: 80
+    artifacts:
+      kos-asutp-nknh-service-review-v1.json: 5c106c263186c4134a84b00bd69c44c7aa1cdc80547c6a740a4130ced66067c1
+      consolidated-project-map-v35.json: 0b61f42d7940027195e58c79e7ff0ad978825ecaf985382d7558c96deb756309
+      commercial-outcome-queue-v10.json: 1637a76755cdb3c94e3acc929ac31319915c363c66c34ab2c7524a7663d9d574
+      commercial-action-register-v29.json: fc5f08190fed576fc4a3722e2ff0a9aad4befe63e8e15db721a3ef4316f31e9f
+      project-coverage-dashboard-v21.json: 79b9335b64e69128b1abc80974a7d2f905fffcc4f802fdf6ffcd459363c7df56
+      consolidated-project-report-v35.md: 9726861f9fc7b0be6678ffec157cd152109981f77b20b39282c52eba9c76fb5c
+  sionika_v36:
+    project_cards: 51
+    priority_union: 8237
+    source_artifacts: 82
+    artifacts:
+      sionika-drive-powerplant-service-v1.json: 11065b2ed7a70a9c53fa7a1d98465fd4e54a361b2957fecbbed5802448726593
+      consolidated-project-map-v36.json: 62b6b2d9e292e3c256d03ddd2df652f60a452b2fa09142e588bff75860ba1b06
+      commercial-outcome-queue-v11.json: 9529eea305fa04fe12a2ec69f9d510cc6e09526f26258157788e18601f7492a6
+      commercial-action-register-v30.json: e40c5c39074f2c6ece9b2a7b96ef067c8b5d28511ff1f008251a58f5f0ca8aa2
+      project-coverage-dashboard-v22.json: 9e60bb934bc0ac3e386e33c02045c5852f2b76a3d6e63f0c837782ef866d2e41
+      consolidated-project-report-v36.md: 72eed6606fcd395bbd62fc64b61ffa9529d228f0084d62e7f5d40b2bb9483b82
+  sionika_v37:
+    project_cards: 57
+    priority_union: 8238
+    source_artifacts: 84
+    artifacts:
+      sionika-relay-metering-service-v1.json: a421edef512b870a3fcee455bfefa7ec8659d5083efa29b9bc4d4b665e354082
+      consolidated-project-map-v37.json: 9461b7cbbb4556924b3c94dc37d9c5b623ee22f763cfacd7a6f75b8f205c6e3f
+      commercial-outcome-queue-v12.json: 746494b8777de6608625740321dc0884f7db2e91b71cdba2f3f11a149c1c73b2
+      commercial-action-register-v31.json: 13bb5cb04f44611e87a0eb8418646124075b26d24f389b3a13763d4611c2d67c
+      project-coverage-dashboard-v23.json: e739e0302a45a42f30be4018f5127e971a012f976d9ae1190749d051d27eef72
+      consolidated-project-report-v37.md: d7394a0cf31975f067fc851e18f8d251384027ce9f68f24682fb5455cb2043ae
+  sionika_v38:
+    project_cards: 64
+    priority_union: 8244
+    source_artifacts: 86
+    completed_stage: SKDN OTR 2112381/1, Tekon clause, KIP groups and ZRA/PSV; 19 listed vs minimum 20; ENER court
+      chain revalidated not new; plan links unresolved.
+    artifacts:
+      sionika-kip-valve-skdn-v1.json: 2f3dc895390261f4d918cc59e6d0f0df97aa52044b454c2288d9c9da0cb7fb8d
+      consolidated-project-map-v38.json: bab8a29d62e89fab45cc3d6f173fa843a58469351d34a71d7c85a886e406ed1f
+      commercial-outcome-queue-v13.json: 3a0dd19e1a1859339806397a00cee073a2a76d7578ec2e9a8d26c2cef56fa54c
+      commercial-action-register-v32.json: 6fa4aaade4a173eca40624668ccf8cd56ce5e0f9d3fee888d1ad8f98ac2b808a
+      project-coverage-dashboard-v24.json: 1da9b47d509355d7923df3c3fae032beff3f2c7dfbd174a4e9a23f2d2e7e1fd5
+      consolidated-project-report-v38.md: 34b6708700eb3181c2ff0e9ad7aa6f4a6d91ad19c5bf4cb6c9771c937845e96c
+  sionika_v39:
+    project_cards: 66
+    priority_union: 8244
+    source_artifacts: 88
+    completed_stage: Motor and AUMA reference rows, Tomsk division of supplies, AGHK PNR qualification. No new award
+      or price.
+    artifacts:
+      sionika-active-service-v1.json: 262a77ef78be1eda2de75a0bf47720c49c08b420306b07dc443609774f16c4ee
+      consolidated-project-map-v39.json: a15b98edb7704f32289960c57d1df4ea3301e5fecd63ce4bc2587d4f1d89601e
+      commercial-outcome-queue-v14.json: 9aa07128e3846fab8abfb5032746ee45140cea67c975bc75c39458acb6025a53
+      commercial-action-register-v33.json: 1aadfcfd6c2bdb1ecad201cb7c0fc547ac4c5be13f1db923fb54197c641fe64f
+      project-coverage-dashboard-v25.json: 3d7afa8a3280240db58efad223408b92306791931d81505b52a958515edd9805
+      consolidated-project-report-v39.md: 255d9dfa020662644691f3c5412ce6d6f350fe17a61b8cd68c52fa80d26335d3
+  sionika_v40:
+    project_cards: 66
+    priority_union: 8244
+    source_artifacts: 90
+    completed_stage: Corpus audit, separate 223-FZ comparator prices and contractor roles; no exact awards. Corrected
+      project IDs to 2659.
+    artifacts:
+      sionika-contract-corpus-audit-v1.json: 2327f270b4240fec91f13cd858f532d44f8b3743b6f1f972725775468edebc1b
+      consolidated-project-map-v40.json: 69933d2d8ef37c97853a809a78c3cc2b7b70dfd3e414901450f5049814694dca
+      commercial-outcome-queue-v15.json: 1aa9e97153ded6dff243276729422fbacd721a254e35142761f6a78f67a9378d
+      commercial-action-register-v34.json: c18b00f3487d6afa7319400dcc18ce35117cc8b08f820e1ff11d6dd26a801400
+      project-coverage-dashboard-v26.json: 66f8e4933275dc749279c4b6855de3489014ed7798ef025472fe6685e04fad34
+      consolidated-project-report-v40.md: b575af88f0edbc25babf917a4f818a9a0bd611dc88b7217103ecb9bd94cad27e
+  sionika_v41:
+    project_cards: 66
+    priority_union: 8244
+    source_artifacts: 92
+    completed_stage: Screened 2017 archive originals; 1921 text readable; reviewed 25 hits, no verified awards;
+      96 unreadable.
+    artifacts:
+      sionika-priority-outcome-screen-v1.json: 5fecd3b2392d0e7efea18cad646479e0e965fb38567e455b058fae7d46d62812
+      consolidated-project-map-v41.json: 0daefd4f8a12dd7327708d2ff32aa7ac0705b1a6f4a1a26cc5139d05145a4826
+      commercial-outcome-queue-v16.json: afd129e3c2301b32fba0f234b7d63831f851cb9aaf9579e298e760c9335dabbb
+      commercial-action-register-v35.json: 932ae210ad826d57fa9428b0cf73582a917846e6b1230cae36d941cfd2762bff
+      project-coverage-dashboard-v27.json: 0fd0e98b9a6214e1970b437e7d4729d246f78999f20e81a04441217bba284bff
+      consolidated-project-report-v41.md: 70e37971f5a08faaeee826520b9821f73e2036735f2ee8d9ddd79122bdc39928
+  sionika_v42_pending:
+    status: superseded_by_verified_v42
+    observed_date: '2026-11-16'
+    last_verified_map: consolidated-project-map-v41.json
+    last_verified_commit: e2cef1ff
+    coverage_dashboard: project-coverage-dashboard-v27.json
+    findings:
+    - 2145701/1 is budget estimate per SIBUR Telegram https://t.me/s/siburholdingprocurement?before=927; original
+      deadline Nov13, Kontur Nov16 14 MSK https://zakupki.kontur.ru/IS87179384; Energybase shows similar title Nov20
+      but precise ID not established. Do not infer extension or a committed order.
+    - 2139750/1 is gas safety emergency rescue and gas laboratory control, not gas analyzer supply; exclude from
+      core. Official announcement https://t.me/s/siburholdingprocurement; Kontur https://zakupki.kontur.ru/IS88434448
+      deadline Nov24 15 MSK.
+    - 'Five active candidate deadlines rechecked, not actual eligibility: 2145723/1 Nov17 11 MSK https://zakupki.kontur.ru/IS87286268;
+      2146167/1 Nov18 14 MSK https://zakupki.kontur.ru/IS88558503; 2146194/1 Nov18 15 MSK https://zakupki.kontur.ru/IS88650131;
+      2145706/1 Nov23 11 MSK https://energybase.ru/tender/01a1afc8-37e7-73e3-95aa-284a8792580d; 2146492/1 Nov27
+      11 MSK https://www.sibur.ru/ru/procurement/buy/.'
+    - NPP TEC self-reported RemTEK actuator references Tomskneftekhim 2004-2024, STG 2024, AGHK 2020-2023; PDF text-only
+      https://www.npptec.ru/upload/iblock/08c/ts50ps6k0ihb8s2hd7s7203a7hxhdl1r.pdf; screenshot unavailable; not
+      verified award or AUMA service winner.
+    - 'SOV-NKNH 223-FZ comparator prices, separate from corporate exact awards: 51651052730260000540000, 18.08.2026,
+      maintenance of 761 COMPACT IC ion chromatographs, 218502 RUB https://zakupki.kontur.ru/D51651052730260000540000;
+      51651052730260000580000, 03.09.2026, 650 m cable AVVGng(A)-LS 4x25, 160439.76 RUB https://zakupki.kontur.ru/D51651052730260000580000;
+      adjacent valve 51651052730260000470000, 06.07.2026, KMO301NZH50NZU 1 pc 345845.60 RUB https://zakupki.kontur.ru/D51651052730260000470000.
+      Secondary EIS mirror, supplier identity masked; deduplicate against V40 by registry ID.'
+    - V40 existing four comparator prices independently rechecked on Kontur exact register/notice pages; winner
+      names masked. Two additional core comparators above and one adjacent; not NKNH direct spend. NPP TEC identity
+      verified INN 7020037139 official https://npptec.ru/contacts/ ; Surgut service center and regulated product
+      references from official site, not AUMA authorization.
+    blocker: ARC commands timed out; RDC Mac mini online, archive and technical workers exist, but runtime file
+      stat and git status hang. No new coverage measurement. Do not restart workers or mutate DB without gate.
+  storage_incident_20261116:
+    status: access_restored_without_reboot
+    observed_msk: 2026-11-16 08:02
+    verified: External disk6 4 TB detected; APFS container disk7; directory and file metadata stat succeeds; opening
+      dashboard and unrelated arvectum-site/package.json hangs. sample ls PID 73466 and technical worker PID 66923
+      both in kernel open; diskutil info disk6 PID 74030 also in kernel open. No device I/O error in sampled 20-minute
+      kernel log, only APFS tx_flush messages. Internal SSD checkpoint readable and writable, 132 GiB free at last
+      df. Archive worker 56279 still exists and CPU regex activity observed; forward progress not established.
+    decisions: No forced eject, filesystem repair, remapping, duplicate worker or DB mutation. Normal controlled
+      restart of Mac mini requires operator coordination because other services are running and remote restart is
+      blocked.
+    next_steps: Recheck actual archive progress and technical executor outcome, run read-only coverage before V42
+      merge; reuse existing runner without duplicate; investigate disk if read timeouts recur.
+    recovery_verified: '2026-11-16: bounded reads of unrelated repository, DP original source and Python executable
+      succeeded; V41 map, dashboard v27 and report V41 SHA256 all match. Original disk remains mounted; no forced
+      eject/repair/reboot. Root cause unknown. Archive PID 56279 active with executor lock; previous technical PID
+      66923 no longer exists. Forward progress not yet verified. DP switched gracefully to internal SSD exact backport,
+      PID 78297, health/auth and known collection read-only checks PASS. No database mutation.'
+post_storage_recovery_20261116:
+  coverage_dashboard: project-coverage-dashboard-v28-post-storage-recovery.json
+  sha256: 481d650720cd39b68cd2b9725e2c5d8d9ad121291b0218720072800f78ebaf87
+  processed_originals: 4875
+  extracted: 4686
+  source_links: 25074
+  linked_procedures: 17062
+  committed_document_rows: 25783
+  indexed_procedures: 738
+  indexed_originals: 764
+  captured_receipts: 4908
+  review_receipts: 12
+  attempts_last_hour: 210
+  priority_eligible: 5804
+  priority_all_supported_extracted: 5560
+  priority_all_known_no_unverified: 1909
+  status: processing_resumed_verified
+sionika_v42_verified_20261116:
+  status: completed_increment
+  project_cards: 66
+  project_unique_publications: 2659
+  project_memberships: 2685
+  priority_union: 8244
+  priority_counts:
+    P0: 39
+    P1: 25
+    P2: 2
+  core_comparator_count: 6
+  core_comparator_rub: '1173379.20'
+  adjacent_comparator_rub: '345845.60'
+  exact_awards_unchanged: true
+  artifacts:
+    sionika-v42-source-observations-v1.json: 666520744eb52f319849a1d655676cc86fd3a3a81e26c4175497e373751a8ca6
+    consolidated-project-map-v42.json: e244c5edb712875e7adafd41e63d75ee6c02788034e48d2f8e883f18d224b1cc
+    commercial-outcome-queue-v17.json: 6844507d78af8f9dc7a019ef60c8102af0604a4c00c2889f0636f302c41d1896
+    commercial-action-register-v36.json: e7c7e98c915de845f573952625db8d1a05dbcbccb9d1af987fe930070300ef67
+    consolidated-project-report-v42.md: 3c74774ebedd222302e498459b7b6657faf2229c34bc2f338536a8717a3ce101
+    project-coverage-dashboard-v28-post-storage-recovery.json: 481d650720cd39b68cd2b9725e2c5d8d9ad121291b0218720072800f78ebaf87
+  verification: V41 source hashes matched, V42 map/queue/action hashes consistent, frozen memberships and award
+    fields preserved; no DB writes or live source rechecks.
+
+sionika_v43:
+  status: in_progress
+  completed_stage: "V43 plan reconciliation: 10 plan rows, four new project cards, four recovered XLSM, no exact awards/plan links. Storage recovered without restart; existing archive worker and technical worker active; index lane running."
+  project_cards: 70
+  priority_union: 8244
+  source_artifacts: 97
+  last_verified_commit: 406b8644
+  artifacts:
+    sionika-plan-service-reconciliation-v1.json: 0c0729e871a25ab139b825f25850e3e84c721c3e50e101a2244f9ffbd386a19a
+    consolidated-project-map-v43.json: 94afae09f326241fc6a7fc9604e06010567be0c61028cc391e84793a675bbabc
+    commercial-outcome-queue-v18.json: 2278128dc7763f814d99b7184f5678f7f059106fff5c625a89138434a9bafe36
+    commercial-action-register-v37.json: 6bb5285808797d041978e2f7a2ce95a09344b93e705ec4e2e6333558405c5b94
+    project-coverage-dashboard-v30.json: 803a0ece84ef747a67b6f496f962c869c8a0c202aaf35541e70ef6b35abe5088
+    consolidated-project-report-v43.md: bff1c05f9b0df6f249d94ef6108f2b756d2dfb93f11a8627247e9ba5295fa7b9
+
+sionika_v44:
+  status: in_progress
+  completed_stage: "Two original mounting TKP filled volumes, material boundaries, cross-project SNEMA channel reverified; no exact corporate award or price."
+  project_cards: 70
+  priority_union: 8244
+  source_artifacts: 99
+  last_verified_commit: 431a27ae
+  artifacts:
+    sionika-subcontract-compressor-mounting-v1.json: 1deab4fe730e2c9517683f02747db486a9feaa23ba1fd90886bb118a65e197ad
+    consolidated-project-map-v44.json: 89ab07d270399c4f000cc6cc93e577f18d2dfe67e9be0206c94790984c8c68a7
+    commercial-outcome-queue-v19.json: da7fe89adc78a55cc94160a33479cf97cd6534fbbea7246ad338695437c0071e
+    commercial-action-register-v38.json: e61e272ee0615063200da55c9e7bb3aff927d5c7e381ea24a34bea2e4c97ffc9
+    project-coverage-dashboard-v31.json: 89eba4c11493b25c27f01a20260eaeac3154f46f6ca65e968bb086566f99d246
+    consolidated-project-report-v44.md: df2317dd2a9e3af7c469d5ec68909dbc2bb8fa35e5defd99d889b77c851b2990
+
+sionika_v45:
+  status: in_progress
+  completed_stage: "V45 ABB controls modernization original TOR and pricing forms; 244 confirmed budget estimates separated, 118 closed intake budgets excluded from award search. Plan 817/1002 no exact match, 71 project cards, no new award."
+  project_cards: 71
+  priority_union: 8244
+  source_artifacts: 101
+  last_verified_commit: 6e545b22
+  artifacts:
+    sionika-abb-drive-budget-classification-v1.json: 9714c1c6783f5794a4b2de512fbe6dd24f7e06785455b99dfbb25485c2318b9b
+    consolidated-project-map-v45.json: 23f4e76d6fb1e6baf6574321662b71c84c886a090afcbb355dca683c9ce5cd60
+    commercial-outcome-queue-v20.json: 0905f301974fb84a3e0967e04e6fbbf3da9883c2247009f01ecfee9a03f3b8aa
+    commercial-action-register-v39.json: 1eea22cabedef3d4627be42aaa10abcc450e18c7ccb62a3b559b5aa5881bbb26
+    project-coverage-dashboard-v32.json: e0f9ba3f5c4fbb45663673450c879de35c8e5c2e4d339b28ee60baeee7c5d821
+    consolidated-project-report-v45.md: 9dfba98c12ab48bc84ced534278499634bd9d1758b30c1e758e99a0152b2de54
+
+sionika_v46:
+  status: in_progress
+  completed_stage: "V46 source revalidation: six court acts retrieved via public indexed text; 2024-25 EP600 acts 16694727.83; six secondary EIS comparator prices 1173379.20; five extra budget estimates reverified. Historical uninspected claims remain provisional. No exact corporate award."
+  project_cards: 71
+  priority_union: 8244
+  source_artifacts: 103
+  last_verified_commit: 0f5bdd10
+  blocker: "Index lane blocked after archive_index_batch exit 2 (8b938db32238 review CalledProcessError); DP has 773 originals, partial success and link batch completed. Archive acquisition active. Require read-only reconciliation and acceptance gate before retry; no duplicate runner."
+  artifacts:
+    sionika-source-revalidation-v46.json: 38f0f6e2211ea454b8bfd792aea75974d396cfae9f5134f0de88eac89900aa87
+    consolidated-project-map-v46.json: d79bcf2633345b904005381535699b003630b506406f968174f382ef42d68ac0
+    commercial-outcome-queue-v21.json: 54090ebcf1407a83d980483fbe22e63ba5bc8da60af298a84d8700cea9841c97
+    commercial-action-register-v40.json: effb8a6b8cdaa9d74d516fcb5dd5a87cf87d5ed4cdc154815180c985d78e916c
+    project-coverage-dashboard-v33.json: aab289f99b7ac67047ca60c2127a972fa56401271c315703a10868f080d65bd9
+    consolidated-project-report-v46.md: f5d768fe60f015cc63d990e5defb3623de8f5c930bb1506c522af1819381698e
+index_late_commit_recovery_20261116_0609:
+  status: reconciled_executor_restarted
+  source_sha256: 8b938db32238ffd37ce3507d7da061e70fe968b3faf5965440930392412082de
+  new_resource_chunks: 161
+  collection_documents: 774
+  collection_chunks_embeddings: 16129
+  evidence: dp-readonly-reconciliation-20261116060947.json
+  evidence_sha256: 0870b8d338e4ac170ef0e638d87e30c8596414990ea0d6b98efb7541adab9d3e
+  manifest_sha256: 5ed31e7c48423ee1dc0daf8d87c3995d59f030593d09d7699e8ccf0e4fc6bc4d
+  pid: 87788
+  database_modified_by_recovery: false
+  reason: Late DP commit after 180s request timeout; 20 chunks in pre-extract, 161 in committed index. Exact original
+    and all persisted embedding identities verified. Preserve prior proof hashes. TA sync pending. Do not increase
+    chunk cap or timeout blindly.
+resume_instruction: 'V46 verified. First reconcile blocked indexing batch read-only and resume existing runner only
+  after gate; continue exact outcomes, active leads and new originals. V46 map, V40 actions, V21 queue, V33 coverage.
+  Nov17 report. No DB mutation without gate, no duplicate workers. 249 budget leads; uninspected historical external
+  claims provisional. Index late commit reconciled: 774 originals/16129 embeddings; check existing PID87788 progress,
+  do not repeat ingestion or reset unexplained mismatches. Gemma paused.'

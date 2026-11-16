@@ -1,0 +1,56 @@
+task_id: TA-AI-TRADING-SOURCE-DISCOVERY-001
+status: in_progress
+goal: Validate public electronic-shop source access and time-correct paper trading
+  evidence; no live action
+definition_of_done:
+- Verified source access and reuse matrix
+- Historical price/outcome evidence, SKU match and economics feasibility; gaps explicit
+- No cost/profit or signed contract inference without exact evidence
+completed:
+- 'Existing Moscow prior pilot independently rehashed and audited: 4 sessions, 139
+  descending bids, 100 auto bids, 43 positions, 29 platform SKU IDs; all bid supplier
+  identity tokens absent. Price traces verified, winner identity from bid sequence
+  not verified. No signed contract or time-valid costs.'
+- Implemented offline audit and 6 regression tests, Ruff passed.
+- 'Offline paper-cost admission gate implemented: actual original byte SHA, timezone-aware
+  observation/validity at decision time, verified manufacturer article and variant/unit
+  crosswalk, quantity/stock/MOQ, firm RUB price, tax basis, delivery deadline. No
+  execution or profit claim. This validates attested fields, not autonomous verification
+  of source content.'
+- 'Public web supplier candidate review: Citizen SDC-888XBL exact model found but
+  one Russian seller requires price confirmation; Vseinstrumenti lists last 2610 RUB
+  and unavailable. Attache frame 1174008 listed 351.40 RUB with VAT but variant and
+  100-piece stock/delivery not verified, alternative PET item 1174004. These are retrieved
+  web page observations after the 13 Nov auctions, not historical executable costs.'
+current_stage: cost_admission_gate_implemented_source_acquisition_pending
+remaining:
+- Inventory EAT and other authorized public sources; respect prior 402 restrictions
+- Time-valid exact SKU evidence, stock, price, delivery, tax, charges and capital;
+  never retroactively treat present cost as historical
+- Larger sample, offline model and holdout replay
+- No actual trade, bid, contact, spend or signed contract inference
+last_verified_commit: 9c626f4e09b25f1d36db621d0a4086f261ee487e
+test_results:
+  focused: 6
+  ruff: pass
+  source_audit:
+    schema: mos_paper_source_audit_v1
+    session_count: 4
+    bids: 139
+    automatic_bids: 100
+    positions: 43
+    positions_with_platform_sku_id: 29
+    verified_time_valid_supplier_costs: 0
+    verified_signed_contracts: 0
+    execution_allowed: false
+  audit_sha256: 1539a3c8c236947afbe6be171a6af21e79269c8ec271de0d13f5301f69b4d521
+  cost_evidence_gate:
+    focused_total: 17
+    ruff: pass
+    actual_historical_costs_admitted: 0
+    supplier_originals_with_full_attestation: 0
+resume_instruction: Read live checkpoints. Reuse paper_cost_evidence gate for time-correct
+  attested originals; obtain new contemporaneous supplier observations and verified
+  manufacturer SKU crosswalk, stock/validity/delivery. Do not use web snippets or
+  past-session future quotes as costs. Continue authorized ZMO source inventory and
+  offline shadow simulation; no real orders, bids, spend or contact.

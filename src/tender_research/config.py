@@ -61,6 +61,8 @@ class TenderResearchConfig:
     rag_retrieval_backend: str = "data_platform"
     rag_data_platform_base_url: str = "http://127.0.0.1:8094"
     rag_data_platform_api_key: str = ""
+    rag_data_platform_consumer: str = ""
+    rag_data_platform_consumer_key: str = ""
     rag_data_platform_timeout_seconds: int = 30
     rag_use_llm: bool = False
     local_llm_base_url: str = "http://127.0.0.1:8088/v1"
@@ -155,6 +157,8 @@ def load_config(settings: Settings | None = None) -> TenderResearchConfig:
         rag_retrieval_backend=s.rag_retrieval_backend,
         rag_data_platform_base_url=s.rag_data_platform_base_url,
         rag_data_platform_api_key=s.rag_data_platform_api_key,
+        rag_data_platform_consumer=s.rag_data_platform_consumer,
+        rag_data_platform_consumer_key=s.rag_data_platform_consumer_key,
         rag_data_platform_timeout_seconds=s.rag_data_platform_timeout_seconds,
         rag_use_llm=s.rag_use_llm,
         local_llm_base_url=s.local_llm_base_url,
