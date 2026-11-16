@@ -339,13 +339,18 @@ completed:
   implemented, migration 122. Explicit manager-selected quantities/rates, source sample
   and preview digests, tenant role and optimistic concurrency, no automatic estimate
   use.
-current_stage: price01_approved_norm_web
+- Corporate norm Web approval, catalog, paginated version history and explicit withdrawal
+  implemented. Client verifies canonical preview and record digests, source bindings
+  and identity; unchanged lost-response retry uses same key.
+current_stage: price01_approved_norm_web_verified_next_ios
 remaining:
-- Implement corporate norm approval and history/catalog Web and iOS UI, explicit user-selected
-  application to estimate with source binding; historical comparables and final acceptance.
-- B2B manual authorized UI observation and document acquisition, then legacy runtime
-  cutover. No repeat live pilot without new evidence.
-last_verified_commit: a3568612424272528d2ea0ae8a538591016388d3
+- Implement native iOS corporate norm catalog, preview, approval/history/withdrawal;
+  verify canonical record and preview digests and tenant boundary, test Swift/build.
+- Explicit version-bound application of norms to estimates, historical comparables
+  and final PRICE-01 acceptance.
+- B2B manual authorized UI observation, document acquisition and runtime cutover;
+  no repeat live requests without new evidence.
+last_verified_commit: c26fc07a5d95d1785c87ec61b4f928ff14aafc61
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -551,9 +556,14 @@ test_results:
 - 289 focused/regression tests pass, 2 skipped, 136 warnings, 16.58s; Ruff/diff PASS;
   SQLite migration 122 upgrade/downgrade and retention guard PASS. PR588 CI 19/19.
   No production PostgreSQL or migration execution.
-resume_instruction: Implement Web corporate normative approval, catalog, history and
-  withdrawal; validate tenant, preview digest, response and idempotent retry. Test
-  Node fixture and focused regression. No production changes.
+- 289 regression tests passed, 2 skipped, 136 warnings in 17.13s; Node company cabinet
+  flow PASS for preview edit invalidation, idempotent approval retry, withdrawal,
+  history, disabled feature, corrupt record and account clearing; Ruff/diff PASS.
+  PR589 17 success/2 running at latest check. No visual/browser production acceptance.
+resume_instruction: Web corporate norm approval and catalog verified in c26fc07a;
+  next typed iOS implementation and contract tests. Keep feature default off and automatic
+  estimate adoption disabled. B2B authorized UI unresolved; no production changes
+  or MacBook. See latest product increment documentation.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
