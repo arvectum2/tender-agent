@@ -1947,3 +1947,59 @@ def test_versioned_readiness_binding_and_submission_gate(client, session, monkey
     assert bind(client.get(endpoint,headers=headers).json()).status_code==201
     assert event('SUBMITTED',3,**receipt).status_code==201
     assert session.query(CompanyReadinessEvidence).count()==3
+
+
+def test_lifecycle_artifact_bytes_scope_and_immutability(client, session, monkeypatch):
+    import hashlib
+
+    from src.modules.saas_foundation.models import CompanyLifecycleArtifact
+
+    _, a=_seed(client,'Artifact A'); _, b=_seed(client,'Artifact B')
+    _legal(client,a);_legal(client,b)
+    settings=saas.get_settings().model_copy(update={'saas_company_lifecycle_enabled':True})
+    monkeypatch.setattr(saas,'get_settings',lambda:settings)
+    cases='/api/saas/company-portfolio/cases'; headers=_auth(a)
+    def save(token,n):
+        r=client.post(cases,headers=_auth(token),json={'registry_number':f'{n:019d}'});assert r.status_code==201,r.text
+        return cases+'/'+r.json()['case_id']
+    path=save(a,1); other=save(b,1); same_tenant=save(a,2)
+    assert client.post(path+'/decisions',headers=headers,json={'action':'GO','expected_revision':0,'rationale':'fixture','idempotency_key':'artifact-go'}).status_code==200
+    now=service.now_utc().isoformat()
+    def event(stage,rev,**extra):
+        r=client.post(path+'/lifecycle',headers=headers,json={'stage':stage,'expected_revision':rev,'expected_decision_revision':1,'rationale':'fixture','idempotency_key':f'artifact-event-{rev}',**extra});assert r.status_code==201,r.text
+        return r.json()['event_id']
+    ready=event('READY',0);submitted=event('SUBMITTED',1,source_ref='receipt fixture',occurred_at=now);won=event('WON',2,source_ref='protocol fixture',occurred_at=now)
+    url=path+'/lifecycle/'+submitted+'/artifact';protocol=path+'/lifecycle/'+won+'/artifact'
+    raw=b'%PDF-1.4\n1 0 obj<<>>endobj\n%%EOF';params={'format_hint':'pdf','confirm_user_supplied':True}
+    assert client.get(url,headers=headers).status_code==404
+    settings=settings.model_copy(update={'saas_company_lifecycle_artifacts_enabled':True})
+    assert client.get(url,headers=headers).status_code==404
+    assert client.post(url,headers=headers,params={'format_hint':'pdf'},content=raw).status_code==422
+    assert client.post(url,headers=headers,params=params,content=b'not pdf').status_code==422
+    assert client.post(url,headers=headers,params=params,content=b'x'*(2*1024*1024+1)).status_code==413
+    assert client.post(path+'/lifecycle/'+ready+'/artifact',headers=headers,params=params,content=raw).status_code==409
+    assert client.post(url,headers=_auth(b),params=params,content=raw).status_code==404
+    assert client.post(same_tenant+'/lifecycle/'+submitted+'/artifact',headers=headers,params=params,content=raw).status_code==404
+    assert client.post(other+'/lifecycle/'+submitted+'/artifact',headers=_auth(b),params=params,content=raw).status_code==404
+    response=client.post(url,headers=headers,params=params,content=raw);assert response.status_code==201,response.text
+    first=response.json();sha=hashlib.sha256(raw).hexdigest();assert first['inspection']['sha256']==sha and first['artifact_kind']=='SUBMISSION_RECEIPT'
+    assert first['stored_bytes_reverified'] and not first['external_fact_verified'] and not first['platform_original_verified']
+    assert client.post(url,headers=headers,params=params,content=raw).json()==first
+    assert client.post(url,headers=headers,params=params,content=raw.replace(b'1 0 obj',b'2 0 obj')).status_code==409
+    assert client.get(url,headers=headers).json()==first
+    invite=client.post('/api/saas/invitations',headers=headers,json={'role':'viewer','acquisition_channel':'referral'}).json()
+    viewer=client.post('/api/saas/invitations/redeem',json={'invitation_code':invite['invitation_code'],'display_name':'viewer'}).json()['access_token']
+    _legal(client,viewer)
+    assert client.get(url,headers=_auth(viewer)).json()==first
+    assert client.get(url+'/download',headers=_auth(viewer)).content==raw
+    assert client.post(protocol,headers=_auth(viewer),params=params,content=raw).status_code==403
+    assert client.get(url+'/download',headers=_auth(b)).status_code==404
+    dl=client.get(url+'/download',headers=headers);assert dl.status_code==200 and dl.content==raw
+    assert dl.headers['x-artifact-sha256']==sha and dl.headers['cache-control']=='private, no-store' and 'attachment;' in dl.headers['content-disposition']
+    r=client.post(protocol,headers=headers,params=params,content=raw);assert r.status_code==201 and r.json()['artifact_kind']=='OUTCOME_PROTOCOL'
+    assert session.query(CompanyLifecycleArtifact).count()==2
+    # Corruption simulation via SQL in the isolated fixture, not via the immutable ORM.
+    from sqlalchemy import update
+    session.execute(update(CompanyLifecycleArtifact).where(CompanyLifecycleArtifact.id==first['artifact_id']).values(raw_bytes=raw.replace(b'1 0 obj',b'9 0 obj')));session.commit()
+    assert client.get(url,headers=headers).status_code==409
+    assert client.get(url+'/download',headers=headers).status_code==409

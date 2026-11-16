@@ -337,3 +337,20 @@ class CompanyReadinessEvidence(UUIDPrimaryKeyMixin, Base):
 
 event.listen(CompanyReadinessEvidence, "before_update", _immutable_company_decision)
 event.listen(CompanyReadinessEvidence, "before_delete", _immutable_company_decision)
+
+
+class CompanyLifecycleArtifact(UUIDPrimaryKeyMixin, Base):
+    """Immutable user-supplied bytes, never proof of platform origin."""
+    __tablename__ = "company_lifecycle_artifacts"
+    lifecycle_event_id: Mapped[str] = mapped_column(String(36), ForeignKey("company_case_lifecycle_events.id"), nullable=False, unique=True)
+    member_id: Mapped[str] = mapped_column(String(36), ForeignKey("saas_members.id"), nullable=False)
+    artifact_kind: Mapped[str] = mapped_column(String(24), nullable=False)
+    format_hint: Mapped[str] = mapped_column(String(8), nullable=False)
+    raw_bytes: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
+    inspection_json: Mapped[dict] = mapped_column(JSON, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    __table_args__ = (CheckConstraint("artifact_kind IN ('SUBMISSION_RECEIPT','OUTCOME_PROTOCOL')", name="ck_lifecycle_artifact_kind"), CheckConstraint("format_hint IN ('pdf','docx','xlsx')", name="ck_lifecycle_artifact_format"))
+
+
+event.listen(CompanyLifecycleArtifact, "before_update", _immutable_company_decision)
+event.listen(CompanyLifecycleArtifact, "before_delete", _immutable_company_decision)

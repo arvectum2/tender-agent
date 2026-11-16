@@ -24,7 +24,7 @@ from fastapi import (
     Request,
     UploadFile,
 )
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, Response
 from pydantic import BaseModel, Field
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
@@ -67,6 +67,7 @@ from src.modules.saas_foundation import (
     company_case_evidence,
     company_discovery,
     company_lifecycle,
+    company_lifecycle_artifacts,
     company_portfolio,
     company_readiness,
     company_schedule,
@@ -951,3 +952,49 @@ def company_readiness_bind(case_id: str, payload: company_readiness.BindInput, p
     if not (settings.saas_company_lifecycle_enabled and settings.saas_company_readiness_evidence_enabled):
         raise HTTPException(404, "Readiness evidence disabled")
     return company_readiness.bind(session, principal, case_id, payload)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/lifecycle/{event_id}/artifact", status_code=201)
+async def upload_lifecycle_artifact(case_id: str, event_id: str, request: Request, principal: Member, session: DBSession, format_hint: company_lifecycle_artifacts.ArtifactFormat, confirm_user_supplied: bool = Query(False)) -> dict:
+    settings=get_settings()
+    if not (settings.saas_company_lifecycle_enabled and settings.saas_company_lifecycle_artifacts_enabled):
+        raise HTTPException(404, "Lifecycle artifacts disabled")
+    role_required(principal, "owner", "admin")
+    company_lifecycle_artifacts._event(session,principal,case_id,event_id)
+    if not confirm_user_supplied:
+        raise HTTPException(422, "Confirm user-supplied unverified origin")
+    if request.headers.get("content-encoding", "identity").lower() != "identity":
+        raise HTTPException(415, "Encoded uploads unsupported")
+    length=request.headers.get("content-length")
+    if length is not None and (not length.isascii() or not length.isdecimal() or len(length)>10):
+        raise HTTPException(400, "Invalid upload length")
+    if length is not None and int(length)>MAX_ATTACHMENT_BYTES:
+        raise HTTPException(413, "Attachment size limit exceeded")
+    session.rollback()
+    raw=bytearray()
+    try:
+        async with asyncio.timeout(20):
+            async for chunk in request.stream():
+                if len(raw)+len(chunk)>MAX_ATTACHMENT_BYTES:
+                    raise HTTPException(413, "Attachment size limit exceeded")
+                raw.extend(chunk)
+    except TimeoutError as exc:
+        raise HTTPException(408, "Attachment upload timeout") from exc
+    return await run_in_threadpool(company_lifecycle_artifacts.save, session, principal, case_id, event_id, bytes(raw), format_hint)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/lifecycle/{event_id}/artifact")
+def read_lifecycle_artifact(case_id: str, event_id: str, principal: Member, session: DBSession) -> dict:
+    settings=get_settings()
+    if not (settings.saas_company_lifecycle_enabled and settings.saas_company_lifecycle_artifacts_enabled):
+        raise HTTPException(404, "Lifecycle artifacts disabled")
+    return company_lifecycle_artifacts.read(session, principal, case_id, event_id)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/lifecycle/{event_id}/artifact/download")
+def download_lifecycle_artifact(case_id: str, event_id: str, principal: Member, session: DBSession):
+    settings=get_settings()
+    if not (settings.saas_company_lifecycle_enabled and settings.saas_company_lifecycle_artifacts_enabled):
+        raise HTTPException(404, "Lifecycle artifacts disabled")
+    raw, format_hint, sha=company_lifecycle_artifacts.download(session, principal, case_id, event_id)
+    return Response(content=raw, media_type="application/octet-stream", headers={"Content-Disposition": f'attachment; filename="lifecycle-{sha[:16]}.{format_hint}"', "Cache-Control": "private, no-store", "X-Content-Type-Options": "nosniff", "X-Artifact-SHA256": sha})
