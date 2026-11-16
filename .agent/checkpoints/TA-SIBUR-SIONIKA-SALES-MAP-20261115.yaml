@@ -1530,4 +1530,22 @@ sionika_v46:
     commercial-action-register-v40.json: effb8a6b8cdaa9d74d516fcb5dd5a87cf87d5ed4cdc154815180c985d78e916c
     project-coverage-dashboard-v33.json: aab289f99b7ac67047ca60c2127a972fa56401271c315703a10868f080d65bd9
     consolidated-project-report-v46.md: f5d768fe60f015cc63d990e5defb3623de8f5c930bb1506c522af1819381698e
-resume_instruction: "V46 verified. First reconcile blocked indexing batch read-only and resume existing runner only after gate; continue exact outcomes, active leads and new originals. V46 map, V40 actions, V21 queue, V33 coverage. Nov17 report. No DB mutation without gate, no duplicate workers. 249 budget leads; uninspected historical external claims provisional."
+index_late_commit_recovery_20261116_0609:
+  status: reconciled_executor_restarted
+  source_sha256: 8b938db32238ffd37ce3507d7da061e70fe968b3faf5965440930392412082de
+  new_resource_chunks: 161
+  collection_documents: 774
+  collection_chunks_embeddings: 16129
+  evidence: dp-readonly-reconciliation-20261116060947.json
+  evidence_sha256: 0870b8d338e4ac170ef0e638d87e30c8596414990ea0d6b98efb7541adab9d3e
+  manifest_sha256: 5ed31e7c48423ee1dc0daf8d87c3995d59f030593d09d7699e8ccf0e4fc6bc4d
+  pid: 87788
+  database_modified_by_recovery: false
+  reason: Late DP commit after 180s request timeout; 20 chunks in pre-extract, 161 in committed index. Exact original
+    and all persisted embedding identities verified. Preserve prior proof hashes. TA sync pending. Do not increase
+    chunk cap or timeout blindly.
+resume_instruction: 'V46 verified. First reconcile blocked indexing batch read-only and resume existing runner only
+  after gate; continue exact outcomes, active leads and new originals. V46 map, V40 actions, V21 queue, V33 coverage.
+  Nov17 report. No DB mutation without gate, no duplicate workers. 249 budget leads; uninspected historical external
+  claims provisional. Index late commit reconciled: 774 originals/16129 embeddings; check existing PID87788 progress,
+  do not repeat ingestion or reset unexplained mismatches. Gemma paused.'
