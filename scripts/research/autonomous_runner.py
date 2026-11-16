@@ -21,6 +21,8 @@ MI_PY = "/Users/master/ArvectumSafe/.venvs/tender-agent-mi/bin/python"
 API = "arvectum-local-e2e-api-1"
 DB = "arvectum-local-e2e-db-1"
 TASK = "TA-AUTONOMOUS-RESEARCH-RUNNER-20261115"
+ARCHIVE_INDEX_BATCH_SIZE = 10
+ARCHIVE_INDEX_BATCH_TIMEOUT = 2050
 STATS = """import os,json
 from arvectum_data_client import DataPlatformClient
 with DataPlatformClient(base_url=os.environ['AI_CORP_RAG_DATA_PLATFORM_BASE_URL'],api_key=os.environ['AI_CORP_RAG_DATA_PLATFORM_API_KEY'],timeout_seconds=60) as c:
@@ -363,12 +365,12 @@ class Runner:
                 gate=self.gate(lane)
                 # Process_document may have side effects: keep the same gate and
                 # reconcile the collection even after extraction transport failure.
-                self.update(lane,index_inflight=True,index_baseline=len(before))
+                self.update(lane,index_inflight=True,index_baseline=len(before),archive_index_batch_size=ARCHIVE_INDEX_BATCH_SIZE)
                 error=None
                 try:
-                    x=self.module(lane,self.sibur,"archive_index_batch","--root",self.root,"--digest",digest,"--mode","extract","--gate",gate,"--limit",3,timeout=650).decode()
+                    x=self.module(lane,self.sibur,"archive_index_batch","--root",self.root,"--digest",digest,"--mode","extract","--gate",gate,"--limit",ARCHIVE_INDEX_BATCH_SIZE,timeout=ARCHIVE_INDEX_BATCH_TIMEOUT).decode()
                     self.reconcile_index(self.local_index())
-                    y=self.module(lane,self.sibur,"archive_index_batch","--root",self.root,"--digest",digest,"--mode","index","--gate",gate,"--limit",3,"--cap",100,timeout=650).decode()
+                    y=self.module(lane,self.sibur,"archive_index_batch","--root",self.root,"--digest",digest,"--mode","index","--gate",gate,"--limit",ARCHIVE_INDEX_BATCH_SIZE,"--cap",100,timeout=ARCHIVE_INDEX_BATCH_TIMEOUT).decode()
                 except Blocked as exc:error=exc
                 after=self.local_index();self.reconcile_index(after)
                 if after!=before:

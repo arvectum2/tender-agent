@@ -117,6 +117,8 @@ def test_drained_archive_refresh_continues_without_restart(tmp_path, monkeypatch
     calls = []
     def module(lane, repo, name, *args, **kwargs):
         calls.append(args[args.index("--digest")+1])
+        assert args[args.index("--limit")+1] == 10
+        assert kwargs["timeout"] == 2050
         return b"planned 0\n"
     monkeypatch.setattr(r, "module", module)
     refreshes = []
