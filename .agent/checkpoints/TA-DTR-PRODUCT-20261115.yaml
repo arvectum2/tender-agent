@@ -300,20 +300,27 @@ completed:
   archive redirect namespace, stop on 401/403/429, real loopback 7/7 counted and exact
   ZIP. Private cookie-only state validation, manual local session CLI, one-card manifest
   preflight without live activation.'
-current_stage: b2b_eds_macbook_session_preparation
+- MacBook EDS login requirement incorporated; dedicated persistent Chrome profile
+  (extension support, positive local confirmation, exact B2B page, owner-only cookie
+  state, no ordinary profile reuse/key access or automatic signing), verified two
+  real Chrome starts/restart offline on Mac mini. Legacy direct B2B fetch entrypoints
+  audited and recorded for activation gate.
+current_stage: b2b_eds_session_profile_verified_next_guarded_runner
 remaining:
-- Complete actual guarded single-card live runner with exact reviewed scope, hard
-  deadline/queue/accounting, canonical shared egress state and sole designated host/IP;
-  audit/disable all legacy unguarded B2B HTTP access in candidate before activation.
-  Current browser isolation and verified TLS only accepted against loopback.
-- Prepare locally reviewed B2B endpoint inventory, use manual dedicated Arvectum session
-  CLI (not password or cookies in chat), verify own account and run limited read-only
-  pilot after technical acceptance. No other tenants, submission or signature.
-- PRICE-01 corporate normative samples and historical comparable normalization; preserve
-  completed work.
-- Hosted CI, PostgreSQL concurrency, real browser/device and E2E acceptance. No production
+- Complete guarded single-card runner with hard deadline, canonical shared egress
+  state and one designated MacBook host/IP; gate/migrate all legacy direct B2B egress
+  paths documented in product increment (preserve other sources/fixtures/history).
+  Test isolated broker and runner offline.
+- Prepare local MacBook runtime and dedicated profile for user-interactive EDS sign-in;
+  verify own Arvectum organization, cookie-only session sufficiency and lifetime in
+  permitted one-card pilot after technical acceptance. No key or PIN export, no automatic
+  signature, no ordinary profile access, no unsupported token reconstruction. Session
+  remains MacBook-local by default; Mac mini analyzes permitted artifacts. Do not
+  assume cross-device portability.
+- PRICE-01 corporate normative samples and historical comparable normalization.
+- Hosted CI, PostgreSQL concurrency and real browser/device/E2E acceptance. No production
   deployment.
-last_verified_commit: 7934b5f2e281018fc42fb8c828cb5729708da9ca
+last_verified_commit: dbf647cb09b7592ca4dbe1c991529751555815e8
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -485,14 +492,24 @@ test_results:
   Session privacy/expiry/foreign domain, exact routes, IPC token/redirect rejection,
   local preflight and exclusive state save tests PASS. Ruff/diff PASS. PR577 exact
   b7368728 CI 19/19 successful.
-resume_instruction: Owner specifies interactive EDS login on MacBook, not password.
-  Adapt dedicated Chrome profile capture, local cookie state and guarded runner preparation;
-  no key access or credential extraction from ordinary profiles, no transfer by default,
-  no live request before acceptance.
+- 170 focused tests passed,2 skipped,130 warnings in 15.83s; persistent Chrome profile
+  launch/relaunch PASS on Mac mini via rejecting proxy; dedicated marker/symlink/permission
+  tests PASS; Ruff/diff PASS. PR578 exact 889506a7 CI 19/19. No MacBook EDS or live
+  B2B test yet.
+resume_instruction: MacBook manual EDS dedicated Chrome profile implementation and
+  offline startup/restart verified. Next complete guarded single-card runner and legacy
+  egress gates/sole canonical host, hard total deadline, approved endpoint inventory
+  and offline acceptance. Prepare MacBook-specific runtime and profile only when feasible;
+  user will manually sign in via EDS once ready. Do not request or inspect signing
+  key/PIN/session secrets in chat or copy regular browser profiles. Keep session local
+  on MacBook, Mac mini consumes allowed artifacts. Actual portability and provider
+  compatibility unverified. PN-1356710-26 internal approval with 60/rolling minute
+  per IP. No live automated traffic before technical acceptance; no production deployment.
+  PRICE-01 preserved.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
-  status: approved_pending_guarded_live_runner_and_local_session
+  status: approved_pending_guarded_runner_and_macbook_eds_login
   support_ticket: PN-1356710-26
   support_response: 'Operator written approval relayed by owner: Козырькова Валерия
     Андреевна, 2026-11-16 14:51:30. Internal partial automation allowed subject to
@@ -500,9 +517,11 @@ b2b_dependency:
     более 60 HTTP-запросов в минуту с одного IP-адреса». IP approval not required;
     no separate download restrictions; own account or optional additional user. Earlier
     response: no additional fee or alternative API for stated actions.'
-  owner_action: 'User specifies manual EDS login on MacBook. Session portability not
-    known: default keep dedicated session on MacBook; Mac mini analysis; no key export,
-    signing, or session secret in chat.'
+  owner_action: Owner will manually authorize via EDS on MacBook. Dedicated profile
+    code ready, offline launch/relaunch verified on Mac mini; MacBook runtime/provider
+    and real session not yet tested. Keep session local by default; no signing key/PIN
+    export or token transfer to chat. Legacy egress audit recorded; gates and guarded
+    runner next.
 sibur_readonly_observation_20261116:
   status: exhausted
   step: archive supported queue drained; oversized and PDF review remains
