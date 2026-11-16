@@ -333,7 +333,7 @@ completed:
 - PRICE-01 descriptive sample backend d06c553d and Web cohort selection fcd56e81 verified;
   explicit latest row per distinct procurement, same work/category/unit, source digest
   and client-side decimal recomputation, no persistence or automatic approved norms.
-current_stage: price01_actual_sample_web_verified_next_ios
+current_stage: price01_actual_sample_ios
 remaining:
 - Implement iOS descriptive actual sample selection UI and typed client validation;
   then explicit normative approval/evidence model and historical comparables.
@@ -539,10 +539,10 @@ test_results:
 - 288 focused tests passed, 2 skipped, 131 warnings, 18.39s; actual Node cabinet contract
   fixture PASS, including stale/disabled API, duplicate selection, median rounding,
   changed result and session clearing; Ruff/diff PASS.
-resume_instruction: PRICE-01 backend and Web preview verified at fcd56e81. Next implement
-  typed iOS actual sample preview and selection, test exact decimal/source/tenant
-  bindings. B2B manual UI receipt absent/incomplete; do not repeat live tests without
-  new evidence. No production deployment. See latest product increment documentation.
+resume_instruction: Implement typed iOS descriptive sample client and in-memory tenant-scoped
+  cohort, explicit selection from latest snapshot and comparison. Validate Python-compatible
+  source digests/decimal statistics, build and run standalone native contract test.
+  B2B manual observation remains incomplete.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
