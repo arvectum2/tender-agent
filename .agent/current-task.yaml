@@ -663,6 +663,6 @@ parallel_dtr_product:
   task_id: TA-DTR-PRODUCT-20261115
   status: in_progress
   checkpoint: .agent/checkpoints/TA-DTR-PRODUCT-20261115.yaml
-  current_stage: versioned_readiness_evidence_binding
+  current_stage: readiness_evidence_backend_verified_next_receipt_artifacts
   branch: feat/ta-dtr-readiness-evidence-20261116
   owner_priority: Product development only in this chat; research separate; Gemma paused

@@ -196,17 +196,21 @@ completed:
   writes only, explicit human attestation/confirmation, current decision binding,
   exact response/actor/payload match, same draft retry key, scope and coherent metrics
   validation, access clearing.'
-current_stage: versioned_readiness_evidence_binding
+- Immutable partial-review binding (migration 116) to current GO-bound READY, latest
+  owned commercial observation, active profile and per-document reviewed fragments
+  including versioned support references; exact digest, explicit partial-scope acknowledgement,
+  stale detection, separate default-off commercial submission recording gate. No full
+  qualification/source claims.
+current_stage: readiness_evidence_backend_verified_next_receipt_artifacts
 remaining:
-- Bind readiness to versioned qualification evidence and required documents; original
-  receipt/protocol evidence, scoped immutable validation and human review. Multi-lot/rebid/corrections
-  remain.
-- Implement PRICE-01 cost/pricing calculation and explainable bid economics without
-  unsupported market forecasts.
-- Hosted CI and mirror; real PG, browser, simulator/device and full E2E acceptance.
-- B2B operator consent pending, no automated B2B traffic. Product roadmap only in
-  this chat; research separate, Gemma paused; no production deployment.
-last_verified_commit: 8298a1872bac9f5caffe7d1db75e1549d313e504
+- Scoped immutable original receipt/protocol user-copy storage and event linkage;
+  independently verified source provenance still separate. Web/native readiness and
+  receipt controls. Cross-module PostgreSQL concurrency and real E2E acceptance, keep
+  mandatory gate disabled until ready.
+- PRICE-01 cost/pricing and explainable bid economics.
+- Hosted CI/mirror and browser/device acceptance. B2B written operator consent pending;
+  no automated B2B traffic. Product only, no production deployment.
+last_verified_commit: 633b2dd6572ad3fedba12fef6fb5374bd6658d42
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -285,10 +289,14 @@ test_results:
 - Actual Swift contract assertions executed independently on macOS PASS; Xcode unsigned
   build-for-testing final PASS (new XCTest compiled; no simulator execution). git
   diff --check PASS. PR553 observed 17 success,1 in progress, mirror failure.
-resume_instruction: Implement bounded read-only commercial evidence projection and
-  append-only snapshot linked to READY event, historical source revision and current
-  profile/review/document IDs, independent opt-in enforcement for new SUBMITTED records
-  only. No external verification claims, no network calls, no prod. Product only.
+- 118 passed, 2 skipped, 99 warnings in 12.44s; sequential profile/document version
+  staleness, missing review, replay, rebind, cross-company, optional gate, SQLite
+  migration rollback guard; Ruff/diff PASS. New hosted CI pending.
+resume_instruction: Readiness backend and sequential SQLite regression verified. Next
+  bounded original receipt/protocol user-copy artifact capture and lifecycle link,
+  then web/native readiness and receipt controls; no promotion to platform originals
+  or full qualification. Keep optional mandatory gate off until client and PG concurrency
+  acceptance. Continue PRICE-01. Product only in this chat; no research operations.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
