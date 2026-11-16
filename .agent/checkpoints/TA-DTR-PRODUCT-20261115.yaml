@@ -231,14 +231,19 @@ completed:
   explicit zero categories and source notes, no-double-count acknowledgement, exact
   BigInt line/rollup verification of server projection, existing immutable history
   and preview/save/replay, session clearing.'
-current_stage: price01_itemized_native_controls
+- 'Native PRICE-01 itemized editor: bounded rows, zero category and provenance acknowledgement,
+  typed Decimal rollup verification, scoped mixed history, explicit manager save and
+  exact projection/replay; legacy aggregate supported.'
+current_stage: price01_itemized_native_verified_next_cost_evidence
 remaining:
-- Native itemized cost editor and detailed mixed history; scoped document-level evidence
-  links and real expenses.
-- Comparable procurement normalization and real-case acceptance; no uncalibrated forecast.
-- Hosted CI, PG concurrency, real web/device E2E. Gates off; no production deploy.
+- Scoped immutable document-level cost evidence links for each saved estimate row,
+  bounded format/integrity and explicit user-reported provenance; actual expense and
+  labor evidence.
+- Comparable procurement normalization and real-case acceptance; no unsupported forecasts.
+- Hosted exact-head CI, PostgreSQL concurrency, real web/device E2E; keep gates off
+  until acceptance. No production deployment.
 - B2B operator consent pending; product only.
-last_verified_commit: 57773b418f880bf8fa6e6c3f6e76b6561ff8f79f
+last_verified_commit: 13706f75f42e080653169fd5e6389aa1605adf01
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -348,9 +353,16 @@ test_results:
   server-generated itemized response, row editing, zero category refusal, amount verification,
   retry, history, invalidation and tampered projection rejection. Ruff/diff PASS.
   PR562 exact 93b21b60 17 success,2 running.
-resume_instruction: Implement typed native itemized estimate, exact Decimal validation,
-  shared history and repeat-safe saving; compile and execute contract tests. Product
-  only; no deploy.
+- Actual macOS Swift server-generated itemized fixture contract PASS (rounding, tampering,
+  source changes, exact retry, legacy record, wire fields); final Xcode unsigned build-for-testing
+  PASS including new XCTest compilation. git diff --check PASS. PR563 exact 31f1e6e0
+  CI 19/19. No simulator XCTest, physical device or live E2E execution.
+resume_instruction: Native itemized estimate built and actual Swift contract PASS.
+  Next scope immutable cost evidence links to saved scenario revision and line ordinal;
+  reuse existing evidence storage/validation where possible, preserve user-provided
+  origin and no independently verified cost claim. Then Web/native evidence controls,
+  historical comparable normalization and real-case acceptance. No production deployment
+  or external source/model calls. Product only.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
