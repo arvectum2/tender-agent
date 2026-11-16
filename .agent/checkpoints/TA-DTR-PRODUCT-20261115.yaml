@@ -282,7 +282,7 @@ completed:
   cooldown, sanitized activity log. Explicit read-only HTTP broker with charged redirects
   and bounded download, same-origin policy, 429 Retry-After. Old pilot B2B refuses
   before launch until integrated.
-current_stage: b2b_network_guard_verified_next_browser_integration
+current_stage: b2b_offline_browser_bridge
 remaining:
 - B2B browser-to-broker integration and offline no-direct-egress proof, all background/redirect/download
   HTTP attempts accounted, trusted canonical state directory and designated sole egress
@@ -454,13 +454,9 @@ test_results:
   and real loopback HTTP redirect/archive/429. Ruff/diff PASS; old pilot refuses B2B
   even with consent reference. PR574 exact 0386c159 17 success/2 running. No live
   B2B requests.
-resume_instruction: Persistent B2B network admission gate and explicit HTTP broker
-  verified (163 focused pass). Next integrate real Playwright offline browser fixture
-  through broker, block direct egress including browser background and redirects/downloads,
-  prove all actual HTTP requests counted; bound total dispatch, canonical state/sole
-  IP, exact read-only endpoint scope and secure auth/session. Do not enable live B2B
-  until accepted. Operator PN-1356710-26 approved internal workflow, retain 60 requests/rolling
-  60s/IP. PRICE-01 norms remain next independent product step. No deployment.
+resume_instruction: Implement offline-only Playwright bridge using explicit single-hop
+  broker, deny proxy, exact local-origin allowlist and actual browser fixture; no
+  live access. Preserve technical gate and PRICE-01.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:

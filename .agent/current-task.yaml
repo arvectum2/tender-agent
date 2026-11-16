@@ -663,6 +663,6 @@ parallel_dtr_product:
   task_id: TA-DTR-PRODUCT-20261115
   status: in_progress
   checkpoint: .agent/checkpoints/TA-DTR-PRODUCT-20261115.yaml
-  current_stage: b2b_network_guard_verified_next_browser_integration
-  branch: feat/ta-b2b-network-guard-20261116
+  current_stage: b2b_offline_browser_bridge
+  branch: feat/ta-b2b-browser-bridge-20261116
   owner_priority: Product development only in this chat; research separate; Gemma paused
