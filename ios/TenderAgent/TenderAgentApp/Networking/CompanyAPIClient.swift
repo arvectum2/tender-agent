@@ -784,7 +784,7 @@ struct CompanyCostBinding: Decodable, Sendable {
 
 struct CompanyActualBaseline: Sendable {
     let scenario: CompanyPriceRecord
-    private static func canonical(_ value: Any) throws -> String {
+    fileprivate static func canonical(_ value: Any) throws -> String {
         if let obj=value as? [String:Any] { return "{" + (try obj.keys.sorted().map { key in CompanyCostTarget.quote(key) + ":" + (try canonical(obj[key]!)) }).joined(separator:",") + "}" }
         if let arr=value as? [Any] { return "[" + (try arr.map(canonical)).joined(separator:",") + "]" }
         if let string=value as? String { return CompanyCostTarget.quote(string) }
@@ -821,13 +821,13 @@ struct CompanyActualInput: Codable, Equatable, Sendable {
         return observations.allSatisfy { o in o.amount != nil && lines.contains { $0.ordinal==o.ordinal } } && unplannedCosts.allSatisfy { $0.amount != nil && $0.sourceKind == .actual }
     }
 }
-struct CompanyActualRow: Decodable, Equatable, Sendable, Identifiable {
+struct CompanyActualRow: Codable, Equatable, Sendable, Identifiable {
     let ordinal:Int;let title:String;let category:CompanyCostCategory;let unit:String
     let plannedQuantity:String;let plannedRateRub:String;let plannedAmountRub:String
     let status:String;let actualQuantity:String?;let actualRateRub:String?;let actualAmountRub:String?;let varianceRub:String?;let variancePercent:String?;let sourceNote:String?
     var id:Int { ordinal }
 }
-struct CompanyActualExtra: Decodable, Equatable, Sendable, Identifiable {
+struct CompanyActualExtra: Codable, Equatable, Sendable, Identifiable {
     let ordinal:Int;let category:CompanyCostCategory;let title:String;let unit:String;let quantity:String;let rateRub:String;let sourceKind:CompanyCostSource;let sourceNote:String;let actualAmountRub:String
     var id:Int { ordinal }
     var line:CompanyCostLine { .init(category:category,title:title,unit:unit,quantity:quantity,rateRub:rateRub,sourceKind:sourceKind,sourceNote:sourceNote) }
@@ -898,6 +898,58 @@ struct CompanyActualAttempt:Equatable,Sendable {
         return Self(accountID:accountID,scenarioID:id,payload:.init(expectedRevision:revision,idempotencyKey:UUID().uuidString,snapshot:input),result:result)
     }
     func accepts(_ row:CompanyActualRecord,identity:CompanyIdentity,caseID:String,baseline:CompanyActualBaseline)->Bool {scenarioID==baseline.scenario.scenarioId&&row.matches(identity,caseID:caseID,baseline:baseline)&&row.memberId==identity.memberId&&row.revision==payload.expectedRevision+1&&row.inputs==payload.snapshot&&row.result==result}
+}
+
+enum CompanyActualDocumentKind:String,Codable,CaseIterable,Identifiable,Sendable {
+    case invoice="INVOICE",contract="CONTRACT",timesheet="TIMESHEET",acceptanceAct="ACCEPTANCE_ACT",paymentRecord="PAYMENT_RECORD",other="OTHER"
+    var id:String {rawValue}
+    var title:String {switch self {case .invoice:"Счёт";case .contract:"Договор";case .timesheet:"Табель трудозатрат";case .acceptanceAct:"Акт выполненных работ";case .paymentRecord:"Платёжный документ";case .other:"Прочее"}}
+}
+enum CompanyActualEvidenceRow:Equatable,Identifiable,Sendable {
+    case planned(CompanyActualRow),unplanned(CompanyActualExtra)
+    var kind:String {switch self {case .planned:"PLANNED";case .unplanned:"UNPLANNED"}}
+    var ordinal:Int {switch self {case .planned(let l):l.ordinal;case .unplanned(let l):l.ordinal}}
+    var title:String {switch self {case .planned(let l):l.title;case .unplanned(let l):l.title}}
+    var amount:String? {switch self {case .planned(let l):l.actualAmountRub;case .unplanned(let l):l.actualAmountRub}}
+    var id:String {kind+":"+String(ordinal)}
+    var label:String {(kind=="PLANNED" ? "Плановая" : "Внеплановая")+" · \(ordinal). \(title) · \(amount ?? "—") ₽"}
+    static func rows(_ snapshot:CompanyActualRecord)->[Self] {snapshot.result.lines.filter{$0.status=="USER_REPORTED_ACTUAL" && $0.actualAmountRub != nil}.map{.planned($0)}+snapshot.result.unplannedCosts.map{.unplanned($0)}}
+    fileprivate func object()throws->[String:Any] {
+        let encoder=JSONEncoder();encoder.keyEncodingStrategy = .convertToSnakeCase
+        let bytes:Data
+        switch self {case .planned(let l):bytes=try encoder.encode(l);case .unplanned(let l):bytes=try encoder.encode(l)}
+        guard let obj=try JSONSerialization.jsonObject(with:bytes) as? [String:Any] else {throw CompanyConnectionError.invalidArtifact};return obj
+    }
+}
+struct CompanyActualEvidenceTarget:Sendable {
+    let baseline:CompanyActualBaseline;let snapshot:CompanyActualRecord;let row:CompanyActualEvidenceRow
+    func digest()throws->String {
+        let base=try baseline.digest()
+        guard snapshot.scope.baselineSha256==base,snapshot.scope.scenarioId==baseline.scenario.scenarioId,snapshot.scope.scenarioRevision==baseline.scenario.revision,snapshot.result.matches(snapshot.inputs,baseline:baseline),CompanyActualEvidenceRow.rows(snapshot).contains(row) else {throw CompanyConnectionError.invalidArtifact}
+        let object:[String:Any]=["scenario_id":baseline.scenario.scenarioId,"scenario_revision":baseline.scenario.revision,"baseline_sha256":base,"snapshot_id":snapshot.snapshotId,"snapshot_revision":snapshot.revision,"as_of":snapshot.inputs.asOf,"row_kind":row.kind,"line":try row.object()]
+        return CompanyArtifactBytes.digest(Data(try CompanyActualBaseline.canonical(object).utf8))
+    }
+    func matches(_ identity:CompanyIdentity,caseID:String)->Bool {snapshot.matches(identity,caseID:caseID,baseline:baseline)&&CompanyActualEvidenceRow.rows(snapshot).contains(row)&&(try? digest()) != nil}
+}
+struct CompanyActualEvidenceScope:Decodable,Equatable,Sendable {
+    let base:CompanyActualScope;let snapshotId:String;let snapshotRevision:Int;let asOf:String;let rowKind:String;let lineOrdinal:Int;let lineTitle:String;let actualAmountRub:String;let lineSha256:String
+    private enum CodingKeys:String,CodingKey {case snapshotId,snapshotRevision,asOf,rowKind,lineOrdinal,lineTitle,actualAmountRub,lineSha256}
+    init(from decoder:Decoder)throws {base=try CompanyActualScope(from:decoder);let c=try decoder.container(keyedBy:CodingKeys.self);snapshotId=try c.decode(String.self,forKey:.snapshotId);snapshotRevision=try c.decode(Int.self,forKey:.snapshotRevision);asOf=try c.decode(String.self,forKey:.asOf);rowKind=try c.decode(String.self,forKey:.rowKind);lineOrdinal=try c.decode(Int.self,forKey:.lineOrdinal);lineTitle=try c.decode(String.self,forKey:.lineTitle);actualAmountRub=try c.decode(String.self,forKey:.actualAmountRub);lineSha256=try c.decode(String.self,forKey:.lineSha256)}
+    func matches(_ identity:CompanyIdentity,caseID:String,target:CompanyActualEvidenceTarget)->Bool {target.matches(identity,caseID:caseID)&&base==target.snapshot.scope&&snapshotId==target.snapshot.snapshotId&&snapshotRevision==target.snapshot.revision&&asOf==target.snapshot.inputs.asOf&&rowKind==target.row.kind&&lineOrdinal==target.row.ordinal&&lineTitle==target.row.title&&actualAmountRub==target.row.amount&&lineSha256==(try? target.digest())}
+}
+struct CompanyActualEvidence:Decodable,Equatable,Sendable {
+    let scope:CompanyActualEvidenceScope;let evidenceId:String;let memberId:String;let documentKind:CompanyActualDocumentKind;let formatHint:String;let inspection:CompanyCostInspection;let origin:String;let storedBytesReverified:Bool;let documentOriginVerified:Bool;let actualAmountVerified:Bool;let paymentVerified:Bool;let contractExecutionVerified:Bool
+    private enum CodingKeys:String,CodingKey {case evidenceId,memberId,documentKind,formatHint,inspection,origin,storedBytesReverified,documentOriginVerified,actualAmountVerified,paymentVerified,contractExecutionVerified}
+    init(from decoder:Decoder)throws {scope=try CompanyActualEvidenceScope(from:decoder);let c=try decoder.container(keyedBy:CodingKeys.self);evidenceId=try c.decode(String.self,forKey:.evidenceId);memberId=try c.decode(String.self,forKey:.memberId);documentKind=try c.decode(CompanyActualDocumentKind.self,forKey:.documentKind);formatHint=try c.decode(String.self,forKey:.formatHint);inspection=try c.decode(CompanyCostInspection.self,forKey:.inspection);origin=try c.decode(String.self,forKey:.origin);storedBytesReverified=try c.decode(Bool.self,forKey:.storedBytesReverified);documentOriginVerified=try c.decode(Bool.self,forKey:.documentOriginVerified);actualAmountVerified=try c.decode(Bool.self,forKey:.actualAmountVerified);paymentVerified=try c.decode(Bool.self,forKey:.paymentVerified);contractExecutionVerified=try c.decode(Bool.self,forKey:.contractExecutionVerified)}
+    func matches(_ identity:CompanyIdentity,caseID:String,target:CompanyActualEvidenceTarget)->Bool {scope.matches(identity,caseID:caseID,target:target)&&UUID(uuidString:evidenceId) != nil && !memberId.isEmpty&&inspection.valid&&formatHint==inspection.formatHint&&origin=="USER_SUPPLIED_UNATTESTED"&&storedBytesReverified && !documentOriginVerified && !actualAmountVerified && !paymentVerified && !contractExecutionVerified}
+    func accepts(_ bytes:CompanyArtifactBytes)->Bool {formatHint==bytes.format&&inspection.sizeBytes==bytes.data.count&&inspection.sha256==bytes.sha256}
+    var filename:String {"actual-\(inspection.sha256.prefix(16)).\(formatHint)"}
+}
+struct CompanyActualEvidenceBinding:Decodable,Sendable {
+    let scope:CompanyActualEvidenceScope;let evidence:CompanyActualEvidence?
+    private enum CodingKeys:String,CodingKey {case evidence}
+    init(from decoder:Decoder)throws {scope=try CompanyActualEvidenceScope(from:decoder);let c=try decoder.container(keyedBy:CodingKeys.self);guard c.contains(.evidence) else {throw CompanyConnectionError.invalidResponse};evidence=try c.decodeIfPresent(CompanyActualEvidence.self,forKey:.evidence)}
+    func matches(_ identity:CompanyIdentity,caseID:String,target:CompanyActualEvidenceTarget)->Bool {scope.matches(identity,caseID:caseID,target:target)&&(evidence.map{$0.scope==scope&&$0.matches(identity,caseID:caseID,target:target)} ?? true)}
 }
 
 struct CompanyPriceHistory: Decodable, Sendable {
@@ -1232,6 +1284,26 @@ struct CompanyAPIClient: Sendable {
         guard attempt.scenarioID==baseline.scenario.scenarioId,attempt.result.matches(attempt.payload.snapshot,baseline:baseline) else {throw CompanyConnectionError.invalidPrice};let encoder=JSONEncoder();encoder.keyEncodingStrategy = .convertToSnakeCase
         let reply:CompanyActualRecord=try await get(try actualPath(caseID:caseID,identity:identity,baseline:baseline,write:true),method:"POST",body:encoder.encode(attempt.payload))
         guard attempt.accepts(reply,identity:identity,caseID:caseID,baseline:baseline) else {throw CompanyConnectionError.identityMismatch};return reply
+    }
+
+    private func actualEvidencePath(caseID:String,identity:CompanyIdentity,target:CompanyActualEvidenceTarget,write:Bool=false)throws->String {
+        guard target.matches(identity,caseID:caseID) else {throw CompanyConnectionError.identityMismatch}
+        return try actualPath(caseID:caseID,identity:identity,baseline:target.baseline,write:write)+"/\(target.snapshot.snapshotId)/rows/\(target.row.kind)/\(target.row.ordinal)/evidence"
+    }
+    func actualEvidenceBinding(caseID:String,identity:CompanyIdentity,target:CompanyActualEvidenceTarget) async throws -> CompanyActualEvidenceBinding {
+        let result:CompanyActualEvidenceBinding=try await get(try actualEvidencePath(caseID:caseID,identity:identity,target:target))
+        guard result.matches(identity,caseID:caseID,target:target) else {throw CompanyConnectionError.identityMismatch};return result
+    }
+    func saveActualEvidence(caseID:String,identity:CompanyIdentity,target:CompanyActualEvidenceTarget,binding:CompanyActualEvidenceBinding,kind:CompanyActualDocumentKind,bytes:CompanyArtifactBytes) async throws -> CompanyActualEvidence {
+        guard binding.matches(identity,caseID:caseID,target:target),binding.evidence==nil else {throw CompanyConnectionError.http(409)}
+        let path=try actualEvidencePath(caseID:caseID,identity:identity,target:target,write:true)
+        let query=[URLQueryItem(name:"format_hint",value:bytes.format),URLQueryItem(name:"document_kind",value:kind.rawValue),URLQueryItem(name:"line_sha256",value:try target.digest()),URLQueryItem(name:"confirm_user_supplied",value:"true")]
+        let result:CompanyActualEvidence=try await get(path,query:query,method:"POST",body:bytes.data,contentType:"application/octet-stream")
+        guard result.matches(identity,caseID:caseID,target:target),result.scope==binding.scope,result.memberId==identity.memberId,result.documentKind==kind,result.accepts(bytes) else {throw CompanyConnectionError.identityMismatch};return result
+    }
+    func downloadActualEvidence(caseID:String,identity:CompanyIdentity,target:CompanyActualEvidenceTarget,evidence:CompanyActualEvidence) async throws -> CompanyArtifactBytes {
+        guard evidence.matches(identity,caseID:caseID,target:target) else {throw CompanyConnectionError.identityMismatch}
+        return try await downloadVerifiedFile(path:actualEvidencePath(caseID:caseID,identity:identity,target:target)+"/download",sha:evidence.inspection.sha256,size:evidence.inspection.sizeBytes,format:evidence.formatHint)
     }
 
     private func get<T: Decodable>(_ path: String, query: [URLQueryItem] = [], method: String = "GET", body: Data? = nil, contentType: String = "application/json") async throws -> T {

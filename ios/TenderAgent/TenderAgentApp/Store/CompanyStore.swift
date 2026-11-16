@@ -384,6 +384,19 @@ final class CompanyStore: ObservableObject {
         do {let (client,actual)=try await lifecycleAccess(accountID:accountID,item:item,write:true);return try await client.saveActual(caseID:item.caseId,identity:actual,baseline:baseline,attempt:attempt)} catch {handleLifecycleError(error);throw error}
     }
 
+    func actualEvidenceBinding(accountID:String,item:CompanyCase,target:CompanyActualEvidenceTarget) async throws -> CompanyActualEvidenceBinding {
+        guard !isBusy else {throw CompanyConnectionError.http(409)};isBusy=true;defer {isBusy=false}
+        do {let (client,actual)=try await lifecycleAccess(accountID:accountID,item:item);return try await client.actualEvidenceBinding(caseID:item.caseId,identity:actual,target:target)} catch {handleLifecycleError(error);throw error}
+    }
+    func saveActualEvidence(accountID:String,item:CompanyCase,target:CompanyActualEvidenceTarget,binding:CompanyActualEvidenceBinding,kind:CompanyActualDocumentKind,bytes:CompanyArtifactBytes) async throws -> CompanyActualEvidence {
+        guard !isBusy,canDecide(accountID:accountID,caseID:item.caseId,revision:item.revision) else {throw CompanyConnectionError.http(409)};isBusy=true;defer {isBusy=false}
+        do {let (client,actual)=try await lifecycleAccess(accountID:accountID,item:item,write:true);return try await client.saveActualEvidence(caseID:item.caseId,identity:actual,target:target,binding:binding,kind:kind,bytes:bytes)} catch {handleLifecycleError(error);throw error}
+    }
+    func downloadActualEvidence(accountID:String,item:CompanyCase,target:CompanyActualEvidenceTarget,evidence:CompanyActualEvidence) async throws -> CompanyArtifactBytes {
+        guard !isBusy else {throw CompanyConnectionError.http(409)};isBusy=true;defer {isBusy=false}
+        do {let (client,actual)=try await lifecycleAccess(accountID:accountID,item:item);return try await client.downloadActualEvidence(caseID:item.caseId,identity:actual,target:target,evidence:evidence)} catch {handleLifecycleError(error);throw error}
+    }
+
     static func safeError(_ error: Error) -> String {
         if let known = error as? CompanyConnectionError { return known.localizedDescription }
         return "Не удалось получить данные компании. Проверьте подключение."

@@ -916,7 +916,7 @@ private struct CompanyActualView:View {
             if let history {
                 editor()
                 if let preview {comparison(preview);if canSave {Button("Проверить и сохранить срез"){prepare()}.disabled((history.first?.revision ?? 0)>=30)}}
-                if !history.isEmpty {Picker("Сохранённый срез",selection:$selected){Text("Выберите срез").tag("");ForEach(history){Text("v\($0.revision) · \($0.inputs.asOf)").tag($0.id)}};if let row=history.first(where:{$0.id==selected}) {DisclosureGroup("Сохранённые результаты"){comparison(row.result);Text(row.inputs.note).textSelection(.enabled)}}}
+                if !history.isEmpty {Picker("Сохранённый срез",selection:$selected){Text("Выберите срез").tag("");ForEach(history){Text("v\($0.revision) · \($0.inputs.asOf)").tag($0.id)}};if let row=history.first(where:{$0.id==selected}) {DisclosureGroup("Сохранённые результаты"){comparison(row.result);Text(row.inputs.note).textSelection(.enabled)};CompanyActualDocumentsView(item:item,accountID:accountID,baseline:baseline,snapshot:row,store:store).id(row.id)}}
             }
             if let notice {Text(notice).font(.caption).foregroundStyle(.secondary)}
         }
@@ -934,5 +934,116 @@ private struct CompanyActualView:View {
         .onChange(of:store.identity?.memberId){_,_ in reset()}
         .onChange(of:store.identity?.role){_,_ in reset()}
         .onDisappear{reset()}
+    }
+}
+
+
+private struct CompanyActualDocumentsView:View {
+    let item:CompanyCase;let accountID:String;let baseline:CompanyActualBaseline;let snapshot:CompanyActualRecord
+    @ObservedObject var store:CompanyStore
+    @State private var selected=""
+    var body:some View {
+        DisclosureGroup("Документы фактических затрат v\(snapshot.revision)") {
+            Text("Одна пользовательская копия на заявленную строку, без замены. Подлинность, сумма, оплата и исполнение договора не подтверждены.").font(.caption).foregroundStyle(.secondary)
+            let rows=CompanyActualEvidenceRow.rows(snapshot)
+            Picker("Заявленная позиция",selection:$selected) {
+                Text("Выберите строку").tag("");ForEach(rows){Text($0.label).tag($0.id)}
+            }
+            if let row=rows.first(where:{$0.id==selected}) {
+                CompanyActualDocumentView(item:item,accountID:accountID,target:.init(baseline:baseline,snapshot:snapshot,row:row),store:store).id(row.id)
+            }
+        }
+        .onChange(of:store.selectedID){_,_ in selected=""}
+        .onChange(of:store.identity?.memberId){_,_ in selected=""}
+        .onChange(of:store.identity?.role){_,_ in selected=""}
+        .onDisappear{selected=""}
+    }
+}
+
+private struct CompanyActualDocumentView: View {
+    let item: CompanyCase
+    let accountID: String
+    let target: CompanyActualEvidenceTarget
+    @ObservedObject var store: CompanyStore
+    @State private var binding: CompanyActualEvidenceBinding?
+    @State private var evidence: CompanyActualEvidence?
+    @State private var kind: CompanyActualDocumentKind?
+    @State private var bytes: CompanyArtifactBytes?
+    @State private var acknowledge=false
+    @State private var importing=false
+    @State private var exporting=false
+    @State private var export: CompanyExportDocument?
+    @State private var notice: String?
+    @State private var generation=UUID()
+    private var canWrite: Bool { store.canDecide(accountID:accountID,caseID:item.caseId,revision:item.revision) }
+    private func active(_ g: UUID) -> Bool {
+        guard g==generation,store.selectedID==accountID,let identity=store.identity,identity.legalAccepted,["owner","admin","analyst"].contains(identity.role) else { return false }
+        return target.matches(identity,caseID:item.caseId)
+    }
+    private func reset() {
+        generation=UUID(); binding=nil; evidence=nil; kind=nil; bytes=nil; acknowledge=false; importing=false; exporting=false; export=nil; notice=nil
+    }
+    private func load() async {
+        reset(); let g=generation
+        do {
+            let result=try await store.actualEvidenceBinding(accountID:accountID,item:item,target:target)
+            guard active(g) else { return }; binding=result; evidence=result.evidence
+            notice=result.evidence==nil ? "Копия не приложена к этой строке." : "Копия сохранена. Проверена целостность байтов, не стоимость или оплата."
+        } catch CompanyConnectionError.http(404) { if active(g) { notice="Функция недоступна или строка не найдена." } }
+        catch { if active(g) { notice=CompanyStore.safeError(error) } }
+    }
+    private func save() async {
+        guard canWrite, acknowledge, let binding, binding.evidence==nil, evidence==nil, let kind, let bytes else { return }
+        acknowledge=false; notice=nil; let g=generation
+        do {
+            let result=try await store.saveActualEvidence(accountID:accountID,item:item,target:target,binding:binding,kind:kind,bytes:bytes)
+            guard active(g) else { return }; evidence=result; self.bytes=nil; notice="Копия сохранена. Подлинность, сумма и оплата не проверены."
+        } catch CompanyConnectionError.http(409) {
+            if active(g) { reset(); notice="Привязка изменилась или документ уже приложен. Проверьте строку повторно." }
+        } catch { if active(g) { notice="Запись не подтверждена. Проверьте строку или повторите тот же файл и вид документа. " + CompanyStore.safeError(error) } }
+    }
+    private func download() async {
+        guard let evidence else { return }; export=nil; notice=nil; let g=generation
+        do {
+            let result=try await store.downloadActualEvidence(accountID:accountID,item:item,target:target,evidence:evidence)
+            guard active(g), self.evidence==evidence else { return }
+            export=CompanyExportDocument(data:result.data); exporting=true
+        } catch { if active(g) { notice=CompanyStore.safeError(error) } }
+    }
+    var body: some View {
+        VStack(alignment:.leading,spacing:8) {
+            Text("Факт v\(target.snapshot.revision) · \(target.row.label)").font(.caption)
+            Button("Проверить документ") { Task { await load() } }.disabled(store.isBusy)
+            if let evidence {
+                Text(evidence.documentKind.title + " · " + evidence.formatHint.uppercased() + " · \(evidence.inspection.sizeBytes) байт")
+                Text(evidence.inspection.sha256).font(.caption2).textSelection(.enabled)
+                Button("Скачать проверенные байты") { Task { await download() } }.disabled(store.isBusy)
+            } else if binding != nil && canWrite {
+                Picker("Вид документа",selection:$kind) {
+                    Text("Выберите вид").tag(CompanyActualDocumentKind?.none)
+                    ForEach(CompanyActualDocumentKind.allCases) { Text($0.title).tag(Optional($0)) }
+                }
+                Button("Выбрать PDF, DOCX или XLSX (до 2 МБ)") { importing=true }.disabled(store.isBusy)
+                if let bytes { Text("\(bytes.format.uppercased()) · \(bytes.data.count) байт").font(.caption) }
+                Toggle("Привязать пользовательскую копию без возможности замены. Источник, сумма и оплата не проверены.",isOn:$acknowledge)
+                Button("Прикрепить документ") { Task { await save() } }.disabled(store.isBusy || !acknowledge || bytes==nil || kind==nil)
+            }
+            if let notice { Text(notice).font(.caption).foregroundStyle(.secondary) }
+        }
+        .fileImporter(isPresented:$importing,allowedContentTypes:CompanyArtifactBytes.formats.compactMap { UTType(filenameExtension:$0) }) { result in
+            self.bytes=nil; acknowledge=false
+            do { guard canWrite,binding != nil,evidence==nil,active(generation) else { return }; bytes=try CompanyArtifactBytes.read(result.get()) }
+            catch { notice=CompanyStore.safeError(error) }
+        }
+        .fileExporter(isPresented:$exporting,document:export,contentType:evidence.flatMap { UTType(filenameExtension:$0.formatHint) } ?? .data,defaultFilename:evidence?.filename ?? "actual") { result in
+            export=nil
+            if case .failure(let error)=result { notice=CompanyStore.safeError(error) }
+        }
+        .onChange(of:exporting) { _,value in if !value { export=nil } }
+        .onChange(of:kind) { _,_ in acknowledge=false }
+        .onChange(of:store.selectedID) { _,_ in reset() }
+        .onChange(of:store.identity?.memberId) { _,_ in reset() }
+        .onChange(of:store.identity?.role) { _,_ in reset() }
+        .onDisappear { reset() }
     }
 }
