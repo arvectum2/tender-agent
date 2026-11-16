@@ -342,15 +342,18 @@ completed:
 - Corporate norm Web approval, catalog, paginated version history and explicit withdrawal
   implemented. Client verifies canonical preview and record digests, source bindings
   and identity; unchanged lost-response retry uses same key.
-current_stage: price01_approved_norm_ios
+- Corporate normative catalog, history, explicit preview, approval and withdrawal
+  implemented in iOS; typed tenant/role and canonical preview/record SHA256/source
+  validation, in-memory retry keys and state clearing.
+current_stage: price01_approved_norm_ios_verified_next_estimate_binding
 remaining:
-- Implement native iOS corporate norm catalog, preview, approval/history/withdrawal;
-  verify canonical record and preview digests and tenant boundary, test Swift/build.
-- Explicit version-bound application of norms to estimates, historical comparables
-  and final PRICE-01 acceptance.
-- B2B manual authorized UI observation, document acquisition and runtime cutover;
-  no repeat live requests without new evidence.
-last_verified_commit: c26fc07a5d95d1785c87ec61b4f928ff14aafc61
+- Implement explicit version-bound norm application in itemized estimates, retaining
+  immutable provenance and refusing stale/withdrawn selections at binding; backend/Web/iOS
+  and tests. No automatic adoption.
+- Historical comparable procurement normalization and final PRICE-01 acceptance.
+- B2B manual authorized UI observation, document acquisition and legacy runtime cutover.
+  No repeated live pilot without new evidence.
+last_verified_commit: 24c886fbc5ce7d98ae6a6719d739738912b76a7e
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -560,9 +563,15 @@ test_results:
   flow PASS for preview edit invalidation, idempotent approval retry, withdrawal,
   history, disabled feature, corrupt record and account clearing; Ruff/diff PASS.
   PR589 17 success/2 running at latest check. No visual/browser production acceptance.
-resume_instruction: Implement iOS normative catalog, approval preview and withdrawal;
-  verify exact source/response digests, role and tenant scopes, idempotent requests;
-  run Swift contract fixture and Xcode build. PR590 CI 19/19. No deployment.
+- Standalone Swift actual evidence/sample/norm contract fixture PASS with independent
+  Python-generated canonical approval/withdrawal records; Xcode generic iOS Simulator
+  build-for-testing including new assertions PASS; git diff check PASS. PR590 CI 19/19.
+  Simulator UI execution/device/server-connected acceptance not performed.
+resume_instruction: PRICE-01 corporate norm approval backend, Web and iOS verified,
+  native code 24c886fb. Next inspect itemized estimate source-kind model and implement
+  explicit norm version/digest binding, preserving historical estimates; no automatic
+  rate adoption, no production changes. B2B manual authorized UI unresolved. See latest
+  product increment docs.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
