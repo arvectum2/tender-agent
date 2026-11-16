@@ -178,7 +178,7 @@ completed:
   pending attention, GO/NO_GO, full scoped counts, bounded filter/paging and web refresh/session
   isolation. No separate store, migration, model or source calls. B2B support inquiry
   sent; acquisition blocked pending written permission/API contract.'
-current_stage: company_manager_inbox_verified_next_native_inbox
+current_stage: native_company_inbox
 remaining:
 - Implement native iOS company inbox against same scoped endpoint, including actionable/due/recorded
   filters and refresh; then evidence-backed human post-GO readiness/submission/outcome
@@ -256,10 +256,9 @@ test_results:
 - 114 passed, 2 skipped, 87 warnings in 11.21s; standalone full JS cabinet fixture
   PASS via isolated Playwright bundled Node v22.20.0; Ruff/diff PASS. PR548 and previous
   PR549 head 18/19, mirror only. B2B checkpoint e7f55849 pushed.
-resume_instruction: Company manager inbox/backend/web and standalone JS verified.
-  Next native iOS scoped inbox; use same source of truth, proceed other roadmap tasks.
-  B2B support response pending, no automated B2B calls. Gemma paused; no production
-  changes. Inspect current SIBUR state, do not duplicate worker.
+resume_instruction: Implement native scoped manager-inbox filters, server-time summary
+  and paging, verify account checks and refresh after human decisions. No production
+  or model calls; B2B pending.
 owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
   Product changes isolated, offline and bounded.
 b2b_dependency:
