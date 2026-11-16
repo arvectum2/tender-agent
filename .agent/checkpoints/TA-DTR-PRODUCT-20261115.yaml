@@ -133,19 +133,25 @@ completed:
   clearing. Bounded offline candidate attachment link inventory, no downloads; two
   reverified historical originals compared for displayed fields/digest and candidate
   link differences.
-current_stage: scoped_attachment_intake_versioning_and_offline_extraction
+- 'Existing B2B/Workspace audit contracts reviewed; no source-specific document endpoint
+  proof. Implemented separate explicit default-off user-supplied attachment intake
+  (not source-attested): reverified card/candidate, bounded raw upload, PDF header/EOF
+  or OOXML package checks, immutable bytes and SHA, offline integrity recheck, same-link
+  historical comparison, bounded DOCX text preview with part/paragraph provenance.
+  Migration 113; web controls implemented. No automatic downloads.'
+current_stage: attachment_intake_and_comparison_verified_backend_hosted_ui_pending
 remaining:
-- Publish/check current stacked PR and CI; previous PR543 had 16 successes, 2 running
-  and 1 failure before this increment.
-- Establish source-specific first-party attachment link/content contracts from permitted
-  existing originals or an approved safe live window. Implement bounded attachment
-  acquisition, immutable raw bytes and revision evidence only after contract validation;
-  do not treat candidate URLs as fetch authority.
-- Isolated PostgreSQL capture concurrency, real public markup acceptance, browser/iOS
-  and end-to-end tests; expand adapters, profile-aware workflow and reports.
-- Gemma paused. SIBUR/Qwen corpus priority; no production migration, live model calls
-  or deployment.
-last_verified_commit: 486d7fd519952b5e6990f88edabc03046e7b8d45
+- Check current PR exact-head CI (mandatory Node JS contract), fix any JS fixture
+  failure before next increment; do not reinstall Mac system Node while SIBUR indexing.
+- Acquire verified platform-specific attachment contracts from authorized original
+  captures in safe window, then implement trusted direct acquisition separately; do
+  not promote user-provided copies to original source.
+- Extend safe extraction from full original documents (PDF/XLSX etc.) and evidence-to-analysis
+  integration.
+- Isolated PostgreSQL concurrent admission, actual browser/iOS and complete E2E acceptance;
+  retention and storage budget policy review.
+- Gemma paused; preserve SIBUR/Qwen and runtime.
+last_verified_commit: b300a34a15a1d14539fbc38faf71125e9e53f694
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -182,10 +188,17 @@ test_results:
   gate off, historical compare, identity mismatch, session reset), attachment candidate
   bounds/negative cases, cross-tenant comparison, migration regression; Ruff/diff
   PASS.
-resume_instruction: No confirmed first-party attachment download contract in existing
-  audits. Implement explicit user-supplied candidate-bound immutable bytes, conservative
-  format validation, offline version comparison and bounded DOCX text preview, with
-  separate gate and provenance never claiming platform origin. No actual downloads
-  or model calls.
+- '105 passed, 2 skipped, 80 warnings in 8.99s; SQLite migration 113 downgrade guard,
+  format safety, idempotence, cross-tenant/invalid candidate and tamper/revision coverage;
+  Ruff/diff PASS. Local JS fixture skipped: Node26 missing libada, Node22 missing
+  libsimdjson. Explicit hosted Node CI step added; do not claim browser fixture accepted
+  yet.'
+resume_instruction: Attachment intake API, storage, recheck, revisions, DOCX preview
+  and web UI implemented. Python/SQLite tests PASS; hosted CI explicit JS contract
+  mandatory (local Node dylibs broken). Check exact-head CI, correct failures, then
+  proceed source-contract-backed attachment acquisition and verified extraction without
+  live model calls. No production migration/deploy. SIBUR existing executor reconciled
+  late commit 774 and advanced 777/16188 at final check; keep Qwen priority; Gemma
+  paused.
 owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
   Product changes isolated, offline and bounded.
