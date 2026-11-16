@@ -288,20 +288,25 @@ completed:
   route interception redirect experiment failed closed; replaced with network-level
   HTTP proxy. Browser fixture 7 actual origin requests = 7 charged, exact 129-byte
   ZIP and nine direct proxy refusals.'
-current_stage: b2b_offline_https_browser_fixture
+- Offline Chrome HTTPS fixture verified using distinct disposable loopback TLS identities,
+  explicit request-level TLS termination (not opaque CONNECT), exact authority/path/Host
+  and read-only method checks, verified upstream TLS, fixture-scoped SPKI trust, synthetic
+  broker cookie session isolation. 7/7 received HTTP requests charged plus one failed
+  TLS attempt; exact 133-byte ZIP, untrusted TLS refused, forbidden POST/path blocked,
+  stop after 429. No real-site interception or credential support.
+current_stage: b2b_offline_https_verified_next_live_transport_design
 remaining:
-- 'B2B accepted HTTPS request-level architecture: offline TLS fixture and no-direct-egress
-  proof, dedicated authorized session/cookie management, exact read-only endpoint
-  allowlist, shared 60/rolling minute canonical designated IP/host, bounded total
-  time/redirects/queued waits and fail-closed unknown response. Existing HTTP fixture
-  explicitly offline-only and does not prove OS-level or HTTPS enforcement.'
-- Limited authorized Arvectum read-only pilot only after technical acceptance and
-  dedicated session; no submissions/signatures or other tenant deployment.
+- Select and verify maintainable live HTTPS transport/session architecture without
+  unauthorized credential interception or global certificate changes; exact site endpoint/session
+  contract, isolated canonical sole egress host/IP and OS-level no-direct-egress proof,
+  total operation deadline, bounded redirect/queue and fail-closed unknown response.
+  Synthetic loopback TLS fixture is NOT a live adapter.
+- Dedicated authorized Arvectum-only session and limited read-only pilot only after
+  technical acceptance; no external submission or other tenant use.
 - PRICE-01 corporate normative samples and historical comparable normalization; preserve
   completed work.
-- Hosted CI, PostgreSQL concurrency, real browser/device and E2E acceptance; no production
-  deployment.
-last_verified_commit: 1d8f7c39bc89c8ed9505a489bccd764dc23b4d44
+- Hosted CI, PostgreSQL concurrency, real browser/device and E2E acceptance. No deployment.
+last_verified_commit: 54b63d9261bac742dda699dcd1e6bfaaf1ae7baf
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -464,13 +469,21 @@ test_results:
   PASS with response sequence 302,200,200,200,307,200,429; direct refusal, blocked
   unapproved route/POST, separate proxy CONNECT/cross-origin redirect tests. Ruff/diff
   PASS. PR575 exact 87b903ef CI 19/19 success. No live requests.
-resume_instruction: Implement offline loopback TLS origin/proxy, exact request-level
-  accounting through verified upstream TLS, isolated fixture cookie session, browser
-  SPKI-scoped trust and actual Chrome test. No live credentials or network changes.
+- 165 focused passed, 2 skipped, 130 warnings in 17.05s; actual Chrome TLS loopback
+  PASS, separate broker 401, invalid browser and upstream cert refusal, nonloopback/foreign
+  CONNECT rejected, Ruff/diff PASS. PR576 exact 22e2859c CI 19/19. No platform requests.
+resume_instruction: Offline Chrome HTTPS request-level and broker synthetic session
+  fixture verified. Next implement live-safe transport design, prioritizing explicitly
+  gated broker requests with verified upstream TLS and browser isolation over real-site
+  TLS interception; exact endpoint/session policy, bounded total operation/redirects/queues,
+  canonical shared egress state and no-direct-egress proof. Do not use fixture SPKI
+  exception or TLS termination for real B2B. Live pilot remains blocked until true
+  acceptance and authorized dedicated account session. Permission PN-1356710-26, strict
+  60/rolling minute/IP. PRICE-01 norms preserved. No production deployment.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
-  status: approved_pending_https_egress_acceptance
+  status: approved_pending_live_transport_and_session_acceptance
   support_ticket: PN-1356710-26
   support_response: 'Operator written approval relayed by owner: Козырькова Валерия
     Андреевна, 2026-11-16 14:51:30. Internal partial automation allowed subject to
@@ -478,10 +491,11 @@ b2b_dependency:
     более 60 HTTP-запросов в минуту с одного IP-адреса». IP approval not required;
     no separate download restrictions; own account or optional additional user. Earlier
     response: no additional fee or alternative API for stated actions.'
-  owner_action: Written operator approval recorded. HTTP-only Chrome accounting bridge
-    verified offline; actual HTTPS, OS-level isolation and auth/session acceptance
-    not established. No platform traffic; retain strict 60/60s per IP, no rotation,
-    no external submission or other tenant use.
+  owner_action: Operator written approval recorded. HTTP and HTTPS loopback browser
+    accounting verified, synthetic broker session isolation tested; live transport,
+    actual account session and OS-level egress enforcement not accepted. No B2B traffic.
+    Keep strict 60/rolling 60s/IP; no IP rotation, submissions/signatures or other
+    tenant use.
 sibur_readonly_observation_20261116:
   status: exhausted
   step: archive supported queue drained; oversized and PDF review remains
