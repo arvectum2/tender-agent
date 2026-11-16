@@ -216,7 +216,7 @@ completed:
   target profit, optional ceiling and manual bid prices, four economic thresholds
   and profit/margin; no tax/market verification or bid/GO claim. Owner/admin/analyst
   read/preview, manager save, viewer restricted.
-current_stage: price01_backend_verified_next_web_native
+current_stage: price01_web_controls
 remaining:
 - PRICE-01 web/native scenario preview, explicit save and history; cost decomposition
   units/hours/rates and independent evidence refs, real expenses and comparable procurement
@@ -322,11 +322,9 @@ test_results:
 - 150 passed, 2 skipped, 111 warnings in 11.16s including historical competitive protocol
   regression, exact economics, role/scope, replay/version, stored result mismatch
   and SQLite migration rollback guard. Ruff/diff PASS. New hosted CI pending.
-resume_instruction: PRICE-01 scenario backend tested with Decimal core and migration
-  118. Next web then native input/preview/save/history controls; preserve explicit
-  input and cost provenance constraints. Do not declare PRICE-01 complete until real
-  expenses/comparable source and E2E acceptance. B2B detailed escalation sent; no
-  automated traffic. Product-only scope.
+resume_instruction: Implement scoped Web price scenario form and explicit preview/save/history,
+  verify exact server results and session clearing, replay and role gates. No automatic
+  estimate or source calls. PR559 CI 19/19.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
