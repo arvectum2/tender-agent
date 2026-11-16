@@ -313,7 +313,7 @@ completed:
 - Owner chose manual password login on Mac mini instead of MacBook EDS. Password-mode
   dedicated Chrome profile and private launcher created on Mac mini, Terminal opened,
   profile marker and single manual session process verified. MacBook untouched.
-current_stage: b2b_macmini_manual_login_open_waiting_owner
+current_stage: b2b_local_session_candidate_one_card_runner
 remaining:
 - Owner manually signs in to own Arvectum account on dedicated Mac mini Chrome and
   types ARVECTUM in local Terminal. After owner confirmation verify only session file
@@ -507,14 +507,10 @@ test_results:
 - 275 focused tests passed,2 skipped,130 warnings in 16.52s; supervised offline Chrome
   7/7 accounting PASS exact ZIP; Ruff/diff PASS. PR580 17 success/2 running at start.
   Local login process/profile launched; actual account/session not verified.
-resume_instruction: Owner switched to manual login/password on Mac mini. Dedicated
-  Chrome/Terminal session launched with ~/Library/Application Support/Arvectum/B2B-private/manual-login.command,
-  password-profile and expected private session.json. After owner says ready, verify
-  session existence/mode/local validation only; do not read secrets through ARC or
-  access MacBook. If not saved, ask owner to finish manual login and enter ARVECTUM
-  in Terminal. Then complete guarded one-card live adapter scope/egress/runtime cutover
-  acceptance. No external automated requests until true acceptance. Operator PN-1356710-26;
-  limit 60/rolling 60s/IP, read-only. PRICE-01 preserved.
+resume_instruction: Owner completed manual sign-in on Mac mini; private cookie candidate
+  recovered locally (12 accepted cookies, no server verification). Implement and verify
+  actual bounded single-card pilot runner, canonical state and legacy schedule cutover
+  check. No secret exposure, no MacBook, no unattended signing.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
@@ -526,10 +522,9 @@ b2b_dependency:
     более 60 HTTP-запросов в минуту с одного IP-адреса». IP approval not required;
     no separate download restrictions; own account or optional additional user. Earlier
     response: no additional fee or alternative API for stated actions.'
-  owner_action: Manual password sign-in on Mac mini, dedicated Chrome and Terminal
-    opened. Owner must verify organization and type ARVECTUM in Terminal. No password
-    or cookie values in chat; no MacBook access. Session not verified; live pilot
-    gated.
+  owner_action: Manual sign-in complete per owner. Dedicated profile session candidate
+    recovered with rejecting proxy; local validation passed. Account identity and
+    live session still need authorized one-card test.
 sibur_readonly_observation_20261116:
   status: exhausted
   step: archive supported queue drained; oversized and PDF review remains
