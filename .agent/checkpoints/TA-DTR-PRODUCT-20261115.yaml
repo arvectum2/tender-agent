@@ -196,7 +196,7 @@ completed:
   writes only, explicit human attestation/confirmation, current decision binding,
   exact response/actor/payload match, same draft retry key, scope and coherent metrics
   validation, access clearing.'
-current_stage: native_lifecycle_verified_next_readiness_and_original_evidence
+current_stage: versioned_readiness_evidence_binding
 remaining:
 - Bind readiness to versioned qualification evidence and required documents; original
   receipt/protocol evidence, scoped immutable validation and human review. Multi-lot/rebid/corrections
@@ -285,10 +285,10 @@ test_results:
 - Actual Swift contract assertions executed independently on macOS PASS; Xcode unsigned
   build-for-testing final PASS (new XCTest compiled; no simulator execution). git
   diff --check PASS. PR553 observed 17 success,1 in progress, mirror failure.
-resume_instruction: Native lifecycle and metrics compiled, actual Swift contract verified.
-  Continue readiness evidence linkage and original receipt/protocol proof under owned
-  case, then PRICE-01. Do not operate/report SIBUR here at owner request. B2B operator
-  consent pending; no automatic external actions, model calls or production changes.
+resume_instruction: Implement bounded read-only commercial evidence projection and
+  append-only snapshot linked to READY event, historical source revision and current
+  profile/review/document IDs, independent opt-in enforcement for new SUBMITTED records
+  only. No external verification claims, no network calls, no prod. Product only.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
