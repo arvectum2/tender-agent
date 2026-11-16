@@ -335,7 +335,7 @@ completed:
   and client-side decimal recomputation, no persistence or automatic approved norms.
 - Native PRICE-01 actual-cost sample selection and preview, typed exact row and decimal
   validation, ephemeral company cohort and explicit confirmations.
-current_stage: price01_actual_sample_ios_verified_next_norm_model
+current_stage: price01_approved_norm_backend
 remaining:
 - Implement explicit corporate norm approval model with provenance/evidence and role
   boundaries; historical comparable procurement normalization and acceptance.
@@ -545,11 +545,9 @@ test_results:
 - Standalone Swift actual evidence/sample contract PASS; Xcode iOS Simulator build-for-testing
   with updated XCTest assertions PASS; git diff check PASS. PR587 all 19 CI checks
   successful. XCTest simulator execution and real device acceptance not performed.
-resume_instruction: PRICE-01 backend, Web and iOS descriptive sample previews verified;
-  native code 124a3bac. Next implement explicit corporate norm approval model with
-  source references and role boundaries, followed by historical comparables. B2B manual
-  observation remains incomplete; no production deployment or MacBook access. Read
-  latest product increment documentation.
+resume_instruction: Implement explicit immutable corporate norm versions, source sample
+  digest, owner/admin approval, tenant-bound reads, idempotency and optimistic concurrency.
+  Default off; isolated migrations and tests, no production activation. B2B pending.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
