@@ -322,7 +322,7 @@ completed:
 - 'Actual reviewed first-party CDN scope and isolated browser pilot: 19/19 static
   HTTP200, 2538847 bytes, exact card GET HTTP200. No rendered card number or documented
   download controls; account remains unverified. Shared counter 27 cumulative HTTP200.'
-current_stage: b2b_reviewed_cdn_verified_next_dynamic_scope
+current_stage: b2b_render_diagnostics
 remaining:
 - Review actual authorized UI/session and exact required read-only dynamic request
   scope. No repeat static pilot without new evidence; no guessed endpoints or authentication
@@ -520,11 +520,10 @@ test_results:
   PR581 17 success/2 running at start.
 - 284 focused passed,2 skipped,130 warnings in 17.18s; actual Chrome offline fixture
   PASS with 2 charged static resources and blocked unreviewed fetch. Ruff/diff PASS.
-resume_instruction: Read latest reviewed CDN renderer section of docs/product/DTR_PARALLEL_PRODUCT_INCREMENT_2026-11-15.md.
-  CDN static loading verified; rendered card and account still unverified. Next review
-  actual authorized UI and exact read-only dynamic scope, then documented download.
-  No repeat of completed requests. Local code commit 94ce9eca; publication pending.
-  Mac mini only, preserve PRICE-01.
+resume_instruction: 'Publication recovered: PR583 and PR584 created, exact commits
+  verified remotely; PR582 CI 19/19. Diagnose rendered UI with bounded static/error
+  metadata and strict HTML field evidence. No guessed private endpoints or unreviewed
+  network requests.'
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
