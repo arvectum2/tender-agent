@@ -319,18 +319,17 @@ completed:
   quarantine completed. First real B2B pilot procurement 4664540 returned HTTP200,
   exactly one charged request, no redirects/retry/download/submission; no visible
   card ID or documented controls, server auth unverified.
-current_stage: b2b_reviewed_cdn_renderer
+- 'Actual reviewed first-party CDN scope and isolated browser pilot: 19/19 static
+  HTTP200, 2538847 bytes, exact card GET HTTP200. No rendered card number or documented
+  download controls; account remains unverified. Shared counter 27 cumulative HTTP200.'
+current_stage: b2b_reviewed_cdn_verified_next_dynamic_scope
 remaining:
-- Review exact required page resource scope from dedicated manual B2B browser with
-  sanitized metadata/inventory, no endpoint guessing, no session secret output. Verify
-  actual card ID, documented controls and own-organization session; first single GET
-  rendered no card ID/controls, HTTP200 alone does not attest login. Use shared canonical
-  gate, strict rolling 60/min/IP, no automated retry after refusal.
-- Complete legacy runtime schedule cutover acceptance before recurring automation,
-  then approved read-only document acquisition and monitoring; no submissions/signing
-  or multi-tenant expansion.
-- PRICE-01 normative samples and comparable normalization; preserve completed work.
-last_verified_commit: 4759e0b7
+- Review actual authorized UI/session and exact required read-only dynamic request
+  scope. No repeat static pilot without new evidence; no guessed endpoints or authentication
+  bypass.
+- Documented archive acquisition and recurring runtime cutover acceptance.
+- PRICE-01 normative samples and comparable normalization.
+last_verified_commit: 94ce9eca
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -519,14 +518,17 @@ test_results:
   B2B request 1, HTTP200, durable pending=false. No relevant active launchctl labels
   observed before bounded pilot; not distributed per-IP/production cutover proof.
   PR581 17 success/2 running at start.
-resume_instruction: Add exact first-party CDN resource scope, separate credential-free
-  bounded TLS transport and isolated read-only renderer. Verify offline before actual
-  card acceptance; previous local commit 4759e0b7, checkpoint e5a6f228, publication
-  pending.
+- 284 focused passed,2 skipped,130 warnings in 17.18s; actual Chrome offline fixture
+  PASS with 2 charged static resources and blocked unreviewed fetch. Ruff/diff PASS.
+resume_instruction: Read latest reviewed CDN renderer section of docs/product/DTR_PARALLEL_PRODUCT_INCREMENT_2026-11-15.md.
+  CDN static loading verified; rendered card and account still unverified. Next review
+  actual authorized UI and exact read-only dynamic scope, then documented download.
+  No repeat of completed requests. Local code commit 94ce9eca; publication pending.
+  Mac mini only, preserve PRICE-01.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
-  status: approved_first_readonly_http200_card_content_unverified
+  status: approved_cdn_verified_dynamic_scope_pending
   support_ticket: PN-1356710-26
   support_response: 'Operator written approval relayed by owner: Козырькова Валерия
     Андреевна, 2026-11-16 14:51:30. Internal partial automation allowed subject to
