@@ -339,7 +339,7 @@ completed:
   implemented, migration 122. Explicit manager-selected quantities/rates, source sample
   and preview digests, tenant role and optimistic concurrency, no automatic estimate
   use.
-current_stage: price01_approved_norm_backend_verified_next_web
+current_stage: price01_approved_norm_web
 remaining:
 - Implement corporate norm approval and history/catalog Web and iOS UI, explicit user-selected
   application to estimate with source binding; historical comparables and final acceptance.
@@ -551,11 +551,9 @@ test_results:
 - 289 focused/regression tests pass, 2 skipped, 136 warnings, 16.58s; Ruff/diff PASS;
   SQLite migration 122 upgrade/downgrade and retention guard PASS. PR588 CI 19/19.
   No production PostgreSQL or migration execution.
-resume_instruction: PRICE-01 corporate norm backend code a3568612 verified. Next implement
-  Web approval flow, catalog/history/withdrawal with exact preview digest and tenant
-  checks, followed by iOS. Default-off. No automatic cost norm adoption. B2B authorized
-  observation incomplete; no MacBook, no production changes. Read latest product increment
-  docs.
+resume_instruction: Implement Web corporate normative approval, catalog, history and
+  withdrawal; validate tenant, preview digest, response and idempotent retry. Test
+  Node fixture and focused regression. No production changes.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
