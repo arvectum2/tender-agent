@@ -34,6 +34,10 @@ const reply=(value,status=200)=>({ok:status>=200&&status<300,status,json:async()
 let lostResponse=false, mismatch=false, delayed=null;
 let lifecycleEnabled=true, lifecycleLost=false, lifecycleMismatch=false;
 const lifecycleRows={a:[],b:[]};
+const priceRows=[];let priceLost=false,priceMismatch=false,priceDisabled=false;
+const priceInputs={external_direct_rub:'60000',own_labor_rub:'20000',cash_overhead_rub:'10000',reserve_rub:'5000',fixed_platform_fees_rub:'2000',guarantee_financing_cost_rub:'3000',revenue_tax_percent:'6',variable_platform_fee_percent:'4',minimum_profit_rub:'5000',target_profit_rub:'20000',reference_ceiling_rub:'120000',manual_bid_prices_rub:['120000'],assumption_note:'Private scenario A',accept_hypothetical_assumptions_only:true};
+const priceResult={schema:'company_price_scenario_v1',currency:'RUB',cash_fixed_and_reserved_rub:'80000.00',own_labor_rub:'20000.00',full_economic_cost_before_revenue_rates_rub:'100000.00',revenue_retention_rate:'0.90',thresholds_rounded_up_to_kopecks:true,profits_rounded_down_to_kopecks:true,reference_ceiling_user_supplied:true,assumptions_independently_verified:false,tax_model_verified:false,market_comparables_used:false,probability_of_winning_estimated:false,is_procurement_bid_recommendation:false,commercial_owner_go:false,external_submission_allowed:false,scenarios:['CASH_BREAK_EVEN','FULL_BREAK_EVEN','STRATEGIC_MINIMUM_PROFIT','COMMERCIAL_TARGET_PROFIT','MANUAL_PRICE'].map((kind,i)=>({kind,price_rub:['88888.89','111111.12','116666.67','133333.34','120000.00'][i],cash_surplus_rub:'28000.00',economic_profit_rub:'8000.00',economic_margin_percent:'6.6666',cash_break_even_met:true,full_break_even_met:i>0,minimum_profit_met:i>1,target_profit_met:i===3,within_user_reference_ceiling:i!==3}))};
+
 let discoveryRun=null, savedCandidate=null, savedCommercial=null;
 let captureEnabled=true, captureReceipt=null, captureMismatch=false;
 let attachmentEnabled=true, attachmentRecord=null, projectionEnabled=true, requirementReview=null;
@@ -133,6 +137,13 @@ async function fetch(route,opts){
   if(route.endsWith('/download'))return new Response(corruptDownload?Buffer.alloc(fileBytes.length,1):fileBytes,{headers:{'x-artifact-sha256':fileSha}});
   return artifact?reply(artifact):reply({detail:'missing'},404);
  }
+ if(route.includes('/price-scenarios')){
+  assert.equal(key,'a');if(priceDisabled)return reply({detail:'disabled'},404);
+  const scope={customer_id:priceMismatch?'foreign':fixture.a.customer_id,case_id:'case-a'};
+  if(route.endsWith('/preview')){assert.deepEqual(JSON.parse(opts.body),priceInputs);return reply({...scope,inputs_stored:false,result:priceResult})}
+  if(method==='POST'){const body=JSON.parse(opts.body);assert.deepEqual(body.scenario,priceInputs);const prior=priceRows.find(x=>x.key===body.idempotency_key);if(prior)return reply(prior.row,201);if(body.expected_revision!==priceRows.length)return reply({detail:'changed'},409);const row={...scope,scenario_id:'price-'+(priceRows.length+1),revision:priceRows.length+1,member_id:'a',created_at:'2026-11-16T12:00:00Z',origin:'EXPLICIT_USER_ASSUMPTIONS',external_submission_allowed:false,inputs:body.scenario,result:priceResult};priceRows.unshift({key:body.idempotency_key,row});if(priceLost){priceLost=false;throw Error('response lost')}return reply(row,201)}
+  return reply({...scope,items:priceRows.map(x=>x.row),has_more:false,external_submission_allowed:false})
+ }
  if(route.startsWith('/api/saas/company-portfolio/cases/case-'+key)){
   if(route.endsWith('/decisions?limit=50'))return reply({items:history[key],has_more:false});
   if(route.endsWith('/decisions')&&method==='POST'){
@@ -213,14 +224,27 @@ async function main(){
  corruptDownload=true;await click('company-event-file-download');assert.equal(downloaded,0);assert.match(get('result').textContent,/Контрольная сумма/);corruptDownload=false;await click('company-event-file-download');assert.equal(downloaded,1);
 await click('company-metrics-load');assert.match(get('company-metrics-result').textContent,/100.0%/);assert.match(get('company-metrics-result').textContent,/по сведениям сотрудников/);
  get('company-lifecycle-stage').value='LOST';change('company-lifecycle-stage');get('company-lifecycle-rationale').value='Коррекция A';get('company-lifecycle-ref').value='protocol corrected A';get('company-lifecycle-date').value='2026-01-03T10:00';get('company-lifecycle-confirm').checked=true;await click('company-lifecycle-save');assert.equal(lifecycleRows.a[0].attestation.correct_outcome,true);assert.equal(get('company-metrics-result').textContent,'');await click('company-metrics-load');assert.match(get('company-metrics-result').textContent,/0.0%/);
+ assert.equal(get('company-price-panel').hidden,false);
+ assert.equal(get('price-external_direct_rub').value,'');assert.equal(get('price-revenue_tax_percent').value,'');
+ priceDisabled=true;await click('price-history');assert.equal(get('price-save').disabled,true);priceDisabled=false;await click('price-history');
+ for(const [k,v] of Object.entries(priceInputs)){if(k.endsWith('_rub')&&k!=='manual_bid_prices_rub'||k.endsWith('_percent'))get('price-'+k).value=v}
+ get('price-manual').value='120000';get('price-note').value=priceInputs.assumption_note;
+ await click('price-preview');assert.equal(priceRows.length,0);assert.equal(get('price-results').children.length,0);
+ get('price-confirm').checked=true;change('price-confirm');await click('price-preview');assert.equal(get('price-results').children[0].children.length,6);assert.equal(priceRows.length,0);assert.equal(get('price-save').disabled,true);
+ get('price-save-confirm').checked=true;change('price-save-confirm');priceLost=true;await click('price-save');assert.equal(priceRows.length,1);get('price-save-confirm').checked=true;change('price-save-confirm');await click('price-save');assert.equal(priceRows.length,1);assert.match(get('price-status').textContent,/v1 сохранена/);
+ const priceWrites=calls.filter(x=>x.method==='POST'&&x.route.endsWith('/price-scenarios'));assert.equal(priceWrites.length,2);assert.equal(priceWrites[0].body.idempotency_key,priceWrites[1].body.idempotency_key);
+ get('price-version').value='price-1';change('price-version');await click('price-show-version');assert.match(get('price-version-detail').textContent,/Private scenario A/);
+ await click('price-preview');get('price-own_labor_rub').value='999';change('price-own_labor_rub');assert.equal(get('price-results').children.length,0);assert.equal(get('price-save').disabled,true);get('price-own_labor_rub').value='20000';change('price-own_labor_rub');
  history.a.unshift({revision:2,action:'NO_GO',rationale:'other client',decided_at:'2026-11-15T01:00:00Z'});
  get('company-rationale').value='Устаревшее решение';get('company-confirm').checked=true;await click('company-decide');assert.equal(history.a.length,2);assert.equal(get('company-detail').hidden,true);assert.match(get('result').textContent,/Откройте карточку заново/);
  get('keywords').value='privately entered A';get('reference-state').textContent='private A';get('run-id').value='private-run-a';
  await selectAccount('b');assert.match(get('company-identity').textContent,/Компания B/);assert.equal(get('keywords').value,'');assert.equal(get('run-id').value,'');assert.equal(get('reference-state').textContent,'Список пока не загружен');assert.equal(get('company-history').textContent,'');assert.equal(get('company-event-file-result').textContent,'');assert.equal(get('company-readiness-result').textContent,'');assert.equal(get('company-capture-result').textContent,'');assert.equal(get('company-capture-attempt').children.length,1);assert.equal(get('company-evidence-result').textContent,'');assert.equal(get('company-search-receipts').textContent,'');assert.equal(get('company-search-candidate').children.length,1);
- await openCase('b');await click('company-lifecycle-load');assert.equal(get('company-lifecycle-editor').hidden,true);assert.equal(get('company-lifecycle-current').textContent,'');await click('company-metrics-load');assert.match(get('company-metrics-result').textContent,/нет данных/);assert.equal(get('company-decision-panel').hidden,true);assert.equal(get('company-evidence-panel').hidden,true);assert.equal(get('company-save-panel').hidden,true);assert(!get('company-case').children.some(c=>c.value==='case-a'));
+ assert.equal(get('price-note').value,'');assert.equal(get('price-version-detail').textContent,'');assert.equal(get('price-results').children.length,0);
+ await openCase('b');assert.equal(get('company-price-panel').hidden,true);assert.equal(get('price-preview').disabled,true);await click('company-lifecycle-load');assert.equal(get('company-lifecycle-editor').hidden,true);assert.equal(get('company-lifecycle-current').textContent,'');await click('company-metrics-load');assert.match(get('company-metrics-result').textContent,/нет данных/);assert.equal(get('company-decision-panel').hidden,true);assert.equal(get('company-evidence-panel').hidden,true);assert.equal(get('company-save-panel').hidden,true);assert(!get('company-case').children.some(c=>c.value==='case-a'));
  lifecycleMismatch=true;await click('company-lifecycle-load');assert.equal(vm.runInContext('token',ctx),'');assert.equal(get('company-metrics-result').textContent,'');lifecycleMismatch=false;await selectAccount('b');
  mismatch=true;await click('company-load');assert.match(get('result').textContent,/другой компании/);assert.equal(get('company-detail').hidden,true);assert.equal(get('company-case').children.length,1);assert.equal(vm.runInContext('token',ctx),'');
  mismatch=false;let release;delayed=new Promise(r=>{release=r});get('saved-token').value='fixture-a';const first=click('use-token');get('saved-token').value='fixture-b';await click('use-token');release();await first;delayed=null;assert.equal(vm.runInContext('token',ctx),'fixture-a');
+ await click('company-load');await openCase('a');priceMismatch=true;await click('price-history');assert.equal(vm.runInContext('token',ctx),'');assert.equal(get('price-note').value,'');assert.equal(get('price-version-detail').textContent,'');assert.match(get('result').textContent,/другой компании/);
  console.log('Company cabinet JS flow PASS: bounded discovery, partial coverage, candidate acceptance, role/identity, evidence, explicit decision, uncertain retry, stale conflict, session clearing, request serialization.');
 }
 main().catch(error=>{console.error(error);process.exitCode=1});
