@@ -65,7 +65,10 @@ completed:
 - New live DP actual source-only acceptance four sections PASS (17/18/18/16 source
   chunks, exact registry). Gemma generation remains pending, no new real ingestion
   claimed.
-current_stage: dp_source_retrieval_verified_gemma_acceptance_pending
+- Actual Gemma criteria generation finished, automated guard pass but semantic formula
+  condition defect identified; prompt correction offline verified. Qwen embedding
+  control request passed after completion; concurrency impact not measured.
+current_stage: gemma_numeric_guard_pass_semantic_review_pending
 remaining:
 - Sustained actual DP ingestion and source-locked Gemma acceptance.
 - Tender Agent candidate runtime deployment separately authorized; preserve research.
@@ -80,6 +83,6 @@ test_results:
 - TA529/530/531 19/19 CI exact heads; DP130 7/7; all merged
 - Final main tree parity PASS, ARM64 isolated build and health/auth/evidence smoke
   PASS
-resume_instruction: DP runtime already live and actual original-source retrieval accepted.
-  Proceed controlled Gemma acceptance and natural authorized ingest monitoring, preserve
-  TA runtime and active research; no repeat switch.
+resume_instruction: DP runtime live; Gemma semantic acceptance not complete. See TA-CORE-GEMMA-REVIEW-20261115
+  checkpoint, prioritize Qwen/active research, no repeated DP switch or mass concurrent
+  inference.

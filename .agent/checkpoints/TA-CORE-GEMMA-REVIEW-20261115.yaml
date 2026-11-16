@@ -49,15 +49,26 @@ completed:
   chunks (2.20 s), customer requirements 18 (0.21 s), evaluation criteria 18 (0.21
   s), contract terms 16 (0.22 s). Private receipt saved, SHA b68dc5421ea168c56e8bab8231c6e084d9e241ead33194505057cdf2dc9e2ced.
   No model generation or canonical DB mutation.'
-current_stage: bounded_gemma_criteria_probe_running
+- Single-section actual Gemma acceptance completed, guarded reply accepted on second
+  attempt in 297.13s; independently checked eight cited canonical chunk hashes and
+  original-source binding. Semantic defect in conditional formula sign rule remains;
+  no full acceptance.
+- Qwen independently responds on 8090 (Qwen3-Embedding-4B, 2560 dimensions, finite
+  normalized vector, 0.965s after Gemma completion). Both model PIDs unchanged; 24GiB
+  host, ~12GiB used swap, no concurrent embedding latency measurement. Prioritize
+  corpus indexing and avoid overlapping mass generation.
+- Updated RAG prompt to preserve formula branches/variable lists, explicitly flag
+  unavailable formula, distinguish scoring cap from admission; 15 offline relevant
+  tests and Ruff PASS. No model rerun or deployment.
+current_stage: gemma_criteria_guard_pass_semantic_correction_pending_retest
 remaining:
-- Bounded actual Gemma generation acceptance (prior durations 88–449 seconds per section;
-  use controlled longer-running executor, not 45-second remote shell). Do not reuse
-  prior final4 receipt or claim new model result.
-- Monitor real authorized ingest/process responsiveness when naturally exercised;
-  no synthetic live ingest.
-- Separate owner approval for Tender Agent runtime deployment.
-last_verified_commit: d5eb8439811f9ca1dc41253f5a136c5aa9e36c92
+- Verify semantic correction on next safe single-section generation, with explicit
+  source-supported variable checks; no batch Gemma while embedding resource pressure
+  is high.
+- Measure embedding latency under actual simultaneous authorized load before claiming
+  no performance impact; prioritize Qwen.
+- Natural authorized ingest/process acceptance and separate TA deployment approval.
+last_verified_commit: 16ff2641c83f7f36c16b55f01b7492e34308b8bf
 test_results:
 - 105/105 draft-only PASS
 - 483/483 combined PASS, 44 warnings, 9.20s
@@ -75,10 +86,13 @@ test_results:
 - Post-switch actual source-locked retrieval 4/4 sections PASS, 17/18/18/16 chunks.
   No new ingest/process request observed after switch marker; sustained ingest acceptance
   still pending.
-resume_instruction: Read gemma-criteria-20261116/exit.json and summary.json, or verify
-  the recorded process if still running. Do not launch duplicate Gemma requests. Inspect
-  numeric/citation validation result and compare with exact source; no gold, DB writes
-  or production deployment.
+- 15 passed, 1 warning; Ruff PASS; actual criteria numeric/citation guard PASS, semantic
+  review FAIL; Qwen post-run inference PASS
+resume_instruction: Gemma criteria probe completed; automated PASS but semantic formula
+  rule incorrect. Do not relaunch old probe. Prompt correction committed and tested
+  offline; require semantic source check, ideally deterministic extraction of formula
+  conditions, before another bounded test in safe resource window. Keep Qwen embedding
+  online, do not stop or reconfigure either model or deploy TA without approval.
 runtime_rollout_20261116:
   release: /Users/master/ArvectumSafe/runtime-releases/data-platform-20261116-50f7b69
   revision: 50f7b69d5d3d33413de2599f7c21c79bffe36541
@@ -92,5 +106,17 @@ gemma_criteria_probe_20261116:
   started_at: '2026-11-16T05:19:28.179598+00:00'
   max_seconds: 900
   section: evaluation_criteria
-  status: in_progress
+  status: completed_guard_pass_semantic_review_failed
   receipt_dir: /Users/master/ArvectumSafe/runtime-releases/data-platform-20261116-50f7b69/acceptance/gemma-criteria-20261116
+  accepted_by_automated_guards: true
+  semantic_acceptance: false
+  duration_seconds: 297.13
+  attempts: 2
+  source_chunks: 18
+  cited_chunks_verified: 8
+  receipt_sha256: 0ddf5e81a61660ca346bca9afb96afe51660921736214bf540fcc3fac9c40377
+  finding: Original cited clause 0f917523 specifies minus sign rule for Цл in 2(a)
+    and Цл/Цi in 2(b); generated answer extends rule to Цнач without support. Four
+    weights 30/70 and 80/20, 15m RUB and 10 contracts caps are supported. Valid citations/numeric
+    guards do not establish entailment. Formula extraction incomplete. No gold or
+    DB writes.
