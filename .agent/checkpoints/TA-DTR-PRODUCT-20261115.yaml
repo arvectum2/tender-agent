@@ -149,7 +149,7 @@ completed:
   and document version, missing evidence/human support/gap/not-requirement states,
   optimistic revision, replay protection, history and stale flags, web matrix controls.
   Migration 114. No automated qualification scoring or claims of original ETP evidence.
-current_stage: requirement_review_matrix_verified_offline_next_ci_and_source_acquisition
+current_stage: bounded_case_snapshot_requirement_matrix
 remaining:
 - Investigate PR546 r8 integration failure from completed job logs; fix root cause
   and check exact-head hosted JS/CI for current branch. Mirror failure unresolved.
@@ -214,11 +214,9 @@ test_results:
   document version staleness test PASS. Ruff/diff PASS. Hosted JS pending. PR546 16
   success, 1 running, 2 failures (Mirror repository, r8-acceptance-integration); logs
   unavailable as run still active.
-resume_instruction: Human requirement matrix/backend/SQLite verified, web fixture
-  awaiting hosted CI. First inspect PR546 r8 job logs and fix regressions, then review
-  current PR exact head, proceed first-party attachment acquisition and original byte
-  evidence only with confirmed source contracts. No automatic qualification or deployment.
-  SIBUR 816/17484 healthy at last observation, prioritize existing workers; Gemma
-  paused.
+resume_instruction: Aggregate owned attachments for one reverified historical card
+  snapshot, expose incomplete coverage and gaps, no merging across versions. Fix hosted
+  fixture routing; inspect remaining CI logs. Offline, preserve SIBUR/Qwen and Gemma
+  pause.
 owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
   Product changes isolated, offline and bounded.
