@@ -229,3 +229,87 @@ def test_tls_fixture_proxy_rejects_nonloopback_and_connect(gate):
             with pytest.raises(httpx.ProxyError):client.get('https://127.0.0.1:49112/')
         assert bridge.events==['BLOCKED']*3 and json.loads(g.state.read_text())['receipts']==[]
     finally:broker.close()
+
+
+def test_private_session_and_exact_route_scope(tmp_path):
+    from scripts.research.b2b_session_policy import (
+        HOST,
+        ExactScope,
+        cookie_jar,
+        private_json,
+    )
+
+    url='https://'+HOST;card=url+'/app/market-next/fixture/tender-4664540/'
+    scope=ExactScope(url,{card:'page',url+'/fixture.zip':'archive'})
+    assert scope(card,'GET') and not scope(card,'POST') and not scope(card+'?x=1','GET') and not scope(card+'x','GET')
+    for routes in ({'https://outside.invalid/':'page'},{card:'#unknown'},{card+'#x':'page'}):
+        with pytest.raises(GuardError):ExactScope(url,routes)
+    item={'name':'session','value':'synthetic-only','domain':'.b2b-center.ru','path':'/app/','expires':-1,'secure':True,'httpOnly':True,'sameSite':'Strict'}
+    state={'cookies':[item],'origins':[]};p=tmp_path/'session.json';p.write_text(json.dumps(state));p.chmod(0o600)
+    jar=cookie_jar(private_json(p),now=1)
+    cookie=next(iter(jar.jar));assert cookie.secure and cookie.domain==HOST and not cookie.domain_specified
+    req=httpx.Request('GET',card);jar.set_cookie_header(req);assert req.headers['cookie']=='session=synthetic-only'
+    for bad_url in ('https://outside.invalid/app/x',url+'/not-app','http://'+HOST+'/app/x'):
+        req=httpx.Request('GET',bad_url);jar.set_cookie_header(req);assert 'cookie' not in req.headers
+    for bad in ({**item,'domain':'outside.invalid'},{**item,'secure':False},{**item,'expires':0},{**item,'partitionKey':'nope'},{**item,'value':'x\r\ny'}):
+        with pytest.raises(GuardError):cookie_jar({'cookies':[bad],'origins':[]},now=1)
+    with pytest.raises(GuardError):cookie_jar({'cookies':[item,item],'origins':[]},now=1)
+    with pytest.raises(GuardError):cookie_jar({'cookies':[item],'origins':[{'origin':url}]},now=1)
+    p.chmod(0o644)
+    with pytest.raises(GuardError):private_json(p)
+    p.chmod(0o600);link=tmp_path/'link';link.symlink_to(p)
+    with pytest.raises(OSError):private_json(link)
+
+
+def test_renderer_broker_exact_routes_and_private_ipc(gate):
+    from scripts.research.b2b_isolated_broker import RendererBroker
+    from scripts.research.b2b_session_policy import ExactScope
+
+    g,_clock=gate;origin='https://127.0.0.1:49111';seen=[]
+    scope=ExactScope(origin,{origin+'/page':'page',origin+'/archive':'archive',origin+'/file':'archive',origin+'/badarchive':'archive'})
+    def handle(request):
+        seen.append(request.url.path)
+        if request.url.path=='/archive':return httpx.Response(307,headers={'location':'/file'})
+        if request.url.path=='/badarchive':return httpx.Response(302,headers={'location':'/page'})
+        if request.url.path=='/file':return httpx.Response(200,headers={'content-disposition':'attachment; filename="fixture.zip"'},stream=httpx.ByteStream(b'PK fixture'))
+        return httpx.Response(200,stream=httpx.ByteStream(b'page'))
+    broker=ReadOnlyBroker(g,origin=origin,permitted=scope,transport=httpx.MockTransport(handle))
+    try:
+        adapter=RendererBroker(broker,scope)
+        with adapter.serve() as port,httpx.Client(trust_env=False,timeout=3) as client:
+            endpoint=f'http://127.0.0.1:{port}/fetch';payload={'url':origin+'/page','method':'GET'}
+            assert client.post(endpoint,json=payload).status_code==403 and seen==[]
+            headers={'Authorization':'Bearer '+adapter.token}
+            assert client.post(endpoint,json={**payload,'url':origin+'/unknown'},headers=headers).status_code==403 and seen==[]
+            assert client.post(endpoint,json={**payload,'method':'POST'},headers=headers).status_code==403 and seen==[]
+            assert client.post(endpoint,json=payload,headers=headers).content==b'page'
+            assert client.post(endpoint,json={**payload,'url':origin+'/archive'},headers=headers).content==b'PK fixture'
+            assert seen==['/page','/archive','/file']
+            assert client.post(endpoint,json={**payload,'url':origin+'/badarchive'},headers=headers).status_code==403
+            assert adapter.stopped and seen==['/page','/archive','/file','/badarchive']
+            assert client.post(endpoint,json=payload,headers=headers).status_code==403
+        assert len(json.loads(g.state.read_text())['receipts'])==4 and adapter.token not in g.state.read_text()
+    finally:broker.close()
+
+
+def test_pilot_preflight_is_explicit_and_does_not_activate():
+    from scripts.research.b2b_pilot_preflight import CONSENT, ORIGIN, preflight
+
+    card=ORIGIN+'/app/market-next/fixture/tender-4664540/'
+    manifest={'schema':1,'organization':'ООО Арвектум','operator_consent':CONSENT,'card':card,'routes':{card:'page'},'confirm_internal_read_only':True}
+    session={'cookies':[{'name':'session','value':'synthetic-only','domain':'www.b2b-center.ru','path':'/','expires':-1,'secure':True,'httpOnly':True,'sameSite':'Strict'}],'origins':[]}
+    receipt=preflight(manifest,session);assert receipt['state']=='LOCAL_INPUT_VALIDATED_LIVE_DISABLED' and receipt['external_id']=='4664540' and receipt['account_identity_verified'] is False and receipt['live_network_performed'] is False and 'synthetic-only' not in json.dumps(receipt)
+    with pytest.raises(GuardError):preflight({**manifest,'operator_consent':'other'},session)
+    with pytest.raises(GuardError):preflight({**manifest,'confirm_internal_read_only':False},session)
+    with pytest.raises(GuardError):preflight({**manifest,'routes':{card:'page',ORIGIN+'/other':'page'}},session)
+
+
+def test_manual_session_capture_filters_and_never_overwrites(tmp_path):
+    from scripts.research.b2b_manual_session import save_private, select_cookie_state
+    from scripts.research.b2b_session_policy import private_json
+
+    item={'name':'session','value':'synthetic-only','domain':'www.b2b-center.ru','path':'/','expires':-1,'secure':True,'httpOnly':True,'sameSite':'Strict'}
+    selected=select_cookie_state([item,{**item,'name':'analytics','secure':False},{**item,'domain':'other.invalid'}]);assert selected=={'cookies':[item],'origins':[]}
+    root=tmp_path/'private';root.mkdir(mode=0o700);p=root/'session.json';save_private(p,selected);assert p.stat().st_mode&0o777==0o600 and private_json(p)==selected
+    with pytest.raises(FileExistsError):save_private(p,selected)
+    with pytest.raises(GuardError):select_cookie_state([{**item,'domain':'outside.invalid'}])

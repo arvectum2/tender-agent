@@ -43,14 +43,14 @@ class Receipt:
 
 
 class ReadOnlyBroker:
-    def __init__(self,gate,*,origin,permitted,transport,wall_clock=time.time):
+    def __init__(self,gate,*,origin,permitted,transport,wall_clock=time.time,cookies=None):
         # No default live transport. A separately accepted browser integration
         # must provide the dedicated transport and its egress/timeout guarantees.
         parsed=urlsplit(origin)
         if parsed.scheme not in ('https','http') or not parsed.netloc or parsed.path not in ('','/') or parsed.query or parsed.fragment or parsed.username or parsed.password:raise GuardError('Invalid broker origin')
         if parsed.scheme=='http' and parsed.hostname not in ('127.0.0.1','::1','localhost'):raise GuardError('HTTP only for localhost fixture')
         self.origin=(parsed.scheme,parsed.netloc);self.gate=gate;self.permitted=permitted;self.wall_clock=wall_clock
-        self.client=httpx.Client(transport=transport,follow_redirects=False,trust_env=False,timeout=httpx.Timeout(10.0),headers={'Accept-Encoding':'identity'})
+        self.client=httpx.Client(transport=transport,follow_redirects=False,trust_env=False,timeout=httpx.Timeout(10.0),cookies=cookies,headers={'Accept-Encoding':'identity'})
 
     def close(self):self.client.close()
 
