@@ -205,7 +205,7 @@ completed:
   117), bounded PDF/DOCX/XLSX, manager-only writes, current authorization recheck,
   per-tenant quota, exact replay, SHA/integrity verification and authenticated exact-byte
   attachment download. No platform-origin or signature claims.
-current_stage: lifecycle_artifacts_backend_verified_next_web_native_evidence
+current_stage: web_readiness_and_lifecycle_artifact_controls
 remaining:
 - Web and native readiness binding and lifecycle file intake/download controls; keep
   default-off gates until UI and PG acceptance. Independent original receipt/protocol
@@ -300,11 +300,10 @@ test_results:
   and owned download test PASS. Migration rollback guard, corruption rejection, scope,
   limits and byte equality tested. Ruff/diff PASS. PR555 exact head 959c5899 18/19
   success, Mirror repository failed.
-resume_instruction: Lifecycle artifact backend and SQLite byte/permission/rollback
-  tests verified. Next implement web then native readiness/receipt controls, retain
-  explicit unattested origin, verify actual JS and Swift contracts. Then PRICE-01.
-  Do not operate/report SIBUR in this chat; B2B consent pending. No external actions
-  or production changes.
+resume_instruction: Implement web readiness projection/binding and lifecycle event
+  file upload and verified download. Explicit partial coverage and user-supplied origin,
+  scope checks and session clearing. Test JS and regression. Product only, no production
+  or source calls.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
