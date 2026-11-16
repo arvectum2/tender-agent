@@ -319,7 +319,7 @@ completed:
   quarantine completed. First real B2B pilot procurement 4664540 returned HTTP200,
   exactly one charged request, no redirects/retry/download/submission; no visible
   card ID or documented controls, server auth unverified.
-current_stage: b2b_partial_card_observed
+current_stage: b2b_reviewed_cdn_renderer
 remaining:
 - Review exact required page resource scope from dedicated manual B2B browser with
   sanitized metadata/inventory, no endpoint guessing, no session secret output. Verify
@@ -519,10 +519,10 @@ test_results:
   B2B request 1, HTTP200, durable pending=false. No relevant active launchctl labels
   observed before bounded pilot; not distributed per-IP/production cutover proof.
   PR581 17 success/2 running at start.
-resume_instruction: Read the latest B2B observed-card inventory section in docs/product/DTR_PARALLEL_PRODUCT_INCREMENT_2026-11-15.md.
-  Resume from the exact static-resource review and account acceptance gates. Local
-  code commit 4759e0b7 passed 280 tests, 2 skipped. Publication is pending. Do not
-  repeat completed checks or live requests unnecessarily.
+resume_instruction: Add exact first-party CDN resource scope, separate credential-free
+  bounded TLS transport and isolated read-only renderer. Verify offline before actual
+  card acceptance; previous local commit 4759e0b7, checkpoint e5a6f228, publication
+  pending.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
