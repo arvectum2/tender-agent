@@ -1678,6 +1678,15 @@ def test_commercial_attachment_intake_provenance_replay_revision_and_isolation(c
     assert client.get(old+'/attachments',headers=_auth(a)).json()['items'][0]['inspection'].get('text_preview') is None
     assert client.get(attach(old),headers=_auth(b)).status_code==404
     assert client.get(attach(other),headers=_auth(b)).status_code==404
+    text_path=attach(old)+'/text-evidence'
+    assert client.get(text_path,headers=_auth(a)).status_code==404
+    settings=settings.model_copy(update={'saas_commercial_text_projection_enabled':True})
+    projected=client.get(text_path,headers=_auth(a));assert projected.status_code==200,projected.text
+    result=projected.json();assert result['text_projection']['source_sha256']==result['inspection']['sha256']
+    assert result['text_projection']['fragments'][0]['text']=='Поставка и монтаж оборудования'
+    assert result['supplier_profile_context']['profile_state']=='MISSING' and not result['supplier_profile_context']['requirements_compared']
+    assert client.get(text_path,headers=_auth(b)).status_code==404
+
     moment[0]+=timedelta(days=1);new=capture_path(a,route)
     r=client.post(attach(new),headers=_auth(a),params=params,content=docx_fixture('Новая редакция'));assert r.status_code==201,r.text
     previous=old.split('/')[-1];r=client.get(attach(new),headers=_auth(a),params={'previous_attempt_id':previous});assert r.status_code==200,r.text

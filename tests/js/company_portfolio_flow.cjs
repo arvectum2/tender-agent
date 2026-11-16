@@ -30,7 +30,7 @@ const reply=(value,status=200)=>({ok:status>=200&&status<300,status,json:async()
 let lostResponse=false, mismatch=false, delayed=null;
 let discoveryRun=null, savedCandidate=null, savedCommercial=null;
 let captureEnabled=true, captureReceipt=null, captureMismatch=false;
-let attachmentEnabled=true, attachmentRecord=null;
+let attachmentEnabled=true, attachmentRecord=null, projectionEnabled=true;
 const candidateID='e'.repeat(64), candidate={candidate_id:candidateID,source_url:'https://workspace.ru/docs/spec.docx',format_hint:'docx',display_label:'ТЗ'};
 const priorCapture={attempt_id:'capture-old',case_id:'commercial-a',source_url:'https://workspace.ru/tenders/fixture-1234567/',capture_day:'2026-11-15',outcome:'CAPTURED'};
 let scheduleState={enabled:false,execution_enabled:true,revision:0,hour_moscow:8,sources:{},profile_current:false};
@@ -69,8 +69,8 @@ async function fetch(route,opts){
  if(route.includes('/commercial-captures/capture-a/attachments')){
   assert.equal(key,'a');
   if(route.endsWith('/attachments'))return reply({customer_id:fixture.a.customer_id,case_id:'commercial-a',attempt_id:'capture-a',items:attachmentRecord?[attachmentRecord]:[]});
-  if(method==='POST'){assert.equal(route.split('?')[1],'confirm_user_supplied=true');assert.equal(opts.body.name,'spec.docx');attachmentRecord={evidence_id:'file-a',case_id:'commercial-a',attempt_id:'capture-a',candidate_id:candidateID,source_url:candidate.source_url,origin:'USER_SUPPLIED_UNATTESTED',stored_bytes_reverified:true,platform_original_verified:false,inspection:{text_preview:[{part:'word/document.xml',paragraph_index:1,text:'Поставка ТЗ'}]}};return reply(attachmentRecord,201)}
-  assert(attachmentRecord);return reply({...attachmentRecord,...(route.includes('?')?{comparison:{previous_attempt_id:'capture-old',supplied_bytes_changed:true}}:{})});
+  if(method==='POST'){assert.equal(route.split('?')[1],'confirm_user_supplied=true');assert.equal(opts.body.name,'spec.docx');attachmentRecord={evidence_id:'file-a',case_id:'commercial-a',attempt_id:'capture-a',candidate_id:candidateID,source_url:candidate.source_url,origin:'USER_SUPPLIED_UNATTESTED',stored_bytes_reverified:true,platform_original_verified:false,inspection:{sha256:'doc-digest',text_preview:[{part:'word/document.xml',paragraph_index:1,text:'Поставка ТЗ'}]}};return reply(attachmentRecord,201)}
+  assert(attachmentRecord);if(route.endsWith('/text-evidence'))return reply({...attachmentRecord,text_projection:{source_sha256:'doc-digest',status:'PARTIAL_PREVIEW',requirements_verified:false,requirement_candidates:[{fragment_id:1}],fragments:[{text:'Поставка ТЗ'}]},supplier_profile_context:{profile_state:'MISSING'}});return reply({...attachmentRecord,...(route.includes('?')?{comparison:{previous_attempt_id:'capture-old',supplied_bytes_changed:true}}:{})});
  }
  if(route.startsWith('/api/saas/company-portfolio/cases/commercial-a/commercial-captures')){
   assert.equal(key,'a');
@@ -79,7 +79,7 @@ async function fetch(route,opts){
    captureReceipt={attempt_id:'capture-a',case_id:'commercial-a',source_url:commercialURL,capture_day:'2026-11-16',outcome:'CAPTURED',receipt:{title:'<img src=x onerror=evil()>',html_sha256:'fixture'}};return reply(captureReceipt,201);
   }
   if(route.endsWith('?limit=20'))return reply({customer_id:captureMismatch?'wrong':fixture.a.customer_id,case_id:'commercial-a',items:captureReceipt?[captureReceipt,priorCapture]:[priorCapture],has_more:false,capture_enabled:captureEnabled});
-  assert(['','?previous_attempt_id=capture-old'].includes(route.split('/commercial-captures/capture-a')[1]));return reply({...captureReceipt,original_reverified:true,attachment_intake_enabled:attachmentEnabled,attachment_inventory:{candidates:[candidate],coverage_complete:false},...(route.includes('?')?{comparison:{previous_attempt_id:'capture-old',html_changed:true}}:{})});
+  assert(['','?previous_attempt_id=capture-old'].includes(route.split('/commercial-captures/capture-a')[1]));return reply({...captureReceipt,original_reverified:true,attachment_intake_enabled:attachmentEnabled,text_projection_enabled:projectionEnabled,attachment_inventory:{candidates:[candidate],coverage_complete:false},...(route.includes('?')?{comparison:{previous_attempt_id:'capture-old',html_changed:true}}:{})});
  }
  if(route.startsWith('/api/saas/company-portfolio/cases/commercial-a')){assert.equal(key,'a');if(route.endsWith('/decisions?limit=50'))return reply({items:[],has_more:false});assert.equal(route,'/api/saas/company-portfolio/cases/commercial-a');return reply(commercialItem);}
  if(route.startsWith('/api/saas/company-portfolio/cases?'))return reply({customer_id:mismatch?'foreign':fixture[key].customer_id,items:[item(key),...(key==='a'&&savedCommercial?[commercialItem]:[])],has_more:false});
@@ -126,10 +126,10 @@ async function main(){
  get('company-capture-confirm').checked=true;change('company-capture-confirm');assert.equal(get('company-capture-start').disabled,false);await click('company-capture-start');assert.equal(captureReceipt.attempt_id,'capture-a');assert.equal(get('company-capture-confirm').checked,false);
  get('company-capture-attempt').value='capture-a';change('company-capture-attempt');await click('company-capture-recheck');assert.match(get('company-capture-state').textContent,/повторно проверен/);assert.match(get('company-capture-result').textContent,/<img src=x onerror=evil\(\)>/);
  assert.equal(get('company-attachment-panel').hidden,false);get('company-attachment-candidate').value=candidateID;change('company-attachment-candidate');get('company-attachment-file').files=[{name:'spec.docx',size:123}];change('company-attachment-file');await click('company-attachment-save');assert.equal(attachmentRecord,null);get('company-attachment-confirm').checked=true;change('company-attachment-confirm');assert.equal(get('company-attachment-save').disabled,false);await click('company-attachment-save');assert.equal(attachmentRecord.origin,'USER_SUPPLIED_UNATTESTED');assert.match(get('company-attachment-result').textContent,/Поставка ТЗ/);
- await click('company-attachment-read');assert.match(get('company-attachment-result').textContent,/stored_bytes_reverified/);
+ await click('company-attachment-read');assert.match(get('company-attachment-result').textContent,/stored_bytes_reverified/);await click('company-attachment-text');assert.match(get('company-attachment-result').textContent,/requirement_candidates/);
  get('company-capture-previous').value='capture-old';change('company-capture-previous');await click('company-capture-recheck');assert.match(get('company-capture-result').textContent,/html_changed/);get('company-attachment-candidate').value=candidateID;change('company-attachment-candidate');await click('company-attachment-read');assert.match(get('company-attachment-result').textContent,/supplied_bytes_changed/);
- attachmentEnabled=false;captureEnabled=false;await click('company-capture-refresh');assert.equal(get('company-capture-start').disabled,true);assert.match(get('company-capture-state').textContent,/отключено сервером/);
- get('company-capture-attempt').value='capture-a';change('company-capture-attempt');await click('company-capture-recheck');assert.equal(get('company-capture-result').hidden,false);assert.equal(get('company-attachment-save').disabled,true);get('company-attachment-candidate').value=candidateID;change('company-attachment-candidate');assert.equal(get('company-attachment-read').disabled,false);
+ projectionEnabled=false;attachmentEnabled=false;captureEnabled=false;await click('company-capture-refresh');assert.equal(get('company-capture-start').disabled,true);assert.match(get('company-capture-state').textContent,/отключено сервером/);
+ get('company-capture-attempt').value='capture-a';change('company-capture-attempt');await click('company-capture-recheck');assert.equal(get('company-capture-result').hidden,false);assert.equal(get('company-attachment-save').disabled,true);get('company-attachment-candidate').value=candidateID;change('company-attachment-candidate');assert.equal(get('company-attachment-read').disabled,false);assert.equal(get('company-attachment-text').disabled,true);
  captureMismatch=true;await click('company-capture-refresh');assert.equal(vm.runInContext('token',ctx),'');assert.equal(get('company-capture-result').textContent,'');assert.equal(get('company-attachment-result').textContent,'');captureMismatch=false;await selectAccount('a');
 
  assert.equal(get('company-save-panel').hidden,false);await openCase('a');

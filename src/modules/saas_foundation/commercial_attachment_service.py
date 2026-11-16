@@ -96,3 +96,26 @@ def read(session,principal,case_id,attempt_id,candidate_id,previous_attempt_id=N
         _check(older,old_candidate)
         result['comparison']={'previous_attempt_id':previous_attempt_id,'previous_sha256':older.inspection_json['sha256'],'current_sha256':row.inspection_json['sha256'],'supplied_bytes_changed':older.raw_bytes!=row.raw_bytes,'platform_document_version_verified':False}
     return result
+
+
+def text_evidence(session, principal, case_id, attempt_id, candidate_id, *, pdf_enabled=False):
+    from src.modules.saas_foundation.commercial_text_evidence import project_text
+    from src.modules.saas_foundation.company_case_evidence import search_context
+
+    _, candidate = _candidate(session, principal, case_id, attempt_id, candidate_id)
+    row = session.scalar(_query(principal, case_id, attempt_id).where(CommercialAttachmentEvidence.candidate_id == candidate_id))
+    if not row:
+        raise HTTPException(404, 'Attachment evidence not found')
+    _check(row, candidate)
+    result = _view(row, case_id, reverified=True)
+    raw = row.raw_bytes
+    # No transaction or row locks during bounded document processing.
+    session.rollback()
+    projection = project_text(raw, candidate['format_hint'], pdf_enabled=pdf_enabled)
+    capture._authorized(session, principal)
+    context = search_context(session, principal)
+    result['text_projection'] = projection
+    result['supplier_profile_context'] = {'profile_version': context.profile_version,
+        'profile_state': context.profile_state, 'requirements_compared': False,
+        'qualification_verified': False, 'human_review_required': True}
+    return result

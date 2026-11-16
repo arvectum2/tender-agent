@@ -820,7 +820,8 @@ def recheck_company_commercial_capture(case_id: str, attempt_id: str, principal:
         result = commercial_capture.compare_captures(session, principal, case_id, attempt_id, previous_attempt_id)
     else:
         result = commercial_capture.recheck(session, principal, case_id, attempt_id)
-    return {**result, "attachment_intake_enabled": get_settings().saas_commercial_attachment_intake_enabled}
+    return {**result, "attachment_intake_enabled": get_settings().saas_commercial_attachment_intake_enabled,
+            "text_projection_enabled": get_settings().saas_commercial_text_projection_enabled}
 
 
 @router.post("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}/attachments/{candidate_id}", status_code=201)
@@ -860,3 +861,12 @@ def list_company_commercial_attachments(case_id: str, attempt_id: str, principal
 @router.get("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}/attachments/{candidate_id}")
 def read_company_commercial_attachment(case_id: str, attempt_id: str, candidate_id: str, principal: Member, session: DBSession, previous_attempt_id: str | None = Query(None, max_length=64)) -> dict:
     return commercial_attachment_service.read(session, principal, case_id, attempt_id, candidate_id, previous_attempt_id)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}/attachments/{candidate_id}/text-evidence")
+def read_company_commercial_text_evidence(case_id: str, attempt_id: str, candidate_id: str, principal: Member, session: DBSession) -> dict:
+    settings = get_settings()
+    if not settings.saas_commercial_text_projection_enabled:
+        raise HTTPException(404, "Commercial text projection disabled")
+    return commercial_attachment_service.text_evidence(session, principal, case_id, attempt_id, candidate_id,
+        pdf_enabled=settings.saas_commercial_pdf_projection_enabled)

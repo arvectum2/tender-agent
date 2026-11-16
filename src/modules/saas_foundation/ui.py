@@ -131,8 +131,8 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 <label>Обнаруженная ссылка<select id="company-attachment-candidate"><option value="">Выберите ссылку</option></select></label>
 <label>Файл (PDF, DOCX, XLSX, PPTX, до 2 МБ)<input id="company-attachment-file" type="file" accept=".pdf,.docx,.xlsx,.pptx"></label>
 <label><input id="company-attachment-confirm" type="checkbox" style="width:auto"> Подтверждаю, что передаю собственную копию. Её происхождение с ЭТП не проверено.</label>
-<button id="company-attachment-save" disabled>Сохранить копию</button><button id="company-attachment-read" disabled>Проверить и сравнить копии</button>
-<pre id="company-attachment-result" hidden></pre><p>Предпросмотр DOCX ограничен; это не полный анализ требований. Скачивание с ЭТП не включено.</p></div>
+<button id="company-attachment-save" disabled>Сохранить копию</button><button id="company-attachment-read" disabled>Проверить и сравнить копии</button><button id="company-attachment-text" disabled>Извлечь фрагменты требований</button>
+<pre id="company-attachment-result" hidden></pre><p>Извлечение DOCX, XLSX и PDF ограничено; найденные фрагменты не являются проверенными требованиями. Скачивание с ЭТП не включено.</p></div>
 <p>Не более одной попытки на закупку в сутки по Москве. Снимок не подтверждает текущий статус конкурса, полный комплект документов, квалификацию или допуск.</p></div>
 </div><p>Сохранённый номер не подтверждает актуальность извещения, квалификацию или право подачи заявки. История решений общая для веб и iOS.</p></section>
 <section><h2>5. Мой пакет и лимиты</h2><button id="me">Мой кабинет</button>
@@ -363,7 +363,7 @@ bind("revoke-member",()=>call("/api/saas/members/"+encodeURIComponent(val("revok
 let companyIdentity=null, companyItems=[], companyMore=false, companyOffset=0;
 let companyCase=null, companyProfile=null, companyEvidence=[], pendingCompanyDecision=null;
 let captureEnabled=false, captureAttempts=[];
-let attachmentParent=null, attachmentCandidates=[], attachmentRecords=[], attachmentIntakeEnabled=false;
+let attachmentParent=null, attachmentCandidates=[], attachmentRecords=[], attachmentIntakeEnabled=false, textProjectionEnabled=false;
 let discoveryEnabled=false, discoveryRun=null, discoveryProfile=null, companySchedule=null;
 const el=id=>document.getElementById(id);
 function blankSelect(id, label){
@@ -422,6 +422,7 @@ function syncCompanyControls(){
  el("company-attachment-panel").hidden=!attachmentReady;
  el("company-attachment-save").disabled=uiBusy||!attachmentReady||!attachmentIntakeEnabled||!selected||!el("company-attachment-confirm").checked||!el("company-attachment-file").files?.length;
  el("company-attachment-read").disabled=uiBusy||!attachmentReady||!attachmentRecords.some(x=>x.candidate_id===selected?.candidate_id);
+ el("company-attachment-text").disabled=el("company-attachment-read").disabled||!textProjectionEnabled;
  syncCompanySearchControls();
 }
 function requireCompany(){if(!companyIdentity?.legal_accepted)throw Error("Загрузите портфель после подтверждения условий пилота");return companyIdentity}
@@ -510,7 +511,7 @@ bind("company-capture-recheck",async()=>{
  return {attempt_id:id,original_reverified:result.original_reverified===true};
 });
 function resetAttachments(){
- attachmentParent=null;attachmentCandidates=[];attachmentRecords=[];attachmentIntakeEnabled=false;
+ attachmentParent=null;attachmentCandidates=[];attachmentRecords=[];attachmentIntakeEnabled=false;textProjectionEnabled=false;
  blankSelect("company-attachment-candidate","Выберите ссылку");el("company-attachment-file").value="";el("company-attachment-confirm").checked=false;
  el("company-attachment-panel").hidden=true;el("company-attachment-state").textContent="";el("company-attachment-result").hidden=true;el("company-attachment-result").textContent="";
 }
@@ -525,7 +526,7 @@ async function refreshAttachmentRecords(){
  el("company-attachment-state").textContent=(attachmentIntakeEnabled?"Приём копий разрешён.":"Приём копий отключён.")+" Сохранено: "+attachmentRecords.length+". Происхождение не подтверждено.";
 }
 async function loadAttachments(result){
- attachmentParent=result.attempt_id;attachmentIntakeEnabled=result.attachment_intake_enabled===true;
+ attachmentParent=result.attempt_id;attachmentIntakeEnabled=result.attachment_intake_enabled===true;textProjectionEnabled=result.text_projection_enabled===true;
  attachmentCandidates=(result.attachment_inventory?.candidates||[]).filter(x=>["pdf","docx","xlsx","pptx"].includes(x.format_hint)&&typeof x.candidate_id==="string");
  for(const item of attachmentCandidates){const opt=document.createElement("option");opt.value=item.candidate_id;opt.textContent=(item.display_label||item.source_url)+" · "+item.format_hint;el("company-attachment-candidate").append(opt)}
  await refreshAttachmentRecords();
@@ -544,6 +545,14 @@ bind("company-attachment-read",async()=>{
  const result=await call(path+"/"+encodeURIComponent(id)+(previous?"?previous_attempt_id="+encodeURIComponent(previous):""));attachmentIdentity(result,id);
  if(previous&&result.comparison?.previous_attempt_id!==previous){clearSession();throw Error("Несоответствие версии копии")}
  el("company-attachment-result").textContent=JSON.stringify(result,null,2);el("company-attachment-result").hidden=false;return {stored_bytes_reverified:result.stored_bytes_reverified};
+});
+bind("company-attachment-text",async()=>{
+ const path=attachmentPath(),id=val("company-attachment-candidate");if(!textProjectionEnabled||!attachmentRecords.some(x=>x.candidate_id===id))throw Error("Сохраните копию и проверьте разрешение извлечения");
+ el("company-attachment-result").hidden=true;el("company-attachment-result").textContent="";
+ const result=await call(path+"/"+encodeURIComponent(id)+"/text-evidence");attachmentIdentity(result,id);
+ if(result.text_projection?.source_sha256!==result.inspection?.sha256||result.text_projection?.requirements_verified!==false){clearSession();throw Error("Несоответствие текстового доказательства")}
+ el("company-attachment-result").textContent=JSON.stringify({text_projection:result.text_projection,supplier_profile_context:result.supplier_profile_context},null,2);el("company-attachment-result").hidden=false;
+ return {status:result.text_projection.status,candidates:result.text_projection.requirement_candidates.length};
 });
 async function loadCompanyCase(id){
  requireCompany();resetCompanyDetail();
