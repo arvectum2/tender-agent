@@ -239,16 +239,20 @@ completed:
   confirmation, manager writes and scoped owner/admin/analyst reads, size/quota, exact
   retry, verified stored-byte download. No inheritance or independent cost/payment/source
   authentication claim.'
-current_stage: price01_cost_evidence_web
+- 'Web PRICE-01 cost documents: saved version/line selector, independent canonical
+  binding digest, explicit manager upload and source acknowledgement, file SHA/size,
+  bounded verified download, exact retry and state clearing; analyst read/download,
+  viewer restricted.'
+current_stage: price01_cost_evidence_web_verified_next_native
 remaining:
-- Web and native cost evidence controls for saved itemized version/line, explicit
-  user-copy origin and document type, exact digest/size transfer; multiple attachments/correction
-  policy and independent actual expense/payment verification remain.
+- Native cost evidence read/upload/download on saved itemized version and ordinal,
+  canonical digest/scope/size validation and explicit provenance. Multiple attachments/correction
+  policy and independently verified expense/payment data remain.
 - Comparable procurement normalization and real-case acceptance; no unsupported forecast.
-- Hosted exact-head CI, PostgreSQL concurrency, physical browser/device E2E. Keep
-  gates off until acceptance. No production deployment.
-- B2B consent pending; product only.
-last_verified_commit: 50e18d266e7ffd968c268c912d911d24282ac4c5
+- Hosted exact-head CI, PG concurrency, physical browser/device E2E; keep gates off
+  and no production deployment.
+- B2B written consent pending; product only.
+last_verified_commit: 78f200502983573c11b05832772d6420b71a178d
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -365,9 +369,15 @@ test_results:
 - 153 passed,2 skipped,118 warnings in 13.20s; SQLite migration rollback protection,
   version/line scope, role, quota, replay, invalid/oversize and corrupted binding/bytes
   tested. Ruff/diff PASS. Alembic head 119. PR564 exact 1a48dae8 17 success,2 running.
-resume_instruction: Build scoped Web evidence editor on saved itemized scenario/line,
-  canonical line digest, explicit file purpose and consent, verified upload/download,
-  mixed history and session invalidation. Offline tests only.
+- 153 passed,2 skipped,118 warnings in 13.40s; actual JS fixture PASS with Python
+  canonical binding, consent, uncertain retry, changed digest, corrupted/oversized
+  download and valid file, version/session clearing. Ruff/diff PASS. PR565 exact 282ab08f
+  17 success/2 running.
+resume_instruction: Web cost evidence implemented and verified. Next native controls
+  use exact saved revision/line and Python-compatible canonical SHA-256, explicit
+  document type/user-copy origin, bounded import/export and exact scoped validation,
+  immutable replay. Then actual expense and historical comparable normalization. No
+  production deploy or external source/model calls.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
