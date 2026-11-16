@@ -211,7 +211,7 @@ completed:
 - Native readiness partial projection, current/stale binding, explicit acknowledgment;
   scoped event file import/export controls, 2 MiB limit, SHA and size response validation,
   authenticated bounded streaming, no trusted provenance claims.
-current_stage: native_readiness_artifacts_verified_next_price01
+current_stage: price01_scoped_economic_scenarios
 remaining:
 - 'PRICE-01 cost/pricing: inspect existing pricing models and roadmap, scoped versioned
   explainable bid economics with explicit assumptions, no uncalibrated forecast.'
@@ -313,10 +313,9 @@ test_results:
   Swift contract scope/readiness/digest/limits executed on macOS PASS; diff PASS.
   PR557 exact ec399596 18 success/1 pending. Simulator and real iPhone transfer not
   run.
-resume_instruction: Native readiness and lifecycle artifact controls compiled and
-  Swift contract PASS. Next PRICE-01, inspect existing costing and pricing modules
-  before extending; no unverified market forecast and no autonomous external actions.
-  Maintain product-only scope, B2B consent pending, no production changes.
+resume_instruction: Extend existing Decimal engine with scoped versioned price scenarios,
+  explicit cost/tax inputs, manual bid evaluations, provenance and no forecast, offline
+  tests. Product only; no external calls or production changes.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
@@ -325,8 +324,8 @@ b2b_dependency:
   support_response: Supplier API active participated IDs and recommended IDs; no personal
     invitations or document download/submission; paid Maximum Opportunities or Professional
     Supplier. General search not confirmed.
-  owner_action: Owner sent follow-up to support requesting written browser automation
-    consent; await response. No automated B2B traffic.
+  owner_action: Owner resent detailed browser automation use case and escalation request;
+    await written response. No automated B2B traffic.
 sibur_readonly_observation_20261116:
   status: exhausted
   step: archive supported queue drained; oversized and PDF review remains
