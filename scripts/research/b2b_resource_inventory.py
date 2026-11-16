@@ -71,7 +71,12 @@ def inventory(card,raw):
     headings=[' '.join(n.text_content().split()) for n in tree.xpath('//h1')]
     visible=[' '.join(v.split()) for v in tree.xpath('//body//text()') if v.strip()]
     id_nodes=[v for v in visible if re.fullmatch(r'(?:№\s*|N\s*|Номер(?: закупки)?:?\s*)?'+identifier,v,re.IGNORECASE)]
-    structure={'heading_count':len(headings),'standalone_exact_id_count':len(id_nodes),'known_stage_count':sum(v.casefold().replace('ё','е') in ('прием заявок','идет прием заявок','завершен','завершено','прием заявок завершен','отменен','отменено','закрыт') for v in visible[:120]),'known_deadline_count':sum(bool(re.fullmatch(r'до \d{2}\.\d{2}\.20\d{2} \d{2}:\d{2}, по МСК',v)) for v in visible[:150]),'canonical_count':len(tree.xpath('//link[@rel="canonical"]/@href | //meta[@property="og:url"]/@content')),'exact_canonical_count':sum(v==card for v in tree.xpath('//link[@rel="canonical"]/@href | //meta[@property="og:url"]/@content'))}
+    organizer_candidates=[]
+    for i,v in enumerate(visible[:150]):
+        if v.rstrip(':').casefold() in ('организатор','заказчик'):
+            next_value=visible[i+1] if i+1<len(visible) else ''
+            organizer_candidates.append({'label':v,'next_legal_prefix':bool(re.match(r'^(?:АО|ПАО|ООО|ЗАО|ОАО)\b',next_value)), 'next_length':len(next_value),'next_contains_quotes':any(c in next_value for c in '«»"')})
+    structure={'organizer_label_shapes':organizer_candidates,'heading_count':len(headings),'standalone_exact_id_count':len(id_nodes),'known_stage_count':sum(v.casefold().replace('ё','е') in ('прием заявок','идет прием заявок','завершен','завершено','прием заявок завершен','отменен','отменено','закрыт') for v in visible[:120]),'known_deadline_count':sum(bool(re.fullmatch(r'до \d{2}\.\d{2}\.20\d{2} \d{2}:\d{2}, по МСК',v)) for v in visible[:150]),'canonical_count':len(tree.xpath('//link[@rel="canonical"]/@href | //meta[@property="og:url"]/@content')),'exact_canonical_count':sum(v==card for v in tree.xpath('//link[@rel="canonical"]/@href | //meta[@property="og:url"]/@content'))}
     return {'html_sha256':hashlib.sha256(raw).hexdigest(),'html_bytes':len(raw),'static_candidates':refs,'omitted_references':omitted,'omission_reasons':reasons,'foreign_host_counts':foreign_hosts,'card_id_in_visible_text':bool(re.search(r'(?<!\d)'+identifier+r'(?!\d)',text)),'challenge_indicator':any(x in text for x in ('captcha','подтвердите, что вы не робот','проверка браузера','access denied')),'login_indicator':any(x in text for x in ('введите пароль','введите логин','вход в личный кабинет')),'visible_text_length':len(text),'structure':structure}
 
 

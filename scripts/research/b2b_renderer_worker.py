@@ -22,6 +22,19 @@ from scripts.research.commercial_document_acquisition import observe
 MAX_RESPONSE=25*1024*1024
 
 
+def error_class(message):
+    value=message.casefold()
+    if 'content security policy' in value or 'content-security-policy' in value:return 'CSP'
+    if 'cors' in value or 'cross-origin' in value:return 'CORS'
+    if 'module script' in value or 'dynamically imported module' in value:return 'MODULE_LOAD'
+    if 'mime type' in value:return 'MIME'
+    if 'integrity' in value:return 'INTEGRITY'
+    if 'err_blocked' in value or 'err_failed' in value:return 'NETWORK_DENIED'
+    if 'referenceerror' in value:return 'REFERENCE_ERROR'
+    if 'typeerror' in value:return 'TYPE_ERROR'
+    return 'OTHER'
+
+
 def assert_restricted(port):
     # Negative socket probe, no real external network request.
     with socket.socket() as s:
@@ -30,9 +43,10 @@ def assert_restricted(port):
 
 
 def render(cfg):
+    from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
     from playwright.sync_api import sync_playwright
 
-    port=cfg['port'];assert_restricted(port);token=cfg['token'];origin=cfg['origin'];card=cfg['card'];root=Path(cfg['directory']);events=[];blocked=Counter()
+    port=cfg['port'];assert_restricted(port);token=cfg['token'];origin=cfg['origin'];card=cfg['card'];root=Path(cfg['directory']);events=[];blocked=Counter();errors=Counter();static_pending=set()
     def note_block(request):
         if cfg['mode']=='reviewed-cdn':
             p=urlsplit(request.url)
@@ -40,6 +54,8 @@ def render(cfg):
             resource=request.resource_type if request.resource_type in ('document','script','stylesheet','xhr','fetch','image','font','media','websocket','eventsource') else 'other'
             method=request.method if request.method in ('GET','HEAD','POST') else 'other'
             blocked[domain+'|'+resource+'|'+method]+=1
+            if domain=='cdn-origin' and method=='GET' and resource in ('script','stylesheet') and not p.query and not p.fragment and re.fullmatch(r'/mknp/assets/[A-Za-z0-9_.-]{1,180}\.(?:m?js|css)',p.path) and len(static_pending)<32:
+                static_pending.add(p.path)
 
     def route_request(route):
         request=route.request
@@ -63,16 +79,24 @@ def render(cfg):
         browser=driver.chromium.launch(**launch_options(f'http://127.0.0.1:{port}'));context=browser.new_context(accept_downloads=True,service_workers='block',ignore_https_errors=False)
         try:
             context.route('**/*',route_request);context.route_web_socket('**/*',lambda ws:ws.close(code=1008,reason='Read-only renderer'))
-            page=context.new_page();response=page.goto(card,wait_until='load',timeout=10000)
+            page=context.new_page()
+            if cfg['mode']=='reviewed-cdn':
+                page.on('pageerror',lambda exc:errors.update(['PAGE_'+error_class(str(exc))]))
+                page.on('console',lambda msg:errors.update(['CONSOLE_'+error_class(msg.text)]) if msg.type=='error' else None)
+            response=page.goto(card,wait_until='load',timeout=10000)
             if page.url!=card or response is None or response.status!=200:raise RuntimeError('Page identity or navigation failed')
             # Candidate one-card workflow: no downloads, navigation or submission.
             # A local operator must verify the account outside this renderer.
             if cfg['mode'] in ('case-review','reviewed-cdn'):
+                if cfg['mode']=='reviewed-cdn':
+                    # Bounded observation for hydration; no new navigation or retry.
+                    try:page.wait_for_function("(id) => document.body && document.body.innerText.includes(id)",arg=card.rsplit('tender-',1)[-1][:-1],timeout=3500)
+                    except PlaywrightTimeoutError:errors.update(['HYDRATION_TIMEOUT'])
                 result=observe(page,card,authenticated=False)
                 body=page.locator('body').inner_text(timeout=3000)
                 if len(body)>500000:raise RuntimeError('Bounded body exceeded')
                 normalized=' '.join(body.casefold().replace('ё','е').split())
-                return {'state':result['state'],'visible_controls':result['visible_controls'],'body_sha256':result['body_sha256'],'external_id':result['external_id'],'card_id_visible':bool(re.search(r'(?<!\d)'+result['external_id']+r'(?!\d)',body)),'login_text_seen':any(x in normalized for x in ('войти в систему','вход в личный кабинет','введите логин','введите пароль')),'account_identity_verified':False,'external_submission_allowed':False,'events':events,'blocked_request_classes':dict(blocked),'sandbox_negative_probe':True}
+                return {'state':result['state'],'visible_controls':result['visible_controls'],'body_sha256':result['body_sha256'],'external_id':result['external_id'],'card_id_visible':bool(re.search(r'(?<!\d)'+result['external_id']+r'(?!\d)',body)),'login_text_seen':any(x in normalized for x in ('войти в систему','вход в личный кабинет','введите логин','введите пароль')),'account_identity_verified':False,'external_submission_allowed':False,'events':events,'blocked_request_classes':dict(blocked),'error_classes':dict(errors),'unreviewed_static_paths':sorted(static_pending),'sandbox_negative_probe':True}
             if cfg['mode']!='offline-fixture':raise RuntimeError('Unknown renderer workflow')
             assert page.locator('h1').inner_text()=='Authorized fixture'
             page.locator('#background').click();page.wait_for_function("document.querySelector('#result').textContent === 'background-ok'",timeout=5000)

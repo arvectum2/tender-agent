@@ -18,6 +18,7 @@ from scripts.research.b2b_readonly_broker import ReadOnlyBroker
 
 CDN='https://cdn.b2b-center.ru'
 MAX_ASSETS=32
+SUPPLEMENTAL=re.compile(r'/mknp/assets/chunk-[A-Za-z0-9_-]{1,100}\.js\Z')
 MAX_ASSET_BYTES=8*1024*1024
 MAX_TOTAL_BYTES=32*1024*1024
 PATH=re.compile(r'/[A-Za-z0-9_./~-]{1,240}\.(?:m?js|css)\Z',re.IGNORECASE)
@@ -86,13 +87,18 @@ class StaticFetcher:
 
 class ReviewedCardRenderer(RendererBroker):
     """Serve a captured card once and exact reviewed static assets only."""
-    def __init__(self,card,receipt,gate,reviewed,*,transport_factory=None,seconds=40):
+    def __init__(self,card,receipt,gate,reviewed,*,supplemental=None,transport_factory=None,seconds=40):
         if receipt.status!=200 or receipt.final_url!=card:raise GuardError('Exact card receipt required')
         actual=references(card,receipt.data)
         if any(actual.get(u)!=kind for u,kind in reviewed.items()):raise GuardError('Static scope no longer matches card')
+        supplemental={} if supplemental is None else supplemental
+        # Explicit prior browser observations only; never discover and fetch in one
+        # step. Require all current root references unchanged before extending scope.
+        if not isinstance(supplemental,dict) or len(supplemental)>8:raise GuardError('Invalid supplemental scope')
+        if supplemental and (reviewed!=actual or any(u in actual or k!='script' or static_kind(u)!='script' or not SUPPLEMENTAL.fullmatch(urlsplit(u).path) for u,k in supplemental.items())):raise GuardError('Unreviewed supplemental module')
         super().__init__(None,None,seconds=seconds)
         self.card=card;self.receipt=receipt;self.page_served=False
-        self.static=StaticFetcher(gate,reviewed,transport_factory=transport_factory)
+        self.static=StaticFetcher(gate,{**reviewed,**supplemental},transport_factory=transport_factory)
 
     def fetch(self,url,method):
         with self.lock:

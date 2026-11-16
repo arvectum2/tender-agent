@@ -471,3 +471,34 @@ def test_cdn_fails_closed_without_redirect_or_repeat(gate,monkeypatch,mode):
     with pytest.raises(GuardError):fetcher.fetch(url,'GET')
     with pytest.raises(GuardError):fetcher.fetch(url,'GET')
     assert seen==[url] and fetcher.stopped and len(g._read()['receipts'])==1
+
+
+def test_reviewed_supplemental_cdn_modules_require_unchanged_root_scope(gate):
+    from scripts.research.b2b_cdn_resources import ReviewedCardRenderer, references
+    from scripts.research.b2b_readonly_broker import Receipt
+
+    g,_=gate;card='https://www.b2b-center.ru/app/market-next/fixture/tender-4664540/'
+    root='https://cdn.b2b-center.ru/mknp/assets/chunk-root.js';dep='https://cdn.b2b-center.ru/mknp/assets/chunk-extra.js'
+    data=f'<html><script src="{root}"></script></html>'.encode()
+    receipt=Receipt(200,(),data,0,card);review=references(card,data);seen=[]
+    def respond(req):
+        assert 'cookie' not in req.headers and 'authorization' not in req.headers
+        seen.append(str(req.url))
+        return httpx.Response(200,headers={'content-type':'application/javascript'},stream=httpx.ByteStream(b'fixture'))
+    bridge=ReviewedCardRenderer(card,receipt,g,review,supplemental={dep:'script'},transport_factory=lambda:httpx.MockTransport(respond))
+    assert bridge.fetch(dep,'GET')[0]==200 and seen==[dep]
+    for bad in ({dep+'?x=1':'script'},{root:'script'},{'https://cdn.b2b-center.ru/api/chunk-extra.js':'script'},{'https://cdn.b2b-center.ru/mknp/assets/chunk-extra.css':'style'}):
+        with pytest.raises(GuardError):ReviewedCardRenderer(card,receipt,g,review,supplemental=bad)
+    with pytest.raises(GuardError):ReviewedCardRenderer(card,receipt,g,{},supplemental={dep:'script'})
+
+
+def test_manual_ui_observation_metadata_has_no_sensitive_url_parts():
+    from scripts.research.b2b_manual_ui_observation import request_metadata
+
+    r=request_metadata('https://www.b2b-center.ru/profile/private?token=fixture-secret','GET','xhr')
+    assert r=={'origin':'www.b2b-center.ru','method':'GET','resource_type':'xhr','query_present':True,'same_origin_reviewable':False}
+    assert 'secret' not in str(r) and '/profile' not in str(r)
+    r=request_metadata('https://other.invalid/opaque-sensitive-path','POST','fetch')
+    assert r['origin']=='other.invalid' and not r['same_origin_reviewable'] and 'opaque-sensitive-path' not in str(r)
+    r=request_metadata('https://www.b2b-center.ru/card','GET','document')
+    assert r['same_origin_reviewable']
