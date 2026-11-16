@@ -205,16 +205,19 @@ completed:
   117), bounded PDF/DOCX/XLSX, manager-only writes, current authorization recheck,
   per-tenant quota, exact replay, SHA/integrity verification and authenticated exact-byte
   attachment download. No platform-origin or signature claims.
-current_stage: web_readiness_and_lifecycle_artifact_controls
+- 'Web readiness and event file controls: explicit partial acknowledgement, bound/stale
+  snapshot, event-scoped user-copy upload with SHA match, authorized bounded binary
+  download checked before save, case/session clearing. No backend/migration changes.'
+current_stage: web_readiness_artifacts_verified_next_native
 remaining:
-- Web and native readiness binding and lifecycle file intake/download controls; keep
-  default-off gates until UI and PG acceptance. Independent original receipt/protocol
-  verification, multi-document/correction policy remains.
+- Native iOS readiness binding and lifecycle file upload/download with owned scope
+  and SHA integrity; actual Swift contract and build verification. Keep default-off
+  gates until PG/browser/device acceptance.
 - PRICE-01 cost/pricing and explainable bid economics.
-- Hosted CI/mirror, PostgreSQL concurrency, real browser/device and E2E acceptance.
-  B2B operator consent pending; no automated requests. Product only, no production
-  deployment.
-last_verified_commit: 43a2421888eb36d28032bbd9c75956d5c21466f1
+- Hosted CI/mirror, actual PG concurrency and E2E acceptance. Independent source authentication
+  and multi-file/correction policy pending. B2B written operator consent pending;
+  product only, no production deploy.
+last_verified_commit: b94424a5feb46d97701f1c781fe833bd4d43f5b7
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -300,10 +303,14 @@ test_results:
   and owned download test PASS. Migration rollback guard, corruption rejection, scope,
   limits and byte equality tested. Ruff/diff PASS. PR555 exact head 959c5899 18/19
   success, Mirror repository failed.
-resume_instruction: Implement web readiness projection/binding and lifecycle event
-  file upload and verified download. Explicit partial coverage and user-supplied origin,
-  scope checks and session clearing. Test JS and regression. Product only, no production
-  or source calls.
+- 120 passed,2 skipped,105 warnings in 11.11s; extended actual JS fixture PASS including
+  binding and stale refusal, explicit file confirmation, SHA and corrupted download
+  rejection, valid download and clearing. Ruff/diff PASS. PR556 exact f6f7a705 18
+  success, mirror failure.
+resume_instruction: Web readiness and artifact controls tested with actual JS fixture
+  and offline regression. Next native controls using same API, bounded file transfer
+  and checksum, then PRICE-01. No production deployment or research operations; B2B
+  consent pending.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
