@@ -243,7 +243,7 @@ completed:
   binding digest, explicit manager upload and source acknowledgement, file SHA/size,
   bounded verified download, exact retry and state clearing; analyst read/download,
   viewer restricted.'
-current_stage: price01_cost_evidence_web_verified_next_native
+current_stage: price01_cost_evidence_native
 remaining:
 - Native cost evidence read/upload/download on saved itemized version and ordinal,
   canonical digest/scope/size validation and explicit provenance. Multiple attachments/correction
@@ -373,11 +373,9 @@ test_results:
   canonical binding, consent, uncertain retry, changed digest, corrupted/oversized
   download and valid file, version/session clearing. Ruff/diff PASS. PR565 exact 282ab08f
   17 success/2 running.
-resume_instruction: Web cost evidence implemented and verified. Next native controls
-  use exact saved revision/line and Python-compatible canonical SHA-256, explicit
-  document type/user-copy origin, bounded import/export and exact scoped validation,
-  immutable replay. Then actual expense and historical comparable normalization. No
-  production deploy or external source/model calls.
+resume_instruction: Implement native saved scenario/line cost document binding, canonical
+  digest, bounded import/export, current role and scope, explicit immutable user-copy
+  consent; test actual Python/Swift contract and Xcode build. No deployment.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
