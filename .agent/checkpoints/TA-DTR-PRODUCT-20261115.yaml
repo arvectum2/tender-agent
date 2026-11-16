@@ -178,17 +178,19 @@ completed:
   pending attention, GO/NO_GO, full scoped counts, bounded filter/paging and web refresh/session
   isolation. No separate store, migration, model or source calls. B2B support inquiry
   sent; acquisition blocked pending written permission/API contract.'
-current_stage: native_company_inbox
+- 'Native company manager inbox: seven scoped filters, server time and validated summary,
+  unique bounded page, identity/access clearing, post-decision refresh, due markers.
+  No alternate data store or global fallback.'
+current_stage: native_company_inbox_verified_next_post_go_lifecycle
 remaining:
-- Implement native iOS company inbox against same scoped endpoint, including actionable/due/recorded
-  filters and refresh; then evidence-backed human post-GO readiness/submission/outcome
-  lifecycle and metrics.
-- Check hosted exact-head CI and resolve mirror separately. PG concurrency, real browser/device
-  and E2E acceptance pending.
-- 'B2B support pending: no automated B2B access until written permission and API contract;
-  no source-origin promotion.'
-- Gemma paused; preserve SIBUR and Qwen priority, no production rollout.
-last_verified_commit: 840ab2709713273119754c957960af8839a67182
+- Implement scoped post-GO readiness and human-attested submission/outcome ledger,
+  audit and revision semantics; derive conversion/win-rate only from explicit known
+  facts, no autonomous bid actions.
+- Hosted exact-head CI, mirror failure, PostgreSQL concurrency and real iPhone/browser
+  E2E acceptance.
+- B2B operator consent/API pending; no automated requests. SIBUR/Qwen priority, Gemma
+  paused, no production deploy.
+last_verified_commit: dae662ccba862a253a5b84ec21a8ed30e6c312f9
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -256,9 +258,14 @@ test_results:
 - 114 passed, 2 skipped, 87 warnings in 11.21s; standalone full JS cabinet fixture
   PASS via isolated Playwright bundled Node v22.20.0; Ruff/diff PASS. PR548 and previous
   PR549 head 18/19, mirror only. B2B checkpoint e7f55849 pushed.
-resume_instruction: Implement native scoped manager-inbox filters, server-time summary
-  and paging, verify account checks and refresh after human decisions. No production
-  or model calls; B2B pending.
+- Xcode 27.1 unsigned build-for-testing SUCCEEDED; new XCTest compiled, actual same
+  Swift decoder/matching assertions independently executed on macOS PASS. No simulator
+  boot or device install. git diff --check PASS.
+resume_instruction: Native inbox compiled and standalone contract PASS. Next scoped
+  post-GO lifecycle independent of source contracts and model; distinguish human-recorded
+  status from independently verified evidence. Keep existing decision log canonical
+  and no autonomous ETP submission. B2B support pending; Gemma paused. SIBUR last
+  842 originals/18702 embeddings,841 synced. No deployment.
 owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
   Product changes isolated, offline and bounded.
 b2b_dependency:
