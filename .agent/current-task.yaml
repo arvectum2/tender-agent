@@ -663,6 +663,6 @@ parallel_dtr_product:
   task_id: TA-DTR-PRODUCT-20261115
   status: in_progress
   checkpoint: .agent/checkpoints/TA-DTR-PRODUCT-20261115.yaml
-  current_stage: b2b_macmini_password_login_preparation
+  current_stage: b2b_macmini_manual_login_open_waiting_owner
   branch: feat/ta-b2b-macmini-login-20261116
   owner_priority: Product development only in this chat; research separate; Gemma paused

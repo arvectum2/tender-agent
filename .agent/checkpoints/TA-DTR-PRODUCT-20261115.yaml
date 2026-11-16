@@ -310,21 +310,21 @@ completed:
   former direct HTTP paths fail closed in candidate branch before transport. MacBook
   read-only runtime inspection confirms Chrome/Python3.12/uv/sandbox/CryptoPro; Playwright
   absent in default Python.
-current_stage: b2b_macmini_password_login_preparation
+- Owner chose manual password login on Mac mini instead of MacBook EDS. Password-mode
+  dedicated Chrome profile and private launcher created on Mac mini, Terminal opened,
+  profile marker and single manual session process verified. MacBook untouched.
+current_stage: b2b_macmini_manual_login_open_waiting_owner
 remaining:
-- Prepare dedicated MacBook checkout/runtime and private path via explicitly approved
-  device operations as required, run supervised offline acceptance on MacBook. User
-  performs manual EDS via dedicated profile, no key/PIN inspection or transfer, no
-  secret to chat.
-- Complete guarded real single-card activation and review exact endpoint inventory/actual
-  own-organization session; confirm canonical shared state and no other live legacy
-  schedules on designated egress host/IP before any live request. Candidate CLI only
-  local check/offline acceptance until then; seven code paths gated but not deployed.
-  Strict unified run may fail closed until B2B guarded adapter integrated.
-- PRICE-01 corporate normative samples and historical comparable normalization; preserve
-  completed work.
-- Hosted CI, PostgreSQL and real device/browser acceptance, no production deployment.
-last_verified_commit: 0bfd2f89c4d267bb5653fd5b142375118b90c7bc
+- Owner manually signs in to own Arvectum account on dedicated Mac mini Chrome and
+  types ARVECTUM in local Terminal. After owner confirmation verify only session file
+  metadata and local validation, never expose cookie values/password in chat, no MacBook
+  operations.
+- Complete guarded single-card live activation with exact reviewed endpoint inventory,
+  shared canonical egress state/sole designated Mac mini host/IP, legacy runtime schedule
+  cutover and hard 60 HTTP requests/rolling 60 seconds. Actual live operation still
+  gated.
+- PRICE-01 normative samples and comparable normalization; no production deployment.
+last_verified_commit: 590d38f57d0bb82ee6d07a79e33b317957dcfceb
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -504,14 +504,21 @@ test_results:
   parsers, Workspace/EIS paths and seven B2B direct refusals, supervisor timeout/lock/receipt.
   Actual supervised offline Chrome fixture 7/7, exact ZIP 133B; Ruff/diff PASS. PR579
   exact ae4cb0b4 CI 19/19. No live requests or deployment.
-resume_instruction: Owner changes login to manual username/password on Mac mini, not
-  EDS on MacBook. Prepare and verify dedicated local Chrome login workflow, no MacBook
-  changes or access, no password or session secrets in chat. Live automated requests
-  remain blocked pending approved guarded acceptance.
+- 275 focused tests passed,2 skipped,130 warnings in 16.52s; supervised offline Chrome
+  7/7 accounting PASS exact ZIP; Ruff/diff PASS. PR580 17 success/2 running at start.
+  Local login process/profile launched; actual account/session not verified.
+resume_instruction: Owner switched to manual login/password on Mac mini. Dedicated
+  Chrome/Terminal session launched with ~/Library/Application Support/Arvectum/B2B-private/manual-login.command,
+  password-profile and expected private session.json. After owner says ready, verify
+  session existence/mode/local validation only; do not read secrets through ARC or
+  access MacBook. If not saved, ask owner to finish manual login and enter ARVECTUM
+  in Terminal. Then complete guarded one-card live adapter scope/egress/runtime cutover
+  acceptance. No external automated requests until true acceptance. Operator PN-1356710-26;
+  limit 60/rolling 60s/IP, read-only. PRICE-01 preserved.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
-  status: approved_pending_macbook_runtime_and_live_acceptance
+  status: approved_waiting_owner_macmini_manual_login
   support_ticket: PN-1356710-26
   support_response: 'Operator written approval relayed by owner: Козырькова Валерия
     Андреевна, 2026-11-16 14:51:30. Internal partial automation allowed subject to
@@ -519,8 +526,10 @@ b2b_dependency:
     более 60 HTTP-запросов в минуту с одного IP-адреса». IP approval not required;
     no separate download restrictions; own account or optional additional user. Earlier
     response: no additional fee or alternative API for stated actions.'
-  owner_action: Manual username/password sign-in by owner on Mac mini instead of EDS.
-    Keep dedicated profile/session on Mac mini; MacBook no longer required.
+  owner_action: Manual password sign-in on Mac mini, dedicated Chrome and Terminal
+    opened. Owner must verify organization and type ARVECTUM in Terminal. No password
+    or cookie values in chat; no MacBook access. Session not verified; live pilot
+    gated.
 sibur_readonly_observation_20261116:
   status: exhausted
   step: archive supported queue drained; oversized and PDF review remains
