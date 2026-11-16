@@ -306,7 +306,7 @@ class Runner:
         if not 1 <= count <= 160:
             raise Blocked("archive refresh exceeds bound")
         path = bridge.parent / result["file"]
-        if path.parent != bridge.parent or not re.fullmatch(r"archive-index-bridge-auto-[0-9]+Z\.json", path.name) or path.is_symlink():
+        if path.parent != bridge.parent or not re.fullmatch(r"archive-index-bridge-auto-[0-9]{8}T[0-9]{12}Z\.json", path.name) or path.is_symlink():
             raise Blocked("invalid prepared bridge path")
         raw = path.read_bytes()
         new_digest = hashlib.sha256(raw).hexdigest()

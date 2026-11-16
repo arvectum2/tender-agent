@@ -73,7 +73,7 @@ def test_archive_refresh_append_preserves_and_checks_identity(tmp_path, monkeypa
     atomic(bridge, old)
     digest = hashlib.sha256(bridge.read_bytes()).hexdigest()
     r.update("sibur", status="running", archive_bridge_sha256=digest)
-    prepared = folder / "archive-index-bridge-auto-20261116000000Z.json"
+    prepared = folder / "archive-index-bridge-auto-20261116T081835120216Z.json"
     new = {**old, "ready": old["ready"] + [{"sha256": "b"*64}]}
     atomic(prepared, new)
     new_digest = hashlib.sha256(prepared.read_bytes()).hexdigest()
