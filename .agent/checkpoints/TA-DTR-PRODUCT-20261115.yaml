@@ -271,7 +271,7 @@ completed:
 - 'PRICE-01 Web actual evidence: exact saved snapshot/date/row namespace and canonical
   digest, missing vs zero, explicit manager upload and user-copy consent, validated
   metadata and SHA/size, shared verified download, uncertain retry and state clearing.'
-current_stage: price01_actual_evidence_web_verified_next_native
+current_stage: price01_actual_evidence_native
 remaining:
 - Native actual evidence controls for selected saved actual snapshot and reported
   planned/unplanned row; exact canonical binding, byte SHA/size, explicit user copy,
@@ -430,13 +430,9 @@ test_results:
   canonical binding and actual projection, missing/zero, planned/unplanned revision
   isolation, consent, retry, corrupt/oversized downloads and false payment flag rejection.
   Ruff/diff PASS. PR571 exact aa74d86c 17 success/2 running.
-resume_instruction: Web actual evidence controls verified. Next native read/upload/download
-  on saved actual snapshot and reported planned/unplanned row, Python-compatible canonical
-  digest, explicit document type/user-copy consent and verified bounded transfers;
-  reuse native cost document components and preserve session invalidation. Then deduplicated
-  normative samples and historical comparable normalization. B2B approval pending,
-  60 requests/60s per IP target; no automated traffic. No production or source/model
-  calls. Product only.
+resume_instruction: Implement native actual evidence scoped to stored snapshot and
+  reported planned/unplanned row; exact Python digest, bounded transfer, user-copy
+  consent, offline Swift contract and Xcode build.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
