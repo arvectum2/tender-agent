@@ -300,7 +300,7 @@ completed:
   archive redirect namespace, stop on 401/403/429, real loopback 7/7 counted and exact
   ZIP. Private cookie-only state validation, manual local session CLI, one-card manifest
   preflight without live activation.'
-current_stage: b2b_isolated_adapter_verified_next_guarded_one_card_runner
+current_stage: b2b_eds_macbook_session_preparation
 remaining:
 - Complete actual guarded single-card live runner with exact reviewed scope, hard
   deadline/queue/accounting, canonical shared egress state and sole designated host/IP;
@@ -485,14 +485,10 @@ test_results:
   Session privacy/expiry/foreign domain, exact routes, IPC token/redirect rejection,
   local preflight and exclusive state save tests PASS. Ruff/diff PASS. PR577 exact
   b7368728 CI 19/19 successful.
-resume_instruction: Isolated browser/verified TLS broker candidate and private manual
-  session preflight verified. Next implement guarded single-card runner and canonical
-  egress state, hard overall deadline/queue, audit/disable legacy unguarded B2B access
-  and exact reviewed endpoint inventory. Use existing manual session preparation when
-  owner can sign in locally; no password/cookies through chat, no live credentials
-  yet. Keep live gate until actual candidate technical acceptance; then limited own-org
-  read-only pilot. PN-1356710-26 approval, hard 60/rolling minute/IP. PRICE-01 norms
-  preserved. No production deployment.
+resume_instruction: Owner specifies interactive EDS login on MacBook, not password.
+  Adapt dedicated Chrome profile capture, local cookie state and guarded runner preparation;
+  no key access or credential extraction from ordinary profiles, no transfer by default,
+  no live request before acceptance.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
@@ -504,11 +500,9 @@ b2b_dependency:
     более 60 HTTP-запросов в минуту с одного IP-адреса». IP approval not required;
     no separate download restrictions; own account or optional additional user. Earlier
     response: no additional fee or alternative API for stated actions.'
-  owner_action: Written permission received. Local isolated Chrome/TLS direct broker
-    fixture verified; preparation CLI and exact manifest preflight ready. No actual
-    local Arvectum session or reviewed live endpoint inventory yet; prior unguarded
-    access paths must be gated before pilot. No external traffic or login executed.
-    Retain 60/rolling 60s/IP.
+  owner_action: 'User specifies manual EDS login on MacBook. Session portability not
+    known: default keep dedicated session on MacBook; Mac mini analysis; no key export,
+    signing, or session secret in chat.'
 sibur_readonly_observation_20261116:
   status: exhausted
   step: archive supported queue drained; oversized and PDF review remains
