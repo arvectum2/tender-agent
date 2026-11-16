@@ -216,6 +216,15 @@ async function fetch(route,opts){
   assert.equal(key,'a');if(priceDisabled)return reply({detail:'disabled'},404);
   const scope={customer_id:priceMismatch?'foreign':fixture.a.customer_id,case_id:'case-a'};
   if(route.includes('/itemized')){
+   const b=JSON.parse(opts.body),isPreview=route.endsWith('/preview'),e=isPreview?b:b.estimate;
+   if(e.lines.some(x=>x.norm_binding)){
+    const chosen=normRecords[0],l=e.lines.find(x=>x.norm_binding);
+    if(chosen.action!=='APPROVED'||l.norm_binding.norm_id!==chosen.norm_id)return reply({detail:'stale norm'},409);
+    assert.deepEqual(l.norm_binding,Object.fromEntries(['norm_id','norm_key','revision','record_sha256'].map(k=>[k,chosen[k]])));assert.equal(l.source_kind,'APPROVED_CORPORATE_NORM');assert.equal(l.quantity,chosen.result.norm_quantity);assert.equal(l.rate_rub,chosen.result.norm_rate_rub);
+    const projected=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-c','import json,sys;from src.modules.saas_foundation.company_price_scenarios import ItemizedInput,derive_itemized,calculate;s,p=derive_itemized(ItemizedInput.model_validate(json.loads(sys.argv[1])));print(json.dumps({"inputs":s.model_dump(mode="json"),"itemized_estimate":p,"result":calculate(s)}))',JSON.stringify(e)],{encoding:'utf8'}));
+    if(isPreview)return reply({...scope,inputs_stored:false,...projected});
+    assert.equal(b.expected_revision,priceRows.length);const row={...scope,scenario_id:'price-'+(priceRows.length+1),revision:priceRows.length+1,member_id:'a',created_at:'2026-11-17T12:01:00Z',origin:'EXPLICIT_USER_ASSUMPTIONS',external_submission_allowed:false,...projected};priceRows.unshift({key:b.idempotency_key,row});return reply(row,201);
+   }
    if(route.endsWith('/preview')){assert.deepEqual(JSON.parse(opts.body),estimate);let projection=structuredClone(itemized);if(itemizedBad)projection.itemized_estimate.lines[0].amount_rub='1.00';return reply({...scope,inputs_stored:false,...projection})}
    const body=JSON.parse(opts.body);assert.deepEqual(body.estimate,estimate);const prior=priceRows.find(x=>x.key===body.idempotency_key);if(prior)return reply(prior.row,201);if(body.expected_revision!==priceRows.length)return reply({detail:'changed'},409);
    const row={...scope,scenario_id:'price-'+(priceRows.length+1),revision:priceRows.length+1,member_id:'a',created_at:'2026-11-16T12:01:00Z',origin:'EXPLICIT_USER_ASSUMPTIONS',external_submission_allowed:false,...itemized};priceRows.unshift({key:body.idempotency_key,row});if(priceLost){priceLost=false;throw Error('response lost')}return reply(row,201)
@@ -351,7 +360,16 @@ await click('company-metrics-load');assert.match(get('company-metrics-result').t
  get('cost-norm-approve-confirm').checked=true;change('cost-norm-approve-confirm');normLost=true;await click('cost-norm-approve');assert.equal(normRecords.length,1);assert.equal(get('cost-norm-approve-confirm').checked,false);
  get('cost-norm-approve-confirm').checked=true;change('cost-norm-approve-confirm');await click('cost-norm-approve');assert.equal(normRecords.length,1);assert.match(get('cost-norm-status').textContent,/Утверждена версия 1/);
  get('cost-norm-select').value=normRecords[0].norm_key;change('cost-norm-select');await click('cost-norm-history');assert.equal(get('cost-norm-history-result').children.length,1);
+ assert.equal(get('cost-norm-apply').disabled,false);await click('cost-norm-apply');assert.equal(vm.runInContext('priceLines.length',ctx),2);assert.equal(get('cost-norm-apply').disabled,true);assert.equal(get('price-save').disabled,true);
+ get('price-line-select').value='1';change('price-line-select');assert.equal(get('price-line-edit').disabled,true);await click('price-line-edit');assert.equal(vm.runInContext('priceEditing',ctx),null);
+ get('price-no-double').checked=true;change('price-no-double');await click('price-preview');assert.match(get('price-itemized-result').children[0].children[2].children[4].textContent,/норматив.*v1/);assert.equal(get('price-itemized-result').children[0].children[2].children[3].textContent,'16.25');
+ get('price-save-confirm').checked=true;change('price-save-confirm');await click('price-save');assert.equal(priceRows.length,3);assert.equal(priceRows[0].row.itemized_estimate.lines[1].norm_binding.norm_id,normRecords[0].norm_id);
+
  get('cost-norm-withdraw-note').value='Explicit fixture withdrawal';change('cost-norm-withdraw-note');get('cost-norm-withdraw-confirm').checked=true;change('cost-norm-withdraw-confirm');await click('cost-norm-withdraw');assert.equal(normRecords.length,2);assert.equal(normRecords[0].action,'WITHDRAWN');assert.equal(get('cost-norm-withdraw').disabled,true);await click('cost-norm-history');assert.equal(get('cost-norm-history-result').children[0].children.length,3);
+ assert.equal(get('cost-norm-apply').disabled,true);await click('price-preview');assert.match(get('result').textContent,/409/);assert.equal(get('price-save').disabled,true);
+ get('price-line-select').value='1';change('price-line-select');await click('price-line-remove');assert.equal(vm.runInContext('priceLines.length',ctx),1);get('price-zero-cash_overhead_rub').checked=true;change('price-zero-cash_overhead_rub');get('price-no-double').checked=true;change('price-no-double');
+ await click('price-history');get('price-version').value='price-3';change('price-version');await click('price-show-version');assert.match(get('price-version-detail').textContent,/APPROVED_CORPORATE_NORM/);get('price-version').value='price-2';change('price-version');await click('actual-load');get('actual-history').value='actual-2';change('actual-history');get('actual-evidence-row').value='UNPLANNED:1';change('actual-evidence-row');
+
  get('actual-sample-remove-select').value='case-a';change('actual-sample-remove-select');await click('actual-sample-remove');assert.equal(vm.runInContext('actualSamples.length',ctx),0);assert.equal(get('actual-sample-preview').disabled,true);assert.equal(get('actual-sample-result').children.length,0);
  await click('actual-sample-add');assert.equal(vm.runInContext('actualSamples.length',ctx),1);
  assert.equal(get('price-cost-evidence-panel').hidden,false);get('price-cost-line').value='1';change('price-cost-line');costDisabled=true;await click('price-cost-load');assert.equal(get('price-cost-editor').hidden,true);costDisabled=false;await click('price-cost-load');assert.equal(get('price-cost-editor').hidden,false);
