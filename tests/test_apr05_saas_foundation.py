@@ -2125,3 +2125,69 @@ def test_price_itemized_rollup_history_and_scope(client, session, monkeypatch):
     stored=session.get(CompanyPriceScenario,row['scenario_id']);damaged=deepcopy(stored.input_json);damaged['scenario']['external_direct_rub']='0.00'
     session.execute(update(CompanyPriceScenario).where(CompanyPriceScenario.id==row['scenario_id']).values(input_json=damaged));session.commit()
     assert client.get(path,headers=headers).status_code==409
+
+
+def test_cost_evidence_exact_version_line_bytes_and_scope(client, session, monkeypatch):
+    import hashlib
+
+    from sqlalchemy import update
+
+    from src.modules.saas_foundation import company_cost_evidence as evidence
+    from src.modules.saas_foundation.models import CompanyCostEvidence
+
+    _, a=_seed(client,'Cost documents A'); _, b=_seed(client,'Cost documents B')
+    _legal(client,a);_legal(client,b)
+    settings=saas.get_settings().model_copy(update={'saas_company_price_scenarios_enabled':True,'saas_company_price_itemized_enabled':True});monkeypatch.setattr(saas,'get_settings',lambda:settings)
+    headers=_auth(a);cases='/api/saas/company-portfolio/cases'
+    def create(token,n):
+        r=client.post(cases,headers=_auth(token),json={'registry_number':f'{n:019d}'});assert r.status_code==201,r.text
+        return cases+'/'+r.json()['case_id']+'/price-scenarios'
+    path=create(a,1);other=create(a,2);foreign=create(b,1)
+    estimate={'lines':[{'category':'own_labor_rub','title':'Develop','unit':'h','quantity':'2.5','rate_rub':'2000','source_kind':'USER_REPORTED_QUOTE','source_note':'User copy fixture'}], 'zero_cost_categories':['external_direct_rub','cash_overhead_rub','reserve_rub','fixed_platform_fees_rub','guarantee_financing_cost_rub'],'terms':{'revenue_tax_percent':'6','variable_platform_fee_percent':'0','minimum_profit_rub':'0','target_profit_rub':'1000','manual_bid_prices_rub':[],'assumption_note':'Synthetic test only','accept_hypothetical_assumptions_only':True},'confirm_no_double_count':True}
+    def save_estimate(rev, key):
+        r=client.post(path+'/itemized',headers=headers,json={'estimate':estimate,'expected_revision':rev,'idempotency_key':key});assert r.status_code==201,r.text
+        return r.json()
+    first=save_estimate(0,'evidence-first');second=save_estimate(1,'evidence-second')
+    legacy=client.post(path,headers=headers,json={'scenario':first['inputs'],'expected_revision':2,'idempotency_key':'evidence-legacy'});assert legacy.status_code==201,legacy.text
+    legacy=legacy.json()
+    def url(row,base=path,ordinal=1):return base+'/'+row['scenario_id']+f'/lines/{ordinal}/evidence'
+    u=url(first);v=url(second);assert client.get(u,headers=headers).status_code==404
+    settings=settings.model_copy(update={'saas_company_cost_evidence_enabled':True})
+    binding=client.get(u,headers=headers).json();digest=binding['line_sha256'];assert len(digest)==64 and binding['evidence'] is None and binding['line_amount_rub']=='5000.00'
+    assert client.get(v,headers=headers).json()['line_sha256']!=digest
+    assert client.get(u+'/download',headers=headers).status_code==404
+    raw=b'%PDF-1.4\n1 0 obj<<>>endobj\n%%EOF';sha=hashlib.sha256(raw).hexdigest()
+    params={'line_sha256':digest,'document_kind':'QUOTE','format_hint':'pdf','confirm_user_supplied':True}
+    def upload(target=u,body=raw,token=a,**overrides):return client.post(target,headers=_auth(token),params={**params,**overrides},content=body)
+    assert upload(confirm_user_supplied=False).status_code==422
+    assert upload(line_sha256='0'*64).status_code==409 and upload(target=v).status_code==409
+    assert upload(body=b'not a document').status_code==422
+    assert upload(body=b'x'*(2*1024*1024+1)).status_code==413
+    assert upload(document_kind='VERIFIED_QUOTE').status_code==422
+    assert upload(token=b).status_code==404 and upload(target=url(first,other)).status_code==404 and upload(target=url(first,foreign),token=b).status_code==404
+    assert client.get(url(first,ordinal=2),headers=headers).status_code==404
+    assert client.get(url(legacy),headers=headers).status_code==409
+    assert upload(target=url(legacy)).status_code==409
+    r=upload();assert r.status_code==201,r.text
+    saved=r.json();assert saved['inspection']['sha256']==sha and saved['scenario_id']==first['scenario_id'] and saved['scenario_revision']==1 and saved['line_sha256']==digest and saved['line_ordinal']==1
+    assert saved['stored_bytes_reverified'] and all(saved[k] is False for k in ('document_origin_verified','cost_amount_verified','payment_verified','external_submission_allowed'))
+    assert 'text_preview' not in saved['inspection']
+    assert upload().json()==saved and upload(document_kind='INVOICE').status_code==409 and upload(body=raw.replace(b'1 0 obj',b'2 0 obj')).status_code==409
+    assert client.get(u,headers=headers).json()['evidence']==saved and client.get(v,headers=headers).json()['evidence'] is None
+    dl=client.get(u+'/download',headers=headers);assert dl.status_code==200 and dl.content==raw and dl.headers['x-artifact-sha256']==sha and dl.headers['cache-control']=='private, no-store' and 'attachment;' in dl.headers['content-disposition']
+    assert client.get(u+'/download',headers=_auth(b)).status_code==404
+    for role in ('viewer','analyst'):
+        invite=client.post('/api/saas/invitations',headers=headers,json={'role':role,'acquisition_channel':'referral'}).json()
+        token=client.post('/api/saas/invitations/redeem',json={'invitation_code':invite['invitation_code'],'display_name':role}).json()['access_token'];_legal(client,token)
+        assert client.get(u,headers=_auth(token)).status_code==(403 if role=='viewer' else 200)
+        assert client.get(u+'/download',headers=_auth(token)).status_code==(403 if role=='viewer' else 200)
+        assert upload(token=token).status_code==403
+    monkeypatch.setattr(evidence,'MAX_DOCUMENTS_PER_TENANT',1)
+    assert upload(target=v,line_sha256=client.get(v,headers=headers).json()['line_sha256']).status_code==429
+    assert upload().json()==saved and session.query(CompanyCostEvidence).count()==1
+    # Adding the file does not revise the underlying financial scenario or promote its provenance.
+    assert client.get(path,headers=headers,params={'limit':30}).json()['items']==[legacy,second,first]
+    session.execute(update(CompanyCostEvidence).where(CompanyCostEvidence.id==saved['evidence_id']).values(line_sha256='0'*64));session.commit()
+    assert client.get(u,headers=headers).status_code==409 and client.get(u+'/download',headers=headers).status_code==409
+    session.execute(update(CompanyCostEvidence).where(CompanyCostEvidence.id==saved['evidence_id']).values(line_sha256=digest,raw_bytes=raw.replace(b'1 0 obj',b'9 0 obj')));session.commit()
+    assert client.get(u,headers=headers).status_code==409 and client.get(u+'/download',headers=headers).status_code==409

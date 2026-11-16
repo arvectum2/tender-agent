@@ -377,3 +377,27 @@ class CompanyPriceScenario(UUIDPrimaryKeyMixin, Base):
 
 event.listen(CompanyPriceScenario, "before_update", _immutable_company_decision)
 event.listen(CompanyPriceScenario, "before_delete", _immutable_company_decision)
+
+
+class CompanyCostEvidence(UUIDPrimaryKeyMixin, Base):
+    """Immutable user copy attached to a particular saved estimate row."""
+    __tablename__ = "company_cost_evidence"
+    scenario_id: Mapped[str] = mapped_column(String(36), ForeignKey("company_price_scenarios.id"), nullable=False)
+    line_ordinal: Mapped[int] = mapped_column(Integer, nullable=False)
+    line_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    member_id: Mapped[str] = mapped_column(String(36), ForeignKey("saas_members.id"), nullable=False)
+    document_kind: Mapped[str] = mapped_column(String(24), nullable=False)
+    format_hint: Mapped[str] = mapped_column(String(8), nullable=False)
+    raw_bytes: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
+    inspection_json: Mapped[dict] = mapped_column(JSON, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    __table_args__ = (
+        UniqueConstraint("scenario_id", "line_ordinal", name="uq_company_cost_evidence_line"),
+        CheckConstraint("line_ordinal BETWEEN 1 AND 60", name="ck_cost_evidence_ordinal"),
+        CheckConstraint("document_kind IN ('QUOTE','INVOICE','CONTRACT','TIMESHEET','OTHER')", name="ck_cost_evidence_kind"),
+        CheckConstraint("format_hint IN ('pdf','docx','xlsx')", name="ck_cost_evidence_format"),
+    )
+
+
+event.listen(CompanyCostEvidence, "before_update", _immutable_company_decision)
+event.listen(CompanyCostEvidence, "before_delete", _immutable_company_decision)

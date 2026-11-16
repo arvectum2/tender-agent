@@ -65,6 +65,7 @@ from src.modules.saas_foundation import (
     commercial_capture,
     commercial_requirement_review,
     company_case_evidence,
+    company_cost_evidence,
     company_discovery,
     company_lifecycle,
     company_lifecycle_artifacts,
@@ -955,15 +956,7 @@ def company_readiness_bind(case_id: str, payload: company_readiness.BindInput, p
     return company_readiness.bind(session, principal, case_id, payload)
 
 
-@router.post("/api/saas/company-portfolio/cases/{case_id}/lifecycle/{event_id}/artifact", status_code=201)
-async def upload_lifecycle_artifact(case_id: str, event_id: str, request: Request, principal: Member, session: DBSession, format_hint: company_lifecycle_artifacts.ArtifactFormat, confirm_user_supplied: bool = Query(False)) -> dict:
-    settings=get_settings()
-    if not (settings.saas_company_lifecycle_enabled and settings.saas_company_lifecycle_artifacts_enabled):
-        raise HTTPException(404, "Lifecycle artifacts disabled")
-    role_required(principal, "owner", "admin")
-    company_lifecycle_artifacts._event(session,principal,case_id,event_id)
-    if not confirm_user_supplied:
-        raise HTTPException(422, "Confirm user-supplied unverified origin")
+async def _bounded_evidence_upload(request: Request, session: DBSession) -> bytes:
     if request.headers.get("content-encoding", "identity").lower() != "identity":
         raise HTTPException(415, "Encoded uploads unsupported")
     length=request.headers.get("content-length")
@@ -981,6 +974,19 @@ async def upload_lifecycle_artifact(case_id: str, event_id: str, request: Reques
                 raw.extend(chunk)
     except TimeoutError as exc:
         raise HTTPException(408, "Attachment upload timeout") from exc
+    return bytes(raw)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/lifecycle/{event_id}/artifact", status_code=201)
+async def upload_lifecycle_artifact(case_id: str, event_id: str, request: Request, principal: Member, session: DBSession, format_hint: company_lifecycle_artifacts.ArtifactFormat, confirm_user_supplied: bool = Query(False)) -> dict:
+    settings=get_settings()
+    if not (settings.saas_company_lifecycle_enabled and settings.saas_company_lifecycle_artifacts_enabled):
+        raise HTTPException(404, "Lifecycle artifacts disabled")
+    role_required(principal, "owner", "admin")
+    company_lifecycle_artifacts._event(session,principal,case_id,event_id)
+    if not confirm_user_supplied:
+        raise HTTPException(422, "Confirm user-supplied unverified origin")
+    raw = await _bounded_evidence_upload(request, session)
     return await run_in_threadpool(company_lifecycle_artifacts.save, session, principal, case_id, event_id, bytes(raw), format_hint)
 
 
@@ -1036,3 +1042,36 @@ def company_price_itemized_save(case_id: str, payload: company_price_scenarios.I
     if not (settings.saas_company_price_scenarios_enabled and settings.saas_company_price_itemized_enabled):
         raise HTTPException(404, "Itemized price scenarios disabled")
     return company_price_scenarios.save_itemized(session,principal,case_id,payload)
+
+
+# Evidence is a user-supplied copy, not verification of the price, payment or signature.
+def _cost_evidence_enabled():
+    settings=get_settings()
+    if not (settings.saas_company_price_scenarios_enabled and settings.saas_company_price_itemized_enabled and settings.saas_company_cost_evidence_enabled):
+        raise HTTPException(404, "Cost evidence disabled")
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/{scenario_id}/lines/{ordinal}/evidence")
+def read_cost_evidence(case_id: str, scenario_id: str, ordinal: int, principal: Member, session: DBSession) -> dict:
+    _cost_evidence_enabled()
+    return company_cost_evidence.read(session,principal,case_id,scenario_id,ordinal)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/{scenario_id}/lines/{ordinal}/evidence", status_code=201)
+async def upload_cost_evidence(case_id: str, scenario_id: str, ordinal: int, request: Request, principal: Member, session: DBSession, format_hint: company_cost_evidence.FormatHint, document_kind: company_cost_evidence.DocumentKind, line_sha256: Annotated[str,Query(pattern=r"^[0-9a-f]{64}$")], confirm_user_supplied: bool = Query(False)) -> dict:
+    _cost_evidence_enabled()
+    role_required(principal,"owner","admin")
+    _,_,digest=company_cost_evidence._line(session,principal,case_id,scenario_id,ordinal)
+    if digest!=line_sha256:
+        raise HTTPException(409,"Estimate line binding changed; refresh")
+    if not confirm_user_supplied:
+        raise HTTPException(422,"Confirm user-supplied unverified origin")
+    raw=await _bounded_evidence_upload(request,session)
+    return await run_in_threadpool(company_cost_evidence.save,session,principal,case_id,scenario_id,ordinal,raw,format_hint,document_kind,line_sha256)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/{scenario_id}/lines/{ordinal}/evidence/download")
+def download_cost_evidence(case_id: str, scenario_id: str, ordinal: int, principal: Member, session: DBSession):
+    _cost_evidence_enabled()
+    raw,format_hint,sha=company_cost_evidence.download(session,principal,case_id,scenario_id,ordinal)
+    return Response(content=raw,media_type="application/octet-stream",headers={"Content-Disposition":f'attachment; filename="cost-{sha[:16]}.{format_hint}"',"Cache-Control":"private, no-store","X-Content-Type-Options":"nosniff","X-Artifact-SHA256":sha})

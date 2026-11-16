@@ -384,3 +384,27 @@ def test_price_scenario_migration_preserves_versions(tmp_path, monkeypatch):
         with engine.connect() as conn:assert conn.scalar(text('SELECT count(*) FROM company_price_scenarios'))==1
     finally:
         engine.dispose();invalidate_settings_cache()
+
+
+def test_cost_evidence_migration_preserves_documents(tmp_path, monkeypatch):
+    import pytest
+
+    db_url='sqlite:///'+str(tmp_path/'cost-evidence.sqlite')
+    monkeypatch.setenv('AI_CORP_DATABASE_URL',db_url);invalidate_settings_cache()
+    cfg=Config(str(Path(__file__).resolve().parents[1]/'alembic.ini'));engine=create_engine(db_url)
+    try:
+        with engine.begin() as conn:
+            for table in ('company_price_scenarios','saas_members'):
+                conn.execute(text(f'CREATE TABLE {table} (id VARCHAR PRIMARY KEY)'))
+                conn.execute(text(f"INSERT INTO {table} (id) VALUES ('fixture')"))
+        command.stamp(cfg,'118_company_price_scenarios');command.upgrade(cfg,'119_company_cost_evidence')
+        assert 'company_cost_evidence' in inspect(engine).get_table_names()
+        command.downgrade(cfg,'118_company_price_scenarios');command.upgrade(cfg,'119_company_cost_evidence')
+        raw=b'%PDF-1.4\nfixture\n%%EOF'
+        with engine.begin() as conn:
+            conn.execute(text("INSERT INTO company_cost_evidence (id,scenario_id,line_ordinal,line_sha256,member_id,document_kind,format_hint,raw_bytes,inspection_json,created_at) VALUES ('e','fixture',1,:digest,'fixture','QUOTE','pdf',:raw,'{}','2026-11-16')"),{'raw':raw,'digest':'a'*64})
+        with pytest.raises(RuntimeError,match='Cannot discard'):
+            command.downgrade(cfg,'118_company_price_scenarios')
+        with engine.connect() as conn:assert conn.scalar(text('SELECT raw_bytes FROM company_cost_evidence'))==raw
+    finally:
+        engine.dispose();invalidate_settings_cache()
