@@ -43,12 +43,20 @@ completed:
 - Live auth 401/404 controls PASS. Three health and real collection statistics probes
   show 86 resources/documents/chunks/embeddings, 25/52/50 ms aggregate. Native module
   paths map to internal release; no startup error lines. Tender Agent old image healthy.
-current_stage: dp_backport_live_verified_next_source_locked_acceptance
+- '2026-11-16 live source-only acceptance after DP update: canonical original EIS
+  identity/readiness verified for pinned 0163200000326005243, Data Platform real retrieval
+  /v1/search HTTP 200 four times, all context references match registry. Subject 17
+  chunks (2.20 s), customer requirements 18 (0.21 s), evaluation criteria 18 (0.21
+  s), contract terms 16 (0.22 s). Private receipt saved, SHA b68dc5421ea168c56e8bab8231c6e084d9e241ead33194505057cdf2dc9e2ced.
+  No model generation or canonical DB mutation.'
+current_stage: source_identity_and_retrieval_verified_gemma_acceptance_pending
 remaining:
-- Verify sustained responsiveness under real ingestion when an authorized operation
-  occurs; no synthetic live ingestion.
-- Verify original-source identity and bounded source-locked Gemma acceptance. Separate
-  TA runtime deployment approval required.
+- Bounded actual Gemma generation acceptance (prior durations 88–449 seconds per section;
+  use controlled longer-running executor, not 45-second remote shell). Do not reuse
+  prior final4 receipt or claim new model result.
+- Monitor real authorized ingest/process responsiveness when naturally exercised;
+  no synthetic live ingest.
+- Separate owner approval for Tender Agent runtime deployment.
 last_verified_commit: d5eb8439811f9ca1dc41253f5a136c5aa9e36c92
 test_results:
 - 105/105 draft-only PASS
@@ -64,10 +72,13 @@ test_results:
   53ms (single observation)
 - 42 passed, 1 warning in 2.70s on staged internal release; post-switch live health/auth
   and preserved collection 86/86/86/86 three times PASS
-resume_instruction: Data Platform exact-release threadpool backport is LIVE on internal
-  SSD. Do not re-stage/restart. Verify sustained real ingestion and original-source
-  identity before bounded Gemma acceptance; do not mutate DB without gate. TA production
-  remains unchanged.
+- Post-switch actual source-locked retrieval 4/4 sections PASS, 17/18/18/16 chunks.
+  No new ingest/process request observed after switch marker; sustained ingest acceptance
+  still pending.
+resume_instruction: DP updated, read-only and four-section real retrieval accepted.
+  Do not repeat DP switch or evidence-only probe unless service changes. Next actual
+  bounded Gemma acceptance with long-running controlled executor and separate new
+  private receipt; source/DB read-only, no gold or deployment. Preserve research.
 runtime_rollout_20261116:
   release: /Users/master/ArvectumSafe/runtime-releases/data-platform-20261116-50f7b69
   revision: 50f7b69d5d3d33413de2599f7c21c79bffe36541

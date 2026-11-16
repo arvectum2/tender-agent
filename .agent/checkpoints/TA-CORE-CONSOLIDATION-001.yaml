@@ -62,7 +62,10 @@ completed:
 - DP exact-release threadpool backport deployed on owner request; internal SSD release
   50f7b69, graceful restart, live auth and collection stats 86/86/86/86 PASS x3. See
   TA-CORE-GEMMA-REVIEW-20261115 checkpoint.
-current_stage: accepted_main_image_verified_dp_runtime_updated
+- New live DP actual source-only acceptance four sections PASS (17/18/18/16 source
+  chunks, exact registry). Gemma generation remains pending, no new real ingestion
+  claimed.
+current_stage: dp_source_retrieval_verified_gemma_acceptance_pending
 remaining:
 - Sustained actual DP ingestion and source-locked Gemma acceptance.
 - Tender Agent candidate runtime deployment separately authorized; preserve research.
@@ -77,6 +80,6 @@ test_results:
 - TA529/530/531 19/19 CI exact heads; DP130 7/7; all merged
 - Final main tree parity PASS, ARM64 isolated build and health/auth/evidence smoke
   PASS
-resume_instruction: Do not repeat approved merges, image build or DP runtime switch.
-  DP updated and read-only acceptance passed. Continue source-locked acceptance only
-  under existing gates; separate TA deployment approval.
+resume_instruction: DP runtime already live and actual original-source retrieval accepted.
+  Proceed controlled Gemma acceptance and natural authorized ingest monitoring, preserve
+  TA runtime and active research; no repeat switch.
