@@ -139,7 +139,7 @@ completed:
   or OOXML package checks, immutable bytes and SHA, offline integrity recheck, same-link
   historical comparison, bounded DOCX text preview with part/paragraph provenance.
   Migration 113; web controls implemented. No automatic downloads.'
-current_stage: attachment_intake_and_comparison_verified_backend_hosted_ui_pending
+current_stage: offline_multiformat_text_and_requirement_candidates
 remaining:
 - Check current PR exact-head CI (mandatory Node JS contract), fix any JS fixture
   failure before next increment; do not reinstall Mac system Node while SIBUR indexing.
@@ -193,12 +193,11 @@ test_results:
   Ruff/diff PASS. Local JS fixture skipped: Node26 missing libada, Node22 missing
   libsimdjson. Explicit hosted Node CI step added; do not claim browser fixture accepted
   yet.'
-resume_instruction: Attachment intake API, storage, recheck, revisions, DOCX preview
-  and web UI implemented. Python/SQLite tests PASS; hosted CI explicit JS contract
-  mandatory (local Node dylibs broken). Check exact-head CI, correct failures, then
-  proceed source-contract-backed attachment acquisition and verified extraction without
-  live model calls. No production migration/deploy. SIBUR existing executor reconciled
-  late commit 774 and advanced 777/16188 at final check; keep Qwen priority; Gemma
-  paused.
+- PR545 exact head 45395db6 CI 18/19 success, including hosted Node and quality; Mirror
+  repository only failure.
+resume_instruction: Add separate versioned bounded text evidence projection for reverified
+  company-supplied files (no old receipt changes), XLSX cell provenance, PDF bounded
+  subprocess if available and source-linked requirement candidates. No direct marketplace
+  downloads until contracts confirmed, no model calls.
 owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
   Product changes isolated, offline and bounded.
