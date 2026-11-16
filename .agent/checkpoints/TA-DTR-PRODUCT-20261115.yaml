@@ -268,7 +268,7 @@ completed:
 - B2B PN-1356710-26 new operator response and sent technical specification recorded;
   60 HTTP requests per 60 seconds per IP target, written approval still pending; no
   traffic.
-current_stage: price01_actual_evidence_backend_verified_next_web_native
+current_stage: price01_actual_evidence_web
 remaining:
 - Web and native actual evidence controls on selected saved actual snapshot and reported
   planned/unplanned row; exact canonical binding and byte SHA, explicit user copy,
@@ -424,13 +424,9 @@ test_results:
   baseline/snapshot/tenant/role scope, replay, quota, corruption and guarded migration
   roundtrip tested. Existing JS fixture PASS; Ruff/diff PASS; Alembic head 121_company_actual_evidence.
   PR570 exact 6bd87d80 CI 19/19 successful.
-resume_instruction: 'Actual-specific evidence backend and migration 121 verified.
-  Next Web then native evidence controls: exact saved snapshot, PLANNED/UNPLANNED
-  row and digest, explicit document kind/user-copy consent, verified bounded transfer/replay
-  and state clearing. Then deduplicated normative samples and historical comparative
-  procurement. B2B technical specification sent; await written approval, 60 HTTP requests
-  per 60s per IP target and offline enforcement before pilot; no platform traffic.
-  No production deployment or external source/model calls. Product only.'
+resume_instruction: Implement Web actual evidence on exact saved report/row, canonical
+  digest, explicit immutable user copy, verified bounded transfers and state clearing;
+  offline tests.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
