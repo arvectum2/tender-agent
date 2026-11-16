@@ -395,7 +395,7 @@ completed:
   V23 whole corpus 16095/30394 extracted, 5640 complete known, 3129/10555 links, 717 indexed. Priority 5613/8238,
   1875 complete, 1862/2315 URLs, 263 indexed. Two pilot originals verified; 4 exact public checks no outcome, cumulative
   22. No DB writes, no outreach.'
-current_stage: sionika_kip_valve_skdn
+current_stage: full_corpus_collection_extraction_and_indexing_priority
 target_report_date: 2026-11-17
 remaining:
 - Reconcile 37 priority plan rows with exact procedures and primary award/contract evidence; check current qualification,
@@ -1469,7 +1469,34 @@ sionika_v42_verified_20261116:
     project-coverage-dashboard-v28-post-storage-recovery.json: 481d650720cd39b68cd2b9725e2c5d8d9ad121291b0218720072800f78ebaf87
   verification: V41 source hashes matched, V42 map/queue/action hashes consistent, frozen memberships and award
     fields preserved; no DB writes or live source rechecks.
-resume_instruction: V42 complete on internal research branch. Continue 37 priority plan reconciliation and primary
-  award/entity evidence, preserve source boundaries; work toward 17 Nov consolidated commercial acceptance. Read
-  current archive and technical state, do not duplicate active worker; no DB mutation without gate. V42 is not final
-  acceptance.
+resume_instruction: 'Gemma acceptance explicitly paused. Prioritize full SIBUR corpus. Existing archive PID56279
+  and restarted supervised index executor PID83984: inspect fresh receipts and state, never duplicate; exact DP
+  reconciliation 767 docs/15745 matched Qwen embeddings proved, recovered lost receipt 259 chunks with original
+  SHA. Index sync remains pending; existing executor must pass gates and backup before writes. Expand vetted fixed
+  archive bridge after existing queue drained; preserve unsupported formats, remaining links and evidence gaps,
+  no claim of complete research. Parallel Tender Agent development offline only. Keep watchdog priority override.'
+corpus_priority_20261116:
+  owner: Prioritize entire SIBUR public corpus, original acquisition, extraction and Qwen index. Gemma acceptance
+    paused until explicit approval. Parallel product work isolated/offline.
+  coverage_dashboard: project-coverage-dashboard-v29-corpus-priority.json
+  coverage_sha256: fed63ecd3a0525f117501e81609dcf24a37e92de7686a217361e418e93b74334
+  publication_count: 30394
+  document_rows: 25998
+  processed_originals: 5007
+  extracted_originals: 4818
+  supported_urls: 10555
+  captured_supported_urls: 5409
+  extracted_supported_urls: 4837
+  index_recovery:
+    prior_status: blocked_at_DP_stats_with_index_inflight
+    read_only_evidence: dp-readonly-reconciliation-20261116055203.json
+    sha256: 8151674abaa51d9530daa52c37186eb69da0762e1374fa6f1978f66f2d77c759
+    exact_server_documents: 767
+    chunks_embeddings: 15745
+    recovered_original_sha256: 2123d5ebf56c8c41ecef35e5f72d57d4a448f47326210cee9fd7d0b9a9633a23
+    recovered_chunks: 259
+    manifest_sha256: 22b32c84e7c0ea162888b03ebfa1e7b87b2d310ad21e07378ccd262d45762870
+    index_executor_pid: 83984
+    status: reconciled_existing_executor_restarted
+    db_modified_during_recovery: false
+    archive_sync_pending: true
