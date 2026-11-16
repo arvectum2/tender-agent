@@ -288,7 +288,7 @@ completed:
   route interception redirect experiment failed closed; replaced with network-level
   HTTP proxy. Browser fixture 7 actual origin requests = 7 charged, exact 129-byte
   ZIP and nine direct proxy refusals.'
-current_stage: b2b_offline_http_browser_verified_next_https_acceptance
+current_stage: b2b_offline_https_browser_fixture
 remaining:
 - 'B2B accepted HTTPS request-level architecture: offline TLS fixture and no-direct-egress
   proof, dedicated authorized session/cookie management, exact read-only endpoint
@@ -464,14 +464,9 @@ test_results:
   PASS with response sequence 302,200,200,200,307,200,429; direct refusal, blocked
   unapproved route/POST, separate proxy CONNECT/cross-origin redirect tests. Ruff/diff
   PASS. PR575 exact 87b903ef CI 19/19 success. No live requests.
-resume_instruction: Real Chrome HTTP-only offline accounting proxy and fixture verified.
-  Next design and implement an offline HTTPS request-level broker/Playwright integration
-  (no opaque CONNECT accounting as HTTP count), ensure fail-closed unauthorized direct
-  egress including redirect/background/download, bounded total operation and secure
-  dedicated session/cookie handling. Keep live B2B pilot disabled until HTTPS and
-  canonical egress acceptance. Operator PN-1356710-26 approved internal use, strict
-  60 requests per rolling 60s/IP. Preserve PRICE-01 normative samples. No production
-  deployment.
+resume_instruction: Implement offline loopback TLS origin/proxy, exact request-level
+  accounting through verified upstream TLS, isolated fixture cookie session, browser
+  SPKI-scoped trust and actual Chrome test. No live credentials or network changes.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
