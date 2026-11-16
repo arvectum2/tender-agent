@@ -167,17 +167,24 @@ completed:
   CRC/path/size/member/SHA checks, offline Chromium synthetic exact-byte download
   verified. Workspace diagnostic only. No actual authenticated original download or
   API contract.'
-current_stage: commercial_browser_pilot_verified_awaiting_authorized_source_contract
+- 'MacBook authorized Arvectum Chromium-GOST cabinet observed: no paid tariff selected,
+  search by exact number 4664540 succeeds, filter fields and templates confirmed,
+  authorized notice has organizer DOCX 138.3 KB and Скачать все документы button.
+  Notice-level path precedes positions; original bytes not obtained. API section not
+  found in inspected cabinet menus. B2B regulation 5.4 requires written operator permission
+  for automated collection, 60 HTTP requests/minute/IP cap; separate pilot CLI refuses
+  B2B network access without explicit permission reference.'
+current_stage: b2b_authenticated_notice_confirmed_operator_consent_and_api_contract_required
 remaining:
-- Obtain official B2B cabinet API method list/XML and tariff/permissions for notice
-  documents, only with an existing authorized company account. Prefer permitted read-only
-  service; otherwise run one authorized B2B browser original pilot with dedicated
-  session, prove exact bytes and source identity; verify Workspace already entitled
-  session and actual file UI separately. No purchases, bids or login bypass.
-- Then integrate proven collectors with scoped evidence, bounded retries and immutable
-  receipt/version storage; full extraction, quality/PG/browser acceptance pending.
-- Resolve mirror and check exact-head CI. SIBUR/Qwen priority; Gemma paused; no deployment.
-last_verified_commit: d3253f96902ded935ad3adcb8f57462bcfea5179
+- Request operator written authorization, official read-only API method documentation,
+  pricing, quotas and storage/use rights, including search/archives, notice histories,
+  attachments, protocols/results. No automated B2B access before documented permission,
+  even public probes.
+- If granted and API sufficient, implement contract-backed adapter; if approved browser
+  route required, verify direct notice download before positions fallback with exact
+  identity and file manifest; actual authorized file acceptance pending.
+- Continue independent offline roadmap and preserve SIBUR/Qwen, Gemma paused.
+last_verified_commit: 21d6cdc320ab078da226a1a245192e3e6aacb388
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -239,11 +246,12 @@ test_results:
   and WORKSPACE_ENTITLEMENT_REQUIRED. SIBUR 823 originals/17785 embeddings synchronized
   and OK. PR547 17 success,1 running,mirror failure; PR548 16 success,2 running,mirror
   failure.
-resume_instruction: API-first B2B/Workspace discovery and standalone pilot verified
-  publicly and via synthetic Chromium ZIP. Actual commercial originals require cabinet
-  method contract or an explicitly authorized existing company session; no guessed
-  endpoints or user-copy promotion. Use independent approved session profile and verify
-  one real original before production wiring. Continue other offline roadmap if access
-  blocked, preserve SIBUR/Qwen, Gemma paused.
+- Authorized search UI and exact procurement card inspected; no downloaded bytes,
+  no automated bulk access, no new payment/consent/applications. CLI negative test
+  exit 2 before browser, Ruff/diff PASS.
+resume_instruction: B2B authorized cabinet search and notice UI verified, API menu
+  not found; written operator approval and API documentation required. No automated
+  B2B traffic pending approval. Pilot gate is assertion only, not verification. Continue
+  other offline product roadmap; no deployment or model calls; maintain SIBUR priority.
 owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
   Product changes isolated, offline and bounded.
