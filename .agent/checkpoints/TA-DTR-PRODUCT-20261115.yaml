@@ -189,7 +189,7 @@ completed:
   participated/recommended IDs only as described; no invitation/document downloads
   or submission; paid maximum/pro supplier tariff. Prefer permitted browser path;
   no written operator consent granted.'
-current_stage: company_case_lifecycle_backend_verified_next_web_native
+current_stage: company_lifecycle_web_controls
 remaining:
 - Web and iOS lifecycle controls, metrics with explicit human-attested provenance;
   complete readiness evidence relationships, receipt/outcome original verification
@@ -271,11 +271,9 @@ test_results:
   boot or device install. git diff --check PASS.
 - 116 passed, 2 skipped, 93 warnings in 11.20s; SQLite migration 115 forward/replay/nonempty
   rollback guard, scope, GO staleness, history/correction and metrics; Ruff/diff PASS.
-resume_instruction: Scoped lifecycle backend, SQLite migration and metrics verified.
-  Next web/native UI for manual readiness/submission/outcome and metrics; no automated
-  qualification or external action. B2B support confirms API unsuitable for document
-  downloads, seek separate written Playwright permission, do not automate B2B yet.
-  Preserve SIBUR worker and Gemma pause.
+resume_instruction: Implement scoped web lifecycle state, explicit human attestation,
+  history and metrics. Run actual JS and offline regression tests. Proceed native
+  next. B2B follow-up sent; no production or model calls.
 owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
   Product changes isolated, offline and bounded.
 b2b_dependency:
@@ -284,8 +282,8 @@ b2b_dependency:
   support_response: Supplier API active participated IDs and recommended IDs; no personal
     invitations or document download/submission; paid Maximum Opportunities or Professional
     Supplier. General search not confirmed.
-  owner_action: Request separate written operator consent for Playwright. API inadequate
-    for document acquisition. No automated B2B network access pending consent.
+  owner_action: Owner sent follow-up to support requesting written browser automation
+    consent; await response. No automated B2B traffic.
 sibur_readonly_observation_20261116:
   status: running
   full_receipts: 845
