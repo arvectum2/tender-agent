@@ -208,16 +208,18 @@ completed:
 - 'Web readiness and event file controls: explicit partial acknowledgement, bound/stale
   snapshot, event-scoped user-copy upload with SHA match, authorized bounded binary
   download checked before save, case/session clearing. No backend/migration changes.'
-current_stage: native_readiness_and_event_files
+- Native readiness partial projection, current/stale binding, explicit acknowledgment;
+  scoped event file import/export controls, 2 MiB limit, SHA and size response validation,
+  authenticated bounded streaming, no trusted provenance claims.
+current_stage: native_readiness_artifacts_verified_next_price01
 remaining:
-- Native iOS readiness binding and lifecycle file upload/download with owned scope
-  and SHA integrity; actual Swift contract and build verification. Keep default-off
-  gates until PG/browser/device acceptance.
-- PRICE-01 cost/pricing and explainable bid economics.
-- Hosted CI/mirror, actual PG concurrency and E2E acceptance. Independent source authentication
-  and multi-file/correction policy pending. B2B written operator consent pending;
-  product only, no production deploy.
-last_verified_commit: b94424a5feb46d97701f1c781fe833bd4d43f5b7
+- 'PRICE-01 cost/pricing: inspect existing pricing models and roadmap, scoped versioned
+  explainable bid economics with explicit assumptions, no uncalibrated forecast.'
+- Hosted CI/mirror, PostgreSQL concurrency, real browser/device file transfer, full
+  E2E acceptance; native readiness drilldown and independent source authentication/multi-file
+  correction remaining. Keep gates off until acceptance.
+- B2B written operator consent pending; product only, no production deploy.
+last_verified_commit: 7f616d91f13128eb1c3013f8edaeef83d7f5ca3a
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -307,9 +309,14 @@ test_results:
   binding and stale refusal, explicit file confirmation, SHA and corrupted download
   rejection, valid download and clearing. Ruff/diff PASS. PR556 exact f6f7a705 18
   success, mirror failure.
-resume_instruction: Implement native readiness binding and scoped event file transfer
-  with digest and explicit provenance, bounded reads, test build and contracts. Product
-  only, no production/source changes.
+- Final unsigned Xcode build-for-testing SUCCEEDED incl new XCTest compilation; actual
+  Swift contract scope/readiness/digest/limits executed on macOS PASS; diff PASS.
+  PR557 exact ec399596 18 success/1 pending. Simulator and real iPhone transfer not
+  run.
+resume_instruction: Native readiness and lifecycle artifact controls compiled and
+  Swift contract PASS. Next PRICE-01, inspect existing costing and pricing modules
+  before extending; no unverified market forecast and no autonomous external actions.
+  Maintain product-only scope, B2B consent pending, no production changes.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
