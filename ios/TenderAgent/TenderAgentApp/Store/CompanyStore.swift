@@ -321,6 +321,15 @@ final class CompanyStore: ObservableObject {
         } catch { handleLifecycleError(error); throw error }
     }
 
+    func itemizedPreview(accountID: String, item: CompanyCase, estimate: CompanyItemizedInput) async throws -> CompanyItemizedPreview {
+        guard !isBusy else { throw CompanyConnectionError.http(409) }
+        isBusy=true; defer { isBusy=false }
+        do {
+            let (client,actual)=try await lifecycleAccess(accountID:accountID,item:item)
+            return try await client.itemizedPreview(caseID:item.caseId,identity:actual,estimate:estimate)
+        } catch { handleLifecycleError(error); throw error }
+    }
+
     func priceHistory(accountID: String, item: CompanyCase) async throws -> CompanyPriceHistory {
         guard !isBusy else { throw CompanyConnectionError.http(409) }
         isBusy = true; defer { isBusy = false }

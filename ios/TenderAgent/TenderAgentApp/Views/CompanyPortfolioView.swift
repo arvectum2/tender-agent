@@ -464,6 +464,13 @@ private struct CompanyPriceSection: View {
     let accountID: String
     @ObservedObject var store: CompanyStore
     @State private var input = CompanyPriceInput()
+    @State private var itemizedMode = false
+    @State private var lines: [CompanyCostLine] = []
+    @State private var line = CompanyCostLine()
+    @State private var editingIndex: Int?
+    @State private var zeroCategories: Set<CompanyCostCategory> = []
+    @State private var noDoubleCount = false
+    @State private var projection: CompanyItemizedProjection?
     @State private var manual = ""
     @State private var ceiling = ""
     @State private var preview: CompanyPriceResult?
@@ -493,17 +500,44 @@ private struct CompanyPriceSection: View {
         value.assumptionNote = value.assumptionNote.trimmingCharacters(in:.whitespacesAndNewlines)
         return value
     }
-    private func invalidate() { preview = nil; previewInput = nil; pending = nil; confirmSave = false; notice = nil }
-    private func reset() { invalidate(); input = CompanyPriceInput(); manual = ""; ceiling = ""; history = nil; selectedVersion = "" }
+    private var lineDirty: Bool { editingIndex != nil || line != CompanyCostLine() }
+    private var estimate: CompanyItemizedInput {
+        .init(lines:lines,zeroCostCategories:CompanyCostCategory.allCases.filter { zeroCategories.contains($0) },terms:CompanyPriceTerms(draft),confirmNoDoubleCount:noDoubleCount)
+    }
+    private var previewCurrent: Bool {
+        guard let value=previewInput else { return false }
+        return itemizedMode ? !lineDirty && projection?.inputs == estimate : projection == nil && value == draft
+    }
+    private func finishLine() { editingIndex=nil; line=CompanyCostLine() }
+    private func lineChanged() { noDoubleCount=false; invalidate() }
+    private func saveLine() {
+        let value=line.normalized
+        guard value.amount != nil else { notice="Заполните строку: положительное количество и ставка, единица и источник."; return }
+        if let index=editingIndex, lines.indices.contains(index) { lines[index]=value }
+        else { guard editingIndex==nil, lines.count<60 else { return }; lines.append(value) }
+        zeroCategories.remove(value.category); finishLine(); lineChanged()
+    }
+    private func invalidate() { projection = nil; preview = nil; previewInput = nil; pending = nil; confirmSave = false; notice = nil }
+    private func reset() { invalidate(); itemizedMode=false; lines=[]; finishLine(); zeroCategories=[]; noDoubleCount=false; input = CompanyPriceInput(); manual = ""; ceiling = ""; history = nil; selectedVersion = "" }
     private func calculate() async {
-        invalidate(); let value = draft
-        guard value.valid else { notice = CompanyConnectionError.invalidPrice.localizedDescription; return }
+        invalidate()
         do {
-            let response = try await store.pricePreview(accountID:accountID,item:item,input:value)
-            guard store.selectedID == accountID, store.identity != nil, draft == value else { return }
-            preview = response.result; previewInput = value
-            notice = "Предварительный расчёт, не сохранён."
-        } catch { notice = CompanyStore.safeError(error) }
+            if itemizedMode {
+                guard !lineDirty else { notice="Сохраните или отмените текущую строку."; return }
+                let value=estimate
+                guard value.sums != nil else { notice="Заполните смету, отметьте нулевые категории и подтвердите отсутствие двойного учёта."; return }
+                let response=try await store.itemizedPreview(accountID:accountID,item:item,estimate:value)
+                guard store.selectedID==accountID, store.identity != nil, itemizedMode, estimate==value, !lineDirty else { return }
+                projection=response.itemizedEstimate; preview=response.result; previewInput=response.inputs
+            } else {
+                let value=draft
+                guard value.valid else { notice=CompanyConnectionError.invalidPrice.localizedDescription; return }
+                let response=try await store.pricePreview(accountID:accountID,item:item,input:value)
+                guard store.selectedID==accountID, store.identity != nil, !itemizedMode, draft==value else { return }
+                preview=response.result; previewInput=value
+            }
+            notice="Предварительный расчёт, не сохранён."
+        } catch { notice=CompanyStore.safeError(error) }
     }
     private func loadHistory() async {
         history = nil; pending = nil; selectedVersion = ""; notice = nil
@@ -511,14 +545,14 @@ private struct CompanyPriceSection: View {
         catch { notice = CompanyStore.safeError(error) }
     }
     private func prepareSave() {
-        guard canSave, let result = preview, let value = previewInput, value == draft, let history else { return }
+        guard canSave, let result = preview, let value = previewInput, previewCurrent, let history else { return }
         do {
-            pending = try CompanyPriceAttempt.prepare(previous:pending,accountID:accountID,caseID:item.caseId,revision:history.first?.revision ?? 0,input:value,result:result)
+            pending = try CompanyPriceAttempt.prepare(previous:pending,accountID:accountID,caseID:item.caseId,revision:history.first?.revision ?? 0,input:value,result:result,itemized:projection)
             confirmSave = true
         } catch { notice = CompanyStore.safeError(error) }
     }
     private func save() async {
-        guard canSave, let attempt = pending, attempt.payload.scenario == draft, attempt.preview == preview else { return }
+        guard canSave, let attempt = pending, previewCurrent, attempt.payload.scenario == previewInput, attempt.itemized == projection, attempt.preview == preview else { return }
         do {
             let row = try await store.savePrice(accountID:accountID,item:item,attempt:attempt)
             history = [row] + (history ?? []); selectedVersion = row.id
@@ -547,16 +581,67 @@ private struct CompanyPriceSection: View {
         }
     }
 
+    @ViewBuilder private func itemizedDetail(_ value: CompanyItemizedProjection) -> some View {
+        Text("Постатейная смета · проверка сумм").font(.headline)
+        ForEach(value.lines) { row in
+            VStack(alignment:.leading,spacing:3) {
+                Text("\(row.ordinal). \(row.title)").font(.headline)
+                Text(row.category.title).font(.caption)
+                Text("\(row.quantity) \(row.unit) × \(row.rateRub) ₽ = \(row.amountRub) ₽").font(.subheadline)
+                Text(row.sourceKind.title + ": " + row.sourceNote).font(.caption).textSelection(.enabled)
+            }
+        }
+        ForEach(CompanyCostCategory.allCases) { category in
+            LabeledContent(category.title,value:(value.categoryTotalsRub[category.rawValue] ?? "—") + " ₽")
+        }
+        Text("Округление каждой строки вверх до копейки. Источники заявлены сотрудником, независимой проверки нет.").font(.caption).foregroundStyle(.secondary)
+    }
+    @ViewBuilder private func editor() -> some View {
+        DisclosureGroup("Постатейная смета · \(lines.count)/60") {
+            ForEach(lines.indices,id:\.self) { index in
+                VStack(alignment:.leading,spacing:3) {
+                    Text(lines[index].title).font(.headline)
+                    Text(lines[index].category.title + " · " + lines[index].quantity + " " + lines[index].unit + " × " + lines[index].rateRub + " ₽").font(.caption)
+                    HStack {
+                        Button("Изменить") { editingIndex=index; line=lines[index]; lineChanged() }.buttonStyle(.borderless).disabled(lineDirty)
+                        Button("Удалить",role:.destructive) { lines.remove(at:index); lineChanged() }.buttonStyle(.borderless).disabled(lineDirty)
+                    }
+                }
+            }
+            Picker("Категория",selection:$line.category) { ForEach(CompanyCostCategory.allCases) { Text($0.title).tag($0) } }
+            TextField("Наименование",text:$line.title)
+            TextField("Единица измерения",text:$line.unit)
+            amount("Количество",$line.quantity)
+            amount("Ставка, ₽",$line.rateRub)
+            Picker("Источник",selection:$line.sourceKind) { ForEach(CompanyCostSource.allCases) { Text($0.title).tag($0) } }
+            TextField("Обоснование ставки",text:$line.sourceNote,axis:.vertical).lineLimit(2...4)
+            Button(editingIndex==nil ? "Добавить строку" : "Сохранить строку") { saveLine() }.disabled(editingIndex==nil && lines.count>=60)
+            Button("Отменить редактирование") { finishLine(); lineChanged() }.disabled(!lineDirty)
+            ForEach(CompanyCostCategory.allCases) { category in
+                if !lines.contains(where:{ $0.category==category }) {
+                    Toggle(category.title + ": 0 ₽",isOn:Binding(get:{ zeroCategories.contains(category) },set:{ checked in
+                        if checked { zeroCategories.insert(category) } else { zeroCategories.remove(category) }; lineChanged()
+                    }))
+                }
+            }
+            Toggle("Подтверждаю отсутствие двойного учёта",isOn:$noDoubleCount)
+        }
+    }
+
     var body: some View {
         Section("Экономика предложения · PRICE-01") {
             Text("Заполните все обязательные поля, включая явные нули. Не учитывайте расходы дважды. Сценарные допущения, не налоговый расчёт и не прогноз победы.").font(.caption).foregroundStyle(.secondary)
+            Picker("Режим расчёта",selection:$itemizedMode) { Text("Итоговые суммы").tag(false); Text("Постатейная смета").tag(true) }
+            if itemizedMode { editor() }
             DisclosureGroup("Себестоимость и ставки") {
+                if !itemizedMode {
                 amount("Прямые расходы, ₽",$input.externalDirectRub)
                 amount("Дополнительная стоимость собственного труда, ₽",$input.ownLaborRub)
                 amount("Денежные накладные расходы, ₽",$input.cashOverheadRub)
                 amount("Резерв риска, ₽",$input.reserveRub)
                 amount("Фиксированные сборы ЭТП, ₽",$input.fixedPlatformFeesRub)
                 amount("Стоимость финансирования и гарантий, ₽",$input.guaranteeFinancingCostRub)
+                }
                 Text("Учитывайте стоимость финансирования, не сумму обеспечения.").font(.caption).foregroundStyle(.secondary)
                 amount("Налог от выручки, %",$input.revenueTaxPercent)
                 amount("Переменная комиссия, %",$input.variablePlatformFeePercent)
@@ -570,6 +655,7 @@ private struct CompanyPriceSection: View {
             Button("Рассчитать") { Task { await calculate() } }.disabled(store.isBusy || !input.acceptHypotheticalAssumptionsOnly)
             Button("Загрузить историю расчётов") { Task { await loadHistory() } }.disabled(store.isBusy)
             if let preview {
+                if let projection { itemizedDetail(projection) }
                 comparison(preview)
                 if canSave {
                     Button("Проверить и сохранить версию") { prepareSave() }.disabled(store.isBusy || history == nil || (history?.first?.revision ?? 0) >= 30)
@@ -581,7 +667,7 @@ private struct CompanyPriceSection: View {
                 else {
                     Picker("Версия",selection:$selectedVersion) {
                         Text("Выберите версию").tag("")
-                        ForEach(history) { row in Text("v\(row.revision) · \(row.createdAt.formatted(date:.abbreviated,time:.shortened))").tag(row.id) }
+                        ForEach(history) { row in Text("v\(row.revision) · \(row.itemizedEstimate == nil ? "Итоги" : "Смета") · \(row.createdAt.formatted(date:.abbreviated,time:.shortened))").tag(row.id) }
                     }
                     if let row = history.first(where: { $0.id == selectedVersion }) {
                         DisclosureGroup("Сохранённые допущения и результаты") {
@@ -597,6 +683,7 @@ private struct CompanyPriceSection: View {
                             LabeledContent("Минимальная прибыль", value:row.inputs.minimumProfitRub + " ₽")
                             LabeledContent("Целевая прибыль", value:row.inputs.targetProfitRub + " ₽")
                             LabeledContent("Предел цены", value:row.inputs.referenceCeilingRub.map { $0 + " ₽" } ?? "Не задан")
+                            if let detail=row.itemizedEstimate { itemizedDetail(detail) }
                             comparison(row.result)
                         }
                     }
@@ -611,6 +698,9 @@ private struct CompanyPriceSection: View {
         } message: {
             Text("\(store.identity?.companyName ?? "Компания") · \(item.displayReference). Это внутренняя оценка, не утверждение цены и не подача заявки.")
         }
+        .onChange(of:itemizedMode) { _,_ in invalidate() }
+        .onChange(of:line) { _,_ in lineChanged() }
+        .onChange(of:noDoubleCount) { _,_ in invalidate() }
         .onChange(of:input) { _,_ in invalidate() }
         .onChange(of:manual) { _,_ in invalidate() }
         .onChange(of:ceiling) { _,_ in invalidate() }

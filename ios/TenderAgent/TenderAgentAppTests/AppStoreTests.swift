@@ -42,6 +42,48 @@ final class AppStoreTests: XCTestCase {
         XCTAssertEqual(try CompanyAPIClient.validatedOrigin("https://EXAMPLE.invalid:443/").absoluteString, "https://example.invalid")
     }
 
+    func testCompanyItemizedScenarioContract() throws {
+        let decoder=TenderAgentJSON.makeDecoder()
+        let identity=try decoder.decode(CompanyIdentity.self,from:Data(#"{"tenant_id":"a","customer_id":"a","member_id":"m","company_name":"A","role":"owner","legal_accepted":true}"#.utf8))
+        // Generated directly by the Python PRICE-01 itemized calculation engine.
+        let raw = #"{"customer_id":"a","case_id":"00000000-0000-4000-8000-000000000001","scenario_id":"00000000-0000-4000-8000-000000000002","revision":1,"member_id":"m","created_at":"2026-11-16T10:00:00Z","inputs":{"revenue_tax_percent":"6","variable_platform_fee_percent":"0","minimum_profit_rub":"0","target_profit_rub":"1000","reference_ceiling_rub":"10000","manual_bid_prices_rub":["4000"],"assumption_note":"Synthetic itemized fixture","accept_hypothetical_assumptions_only":true,"external_direct_rub":"0.01","own_labor_rub":"2333.30","cash_overhead_rub":"0.00","reserve_rub":"0.00","fixed_platform_fees_rub":"0.00","guarantee_financing_cost_rub":"0.00"},"result":{"schema":"company_price_scenario_v1","currency":"RUB","cash_fixed_and_reserved_rub":"0.01","own_labor_rub":"2333.30","full_economic_cost_before_revenue_rates_rub":"2333.31","revenue_retention_rate":"0.94","thresholds_rounded_up_to_kopecks":true,"profits_rounded_down_to_kopecks":true,"scenarios":[{"kind":"CASH_BREAK_EVEN","price_rub":"0.02","cash_surplus_rub":"0.00","economic_profit_rub":"-2333.30","economic_margin_percent":"-11666456.0000","cash_break_even_met":true,"full_break_even_met":false,"minimum_profit_met":false,"target_profit_met":false,"within_user_reference_ceiling":true},{"kind":"FULL_BREAK_EVEN","price_rub":"2482.25","cash_surplus_rub":"2333.30","economic_profit_rub":"0.00","economic_margin_percent":"0.0002","cash_break_even_met":true,"full_break_even_met":true,"minimum_profit_met":true,"target_profit_met":false,"within_user_reference_ceiling":true},{"kind":"STRATEGIC_MINIMUM_PROFIT","price_rub":"2482.25","cash_surplus_rub":"2333.30","economic_profit_rub":"0.00","economic_margin_percent":"0.0002","cash_break_even_met":true,"full_break_even_met":true,"minimum_profit_met":true,"target_profit_met":false,"within_user_reference_ceiling":true},{"kind":"COMMERCIAL_TARGET_PROFIT","price_rub":"3546.08","cash_surplus_rub":"3333.30","economic_profit_rub":"1000.00","economic_margin_percent":"28.2003","cash_break_even_met":true,"full_break_even_met":true,"minimum_profit_met":true,"target_profit_met":true,"within_user_reference_ceiling":true},{"kind":"MANUAL_PRICE","price_rub":"4000.00","cash_surplus_rub":"3759.99","economic_profit_rub":"1426.69","economic_margin_percent":"35.6672","cash_break_even_met":true,"full_break_even_met":true,"minimum_profit_met":true,"target_profit_met":true,"within_user_reference_ceiling":true}],"reference_ceiling_user_supplied":true,"assumptions_independently_verified":false,"tax_model_verified":false,"market_comparables_used":false,"probability_of_winning_estimated":false,"is_procurement_bid_recommendation":false,"commercial_owner_go":false,"external_submission_allowed":false},"itemized_estimate":{"schema":"company_price_itemized_v1","inputs":{"lines":[{"category":"external_direct_rub","title":"Fractional item","unit":"unit","quantity":"0.3333","rate_rub":"0.01","source_kind":"USER_REPORTED_QUOTE","source_note":"Synthetic quote"},{"category":"own_labor_rub","title":"Work","unit":"h","quantity":"2.3333","rate_rub":"1000.00","source_kind":"ASSUMPTION","source_note":"Synthetic work"}],"zero_cost_categories":["cash_overhead_rub","reserve_rub","fixed_platform_fees_rub","guarantee_financing_cost_rub"],"terms":{"revenue_tax_percent":"6","variable_platform_fee_percent":"0","minimum_profit_rub":"0","target_profit_rub":"1000","reference_ceiling_rub":"10000","manual_bid_prices_rub":["4000"],"assumption_note":"Synthetic itemized fixture","accept_hypothetical_assumptions_only":true},"confirm_no_double_count":true},"lines":[{"ordinal":1,"category":"external_direct_rub","title":"Fractional item","unit":"unit","quantity":"0.3333","rate_rub":"0.01","source_kind":"USER_REPORTED_QUOTE","source_note":"Synthetic quote","amount_rub":"0.01"},{"ordinal":2,"category":"own_labor_rub","title":"Work","unit":"h","quantity":"2.3333","rate_rub":"1000.00","source_kind":"ASSUMPTION","source_note":"Synthetic work","amount_rub":"2333.30"}],"category_totals_rub":{"external_direct_rub":"0.01","own_labor_rub":"2333.30","cash_overhead_rub":"0.00","reserve_rub":"0.00","fixed_platform_fees_rub":"0.00","guarantee_financing_cost_rub":"0.00"},"rounding_policy":"CEIL_EACH_LINE_TO_KOPECKS_THEN_SUM","source_notes_independently_verified":false,"double_count_independently_checked":false,"external_submission_allowed":false},"origin":"EXPLICIT_USER_ASSUMPTIONS","external_submission_allowed":false}"#
+        let row=try decoder.decode(CompanyPriceRecord.self,from:Data(raw.utf8))
+        let projection=try XCTUnwrap(row.itemizedEstimate)
+        XCTAssertTrue(row.matches(identity,caseID:row.caseId))
+        XCTAssertFalse(row.matches(identity,caseID:"foreign"))
+        XCTAssertEqual(projection.lines.map(\.amountRub),["0.01","2333.30"])
+        XCTAssertEqual(projection.categoryTotalsRub["own_labor_rub"],"2333.30")
+        XCTAssertTrue(projection.matches(row.inputs,expected:projection.inputs))
+        let attempt=try CompanyPriceAttempt.prepare(previous:nil,accountID:"a",caseID:row.caseId,revision:0,input:row.inputs,result:row.result,itemized:projection)
+        XCTAssertTrue(attempt.accepts(row,identity:identity))
+        XCTAssertEqual(attempt,try CompanyPriceAttempt.prepare(previous:attempt,accountID:"a",caseID:row.caseId,revision:0,input:row.inputs,result:row.result,itemized:projection))
+        let aggregate=try CompanyPriceAttempt.prepare(previous:attempt,accountID:"a",caseID:row.caseId,revision:0,input:row.inputs,result:row.result)
+        XCTAssertNotEqual(aggregate.payload.idempotencyKey,attempt.payload.idempotencyKey)
+        XCTAssertFalse(aggregate.accepts(row,identity:identity))
+        let encoder=JSONEncoder(); encoder.keyEncodingStrategy = .convertToSnakeCase
+        let body=try JSONSerialization.jsonObject(with:encoder.encode(CompanyItemizedSavePayload(expectedRevision:0,idempotencyKey:attempt.payload.idempotencyKey,estimate:projection.inputs))) as! [String:Any]
+        XCTAssertTrue(body["scenario"] == nil)
+        let encoded=body["estimate"] as! [String:Any]
+        XCTAssertEqual((encoded["lines"] as? [[String:Any]])?.first?["rate_rub"] as? String,"0.01")
+        XCTAssertTrue((encoded["terms"] as? [String:Any])?["own_labor_rub"] == nil)
+        var object=try JSONSerialization.jsonObject(with:Data(raw.utf8)) as! [String:Any]
+        var tampered=object["itemized_estimate"] as! [String:Any]
+        var lines=tampered["lines"] as! [[String:Any]]; lines[0]["amount_rub"]="0.02"; tampered["lines"]=lines
+        object["itemized_estimate"]=tampered
+        let bad=try decoder.decode(CompanyPriceRecord.self,from:JSONSerialization.data(withJSONObject:object))
+        XCTAssertFalse(bad.matches(identity,caseID:row.caseId))
+        XCTAssertFalse(attempt.accepts(bad,identity:identity))
+        object.removeValue(forKey:"itemized_estimate")
+        let old=try decoder.decode(CompanyPriceRecord.self,from:JSONSerialization.data(withJSONObject:object))
+        XCTAssertTrue(old.matches(identity,caseID:row.caseId))
+        XCTAssertFalse(attempt.accepts(old,identity:identity))
+        var line=projection.inputs.lines[0];line.sourceNote="New source"
+        let changed=CompanyItemizedInput(lines:[line,projection.inputs.lines[1]],zeroCostCategories:projection.inputs.zeroCostCategories,terms:projection.inputs.terms,confirmNoDoubleCount:true)
+        XCTAssertFalse(projection.matches(row.inputs,expected:changed))
+        let invalid=CompanyItemizedInput(lines:projection.inputs.lines,zeroCostCategories:[],terms:projection.inputs.terms,confirmNoDoubleCount:true)
+        XCTAssertTrue(invalid.sums == nil)
+    }
+
     func testCompanyPriceScenarioContract() throws {
         let decoder = TenderAgentJSON.makeDecoder()
         let identity = try decoder.decode(CompanyIdentity.self, from: Data(#"{"tenant_id":"a","customer_id":"a","member_id":"m","company_name":"A","role":"owner","legal_accepted":true}"#.utf8))

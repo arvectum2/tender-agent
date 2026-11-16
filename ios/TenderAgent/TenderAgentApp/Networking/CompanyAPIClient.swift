@@ -471,6 +471,121 @@ struct CompanyPriceInput: Codable, Equatable, Sendable {
     }
 }
 
+enum CompanyCostCategory: String, Codable, CaseIterable, Identifiable, Sendable {
+    case direct = "external_direct_rub", labor = "own_labor_rub", overhead = "cash_overhead_rub", reserve = "reserve_rub", platform = "fixed_platform_fees_rub", financing = "guarantee_financing_cost_rub"
+    var id: String { rawValue }
+    var title: String {
+        switch self { case .direct: "Прямые расходы"; case .labor: "Собственный труд"; case .overhead: "Накладные расходы"; case .reserve: "Резерв"; case .platform: "Сборы ЭТП"; case .financing: "Финансирование" }
+    }
+}
+enum CompanyCostSource: String, Codable, CaseIterable, Identifiable, Sendable {
+    case assumption = "ASSUMPTION", quote = "USER_REPORTED_QUOTE", actual = "USER_REPORTED_ACTUAL"
+    var id: String { rawValue }
+    var title: String { switch self { case .assumption: "Допущение"; case .quote: "КП со слов сотрудника"; case .actual: "Расходы со слов сотрудника" } }
+}
+struct CompanyCostLine: Codable, Equatable, Sendable {
+    var category: CompanyCostCategory = .direct
+    var title = ""
+    var unit = ""
+    var quantity = ""
+    var rateRub = ""
+    var sourceKind: CompanyCostSource = .assumption
+    var sourceNote = ""
+    var normalized: Self {
+        var x = self
+        x.title = title.trimmingCharacters(in:.whitespacesAndNewlines); x.unit = unit.trimmingCharacters(in:.whitespacesAndNewlines)
+        x.quantity = CompanyPriceInput.normalize(quantity); x.rateRub = CompanyPriceInput.normalize(rateRub)
+        x.sourceNote = sourceNote.trimmingCharacters(in:.whitespacesAndNewlines); return x
+    }
+    var amount: Decimal? {
+        guard self == normalized, !title.isEmpty, title.count <= 160, !unit.isEmpty, unit.count <= 24, !sourceNote.isEmpty, sourceNote.count <= 500,
+              quantity.range(of: #"^[0-9]{1,9}(\.[0-9]{1,4})?$"#,options:.regularExpression) != nil,
+              CompanyPriceInput.money(rateRub), let q = CompanyPriceInput.decimal(quantity), let r = CompanyPriceInput.decimal(rateRub), q > 0, r > 0 else { return nil }
+        var product = q*r; var rounded = Decimal(); NSDecimalRound(&rounded,&product,2,.up); return rounded
+    }
+}
+struct CompanyPriceTerms: Codable, Equatable, Sendable {
+    let revenueTaxPercent: String
+    let variablePlatformFeePercent: String
+    let minimumProfitRub: String
+    let targetProfitRub: String
+    let referenceCeilingRub: String?
+    let manualBidPricesRub: [String]
+    let assumptionNote: String
+    let acceptHypotheticalAssumptionsOnly: Bool
+    init(_ input: CompanyPriceInput) {
+        revenueTaxPercent=input.revenueTaxPercent; variablePlatformFeePercent=input.variablePlatformFeePercent; minimumProfitRub=input.minimumProfitRub; targetProfitRub=input.targetProfitRub
+        referenceCeilingRub=input.referenceCeilingRub; manualBidPricesRub=input.manualBidPricesRub; assumptionNote=input.assumptionNote; acceptHypotheticalAssumptionsOnly=input.acceptHypotheticalAssumptionsOnly
+    }
+    func aggregate(_ sums: [String:String]) -> CompanyPriceInput {
+        var x = CompanyPriceInput(); x.revenueTaxPercent=revenueTaxPercent; x.variablePlatformFeePercent=variablePlatformFeePercent; x.minimumProfitRub=minimumProfitRub; x.targetProfitRub=targetProfitRub; x.referenceCeilingRub=referenceCeilingRub; x.manualBidPricesRub=manualBidPricesRub; x.assumptionNote=assumptionNote; x.acceptHypotheticalAssumptionsOnly=acceptHypotheticalAssumptionsOnly
+        x.externalDirectRub=sums[CompanyCostCategory.direct.rawValue] ?? ""; x.ownLaborRub=sums[CompanyCostCategory.labor.rawValue] ?? ""; x.cashOverheadRub=sums[CompanyCostCategory.overhead.rawValue] ?? ""; x.reserveRub=sums[CompanyCostCategory.reserve.rawValue] ?? ""; x.fixedPlatformFeesRub=sums[CompanyCostCategory.platform.rawValue] ?? ""; x.guaranteeFinancingCostRub=sums[CompanyCostCategory.financing.rawValue] ?? ""
+        return x
+    }
+}
+struct CompanyItemizedInput: Codable, Equatable, Sendable {
+    let lines: [CompanyCostLine]
+    let zeroCostCategories: [CompanyCostCategory]
+    let terms: CompanyPriceTerms
+    let confirmNoDoubleCount: Bool
+    var sums: [String:Decimal]? {
+        let used=Set(lines.map(\.category)), zeros=Set(zeroCostCategories)
+        guard confirmNoDoubleCount, (1...60).contains(lines.count), zeros.count==zeroCostCategories.count, used.isDisjoint(with:zeros), used.union(zeros)==Set(CompanyCostCategory.allCases) else { return nil }
+        var sums=Dictionary(uniqueKeysWithValues:CompanyCostCategory.allCases.map { ($0.rawValue,Decimal(0)) })
+        for line in lines { guard let amount=line.amount else { return nil }; sums[line.category.rawValue,default:0]+=amount }
+        guard sums.values.allSatisfy({ $0 <= Decimal(string:"999999999999.99")! }) else { return nil }; return sums
+    }
+}
+struct CompanyProjectedCostLine: Decodable, Equatable, Sendable, Identifiable {
+    let ordinal: Int
+    let category: CompanyCostCategory
+    let title: String
+    let unit: String
+    let quantity: String
+    let rateRub: String
+    let sourceKind: CompanyCostSource
+    let sourceNote: String
+    let amountRub: String
+    var id: Int { ordinal }
+    var line: CompanyCostLine { .init(category:category,title:title,unit:unit,quantity:quantity,rateRub:rateRub,sourceKind:sourceKind,sourceNote:sourceNote) }
+}
+struct CompanyItemizedProjection: Decodable, Equatable, Sendable {
+    let schema: String
+    let inputs: CompanyItemizedInput
+    let lines: [CompanyProjectedCostLine]
+    let categoryTotalsRub: [String:String]
+    let roundingPolicy: String
+    let sourceNotesIndependentlyVerified: Bool
+    let doubleCountIndependentlyChecked: Bool
+    let externalSubmissionAllowed: Bool
+    func matches(_ aggregate: CompanyPriceInput, expected: CompanyItemizedInput? = nil) -> Bool {
+        func cents(_ value: String) -> Decimal? {
+            guard value.range(of: #"^[0-9]{1,12}\.[0-9]{2}$"#,options:.regularExpression) != nil else { return nil }
+            return CompanyPriceInput.decimal(value)
+        }
+        guard schema == "company_price_itemized_v1", roundingPolicy == "CEIL_EACH_LINE_TO_KOPECKS_THEN_SUM", !sourceNotesIndependentlyVerified, !doubleCountIndependentlyChecked, !externalSubmissionAllowed,
+              expected.map({ $0 == inputs }) ?? true, let sums=inputs.sums, Set(categoryTotalsRub.keys)==Set(sums.keys), sums.allSatisfy({ cents(categoryTotalsRub[$0.key] ?? "") == $0.value }),
+              aggregate.valid, inputs.terms.aggregate(categoryTotalsRub)==aggregate, lines.count==inputs.lines.count else { return false }
+        return lines.enumerated().allSatisfy { i,row in row.ordinal==i+1 && row.line==inputs.lines[i] && cents(row.amountRub)==inputs.lines[i].amount }
+    }
+}
+struct CompanyItemizedPreview: Decodable, Sendable {
+    let customerId: String
+    let caseId: String
+    let inputsStored: Bool
+    let inputs: CompanyPriceInput
+    let itemizedEstimate: CompanyItemizedProjection
+    let result: CompanyPriceResult
+    func matches(_ identity: CompanyIdentity, caseID: String, estimate: CompanyItemizedInput) -> Bool {
+        customerId==identity.customerId && caseId==caseID && !inputsStored && itemizedEstimate.matches(inputs,expected:estimate) && result.matches(inputs)
+    }
+}
+struct CompanyItemizedSavePayload: Encodable {
+    let expectedRevision: Int
+    let idempotencyKey: String
+    let estimate: CompanyItemizedInput
+}
+
 struct CompanyPriceRow: Codable, Equatable, Sendable, Identifiable {
     let kind: String
     let priceRub: String
@@ -551,11 +666,12 @@ struct CompanyPriceRecord: Decodable, Identifiable, Sendable {
     let createdAt: Date
     let inputs: CompanyPriceInput
     let result: CompanyPriceResult
+    let itemizedEstimate: CompanyItemizedProjection?
     let origin: String
     let externalSubmissionAllowed: Bool
     var id: String { scenarioId }
     func matches(_ identity: CompanyIdentity, caseID: String) -> Bool {
-        customerId == identity.customerId && caseId == caseID && UUID(uuidString: scenarioId) != nil && (1...30).contains(revision) && origin == "EXPLICIT_USER_ASSUMPTIONS" && !externalSubmissionAllowed && result.matches(inputs)
+        customerId == identity.customerId && caseId == caseID && UUID(uuidString: scenarioId) != nil && (1...30).contains(revision) && origin == "EXPLICIT_USER_ASSUMPTIONS" && !externalSubmissionAllowed && result.matches(inputs) && (itemizedEstimate.map { $0.matches(inputs) } ?? true)
     }
 }
 
@@ -581,13 +697,14 @@ struct CompanyPriceAttempt: Equatable, Sendable {
     let caseID: String
     let payload: CompanyPriceSavePayload
     let preview: CompanyPriceResult
-    static func prepare(previous: Self?, accountID: String, caseID: String, revision: Int, input: CompanyPriceInput, result: CompanyPriceResult) throws -> Self {
-        guard (0..<30).contains(revision), result.matches(input) else { throw CompanyConnectionError.invalidPrice }
-        if let previous, previous.accountID == accountID, previous.caseID == caseID, previous.payload.expectedRevision == revision, previous.payload.scenario == input, previous.preview == result { return previous }
-        return Self(accountID:accountID,caseID:caseID,payload:.init(expectedRevision:revision,idempotencyKey:UUID().uuidString,scenario:input),preview:result)
+    let itemized: CompanyItemizedProjection?
+    static func prepare(previous: Self?, accountID: String, caseID: String, revision: Int, input: CompanyPriceInput, result: CompanyPriceResult, itemized: CompanyItemizedProjection? = nil) throws -> Self {
+        guard (0..<30).contains(revision), result.matches(input), itemized.map({ $0.matches(input) }) ?? true else { throw CompanyConnectionError.invalidPrice }
+        if let previous, previous.accountID == accountID, previous.caseID == caseID, previous.payload.expectedRevision == revision, previous.payload.scenario == input, previous.preview == result, previous.itemized == itemized { return previous }
+        return Self(accountID:accountID,caseID:caseID,payload:.init(expectedRevision:revision,idempotencyKey:UUID().uuidString,scenario:input),preview:result,itemized:itemized)
     }
     func accepts(_ row: CompanyPriceRecord, identity: CompanyIdentity) -> Bool {
-        row.matches(identity,caseID:caseID) && row.memberId == identity.memberId && row.revision == payload.expectedRevision + 1 && row.inputs == payload.scenario && row.result == preview
+        row.matches(identity,caseID:caseID) && row.memberId == identity.memberId && row.revision == payload.expectedRevision + 1 && row.inputs == payload.scenario && row.result == preview && row.itemizedEstimate == itemized
     }
 }
 
@@ -814,6 +931,14 @@ struct CompanyAPIClient: Sendable {
         return reply
     }
 
+    func itemizedPreview(caseID: String, identity: CompanyIdentity, estimate: CompanyItemizedInput) async throws -> CompanyItemizedPreview {
+        guard let sums=estimate.sums, estimate.terms.aggregate(sums.mapValues { NSDecimalNumber(decimal:$0).stringValue }).valid else { throw CompanyConnectionError.invalidPrice }
+        let encoder=JSONEncoder(); encoder.keyEncodingStrategy = .convertToSnakeCase
+        let reply: CompanyItemizedPreview = try await get(try pricePath(caseID:caseID,identity:identity)+"/itemized/preview",method:"POST",body:encoder.encode(estimate))
+        guard reply.matches(identity,caseID:caseID,estimate:estimate) else { throw CompanyConnectionError.identityMismatch }
+        return reply
+    }
+
     func priceHistory(caseID: String, identity: CompanyIdentity) async throws -> CompanyPriceHistory {
         let reply: CompanyPriceHistory = try await get(try pricePath(caseID: caseID, identity: identity), query: [URLQueryItem(name:"limit", value:"30")])
         guard reply.matches(identity, caseID: caseID) else { throw CompanyConnectionError.identityMismatch }
@@ -822,7 +947,11 @@ struct CompanyAPIClient: Sendable {
 
     func savePrice(_ attempt: CompanyPriceAttempt, identity: CompanyIdentity) async throws -> CompanyPriceRecord {
         let encoder = JSONEncoder(); encoder.keyEncodingStrategy = .convertToSnakeCase
-        let reply: CompanyPriceRecord = try await get(try pricePath(caseID: attempt.caseID, identity: identity, write: true), method: "POST", body: encoder.encode(attempt.payload))
+        let path = try pricePath(caseID:attempt.caseID,identity:identity,write:true)
+        let reply: CompanyPriceRecord
+        if let itemized=attempt.itemized {
+            reply = try await get(path+"/itemized",method:"POST",body:encoder.encode(CompanyItemizedSavePayload(expectedRevision:attempt.payload.expectedRevision,idempotencyKey:attempt.payload.idempotencyKey,estimate:itemized.inputs)))
+        } else { reply = try await get(path,method:"POST",body:encoder.encode(attempt.payload)) }
         guard attempt.accepts(reply,identity:identity) else { throw CompanyConnectionError.identityMismatch }
         return reply
     }
