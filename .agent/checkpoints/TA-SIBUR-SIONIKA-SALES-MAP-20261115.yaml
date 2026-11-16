@@ -1499,4 +1499,19 @@ sionika_v44:
     commercial-action-register-v38.json: e61e272ee0615063200da55c9e7bb3aff927d5c7e381ea24a34bea2e4c97ffc9
     project-coverage-dashboard-v31.json: 89eba4c11493b25c27f01a20260eaeac3154f46f6ca65e968bb086566f99d246
     consolidated-project-report-v44.md: df2317dd2a9e3af7c469d5ec68909dbc2bb8fa35e5defd99d889b77c851b2990
-resume_instruction: "V44 verified. Continue evidence for named contractors and exact awards, plan 817/1002 and 332/333/823 gaps; review newly captured priority originals. Use V44 map, V38 actions, V19 queue, V31 coverage. Nov17 report. No DB writes without gate, no duplicate workers. External observations without source content provisional."
+
+sionika_v45:
+  status: in_progress
+  completed_stage: "V45 ABB controls modernization original TOR and pricing forms; 244 confirmed budget estimates separated, 118 closed intake budgets excluded from award search. Plan 817/1002 no exact match, 71 project cards, no new award."
+  project_cards: 71
+  priority_union: 8244
+  source_artifacts: 101
+  last_verified_commit: 6e545b22
+  artifacts:
+    sionika-abb-drive-budget-classification-v1.json: 9714c1c6783f5794a4b2de512fbe6dd24f7e06785455b99dfbb25485c2318b9b
+    consolidated-project-map-v45.json: 23f4e76d6fb1e6baf6574321662b71c84c886a090afcbb355dca683c9ce5cd60
+    commercial-outcome-queue-v20.json: 0905f301974fb84a3e0967e04e6fbbf3da9883c2247009f01ecfee9a03f3b8aa
+    commercial-action-register-v39.json: 1eea22cabedef3d4627be42aaa10abcc450e18c7ccb62a3b559b5aa5881bbb26
+    project-coverage-dashboard-v32.json: e0f9ba3f5c4fbb45663673450c879de35c8e5c2e4d339b28ee60baeee7c5d821
+    consolidated-project-report-v45.md: 9dfba98c12ab48bc84ced534278499634bd9d1758b30c1e758e99a0152b2de54
+resume_instruction: "V45 verified. Continue primary award and price evidence, active opportunities, and newly captured priority originals; 244 budget leads route to subsequent procurement; 6753 closed intake not tagged budget (not awards). V45 map, V39 actions, V20 queue, V32 coverage. Nov17 report. No DB mutation without gate, no duplicate workers."
