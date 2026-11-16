@@ -44,6 +44,9 @@ const costLine={category:'own_labor_rub',title:'Design A',unit:'h',quantity:'2.3
 const estimate={lines:[costLine],zero_cost_categories:itemizedCategories.filter(k=>k!==costLine.category),terms:itemizedTerms,confirm_no_double_count:true};
 const itemized=JSON.parse(execFileSync(process.env.PYTHON || 'python3',['-c','import json,sys; from src.modules.saas_foundation.company_price_scenarios import ItemizedInput,derive_itemized,calculate; s,p=derive_itemized(ItemizedInput.model_validate(json.loads(sys.argv[1]))); print(json.dumps({"inputs":s.model_dump(mode="json"),"itemized_estimate":p,"result":calculate(s)}))',JSON.stringify(estimate)],{encoding:'utf8'}));
 let itemizedBad=false;
+const lineHash=execFileSync(process.env.PYTHON || 'python3',['-c','import hashlib,json,sys; print(hashlib.sha256(json.dumps(json.loads(sys.argv[1]),ensure_ascii=False,sort_keys=True,separators=(chr(44),chr(58))).encode()).hexdigest())',JSON.stringify({scenario_id:'price-2',revision:2,line:itemized.itemized_estimate.lines[0]})],{encoding:'utf8'}).trim();
+let costDocument=null,costDisabled=false,costBad=false,costLost=false,costCorrupt=false,costOversize=false;
+
 let discoveryRun=null, savedCandidate=null, savedCommercial=null;
 let captureEnabled=true, captureReceipt=null, captureMismatch=false;
 let attachmentEnabled=true, attachmentRecord=null, projectionEnabled=true, requirementReview=null;
@@ -143,6 +146,17 @@ async function fetch(route,opts){
   if(route.endsWith('/download'))return new Response(corruptDownload?Buffer.alloc(fileBytes.length,1):fileBytes,{headers:{'x-artifact-sha256':fileSha}});
   return artifact?reply(artifact):reply({detail:'missing'},404);
  }
+ if(route.includes('/price-scenarios/')&&route.includes('/lines/')) {
+  assert.equal(key,'a');assert.match(route,/price-2\/lines\/1\/evidence/);if(costDisabled)return reply({detail:'disabled'},404);
+  const scope={customer_id:fixture.a.customer_id,case_id:'case-a',scenario_id:'price-2',scenario_revision:2,line_ordinal:1,line_sha256:costBad?'0'.repeat(64):lineHash,line_title:costLine.title,line_amount_rub:'2333.30',external_submission_allowed:false};
+  if(route.endsWith('/download'))return new Response(costCorrupt?Buffer.alloc(fileBytes.length,1):costOversize?Buffer.concat([fileBytes,Buffer.from('x')]):fileBytes,{headers:{'x-artifact-sha256':fileSha}});
+  if(method==='POST'){
+   const q=new URLSearchParams(route.split('?')[1]);assert.equal(q.get('line_sha256'),lineHash);assert.equal(q.get('document_kind'),'QUOTE');assert.equal(q.get('format_hint'),'pdf');assert.equal(q.get('confirm_user_supplied'),'true');assert.equal(opts.body.name,'quote.pdf');
+   costDocument??={...scope,evidence_id:'cost-evidence-a',member_id:'a',document_kind:'QUOTE',format_hint:'pdf',inspection:{schema:'commercial_attachment_inspection_v1',format_hint:'pdf',format_check:'PDF_HEADER_AND_EOF_ONLY',sha256:fileSha,size_bytes:fileBytes.length,text_preview_complete:false,requirements_verified:false,malware_free_verified:false,digital_signature_verified:false},origin:'USER_SUPPLIED_UNATTESTED',stored_bytes_reverified:true,document_origin_verified:false,cost_amount_verified:false,payment_verified:false};
+   if(costLost){costLost=false;throw Error('response lost')}return reply(costDocument,201)
+  }
+  return reply({...scope,evidence:costDocument});
+ }
  if(route.includes('/price-scenarios')){
   assert.equal(key,'a');if(priceDisabled)return reply({detail:'disabled'},404);
   const scope={customer_id:priceMismatch?'foreign':fixture.a.customer_id,case_id:'case-a'};
@@ -172,7 +186,7 @@ async function fetch(route,opts){
  }
  throw Error('Unexpected route '+route);
 }
-const ctx=vm.createContext({document:{getElementById:get,createElement:tag=>new Element(tag),querySelectorAll:s=>s.startsWith('button')?controls:fields},fetch,crypto:{randomUUID,subtle:webcrypto.subtle},Blob,URL,setTimeout,console});
+const ctx=vm.createContext({document:{getElementById:get,createElement:tag=>new Element(tag),querySelectorAll:s=>s.startsWith('button')?controls:fields},fetch,crypto:{randomUUID,subtle:webcrypto.subtle},Blob,URL,URLSearchParams,TextEncoder,AbortController,setTimeout,clearTimeout,console});
 vm.runInContext(script,ctx);
 const click=async id=>{assert(get(id).events.click,'no click '+id);await get(id).events.click()};
 const change=id=>get(id).events.change();
@@ -258,12 +272,17 @@ await click('company-metrics-load');assert.match(get('company-metrics-result').t
  get('price-save-confirm').checked=true;change('price-save-confirm');priceLost=true;await click('price-save');assert.equal(priceRows.length,2);get('price-save-confirm').checked=true;change('price-save-confirm');await click('price-save');assert.equal(priceRows.length,2);assert.match(get('price-status').textContent,/v2 сохранена/);
  const itemizedWrites=calls.filter(x=>x.method==='POST'&&x.route.endsWith('/price-scenarios/itemized'));assert.equal(itemizedWrites.length,2);assert.equal(itemizedWrites[0].body.idempotency_key,itemizedWrites[1].body.idempotency_key);
  await click('price-history');get('price-version').value='price-2';change('price-version');await click('price-show-version');assert.match(get('price-version-detail').textContent,/Private source A/);assert.match(get('price-version-detail').textContent,/itemized_estimate/);
+ assert.equal(get('price-cost-evidence-panel').hidden,false);get('price-cost-line').value='1';change('price-cost-line');costDisabled=true;await click('price-cost-load');assert.equal(get('price-cost-editor').hidden,true);costDisabled=false;await click('price-cost-load');assert.equal(get('price-cost-editor').hidden,false);
+ get('price-cost-kind').value='QUOTE';change('price-cost-kind');get('price-cost-file').files=[{name:'quote.pdf',size:fileBytes.length,arrayBuffer:async()=>fileBytes}];change('price-cost-file');await click('price-cost-save');assert.equal(costDocument,null);
+ get('price-cost-confirm').checked=true;change('price-cost-confirm');costLost=true;await click('price-cost-save');assert.equal(costDocument.inspection.sha256,fileSha);assert.equal(get('price-cost-confirm').checked,false);get('price-cost-confirm').checked=true;change('price-cost-confirm');await click('price-cost-save');assert.match(get('price-cost-status').textContent,/не источник, сумма или оплата/);assert.equal(get('price-cost-editor').hidden,true);
+ const beforeDownload=downloaded;costCorrupt=true;await click('price-cost-download');assert.equal(downloaded,beforeDownload);assert.match(get('result').textContent,/Контрольная сумма/);costCorrupt=false;costOversize=true;await click('price-cost-download');assert.equal(downloaded,beforeDownload);assert.match(get('result').textContent,/Размер файла/);costOversize=false;await click('price-cost-download');assert.equal(downloaded,beforeDownload+1);
+ get('price-version').value='price-1';change('price-version');assert.equal(get('price-cost-evidence-panel').hidden,true);assert.equal(get('price-cost-result').textContent,'');assert.equal(get('price-cost-download').disabled,true);get('price-version').value='price-2';change('price-version');get('price-cost-line').value='1';change('price-cost-line');await click('price-cost-load');assert.match(get('price-cost-result').textContent,/cost-evidence-a/);
  await click('price-preview');get('price-line-select').value='0';change('price-line-select');await click('price-line-edit');assert.equal(get('price-itemized-result').children.length,0);assert.equal(get('price-save').disabled,true);await click('price-line-cancel');
  history.a.unshift({revision:2,action:'NO_GO',rationale:'other client',decided_at:'2026-11-15T01:00:00Z'});
  get('company-rationale').value='Устаревшее решение';get('company-confirm').checked=true;await click('company-decide');assert.equal(history.a.length,2);assert.equal(get('company-detail').hidden,true);assert.match(get('result').textContent,/Откройте карточку заново/);
  get('keywords').value='privately entered A';get('reference-state').textContent='private A';get('run-id').value='private-run-a';
  await selectAccount('b');assert.match(get('company-identity').textContent,/Компания B/);assert.equal(get('keywords').value,'');assert.equal(get('run-id').value,'');assert.equal(get('reference-state').textContent,'Список пока не загружен');assert.equal(get('company-history').textContent,'');assert.equal(get('company-event-file-result').textContent,'');assert.equal(get('company-readiness-result').textContent,'');assert.equal(get('company-capture-result').textContent,'');assert.equal(get('company-capture-attempt').children.length,1);assert.equal(get('company-evidence-result').textContent,'');assert.equal(get('company-search-receipts').textContent,'');assert.equal(get('company-search-candidate').children.length,1);
- assert.equal(get('price-note').value,'');assert.equal(get('price-version-detail').textContent,'');assert.equal(get('price-results').children.length,0);assert.equal(get('price-line-list').children[0].children.length,0);assert.equal(get('price-line-source_note').value,'');assert.equal(get('price-mode').value,'aggregate');
+ assert.equal(get('price-note').value,'');assert.equal(get('price-cost-result').textContent,'');assert.equal(get('price-cost-line').children.length,1);assert.equal(get('price-version-detail').textContent,'');assert.equal(get('price-results').children.length,0);assert.equal(get('price-line-list').children[0].children.length,0);assert.equal(get('price-line-source_note').value,'');assert.equal(get('price-mode').value,'aggregate');
  await openCase('b');assert.equal(get('company-price-panel').hidden,true);assert.equal(get('price-preview').disabled,true);await click('company-lifecycle-load');assert.equal(get('company-lifecycle-editor').hidden,true);assert.equal(get('company-lifecycle-current').textContent,'');await click('company-metrics-load');assert.match(get('company-metrics-result').textContent,/нет данных/);assert.equal(get('company-decision-panel').hidden,true);assert.equal(get('company-evidence-panel').hidden,true);assert.equal(get('company-save-panel').hidden,true);assert(!get('company-case').children.some(c=>c.value==='case-a'));
  lifecycleMismatch=true;await click('company-lifecycle-load');assert.equal(vm.runInContext('token',ctx),'');assert.equal(get('company-metrics-result').textContent,'');lifecycleMismatch=false;await selectAccount('b');
  mismatch=true;await click('company-load');assert.match(get('result').textContent,/другой компании/);assert.equal(get('company-detail').hidden,true);assert.equal(get('company-case').children.length,1);assert.equal(vm.runInContext('token',ctx),'');
@@ -272,6 +291,7 @@ await click('company-metrics-load');assert.match(get('company-metrics-result').t
  for(const [k,v] of Object.entries(itemizedTerms)){if(typeof v==='string'&&k!=='assumption_note')get('price-'+k).value=v}get('price-note').value=itemizedTerms.assumption_note;get('price-manual').value='120000';get('price-confirm').checked=true;change('price-confirm');
  for(const [k,v] of Object.entries(costLine))get('price-line-'+k).value=v;await click('price-line-add');for(const k of estimate.zero_cost_categories){get('price-zero-'+k).checked=true;change('price-zero-'+k)}get('price-no-double').checked=true;change('price-no-double');
  itemizedBad=true;await click('price-preview');assert.equal(vm.runInContext('token',ctx),'');assert.match(get('result').textContent,/Некорректный расчёт/);assert.equal(get('price-itemized-result').children.length,0);itemizedBad=false;await selectAccount('a');
+ await click('company-load');await openCase('a');await click('price-history');get('price-version').value='price-2';change('price-version');get('price-cost-line').value='1';change('price-cost-line');costBad=true;await click('price-cost-load');assert.equal(vm.runInContext('token',ctx),'');assert.match(get('result').textContent,/Несоответствие документа/);costBad=false;await selectAccount('a');
  await click('company-load');await openCase('a');priceMismatch=true;await click('price-history');assert.equal(vm.runInContext('token',ctx),'');assert.equal(get('price-note').value,'');assert.equal(get('price-version-detail').textContent,'');assert.match(get('result').textContent,/другой компании/);
  console.log('Company cabinet JS flow PASS: bounded discovery, partial coverage, candidate acceptance, role/identity, evidence, explicit decision, uncertain retry, stale conflict, session clearing, request serialization.');
 }
