@@ -1879,3 +1879,71 @@ def test_company_lifecycle_attestation_and_metrics(client, session, monkeypatch)
     assert not m['external_facts_verified'] and not m['contract_revenue_verified']
     other=client.get(metrics,headers=_auth(b)).json();assert other['saved_cases']==1 and other['win_rate']['rate'] is None and other['go_to_submission']['rate'] is None
     assert session.query(CompanyCaseLifecycleEvent).count()==9
+
+
+def test_versioned_readiness_binding_and_submission_gate(client, session, monkeypatch):
+    from test_commercial_attachment_bytes import docx_fixture
+    from test_company_commercial_card_evidence import WORKSPACE, workspace
+
+    from src.modules.saas_foundation import commercial_capture as capture
+    from src.modules.saas_foundation.models import CompanyReadinessEvidence
+
+    _, a=_seed(client,'Readiness A'); _, b=_seed(client,'Readiness B')
+    for token in (a,b):
+        _legal(client,token)
+        assert client.put('/api/saas/profile',headers=_auth(token),json=_profile()).status_code==200
+    settings=saas.get_settings().model_copy(update={'saas_commercial_capture_enabled':True,'saas_commercial_attachment_intake_enabled':True,'saas_commercial_requirement_review_enabled':True,'saas_company_lifecycle_enabled':True})
+    monkeypatch.setattr(saas,'get_settings',lambda:settings)
+    card=workspace().replace(b'</body>',b'<a href="/docs/spec.docx">spec</a></body>')
+    monkeypatch.setattr(capture,'fetch_card',lambda url:capture.SourceResponse(url,'text/html',200,service.now_utc(),card))
+    base='/api/saas/company-portfolio';headers=_auth(a)
+    case=client.post(base+'/commercial-cases',headers=headers,json={'source_url':WORKSPACE}).json()['case_id'];path=base+'/cases/'+case
+    cap=path+'/commercial-captures';attempt=client.post(cap,headers=headers,json={'confirm_public_capture':True}).json()['attempt_id']
+    parent=cap+'/'+attempt;candidate=client.get(parent,headers=headers).json()['attachment_inventory']['candidates'][0]['candidate_id'];attach=parent+'/attachments/'+candidate
+    assert client.post(attach,headers=headers,params={'confirm_user_supplied':True},content=docx_fixture('Поставщик должен иметь опыт поставки')).status_code==201
+    assert client.post(path+'/decisions',headers=headers,json={'action':'GO','expected_revision':0,'rationale':'fixture','idempotency_key':'go-fixture'}).status_code==200
+    def event(stage,revision,**extra):
+        return client.post(path+'/lifecycle',headers=headers,json={'stage':stage,'expected_revision':revision,'expected_decision_revision':1,'rationale':'fixture','idempotency_key':f'readiness-event-{revision}',**extra})
+    assert event('READY',0).status_code==201
+    endpoint=path+'/readiness-evidence';assert client.get(endpoint,headers=headers).status_code==404
+    settings=settings.model_copy(update={'saas_company_readiness_evidence_enabled':True,'saas_company_commercial_readiness_required':True})
+    r=client.get(endpoint,headers=headers);assert r.status_code==200,r.text
+    pending=r.json();assert 'UNREVIEWED_FRAGMENT' in pending['projection']['issues'] and not pending['binding_current']
+    def bind(state,**extras):
+        return client.post(endpoint,headers=headers,json={'ready_event_id':state['ready_event_id'],'projection_sha256':state['projection_sha256'],'acknowledge_partial_coverage':True,**extras})
+    assert bind(pending).status_code==409
+    receipt={'source_ref':'receipt fixture','occurred_at':service.now_utc().isoformat()}
+    assert event('SUBMITTED',1,**receipt).status_code==409
+    ref=client.post('/api/saas/qualification/references',headers=headers,json={'expected_version':0,'source_ref':'fixture','snapshot':{'schema_version':'completed-contract-references-v1','as_of_date':'2026-11-16','completeness':'PARTIAL','owner_confirmed':False,'contracts':[]}}).json()['fact_id']
+    route=attach+'/requirements'
+    uploaded=client.post('/api/saas/documents',headers=headers,data={'document_key':'license_fixture','document_type':'LICENSE','display_name':'Fixture'},files={'file':('fixture.pdf',b'%PDF-1.4\n1 0 obj<<>>endobj\n%%EOF','application/pdf')});assert uploaded.status_code==201,uploaded.text
+    def review_body(rev,key):
+        matrix=client.get(route,headers=headers).json();frag=matrix['items'][0]
+        return {'fragment_key':frag['fragment_key'],'profile_fact_id':matrix['profile']['fact_id'],'expected_revision':rev,'assessment':'HUMAN_SUPPORT_RECORDED','reference_fact_id':ref,'document_version_id':matrix['document_options'][0]['document_version_id'],'rationale':'manual support fixture','idempotency_key':key}
+    assert client.post(route,headers=headers,json=review_body(0,'review-fixture-one')).status_code==201
+    first=client.get(endpoint,headers=headers).json();assert first['projection']['partial_review_resolved'] and not first['projection']['coverage_complete']
+    assert bind(first,acknowledge_partial_coverage=False).status_code==422
+    r=bind(first);assert r.status_code==201,r.text
+    saved=r.json();assert saved['binding_current'] and not saved['qualification_verified']
+    assert bind(first).json()['binding_id']==saved['binding_id']
+    assert client.get(endpoint,headers=_auth(b)).status_code==404
+    assert client.put('/api/saas/profile',headers=headers,json=_profile()).status_code==200
+    stale=client.get(endpoint,headers=headers).json();assert stale['binding_current'] is False and 'STALE_REVIEW' in stale['projection']['issues']
+    assert event('SUBMITTED',1,**receipt).status_code==409
+    assert client.post(route,headers=headers,json=review_body(1,'review-fixture-two')).status_code==201
+    refreshed=client.get(endpoint,headers=headers).json();assert refreshed['projection']['partial_review_resolved'] and not refreshed['binding_current']
+    assert bind(refreshed).status_code==409
+    assert event('READY',1).status_code==201
+    renewed=client.get(endpoint,headers=headers).json();assert renewed['ready_event_id']!=first['ready_event_id']
+    assert bind(renewed).status_code==201
+    from src.modules.company_profile_store.models import CompanyDocumentVersion
+    old_doc=session.get(CompanyDocumentVersion,review_body(2,'unused')['document_version_id'])
+    session.add(CompanyDocumentVersion(company_document_id=old_doc.company_document_id,version_no=2,artifact_version_no=2,source_type='CUSTOMER_PROVIDED',source_ref='fixture-new-version'))
+    session.commit()
+    assert 'STALE_REVIEW' in client.get(endpoint,headers=headers).json()['projection']['issues']
+    assert event('SUBMITTED',2,**receipt).status_code==409
+    assert client.post(route,headers=headers,json=review_body(2,'review-fixture-three')).status_code==201
+    assert event('READY',2).status_code==201
+    assert bind(client.get(endpoint,headers=headers).json()).status_code==201
+    assert event('SUBMITTED',3,**receipt).status_code==201
+    assert session.query(CompanyReadinessEvidence).count()==3

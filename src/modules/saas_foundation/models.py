@@ -322,3 +322,18 @@ class CompanyCaseLifecycleEvent(UUIDPrimaryKeyMixin, Base):
 
 event.listen(CompanyCaseLifecycleEvent, "before_update", _immutable_company_decision)
 event.listen(CompanyCaseLifecycleEvent, "before_delete", _immutable_company_decision)
+
+
+class CompanyReadinessEvidence(UUIDPrimaryKeyMixin, Base):
+    """Immutable partial-review binding to one READY event."""
+    __tablename__ = "company_readiness_evidence"
+    ready_event_id: Mapped[str] = mapped_column(String(36), ForeignKey("company_case_lifecycle_events.id"), nullable=False, unique=True)
+    attempt_id: Mapped[str] = mapped_column(String(36), ForeignKey("commercial_capture_attempts.id"), nullable=False)
+    member_id: Mapped[str] = mapped_column(String(36), ForeignKey("saas_members.id"), nullable=False)
+    projection_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    projection_json: Mapped[dict] = mapped_column(JSON, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+
+
+event.listen(CompanyReadinessEvidence, "before_update", _immutable_company_decision)
+event.listen(CompanyReadinessEvidence, "before_delete", _immutable_company_decision)

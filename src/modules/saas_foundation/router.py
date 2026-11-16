@@ -68,6 +68,7 @@ from src.modules.saas_foundation import (
     company_discovery,
     company_lifecycle,
     company_portfolio,
+    company_readiness,
     company_schedule,
 )
 from src.modules.saas_foundation.commercial_attachment_bytes import MAX_ATTACHMENT_BYTES
@@ -919,7 +920,7 @@ def company_lifecycle_state(case_id: str, principal: Member, session: DBSession)
 def company_lifecycle_record(case_id: str, payload: company_lifecycle.LifecycleInput, principal: Member, session: DBSession) -> dict:
     if not get_settings().saas_company_lifecycle_enabled:
         raise HTTPException(404, "Company lifecycle disabled")
-    return company_lifecycle.record(session, principal, case_id, payload)
+    return company_lifecycle.record(session, principal, case_id, payload, require_commercial_readiness=get_settings().saas_company_commercial_readiness_required)
 
 
 @router.get("/api/saas/company-portfolio/cases/{case_id}/lifecycle/history")
@@ -934,3 +935,19 @@ def company_lifecycle_metrics(principal: Member, session: DBSession) -> dict:
     if not get_settings().saas_company_lifecycle_enabled:
         raise HTTPException(404, "Company lifecycle disabled")
     return company_lifecycle.metrics(session, principal)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/readiness-evidence")
+def company_readiness_state(case_id: str, principal: Member, session: DBSession) -> dict:
+    settings=get_settings()
+    if not (settings.saas_company_lifecycle_enabled and settings.saas_company_readiness_evidence_enabled):
+        raise HTTPException(404, "Readiness evidence disabled")
+    return company_readiness.state(session, principal, case_id)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/readiness-evidence", status_code=201)
+def company_readiness_bind(case_id: str, payload: company_readiness.BindInput, principal: Member, session: DBSession) -> dict:
+    settings=get_settings()
+    if not (settings.saas_company_lifecycle_enabled and settings.saas_company_readiness_evidence_enabled):
+        raise HTTPException(404, "Readiness evidence disabled")
+    return company_readiness.bind(session, principal, case_id, payload)

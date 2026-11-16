@@ -88,10 +88,10 @@ def history(session,principal,case_id,offset=0,limit=50):
     return {'customer_id':principal.customer_id,'case_id':case_id,'items':[_view(row,decision) for row in rows[:limit]],'has_more':len(rows)>limit,'external_submission_allowed':False}
 
 
-def record(session,principal,case_id,payload):
+def record(session,principal,case_id,payload,*,require_commercial_readiness=False):
     role_required(principal,'owner','admin');legal_required(session,principal)
     # Serialize with the existing decision writer on this same case row.
-    portfolio._owned_case(session,principal,case_id,lock=True)
+    case=portfolio._owned_case(session,principal,case_id,lock=True)
     _authorized(session,principal)
     member=session.get(SaasMember,principal.member_id,populate_existing=True)
     if not member or not member.active or member.tenant_id!=principal.tenant_id or member.role not in {'owner','admin'}:
@@ -111,6 +111,9 @@ def record(session,principal,case_id,payload):
     if payload.stage in PRE or payload.stage=='SUBMITTED':
         if decision.action!='GO' or (before is not None and before not in PRE):raise HTTPException(409,'Current GO and pre-submission state required')
         if payload.stage=='SUBMITTED' and (before!='READY' or latest.go_decision_id!=decision.id):raise HTTPException(409,'Current GO readiness assertion required')
+        if payload.stage=='SUBMITTED' and require_commercial_readiness and portfolio._view(session,principal,case)['source_kind']=='commercial_reference':
+            from src.modules.saas_foundation.company_readiness import require_current
+            require_current(session,principal,case_id)
         binding=decision.id
     else:
         if before!='SUBMITTED' and not (payload.correct_outcome and before in OUTCOMES and before!=payload.stage):raise HTTPException(409,'Recorded submission or explicit terminal correction required')

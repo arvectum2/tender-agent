@@ -24,6 +24,8 @@ class Settings(BaseSettings):
     saas_commercial_capture_enabled: bool = False  # Explicit public card capture gate
     saas_commercial_attachment_intake_enabled: bool = False  # Explicit user-provided bytes only
     saas_company_lifecycle_enabled: bool = False
+    saas_company_readiness_evidence_enabled: bool = False
+    saas_company_commercial_readiness_required: bool = False
     saas_commercial_requirement_review_enabled: bool = False
     saas_commercial_text_projection_enabled: bool = False
     saas_commercial_pdf_projection_enabled: bool = False  # Separate parser process gate

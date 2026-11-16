@@ -314,3 +314,26 @@ def test_company_lifecycle_migration_preserves_history(tmp_path, monkeypatch):
         with engine.connect() as conn:assert conn.scalar(text('SELECT count(*) FROM company_case_lifecycle_events'))==1
     finally:
         engine.dispose();invalidate_settings_cache()
+
+
+def test_readiness_evidence_migration_preserves_bindings(tmp_path, monkeypatch):
+    import pytest
+
+    db_url='sqlite:///'+str(tmp_path/'readiness.sqlite')
+    monkeypatch.setenv('AI_CORP_DATABASE_URL',db_url);invalidate_settings_cache()
+    cfg=Config(str(Path(__file__).resolve().parents[1]/'alembic.ini'));engine=create_engine(db_url)
+    try:
+        with engine.begin() as conn:
+            for table in ('company_case_lifecycle_events','commercial_capture_attempts','saas_members'):
+                conn.execute(text(f'CREATE TABLE {table} (id VARCHAR PRIMARY KEY)'))
+                conn.execute(text(f"INSERT INTO {table} (id) VALUES ('fixture')"))
+        command.stamp(cfg,'115_company_case_lifecycle');command.upgrade(cfg,'116_company_readiness_evidence')
+        assert 'company_readiness_evidence' in inspect(engine).get_table_names()
+        command.downgrade(cfg,'115_company_case_lifecycle');command.upgrade(cfg,'116_company_readiness_evidence')
+        with engine.begin() as conn:
+            conn.execute(text("INSERT INTO company_readiness_evidence (id,ready_event_id,attempt_id,member_id,projection_sha256,projection_json,created_at) VALUES ('e','fixture','fixture','fixture','digest','{}','2026-11-16')"))
+        with pytest.raises(RuntimeError,match='Cannot discard'):
+            command.downgrade(cfg,'115_company_case_lifecycle')
+        with engine.connect() as conn:assert conn.scalar(text('SELECT count(*) FROM company_readiness_evidence'))==1
+    finally:
+        engine.dispose();invalidate_settings_cache()
