@@ -181,7 +181,7 @@ completed:
 - 'Native company manager inbox: seven scoped filters, server time and validated summary,
   unique bounded page, identity/access clearing, post-decision refresh, due markers.
   No alternate data store or global fallback.'
-current_stage: native_company_inbox_verified_next_post_go_lifecycle
+current_stage: company_case_post_go_lifecycle
 remaining:
 - Implement scoped post-GO readiness and human-attested submission/outcome ledger,
   audit and revision semantics; derive conversion/win-rate only from explicit known
@@ -261,11 +261,11 @@ test_results:
 - Xcode 27.1 unsigned build-for-testing SUCCEEDED; new XCTest compiled, actual same
   Swift decoder/matching assertions independently executed on macOS PASS. No simulator
   boot or device install. git diff --check PASS.
-resume_instruction: Native inbox compiled and standalone contract PASS. Next scoped
-  post-GO lifecycle independent of source contracts and model; distinguish human-recorded
-  status from independently verified evidence. Keep existing decision log canonical
-  and no autonomous ETP submission. B2B support pending; Gemma paused. SIBUR last
-  842 originals/18702 embeddings,841 synced. No deployment.
+resume_instruction: Add scoped append-only human-attested lifecycle to existing ProcurementCase
+  and GO decision, no duplicate case/deal, readiness bound to GO revision, submission
+  receipt reference, terminal outcome, explicit corrections, case-level metrics on
+  recorded facts. Offline tests, no production changes. B2B consent pending; Gemma
+  paused.
 owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
   Product changes isolated, offline and bounded.
 b2b_dependency:
