@@ -313,18 +313,24 @@ completed:
 - Owner chose manual password login on Mac mini instead of MacBook EDS. Password-mode
   dedicated Chrome profile and private launcher created on Mac mini, Terminal opened,
   profile marker and single manual session process verified. MacBook untouched.
-current_stage: b2b_local_session_candidate_one_card_runner
+- Owner confirmed manual login on Mac mini. Dedicated profile retained 20 platform
+  cookies, 12 secure validated; recovered owner-private local session candidate, no
+  secret transfer. Supervised exact one-card GET runner tested; canonical egress initialized,
+  quarantine completed. First real B2B pilot procurement 4664540 returned HTTP200,
+  exactly one charged request, no redirects/retry/download/submission; no visible
+  card ID or documented controls, server auth unverified.
+current_stage: b2b_first_one_card_http200_next_review_resource_scope
 remaining:
-- Owner manually signs in to own Arvectum account on dedicated Mac mini Chrome and
-  types ARVECTUM in local Terminal. After owner confirmation verify only session file
-  metadata and local validation, never expose cookie values/password in chat, no MacBook
-  operations.
-- Complete guarded single-card live activation with exact reviewed endpoint inventory,
-  shared canonical egress state/sole designated Mac mini host/IP, legacy runtime schedule
-  cutover and hard 60 HTTP requests/rolling 60 seconds. Actual live operation still
-  gated.
-- PRICE-01 normative samples and comparable normalization; no production deployment.
-last_verified_commit: 590d38f57d0bb82ee6d07a79e33b317957dcfceb
+- Review exact required page resource scope from dedicated manual B2B browser with
+  sanitized metadata/inventory, no endpoint guessing, no session secret output. Verify
+  actual card ID, documented controls and own-organization session; first single GET
+  rendered no card ID/controls, HTTP200 alone does not attest login. Use shared canonical
+  gate, strict rolling 60/min/IP, no automated retry after refusal.
+- Complete legacy runtime schedule cutover acceptance before recurring automation,
+  then approved read-only document acquisition and monitoring; no submissions/signing
+  or multi-tenant expansion.
+- PRICE-01 normative samples and comparable normalization; preserve completed work.
+last_verified_commit: 8ab17271e1d26a00e5bac5c2ba09e4addd6b30a9
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -507,14 +513,25 @@ test_results:
 - 275 focused tests passed,2 skipped,130 warnings in 16.52s; supervised offline Chrome
   7/7 accounting PASS exact ZIP; Ruff/diff PASS. PR580 17 success/2 running at start.
   Local login process/profile launched; actual account/session not verified.
-resume_instruction: Owner completed manual sign-in on Mac mini; private cookie candidate
-  recovered locally (12 accepted cookies, no server verification). Implement and verify
-  actual bounded single-card pilot runner, canonical state and legacy schedule cutover
-  check. No secret exposure, no MacBook, no unattended signing.
+- 276 focused/source tests pass,2 skipped,130 warnings in 16.76s; actual isolated
+  Chrome synthetic one-card acceptance PASS (one charged GET, blocked extra resources,
+  card ID visible on fixture), existing HTTPS fixture 7/7 PASS; Ruff/diff PASS. Real
+  B2B request 1, HTTP200, durable pending=false. No relevant active launchctl labels
+  observed before bounded pilot; not distributed per-IP/production cutover proof.
+  PR581 17 success/2 running at start.
+resume_instruction: Owner login done; local dedicated Mac mini session candidate recovered
+  (12 accepted cookies), first actual supervised B2B one-card pilot 4664540 HTTP200,
+  exact 1 charged request, card ID and controls not visible, account/session not server-verified.
+  Next prepare sanitized exact resource inventory on dedicated authorized browser
+  and positively review required resources, then scoped read-only retry only after
+  gate/operational acceptance. Do not expose cookie values or access MacBook, guess
+  private endpoints, perform signing/submission or claim HTTP200 proves login. Legacy
+  runtime cutover before recurring B2B automation; no production deployment. Permission
+  PN-1356710-26, 60/rolling minute per IP. PRICE-01 preserved.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
-  status: approved_waiting_owner_macmini_manual_login
+  status: approved_first_readonly_http200_card_content_unverified
   support_ticket: PN-1356710-26
   support_response: 'Operator written approval relayed by owner: Козырькова Валерия
     Андреевна, 2026-11-16 14:51:30. Internal partial automation allowed subject to
@@ -522,9 +539,10 @@ b2b_dependency:
     более 60 HTTP-запросов в минуту с одного IP-адреса». IP approval not required;
     no separate download restrictions; own account or optional additional user. Earlier
     response: no additional fee or alternative API for stated actions.'
-  owner_action: Manual sign-in complete per owner. Dedicated profile session candidate
-    recovered with rejecting proxy; local validation passed. Account identity and
-    live session still need authorized one-card test.
+  owner_action: Owner completed Mac mini login; local candidate recovered with private
+    permissions. First real bounded GET returned HTTP200 but exact card and logged-in
+    status not proved. Next reviewed resource scope, no further platform calls in
+    this increment. No MacBook, secrets, submissions or production changes.
 sibur_readonly_observation_20261116:
   status: exhausted
   step: archive supported queue drained; oversized and PDF review remains
