@@ -277,20 +277,25 @@ completed:
   retry and scoped state clearing.'
 - B2B operator permission received from owner for submitted internal browser agent
   specification, PN-1356710-26; PR573 exact ddf92b0a CI 19/19 successful.
-current_stage: b2b_offline_network_guard
+- B2B shared single-host persistent rolling 60 HTTP attempts/60s admission gate, durable
+  pending reservation and process serialization, crash quarantine and persisted known
+  cooldown, sanitized activity log. Explicit read-only HTTP broker with charged redirects
+  and bounded download, same-origin policy, 429 Retry-After. Old pilot B2B refuses
+  before launch until integrated.
+current_stage: b2b_network_guard_verified_next_browser_integration
 remaining:
-- 'B2B offline egress limiter/acceptance: shared rolling 60 requests/60s per IP across
-  all agent HTTP requests, redirect/download accounting, 429 Retry-After, fail-closed
-  unaccounted traffic, no rotation, sanitized activity log, auth session isolation.
-  Prove using local fixture before live pilot; explicit own organization account access
-  and no submissions.'
-- Then limited authorized B2B read-only pilot and verified documentation acquisition;
-  separate operator approval before other tenant deployment.
-- Corporate normative labor/expense samples and comparable normalization as previously
-  planned; preserve PRICE-01 progress.
+- B2B browser-to-broker integration and offline no-direct-egress proof, all background/redirect/download
+  HTTP attempts accounted, trusted canonical state directory and designated sole egress
+  host/IP, exact read-only endpoint policy, bounded total time, session/cookie synchronization,
+  queued waits and unknown response/cooldown handling. Single-host gate not distributed
+  per-IP guarantee yet.
+- Dedicated authorized own-organization session and limited read-only pilot only after
+  offline acceptance; no submissions or other tenant deployment.
+- PRICE-01 corporate normative samples and historical comparable normalization; preserve
+  completed work.
 - Hosted CI, PostgreSQL concurrency, real browser/device and E2E acceptance. No production
   deployment.
-last_verified_commit: 5032b7b541a3c65788bd0499e93f06a3da709edf
+last_verified_commit: 9c23ad3b290039f7e6a10f3ebebd3eeaa2e20d6f
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -443,13 +448,23 @@ test_results:
   corrupt bytes and false payment rejection. Xcode unsigned build-for-testing PASS
   including XCTest compilation; git diff --check PASS. PR572 exact a6724300 CI 19/19
   success. No physical device or simulator XCTest execution/live API E2E.
-resume_instruction: Implement persistent shared sliding-window gate and audited explicit
-  read-only HTTP broker, redirect and retry accounting, offline acceptance; keep old
-  B2B pilot blocked until actual browser integration proven.
+- 163 focused tests pass, 2 skipped, 130 warnings in 15.50s. Six new tests including
+  shared threads, 105 attempts in three separate processes -> 60 allowed, staggered
+  sliding-window boundary, actual crash recovery and corrupted state, mock redirect/429
+  and real loopback HTTP redirect/archive/429. Ruff/diff PASS; old pilot refuses B2B
+  even with consent reference. PR574 exact 0386c159 17 success/2 running. No live
+  B2B requests.
+resume_instruction: Persistent B2B network admission gate and explicit HTTP broker
+  verified (163 focused pass). Next integrate real Playwright offline browser fixture
+  through broker, block direct egress including browser background and redirects/downloads,
+  prove all actual HTTP requests counted; bound total dispatch, canonical state/sole
+  IP, exact read-only endpoint scope and secure auth/session. Do not enable live B2B
+  until accepted. Operator PN-1356710-26 approved internal workflow, retain 60 requests/rolling
+  60s/IP. PRICE-01 norms remain next independent product step. No deployment.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
-  status: approved_pending_technical_acceptance
+  status: approved_pending_browser_egress_acceptance
   support_ticket: PN-1356710-26
   support_response: 'Operator written approval relayed by owner: Козырькова Валерия
     Андреевна, 2026-11-16 14:51:30. Internal partial automation allowed subject to
@@ -457,12 +472,10 @@ b2b_dependency:
     более 60 HTTP-запросов в минуту с одного IP-адреса». IP approval not required;
     no separate download restrictions; own account or optional additional user. Earlier
     response: no additional fee or alternative API for stated actions.'
-  owner_action: Keep submitted 60 HTTP requests/rolling 60 seconds/IP as hard cap
-    pending clarification of exception phrase, including background requests, redirects
-    and archive downloads. Authorization scoped to submitted internal Arvectum workflow,
-    no external submission/signing/CAPTCHA circumvention, no other organizations.
-    Live pilot remains gated on verified offline network limit, dedicated authorized
-    session and approved scope. Do not treat consent reference alone as release readiness.
+  owner_action: Written approval received; shared host gate and offline broker verified,
+    browser-wide egress integration not yet accepted. Keep live B2B pilot disabled.
+    Retain hard 60/60s per IP; no 45 soft limit, no IP rotation, no other tenant use,
+    no submission/signing.
 sibur_readonly_observation_20261116:
   status: exhausted
   step: archive supported queue drained; oversized and PDF review remains
