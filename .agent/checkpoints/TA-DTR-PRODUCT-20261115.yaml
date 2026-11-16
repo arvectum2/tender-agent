@@ -305,7 +305,7 @@ completed:
   state, no ordinary profile reuse/key access or automatic signing), verified two
   real Chrome starts/restart offline on Mac mini. Legacy direct B2B fetch entrypoints
   audited and recorded for activation gate.
-current_stage: b2b_eds_session_profile_verified_next_guarded_runner
+current_stage: b2b_guarded_one_card_runner
 remaining:
 - Complete guarded single-card runner with hard deadline, canonical shared egress
   state and one designated MacBook host/IP; gate/migrate all legacy direct B2B egress
@@ -496,16 +496,9 @@ test_results:
   launch/relaunch PASS on Mac mini via rejecting proxy; dedicated marker/symlink/permission
   tests PASS; Ruff/diff PASS. PR578 exact 889506a7 CI 19/19. No MacBook EDS or live
   B2B test yet.
-resume_instruction: MacBook manual EDS dedicated Chrome profile implementation and
-  offline startup/restart verified. Next complete guarded single-card runner and legacy
-  egress gates/sole canonical host, hard total deadline, approved endpoint inventory
-  and offline acceptance. Prepare MacBook-specific runtime and profile only when feasible;
-  user will manually sign in via EDS once ready. Do not request or inspect signing
-  key/PIN/session secrets in chat or copy regular browser profiles. Keep session local
-  on MacBook, Mac mini consumes allowed artifacts. Actual portability and provider
-  compatibility unverified. PN-1356710-26 internal approval with 60/rolling minute
-  per IP. No live automated traffic before technical acceptance; no production deployment.
-  PRICE-01 preserved.
+resume_instruction: Build single-card supervised runner, hard runtime deadline, canonical
+  local egress lock, legacy paths fail closed, offline actual browser verification.
+  MacBook EDS remains manual and live activation gated.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
