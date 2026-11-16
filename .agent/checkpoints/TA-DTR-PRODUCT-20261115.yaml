@@ -219,14 +219,18 @@ completed:
 - 'PRICE-01 web controls: explicit blank inputs and provenance, server Decimal comparison,
   stateless preview, explicit version save, immutable history, exact replay/result
   validation and scope clearing.'
-current_stage: price01_native_controls
+- Native PRICE-01 explicit costs/rates, server result comparison, version history
+  and explicit manager save; scope, actor, payload/result and replay validation. Actual
+  server-generated fixture tested in Swift.
+current_stage: price01_native_verified_next_itemized_costs
 remaining:
-- Native PRICE-01 input/preview/save/history; detailed units/hours/rates and evidence-linked
-  costs, comparable procurement normalization and real-case acceptance.
-- Hosted exact-head CI, PG concurrency and real browser/device E2E; keep gates off
-  until acceptance, no production deploy.
-- B2B consent pending, no automated requests; product only.
-last_verified_commit: 8ae417cf3253895dd236d571618be876924eddee
+- Itemized PRICE-01 cost estimates with quantities/units/hours/rates and versioned
+  provenance mapping into existing cost categories; real expense evidence and comparable
+  procurement normalization.
+- Hosted exact-head CI, PG concurrency, real web/iOS and full E2E acceptance; keep
+  gates off and no production deploy.
+- B2B written operator consent pending; no automated requests. Product-only scope.
+last_verified_commit: fee62835b11d86d2167ba879d6fcb6efef0aef59
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -326,9 +330,14 @@ test_results:
 - 150 passed,2 skipped,111 warnings in 11.55s; extended actual JS fixture PASS for
   preview/save, uncertain replay, changed input invalidation, disabled feature and
   foreign scope. Ruff/diff PASS. PR559 exact ad906f54 CI 19/19.
-resume_instruction: Native scoped price scenario input/preview/save/history, explicit
-  assumptions and role gate, exact replay/result validation. Run Swift contracts and
-  Xcode build; no production changes.
+- Final Xcode unsigned build-for-testing PASS incl new XCTest compilation; macOS Swift
+  PRICE-01 server fixture contract PASS, git diff --check PASS. PR560 exact f36f2175
+  17 success, 2 in progress; no physical device/simulator XCTest or live network acceptance.
+resume_instruction: Native PRICE-01 controls built and server-fixture Swift contract
+  verified. Next implement bounded itemized cost estimates with explicit quantity,
+  unit, rate, source note and category rollup to existing Decimal engine; preserve
+  immutable history, prior scenario compatibility, no invented cost or market forecast.
+  Product-only scope; B2B consent pending.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
