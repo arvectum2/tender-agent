@@ -128,18 +128,24 @@ completed:
   and ten/company/day, immutable scoped capture outcomes, authorization recheck and
   offline original integrity recheck. HTTP returns observations only. No live source
   or production changes.'
-current_stage: commercial_capture_ui_and_attachment_contract_review
+- Commercial capture history and explicit confirmation in web cabinet; original offline
+  recheck available with capture gate off; case/customer/reference checks and state
+  clearing. Bounded offline candidate attachment link inventory, no downloads; two
+  reverified historical originals compared for displayed fields/digest and candidate
+  link differences.
+current_stage: commercial_evidence_ui_verified_next_attachment_source_contracts
 remaining:
-- Publish/check PRs 542/543; review previous stack mirror failure without deploying.
-- Complete scoped web capture controls and source original attachment evidence/version
-  contracts, bounded transport and immutable receipts. Validate permitted real source
-  layouts only in approved window.
-- Expand source adapters and connect scoped commercial evidence to analysis/reports
-  without live models.
-- Separate isolated PostgreSQL concurrency and full E2E acceptance, browser/iOS, production
-  approval.
-- Gemma paused. Prioritize SIBUR/Qwen, avoid heavy local tests and runtime changes.
-last_verified_commit: d78f9a38872c3c050dd8b179e55fe382539cee97
+- Publish/check current stacked PR and CI; previous PR543 had 16 successes, 2 running
+  and 1 failure before this increment.
+- Establish source-specific first-party attachment link/content contracts from permitted
+  existing originals or an approved safe live window. Implement bounded attachment
+  acquisition, immutable raw bytes and revision evidence only after contract validation;
+  do not treat candidate URLs as fetch authority.
+- Isolated PostgreSQL capture concurrency, real public markup acceptance, browser/iOS
+  and end-to-end tests; expand adapters, profile-aware workflow and reports.
+- Gemma paused. SIBUR/Qwen corpus priority; no production migration, live model calls
+  or deployment.
+last_verified_commit: 486d7fd519952b5e6990f88edabc03046e7b8d45
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -172,8 +178,14 @@ test_results:
   refusal, HTTP fixture replay/isolation/tamper/crash, transport mock limits and regression
   UI; Ruff and diff PASS. Actual PG admission concurrency and live platform acceptance
   pending.
-resume_instruction: Implement explicit company-scoped capture/recheck UI with default-off
-  gate and saved-historical semantics. Review actual attachment contracts before enabling
-  any downloader. Offline tests only.
+- 95 passed, 2 skipped, 74 warnings in 8.54s; rendered Node cabinet fixture (confirmation,
+  gate off, historical compare, identity mismatch, session reset), attachment candidate
+  bounds/negative cases, cross-tenant comparison, migration regression; Ruff/diff
+  PASS.
+resume_instruction: Web capture/recheck and historical comparison verified offline.
+  Proceed attachment source contracts and original byte verification; candidate inventory
+  is not authorizing downloads. Preserve all existing source limits and tenant boundaries.
+  Use isolated/offline work, no source calls or heavy jobs that interfere with SIBUR
+  indexing; Gemma explicitly paused. No deployment.
 owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
   Product changes isolated, offline and bounded.
