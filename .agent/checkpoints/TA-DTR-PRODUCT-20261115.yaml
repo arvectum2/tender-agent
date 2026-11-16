@@ -330,7 +330,7 @@ completed:
   and title with query at 20:14:14Z; previous full URL check would reject it. Fixed
   manual-only observed identity, visible number requirement and durable progress/failure
   metadata. Actual offline Chrome query variant test PASS.
-current_stage: b2b_manual_ui_receipt_verified_pending_actual_view
+current_stage: price01_corporate_actual_sample_preview
 remaining:
 - Capture real manual UI control observation using corrected helper. Owner confirmed
   previous visit; no need for repeat credentials unless platform requires. Prior final
@@ -535,12 +535,11 @@ test_results:
   POST and same-origin document GET denied.
 - 287 passed,2 skipped,130 warnings in 23.41s; Ruff/diff PASS. Actual Chrome offline
   manual URL variant PASS. PR583/584/585 CI success; no new automated B2B traffic.
-resume_instruction: Read corrected manual UI progress/report (metadata only) in Mac
-  mini private root. Owner previous manual visit confirmed in dedicated history, URL
-  parameters explain likely receipt refusal; corrected observer tested offline. If
-  actual report missing, inspect progress failure metadata and avoid needless re-logins.
-  Do not weaken upstream scope or repeat static pilots. See latest product increment
-  docs. Mac mini only; no publication of secrets, no submissions; PRICE-01 preserved.
+resume_instruction: 'B2B manual observer running, waiting for actual card. In parallel
+  implement PRICE-01 corporate actual sample preview: explicit same-category/title/unit,
+  one latest saved reported row per distinct case, bounded selection, evidence digest
+  and descriptive distributions only. No automatic suggested rate or persistence;
+  isolated tests; retain B2B pending state.'
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
