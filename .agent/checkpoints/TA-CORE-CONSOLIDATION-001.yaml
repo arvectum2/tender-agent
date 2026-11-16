@@ -1,5 +1,5 @@
 task_id: TA-CORE-CONSOLIDATION-001
-status: in_progress
+status: blocked
 goal: Consolidate existing Tender Agent engine PRs independently of live market research.
 definition_of_done:
 - Inventory exact PR heads and dependency graph; classify conflicts and review gates.
@@ -68,7 +68,7 @@ completed:
 - Actual Gemma criteria generation finished, automated guard pass but semantic formula
   condition defect identified; prompt correction offline verified. Qwen embedding
   control request passed after completion; concurrency impact not measured.
-current_stage: gemma_numeric_guard_pass_semantic_review_pending
+current_stage: owner_paused_gemma_acceptance
 remaining:
 - Sustained actual DP ingestion and source-locked Gemma acceptance.
 - Tender Agent candidate runtime deployment separately authorized; preserve research.
@@ -83,6 +83,14 @@ test_results:
 - TA529/530/531 19/19 CI exact heads; DP130 7/7; all merged
 - Final main tree parity PASS, ARM64 isolated build and health/auth/evidence smoke
   PASS
-resume_instruction: DP runtime live; Gemma semantic acceptance not complete. See TA-CORE-GEMMA-REVIEW-20261115
-  checkpoint, prioritize Qwen/active research, no repeated DP switch or mass concurrent
-  inference.
+resume_instruction: 'Owner priority 2026-11-16: pause all Gemma generation acceptance
+  and batch inference until explicit owner resume. Preserve Qwen embedding, SIBUR
+  collection/extraction/indexing, and current runtime. Offline development and tests
+  permitted without live model calls or production changes.'
+owner_pause:
+  active: true
+  reason: 'Owner priority 2026-11-16: pause all Gemma generation acceptance and batch
+    inference until explicit owner resume. Preserve Qwen embedding, SIBUR collection/extraction/indexing,
+    and current runtime. Offline development and tests permitted without live model
+    calls or production changes.'
+  resume_condition: Explicit owner authorization to resume Gemma acceptance

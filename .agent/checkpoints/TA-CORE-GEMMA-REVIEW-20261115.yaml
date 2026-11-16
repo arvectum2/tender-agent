@@ -1,5 +1,5 @@
 task_id: TA-CORE-GEMMA-REVIEW-20261115
-status: in_progress
+status: blocked
 goal: Isolated review of draft PR497–500; preserve real model quality gates.
 definition_of_done:
 - Review candidate against consolidated core
@@ -60,7 +60,7 @@ completed:
 - Updated RAG prompt to preserve formula branches/variable lists, explicitly flag
   unavailable formula, distinguish scoring cap from admission; 15 offline relevant
   tests and Ruff PASS. No model rerun or deployment.
-current_stage: gemma_criteria_guard_pass_semantic_correction_pending_retest
+current_stage: owner_paused_gemma_acceptance
 remaining:
 - Verify semantic correction on next safe single-section generation, with explicit
   source-supported variable checks; no batch Gemma while embedding resource pressure
@@ -88,11 +88,10 @@ test_results:
   still pending.
 - 15 passed, 1 warning; Ruff PASS; actual criteria numeric/citation guard PASS, semantic
   review FAIL; Qwen post-run inference PASS
-resume_instruction: Gemma criteria probe completed; automated PASS but semantic formula
-  rule incorrect. Do not relaunch old probe. Prompt correction committed and tested
-  offline; require semantic source check, ideally deterministic extraction of formula
-  conditions, before another bounded test in safe resource window. Keep Qwen embedding
-  online, do not stop or reconfigure either model or deploy TA without approval.
+resume_instruction: 'Owner priority 2026-11-16: pause all Gemma generation acceptance
+  and batch inference until explicit owner resume. Preserve Qwen embedding, SIBUR
+  collection/extraction/indexing, and current runtime. Offline development and tests
+  permitted without live model calls or production changes.'
 runtime_rollout_20261116:
   release: /Users/master/ArvectumSafe/runtime-releases/data-platform-20261116-50f7b69
   revision: 50f7b69d5d3d33413de2599f7c21c79bffe36541
@@ -120,3 +119,10 @@ gemma_criteria_probe_20261116:
     weights 30/70 and 80/20, 15m RUB and 10 contracts caps are supported. Valid citations/numeric
     guards do not establish entailment. Formula extraction incomplete. No gold or
     DB writes.
+owner_pause:
+  active: true
+  reason: 'Owner priority 2026-11-16: pause all Gemma generation acceptance and batch
+    inference until explicit owner resume. Preserve Qwen embedding, SIBUR collection/extraction/indexing,
+    and current runtime. Offline development and tests permitted without live model
+    calls or production changes.'
+  resume_condition: Explicit owner authorization to resume Gemma acceptance
