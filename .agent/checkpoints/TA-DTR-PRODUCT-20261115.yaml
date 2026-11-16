@@ -282,20 +282,26 @@ completed:
   cooldown, sanitized activity log. Explicit read-only HTTP broker with charged redirects
   and bounded download, same-origin policy, 429 Retry-After. Old pilot B2B refuses
   before launch until integrated.
-current_stage: b2b_offline_browser_bridge
+- 'B2B real offline Chrome/Playwright HTTP accounting bridge: explicit loopback proxy
+  with same-origin approved routes and exact single-hop broker accounting, rejects
+  CONNECT, cross-origin/mutating/unapproved requests and stops after 429. Initial
+  route interception redirect experiment failed closed; replaced with network-level
+  HTTP proxy. Browser fixture 7 actual origin requests = 7 charged, exact 129-byte
+  ZIP and nine direct proxy refusals.'
+current_stage: b2b_offline_http_browser_verified_next_https_acceptance
 remaining:
-- B2B browser-to-broker integration and offline no-direct-egress proof, all background/redirect/download
-  HTTP attempts accounted, trusted canonical state directory and designated sole egress
-  host/IP, exact read-only endpoint policy, bounded total time, session/cookie synchronization,
-  queued waits and unknown response/cooldown handling. Single-host gate not distributed
-  per-IP guarantee yet.
-- Dedicated authorized own-organization session and limited read-only pilot only after
-  offline acceptance; no submissions or other tenant deployment.
+- 'B2B accepted HTTPS request-level architecture: offline TLS fixture and no-direct-egress
+  proof, dedicated authorized session/cookie management, exact read-only endpoint
+  allowlist, shared 60/rolling minute canonical designated IP/host, bounded total
+  time/redirects/queued waits and fail-closed unknown response. Existing HTTP fixture
+  explicitly offline-only and does not prove OS-level or HTTPS enforcement.'
+- Limited authorized Arvectum read-only pilot only after technical acceptance and
+  dedicated session; no submissions/signatures or other tenant deployment.
 - PRICE-01 corporate normative samples and historical comparable normalization; preserve
   completed work.
-- Hosted CI, PostgreSQL concurrency, real browser/device and E2E acceptance. No production
+- Hosted CI, PostgreSQL concurrency, real browser/device and E2E acceptance; no production
   deployment.
-last_verified_commit: 9c23ad3b290039f7e6a10f3ebebd3eeaa2e20d6f
+last_verified_commit: 1d8f7c39bc89c8ed9505a489bccd764dc23b4d44
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -454,13 +460,22 @@ test_results:
   and real loopback HTTP redirect/archive/429. Ruff/diff PASS; old pilot refuses B2B
   even with consent reference. PR574 exact 0386c159 17 success/2 running. No live
   B2B requests.
-resume_instruction: Implement offline-only Playwright bridge using explicit single-hop
-  broker, deny proxy, exact local-origin allowlist and actual browser fixture; no
-  live access. Preserve technical gate and PRICE-01.
+- 164 focused passed, 2 skipped, 130 warnings in 17.53s. Actual Chrome offline bridge
+  PASS with response sequence 302,200,200,200,307,200,429; direct refusal, blocked
+  unapproved route/POST, separate proxy CONNECT/cross-origin redirect tests. Ruff/diff
+  PASS. PR575 exact 87b903ef CI 19/19 success. No live requests.
+resume_instruction: Real Chrome HTTP-only offline accounting proxy and fixture verified.
+  Next design and implement an offline HTTPS request-level broker/Playwright integration
+  (no opaque CONNECT accounting as HTTP count), ensure fail-closed unauthorized direct
+  egress including redirect/background/download, bounded total operation and secure
+  dedicated session/cookie handling. Keep live B2B pilot disabled until HTTPS and
+  canonical egress acceptance. Operator PN-1356710-26 approved internal use, strict
+  60 requests per rolling 60s/IP. Preserve PRICE-01 normative samples. No production
+  deployment.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
-  status: approved_pending_browser_egress_acceptance
+  status: approved_pending_https_egress_acceptance
   support_ticket: PN-1356710-26
   support_response: 'Operator written approval relayed by owner: Козырькова Валерия
     Андреевна, 2026-11-16 14:51:30. Internal partial automation allowed subject to
@@ -468,10 +483,10 @@ b2b_dependency:
     более 60 HTTP-запросов в минуту с одного IP-адреса». IP approval not required;
     no separate download restrictions; own account or optional additional user. Earlier
     response: no additional fee or alternative API for stated actions.'
-  owner_action: Written approval received; shared host gate and offline broker verified,
-    browser-wide egress integration not yet accepted. Keep live B2B pilot disabled.
-    Retain hard 60/60s per IP; no 45 soft limit, no IP rotation, no other tenant use,
-    no submission/signing.
+  owner_action: Written operator approval recorded. HTTP-only Chrome accounting bridge
+    verified offline; actual HTTPS, OS-level isolation and auth/session acceptance
+    not established. No platform traffic; retain strict 60/60s per IP, no rotation,
+    no external submission or other tenant use.
 sibur_readonly_observation_20261116:
   status: exhausted
   step: archive supported queue drained; oversized and PDF review remains
