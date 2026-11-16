@@ -64,6 +64,7 @@ from src.modules.saas_foundation import (
     commercial_attachment_service,
     commercial_capture,
     commercial_requirement_review,
+    company_actual_costs,
     company_case_evidence,
     company_cost_evidence,
     company_discovery,
@@ -1075,3 +1076,27 @@ def download_cost_evidence(case_id: str, scenario_id: str, ordinal: int, princip
     _cost_evidence_enabled()
     raw,format_hint,sha=company_cost_evidence.download(session,principal,case_id,scenario_id,ordinal)
     return Response(content=raw,media_type="application/octet-stream",headers={"Content-Disposition":f'attachment; filename="cost-{sha[:16]}.{format_hint}"',"Cache-Control":"private, no-store","X-Content-Type-Options":"nosniff","X-Artifact-SHA256":sha})
+
+
+def _actual_costs_enabled():
+    settings=get_settings()
+    if not (settings.saas_company_price_scenarios_enabled and settings.saas_company_price_itemized_enabled and settings.saas_company_actual_costs_enabled):
+        raise HTTPException(404,"Actual cost snapshots disabled")
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/{scenario_id}/actual-costs")
+def actual_cost_history(case_id: str, scenario_id: str, principal: Member, session: DBSession, offset: int = Query(0,ge=0,le=30), limit: int = Query(5,ge=1,le=10)) -> dict:
+    _actual_costs_enabled()
+    return company_actual_costs.history(session,principal,case_id,scenario_id,offset,limit)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/{scenario_id}/actual-costs/preview")
+def actual_cost_preview(case_id: str, scenario_id: str, payload: company_actual_costs.SnapshotInput, principal: Member, session: DBSession) -> dict:
+    _actual_costs_enabled()
+    return company_actual_costs.preview(session,principal,case_id,scenario_id,payload)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/{scenario_id}/actual-costs",status_code=201)
+def actual_cost_save(case_id: str, scenario_id: str, payload: company_actual_costs.SaveInput, principal: Member, session: DBSession) -> dict:
+    _actual_costs_enabled()
+    return company_actual_costs.save(session,principal,case_id,scenario_id,payload)

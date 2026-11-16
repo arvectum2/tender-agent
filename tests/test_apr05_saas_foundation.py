@@ -2191,3 +2191,63 @@ def test_cost_evidence_exact_version_line_bytes_and_scope(client, session, monke
     assert client.get(u,headers=headers).status_code==409 and client.get(u+'/download',headers=headers).status_code==409
     session.execute(update(CompanyCostEvidence).where(CompanyCostEvidence.id==saved['evidence_id']).values(line_sha256=digest,raw_bytes=raw.replace(b'1 0 obj',b'9 0 obj')));session.commit()
     assert client.get(u,headers=headers).status_code==409 and client.get(u+'/download',headers=headers).status_code==409
+
+
+def test_actual_cost_snapshots_partial_complete_and_scope(client,session,monkeypatch):
+    from copy import deepcopy
+
+    from sqlalchemy import update
+
+    from src.modules.saas_foundation.models import CompanyActualCostSnapshot
+
+    _,a=_seed(client,'Actual A');_,b=_seed(client,'Actual B');_legal(client,a);_legal(client,b)
+    settings=saas.get_settings().model_copy(update={'saas_company_price_scenarios_enabled':True,'saas_company_price_itemized_enabled':True});monkeypatch.setattr(saas,'get_settings',lambda:settings)
+    headers=_auth(a);cases='/api/saas/company-portfolio/cases'
+    def create(token,n):
+        r=client.post(cases,headers=_auth(token),json={'registry_number':f'{n:019d}'});assert r.status_code==201,r.text
+        return cases+'/'+r.json()['case_id']+'/price-scenarios'
+    path=create(a,1);other=create(a,2);foreign=create(b,1)
+    def cost(cat,title,qty,rate,kind='ASSUMPTION'):
+        return {'category':cat,'title':title,'unit':'h' if cat=='own_labor_rub' else 'unit','quantity':qty,'rate_rub':rate,'source_kind':kind,'source_note':'Synthetic test source'}
+    estimate={'lines':[cost('own_labor_rub','Development','10','1000'),cost('external_direct_rub','License','2','500'),cost('reserve_rub','Reserve','1','100')],'zero_cost_categories':['cash_overhead_rub','fixed_platform_fees_rub','guarantee_financing_cost_rub'],'terms':{'revenue_tax_percent':'6','variable_platform_fee_percent':'0','minimum_profit_rub':'0','target_profit_rub':'1000','manual_bid_prices_rub':[],'assumption_note':'Synthetic plan','accept_hypothetical_assumptions_only':True},'confirm_no_double_count':True}
+    def plan(rev,key):
+        r=client.post(path+'/itemized',headers=headers,json={'estimate':estimate,'expected_revision':rev,'idempotency_key':key});assert r.status_code==201,r.text
+        return r.json()
+    first=plan(0,'actual-plan-1');second=plan(1,'actual-plan-2');legacy=client.post(path,headers=headers,json={'scenario':first['inputs'],'expected_revision':2,'idempotency_key':'actual-legacy'}).json()
+    def url(row,base=path):return base+'/'+row['scenario_id']+'/actual-costs'
+    u=url(first);v=url(second);assert client.get(u,headers=headers).status_code==404
+    settings=settings.model_copy(update={'saas_company_actual_costs_enabled':True})
+    pre=client.get(u,headers=headers).json();digest=pre['baseline_sha256'];assert pre['items']==[] and len(digest)==64 and len(pre['planned_lines'])==3
+    assert client.get(v,headers=headers).json()['baseline_sha256']!=digest
+    partial={'baseline_sha256':digest,'as_of':'2026-11-15','observations':[{'ordinal':1,'quantity':'12','rate_rub':'1000','source_note':'Reported cumulative hours'}],'unplanned_costs':[cost('cash_overhead_rub','Extra hosting','0.3333','0.01','USER_REPORTED_ACTUAL')],'note':'Cumulative to date, synthetic','confirm_cumulative_user_report':True,'confirm_no_double_count':True}
+    def preview(body=partial,token=a,target=u):return client.post(target+'/preview',headers=_auth(token),json=body)
+    def save(body=partial,rev=0,key='actual-snapshot-1',token=a,target=u):return client.post(target,headers=_auth(token),json={'snapshot':body,'expected_revision':rev,'idempotency_key':key})
+    r=preview();assert r.status_code==200,r.text
+    result=r.json()['result'];assert not r.json()['inputs_stored'] and session.query(CompanyActualCostSnapshot).count()==0
+    assert result['lines'][0]['actual_amount_rub']=='12000.00' and result['lines'][0]['variance_rub']=='2000.00' and result['lines'][0]['variance_percent']=='20.0000'
+    assert result['lines'][1]['status']=='NOT_REPORTED' and result['lines'][1]['actual_amount_rub'] is None and result['lines'][1]['variance_rub'] is None
+    assert result['totals']['planned_rub']=='11100.00' and result['totals']['reported_total_rub']=='12000.01' and result['totals']['matched_planned_rub']=='10000.00'
+    assert result['totals']['missing_planned_lines']==2 and result['totals']['reported_vs_full_plan_rub'] is None
+    assert result['unplanned_costs'][0]['actual_amount_rub']=='0.01'
+    assert all(result[k] is False for k in ('payment_verified','actual_amounts_independently_verified','contract_cost_coverage_complete','contract_execution_verified','revenue_or_profit_verified','external_submission_allowed'))
+    assert preview(target=v).status_code==409 and preview(token=b).status_code==404 and save(target=url(first,other)).status_code==404 and save(target=url(first,foreign),token=b).status_code==404
+    assert client.get(url(legacy),headers=headers).status_code==409
+    for changes in ({'as_of':'2099-01-01'},{'confirm_cumulative_user_report':False},{'confirm_no_double_count':False},{'observations':partial['observations']*2},{'observations':[{**partial['observations'][0],'ordinal':4}]},{'observations':[{**partial['observations'][0],'quantity':'0'}]},{'observations':[{**partial['observations'][0],'quantity':'1.00001'}]},{'observations':[{**partial['observations'][0],'source_note':' '} ]},{'observations':[],'unplanned_costs':[]},{'unplanned_costs':[cost('cash_overhead_rub','Extra','1','100')]},{'unplanned_costs':[cost('cash_overhead_rub','Extra','999999999','999999999999.99','USER_REPORTED_ACTUAL')]}):
+        assert preview({**partial,**changes}).status_code==422,changes
+    r=save();assert r.status_code==201,r.text
+    row=r.json();assert row['revision']==1 and row['result']==result and save().json()==row
+    complete=deepcopy(partial);complete['observations']+= [{'ordinal':2,'quantity':'2','rate_rub':'500','source_note':'Reported license cost'},{'ordinal':3,'quantity':'0','rate_rub':'0','source_note':'Reported no reserve used'}]
+    assert save(complete).status_code==409 and save(complete,key='actual-snapshot-2').status_code==409
+    assert save({**complete,'as_of':'2026-11-14'},rev=1,key='actual-snapshot-2').status_code==409
+    r=save(complete,rev=1,key='actual-snapshot-2');assert r.status_code==201,r.text
+    row2=r.json();t=row2['result']['totals'];assert t['reported_total_rub']=='13000.01' and t['reported_vs_full_plan_rub']=='1900.01' and t['all_planned_lines_reported'] and not row2['result']['contract_cost_coverage_complete']
+    assert row2['result']['lines'][2]['actual_amount_rub']=='0.00' and row2['result']['lines'][2]['variance_percent']=='-100.0000'
+    page=client.get(u,headers=headers,params={'limit':1}).json();assert page['items']==[row2] and page['has_more'];assert client.get(u,headers=headers,params={'offset':1}).json()['items']==[row]
+    assert client.get(v,headers=headers).json()['items']==[]
+    for role in ('viewer','analyst'):
+        invite=client.post('/api/saas/invitations',headers=headers,json={'role':role,'acquisition_channel':'referral'}).json();token=client.post('/api/saas/invitations/redeem',json={'invitation_code':invite['invitation_code'],'display_name':role}).json()['access_token'];_legal(client,token)
+        assert preview(token=token).status_code==(403 if role=='viewer' else 200)
+        assert save(complete,rev=2,key='actual-role-test',token=token).status_code==403
+    assert client.get(path,headers=headers,params={'limit':30}).json()['items']==[legacy,second,first]
+    session.execute(update(CompanyActualCostSnapshot).where(CompanyActualCostSnapshot.id==row['snapshot_id']).values(result_json={}));session.commit()
+    assert client.get(u,headers=headers).status_code==409

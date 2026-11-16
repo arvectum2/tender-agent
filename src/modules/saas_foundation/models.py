@@ -401,3 +401,24 @@ class CompanyCostEvidence(UUIDPrimaryKeyMixin, Base):
 
 event.listen(CompanyCostEvidence, "before_update", _immutable_company_decision)
 event.listen(CompanyCostEvidence, "before_delete", _immutable_company_decision)
+
+
+class CompanyActualCostSnapshot(UUIDPrimaryKeyMixin, Base):
+    """Immutable cumulative user-reported actual costs against one baseline."""
+    __tablename__ = "company_actual_cost_snapshots"
+    scenario_id: Mapped[str] = mapped_column(String(36), ForeignKey("company_price_scenarios.id"), nullable=False)
+    member_id: Mapped[str] = mapped_column(String(36), ForeignKey("saas_members.id"), nullable=False)
+    revision: Mapped[int] = mapped_column(Integer, nullable=False)
+    idempotency_key: Mapped[str] = mapped_column(String(128), nullable=False)
+    input_json: Mapped[dict] = mapped_column(JSON, nullable=False)
+    result_json: Mapped[dict] = mapped_column(JSON, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    __table_args__ = (
+        UniqueConstraint("scenario_id", "revision", name="uq_actual_cost_revision"),
+        UniqueConstraint("scenario_id", "idempotency_key", name="uq_actual_cost_replay"),
+        CheckConstraint("revision BETWEEN 1 AND 30", name="ck_actual_cost_revision"),
+    )
+
+
+event.listen(CompanyActualCostSnapshot, "before_update", _immutable_company_decision)
+event.listen(CompanyActualCostSnapshot, "before_delete", _immutable_company_decision)
