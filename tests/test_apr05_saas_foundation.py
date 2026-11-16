@@ -1827,3 +1827,55 @@ def test_company_manager_inbox_due_and_latest_decision_scope(client, session, mo
     decision(ids[1],'GO',1)
     updated=client.get(route,headers=_auth(owner)).json()
     assert updated['summary']['attention']==2 and updated['summary']['go']==2 and updated['summary']['deferred_due']==0
+
+
+def test_company_lifecycle_attestation_and_metrics(client, session, monkeypatch):
+    from src.modules.saas_foundation.models import CompanyCaseLifecycleEvent
+
+    _, a = _seed(client,'Lifecycle A'); _, b = _seed(client,'Lifecycle B')
+    _legal(client,a); _legal(client,b)
+    base='/api/saas/company-portfolio';cases=base+'/cases';metrics=base+'/lifecycle-metrics'
+    settings=saas.get_settings()
+    monkeypatch.setattr(saas,'get_settings',lambda:settings)
+    def save(token,n):
+        r=client.post(cases,headers=_auth(token),json={'registry_number':f'{n:019d}'});assert r.status_code==201,r.text
+        return cases+'/'+r.json()['case_id']
+    path,foreign,second,third=[save(token,n) for token,n in ((a,1),(b,1),(a,2),(a,3))]
+    assert client.get(path+'/lifecycle',headers=_auth(a)).status_code==404
+    settings=settings.model_copy(update={'saas_company_lifecycle_enabled':True})
+    def decide(path,rev,action='GO'):
+        r=client.post(path+'/decisions',headers=_auth(a),json={'action':action,'expected_revision':rev,'rationale':'fixture','idempotency_key':f'decision-{rev}'});assert r.status_code==200,r.text
+    def event(path,stage,rev,decision_rev=1,**extra):
+        body={'stage':stage,'expected_revision':rev,'expected_decision_revision':decision_rev,'rationale':'fixture','idempotency_key':f'lifecycle-{rev}',**extra}
+        return client.post(path+'/lifecycle',headers=_auth(a),json=body)
+    now=service.now_utc();receipt={'source_ref':'receipt 123','occurred_at':(now-timedelta(minutes=2)).isoformat()};outcome={'source_ref':'protocol 123','occurred_at':now.isoformat()}
+    assert event(path,'READY',0).status_code==409
+    for p in (path,second,third):decide(p,0)
+    assert event(path,'SUBMITTED',0,**receipt).status_code==409
+    r=event(path,'READY',0);assert r.status_code==201,r.text
+    assert event(path,'READY',0).json()==r.json()
+    decide(path,1,'NO_GO');assert client.get(path+'/lifecycle',headers=_auth(a)).json()['latest']['readiness_stale']
+    decide(path,2);assert event(path,'SUBMITTED',1,3,**receipt).status_code==409
+    assert event(path,'READY',1,3).status_code==201
+    assert event(path,'SUBMITTED',2,3).status_code==422
+    r=event(path,'SUBMITTED',2,3,**receipt);assert r.status_code==201,r.text
+    assert r.json()['origin']=='HUMAN_ATTESTATION' and not r.json()['external_fact_verified']
+    assert event(path,'WON',3,3,source_ref='protocol',occurred_at=(now-timedelta(days=1)).isoformat()).status_code==422
+    assert event(path,'WON',3,3,**outcome).status_code==201
+    assert event(path,'LOST',4,3,**outcome).status_code==409
+    assert event(path,'LOST',4,3,correct_outcome=True,**outcome).status_code==201
+    assert event(path,'WON',5,3,correct_outcome=True,**outcome).status_code==201
+    assert event(path,'SUBMITTED',6,3,**receipt).status_code==409
+    assert event(second,'READY',0).status_code==201
+    assert event(second,'SUBMITTED',1,**receipt).status_code==201
+    assert event(second,'REJECTED',2,**outcome).status_code==201
+    h=client.get(path+'/lifecycle/history',headers=_auth(a)).json();assert [x['revision'] for x in h['items']]==[6,5,4,3,2,1]
+    assert client.get(path+'/lifecycle',headers=_auth(b)).status_code==404
+    assert event(foreign,'READY',0).status_code==404
+    m=client.get(metrics,headers=_auth(a));assert m.status_code==200,m.text
+    m=m.json();assert m['saved_cases']==3 and m['ever_go_cases']==3 and m['recorded_submissions']==2
+    assert m['win_rate']=={'numerator':1,'denominator':2,'rate':0.5}
+    assert m['go_to_submission']['numerator']==2 and m['go_to_submission']['denominator']==3
+    assert not m['external_facts_verified'] and not m['contract_revenue_verified']
+    other=client.get(metrics,headers=_auth(b)).json();assert other['saved_cases']==1 and other['win_rate']['rate'] is None and other['go_to_submission']['rate'] is None
+    assert session.query(CompanyCaseLifecycleEvent).count()==9

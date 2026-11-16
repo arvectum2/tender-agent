@@ -66,6 +66,7 @@ from src.modules.saas_foundation import (
     commercial_requirement_review,
     company_case_evidence,
     company_discovery,
+    company_lifecycle,
     company_portfolio,
     company_schedule,
 )
@@ -905,3 +906,31 @@ def commercial_case_requirement_matrix(case_id: str, attempt_id: str, principal:
 @router.get("/api/saas/company-portfolio/manager-inbox")
 def company_manager_inbox(principal: Member, session: DBSession, view: company_portfolio.InboxFilter = "attention", offset: int = Query(0, ge=0), limit: int = Query(50, ge=1, le=100)) -> dict:
     return company_portfolio.manager_inbox(session, principal, view=view, offset=offset, limit=limit)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/lifecycle")
+def company_lifecycle_state(case_id: str, principal: Member, session: DBSession) -> dict:
+    if not get_settings().saas_company_lifecycle_enabled:
+        raise HTTPException(404, "Company lifecycle disabled")
+    return company_lifecycle.state(session, principal, case_id)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/lifecycle", status_code=201)
+def company_lifecycle_record(case_id: str, payload: company_lifecycle.LifecycleInput, principal: Member, session: DBSession) -> dict:
+    if not get_settings().saas_company_lifecycle_enabled:
+        raise HTTPException(404, "Company lifecycle disabled")
+    return company_lifecycle.record(session, principal, case_id, payload)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/lifecycle/history")
+def company_lifecycle_history(case_id: str, principal: Member, session: DBSession, offset: int = Query(0, ge=0, le=50), limit: int = Query(50, ge=1, le=50)) -> dict:
+    if not get_settings().saas_company_lifecycle_enabled:
+        raise HTTPException(404, "Company lifecycle disabled")
+    return company_lifecycle.history(session, principal, case_id, offset, limit)
+
+
+@router.get("/api/saas/company-portfolio/lifecycle-metrics")
+def company_lifecycle_metrics(principal: Member, session: DBSession) -> dict:
+    if not get_settings().saas_company_lifecycle_enabled:
+        raise HTTPException(404, "Company lifecycle disabled")
+    return company_lifecycle.metrics(session, principal)

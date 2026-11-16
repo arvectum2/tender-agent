@@ -297,3 +297,28 @@ class CommercialRequirementReview(UUIDPrimaryKeyMixin, Base):
 
 event.listen(CommercialRequirementReview, "before_update", _immutable_company_decision)
 event.listen(CommercialRequirementReview, "before_delete", _immutable_company_decision)
+
+
+class CompanyCaseLifecycleEvent(UUIDPrimaryKeyMixin, Base):
+    """Human-attested progress on the canonical owned case, never an ETP action."""
+    __tablename__ = "company_case_lifecycle_events"
+    case_id: Mapped[str] = mapped_column(String(36), ForeignKey("procurement_cases.id"), nullable=False)
+    tenant_id: Mapped[str] = mapped_column(String(64), ForeignKey("saas_tenants.tenant_id"), nullable=False)
+    member_id: Mapped[str] = mapped_column(String(36), ForeignKey("saas_members.id"), nullable=False)
+    go_decision_id: Mapped[str] = mapped_column(String(36), ForeignKey("company_portfolio_decisions.id"), nullable=False)
+    revision: Mapped[int] = mapped_column(Integer, nullable=False)
+    stage: Mapped[str] = mapped_column(String(24), nullable=False)
+    event_json: Mapped[dict] = mapped_column(JSON, nullable=False)
+    idempotency_key: Mapped[str] = mapped_column(String(128), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    __table_args__ = (
+        UniqueConstraint("case_id", "revision", name="uq_company_lifecycle_revision"),
+        UniqueConstraint("case_id", "idempotency_key", name="uq_company_lifecycle_replay"),
+        CheckConstraint("revision > 0", name="ck_company_lifecycle_revision"),
+        CheckConstraint("stage IN ('PREPARING','BLOCKED','READY','SUBMITTED','WON','LOST','REJECTED','WITHDRAWN','CANCELLED')", name="ck_company_lifecycle_stage"),
+        Index("ix_company_lifecycle_tenant_case", "tenant_id", "case_id"),
+    )
+
+
+event.listen(CompanyCaseLifecycleEvent, "before_update", _immutable_company_decision)
+event.listen(CompanyCaseLifecycleEvent, "before_delete", _immutable_company_decision)

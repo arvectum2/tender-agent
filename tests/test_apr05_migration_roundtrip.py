@@ -291,3 +291,26 @@ def test_requirement_review_migration_preserves_history(tmp_path, monkeypatch):
         with engine.connect() as conn:assert conn.scalar(text('SELECT count(*) FROM commercial_requirement_reviews'))==1
     finally:
         engine.dispose();invalidate_settings_cache()
+
+
+def test_company_lifecycle_migration_preserves_history(tmp_path, monkeypatch):
+    import pytest
+
+    db_url='sqlite:///'+str(tmp_path/'lifecycle.sqlite')
+    monkeypatch.setenv('AI_CORP_DATABASE_URL',db_url);invalidate_settings_cache()
+    cfg=Config(str(Path(__file__).resolve().parents[1]/'alembic.ini'));engine=create_engine(db_url)
+    try:
+        with engine.begin() as conn:
+            for table,identity in (('procurement_cases','id'),('saas_tenants','tenant_id'),('saas_members','id'),('company_portfolio_decisions','id')):
+                conn.execute(text(f'CREATE TABLE {table} ({identity} VARCHAR PRIMARY KEY)'))
+                conn.execute(text(f"INSERT INTO {table} ({identity}) VALUES ('fixture')"))
+        command.stamp(cfg,'114_commercial_requirement_reviews');command.upgrade(cfg,'115_company_case_lifecycle')
+        assert 'company_case_lifecycle_events' in inspect(engine).get_table_names()
+        command.downgrade(cfg,'114_commercial_requirement_reviews');command.upgrade(cfg,'115_company_case_lifecycle')
+        with engine.begin() as conn:
+            conn.execute(text("INSERT INTO company_case_lifecycle_events (id,case_id,tenant_id,member_id,go_decision_id,revision,stage,event_json,idempotency_key,created_at) VALUES ('e','fixture','fixture','fixture','fixture',1,'READY','{}','fixture-key','2026-11-16')"))
+        with pytest.raises(RuntimeError,match='Cannot discard'):
+            command.downgrade(cfg,'114_commercial_requirement_reviews')
+        with engine.connect() as conn:assert conn.scalar(text('SELECT count(*) FROM company_case_lifecycle_events'))==1
+    finally:
+        engine.dispose();invalidate_settings_cache()
