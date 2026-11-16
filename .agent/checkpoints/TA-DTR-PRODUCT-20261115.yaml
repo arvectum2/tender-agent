@@ -231,7 +231,7 @@ completed:
   explicit zero categories and source notes, no-double-count acknowledgement, exact
   BigInt line/rollup verification of server projection, existing immutable history
   and preview/save/replay, session clearing.'
-current_stage: price01_itemized_web_verified_next_native
+current_stage: price01_itemized_native_controls
 remaining:
 - Native itemized cost editor and detailed mixed history; scoped document-level evidence
   links and real expenses.
@@ -348,10 +348,9 @@ test_results:
   server-generated itemized response, row editing, zero category refusal, amount verification,
   retry, history, invalidation and tampered projection rejection. Ruff/diff PASS.
   PR562 exact 93b21b60 17 success,2 running.
-resume_instruction: Web itemized editor verified, next iOS itemized form and mixed
-  history with exact Decimal/kopeck projection validation and same shared revision/replay
-  rules. Then immutable evidence links and historical comparable normalization. No
-  production deployment or source/model calls.
+resume_instruction: Implement typed native itemized estimate, exact Decimal validation,
+  shared history and repeat-safe saving; compile and execute contract tests. Product
+  only; no deploy.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
