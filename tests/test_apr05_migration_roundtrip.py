@@ -237,3 +237,34 @@ def test_commercial_capture_migration_preserves_immutable_history(tmp_path, monk
     finally:
         engine.dispose()
         invalidate_settings_cache()
+
+
+def test_commercial_attachment_migration_preserves_originals(tmp_path, monkeypatch):
+    import pytest
+
+    db_url = 'sqlite:///' + str(tmp_path/'attachment.sqlite')
+    monkeypatch.setenv('AI_CORP_DATABASE_URL', db_url)
+    invalidate_settings_cache()
+    cfg = Config(str(Path(__file__).resolve().parents[1]/'alembic.ini'))
+    engine = create_engine(db_url)
+    try:
+        with engine.begin() as conn:
+            for table, identity in (('saas_tenants','tenant_id'),('saas_members','id'),('procurement_cases','id')):
+                conn.execute(text(f'CREATE TABLE {table} ({identity} VARCHAR PRIMARY KEY)'))
+                conn.execute(text(f"INSERT INTO {table} ({identity}) VALUES ('fixture')"))
+        command.stamp(cfg,'111_company_discovery_schedule')
+        command.upgrade(cfg,'113_commercial_attachment_evidence')
+        assert 'commercial_attachment_evidence' in inspect(engine).get_table_names()
+        command.downgrade(cfg,'112_commercial_card_snapshots')
+        assert 'commercial_attachment_evidence' not in inspect(engine).get_table_names()
+        command.upgrade(cfg,'113_commercial_attachment_evidence')
+        with engine.begin() as conn:
+            conn.execute(text("INSERT INTO commercial_capture_attempts (id,tenant_id,case_id,member_id,capture_day,source_url,created_at) VALUES ('a','fixture','fixture','fixture','2026-11-16','https://workspace.ru/tenders/fixture-19043/','2026-11-16')"))
+            conn.execute(text("INSERT INTO commercial_attachment_evidence (id,attempt_id,member_id,candidate_id,source_url,raw_bytes,inspection_json,created_at) VALUES ('e','a','fixture','fixture','https://workspace.ru/docs/spec.docx',:raw,'{}','2026-11-16')"),{'raw':b'fixture'})
+        with pytest.raises(RuntimeError, match='Cannot discard'):
+            command.downgrade(cfg,'112_commercial_card_snapshots')
+        with engine.connect() as conn:
+            assert conn.scalar(text('SELECT raw_bytes FROM commercial_attachment_evidence'))==b'fixture'
+    finally:
+        engine.dispose()
+        invalidate_settings_cache()

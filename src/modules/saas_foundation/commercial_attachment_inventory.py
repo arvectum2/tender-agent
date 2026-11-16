@@ -5,6 +5,7 @@ Unknown/opaque links are not resolved or requested.
 """
 from __future__ import annotations
 
+import hashlib
 import re
 from urllib.parse import urljoin, urlsplit
 
@@ -57,7 +58,7 @@ def attachment_inventory(source_url: str, original: bytes) -> dict:
             continue
         if url not in candidates and len(candidates) < MAX_CANDIDATES:
             label = ' '.join(link.text_content().split())[:200]
-            candidates[url] = {'source_url': url, 'display_label': label or None, 'format_hint': suffix.group(1).lower(),
+            candidates[url] = {'candidate_id': hashlib.sha256(url.encode()).hexdigest(), 'source_url': url, 'display_label': label or None, 'format_hint': suffix.group(1).lower(),
                                'original_bytes_verified': False, 'download_allowed': False}
         elif url not in candidates:
             rejected += 1

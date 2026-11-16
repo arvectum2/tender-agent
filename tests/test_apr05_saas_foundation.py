@@ -1630,3 +1630,60 @@ def test_commercial_capture_historical_comparison(client, session, monkeypatch):
     assert client.get(route+'/'+older,headers=_auth(a),params={'previous_attempt_id':newer}).status_code==422
     assert client.get(route+'/'+newer,headers=_auth(a),params={'previous_attempt_id':newer}).status_code==422
     assert len(calls)==3
+
+
+def test_commercial_attachment_intake_provenance_replay_revision_and_isolation(client, session, monkeypatch):
+    from hashlib import sha256
+
+    from sqlalchemy import text
+    from test_commercial_attachment_bytes import docx_fixture
+    from test_company_commercial_card_evidence import WORKSPACE, workspace
+
+    from src.modules.saas_foundation import commercial_capture as capture
+    from src.modules.saas_foundation.models import CommercialAttachmentEvidence
+
+    _, a = _seed(client, 'Attachments A')
+    _, b = _seed(client, 'Attachments B')
+    _legal(client,a);_legal(client,b)
+    settings=saas.get_settings().model_copy(update={'saas_commercial_capture_enabled':True})
+    monkeypatch.setattr(saas,'get_settings',lambda:settings)
+    moment=[service.now_utc()];monkeypatch.setattr(capture,'now_utc',lambda:moment[0]);calls=[]
+    card=workspace().replace(b'</body>',b'<a href="/docs/spec.docx">spec</a></body>')
+    def fetch(url):
+        calls.append(url);return capture.SourceResponse(url,'text/html',200,moment[0],card)
+    monkeypatch.setattr(capture,'fetch_card',fetch)
+    base='/api/saas/company-portfolio'
+    def case_path(token):
+        row=client.post(base+'/commercial-cases',headers=_auth(token),json={'source_url':WORKSPACE});assert row.status_code==201
+        return f'{base}/cases/{row.json()["case_id"]}/commercial-captures'
+    route,foreign=case_path(a),case_path(b)
+    def capture_path(token,path):
+        r=client.post(path,headers=_auth(token),json={'confirm_public_capture':True});assert r.status_code==201,r.text
+        return path+'/'+r.json()['attempt_id']
+    old=capture_path(a,route);other=capture_path(b,foreign)
+    record=client.get(old,headers=_auth(a)).json();candidate=record['attachment_inventory']['candidates'][0]['candidate_id'];assert candidate==sha256(b'https://workspace.ru/docs/spec.docx').hexdigest()
+    attach=lambda path:path+'/attachments/'+candidate
+    body=docx_fixture();params={'confirm_user_supplied':True}
+    assert client.post(attach(old),headers=_auth(a),params=params,content=body).status_code==404
+    settings=settings.model_copy(update={'saas_commercial_attachment_intake_enabled':True})
+    assert client.post(attach(old),headers=_auth(a),content=body).status_code==422
+    assert client.post(attach(old),headers=_auth(b),params=params,content=body).status_code==404
+    assert client.post(old+'/attachments/'+'f'*64,headers=_auth(a),params=params,content=body).status_code==404
+    assert client.post(attach(old),headers=_auth(a),params=params,content=b'<html>wrong</html>').status_code==422
+    assert client.post(attach(old),headers=_auth(a),params=params,content=b'x'*(2*1024*1024+1)).status_code==413
+    r=client.post(attach(old),headers=_auth(a),params=params,content=body);assert r.status_code==201,r.text
+    evidence=r.json();assert evidence['origin']=='USER_SUPPLIED_UNATTESTED' and evidence['stored_bytes_reverified'] and not evidence['platform_original_verified']
+    assert client.post(attach(old),headers=_auth(a),params=params,content=body).json()==evidence
+    assert client.post(attach(old),headers=_auth(a),params=params,content=docx_fixture('changed')).status_code==409
+    assert client.get(old+'/attachments',headers=_auth(a)).json()['items'][0]['inspection'].get('text_preview') is None
+    assert client.get(attach(old),headers=_auth(b)).status_code==404
+    assert client.get(attach(other),headers=_auth(b)).status_code==404
+    moment[0]+=timedelta(days=1);new=capture_path(a,route)
+    r=client.post(attach(new),headers=_auth(a),params=params,content=docx_fixture('Новая редакция'));assert r.status_code==201,r.text
+    previous=old.split('/')[-1];r=client.get(attach(new),headers=_auth(a),params={'previous_attempt_id':previous});assert r.status_code==200,r.text
+    assert r.json()['comparison']['supplied_bytes_changed'] and not r.json()['comparison']['platform_document_version_verified']
+    assert client.get(attach(new),headers=_auth(a),params={'previous_attempt_id':other.split('/')[-1]}).status_code==404
+    assert len(calls)==3 and session.query(CommercialAttachmentEvidence).count()==2
+    row=session.query(CommercialAttachmentEvidence).filter_by(id=evidence['evidence_id']).one();assert row.raw_bytes==body
+    session.execute(text('UPDATE commercial_attachment_evidence SET raw_bytes=:raw WHERE id=:id'),{'raw':docx_fixture('tampered'),'id':row.id});session.commit()
+    assert client.get(attach(old),headers=_auth(a)).status_code==409

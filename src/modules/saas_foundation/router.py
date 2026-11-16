@@ -5,6 +5,7 @@ AI_CORP_SAAS_FOUNDATION_ENABLED is explicitly true.
 """
 from __future__ import annotations
 
+import asyncio
 import base64
 import binascii
 import hmac
@@ -27,6 +28,7 @@ from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
+from starlette.concurrency import run_in_threadpool
 
 from src.modules.company_profile_store.qualification_decision import (
     QualificationAwareDecisionRequest,
@@ -59,12 +61,14 @@ from src.modules.customer_onboarding.router import (
     upload_company_document,
 )
 from src.modules.saas_foundation import (
+    commercial_attachment_service,
     commercial_capture,
     company_case_evidence,
     company_discovery,
     company_portfolio,
     company_schedule,
 )
+from src.modules.saas_foundation.commercial_attachment_bytes import MAX_ATTACHMENT_BYTES
 from src.modules.saas_foundation.models import (
     SaasAccessToken,
     SaasMember,
@@ -813,5 +817,46 @@ def list_company_commercial_captures(case_id: str, principal: Member, session: D
 @router.get("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}")
 def recheck_company_commercial_capture(case_id: str, attempt_id: str, principal: Member, session: DBSession, previous_attempt_id: str | None = Query(None, max_length=64)) -> dict:
     if previous_attempt_id is not None:
-        return commercial_capture.compare_captures(session, principal, case_id, attempt_id, previous_attempt_id)
-    return commercial_capture.recheck(session, principal, case_id, attempt_id)
+        result = commercial_capture.compare_captures(session, principal, case_id, attempt_id, previous_attempt_id)
+    else:
+        result = commercial_capture.recheck(session, principal, case_id, attempt_id)
+    return {**result, "attachment_intake_enabled": get_settings().saas_commercial_attachment_intake_enabled}
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}/attachments/{candidate_id}", status_code=201)
+async def save_company_commercial_attachment(case_id: str, attempt_id: str, candidate_id: str, request: Request, principal: Member, session: DBSession, confirm_user_supplied: bool = Query(False)) -> dict:
+    if not get_settings().saas_commercial_attachment_intake_enabled:
+        raise HTTPException(404, "Commercial attachment intake disabled")
+    role_required(principal, "owner", "admin", "analyst")
+    legal_required(session, principal)
+    if not confirm_user_supplied:
+        raise HTTPException(422, "Confirm user-supplied, unverified origin")
+    if request.headers.get("content-encoding", "identity").lower() != "identity":
+        raise HTTPException(415, "Encoded uploads unsupported")
+    length = request.headers.get("content-length")
+    if length is not None and (not length.isascii() or not length.isdecimal() or len(length) > 10):
+        raise HTTPException(400, "Invalid upload length")
+    if length is not None and int(length) > MAX_ATTACHMENT_BYTES:
+        raise HTTPException(413, "Attachment size limit exceeded")
+    # Avoid holding the initial auth transaction across untrusted upload I/O.
+    session.rollback()
+    raw = bytearray()
+    try:
+        async with asyncio.timeout(20):
+            async for chunk in request.stream():
+                if len(raw) + len(chunk) > MAX_ATTACHMENT_BYTES:
+                    raise HTTPException(413, "Attachment size limit exceeded")
+                raw.extend(chunk)
+    except TimeoutError as exc:
+        raise HTTPException(408, "Attachment upload timeout") from exc
+    return await run_in_threadpool(commercial_attachment_service.save, session, principal, case_id, attempt_id, candidate_id, bytes(raw))
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}/attachments")
+def list_company_commercial_attachments(case_id: str, attempt_id: str, principal: Member, session: DBSession) -> dict:
+    return commercial_attachment_service.list_evidence(session, principal, case_id, attempt_id)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}/attachments/{candidate_id}")
+def read_company_commercial_attachment(case_id: str, attempt_id: str, candidate_id: str, principal: Member, session: DBSession, previous_attempt_id: str | None = Query(None, max_length=64)) -> dict:
+    return commercial_attachment_service.read(session, principal, case_id, attempt_id, candidate_id, previous_attempt_id)

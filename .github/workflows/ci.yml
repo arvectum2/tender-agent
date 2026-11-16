@@ -54,6 +54,10 @@ jobs:
       - name: Install locked Python dependencies
         run: python -m pip install --require-hashes -r requirements.lock
       - run: make check
+      - name: Require hosted Node for company cabinet contract
+        run: |
+          node --version
+          PYTHON="$(command -v python)" node tests/js/company_portfolio_flow.cjs
       - name: Run make test
         shell: bash
         run: |

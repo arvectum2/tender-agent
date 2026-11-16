@@ -256,3 +256,20 @@ class CommercialCardSnapshot(UUIDPrimaryKeyMixin, Base):
 for _commercial_immutable in (CommercialCaptureAttempt, CommercialCardSnapshot):
     event.listen(_commercial_immutable, "before_update", _immutable_company_decision)
     event.listen(_commercial_immutable, "before_delete", _immutable_company_decision)
+
+
+class CommercialAttachmentEvidence(UUIDPrimaryKeyMixin, Base):
+    """Company-supplied bytes bound to an observed candidate link, not original proof."""
+    __tablename__ = "commercial_attachment_evidence"
+    attempt_id: Mapped[str] = mapped_column(String(36), ForeignKey("commercial_capture_attempts.id"), nullable=False)
+    member_id: Mapped[str] = mapped_column(String(36), ForeignKey("saas_members.id"), nullable=False)
+    candidate_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    source_url: Mapped[str] = mapped_column(String(650), nullable=False)
+    raw_bytes: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
+    inspection_json: Mapped[dict] = mapped_column(JSON, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    __table_args__ = (UniqueConstraint("attempt_id", "candidate_id", name="uq_commercial_attachment_candidate"),)
+
+
+event.listen(CommercialAttachmentEvidence, "before_update", _immutable_company_decision)
+event.listen(CommercialAttachmentEvidence, "before_delete", _immutable_company_decision)

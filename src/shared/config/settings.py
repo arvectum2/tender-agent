@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     saas_company_discovery_enabled: bool = False  # Separate opt-in for source requests
     saas_company_schedule_enabled: bool = False  # Independent unattended execution gate
     saas_commercial_capture_enabled: bool = False  # Explicit public card capture gate
+    saas_commercial_attachment_intake_enabled: bool = False  # Explicit user-provided bytes only
     market_intelligence_report_delivery_enabled: bool = False  # Additional opt-in gate
     pilot_auth_protected_prefixes: str = "/api,/demo,/pilot,/customers,/docs,/redoc,/openapi.json,/health/ready"
     pilot_auth_public_paths: str = "/health"
