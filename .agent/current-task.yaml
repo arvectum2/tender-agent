@@ -1820,3 +1820,8 @@ sibur_v45_abb_budget_classification_20261116:
   checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
   status: in_progress
   resume: V45 verified; continue award and price evidence, new originals, separate budgets.
+
+sibur_v46_source_revalidation_20261116:
+  checkpoint: .agent/checkpoints/TA-SIBUR-SIONIKA-SALES-MAP-20261115.yaml
+  status: in_progress
+  resume: V46 verified; reconcile partial index failure safely; continue exact outcomes and evidence.

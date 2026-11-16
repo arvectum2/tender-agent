@@ -1514,4 +1514,20 @@ sionika_v45:
     commercial-action-register-v39.json: 1eea22cabedef3d4627be42aaa10abcc450e18c7ccb62a3b559b5aa5881bbb26
     project-coverage-dashboard-v32.json: e0f9ba3f5c4fbb45663673450c879de35c8e5c2e4d339b28ee60baeee7c5d821
     consolidated-project-report-v45.md: 9dfba98c12ab48bc84ced534278499634bd9d1758b30c1e758e99a0152b2de54
-resume_instruction: "V45 verified. Continue primary award and price evidence, active opportunities, and newly captured priority originals; 244 budget leads route to subsequent procurement; 6753 closed intake not tagged budget (not awards). V45 map, V39 actions, V20 queue, V32 coverage. Nov17 report. No DB mutation without gate, no duplicate workers."
+
+sionika_v46:
+  status: in_progress
+  completed_stage: "V46 source revalidation: six court acts retrieved via public indexed text; 2024-25 EP600 acts 16694727.83; six secondary EIS comparator prices 1173379.20; five extra budget estimates reverified. Historical uninspected claims remain provisional. No exact corporate award."
+  project_cards: 71
+  priority_union: 8244
+  source_artifacts: 103
+  last_verified_commit: 0f5bdd10
+  blocker: "Index lane blocked after archive_index_batch exit 2 (8b938db32238 review CalledProcessError); DP has 773 originals, partial success and link batch completed. Archive acquisition active. Require read-only reconciliation and acceptance gate before retry; no duplicate runner."
+  artifacts:
+    sionika-source-revalidation-v46.json: 38f0f6e2211ea454b8bfd792aea75974d396cfae9f5134f0de88eac89900aa87
+    consolidated-project-map-v46.json: d79bcf2633345b904005381535699b003630b506406f968174f382ef42d68ac0
+    commercial-outcome-queue-v21.json: 54090ebcf1407a83d980483fbe22e63ba5bc8da60af298a84d8700cea9841c97
+    commercial-action-register-v40.json: effb8a6b8cdaa9d74d516fcb5dd5a87cf87d5ed4cdc154815180c985d78e916c
+    project-coverage-dashboard-v33.json: aab289f99b7ac67047ca60c2127a972fa56401271c315703a10868f080d65bd9
+    consolidated-project-report-v46.md: f5d768fe60f015cc63d990e5defb3623de8f5c930bb1506c522af1819381698e
+resume_instruction: "V46 verified. First reconcile blocked indexing batch read-only and resume existing runner only after gate; continue exact outcomes, active leads and new originals. V46 map, V40 actions, V21 queue, V33 coverage. Nov17 report. No DB mutation without gate, no duplicate workers. 249 budget leads; uninspected historical external claims provisional."
