@@ -144,17 +144,24 @@ completed:
   source SHA and locators, unreviewed literal requirement categories, current scoped
   supplier profile version/state, explicit web button. Both extraction flags default
   off; no direct ETP acquisition.
-current_stage: source_linked_requirement_review_and_company_fact_binding
+- Default-off human review ledger for reverified DOCX/XLSX literal fragments, stable
+  digest/location keys, current company profile binding, optional own reference-list
+  and document version, missing evidence/human support/gap/not-requirement states,
+  optimistic revision, replay protection, history and stale flags, web matrix controls.
+  Migration 114. No automated qualification scoring or claims of original ETP evidence.
+current_stage: requirement_review_matrix_verified_offline_next_ci_and_source_acquisition
 remaining:
-- Review exact-head hosted CI and mandatory Node fixture for new PR; fix regressions.
-- Implement source-linked human reviewed requirement register, explicit matching to
-  versioned company qualification facts, no automatic GO/NO_GO.
-- Actual first-party attachment endpoint and content contracts require independently
-  permitted original observations; no speculative downloading or user-copy promotion.
-- Full original extraction acceptance, PostgreSQL concurrency, retention and resource
-  policy, real browser/iOS and complete E2E; no production rollout without approval.
-- Keep SIBUR corpus and Qwen priority, Gemma paused.
-last_verified_commit: 443c24fbb07fb4b14e51949f753dc77c400600ae
+- Investigate PR546 r8 integration failure from completed job logs; fix root cause
+  and check exact-head hosted JS/CI for current branch. Mirror failure unresolved.
+- Verify actual original attachment acquisition contracts; bounded trusted downloader
+  and full extraction remain pending. No speculative URLs or promoting user copies.
+- Extend requirement matrix across documents and verified source-specific requirements,
+  qualify actual company artifacts and references independently; PDF stable extraction
+  review, full coverage and scoring remain pending.
+- Isolated PG concurrent admission, real browser/iOS, integration acceptance and production
+  approval.
+- SIBUR/Qwen priority, Gemma explicitly paused.
+last_verified_commit: 0dc38c6822a0eddf61296e8f174664812002307a
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -202,9 +209,16 @@ test_results:
   XLSX literal/formula/hidden-sheet behavior, DOCX bounds, API default-off and tenant
   isolation, SQLite migration regression; Ruff/diff PASS. Current hosted Node/CI pending.
   PR545 hosted JS and quality PASS, 18/19, mirror only failure.
-resume_instruction: Implement bounded scoped append-only human requirement matrix,
-  DOCX/XLSX untruncated fragments only, explicit profile and optional document/reference
-  fact version, stale detection and optimistic revision. Offline tests; no binding
-  implies verified qualification. Investigate PR546 CI failure when logs ready.
+- 111 passed, 2 skipped, 86 warnings in 9.55s; SQLite migration 114 history refusal,
+  cross-tenant, replay, profile/ref stale detection; additional focused synthetic
+  document version staleness test PASS. Ruff/diff PASS. Hosted JS pending. PR546 16
+  success, 1 running, 2 failures (Mirror repository, r8-acceptance-integration); logs
+  unavailable as run still active.
+resume_instruction: Human requirement matrix/backend/SQLite verified, web fixture
+  awaiting hosted CI. First inspect PR546 r8 job logs and fix regressions, then review
+  current PR exact head, proceed first-party attachment acquisition and original byte
+  evidence only with confirmed source contracts. No automatic qualification or deployment.
+  SIBUR 816/17484 healthy at last observation, prioritize existing workers; Gemma
+  paused.
 owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
   Product changes isolated, offline and bounded.
