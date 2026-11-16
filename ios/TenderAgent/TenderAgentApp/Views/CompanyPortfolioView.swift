@@ -84,6 +84,11 @@ struct CompanyPortfolioView: View {
                     }
                     if let notice = store.lifecycleNotice { Text(notice).font(.caption).foregroundStyle(.orange) }
                 }
+                if store.canCompareActualSamples {
+                    Section("Сопоставимые фактические затраты") {
+                        CompanyActualSampleView(store:store).disabled(store.isBusy)
+                    }
+                }
                 Section("Очередь руководителя") {
                     Picker("Показывать", selection: Binding(get: { store.inboxFilter }, set: { filter in
                         selectedCase = nil
@@ -916,7 +921,7 @@ private struct CompanyActualView:View {
             if let history {
                 editor()
                 if let preview {comparison(preview);if canSave {Button("Проверить и сохранить срез"){prepare()}.disabled((history.first?.revision ?? 0)>=30)}}
-                if !history.isEmpty {Picker("Сохранённый срез",selection:$selected){Text("Выберите срез").tag("");ForEach(history){Text("v\($0.revision) · \($0.inputs.asOf)").tag($0.id)}};if let row=history.first(where:{$0.id==selected}) {DisclosureGroup("Сохранённые результаты"){comparison(row.result);Text(row.inputs.note).textSelection(.enabled)};CompanyActualDocumentsView(item:item,accountID:accountID,baseline:baseline,snapshot:row,store:store).id(row.id)}}
+                if !history.isEmpty {Picker("Сохранённый срез",selection:$selected){Text("Выберите срез").tag("");ForEach(history){Text("v\($0.revision) · \($0.inputs.asOf)").tag($0.id)}};if let row=history.first(where:{$0.id==selected}) {DisclosureGroup("Сохранённые результаты"){comparison(row.result);Text(row.inputs.note).textSelection(.enabled)};CompanyActualDocumentsView(item:item,accountID:accountID,baseline:baseline,snapshot:row,latestSnapshotID:history.first?.id ?? "",store:store).id(row.id)}}
             }
             if let notice {Text(notice).font(.caption).foregroundStyle(.secondary)}
         }
@@ -938,8 +943,49 @@ private struct CompanyActualView:View {
 }
 
 
+private struct CompanyActualSampleView:View {
+    @ObservedObject var store:CompanyStore
+    @State private var comparable=false
+    @State private var distinct=false
+    private func resetConfirmation(){comparable=false;distinct=false}
+    var body:some View {
+        Text("Добавляйте последние сохранённые строки из разных закупок. Одна строка на закупку, одинаковые работа, категория и единица. До 20.").font(.caption).foregroundStyle(.secondary)
+        ForEach(store.actualSamples,id:\.sample.id){selection in
+            let row=selection.sample
+            VStack(alignment:.leading,spacing:4){
+                Text(row.title).font(.headline)
+                Text(row.sourcePlatform+":"+row.externalId+" · v"+String(row.snapshotRevision)+" · "+row.asOf).font(.caption)
+                Text(row.reportedQuantity+" "+row.unit+" × "+row.reportedRateRub+" ₽ = "+row.reportedAmountRub+" ₽")
+                Button("Исключить",role:.destructive){store.removeActualSample(row.id)}.buttonStyle(.borderless)
+            }
+        }
+        if !store.actualSamples.isEmpty {
+            Button("Очистить выборку",role:.destructive){store.clearActualSamples()}
+            Toggle("Подтверждаю сопоставимость заявленных строк",isOn:$comparable)
+            Toggle("Одна накопительная строка на закупку, без двойного учёта",isOn:$distinct)
+            Button("Сравнить фактические затраты"){Task{await store.previewActualSamples(comparable:comparable,distinct:distinct)}}.disabled(!comparable || !distinct)
+        }
+        if let r=store.actualSampleResult {
+            Text("Закупок: \(r.distinctCaseCount). "+(r.smallSampleWarning ? "Малая выборка." : "")).font(.headline)
+            distribution("Количество, "+r.unit,r.reportedQuantityDistribution)
+            distribution("Ставка, ₽",r.reportedUnitRateDistributionRub)
+            distribution("Сумма, ₽",r.reportedAmountDistributionRub)
+            Text("Заявленные данные не проверены. Норматив и ставка не утверждены.").font(.caption).foregroundStyle(.secondary)
+        }
+        if let notice=store.actualSampleNotice{Text(notice).font(.caption).foregroundStyle(.secondary)}
+        Color.clear.frame(height:0)
+            .onChange(of:store.actualSamples){_,_ in resetConfirmation()}
+            .onChange(of:store.identity){_,_ in resetConfirmation()}
+            .onChange(of:comparable){_,_ in store.invalidateActualSampleResult()}
+            .onChange(of:distinct){_,_ in store.invalidateActualSampleResult()}
+    }
+    @ViewBuilder private func distribution(_ title:String,_ d:CompanyActualSampleDistribution)->some View {
+        VStack(alignment:.leading){Text(title).font(.headline);LabeledContent("Минимум",value:d.minimum);LabeledContent("Медиана",value:d.median);LabeledContent("Максимум",value:d.maximum)}
+    }
+}
+
 private struct CompanyActualDocumentsView:View {
-    let item:CompanyCase;let accountID:String;let baseline:CompanyActualBaseline;let snapshot:CompanyActualRecord
+    let item:CompanyCase;let accountID:String;let baseline:CompanyActualBaseline;let snapshot:CompanyActualRecord;let latestSnapshotID:String
     @ObservedObject var store:CompanyStore
     @State private var selected=""
     var body:some View {
@@ -950,7 +996,15 @@ private struct CompanyActualDocumentsView:View {
                 Text("Выберите строку").tag("");ForEach(rows){Text($0.label).tag($0.id)}
             }
             if let row=rows.first(where:{$0.id==selected}) {
-                CompanyActualDocumentView(item:item,accountID:accountID,target:.init(baseline:baseline,snapshot:snapshot,row:row),store:store).id(row.id)
+                let target=CompanyActualEvidenceTarget(baseline:baseline,snapshot:snapshot,row:row)
+                if let identity=store.identity, (try? CompanyActualSampleSelection.make(identity:identity,item:item,target:target,latestSnapshotID:latestSnapshotID)) != nil {
+                    Button("Добавить строку в сравнение затрат") {
+                        store.addActualSample(accountID:accountID,item:item,target:target,latestSnapshotID:latestSnapshotID)
+                    }.disabled(store.isBusy || store.actualSamples.count>=20)
+                    Text("В выборке: \(store.actualSamples.count)/20. Сравнение — в портфеле компании.").font(.caption)
+                    if let notice=store.actualSampleNotice {Text(notice).font(.caption).foregroundStyle(.secondary)}
+                }
+                CompanyActualDocumentView(item:item,accountID:accountID,target:target,store:store).id(row.id)
             }
         }
         .onChange(of:store.selectedID){_,_ in selected=""}

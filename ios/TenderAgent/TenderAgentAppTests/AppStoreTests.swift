@@ -65,6 +65,31 @@ final class AppStoreTests: XCTestCase {
         XCTAssertFalse(binding.matches(identity,caseID:scenario.caseId,target:extra))
         XCTAssertFalse(binding.matches(identity,caseID:"foreign",target:planned))
         XCTAssertEqual(planned.row.amount,"0.00")
+        let item=try decoder.decode(CompanyCase.self,from:Data(#"{"case_id":"00000000-0000-4000-8000-000000000001","registry_number":"0123456789012345678","source_platform":"eis","external_id":"0123456789012345678","source_verified":false,"revision":0,"decision":null}"#.utf8))
+        let selected=try CompanyActualSampleSelection.make(identity:identity,item:item,target:extra,latestSnapshotID:partial.id)
+        XCTAssertEqual(selected.sample.lineSha256,"3022d5c6c05060c96d331bb345743aecb73bdec7eb85265b1976b8018a0dda64")
+        XCTAssertThrowsError(try CompanyActualSampleSelection.make(identity:identity,item:item,target:extra,latestSnapshotID:full.id))
+        XCTAssertThrowsError(try CompanyActualSampleSelection.make(identity:identity,item:item,target:planned,latestSnapshotID:full.id))
+        XCTAssertThrowsError(try CompanyActualSampleInput.make([selected,selected],comparable:true,distinct:true))
+        XCTAssertThrowsError(try CompanyActualSampleInput.make([selected],comparable:false,distinct:true))
+        let sampleInput=try CompanyActualSampleInput.make([selected],comparable:true,distinct:true)
+        let encoder=JSONEncoder();encoder.keyEncodingStrategy = .convertToSnakeCase
+        let encoded=try JSONSerialization.jsonObject(with:encoder.encode(sampleInput)) as! [String:Any]
+        XCTAssertEqual((encoded["samples"] as? [[String:Any]])?.first?["line_sha256"] as? String,selected.sample.lineSha256)
+        func d(_ value:String)->[String:String] {["minimum":value,"median":value,"maximum":value]}
+        var comparison:[String:Any]=["schema":"company_actual_descriptive_sample_v1","customer_id":"a","category":"cash_overhead_rub","title":"Extra","unit":"month","currency":"RUB","distinct_case_count":1,"samples":[try JSONSerialization.jsonObject(with:encoder.encode(selected.sample))],"reported_quantity_distribution":d("0.3333"),"reported_unit_rate_distribution_rub":d("0.010"),"reported_amount_distribution_rub":d("0.010"),"basis":"EXPLICIT_ONE_CUMULATIVE_REPORTED_ROW_PER_DISTINCT_CASE","small_sample_warning":true,"comparability_independently_verified":false,"actual_amounts_independently_verified":false,"contract_execution_verified":false,"approved_norm":false,"recommended_rate":NSNull(),"inputs_stored":false,"external_submission_allowed":false]
+        func compare()throws->CompanyActualSamplePreview {try decoder.decode(CompanyActualSamplePreview.self,from:JSONSerialization.data(withJSONObject:comparison))}
+        XCTAssertTrue(try compare().matches(identity,input:sampleInput,selections:[selected]))
+        comparison["reported_amount_distribution_rub"]=d("0.020")
+        XCTAssertFalse(try compare().matches(identity,input:sampleInput,selections:[selected]))
+        comparison["reported_amount_distribution_rub"]=d("0.010")
+        comparison["customer_id"]="foreign"
+        XCTAssertFalse(try compare().matches(identity,input:sampleInput,selections:[selected]))
+        comparison["customer_id"]="a";comparison["approved_norm"]=true
+        XCTAssertFalse(try compare().matches(identity,input:sampleInput,selections:[selected]))
+        XCTAssertTrue(CompanyActualSampleDistribution(minimum:"1.000",median:"1.005",maximum:"1.010").matches(["1.00","1.01"],digits:3))
+        XCTAssertTrue(CompanyActualSampleDistribution(minimum:"1.0000",median:"1.0001",maximum:"1.0001").matches(["1.0000","1.0001"],digits:4))
+
         let evidence=try XCTUnwrap(binding.evidence)
         let bytes=try CompanyArtifactBytes(data:Data("%PDF-1.4\nfixture\n%%EOF".utf8),format:"pdf")
         XCTAssertTrue(evidence.accepts(bytes))

@@ -931,6 +931,57 @@ struct CompanyActualEvidenceTarget:Sendable {
     }
     func matches(_ identity:CompanyIdentity,caseID:String)->Bool {snapshot.matches(identity,caseID:caseID,baseline:baseline)&&CompanyActualEvidenceRow.rows(snapshot).contains(row)&&(try? digest()) != nil}
 }
+struct CompanyActualSampleRef: Codable, Equatable, Sendable {
+    let caseId:String;let scenarioId:String;let snapshotId:String;let rowKind:String;let ordinal:Int;let lineSha256:String
+}
+struct CompanyActualSample: Codable, Equatable, Identifiable, Sendable {
+    let sourcePlatform:String;let externalId:String;let caseId:String;let scenarioId:String;let scenarioRevision:Int;let baselineSha256:String;let snapshotId:String;let snapshotRevision:Int;let rowKind:String;let ordinal:Int;let lineSha256:String;let asOf:String;let title:String;let unit:String;let reportedQuantity:String;let reportedRateRub:String;let reportedAmountRub:String;let origin:String;let actualAmountVerified:Bool
+    var id:String {caseId}
+    var reference:CompanyActualSampleRef {.init(caseId:caseId,scenarioId:scenarioId,snapshotId:snapshotId,rowKind:rowKind,ordinal:ordinal,lineSha256:lineSha256)}
+}
+struct CompanyActualSampleSelection: Equatable, Sendable {
+    let category:CompanyCostCategory;let sample:CompanyActualSample
+    static func make(identity:CompanyIdentity,item:CompanyCase,target:CompanyActualEvidenceTarget,latestSnapshotID:String)throws->Self {
+        guard identity.legalAccepted,["owner","admin","analyst"].contains(identity.role),target.snapshot.id==latestSnapshotID,target.matches(identity,caseID:item.caseId) else {throw CompanyConnectionError.invalidPrice}
+        let category:CompanyCostCategory,unit:String,quantity:String,rate:String
+        switch target.row {
+        case .planned(let l):guard let q=l.actualQuantity,let r=l.actualRateRub else {throw CompanyConnectionError.invalidPrice};category=l.category;unit=l.unit;quantity=q;rate=r
+        case .unplanned(let l):category=l.category;unit=l.unit;quantity=l.quantity;rate=l.rateRub
+        }
+        let platform=item.sourcePlatform ?? "eis"
+        guard [.labor,.direct,.overhead].contains(category),let q=CompanyPriceInput.decimal(quantity),q>0,let amount=target.row.amount,let id=item.externalId ?? item.registryNumber,!id.isEmpty,["eis","workspace","b2bcenter"].contains(platform) else {throw CompanyConnectionError.invalidPrice}
+        let s=target.snapshot
+        return .init(category:category,sample:.init(sourcePlatform:platform,externalId:id,caseId:item.caseId,scenarioId:s.scope.scenarioId,scenarioRevision:s.scope.scenarioRevision,baselineSha256:s.scope.baselineSha256,snapshotId:s.id,snapshotRevision:s.revision,rowKind:target.row.kind,ordinal:target.row.ordinal,lineSha256:try target.digest(),asOf:s.inputs.asOf,title:target.row.title,unit:unit,reportedQuantity:quantity,reportedRateRub:rate,reportedAmountRub:amount,origin:"USER_REPORTED_UNVERIFIED",actualAmountVerified:false))
+    }
+}
+struct CompanyActualSampleInput: Encodable, Equatable, Sendable {
+    let category:CompanyCostCategory;let title:String;let unit:String;let samples:[CompanyActualSampleRef]
+    let confirmComparableReportedRows:Bool;let confirmOneCumulativeRowPerCase:Bool
+    static func make(_ selections:[CompanyActualSampleSelection],comparable:Bool,distinct:Bool)throws->Self {
+        guard let first=selections.first,selections.count<=20,comparable,distinct,Set(selections.map{$0.sample.caseId}).count==selections.count,Set(selections.map{$0.sample.sourcePlatform+"|"+$0.sample.externalId}).count==selections.count,selections.allSatisfy({$0.category==first.category && $0.sample.title==first.sample.title && $0.sample.unit==first.sample.unit}) else {throw CompanyConnectionError.invalidPrice}
+        return .init(category:first.category,title:first.sample.title,unit:first.sample.unit,samples:selections.map{$0.sample.reference},confirmComparableReportedRows:comparable,confirmOneCumulativeRowPerCase:distinct)
+    }
+}
+struct CompanyActualSampleDistribution: Decodable, Equatable, Sendable {
+    let minimum:String;let median:String;let maximum:String
+    func matches(_ values:[String],digits:Int)->Bool {
+        let nums=values.compactMap(CompanyPriceInput.decimal).sorted()
+        guard !nums.isEmpty,nums.count==values.count else{return false}
+        var midpoint=(nums[(nums.count-1)/2]+nums[nums.count/2])/2,rounded=Decimal()
+        NSDecimalRound(&rounded,&midpoint,digits,.plain)
+        return CompanyActualAccumulator.matches(minimum,nums.first,digits:digits)&&CompanyActualAccumulator.matches(median,rounded,digits:digits)&&CompanyActualAccumulator.matches(maximum,nums.last,digits:digits)
+    }
+}
+struct CompanyActualSamplePreview: Decodable, Sendable {
+    let schema:String;let customerId:String;let category:CompanyCostCategory;let title:String;let unit:String;let currency:String;let distinctCaseCount:Int;let samples:[CompanyActualSample]
+    let reportedQuantityDistribution:CompanyActualSampleDistribution;let reportedUnitRateDistributionRub:CompanyActualSampleDistribution;let reportedAmountDistributionRub:CompanyActualSampleDistribution
+    let basis:String;let smallSampleWarning:Bool;let comparabilityIndependentlyVerified:Bool;let actualAmountsIndependentlyVerified:Bool;let contractExecutionVerified:Bool;let approvedNorm:Bool;let recommendedRate:String?;let inputsStored:Bool;let externalSubmissionAllowed:Bool
+    func matches(_ identity:CompanyIdentity,input:CompanyActualSampleInput,selections:[CompanyActualSampleSelection])->Bool {
+        guard (try? CompanyActualSampleInput.make(selections,comparable:input.confirmComparableReportedRows,distinct:input.confirmOneCumulativeRowPerCase))==input,schema=="company_actual_descriptive_sample_v1",customerId==identity.customerId,category==input.category,title==input.title,unit==input.unit,currency=="RUB",distinctCaseCount==selections.count,samples==selections.map(\.sample),basis=="EXPLICIT_ONE_CUMULATIVE_REPORTED_ROW_PER_DISTINCT_CASE",smallSampleWarning==(samples.count<5),!comparabilityIndependentlyVerified,!actualAmountsIndependentlyVerified,!contractExecutionVerified,!approvedNorm,recommendedRate==nil,!inputsStored,!externalSubmissionAllowed else{return false}
+        return reportedQuantityDistribution.matches(samples.map(\.reportedQuantity),digits:4)&&reportedUnitRateDistributionRub.matches(samples.map(\.reportedRateRub),digits:3)&&reportedAmountDistributionRub.matches(samples.map(\.reportedAmountRub),digits:3)
+    }
+}
+
 struct CompanyActualEvidenceScope:Decodable,Equatable,Sendable {
     let base:CompanyActualScope;let snapshotId:String;let snapshotRevision:Int;let asOf:String;let rowKind:String;let lineOrdinal:Int;let lineTitle:String;let actualAmountRub:String;let lineSha256:String
     private enum CodingKeys:String,CodingKey {case snapshotId,snapshotRevision,asOf,rowKind,lineOrdinal,lineTitle,actualAmountRub,lineSha256}
@@ -1304,6 +1355,14 @@ struct CompanyAPIClient: Sendable {
     func downloadActualEvidence(caseID:String,identity:CompanyIdentity,target:CompanyActualEvidenceTarget,evidence:CompanyActualEvidence) async throws -> CompanyArtifactBytes {
         guard evidence.matches(identity,caseID:caseID,target:target) else {throw CompanyConnectionError.identityMismatch}
         return try await downloadVerifiedFile(path:actualEvidencePath(caseID:caseID,identity:identity,target:target)+"/download",sha:evidence.inspection.sha256,size:evidence.inspection.sizeBytes,format:evidence.formatHint)
+    }
+
+    func actualSamplePreview(identity:CompanyIdentity,selections:[CompanyActualSampleSelection],comparable:Bool,distinct:Bool) async throws -> CompanyActualSamplePreview {
+        guard identity.legalAccepted,["owner","admin","analyst"].contains(identity.role) else {throw CompanyConnectionError.http(403)}
+        let input=try CompanyActualSampleInput.make(selections,comparable:comparable,distinct:distinct)
+        let encoder=JSONEncoder();encoder.keyEncodingStrategy = .convertToSnakeCase
+        let result:CompanyActualSamplePreview=try await get("/api/saas/company-portfolio/actual-samples/preview",method:"POST",body:encoder.encode(input))
+        guard result.matches(identity,input:input,selections:selections) else {throw CompanyConnectionError.identityMismatch};return result
     }
 
     private func get<T: Decodable>(_ path: String, query: [URLQueryItem] = [], method: String = "GET", body: Data? = nil, contentType: String = "application/json") async throws -> T {

@@ -16,6 +16,9 @@ final class CompanyStore: ObservableObject {
     @Published private(set) var inboxFilter: CompanyInboxFilter = .attention
     @Published private(set) var inboxSummary: CompanyInboxSummary?
     @Published private(set) var inboxAsOf: Date?
+    @Published private(set) var actualSamples: [CompanyActualSampleSelection] = []
+    @Published private(set) var actualSampleResult: CompanyActualSamplePreview?
+    @Published private(set) var actualSampleNotice: String?
     private var nextOffset = 0
     private var pendingDecision: CompanyDecisionAttempt?
     private var pendingLifecycle: CompanyLifecycleAttempt?
@@ -32,6 +35,7 @@ final class CompanyStore: ObservableObject {
     private var selected: CompanyConnection? { connections.first { $0.id == selectedID } }
 
     private func resetSelection(_ id: String? = nil) {
+        clearActualSamples()
         if selectedID != id { pendingDecision = nil; pendingLifecycle = nil; inboxFilter = .attention }
         selectedID = id
         decisionNotice = nil
@@ -98,6 +102,7 @@ final class CompanyStore: ObservableObject {
             let actual = try await client.verifiedIdentity(for: account.identity)
             guard actual.legalAccepted else {
                 lifecycleMetrics = nil; lifecycleNotice = nil
+                if identity != actual { clearActualSamples() }
                 identity = actual
                 items = []
                 inboxSummary = nil; inboxAsOf = nil; nextOffset = 0
@@ -106,6 +111,7 @@ final class CompanyStore: ObservableObject {
                 return
             }
             let page = try await client.inbox(for: actual, filter: inboxFilter, offset: offset)
+            if identity != actual { clearActualSamples() }
             identity = actual
             let seen = Set(items.map(\.caseId))
             items = offset == 0 ? page.items : items + page.items.filter { !seen.contains($0.caseId) }
@@ -117,6 +123,7 @@ final class CompanyStore: ObservableObject {
         } catch {
             // No fallback to the owner's global portfolio or stale company data.
             lifecycleMetrics = nil; lifecycleNotice = nil
+            clearActualSamples()
             identity = nil
             items = []
             inboxSummary = nil; inboxAsOf = nil; nextOffset = 0
@@ -143,6 +150,7 @@ final class CompanyStore: ObservableObject {
     }
 
     private func invalidateCompanyAccess() {
+        clearActualSamples()
         identity = nil
         items = []
         inboxSummary = nil; inboxAsOf = nil; nextOffset = 0
@@ -221,6 +229,7 @@ final class CompanyStore: ObservableObject {
         let client = try CompanyAPIClient(connection: account)
         let actual = try await client.verifiedIdentity(for: account.identity)
         guard actual.legalAccepted, !write || ["owner", "admin"].contains(actual.role) else { throw CompanyConnectionError.http(403) }
+        if identity != actual { clearActualSamples() }
         identity = actual
         return (client, actual)
     }
@@ -395,6 +404,53 @@ final class CompanyStore: ObservableObject {
     func downloadActualEvidence(accountID:String,item:CompanyCase,target:CompanyActualEvidenceTarget,evidence:CompanyActualEvidence) async throws -> CompanyArtifactBytes {
         guard !isBusy else {throw CompanyConnectionError.http(409)};isBusy=true;defer {isBusy=false}
         do {let (client,actual)=try await lifecycleAccess(accountID:accountID,item:item);return try await client.downloadActualEvidence(caseID:item.caseId,identity:actual,target:target,evidence:evidence)} catch {handleLifecycleError(error);throw error}
+    }
+
+    var canCompareActualSamples: Bool {
+        identity?.legalAccepted == true && ["owner","admin","analyst"].contains(identity?.role ?? "")
+    }
+
+    func invalidateActualSampleResult() {
+        actualSampleResult=nil;actualSampleNotice=nil
+    }
+
+    func clearActualSamples() {
+        actualSamples=[];invalidateActualSampleResult()
+    }
+    func removeActualSample(_ id:String) {
+        guard !isBusy,canCompareActualSamples else{return}
+        actualSamples.removeAll{$0.sample.id==id};invalidateActualSampleResult()
+    }
+    func addActualSample(accountID:String,item:CompanyCase,target:CompanyActualEvidenceTarget,latestSnapshotID:String) {
+        guard !isBusy,canCompareActualSamples,selectedID==accountID,let identity,items.contains(where:{$0.caseId==item.caseId && $0.revision==item.revision}) else{return}
+        do {
+            let row=try CompanyActualSampleSelection.make(identity:identity,item:item,target:target,latestSnapshotID:latestSnapshotID)
+            _=try CompanyActualSampleInput.make(actualSamples+[row],comparable:true,distinct:true)
+            actualSamples.append(row);invalidateActualSampleResult()
+        } catch {
+            actualSampleNotice="Выберите последнюю заявленную строку с положительным количеством, без повторной закупки и с той же работой, категорией и единицей."
+        }
+    }
+    func previewActualSamples(comparable:Bool,distinct:Bool) async {
+        guard !isBusy,canCompareActualSamples,let accountID=selectedID,let current=identity else{return}
+        let rows=actualSamples
+        invalidateActualSampleResult()
+        isBusy=true;defer{isBusy=false}
+        do {
+            let (client,actual)=try await lifecycleAccess(accountID:accountID)
+            guard actual==current,actualSamples==rows else{throw CompanyConnectionError.identityMismatch}
+            let result=try await client.actualSamplePreview(identity:actual,selections:rows,comparable:comparable,distinct:distinct)
+            guard selectedID==accountID,identity==actual,actualSamples==rows else{throw CompanyConnectionError.identityMismatch}
+            actualSampleResult=result
+            actualSampleNotice="Предварительное сравнение. Не сохранено."
+        } catch CompanyConnectionError.http(409) {
+            actualSampleNotice="Срез устарел. Исключите его и выберите актуальный."
+        } catch CompanyConnectionError.http(404) {
+            actualSampleNotice="Функция недоступна или строка не найдена."
+        } catch {
+            handleLifecycleError(error)
+            if canCompareActualSamples { actualSampleNotice=Self.safeError(error) }
+        }
     }
 
     static func safeError(_ error: Error) -> String {
