@@ -371,6 +371,19 @@ final class CompanyStore: ObservableObject {
         } catch { throw CompanyConnectionError.priceUncertain }
     }
 
+    func actualHistory(accountID:String,item:CompanyCase,baseline:CompanyActualBaseline) async throws -> [CompanyActualRecord] {
+        guard !isBusy else {throw CompanyConnectionError.http(409)};isBusy=true;defer {isBusy=false}
+        do {let (client,actual)=try await lifecycleAccess(accountID:accountID,item:item);return try await client.actualHistory(caseID:item.caseId,identity:actual,baseline:baseline)} catch {handleLifecycleError(error);throw error}
+    }
+    func actualPreview(accountID:String,item:CompanyCase,baseline:CompanyActualBaseline,input:CompanyActualInput) async throws -> CompanyActualPreview {
+        guard !isBusy else {throw CompanyConnectionError.http(409)};isBusy=true;defer {isBusy=false}
+        do {let (client,actual)=try await lifecycleAccess(accountID:accountID,item:item);return try await client.actualPreview(caseID:item.caseId,identity:actual,baseline:baseline,input:input)} catch {handleLifecycleError(error);throw error}
+    }
+    func saveActual(accountID:String,item:CompanyCase,baseline:CompanyActualBaseline,attempt:CompanyActualAttempt) async throws -> CompanyActualRecord {
+        guard !isBusy,accountID==attempt.accountID,canDecide(accountID:accountID,caseID:item.caseId,revision:item.revision) else {throw CompanyConnectionError.http(409)};isBusy=true;defer {isBusy=false}
+        do {let (client,actual)=try await lifecycleAccess(accountID:accountID,item:item,write:true);return try await client.saveActual(caseID:item.caseId,identity:actual,baseline:baseline,attempt:attempt)} catch {handleLifecycleError(error);throw error}
+    }
+
     static func safeError(_ error: Error) -> String {
         if let known = error as? CompanyConnectionError { return known.localizedDescription }
         return "Не удалось получить данные компании. Проверьте подключение."

@@ -686,6 +686,7 @@ private struct CompanyPriceSection: View {
                             if let detail=row.itemizedEstimate {
                                 itemizedDetail(detail)
                                 CompanyCostDocumentsView(item:item,accountID:accountID,scenario:row,store:store).id(row.id)
+                                CompanyActualView(item:item,accountID:accountID,baseline:.init(scenario:row),store:store).id(row.id)
                             }
                             comparison(row.result)
                         }
@@ -821,5 +822,117 @@ private struct CompanyCostDocumentView: View {
         .onChange(of:store.identity?.memberId) { _,_ in reset() }
         .onChange(of:store.identity?.role) { _,_ in reset() }
         .onDisappear { reset() }
+    }
+}
+
+private struct CompanyActualView:View {
+    let item:CompanyCase;let accountID:String;let baseline:CompanyActualBaseline
+    @ObservedObject var store:CompanyStore
+    @State private var history:[CompanyActualRecord]?
+    @State private var observations:[CompanyActualObservation]=[]
+    @State private var extras:[CompanyCostLine]=[]
+    @State private var ordinal=0
+    @State private var quantity=""
+    @State private var rate=""
+    @State private var source=""
+    @State private var extra=CompanyCostLine(sourceKind:.actual)
+    @State private var date=Date()
+    @State private var note=""
+    @State private var cumulative=false
+    @State private var noDouble=false
+    @State private var confirmSave=false
+    @State private var preview:CompanyActualResult?
+    @State private var previewInput:CompanyActualInput?
+    @State private var attempt:CompanyActualAttempt?
+    @State private var selected=""
+    @State private var notice:String?
+    @State private var generation=UUID()
+    private var lines:[CompanyProjectedCostLine] {baseline.scenario.itemizedEstimate?.lines ?? []}
+    private var canSave:Bool {store.canDecide(accountID:accountID,caseID:item.caseId,revision:item.revision)}
+    private var dateString:String {
+        let f=DateFormatter();f.calendar=Calendar(identifier:.gregorian);f.locale=Locale(identifier:"en_US_POSIX");f.timeZone=TimeZone(secondsFromGMT:0);f.dateFormat="yyyy-MM-dd";return f.string(from:date)
+    }
+    private var input:CompanyActualInput? {
+        guard let digest=try? baseline.digest() else {return nil}
+        return .init(baselineSha256:digest,asOf:dateString,observations:observations,unplannedCosts:extras,note:note.trimmingCharacters(in:.whitespacesAndNewlines),confirmCumulativeUserReport:cumulative,confirmNoDoubleCount:noDouble)
+    }
+    private var lineDirty:Bool {let old=observations.first{$0.ordinal==ordinal};return quantity != (old?.quantity ?? "") || rate != (old?.rateRub ?? "") || source != (old?.sourceNote ?? "")}
+    private var extraDirty:Bool {extra != CompanyCostLine(sourceKind:.actual)}
+    private func invalidate(){preview=nil;previewInput=nil;attempt=nil;confirmSave=false;notice=nil}
+    private func changed(){invalidate();noDouble=false}
+    private func reset(){generation=UUID();history=nil;observations=[];extras=[];ordinal=0;quantity="";rate="";source="";extra=CompanyCostLine(sourceKind:.actual);date=Date();note="";cumulative=false;noDouble=false;selected="";invalidate()}
+    private func active(_ g:UUID)->Bool {guard g==generation,store.selectedID==accountID,let identity=store.identity,identity.legalAccepted,["owner","admin","analyst"].contains(identity.role) else{return false};return baseline.scenario.matches(identity,caseID:item.caseId)}
+    private func selectLine(_ next:Int){guard !lineDirty else {notice="Сохраните или снимите наблюдение перед сменой строки.";return};ordinal=next;fillLine()}
+    private func fillLine(){let old=observations.first{$0.ordinal==ordinal};quantity=old?.quantity ?? "";rate=old?.rateRub ?? "";source=old?.sourceNote ?? ""}
+    private func storeLine(){guard lines.contains(where:{$0.ordinal==ordinal}) else{return};let o=CompanyActualObservation(ordinal:ordinal,quantity:CompanyPriceInput.normalize(quantity),rateRub:CompanyPriceInput.normalize(rate),sourceNote:source.trimmingCharacters(in:.whitespacesAndNewlines));guard o.amount != nil else {notice="Укажите количество, ставку и источник; при нулевом количестве ставка 0.";return};observations.removeAll{$0.ordinal==ordinal};observations.append(o);observations.sort{$0.ordinal<$1.ordinal};fillLine();changed()}
+    private func clearLine(){observations.removeAll{$0.ordinal==ordinal};fillLine();changed()}
+    private func addExtra(){let value=extra.normalized;guard extras.count<30,value.amount != nil else {notice="Заполните положительное количество, ставку и источник.";return};extras.append(value);extra=CompanyCostLine(sourceKind:.actual);changed()}
+    private func load() async {reset();let g=generation;do {let rows=try await store.actualHistory(accountID:accountID,item:item,baseline:baseline);guard active(g) else{return};history=rows;notice="Новый накопительный срез. Прошлые значения не переносятся автоматически."} catch CompanyConnectionError.http(404) {if active(g){notice="Функция недоступна или смета не найдена."}} catch {if active(g){notice=CompanyStore.safeError(error)}}}
+    private func calculate() async {invalidate();guard !lineDirty,!extraDirty,let input,input.valid(baseline) else {notice="Завершите ввод строк, укажите дату, обоснование и подтверждения.";return};let g=generation;do{let result=try await store.actualPreview(accountID:accountID,item:item,baseline:baseline,input:input);guard active(g),self.input==input,!lineDirty,!extraDirty else{return};preview=result.result;previewInput=input;notice="Предварительный расчёт, не сохранён."}catch{if active(g){notice=CompanyStore.safeError(error)}}}
+    private func prepare(){guard canSave,let history,let preview,let input,input==previewInput,!lineDirty,!extraDirty else{return};do{attempt=try CompanyActualAttempt.prepare(previous:attempt,accountID:accountID,baseline:baseline,revision:history.first?.revision ?? 0,input:input,result:preview);confirmSave=true}catch{notice=CompanyStore.safeError(error)}}
+    private func save() async {guard canSave,let attempt,attempt.payload.snapshot==input,attempt.result==preview,!lineDirty,!extraDirty else{return};let g=generation;do{let row=try await store.saveActual(accountID:accountID,item:item,baseline:baseline,attempt:attempt);guard active(g) else{return};history=[row]+(history ?? []);selected=row.id;invalidate();notice="Срез v\(row.revision) сохранён. Не подтверждение оплаты."}catch CompanyConnectionError.http(409){if active(g){reset();notice="Версия или дата конфликтует. Загрузите историю и пересчитайте."}}catch{if active(g){notice="Запись не подтверждена. Повторите тот же срез или проверьте историю. "+CompanyStore.safeError(error)}}}
+    @ViewBuilder private func comparison(_ r:CompanyActualResult)->some View {
+        Text("На \(r.asOf) · пользовательские данные").font(.headline)
+        LabeledContent("План",value:r.totals.plannedRub+" ₽")
+        LabeledContent("Заявлено",value:r.totals.reportedTotalRub+" ₽")
+        LabeledContent("Внеплановые",value:r.totals.reportedUnplannedRub+" ₽")
+        Text("Незаявленных строк: \(r.totals.missingPlannedLines)")
+        if let delta=r.totals.reportedVsFullPlanRub {LabeledContent("Отклонение от сметы",value:delta+" ₽")} else {Text("Отклонение от всей сметы не рассчитано.").font(.caption)}
+        ForEach(r.lines){row in VStack(alignment:.leading,spacing:3){Text(row.title).font(.headline);LabeledContent("План",value:row.plannedAmountRub+" ₽");LabeledContent("Факт",value:row.actualAmountRub.map{$0+" ₽"} ?? "Не заявлено");if let d=row.varianceRub {LabeledContent("Отклонение",value:d+" ₽ · "+(row.variancePercent ?? "—")+"%")};if let source=row.sourceNote {Text(source).font(.caption)}}}
+        ForEach(r.unplannedCosts){row in VStack(alignment:.leading){Text("Вне плана: "+row.title);Text(row.quantity+" "+row.unit+" × "+row.rateRub+" ₽ = "+row.actualAmountRub+" ₽");Text(row.sourceNote).font(.caption)}}
+        DisclosureGroup("Итоги по категориям") {ForEach(CompanyCostCategory.allCases){cat in if let t=r.categoryTotals[cat.rawValue]{VStack(alignment:.leading){Text(cat.title).font(.headline);LabeledContent("План",value:t.plannedRub+" ₽");LabeledContent("Заявлено",value:t.reportedTotalRub+" ₽");LabeledContent("Внеплановые",value:t.reportedUnplannedRub+" ₽");Text("Незаявлено строк: \(t.missingPlannedLines)");LabeledContent("Отклонение сопоставимых строк",value:t.matchedVarianceRub.map{$0+" ₽"} ?? "—")}}}}
+        Text("Полнота затрат договора, подлинность сумм, оплата и прибыль не подтверждены.").font(.caption).foregroundStyle(.secondary)
+    }
+    @ViewBuilder private func editor()->some View {
+        DatePicker("Дата среза (UTC)",selection:$date,in:...Date(),displayedComponents:.date).environment(\.timeZone,TimeZone(secondsFromGMT:0)!)
+        Picker("Плановая строка",selection:Binding(get:{ordinal},set:selectLine)){Text("Выберите строку").tag(0);ForEach(lines){l in Text("\(l.ordinal). "+l.title).tag(l.ordinal)}}
+        if let l=lines.first(where:{$0.ordinal==ordinal}) {
+            Text("План: \(l.quantity) \(l.unit) × \(l.rateRub) ₽")
+            TextField("Фактическое количество",text:$quantity).keyboardType(.decimalPad)
+            TextField("Фактическая ставка, ₽",text:$rate).keyboardType(.decimalPad)
+            TextField("Источник факта",text:$source)
+            Button("Записать факт строки"){storeLine()}.buttonStyle(.borderless)
+            Button("Снять наблюдение"){clearLine()}.buttonStyle(.borderless)
+        }
+        ForEach(lines){l in LabeledContent(l.title,value:observations.first(where:{$0.ordinal==l.ordinal}).map{$0.quantity+" "+l.unit+" × "+$0.rateRub+" ₽"} ?? "Не заявлено")}
+        DisclosureGroup("Внеплановые расходы · \(extras.count)/30") {
+            ForEach(extras.indices,id:\.self){i in VStack(alignment:.leading){Text(extras[i].title);Text(extras[i].quantity+" "+extras[i].unit+" × "+extras[i].rateRub+" ₽");Button("Удалить",role:.destructive){extras.remove(at:i);changed()}.buttonStyle(.borderless).disabled(extraDirty)}}
+            Picker("Категория",selection:$extra.category){ForEach(CompanyCostCategory.allCases){Text($0.title).tag($0)}}
+            TextField("Наименование",text:$extra.title);TextField("Единица",text:$extra.unit)
+            TextField("Количество",text:$extra.quantity).keyboardType(.decimalPad);TextField("Ставка, ₽",text:$extra.rateRub).keyboardType(.decimalPad)
+            TextField("Источник",text:$extra.sourceNote)
+            Button("Добавить расход"){addExtra()}.disabled(extras.count>=30)
+            Button("Очистить черновик"){extra=CompanyCostLine(sourceKind:.actual);changed()}.disabled(!extraDirty)
+        }
+        TextField("Обоснование среза",text:$note,axis:.vertical).lineLimit(2...5)
+        Toggle("Подтверждаю накопленный пользовательский факт, не оплату",isOn:$cumulative)
+        Toggle("Подтверждаю отсутствие двойного учёта",isOn:$noDouble)
+        Button("Рассчитать отклонения"){Task{await calculate()}}.disabled(!cumulative || !noDouble)
+    }
+    var body:some View {
+        DisclosureGroup("План-факт сметы v\(baseline.scenario.revision)") {
+            Text("Накопленные расходы на дату. Не суммируйте версии. Незаявленные строки не равны нулю.").font(.caption).foregroundStyle(.secondary)
+            Button("Загрузить план и историю факта"){Task{await load()}}
+            if let history {
+                editor()
+                if let preview {comparison(preview);if canSave {Button("Проверить и сохранить срез"){prepare()}.disabled((history.first?.revision ?? 0)>=30)}}
+                if !history.isEmpty {Picker("Сохранённый срез",selection:$selected){Text("Выберите срез").tag("");ForEach(history){Text("v\($0.revision) · \($0.inputs.asOf)").tag($0.id)}};if let row=history.first(where:{$0.id==selected}) {DisclosureGroup("Сохранённые результаты"){comparison(row.result);Text(row.inputs.note).textSelection(.enabled)}}}
+            }
+            if let notice {Text(notice).font(.caption).foregroundStyle(.secondary)}
+        }
+        .disabled(store.isBusy)
+        .alert("Сохранить неизменяемый срез?",isPresented:$confirmSave){Button("Сохранить"){Task{await save()}};Button("Отмена",role:.cancel){}} message:{Text("Смета v\(baseline.scenario.revision) · \(dateString). Это пользовательские данные, не подтверждение оплаты.")}
+        .onChange(of:quantity){_,_ in if lineDirty {changed()}}
+        .onChange(of:rate){_,_ in if lineDirty {changed()}}
+        .onChange(of:source){_,_ in if lineDirty {changed()}}
+        .onChange(of:extra){_,_ in changed()}
+        .onChange(of:date){_,_ in changed()}
+        .onChange(of:note){_,_ in changed()}
+        .onChange(of:cumulative){_,_ in invalidate()}
+        .onChange(of:noDouble){_,_ in invalidate()}
+        .onChange(of:store.selectedID){_,_ in reset()}
+        .onChange(of:store.identity?.memberId){_,_ in reset()}
+        .onChange(of:store.identity?.role){_,_ in reset()}
+        .onDisappear{reset()}
     }
 }

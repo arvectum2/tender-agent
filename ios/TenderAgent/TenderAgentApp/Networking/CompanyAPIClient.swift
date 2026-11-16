@@ -536,7 +536,7 @@ struct CompanyItemizedInput: Codable, Equatable, Sendable {
         guard sums.values.allSatisfy({ $0 <= Decimal(string:"999999999999.99")! }) else { return nil }; return sums
     }
 }
-struct CompanyProjectedCostLine: Decodable, Equatable, Sendable, Identifiable {
+struct CompanyProjectedCostLine: Codable, Equatable, Sendable, Identifiable {
     let ordinal: Int
     let category: CompanyCostCategory
     let title: String
@@ -549,7 +549,7 @@ struct CompanyProjectedCostLine: Decodable, Equatable, Sendable, Identifiable {
     var id: Int { ordinal }
     var line: CompanyCostLine { .init(category:category,title:title,unit:unit,quantity:quantity,rateRub:rateRub,sourceKind:sourceKind,sourceNote:sourceNote) }
 }
-struct CompanyItemizedProjection: Decodable, Equatable, Sendable {
+struct CompanyItemizedProjection: Codable, Equatable, Sendable {
     let schema: String
     let inputs: CompanyItemizedInput
     let lines: [CompanyProjectedCostLine]
@@ -685,7 +685,7 @@ struct CompanyCostTarget: Sendable {
     let scenario: CompanyPriceRecord
     let line: CompanyProjectedCostLine
     // Python json.dumps(ensure_ascii=False, sort_keys=True, separators=(',', ':')).
-    private static func quote(_ value: String) -> String {
+    fileprivate static func quote(_ value: String) -> String {
         var out = "\""
         for scalar in value.unicodeScalars {
             switch scalar.value {
@@ -780,6 +780,124 @@ struct CompanyCostBinding: Decodable, Sendable {
         evidence=try c.decodeIfPresent(CompanyCostEvidence.self,forKey:.evidence)
     }
     func matches(_ identity: CompanyIdentity, caseID: String,target: CompanyCostTarget) -> Bool { scope.matches(identity,caseID:caseID,target:target) && (evidence.map { $0.scope==scope && $0.matches(identity,caseID:caseID,target:target) } ?? true) }
+}
+
+struct CompanyActualBaseline: Sendable {
+    let scenario: CompanyPriceRecord
+    private static func canonical(_ value: Any) throws -> String {
+        if let obj=value as? [String:Any] { return "{" + (try obj.keys.sorted().map { key in CompanyCostTarget.quote(key) + ":" + (try canonical(obj[key]!)) }).joined(separator:",") + "}" }
+        if let arr=value as? [Any] { return "[" + (try arr.map(canonical)).joined(separator:",") + "]" }
+        if let string=value as? String { return CompanyCostTarget.quote(string) }
+        return String(decoding:try JSONSerialization.data(withJSONObject:value,options:[.fragmentsAllowed]),as:UTF8.self)
+    }
+    func digest() throws -> String {
+        guard let estimate=scenario.itemizedEstimate,estimate.matches(scenario.inputs) else { throw CompanyConnectionError.invalidPrice }
+        let encoder=JSONEncoder();encoder.keyEncodingStrategy = .convertToSnakeCase
+        guard var object=try JSONSerialization.jsonObject(with:encoder.encode(estimate)) as? [String:Any],var input=object["inputs"] as? [String:Any],var terms=input["terms"] as? [String:Any] else { throw CompanyConnectionError.invalidPrice }
+        if terms["reference_ceiling_rub"]==nil { terms["reference_ceiling_rub"]=NSNull() };input["terms"]=terms;object["inputs"]=input
+        return CompanyArtifactBytes.digest(Data(try Self.canonical(["scenario_id":scenario.scenarioId,"revision":scenario.revision,"estimate":object]).utf8))
+    }
+}
+struct CompanyActualObservation: Codable, Equatable, Sendable {
+    let ordinal: Int
+    var quantity: String
+    var rateRub: String
+    var sourceNote: String
+    var amount: Decimal? {
+        guard quantity.range(of:#"^[0-9]{1,9}(\.[0-9]{1,4})?$"#,options:.regularExpression) != nil,CompanyPriceInput.money(rateRub),let q=CompanyPriceInput.decimal(quantity),let r=CompanyPriceInput.decimal(rateRub),q != 0 || r == 0,!sourceNote.isEmpty,sourceNote.count<=500,sourceNote==sourceNote.trimmingCharacters(in:.whitespacesAndNewlines) else { return nil }
+        var product=q*r;var rounded=Decimal();NSDecimalRound(&rounded,&product,2,.up);return rounded
+    }
+}
+struct CompanyActualInput: Codable, Equatable, Sendable {
+    let baselineSha256: String
+    let asOf: String
+    let observations: [CompanyActualObservation]
+    let unplannedCosts: [CompanyCostLine]
+    let note: String
+    let confirmCumulativeUserReport: Bool
+    let confirmNoDoubleCount: Bool
+    func valid(_ baseline: CompanyActualBaseline) -> Bool {
+        guard baselineSha256==(try? baseline.digest()),let lines=baseline.scenario.itemizedEstimate?.lines,asOf.range(of:#"^\d{4}-\d{2}-\d{2}$"#,options:.regularExpression) != nil,confirmCumulativeUserReport,confirmNoDoubleCount,!note.isEmpty,note.count<=2000,note==note.trimmingCharacters(in:.whitespacesAndNewlines),observations.count<=60,unplannedCosts.count<=30,!observations.isEmpty || !unplannedCosts.isEmpty,Set(observations.map(\.ordinal)).count==observations.count else { return false }
+        return observations.allSatisfy { o in o.amount != nil && lines.contains { $0.ordinal==o.ordinal } } && unplannedCosts.allSatisfy { $0.amount != nil && $0.sourceKind == .actual }
+    }
+}
+struct CompanyActualRow: Decodable, Equatable, Sendable, Identifiable {
+    let ordinal:Int;let title:String;let category:CompanyCostCategory;let unit:String
+    let plannedQuantity:String;let plannedRateRub:String;let plannedAmountRub:String
+    let status:String;let actualQuantity:String?;let actualRateRub:String?;let actualAmountRub:String?;let varianceRub:String?;let variancePercent:String?;let sourceNote:String?
+    var id:Int { ordinal }
+}
+struct CompanyActualExtra: Decodable, Equatable, Sendable, Identifiable {
+    let ordinal:Int;let category:CompanyCostCategory;let title:String;let unit:String;let quantity:String;let rateRub:String;let sourceKind:CompanyCostSource;let sourceNote:String;let actualAmountRub:String
+    var id:Int { ordinal }
+    var line:CompanyCostLine { .init(category:category,title:title,unit:unit,quantity:quantity,rateRub:rateRub,sourceKind:sourceKind,sourceNote:sourceNote) }
+}
+struct CompanyActualTotals: Decodable, Equatable, Sendable {
+    let plannedRub:String;let matchedPlannedRub:String;let reportedPlannedLineActualRub:String;let reportedUnplannedRub:String;let reportedTotalRub:String;let missingPlannedLines:Int;let matchedVarianceRub:String?;let matchedVariancePercent:String?;let allPlannedLinesReported:Bool;let reportedVsFullPlanRub:String?
+}
+private struct CompanyActualAccumulator {
+    var plan=Decimal(0),matched=Decimal(0),observed=Decimal(0),extra=Decimal(0);var missing=0
+    mutating func add(_ x:Self) { plan+=x.plan;matched+=x.matched;observed+=x.observed;extra+=x.extra;missing+=x.missing }
+    static func matches(_ value:String?,_ number:Decimal?,digits:Int=2) -> Bool {
+        guard let number else { return value==nil };guard let value,value.range(of:"^-?[0-9]{1,24}\\.[0-9]{\(digits)}$",options:.regularExpression) != nil else { return false };return CompanyPriceInput.decimal(value)==number
+    }
+    static func percentage(_ delta:Decimal,_ base:Decimal)->Decimal? { guard base != 0 else { return nil };var x=delta/base*100,rounded=Decimal();NSDecimalRound(&rounded,&x,4,.plain);return rounded }
+    func matches(_ t:CompanyActualTotals)->Bool {
+        Self.matches(t.plannedRub,plan) && Self.matches(t.matchedPlannedRub,matched) && Self.matches(t.reportedPlannedLineActualRub,observed) && Self.matches(t.reportedUnplannedRub,extra) && Self.matches(t.reportedTotalRub,observed+extra) && t.missingPlannedLines==missing && Self.matches(t.matchedVarianceRub,matched==0 ? nil : observed-matched) && Self.matches(t.matchedVariancePercent,Self.percentage(observed-matched,matched),digits:4) && t.allPlannedLinesReported==(missing==0) && Self.matches(t.reportedVsFullPlanRub,missing==0 ? observed+extra-plan : nil)
+    }
+}
+struct CompanyActualResult: Decodable, Equatable, Sendable {
+    let schema:String;let currency:String;let baselineSha256:String;let asOf:String;let lines:[CompanyActualRow];let unplannedCosts:[CompanyActualExtra];let categoryTotals:[String:CompanyActualTotals];let totals:CompanyActualTotals
+    let roundingPolicy:String;let basis:String;let origin:String;let paymentVerified:Bool;let actualAmountsIndependentlyVerified:Bool;let contractCostCoverageComplete:Bool;let contractExecutionVerified:Bool;let revenueOrProfitVerified:Bool;let externalSubmissionAllowed:Bool
+    func matches(_ input:CompanyActualInput,baseline:CompanyActualBaseline)->Bool {
+        guard input.valid(baseline),schema=="company_actual_cost_snapshot_v1",currency=="RUB",baselineSha256==input.baselineSha256,asOf==input.asOf,roundingPolicy=="CEIL_EACH_LINE_TO_KOPECKS_THEN_SUM",basis=="CUMULATIVE_USER_REPORTED_COSTS_BEFORE_REVENUE_RATES",origin=="USER_REPORTED_UNVERIFIED",!paymentVerified,!actualAmountsIndependentlyVerified,!contractCostCoverageComplete,!contractExecutionVerified,!revenueOrProfitVerified,!externalSubmissionAllowed,let planned=baseline.scenario.itemizedEstimate?.lines,planned.count==lines.count,unplannedCosts.count==input.unplannedCosts.count else { return false }
+        var category=Dictionary(uniqueKeysWithValues:CompanyCostCategory.allCases.map { ($0.rawValue,CompanyActualAccumulator()) })
+        for (l,row) in zip(planned,lines) {
+            guard let plan=CompanyPriceInput.decimal(l.amountRub),row.ordinal==l.ordinal,row.title==l.title,row.category==l.category,row.unit==l.unit,row.plannedQuantity==l.quantity,row.plannedRateRub==l.rateRub,row.plannedAmountRub==l.amountRub else { return false }
+            var t=category[l.category.rawValue]!;t.plan+=plan
+            if let o=input.observations.first(where:{$0.ordinal==l.ordinal}),let a=o.amount {
+                guard row.status=="USER_REPORTED_ACTUAL",row.actualQuantity==o.quantity,row.actualRateRub==o.rateRub,row.sourceNote==o.sourceNote,CompanyActualAccumulator.matches(row.actualAmountRub,a),CompanyActualAccumulator.matches(row.varianceRub,a-plan),CompanyActualAccumulator.matches(row.variancePercent,CompanyActualAccumulator.percentage(a-plan,plan),digits:4) else { return false };t.matched+=plan;t.observed+=a
+            } else {
+                guard row.status=="NOT_REPORTED",row.actualQuantity==nil,row.actualRateRub==nil,row.sourceNote==nil,row.actualAmountRub==nil,row.varianceRub==nil,row.variancePercent==nil else { return false };t.missing+=1
+            };category[l.category.rawValue]=t
+        }
+        for (i,row) in unplannedCosts.enumerated() { let l=input.unplannedCosts[i];guard row.ordinal==i+1,row.line==l,let a=l.amount,CompanyActualAccumulator.matches(row.actualAmountRub,a) else { return false };category[l.category.rawValue]!.extra+=a }
+        guard Set(category.keys)==Set(categoryTotals.keys) else { return false };var total=CompanyActualAccumulator()
+        for (k,t) in category { guard t.observed+t.extra<=Decimal(string:"999999999999.99")!,let c=categoryTotals[k],t.matches(c) else { return false };total.add(t) };return total.matches(totals)
+    }
+}
+struct CompanyActualScope: Decodable, Equatable, Sendable {
+    let customerId:String;let caseId:String;let scenarioId:String;let scenarioRevision:Int;let baselineSha256:String;let externalSubmissionAllowed:Bool
+    func matches(_ identity:CompanyIdentity,caseID:String,baseline:CompanyActualBaseline)->Bool { let s=baseline.scenario;return s.matches(identity,caseID:caseID)&&customerId==identity.customerId&&caseId==caseID&&scenarioId==s.scenarioId&&scenarioRevision==s.revision&&baselineSha256==(try? baseline.digest()) && !externalSubmissionAllowed }
+}
+struct CompanyActualPreview: Decodable, Sendable {
+    let scope:CompanyActualScope;let inputsStored:Bool;let result:CompanyActualResult
+    private enum CodingKeys:String,CodingKey {case inputsStored,result}
+    init(from decoder:Decoder)throws {scope=try CompanyActualScope(from:decoder);let c=try decoder.container(keyedBy:CodingKeys.self);inputsStored=try c.decode(Bool.self,forKey:.inputsStored);result=try c.decode(CompanyActualResult.self,forKey:.result)}
+    func matches(_ identity:CompanyIdentity,caseID:String,baseline:CompanyActualBaseline,input:CompanyActualInput)->Bool {scope.matches(identity,caseID:caseID,baseline:baseline) && !inputsStored && result.matches(input,baseline:baseline)}
+}
+struct CompanyActualRecord: Decodable, Identifiable, Sendable {
+    let scope:CompanyActualScope;let snapshotId:String;let revision:Int;let memberId:String;let createdAt:Date;let inputs:CompanyActualInput;let result:CompanyActualResult
+    var id:String { snapshotId }
+    private enum CodingKeys:String,CodingKey {case snapshotId,revision,memberId,createdAt,inputs,result}
+    init(from decoder:Decoder)throws {scope=try CompanyActualScope(from:decoder);let c=try decoder.container(keyedBy:CodingKeys.self);snapshotId=try c.decode(String.self,forKey:.snapshotId);revision=try c.decode(Int.self,forKey:.revision);memberId=try c.decode(String.self,forKey:.memberId);createdAt=try c.decode(Date.self,forKey:.createdAt);inputs=try c.decode(CompanyActualInput.self,forKey:.inputs);result=try c.decode(CompanyActualResult.self,forKey:.result)}
+    func matches(_ identity:CompanyIdentity,caseID:String,baseline:CompanyActualBaseline)->Bool {scope.matches(identity,caseID:caseID,baseline:baseline)&&UUID(uuidString:snapshotId) != nil && (1...30).contains(revision) && !memberId.isEmpty && result.matches(inputs,baseline:baseline)}
+}
+struct CompanyActualPage:Decodable,Sendable {
+    let scope:CompanyActualScope;let plannedLines:[CompanyProjectedCostLine];let items:[CompanyActualRecord];let hasMore:Bool
+    private enum CodingKeys:String,CodingKey {case plannedLines,items,hasMore}
+    init(from decoder:Decoder)throws {scope=try CompanyActualScope(from:decoder);let c=try decoder.container(keyedBy:CodingKeys.self);plannedLines=try c.decode([CompanyProjectedCostLine].self,forKey:.plannedLines);items=try c.decode([CompanyActualRecord].self,forKey:.items);hasMore=try c.decode(Bool.self,forKey:.hasMore)}
+    func matches(_ identity:CompanyIdentity,caseID:String,baseline:CompanyActualBaseline)->Bool {scope.matches(identity,caseID:caseID,baseline:baseline)&&plannedLines==baseline.scenario.itemizedEstimate?.lines&&items.count<=10&&(!hasMore||items.count==10)&&items.allSatisfy{$0.matches(identity,caseID:caseID,baseline:baseline)}}
+}
+struct CompanyActualSave:Codable,Equatable,Sendable {let expectedRevision:Int;let idempotencyKey:String;let snapshot:CompanyActualInput}
+struct CompanyActualAttempt:Equatable,Sendable {
+    let accountID:String;let scenarioID:String;let payload:CompanyActualSave;let result:CompanyActualResult
+    static func prepare(previous:Self?,accountID:String,baseline:CompanyActualBaseline,revision:Int,input:CompanyActualInput,result:CompanyActualResult)throws->Self {
+        guard (0..<30).contains(revision),result.matches(input,baseline:baseline) else {throw CompanyConnectionError.invalidPrice};let id=baseline.scenario.scenarioId
+        if let previous,previous.accountID==accountID,previous.scenarioID==id,previous.payload.expectedRevision==revision,previous.payload.snapshot==input,previous.result==result{return previous}
+        return Self(accountID:accountID,scenarioID:id,payload:.init(expectedRevision:revision,idempotencyKey:UUID().uuidString,snapshot:input),result:result)
+    }
+    func accepts(_ row:CompanyActualRecord,identity:CompanyIdentity,caseID:String,baseline:CompanyActualBaseline)->Bool {scenarioID==baseline.scenario.scenarioId&&row.matches(identity,caseID:caseID,baseline:baseline)&&row.memberId==identity.memberId&&row.revision==payload.expectedRevision+1&&row.inputs==payload.snapshot&&row.result==result}
 }
 
 struct CompanyPriceHistory: Decodable, Sendable {
@@ -1090,6 +1208,30 @@ struct CompanyAPIClient: Sendable {
         guard evidence.matches(identity,caseID:caseID,target:target) else { throw CompanyConnectionError.identityMismatch }
         let path=try costPath(caseID:caseID,identity:identity,target:target)+"/download"
         return try await downloadVerifiedFile(path:path,sha:evidence.inspection.sha256,size:evidence.inspection.sizeBytes,format:evidence.formatHint)
+    }
+
+    private func actualPath(caseID:String,identity:CompanyIdentity,baseline:CompanyActualBaseline,write:Bool=false)throws->String {
+        guard baseline.scenario.matches(identity,caseID:caseID),baseline.scenario.itemizedEstimate != nil else {throw CompanyConnectionError.identityMismatch}
+        return try pricePath(caseID:caseID,identity:identity,write:write)+"/\(baseline.scenario.scenarioId)/actual-costs"
+    }
+    func actualHistory(caseID:String,identity:CompanyIdentity,baseline:CompanyActualBaseline) async throws -> [CompanyActualRecord] {
+        let path=try actualPath(caseID:caseID,identity:identity,baseline:baseline);var rows:[CompanyActualRecord]=[],more=true
+        while more {
+            let page:CompanyActualPage=try await get(path,query:[.init(name:"offset",value:String(rows.count)),.init(name:"limit",value:"10")])
+            guard page.matches(identity,caseID:caseID,baseline:baseline),rows.count+page.items.count<=30 else {throw CompanyConnectionError.identityMismatch}
+            rows+=page.items;more=page.hasMore;if more && rows.count>=30 {throw CompanyConnectionError.identityMismatch}
+        }
+        guard Set(rows.map(\.id)).count==rows.count,rows.enumerated().allSatisfy({$0.element.revision==rows.count-$0.offset}) else {throw CompanyConnectionError.identityMismatch};return rows
+    }
+    func actualPreview(caseID:String,identity:CompanyIdentity,baseline:CompanyActualBaseline,input:CompanyActualInput) async throws -> CompanyActualPreview {
+        guard input.valid(baseline) else {throw CompanyConnectionError.invalidPrice};let encoder=JSONEncoder();encoder.keyEncodingStrategy = .convertToSnakeCase
+        let reply:CompanyActualPreview=try await get(try actualPath(caseID:caseID,identity:identity,baseline:baseline)+"/preview",method:"POST",body:encoder.encode(input))
+        guard reply.matches(identity,caseID:caseID,baseline:baseline,input:input) else {throw CompanyConnectionError.identityMismatch};return reply
+    }
+    func saveActual(caseID:String,identity:CompanyIdentity,baseline:CompanyActualBaseline,attempt:CompanyActualAttempt) async throws -> CompanyActualRecord {
+        guard attempt.scenarioID==baseline.scenario.scenarioId,attempt.result.matches(attempt.payload.snapshot,baseline:baseline) else {throw CompanyConnectionError.invalidPrice};let encoder=JSONEncoder();encoder.keyEncodingStrategy = .convertToSnakeCase
+        let reply:CompanyActualRecord=try await get(try actualPath(caseID:caseID,identity:identity,baseline:baseline,write:true),method:"POST",body:encoder.encode(attempt.payload))
+        guard attempt.accepts(reply,identity:identity,caseID:caseID,baseline:baseline) else {throw CompanyConnectionError.identityMismatch};return reply
     }
 
     private func get<T: Decodable>(_ path: String, query: [URLQueryItem] = [], method: String = "GET", body: Data? = nil, contentType: String = "application/json") async throws -> T {
