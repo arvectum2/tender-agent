@@ -135,3 +135,34 @@ def test_public_capture_transport_is_bounded_and_credential_free(monkeypatch, mo
         with pytest.raises((ValueError, httpx.HTTPError)):
             capture.fetch_card(WORKSPACE)
     assert len(requests)==1
+
+
+def test_attachment_inventory_is_offline_conservative_and_deduplicated():
+    from src.modules.saas_foundation.commercial_attachment_inventory import (
+        attachment_inventory,
+    )
+
+    extra = '''<a href="/docs/spec.pdf">ТЗ</a><a href="https://workspace.ru/docs/spec.pdf">Дубль</a>
+    <a href="/docs/contract.docx">Договор</a><a href="https://evil.invalid/file.pdf">Чужой домен</a>
+    <a href="/download?id=1" download>Неразрешённый ID</a><a href="/docs/file.zip?secret=x">Токен</a>
+    <a href="//workspace.ru/docs/file.pdf">Схема</a><a href="/docs/../file.pdf">Путь</a>
+    <a href="/docs/a%20b.xlsx">Кодирование</a><a hidden href="/docs/hidden.pdf">Скрытый</a>'''.encode()
+    raw = workspace().replace(b'</body>', extra+b'</body>')
+    result = attachment_inventory(WORKSPACE, raw)
+    assert [x['source_url'] for x in result['candidates']] == ['https://workspace.ru/docs/spec.pdf','https://workspace.ru/docs/contract.docx']
+    assert result['rejected_or_opaque_links']==6
+    assert not result['coverage_complete'] and not result['download_enabled'] and not result['full_documents_verified']
+    assert all(not x['download_allowed'] and not x['original_bytes_verified'] for x in result['candidates'])
+    altered = raw.replace(b'<head>', b'<head><base href="https://evil.invalid/">')
+    assert attachment_inventory(WORKSPACE, altered)['candidates'] == []
+
+
+def test_attachment_inventory_caps_untrusted_links():
+    from src.modules.saas_foundation.commercial_attachment_inventory import (
+        attachment_inventory,
+    )
+
+    raw = workspace().replace(b'</body>', b''.join(f'<a href="/f/{i}.pdf">{i}</a>'.encode() for i in range(510))+b'</body>')
+    r = attachment_inventory(WORKSPACE,raw)
+    assert len(r['candidates'])==20 and r['scanned_links']==500 and r['link_scan_truncated']
+    assert r['rejected_or_opaque_links']==480

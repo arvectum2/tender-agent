@@ -118,6 +118,16 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 <button id="company-read-evidence">Проверить сохранённые оригиналы и показать оценку</button>
 <p id="company-evidence-state" aria-live="polite"></p>
 <pre id="company-evidence-result" hidden></pre></div>
+<div id="company-commercial-evidence-panel" hidden><h3>Снимки коммерческой карточки</h3>
+<p id="company-capture-state" aria-live="polite"></p>
+<button id="company-capture-refresh" disabled>Обновить историю</button>
+<label><input id="company-capture-confirm" type="checkbox" style="width:auto"> Подтверждаю получение публичной карточки по сохранённой ссылке указанной компании. Не подача заявки.</label>
+<button id="company-capture-start" disabled>Получить оригинал карточки</button>
+<label>Сохранённая попытка<select id="company-capture-attempt"><option value="">Выберите попытку</option></select></label>
+<label>Сравнить с более ранним снимком (необязательно)<select id="company-capture-previous"><option value="">Без сравнения</option></select></label>
+<button id="company-capture-recheck" disabled>Проверить сохранённый снимок</button>
+<pre id="company-capture-result" hidden></pre>
+<p>Не более одной попытки на закупку в сутки по Москве. Снимок не подтверждает текущий статус конкурса, полный комплект документов, квалификацию или допуск.</p></div>
 </div><p>Сохранённый номер не подтверждает актуальность извещения, квалификацию или право подачи заявки. История решений общая для веб и iOS.</p></section>
 <section><h2>5. Мой пакет и лимиты</h2><button id="me">Мой кабинет</button>
 <button id="packages">Показать пакеты</button>
@@ -346,6 +356,7 @@ bind("revoke-member",()=>call("/api/saas/members/"+encodeURIComponent(val("revok
 // All portfolio state belongs to the current in-memory SaaS session.
 let companyIdentity=null, companyItems=[], companyMore=false, companyOffset=0;
 let companyCase=null, companyProfile=null, companyEvidence=[], pendingCompanyDecision=null;
+let captureEnabled=false, captureAttempts=[];
 let discoveryEnabled=false, discoveryRun=null, discoveryProfile=null, companySchedule=null;
 const el=id=>document.getElementById(id);
 function blankSelect(id, label){
@@ -354,6 +365,7 @@ function blankSelect(id, label){
 }
 function resetCompanyDetail(){
  companyCase=null;companyProfile=null;companyEvidence=[];pendingCompanyDecision=null;
+ resetCommercialCaptures();
  el("company-detail").hidden=true;el("company-case-state").textContent="";el("company-case-url").textContent="";
  el("company-history").textContent="";el("company-profile-state").textContent="";
  el("company-evidence-state").textContent="";el("company-evidence-result").textContent="";
@@ -392,6 +404,12 @@ function syncCompanyControls(){
  el("company-evidence-panel").hidden=!detail||!companyCanWrite()||companyCase?.source_kind==="commercial_reference";
  el("company-bind").disabled=uiBusy||!detail||!companyCanWrite()||companyProfile?.profile_state!=="ACTIVE";
  el("company-read-evidence").disabled=uiBusy||!detail||!companyCanWrite()||!el("company-evidence").value;
+ const commercial=Boolean(detail&&companyCanWrite()&&companyCase?.source_kind==="commercial_reference"&&companyCase.source_url);
+ el("company-commercial-evidence-panel").hidden=!commercial;
+ el("company-capture-refresh").disabled=uiBusy||!commercial;
+ el("company-capture-confirm").disabled=uiBusy||!commercial||!captureEnabled;
+ el("company-capture-start").disabled=uiBusy||!commercial||!captureEnabled||!el("company-capture-confirm").checked;
+ el("company-capture-recheck").disabled=uiBusy||!commercial||!captureAttempts.some(x=>x.attempt_id===el("company-capture-attempt").value);
  syncCompanySearchControls();
 }
 function requireCompany(){if(!companyIdentity?.legal_accepted)throw Error("Загрузите портфель после подтверждения условий пилота");return companyIdentity}
@@ -423,6 +441,60 @@ async function loadCompanyEvidence(path){
  for(const source of companyEvidence){const opt=document.createElement("option");opt.value=source.binding_id;opt.textContent=source.run_id+" · профиль v"+source.profile_version+" · "+source.profile_state;el("company-evidence").append(opt)}
  el("company-evidence-state").textContent=companyEvidence.length===0?"Нет привязок":(page.has_more?"Первые 50 привязок":"Привязок: "+companyEvidence.length);
 }
+function resetCommercialCaptures(){
+ captureEnabled=false;captureAttempts=[];blankSelect("company-capture-attempt","Выберите попытку");blankSelect("company-capture-previous","Без сравнения");
+ el("company-capture-state").textContent="";el("company-capture-confirm").checked=false;
+ el("company-capture-result").hidden=true;el("company-capture-result").textContent="";
+}
+function requireCommercialCase(){
+ if(!companyCanWrite()||companyCase?.source_kind!=="commercial_reference"||!companyCase.source_url)throw Error("Откройте коммерческую карточку с сохранённой ссылкой");
+ return companyCase;
+}
+function captureIdentity(result,attemptId=null){
+ const item=requireCommercialCase();
+ if(result.case_id!==item.case_id||result.source_url!==item.source_url||(attemptId!==null&&result.attempt_id!==attemptId)){
+   clearSession();throw Error("Снимок не соответствует карточке. Сессия очищена.");
+ }
+}
+function captureLabel(outcome){return ({CAPTURED:"Сохранён снимок",SOURCE_UNAVAILABLE:"Источник недоступен",UNSUPPORTED_CARD:"Неподдерживаемая карточка",UNCONFIRMED_ATTEMPT:"Попытка без подтверждения"})[outcome]||"Неизвестный результат"}
+async function loadCommercialCaptures(){
+ const item=requireCommercialCase();resetCommercialCaptures();
+ const page=await call(casePath()+"/commercial-captures?limit=20");
+ if(page.customer_id!==requireCompany().customer_id||page.case_id!==item.case_id){clearSession();throw Error("История другой компании или карточки")}
+ for(const attempt of page.items)captureIdentity(attempt);
+ captureEnabled=page.capture_enabled===true;captureAttempts=page.items;
+ for(const attempt of captureAttempts){const opt=document.createElement("option");opt.value=attempt.attempt_id;opt.textContent=attempt.capture_day+" · "+captureLabel(attempt.outcome);el("company-capture-attempt").append(opt)}
+ el("company-capture-state").textContent=(captureEnabled?"Получение разрешено сервером.":"Получение отключено сервером.")+" Сохранённых попыток: "+captureAttempts.length+(page.has_more?" (первые 20)":"");
+ return {attempts:captureAttempts.length,capture_enabled:captureEnabled};
+}
+el("company-capture-confirm").addEventListener("change",syncCompanyControls);
+el("company-capture-attempt").addEventListener("change",()=>{
+ el("company-capture-result").hidden=true;el("company-capture-result").textContent="";blankSelect("company-capture-previous","Без сравнения");
+ const chosen=captureAttempts.find(x=>x.attempt_id===el("company-capture-attempt").value);
+ if(chosen?.outcome==="CAPTURED")for(const old of captureAttempts){if(old.outcome==="CAPTURED"&&old.capture_day<chosen.capture_day){const opt=document.createElement("option");opt.value=old.attempt_id;opt.textContent=old.capture_day;el("company-capture-previous").append(opt)}}
+ syncCompanyControls();
+});
+el("company-capture-previous").addEventListener("change",()=>{el("company-capture-result").hidden=true;el("company-capture-result").textContent="";syncCompanyControls()});
+bind("company-capture-refresh",loadCommercialCaptures);
+bind("company-capture-start",async()=>{
+ requireCommercialCase();if(!captureEnabled||!el("company-capture-confirm").checked)throw Error("Подтвердите получение оригинала");
+ el("company-capture-confirm").checked=false;el("company-capture-result").hidden=true;el("company-capture-result").textContent="";
+ const result=await call(casePath()+"/commercial-captures",{method:"POST",body:{confirm_public_capture:true}});captureIdentity(result);
+ await loadCommercialCaptures();el("company-capture-state").textContent=captureLabel(result.outcome)+". Для проверки выберите сохранённую попытку.";
+ return {attempt_id:result.attempt_id,outcome:result.outcome};
+});
+bind("company-capture-recheck",async()=>{
+ requireCommercialCase();const id=val("company-capture-attempt");if(!captureAttempts.some(x=>x.attempt_id===id))throw Error("Выберите попытку из карточки");
+ el("company-capture-result").hidden=true;el("company-capture-result").textContent="";
+ const previous=val("company-capture-previous");
+ const chosen=captureAttempts.find(x=>x.attempt_id===id);
+ if(previous&&!captureAttempts.some(x=>x.attempt_id===previous&&x.outcome==="CAPTURED"&&x.capture_day<chosen.capture_day))throw Error("Выберите более ранний снимок этой карточки");
+ const result=await call(casePath()+"/commercial-captures/"+encodeURIComponent(id)+(previous?"?previous_attempt_id="+encodeURIComponent(previous):""));captureIdentity(result,id);
+ if(previous&&result.comparison?.previous_attempt_id!==previous){clearSession();throw Error("Сравнение не соответствует выбранному снимку")}
+ el("company-capture-state").textContent=result.original_reverified===true?"Сохранённый оригинал повторно проверен. Актуальный статус не подтверждён.":captureLabel(result.outcome)+". Оригинал не подтверждён.";
+ if(result.original_reverified===true){el("company-capture-result").textContent=JSON.stringify({receipt:result.receipt,attachment_inventory:result.attachment_inventory,comparison:result.comparison},null,2);el("company-capture-result").hidden=false}
+ return {attempt_id:id,original_reverified:result.original_reverified===true};
+});
 async function loadCompanyCase(id){
  requireCompany();resetCompanyDetail();
  if(!companyItems.some(x=>x.case_id===id))throw Error("Выберите карточку из своего портфеля");
@@ -435,6 +507,7 @@ async function loadCompanyCase(id){
  el("company-history").textContent=history.items.map(x=>"v"+x.revision+" · "+x.action+" · "+x.decided_at+"\\n"+x.rationale).join("\\n\\n")+(history.has_more?"\\nПервые 50 решений":"")||"История пуста";
  el("company-detail").hidden=false;
  if(companyCanWrite()&&item.source_kind!=="commercial_reference")await loadCompanyEvidence(path);
+ if(companyCanWrite()&&item.source_kind==="commercial_reference"&&item.source_url)await loadCommercialCaptures();
  return {case_id:item.case_id,revision:item.revision};
 }
 bind("company-load",()=>loadCompanyPage());

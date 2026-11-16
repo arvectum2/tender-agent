@@ -806,9 +806,12 @@ def capture_company_commercial_card(case_id: str, payload: commercial_capture.Ca
 
 @router.get("/api/saas/company-portfolio/cases/{case_id}/commercial-captures")
 def list_company_commercial_captures(case_id: str, principal: Member, session: DBSession, offset: int = Query(0, ge=0), limit: int = Query(10, ge=1, le=20)) -> dict:
-    return commercial_capture.list_captures(session, principal, case_id, offset=offset, limit=limit)
+    return {**commercial_capture.list_captures(session, principal, case_id, offset=offset, limit=limit),
+            "capture_enabled": get_settings().saas_commercial_capture_enabled}
 
 
 @router.get("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}")
-def recheck_company_commercial_capture(case_id: str, attempt_id: str, principal: Member, session: DBSession) -> dict:
+def recheck_company_commercial_capture(case_id: str, attempt_id: str, principal: Member, session: DBSession, previous_attempt_id: str | None = Query(None, max_length=64)) -> dict:
+    if previous_attempt_id is not None:
+        return commercial_capture.compare_captures(session, principal, case_id, attempt_id, previous_attempt_id)
     return commercial_capture.recheck(session, principal, case_id, attempt_id)

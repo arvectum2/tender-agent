@@ -1582,3 +1582,51 @@ def test_commercial_capture_failed_and_crash_reservations_are_not_retried(client
     assert client.post(paths[3], headers=_auth(a), json=body).status_code == 429
     assert len(calls)==3 and session.query(CommercialCaptureAttempt).count()==3
     assert all(x.original_html is None and x.receipt_json is None for x in session.query(CommercialCardSnapshot).all())
+
+
+def test_commercial_capture_historical_comparison(client, session, monkeypatch):
+    from test_company_commercial_card_evidence import WORKSPACE, workspace
+
+    from src.modules.saas_foundation import commercial_capture as capture
+
+    _, a = _seed(client, 'Capture comparison')
+    _, b = _seed(client, 'Foreign comparison')
+    _legal(client, a)
+    _legal(client, b)
+    settings = saas.get_settings().model_copy(update={'saas_commercial_capture_enabled': True})
+    monkeypatch.setattr(saas, 'get_settings', lambda: settings)
+    moment = [service.now_utc()]
+    monkeypatch.setattr(capture, 'now_utc', lambda: moment[0])
+    base = '/api/saas/company-portfolio'
+    def path(token, url):
+        case = client.post(base+'/commercial-cases', headers=_auth(token), json={'source_url':url})
+        assert case.status_code == 201
+        return f'{base}/cases/{case.json()["case_id"]}/commercial-captures'
+    route, foreign = path(a, WORKSPACE), path(b, WORKSPACE)
+    calls = []
+    raw = [workspace().replace(b'</body>',b'<a href="/docs/old.pdf">old</a></body>')]
+    def source(url):
+        calls.append(url)
+        return capture.SourceResponse(url,'text/html',200,moment[0],raw[0])
+    monkeypatch.setattr(capture,'fetch_card',source)
+    def save(token, route):
+        r = client.post(route, headers=_auth(token), json={'confirm_public_capture':True})
+        assert r.status_code == 201, r.text
+        return r.json()['attempt_id']
+    older = save(a,route)
+    outsider = save(b,foreign)
+    moment[0] += timedelta(days=1)
+    raw[0] = workspace(stage='Завершён',deadline='29 октября 2026').replace(b'</body>',b'<a href="/docs/new.pdf">new</a></body>')
+    newer = save(a,route)
+    r = client.get(route+'/'+newer,headers=_auth(a),params={'previous_attempt_id':older})
+    assert r.status_code == 200,r.text
+    comp = r.json()['comparison']
+    assert comp['html_changed'] and comp['observed_field_changes']['displayed_deadline']['after']=='2026-10-29'
+    assert comp['observed_field_changes']['displayed_stage']['after']=='Завершён'
+    assert [x['source_url'] for x in comp['candidate_links_added']]==['https://workspace.ru/docs/new.pdf']
+    assert [x['source_url'] for x in comp['candidate_links_absent']]==['https://workspace.ru/docs/old.pdf']
+    assert not comp['attachment_bytes_compared'] and not comp['candidate_link_coverage_complete']
+    assert client.get(route+'/'+newer,headers=_auth(a),params={'previous_attempt_id':outsider}).status_code==404
+    assert client.get(route+'/'+older,headers=_auth(a),params={'previous_attempt_id':newer}).status_code==422
+    assert client.get(route+'/'+newer,headers=_auth(a),params={'previous_attempt_id':newer}).status_code==422
+    assert len(calls)==3

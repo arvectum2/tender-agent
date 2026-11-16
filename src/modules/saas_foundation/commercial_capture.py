@@ -12,6 +12,9 @@ from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session, defer
 
+from src.modules.saas_foundation.commercial_attachment_inventory import (
+    attachment_inventory,
+)
 from src.modules.saas_foundation.commercial_card_evidence import (
     MAX_CARD_BYTES,
     MOSCOW,
@@ -186,7 +189,32 @@ def recheck(session, principal, case_id, attempt_id):
                         observed_at=datetime.fromisoformat(snapshot.receipt_json["observed_at"]).astimezone(UTC))
             if verified != snapshot.receipt_json:
                 raise ValueError("Stored receipt mismatch")
+            result["attachment_inventory"] = attachment_inventory(attempt.source_url, snapshot.original_html)
         except (ValueError, TypeError, KeyError, LxmlError) as exc:
             raise HTTPException(409, "Stored public card integrity mismatch") from exc
         result["original_reverified"] = True
     return result
+
+
+def compare_captures(session, principal, case_id, attempt_id, previous_attempt_id):
+    """Compare two historical observations only, never infer why a change occurred."""
+    if previous_attempt_id == attempt_id:
+        raise HTTPException(422, 'Choose two different capture attempts')
+    current = recheck(session, principal, case_id, attempt_id)
+    previous = recheck(session, principal, case_id, previous_attempt_id)
+    if not current['original_reverified'] or not previous['original_reverified']:
+        raise HTTPException(409, 'Two verified historical originals required')
+    before, after = previous['receipt'], current['receipt']
+    if datetime.fromisoformat(before['observed_at']) >= datetime.fromisoformat(after['observed_at']):
+        raise HTTPException(422, 'Previous observation must be older')
+    fields = ('title', 'displayed_stage', 'displayed_deadline', 'deadline_precision', 'organizer_type', 'organizer_name_literal')
+    changes = {k: {'before': before[k], 'after': after[k]} for k in fields if before[k] != after[k]}
+    old_links = {r['source_url']: r for r in previous['attachment_inventory']['candidates']}
+    new_links = {r['source_url']: r for r in current['attachment_inventory']['candidates']}
+    current['comparison'] = {'previous_attempt_id': previous_attempt_id, 'previous_observed_at': before['observed_at'],
+        'html_changed': before['html_sha256'] != after['html_sha256'], 'observed_field_changes': changes,
+        'candidate_links_added': [new_links[u] for u in sorted(new_links.keys()-old_links.keys())],
+        'candidate_links_absent': [old_links[u] for u in sorted(old_links.keys()-new_links.keys())],
+        'candidate_link_coverage_complete': False, 'attachment_bytes_compared': False,
+        'current_live_notice_status_verified': False, 'external_submission_allowed': False}
+    return current
