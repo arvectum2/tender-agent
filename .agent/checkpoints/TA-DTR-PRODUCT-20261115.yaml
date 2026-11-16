@@ -348,7 +348,7 @@ completed:
 - Explicit approved corporate norm version binding in itemized estimate backend, immutable
   original norm verification on historical reads, current-version checks on preview/new
   save under tenant-before-case locking. Legacy lines/projections unchanged.
-current_stage: price01_norm_binding_backend_verified_next_web
+current_stage: price01_norm_binding_web
 remaining:
 - Web and iOS explicit approved norm selection and rendering, update typed estimate/digest
   validations to accept version-bound source. Keep feature default off until both
@@ -574,11 +574,10 @@ test_results:
   exact amount/source, tenant separation, stale and withdrawn rejection, historical
   replay/evidence/actual reads, corruption tests. PR591 CI 19/19. PostgreSQL concurrency
   not run.
-resume_instruction: Backend exact normative estimate binding complete and tested,
-  code febc7e52. Next Web catalog selection -> explicit populated line with norm_binding
-  and approved source, immutable history and client validation; then iOS. Existing
-  clients do not yet support new source, keep feature default off. No production changes.
-  B2B authorization unresolved. See latest product increment docs.
+resume_instruction: Implement Web explicit approved norm selection into itemized estimate;
+  accept verified historic source shape, display provenance, block bound-row edits/duplicates,
+  invalidate preview as needed. Backend febc7e52 verified. Test Node fixture and regression.
+  Default-off.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
