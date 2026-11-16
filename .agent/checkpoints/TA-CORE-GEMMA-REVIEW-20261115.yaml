@@ -49,7 +49,7 @@ completed:
   chunks (2.20 s), customer requirements 18 (0.21 s), evaluation criteria 18 (0.21
   s), contract terms 16 (0.22 s). Private receipt saved, SHA b68dc5421ea168c56e8bab8231c6e084d9e241ead33194505057cdf2dc9e2ced.
   No model generation or canonical DB mutation.'
-current_stage: source_identity_and_retrieval_verified_gemma_acceptance_pending
+current_stage: bounded_gemma_criteria_probe_running
 remaining:
 - Bounded actual Gemma generation acceptance (prior durations 88–449 seconds per section;
   use controlled longer-running executor, not 45-second remote shell). Do not reuse
@@ -75,10 +75,10 @@ test_results:
 - Post-switch actual source-locked retrieval 4/4 sections PASS, 17/18/18/16 chunks.
   No new ingest/process request observed after switch marker; sustained ingest acceptance
   still pending.
-resume_instruction: DP updated, read-only and four-section real retrieval accepted.
-  Do not repeat DP switch or evidence-only probe unless service changes. Next actual
-  bounded Gemma acceptance with long-running controlled executor and separate new
-  private receipt; source/DB read-only, no gold or deployment. Preserve research.
+resume_instruction: Read gemma-criteria-20261116/exit.json and summary.json, or verify
+  the recorded process if still running. Do not launch duplicate Gemma requests. Inspect
+  numeric/citation validation result and compare with exact source; no gold, DB writes
+  or production deployment.
 runtime_rollout_20261116:
   release: /Users/master/ArvectumSafe/runtime-releases/data-platform-20261116-50f7b69
   revision: 50f7b69d5d3d33413de2599f7c21c79bffe36541
@@ -87,3 +87,10 @@ runtime_rollout_20261116:
   rollback_launcher: /Users/master/ArvectumSafe/runtime-releases/data-platform-20261116-50f7b69/launcher.rollback.sh
   rollback_sha256: 010fcd9f76dfae420e12768c47fd551842ea3e1586fa197bfec6a5dc961055d8
   status: live_verified_read_only
+gemma_criteria_probe_20261116:
+  pid: 79661
+  started_at: '2026-11-16T05:19:28.179598+00:00'
+  max_seconds: 900
+  section: evaluation_criteria
+  status: in_progress
+  receipt_dir: /Users/master/ArvectumSafe/runtime-releases/data-platform-20261116-50f7b69/acceptance/gemma-criteria-20261116
