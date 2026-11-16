@@ -181,16 +181,24 @@ completed:
 - 'Native company manager inbox: seven scoped filters, server time and validated summary,
   unique bounded page, identity/access clearing, post-decision refresh, due markers.
   No alternate data store or global fallback.'
-current_stage: company_case_post_go_lifecycle
+- Append-only scoped case lifecycle and migration 115, manual readiness bound to GO
+  revision, receipt/protocol reference and aware dates, explicit terminal corrections,
+  same-case locking, replay/version control, all-time distinct-case conversion/win
+  metrics. No external fact verification or submission.
+- 'B2B supplier API official support response PN-1356710-26 supplied by owner: active
+  participated/recommended IDs only as described; no invitation/document downloads
+  or submission; paid maximum/pro supplier tariff. Prefer permitted browser path;
+  no written operator consent granted.'
+current_stage: company_case_lifecycle_backend_verified_next_web_native
 remaining:
-- Implement scoped post-GO readiness and human-attested submission/outcome ledger,
-  audit and revision semantics; derive conversion/win-rate only from explicit known
-  facts, no autonomous bid actions.
-- Hosted exact-head CI, mirror failure, PostgreSQL concurrency and real iPhone/browser
+- Web and iOS lifecycle controls, metrics with explicit human-attested provenance;
+  complete readiness evidence relationships, receipt/outcome original verification
+  and multi-lot/rebid/correction policy.
+- Hosted exact-head CI and mirror; PG concurrent admission and actual browser/device
   E2E acceptance.
-- B2B operator consent/API pending; no automated requests. SIBUR/Qwen priority, Gemma
-  paused, no production deploy.
-last_verified_commit: dae662ccba862a253a5b84ec21a8ed30e6c312f9
+- B2B operator browser consent pending, no automated requests. SIBUR/Qwen priority,
+  Gemma paused; no production deployment.
+last_verified_commit: 6e8c9e6be9c12fd0e1a43bfe3cfaa4e044eda952
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -261,23 +269,29 @@ test_results:
 - Xcode 27.1 unsigned build-for-testing SUCCEEDED; new XCTest compiled, actual same
   Swift decoder/matching assertions independently executed on macOS PASS. No simulator
   boot or device install. git diff --check PASS.
-resume_instruction: Add scoped append-only human-attested lifecycle to existing ProcurementCase
-  and GO decision, no duplicate case/deal, readiness bound to GO revision, submission
-  receipt reference, terminal outcome, explicit corrections, case-level metrics on
-  recorded facts. Offline tests, no production changes. B2B consent pending; Gemma
-  paused.
+- 116 passed, 2 skipped, 93 warnings in 11.20s; SQLite migration 115 forward/replay/nonempty
+  rollback guard, scope, GO staleness, history/correction and metrics; Ruff/diff PASS.
+resume_instruction: Scoped lifecycle backend, SQLite migration and metrics verified.
+  Next web/native UI for manual readiness/submission/outcome and metrics; no automated
+  qualification or external action. B2B support confirms API unsuitable for document
+  downloads, seek separate written Playwright permission, do not automate B2B yet.
+  Preserve SIBUR worker and Gemma pause.
 owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
   Product changes isolated, offline and bounded.
 b2b_dependency:
   status: blocked
-  owner_action: Support inquiry sent; await written operator consent and official
-    API contract. No automated B2B requests.
+  support_ticket: PN-1356710-26
+  support_response: Supplier API active participated IDs and recommended IDs; no personal
+    invitations or document download/submission; paid Maximum Opportunities or Professional
+    Supplier. General search not confirmed.
+  owner_action: Request separate written operator consent for Playwright. API inadequate
+    for document acquisition. No automated B2B network access pending consent.
 sibur_readonly_observation_20261116:
   status: running
-  full_receipts: 841
-  archive_synced_count: 838
+  full_receipts: 845
+  archive_synced_count: 844
   server:
-    documents: 841
-    chunks: 18637
-    embeddings: 18637
+    documents: 845
+    chunks: 18829
+    embeddings: 18829
   error: null
