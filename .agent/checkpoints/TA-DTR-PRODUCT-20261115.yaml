@@ -234,16 +234,21 @@ completed:
 - 'Native PRICE-01 itemized editor: bounded rows, zero category and provenance acknowledgement,
   typed Decimal rollup verification, scoped mixed history, explicit manager save and
   exact projection/replay; legacy aggregate supported.'
-current_stage: price01_cost_evidence_backend
+- 'PRICE-01 document evidence backend (migration 119): exact saved scenario revision/line
+  digest, immutable one user-copy PDF/DOCX/XLSX per line, explicit document type and
+  confirmation, manager writes and scoped owner/admin/analyst reads, size/quota, exact
+  retry, verified stored-byte download. No inheritance or independent cost/payment/source
+  authentication claim.'
+current_stage: price01_cost_evidence_backend_verified_next_web_native
 remaining:
-- Scoped immutable document-level cost evidence links for each saved estimate row,
-  bounded format/integrity and explicit user-reported provenance; actual expense and
-  labor evidence.
-- Comparable procurement normalization and real-case acceptance; no unsupported forecasts.
-- Hosted exact-head CI, PostgreSQL concurrency, real web/device E2E; keep gates off
-  until acceptance. No production deployment.
-- B2B operator consent pending; product only.
-last_verified_commit: 13706f75f42e080653169fd5e6389aa1605adf01
+- Web and native cost evidence controls for saved itemized version/line, explicit
+  user-copy origin and document type, exact digest/size transfer; multiple attachments/correction
+  policy and independent actual expense/payment verification remain.
+- Comparable procurement normalization and real-case acceptance; no unsupported forecast.
+- Hosted exact-head CI, PostgreSQL concurrency, physical browser/device E2E. Keep
+  gates off until acceptance. No production deployment.
+- B2B consent pending; product only.
+last_verified_commit: 50e18d266e7ffd968c268c912d911d24282ac4c5
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -357,10 +362,14 @@ test_results:
   source changes, exact retry, legacy record, wire fields); final Xcode unsigned build-for-testing
   PASS including new XCTest compilation. git diff --check PASS. PR563 exact 31f1e6e0
   CI 19/19. No simulator XCTest, physical device or live E2E execution.
-resume_instruction: Implement scoped immutable user-copy evidence attached to exact
-  saved itemized scenario and line ordinal/digest. Reuse bounded file inspector and
-  streaming, manager-only writes/current role, read/download integrity, migration
-  and tests. No production deployment or external calls.
+- 153 passed,2 skipped,118 warnings in 13.20s; SQLite migration rollback protection,
+  version/line scope, role, quota, replay, invalid/oversize and corrupted binding/bytes
+  tested. Ruff/diff PASS. Alembic head 119. PR564 exact 1a48dae8 17 success,2 running.
+resume_instruction: Cost evidence backend and migration 119 verified. Next implement
+  Web then native read/upload/download on selected saved itemized scenario/line, verify
+  returned scope, line digest, byte size/SHA and no trusted-origin/cost/payment claims;
+  preserve immutable history and exact replay. Then actual expense and comparable
+  normalization. No production deployment or source/model calls.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
