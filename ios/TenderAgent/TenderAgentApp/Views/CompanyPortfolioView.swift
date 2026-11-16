@@ -89,6 +89,11 @@ struct CompanyPortfolioView: View {
                         CompanyActualSampleView(store:store).disabled(store.isBusy)
                     }
                 }
+                if store.canCompareActualSamples {
+                    Section("Корпоративные нормативы") {
+                        CompanyNormView(store:store).disabled(store.isBusy)
+                    }
+                }
                 Section("Очередь руководителя") {
                     Picker("Показывать", selection: Binding(get: { store.inboxFilter }, set: { filter in
                         selectedCase = nil
@@ -981,6 +986,114 @@ private struct CompanyActualSampleView:View {
     }
     @ViewBuilder private func distribution(_ title:String,_ d:CompanyActualSampleDistribution)->some View {
         VStack(alignment:.leading){Text(title).font(.headline);LabeledContent("Минимум",value:d.minimum);LabeledContent("Медиана",value:d.median);LabeledContent("Максимум",value:d.maximum)}
+    }
+}
+
+private struct CompanyNormView:View {
+    @ObservedObject var store:CompanyStore
+    @State private var quantity=""
+    @State private var rate=""
+    @State private var note=""
+    @State private var comparable=false
+    @State private var distinct=false
+    @State private var limits=false
+    @State private var confirm=false
+    @State private var chosen=""
+    @State private var withdrawNote=""
+    @State private var withdrawConfirm=false
+    private var proposal:CompanyNormProposal? {
+        try? .make(selections:store.actualSamples,comparable:comparable,distinct:distinct,quantity:quantity,rate:rate,note:note,limits:limits)
+    }
+    private var selected:CompanyNormRecord? {store.normCatalog?.items.first{$0.normKey==chosen}}
+    private func invalidate(){confirm=false;store.invalidateNormDraft()}
+    private func resetSelection(){chosen="";withdrawNote="";withdrawConfirm=false;store.clearNormHistory()}
+    private func resetForm(){quantity="";rate="";note="";comparable=false;distinct=false;limits=false;confirm=false}
+    var body:some View {
+        Text("Внутренние решения руководителя. Не применяются автоматически в сметах.").font(.caption).foregroundStyle(.secondary)
+        Button("Загрузить каталог"){Task{await store.loadNorms()}}
+        if let page=store.normCatalog {
+            Text("Нормативов на странице: "+String(page.items.count)).font(.caption)
+            ForEach(page.items){r in normRow(r)}
+            HStack {
+                Button("Назад"){Task{await store.loadNorms(offset:max(0,store.normOffset-10))}}.disabled(store.normOffset==0)
+                Spacer()
+                Button("Далее"){Task{await store.loadNorms(offset:store.normOffset+10)}}.disabled(!page.hasMore)
+            }.buttonStyle(.borderless)
+            Picker("Норматив",selection:$chosen){
+                Text("Выберите").tag("")
+                ForEach(page.items){r in Text(r.result.title+" · v"+String(r.revision)).tag(r.normKey)}
+            }
+            if let item=selected {
+                Button("История версий"){Task{await store.loadNormHistory(key:item.normKey)}}
+                if let history=store.normHistory,history.normKey==item.normKey {
+                    ForEach(history.items){r in normRow(r)}
+                    HStack{
+                        Button("Назад"){Task{await store.loadNormHistory(key:item.normKey,offset:max(0,store.normHistoryOffset-10))}}.disabled(store.normHistoryOffset==0)
+                        Spacer()
+                        Button("Далее"){Task{await store.loadNormHistory(key:item.normKey,offset:store.normHistoryOffset+10)}}.disabled(!history.hasMore)
+                    }.buttonStyle(.borderless)
+                }
+                if store.canApproveNorms,item.action=="APPROVED" {
+                    TextField("Причина отзыва",text:$withdrawNote,axis:.vertical)
+                    Toggle("Подтверждаю отзыв выбранного норматива",isOn:$withdrawConfirm)
+                    Button("Отозвать норматив",role:.destructive){
+                        withdrawConfirm=false
+                        Task{await store.withdrawNorm(key:item.normKey,rationale:withdrawNote,confirmed:true)}
+                    }.disabled(!withdrawConfirm || !(10...2000).contains(withdrawNote.trimmingCharacters(in:.whitespacesAndNewlines).unicodeScalars.count))
+                }
+            }
+        }
+        if !store.actualSamples.isEmpty {
+            Text("Проект по выбранной выборке").font(.headline)
+            Text("Количество и ставку задаёт человек.").font(.caption)
+            TextField("Нормативное количество",text:$quantity).keyboardType(.decimalPad)
+            TextField("Ставка, ₽",text:$rate).keyboardType(.decimalPad)
+            TextField("Обоснование",text:$note,axis:.vertical)
+            Toggle("Подтверждаю сопоставимость",isOn:$comparable)
+            Toggle("Одна накопительная строка на закупку",isOn:$distinct)
+            Toggle("Фактические данные не проверены независимо",isOn:$limits)
+            Button("Предварительный просмотр"){
+                if let proposal {confirm=false;Task{await store.previewNorm(proposal)}}
+            }.disabled(proposal==nil)
+            if let draft=store.normDraft,draft.proposal==proposal {
+                Text("Проект: "+draft.proposal.normQuantity+" "+draft.proposal.sample.unit+" × "+draft.proposal.normRateRub+" ₽").font(.headline)
+                Text("Следующая версия: "+String(draft.expectedRevision+1)+". Не утверждён.").font(.caption)
+                Text("Источников: "+String(draft.sampleObservation.samples.count)+(draft.sampleObservation.smallSampleWarning ? ". Малая выборка.":"")).font(.caption)
+                if store.canApproveNorms {
+                    Toggle("Утверждаю именно этот внутренний норматив",isOn:$confirm)
+                    Button("Утвердить норматив"){
+                        confirm=false
+                        Task{await store.approveNorm(proposal:draft.proposal,confirmed:true)}
+                    }.disabled(!confirm || draft.expectedRevision>=99)
+                }
+            }
+        }
+        if let notice=store.normNotice{Text(notice).font(.caption).foregroundStyle(.secondary)}
+        Color.clear.frame(height:0)
+            .onChange(of:quantity){_,_ in invalidate()}
+            .onChange(of:rate){_,_ in invalidate()}
+            .onChange(of:note){_,_ in invalidate()}
+            .onChange(of:comparable){_,_ in invalidate()}
+            .onChange(of:distinct){_,_ in invalidate()}
+            .onChange(of:limits){_,_ in invalidate()}
+            .onChange(of:store.actualSamples){_,_ in resetForm();invalidate()}
+            .onChange(of:store.identity){_,_ in resetForm();resetSelection();invalidate()}
+            .onChange(of:chosen){_,_ in withdrawNote="";withdrawConfirm=false;store.clearNormHistory()}
+            .onChange(of:store.normCatalog?.items.map(\.recordSha256) ?? []){_,_ in
+                if selected==nil {resetSelection()} else {withdrawConfirm=false}
+            }
+    }
+    @ViewBuilder private func normRow(_ r:CompanyNormRecord)->some View {
+        VStack(alignment:.leading,spacing:4){
+            Text(r.result.title+" · v"+String(r.revision)).font(.headline)
+            Text(r.action=="APPROVED" ? "Утверждён":"Отозван").font(.caption)
+            if let q=r.result.normQuantity,let rate=r.result.normRateRub {Text(q+" "+r.result.unit+" × "+rate+" ₽")}
+            Text(r.result.rationale)
+            Text(r.createdAt+" · "+r.memberId).font(.caption).foregroundStyle(.secondary)
+            if let observation=r.result.sampleObservation {
+                ForEach(observation.samples){s in Text(s.sourcePlatform+":"+s.externalId+" · v"+String(s.snapshotRevision)).font(.caption)}
+            }
+        }
     }
 }
 

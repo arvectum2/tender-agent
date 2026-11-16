@@ -19,6 +19,14 @@ final class CompanyStore: ObservableObject {
     @Published private(set) var actualSamples: [CompanyActualSampleSelection] = []
     @Published private(set) var actualSampleResult: CompanyActualSamplePreview?
     @Published private(set) var actualSampleNotice: String?
+    @Published private(set) var normCatalog:CompanyNormPage?
+    @Published private(set) var normOffset=0
+    @Published private(set) var normHistory:CompanyNormPage?
+    @Published private(set) var normHistoryOffset=0
+    @Published private(set) var normDraft:CompanyNormPreview?
+    @Published private(set) var normNotice:String?
+    private var pendingNormApproval:CompanyNormApproval?
+    private var pendingNormWithdrawal:(key:String,attempt:CompanyNormWithdrawal)?
     private var nextOffset = 0
     private var pendingDecision: CompanyDecisionAttempt?
     private var pendingLifecycle: CompanyLifecycleAttempt?
@@ -411,11 +419,11 @@ final class CompanyStore: ObservableObject {
     }
 
     func invalidateActualSampleResult() {
-        actualSampleResult=nil;actualSampleNotice=nil
+        actualSampleResult=nil;actualSampleNotice=nil;invalidateNormDraft()
     }
 
     func clearActualSamples() {
-        actualSamples=[];invalidateActualSampleResult()
+        actualSamples=[];invalidateActualSampleResult();resetNormState()
     }
     func removeActualSample(_ id:String) {
         guard !isBusy,canCompareActualSamples else{return}
@@ -451,6 +459,86 @@ final class CompanyStore: ObservableObject {
             handleLifecycleError(error)
             if canCompareActualSamples { actualSampleNotice=Self.safeError(error) }
         }
+    }
+
+    var canApproveNorms:Bool { identity?.legalAccepted == true && ["owner","admin"].contains(identity?.role ?? "") }
+    func invalidateNormDraft(){normDraft=nil}
+    func resetNormState(){
+        normCatalog=nil;normHistory=nil;normDraft=nil;normNotice=nil;normOffset=0;normHistoryOffset=0;pendingNormApproval=nil;pendingNormWithdrawal=nil
+    }
+    func clearNormHistory(){normHistory=nil;normHistoryOffset=0}
+    private func normFailure(_ error:Error){
+        handleLifecycleError(error)
+        guard canCompareActualSamples else{return}
+        switch error as? CompanyConnectionError {
+        case .http(409):normDraft=nil;pendingNormApproval=nil;pendingNormWithdrawal=nil;normCatalog=nil;clearNormHistory();normNotice="Версия или источники изменились. Обновите данные."
+        case .http(404):normNotice="Функция недоступна или норматив не найден."
+        default:normNotice=Self.safeError(error)
+        }
+    }
+    func loadNorms(offset:Int=0) async {
+        guard !isBusy,canCompareActualSamples,let account=selectedID,let current=identity else{return}
+        isBusy=true;defer{isBusy=false}
+        normCatalog=nil;clearNormHistory();normNotice=nil
+        do {
+            let (client,actual)=try await lifecycleAccess(accountID:account)
+            guard actual==current else{throw CompanyConnectionError.identityMismatch}
+            let page=try await client.normPage(identity:actual,offset:offset)
+            guard selectedID==account,identity==actual else{throw CompanyConnectionError.identityMismatch}
+            normCatalog=page;normOffset=offset
+        }catch{normFailure(error)}
+    }
+    func loadNormHistory(key:String,offset:Int=0) async {
+        guard !isBusy,canCompareActualSamples,let account=selectedID,let current=identity,let chosen=normCatalog?.items.first(where:{$0.normKey==key}) else{return}
+        isBusy=true;defer{isBusy=false};clearNormHistory();normNotice=nil
+        do {
+            let (client,actual)=try await lifecycleAccess(accountID:account)
+            guard actual==current else{throw CompanyConnectionError.identityMismatch}
+            let page=try await client.normPage(identity:actual,key:key,offset:offset)
+            guard selectedID==account,identity==actual else{throw CompanyConnectionError.identityMismatch}
+            guard offset != 0 || page.items.first?.recordSha256==chosen.recordSha256 else{throw CompanyConnectionError.http(409)}
+            normHistory=page;normHistoryOffset=offset
+        }catch{normFailure(error)}
+    }
+    func previewNorm(_ proposal:CompanyNormProposal) async {
+        guard !isBusy,canCompareActualSamples,let account=selectedID,let current=identity else{return}
+        let rows=actualSamples
+        isBusy=true;defer{isBusy=false};normDraft=nil;normNotice=nil
+        do {
+            let (client,actual)=try await lifecycleAccess(accountID:account)
+            guard actual==current,actualSamples==rows else{throw CompanyConnectionError.identityMismatch}
+            let draft=try await client.normPreview(identity:actual,proposal:proposal,selections:rows)
+            guard selectedID==account,identity==actual,actualSamples==rows else{throw CompanyConnectionError.identityMismatch}
+            normDraft=draft
+        }catch{normFailure(error)}
+    }
+    func approveNorm(proposal:CompanyNormProposal,confirmed:Bool) async {
+        guard !isBusy,canApproveNorms,confirmed,let account=selectedID,let current=identity,let draft=normDraft,draft.proposal==proposal else{return}
+        let rows=actualSamples
+        let previous=pendingNormApproval
+        let attempt=CompanyNormApproval(proposal:proposal,previewSha256:draft.previewSha256,expectedRevision:draft.expectedRevision,idempotencyKey:previous?.previewSha256==draft.previewSha256 && previous?.proposal==proposal ? previous!.idempotencyKey:UUID().uuidString,confirmInternalApproval:true)
+        pendingNormApproval=attempt;isBusy=true;defer{isBusy=false}
+        do {
+            let (client,actual)=try await lifecycleAccess(accountID:account,write:true)
+            guard actual==current,actualSamples==rows else{throw CompanyConnectionError.identityMismatch}
+            let record=try await client.approveNorm(identity:actual,draft:draft,attempt:attempt,selections:rows)
+            guard selectedID==account,identity==actual,actualSamples==rows else{throw CompanyConnectionError.identityMismatch}
+            pendingNormApproval=nil;normDraft=nil;normCatalog=nil;clearNormHistory();normNotice="Утверждена версия "+String(record.revision)+". Не применяется автоматически."
+        }catch{normFailure(error)}
+    }
+    func withdrawNorm(key:String,rationale:String,confirmed:Bool) async {
+        let note=rationale.trimmingCharacters(in:.whitespacesAndNewlines)
+        guard !isBusy,canApproveNorms,confirmed,(10...2000).contains(note.unicodeScalars.count),let account=selectedID,let current=identity,let record=normCatalog?.items.first(where:{$0.normKey==key && $0.action=="APPROVED"}) else{return}
+        let previous=pendingNormWithdrawal
+        let attempt=CompanyNormWithdrawal(expectedRevision:record.revision,idempotencyKey:previous?.key==key && previous?.attempt.expectedRevision==record.revision && previous?.attempt.rationale==note ? previous!.attempt.idempotencyKey:UUID().uuidString,rationale:note,confirmWithdrawal:true)
+        pendingNormWithdrawal=(key,attempt);isBusy=true;defer{isBusy=false}
+        do {
+            let (client,actual)=try await lifecycleAccess(accountID:account,write:true)
+            guard actual==current else{throw CompanyConnectionError.identityMismatch}
+            _=try await client.withdrawNorm(identity:actual,record:record,attempt:attempt)
+            guard selectedID==account,identity==actual else{throw CompanyConnectionError.identityMismatch}
+            pendingNormWithdrawal=nil;normDraft=nil;normCatalog=nil;clearNormHistory();normNotice="Норматив отозван. История сохранена."
+        }catch{normFailure(error)}
     }
 
     static func safeError(_ error: Error) -> String {

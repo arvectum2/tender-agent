@@ -954,7 +954,7 @@ struct CompanyActualSampleSelection: Equatable, Sendable {
         return .init(category:category,sample:.init(sourcePlatform:platform,externalId:id,caseId:item.caseId,scenarioId:s.scope.scenarioId,scenarioRevision:s.scope.scenarioRevision,baselineSha256:s.scope.baselineSha256,snapshotId:s.id,snapshotRevision:s.revision,rowKind:target.row.kind,ordinal:target.row.ordinal,lineSha256:try target.digest(),asOf:s.inputs.asOf,title:target.row.title,unit:unit,reportedQuantity:quantity,reportedRateRub:rate,reportedAmountRub:amount,origin:"USER_REPORTED_UNVERIFIED",actualAmountVerified:false))
     }
 }
-struct CompanyActualSampleInput: Encodable, Equatable, Sendable {
+struct CompanyActualSampleInput: Codable, Equatable, Sendable {
     let category:CompanyCostCategory;let title:String;let unit:String;let samples:[CompanyActualSampleRef]
     let confirmComparableReportedRows:Bool;let confirmOneCumulativeRowPerCase:Bool
     static func make(_ selections:[CompanyActualSampleSelection],comparable:Bool,distinct:Bool)throws->Self {
@@ -962,7 +962,7 @@ struct CompanyActualSampleInput: Encodable, Equatable, Sendable {
         return .init(category:first.category,title:first.sample.title,unit:first.sample.unit,samples:selections.map{$0.sample.reference},confirmComparableReportedRows:comparable,confirmOneCumulativeRowPerCase:distinct)
     }
 }
-struct CompanyActualSampleDistribution: Decodable, Equatable, Sendable {
+struct CompanyActualSampleDistribution: Codable, Equatable, Sendable {
     let minimum:String;let median:String;let maximum:String
     func matches(_ values:[String],digits:Int)->Bool {
         let nums=values.compactMap(CompanyPriceInput.decimal).sorted()
@@ -972,13 +972,91 @@ struct CompanyActualSampleDistribution: Decodable, Equatable, Sendable {
         return CompanyActualAccumulator.matches(minimum,nums.first,digits:digits)&&CompanyActualAccumulator.matches(median,rounded,digits:digits)&&CompanyActualAccumulator.matches(maximum,nums.last,digits:digits)
     }
 }
-struct CompanyActualSamplePreview: Decodable, Sendable {
+struct CompanyActualSamplePreview: Codable, Sendable {
     let schema:String;let customerId:String;let category:CompanyCostCategory;let title:String;let unit:String;let currency:String;let distinctCaseCount:Int;let samples:[CompanyActualSample]
     let reportedQuantityDistribution:CompanyActualSampleDistribution;let reportedUnitRateDistributionRub:CompanyActualSampleDistribution;let reportedAmountDistributionRub:CompanyActualSampleDistribution
     let basis:String;let smallSampleWarning:Bool;let comparabilityIndependentlyVerified:Bool;let actualAmountsIndependentlyVerified:Bool;let contractExecutionVerified:Bool;let approvedNorm:Bool;let recommendedRate:String?;let inputsStored:Bool;let externalSubmissionAllowed:Bool
     func matches(_ identity:CompanyIdentity,input:CompanyActualSampleInput,selections:[CompanyActualSampleSelection])->Bool {
         guard (try? CompanyActualSampleInput.make(selections,comparable:input.confirmComparableReportedRows,distinct:input.confirmOneCumulativeRowPerCase))==input,schema=="company_actual_descriptive_sample_v1",customerId==identity.customerId,category==input.category,title==input.title,unit==input.unit,currency=="RUB",distinctCaseCount==selections.count,samples==selections.map(\.sample),basis=="EXPLICIT_ONE_CUMULATIVE_REPORTED_ROW_PER_DISTINCT_CASE",smallSampleWarning==(samples.count<5),!comparabilityIndependentlyVerified,!actualAmountsIndependentlyVerified,!contractExecutionVerified,!approvedNorm,recommendedRate==nil,!inputsStored,!externalSubmissionAllowed else{return false}
         return reportedQuantityDistribution.matches(samples.map(\.reportedQuantity),digits:4)&&reportedUnitRateDistributionRub.matches(samples.map(\.reportedRateRub),digits:3)&&reportedAmountDistributionRub.matches(samples.map(\.reportedAmountRub),digits:3)
+    }
+}
+
+struct CompanyNormProposal: Codable, Equatable, Sendable {
+    let sample:CompanyActualSampleInput
+    let normQuantity:String;let normRateRub:String;let rationale:String;let confirmReportedSourceLimits:Bool
+    static func make(selections:[CompanyActualSampleSelection],comparable:Bool,distinct:Bool,quantity:String,rate:String,note:String,limits:Bool)throws->Self {
+        let p=Self(sample:try .make(selections,comparable:comparable,distinct:distinct),normQuantity:quantity.trimmingCharacters(in:.whitespacesAndNewlines).replacingOccurrences(of:",",with:"."),normRateRub:rate.trimmingCharacters(in:.whitespacesAndNewlines).replacingOccurrences(of:",",with:"."),rationale:note.trimmingCharacters(in:.whitespacesAndNewlines),confirmReportedSourceLimits:limits)
+        guard p.valid else {throw CompanyConnectionError.invalidPrice};return p
+    }
+    var valid:Bool {
+        confirmReportedSourceLimits && normQuantity.range(of:#"^[0-9]{1,9}(\.[0-9]{1,4})?$"#,options:.regularExpression) != nil && (CompanyPriceInput.decimal(normQuantity) ?? 0)>0 && normRateRub.range(of:#"^[0-9]{1,12}(\.[0-9]{1,2})?$"#,options:.regularExpression) != nil && (10...2000).contains(rationale.unicodeScalars.count)
+    }
+}
+enum CompanyNormDigest {
+    static func object<T:Encodable>(_ value:T)throws->[String:Any] {
+        let e=JSONEncoder();e.keyEncodingStrategy = .convertToSnakeCase
+        guard let o=try JSONSerialization.jsonObject(with:e.encode(value)) as? [String:Any] else {throw CompanyConnectionError.invalidResponse};return o
+    }
+    static func hash(_ value:[String:Any])throws->String {CompanyArtifactBytes.digest(Data(try CompanyActualBaseline.canonical(value).utf8))}
+    static func observation(_ value:CompanyActualSamplePreview)throws->[String:Any] {
+        var o=try object(value);o["recommended_rate"]=(value.recommendedRate as Any?) ?? NSNull();return o
+    }
+    static func preview(identity:CompanyIdentity,key:String,revision:Int,proposal:CompanyNormProposal,observation:CompanyActualSamplePreview)throws->String {
+        try hash(["schema":"company_cost_norm_preview_v1","customer_id":identity.customerId,"norm_key":key,"expected_revision":revision,"proposal":object(proposal),"sample_observation":self.observation(observation),"approved_norm":false,"automatically_applied":false,"inputs_stored":false,"external_submission_allowed":false])
+    }
+    static func stamp(_ s:String)->String? {
+        let v=s.hasSuffix("Z") ? String(s.dropLast())+"+00:00":s
+        return v.range(of:#"^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]{6})?\+00:00$"#,options:.regularExpression) != nil ? v:nil
+    }
+    static func isSHA(_ s:String)->Bool {s.range(of:#"^[0-9a-f]{64}$"#,options:.regularExpression) != nil}
+}
+struct CompanyNormPreview: Decodable,Sendable {
+    let schema:String;let customerId:String;let normKey:String;let expectedRevision:Int;let proposal:CompanyNormProposal;let sampleObservation:CompanyActualSamplePreview;let approvedNorm:Bool;let automaticallyApplied:Bool;let inputsStored:Bool;let externalSubmissionAllowed:Bool;let previewSha256:String
+    func matches(_ identity:CompanyIdentity,proposal p:CompanyNormProposal,selections:[CompanyActualSampleSelection])->Bool {
+        schema=="company_cost_norm_preview_v1" && customerId==identity.customerId && CompanyNormDigest.isSHA(normKey) && (0...100).contains(expectedRevision) && proposal==p && p.valid && !approvedNorm && !automaticallyApplied && !inputsStored && !externalSubmissionAllowed && sampleObservation.matches(identity,input:p.sample,selections:selections) && previewSha256==(try? CompanyNormDigest.preview(identity:identity,key:normKey,revision:expectedRevision,proposal:p,observation:sampleObservation))
+    }
+}
+struct CompanyNormApproval: Codable,Equatable,Sendable {
+    let proposal:CompanyNormProposal;let previewSha256:String;let expectedRevision:Int;let idempotencyKey:String;let confirmInternalApproval:Bool
+}
+struct CompanyNormWithdrawal: Codable,Equatable,Sendable {
+    let expectedRevision:Int;let idempotencyKey:String;let rationale:String;let confirmWithdrawal:Bool
+}
+struct CompanyNormRecord: Decodable,Identifiable,Sendable {
+    let schema:String;let customerId:String;let normId:String;let normKey:String;let revision:Int;let action:String;let memberId:String;let createdAt:String;let recordSha256:String;let inputs:Inputs;let result:Result;let externalSubmissionAllowed:Bool;let automaticallyApplied:Bool
+    var id:String {normId}
+    struct Inputs:Codable,Sendable {
+        let expectedRevision:Int;let idempotencyKey:String;let proposal:CompanyNormProposal?;let previewSha256:String?;let confirmInternalApproval:Bool?;let rationale:String?;let confirmWithdrawal:Bool?
+        var approval:CompanyNormApproval? {guard let proposal,let previewSha256,let confirmInternalApproval else{return nil};return .init(proposal:proposal,previewSha256:previewSha256,expectedRevision:expectedRevision,idempotencyKey:idempotencyKey,confirmInternalApproval:confirmInternalApproval)}
+        var withdrawal:CompanyNormWithdrawal? {guard let rationale,let confirmWithdrawal else{return nil};return .init(expectedRevision:expectedRevision,idempotencyKey:idempotencyKey,rationale:rationale,confirmWithdrawal:confirmWithdrawal)}
+    }
+    struct Result: Codable,Sendable {
+        let category:CompanyCostCategory;let title:String;let unit:String;let currency:String;let normQuantity:String?;let normRateRub:String?;let rationale:String;let sampleObservation:CompanyActualSamplePreview?;let previewSha256:String?;let origin:String?;let approvedNorm:Bool;let actualAmountsIndependentlyVerified:Bool?;let automaticallyApplied:Bool;let externalSubmissionAllowed:Bool;let withdrawnNormId:String?;let withdrawnRecordSha256:String?
+    }
+    func matches(_ identity:CompanyIdentity)->Bool {
+        guard schema=="company_cost_norm_version_v1",customerId==identity.customerId,!normId.isEmpty,!memberId.isEmpty,CompanyNormDigest.isSHA(normKey),(1...100).contains(revision),inputs.expectedRevision==revision-1,(8...128).contains(inputs.idempotencyKey.count),!externalSubmissionAllowed,!automaticallyApplied,!result.automaticallyApplied,!result.externalSubmissionAllowed,result.currency=="RUB",[.labor,.direct,.overhead].contains(result.category),!result.title.isEmpty,!result.unit.isEmpty,let stamp=CompanyNormDigest.stamp(createdAt) else{return false}
+        switch action {
+        case "APPROVED":
+            guard let a=inputs.approval,inputs.rationale==nil,inputs.confirmWithdrawal==nil,a.confirmInternalApproval,a.proposal.valid,let o=result.sampleObservation,result.approvedNorm,result.actualAmountsIndependentlyVerified==false,result.origin=="EXPLICIT_INTERNAL_MANAGER_APPROVAL",result.previewSha256==a.previewSha256,result.normQuantity==a.proposal.normQuantity,result.normRateRub==a.proposal.normRateRub,result.rationale==a.proposal.rationale,result.category==a.proposal.sample.category,result.title==a.proposal.sample.title,result.unit==a.proposal.sample.unit,result.withdrawnNormId==nil,result.withdrawnRecordSha256==nil,(1...20).contains(o.samples.count),o.samples.allSatisfy({$0.origin=="USER_REPORTED_UNVERIFIED" && !$0.actualAmountVerified && CompanyNormDigest.isSHA($0.lineSha256) && (CompanyPriceInput.decimal($0.reportedQuantity) ?? 0)>0}),o.matches(identity,input:a.proposal.sample,selections:o.samples.map{.init(category:result.category,sample:$0)}),a.previewSha256==(try? CompanyNormDigest.preview(identity:identity,key:normKey,revision:inputs.expectedRevision,proposal:a.proposal,observation:o)) else{return false}
+        case "WITHDRAWN":
+            guard let w=inputs.withdrawal,inputs.proposal==nil,inputs.previewSha256==nil,inputs.confirmInternalApproval==nil,w.confirmWithdrawal,w.expectedRevision>=1,!result.approvedNorm,result.rationale==w.rationale,result.normQuantity==nil,result.normRateRub==nil,result.sampleObservation==nil,result.previewSha256==nil,result.origin==nil,result.actualAmountsIndependentlyVerified==nil,let old=result.withdrawnNormId,!old.isEmpty,let sha=result.withdrawnRecordSha256,CompanyNormDigest.isSHA(sha) else{return false}
+        default:return false
+        }
+        do {
+            var x=try CompanyNormDigest.object(result)
+            if let o=result.sampleObservation {x["sample_observation"]=try CompanyNormDigest.observation(o)}
+            let p=try CompanyNormDigest.object(inputs)
+            return recordSha256 == (try CompanyNormDigest.hash(["norm_id":normId,"created_at":stamp,"tenant_id":identity.tenantId,"member_id":memberId,"norm_key":normKey,"revision":revision,"action":action,"idempotency_key":inputs.idempotencyKey,"inputs":p,"result":x]))
+        }catch{return false}
+    }
+}
+struct CompanyNormPage:Decodable,Sendable {
+    let customerId:String;let normKey:String?;let items:[CompanyNormRecord];let hasMore:Bool
+    func matches(_ identity:CompanyIdentity,key:String?)->Bool {
+        guard customerId==identity.customerId,normKey==key,items.count<=10,items.allSatisfy({$0.matches(identity)}) else{return false}
+        if let key{return items.allSatisfy{$0.normKey==key} && zip(items,items.dropFirst()).allSatisfy{$0.0.revision==$0.1.revision+1}}
+        return Set(items.map(\.normKey)).count==items.count
     }
 }
 
@@ -1363,6 +1441,30 @@ struct CompanyAPIClient: Sendable {
         let encoder=JSONEncoder();encoder.keyEncodingStrategy = .convertToSnakeCase
         let result:CompanyActualSamplePreview=try await get("/api/saas/company-portfolio/actual-samples/preview",method:"POST",body:encoder.encode(input))
         guard result.matches(identity,input:input,selections:selections) else {throw CompanyConnectionError.identityMismatch};return result
+    }
+
+    func normPage(identity:CompanyIdentity,key:String?=nil,offset:Int=0) async throws -> CompanyNormPage {
+        guard identity.legalAccepted,["owner","admin","analyst"].contains(identity.role),offset>=0,offset<=(key==nil ? 500:100),key.map(CompanyNormDigest.isSHA) ?? true else {throw CompanyConnectionError.http(403)}
+        let page:CompanyNormPage=try await get("/api/saas/company-portfolio/cost-norms"+(key.map{"/"+$0} ?? ""),query:[.init(name:"offset",value:String(offset)),.init(name:"limit",value:"10")])
+        guard page.matches(identity,key:key) else {throw CompanyConnectionError.identityMismatch};return page
+    }
+    func normPreview(identity:CompanyIdentity,proposal:CompanyNormProposal,selections:[CompanyActualSampleSelection]) async throws -> CompanyNormPreview {
+        guard identity.legalAccepted,["owner","admin","analyst"].contains(identity.role),proposal.valid else {throw CompanyConnectionError.http(403)}
+        let e=JSONEncoder();e.keyEncodingStrategy = .convertToSnakeCase
+        let r:CompanyNormPreview=try await get("/api/saas/company-portfolio/cost-norms/preview",method:"POST",body:e.encode(proposal))
+        guard r.matches(identity,proposal:proposal,selections:selections) else{throw CompanyConnectionError.identityMismatch};return r
+    }
+    func approveNorm(identity:CompanyIdentity,draft:CompanyNormPreview,attempt:CompanyNormApproval,selections:[CompanyActualSampleSelection]) async throws -> CompanyNormRecord {
+        guard identity.legalAccepted,["owner","admin"].contains(identity.role),attempt.confirmInternalApproval,attempt.proposal==draft.proposal,attempt.previewSha256==draft.previewSha256,attempt.expectedRevision==draft.expectedRevision,draft.matches(identity,proposal:attempt.proposal,selections:selections) else {throw CompanyConnectionError.http(403)}
+        let e=JSONEncoder();e.keyEncodingStrategy = .convertToSnakeCase
+        let r:CompanyNormRecord=try await get("/api/saas/company-portfolio/cost-norms",method:"POST",body:e.encode(attempt))
+        guard r.matches(identity),r.memberId==identity.memberId,r.normKey==draft.normKey,r.inputs.approval==attempt,r.action=="APPROVED" else{throw CompanyConnectionError.identityMismatch};return r
+    }
+    func withdrawNorm(identity:CompanyIdentity,record:CompanyNormRecord,attempt:CompanyNormWithdrawal) async throws -> CompanyNormRecord {
+        guard identity.legalAccepted,["owner","admin"].contains(identity.role),record.matches(identity),record.action=="APPROVED",attempt.confirmWithdrawal,attempt.expectedRevision==record.revision,(10...2000).contains(attempt.rationale.unicodeScalars.count) else {throw CompanyConnectionError.http(403)}
+        let e=JSONEncoder();e.keyEncodingStrategy = .convertToSnakeCase
+        let r:CompanyNormRecord=try await get("/api/saas/company-portfolio/cost-norms/"+record.normKey+"/withdraw",method:"POST",body:e.encode(attempt))
+        guard r.matches(identity),r.memberId==identity.memberId,r.normKey==record.normKey,r.inputs.withdrawal==attempt,r.action=="WITHDRAWN",r.result.withdrawnNormId==record.normId,r.result.withdrawnRecordSha256==record.recordSha256 else{throw CompanyConnectionError.identityMismatch};return r
     }
 
     private func get<T: Decodable>(_ path: String, query: [URLQueryItem] = [], method: String = "GET", body: Data? = nil, contentType: String = "application/json") async throws -> T {
