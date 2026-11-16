@@ -310,7 +310,7 @@ completed:
   former direct HTTP paths fail closed in candidate branch before transport. MacBook
   read-only runtime inspection confirms Chrome/Python3.12/uv/sandbox/CryptoPro; Playwright
   absent in default Python.
-current_stage: b2b_supervised_runner_verified_next_macbook_runtime
+current_stage: b2b_macmini_password_login_preparation
 remaining:
 - Prepare dedicated MacBook checkout/runtime and private path via explicitly approved
   device operations as required, run supervised offline acceptance on MacBook. User
@@ -504,15 +504,10 @@ test_results:
   parsers, Workspace/EIS paths and seven B2B direct refusals, supervisor timeout/lock/receipt.
   Actual supervised offline Chrome fixture 7/7, exact ZIP 133B; Ruff/diff PASS. PR579
   exact ae4cb0b4 CI 19/19. No live requests or deployment.
-resume_instruction: Supervised offline runner and seven legacy direct egress gates
-  verified in candidate branch. Next prepare MacBook Air private isolated Python3.12
-  Playwright environment and reviewed checkout with owner approval for required device
-  writes, then run actual offline acceptance there. MacBook online with Chrome/uv/sandbox/CryptoPro
-  installed; default Python lacks Playwright. Manual owner EDS login follows when
-  ready, no signing-key/PIN export or existing profile extraction. Complete actual
-  guarded one-card runner/approved endpoint scope and deployed schedule cutover before
-  live operation. Keep session MacBook-local and 60 requests per rolling 60s/IP. No
-  live B2B/production changes today; PRICE-01 preserved.
+resume_instruction: Owner changes login to manual username/password on Mac mini, not
+  EDS on MacBook. Prepare and verify dedicated local Chrome login workflow, no MacBook
+  changes or access, no password or session secrets in chat. Live automated requests
+  remain blocked pending approved guarded acceptance.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
@@ -524,10 +519,8 @@ b2b_dependency:
     более 60 HTTP-запросов в минуту с одного IP-адреса». IP approval not required;
     no separate download restrictions; own account or optional additional user. Earlier
     response: no additional fee or alternative API for stated actions.'
-  owner_action: 'Owner manual EDS on MacBook as planned. MacBook read-only check:
-    available, Chrome/Python3.12/uv/sandbox/CryptoPro, missing Playwright in default
-    interpreter. Dedicated runtime not installed. Supervised offline candidate and
-    legacy gates verified; not deployed. No actual session or live requests.'
+  owner_action: Manual username/password sign-in by owner on Mac mini instead of EDS.
+    Keep dedicated profile/session on Mac mini; MacBook no longer required.
 sibur_readonly_observation_20261116:
   status: exhausted
   step: archive supported queue drained; oversized and PDF review remains
