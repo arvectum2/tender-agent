@@ -1,8 +1,8 @@
 """Local interactive Arvectum sign-in only; no automated platform navigation.
 
 Run in a local user terminal when ready to sign in to the dedicated Chrome window.
-The user authenticates manually with EDS on the MacBook in a dedicated persistent
-Chrome profile supporting the installed crypto provider. Never inspect or copy
+The user authenticates manually in a dedicated persistent Chrome profile.
+Password mode is the default; optional EDS mode remains supported. Never inspect or copy
 private signing keys, PINs, existing browser profiles or credential databases.
 Never send session secrets or the resulting file into chat or source control.
 """
@@ -69,7 +69,8 @@ def session_summary(context):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--session',type=Path,required=True)
-    parser.add_argument('--profile',type=Path,required=True,help='Dedicated owner-only persistent Chrome profile on the MacBook')
+    parser.add_argument('--profile',type=Path,required=True,help='Dedicated owner-only persistent Chrome profile')
+    parser.add_argument('--auth-method',choices=('password','eds'),default='password')
     args=parser.parse_args()
     if sys.platform!='darwin' or not sys.stdin.isatty() or not sys.stdout.isatty():parser.error('Interactive local macOS terminal required')
     if args.session.exists() or args.session.is_symlink():parser.error('Choose a new private session file; no overwrite')
@@ -77,16 +78,22 @@ def main():
     try:
         profile=dedicated_profile(args.profile)
         with sync_playwright() as driver:
-            context=driver.chromium.launch_persistent_context(str(profile),channel='chrome',headless=False,timeout=8000,ignore_https_errors=False,ignore_default_args=['--disable-extensions'],chromium_sandbox=True)
+            options={'channel':'chrome','headless':False,'timeout':8000,'ignore_https_errors':False,'chromium_sandbox':True}
+            if args.auth_method=='eds':options['ignore_default_args']=['--disable-extensions']
+            context=driver.chromium.launch_persistent_context(str(profile),**options)
             try:
-                print('Используйте выделенный профиль Chrome на MacBook. При необходимости вручную установите штатное расширение криптопровайдера из официального источника.')
-                print('Вручную откройте https://www.b2b-center.ru/ и войдите через ЭЦП. PIN, закрытый ключ и подписание не передаются агенту.')
+                print('Используйте только открывшийся выделенный профиль Chrome.')
+                if args.auth_method=='eds':
+                    print('При необходимости установите официальное расширение криптопровайдера вручную. Войдите через ЭЦП; закрытый ключ и PIN не передаются агенту.')
+                else:
+                    print('Войдите вручную с логином и паролем в браузере. Не вводите их в терминал или чат; не сохраняйте пароль в браузере.')
+                print('Адрес для ручного входа: https://www.b2b-center.ru/')
                 print('Проверьте, что открыт личный кабинет ООО «Арвектум». Затем введите ARVECTUM в этом терминале.')
                 if input('Подтверждение (ARVECTUM): ').strip()!='ARVECTUM':raise GuardError('Manual confirmation absent')
                 summary=session_summary(context)
                 if not summary['b2b_page_open']:raise GuardError('Exact B2B HTTPS page required')
                 state=select_cookie_state(context.cookies());save_private(args.session,state)
-                print(json.dumps({'state':'LOCAL_EDS_SESSION_SAVED','cookie_count':summary['cookie_count'],'account_identity_verified':False,'cross_device_portability_verified':False,'live_agent_enabled':False},ensure_ascii=False))
+                print(json.dumps({'state':'LOCAL_SESSION_SAVED','auth_method':args.auth_method,'cookie_count':summary['cookie_count'],'account_identity_verified':False,'cross_device_portability_verified':False,'live_agent_enabled':False},ensure_ascii=False))
             finally:context.close()
     except Exception as exc:  # noqa: BLE001 -- do not leak data in browser exceptions
         print('Session not accepted: '+type(exc).__name__);return 1
