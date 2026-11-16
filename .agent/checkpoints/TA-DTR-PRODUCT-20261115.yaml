@@ -133,7 +133,7 @@ completed:
   clearing. Bounded offline candidate attachment link inventory, no downloads; two
   reverified historical originals compared for displayed fields/digest and candidate
   link differences.
-current_stage: commercial_evidence_ui_verified_next_attachment_source_contracts
+current_stage: scoped_attachment_intake_versioning_and_offline_extraction
 remaining:
 - Publish/check current stacked PR and CI; previous PR543 had 16 successes, 2 running
   and 1 failure before this increment.
@@ -182,10 +182,10 @@ test_results:
   gate off, historical compare, identity mismatch, session reset), attachment candidate
   bounds/negative cases, cross-tenant comparison, migration regression; Ruff/diff
   PASS.
-resume_instruction: Web capture/recheck and historical comparison verified offline.
-  Proceed attachment source contracts and original byte verification; candidate inventory
-  is not authorizing downloads. Preserve all existing source limits and tenant boundaries.
-  Use isolated/offline work, no source calls or heavy jobs that interfere with SIBUR
-  indexing; Gemma explicitly paused. No deployment.
+resume_instruction: No confirmed first-party attachment download contract in existing
+  audits. Implement explicit user-supplied candidate-bound immutable bytes, conservative
+  format validation, offline version comparison and bounded DOCX text preview, with
+  separate gate and provenance never claiming platform origin. No actual downloads
+  or model calls.
 owner_priority: Full SIBUR corpus first. Gemma acceptance paused until explicit resume.
   Product changes isolated, offline and bounded.
