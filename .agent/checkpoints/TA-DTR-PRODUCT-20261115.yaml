@@ -106,17 +106,31 @@ completed:
   selection and EIS evidence panel suppression; Ruff/make check PASS; Xcode unsigned
   build-for-testing PASS twice. No live HTTP, credentials, DB changes or application
   install.
-current_stage: company_schedule_and_durable_retries
+- Explicit per-company owner grant, frozen profile identity and source selection,
+  Moscow daily hour, schedule revision and separate default-off server gate. Existing
+  DTR CLI --company-schedule-tick invokes one bounded worker tick without owner-global
+  DTR; no live scheduling installation.
+- Durable attempt reservations before source call, retryable outcomes 5/15 minute
+  backoff, three logical attempts max, crash consumes reserved slot, shared manual-resume
+  budget, existing daily uniqueness/advisory guard. Owner status/role/legal/entitlement/profile
+  and grant revision rechecked before/after scheduled source access.
+- Web owner schedule controls, scoped state and confirmation; 113 offline tests passed,
+  one skipped, JS fixture/Ruff/make check PASS; disabled CLI returns no work. Disposable
+  PostgreSQL 110/111 migration upgrade/empty downgrade/re-upgrade, populated downgrade
+  denial, concurrent global tick lock, pre-request reservation and daily replay PASS;
+  database removed.
+current_stage: company_schedule_verified_next_commercial_original_evidence
 remaining:
-- Check exact-head PR539 and new commercial PR CI; PR532–538 previously 19/19 green,
-  review only.
-- Implement durable per-company opt-in schedule, bounded retry/backoff and scheduler
-  integration without creating a duplicate watchdog; do not activate production.
-- Expand source adapters beyond initial B2B-Center/Workspace and implement original
-  commercial card/document verification and eligibility separately.
-- Actual browser/simulator/Keychain and isolated end-to-end acceptance; coordinated
-  rollout and production migration remain separate.
-last_verified_commit: 64bdf5f68b51a4840cd16ecd2223e6670c9efc26
+- Check exact-head PR539–541 CI, prior PR532–538 green; all review-only, no merge
+  approval for this stack.
+- Extend commercial first-party card/document verification and evidence binding, additional
+  ETP source adapters based on verified original contracts.
+- Real browser/simulator/Keychain and isolated end-to-end acceptance including migrations
+  and scheduled cadence; production approval distinct.
+- No active schedule or new watchdog; deploy-approved existing scheduler invocation
+  and actual live source acceptance outstanding. Preserve SIBUR and conditional DP
+  rollout.
+last_verified_commit: 8a60e685fc6f4bc7c26b13f349f818136905efd9
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -140,5 +154,11 @@ test_results:
   109/110 and daily admission/step concurrency PASS
 - 54 passed, 1 skipped, 38 warnings in 6.63s; rendered JS, Ruff/make check/diff PASS;
   unsigned Xcode build-for-testing PASS twice
-resume_instruction: Build explicit owner grant, bounded schedule worker and persisted
-  attempts; default disabled. Test only isolated source fixtures and DB.
+- 113 passed, 1 skipped, 84 warnings in 9.76s; Node workflow, Ruff/make check/diff
+  PASS; disabled CLI no-op PASS; disposable PG migration 111, downgrade guard, concurrency
+  and reserved attempt/daily replay PASS
+resume_instruction: Schedule policy and bounded tick verified offline, publish/check
+  stacked review PR. Next implement commercial first-party evidence verification and
+  scoped source binding, using existing original card contracts; no live source requests
+  or owner-private corpus copying. Do not activate tenant, production migration, scheduler,
+  APNs, model or deployment. Existing watchdog unchanged.
