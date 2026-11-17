@@ -365,17 +365,20 @@ completed:
 - Native historical comparable evidence catalog and explicit case-bound selection/preview,
   exact source/response digest validation, locally reconstructed scope comparison;
   Web and iOS pin entire reviewed six-record projection.
-current_stage: price01_reviewed_contract_evidence_ingestion
+- Reviewed contract evidence offline manifest/XML verification, exact anchors, reviewer-attested
+  full scope, source identity and bounded Decimal contracted unit price; local read-only
+  CLI.
+current_stage: price01_reviewed_contract_intake_verified_next_publication_registry
 remaining:
-- Implement reviewed historical evidence ingestion and bounded normalization for independently
-  sourced signed contract prices and exact equivalent full-scope quantities. Additional
-  real source acquisition research separate; current reviewed cohort has zero additional
-  equivalents and zero verified signed contract prices.
-- Final PRICE-01 integrated acceptance, PostgreSQL concurrency, interactive Web/native
-  UI and deployment readiness. Default off.
+- 'Implement versioned reviewed-published historical receipt registry with explicit
+  trusted manifest pins; integrate separately from legacy fixed six-source archive
+  into backend and clients. Actual source acquisition research separate: no verified
+  new contracts or full-scope equivalent real quantities.'
+- Final PRICE-01 integrated PostgreSQL concurrency and interactive Web/iOS acceptance;
+  keep feature gates off.
 - B2B authorized UI observation, document acquisition and legacy cutover; no repeated
-  live pilot without new evidence.
-last_verified_commit: 37c1757a443f79e639053ff44cfe94730d566152
+  live pilot.
+last_verified_commit: 341d48b3ad10e810e336d070e864430e25f96f02
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -612,10 +615,14 @@ test_results:
   price corruption, 104 focused tests PASS/2 skipped/57 warnings in 11.61s, Ruff/diff
   PASS. PR596 CI 17 success/2 running at check. Interactive browser/simulator/device
   acceptance not performed.
-resume_instruction: Implement offline reviewed contract evidence bundle validation
-  and bounded scope normalization; explicit independent receipt pin, source byte and
-  exact anchor verification, no live acquisition or DB writes, test synthetic fixtures.
-  Keep current historical archive and client pins intact.
+- 20 new tests PASS; 335 full focused tests PASS/2 skipped/142 warnings in 21.82s;
+  Ruff/diff PASS. Synthetic XML only, no independent authenticity or signature verification.
+  PR597 CI 17 success/2 running at latest check.
+resume_instruction: Offline reviewed contract intake verified at 341d48b3. Next design
+  and implement versioned reviewed-published receipt registry from trusted review
+  pins only; preserve existing fixed archive/client compatibility. No actual new source
+  evidence, no independent signature/authenticity claims. Read PRICE01_REVIEWED_CONTRACT_INTAKE_2026-11-17.md.
+  No production changes or MacBook access; B2B unresolved.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
