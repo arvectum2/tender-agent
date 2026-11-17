@@ -742,7 +742,7 @@ apr08_evidence_copilot_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR08-EVIDENCE-COPILOT-20261117.yaml
   branch: feat/ta-apr08-evidence-copilot-20261117
-  current_stage: pinned_browser_review_authoritative_statute_gate_next
+  current_stage: statute_snapshot_review_authoritative_versions_next
 
 apr08_document_retrieval_20261117:
   task_id: TA-APR08-DOCUMENT-RETRIEVAL-20261117
@@ -822,4 +822,5 @@ apr08_statute_corpus_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR08-STATUTE-CORPUS-20261117.yaml
   branch: feat/ta-apr08-statute-corpus-20261117
-  current_stage: versioned_source_snapshot_gate
+  current_stage: exact_ci_pending
+  last_verified_commit: 941e377f483c01ec1f7bbcb3b9d0c7ca081467dd

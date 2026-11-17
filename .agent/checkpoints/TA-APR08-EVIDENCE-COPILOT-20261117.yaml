@@ -20,13 +20,14 @@ completed:
   - Extended stateless offer economics and liquidity stress; 195 focused regressions and authenticated HTTP/Node UI simulation PASS. PR615/616 exact CI green.
   - Actual Chromium loopback workspace acceptance twice; archived DP questions, lexical search, unknown, commercial scenario, input reset and visual review PASS. Pinned XML positives remain API-tested, not browser-tested.
   - Positive pinned archived XML Chromium desktop/narrow testing PASS; Copilot accessible before report; no model or unsupported legal conclusion. PR617/619/620 exact CI green.
-current_stage: pinned_browser_review_authoritative_statute_gate_next
+  - Versioned immutable historical statute snapshot corpus, real Rospatent 44-FZ source, 6 article excerpts and Chromium positive/negative flow PASS; no normative effective interval or actual applicability.
+current_stage: statute_snapshot_review_authoritative_versions_next
 remaining:
   - Verify reproducible APR08 real DP acceptance successor CI.
   - Develop bounded semantic evidence grounded Q&A, legal reasoning boundaries and explicit assumption-based commercial calculations.
   - Real browser acceptance, complete module gate and separate integration consent.
-last_verified_commit: 2953c0eb1ca47dbe456026a63431a690e8b359d8
+last_verified_commit: 941e377f483c01ec1f7bbcb3b9d0c7ca081467dd
 test_results:
   - 108 targeted PASS, Ruff/Node syntax/diff check PASS, existing Node UI simulation genuine scenario extension PASS.
   - Real archived XML v3 exact SHA replay 4/4, missing pinned metadata 4/4 UNKNOWN; no live sources/model/production.
-resume_instruction: Continue from the retrieval replay successor branch; check CI, build next bounded evidence-grounded question increment. PR610/611 green but not merged. No production, live procurement, model execution or automatic merge.
+resume_instruction: Verify latest stack CI, extend authoritative official source and reviewed effective-date evidence, then bounded semantic and overall module acceptance. No production, live procurement, model or automatic merge.
