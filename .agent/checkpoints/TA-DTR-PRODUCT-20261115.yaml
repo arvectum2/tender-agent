@@ -358,16 +358,20 @@ completed:
   EIS receipts; distinct selected procedures, explicit reference, scope difference
   evidence, admitted offers separated from unknown signed contract amounts. No unsupported
   normalization.
-current_stage: price01_historical_comparables_web
+- Web historical comparable archive, explicit selected reference/observations, separate
+  admitted prices and unknown contracts, scope comparison with original quotes and
+  provenance. Client validates pinned receipt identities, exact response digest, scope
+  and selected observations.
+current_stage: price01_historical_comparables_web_verified_next_ios
 remaining:
-- Web/iOS historical evidence catalog and comparison, exact source and response digest
-  validation.
-- Expand reviewed corpus with actual signed contract evidence and exact comparable
-  complete quantities; no inference from deadlines or winners.
-- Final PRICE-01 acceptance including PostgreSQL concurrency and native interactive
-  acceptance.
-- B2B authorized manual observation, document acquisition and legacy cutover.
-last_verified_commit: 70306f2a86982eff9e33ccb61a1c2554d309338b
+- Native iOS typed historical catalog and preview with exact selected observations,
+  pinned source/digest validation, scope comparison; Swift fixture and Xcode build.
+- Additional reviewed signed contract evidence and exact equivalent full-scope work
+  quantities; no inferred normalized range.
+- Final PRICE-01 integrated acceptance including PostgreSQL concurrency, real Web/native
+  UI.
+- B2B authorized UI observation, document acquisition and legacy cutover.
+last_verified_commit: be7df7997e9db08f7b2b287c4746befeed0ce8ff
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -595,10 +599,15 @@ test_results:
 - 315 tests passed, 2 skipped, 142 warnings in 18.66s; Ruff/diff PASS. Integrated
   tenant/role, archive provenance/quantity limits and source corruption tests. PR594
   17 success/2 running, no failures.
-resume_instruction: Implement Web case-bound historical evidence catalog and explicit
-  comparison, verify source receipt and response digests, exact selected records and
-  scope differences; no pooled rate or fabricated contract values. Test Node and regression;
-  no production changes.
+- 315 tests pass, 2 skipped, 142 warnings in 18.92s; Node cabinet fixture with real
+  Python archive projections PASS, including disabled feature, duplicate/remove, changed
+  reference, wrong company and changed price with recomputed digest; Ruff/diff PASS.
+  PR595 18 success/1 running, no failures. Interactive browser acceptance not performed.
+resume_instruction: Historical evidence backend and Web verified, Web code be7df799.
+  Next iOS typed catalog/preview and selection. Six archived website procedures, zero
+  additional equivalent cases or verified contract prices. Keep feature disabled by
+  default; no new live source requests, production changes or MacBook access. B2B
+  authorization unresolved.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
