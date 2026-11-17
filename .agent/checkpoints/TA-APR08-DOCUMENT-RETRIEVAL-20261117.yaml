@@ -6,10 +6,11 @@ definition_of_done:
   - Private API and existing UI with safe display and request scoping; unsupported/missing evidence UNKNOWN, completeness not implied.
   - Adversarial regressions, UI simulation and archive replay; publish draft.
 completed:
-  - PR610 exact head fd8c32f8 currently CI pending; main mirror passed.
+  - Exact PR610 fd8c32f8 and PR611 ae389369 CI 19/19 SUCCESS each, main postmerge CI SUCCESS.
   - Implemented private run-local lexical lookup, bounded candidate selection and existing original quote verifier; UI search and stale response reset.
   - Actual saved archive replay returned UNKNOWN; diagnosed local DP authentication error and unsupported nested XML; excluded nested paths from candidate budget. Original bytes unchanged.
-current_stage: exact_ci_and_authorized_dp_replay_pending
+  - Authorized isolated real DP replay PASS: ephemeral key, no models, anonymous 401, archived query оплатa работ returned one verified excerpt, original run SHA inventory unchanged, instance removed.
+current_stage: reproducible_real_dp_acceptance
 remaining:
   - Verify exact PR610 and successor CI; correct failures.
   - Obtain sanctioned isolated DP process consumer configuration for real positive original replay; no credential disclosure or change to working service auth.

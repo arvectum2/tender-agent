@@ -749,4 +749,4 @@ apr08_document_retrieval_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR08-DOCUMENT-RETRIEVAL-20261117.yaml
   branch: feat/ta-apr08-document-retrieval-20261117
-  current_stage: exact_ci_and_authorized_dp_replay_pending
+  current_stage: reproducible_real_dp_acceptance
