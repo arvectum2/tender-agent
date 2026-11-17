@@ -1,0 +1,15 @@
+task_id: TA-APR08-TYPED-PAYMENT-20261117
+status: in_progress
+goal: Extract explicitly stated payment duration, day type and trigger from supported verified literal excerpts, without asserting applicable contractual deadline.
+definition_of_done:
+  - Only full conservative clause patterns, cite exact text, refuse partial/conditional/conflicting patterns; no statutory inference or calendar arithmetic.
+  - Extend existing response and UI with typed observation and explicit incomplete scope, no semantic/legal/GO promotion.
+  - Regression, isolated real DP replay and draft PR with CI.
+completed:
+  - PR612 exact head 19/19; PR613 18/19 with mirror workflow failure, investigating.
+current_stage: bounded_literal_payment_duration
+remaining:
+  - Diagnose mirror, implement, test, publish and verify CI.
+last_verified_commit: f0d1e152938c95c1f9d5b847fb70d1acb8549906
+test_results: []
+resume_instruction: Existing private grounded question route; typed explicit clause observation only; no production, Gemma, live sources or automatic merge.
