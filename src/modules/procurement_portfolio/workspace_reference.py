@@ -17,6 +17,8 @@ from src.modules.event_log.models import DecisionRecord, EventRecord
 from src.modules.outcome_intake.models import OutcomeIntakeBinding, OutcomeIntakeRecord, OutcomeIntakeSet
 from src.modules.tender_screening.models import TenderScreeningRecord
 
+from src.shared.enums import DealStatus
+
 from .service import _EXPLICIT_DECISION_CODES
 
 SCHEMA = "arvectum.tender.internal-procurement-reference/1"
@@ -71,7 +73,7 @@ def _check(expected, authorize, now):
         raise ReferenceDenied("source admission missing or changed")
     _ref(expected.binding_id)
     _ref(expected.database_binding)
-    if not re.fullmatch(r"[a-f0-9]{40}", expected.source_release):
+    if not isinstance(expected.source_release, str) or not re.fullmatch(r"[a-f0-9]{40}", expected.source_release):
         raise ReferenceDenied("release pin required")
     start, end = _utc(expected.starts_at), _utc(expected.expires_at)
     if not start <= _utc(now) < end or end - start > timedelta(days=30):
@@ -104,7 +106,7 @@ def _decision(session, deal_id):
         return None
     value = CODE_VALUES.get(row["decision_code"], row["value"])
     actor = row["decided_by_type"]
-    if actor not in ("HUMAN", "AGENT", "SYSTEM", "SOFTWARE"):
+    if actor not in ("HUMAN", "AGENT", "SYSTEM", "MODULE"):
         actor = "UNKNOWN"
     return {
         "ref": _ref(row["decision_id"]),
@@ -187,7 +189,7 @@ def read_internal_procurement(session: Session, *, scope, authorize, clock):
             items.append({
                 "deal_id": _ref(row.deal_id),
                 "procurement_number": number,
-                "workflow_status": _ref(row.current_status),
+                "workflow_status": row.current_status if row.current_status in {v.value for v in DealStatus} else "UNKNOWN",
                 "updated_at": _stamp(row.updated_at),
                 "recorded_decision": _decision(session, row.deal_id),
                 "recommendation": _screening(session, row.deal_id),
