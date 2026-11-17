@@ -1,0 +1,15 @@
+task_id: TA-APR03B-RI223-ZIP-20261117
+status: in_progress
+goal: Explicit bounded ZIP projection of receipt-bound original attachments and exact quote-time lineage; retain RAR behavior.
+definition_of_done:
+  - Validate entire ZIP inventory before decompression, refuse traversal, links, duplicate paths, unsupported/encrypted/nested files and excessive budgets.
+  - Independent parent receipt and re-derived child, exact lineage in API/UI; no full analysis promotion.
+  - Attack tests, actual DP/Chromium replay with accurately labelled fixture if no actual ZIP, regressions and draft PR.
+completed:
+  - PR632 exact CI 19/19; PR633 exact 17/19 no failures. Main unchanged 3b37fb69.
+current_stage: zip_projection
+remaining:
+  - Implement, test, replay, publish, verify CI.
+last_verified_commit: 64b81063f1e3b4afd54e2580db07a87b88f25550
+test_results: []
+resume_instruction: Preserve private originals and WSF07B; no live acquisitions, production, model or automatic merge.
