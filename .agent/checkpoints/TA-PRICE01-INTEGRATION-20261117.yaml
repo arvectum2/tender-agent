@@ -1,5 +1,5 @@
 task_id: TA-PRICE01-INTEGRATION-20261117
-status: in_progress
+status: blocked
 goal: Reconcile PRICE-01 accepted staging, runtime packaging and full CI on a consolidated integration candidate.
 definition_of_done:
   - Preserve existing accepted HTTPS Web/native/iOS evidence and package pinned registry.
@@ -10,11 +10,17 @@ completed:
   - Stage acceptance passed at 31af52c1; PR 602 checkpoint 2a3faa8b.
   - Packaging fix cherry-picked from 8678c917.
   - PR601 quality failure isolated to Node fixture exceeding 20 seconds; 5984 other tests passed. Bounded fixture allowance increased to 90 seconds.
-current_stage: exact_ci_pending
+current_stage: owner_merge_review
 remaining:
-  - Exact full CI and integration review.
-last_verified_commit: 4ae48b94
+  - Obtain explicit Owner merge approval for exact consolidated PR #603 (includes DTR, SaaS and B2B dependencies; no matching active auto_merge queue entry).
+  - After approval, verify exact green head and unchanged main, merge; record final merge SHA.
+  - Production deployment, physical device UX and actual contract publication remain separate.
+last_verified_commit: b52333adc68de0df3f21dee7631c4cef48a5c9c2
 test_results:
   - 26 focused pytest PASS, including Node browser fixture, 13.45s; Ruff and diff check PASS.
   - Previous isolated local Docker release loader and SHA PASS; iOS HTTPS XCTest PASS.
-resume_instruction: Review consolidated draft PR exact CI and dependency scope; address failures, then integrate only under applicable merge authorization. Preserve production and separate B2B live gates.
+  - PR603 exact-head GitHub CI 19/19 SUCCESS; both quality jobs 5987 passed, 288 skipped, 0 failed (runs 44032285109 and 44032277824).
+  - PR mergeable CLEAN, base main 35c44a898b56c055bbcd50a8be25227459c08e58; all new company/source feature flags default false.
+  - Main CI builds root Dockerfile; full pilot Dockerfile not rebuilt; local overlay loader checked.
+  - Scope review: 127 files, includes guarded B2B transport and direct egress denial, DTR and company portfolio. No live activation or registry content.
+resume_instruction: Await explicit Owner approval of consolidated PR603 scope. Verify PR603 head b52333ad and green CI, main base unchanged; if approved merge without deployment, record SHA, reconcile roadmap and checkpoints. If head/base changes, revalidate. Do not bypass governance.

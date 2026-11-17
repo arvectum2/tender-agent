@@ -669,7 +669,11 @@ parallel_dtr_product:
 
 price01_integration_20261117:
   task_id: TA-PRICE01-INTEGRATION-20261117
-  status: in_progress
+  status: blocked
   checkpoint: .agent/checkpoints/TA-PRICE01-INTEGRATION-20261117.yaml
   branch: feat/ta-price01-integration-20261117
-  current_stage: exact_ci_pending
+  review_checkpoint_branch: docs/ta-price01-final-review-20261117
+  current_stage: owner_merge_review
+  last_verified_commit: b52333adc68de0df3f21dee7631c4cef48a5c9c2
+  pr: 603
+  resume_instruction: Explicit Owner merge approval required for consolidated scope; verify exact head CI before merge, no deployment.
