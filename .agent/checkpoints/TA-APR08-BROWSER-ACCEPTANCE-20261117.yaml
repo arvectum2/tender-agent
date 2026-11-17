@@ -1,5 +1,5 @@
 task_id: TA-APR08-BROWSER-ACCEPTANCE-20261117
-status: in_progress
+status: completed
 goal: Real Chromium acceptance using actual private workspace route and archived sources, no production.
 definition_of_done:
   - Browser opens stored run with auth; real source question, quote, unknown, financial scenario and stale-clear verified.
@@ -10,13 +10,12 @@ completed:
   - Real Chromium against isolated operator ASGI with exact read-only route allowlist and authenticated isolated DP: payment, delivery, lexical search, legal/legacy UNKNOWN, financial scenario, clear PASS, no JS errors. Anonymous 401 and analyze 403.
   - Visually inspected three result screenshots; deduplicated identical delivery summary while retaining both source citations, reran Chromium successfully. Originals unchanged and temporary services stopped.
   - Prior pinned XML security/legal replay PASS; positive pinned XML browser branch and authoritative statute gate not yet covered.
-current_stage: exact_ci_pending
-remaining:
-  - Verify exact new PR CI and parent PR617/619 CI.
-  - Positive pinned XML browser replay and comprehensive remaining statute/source verification gate; no full APR08 completion claim.
-last_verified_commit: 2bfb90b444aa8921a62ca34c6fe64ebddd21762d
+  - Exact reviewed head f1e1cdf6c2ae39a7d55bfa6932853994c179e793 CI 19/19 SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
+last_verified_commit: f1e1cdf6c2ae39a7d55bfa6932853994c179e793
 test_results:
   - 195 focused PASS, Ruff, diff, JS syntax and Node simulation PASS.
   - APR08_REAL_CHROMIUM_PASS twice; three screenshots visually inspected and duplicate summary corrected.
   - APR08_REAL_DP_REPLAY_PASS and APR08_SECURITY_ARCHIVE_REPLAY_PASS; original inventory unchanged.
-resume_instruction: Use existing archived sources and isolated loopback DP/ASGI routes, prohibit external browser traffic, no automatic merge or deployment.
+resume_instruction: Bounded increment verified; merge requires separate authorization. Continue parent APR08.

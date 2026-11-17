@@ -1,5 +1,5 @@
 task_id: TA-APR08-LEGAL-REFERENCE-20261117
-status: in_progress
+status: completed
 goal: Explain security terms grounded in archived customer procedureInfo, identify explicit references to legal acts without claiming their legal content or current applicability.
 definition_of_done:
   - Reuse exact pinned original security group, verify literal procedure text and explicitly paired legal references, do not infer legal norms or eligibility.
@@ -9,12 +9,11 @@ completed:
   - PR615 and PR616 exact heads 17/19 successful each, no failures. No versioned procurement legislation corpus located in product repository.
   - Implemented full unique pinned XML customer procedureInfo and explicit article/act or decree date/number citation with literal offsets. Separate customer terms from law, no independently verified statute or legal conclusion; review checklist.
   - Real archived EOK v3 0348100024426000039: 3 bid and 5 contract security references, SHA-pinned exact scopes, all originals unchanged.
-current_stage: exact_ci_pending
-remaining:
-  - Verify exact new PR CI, parent PR615/616 CI.
-  - Next explicit financial scenarios and versioned authoritative legislation source gate; general legal interpretation not completed.
-last_verified_commit: 9519b335199290056120f68c8a59ef214d0ba28f
+  - Exact reviewed head 379f7252f7cead8a02bc42dcbff13c61b03426a9 CI 19/19 SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
+last_verified_commit: 379f7252f7cead8a02bc42dcbff13c61b03426a9
 test_results:
   - 161 focused PASS, Ruff, diff, Node syntax and simulation PASS.
   - APR08_CUSTOMER_LEGAL_REFERENCE 0348100024426000039 applicationGuarantee 3, contractGuarantee 5; prior security replay PASS.
-resume_instruction: Reuse pinned security group and exact XML path; references are not independently verified law. No model, production, live procurement or automatic merge.
+resume_instruction: Bounded increment verified; merge requires separate authorization. Continue parent APR08.

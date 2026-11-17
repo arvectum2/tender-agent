@@ -742,7 +742,7 @@ apr08_evidence_copilot_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR08-EVIDENCE-COPILOT-20261117.yaml
   branch: feat/ta-apr08-evidence-copilot-20261117
-  current_stage: browser_review_pinned_xml_and_statute_gate_next
+  current_stage: pinned_browser_review_authoritative_statute_gate_next
 
 apr08_document_retrieval_20261117:
   task_id: TA-APR08-DOCUMENT-RETRIEVAL-20261117
@@ -787,31 +787,32 @@ apr08_delivery_20261117:
 
 apr08_legal_reference_20261117:
   task_id: TA-APR08-LEGAL-REFERENCE-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR08-LEGAL-REFERENCE-20261117.yaml
   branch: feat/ta-apr08-legal-reference-20261117
-  current_stage: exact_ci_pending
-  last_verified_commit: 9519b335199290056120f68c8a59ef214d0ba28f
+  current_stage: verified_pending_merge
+  last_verified_commit: 379f7252f7cead8a02bc42dcbff13c61b03426a9
 
 apr08_commercial_scenario_20261117:
   task_id: TA-APR08-COMMERCIAL-SCENARIO-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR08-COMMERCIAL-SCENARIO-20261117.yaml
   branch: feat/ta-apr08-commercial-scenario-20261117
-  current_stage: exact_ci_pending
-  last_verified_commit: fd4635a4e8d7e153678f15b968798b6d758090a8
+  current_stage: verified_pending_merge
+  last_verified_commit: e19d79174cc2727dcbfbd6a869577458de853144
 
 apr08_browser_acceptance_20261117:
   task_id: TA-APR08-BROWSER-ACCEPTANCE-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR08-BROWSER-ACCEPTANCE-20261117.yaml
   branch: feat/ta-apr08-browser-acceptance-20261117
-  current_stage: exact_ci_pending
-  last_verified_commit: 2bfb90b444aa8921a62ca34c6fe64ebddd21762d
+  current_stage: verified_pending_merge
+  last_verified_commit: f1e1cdf6c2ae39a7d55bfa6932853994c179e793
 
 apr08_pinned_browser_20261117:
   task_id: TA-APR08-PINNED-BROWSER-20261117
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR08-PINNED-BROWSER-20261117.yaml
   branch: feat/ta-apr08-pinned-browser-20261117
-  current_stage: pinned_archive_browser_replay
+  current_stage: exact_ci_pending
+  last_verified_commit: 2953c0eb1ca47dbe456026a63431a690e8b359d8

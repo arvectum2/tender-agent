@@ -1,5 +1,5 @@
 task_id: TA-APR08-COMMERCIAL-SCENARIO-20261117
-status: in_progress
+status: completed
 goal: Extend existing PRICE01 stateless what-if with explicit proposal price, guarantee fees and refundable collateral liquidity, no implied procurement recommendation.
 definition_of_done:
   - Exact decimal scenario economics, explicitly supplied assumptions, separate refundable collateral from costs and no unsupported tax or actual security inference.
@@ -10,12 +10,11 @@ completed:
   - Extended existing stateless calculator with four optional but jointly required offer assumptions; Decimal economic profit, margin, fees, revised thresholds and explicit pre-receipt cash stress, collateral separate from costs.
   - Exact route protection checked, UI stale-response invalidation tested; no actual peak cash or security obligation inferred.
   - PR615 and PR616 exact CI 19/19 SUCCESS; PR617 17/19 in progress, no failures.
-current_stage: exact_ci_pending
-remaining:
-  - Verify exact new PR CI and PR617 CI.
-  - Next actual browser acceptance and authoritative statute gate; full APR08 remains open.
-last_verified_commit: fd4635a4e8d7e153678f15b968798b6d758090a8
+  - Exact reviewed head e19d79174cc2727dcbfbd6a869577458de853144 CI 19/19 SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
+last_verified_commit: e19d79174cc2727dcbfbd6a869577458de853144
 test_results:
   - 195 focused PASS, Ruff, diff, Node simulation PASS incl stale response.
   - Authenticated HTTP scenario synthetic explicit inputs: price 500, profit 125, margin 25%, cash costs 175, refundable deposits 70, stress 245; actual peak UNKNOWN.
-resume_instruction: Extend stateless PRICE01 without tax advice, assumed actual security or bid readiness; no models, live procurement, production or automatic merge.
+resume_instruction: Bounded increment verified; merge requires separate authorization. Continue parent APR08.
