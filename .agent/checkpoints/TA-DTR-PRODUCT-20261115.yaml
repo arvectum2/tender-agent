@@ -351,14 +351,19 @@ completed:
 - Web explicit selected normative version added to open itemized estimate, validated
   provenance and immutable bound row, duplicate protection, compatible historical
   rendering.
-current_stage: price01_norm_binding_ios
+- Native explicit norm version selection into itemized estimate, typed source binding
+  and protected bound row, provenance in historical projection and Python-compatible
+  actual/evidence digests.
+current_stage: price01_norm_binding_ios_verified_next_comparables
 remaining:
-- iOS typed approved norm selection, source provenance verification and compatible
-  historical estimate/evidence/actual baseline decoding and digest; test Swift/build.
-  Default-off until acceptance.
-- Historical comparable procurement normalization and final PRICE-01 acceptance.
-- B2B authorized manual observation and document acquisition; no repeat live pilot.
-last_verified_commit: ef5bad3e4c6ed52bebd17fcddb9da18f08c2c8e7
+- Implement historical comparable procurement normalization from admitted offers and
+  contract evidence, with explicit comparability and provenance; do not infer market
+  prices or probability.
+- 'Final PRICE-01 acceptance: PostgreSQL concurrency, integrated Web/native UI, fixture
+  and deployment readiness. Feature gates stay off until acceptance.'
+- B2B authorized manual observation and document acquisition, legacy runtime cutover;
+  no repeat live pilot.
+last_verified_commit: 1d185b5f5da19c20ed51a44b062d4825d75efb0b
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -579,10 +584,15 @@ test_results:
 - 289 focused tests passed, 2 skipped, 136 warnings in 18.94s; Node cabinet flow PASS
   including bound Python projection/save, withdrawal and historical read; Ruff/diff
   PASS. PR592 17 success/2 running. No real-browser acceptance.
-resume_instruction: Implement native version-bound normative estimate selection, typed
-  historical projection and digest compatibility. Test Swift contract with independent
-  Python fixtures and Xcode build. PR593 CI 19/19. Keep feature default off; no production
-  changes.
+- Standalone Swift execution of independent Python bound estimate and legacy actual/evidence/norm
+  fixtures PASS, including row and baseline SHA256, rejected foreign/withdrawn selections
+  and duplicates. Xcode iOS Simulator build-for-testing PASS. Git diff check PASS;
+  PR593 CI 19/19. Native interactive acceptance not performed.
+resume_instruction: 'Backend, Web and iOS exact norm binding verified, native code
+  1d185b5f. Next historical market comparables: inspect prior price research notes,
+  corpus models and evidence contracts; implement bounded explicit normalization and
+  descriptive evidence first. Keep feature default off; no production or MacBook changes.
+  B2B authorized access unresolved.'
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
