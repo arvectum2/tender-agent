@@ -7,9 +7,15 @@ definition_of_done:
   - Targeted tests and real isolated DP replay, draft PR and exact CI.
 completed:
   - PR615 17/19 SUCCESS, two running; no failed checks. Real archive inspection identified duplicate service completion dates with different clause numbers; no unique clause inference.
-current_stage: literal_service_work_delivery_contract_dates
+  - Implemented strict scope-specific literal date/duration observations with original verified citations; no inferred deadline. Repeated identical terms within a file may be sampled once, distinct supported terms within one file abstain; partial search does not establish completeness.
+  - Real isolated DP archived service question: two verified original excerpts, 2026-12-07 inclusive from contract conclusion, no effective due date. Prior security replay also PASS.
+current_stage: exact_ci_pending
 remaining:
-  - Implement, verify, publish and confirm CI.
-last_verified_commit: 80d8533ba73ddfe8735cf5d1ff4629045a834b84
-test_results: []
+  - Verify exact new PR CI and parent PR615 CI.
+  - Next bounded legal explanation and financial scenarios; full APR08 remains open.
+last_verified_commit: 114cdda8de7f1cf0c526958cf1b2278acc0b63c1
+test_results:
+  - 157 focused PASS, Ruff, diff, JS syntax and Node simulation PASS.
+  - APR08_REAL_DELIVERY_OBSERVATION LITERAL_PERFORMANCE_OBSERVATIONS citations 2; original inventory unchanged.
+  - APR08_SECURITY_ARCHIVE_REPLAY_PASS 3 archives 6 questions.
 resume_instruction: Existing authenticated run scope and original quote verifier; no models, new live procurement, production or automatic merge.
