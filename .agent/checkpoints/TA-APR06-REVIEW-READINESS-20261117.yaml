@@ -1,0 +1,15 @@
+task_id: TA-APR06-REVIEW-READINESS-20261117
+status: in_progress
+goal: Reconcile frozen 20-case development evidence with existing commercial acceptance candidates without promoting development labels into human or legal gold.
+definition_of_done:
+  - Reuse pinned cohort integrity audit and exact candidate pool provenance.
+  - Produce deterministic case-level readiness inventory, expose overlap and missing metrics without claiming human review or source authenticity.
+  - Test rejection of changed inputs and false acceptance claims; publish review PR.
+completed:
+  - APR05 engineering rehearsal exact head 380bbdb0 verified CI 19/19 and full pilot build; merge remains owner-gated.
+current_stage: source_bound_review_inventory
+remaining:
+  - Implement and verify offline inventory and targeted regression.
+last_verified_commit: 380bbdb0bb50ec0557eb40ebf14100da5ed0ff1b
+test_results: []
+resume_instruction: Build and verify readiness inventory from pinned tracked evidence only; no new LLM, EIS traffic, payment, or production activity.
