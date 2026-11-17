@@ -14,11 +14,14 @@ completed:
   - Original ZIP/XML and 75 individual attachment bytes reverified for all 16 overlaps, private navigation index created.
   - Replayed pinned historical audit byte-for-byte and published 16 archived cross-document review questions with source SHA and locators.
   - Repaired commercial KPI denominator: decisive-vs-decisive comparisons only, no zero missed-blocker value with zero observations.
-current_stage: historical_findings_ci_pending
+  - Verified additional four DEVELOPMENT-only 44-FZ ZIP/XML and 21 original binary attachments.
+  - Reverified six supplemental historical RI223 archives, ten archived attachment references plus one RAR, exact notice/protocol binding, and original candidate receipt gaps.
+  - Exact prior PR605 da55fa7c CI 19/19 SUCCESS.
+current_stage: mixed_archive_ci_pending
 remaining:
   - Verify exact CI on successor PR.
   - Commercial acceptance stays blocked pending independent original-source and attributable human reviews; no fabricated metrics.
-last_verified_commit: 05e293a3a4b6f2ed02bf9fdc34b1ffb605683738
+last_verified_commit: 08e97473fe849b0b622b5af4cb30ca3b25ad7121
 test_results:
   - 51 targeted pytest PASS; Ruff and git diff check PASS.
   - Deterministic output byte comparison PASS. 28 candidates, 20 archived development, 16 overlap, 12 candidate-only, 4 development-only, 32 unique inventory entries.
@@ -27,4 +30,6 @@ test_results:
   - 113 targeted tests PASS, Ruff PASS, deterministic public artifact identical on rerun, private navigation 0600 outside Git.
   - Replayed exact original 707e5bbb audit: overlap 16 archival source-contrast questions, 75 documents, 209 first topical mentions / 1633 fixed-pattern occurrences; 26 sampled quotes / 10 historical cases (22 exact, 3 whitespace variants, 1 unsupported); two deadline conflicts and eight unattested strong blocker statements in ten older reports. All seven commercial metrics null.
   - 117 targeted tests PASS; deterministic findings artifact rerun byte-identical; Ruff PASS.
-resume_instruction: Verify exact updated PR605 CI; fix failures. Continue offline candidate diversity/selection decision and review evidence for the four development-only cases and existing 223-FZ receipts. Do not label the 44-FZ-only historical subset the frozen mixed commercial corpus; preserve original snapshots. Attributed human reviews, actual operator time and Owner KPI approval remain separate. No Gemma, live EIS/ETP, production, or unauthorized merge.
+  - 72 targeted tests PASS; Ruff and byte-identical mixed archive replay PASS. 44-FZ full historical DEVELOPMENT coverage now 20 archives / 96 attached originals.
+  - Supplemental RI223: three single-supplier negative controls, one fully archived quotation candidate, one multi-lot competitive candidate with missing binaries, one market-research method requiring classification. Eleven binary references verified including exact source RAR/PDF scoring; eight original APR06 223-FZ candidates still lack independently complete revision-bound documentation.
+resume_instruction: Verify exact new PR605 CI, then delimit completed engineering readiness from externally blocked commercial acceptance. Prepare explicit supplemental review shortlist (20 historical 44-FZ plus complete quotation candidate, not frozen) and do not promote noncompetitive controls, ambiguous market research, or incomplete multi-lot materials into commercial corpus. If source recovery cannot proceed without new EIS requests, mark objective external blocker and move to next independent engineering roadmap item; no Gemma, live requests, production, unauthorized merge or fabricated commercial metrics.
