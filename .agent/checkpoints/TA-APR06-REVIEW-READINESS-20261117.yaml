@@ -7,19 +7,24 @@ definition_of_done:
   - Test rejection of changed inputs and false acceptance claims; publish review PR.
   - Verify historical original ZIP/XML and rehash all archived attachments in the 16 overlaps; create private navigation index.
 completed:
+  - PR605 exact head 7ea0c3d1 CI 19/19; 5996 pytest pass, 288 skipped.
   - APR05 engineering rehearsal exact head 380bbdb0 verified CI 19/19 and full pilot build; merge remains owner-gated.
   - Pinned 28 candidate and corrected 20 development records reconciled without corpus promotion.
   - Deterministic inventory and adversarial tests implemented.
   - Original ZIP/XML and 75 individual attachment bytes reverified for all 16 overlaps, private navigation index created.
-current_stage: overlap_packets_ci_pending
+  - Replayed pinned historical audit byte-for-byte and published 16 archived cross-document review questions with source SHA and locators.
+  - Repaired commercial KPI denominator: decisive-vs-decisive comparisons only, no zero missed-blocker value with zero observations.
+current_stage: historical_findings_ci_pending
 remaining:
   - Verify exact CI on successor PR.
   - Commercial acceptance stays blocked pending independent original-source and attributable human reviews; no fabricated metrics.
-last_verified_commit: c33f55f78453ccd4c582b88123d5e593c29b951a
+last_verified_commit: 05e293a3a4b6f2ed02bf9fdc34b1ffb605683738
 test_results:
   - 51 targeted pytest PASS; Ruff and git diff check PASS.
   - Deterministic output byte comparison PASS. 28 candidates, 20 archived development, 16 overlap, 12 candidate-only, 4 development-only, 32 unique inventory entries.
   - Seven commercial metrics null; no human review evidence in inputs.
   - 16/16 archived ZIP and selected XML verified; 75/75 attachments locally rehashed; 14 individual receipt sets reconciled and 2 older complete same-case runs recovered without mixing.
   - 113 targeted tests PASS, Ruff PASS, deterministic public artifact identical on rerun, private navigation 0600 outside Git.
-resume_instruction: Review updated exact PR605 CI; fix failures. Use private navigation at /Volumes/ArvectumSSD/Arvectum/runtime/ta-apr06-overlap-review-20261117/review-navigation.json for source-grounded review of archived cases and KPI readiness; continue four development-only archived cases/candidate diversity as a separate documented selection decision. Do not manufacture attributable human decisions, current EIS state or measured commercial KPIs. Keep APR05 merge authorization separate; no model invocation, live traffic or deployment.
+  - Replayed exact original 707e5bbb audit: overlap 16 archival source-contrast questions, 75 documents, 209 first topical mentions / 1633 fixed-pattern occurrences; 26 sampled quotes / 10 historical cases (22 exact, 3 whitespace variants, 1 unsupported); two deadline conflicts and eight unattested strong blocker statements in ten older reports. All seven commercial metrics null.
+  - 117 targeted tests PASS; deterministic findings artifact rerun byte-identical; Ruff PASS.
+resume_instruction: Verify exact updated PR605 CI; fix failures. Continue offline candidate diversity/selection decision and review evidence for the four development-only cases and existing 223-FZ receipts. Do not label the 44-FZ-only historical subset the frozen mixed commercial corpus; preserve original snapshots. Attributed human reviews, actual operator time and Owner KPI approval remain separate. No Gemma, live EIS/ETP, production, or unauthorized merge.

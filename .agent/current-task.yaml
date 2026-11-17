@@ -689,4 +689,4 @@ apr06_review_readiness_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR06-REVIEW-READINESS-20261117.yaml
   branch: feat/ta-apr06-review-readiness-20261117
-  current_stage: overlap_packets_ci_pending
+  current_stage: historical_findings_ci_pending
