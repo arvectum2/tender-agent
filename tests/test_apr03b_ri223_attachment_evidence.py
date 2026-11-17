@@ -77,3 +77,54 @@ def test_rar_preserved_without_expansion(tmp_path,monkeypatch):
     f=meta['files'][1]
     assert f['extraction_status']=='unsupported' and meta['ri223_attachment_extraction']['searchable']==0
     assert (run/'input'/f['stored_name']).read_bytes()==original.read_bytes()
+
+
+@pytest.mark.parametrize('tamper',['none','parent','child','path','receipt','parent_id','alias'])
+def test_rar_projection_and_lineage(tmp_path,monkeypatch,tamper):
+    from src.modules.tender_operator_agent_demo import (
+        ri223_container_evidence as container,
+    )
+    from src.modules.tender_operator_agent_demo.ri223_attachment_evidence import (
+        verified_container_lineage,
+    )
+    from src.tender_research.providers.ri223_rar_members import Ri223RarMember
+
+    root,archive,original,_=setup_attachment(tmp_path,monkeypatch,ext='rar')
+    child=Ri223RarMember('docs/spec.docx','spec.docx',b'actual projected fixture')
+    def extract(path):
+        assert path.read_bytes()==original.read_bytes()
+        return (child,)
+    monkeypatch.setattr(container,'extract_ri223_rar_members',extract)
+    run=root/import_archive(root,archive,NUMBER,attachments=[original],processor=processor,expand_rar=True)
+    meta=json.loads((run/'metadata.json').read_text())
+    p,f=meta['files'][1:]
+    assert meta['ri223_attachment_extraction']['container_members']==1
+    assert meta['ri223_attachment_extraction']['searchable']==1
+    assert p['source']=='ri223_attachment' and f['source']=='ri223_container_member'
+    if tamper=='parent':(run/'input'/p['stored_name']).write_bytes(b'changed')
+    elif tamper=='child':(run/'input'/f['stored_name']).write_bytes(b'changed')
+    elif tamper=='path':f['ri223_container']['member_path']='docs/other.docx'
+    elif tamper=='receipt':f['ri223_receipts']=[]
+    elif tamper=='parent_id':f['ri223_container']['parent_file_id']='FILE-99'
+    elif tamper=='alias':meta['files'].append(dict(p))
+    result=verified_container_lineage(run,meta,f)
+    if tamper=='none':
+        assert result['member_path']==child.path and result['parent_name']=='spec.rar'
+        assert result['member_sha256']==hashlib.sha256(child.content).hexdigest()
+    else:assert result is None
+
+
+@pytest.mark.parametrize('path',['../escape.pdf','docs/*.pdf','docs/other.rar','/absolute.pdf','docs/a?.pdf','docs/a[1].pdf'])
+def test_unsafe_projection_paths(tmp_path,monkeypatch,path):
+    from pathlib import PurePosixPath
+
+    from src.modules.tender_operator_agent_demo import (
+        ri223_container_evidence as container,
+    )
+    from src.tender_research.providers.ri223_rar_members import Ri223RarMember
+
+    root,archive,original,_=setup_attachment(tmp_path,monkeypatch,ext='rar')
+    monkeypatch.setattr(container,'extract_ri223_rar_members',lambda _:(Ri223RarMember(path,PurePosixPath(path).name,b'bad'),))
+    def forbidden(**kw):pytest.fail('unsafe child reached processor')
+    with pytest.raises(ValueError):import_archive(root,archive,NUMBER,attachments=[original],processor=forbidden,expand_rar=True)
+    assert not list(root.iterdir())

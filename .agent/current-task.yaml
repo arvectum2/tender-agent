@@ -906,3 +906,11 @@ apr03b_ri223_attachments_20261117:
   branch: feat/ta-apr03b-ri223-attachments-20261117
   current_stage: exact_ci_pending
   last_verified_commit: 293c692fe264d495a4828710092f918cda549ee8
+
+apr03b_ri223_container_20261117:
+  task_id: TA-APR03B-RI223-CONTAINER-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR03B-RI223-CONTAINER-20261117.yaml
+  branch: feat/ta-apr03b-ri223-container-20261117
+  current_stage: exact_ci_pending
+  last_verified_commit: f07a82d04a0df2ea716974c1a991b87cc0ec2b41
