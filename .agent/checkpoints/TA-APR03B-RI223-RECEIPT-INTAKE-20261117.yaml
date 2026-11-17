@@ -7,9 +7,14 @@ definition_of_done:
   - Publish draft PR, verify CI; no live procurement, production, model or automatic merge.
 completed:
   - PR629 17/19 SUCCESS no failures; existing RI223 provider and independent APR06 receipt inspected.
-current_stage: trusted_catalog_and_offline_intake
+  - Configured catalog with independent SHA anchor; six preserved RI223 ZIPs imported into disposable source-only runs, selected XML/version bound. One multi-lot case no aggregate, two protocol observations no award.
+  - CLI creates private needs_review runs; full analysis and append denied; actual six HTTP 409 denials and two Chromium scenarios PASS; original ZIPs unchanged. 275 focused tests PASS.
+current_stage: exact_ci_pending
 remaining:
-  - Implement, test, replay and publish.
-last_verified_commit: a0f433bcae911b64cbe3ff4d5ef06e7eb1edf5fe
-test_results: []
+  - Verify successor exact CI; await integration decision. Next bounded gap: verified original attachment intake and document extraction separately from archive facts, without live acquisition or analysis promotion.
+last_verified_commit: 6046bcb1468c1d74cc4b7cc123fb7b56f0e246b2
+test_results:
+  - 275 focused PASS; Ruff/Node/diff PASS.
+  - APR03B_RI223_RECEIPT_INTAKE_PASS six archives, six HTTP 409 denials, two Chromium scenarios; originals unchanged.
+  - PR629 exact CI 19/19 SUCCESS.
 resume_instruction: Never trust arbitrary run pins. Keep 44-FZ path unchanged; preserve no award, legal status or aggregate multi-lot price.
