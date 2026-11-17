@@ -7,17 +7,22 @@ import hashlib
 import hmac
 import json
 import os
-from pathlib import Path
 import re
 import stat
-from datetime import datetime, timezone
+from datetime import UTC, datetime
+from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from sqlalchemy import text
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
-from .workspace_reference import ReferenceDenied, ReferenceScope, read_internal_procurement
+from .workspace_reference import (
+    ReferenceDenied,
+    ReferenceScope,
+    read_internal_procurement,
+)
 
 PATH = "/api/internal/workspace/procurement-reference"
 DRAFT = "9c0f7caa552613ab598d9de05b819524a74e8c73"
@@ -70,7 +75,7 @@ def load_scope(path, pin, release, auth, clock):
     ) or len(set(ids)) != len(ids):
         raise ReferenceDenied("invalid identity set")
     start, end = (datetime.fromisoformat(d[k]) for k in ("starts_at", "expires_at"))
-    if start.utcoffset() != timezone.utc.utcoffset(start) or end.utcoffset() != timezone.utc.utcoffset(end):
+    if start.utcoffset() != UTC.utcoffset(start) or end.utcoffset() != UTC.utcoffset(end):
         raise ReferenceDenied("UTC interval required")
     if not start <= clock() < end <= MAX_EXPIRY:
         raise ReferenceDenied("expired source admission")
@@ -97,21 +102,20 @@ def database_binding(session):
 def read_from_postgres(engine, scope, authorize, clock):
     if engine.dialect.name != "postgresql":
         raise ReferenceDenied("PostgreSQL source required")
-    with Session(engine, autoflush=False, expire_on_commit=False) as session:
-        with session.begin():
-            session.execute(text("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY"))
-            if session.execute(text("SHOW transaction_read_only")).scalar_one() != "on":
-                raise ReferenceDenied("read-only transaction required")
-            if database_binding(session) != scope.database_binding:
-                raise ReferenceDenied("database binding mismatch")
-            result = read_internal_procurement(session, scope=scope, authorize=authorize, clock=clock)
-            # Explicit rollback even though all queries were read-only.
-            session.rollback()
-            return result
+    with Session(engine, autoflush=False, expire_on_commit=False) as session, session.begin():
+        session.execute(text("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY"))
+        if session.execute(text("SHOW transaction_read_only")).scalar_one() != "on":
+            raise ReferenceDenied("read-only transaction required")
+        if database_binding(session) != scope.database_binding:
+            raise ReferenceDenied("database binding mismatch")
+        result = read_internal_procurement(session, scope=scope, authorize=authorize, clock=clock)
+        # Explicit rollback even though all queries were read-only.
+        session.rollback()
+        return result
 
 
 def install_workspace_reference(app: FastAPI, *, engine, path=None, pin=None, release=None,
-                                reader=read_from_postgres, clock=lambda: datetime.now(timezone.utc)):
+                                reader=read_from_postgres, clock=lambda: datetime.now(UTC)):
     """Production wiring passes existing product engine, no caller-controlled target."""
     @app.get(PATH, include_in_schema=False)
     def read(request: Request):
@@ -133,7 +137,7 @@ def install_workspace_reference(app: FastAPI, *, engine, path=None, pin=None, re
                 raise ReferenceDenied("source permission changed")
         except (ReferenceDenied, OSError, TypeError, ValueError, KeyError, AttributeError, RecursionError):
             raise HTTPException(403, "SOURCE_ACCESS_DENIED") from None
-        except Exception:
+        except (SQLAlchemyError, RuntimeError):
             # Never expose SQL, credentials or private paths in a response.
             raise HTTPException(503, "SOURCE_UNAVAILABLE") from None
         return JSONResponse(result, headers={"Cache-Control": "no-store", "Pragma": "no-cache"})
