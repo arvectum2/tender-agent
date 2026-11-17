@@ -371,7 +371,7 @@ completed:
 - Reviewed contract publication ledger, offline candidate CLI, immutable chained publication/withdrawal,
   exact repository pin, active groups and read-only case-bound API. Initial release
   empty; legacy archive unchanged.
-current_stage: price01_reviewed_registry_backend_verified_next_web
+current_stage: price01_reviewed_registry_clients
 remaining:
 - Web and iOS separate reviewed contract registry display, exact pinned release/response
   verification, per-group range/provenance and withdrawal notices. No cross-group
@@ -624,11 +624,9 @@ test_results:
 - 337 regression tests PASS, 2 skipped, 144 warnings in 18.92s; Ruff/diff PASS. Synthetic
   publication, withdrawal, replacement, duplicate and corruption rejection; read-only
   catalog empty/nonempty, tenant/role and legacy archive tests. PR598 CI 19/19.
-resume_instruction: Reviewed contract registry backend verified at a664b0a4. Next
-  Web then iOS for separate /reviewed-contracts catalog with exact pinned release
-  verification; preserve old archive. Read PRICE01_REVIEWED_CONTRACT_REGISTRY_2026-11-17.md.
-  Initial release empty; real publication requires separate reviewed manifest and
-  repo release deployment. No production changes or MacBook; B2B unresolved.
+resume_instruction: Implement Web and iOS reviewed contract catalog, pin exact public
+  projection, test empty/nonempty/withdrawn fixtures, then integrated acceptance.
+  Keep defaults off.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
