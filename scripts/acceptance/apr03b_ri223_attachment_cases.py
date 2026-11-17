@@ -71,5 +71,9 @@ def replay(runs):
                 p=directory/'input'/f['stored_name'];p.write_bytes(p.read_bytes()+b' ')
         t=c.post(url,auth=auth,json={'query':'договор'}).json()
         assert t['status']=='UNKNOWN' and not t['citations']
+    if os.environ.get('APR03B_RAR_ACCEPTANCE')=='1':
+        from scripts.acceptance.apr03b_ri223_container_case import replay_container
+
+        replay_container(runs,app,password)
     assert all(inventory(ROOT/n)==v for n,v in before.items())
     print('APR03B_RI223_ATTACHMENTS_REPLAY_PASS',unique,references,searchable,'source originals unchanged, tamper UNKNOWN')

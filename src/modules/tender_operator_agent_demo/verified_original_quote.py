@@ -162,12 +162,20 @@ def verify_operator_run_quote(
     )
     if file_record is None:
         raise HTTPException(status_code=404, detail="Original file not found in run")
+    lineage = None
     if metadata.get("procurement_source") == "zakupki_gov_ru_ri223_getdocs_ip":
         from src.modules.tender_operator_agent_demo.ri223_attachment_evidence import (
             attachment_quote_allowed,
+            verified_container_lineage,
         )
 
-        if not attachment_quote_allowed(_input_dir(run_id).parent, metadata, file_record):
+        run = _input_dir(run_id).parent
+        if file_record.get("source") == "ri223_container_member":
+            lineage = verified_container_lineage(run, metadata, file_record)
+            allowed = lineage is not None
+        else:
+            allowed = attachment_quote_allowed(run, metadata, file_record)
+        if not allowed:
             return {"status": "unverified", "evidence": None}
     revision = metadata.get("notice_revision_selected")
     review_id = (
@@ -188,4 +196,8 @@ def verify_operator_run_quote(
     )
     if result is None:
         return {"status": "unverified", "evidence": None}
+    if lineage is not None:
+        if result.get("original_sha256") != lineage["member_sha256"]:
+            return {"status": "unverified", "evidence": None}
+        result["ri223_container"] = lineage
     return {"status": "literal_quote_found_in_extracted_original_only", "evidence": result}

@@ -14,7 +14,7 @@ assert.equal(target.hostname,'127.0.0.1');assert.equal(target.protocol,'http:');
   const l=id=>page.locator('#'+id);
   await page.goto(origin+'/pilot/tender-agent/workspace?run='+run);
   await l('copilot-panel').waitFor({state:'visible'});
-  if(['pinned','ri223','ri223-multilot','ri223-attachments'].includes(process.env.APR08_BROWSER_SCENARIO)) assert(await l('report-panel').isHidden());
+  if(['pinned','ri223','ri223-multilot','ri223-attachments','ri223-container'].includes(process.env.APR08_BROWSER_SCENARIO)) assert(await l('report-panel').isHidden());
   else await l('report-panel').waitFor({state:'visible'});
   await page.getByText('Evidence Copilot — вопросы и расчёт по закупке',{exact:true}).click();
   const ask=async(question,pattern)=>{
@@ -24,6 +24,14 @@ assert.equal(target.hostname,'127.0.0.1');assert.equal(target.protocol,'http:');
     await page.waitForFunction(({id,text})=>document.getElementById(id).innerText.includes(text),{id:'copilot-answer-result',text:pattern});
     return await l('copilot-answer-result').innerText();
   };
+  if(process.env.APR08_BROWSER_SCENARIO==='ri223-container') {
+    await ask('Покажи архивные сведения 223-ФЗ','Цена единственного лота: 1020000');
+    await l('copilot-search').fill('критерий оценки');await l('copilot-search-submit').click();
+    await page.waitForFunction(()=>document.getElementById('copilot-search-result').innerText.includes('SHA-256 контейнера'));
+    await l('copilot-search-result').screenshot({path:process.env.APR08_SCREENSHOT_DIR+'/ri223-container.png'});
+    assert(await l('analyze-btn').isDisabled());assert.deepEqual(errors,[]);
+    console.log('APR03B_RI223_CONTAINER_BROWSER_PASS');return;
+  }
   if(process.env.APR08_BROWSER_SCENARIO==='ri223-attachments') {
     await ask('Покажи архивные сведения 223-ФЗ','Цена единственного лота: 191352');
     await l('copilot-search').fill('договор');await l('copilot-search-submit').click();

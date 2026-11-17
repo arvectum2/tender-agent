@@ -375,6 +375,7 @@
         for(const c of data.citations.slice(0,2)) {
           paragraph(root,c.quote,'citation');
           paragraph(root,c.file_id+' · чанк '+c.chunk_id+' · SHA-256 оригинала '+c.original_sha256,'help-text');
+          if(c.ri223_container) paragraph(root,'Контейнер '+c.ri223_container.parent_name+' · '+c.ri223_container.member_path+' · SHA-256 контейнера '+c.ri223_container.parent_sha256,'help-text');
         }
       } else if(data.status==='SECONDARY_AMENDMENT_TIMING_ONLY' && data.citation_kind==='SECONDARY_LEGAL_REFERENCE' && data.observation?.secondary_copies_agree===true) {
         paragraph(root,data.answer,'help-text');
@@ -430,6 +431,7 @@
       for(const c of data.citations.slice(0,2)) {
         paragraph(root,c.quote,'citation');
         paragraph(root,c.file_id+' · чанк '+c.chunk_id+' · SHA-256 оригинала '+c.original_sha256,'help-text');
+          if(c.ri223_container) paragraph(root,'Контейнер '+c.ri223_container.parent_name+' · '+c.ri223_container.member_path+' · SHA-256 контейнера '+c.ri223_container.parent_sha256,'help-text');
       }
       paragraph(root,'Буквальные фрагменты, не юридический вывод. Поиск не исчерпывающий.','help-text');
     }catch(error){if(state.runId===runId && epoch===state.copilotSearchEpoch)paragraph(root,'UNKNOWN · Проверка не выполнена.','unknown');}
@@ -457,6 +459,7 @@
       $('quote-check-result').textContent = result?.status === 'literal_quote_found_in_extracted_original_only' && evidence?.chunk_id
         ? 'Буквальное совпадение с извлечённым оригиналом: '+fileId+' · чанк '+evidence.chunk_id+
           ' · символы '+evidence.quote_char_start_in_chunk+'–'+evidence.quote_char_end_in_chunk+
+          (evidence.ri223_container ? ' · Контейнер '+evidence.ri223_container.parent_name+' · '+evidence.ri223_container.member_path+' · SHA-256 контейнера '+evidence.ri223_container.parent_sha256 : '')+
           '. Юридический и коммерческий смысл не подтверждён автоматически.'
         : 'UNKNOWN · Буквальное совпадение с подтверждённым оригиналом не установлено. Проверьте текст цитаты, исходник и доступность Data Platform.';
     } catch(error) {

@@ -142,8 +142,11 @@ def search_run_documents(run_id: str, request: DocumentSearchQuestion, *, candid
                 or evidence['quote_char_start_in_chunk'] < 0
                 or evidence['quote_char_end_in_chunk'] - evidence['quote_char_start_in_chunk'] != len(quote)):
             continue
-        result['citations'].append({k: evidence[k] for k in ('file_id','chunk_id','quote','original_sha256',
-                                    'quote_char_start_in_chunk','quote_char_end_in_chunk','offset_space')})
+        cite = {k: evidence[k] for k in ('file_id','chunk_id','quote','original_sha256',
+                                    'quote_char_start_in_chunk','quote_char_end_in_chunk','offset_space')}
+        if 'ri223_container' in evidence:
+            cite['ri223_container'] = evidence['ri223_container']
+        result['citations'].append(cite)
     if not result['citations']:
         return {**result, 'reason': 'NO_VERIFIED_MATCH_IN_BOUNDED_SEARCH'}
     return {**result, 'status': 'VERIFIED_EXCERPTS_ONLY', 'reason': 'LEXICAL_MATCH_NOT_SEMANTIC_ANSWER'}
