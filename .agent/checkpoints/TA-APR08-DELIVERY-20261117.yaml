@@ -1,0 +1,15 @@
+task_id: TA-APR08-DELIVERY-20261117
+status: in_progress
+goal: Distinguish literal performance dates and durations from contract validity, payment and other deadlines; original-attested lines only.
+definition_of_done:
+  - Explicit service/work/goods/contract execution scope, date and duration observations, preserve trigger and qualifiers; no inferred effective deadline.
+  - Expose in existing private question route and UI; no legal sufficiency or completeness.
+  - Targeted tests and real isolated DP replay, draft PR and exact CI.
+completed:
+  - PR615 17/19 SUCCESS, two running; no failed checks. Real archive inspection identified duplicate service completion dates with different clause numbers; no unique clause inference.
+current_stage: literal_service_work_delivery_contract_dates
+remaining:
+  - Implement, verify, publish and confirm CI.
+last_verified_commit: 80d8533ba73ddfe8735cf5d1ff4629045a834b84
+test_results: []
+resume_instruction: Existing authenticated run scope and original quote verifier; no models, new live procurement, production or automatic merge.
