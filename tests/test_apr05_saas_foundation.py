@@ -2560,3 +2560,59 @@ def test_historical_comparables_archive_is_case_scoped_and_not_pooled(client,ses
     assert history.exact_unit_amount(Decimal('100.00'),Decimal(3))==Decimal('33.333333')
     for price,qty in [('100','0'),('NaN','3'),('100','0.00001'),('1.001','2'),('-1','2')]:
         with pytest.raises(ValueError):history.exact_unit_amount(Decimal(price),Decimal(qty))
+
+
+def test_reviewed_contract_registry_read_only_empty_release(client,session,monkeypatch,tmp_path):
+    from src.modules.saas_foundation import company_reviewed_contracts as contracts
+    from src.modules.saas_foundation.models import CompanyPriceScenario
+    from src.tender_research.competitive_bid_protocol import AKSAY
+    from src.tender_research.reviewed_contract_evidence import sealed
+
+    _,a=_seed(client,'Registry A');_,b=_seed(client,'Registry B');_legal(client,a);_legal(client,b)
+    h=_auth(a);cases='/api/saas/company-portfolio/cases'
+    case=client.post(cases,headers=h,json={'registry_number':AKSAY}).json()['case_id']
+    path=cases+'/'+case+'/reviewed-contracts'
+    settings=saas.get_settings().model_copy(update={'saas_company_price_scenarios_enabled':True,'saas_company_historical_comparables_enabled':True})
+    monkeypatch.setattr(saas,'get_settings',lambda:settings)
+    assert client.get(path,headers=h).status_code==404
+    settings=settings.model_copy(update={'saas_company_reviewed_contract_registry_enabled':True})
+    assert client.get(path,headers=_auth(b)).status_code==404
+    before=session.query(CompanyPriceScenario).count()
+    r=client.get(path,headers=h);assert r.status_code==200,r.text
+    result=r.json();assert result['release_revision']==0 and result['active_groups']==[] and result['withdrawn_groups']==[]
+    assert result['last_event_sha256'] is None and not result['target_scope_verified']
+    for k in ('cross_group_range_rub','current_market_price','recommendation'):assert result[k] is None
+    assert result['catalog_sha256']==sealed({k:v for k,v in result.items() if k!='catalog_sha256'})
+    assert client.post(path,headers=h,json={}).status_code==405
+    for role in ('viewer','analyst'):
+        invite=client.post('/api/saas/invitations',headers=h,json={'role':role,'acquisition_channel':'referral'}).json()
+        token=client.post('/api/saas/invitations/redeem',json={'invitation_code':invite['invitation_code'],'display_name':role}).json()['access_token'];_legal(client,token)
+        assert client.get(path,headers=_auth(token)).status_code==(403 if role=='viewer' else 200)
+    assert session.query(CompanyPriceScenario).count()==before
+    bad=tmp_path/'release.json';bad.write_text('{}')
+    monkeypatch.setattr(contracts,'_RELEASE_PATH',bad)
+    assert client.get(path,headers=h).status_code==503
+    assert client.get(cases+'/'+case+'/historical-comparables',headers=h).status_code==200
+    # Simulate an independently reviewed release; only temporary fixture bytes and pin.
+    from src.tender_research import reviewed_contract_registry as reg
+    from src.tender_research.reviewed_contract_evidence import digest
+    initial=reg.load_release(b'{"schema":"price01_reviewed_contract_registry_v1","events":[]}\n',contracts._RELEASE_SHA256)
+    group=reg.Group.model_validate({'group_id':'fixture-group','reviewed_manifest_sha256':'a'*64,'intake_receipt_sha256':'b'*64,
+        'reference_registry_number':AKSAY,'full_scope':'Synthetic full scope','tax_terms':'VAT included','price_terms':'Fixed price',
+        'currency':'RUB','unit':'item','observations':[
+            {'registry_number':AKSAY,'contract_number':'fixture-1','signed_on':'2026-01-01','signed_contract_price_rub':'100.00','contracted_exact_full_scope_quantity':'3','unit':'item','source_sha256':'c'*64,'unit_price_rub':'33.333333'},
+            {'registry_number':'0'*18+'2','contract_number':'fixture-2','signed_on':'2026-01-02','signed_contract_price_rub':'200.00','contracted_exact_full_scope_quantity':'4','unit':'item','source_sha256':'d'*64,'unit_price_rub':'50.000000'}],
+        'range_rub_per_unit':{'minimum':'33.333333','median':'41.666667','maximum':'50.000000','distinct_procurements':2}})
+    raw=reg.append_candidate(initial,action='PUBLISH',group_id=group.group_id,group=group,reason='Synthetic publication test')
+    bad.write_bytes(raw);monkeypatch.setattr(contracts,'_RELEASE_SHA256',digest(raw))
+    res=client.get(path,headers=h);assert res.status_code==200,res.text
+    body=res.json();assert body['release_revision']==1
+    assert body['active_groups']==[{**group.model_dump(),'target_reference_identity_matches':True,'target_scope_equivalence_verified':False}]
+    assert body['cross_group_range_rub'] is None and not body['independent_signature_verification'] and not body['completed_work_quantity_verified']
+    assert client.get(path,headers=_auth(b)).status_code==404
+    withdrawn=reg.append_candidate(reg.load_release(raw,digest(raw)),action='WITHDRAW',group_id=group.group_id,reason='Synthetic withdrawal test')
+    bad.write_bytes(withdrawn);monkeypatch.setattr(contracts,'_RELEASE_SHA256',digest(withdrawn))
+    body=client.get(path,headers=h).json()
+    assert body['release_revision']==2 and body['active_groups']==[]
+    assert body['withdrawn_groups']==[{'group_id':group.group_id,'revision':2}]
+    assert session.query(CompanyPriceScenario).count()==before

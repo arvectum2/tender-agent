@@ -77,6 +77,7 @@ from src.modules.saas_foundation import (
     company_portfolio,
     company_price_scenarios,
     company_readiness,
+    company_reviewed_contracts,
     company_schedule,
 )
 from src.modules.saas_foundation.commercial_attachment_bytes import MAX_ATTACHMENT_BYTES
@@ -1203,3 +1204,10 @@ def historical_comparable_catalog(case_id: str, principal: Member, session: DBSe
 def historical_comparable_preview(case_id: str, payload: company_historical_comparables.Selection, principal: Member, session: DBSession) -> dict:
     _historical_comparables_enabled()
     return company_historical_comparables.preview(session,principal,case_id,payload)
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/reviewed-contracts")
+def reviewed_contract_catalog(case_id: str, principal: Member, session: DBSession) -> dict:
+    _historical_comparables_enabled()
+    if not get_settings().saas_company_reviewed_contract_registry_enabled:
+        raise HTTPException(404,"Reviewed contract registry disabled")
+    return company_reviewed_contracts.catalog(session,principal,case_id)

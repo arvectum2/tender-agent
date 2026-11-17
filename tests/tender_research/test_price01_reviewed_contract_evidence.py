@@ -109,3 +109,55 @@ def test_pins_and_originals(bundle,tmp_path):
     (tmp_path/(sha+'.xml')).unlink()
     (tmp_path/(sha+'.xml')).symlink_to(m)
     with pytest.raises(OSError):run(m,e.digest(raw),tmp_path)
+
+
+def test_reviewed_registry_append_withdraw_and_recompute(bundle,tmp_path,monkeypatch,capsysbinary):
+    import sys
+
+    from scripts.price01.prepare_contract_registry_release import main
+    from src.tender_research import reviewed_contract_registry as reg
+
+    data,originals=bundle
+    empty=b'{"schema":"price01_reviewed_contract_registry_v1","events":[]}\n'
+    old=reg.load_release(empty,e.digest(empty))
+    assert reg.replay(old)==({},[])
+    manifest=raw_manifest(data)
+    group=reg.publication_group(manifest,e.digest(manifest),originals,'fixture-group')
+    assert group.range_rub_per_unit.median=='41.666667'
+    assert len(group.observations)==2
+    assert 'source_url' not in group.observations[0].model_dump()
+    assert group.full_scope==data['records'][0]['full_scope']
+    raw=reg.append_candidate(old,action='PUBLISH',group_id=group.group_id,reason='Reviewed fixture publication',group=group)
+    release=reg.load_release(raw,e.digest(raw));active,_=reg.replay(release)
+    assert list(active)==['fixture-group']
+    with pytest.raises(ValueError):reg.load_release(raw,e.digest(empty))
+    for field,value in [('unit_price_rub','1.000000'),('signed_contract_price_rub','0')]:
+        altered=group.model_dump();altered['observations'][0][field]=value
+        with pytest.raises(ValueError):reg.Group.model_validate(altered)
+    bad=group.model_dump();bad['range_rub_per_unit']['median']='42.000000'
+    with pytest.raises(ValueError):reg.Group.model_validate(bad)
+    # A new review pin must not silently double-count active source rows.
+    duplicate=reg.Group.model_validate({**group.model_dump(),'group_id':'other-group','reviewed_manifest_sha256':'f'*64})
+    with pytest.raises(ValueError):reg.append_candidate(release,action='PUBLISH',group_id=duplicate.group_id,reason='Duplicate source prohibited',group=duplicate)
+    revoked=reg.append_candidate(release,action='WITHDRAW',group_id=group.group_id,reason='Explicit fixture withdrawal')
+    after=reg.load_release(revoked,e.digest(revoked));active,withdrawn=reg.replay(after)
+    assert not active and withdrawn[0]['revision']==2
+    assert after.events[0]==release.events[0]
+    assert after.events[1].previous_event_sha256==release.events[0].event_sha256
+    with pytest.raises(ValueError):reg.append_candidate(after,action='WITHDRAW',group_id=group.group_id,reason='Already withdrawn fixture')
+    with pytest.raises(ValueError):reg.append_candidate(after,action='PUBLISH',group_id=group.group_id,reason='Reused group prohibited',group=group)
+    # A separate reviewed replacement can follow explicit withdrawal.
+    replacement=reg.append_candidate(after,action='PUBLISH',group_id=duplicate.group_id,reason='Reviewed correction fixture',group=duplicate)
+    assert list(reg.replay(reg.load_release(replacement,e.digest(replacement)))[0])==['other-group']
+    # Hashing a broken chain does not make it valid.
+    corrupted=json.loads(revoked);event=corrupted['events'][1];event['previous_event_sha256']='0'*64
+    event['event_sha256']=e.sealed({k:v for k,v in event.items() if k!='event_sha256'})
+    b=raw_manifest(corrupted)
+    with pytest.raises(ValueError):reg.load_release(b,e.digest(b))
+    release_path=tmp_path/'release.json';release_path.write_bytes(empty)
+    manifest_path=tmp_path/'review.json';manifest_path.write_bytes(manifest)
+    for key,doc in originals.items():(tmp_path/(key+'.xml')).write_bytes(doc)
+    monkeypatch.setattr(sys,'argv',['prepare','--release',str(release_path),'--release-sha256',e.digest(empty),'--action','PUBLISH','--group-id','fixture-group','--reason','Reviewed fixture publication','--manifest',str(manifest_path),'--reviewed-sha256',e.digest(manifest),'--originals',str(tmp_path)])
+    main()
+    assert capsysbinary.readouterr().out==raw
+    assert release_path.read_bytes()==empty
