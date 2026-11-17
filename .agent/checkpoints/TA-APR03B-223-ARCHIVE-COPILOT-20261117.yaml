@@ -6,9 +6,13 @@ definition_of_done:
   - Actual private workspace replay or documented technical blocker, focused tests, draft PR and exact CI.
 completed:
   - PR628 metadata exact 19/19, owner-authorized merge 2cd96ebcdc47e48d212c04faaa165a587d636f76, exact tree matches. APR08 complete.
-current_stage: ri223_source_and_existing_evidence_path
+  - Real pinned RI223 ZIP and selected XML plus four original attachments reverified; explicit source-scoped 223-FZ observation and UI, five literal fields, no inferential 44-FZ fallback.
+  - Two actual authenticated Chromium passes, tampered XML UNKNOWN, 268 focused tests PASS, originals unchanged.
+current_stage: exact_ci_pending
 remaining:
-  - Inspect candidate and current route, implement only missing bounded capability, test, publish.
-last_verified_commit: 2cd96ebcdc47e48d212c04faaa165a587d636f76
-test_results: []
+  - Verify exact successor CI and obtain integration decision; general RI223 import and official current-source gates remain separate.
+last_verified_commit: 56ede99234d9f7469b08fb434959c77981176a2b
+test_results:
+  - 268 focused PASS, Ruff/Node/diff PASS.
+  - APR03B_RI223_BROWSER_PASS and APR03B_RI223_REPLAY_PASS twice; four original attachments and five literal sourced fields.
 resume_instruction: No live EIS/B2B or production, Gemma, automatic commercial GO or new APR09/10. Preserve existing 44-FZ path, no invented source metadata.

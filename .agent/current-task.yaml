@@ -872,4 +872,5 @@ apr03b_223_archive_copilot_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR03B-223-ARCHIVE-COPILOT-20261117.yaml
   branch: feat/ta-apr03b-223-archive-copilot-20261117
-  current_stage: ri223_source_and_existing_evidence_path
+  current_stage: exact_ci_pending
+  last_verified_commit: 56ede99234d9f7469b08fb434959c77981176a2b
