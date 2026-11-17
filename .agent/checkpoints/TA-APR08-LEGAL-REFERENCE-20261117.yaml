@@ -1,0 +1,15 @@
+task_id: TA-APR08-LEGAL-REFERENCE-20261117
+status: in_progress
+goal: Explain security terms grounded in archived customer procedureInfo, identify explicit references to legal acts without claiming their legal content or current applicability.
+definition_of_done:
+  - Reuse exact pinned original security group, verify literal procedure text and explicitly paired legal references, do not infer legal norms or eligibility.
+  - Private grounded questions and UI distinguish customer quotation, reference and review checklist.
+  - Regression and real archived replay, publish draft and verify CI.
+completed:
+  - PR615 and PR616 exact heads 17/19 successful each, no failures. No versioned procurement legislation corpus located in product repository.
+current_stage: distinguish_customer_terms_and_unverified_legal_references
+remaining:
+  - Implementation, verification, publish and exact CI.
+last_verified_commit: b31b27872ae2907d64f80f7a07299864ff81d1b9
+test_results: []
+resume_instruction: Reuse pinned security group and exact XML path; references are not independently verified law. No model, production, live procurement or automatic merge.

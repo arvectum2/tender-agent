@@ -784,3 +784,10 @@ apr08_delivery_20261117:
   branch: feat/ta-apr08-delivery-observation-20261117
   current_stage: exact_ci_pending
   last_verified_commit: 114cdda8de7f1cf0c526958cf1b2278acc0b63c1
+
+apr08_legal_reference_20261117:
+  task_id: TA-APR08-LEGAL-REFERENCE-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR08-LEGAL-REFERENCE-20261117.yaml
+  branch: feat/ta-apr08-legal-reference-20261117
+  current_stage: distinguish_customer_terms_and_unverified_legal_references
