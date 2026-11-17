@@ -368,17 +368,20 @@ completed:
 - Reviewed contract evidence offline manifest/XML verification, exact anchors, reviewer-attested
   full scope, source identity and bounded Decimal contracted unit price; local read-only
   CLI.
-current_stage: price01_reviewed_registry_backend
+- Reviewed contract publication ledger, offline candidate CLI, immutable chained publication/withdrawal,
+  exact repository pin, active groups and read-only case-bound API. Initial release
+  empty; legacy archive unchanged.
+current_stage: price01_reviewed_registry_backend_verified_next_web
 remaining:
-- 'Implement versioned reviewed-published historical receipt registry with explicit
-  trusted manifest pins; integrate separately from legacy fixed six-source archive
-  into backend and clients. Actual source acquisition research separate: no verified
-  new contracts or full-scope equivalent real quantities.'
+- Web and iOS separate reviewed contract registry display, exact pinned release/response
+  verification, per-group range/provenance and withdrawal notices. No cross-group
+  rate or target equivalence.
 - Final PRICE-01 integrated PostgreSQL concurrency and interactive Web/iOS acceptance;
-  keep feature gates off.
+  default off until approved. Actual source acquisition separate, zero real published
+  contracts.
 - B2B authorized UI observation, document acquisition and legacy cutover; no repeated
   live pilot.
-last_verified_commit: 341d48b3ad10e810e336d070e864430e25f96f02
+last_verified_commit: a664b0a4cf41eb219fa5f33a7be6aa16a694ac95
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -618,10 +621,14 @@ test_results:
 - 20 new tests PASS; 335 full focused tests PASS/2 skipped/142 warnings in 21.82s;
   Ruff/diff PASS. Synthetic XML only, no independent authenticity or signature verification.
   PR597 CI 17 success/2 running at latest check.
-resume_instruction: Implement immutable repository-pinned publication index and trusted
-  receipt generation, read-only case-scoped registry API with revocation and separate
-  group ranges; empty release only, synthetic tests; keep previous archive intact.
-  PR598 CI 19/19. No production changes.
+- 337 regression tests PASS, 2 skipped, 144 warnings in 18.92s; Ruff/diff PASS. Synthetic
+  publication, withdrawal, replacement, duplicate and corruption rejection; read-only
+  catalog empty/nonempty, tenant/role and legacy archive tests. PR598 CI 19/19.
+resume_instruction: Reviewed contract registry backend verified at a664b0a4. Next
+  Web then iOS for separate /reviewed-contracts catalog with exact pinned release
+  verification; preserve old archive. Read PRICE01_REVIEWED_CONTRACT_REGISTRY_2026-11-17.md.
+  Initial release empty; real publication requires separate reviewed manifest and
+  repo release deployment. No production changes or MacBook; B2B unresolved.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
