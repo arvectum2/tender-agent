@@ -161,3 +161,28 @@ def test_reviewed_registry_append_withdraw_and_recompute(bundle,tmp_path,monkeyp
     main()
     assert capsysbinary.readouterr().out==raw
     assert release_path.read_bytes()==empty
+
+
+def test_price01_release_client_pins_and_default_gates():
+    """A reviewed source update must change both client pins in the same release."""
+    import re
+    from pathlib import Path
+
+    from src.modules.saas_foundation import company_reviewed_contracts as c
+    from src.shared.config.settings import Settings
+    from src.tender_research import reviewed_contract_registry as reg
+
+    root=Path(__file__).resolve().parents[2]
+    release=c._approved_release()
+    projection=e.sealed(reg.public_projection(release,c._RELEASE_SHA256))
+    web=(root/'src/modules/saas_foundation/ui.py').read_text()
+    swift=(root/'ios/TenderAgent/TenderAgentApp/Networking/CompanyAPIClient.swift').read_text()
+    for name,value in [('reviewedReleasePin',c._RELEASE_SHA256),('reviewedProjectionPin',projection)]:
+        assert re.findall(r"\b"+name+r"='([a-f0-9]{64})'",web)==[value]
+    for name,value in [('releasePin',c._RELEASE_SHA256),('projectionPin',projection)]:
+        assert re.findall(r'\bstatic let '+name+r'="([a-f0-9]{64})"',swift)==[value]
+    from scripts.acceptance.run_price01_staging import FLAGS
+
+    assert Settings.model_fields['saas_foundation_enabled'].default is False
+    for flag in FLAGS:
+        assert Settings.model_fields['saas_company_'+flag+'_enabled'].default is False
