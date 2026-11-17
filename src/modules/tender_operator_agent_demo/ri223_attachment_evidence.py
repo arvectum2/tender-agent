@@ -1,4 +1,4 @@
-"""Receipt-bound local originals; no network acquisition or archive expansion."""
+"""Receipt-bound local originals; no network acquisition or recursive archive expansion."""
 from __future__ import annotations
 
 import hashlib
@@ -17,7 +17,11 @@ from .document_source_projection import project_document_source
 from .evidence_ri223_archive import SOURCE, ri223_archive_observation
 from .operator_document_extraction import extract_operator_document
 from .operator_stored_file_paths import checked_original_input_path
-from .ri223_container_evidence import PROCESSABLE_MEMBERS, member_receipt, project_rar
+from .ri223_container_evidence import (
+    PROCESSABLE_MEMBERS,
+    member_receipt,
+    project_container,
+)
 from .ri223_receipt_catalog import configured_receipts
 
 MAX_FILE = 12 * 1024 * 1024
@@ -119,7 +123,7 @@ def _store_file(stage,metadata,name,content,refs,processor,*,source,lineage=None
     return row
 
 
-def import_attachments(stage: Path, metadata: dict, paths: list[Path], processor, *, expand_rar: bool = False) -> None:
+def import_attachments(stage: Path, metadata: dict, paths: list[Path], processor, *, expand_rar: bool = False, expand_zip: bool = False) -> None:
     expected=expected_documents(stage,metadata)
     if len(paths)!=len(expected):
         raise ValueError('Provide one original per unique receipt digest')
@@ -134,11 +138,12 @@ def import_attachments(stage: Path, metadata: dict, paths: list[Path], processor
         raise ValueError('Incomplete attachment set')
 
     # Validate every container before processing or publishing any file.
-    containers = [sha for sha,refs in expected.items() if expand_rar and Path(refs[0]['name']).suffix.lower() == '.rar']
+    enabled = ({'.rar'} if expand_rar else set()) | ({'.zip'} if expand_zip else set())
+    containers = [sha for sha,refs in expected.items() if Path(refs[0]['name']).suffix.lower() in enabled]
     if len(containers)>1:
-        raise ValueError('Only one RAR container per evidence run')
-    projections = {sha: project_rar(blobs[sha]) for sha in containers}
-    if expand_rar and 1 + len(expected) + sum(map(len,projections.values())) > MAX_REFS:
+        raise ValueError('Only one expanded container per evidence run')
+    projections = {sha: project_container(blobs[sha],Path(expected[sha][0]['name']).suffix.lower()) for sha in containers}
+    if enabled and 1 + len(expected) + sum(map(len,projections.values())) > MAX_REFS:
         raise ValueError('Workspace document count exceeds search budget')
     if sum(len(b) for b in blobs.values()) + sum(len(m.content) for ms in projections.values() for m in ms) > MAX_TOTAL:
         raise ValueError('Expanded attachment budget exceeded')
@@ -147,7 +152,7 @@ def import_attachments(stage: Path, metadata: dict, paths: list[Path], processor
     for sha,refs in expected.items():
         parent=_store_file(stage,metadata,refs[0]['name'],blobs[sha],refs,processor,source='ri223_attachment')
         for member in projections.get(sha,()):
-            lineage=member_receipt(sha,member)
+            lineage=member_receipt(sha,member,container_format=parent['extension'][1:].upper())
             _store_file(stage,metadata,member.filename,member.content,refs,processor,
                         source='ri223_container_member',
                         lineage={**lineage,'parent_file_id':parent['file_id']})
@@ -194,14 +199,14 @@ def verified_container_lineage(run: Path, metadata: dict, row: dict) -> dict | N
             return None
         parent = parents[0]
         expected = expected_documents(run,metadata)
-        if parent.get('source') != 'ri223_attachment' or parent.get('extension') != '.rar':
+        if parent.get('source') != 'ri223_attachment' or parent.get('extension') not in {'.rar','.zip'}:
             return None
         parent_bytes = read_bytes(checked_original_input_path(run/'input',parent.get('stored_name')),MAX_FILE)
         sha = digest(parent_bytes)
         refs = expected.get(sha)
         if (not refs or parent.get('ri223_receipts') != refs or row.get('ri223_receipts') != refs
                 or parent.get('original_name') != refs[0]['name']
-                or Path(refs[0]['name']).suffix.lower() != '.rar'
+                or Path(refs[0]['name']).suffix.lower() != parent['extension']
                 or parent.get('size_bytes') != len(parent_bytes)
                 or len(parent_bytes) != refs[0]['bytes']
                 or sha != lineage['parent_sha256']):
@@ -211,11 +216,11 @@ def verified_container_lineage(run: Path, metadata: dict, row: dict) -> dict | N
         if (row.get('size_bytes') != len(child) or child_sha != lineage['member_sha256']
                 or row.get('data_platform_source',{}).get('canonical_uri') != 'tender-upload://'+child_sha):
             return None
-        members = [m for m in project_rar(parent_bytes) if m.path == lineage['member_path']]
+        members = [m for m in project_container(parent_bytes,parent['extension']) if m.path == lineage['member_path']]
         if len(members) != 1:
             return None
         m = members[0]
-        bound = {**member_receipt(sha,m),'parent_file_id':parent['file_id']}
+        bound = {**member_receipt(sha,m,container_format=parent['extension'][1:].upper()),'parent_file_id':parent['file_id']}
         if (bound != lineage or child != m.content or row.get('original_name') != m.filename
                 or row.get('extension') != Path(m.filename).suffix.lower()
                 or Path(row['stored_name']).suffix.lower() != row['extension']):

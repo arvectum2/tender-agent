@@ -75,5 +75,9 @@ def replay(runs):
         from scripts.acceptance.apr03b_ri223_container_case import replay_container
 
         replay_container(runs,app,password)
+    if os.environ.get('APR03B_ZIP_ACCEPTANCE')=='1':
+        from scripts.acceptance.apr03b_ri223_zip_fixture import replay_zip
+
+        replay_zip(runs,app,password)
     assert all(inventory(ROOT/n)==v for n,v in before.items())
     print('APR03B_RI223_ATTACHMENTS_REPLAY_PASS',unique,references,searchable,'source originals unchanged, tamper UNKNOWN')

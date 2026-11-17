@@ -1,5 +1,5 @@
 task_id: TA-APR03B-RI223-ATTACHMENTS-20261117
-status: in_progress
+status: completed
 goal: Independently pinned RI223 attachment intake, non-persisting DP extraction and source-bound quotes, preserve WSF07B.
 definition_of_done:
   - Verified complete receipt/reference coverage, bounded local binary copies, reject tampering and unpinned files, explicit unsupported formats.
@@ -9,7 +9,7 @@ completed:
   - Implemented receipt-bound binary intake with unique XML reference keys, deduplicated identical bytes, non-persisting DP extraction, and quote-time independent revalidation.
   - Actual isolated DP and Chromium replay twice PASS: 5 complete receipt sets, 9 unique originals, 11 references, 8 extracted, one RAR preserved unsupported, incomplete multi-lot receipt refused. Tampered original UNKNOWN; source originals unchanged.
   - 301 focused tests PASS, WSF07B unchanged against main, Ruff/Node/diff PASS.
-current_stage: exact_ci_pending
+current_stage: verified_pending_merge
 remaining:
   - Verify exact draft PR CI; then review integration or next bounded gap. RAR member provenance and full analysis remain unvalidated.
 last_verified_commit: 293c692fe264d495a4828710092f918cda549ee8
@@ -18,3 +18,5 @@ test_results:
   - APR03B_RI223_ATTACHMENTS_REPLAY_PASS 9 11 8, actual Chromium PASS twice; originals unchanged, tamper UNKNOWN.
   - Prior PR629/630 each exact CI 19/19 SUCCESS.
 resume_instruction: Continue local-only artifacts, no live data acquisition or production, no Workspace admission, Gemma or automatic integration.
+
+exact_ci: 19/19 SUCCESS, head 5d9199c44d90193b5afcfd418e03a5afebdb4311
