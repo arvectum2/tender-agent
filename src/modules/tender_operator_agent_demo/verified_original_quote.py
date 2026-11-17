@@ -162,6 +162,13 @@ def verify_operator_run_quote(
     )
     if file_record is None:
         raise HTTPException(status_code=404, detail="Original file not found in run")
+    if metadata.get("procurement_source") == "zakupki_gov_ru_ri223_getdocs_ip":
+        from src.modules.tender_operator_agent_demo.ri223_attachment_evidence import (
+            attachment_quote_allowed,
+        )
+
+        if not attachment_quote_allowed(_input_dir(run_id).parent, metadata, file_record):
+            return {"status": "unverified", "evidence": None}
     revision = metadata.get("notice_revision_selected")
     review_id = (
         metadata.get("procurement_id") or ""

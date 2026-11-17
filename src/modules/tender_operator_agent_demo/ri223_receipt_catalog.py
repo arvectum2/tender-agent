@@ -10,7 +10,7 @@ from pathlib import Path
 _SHA = re.compile(r'[a-f0-9]{64}')
 
 
-def configured_catalog() -> dict[str, tuple[str, str, str]] | None:
+def configured_receipts() -> dict[str, dict] | None:
     path = os.environ.get('AI_CORP_RI223_RECEIPT_CATALOG')
     digest = os.environ.get('AI_CORP_RI223_RECEIPT_CATALOG_SHA256')
     if not path and not digest:
@@ -30,12 +30,20 @@ def configured_catalog() -> dict[str, tuple[str, str, str]] | None:
     rows=doc['historical_ri223_cases']
     if not 0<len(rows)<=500:
         raise ValueError('RI223 catalog size')
-    pins={}
+    receipts={}
     for row in rows:
         if not isinstance(row,dict):
             raise TypeError('Invalid row')
         n,a,x,v=(row.get(k) for k in ('registry_number','archive_sha256','selected_xml_sha256','observed_version'))
-        if not all(isinstance(s,str) for s in (n,a,x,v)) or not re.fullmatch(r'[0-9]{11}',n) or not _SHA.fullmatch(a) or not _SHA.fullmatch(x) or not re.fullmatch(r'[1-9][0-9]{0,5}',v) or n in pins:
+        if not all(isinstance(s,str) for s in (n,a,x,v)) or not re.fullmatch(r'[0-9]{11}',n) or not _SHA.fullmatch(a) or not _SHA.fullmatch(x) or not re.fullmatch(r'[1-9][0-9]{0,5}',v) or n in receipts:
             raise ValueError('Invalid or duplicate RI223 receipt')
-        pins[n]=(a,x,v)
-    return pins
+        receipts[n]=row
+    return receipts
+
+
+def configured_catalog() -> dict[str, tuple[str, str, str]] | None:
+    receipts = configured_receipts()
+    if receipts is None:
+        return None
+    return {n: (r['archive_sha256'], r['selected_xml_sha256'], r['observed_version'])
+            for n, r in receipts.items()}

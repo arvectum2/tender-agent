@@ -24,7 +24,7 @@ from src.tender_research.providers.ri223_soap_evidence import (
 )
 
 
-def import_archive(root: Path, archive: Path, number: str) -> str:
+def import_archive(root: Path, archive: Path, number: str, *, attachments: list[Path] | None = None, processor=None) -> str:
     if not root.is_absolute() or root.is_symlink() or not root.is_dir() or root.stat().st_mode & 0o077:
         raise ValueError('Explicit private existing runs directory (0700) required')
     if archive.is_symlink() or not archive.is_file():
@@ -61,10 +61,19 @@ def import_archive(root: Path, archive: Path, number: str) -> str:
               'warnings':[],'limitations':['Только архивное XML. Вложения не импортированы; полный анализ недоступен.']}
         if ri223_archive_observation(stage,meta)['status']!='PINNED_RI223_ARCHIVED_NOTICE':
             raise ValueError('Source verification failed')
+        if attachments is not None:
+            from src.modules.tender_operator_agent_demo.ri223_attachment_evidence import (
+                import_attachments,
+            )
+            from src.shared.document_processing import process_document_bytes
+
+            import_attachments(stage,meta,attachments,processor or process_document_bytes)
         (stage/'metadata.json').write_text(json.dumps(meta,ensure_ascii=False),encoding='utf-8')
         target.mkdir(mode=0o700,exist_ok=False)
         try:
             (stage/'input').rename(target/'input')
+            if (stage/'normalized').exists():
+                (stage/'normalized').rename(target/'normalized')
             (stage/'metadata.json').rename(target/'metadata.json')
         except BaseException:
             shutil.rmtree(target)
@@ -76,11 +85,12 @@ def main() -> None:
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--archive',type=Path,required=True)
     parser.add_argument('--number',required=True)
+    parser.add_argument('--attachment',type=Path,action='append',help='One local original per unique trusted receipt digest')
     args=parser.parse_args()
     root=os.environ.get('AI_CORP_TENDER_OPERATOR_DEMO_RUNS_DIR')
     if not root:
         parser.error('Explicit private runs directory required')
-    print(import_archive(Path(root),args.archive,args.number))
+    print(import_archive(Path(root),args.archive,args.number,attachments=args.attachment))
 
 
 if __name__=='__main__':
