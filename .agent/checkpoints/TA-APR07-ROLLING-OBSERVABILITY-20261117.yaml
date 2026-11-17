@@ -1,0 +1,16 @@
+task_id: TA-APR07-ROLLING-OBSERVABILITY-20261117
+status: in_progress
+goal: Extend existing operational observability with a bounded rolling analysis-job measurement, not model inference or production SLO acceptance.
+definition_of_done:
+  - Measure terminal analysis jobs in stated UTC window, separate completed, warning, failed and cancelled outcomes and invalid timing.
+  - Report queue-to-job-finish latency only with explicit denominators, no empty or undersized sample claimed as SLO.
+  - Validate with disposable DB fixture, endpoint contract and regression tests; publish draft PR.
+completed:
+  - APR06 bounded engineering readiness complete; commercial blockers separate; final PR605 shortlist CI pending.
+current_stage: implement_measured_job_window
+remaining:
+  - Implementation and targeted isolated tests.
+  - Exact CI.
+last_verified_commit: 66e664c41453f609ed6fd393b332439fae6cf560
+test_results: []
+resume_instruction: Implement rolling measurement using existing TenderAnalysisJob records, never access production DB or invoke Gemma; preserve existing operational endpoint behavior and distinguish job latency from operator time and production SLO.
