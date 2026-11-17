@@ -1,5 +1,5 @@
 task_id: TA-APR07-ROLE-HARDENING-20261117
-status: in_progress
+status: completed
 goal: Enforce existing APR07 operator least-privilege read contract; reject overbroad SELECT and row-level-filtered job data instead of misstating global observations.
 definition_of_done:
   - Reject read privileges on non-metric job columns including inherited grants.
@@ -10,12 +10,12 @@ completed:
   - Completed integration checkpoint carried from separate record branch.
   - Enforced exactly the six metric columns, including effective inherited grants, and rejected RLS table or nonordinary relation before measurement.
   - Actual PostgreSQL 18.7 acceptance passed for allowed role, denied owner, writer, broad reader, partial reader and inherited extra-column reader, denied RLS and verified recovery after disabling RLS in disposable cluster.
-current_stage: exact_ci_pending
-remaining:
-  - Verify exact PR CI and main integration CI; fix actual failures if necessary.
-last_verified_commit: 645ec34cb204107a5d8ce3e04e95c7b61d1ccabd
+  - Exact PR608 head 21c56ca72a6bff94ec5831bff5f1cfd7d31a9e93 CI 19/19; 6031 pytest pass, 288 skipped. Main a08a34a1 postmerge CI and GitVerse mirror SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
+last_verified_commit: 21c56ca72a6bff94ec5831bff5f1cfd7d31a9e93
 test_results:
   - 47 targeted pytest PASS, Ruff and diff check PASS.
   - APR07_POSTGRES_OPERATOR_READONLY_PASS: 100 synthetic rows, P95 95 seconds; all five inappropriate roles and RLS rejected, sensitive column/write denied, disposable cluster removed.
   - Main a08a34a1 GitVerse mirror SUCCESS, post-merge CI in progress.
-resume_instruction: Verify exact new PR CI and main post-merge CI, then finalize bounded hardening; no further merge permission implied. External owner/source/staging gates stay open; P1 APR08 requires roadmap transition decision. No working DB, live procurement, production or Gemma.
+resume_instruction: Bounded role hardening verified; PR608 merge requires separate owner authorization. Continue independent P0 source claim checks without models or live sources.
