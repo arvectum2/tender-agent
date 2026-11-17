@@ -354,16 +354,20 @@ completed:
 - Native explicit norm version selection into itemized estimate, typed source binding
   and protected bound row, provenance in historical projection and Python-compatible
   actual/evidence digests.
-current_stage: price01_historical_comparables_backend
+- Case-scoped historical evidence catalog and comparison backend from existing pinned
+  EIS receipts; distinct selected procedures, explicit reference, scope difference
+  evidence, admitted offers separated from unknown signed contract amounts. No unsupported
+  normalization.
+current_stage: price01_historical_comparables_backend_verified_next_web
 remaining:
-- Implement historical comparable procurement normalization from admitted offers and
-  contract evidence, with explicit comparability and provenance; do not infer market
-  prices or probability.
-- 'Final PRICE-01 acceptance: PostgreSQL concurrency, integrated Web/native UI, fixture
-  and deployment readiness. Feature gates stay off until acceptance.'
-- B2B authorized manual observation and document acquisition, legacy runtime cutover;
-  no repeat live pilot.
-last_verified_commit: 1d185b5f5da19c20ed51a44b062d4825d75efb0b
+- Web/iOS historical evidence catalog and comparison, exact source and response digest
+  validation.
+- Expand reviewed corpus with actual signed contract evidence and exact comparable
+  complete quantities; no inference from deadlines or winners.
+- Final PRICE-01 acceptance including PostgreSQL concurrency and native interactive
+  acceptance.
+- B2B authorized manual observation, document acquisition and legacy cutover.
+last_verified_commit: 70306f2a86982eff9e33ccb61a1c2554d309338b
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -588,11 +592,14 @@ test_results:
   fixtures PASS, including row and baseline SHA256, rejected foreign/withdrawn selections
   and duplicates. Xcode iOS Simulator build-for-testing PASS. Git diff check PASS;
   PR593 CI 19/19. Native interactive acceptance not performed.
-resume_instruction: Build case-scoped historical evidence comparison with existing
-  SHA-pinned website receipts; explicit reference selection, scope differences, separate
-  admitted offers and verified contract basis, exact quantity normalization only when
-  source proves comparable complete basket. No inferred current rates, no live traffic
-  or DB mutations. Test backend, then clients.
+- 315 tests passed, 2 skipped, 142 warnings in 18.66s; Ruff/diff PASS. Integrated
+  tenant/role, archive provenance/quantity limits and source corruption tests. PR594
+  17 success/2 running, no failures.
+resume_instruction: Historical comparison backend verified at 70306f2a; next Web catalog
+  and explicit reference/selection with separate price fields and scope differences,
+  then iOS. Archive only six historic procedures, zero new equivalent cases, no contract
+  prices or complete quantity data. Keep feature off. No new B2B traffic, production
+  or MacBook changes.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
