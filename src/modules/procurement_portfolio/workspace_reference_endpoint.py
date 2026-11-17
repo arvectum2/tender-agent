@@ -1,7 +1,8 @@
 """Opt-in product-owned internal procurement endpoint.
 
 A separately reviewed local manifest, exact release/DB binding and dedicated
-bearer are required. No Basic-auth bypass, generic credentials, or source writes.
+bearer are required. Exact GET delegates to this independent boundary; no
+generic Basic credential, broad public-path exemption, or source writes.
 """
 import hashlib
 import hmac
@@ -141,3 +142,6 @@ def install_workspace_reference(app: FastAPI, *, engine, path=None, pin=None, re
             # Never expose SQL, credentials or private paths in a response.
             raise HTTPException(503, "SOURCE_UNAVAILABLE") from None
         return JSONResponse(result, headers={"Cache-Control": "no-store", "Pragma": "no-cache"})
+
+    # Register the actual guarded handler, not a caller-controlled exemption.
+    app.state.wsf07b_reference_endpoint = read
