@@ -270,7 +270,7 @@ active_product_roadmap_2026_10_08:
       done_gate: 'Model/ontology changes are promoted only after frozen benchmark comparison; production quality/SLO metrics are observable.'
     - id: APR-08-EVIDENCE-COPILOT
       priority: P1
-      state: bounded_development_gate_pass_ci_and_owner_integration_pending
+      state: bounded_development_merged_main_verified
       legacy_mapping: [ARV-065]
       outcome: 'Procurement-scoped evidence copilot for Q&A, legal/commercial calculations and explanations with citations.'
       why_now: 'Useful intelligence extension after the core pre-analysis path is stable.'

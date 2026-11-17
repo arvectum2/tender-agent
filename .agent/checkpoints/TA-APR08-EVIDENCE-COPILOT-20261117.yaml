@@ -1,5 +1,5 @@
 task_id: TA-APR08-EVIDENCE-COPILOT-20261117
-status: in_progress
+status: completed
 goal: Owner-approved APR08 procurement-scoped evidence assistant in existing private Operator Workspace, starting with explicit source questions and hypothetical percentage calculation.
 definition_of_done:
   - Existing authenticated workspace run scope; no public route or tenant fallback, no model, no new DB.
@@ -25,12 +25,10 @@ completed:
   - Four additional actual government-hosted law copies pinned; 19 bounded excerpts and two amendment-list comparisons, 218 focused and real Chromium PASS. PR623 exact CI green. Official current law remains unverified.
   - Bounded composed independently sourced briefs and explicit security/historical article comparison implemented; real pinned XML and DP Chromium PASS, partial unknowns retained; 223 focused tests PASS.
   - Integrated bounded development acceptance PASS 4/4, 9/9 legal SHA, actual DP and Chromium, 223 focused PASS. PR625/626 CI green.
-current_stage: integrated_development_pass_successor_ci_and_owner_integration_pending
-remaining:
-  - Verify successor exact CI, then close bounded development increment.
-  - Separate explicit Owner integration decision; main remains unchanged.
-  - Current-law, broader semantic, 223-FZ procurement evidence and production/business gates remain unproven.
-last_verified_commit: 427a548cffc5d61aa062826ea82fe43a54d542e5
+  - Exact final stack PR627 CI 19/19; owner authorized merge, merged to main cac4cd4a69f2494bff582b94aec80a5ee4d4af4c; tree matches reviewed head 17e64db3a6133f6a8ab1d372be031c72c4c8bd2d.
+current_stage: integrated_bounded_development_complete
+remaining: []
+last_verified_commit: 17e64db3a6133f6a8ab1d372be031c72c4c8bd2d
 test_results:
-  - Integrated 4/4, legal source SHA 9/9, 223 focused PASS, Ruff/Node/diff PASS.
-resume_instruction: Verify successor exact CI, then request explicit integration consent. Do not repeat accepted work or expand APR09/10 without triggers. No production, live procurement, Gemma or unapproved merge.
+  - Integrated 4/4, 9/9 legal-source SHA, 223 focused tests PASS; all 16 PRs 304/304 checks SUCCESS.
+resume_instruction: Bounded APR08 engineering complete and merged. Verify main post-merge CI in integration checkpoint. Authoritative current law, broad semantic/223-FZ document coverage and production/business acceptance remain separate open gates. No APR09/10 trigger.
