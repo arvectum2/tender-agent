@@ -808,3 +808,10 @@ apr08_browser_acceptance_20261117:
   branch: feat/ta-apr08-browser-acceptance-20261117
   current_stage: exact_ci_pending
   last_verified_commit: 2bfb90b444aa8921a62ca34c6fe64ebddd21762d
+
+apr08_pinned_browser_20261117:
+  task_id: TA-APR08-PINNED-BROWSER-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR08-PINNED-BROWSER-20261117.yaml
+  branch: feat/ta-apr08-pinned-browser-20261117
+  current_stage: pinned_archive_browser_replay
