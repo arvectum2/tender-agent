@@ -358,7 +358,7 @@ completed:
   EIS receipts; distinct selected procedures, explicit reference, scope difference
   evidence, admitted offers separated from unknown signed contract amounts. No unsupported
   normalization.
-current_stage: price01_historical_comparables_backend_verified_next_web
+current_stage: price01_historical_comparables_web
 remaining:
 - Web/iOS historical evidence catalog and comparison, exact source and response digest
   validation.
@@ -595,11 +595,10 @@ test_results:
 - 315 tests passed, 2 skipped, 142 warnings in 18.66s; Ruff/diff PASS. Integrated
   tenant/role, archive provenance/quantity limits and source corruption tests. PR594
   17 success/2 running, no failures.
-resume_instruction: Historical comparison backend verified at 70306f2a; next Web catalog
-  and explicit reference/selection with separate price fields and scope differences,
-  then iOS. Archive only six historic procedures, zero new equivalent cases, no contract
-  prices or complete quantity data. Keep feature off. No new B2B traffic, production
-  or MacBook changes.
+resume_instruction: Implement Web case-bound historical evidence catalog and explicit
+  comparison, verify source receipt and response digests, exact selected records and
+  scope differences; no pooled rate or fabricated contract values. Test Node and regression;
+  no production changes.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
