@@ -1,0 +1,15 @@
+task_id: TA-APR03B-RI223-CONTAINER-20261117
+status: in_progress
+goal: Opt-in safe RI223 RAR member projection into archived evidence workspace and quote-time container lineage; ZIP expansion remains separate.
+definition_of_done:
+  - Reuse bounded existing RAR provider; parent receipt and actual inner paths/hashes, no path writes or nested expansion, bounded projection.
+  - Revalidate parent and exact member before DP quote; expose lineage in API/UI; no full-analysis promotion.
+  - Actual 19-member archive and existing scoring receipt replay, adversarial tests, CI and draft successor.
+completed:
+  - Restored PR632 exact head 5d9199c44d90193b5afcfd418e03a5afebdb4311, CI 11/19 success with 8 running; current main 3b37fb69. Existing RAR provider replayed 19 regular members (4044608 bytes), both historic scoring hashes match.
+current_stage: receipt_bound_rar_members
+remaining:
+  - Implement, test, actual DP/Chromium replay, publish draft and verify exact CI.
+last_verified_commit: 5d9199c44d90193b5afcfd418e03a5afebdb4311
+test_results: []
+resume_instruction: No live procurement, production, Workspace admission, Gemma or automatic merging. Preserve original archives, no unreviewed ZIP expansion.
