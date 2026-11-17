@@ -354,7 +354,7 @@ completed:
 - Native explicit norm version selection into itemized estimate, typed source binding
   and protected bound row, provenance in historical projection and Python-compatible
   actual/evidence digests.
-current_stage: price01_norm_binding_ios_verified_next_comparables
+current_stage: price01_historical_comparables_backend
 remaining:
 - Implement historical comparable procurement normalization from admitted offers and
   contract evidence, with explicit comparability and provenance; do not infer market
@@ -588,11 +588,11 @@ test_results:
   fixtures PASS, including row and baseline SHA256, rejected foreign/withdrawn selections
   and duplicates. Xcode iOS Simulator build-for-testing PASS. Git diff check PASS;
   PR593 CI 19/19. Native interactive acceptance not performed.
-resume_instruction: 'Backend, Web and iOS exact norm binding verified, native code
-  1d185b5f. Next historical market comparables: inspect prior price research notes,
-  corpus models and evidence contracts; implement bounded explicit normalization and
-  descriptive evidence first. Keep feature default off; no production or MacBook changes.
-  B2B authorized access unresolved.'
+resume_instruction: Build case-scoped historical evidence comparison with existing
+  SHA-pinned website receipts; explicit reference selection, scope differences, separate
+  admitted offers and verified contract basis, exact quantity normalization only when
+  source proves comparable complete basket. No inferred current rates, no live traffic
+  or DB mutations. Test backend, then clients.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
