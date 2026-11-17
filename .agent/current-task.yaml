@@ -742,7 +742,7 @@ apr08_evidence_copilot_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR08-EVIDENCE-COPILOT-20261117.yaml
   branch: feat/ta-apr08-evidence-copilot-20261117
-  current_stage: legal_reference_review_financial_and_statute_gate_next
+  current_stage: commercial_review_browser_and_statute_gate_next
 
 apr08_document_retrieval_20261117:
   task_id: TA-APR08-DOCUMENT-RETRIEVAL-20261117
@@ -771,19 +771,19 @@ apr08_typed_payment_20261117:
 
 apr08_security_xml_20261117:
   task_id: TA-APR08-SECURITY-XML-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR08-SECURITY-XML-20261117.yaml
   branch: feat/ta-apr08-security-xml-20261117
-  current_stage: exact_ci_pending
-  last_verified_commit: 7d8a912da73733c0d922087061387bce7363e2c5
+  current_stage: verified_pending_merge
+  last_verified_commit: 80d8533ba73ddfe8735cf5d1ff4629045a834b84
 
 apr08_delivery_20261117:
   task_id: TA-APR08-DELIVERY-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR08-DELIVERY-20261117.yaml
   branch: feat/ta-apr08-delivery-observation-20261117
-  current_stage: exact_ci_pending
-  last_verified_commit: 114cdda8de7f1cf0c526958cf1b2278acc0b63c1
+  current_stage: verified_pending_merge
+  last_verified_commit: b31b27872ae2907d64f80f7a07299864ff81d1b9
 
 apr08_legal_reference_20261117:
   task_id: TA-APR08-LEGAL-REFERENCE-20261117
@@ -798,4 +798,5 @@ apr08_commercial_scenario_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR08-COMMERCIAL-SCENARIO-20261117.yaml
   branch: feat/ta-apr08-commercial-scenario-20261117
-  current_stage: explicit_profit_and_liquidity_scenario
+  current_stage: exact_ci_pending
+  last_verified_commit: fd4635a4e8d7e153678f15b968798b6d758090a8

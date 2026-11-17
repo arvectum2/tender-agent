@@ -17,12 +17,13 @@ completed:
   - PR610 through PR614 exact CI green. Added pinned original security field observation, 146 tests and 3 real archive replay PASS.
   - Literal performance term observations implemented; archived service question real DP replay 2 citations and 157 regression tests PASS.
   - Archived customer security procedure and explicit referenced acts distinguished from applicable law; real replay 8 references, 161 regression tests PASS. No versioned statute corpus or legal conclusion.
-current_stage: legal_reference_review_financial_and_statute_gate_next
+  - Extended stateless offer economics and liquidity stress; 195 focused regressions and authenticated HTTP/Node UI simulation PASS. PR615/616 exact CI green.
+current_stage: commercial_review_browser_and_statute_gate_next
 remaining:
   - Verify reproducible APR08 real DP acceptance successor CI.
   - Develop bounded semantic evidence grounded Q&A, legal reasoning boundaries and explicit assumption-based commercial calculations.
   - Real browser acceptance, complete module gate and separate integration consent.
-last_verified_commit: 9519b335199290056120f68c8a59ef214d0ba28f
+last_verified_commit: fd4635a4e8d7e153678f15b968798b6d758090a8
 test_results:
   - 108 targeted PASS, Ruff/Node syntax/diff check PASS, existing Node UI simulation genuine scenario extension PASS.
   - Real archived XML v3 exact SHA replay 4/4, missing pinned metadata 4/4 UNKNOWN; no live sources/model/production.

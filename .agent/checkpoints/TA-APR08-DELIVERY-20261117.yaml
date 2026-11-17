@@ -1,5 +1,5 @@
 task_id: TA-APR08-DELIVERY-20261117
-status: in_progress
+status: completed
 goal: Distinguish literal performance dates and durations from contract validity, payment and other deadlines; original-attested lines only.
 definition_of_done:
   - Explicit service/work/goods/contract execution scope, date and duration observations, preserve trigger and qualifiers; no inferred effective deadline.
@@ -9,11 +9,10 @@ completed:
   - PR615 17/19 SUCCESS, two running; no failed checks. Real archive inspection identified duplicate service completion dates with different clause numbers; no unique clause inference.
   - Implemented strict scope-specific literal date/duration observations with original verified citations; no inferred deadline. Repeated identical terms within a file may be sampled once, distinct supported terms within one file abstain; partial search does not establish completeness.
   - Real isolated DP archived service question: two verified original excerpts, 2026-12-07 inclusive from contract conclusion, no effective due date. Prior security replay also PASS.
-current_stage: exact_ci_pending
-remaining:
-  - Verify exact new PR CI and parent PR615 CI.
-  - Next bounded legal explanation and financial scenarios; full APR08 remains open.
-last_verified_commit: 114cdda8de7f1cf0c526958cf1b2278acc0b63c1
+  - Exact reviewed head b31b27872ae2907d64f80f7a07299864ff81d1b9 CI 19/19 SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
+last_verified_commit: b31b27872ae2907d64f80f7a07299864ff81d1b9
 test_results:
   - 157 focused PASS, Ruff, diff, JS syntax and Node simulation PASS.
   - APR08_REAL_DELIVERY_OBSERVATION LITERAL_PERFORMANCE_OBSERVATIONS citations 2; original inventory unchanged.
