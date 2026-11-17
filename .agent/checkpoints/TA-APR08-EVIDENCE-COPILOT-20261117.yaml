@@ -1,0 +1,16 @@
+task_id: TA-APR08-EVIDENCE-COPILOT-20261117
+status: in_progress
+goal: Owner-approved APR08 procurement-scoped evidence assistant in existing private Operator Workspace, starting with explicit source questions and hypothetical percentage calculation.
+definition_of_done:
+  - Existing authenticated workspace run scope; no public route or tenant fallback, no model, no new DB.
+  - Three original pinned archived XML fact questions and explicit hypothetical NMCK percentage with source excerpt and decimal calculation; unknown/unsupported fail closed, no legal/GO/current assertion.
+  - Existing Workspace UI with run-bound response and no stale results; targeted HTTP, JS, archived source replay and reg tests.
+  - Publish draft PR and verify exact CI; further general document Q&A/retrieval and commercial/legal interpretations remain future increments.
+completed:
+  - Exact PR608/609 green and owner-authorized merges, main a1686d85 tree matches PR609.
+current_stage: bounded_source_question_and_calculation_slice
+remaining:
+  - Implement first vertical slice, run tests, publish draft.
+last_verified_commit: a1686d85baf139b7a01b0f29ae8283a266938482
+test_results: []
+resume_instruction: Work in existing workspace UI/API with private auth; use original pinned archived EIS evidence only, no model/live/production or generic bot. Distinguish hypothetical calculation from legal security requirement.

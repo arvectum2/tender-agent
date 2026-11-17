@@ -1,5 +1,5 @@
 task_id: TA-APR03B-MULTIPLE-SOURCE-CLAIMS-20261117
-status: in_progress
+status: completed
 goal: Prevent first-match-only audit from hiding later conflicting labelled price/deadline claims and normalize equivalent aware timestamps.
 definition_of_done:
   - Audit each supported explicit labelled assertion, not only first match, with bounded overflow exposed and review required.
@@ -10,11 +10,11 @@ completed:
   - Fixed first-match audit to check labelled price and deadline assertions in source order, maximum 100 plus overflow sentinel. Overflow visible in typed evidence, operator quality gate, limitations and expert prefill.
   - Equivalent aware timestamps compare UTC instants; timezone-free claim remains UNKNOWN; historic original values unchanged.
   - Real archived normalized EIS notice replay with four synthetic assertions: two matched, two contradictions detected; no model run.
-current_stage: exact_ci_pending
-remaining:
-  - Verify exact successor CI; fix actual failures.
-last_verified_commit: 1e934adb9ca5a551dccfbc1c640ef573a540b37d
+  - Exact PR609 head 00debad91eb1f704f35bccc3be54acefd3d456f4 CI 19/19; owner-approved merges PR608 f39faa556c9575993cf777b065c018e7ddce2de7 and PR609 a1686d85baf139b7a01b0f29ae8283a266938482; both tree matches.
+current_stage: merged_verified_no_deployment
+remaining: []
+last_verified_commit: a1686d85baf139b7a01b0f29ae8283a266938482
 test_results:
   - 123 focused regressions PASS / 1 SKIP, Ruff and diff check PASS.
   - Archived normalized real notice 0372200172326000015: 4 assertions, 2 matches and 2 contradictions. Synthetic assertions only, no new legal status.
-resume_instruction: Verify exact new PR CI; mark bounded fix complete. PR608 and successor need separate merge permission. Existing regex supports explicit labelled Russian/English prices and aware dates only, not full semantic entailment. P1 APR08 remains gated by roadmap transition; no live requests, Gemma or production.
+resume_instruction: Engineering completed, merged into main. Owner approved APR08 development; no production, live sources, model or commercial gate approval.

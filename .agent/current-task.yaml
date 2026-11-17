@@ -724,13 +724,22 @@ apr07_role_hardening_20261117:
   status: completed
   checkpoint: .agent/checkpoints/TA-APR07-ROLE-HARDENING-20261117.yaml
   branch: feat/ta-apr07-operator-role-hardening-20261117
-  current_stage: verified_pending_merge
+  current_stage: merged_verified_no_deployment
   last_verified_commit: 21c56ca72a6bff94ec5831bff5f1cfd7d31a9e93
   pr: 608
 
 apr03b_multiple_source_claims_20261117:
   task_id: TA-APR03B-MULTIPLE-SOURCE-CLAIMS-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR03B-MULTIPLE-SOURCE-CLAIMS-20261117.yaml
   branch: feat/ta-apr03b-multiple-source-claims-20261117
-  current_stage: exact_ci_pending
+  current_stage: merged_verified_no_deployment
+  last_verified_commit: a1686d85baf139b7a01b0f29ae8283a266938482
+  pr: 609
+
+apr08_evidence_copilot_20261117:
+  task_id: TA-APR08-EVIDENCE-COPILOT-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR08-EVIDENCE-COPILOT-20261117.yaml
+  branch: feat/ta-apr08-evidence-copilot-20261117
+  current_stage: bounded_source_question_and_calculation_slice
