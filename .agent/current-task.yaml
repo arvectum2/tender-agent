@@ -936,4 +936,5 @@ apr03b_ri223_fit_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR03B-RI223-FIT-20261117.yaml
   branch: feat/ta-apr03b-ri223-fit-20261117
-  current_stage: archived_owner_review_and_price_scenario
+  current_stage: exact_ci_pending
+  last_verified_commit: f7d036a4e604960a004fba73882769a185f8d5b4

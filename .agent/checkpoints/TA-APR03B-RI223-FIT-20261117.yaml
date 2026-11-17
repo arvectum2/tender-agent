@@ -7,9 +7,14 @@ definition_of_done:
   - Actual archived replay, tests, checkpoint and draft PR; no public profile endpoint or DB writes.
 completed:
   - PR635 19/19 SUCCESS. Main 3b37fb69 unchanged. Read-only production DB inspection: customer_profiles, company_profile_fact_versions, company_documents all empty. Historical 2026-10-13 owner reference-list receipt exists but no live tenant profile. Existing calculator and qualification path inspected.
-current_stage: archived_owner_review_and_price_scenario
+  - Implemented local owner review reusing historical pinned reference snapshot and PRICE01, exact archived SME participant clause and conditional scoring; explicit single RUB lot scenario.
+  - Real archived replay PASS, 19 originals, incomplete member UNKNOWN, illustrative arithmetic 768817.21/222000/498000, no actual cost or legal GO.
+  - 411 passed, 8 skipped, 6 warnings; 12 new tests, 3 Chromium regression scenarios PASS, WSF07B unchanged.
+current_stage: exact_ci_pending
 remaining:
-  - Implement local owner review and test; verify real archive and publish.
-last_verified_commit: a466eb10eea906b3207df78acc6e338b6e748cb3
-test_results: []
+  - Verify draft exact CI; then source-bound contract risk review. Current canonical owner profile/tenant and actual company cost evidence remain unestablished; no launch, qualification verdict or real commercial GO.
+last_verified_commit: f7d036a4e604960a004fba73882769a185f8d5b4
+test_results:
+  - 411 passed, 8 skipped, 6 warnings; Ruff, Node/diff PASS.
+  - RI223_OWNER_ACTUAL_SOURCE_PASS and RI223_OWNER_INCOMPLETE_SOURCE_REFUSED; 3 actual browser regressions PASS.
 resume_instruction: No company tenant creation, private data publication, Workspace admission, live purchase, model or production changes; no automatic merge.
