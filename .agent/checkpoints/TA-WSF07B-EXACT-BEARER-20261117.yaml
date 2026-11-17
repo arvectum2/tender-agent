@@ -1,0 +1,15 @@
+task_id: TA-WSF07B-EXACT-BEARER-20261117
+status: in_progress
+goal: Resolve Basic/Bearer collision for exact WSF07B GET; establish private source binding and conservative ownership review package; hand off to Company without activating access.
+definition_of_done:
+  - Exact route/method and registered handler independent Bearer boundary, negative HTTP regressions, CI.
+  - Verify live release and read-only database binding; identify independently proven candidate ownership or explicitly exclude unproven records.
+  - Deliver exact commit, tests and non-sensitive handoff to Company; no credentials, active manifest, Workspace release or real data access.
+completed:
+  - Reopened normative contract and source; live anonymous endpoint 401, collision confirmed. Production prior checkpoint completed.
+current_stage: strict_auth_and_private_provenance
+remaining:
+  - Implement, test, review release and source binding, package and handoff.
+last_verified_commit: 28e874b65d8aeab5a13e3c2453632810c14140be
+test_results: []
+resume_instruction: Read checkpoint and live release first. Never activate real records or issue credentials. No unreviewed deployment, unrelated merges, or DB writes.

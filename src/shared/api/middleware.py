@@ -8,11 +8,31 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 from starlette.requests import Request
 from starlette.responses import Response
+from starlette.routing import Match
 
 from src.shared.config.settings import Settings
 
 DEFAULT_PROTECTED_PREFIXES = ("/demo/tender-agent", "/pilot/tender-agent", "/api/demo/tender-agent")
 DEFAULT_PUBLIC_PATHS = ("/health",)
+
+def _workspace_reference_get(request: Request) -> bool:
+    # An exact independently guarded route, not a public path or prefix.
+    path = "/api/internal/workspace/procurement-reference"
+    scope = request.scope
+    if (scope.get("method") != "GET" or scope.get("path") != path
+            or scope.get("raw_path") != path.encode("ascii") or scope.get("root_path", "")):
+        return False
+    endpoint = getattr(request.app.state, "wsf07b_reference_endpoint", None)
+    if endpoint is None:
+        return False
+    # Match the same first FULL route Starlette will dispatch to. An earlier
+    # matching route/mount must not inherit the exception.
+    for route in request.app.router.routes:
+        match, child = route.matches(scope)
+        if match == Match.FULL:
+            return child.get("endpoint") is endpoint
+    return False
+
 
 class TenderPilotBasicAuthMiddleware(BaseHTTPMiddleware):
     def __init__(self, app, *, username: str, password: str, protected: tuple[str, ...] = DEFAULT_PROTECTED_PREFIXES, public: tuple[str, ...] = DEFAULT_PUBLIC_PATHS, tenant_api_enabled: bool = False) -> None:
@@ -24,6 +44,14 @@ class TenderPilotBasicAuthMiddleware(BaseHTTPMiddleware):
         self.tenant_api_enabled = tenant_api_enabled
 
     async def dispatch(self, request: Request, call_next) -> Response:
+        if _workspace_reference_get(request):
+            response = await call_next(request)
+            response.headers.update({
+                "Cache-Control": "no-store", "Pragma": "no-cache",
+                "X-Content-Type-Options": "nosniff", "X-Frame-Options": "DENY",
+                "Referrer-Policy": "no-referrer",
+            })
+            return response
         # This path is guarded by its own Bearer/tenant FastAPI dependencies.
         # Existing operator routes remain protected by the separate Basic gate.
         if self.tenant_api_enabled and request.url.path.startswith("/api/saas/"):
