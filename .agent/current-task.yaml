@@ -742,7 +742,7 @@ apr08_evidence_copilot_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR08-EVIDENCE-COPILOT-20261117.yaml
   branch: feat/ta-apr08-evidence-copilot-20261117
-  current_stage: commercial_review_browser_and_statute_gate_next
+  current_stage: browser_review_pinned_xml_and_statute_gate_next
 
 apr08_document_retrieval_20261117:
   task_id: TA-APR08-DOCUMENT-RETRIEVAL-20261117
@@ -806,4 +806,5 @@ apr08_browser_acceptance_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR08-BROWSER-ACCEPTANCE-20261117.yaml
   branch: feat/ta-apr08-browser-acceptance-20261117
-  current_stage: authenticated_real_browser_replay
+  current_stage: exact_ci_pending
+  last_verified_commit: 2bfb90b444aa8921a62ca34c6fe64ebddd21762d
