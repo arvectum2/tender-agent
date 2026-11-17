@@ -21,12 +21,13 @@ completed:
   - Actual Chromium loopback workspace acceptance twice; archived DP questions, lexical search, unknown, commercial scenario, input reset and visual review PASS. Pinned XML positives remain API-tested, not browser-tested.
   - Positive pinned archived XML Chromium desktop/narrow testing PASS; Copilot accessible before report; no model or unsupported legal conclusion. PR617/619/620 exact CI green.
   - Versioned immutable historical statute snapshot corpus, real Rospatent 44-FZ source, 6 article excerpts and Chromium positive/negative flow PASS; no normative effective interval or actual applicability.
-current_stage: statute_snapshot_review_authoritative_versions_next
+  - Cross-checked pinned secondary 279-FZ commencement groups, five date replays and real Chromium PASS; official portal unavailable, no verified effective interval or current law. PR621/622 CI green.
+current_stage: amendment_schedule_review_authoritative_sources_next
 remaining:
   - Verify reproducible APR08 real DP acceptance successor CI.
   - Develop bounded semantic evidence grounded Q&A, legal reasoning boundaries and explicit assumption-based commercial calculations.
   - Real browser acceptance, complete module gate and separate integration consent.
-last_verified_commit: 941e377f483c01ec1f7bbcb3b9d0c7ca081467dd
+last_verified_commit: 1d8dbe64487ce5c207bc3a58dfc16aca3f52db4e
 test_results:
   - 108 targeted PASS, Ruff/Node syntax/diff check PASS, existing Node UI simulation genuine scenario extension PASS.
   - Real archived XML v3 exact SHA replay 4/4, missing pinned metadata 4/4 UNKNOWN; no live sources/model/production.

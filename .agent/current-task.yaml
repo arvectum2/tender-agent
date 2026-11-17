@@ -742,7 +742,7 @@ apr08_evidence_copilot_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR08-EVIDENCE-COPILOT-20261117.yaml
   branch: feat/ta-apr08-evidence-copilot-20261117
-  current_stage: statute_snapshot_review_authoritative_versions_next
+  current_stage: amendment_schedule_review_authoritative_sources_next
 
 apr08_document_retrieval_20261117:
   task_id: TA-APR08-DOCUMENT-RETRIEVAL-20261117
@@ -811,23 +811,24 @@ apr08_browser_acceptance_20261117:
 
 apr08_pinned_browser_20261117:
   task_id: TA-APR08-PINNED-BROWSER-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR08-PINNED-BROWSER-20261117.yaml
   branch: feat/ta-apr08-pinned-browser-20261117
-  current_stage: exact_ci_pending
-  last_verified_commit: 2953c0eb1ca47dbe456026a63431a690e8b359d8
+  current_stage: verified_pending_merge
+  last_verified_commit: efdaa8b3c9b451b2ae71a90456a27673fb4c4fdd
 
 apr08_statute_corpus_20261117:
   task_id: TA-APR08-STATUTE-CORPUS-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR08-STATUTE-CORPUS-20261117.yaml
   branch: feat/ta-apr08-statute-corpus-20261117
-  current_stage: exact_ci_pending
-  last_verified_commit: 941e377f483c01ec1f7bbcb3b9d0c7ca081467dd
+  current_stage: verified_pending_merge
+  last_verified_commit: 38c6ee3e43f481aad5b0e4e1aa92b6c6984ba3ed
 
 apr08_effective_date_20261117:
   task_id: TA-APR08-EFFECTIVE-DATE-20261117
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR08-EFFECTIVE-DATE-20261117.yaml
   branch: feat/ta-apr08-effective-date-20261117
-  current_stage: amendment_source_intake_and_temporal_gate
+  current_stage: exact_ci_pending
+  last_verified_commit: 1d8dbe64487ce5c207bc3a58dfc16aca3f52db4e

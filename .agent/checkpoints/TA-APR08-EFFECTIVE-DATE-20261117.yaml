@@ -7,9 +7,16 @@ definition_of_done:
   - Tests and real replay, draft PR, verify exact CI.
 completed:
   - PR621 and PR622 exact CI 19/19 SUCCESS.
-current_stage: amendment_source_intake_and_temporal_gate
+  - Actual direct official portal requests failed (publication timeout, actual.pravo connection refused); downloaded two actual secondary article 2 copies for 279-FZ and reported publication reference. Pinned raw SHA and normalized paragraph SHA; both copies agree.
+  - Calendar groups 2026-08-04 (secondary reported publication), 2026-10-01 (general rule), 2027-01-01 (exceptions); compare chosen date only, never mark legally effective.
+  - Real five date replay and isolated Chromium positive schedule/current-law UNKNOWN, prior XML and historical statute flows PASS; 214 focused tests PASS.
+current_stage: exact_ci_pending
 remaining:
-  - Acquire source, implement, test, publish.
-last_verified_commit: 38c6ee3e43f481aad5b0e4e1aa92b6c6984ba3ed
-test_results: []
+  - Verify exact successor CI.
+  - Obtain authoritative consolidated 44-FZ/223-FZ and official amendment publication/effective interval coverage; do not confuse secondary agreement with authority.
+  - Continue bounded semantic and final acceptance.
+last_verified_commit: 1d8dbe64487ce5c207bc3a58dfc16aca3f52db4e
+test_results:
+  - 214 focused PASS, Ruff, diff, JS syntax and Node simulation PASS.
+  - APR08_AMENDMENT_BROWSER_PASS, APR08_STATUTE_BROWSER_PASS, APR08_PINNED_XML_CHROMIUM_PASS; five real date replays PASS, original archive unchanged.
 resume_instruction: Prefer official publication; distinguish secondary source if official fails. No model, production, live procurement or automatic merge.

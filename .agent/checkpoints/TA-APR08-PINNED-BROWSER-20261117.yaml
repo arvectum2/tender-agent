@@ -1,5 +1,5 @@
 task_id: TA-APR08-PINNED-BROWSER-20261117
-status: in_progress
+status: completed
 goal: Positive pinned archive XML evidence in real private browser without fabricated report or reanalysis.
 definition_of_done:
   - Actual pinned ZIP/XML and actual workspace on loopback; subject, NMCK, deadline, percentage, both security groups and legal references verified; no live or legal authority claim.
@@ -10,12 +10,11 @@ completed:
   - Copilot moved outside report panel, available with source files before analysis; missing files hide panel; run change clears evidence and ignores stale run response.
   - Actual pinned EOK v3 0348100024426000039 archived ZIP/XML, temporary minimal metadata shell only, no fabricated report: Chromium desk and narrow PASS, verified subject, price, deadline, percent, security, customer legal references, legal UNKNOWN and reset. Original and temporary run inventory unchanged.
   - Previous real DP Chromium replay PASS, no model or production. Visual screenshots reviewed desktop and 390px, no horizontal overflow.
-current_stage: exact_ci_pending
-remaining:
-  - Verify exact new PR CI.
-  - Authoritative versioned statute gate remains open; general semantic reasoning and full APR08 not complete.
-last_verified_commit: 2953c0eb1ca47dbe456026a63431a690e8b359d8
+  - Exact reviewed head efdaa8b3c9b451b2ae71a90456a27673fb4c4fdd CI 19/19 SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
+last_verified_commit: efdaa8b3c9b451b2ae71a90456a27673fb4c4fdd
 test_results:
   - 195 focused PASS; Ruff, diff, Node syntax and simulation PASS.
   - APR08_PINNED_XML_CHROMIUM_PASS desktop and narrow; APR08_REAL_CHROMIUM_PASS archived DP regression; originals unchanged.
-resume_instruction: Reuse SHA receipts and actual read-only routes; no production, live procurement, model or automatic merge.
+resume_instruction: Bounded increment verified; merge requires separate authorization. Continue parent APR08.

@@ -1,5 +1,5 @@
 task_id: TA-APR08-STATUTE-CORPUS-20261117
-status: in_progress
+status: completed
 goal: Versioned legal source corpus with immutable hash, provenance, explicit reviewed effective interval and source text verification independent of customer references.
 definition_of_done:
   - Strict local hash-pinned source manifest, date/scope/ambiguity checks; candidates and historical reproductions never imply current applicability.
@@ -10,12 +10,11 @@ completed:
   - Downloaded public Rospatent historical 44-FZ reproduction, stated changes through 2022-07-14, 1769507 raw bytes, SHA 8cc95985d65d6913861ca42d4b67fd2ce42adca25a132ce17c82e03d052d433d; stored locally outside repo.
   - Versioned fixed catalog; bounded offline exact hash identity/edition heading and article locator validation; explicit snapshot only, as-of/current legal date always UNKNOWN absent reviewed effective interval.
   - Real archived run 0348100024426000039 six article fragments 30/37/44/45/95/96; Chromium source and two date-based refusals PASS. Screenshot reviewed.
-current_stage: exact_ci_pending
-remaining:
-  - Verify exact successor CI and PR621.
-  - Acquire independently authoritative text editions and amendment/effective date receipts for 44-FZ/223-FZ; no full legal applicability claim.
-last_verified_commit: 941e377f483c01ec1f7bbcb3b9d0c7ca081467dd
+  - Exact reviewed head 38c6ee3e43f481aad5b0e4e1aa92b6c6984ba3ed CI 19/19 SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
+last_verified_commit: 38c6ee3e43f481aad5b0e4e1aa92b6c6984ba3ed
 test_results:
   - 205 focused PASS, Ruff, diff, Node syntax and simulation PASS.
   - APR08_STATUTE_BROWSER_PASS historical source and two as-of refusals; 6 actual historical article excerpt lookups; pinned XML replay PASS; source and originals unchanged.
-resume_instruction: No current legal conclusion from title or digest alone; no auto-trust of source, live tender, production, model or merge.
+resume_instruction: Bounded increment verified; merge requires separate authorization. Continue parent APR08.
