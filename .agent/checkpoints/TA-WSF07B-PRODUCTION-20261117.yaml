@@ -7,9 +7,12 @@ definition_of_done:
   - Preserve source identity, 21 deals/307 original table checks, Portfolio ready for separate admission.
 completed:
   - Main and prepared release both 28e874b65d8aeab5a13e3c2453632810c14140be; CI and mirror SUCCESS. WSF contract and OS PR44 read; prior actual rehearsal PASS. Live DB 107, backend old relocated runtime; DP separate database.
-current_stage: exact_release_and_writer_coordination
+  - Exact offline SQL generated from release: 15 version transitions in one transaction; actual restore and migration replay 307/307 hashes, 21 deals, both exact new and previous runtime APIs on 122 PASS; new endpoint denied 503.
+  - Private deployment bundle created, rollback source/launcher and actual data fingerprint prepared; Workspace remains disabled.
+current_stage: production_cutover_preflight_pass
 remaining:
-  - Preflight same release and DB, validate cutover and rollback, coordinate writers and deploy only if safe.
+  - Run guarded live cutover under shared lock and PostgreSQL target database connection fence; fresh backup/restore test before SQL; verify API, DB hashes, exact release and WSF denial.
+  - If interrupted inspect private journal, lock and DB, never blindly rerun.
 last_verified_commit: 28e874b65d8aeab5a13e3c2453632810c14140be
 test_results:
   - Prior isolated 15-step migration and 307 original table fingerprint PASS; 21 deals.

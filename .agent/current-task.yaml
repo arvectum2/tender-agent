@@ -871,4 +871,4 @@ wsf07b_production_20261117:
   task_id: TA-WSF07B-PRODUCTION-20261117
   status: in_progress
   checkpoint: .agent/checkpoints/TA-WSF07B-PRODUCTION-20261117.yaml
-  current_stage: exact_release_and_writer_coordination
+  current_stage: production_cutover_preflight_pass
