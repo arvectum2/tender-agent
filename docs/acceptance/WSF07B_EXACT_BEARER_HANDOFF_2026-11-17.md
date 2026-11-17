@@ -5,3 +5,7 @@ PR #631 exact head b48797bf09977530c8b555f6079d10a1ad7bd239. 94 focused tests pa
 ## Deployment receipt
 
 Owner continuation authorized code-only rollout. Exact PR631 CI 19/19, merged main `3b37fb6988dd996efeb55e69058016a22a2bd48f`, tree identical. Isolated release and unchanged dependencies; 94 passed, 1 skipped. Actual live cutover 17:37:50Z, shared lock released, first launchd bootout/bootstrap race recovered to old API, corrected retry succeeded. Exact path now 503 SOURCE_NOT_ADMITTED (including Basic and invalid Bearer), unchanged adjacent-route/method Basic gate. Health/readiness/Portfolio/UI 200, release verifier OK. DB 122 unchanged, 21 exact identities/deal fingerprint/provenance and DB binding verified on current release. Zero admitted; private package revalidated, no credentials or active manifest. Company issue 16 updated. GitVerse mirror SUCCESS, main quality job pending after deployment; all other 8 main jobs SUCCESS. No schema changes or unrelated PR merge.
+
+## Final verification
+
+Exact deployed main CI run [44138601320](https://github.com/arvectum2/tender-agent/actions/runs/44138601320) SUCCESS 9/9; GitVerse mirror SUCCESS. Live verifier 14/14 OK and reference endpoint remains 503 SOURCE_NOT_ADMITTED. Company issue 16 updated. Source fix and rollout completed; real admission remains separate.

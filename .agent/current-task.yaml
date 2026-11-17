@@ -877,8 +877,8 @@ wsf07b_production_20261117:
 
 wsf07b_exact_bearer_20261117:
   task_id: TA-WSF07B-EXACT-BEARER-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-WSF07B-EXACT-BEARER-20261117.yaml
   branch: fix/ta-wsf07b-exact-bearer-20261117
-  current_stage: deployment_verified_main_ci_final_check
+  current_stage: deployed_verified_completed
   last_verified_commit: 3b37fb6988dd996efeb55e69058016a22a2bd48f

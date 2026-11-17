@@ -1,5 +1,5 @@
 task_id: TA-WSF07B-EXACT-BEARER-20261117
-status: in_progress
+status: completed
 goal: Resolve Basic/Bearer collision for exact WSF07B GET; establish private source binding and conservative ownership review package; hand off to Company without activating access.
 definition_of_done:
   - Exact route/method and registered handler independent Bearer boundary, negative HTTP regressions, CI.
@@ -15,11 +15,12 @@ completed:
   - Guarded code-only deployment of exact main 3b37fb6988dd996efeb55e69058016a22a2bd48f completed 2026-11-17T17:37:50Z. First launchd bootstrap transient error; old launcher restored, service recovered, old API verified; guarded retry waited for actual removal and succeeded. Lock released. No DB migration or mutation.
   - Actual API exact GET anonymous/invalid Bearer/Basic 503 SOURCE_NOT_ADMITTED, cache no-store; other methods and neighboring paths retain Basic; health/readiness/Portfolio/UI and DP health pass. Release verifier 14/14 OK. DB binding and prior deal checksum, exact 21 identities and provenance unchanged; private review package revalidated on new release, no admission.
   - Company issue 16 updated with deployment commit and acceptance results, no private IDs or credentials.
-current_stage: deployment_verified_main_ci_final_check
-remaining:
-  - Confirm exact main CI quality job (8/9 successful, mirror SUCCESS); close checkpoint. Real admission separate, forbidden here.
+  - Exact main CI run 44138601320 completed SUCCESS 9/9; mirror SUCCESS; live drift verifier 14/14 reconfirmed; Company issue 16 final confirmation posted.
+current_stage: deployed_verified_completed
+remaining: []
 last_verified_commit: 3b37fb6988dd996efeb55e69058016a22a2bd48f
 test_results:
   - Exact PR CI 19/19 SUCCESS; 94 passed/1 skipped on release, Ruff/diff, actual synthetic PostgreSQL PASS.
   - Production exact GET 503 not admitted; neighboring Basic regressions, release marker and DB binding/21 identity/provenance/fingerprint checks PASS; GitVerse mirror SUCCESS.
-resume_instruction: Deployment complete; never repeat merge or cutover. Check exact main CI run 44138601320 and update operational checkpoint/Company issue 16. No activation, token, manifest, unrelated merge or DB mutation.
+  - Final exact main CI 9/9 SUCCESS, production reference remains 503 SOURCE_NOT_ADMITTED.
+resume_instruction: WSF07B source fix and rollout complete. Do not repeat deployment or activate Workspace. Real admission requires separate authorized Company ownership review and contract gates.
