@@ -368,7 +368,7 @@ completed:
 - Reviewed contract evidence offline manifest/XML verification, exact anchors, reviewer-attested
   full scope, source identity and bounded Decimal contracted unit price; local read-only
   CLI.
-current_stage: price01_reviewed_contract_intake_verified_next_publication_registry
+current_stage: price01_reviewed_registry_backend
 remaining:
 - 'Implement versioned reviewed-published historical receipt registry with explicit
   trusted manifest pins; integrate separately from legacy fixed six-source archive
@@ -618,11 +618,10 @@ test_results:
 - 20 new tests PASS; 335 full focused tests PASS/2 skipped/142 warnings in 21.82s;
   Ruff/diff PASS. Synthetic XML only, no independent authenticity or signature verification.
   PR597 CI 17 success/2 running at latest check.
-resume_instruction: Offline reviewed contract intake verified at 341d48b3. Next design
-  and implement versioned reviewed-published receipt registry from trusted review
-  pins only; preserve existing fixed archive/client compatibility. No actual new source
-  evidence, no independent signature/authenticity claims. Read PRICE01_REVIEWED_CONTRACT_INTAKE_2026-11-17.md.
-  No production changes or MacBook access; B2B unresolved.
+resume_instruction: Implement immutable repository-pinned publication index and trusted
+  receipt generation, read-only case-scoped registry API with revocation and separate
+  group ranges; empty release only, synthetic tests; keep previous archive intact.
+  PR598 CI 19/19. No production changes.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
