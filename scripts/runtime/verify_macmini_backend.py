@@ -4,13 +4,20 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import pathlib
 import plistlib
+import re
+import shlex
 import subprocess
 import sys
 import urllib.request
 
 ROOT = pathlib.Path("/Volumes/ArvectumSSD/Arvectum/repos/tender-agent")
+RELEASES = pathlib.Path("/Volumes/ArvectumSSD/Arvectum/releases")
+RELEASE_CONFIG = pathlib.Path("/Users/master/Library/Application Support/Arvectum/tender-agent/runtime.env")
+RELEASE_LAUNCHER = "/Users/master/arvectum-ops/arv-075/scripts/tender-agent-backend-ssd.sh"
+LOCK = pathlib.Path("/Volumes/ArvectumSSD/Arvectum/runtime/tender-agent/deploy.lock")
 CONFIG = pathlib.Path("/Volumes/ArvectumSSD/Arvectum/private/tender-agent/runtime/backend.env")
 RUNTIME = pathlib.Path("/Volumes/ArvectumSSD/Arvectum/runtime/tender-agent/backend-active.json")
 PLIST = pathlib.Path("/Users/master/Library/LaunchAgents/com.arvectum.backend.plist")
@@ -23,7 +30,75 @@ def run(*args: str) -> tuple[int, str]:
     except (OSError, subprocess.TimeoutExpired):
         return 99, ""
 
+def check_release(active: dict) -> dict:
+    """Check immutable release rather than a mutable developer checkout."""
+    checks: dict[str, bool] = {}
+    commit = active.get("commit")
+    valid_sha = isinstance(commit, str) and re.fullmatch(r"[0-9a-f]{40}", commit)
+    result = {"checks": checks, "expected_repo": str(RELEASES), "active_backend_sha": None,
+              "github_main_sha": None, "local_main_sha": None}
+    if not valid_sha:
+        checks["valid_release_sha"] = False
+        return {**result, "status": "DRIFT_OR_DEGRADED"}
+    result["active_backend_sha"] = commit[:12]
+    release = RELEASES / ("tender-agent-" + commit)
+    source = release / "source"
+    venv = release / "venv"
+    checks["expected_release_source"] = (
+        active.get("source") == str(source) and active.get("venv") == str(venv)
+        and source.is_dir() and source.resolve() == source and venv.is_dir()
+        and venv.resolve() == venv
+    )
+    if not checks["expected_release_source"]:
+        return {**result, "status": "DRIFT_OR_DEGRADED"}
+    code, head = run("git", "-C", str(source), "rev-parse", "HEAD")
+    checks["release_head_matches_marker"] = code == 0 and head == commit
+    result["local_main_sha"] = head[:12] if code == 0 else None
+    code, dirty = run("git", "-C", str(source), "status", "--porcelain", "--untracked-files=all")
+    checks["release_tree_clean"] = code == 0 and not dirty
+    code, github = run("gh", "api", "repos/arvectum2/tender-agent/commits/main", "--jq", ".sha")
+    result["github_main_sha"] = github[:12] if code == 0 else None
+    checks["release_matches_github_main"] = code == 0 and github == commit
+    checks["private_config"] = RELEASE_CONFIG.is_file() and RELEASE_CONFIG.stat().st_mode & 0o077 == 0
+    try:
+        plist = plistlib.loads(PLIST.read_bytes())
+    except (OSError, ValueError):
+        plist = {}
+    checks["launch_agent_uses_release_launcher"] = plist.get("ProgramArguments") == ["/bin/bash", RELEASE_LAUNCHER]
+    code, launch = run("launchctl", "print", f"gui/{os.getuid()}/com.arvectum.backend")
+    checks["launch_agent_running"] = code == 0 and "state = running" in launch
+    code, raw = run("lsof", "-nP", "-iTCP:8001", "-sTCP:LISTEN", "-t")
+    pids = {p.strip() for p in raw.splitlines() if p.strip().isdigit()}
+    checks["one_backend_listener"] = code == 0 and len(pids) == 1
+    pid = next(iter(pids)) if checks["one_backend_listener"] else ""
+    checks["marker_pid_matches_listener"] = bool(pid) and str(active.get("backend_pid")) == pid
+    checks["launch_agent_pid_matches_listener"] = bool(pid) and bool(re.search(r"(?m)^\s*pid = " + re.escape(pid) + r"\s*$", launch))
+    code, command = run("ps", "-p", pid, "-o", "command=") if pid else (1, "")
+    try:
+        args = shlex.split(command)
+    except ValueError:
+        args = []
+    checks["process_uses_release_venv"] = code == 0 and args == [
+        str(venv / "bin/python"), "-m", "uvicorn", "src.main:app", "--host", "127.0.0.1", "--port", "8001",
+    ]
+    checks["workspace_not_admitted_in_marker"] = active.get("workspace_admitted") is False
+    checks["maintenance_lock_released"] = not LOCK.exists()
+    try:
+        op = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+        with op.open("http://127.0.0.1:8001/health", timeout=4) as r:
+            checks["http_health_200"] = r.status == 200
+    except (OSError, ValueError):
+        checks["http_health_200"] = False
+    return {**result, "status": "OK" if all(checks.values()) else "DRIFT_OR_DEGRADED"}
+
+
 def check() -> dict:
+    try:
+        marker = json.loads(RUNTIME.read_text())
+    except (OSError, json.JSONDecodeError):
+        marker = {}
+    if isinstance(marker, dict) and ("venv" in marker or str(marker.get("source", "")).startswith(str(RELEASES) + "/")):
+        return check_release(marker)
     result: dict = {"checks": {}, "expected_repo": str(ROOT)}
     checks = result["checks"]
     def record(label: str, good: bool):

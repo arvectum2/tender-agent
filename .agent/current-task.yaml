@@ -869,6 +869,8 @@ apr08_integration_20261117:
 
 wsf07b_production_20261117:
   task_id: TA-WSF07B-PRODUCTION-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-WSF07B-PRODUCTION-20261117.yaml
-  current_stage: production_cutover_preflight_pass
+  branch: ops/ta-wsf07b-production-20261117
+  current_stage: production_cutover_and_verification_completed
+  last_verified_commit: 28e874b65d8aeab5a13e3c2453632810c14140be

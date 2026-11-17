@@ -1,19 +1,26 @@
 task_id: TA-WSF07B-PRODUCTION-20261117
-status: in_progress
+status: completed
 goal: Owner-authorized Tender Agent production convergence WSF-07B, without Workspace admission.
 definition_of_done:
   - Exact main/release and CI, preserve all worktrees, pending PR629/630 not silently merged.
   - Cross-deployment lock, DB writer fence, fresh backup and verified rollback procedure; exact 107 to 122 migration and API verification.
   - Preserve source identity, 21 deals/307 original table checks, Portfolio ready for separate admission.
 completed:
-  - Main and prepared release both 28e874b65d8aeab5a13e3c2453632810c14140be; CI and mirror SUCCESS. WSF contract and OS PR44 read; prior actual rehearsal PASS. Live DB 107, backend old relocated runtime; DP separate database.
-  - Exact offline SQL generated from release: 15 version transitions in one transaction; actual restore and migration replay 307/307 hashes, 21 deals, both exact new and previous runtime APIs on 122 PASS; new endpoint denied 503.
-  - Private deployment bundle created, rollback source/launcher and actual data fingerprint prepared; Workspace remains disabled.
-current_stage: production_cutover_preflight_pass
-remaining:
-  - Run guarded live cutover under shared lock and PostgreSQL target database connection fence; fresh backup/restore test before SQL; verify API, DB hashes, exact release and WSF denial.
-  - If interrupted inspect private journal, lock and DB, never blindly rerun.
+  - GitHub main and exact clean SSD release 28e874b65d8aeab5a13e3c2453632810c14140be; CI and mirror SUCCESS.
+  - Prior isolated exact migration and old/new runtime rollback canaries PASS.
+  - Shared lock acquired; backend drained and daily temporarily paused; PostgreSQL target TCP fence verified with no other writers.
+  - Fresh dump restored and fingerprint validated before migration. Exact 15 transitions from 107 to 122 applied in one transaction.
+  - All 307 original table fingerprints preserved through restore, production migration and read-only API smoke; 21 deals preserved; DB binding unchanged.
+  - Production cutover completed 2026-11-17T17:01:10Z. API on 8001 health, Portfolio and Portfolio UI 200; Workspace reference 503 SOURCE_NOT_ADMITTED.
+  - Daily restored to previous scheduling state, PostgreSQL fence removed, maintenance lock released.
+  - Immutable release verifier 14/14 checks PASS. Installed hourly drift guard now runs under Python because the Homebrew Node launcher is unavailable/broken; launchd run exit 0, report OK.
+  - Private backup, journal, before/after launcher and rollback assets on SSD, verified SHA256SUMS.
+  - No Workspace admission, grants, OS/Company changes, merges of PR629/630, or destructive restore.
+current_stage: production_cutover_and_verification_completed
+remaining: []
 last_verified_commit: 28e874b65d8aeab5a13e3c2453632810c14140be
 test_results:
-  - Prior isolated 15-step migration and 307 original table fingerprint PASS; 21 deals.
-resume_instruction: Read private deployment journal and live state first; never assume cutover. No Workspace admission, grant, OS/Company changes or destructive restore.
+  - Exact main CI and mirror SUCCESS.
+  - Migration and rollback canaries PASS; confirmed schema 122, 21 deals, 307/307 original table fingerprints equal, DB binding equal, backup SHA256 verification PASS.
+  - Runtime verifier 14/14 PASS; focused verifier pytest 4 passed, 2 existing warnings; Python drift guard compiled and actual scheduled launch exit 0.
+resume_instruction: Production deployment completed; do not rerun migration or admit Workspace without separate authorization. Read private deployment journal and current live state before future changes. Preserve the exact release and pending PRs.

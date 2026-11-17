@@ -88,3 +88,40 @@ def test_git_status_failure_not_treated_as_clean(tmp_path, monkeypatch):
     result = verify.check()
     assert result["status"] == "DRIFT_OR_DEGRADED"
     assert result["checks"]["local_main_clean"] is False
+
+
+def test_immutable_release_identity(tmp_path, monkeypatch):
+    marker = _setup(tmp_path, monkeypatch)
+    sha = "a" * 40
+    releases = tmp_path / "releases"
+    release = releases / ("tender-agent-" + sha)
+    source = release / "source"
+    venv = release / "venv"
+    source.mkdir(parents=True)
+    venv.mkdir()
+    marker.write_text(json.dumps({"commit": sha, "backend_pid": 42, "source": str(source),
+                                  "venv": str(venv), "workspace_admitted": False}))
+    monkeypatch.setattr(verify, "RELEASES", releases)
+    monkeypatch.setattr(verify, "RELEASE_CONFIG", tmp_path / "backend.env")
+    monkeypatch.setattr(verify, "LOCK", tmp_path / "deploy.lock")
+    (tmp_path / "backend.plist").write_bytes(plistlib.dumps(
+        {"ProgramArguments": ["/bin/bash", verify.RELEASE_LAUNCHER]}))
+    old = verify.run
+
+    def run(*args):
+        if args[0] == "gh" or (args[0] == "git" and "rev-parse" in args):
+            return 0, sha
+        if args[0] == "launchctl":
+            return 0, "state = running\n pid = 42\n"
+        if args[0] == "ps":
+            return 0, f"{venv}/bin/python -m uvicorn src.main:app --host 127.0.0.1 --port 8001"
+        return old(*args)
+
+    monkeypatch.setattr(verify, "run", run)
+    assert verify.check()["status"] == "OK"
+    (tmp_path / "deploy.lock").mkdir()
+    assert verify.check()["checks"]["maintenance_lock_released"] is False
+    bad = json.loads(marker.read_text())
+    bad["source"] = str(tmp_path / "repo")
+    marker.write_text(json.dumps(bad))
+    assert verify.check()["status"] == "DRIFT_OR_DEGRADED"
