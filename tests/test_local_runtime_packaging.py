@@ -26,3 +26,15 @@ def test_overlay_dependency_guard_and_explicit_base():
     assert "python -m pip check" in dockerfile
     assert "COPY pyproject.toml /tmp/overlay-pyproject.toml" in dockerfile
     assert "ARVECTUM_LOCAL_BASE_IMAGE" in (ROOT / "deploy/local/compose.macmini.yaml").read_text()
+
+
+def test_runtime_images_preserve_reviewed_contract_registry_path():
+    relative = "docs/roadmap/price01_contract_registry/release.json"
+    assert (ROOT / relative).is_file()
+    assert "COPY docs ./docs" in (ROOT / "Dockerfile").read_text().splitlines()
+    assert f"COPY --chown=app:app {relative} /app/{relative}" in (
+        ROOT / "deploy/local/Dockerfile"
+    ).read_text().splitlines()
+    assert f"COPY {relative} ./{relative}" in (
+        ROOT / "deploy/pilot/Dockerfile"
+    ).read_text().splitlines()
