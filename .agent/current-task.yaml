@@ -920,4 +920,5 @@ apr03b_ri223_zip_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR03B-RI223-ZIP-20261117.yaml
   branch: feat/ta-apr03b-ri223-zip-20261117
-  current_stage: zip_projection
+  current_stage: exact_ci_pending
+  last_verified_commit: 6431f7220d728b838c50f5ad6cff175a9a83e4a3
