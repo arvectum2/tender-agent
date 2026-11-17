@@ -696,4 +696,4 @@ apr07_rolling_observability_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR07-ROLLING-OBSERVABILITY-20261117.yaml
   branch: feat/ta-apr07-rolling-observability-20261117
-  current_stage: rolling_measurement_ci_pending
+  current_stage: operator_postgres_ci_pending
