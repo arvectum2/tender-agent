@@ -2479,3 +2479,84 @@ def test_actual_samples_preview_explicit_distinct_sources(client,session,monkeyp
 
     session.execute(update(CompanyActualCostSnapshot).where(CompanyActualCostSnapshot.id==newer['snapshot_id']).values(result_json={}));session.commit()
     assert preview({**payload,'samples':[newer,second]}).status_code==409
+
+
+def test_historical_comparables_archive_is_case_scoped_and_not_pooled(client,session,monkeypatch):
+    import hashlib
+    import json
+    from decimal import Decimal
+
+    from src.modules.saas_foundation import company_historical_comparables as history
+    from src.modules.saas_foundation.models import CompanyPriceScenario
+    from src.tender_research.competitive_bid_protocol import AKSAY
+
+    _,a=_seed(client,'Historical A');_,b=_seed(client,'Historical B');_legal(client,a);_legal(client,b)
+    h=_auth(a);cases='/api/saas/company-portfolio/cases'
+    case=client.post(cases,headers=h,json={'registry_number':AKSAY}).json()['case_id']
+    foreign=client.post(cases,headers=_auth(b),json={'registry_number':AKSAY}).json()['case_id']
+    other=client.post(cases,headers=h,json={'registry_number':'0'*18+'1'}).json()['case_id']
+    path=cases+'/'+case+'/historical-comparables'
+    settings=saas.get_settings().model_copy(update={'saas_company_price_scenarios_enabled':True})
+    monkeypatch.setattr(saas,'get_settings',lambda:settings)
+    assert client.get(path,headers=h).status_code==404
+    settings=settings.model_copy(update={'saas_company_historical_comparables_enabled':True})
+    assert client.get(path,headers=_auth(b)).status_code==404
+    assert client.get(cases+'/'+foreign+'/historical-comparables',headers=h).status_code==404
+    initial=session.query(CompanyPriceScenario).count()
+    res=client.get(path,headers=h);assert res.status_code==200,res.text
+    catalog=res.json()
+    def verify_digest(r,key):
+        v=dict(r);digest=v.pop(key)
+        assert digest==hashlib.sha256(json.dumps(v,sort_keys=True,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()
+    verify_digest(catalog,'catalog_sha256')
+    rows={r['registry_number']:r for r in catalog['records']}
+    assert len(rows)==6 and catalog['target_scope_verified'] is False
+    assert rows[AKSAY]['admitted_offers']==45 and rows[AKSAY]['rejected_offers']==10
+    assert Decimal(rows[AKSAY]['admitted_protocol_prices_rub']['median'])==74000
+    assert Decimal(rows[AKSAY]['winner_offer_rub'])==28400
+    assert sum(r['admitted_protocol_prices_rub']['median'] is not None for r in rows.values())==5
+    assert all(r['signed_contract_price_rub'] is None and r['normalized_unit_rate_rub'] is None and r['exact_completed_work_quantity'] is None for r in rows.values())
+    assert any(r['sub_ruble_offer_observed'] for r in rows.values())
+    assert sum(bool(r['scope_dimensions']) for r in rows.values())==3
+    payload={'reference_registry_number':AKSAY,'selected_registry_numbers':list(rows),'confirm_review_source_scope':True}
+    def preview(value=payload,token=a,url=path):return client.post(url+'/preview',headers=_auth(token),json=value)
+    r=preview();assert r.status_code==200,r.text
+    result=r.json();verify_digest(result,'preview_sha256')
+    assert result['target_reference_identity_matches'] and not result['target_scope_verified']
+    assert result['selected_distinct_procurements']==6 and result['admitted_price_procedures_count']==5
+    assert result['reference_procurements_count']==1 and result['additional_equivalent_procurements']==0
+    assert result['signed_contract_prices_verified_count']==0
+    for k in ('normalized_admitted_offer_range_rub','normalized_signed_contract_range_rub','cross_procurement_price_rub','current_market_price','recommendation','win_probability'):
+        assert result[k] is None
+    assert not result['inputs_stored'] and not result['external_submission_allowed']
+    by_id={x['registry_number']:x for x in result['observations']}
+    assert by_id[AKSAY]['comparison_state']=='REFERENCE_ONLY'
+    related=by_id['0119200000126013647']
+    assert related['comparison_state']=='RELATED_SCOPE_REQUIRES_NORMALIZATION'
+    duration=next(x for x in related['scope_comparison'] if x['dimension']=='delivery_working_days')
+    assert duration['state']=='DIFFERENT_REPORTED_DIMENSION'
+    assert duration['reference']['source_value']==14 and duration['candidate']['source_value']==10
+    assert all(not x['accepted_for_cross_procurement_normalization'] for x in result['observations'])
+    alternate=preview({**payload,'reference_registry_number':'0119200000126013647'}).json()
+    assert not alternate['target_reference_identity_matches']
+    assert all(x['comparison_state']=='PAIRWISE_SCOPE_NOT_REVIEWED' for x in alternate['observations'] if x['registry_number']!=alternate['reference_registry_number'])
+    unrelated=preview(url=cases+'/'+other+'/historical-comparables').json()
+    assert unrelated['target_external_id']=='0'*18+'1' and not unrelated['target_reference_identity_matches']
+    assert preview(token=b).status_code==404
+    for bad in ({'selected_registry_numbers':[AKSAY,AKSAY]},{'selected_registry_numbers':[]},{'confirm_review_source_scope':False},{'selected_registry_numbers':['bad']},{'norm_quantity':'12'},{'reference_registry_number':'0'*19}):
+        assert preview({**payload,**bad}).status_code==422
+    assert preview({**payload,'selected_registry_numbers':[AKSAY,'0'*19]}).status_code==404
+    for role in ('viewer','analyst'):
+        invite=client.post('/api/saas/invitations',headers=h,json={'role':role,'acquisition_channel':'referral'}).json()
+        token=client.post('/api/saas/invitations/redeem',json={'invitation_code':invite['invitation_code'],'display_name':role}).json()['access_token'];_legal(client,token)
+        assert preview(token=token).status_code==(403 if role=='viewer' else 200)
+    assert session.query(CompanyPriceScenario).count()==initial
+    original=history.archived_website_workload_normalization
+    def broken():
+        data=original();data['cases'][0]['original_technical_scope_docx_sha256']='0'*64;return data
+    monkeypatch.setattr(history,'archived_website_workload_normalization',broken)
+    assert client.get(path,headers=h).status_code==503
+    assert preview().status_code==503
+    assert history.exact_unit_amount(Decimal('100.00'),Decimal(3))==Decimal('33.333333')
+    for price,qty in [('100','0'),('NaN','3'),('100','0.00001'),('1.001','2'),('-1','2')]:
+        with pytest.raises(ValueError):history.exact_unit_amount(Decimal(price),Decimal(qty))

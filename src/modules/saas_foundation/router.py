@@ -71,6 +71,7 @@ from src.modules.saas_foundation import (
     company_cost_evidence,
     company_cost_norms,
     company_discovery,
+    company_historical_comparables,
     company_lifecycle,
     company_lifecycle_artifacts,
     company_portfolio,
@@ -1185,3 +1186,20 @@ def cost_norm_history(norm_key: company_actual_costs.Digest, principal: Member, 
 def cost_norm_withdraw(norm_key: company_actual_costs.Digest, payload: company_cost_norms.Withdrawal, principal: Member, session: DBSession) -> dict:
     _cost_norms_enabled()
     return company_cost_norms.withdraw(session,principal,norm_key,payload)
+
+def _historical_comparables_enabled():
+    settings=get_settings()
+    if not (settings.saas_company_price_scenarios_enabled and settings.saas_company_historical_comparables_enabled):
+        raise HTTPException(404,"Historical comparable evidence disabled")
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/historical-comparables")
+def historical_comparable_catalog(case_id: str, principal: Member, session: DBSession) -> dict:
+    _historical_comparables_enabled()
+    return company_historical_comparables.catalog(session,principal,case_id)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/historical-comparables/preview")
+def historical_comparable_preview(case_id: str, payload: company_historical_comparables.Selection, principal: Member, session: DBSession) -> dict:
+    _historical_comparables_enabled()
+    return company_historical_comparables.preview(session,principal,case_id,payload)
