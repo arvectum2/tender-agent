@@ -24,9 +24,9 @@ from src.tender_research.providers.ri223_soap_evidence import (
 )
 
 
-def import_archive(root: Path, archive: Path, number: str, *, attachments: list[Path] | None = None, processor=None, expand_rar: bool = False) -> str:
-    if expand_rar and attachments is None:
-        raise ValueError('RAR expansion requires verified original attachments')
+def import_archive(root: Path, archive: Path, number: str, *, attachments: list[Path] | None = None, processor=None, expand_rar: bool = False, expand_zip: bool = False) -> str:
+    if (expand_rar or expand_zip) and attachments is None:
+        raise ValueError('Container expansion requires verified original attachments')
     if not root.is_absolute() or root.is_symlink() or not root.is_dir() or root.stat().st_mode & 0o077:
         raise ValueError('Explicit private existing runs directory (0700) required')
     if archive.is_symlink() or not archive.is_file():
@@ -69,7 +69,7 @@ def import_archive(root: Path, archive: Path, number: str, *, attachments: list[
             )
             from src.shared.document_processing import process_document_bytes
 
-            import_attachments(stage,meta,attachments,processor or process_document_bytes,expand_rar=expand_rar)
+            import_attachments(stage,meta,attachments,processor or process_document_bytes,expand_rar=expand_rar,expand_zip=expand_zip)
         (stage/'metadata.json').write_text(json.dumps(meta,ensure_ascii=False),encoding='utf-8')
         target.mkdir(mode=0o700,exist_ok=False)
         try:
@@ -89,11 +89,12 @@ def main() -> None:
     parser.add_argument('--number',required=True)
     parser.add_argument('--attachment',type=Path,action='append',help='One local original per unique trusted receipt digest')
     parser.add_argument('--expand-rar',action='store_true',help='Opt-in bounded RAR member projection')
+    parser.add_argument('--expand-zip',action='store_true',help='Opt-in bounded ZIP member projection')
     args=parser.parse_args()
     root=os.environ.get('AI_CORP_TENDER_OPERATOR_DEMO_RUNS_DIR')
     if not root:
         parser.error('Explicit private runs directory required')
-    print(import_archive(Path(root),args.archive,args.number,attachments=args.attachment,expand_rar=args.expand_rar))
+    print(import_archive(Path(root),args.archive,args.number,attachments=args.attachment,expand_rar=args.expand_rar,expand_zip=args.expand_zip))
 
 
 if __name__=='__main__':
