@@ -62,7 +62,7 @@ def _source(root: Path, act: str, placement: str, article: str | None) -> dict:
             if start<len(lines) and not re.match(r'^Статья [0-9]',lines[start]) and len(excerpt)+len(lines[start])+1<=4800:
                 excerpt+='\n'+lines[start];end+=1
             locator=f'PDF page {page}, text blocks {start}..{end} (pinned projection)'
-            
+
         else:
             excerpt='\n'.join(x for x in pages['1'][:17] if 'от 08.08.2024' in x)
             locator='PDF page 1, amendment list (pinned projection)'
