@@ -478,6 +478,7 @@ private struct CompanyPriceSection: View {
     @State private var lines: [CompanyCostLine] = []
     @State private var line = CompanyCostLine()
     @State private var editingIndex: Int?
+    @State private var chosenNormKey = ""
     @State private var zeroCategories: Set<CompanyCostCategory> = []
     @State private var noDoubleCount = false
     @State private var projection: CompanyItemizedProjection?
@@ -518,17 +519,30 @@ private struct CompanyPriceSection: View {
         guard let value=previewInput else { return false }
         return itemizedMode ? !lineDirty && projection?.inputs == estimate : projection == nil && value == draft
     }
+    private var selectedNormLine:CompanyCostLine? {
+        guard store.selectedID==accountID,let identity=store.identity,let record=store.normCatalog?.items.first(where:{$0.normKey==chosenNormKey}) else{return nil}
+        return try? .fromNorm(record,identity:identity)
+    }
+    private var canAddNorm:Bool {
+        guard !lineDirty,lines.count<60,let value=selectedNormLine,let binding=value.normBinding else{return false}
+        return !lines.contains(where:{$0.normBinding?.normId==binding.normId})
+    }
+    private func addNorm(){
+        guard canAddNorm,let value=selectedNormLine else{return}
+        lines.append(value);zeroCategories.remove(value.category);lineChanged()
+        notice="Норматив добавлен. Актуальность проверяется на сервере при расчёте и сохранении."
+    }
     private func finishLine() { editingIndex=nil; line=CompanyCostLine() }
     private func lineChanged() { noDoubleCount=false; invalidate() }
     private func saveLine() {
         let value=line.normalized
-        guard value.amount != nil else { notice="Заполните строку: положительное количество и ставка, единица и источник."; return }
+        guard value.sourceKind != .approvedNorm,value.normBinding==nil,value.amount != nil else { notice="Заполните строку: положительное количество и ставка, единица и источник."; return }
         if let index=editingIndex, lines.indices.contains(index) { lines[index]=value }
         else { guard editingIndex==nil, lines.count<60 else { return }; lines.append(value) }
         zeroCategories.remove(value.category); finishLine(); lineChanged()
     }
     private func invalidate() { projection = nil; preview = nil; previewInput = nil; pending = nil; confirmSave = false; notice = nil }
-    private func reset() { invalidate(); itemizedMode=false; lines=[]; finishLine(); zeroCategories=[]; noDoubleCount=false; input = CompanyPriceInput(); manual = ""; ceiling = ""; history = nil; selectedVersion = "" }
+    private func reset() { invalidate(); itemizedMode=false; lines=[]; chosenNormKey=""; finishLine(); zeroCategories=[]; noDoubleCount=false; input = CompanyPriceInput(); manual = ""; ceiling = ""; history = nil; selectedVersion = "" }
     private func calculate() async {
         invalidate()
         do {
@@ -599,6 +613,7 @@ private struct CompanyPriceSection: View {
                 Text(row.category.title).font(.caption)
                 Text("\(row.quantity) \(row.unit) × \(row.rateRub) ₽ = \(row.amountRub) ₽").font(.subheadline)
                 Text(row.sourceKind.title + ": " + row.sourceNote).font(.caption).textSelection(.enabled)
+                if let b=row.normBinding {Text("Версия "+String(b.revision)+" · "+b.recordSha256).font(.caption).textSelection(.enabled)}
             }
         }
         ForEach(CompanyCostCategory.allCases) { category in
@@ -608,12 +623,31 @@ private struct CompanyPriceSection: View {
     }
     @ViewBuilder private func editor() -> some View {
         DisclosureGroup("Постатейная смета · \(lines.count)/60") {
+            Button("Загрузить корпоративные нормативы"){Task{await store.loadNorms()}}
+            if let page=store.normCatalog {
+                Picker("Утверждённый норматив",selection:$chosenNormKey){
+                    Text("Выберите").tag("")
+                    ForEach(page.items.filter{$0.action=="APPROVED"}){r in
+                        Text(r.result.title+" · v"+String(r.revision)).tag(r.normKey)
+                    }
+                }
+                HStack{
+                    Button("Назад"){Task{await store.loadNorms(offset:max(0,store.normOffset-10))}}.disabled(store.normOffset==0)
+                    Spacer()
+                    Button("Далее"){Task{await store.loadNorms(offset:store.normOffset+10)}}.disabled(!page.hasMore)
+                }.buttonStyle(.borderless)
+                if let value=selectedNormLine {Text(value.quantity+" "+value.unit+" × "+value.rateRub+" ₽").font(.caption)}
+                Button("Добавить выбранный норматив"){addNorm()}.disabled(!canAddNorm)
+            }
+            if let n=store.normNotice{Text(n).font(.caption).foregroundStyle(.secondary)}
+
             ForEach(lines.indices,id:\.self) { index in
                 VStack(alignment:.leading,spacing:3) {
                     Text(lines[index].title).font(.headline)
                     Text(lines[index].category.title + " · " + lines[index].quantity + " " + lines[index].unit + " × " + lines[index].rateRub + " ₽").font(.caption)
+                    if let b=lines[index].normBinding {Text("Корпоративный норматив · v"+String(b.revision)).font(.caption)}
                     HStack {
-                        Button("Изменить") { editingIndex=index; line=lines[index]; lineChanged() }.buttonStyle(.borderless).disabled(lineDirty)
+                        Button("Изменить") { guard lines[index].normBinding==nil else{return};editingIndex=index; line=lines[index]; lineChanged() }.buttonStyle(.borderless).disabled(lineDirty || lines[index].normBinding != nil)
                         Button("Удалить",role:.destructive) { lines.remove(at:index); lineChanged() }.buttonStyle(.borderless).disabled(lineDirty)
                     }
                 }
@@ -623,7 +657,7 @@ private struct CompanyPriceSection: View {
             TextField("Единица измерения",text:$line.unit)
             amount("Количество",$line.quantity)
             amount("Ставка, ₽",$line.rateRub)
-            Picker("Источник",selection:$line.sourceKind) { ForEach(CompanyCostSource.allCases) { Text($0.title).tag($0) } }
+            Picker("Источник",selection:$line.sourceKind) { ForEach(CompanyCostSource.allCases.filter{$0 != .approvedNorm}) { Text($0.title).tag($0) } }
             TextField("Обоснование ставки",text:$line.sourceNote,axis:.vertical).lineLimit(2...4)
             Button(editingIndex==nil ? "Добавить строку" : "Сохранить строку") { saveLine() }.disabled(editingIndex==nil && lines.count>=60)
             Button("Отменить редактирование") { finishLine(); lineChanged() }.disabled(!lineDirty)

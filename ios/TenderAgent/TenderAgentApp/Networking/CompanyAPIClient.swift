@@ -479,9 +479,15 @@ enum CompanyCostCategory: String, Codable, CaseIterable, Identifiable, Sendable 
     }
 }
 enum CompanyCostSource: String, Codable, CaseIterable, Identifiable, Sendable {
-    case assumption = "ASSUMPTION", quote = "USER_REPORTED_QUOTE", actual = "USER_REPORTED_ACTUAL"
+    case assumption = "ASSUMPTION", quote = "USER_REPORTED_QUOTE", actual = "USER_REPORTED_ACTUAL", approvedNorm = "APPROVED_CORPORATE_NORM"
     var id: String { rawValue }
-    var title: String { switch self { case .assumption: "Допущение"; case .quote: "КП со слов сотрудника"; case .actual: "Расходы со слов сотрудника" } }
+    var title: String { switch self { case .assumption: "Допущение"; case .quote: "КП со слов сотрудника"; case .actual: "Расходы со слов сотрудника"; case .approvedNorm: "Утверждённый корпоративный норматив" } }
+}
+struct CompanyNormBinding: Codable, Equatable, Sendable {
+    let normId:String;let normKey:String;let revision:Int;let recordSha256:String
+    var valid:Bool {
+        !normId.isEmpty && normId.count<=36 && (1...99).contains(revision) && CompanyNormDigest.isSHA(normKey) && CompanyNormDigest.isSHA(recordSha256)
+    }
 }
 struct CompanyCostLine: Codable, Equatable, Sendable {
     var category: CompanyCostCategory = .direct
@@ -491,6 +497,16 @@ struct CompanyCostLine: Codable, Equatable, Sendable {
     var rateRub = ""
     var sourceKind: CompanyCostSource = .assumption
     var sourceNote = ""
+    var normBinding:CompanyNormBinding? = nil
+    static func fromNorm(_ record:CompanyNormRecord,identity:CompanyIdentity)throws->Self {
+        guard record.matches(identity),record.action=="APPROVED",let quantity=record.result.normQuantity,let rate=record.result.normRateRub else{throw CompanyConnectionError.invalidPrice}
+        let line=Self(category:record.result.category,title:record.result.title,unit:record.result.unit,quantity:quantity,rateRub:rate,sourceKind:.approvedNorm,sourceNote:"Явно выбранный корпоративный норматив v"+String(record.revision),normBinding:.init(normId:record.normId,normKey:record.normKey,revision:record.revision,recordSha256:record.recordSha256))
+        guard line.amount != nil else{throw CompanyConnectionError.invalidPrice};return line
+    }
+    var validBinding:Bool {
+        if sourceKind == .approvedNorm {return normBinding?.valid == true && [.labor,.direct,.overhead].contains(category)}
+        return normBinding==nil
+    }
     var normalized: Self {
         var x = self
         x.title = title.trimmingCharacters(in:.whitespacesAndNewlines); x.unit = unit.trimmingCharacters(in:.whitespacesAndNewlines)
@@ -498,7 +514,7 @@ struct CompanyCostLine: Codable, Equatable, Sendable {
         x.sourceNote = sourceNote.trimmingCharacters(in:.whitespacesAndNewlines); return x
     }
     var amount: Decimal? {
-        guard self == normalized, !title.isEmpty, title.count <= 160, !unit.isEmpty, unit.count <= 24, !sourceNote.isEmpty, sourceNote.count <= 500,
+        guard validBinding, self == normalized, !title.isEmpty, title.count <= 160, !unit.isEmpty, unit.count <= 24, !sourceNote.isEmpty, sourceNote.count <= 500,
               quantity.range(of: #"^[0-9]{1,9}(\.[0-9]{1,4})?$"#,options:.regularExpression) != nil,
               CompanyPriceInput.money(rateRub), let q = CompanyPriceInput.decimal(quantity), let r = CompanyPriceInput.decimal(rateRub), q > 0, r > 0 else { return nil }
         var product = q*r; var rounded = Decimal(); NSDecimalRound(&rounded,&product,2,.up); return rounded
@@ -530,6 +546,8 @@ struct CompanyItemizedInput: Codable, Equatable, Sendable {
     let confirmNoDoubleCount: Bool
     var sums: [String:Decimal]? {
         let used=Set(lines.map(\.category)), zeros=Set(zeroCostCategories)
+        let bindings=lines.compactMap{$0.normBinding?.normId}
+        guard Set(bindings).count==bindings.count else{return nil}
         guard confirmNoDoubleCount, (1...60).contains(lines.count), zeros.count==zeroCostCategories.count, used.isDisjoint(with:zeros), used.union(zeros)==Set(CompanyCostCategory.allCases) else { return nil }
         var sums=Dictionary(uniqueKeysWithValues:CompanyCostCategory.allCases.map { ($0.rawValue,Decimal(0)) })
         for line in lines { guard let amount=line.amount else { return nil }; sums[line.category.rawValue,default:0]+=amount }
@@ -546,8 +564,9 @@ struct CompanyProjectedCostLine: Codable, Equatable, Sendable, Identifiable {
     let sourceKind: CompanyCostSource
     let sourceNote: String
     let amountRub: String
+    let normBinding:CompanyNormBinding?
     var id: Int { ordinal }
-    var line: CompanyCostLine { .init(category:category,title:title,unit:unit,quantity:quantity,rateRub:rateRub,sourceKind:sourceKind,sourceNote:sourceNote) }
+    var line: CompanyCostLine { .init(category:category,title:title,unit:unit,quantity:quantity,rateRub:rateRub,sourceKind:sourceKind,sourceNote:sourceNote,normBinding:normBinding) }
 }
 struct CompanyItemizedProjection: Codable, Equatable, Sendable {
     let schema: String
@@ -704,6 +723,12 @@ struct CompanyCostTarget: Sendable {
     }
     var digest: String {
         let values = ["amount_rub":line.amountRub,"category":line.category.rawValue,"quantity":line.quantity,"rate_rub":line.rateRub,"source_kind":line.sourceKind.rawValue,"source_note":line.sourceNote,"title":line.title,"unit":line.unit]
+        if line.normBinding != nil {
+            // All nested keys, including numeric revision, use the Python canonical form.
+            guard let object=try? CompanyNormDigest.object(line),
+                  let text=try? CompanyActualBaseline.canonical(["line":object,"revision":scenario.revision,"scenario_id":scenario.scenarioId]) else{return ""}
+            return CompanyArtifactBytes.digest(Data(text.utf8))
+        }
         let keys = (Array(values.keys) + ["ordinal"]).sorted()
         let row = keys.map { Self.quote($0) + ":" + ($0 == "ordinal" ? String(line.ordinal) : Self.quote(values[$0]!)) }.joined(separator:",")
         let text = "{\"line\":{\(row)},\"revision\":\(scenario.revision),\"scenario_id\":\(Self.quote(scenario.scenarioId))}"
