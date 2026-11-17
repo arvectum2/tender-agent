@@ -40,18 +40,31 @@ def snapshot(value: str, *, now: datetime, days: int = 7) -> dict:
     try:
         with engine.connect() as conn, conn.begin():
             conn.exec_driver_sql('SET TRANSACTION READ ONLY')
-            conn.exec_driver_sql('SET LOCAL search_path TO pg_catalog, public')
+            conn.exec_driver_sql('SET LOCAL search_path TO pg_catalog, public, pg_temp')
             conn.exec_driver_sql("SET LOCAL statement_timeout = '15000ms'")
             allowed = conn.execute(text("""
                 SELECT NOT (r.rolsuper OR r.rolcreaterole OR r.rolcreatedb OR r.rolreplication OR r.rolbypassrls)
                     AND NOT has_table_privilege(current_user, 'public.tender_analysis_jobs', 'INSERT,UPDATE,DELETE,TRUNCATE,TRIGGER,REFERENCES')
                     AND NOT has_any_column_privilege(current_user, 'public.tender_analysis_jobs', 'INSERT,UPDATE,REFERENCES')
                     AND NOT pg_has_role(current_user, c.relowner, 'MEMBER')
+                    AND c.relkind = 'r' AND NOT c.relrowsecurity AND NOT c.relforcerowsecurity
+                    AND NOT EXISTS (
+                        SELECT 1 FROM pg_attribute a
+                        WHERE a.attrelid = c.oid AND a.attnum > 0 AND NOT a.attisdropped
+                          AND has_column_privilege(current_user, c.oid, a.attnum, 'SELECT')
+                          AND a.attname NOT IN ('job_type','status','created_at','started_at','finished_at','updated_at')
+                    )
+                    AND 6 = (
+                        SELECT count(*) FROM pg_attribute a
+                        WHERE a.attrelid = c.oid AND a.attnum > 0 AND NOT a.attisdropped
+                          AND a.attname IN ('job_type','status','created_at','started_at','finished_at','updated_at')
+                          AND has_column_privilege(current_user, c.oid, a.attnum, 'SELECT')
+                    )
                 FROM pg_roles r CROSS JOIN pg_class c
                 WHERE r.rolname = current_user AND c.oid = 'public.tender_analysis_jobs'::regclass
             """)).scalar_one()
             if allowed is not True:
-                raise PermissionError('Dedicated non-writing operator role required')
+                raise PermissionError('Dedicated metric-column-only operator role and unfiltered job table required')
             with Session(bind=conn, autoflush=False) as session:
                 return measure_analysis_window(session, now=now, days=days)
     finally:
