@@ -96,6 +96,16 @@ def main() -> int:
                     absent = client.post(url, headers=auth, json={'query':'несуществующийтерминabcdef'})
                     assert absent.status_code == 200 and absent.json()['status'] == 'UNKNOWN'
                     assert not absent.json()['citations']
+                    qa_url = url.replace('evidence-search', 'evidence-answer')
+                    assert client.post(qa_url, json={'question':'Какие условия оплаты работ?'}).status_code == 401
+                    answer = client.post(qa_url, headers=auth, json={'question':'Какие условия оплаты работ?'})
+                    assert answer.status_code == 200
+                    packet = answer.json()
+                    assert packet['status'] == 'TOPIC_EXCERPTS_ONLY' and packet['citations']
+                    assert packet['citations'] == result['citations'] and not packet['semantic_answer_verified']
+                    unsupported = client.post(qa_url, headers=auth, json={'question':'Можно ли подписывать контракт?'})
+                    assert unsupported.status_code == 200 and unsupported.json()['status'] == 'UNKNOWN'
+                    print('APR08_REAL_GROUNDED_QUESTION_PASS', 'verified_excerpts', len(packet['citations']), 'unsupported_unknown', True)
                 assert result['status'] == 'VERIFIED_EXCERPTS_ONLY' and result['citations']
                 assert result['verification_attempts'] <= 2 and not result['bid_ready'] and not result['scope_complete']
                 for cite in result['citations']:

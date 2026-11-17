@@ -209,3 +209,19 @@ def test_copilot_percentage_and_tamper_abstention(archive):
     target.write_bytes(target.read_bytes() + b'changed')
     result = answer_question('run', request)
     assert result['status'] == 'UNKNOWN' and result['answer'] is None and result['citations'] == []
+
+
+@pytest.mark.parametrize(('question','intent','answer','status'), [
+    ('Что закупается?', 'subject', 'Предмет версии 4', 'ARCHIVED_SOURCE_FACT'),
+    ('Какова НМЦК?', 'nmck', '400000.00', 'ARCHIVED_SOURCE_FACT'),
+    ('Какой срок подачи заявок?', 'deadline', '2026-10-14T11:00:00+03:00', 'ARCHIVED_SOURCE_FACT'),
+    ('Сколько составляет 5,125% от НМЦК?', 'nmck_percent', '20500.00', 'HYPOTHETICAL_CALCULATION'),
+])
+def test_grounded_question_routes_to_actual_pinned_xml(archive, monkeypatch, question, intent, answer, status):
+    from src.modules.tender_operator_agent_demo import evidence_grounded_questions as qa
+
+    monkeypatch.setattr(qa, 'checked_search_run', lambda _id: (archive[0], archive[1]))
+    result = qa.answer_grounded_question('run', qa.GroundedQuestion(question=question))
+    assert (result['status'], result['intent'], result['answer']) == (status, intent, answer)
+    assert result['citation_kind'] == 'ARCHIVED_XML' and result['citations'][0]['file_id'] == 'FILE-02'
+    assert result['requires_human_review'] and not result['bid_ready'] and not result['current_revision_attested']

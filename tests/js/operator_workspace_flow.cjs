@@ -116,6 +116,11 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
         owner_legal_go:false
       } : null
     };
+    else if(route.endsWith('/workspace/runs/run-1/evidence-answer') && method==='POST') {
+      const request=JSON.parse(opts.body);
+      assert.deepEqual(request,{question:'Какие условия оплаты работ?'});
+      value={run_id:'run-1',status:'TOPIC_EXCERPTS_ONLY',citation_kind:'ORIGINAL_DP_CHUNK',answer:'Условия оплаты: найдены проверенные фрагменты.',citations:[{file_id:'FILE-01',chunk_id:'chunk-1',original_sha256:'a'.repeat(64),quote:'Оплата выполненных работ в течение семи рабочих дней.'}]};
+    }
     else if(route.endsWith('/workspace/runs/run-1/evidence-search') && method==='POST') {
       const request=JSON.parse(opts.body);
       assert.deepEqual(request,{query:'оплата работ'});
@@ -269,6 +274,13 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
     assert(get('copilot-search-result').children.some(c=>c.textContent.includes('SHA-256 оригинала')));
     get('copilot-search').value='иная тема';get('copilot-search').events.input();
     assert.equal(get('copilot-search-result').children.length,0);
+    get('copilot-answer-question').value='Какие условия оплаты работ?';get('copilot-answer-form').events.submit({preventDefault(){}});
+    for(let i=0;i<50 && !get('copilot-answer-result').children.length;i++) await new Promise(resolve=>setTimeout(resolve,3));
+    assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('Оплата выполненных работ')));
+    assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('SHA-256 оригинала')));
+    get('copilot-answer-question').value='другой вопрос';get('copilot-answer-question').events.input();
+    assert.equal(get('copilot-answer-result').children.length,0);
+
 
 
   }else{

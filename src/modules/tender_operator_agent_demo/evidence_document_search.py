@@ -72,7 +72,7 @@ def _bounded_text(root: Path, file_id: str) -> str | None:
         return None
 
 
-def search_run_documents(run_id: str, request: DocumentSearchQuestion) -> dict[str, Any]:
+def checked_search_run(run_id: str) -> tuple[Path, dict[str, Any]]:
     from src.modules.tender_operator_agent_demo.upload_service_legacy import (
         get_demo_runs_root,
         load_demo_run_metadata,
@@ -87,6 +87,11 @@ def search_run_documents(run_id: str, request: DocumentSearchQuestion) -> dict[s
     metadata = load_demo_run_metadata(run_id)
     if metadata.get('run_id') != run_id or (run / 'input').is_symlink():
         raise HTTPException(status_code=404, detail='Run not found')
+    return run, metadata
+
+
+def search_run_documents(run_id: str, request: DocumentSearchQuestion) -> dict[str, Any]:
+    run, metadata = checked_search_run(run_id)
     result = {'contract': 'apr08_run_lexical_evidence_v1', 'run_id': run_id,
               'status': 'UNKNOWN', 'citations': [], 'files_examined': 0, 'verification_attempts': 0,
               'scope_complete': False, 'semantic_answer_verified': False, 'current_revision_attested': False,

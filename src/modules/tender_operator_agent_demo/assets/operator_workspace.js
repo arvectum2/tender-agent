@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const api = '/api/demo/tender-agent';
-  const state = { runId: null, poll: null, busy: false, registryOffset: 0, registryTotal: 0, registryQuery: '', runReady: false, searchParams: null, searchCursor: null, seenNumbers: [], quoteFileKey: null, copilotEpoch: 0, copilotSearchEpoch: 0 };
+  const state = { runId: null, poll: null, busy: false, registryOffset: 0, registryTotal: 0, registryQuery: '', runReady: false, searchParams: null, searchCursor: null, seenNumbers: [], quoteFileKey: null, copilotEpoch: 0, copilotSearchEpoch: 0, copilotAnswerEpoch: 0 };
   const $ = id => document.getElementById(id);
   const node = (tag, cls = '', content = null) => {
     const el = document.createElement(tag);
@@ -54,6 +54,7 @@
     $('quote-verify-button').disabled = value;
     $('copilot-submit').disabled = value;
     $('copilot-search-submit').disabled = value;
+    $('copilot-answer-submit').disabled = value;
   }
   function tab(name) {
     const labels = {new:'Новый анализ',history:'История анализов',registry:'База закупок',prices:'Цены и протоколы'};
@@ -238,6 +239,7 @@
     const id = encodeURIComponent(state.runId);
     state.copilotEpoch++;wipe($('copilot-result'));$('copilot-percent').value='';
     state.copilotSearchEpoch++;wipe($('copilot-search-result'));$('copilot-search').value='';
+    state.copilotAnswerEpoch++;wipe($('copilot-answer-result'));$('copilot-answer-question').value='';
     const run = await json(api + '/runs/' + id);
     show('run-empty', false);
     show('run-section', true);
@@ -316,6 +318,33 @@
       renderCitations(root,data.citations,{originalVerified:true});
       paragraph(root,'Архивная редакция. Актуальность и право участия не подтверждены.','help-text');
     }catch(error){if(state.runId===runId && epoch===state.copilotEpoch)paragraph(root,'UNKNOWN · Проверка не выполнена.','unknown');}
+    finally{setBusy(false);}
+  }
+
+  async function answerGroundedQuestion(event) {
+    event.preventDefault();
+    if (!state.runId || state.busy) return;
+    const runId=state.runId, epoch=++state.copilotAnswerEpoch, question=$('copilot-answer-question').value.trim();
+    const root=$('copilot-answer-result');wipe(root);setBusy(true);
+    try {
+      const data=await json(api+'/workspace/runs/'+encodeURIComponent(runId)+'/evidence-answer',
+        {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question})});
+      if(state.runId!==runId || epoch!==state.copilotAnswerEpoch) return;
+      if(data.run_id!==runId || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION','TOPIC_EXCERPTS_ONLY'].includes(data.status) || !Array.isArray(data.citations) || !data.citations.length) {
+        paragraph(root,'UNKNOWN · Вопрос не поддерживается или доказательство не найдено.','unknown');return;
+      }
+      if(data.status==='TOPIC_EXCERPTS_ONLY' && data.citation_kind==='ORIGINAL_DP_CHUNK') {
+        paragraph(root,data.answer,'help-text');
+        for(const c of data.citations.slice(0,2)) {
+          paragraph(root,c.quote,'citation');
+          paragraph(root,c.file_id+' · чанк '+c.chunk_id+' · SHA-256 оригинала '+c.original_sha256,'help-text');
+        }
+      } else if(['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION'].includes(data.status) && data.citation_kind==='ARCHIVED_XML') {
+        paragraph(root,data.status==='HYPOTHETICAL_CALCULATION'?'Сценарная сумма: '+data.answer+' (валюта и фактическое обеспечение не подтверждены).':String(data.answer));
+        renderCitations(root,data.citations,{originalVerified:true});
+      } else {paragraph(root,'UNKNOWN · Неизвестный вид доказательства.','unknown');return;}
+      paragraph(root,'Исторические материалы. Полнота, актуальность и право участия не подтверждены.','help-text');
+    }catch(error){if(state.runId===runId && epoch===state.copilotAnswerEpoch)paragraph(root,'UNKNOWN · Проверка не выполнена.','unknown');}
     finally{setBusy(false);}
   }
 
@@ -967,6 +996,8 @@
   $('copilot-form').addEventListener('submit',event=>void answerEvidenceQuestion(event));
   $('copilot-search').addEventListener('input',()=>{wipe($('copilot-search-result'));state.copilotSearchEpoch++;});
   $('copilot-search-form').addEventListener('submit',event=>void searchEvidenceDocuments(event));
+  $('copilot-answer-question').addEventListener('input',()=>{wipe($('copilot-answer-result'));state.copilotAnswerEpoch++;});
+  $('copilot-answer-form').addEventListener('submit',event=>void answerGroundedQuestion(event));
   $('quote-verify-form').addEventListener('submit',event=>void verifyQuote(event));
   $('download-pdf').addEventListener('click', event=>void downloadReport(event, 'pdf'));
   $('download-docx').addEventListener('click', event=>void downloadReport(event, 'docx'));
