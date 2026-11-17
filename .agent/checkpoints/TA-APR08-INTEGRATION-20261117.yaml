@@ -1,5 +1,5 @@
 task_id: TA-APR08-INTEGRATION-20261117
-status: in_progress
+status: completed
 goal: Integrate exact owner-authorized APR08 stack into main, no deployment.
 definition_of_done:
   - Exact 16 PRs green and main unchanged; merge reviewed tip, prove main tree identical; reconcile checkpoints and stack status.
@@ -7,10 +7,11 @@ definition_of_done:
 completed:
   - Owner explicitly authorized integration. All 16 PRs 19/19 CI green, CLEAN; 50 commits, no diff whitespace, main ancestor a1686d85.
   - PR627 retargeted main and merged via standard GitHub merge, exact reviewed head and 19/19 green. Main cac4cd4a69f2494bff582b94aec80a5ee4d4af4c tree 542bfa19cbc74d353499a6693074b6405a82bc52 matches reviewed tip.
-current_stage: post_merge_main_ci_and_receipt_pending
-remaining:
-  - Verify main CI run 44121271063 and GitVerse mirror 44121270969; metadata-only receipt PR CI/merge.
-last_verified_commit: 17e64db3a6133f6a8ab1d372be031c72c4c8bd2d
+  - Exact main CI run 44121271063 all 9 jobs SUCCESS, full pytest 6128 passed, 288 skipped; GitVerse mirror 44121270969 SUCCESS. Redundant stacked PRs closed, no branches deleted.
+current_stage: code_integrated_and_main_ci_verified
+remaining: []
+last_verified_commit: cac4cd4a69f2494bff582b94aec80a5ee4d4af4c
 test_results:
-  - All 304 stack checks SUCCESS, integrated 4/4 and 223 tests PASS.
-resume_instruction: Main merge is complete; do not remerge. Check exact main cac4cd4a69f2494bff582b94aec80a5ee4d4af4c CI and mirror; verify receipt PR, reconcile final status. No production or untriggered APR09/10.
+  - 304/304 pre-merge checks SUCCESS, 4/4 integrated scenarios, 223 focused tests PASS.
+  - Exact main full suite 6128 passed, 288 skipped; all nine CI jobs and GitVerse mirror SUCCESS.
+resume_instruction: APR08 bounded engineering integration complete; do not merge code again. PR628 contains only final metadata receipt; merge only after its exact CI is green. APR09/10 remain trigger_wait. No production or model changes. Next independent P0 gates require owner/business/external evidence.
