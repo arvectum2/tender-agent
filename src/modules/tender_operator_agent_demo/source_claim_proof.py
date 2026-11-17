@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import hashlib
 import re
-from datetime import datetime
+from datetime import UTC, datetime
 from decimal import Decimal, InvalidOperation
 from typing import Any
 
@@ -18,6 +18,7 @@ _SHA_PATTERN = re.compile(r"[a-f0-9]{64}")
 _EXACT_SPAN_STATUS = "EXACT_NORMALIZED_SOURCE_TEXT"
 _UNLOCATED = "SOURCE_SPAN_UNVERIFIED"
 _NO_PAGE = "PAGE_OR_CELL_NOT_ATTESTED"
+_MAX_TYPED_CLAIMS = 100
 
 
 def _sha(text: str) -> str:
@@ -149,14 +150,18 @@ def _normalized_value(kind: str, value: Any) -> str | None:
     if kind == "submission_deadline":
         raw = str(value or "").strip()
         # Accept aware ISO 8601, and Russian EIS parser strings with offset.
-        raw = raw.replace("Z", "+00:00")
-        if re.fullmatch(r"\d{2}\.\d{2}\.\d{4}\s+\d{2}:\d{2}:\d{2}\s*[+-]\d{2}:\d{2}", raw):
-            date, clock, tz = raw.split()
-            raw = f"{date[6:10]}-{date[3:5]}-{date[:2]}T{clock}{tz}"
+        local = re.fullmatch(
+            r"(\d{2})\.(\d{2})\.(\d{4})[ \t]+(\d{2}:\d{2}(?::\d{2}(?:\.\d{1,6})?)?)[ \t]*(Z|[+-]\d{2}:?\d{2})", raw,
+        )
+        if local:
+            day, month, year, clock, tz = local.groups()
+            raw = f"{year}-{month}-{day}T{clock}{tz}"
+        else:
+            raw = re.sub(r"[ \t]+(?=Z$|[+-]\d{2}:?\d{2}$)", "", raw)
         try:
             parsed = datetime.fromisoformat(raw)
-            return parsed.isoformat() if parsed.tzinfo is not None else None
-        except ValueError:
+            return parsed.astimezone(UTC).isoformat() if parsed.utcoffset() is not None else None
+        except (ValueError, OverflowError):
             return None
     if kind == "procurement_subject":
         return re.sub(r"\s+", " ", str(value or "")).strip().casefold() or None
@@ -186,7 +191,7 @@ def check_typed_original_facts(
         or research.get("source_status") == "INCOMPLETE"
     )
     results = []
-    for claim in claims[:100]:
+    for claim in claims[:_MAX_TYPED_CLAIMS]:
         kind = str(claim.get("field") or "")
         actual = _normalized_value(kind, claim.get("value"))
         candidates = [
@@ -221,6 +226,7 @@ def check_typed_original_facts(
         "status": "HISTORICAL_ONLY_HUMAN_REVIEW",
         "claims": results,
         "source_corruption_or_revision_conflict": edition_conflict,
+        "assertion_limit_exceeded": len(claims) > _MAX_TYPED_CLAIMS,
         "bid_ready": False,
     }
 
@@ -233,21 +239,21 @@ def extract_model_eis_summary_claims(requirements: dict[str, Any]) -> list[dict[
     """
     summary = str(requirements.get("tender_summary") or "")
     claims: list[dict[str, Any]] = []
-    price = re.search(
-        r"(?:НМЦК|NMCK)\s*[:=–-]\s*"
-        r"(?P<value>\d[\d,.\s]*\d|\d)\s*(?:RUB|₽|руб(?:лей)?)",
-        summary, re.IGNORECASE,
+    # One ordered scan: a matching first assertion must not hide a later
+    # contradiction. Keep one overflow sentinel; comparisons remain bounded.
+    pattern = re.compile(
+        r"(?<!\w)(?:НМЦК|NMCK)\s*[:=–-]\s*"
+        r"(?P<price>[0-9][0-9,. \t\u00a0\u202f]*[0-9]|[0-9])\s*(?:RUB|₽|руб(?:лей)?)"
+        r"|(?<!\w)(?:submission\s+deadline|срок\s+подачи\s+заявок)\s*[:=–-]\s*"
+        r"(?P<deadline>(?:\d{4}-\d{2}-\d{2}T|\d{2}\.\d{2}\.\d{4}[ \t]+)"
+        r"\d{2}:\d{2}(?::\d{2}(?:\.\d{1,6})?)?[ \t]*(?:Z|[+-]\d{2}:?\d{2}))",
+        re.IGNORECASE,
     )
-    if price:
-        claims.append({"field": "nmck", "value": price.group("value").strip()})
-    deadline = re.search(
-        r"(?:submission\s+deadline|срок\s+подачи\s+заявок)\s*[:=–-]\s*"
-        r"(?P<value>(?:\d{4}-\d{2}-\d{2}T|\d{2}\.\d{2}\.\d{4}\s+)"
-        r"\d{2}:\d{2}(?::\d{2})?\s*[+-]\d{2}:\d{2})",
-        summary, re.IGNORECASE,
-    )
-    if deadline:
-        claims.append({"field": "submission_deadline", "value": deadline.group("value").strip()})
+    for match in pattern.finditer(summary):
+        field = "nmck" if match.group("price") is not None else "submission_deadline"
+        claims.append({"field": field, "value": (match.group("price") or match.group("deadline")).strip()})
+        if len(claims) > _MAX_TYPED_CLAIMS:
+            break
     return claims
 
 
@@ -264,6 +270,7 @@ def audit_model_eis_summary(
     asserted = {c["field"] for c in claims}
     checked["unmentioned_archived_eis_fields"] = sorted(available - asserted)
     checked["explicit_assertions_count"] = len(claims)
+    checked["explicit_assertions_count_is_lower_bound"] = checked["assertion_limit_exceeded"]
     checked["contradictions_count"] = sum(
         c["status"] == "CONTRADICTED_BY_HISTORICAL_EIS_SOURCE"
         for c in checked["claims"]
