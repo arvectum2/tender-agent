@@ -362,7 +362,7 @@ completed:
   admitted prices and unknown contracts, scope comparison with original quotes and
   provenance. Client validates pinned receipt identities, exact response digest, scope
   and selected observations.
-current_stage: price01_historical_comparables_web_verified_next_ios
+current_stage: price01_historical_comparables_ios
 remaining:
 - Native iOS typed historical catalog and preview with exact selected observations,
   pinned source/digest validation, scope comparison; Swift fixture and Xcode build.
@@ -603,11 +603,9 @@ test_results:
   Python archive projections PASS, including disabled feature, duplicate/remove, changed
   reference, wrong company and changed price with recomputed digest; Ruff/diff PASS.
   PR595 18 success/1 running, no failures. Interactive browser acceptance not performed.
-resume_instruction: Historical evidence backend and Web verified, Web code be7df799.
-  Next iOS typed catalog/preview and selection. Six archived website procedures, zero
-  additional equivalent cases or verified contract prices. Keep feature disabled by
-  default; no new live source requests, production changes or MacBook access. B2B
-  authorization unresolved.
+resume_instruction: Implement native case-bound historical evidence catalog, explicit
+  comparison and typed source/response verification. Run independent Python/Swift
+  fixtures, Xcode build, no deployment or live source requests.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
