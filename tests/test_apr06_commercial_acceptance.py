@@ -370,3 +370,28 @@ def test_cli_cannot_exit_success_on_invented_approved_review(tmp_path):
     assert summary["status"] == "PENDING_EXTERNAL_SOURCE_AND_OWNER_ATTESTATION"
     assert summary["thresholds_approved"] is True
     assert summary["commercial_release_authorized"] is False
+
+
+def test_deferred_human_decisions_never_dilute_false_decisive_rate():
+    manifest = frozen_corpus()
+    obs = observations(manifest)
+    for row in obs.values():
+        row['operator_review']['decision'] = 'DEFER'
+    report = score(manifest, obs, approved(policy()))
+    assert report['metrics']['false_go_no_go'] is None
+    assert report['threshold_checks']['false_go_no_go'] is None
+    assert report['status'] == 'INSUFFICIENT_REVIEW_EVIDENCE'
+    first = next(iter(obs.values()))
+    first['operator_review']['decision'] = 'GO'
+    first['confirmed_defects'] = [{'defect_id': 'false_decision', 'source_ref': 'test-only:source',
+                                  'summary': 'Test-only false NO_GO'}]
+    report = score(manifest, obs, approved(policy()))
+    assert report['metrics']['false_go_no_go'] == 1.0
+    assert report['status'] == 'FAILED_ACCEPTANCE'
+
+
+def test_empty_review_has_no_measured_commercial_kpi():
+    result = score(frozen_corpus(), {}, approved(policy()))
+    assert all(value is None for value in result['metrics'].values())
+    assert all(value is None for value in result['threshold_checks'].values())
+    assert result['status'] == 'INSUFFICIENT_REVIEW_EVIDENCE'
