@@ -54,6 +54,20 @@ assert.equal(target.hostname,'127.0.0.1');assert.equal(target.protocol,'http:');
       assert(!asOf.includes('Статья 45. Условия'));
       await ask('Покажи статью 45 44-ФЗ на дату 17.11.2026','UNKNOWN');
       console.log('APR08_STATUTE_BROWSER_PASS historical source SHA and two as-of refusals');
+      if(process.env.APR08_GOVERNMENT_COPIES_BROWSER==='1') {
+        const docx=await ask('Покажи статью 45 44-ФЗ из копии от 03.11.2026','Неполный исторический фрагмент');
+        assert.match(docx,/Статья 45[.] Условия независимой гарантии/);assert.match(docx,/word\/document.xml/);
+        const pdf=await ask('Покажи статью 3.2 223-ФЗ из копии от 07.06.2025','Неполный исторический фрагмент');
+        assert.match(pdf,/Статья 3[.]2[.] Порядок осуществления конкурентной закупки/);assert.match(pdf,/pinned projection/);
+        const compare44=await ask('Сравни списки изменений 44-ФЗ','Сопоставление перечней');
+        assert.match(compare44,/278-ФЗ · в раннем фрагменте: не указан; в позднем: указан/);
+        const compare223=await ask('Сравни списки изменений 223-ФЗ','Сопоставление перечней');
+        assert.match(compare223,/318-ФЗ · в раннем фрагменте: не указан; в позднем: указан/);
+        await l('copilot-answer-result').screenshot({path:process.env.APR08_SCREENSHOT_DIR+'/government-copy-comparison.png'});
+        await ask('Покажи статью 45 44-ФЗ на дату 03.11.2026','UNKNOWN');
+        console.log('APR08_GOVERNMENT_COPIES_BROWSER_PASS docx pdf comparison current-law refusal');
+      }
+
       if(process.env.APR08_AMENDMENT_BROWSER_ACCEPTANCE==='1') {
         const timing=await ask('Покажи сроки вступления в силу 279-ФЗ на дату 17.11.2026','Юридический статус нормы на выбранную дату: UNKNOWN');
         assert.match(timing,/2027-01-01 · Будущая дата/);assert.match(timing,/2026-10-01 · Дата наступила/);assert.match(timing,/2026-08-04 · Дата наступила/);

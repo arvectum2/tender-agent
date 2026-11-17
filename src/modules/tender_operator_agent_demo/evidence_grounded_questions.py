@@ -22,6 +22,10 @@ from src.modules.tender_operator_agent_demo.evidence_document_search import (
     checked_search_run,
     search_run_documents,
 )
+from src.modules.tender_operator_agent_demo.evidence_government_copies import (
+    compare_government_copies,
+    government_copy_observation,
+)
 from src.modules.tender_operator_agent_demo.evidence_legal_reference import (
     legal_reference_observation,
 )
@@ -66,6 +70,15 @@ def answer_grounded_question(run_id: str, request: GroundedQuestion) -> dict:
               'scope_complete': False, 'semantic_answer_verified': False, 'bid_ready': False,
               'current_revision_attested': False, 'legal_requirement_attested': False,
               'requires_human_review': True, 'external_action_allowed': False}
+    agency_copy = re.fullmatch(r'(?:покажи|показать) статью ([0-9]{1,3}(?:\.[0-9]{1,2})?) (44|223)-фз из копии от ([0-9]{2})\.([0-9]{2})\.([0-9]{4})', q)
+    comparison = re.fullmatch(r'сравни списки изменений (44|223)-фз', q)
+    if agency_copy or comparison:
+        observation = (government_copy_observation(agency_copy[2]+'-ФЗ', f'{agency_copy[5]}-{agency_copy[4]}-{agency_copy[3]}', agency_copy[1]) if agency_copy else compare_government_copies(comparison[1]+'-ФЗ'))
+        if observation['status'] == 'UNKNOWN':
+            return {**result, 'intent': 'government_copy', 'reason': observation['reason'], 'observation': observation}
+        return {**result, 'intent':'government_copy', 'status':observation['status'], 'observation':observation,
+                'citations':observation['citations'], 'citation_kind':'GOVERNMENT_REPRODUCTION',
+                'answer':'Проверенные по SHA-256 копии с государственных сайтов. Дата размещения файла не является датой действия редакции; правовая актуальность не подтверждена.'}
     amendment = re.fullmatch(r'(?:покажи|показать) сроки вступления в силу 279-фз на дату ([0-9]{2})\.([0-9]{2})\.([0-9]{4})', q)
     if amendment:
         observation = amendment_timing(f'{amendment[3]}-{amendment[2]}-{amendment[1]}')

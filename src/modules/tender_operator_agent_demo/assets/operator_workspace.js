@@ -333,7 +333,7 @@
       const data=await json(api+'/workspace/runs/'+encodeURIComponent(runId)+'/evidence-answer',
         {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question})});
       if(state.runId!==runId || epoch!==state.copilotAnswerEpoch) return;
-      if(data.run_id!==runId || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION','TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','ARCHIVED_SECURITY_FIELDS','LITERAL_PERFORMANCE_OBSERVATIONS','CUSTOMER_TERMS_LEGAL_REFERENCES','HISTORICAL_STATUTE_SNAPSHOT_EXCERPT','SECONDARY_AMENDMENT_TIMING_ONLY'].includes(data.status) || !Array.isArray(data.citations) || !data.citations.length) {
+      if(data.run_id!==runId || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION','TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','ARCHIVED_SECURITY_FIELDS','LITERAL_PERFORMANCE_OBSERVATIONS','CUSTOMER_TERMS_LEGAL_REFERENCES','HISTORICAL_STATUTE_SNAPSHOT_EXCERPT','SECONDARY_AMENDMENT_TIMING_ONLY','GOVERNMENT_COPY_LIST_COMPARISON'].includes(data.status) || !Array.isArray(data.citations) || !data.citations.length) {
         paragraph(root,'UNKNOWN · Вопрос не поддерживается или доказательство не найдено.','unknown');return;
       }
       if(['TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','LITERAL_PERFORMANCE_OBSERVATIONS'].includes(data.status) && data.citation_kind==='ORIGINAL_DP_CHUNK') {
@@ -359,12 +359,18 @@
         for(const g of data.observation.groups) paragraph(root,g.scope+' · '+g.stated_start_date+' · '+(g.calendar_relation==='DATE_REACHED'?'Дата наступила':'Будущая дата')+(g.date_basis==='SECONDARY_REPORTED_PUBLICATION_DATE'?' (дата публикации по справочному источнику)':''));
         for(const c of data.citations) {paragraph(root,c.excerpt,'citation');paragraph(root,c.source_url+' · '+c.locator+' · SHA-256 '+c.source_sha256,'help-text');}
         paragraph(root,'Юридический статус нормы на выбранную дату: UNKNOWN.','help-text');
+      } else if(data.status==='GOVERNMENT_COPY_LIST_COMPARISON' && data.citation_kind==='GOVERNMENT_REPRODUCTION' && data.observation) {
+        paragraph(root,data.answer,'help-text');
+        paragraph(root,'Более ранняя копия: '+data.observation.dates[0]+'; более новая: '+data.observation.dates[1]);
+        for(const o of data.observation.observations) paragraph(root,o.amendment+' · в раннем фрагменте: '+(o.listed_in_older_excerpt?'указан':'не указан')+'; в позднем: '+(o.listed_in_newer_excerpt?'указан':'не указан'));
+        for(const c of data.citations) {paragraph(root,c.document+' · '+c.excerpt,'citation');paragraph(root,c.source_url+' · '+c.locator+' · SHA-256 '+c.source_sha256,'help-text');}
+        paragraph(root,'Сопоставление перечней, не подтверждение полноты изменений или действующей редакции.','help-text');
       } else if(data.status==='HISTORICAL_STATUTE_SNAPSHOT_EXCERPT' && data.citation_kind==='GOVERNMENT_REPRODUCTION' && data.observation?.snapshot_bytes_verified===true) {
         paragraph(root,data.answer,'help-text');
         for(const c of data.citations) {
           paragraph(root,c.document+' · '+c.locator,'help-text');
           paragraph(root,c.excerpt,'citation');
-          paragraph(root,c.source_url+' · SHA-256 '+c.source_sha256,'help-text');
+          paragraph(root,c.source_url+' · SHA-256 '+c.source_sha256+(c.projection_sha256?' · SHA-256 текстовой проекции '+c.projection_sha256:''),'help-text');
         }
         paragraph(root,'Неполный исторический фрагмент. Действующая редакция и юридическая применимость: UNKNOWN.','help-text');
       } else if(data.status==='CUSTOMER_TERMS_LEGAL_REFERENCES' && data.citation_kind==='ARCHIVED_XML' && data.observation) {
