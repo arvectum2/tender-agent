@@ -880,5 +880,5 @@ wsf07b_exact_bearer_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-WSF07B-EXACT-BEARER-20261117.yaml
   branch: fix/ta-wsf07b-exact-bearer-20261117
-  current_stage: exact_ci_pending_and_separate_product_release_gate
-  last_verified_commit: b48797bf09977530c8b555f6079d10a1ad7bd239
+  current_stage: guarded_code_only_cutover
+  last_verified_commit: 3b37fb6988dd996efeb55e69058016a22a2bd48f

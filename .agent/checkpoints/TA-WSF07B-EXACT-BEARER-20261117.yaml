@@ -11,10 +11,11 @@ completed:
   - Focused regression 94 passed, 1 skipped; actual src.main with disposable synthetic PostgreSQL PASS, scoped valid Bearer, forbidden invalid/Basic/revoked, sibling/method Basic protection, SELECT-only and no private-field leaks. Fixture DB removed.
   - Live source verifier 14/14; prior database binding and exact deal-table fingerprint match, DB 122; 12 corporate profile-correlated candidates, 9 ownership unproven excluded, 0 admitted. Private reviewed nonoperational package checksum verified; no active grant, token or manifest.
   - Non-sensitive handoff published in Company issue 16, exact commit and tests.
-current_stage: exact_ci_pending_and_separate_product_release_gate
+  - Owner continuation authorized code-only rollout, not admission. PR631 exact CI 19/19, merged exact reviewed tree b32e68d164958cf1ab95644cc901aaeb01ab08b1 into main 3b37fb6988dd996efeb55e69058016a22a2bd48f. Isolated exact release prepared with copied unchanged venv; 94 passed/1 skipped on release.
+current_stage: guarded_code_only_cutover
 remaining:
-  - Verify PR631 exact CI, then reconcile product release with explicit approval; no real admission. Current production 28e874b6 still returns 401; no migrations required by patch.
-last_verified_commit: b48797bf09977530c8b555f6079d10a1ad7bd239
+  - Verify actual deployed process and HTTP denials after guarded launcher-only switch; rollback launcher if verification fails. Confirm main CI, update private review scope receipt and Company issue 16.
+last_verified_commit: 3b37fb6988dd996efeb55e69058016a22a2bd48f
 test_results:
   - 94 passed, 1 skipped, Ruff and git diff check PASS; actual synthetic PostgreSQL integration PASS; CI last observed 17/19 success, 2 running, no failures.
-resume_instruction: Read PR631 exact head CI and live release marker first. Do not activate Workspace, generate access credentials or active manifest. Preserve private package on SSD and zero admitted identities; confirm any real ownership with Owner. Review guarded exact-release rollout separately; no schema migration, unrelated PR merges or DB writes.
+resume_instruction: Check main and live marker, shared deploy.lock, and private cutover journal first. Do not repeat merge or migrate; release 3b37fb69 prepared, previous 28e874b6 retained. No admission, token, manifest, unrelated merge or DB mutation.
