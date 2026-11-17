@@ -1,0 +1,15 @@
+task_id: TA-APR04-DISPOSABLE-REPLAY-20261117
+status: in_progress
+goal: Repeat the existing private source-backed onboarding HTTP acceptance on current product code without reusing or modifying historical DB or source files.
+definition_of_done:
+  - Bind saved owner identity inputs and archive report to prior private receipt, copy only required bounded source artifacts to disposable private runtime.
+  - Run exact existing onboarding workflow twice with fresh databases, preserve UNKNOWN business qualification and original input hashes; no actual PDF verification claim or production changes.
+  - Add tests and document reproducible bounded acceptance, publish review PR.
+completed:
+  - Confirmed private legacy identity, saved run and original receipt exist. APR07 CI pending, separate predecessor.
+current_stage: implement_disposable_owner_replay
+remaining:
+  - Implement isolated runner and source guards, run twice, regression, publish.
+last_verified_commit: a7dba514f05ce13d1dd50daf2e5a22ddce1ac479
+test_results: []
+resume_instruction: Work in dedicated branch; do not read or disclose private owner values in transcript, use preserved local inputs and fresh temporary DB. No Gemma, no network procurement requests, no production.
