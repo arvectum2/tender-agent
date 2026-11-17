@@ -365,7 +365,7 @@ completed:
 - Native historical comparable evidence catalog and explicit case-bound selection/preview,
   exact source/response digest validation, locally reconstructed scope comparison;
   Web and iOS pin entire reviewed six-record projection.
-current_stage: price01_historical_comparables_ios_verified_next_evidence_ingestion
+current_stage: price01_reviewed_contract_evidence_ingestion
 remaining:
 - Implement reviewed historical evidence ingestion and bounded normalization for independently
   sourced signed contract prices and exact equivalent full-scope quantities. Additional
@@ -612,11 +612,10 @@ test_results:
   price corruption, 104 focused tests PASS/2 skipped/57 warnings in 11.61s, Ruff/diff
   PASS. PR596 CI 17 success/2 running at check. Interactive browser/simulator/device
   acceptance not performed.
-resume_instruction: Historical evidence Backend/Web/iOS implemented and verified.
-  Native code 37c1757a. Next engineering stage is reviewed historical evidence ingestion
-  and explicit normalization with signed-contract and full-scope quantity provenance,
-  not unsupported market rate; keep research separate. Then integrated PRICE-01 acceptance.
-  No production changes, new live traffic or MacBook access. B2B authorization unresolved.
+resume_instruction: Implement offline reviewed contract evidence bundle validation
+  and bounded scope normalization; explicit independent receipt pin, source byte and
+  exact anchor verification, no live acquisition or DB writes, test synthetic fixtures.
+  Keep current historical archive and client pins intact.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
