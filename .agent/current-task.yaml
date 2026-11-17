@@ -703,4 +703,4 @@ apr04_disposable_replay_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR04-DISPOSABLE-REPLAY-20261117.yaml
   branch: feat/ta-apr04-disposable-replay-20261117
-  current_stage: implement_disposable_owner_replay
+  current_stage: disposable_replay_ci_pending
