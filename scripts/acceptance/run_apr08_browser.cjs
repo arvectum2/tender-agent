@@ -45,6 +45,16 @@ assert.equal(target.hostname,'127.0.0.1');assert.equal(target.protocol,'http:');
     const legal=await ask('Поясни требования к обеспечению исполнения контракта','Ссылки заказчика на нормы');
     assert.match(legal,/содержание законодательства не проверено/);assert.match(legal,/44-ФЗ/);
     await l('copilot-answer-result').screenshot({path:process.env.APR08_SCREENSHOT_DIR+'/legal.png'});
+    if(process.env.APR08_STATUTE_BROWSER_ACCEPTANCE==='1') {
+      const historical=await ask('Покажи статью 45 44-ФЗ из снимка 14.07.2022','Неполный исторический фрагмент');
+      assert.match(historical,/Статья 45\. Условия независимой гарантии/);
+      assert.match(historical,/rospatent\.gov\.ru/);assert.match(historical,/SHA-256 8cc95985d65d6913861ca42d4b67fd2ce42adca25a132ce17c82e03d052d433d/);
+      await l('copilot-answer-result').screenshot({path:process.env.APR08_SCREENSHOT_DIR+'/historical-statute.png'});
+      const asOf=await ask('Покажи статью 45 44-ФЗ на дату 14.07.2022','UNKNOWN');
+      assert(!asOf.includes('Статья 45. Условия'));
+      await ask('Покажи статью 45 44-ФЗ на дату 17.11.2026','UNKNOWN');
+      console.log('APR08_STATUTE_BROWSER_PASS historical source SHA and two as-of refusals');
+    }
     await ask('Можно ли подписывать контракт?','UNKNOWN');
     await l('copilot-answer-question').fill('другой вопрос');assert.equal(await l('copilot-answer-result').innerText(),'');
     assert(await l('report-panel').isHidden()); assert.deepEqual(errors,[]);

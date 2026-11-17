@@ -29,6 +29,9 @@ from src.modules.tender_operator_agent_demo.evidence_payment_observation import 
 from src.modules.tender_operator_agent_demo.evidence_security_observation import (
     archived_security_observation,
 )
+from src.modules.tender_operator_agent_demo.evidence_statute_corpus import (
+    lookup_statute_snapshot,
+)
 
 
 class GroundedQuestion(BaseModel):
@@ -60,6 +63,16 @@ def answer_grounded_question(run_id: str, request: GroundedQuestion) -> dict:
               'scope_complete': False, 'semantic_answer_verified': False, 'bid_ready': False,
               'current_revision_attested': False, 'legal_requirement_attested': False,
               'requires_human_review': True, 'external_action_allowed': False}
+    statute = re.fullmatch(r'(?:покажи|показать) статью ([0-9]{1,3}(?:\.[0-9]{1,2})?) (44|223)-фз (из снимка|на дату) ([0-9]{2})\.([0-9]{2})\.([0-9]{4})', q)
+    if statute:
+        observation = lookup_statute_snapshot(act=statute[2]+'-ФЗ', article=statute[1],
+            requested_date=f'{statute[6]}-{statute[5]}-{statute[4]}',
+            mode='explicit_snapshot' if statute[3]=='из снимка' else 'as_of')
+        if observation['status'] != 'HISTORICAL_STATUTE_SNAPSHOT_EXCERPT':
+            return {**result, 'intent': 'statute_snapshot', 'reason': observation['reason'], 'observation': observation}
+        return {**result, 'intent': 'statute_snapshot', 'status': observation['status'],
+            'observation': observation, 'citations': observation['citations'], 'citation_kind': 'GOVERNMENT_REPRODUCTION',
+            'answer': 'Фрагмент исторической копии с сайта государственного органа. Целостность снимка подтверждена; применимость редакции и актуальный текст закона не установлены.'}
     intent = next((k for k, pattern in _FACTS.items() if re.fullmatch(pattern, q)), None)
     pct = _PERCENT.fullmatch(q)
     if pct:

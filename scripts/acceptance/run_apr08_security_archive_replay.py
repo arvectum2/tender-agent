@@ -116,6 +116,18 @@ def main() -> int:
                     before = inventory(root / run)
                     run_browser(app, run, password, Path(os.environ['APR08_SCREENSHOT_DIR']), scenario='pinned')
                     assert inventory(root / run) == before
+            if number == '0348100024426000039' and os.environ.get('APR08_STATUTE_BROWSER_ACCEPTANCE') == '1':
+                expected_sha = '8cc95985d65d6913861ca42d4b67fd2ce42adca25a132ce17c82e03d052d433d'
+                snapshot_path = Path(os.environ['AI_CORP_TENDER_LEGAL_SNAPSHOTS_DIR']) / '44fz-rospatent.html'
+                assert digest(snapshot_path) == expected_sha
+                for article in ('30','37','44','45','95','96'):
+                    response = answer_grounded_question(run, GroundedQuestion(question=f'Покажи статью {article} 44-ФЗ из снимка 14.07.2022'))
+                    assert response['status'] == 'HISTORICAL_STATUTE_SNAPSHOT_EXCERPT'
+                    assert response['citations'][0]['excerpt'].startswith(f'Статья {article}. ')
+                    assert response['observation']['snapshot_bytes_verified'] and not response['observation']['statute_text_verified']
+                    assert not response['observation']['current_law_verified'] and not response['legal_requirement_attested']
+                    print('APR08_HISTORICAL_STATUTE', article, response['citations'][0]['locator'])
+                assert digest(snapshot_path) == expected_sha
             assert digest(original) == receipt['zip_sha256']
     print('APR08_SECURITY_ARCHIVE_REPLAY_PASS 3 archives 6 questions originals unchanged')
     return 0
