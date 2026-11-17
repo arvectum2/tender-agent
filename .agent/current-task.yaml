@@ -743,3 +743,10 @@ apr08_evidence_copilot_20261117:
   checkpoint: .agent/checkpoints/TA-APR08-EVIDENCE-COPILOT-20261117.yaml
   branch: feat/ta-apr08-evidence-copilot-20261117
   current_stage: first_slice_exact_ci_pending
+
+apr08_document_retrieval_20261117:
+  task_id: TA-APR08-DOCUMENT-RETRIEVAL-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR08-DOCUMENT-RETRIEVAL-20261117.yaml
+  branch: feat/ta-apr08-document-retrieval-20261117
+  current_stage: bounded_local_candidate_and_original_quote_recheck

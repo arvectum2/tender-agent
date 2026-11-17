@@ -1,0 +1,15 @@
+task_id: TA-APR08-DOCUMENT-RETRIEVAL-20261117
+status: in_progress
+goal: Free-text lexical lookup within selected saved run; original-verified DP excerpts only, no semantic answer or legal decision.
+definition_of_done:
+  - Bounded run-local candidate lookup and original raw SHA/chunk verification through existing nonpersisting DP quote checker, no cross-run fallback.
+  - Private API and existing UI with safe display and request scoping; unsupported/missing evidence UNKNOWN, completeness not implied.
+  - Adversarial regressions, UI simulation and archive replay; publish draft.
+completed:
+  - PR610 exact head fd8c32f8 currently CI pending; main mirror passed.
+current_stage: bounded_local_candidate_and_original_quote_recheck
+remaining:
+  - Implement, test, publish; verify exact CI.
+last_verified_commit: fd8c32f811c93508b80efb8c680819db83812249
+test_results: []
+resume_instruction: Work in this branch; use existing quote verifier on selected candidates only. No Gemma, procurement network, new DB, production or unapproved merge.
