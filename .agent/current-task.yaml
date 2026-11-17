@@ -824,3 +824,10 @@ apr08_statute_corpus_20261117:
   branch: feat/ta-apr08-statute-corpus-20261117
   current_stage: exact_ci_pending
   last_verified_commit: 941e377f483c01ec1f7bbcb3b9d0c7ca081467dd
+
+apr08_effective_date_20261117:
+  task_id: TA-APR08-EFFECTIVE-DATE-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR08-EFFECTIVE-DATE-20261117.yaml
+  branch: feat/ta-apr08-effective-date-20261117
+  current_stage: amendment_source_intake_and_temporal_gate

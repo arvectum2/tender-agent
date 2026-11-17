@@ -1,0 +1,15 @@
+task_id: TA-APR08-EFFECTIVE-DATE-20261117
+status: in_progress
+goal: Evidence-backed amendment timing with explicit scope; prevent future or unreviewed law from being used as an applicable consolidated edition.
+definition_of_done:
+  - Pin a real amendment source and literal commencement evidence; distinguish dated provision groups, publication and consolidated law applicability.
+  - Explicit date query, bounded source evidence, no inferred comprehensive amendment coverage.
+  - Tests and real replay, draft PR, verify exact CI.
+completed:
+  - PR621 and PR622 exact CI 19/19 SUCCESS.
+current_stage: amendment_source_intake_and_temporal_gate
+remaining:
+  - Acquire source, implement, test, publish.
+last_verified_commit: 38c6ee3e43f481aad5b0e4e1aa92b6c6984ba3ed
+test_results: []
+resume_instruction: Prefer official publication; distinguish secondary source if official fails. No model, production, live procurement or automatic merge.
