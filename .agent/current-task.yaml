@@ -768,3 +768,10 @@ apr08_typed_payment_20261117:
   branch: feat/ta-apr08-typed-payment-20261117
   current_stage: exact_ci_pending
   last_verified_commit: c6ae2ea8db8118b9ffe4eb289d8e12f02b68b1d7
+
+apr08_security_xml_20261117:
+  task_id: TA-APR08-SECURITY-XML-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR08-SECURITY-XML-20261117.yaml
+  branch: feat/ta-apr08-security-xml-20261117
+  current_stage: pinned_archived_security_fields
