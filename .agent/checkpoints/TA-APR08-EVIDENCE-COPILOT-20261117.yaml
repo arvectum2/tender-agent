@@ -11,12 +11,14 @@ completed:
   - Implemented first vertical slice in existing private workspace with three pinned XML fact questions and explicit Decimal percentage; run-scoped citations, UNKNOWN and no legal/GO claim.
   - HTTP auth/percent validation and exact URL auth exemption denial, UI simulation with scenario result and cleared response; no real browser session.
   - Replayed actual archived EOK v3 procurement 0348100024426000039 original ZIP and selected XML rehashed against existing APR06 receipts, 4/4 source-backed results; legacy unpinned archive 0372200172326000015 4/4 UNKNOWN.
-current_stage: first_slice_exact_ci_pending
+  - PR610 exact head fd8c32f8 CI 19/19 SUCCESS; PR611 exact head ae389369 CI 19/19 SUCCESS; subsequent isolated real retrieval replay passed.
+current_stage: retrieval_real_dp_verified_semantic_increment_next
 remaining:
-  - Verify exact first slice PR CI; fix any real failures.
-  - Next implement bounded free-text source retrieval from existing DP evidence chunks without automatic legal interpretation; use existing run auth and quote proof.
-last_verified_commit: 423342e38ef6a9bb3405f337c6e3d5128708bcc1
+  - Verify reproducible APR08 real DP acceptance successor CI.
+  - Develop bounded semantic evidence grounded Q&A, legal reasoning boundaries and explicit assumption-based commercial calculations.
+  - Real browser acceptance, complete module gate and separate integration consent.
+last_verified_commit: 66309ab19fe69d3e9efa96e000c89638cf794d8d
 test_results:
   - 108 targeted PASS, Ruff/Node syntax/diff check PASS, existing Node UI simulation genuine scenario extension PASS.
   - Real archived XML v3 exact SHA replay 4/4, missing pinned metadata 4/4 UNKNOWN; no live sources/model/production.
-resume_instruction: Verify first slice exact CI and main a1686d85 postmerge CI. Continue next bounded APR08 evidence retrieval in separate dependent increment, with explicit supported/unsupported results and independent original quote validation, no live requests/Gemma/production/new DB or automatic merge. No claim of arbitrary Q&A or legal/commercial acceptance.
+resume_instruction: Continue from the retrieval replay successor branch; check CI, build next bounded evidence-grounded question increment. PR610/611 green but not merged. No production, live procurement, model execution or automatic merge.

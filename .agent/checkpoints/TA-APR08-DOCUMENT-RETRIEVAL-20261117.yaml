@@ -10,13 +10,13 @@ completed:
   - Implemented private run-local lexical lookup, bounded candidate selection and existing original quote verifier; UI search and stale response reset.
   - Actual saved archive replay returned UNKNOWN; diagnosed local DP authentication error and unsupported nested XML; excluded nested paths from candidate budget. Original bytes unchanged.
   - Authorized isolated real DP replay PASS: ephemeral key, no models, anonymous 401, archived query оплатa работ returned one verified excerpt, original run SHA inventory unchanged, instance removed.
-current_stage: reproducible_real_dp_acceptance
+  - Reproducible scripts.acceptance.run_apr08_real_dp_replay: real DP checkout 38322fd5, ephemeral authenticated loopback server, existing archived file/chunk receipts, actual operator FastAPI route via TestClient, anonymous 401 on both levels, positive one cited excerpt, absent term UNKNOWN, source inventory unchanged; temporary instance removed.
+current_stage: replay_verified_successor_ci_pending
 remaining:
-  - Verify exact PR610 and successor CI; correct failures.
-  - Obtain sanctioned isolated DP process consumer configuration for real positive original replay; no credential disclosure or change to working service auth.
-  - Continue semantic grounded questions and calculations only after evidence path is accepted.
-last_verified_commit: 572a687a53425540a41fbfcbd6b954f90e265751
+  - Verify exact replay successor PR CI; PR610/611 exact heads already green. No authorized merge yet.
+  - Continue bounded semantic grounded questions and calculations in the parent APR08 task.
+last_verified_commit: 66309ab19fe69d3e9efa96e000c89638cf794d8d
 test_results:
   - 105 focused pytest PASS, Ruff/JS syntax/Node simulation/diff check PASS.
-  - Real archived query UNKNOWN; two candidate attempts, real DP authentication error confirmed; saved run bytes unchanged.
-resume_instruction: Check exact PR610/successor and main CI. Reproduce positive nonpersisting DP retrieval in isolated authorized environment, not production. Existing real DP 8094 returned DataPlatformAuthenticationError; do not weaken auth. Continue APR08 incrementally, no Gemma/live procurement/new DB/automatic merge.
+  - Earlier working DP auth rejection resolved by isolated authorized replay; three positive real DP rehearsals including final HTTP route, each one verified excerpt, no actual legal inference. 105 targeted tests PASS on replay code.
+resume_instruction: Check exact new acceptance PR CI, then mark bounded retrieval completed. PR610/611 verified green but not merged without owner permission. Continue APR08 semantic grounding with supported scope and real citation verification. No production, Gemma, live sources or automatic merge.
