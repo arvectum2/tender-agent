@@ -680,4 +680,4 @@ apr05_release_rehearsal_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR05-RELEASE-REHEARSAL-20261117.yaml
   branch: feat/ta-apr05-release-rehearsal-20261117
-  current_stage: exact_ci_pending
+  current_stage: pilot_image_ci_pending
