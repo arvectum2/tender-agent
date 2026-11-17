@@ -1,5 +1,5 @@
 task_id: TA-APR-INTEGRATION-20261117
-status: in_progress
+status: completed
 goal: Verify exact stacked APR05/06/07/04 review heads and combined isolated integration without modifying verified PR heads or main.
 definition_of_done:
   - Verify ancestry and exact green CI for four draft PR heads.
@@ -12,14 +12,12 @@ completed:
   - Combined 14 targeted suites on exact PR607 head passed; actual PostgreSQL R9 migration122 restore, 7 histories, 2 binary downloads, corrupt/wrong scope reject, kill switch, tenant denial.
   - Actual PostgreSQL read-only role rehearsal pass, private disposable APR04 replay pass, mixed shortlist deterministic byte match.
   - Owner explicitly authorized merge of PR604 through 607 into main without production deployment; all four exact heads now CI 19/19 CLEAN.
-current_stage: owner_authorized_sequential_merge
-remaining:
-  - Merge PR604–607 in order, rechecking each exact head and base tree.
-  - Record final CI on checkpoint-only branch; mark bounded APR07/APR04 complete when green.
-  - Verify resulting main tree, no deployment.
-last_verified_commit: 337b1c58cdd7e69c2250a65b7b49a3b825a12a77
+  - Merged PR604 bbb099ba75bd9fcea612069404d342ee044c0f5d, PR605 c1c2aa1f74a309c03439b26610dddb01795e911e, PR606 a97ba52b67f89b1ce214b6d77f5642c5655d4fca, PR607 a08a34a1d9d51ff6df15f2cf174e000d149209e3 into main. All exact source heads 19/19 successful, each resulting main tree identical to verified head.
+current_stage: merged_verified_no_deployment
+remaining: []
+last_verified_commit: a08a34a1d9d51ff6df15f2cf174e000d149209e3
 test_results:
   - 174 passed / 2 skipped / 0 failures (20.15s), git diff check PASS.
   - APR05_R9_RESTORE_PASS; APR07_POSTGRES_OPERATOR_READONLY_PASS; APR04_DISPOSABLE_REPLAY_PASS.
   - No production, Gemma, live sources or working database changes.
-resume_instruction: Owner approved only sequential merge PR604–607 to main without deployment. Verify live GitHub state before each action; retarget successor to main only after predecessor merged; exact head must remain unchanged and prior main tree equal predecessor head tree. Stop on unexpected checks, conflicts or changed head. Record exact merge hashes and final tree; do not deploy.
+resume_instruction: Owner-approved PR604–607 merges complete without deployment. Main a08a34a1 tree equals exact PR607 head. Verify new main CI when available. Remaining commercial and production gates external. Continue only independent P0 technical work with no live procurement, model launches, deployment, or further unapproved merges.
