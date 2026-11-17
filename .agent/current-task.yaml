@@ -663,13 +663,21 @@ parallel_dtr_product:
   task_id: TA-DTR-PRODUCT-20261115
   status: in_progress
   checkpoint: .agent/checkpoints/TA-DTR-PRODUCT-20261115.yaml
-  current_stage: price01_local_https_staging_verified_release_gate
-  branch: feat/ta-price01-staging-acceptance-20261117
+  current_stage: apr05_release_rehearsal
+  branch: feat/ta-apr05-release-rehearsal-20261117
   owner_priority: Product development only in this chat; research separate; Gemma paused
 
 price01_integration_20261117:
   task_id: TA-PRICE01-INTEGRATION-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-PRICE01-INTEGRATION-20261117.yaml
-  branch: feat/ta-price01-integration-20261117
-  current_stage: exact_ci_pending
+  last_verified_commit: b843f92ca129dcf9a57bd7935fb53ec31c1372dc
+  pr: 603
+  current_stage: merged_without_deployment
+
+apr05_release_rehearsal_20261117:
+  task_id: TA-APR05-RELEASE-REHEARSAL-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR05-RELEASE-REHEARSAL-20261117.yaml
+  branch: feat/ta-apr05-release-rehearsal-20261117
+  current_stage: pilot_image_ci_pending
