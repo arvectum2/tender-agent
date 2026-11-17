@@ -1,15 +1,17 @@
-from datetime import datetime, timedelta, timezone
 import hashlib
 import json
-from pathlib import Path
 import tempfile
 import unittest
+from datetime import UTC, datetime, timedelta
+from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-
 from src.modules.procurement_portfolio.workspace_reference_endpoint import (
-    DRAFT, PATH, SCHEMA, install_workspace_reference,
+    DRAFT,
+    PATH,
+    SCHEMA,
+    install_workspace_reference,
 )
 
 
@@ -18,7 +20,7 @@ class SourceEndpointTests(unittest.TestCase):
         t = tempfile.TemporaryDirectory()
         self.addCleanup(t.cleanup)
         self.path = Path(t.name).resolve() / "manifest.json"
-        self.now = datetime(2026, 11, 17, 12, tzinfo=timezone.utc)
+        self.now = datetime(2026, 11, 17, 12, tzinfo=UTC)
         self.token = "a" * 64
         self.release = "b" * 40
         self.doc = {
