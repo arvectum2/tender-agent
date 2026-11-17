@@ -340,7 +340,11 @@
           paragraph(root,'Указано в фрагменте: '+o.mentioned_days+(o.day_unit==='WORKING_DAYS'?' рабочих дней':' календарных дней')+'. Применимый срок не установлен.');
         }
         if(data.status==='LITERAL_PERFORMANCE_OBSERVATIONS' && data.observation) {
-          for(const o of data.observation.mentions || []) paragraph(root,'Указано в источнике: '+o.term_literal);
+          const displayed=new Set();
+          for(const o of data.observation.mentions || []) {
+            const term=String(o.term_literal || '');const key=term.toLocaleLowerCase('ru-RU');
+            if(term && !displayed.has(key)){displayed.add(key);paragraph(root,'Указано в источнике: '+term);}
+          }
           if(data.observation.distinct_literal_terms>1) paragraph(root,'Найдены разные формулировки; требуется сопоставление.','unknown');
         }
         for(const c of data.citations.slice(0,2)) {

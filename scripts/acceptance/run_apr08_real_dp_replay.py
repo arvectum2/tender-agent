@@ -127,6 +127,10 @@ def main() -> int:
                     assert all('с момента заключения Контракта' in c['quote'] for c in term['citations'])
                     assert not term['bid_ready'] and not term['scope_complete']
                     print('APR08_REAL_GROUNDED_QUESTION_PASS', 'verified_excerpts', len(packet['citations']), 'unsupported_unknown', True)
+                if os.environ.get('APR08_BROWSER_ACCEPTANCE') == '1':
+                    from scripts.acceptance.apr08_browser_harness import run_browser
+
+                    run_browser(app, RUN, password, Path(os.environ['APR08_SCREENSHOT_DIR']))
                 assert result['status'] == 'VERIFIED_EXCERPTS_ONLY' and result['citations']
                 assert result['verification_attempts'] <= 2 and not result['bid_ready'] and not result['scope_complete']
                 for cite in result['citations']:
