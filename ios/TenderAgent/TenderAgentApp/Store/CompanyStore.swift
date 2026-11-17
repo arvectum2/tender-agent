@@ -252,6 +252,29 @@ final class CompanyStore: ObservableObject {
         lifecycleMetrics = nil
     }
 
+    func loadHistoricalCatalog(accountID:String,item:CompanyCase) async throws -> CompanyHistoricalCatalog {
+        guard !isBusy,canCompareActualSamples,let current=identity else{throw CompanyConnectionError.http(403)}
+        isBusy=true;defer{isBusy=false}
+        do {
+            let (client,actual)=try await lifecycleAccess(accountID:accountID,item:item)
+            guard actual==current else{throw CompanyConnectionError.identityMismatch}
+            let result=try await client.historicalCatalog(identity:actual,item:item)
+            guard selectedID==accountID,identity==actual else{throw CompanyConnectionError.identityMismatch}
+            return result
+        }catch{handleLifecycleError(error);throw error}
+    }
+    func previewHistorical(accountID:String,item:CompanyCase,catalog:CompanyHistoricalCatalog,selection:CompanyHistoricalSelection) async throws -> CompanyHistoricalPreview {
+        guard !isBusy,canCompareActualSamples,let current=identity else{throw CompanyConnectionError.http(403)}
+        isBusy=true;defer{isBusy=false}
+        do {
+            let (client,actual)=try await lifecycleAccess(accountID:accountID,item:item)
+            guard actual==current else{throw CompanyConnectionError.identityMismatch}
+            let result=try await client.historicalPreview(identity:actual,item:item,catalog:catalog,selection:selection)
+            guard selectedID==accountID,identity==actual else{throw CompanyConnectionError.identityMismatch}
+            return result
+        }catch{handleLifecycleError(error);throw error}
+    }
+
     func loadLifecycle(accountID: String, item: CompanyCase) async throws -> CompanyLifecycleState {
         guard !isBusy else { throw CompanyConnectionError.http(409) }
         isBusy = true; defer { isBusy = false }

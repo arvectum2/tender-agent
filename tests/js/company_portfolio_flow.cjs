@@ -121,6 +121,7 @@ async function fetch(route,opts){
   if(historicalBad==='digest')r[p?'preview_sha256':'catalog_sha256']='0'.repeat(64);
   if(historicalBad==='foreign')r.customer_id='foreign';
   if(historicalBad==='price'&&p){r.observations[0].admitted_protocol_prices_rub.median='99999';delete r.preview_sha256;r.preview_sha256=normSHA(r)}
+  if(historicalBad==='catalogprice'&&!p){r.records[2].admitted_protocol_prices_rub.median='96000';delete r.catalog_sha256;r.catalog_sha256=normSHA(r)}
   if(historicalBad==='contract'&&!p){r.records[0].signed_contract_price_rub='28400';delete r.catalog_sha256;r.catalog_sha256=normSHA(r)}
   return reply(r);
  }
@@ -284,7 +285,7 @@ async function main(){
  get('historical-confirm').checked=true;change('historical-confirm');await click('historical-preview');assert.equal(get('historical-result').children[1].children[1].children[8].textContent,'Эквивалентность пары не проверена');
  get('historical-remove-select').value=otherHistory;change('historical-remove-select');await click('historical-remove');assert.equal(get('historical-preview').disabled,true);
  await openCase('a');assert.equal(get('historical-catalog').children.length,0);assert.equal(vm.runInContext('historicalSelection.length',ctx),0);
- for(const mode of ['digest','foreign','contract']){historicalBad=mode;await click('historical-load');assert.equal(vm.runInContext('token',ctx),'');assert.match(get('result').textContent,/Несоответствие исторического архива/);historicalBad=null;await selectAccount('a');await openCase('a')}
+ for(const mode of ['digest','foreign','contract','catalogprice']){historicalBad=mode;await click('historical-load');assert.equal(vm.runInContext('token',ctx),'');assert.match(get('result').textContent,/Несоответствие исторического архива/);historicalBad=null;await selectAccount('a');await openCase('a')}
  await click('historical-load');get('historical-reference').value=aksay;change('historical-reference');get('historical-candidate').value=aksay;change('historical-candidate');await click('historical-add');get('historical-confirm').checked=true;change('historical-confirm');
  historicalBad='price';await click('historical-preview');assert.equal(vm.runInContext('token',ctx),'');assert.equal(get('historical-result').children.length,0);historicalBad=null;await selectAccount('a');
 

@@ -201,6 +201,7 @@ private struct CompanyCaseDetail: View {
                 }
                 CompanyLifecycleSection(item: item, accountID: accountID, store: store)
                 if let identity = store.identity, identity.legalAccepted, ["owner", "admin", "analyst"].contains(identity.role) {
+                    CompanyHistoricalSection(item: item, accountID: accountID, store: store)
                     CompanyPriceSection(item: item, accountID: accountID, store: store)
                 }
                 if let decisionError { Section { Text(decisionError).foregroundStyle(.orange) } }
@@ -466,6 +467,99 @@ private struct CompanyEventFileView: View {
         .onChange(of: exporting) { _, value in if !value { export = nil } }
         .onChange(of: store.selectedID) { _, _ in reset() }
         .onChange(of: store.identity?.memberId) { _, value in if value == nil { reset() } }
+    }
+}
+
+private struct CompanyHistoricalSection: View {
+    let item:CompanyCase
+    let accountID:String
+    @ObservedObject var store:CompanyStore
+    @State private var catalog:CompanyHistoricalCatalog?
+    @State private var reference=""
+    @State private var selected:[String]=[]
+    @State private var confirm=false
+    @State private var result:CompanyHistoricalPreview?
+    @State private var notice:String?
+    private var selection:CompanyHistoricalSelection {
+        .init(referenceRegistryNumber:reference,selectedRegistryNumbers:selected,confirmReviewSourceScope:confirm)
+    }
+    private func invalidate(){confirm=false;result=nil}
+    private func clear(){catalog=nil;reference="";selected=[];invalidate();notice=nil}
+    private func load() async {
+        clear()
+        do {catalog=try await store.loadHistoricalCatalog(accountID:accountID,item:item)}
+        catch CompanyConnectionError.http(404){notice="Архив недоступен или функция отключена."}
+        catch {notice=CompanyStore.safeError(error)}
+    }
+    private func compare() async {
+        result=nil;notice=nil
+        guard let catalog,selection.valid(in:catalog) else{return}
+        do {result=try await store.previewHistorical(accountID:accountID,item:item,catalog:catalog,selection:selection)}
+        catch {notice=CompanyStore.safeError(error)}
+    }
+    var body:some View {
+        Section("Исторические рыночные аналоги") {
+            Text("Шесть проверенных закупок сайтов ЕИС. Цены предложений не равны ценам подписанных контрактов.").font(.caption).foregroundStyle(.secondary)
+            Button("Загрузить проверенный архив"){Task{await load()}}
+            if let catalog {
+                Text("5 процедур с раскрытыми ценами допущенных предложений; подписанные контракты не подтверждены.").font(.caption)
+                Picker("Базовая закупка",selection:$reference){
+                    Text("Выберите").tag("")
+                    ForEach(catalog.records){r in Text(r.registryNumber).tag(r.registryNumber)}
+                }
+                ForEach(catalog.records){r in
+                    DisclosureGroup {
+                        recordBody(r)
+                    } label: {
+                        VStack(alignment:.leading){Text(r.registryNumber).font(.caption.monospaced());Text(r.subject).font(.subheadline);Text(r.stateLabel).font(.caption).foregroundStyle(.secondary)}
+                    }
+                    Button(selected.contains(r.id) ? "Исключить "+r.id : "Добавить "+r.id) {
+                        if selected.contains(r.id){selected.removeAll{$0==r.id}}else{selected.append(r.id)}
+                        invalidate()
+                    }.buttonStyle(.borderless)
+                }
+                Text("Выбрано: "+String(selected.count)+"/6").font(.caption)
+                Toggle("Просмотрены ограничения ТЗ. Эквивалентность работ не подтверждена.",isOn:$confirm)
+                Button("Сравнить выбранные закупки"){Task{await compare()}}.disabled(!selection.valid(in:catalog))
+            }
+            if let result {
+                Text("Недостаточно данных для нормализованной цены. Дополнительных эквивалентных закупок: 0.").font(.headline)
+                Text(result.targetReferenceIdentityMatches ? "Номер базовой закупки совпадает с карточкой; объём работ отдельно не проверен.":"Базовая закупка отличается от карточки. Эквивалентность целевой закупки не установлена.").font(.caption)
+                Text("Процедур с раскрытыми ценами: "+String(result.pricedProcedures)).font(.caption)
+                ForEach(result.observations){r in
+                    DisclosureGroup(r.registryNumber+" · "+r.stateLabel) {
+                        recordBody(r)
+                        ForEach(r.scopeComparison ?? []){d in
+                            VStack(alignment:.leading){Text(d.dimension+" · "+d.label).font(.headline);Text("База: "+(d.reference?.sourceQuote ?? "Нет данных"));Text("Кандидат: "+(d.candidate?.sourceQuote ?? "Нет данных"))}.font(.caption)
+                        }
+                    }
+                }
+            }
+            if let notice {Text(notice).font(.caption).foregroundStyle(.orange)}
+        }
+        .disabled(store.isBusy)
+        .onChange(of:reference){_,_ in invalidate()}
+        .onChange(of:confirm){_,_ in result=nil}
+        .onChange(of:store.identity){_,_ in clear()}
+        .onChange(of:store.selectedID){_,_ in clear()}
+        .onChange(of:item.caseId){_,_ in clear()}
+    }
+    @ViewBuilder private func recordBody(_ r:CompanyHistoricalRecord)->some View {
+        Text(r.subject)
+        LabeledContent("Допущено / всего",value:String(r.admittedOffers)+" / "+String(r.totalOffers))
+        LabeledContent("Отклонено",value:String(r.rejectedOffers))
+        LabeledContent("Мин. предложения, ₽",value:r.admittedProtocolPricesRub.minimum ?? "Нет данных")
+        LabeledContent("Медиана, ₽",value:r.admittedProtocolPricesRub.median ?? "Нет данных")
+        LabeledContent("Макс., ₽",value:r.admittedProtocolPricesRub.maximum ?? "Нет данных")
+        LabeledContent("Предложение победителя, ₽",value:r.winnerOfferRub ?? "Нет данных")
+        LabeledContent("Подписанный контракт",value:"Не подтверждён")
+        if r.subRubleOfferObserved {Text("В протоколе есть предложение менее 1 ₽.").font(.caption).foregroundStyle(.orange)}
+        Text("Оценка относительно Аксая: "+r.sourceScopeReasonRelativeToAksay).font(.caption)
+        ForEach(Array(r.scopeAnchors.enumerated()),id:\.offset){_,anchor in Text(anchor).font(.caption)}
+        ForEach(r.scopeDimensions){d in
+            VStack(alignment:.leading){Text(d.dimension+" · "+d.sourceValue.display+" "+d.unit+" · "+d.constraintKind).font(.headline);Text(d.sourceQuote);Text(d.reviewedInterpretation);Text("Строка "+String(d.sourceLineOrdinal)+" · "+d.sourceLineSha256).textSelection(.enabled)}.font(.caption)
+        }
+        ForEach(r.provenance.keys.sorted(),id:\.self){key in Text(key+" · "+(r.provenance[key] ?? "")).font(.caption.monospaced()).textSelection(.enabled)}
     }
 }
 

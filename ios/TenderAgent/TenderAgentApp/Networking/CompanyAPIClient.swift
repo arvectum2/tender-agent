@@ -1085,6 +1085,136 @@ struct CompanyNormPage:Decodable,Sendable {
     }
 }
 
+// Preserve explicit JSON nulls and integer types for Python-compatible SHA-256.
+indirect enum CompanyHistoricalJSON: Decodable, Equatable, Sendable {
+    case object([String:Self]), array([Self]), text(String), integer(Int), boolean(Bool), null
+    init(from decoder:Decoder)throws {
+        let c=try decoder.singleValueContainer()
+        if c.decodeNil(){self = .null}
+        else if let v=try? c.decode(Bool.self){self = .boolean(v)}
+        else if let v=try? c.decode(Int.self){self = .integer(v)}
+        else if let v=try? c.decode(String.self){self = .text(v)}
+        else if let v=try? c.decode([Self].self){self = .array(v)}
+        else if let v=try? c.decode([String:Self].self){self = .object(v)}
+        else{throw CompanyConnectionError.invalidResponse}
+    }
+    var value:Any {
+        switch self {
+        case .object(let x):x.mapValues{ $0.value }
+        case .array(let x):x.map{ $0.value }
+        case .text(let x):x
+        case .integer(let x):x
+        case .boolean(let x):x
+        case .null:NSNull()
+        }
+    }
+    var fields:[String:Self]? {if case .object(let x)=self{return x};return nil}
+    var elements:[Self]? {if case .array(let x)=self{return x};return nil}
+    var text:String? {if case .text(let x)=self{return x};return nil}
+    var display:String {switch self{case .text(let x):x;case .integer(let x):String(x);default:"—"}}
+    func typed<T:Decodable>(_ type:T.Type)throws->T {
+        try TenderAgentJSON.makeDecoder().decode(type,from:JSONSerialization.data(withJSONObject:value,options:[.fragmentsAllowed]))
+    }
+    func digest()throws->String {CompanyArtifactBytes.digest(Data(try CompanyActualBaseline.canonical(value).utf8))}
+}
+struct CompanyHistoricalDimension:Decodable,Sendable,Identifiable {
+    let dimension:String;let sourceValue:CompanyHistoricalJSON;let unit:String;let constraintKind:String;let reviewedInterpretation:String;let sourceQuote:String;let sourceLineOrdinal:Int;let sourceLineSha256:String
+    var id:String {dimension}
+}
+struct CompanyHistoricalDifference:Decodable,Sendable,Identifiable {
+    let dimension:String;let state:String;let reference:CompanyHistoricalDimension?;let candidate:CompanyHistoricalDimension?
+    var id:String {dimension}
+    var label:String {switch state{case "SAME_REPORTED_DIMENSION":"Совпадает параметр";case "DIFFERENT_REPORTED_DIMENSION":"Различается";default:"Недостаточно данных"}}
+}
+struct CompanyHistoricalRecord:Decodable,Sendable,Identifiable {
+    struct Prices:Decodable,Sendable {let minimum:String?;let median:String?;let maximum:String?}
+    let registryNumber:String;let subject:String;let totalOffers:Int;let admittedOffers:Int;let rejectedOffers:Int
+    let admittedProtocolPricesRub:Prices;let subRubleOfferObserved:Bool;let winnerOfferRub:String?
+    let sourceScopeStateRelativeToAksay:String;let sourceScopeReasonRelativeToAksay:String;let scopeAnchors:[String];let provenance:[String:String];let scopeDimensions:[CompanyHistoricalDimension]
+    let comparisonState:String?;let scopeComparison:[CompanyHistoricalDifference]?
+    var id:String {registryNumber}
+    var stateLabel:String {
+        switch comparisonState ?? sourceScopeStateRelativeToAksay {
+        case "REFERENCE_ONLY":"Базовая закупка"
+        case "BASELINE_ONLY":"Исходная корзина"
+        case "RELATED_SCOPE_REQUIRES_NORMALIZATION":"Требуется нормализация"
+        case "NOT_COMPARABLE_REGULATED_OFFICIAL_SITE":"Иные регуляторные требования"
+        case "NOT_COMPARABLE_CUSTOM_CMS":"Иная CMS"
+        case "NOT_COMPARABLE_COMPOUND_SUPPORT":"Комплексное сопровождение"
+        default:"Эквивалентность пары не проверена"
+        }
+    }
+}
+struct CompanyHistoricalSelection:Encodable,Equatable,Sendable {
+    let referenceRegistryNumber:String;let selectedRegistryNumbers:[String];let confirmReviewSourceScope:Bool
+    func valid(in catalog:CompanyHistoricalCatalog)->Bool {
+        confirmReviewSourceScope && (1...6).contains(selectedRegistryNumbers.count) && Set(selectedRegistryNumbers).count==selectedRegistryNumbers.count && selectedRegistryNumbers.contains(referenceRegistryNumber) && selectedRegistryNumbers.allSatisfy{ id in catalog.records.contains{$0.id==id} }
+    }
+}
+struct CompanyHistoricalCatalog:Sendable {
+    static let aksay="0158300034526000388"
+    static let cohort="65038a3e607bb2e2e51b1dffc05ee10c36a00b59e8817141a4c6be3146a9e963"
+    static let workload="fefb77d99df0999e626a916d3edc58a942a75cec894c7c56da309f1f6b0ce74f"
+    // Exact reviewed projection for this fixed six-procedure archive; changes require review.
+    static let recordsDigest="b7f0c04708e41cd4385a14069c294ba2a207f7f6ab75372451ce52e649fc6f06"
+    let records:[CompanyHistoricalRecord]
+    fileprivate let rawRecords:[CompanyHistoricalJSON]
+    fileprivate let context:[String:CompanyHistoricalJSON]
+    static func context(identity:CompanyIdentity,item:CompanyCase)throws->[String:CompanyHistoricalJSON] {
+        guard identity.legalAccepted,["owner","admin","analyst"].contains(identity.role),let external=item.externalId ?? item.registryNumber else{throw CompanyConnectionError.identityMismatch}
+        return ["customer_id":.text(identity.customerId),"case_id":.text(item.caseId),"target_source_platform":.text(item.sourcePlatform ?? "eis"),"target_external_id":.text(external),"target_scope_verified":.boolean(false),"cohort_receipt_sha256":.text(cohort),"workload_receipt_sha256":.text(workload),"signed_contract_prices_verified_count":.integer(0),"current_market_price":.null,"recommendation":.null,"external_submission_allowed":.boolean(false)]
+    }
+    static func verified(_ raw:CompanyHistoricalJSON,identity:CompanyIdentity,item:CompanyCase)throws->Self {
+        let context=try context(identity:identity,item:item)
+        guard var actual=raw.fields,let sha=actual.removeValue(forKey:"catalog_sha256")?.text,sha == (try CompanyHistoricalJSON.object(actual).digest()),let records=actual["records"],let list=records.elements,list.count==6,try records.digest()==recordsDigest else{throw CompanyConnectionError.identityMismatch}
+        var expected=context;expected["schema"] = .text("company_historical_comparable_catalog_v1");expected["archive_scope"] = .text("SIX_REVIEWED_EIS_WEBSITE_PROCEDURES");expected["records"]=records
+        guard actual==expected else{throw CompanyConnectionError.identityMismatch}
+        return .init(records:try records.typed([CompanyHistoricalRecord].self),rawRecords:list,context:context)
+    }
+    func matches(identity:CompanyIdentity,item:CompanyCase)->Bool {(try? Self.context(identity:identity,item:item))==context}
+}
+struct CompanyHistoricalPreview:Sendable {
+    let observations:[CompanyHistoricalRecord];let targetReferenceIdentityMatches:Bool;let pricedProcedures:Int
+    private static func differences(_ a:CompanyHistoricalJSON,_ b:CompanyHistoricalJSON)throws->[CompanyHistoricalJSON] {
+        guard let x=a.fields?["scope_dimensions"]?.elements,let y=b.fields?["scope_dimensions"]?.elements else{throw CompanyConnectionError.invalidResponse}
+        if x.isEmpty || y.isEmpty{return []}
+        func index(_ rows:[CompanyHistoricalJSON])throws->[String:CompanyHistoricalJSON] {
+            var result=[String:CompanyHistoricalJSON]()
+            for row in rows {guard let key=row.fields?["dimension"]?.text,result[key]==nil else{throw CompanyConnectionError.invalidResponse};result[key]=row}
+            return result
+        }
+        let left=try index(x),right=try index(y)
+        return Set(left.keys).union(right.keys).sorted().map{key in
+            let ref=left[key],candidate=right[key]
+            let state:String
+            if let ref,let candidate {state=["source_value","unit","constraint_kind"].allSatisfy{ref.fields?[$0]==candidate.fields?[$0]} ? "SAME_REPORTED_DIMENSION":"DIFFERENT_REPORTED_DIMENSION"}
+            else{state="UNKNOWN_ON_ONE_SIDE"}
+            return .object(["dimension":.text(key),"state":.text(state),"reference":ref ?? .null,"candidate":candidate ?? .null])
+        }
+    }
+    static func verified(_ raw:CompanyHistoricalJSON,identity:CompanyIdentity,item:CompanyCase,catalog:CompanyHistoricalCatalog,selection:CompanyHistoricalSelection)throws->Self {
+        guard catalog.matches(identity:identity,item:item),selection.valid(in:catalog),var actual=raw.fields,let sha=actual.removeValue(forKey:"preview_sha256")?.text,sha == (try CompanyHistoricalJSON.object(actual).digest()) else{throw CompanyConnectionError.identityMismatch}
+        let reference=selection.referenceRegistryNumber
+        let index=Dictionary(uniqueKeysWithValues:zip(catalog.records.map(\.id),catalog.rawRecords))
+        guard let base=index[reference] else{throw CompanyConnectionError.invalidResponse}
+        var observations=[CompanyHistoricalJSON]();var priced=0
+        for id in selection.selectedRegistryNumbers {
+            guard let row=index[id],var fields=row.fields,let sourceState=fields["source_scope_state_relative_to_aksay"],let median=fields["admitted_protocol_prices_rub"]?.fields?["median"] else{throw CompanyConnectionError.invalidResponse}
+            if median != .null{priced+=1}
+            fields["comparison_state"]=id==reference ? .text("REFERENCE_ONLY") : reference==CompanyHistoricalCatalog.aksay ? sourceState : .text("PAIRWISE_SCOPE_NOT_REVIEWED")
+            fields["scope_comparison"] = .array(id==reference ? [] : try differences(base,row))
+            fields["accepted_for_cross_procurement_normalization"] = .boolean(false)
+            observations.append(.object(fields))
+        }
+        let same=(item.sourcePlatform ?? "eis")=="eis" && (item.externalId ?? item.registryNumber)==reference
+        var expected=catalog.context
+        let extra:[String:CompanyHistoricalJSON]=["schema":.text("company_historical_comparable_preview_v1"),"reference_registry_number":.text(reference),"target_reference_identity_matches":.boolean(same),"selected_distinct_procurements":.integer(observations.count),"observations":.array(observations),"admitted_price_procedures_count":.integer(priced),"reference_procurements_count":.integer(1),"additional_equivalent_procurements":.integer(0),"normalization_state":.text("INSUFFICIENT_VERIFIED_EQUIVALENT_SCOPE_AND_QUANTITY"),"normalized_admitted_offer_range_rub":.null,"normalized_signed_contract_range_rub":.null,"cross_procurement_price_rub":.null,"win_probability":.null,"inputs_stored":.boolean(false)]
+        expected.merge(extra){_,new in new}
+        guard actual==expected else{throw CompanyConnectionError.identityMismatch}
+        return .init(observations:try CompanyHistoricalJSON.array(observations).typed([CompanyHistoricalRecord].self),targetReferenceIdentityMatches:same,pricedProcedures:priced)
+    }
+}
+
 struct CompanyActualEvidenceScope:Decodable,Equatable,Sendable {
     let base:CompanyActualScope;let snapshotId:String;let snapshotRevision:Int;let asOf:String;let rowKind:String;let lineOrdinal:Int;let lineTitle:String;let actualAmountRub:String;let lineSha256:String
     private enum CodingKeys:String,CodingKey {case snapshotId,snapshotRevision,asOf,rowKind,lineOrdinal,lineTitle,actualAmountRub,lineSha256}
@@ -1490,6 +1620,18 @@ struct CompanyAPIClient: Sendable {
         let e=JSONEncoder();e.keyEncodingStrategy = .convertToSnakeCase
         let r:CompanyNormRecord=try await get("/api/saas/company-portfolio/cost-norms/"+record.normKey+"/withdraw",method:"POST",body:e.encode(attempt))
         guard r.matches(identity),r.memberId==identity.memberId,r.normKey==record.normKey,r.inputs.withdrawal==attempt,r.action=="WITHDRAWN",r.result.withdrawnNormId==record.normId,r.result.withdrawnRecordSha256==record.recordSha256 else{throw CompanyConnectionError.identityMismatch};return r
+    }
+
+    func historicalCatalog(identity:CompanyIdentity,item:CompanyCase) async throws -> CompanyHistoricalCatalog {
+        _=try CompanyHistoricalCatalog.context(identity:identity,item:item)
+        let raw:CompanyHistoricalJSON=try await get("/api/saas/company-portfolio/cases/"+item.caseId+"/historical-comparables")
+        return try .verified(raw,identity:identity,item:item)
+    }
+    func historicalPreview(identity:CompanyIdentity,item:CompanyCase,catalog:CompanyHistoricalCatalog,selection:CompanyHistoricalSelection) async throws -> CompanyHistoricalPreview {
+        guard catalog.matches(identity:identity,item:item),selection.valid(in:catalog) else{throw CompanyConnectionError.invalidPrice}
+        let e=JSONEncoder();e.keyEncodingStrategy = .convertToSnakeCase
+        let raw:CompanyHistoricalJSON=try await get("/api/saas/company-portfolio/cases/"+item.caseId+"/historical-comparables/preview",method:"POST",body:e.encode(selection))
+        return try .verified(raw,identity:identity,item:item,catalog:catalog,selection:selection)
     }
 
     private func get<T: Decodable>(_ path: String, query: [URLQueryItem] = [], method: String = "GET", body: Data? = nil, contentType: String = "application/json") async throws -> T {
