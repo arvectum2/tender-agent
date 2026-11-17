@@ -1,5 +1,5 @@
 task_id: TA-APR08-GROUNDED-QUESTIONS-20261117
-status: in_progress
+status: completed
 goal: Natural-language procurement question routing to pinned source facts and original verified contractual excerpts; no unsupported legal decisions or model call.
 definition_of_done:
   - Explicit supported Russian question forms, fail closed for ambiguous, multi-intent, legal approval and unsupported questions; run-local scope.
@@ -9,12 +9,11 @@ completed:
   - PR610/611 exact CI green; PR612 real replay PASS, 17/19 CI in progress.
   - Implemented full-match Russian intent routing, archived facts and explicit percentage, separate clause topics (payment, delivery, security), nonsemantic excerpt status, unsupported/compound/legal unknown, run validation, private HTTP/UI.
   - Actual isolated DP and operator HTTP replay: verified payment excerpt, unsupported signature question UNKNOWN, anonymous 401, original inventory unchanged, temporary instance removed.
-current_stage: exact_ci_pending
-remaining:
-  - Verify exact PR CI, parent PR612 CI; fix actual failures.
-  - Continue bounded typed interpretations, legal explanation and commercial scenario increment; no claim of full semantic Q&A.
-last_verified_commit: 67da3dcfe1e2137c6c377c8a113877b5601561ba
+  - Exact reviewed head f0d1e152938c95c1f9d5b847fb70d1acb8549906 CI 19/19 SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
+last_verified_commit: f0d1e152938c95c1f9d5b847fb70d1acb8549906
 test_results:
   - 118 focused PASS, Ruff/diff/Node simulation PASS.
   - APR08_REAL_GROUNDED_QUESTION_PASS, APR08_REAL_DP_REPLAY_PASS, APR08_ISOLATED_DP_REMOVED; no model or browser visual test.
-resume_instruction: Verify exact grounded-question PR and PR612 CI, then continue typed evidence interpretations, legal and commercial scenario boundaries. No production, Gemma, live sources, external actions or automatic merge. Full APR08 remains in progress.
+resume_instruction: Bounded increment verified; merge requires separate authorization. Continue parent APR08.

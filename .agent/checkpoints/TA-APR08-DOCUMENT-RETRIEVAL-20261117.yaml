@@ -1,5 +1,5 @@
 task_id: TA-APR08-DOCUMENT-RETRIEVAL-20261117
-status: in_progress
+status: completed
 goal: Free-text lexical lookup within selected saved run; original-verified DP excerpts only, no semantic answer or legal decision.
 definition_of_done:
   - Bounded run-local candidate lookup and original raw SHA/chunk verification through existing nonpersisting DP quote checker, no cross-run fallback.
@@ -11,12 +11,11 @@ completed:
   - Actual saved archive replay returned UNKNOWN; diagnosed local DP authentication error and unsupported nested XML; excluded nested paths from candidate budget. Original bytes unchanged.
   - Authorized isolated real DP replay PASS: ephemeral key, no models, anonymous 401, archived query оплатa работ returned one verified excerpt, original run SHA inventory unchanged, instance removed.
   - Reproducible scripts.acceptance.run_apr08_real_dp_replay: real DP checkout 38322fd5, ephemeral authenticated loopback server, existing archived file/chunk receipts, actual operator FastAPI route via TestClient, anonymous 401 on both levels, positive one cited excerpt, absent term UNKNOWN, source inventory unchanged; temporary instance removed.
-current_stage: replay_verified_successor_ci_pending
-remaining:
-  - Verify exact replay successor PR CI; PR610/611 exact heads already green. No authorized merge yet.
-  - Continue bounded semantic grounded questions and calculations in the parent APR08 task.
-last_verified_commit: 66309ab19fe69d3e9efa96e000c89638cf794d8d
+  - Exact reviewed head a0261f8c82a0195f7a9b08b879dd0b69d1384766 CI 19/19 SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
+last_verified_commit: a0261f8c82a0195f7a9b08b879dd0b69d1384766
 test_results:
   - 105 focused pytest PASS, Ruff/JS syntax/Node simulation/diff check PASS.
   - Earlier working DP auth rejection resolved by isolated authorized replay; three positive real DP rehearsals including final HTTP route, each one verified excerpt, no actual legal inference. 105 targeted tests PASS on replay code.
-resume_instruction: Check exact new acceptance PR CI, then mark bounded retrieval completed. PR610/611 verified green but not merged without owner permission. Continue APR08 semantic grounding with supported scope and real citation verification. No production, Gemma, live sources or automatic merge.
+resume_instruction: Bounded increment verified; merge requires separate authorization. Continue parent APR08.

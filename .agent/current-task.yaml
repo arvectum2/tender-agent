@@ -742,36 +742,37 @@ apr08_evidence_copilot_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR08-EVIDENCE-COPILOT-20261117.yaml
   branch: feat/ta-apr08-evidence-copilot-20261117
-  current_stage: retrieval_real_dp_verified_semantic_increment_next
+  current_stage: security_review_delivery_and_commercial_next
 
 apr08_document_retrieval_20261117:
   task_id: TA-APR08-DOCUMENT-RETRIEVAL-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR08-DOCUMENT-RETRIEVAL-20261117.yaml
   branch: feat/ta-apr08-document-retrieval-20261117
-  current_stage: replay_verified_successor_ci_pending
+  current_stage: verified_pending_merge
   replay_branch: feat/ta-apr08-real-dp-replay-20261117
-  last_verified_commit: 66309ab19fe69d3e9efa96e000c89638cf794d8d
+  last_verified_commit: a0261f8c82a0195f7a9b08b879dd0b69d1384766
 
 apr08_grounded_questions_20261117:
   task_id: TA-APR08-GROUNDED-QUESTIONS-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR08-GROUNDED-QUESTIONS-20261117.yaml
   branch: feat/ta-apr08-grounded-questions-20261117
-  current_stage: exact_ci_pending
-  last_verified_commit: 67da3dcfe1e2137c6c377c8a113877b5601561ba
+  current_stage: verified_pending_merge
+  last_verified_commit: f0d1e152938c95c1f9d5b847fb70d1acb8549906
 
 apr08_typed_payment_20261117:
   task_id: TA-APR08-TYPED-PAYMENT-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR08-TYPED-PAYMENT-20261117.yaml
   branch: feat/ta-apr08-typed-payment-20261117
-  current_stage: exact_ci_pending
-  last_verified_commit: c6ae2ea8db8118b9ffe4eb289d8e12f02b68b1d7
+  current_stage: verified_pending_merge
+  last_verified_commit: f2de139559bfa8f3fa2d10d01dddbfc52c1d21f5
 
 apr08_security_xml_20261117:
   task_id: TA-APR08-SECURITY-XML-20261117
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR08-SECURITY-XML-20261117.yaml
   branch: feat/ta-apr08-security-xml-20261117
-  current_stage: pinned_archived_security_fields
+  current_stage: exact_ci_pending
+  last_verified_commit: 7d8a912da73733c0d922087061387bce7363e2c5

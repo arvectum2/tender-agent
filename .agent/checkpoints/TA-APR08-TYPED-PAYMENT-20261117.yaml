@@ -1,5 +1,5 @@
 task_id: TA-APR08-TYPED-PAYMENT-20261117
-status: in_progress
+status: completed
 goal: Extract explicitly stated payment duration, day type and trigger from supported verified literal excerpts, without asserting applicable contractual deadline.
 definition_of_done:
   - Conservative literal duration observation with complete extracted line and all following qualifiers preserved; no effective deadline, statutory inference, or calendar arithmetic.
@@ -10,11 +10,11 @@ completed:
   - PR612 and PR613 exact heads CI 19/19 SUCCESS; mirror HTTP504 recovered on retry.
   - Implemented typed literal payment duration and explicit day unit, full contextual quote, separate work/service candidates.
   - Real authenticated isolated DP replay confirmed one quote with 7 working days and retained conditions and liability caveat; original inventory unchanged, temporary instance removed.
-current_stage: exact_ci_pending
-remaining:
-  - Verify exact successor CI; continue other typed requirements and commercial scenarios in parent APR08.
-last_verified_commit: c6ae2ea8db8118b9ffe4eb289d8e12f02b68b1d7
+  - Exact reviewed head f2de139559bfa8f3fa2d10d01dddbfc52c1d21f5 CI 19/19 SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
+last_verified_commit: f2de139559bfa8f3fa2d10d01dddbfc52c1d21f5
 test_results:
   - 128 focused PASS, Ruff/diff/Node simulation PASS.
   - APR08_REAL_PAYMENT_OBSERVATION LITERAL_PAYMENT_OBSERVATION citations 1; APR08_REAL_DP_REPLAY_PASS; APR08_ISOLATED_DP_REMOVED.
-resume_instruction: Existing private grounded question route; typed explicit clause observation only; no production, Gemma, live sources or automatic merge.
+resume_instruction: Bounded increment verified; merge requires separate authorization. Continue parent APR08.

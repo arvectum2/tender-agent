@@ -7,9 +7,14 @@ definition_of_done:
   - Tests and real SHA-pinned archive replay, publish draft and verify exact CI.
 completed:
   - PR614 exact f2de1395 CI 19/19 SUCCESS. PR610-614 not merged.
-current_stage: pinned_archived_security_fields
+  - Implemented exact unique customer XML path, separate application/contract groups, explicit amount/part values and individual citations. No amount derivation, currency inference or legal obligation.
+  - Three original archives and six questions replayed with independent existing ZIP/XML SHA receipts; five source observations and one expected UNKNOWN, originals unchanged.
+current_stage: exact_ci_pending
 remaining:
-  - Implementation, tests, replay, PR and CI.
-last_verified_commit: f2de139559bfa8f3fa2d10d01dddbfc52c1d21f5
-test_results: []
+  - Verify exact new PR CI.
+  - Next typed delivery terms and commercial scenarios; full APR08 remains open.
+last_verified_commit: 7d8a912da73733c0d922087061387bce7363e2c5
+test_results:
+  - 146 focused PASS; Ruff, diff, Node syntax and UI simulation PASS.
+  - APR08_SECURITY_ARCHIVE_REPLAY_PASS 3 archives 6 questions originals unchanged.
 resume_instruction: Use existing pinned archive selector, no new live data, models, working DB or deployment. Do not derive amount from part or infer currency/legal duty.
