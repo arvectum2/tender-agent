@@ -866,3 +866,18 @@ apr08_integration_20261117:
   current_stage: code_integrated_and_main_ci_verified
   last_verified_commit: cac4cd4a69f2494bff582b94aec80a5ee4d4af4c
   merge_commit: cac4cd4a69f2494bff582b94aec80a5ee4d4af4c
+
+wsf07b_production_20261117:
+  task_id: TA-WSF07B-PRODUCTION-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-WSF07B-PRODUCTION-20261117.yaml
+  branch: ops/ta-wsf07b-production-20261117
+  current_stage: production_cutover_and_verification_completed
+  last_verified_commit: 28e874b65d8aeab5a13e3c2453632810c14140be
+
+wsf07b_exact_bearer_20261117:
+  task_id: TA-WSF07B-EXACT-BEARER-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-WSF07B-EXACT-BEARER-20261117.yaml
+  branch: fix/ta-wsf07b-exact-bearer-20261117
+  current_stage: strict_auth_and_private_provenance
