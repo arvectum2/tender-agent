@@ -93,12 +93,15 @@ class InternalProcurementReferenceTests(unittest.TestCase):
         self.session.add(EventRecord(event_id="submission-fixture", deal_id="DL-fixture",
             event_code="submission_execution_submitted", severity="INFO", payload_json={"private": "PRIVATE_PAYLOAD"},
             created_at=self.now))
-        self.session.add(OutcomeIntakeSet(outcome_intake_set_id="outcome-set-fixture",
-            deal_id="DL-fixture", post_submission_tracker_set_id="fixture", outcome_status="RECORDED",
+        # This isolated fixture does not create unrelated tracker tables.
+        self.session.execute(OutcomeIntakeSet.__table__.insert().values(
+            outcome_intake_set_id="outcome-set-fixture", deal_id="DL-fixture",
+            post_submission_tracker_set_id="fixture", outcome_status="RECORDED",
             created_at=self.now, updated_at=self.now))
-        self.session.add(OutcomeIntakeRecord(outcome_intake_id="outcome-fixture",
-            outcome_intake_set_id="outcome-set-fixture", outcome_code="WON", rationale="PRIVATE_TEXT",
-            effective_at=self.now, created_at=self.now, updated_at=self.now))
+        self.session.execute(OutcomeIntakeRecord.__table__.insert().values(
+            outcome_intake_id="outcome-fixture", outcome_intake_set_id="outcome-set-fixture",
+            outcome_code="WON", rationale="PRIVATE_TEXT", effective_at=self.now,
+            created_at=self.now, updated_at=self.now))
         self.session.commit()
         row = self.read()["items"][0]
         self.assertEqual(row["submission"]["ref"], "submission-fixture")
