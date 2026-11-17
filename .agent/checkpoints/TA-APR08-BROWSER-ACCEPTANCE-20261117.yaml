@@ -1,0 +1,15 @@
+task_id: TA-APR08-BROWSER-ACCEPTANCE-20261117
+status: in_progress
+goal: Real Chromium acceptance using actual private workspace route and archived sources, no production.
+definition_of_done:
+  - Browser opens stored run with auth; real source question, quote, unknown, financial scenario and stale-clear verified.
+  - Isolated DP and browser traffic loopback only, originals unchanged, no new DB or model.
+  - Reproducible script, screenshots inspected locally, tests, draft PR and exact CI.
+completed:
+  - PR617 and PR619 checked; no failed checks, CI still running.
+current_stage: authenticated_real_browser_replay
+remaining:
+  - Implement and run acceptance, document and publish.
+last_verified_commit: e19d79174cc2727dcbfbd6a869577458de853144
+test_results: []
+resume_instruction: Use existing archived sources and isolated loopback DP/ASGI routes, prohibit external browser traffic, no automatic merge or deployment.
