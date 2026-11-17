@@ -1,0 +1,15 @@
+task_id: TA-APR03B-RI223-FIT-20261117
+status: in_progress
+goal: Source-bound offline owner review of RI223 qualification readiness and explicit lot-level economics, without inventing profile or executable participation.
+definition_of_done:
+  - Reuse reference-list snapshot and PRICE01 calculator; distinguish missing profile and historical owner input, never score conditional formula.
+  - Bind scenario to independent exact original single RUB lot, compare explicit offer and thresholds; no inferred actual cost, guarantees or tax.
+  - Actual archived replay, tests, checkpoint and draft PR; no public profile endpoint or DB writes.
+completed:
+  - PR635 19/19 SUCCESS. Main 3b37fb69 unchanged. Read-only production DB inspection: customer_profiles, company_profile_fact_versions, company_documents all empty. Historical 2026-10-13 owner reference-list receipt exists but no live tenant profile. Existing calculator and qualification path inspected.
+current_stage: archived_owner_review_and_price_scenario
+remaining:
+  - Implement local owner review and test; verify real archive and publish.
+last_verified_commit: a466eb10eea906b3207df78acc6e338b6e748cb3
+test_results: []
+resume_instruction: No company tenant creation, private data publication, Workspace admission, live purchase, model or production changes; no automatic merge.

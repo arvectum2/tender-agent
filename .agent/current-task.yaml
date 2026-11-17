@@ -925,8 +925,15 @@ apr03b_ri223_zip_20261117:
 
 apr03b_ri223_dossier_20261117:
   task_id: TA-APR03B-RI223-DOSSIER-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR03B-RI223-DOSSIER-20261117.yaml
   branch: feat/ta-apr03b-ri223-dossier-20261117
-  current_stage: exact_ci_pending
+  current_stage: verified_pending_merge
   last_verified_commit: 842439935806cf12615a600fc36b314a8afd8120
+
+apr03b_ri223_fit_20261117:
+  task_id: TA-APR03B-RI223-FIT-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR03B-RI223-FIT-20261117.yaml
+  branch: feat/ta-apr03b-ri223-fit-20261117
+  current_stage: archived_owner_review_and_price_scenario
