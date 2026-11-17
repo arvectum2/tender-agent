@@ -742,7 +742,7 @@ apr08_evidence_copilot_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR08-EVIDENCE-COPILOT-20261117.yaml
   branch: feat/ta-apr08-evidence-copilot-20261117
-  current_stage: delivery_review_legal_financial_next
+  current_stage: legal_reference_review_financial_and_statute_gate_next
 
 apr08_document_retrieval_20261117:
   task_id: TA-APR08-DOCUMENT-RETRIEVAL-20261117
@@ -790,4 +790,5 @@ apr08_legal_reference_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR08-LEGAL-REFERENCE-20261117.yaml
   branch: feat/ta-apr08-legal-reference-20261117
-  current_stage: distinguish_customer_terms_and_unverified_legal_references
+  current_stage: exact_ci_pending
+  last_verified_commit: 9519b335199290056120f68c8a59ef214d0ba28f
