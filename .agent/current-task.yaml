@@ -742,7 +742,8 @@ apr08_evidence_copilot_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR08-EVIDENCE-COPILOT-20261117.yaml
   branch: feat/ta-apr08-evidence-copilot-20261117
-  current_stage: composed_review_integrated_acceptance_next
+  current_stage: integrated_development_pass_successor_ci_and_owner_integration_pending
+  last_verified_commit: 427a548cffc5d61aa062826ea82fe43a54d542e5
 
 apr08_document_retrieval_20261117:
   task_id: TA-APR08-DOCUMENT-RETRIEVAL-20261117
@@ -835,23 +836,24 @@ apr08_effective_date_20261117:
 
 apr08_multiedition_corpus_20261117:
   task_id: TA-APR08-MULTIEDITION-CORPUS-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR08-MULTIEDITION-CORPUS-20261117.yaml
   branch: feat/ta-apr08-multiedition-corpus-20261117
-  current_stage: exact_ci_pending
-  last_verified_commit: 62aaabbb266eb16096d7bd7ea8077532ce7c65cd
+  current_stage: verified_pending_merge
+  last_verified_commit: a763aaf8cf78b9c4b7f0ba16a23c77eba15caf7a
 
 apr08_composed_evidence_20261117:
   task_id: TA-APR08-COMPOSED-EVIDENCE-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR08-COMPOSED-EVIDENCE-20261117.yaml
   branch: feat/ta-apr08-composed-evidence-20261117
-  current_stage: exact_ci_pending
-  last_verified_commit: e0b422174205a715818feddaf01a9e834e61f4b7
+  current_stage: verified_pending_merge
+  last_verified_commit: 5c606bcae85d0e5822d803e07a5f287b97509f02
 
 apr08_integrated_acceptance_20261117:
   task_id: TA-APR08-INTEGRATED-ACCEPTANCE-20261117
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR08-INTEGRATED-ACCEPTANCE-20261117.yaml
   branch: feat/ta-apr08-integrated-acceptance-20261117
-  current_stage: integrated_gate_and_residual_audit
+  current_stage: exact_ci_pending
+  last_verified_commit: 427a548cffc5d61aa062826ea82fe43a54d542e5
