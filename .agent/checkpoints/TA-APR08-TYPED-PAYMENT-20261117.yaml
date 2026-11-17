@@ -2,14 +2,19 @@ task_id: TA-APR08-TYPED-PAYMENT-20261117
 status: in_progress
 goal: Extract explicitly stated payment duration, day type and trigger from supported verified literal excerpts, without asserting applicable contractual deadline.
 definition_of_done:
-  - Only full conservative clause patterns, cite exact text, refuse partial/conditional/conflicting patterns; no statutory inference or calendar arithmetic.
+  - Conservative literal duration observation with complete extracted line and all following qualifiers preserved; no effective deadline, statutory inference, or calendar arithmetic.
   - Extend existing response and UI with typed observation and explicit incomplete scope, no semantic/legal/GO promotion.
   - Regression, isolated real DP replay and draft PR with CI.
 completed:
   - PR612 exact head 19/19; PR613 18/19 with mirror workflow failure, investigating.
-current_stage: bounded_literal_payment_duration
+  - PR612 and PR613 exact heads CI 19/19 SUCCESS; mirror HTTP504 recovered on retry.
+  - Implemented typed literal payment duration and explicit day unit, full contextual quote, separate work/service candidates.
+  - Real authenticated isolated DP replay confirmed one quote with 7 working days and retained conditions and liability caveat; original inventory unchanged, temporary instance removed.
+current_stage: exact_ci_pending
 remaining:
-  - Diagnose mirror, implement, test, publish and verify CI.
-last_verified_commit: f0d1e152938c95c1f9d5b847fb70d1acb8549906
-test_results: []
+  - Verify exact successor CI; continue other typed requirements and commercial scenarios in parent APR08.
+last_verified_commit: c6ae2ea8db8118b9ffe4eb289d8e12f02b68b1d7
+test_results:
+  - 128 focused PASS, Ruff/diff/Node simulation PASS.
+  - APR08_REAL_PAYMENT_OBSERVATION LITERAL_PAYMENT_OBSERVATION citations 1; APR08_REAL_DP_REPLAY_PASS; APR08_ISOLATED_DP_REMOVED.
 resume_instruction: Existing private grounded question route; typed explicit clause observation only; no production, Gemma, live sources or automatic merge.

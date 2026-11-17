@@ -13,12 +13,13 @@ completed:
   - Replayed actual archived EOK v3 procurement 0348100024426000039 original ZIP and selected XML rehashed against existing APR06 receipts, 4/4 source-backed results; legacy unpinned archive 0372200172326000015 4/4 UNKNOWN.
   - PR610 exact head fd8c32f8 CI 19/19 SUCCESS; PR611 exact head ae389369 CI 19/19 SUCCESS; subsequent isolated real retrieval replay passed.
   - Natural-language bounded grounded question slice implemented and actual DP payment question replay verified; 118 tests PASS, no general semantic/legal approval.
-current_stage: grounded_questions_review_next_typed_interpretation
+  - PR612/613 exact CI green; typed payment observation and real isolated DP replay PASS.
+current_stage: typed_payment_review_other_requirements_next
 remaining:
   - Verify reproducible APR08 real DP acceptance successor CI.
   - Develop bounded semantic evidence grounded Q&A, legal reasoning boundaries and explicit assumption-based commercial calculations.
   - Real browser acceptance, complete module gate and separate integration consent.
-last_verified_commit: 67da3dcfe1e2137c6c377c8a113877b5601561ba
+last_verified_commit: c6ae2ea8db8118b9ffe4eb289d8e12f02b68b1d7
 test_results:
   - 108 targeted PASS, Ruff/Node syntax/diff check PASS, existing Node UI simulation genuine scenario extension PASS.
   - Real archived XML v3 exact SHA replay 4/4, missing pinned metadata 4/4 UNKNOWN; no live sources/model/production.

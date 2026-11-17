@@ -766,4 +766,5 @@ apr08_typed_payment_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR08-TYPED-PAYMENT-20261117.yaml
   branch: feat/ta-apr08-typed-payment-20261117
-  current_stage: bounded_literal_payment_duration
+  current_stage: exact_ci_pending
+  last_verified_commit: c6ae2ea8db8118b9ffe4eb289d8e12f02b68b1d7
