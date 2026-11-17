@@ -118,6 +118,9 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
     };
     else if(route.endsWith('/workspace/runs/run-1/evidence-answer') && method==='POST') {
       const request=JSON.parse(opts.body);
+      if(request.question==='Какой срок оплаты услуг?') {
+        return {ok:true,json:async()=>({run_id:'run-1',status:'LITERAL_PAYMENT_OBSERVATION',citation_kind:'ORIGINAL_DP_CHUNK',answer:'Срок в источнике, не применимый дедлайн.',observation:{mentioned_days:7,day_unit:'WORKING_DAYS'},citations:[{file_id:'FILE-01',chunk_id:'chunk-1',original_sha256:'a'.repeat(64),quote:'Оплата услуг производится в течение 7 рабочих дней с даты приемки.'}]})};
+      }
       assert.deepEqual(request,{question:'Какие условия оплаты работ?'});
       value={run_id:'run-1',status:'TOPIC_EXCERPTS_ONLY',citation_kind:'ORIGINAL_DP_CHUNK',answer:'Условия оплаты: найдены проверенные фрагменты.',citations:[{file_id:'FILE-01',chunk_id:'chunk-1',original_sha256:'a'.repeat(64),quote:'Оплата выполненных работ в течение семи рабочих дней.'}]};
     }
@@ -280,6 +283,10 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
     assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('SHA-256 оригинала')));
     get('copilot-answer-question').value='другой вопрос';get('copilot-answer-question').events.input();
     assert.equal(get('copilot-answer-result').children.length,0);
+    get('copilot-answer-question').value='Какой срок оплаты услуг?';get('copilot-answer-form').events.submit({preventDefault(){}});
+    for(let i=0;i<50 && !get('copilot-answer-result').children.length;i++) await new Promise(resolve=>setTimeout(resolve,3));
+    assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('7 рабочих дней') && c.textContent.includes('Применимый срок не установлен')));
+
 
 
 

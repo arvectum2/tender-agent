@@ -105,6 +105,18 @@ def main() -> int:
                     assert packet['citations'] == result['citations'] and not packet['semantic_answer_verified']
                     unsupported = client.post(qa_url, headers=auth, json={'question':'Можно ли подписывать контракт?'})
                     assert unsupported.status_code == 200 and unsupported.json()['status'] == 'UNKNOWN'
+                    typed = client.post(qa_url, headers=auth, json={'question':'Какой срок оплаты услуг?'})
+                    assert typed.status_code == 200
+                    typed_packet = typed.json()
+                    print('APR08_REAL_PAYMENT_OBSERVATION', typed_packet['status'], 'citations', len(typed_packet['citations']), flush=True)
+                    assert typed_packet['status'] == 'LITERAL_PAYMENT_OBSERVATION'
+                    if typed_packet['status'] == 'LITERAL_PAYMENT_OBSERVATION':
+                        assert typed_packet['observation']['mentioned_days'] == 7
+                        assert typed_packet['observation']['day_unit'] == 'WORKING_DAYS'
+                        assert typed_packet['observation']['effective_due_date'] is None
+                        assert 'предоставления' in typed_packet['citations'][0]['quote']
+                        assert 'не несет ответственности' in typed_packet['citations'][0]['quote']
+                    assert not typed_packet['bid_ready'] and not typed_packet['scope_complete']
                     print('APR08_REAL_GROUNDED_QUESTION_PASS', 'verified_excerpts', len(packet['citations']), 'unsupported_unknown', True)
                 assert result['status'] == 'VERIFIED_EXCERPTS_ONLY' and result['citations']
                 assert result['verification_attempts'] <= 2 and not result['bid_ready'] and not result['scope_complete']

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import re
+from functools import partial
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -13,6 +14,10 @@ from src.modules.tender_operator_agent_demo.evidence_document_search import (
     DocumentSearchQuestion,
     checked_search_run,
     search_run_documents,
+)
+from src.modules.tender_operator_agent_demo.evidence_payment_observation import (
+    literal_payment_observation,
+    payment_candidate,
 )
 
 
@@ -41,7 +46,7 @@ def answer_grounded_question(run_id: str, request: GroundedQuestion) -> dict:
     checked_search_run(run_id)
     q = re.sub(r'\s+', ' ', request.question.strip().casefold()).removesuffix('?').strip()
     result = {'contract': 'apr08_grounded_question_v1', 'run_id': run_id, 'status': 'UNKNOWN',
-              'intent': None, 'answer': None, 'citations': [], 'citation_kind': None, 'calculation': None,
+              'intent': None, 'answer': None, 'citations': [], 'citation_kind': None, 'calculation': None, 'observation': None,
               'scope_complete': False, 'semantic_answer_verified': False, 'bid_ready': False,
               'current_revision_attested': False, 'legal_requirement_attested': False,
               'requires_human_review': True, 'external_action_allowed': False}
@@ -63,6 +68,20 @@ def answer_grounded_question(run_id: str, request: GroundedQuestion) -> dict:
             return {**result, 'intent': intent, 'reason': fact.get('reason', 'SOURCE_FIELD_UNVERIFIED')}
         return {**result, 'intent': intent, 'status': fact['status'], 'answer': fact['answer'],
                 'citations': fact['citations'], 'citation_kind': 'ARCHIVED_XML', 'calculation': fact['calculation']}
+    if re.fullmatch(r'(?:какой срок оплаты(?: работ| услуг)?|каков срок оплаты(?: работ| услуг)?)', q):
+        kind = 'works' if q.endswith(' работ') else 'services' if q.endswith(' услуг') else None
+        found = search_run_documents(run_id, DocumentSearchQuestion(query='оплата'),
+                                     candidate_selector=partial(payment_candidate, object_kind=kind))
+        citations = found['citations']
+        # Even two identical durations may have different triggers; do not collapse.
+        if found['status'] == 'VERIFIED_EXCERPTS_ONLY' and len(citations) == 1:
+            observation = literal_payment_observation(citations[0]['quote'])
+            if observation:
+                return {**result, 'intent': 'payment_duration', 'status': 'LITERAL_PAYMENT_OBSERVATION',
+                        'citation_kind': 'ORIGINAL_DP_CHUNK', 'observation': observation, 'citations': citations,
+                        'answer': 'В найденном фрагменте указан срок оплаты. Это не подтверждение применимого срока; условия, исключения и связанные пункты требуют проверки.'}
+        return {**result, 'intent': 'payment_duration', 'reason': 'NO_UNAMBIGUOUS_VERIFIED_PAYMENT_PARAGRAPH',
+                'citations': citations, 'citation_kind': 'ORIGINAL_DP_CHUNK' if citations else None}
     topic = next(((key, terms, title) for key, (pattern, terms, title) in _TOPICS.items() if re.fullmatch(pattern, q)), None)
     if topic is None:
         return {**result, 'reason': 'UNSUPPORTED_OR_COMPOUND_QUESTION'}
