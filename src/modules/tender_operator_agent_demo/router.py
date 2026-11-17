@@ -244,9 +244,13 @@ def operator_workspace_verify_quote(
     dependencies=[Depends(require_private_workspace)],
 )
 def operator_workspace_explicit_price_scenario(
-    request: ExplicitCostScenarioRequest,
+    request: ExplicitCostScenarioRequest, http: Request,
 ) -> dict:
     """Stateless what-if; no quote, company costs storage or ETP actions."""
+    settings = get_settings()
+    if not _is_protected_path(http.url.path, tuple(settings.pilot_auth_protected_prefixes.split(",")),
+                              tuple(settings.pilot_auth_public_paths.split(","))):
+        raise HTTPException(status_code=503, detail="Private operator authentication must cover this endpoint")
     return calculate_explicit_cost_thresholds(request)
 
 

@@ -110,8 +110,16 @@
             <input id="cost-variable" name="variable_platform_fee_percent" type="text" inputmode="decimal" maxlength="8" required autocomplete="off" placeholder="Введите процент">
             <label for="cost-target">Желаемая абсолютная прибыль, ₽</label>
             <input id="cost-target" name="target_profit_rub" type="text" inputmode="decimal" maxlength="15" required autocomplete="off" placeholder="Укажите сумму, ₽">
+            <label><input id="cost-offer-enabled" type="checkbox"> Дополнительно оценить прибыль при заданной цене и сценарную потребность в денежных средствах</label>
+            <div id="cost-offer-fields" hidden>
+              <p class="help-text">Введите все четыре значения, включая нули. Комиссию за гарантию не дублируйте в прочих расходах. Собственный труд здесь не денежный расход; оплачиваемый труд учитывайте в прямых затратах. Стресс-сценарий: все денежные расходы, налог, комиссии и оба возвратных обеспечения оплачены до первого поступления; возврат обеспечений предполагается полным. Не прогноз реального кассового разрыва.</p>
+              <label for="cost-offer-price">Цена предложения, ₽</label><input id="cost-offer-price" type="text" inputmode="decimal" maxlength="15" autocomplete="off">
+              <label for="cost-guarantee-fees">Невозвратные комиссии за гарантии, ₽</label><input id="cost-guarantee-fees" type="text" inputmode="decimal" maxlength="15" autocomplete="off">
+              <label for="cost-bid-cash">Возвратное денежное обеспечение заявки, ₽</label><input id="cost-bid-cash" type="text" inputmode="decimal" maxlength="15" autocomplete="off">
+              <label for="cost-contract-cash">Возвратное денежное обеспечение исполнения, ₽</label><input id="cost-contract-cash" type="text" inputmode="decimal" maxlength="15" autocomplete="off">
+            </div>
             <label><input id="cost-scenario-confirm" type="checkbox" required> Подтверждаю, что это гипотетический расчёт по введённым мной допущениям, а не согласованная коммерческая ставка.</label>
-            <div class="actions"><button class="button button-primary" type="submit">Рассчитать три порога — без сохранения</button><button class="button button-secondary" id="cost-clear-btn" type="button">Очистить введённые значения</button></div>
+            <div class="actions"><button class="button button-primary" type="submit">Рассчитать сценарий — без сохранения</button><button class="button button-secondary" id="cost-clear-btn" type="button">Очистить введённые значения</button></div>
           </form>
           <div id="price-cost-result" role="status" aria-live="polite" class="report-section"><p>Без явно введённых сумм расчёт не выполняется.</p></div>
         </section>

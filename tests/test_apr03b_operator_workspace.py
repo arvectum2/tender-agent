@@ -655,3 +655,17 @@ def test_copilot_grounded_question_private_route(client, auth, monkeypatch):
         pilot_auth_public_paths='/health,' + route))
     assert client.post(route, headers=auth, json={'question':'Какова НМЦК?'}).status_code == 503
     assert len(calls) == 1
+
+
+def test_price_extended_offer_private_stateless_and_exact_auth_scope(client, auth, monkeypatch):
+    url = '/api/demo/tender-agent/workspace/price-scenario/calculate'
+    payload = {**_COST_SAMPLE, 'offer_scenario': {'offer_price_rub':'500', 'nonrefundable_guarantee_fees_rub':'10',
+               'refundable_bid_cash_rub':'30', 'refundable_contract_cash_rub':'40'}}
+    assert client.post(url, json=payload).status_code == 401
+    response = client.post(url, headers=auth, json=payload)
+    assert response.status_code == 200 and 'no-store' in response.headers.get('cache-control','')
+    assert response.json()['offer_scenario']['pre_receipt_stress_cash_rub'] == '245.00'
+    monkeypatch.setattr(operator_router, 'get_settings', lambda: Settings(
+        pilot_auth_enabled=True, pilot_auth_username='test-operator', pilot_auth_password='test-secret-unique-12345',
+        pilot_auth_public_paths='/health,' + url))
+    assert client.post(url, headers=auth, json=payload).status_code == 503

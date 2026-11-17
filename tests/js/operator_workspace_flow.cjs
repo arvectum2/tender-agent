@@ -116,6 +116,12 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
         owner_legal_go:false
       } : null
     };
+    else if(route.endsWith('/workspace/price-scenario/calculate') && method==='POST') {
+      const request=JSON.parse(opts.body);
+      assert.deepEqual(request.offer_scenario,{offer_price_rub:'500',nonrefundable_guarantee_fees_rub:'10',refundable_bid_cash_rub:'30',refundable_contract_cash_rub:'40'});
+      await new Promise(resolve=>setTimeout(resolve,5));
+      value={state:'EXPLICIT_USER_ASSUMPTION_BREAK_EVEN_ONLY',inputs_stored:false,assumptions_independently_verified:false,is_procurement_bid_recommendation:false,probability_of_winning_estimated:false,commercial_owner_go:false,automatic_submission_or_payment:false,cash_break_even_rub:'146.74',full_economic_break_even_rub:'364.14',full_cost_plus_explicit_target_rub:'418.48',offer_scenario:{kind:'EXPLICIT_OFFER_AND_PRE_RECEIPT_STRESS_ONLY',actual_peak_working_capital_rub:null,actual_security_requirement_rub:null,labor_treated_as_non_cash:true,collateral_treated_as_fully_refundable:true,modeled_revenue_tax_rub:'30.00',modeled_variable_fee_rub:'10.00',economic_cost_rub:'375.00',economic_profit_rub:'125.00',economic_margin_percent:'25.00',cash_cost_rub:'175.00',refundable_cash_collateral_rub:'70.00',pre_receipt_stress_cash_rub:'245.00'}};
+    }
     else if(route.endsWith('/workspace/runs/run-1/evidence-answer') && method==='POST') {
       const request=JSON.parse(opts.body);
       if(request.question==='Поясни требования к обеспечению исполнения контракта') {
@@ -307,6 +313,20 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
     for(let i=0;i<50 && !get('copilot-answer-result').children.some(c=>c.textContent.includes('Ссылки заказчика на нормы'));i++) await new Promise(resolve=>setTimeout(resolve,3));
     assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('содержание законодательства не проверено')));
     assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('статьи 45 Федерального закона')));
+    for(const [id,val] of Object.entries({'cost-external':'100','cost-labor':'200','cost-reserve':'20','cost-fixed':'5','cost-tax':'6','cost-variable':'2','cost-target':'50','cost-offer-price':'500','cost-guarantee-fees':'10','cost-bid-cash':'30','cost-contract-cash':'40'})) get(id).value=val;
+    get('cost-offer-enabled').checked=true;get('cost-scenario-confirm').checked=true;get('price-cost-form').events.input();
+    assert.equal(get('cost-offer-fields').hidden,false);
+    const flatten=el=>[el.textContent,...el.children.flatMap(flatten)].join(' ');
+    get('price-cost-form').events.submit({preventDefault(){}});
+    for(let i=0;i<50&&!flatten(get('price-cost-result')).includes('245,00');i++) await new Promise(resolve=>setTimeout(resolve,3));
+    assert(flatten(get('price-cost-result')).includes('245,00'));
+    assert(flatten(get('price-cost-result')).includes('125,00'));
+    assert(flatten(get('price-cost-result')).includes('Возвратные обеспечения (не расход)'));
+    get('price-cost-form').events.submit({preventDefault(){}});
+    get('price-cost-form').events.input();
+    await new Promise(resolve=>setTimeout(resolve,15));
+    assert.equal(get('price-cost-result').children.length,0,'Stale scenario must not reappear');
+
 
 
 

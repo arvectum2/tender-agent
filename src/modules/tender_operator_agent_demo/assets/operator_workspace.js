@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const api = '/api/demo/tender-agent';
-  const state = { runId: null, poll: null, busy: false, registryOffset: 0, registryTotal: 0, registryQuery: '', runReady: false, searchParams: null, searchCursor: null, seenNumbers: [], quoteFileKey: null, copilotEpoch: 0, copilotSearchEpoch: 0, copilotAnswerEpoch: 0 };
+  const state = { runId: null, poll: null, busy: false, registryOffset: 0, registryTotal: 0, registryQuery: '', runReady: false, searchParams: null, searchCursor: null, seenNumbers: [], quoteFileKey: null, copilotEpoch: 0, copilotSearchEpoch: 0, copilotAnswerEpoch: 0, costEpoch: 0 };
   const $ = id => document.getElementById(id);
   const node = (tag, cls = '', content = null) => {
     const el = document.createElement(tag);
@@ -917,6 +917,7 @@
   }
   async function calculateExplicitPriceCostScenario(event) {
     event.preventDefault();
+    const epoch=++state.costEpoch;
     const target=$('price-cost-result');
     wipe(target);
     const monetary=/^\d{1,12}(?:[.,]\d{1,2})?$/;
@@ -943,11 +944,20 @@
       }
       payload[field]=entered.replace(',','.');
     }
-    paragraph(target,'Вычисляем пороги на основе семи введённых величин…','empty-state');
+    if($('cost-offer-enabled').checked) {
+      payload.offer_scenario={};
+      for(const [field,id] of [['offer_price_rub','cost-offer-price'],['nonrefundable_guarantee_fees_rub','cost-guarantee-fees'],['refundable_bid_cash_rub','cost-bid-cash'],['refundable_contract_cash_rub','cost-contract-cash']]) {
+        const entered=$(id).value.trim();
+        if(!monetary.test(entered)) {paragraph(target,'Введите все четыре дополнительные суммы, включая нули.','empty-state');return;}
+        payload.offer_scenario[field]=entered.replace(',','.');
+      }
+    }
+    paragraph(target,'Вычисляем сценарные значения…','empty-state');
     try {
       const result=await json(api+'/workspace/price-scenario/calculate',{
         method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),
       });
+      if(epoch!==state.costEpoch) return;
       if(result.state!=='EXPLICIT_USER_ASSUMPTION_BREAK_EVEN_ONLY'
           ||result.inputs_stored!==false||result.assumptions_independently_verified!==false
           ||result.is_procurement_bid_recommendation!==false
@@ -967,9 +977,19 @@
         }
         appendFact(facts,label,value.replace('.',',')+' ₽');
       }
+      if(payload.offer_scenario) {
+        const o=result.offer_scenario;
+        if(!o||o.kind!=='EXPLICIT_OFFER_AND_PRE_RECEIPT_STRESS_ONLY'||o.actual_peak_working_capital_rub!==null||o.actual_security_requirement_rub!==null||o.labor_treated_as_non_cash!==true||o.collateral_treated_as_fully_refundable!==true) throw new Error('Дополнительный сценарий не прошёл проверку.');
+        for(const [label,key,suffix] of [['Налог по вводным','modeled_revenue_tax_rub',' ₽'],['Переменная комиссия','modeled_variable_fee_rub',' ₽'],['Полная экономическая себестоимость','economic_cost_rub',' ₽'],['Сценарная прибыль','economic_profit_rub',' ₽'],['Маржа от выручки','economic_margin_percent','%'],['Денежные затраты','cash_cost_rub',' ₽'],['Возвратные обеспечения (не расход)','refundable_cash_collateral_rub',' ₽'],['Стресс-потребность до поступления','pre_receipt_stress_cash_rub',' ₽']]) {
+          if(typeof o[key]!=='string'||! /^-?\d{1,22}\.\d{2}$/.test(o[key])) throw new Error('Некорректные значения сценария.');
+          appendFact(facts,label,o[key].replace('.',',')+suffix);
+        }
+        paragraph(target,'Фактический кассовый разрыв и обязательный размер обеспечения: UNKNOWN. Все денежные расходы и оба возвратных обеспечения условно совпадают до первого поступления; собственный труд не денежный расход. Суммы округлены для отображения отдельно.','help-text');
+      }
       target.append(facts);
       paragraph(target,'Это сценарные минимальные пороги при ваших вводных. Фактические расходы, налоговые обязательства, конкурентная цена и вероятность выигрыша не проверены. Автоматической подачи нет.','help-text');
     } catch(error) {
+      if(epoch!==state.costEpoch) return;
       wipe(target);
       paragraph(target,'Не удалось рассчитать сценарий: '+error.message,'empty-state');
     }
@@ -1030,7 +1050,8 @@
   $('price-cohort-btn').addEventListener('click',()=>void loadWebsiteCohort());
   $('price-workload-btn').addEventListener('click',()=>void loadWorkloadNormalization());
   $('price-cost-form').addEventListener('submit',event=>void calculateExplicitPriceCostScenario(event));
-  $('cost-clear-btn').addEventListener('click',()=>{ $('price-cost-form').reset();wipe($('price-cost-result'));paragraph($('price-cost-result'),'Данные очищены в форме, на сервере ничего не сохранялось.','empty-state'); });
+  $('price-cost-form').addEventListener('input',()=>{state.costEpoch++;wipe($('price-cost-result'));show('cost-offer-fields',$('cost-offer-enabled').checked);});
+  $('cost-clear-btn').addEventListener('click',()=>{ state.costEpoch++;$('price-cost-form').reset();show('cost-offer-fields',false);wipe($('price-cost-result'));paragraph($('price-cost-result'),'Данные очищены в форме, на сервере ничего не сохранялось.','empty-state'); });
   $('registry-form').addEventListener('submit',event=>{ event.preventDefault();state.registryOffset=0;state.registryQuery=$('registry-search').value.trim();void loadRegistry(); });
   $('prev-registry').addEventListener('click',()=>{state.registryOffset=Math.max(0,state.registryOffset-25);void loadRegistry();});
   $('next-registry').addEventListener('click',()=>{ if (state.registryOffset+25<state.registryTotal) { state.registryOffset+=25;void loadRegistry();}});
