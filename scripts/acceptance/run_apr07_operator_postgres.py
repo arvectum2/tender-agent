@@ -38,6 +38,16 @@ def main():
                 with engine.begin() as conn:
                     conn.exec_driver_sql('CREATE ROLE apr07_observer LOGIN')
                     conn.exec_driver_sql('CREATE ROLE apr07_writer LOGIN')
+                    conn.exec_driver_sql('CREATE ROLE apr07_broad_reader LOGIN')
+                    conn.exec_driver_sql('CREATE ROLE apr07_partial_reader LOGIN')
+                    conn.exec_driver_sql('CREATE ROLE apr07_extra_column NOLOGIN')
+                    conn.exec_driver_sql('CREATE ROLE apr07_inherited_reader LOGIN INHERIT')
+                    conn.exec_driver_sql('GRANT apr07_extra_column TO apr07_inherited_reader')
+                    conn.exec_driver_sql('GRANT USAGE ON SCHEMA public TO apr07_broad_reader, apr07_partial_reader, apr07_inherited_reader')
+                    conn.exec_driver_sql('GRANT SELECT ON public.tender_analysis_jobs TO apr07_broad_reader')
+                    conn.exec_driver_sql('GRANT SELECT (status) ON public.tender_analysis_jobs TO apr07_partial_reader')
+                    conn.exec_driver_sql('GRANT SELECT (registry_number) ON public.tender_analysis_jobs TO apr07_extra_column')
+                    conn.exec_driver_sql('GRANT SELECT (job_type,status,created_at,started_at,finished_at,updated_at) ON public.tender_analysis_jobs TO apr07_inherited_reader')
                     conn.exec_driver_sql('GRANT USAGE ON SCHEMA public TO apr07_observer, apr07_writer')
                     conn.exec_driver_sql('GRANT SELECT (job_type,status,created_at,started_at,finished_at,updated_at) ON public.tender_analysis_jobs TO apr07_observer, apr07_writer')
                     conn.exec_driver_sql('GRANT UPDATE (status) ON public.tender_analysis_jobs TO apr07_writer')
@@ -53,13 +63,24 @@ def main():
                 assert result['queue_to_finished_seconds']['p95'] == 95
                 assert result['clean_completion_rate'] == 1.0 and not result['rolling_production_slo_approved']
                 assert 'private-fixture' not in str(result)
-                for role in ('apr07_fixture_owner', 'apr07_writer'):
+                for role in ('apr07_fixture_owner', 'apr07_writer', 'apr07_broad_reader', 'apr07_partial_reader', 'apr07_inherited_reader'):
                     try:
                         snapshot(url(role), now=now)
                     except PermissionError:
                         pass
                     else:
                         raise AssertionError('Privileged role was accepted')
+                with engine.begin() as conn:
+                    conn.exec_driver_sql('ALTER TABLE public.tender_analysis_jobs ENABLE ROW LEVEL SECURITY')
+                try:
+                    snapshot(url('apr07_observer'), now=now)
+                except PermissionError:
+                    pass
+                else:
+                    raise AssertionError('RLS-filtered table was accepted as global evidence')
+                with engine.begin() as conn:
+                    conn.exec_driver_sql('ALTER TABLE public.tender_analysis_jobs DISABLE ROW LEVEL SECURITY')
+                assert snapshot(url('apr07_observer'), now=now) == result
                 observer = create_engine(url('apr07_observer'))
                 try:
                     for statement in ('SELECT registry_number FROM tender_analysis_jobs', 'UPDATE tender_analysis_jobs SET status=\'failed\''):
@@ -84,7 +105,7 @@ def main():
         finally:
             if started or (data/'postmaster.pid').exists():
                 run(str(bindir/'pg_ctl'), '-D', str(data), '-m', 'fast', '-w', 'stop')
-    print('APR07_POSTGRES_OPERATOR_READONLY_PASS: 100 terminal rows, p95=95s, owner/writer denied, sensitive field/write denied, cluster removed')
+    print('APR07_POSTGRES_OPERATOR_READONLY_PASS: 100 terminal rows, p95=95s, owner/writer/broad/partial/inherited reader denied, RLS denied, sensitive field/write denied, cluster removed')
 
 
 if __name__ == '__main__':
