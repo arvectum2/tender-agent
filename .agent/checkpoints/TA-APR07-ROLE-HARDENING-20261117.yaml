@@ -1,0 +1,16 @@
+task_id: TA-APR07-ROLE-HARDENING-20261117
+status: in_progress
+goal: Enforce existing APR07 operator least-privilege read contract; reject overbroad SELECT and row-level-filtered job data instead of misstating global observations.
+definition_of_done:
+  - Reject read privileges on non-metric job columns including inherited grants.
+  - Reject RLS-filtered job table for system-level snapshot; ensure all six metric columns readable.
+  - Rehearse real local PostgreSQL positive/negative roles, existing tests, publish independent PR.
+completed:
+  - Owner-approved PR604–607 merged without deployment; new main identical to tested PR607 head.
+  - Completed integration checkpoint carried from separate record branch.
+current_stage: enforce_least_privilege_read_scope
+remaining:
+  - Implement, test, publish and verify CI.
+last_verified_commit: a08a34a1d9d51ff6df15f2cf174e000d149209e3
+test_results: []
+resume_instruction: Implement restricted reader check in existing local APR07 CLI; test on disposable PostgreSQL only, no external calls, production, Gemma or further merge authorization.

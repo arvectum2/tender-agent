@@ -680,7 +680,7 @@ apr05_release_rehearsal_20261117:
   status: completed
   checkpoint: .agent/checkpoints/TA-APR05-RELEASE-REHEARSAL-20261117.yaml
   branch: feat/ta-apr05-release-rehearsal-20261117
-  current_stage: verified_review_pending_merge
+  current_stage: merged_verified_no_deployment
   last_verified_commit: 380bbdb0bb50ec0557eb40ebf14100da5ed0ff1b
   pr: 604
 
@@ -689,18 +689,39 @@ apr06_review_readiness_20261117:
   status: completed
   checkpoint: .agent/checkpoints/TA-APR06-REVIEW-READINESS-20261117.yaml
   branch: feat/ta-apr06-review-readiness-20261117
-  current_stage: engineering_readiness_completed_commercial_blocked
+  current_stage: merged_engineering_completed_commercial_blocked
+  last_verified_commit: 66e664c41453f609ed6fd393b332439fae6cf560
+  pr: 605
 
 apr07_rolling_observability_20261117:
   task_id: TA-APR07-ROLLING-OBSERVABILITY-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR07-ROLLING-OBSERVABILITY-20261117.yaml
   branch: feat/ta-apr07-rolling-observability-20261117
-  current_stage: operator_postgres_ci_pending
+  current_stage: merged_engineering_completed_slo_unmeasured
+  last_verified_commit: a7dba514f05ce13d1dd50daf2e5a22ddce1ac479
+  pr: 606
 
 apr04_disposable_replay_20261117:
   task_id: TA-APR04-DISPOSABLE-REPLAY-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR04-DISPOSABLE-REPLAY-20261117.yaml
   branch: feat/ta-apr04-disposable-replay-20261117
-  current_stage: disposable_replay_ci_pending
+  current_stage: merged_engineering_completed_owner_gate_open
+  last_verified_commit: 337b1c58cdd7e69c2250a65b7b49a3b825a12a77
+  pr: 607
+
+apr_integration_20261117:
+  task_id: TA-APR-INTEGRATION-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR-INTEGRATION-20261117.yaml
+  branch: checkpoint/ta-apr-integration-20261117
+  current_stage: merged_verified_no_deployment
+  last_verified_commit: a08a34a1d9d51ff6df15f2cf174e000d149209e3
+
+apr07_role_hardening_20261117:
+  task_id: TA-APR07-ROLE-HARDENING-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR07-ROLE-HARDENING-20261117.yaml
+  branch: feat/ta-apr07-operator-role-hardening-20261117
+  current_stage: enforce_least_privilege_read_scope
