@@ -26,6 +26,15 @@ SOURCE = 'zakupki_gov_ru_ri223_getdocs_ip'
 BASE = '/purchaseNotice/body/item/purchaseNoticeData'
 
 
+def trusted_pins() -> dict[str, tuple[str, str, str]]:
+    from src.modules.tender_operator_agent_demo.ri223_receipt_catalog import (
+        configured_catalog,
+    )
+
+    configured = configured_catalog()
+    return PINS if configured is None else configured
+
+
 def _digest(path: Path, limit: int) -> str:
     with path.open('rb') as stream:
         data = stream.read(limit + 1)
@@ -40,9 +49,15 @@ def ri223_archive_observation(run: Path, metadata: dict) -> dict:
               'bid_ready':False,'external_action_allowed':False,'scope_complete':False,
               'timezone_attested':False,'award_attested':False}
     number = metadata.get('procurement_id')
-    if metadata.get('procurement_source') != SOURCE or not isinstance(number,str) or number not in PINS:
+    if metadata.get('procurement_source') != SOURCE or not isinstance(number,str):
         return {**result,'reason':'PINNED_RI223_SOURCE_REQUIRED'}
-    archive_hash, xml_hash, version = PINS[number]
+    try:
+        pins = trusted_pins()
+    except (OSError,ValueError,TypeError):
+        return {**result,'reason':'RI223_CATALOG_UNVERIFIED'}
+    if number not in pins:
+        return {**result,'reason':'PINNED_RI223_SOURCE_REQUIRED'}
+    archive_hash, xml_hash, version = pins[number]
     try:
         filename = metadata['archive_stored_name']
         if not isinstance(filename,str) or Path(filename).name != filename or not filename.endswith('.zip'):
