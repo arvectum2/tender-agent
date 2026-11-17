@@ -72,6 +72,21 @@ def replay_container(runs,app,password):
             finally:
                 member.write_bytes(content)
             print('APR03B_RI223_DOSSIER_ACTUAL_PASS missing member UNKNOWN',flush=True)
+        if os.environ.get('APR03B_OWNER_REVIEW_ACCEPTANCE')=='1':
+            from scripts.acceptance.apr03b_ri223_owner_case import replay_owner
+            from src.modules.tender_operator_agent_demo.ri223_owner_review import (
+                review_archived_owner_run,
+            )
+
+            replay_owner(run)
+            member=directory/'input'/members[-1]['stored_name']
+            content=member.read_bytes();member.unlink()
+            try:
+                denied=review_archived_owner_run(run)
+                assert denied['status']=='UNKNOWN' and 'economics' not in denied
+            finally:
+                member.write_bytes(content)
+            print('RI223_OWNER_INCOMPLETE_SOURCE_REFUSED',flush=True)
         assert inventory(directory)==saved
         parent=directory/'input'/meta['files'][1]['stored_name']
         blob=parent.read_bytes();parent.write_bytes(blob+b' ')
