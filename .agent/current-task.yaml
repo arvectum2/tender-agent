@@ -724,4 +724,4 @@ apr07_role_hardening_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR07-ROLE-HARDENING-20261117.yaml
   branch: feat/ta-apr07-operator-role-hardening-20261117
-  current_stage: enforce_least_privilege_read_scope
+  current_stage: exact_ci_pending
