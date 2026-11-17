@@ -869,8 +869,16 @@ apr08_integration_20261117:
 
 apr03b_223_archive_copilot_20261117:
   task_id: TA-APR03B-223-ARCHIVE-COPILOT-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR03B-223-ARCHIVE-COPILOT-20261117.yaml
   branch: feat/ta-apr03b-223-archive-copilot-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: a0f433bcae911b64cbe3ff4d5ef06e7eb1edf5fe
+
+apr03b_ri223_receipt_intake_20261117:
+  task_id: TA-APR03B-RI223-RECEIPT-INTAKE-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR03B-RI223-RECEIPT-INTAKE-20261117.yaml
+  branch: feat/ta-apr03b-ri223-receipt-intake-20261117
   current_stage: exact_ci_pending
-  last_verified_commit: 56ede99234d9f7469b08fb434959c77981176a2b
+  last_verified_commit: 6046bcb1468c1d74cc4b7cc123fb7b56f0e246b2
