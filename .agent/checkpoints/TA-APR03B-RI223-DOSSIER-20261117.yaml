@@ -1,0 +1,15 @@
+task_id: TA-APR03B-RI223-DOSSIER-20261117
+status: in_progress
+goal: Source-bound archived RI223 review dossier in Operator Workspace, reuse canonical seven domains and existing quote attestation; explicit completeness, commercial/decision boundaries.
+definition_of_done:
+  - independently verify receipt originals and complete projected archive membership, fail closed on missing/altered evidence
+  - nine review domains (canonical seven plus payment/security), individually cited excerpts, unknowns and decision gates, no unsupported semantic or commercial conclusion
+  - actual DP/Chromium archive replay, adversarial tests, draft PR and CI
+completed:
+  - PR633 and PR634 exact CI 19/19 each; unchanged main 3b37fb69. Existing RI223 canonical dossier/source-facts and original scoring observer inspected.
+current_stage: independently_bound_review_matrix
+remaining:
+  - Implement, test and publish; structured scoring and substantive supplier/commercial fit remain separate.
+last_verified_commit: 49fc850900451cdb1da0a80423a05a97201accc0
+test_results: []
+resume_instruction: Preserve WSF07B, archived sources and no live acquisition, DB mutation, Gemma, Workspace admission or automatic merge.
