@@ -374,14 +374,18 @@ completed:
 - Reviewed registry Web/iOS with exact compiled release/public projection pins; real
   Chrome smoke at desktop/mobile widths; actual iOS XCTest; isolated migrated PostgreSQL
   concurrent approval and binding/withdrawal acceptance.
-current_stage: price01_staging_acceptance
+- 'Real disposable local HTTPS staging: Web norm-bound itemized save v2, actual native
+  macOS and iOS Simulator XCTest read and verify same server data, foreign tenant
+  404. Release/projection pin consistency and default-off gates checked.'
+current_stage: price01_local_https_staging_verified_release_gate
 remaining:
-- 'Live staging end-to-end Web/native UI with a non-production backend; verify feature
-  gating/deployment readiness and exact reviewed real contract evidence. Real source
-  acquisition separate: empty initial registry. Feature gates off until separate GO.'
+- 'Release-readiness review: inspect stacked PR dependency/CI and deployment packaging,
+  document activation and rollback plan without deploying. Real contract source publication
+  separate; initial registry empty. Physical device and interactive SwiftUI verification
+  and approved deployment target/GO remain explicit release boundaries.'
 - B2B approved manual observation/document acquisition and legacy cutover; no repeat
   live pilot.
-last_verified_commit: 7cb0dddd53164a9b5175c2abec5bad54382e5bfe
+last_verified_commit: 31af52c1350100fc9f0aea263c76576914da5072
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -630,8 +634,15 @@ test_results:
   race test 1 PASS, temporary cluster stopped and removed; Ruff/diff PASS; PR600 CI
   19/19. Final broad regression 337 passed, 3 skipped (PG opt-in separately passed),
   144 warnings in 18.57s; Node and Ruff/diff PASS.
-resume_instruction: Run disposable loopback HTTP backend and real browser/native client
-  acceptance; no network procurement calls, production or MacBook.
+- Full local HTTPS run Web/macOS native/iOS Simulator 1 live XCTest PASS, exit 0;
+  Xcode build-for-testing PASS; targeted regression 116 PASS/3 skipped/139 warnings
+  in 36.41s; Node flow and Ruff/diff PASS; temporary server/data removed and simulator
+  shut down.
+resume_instruction: PRICE-01 real HTTPS local staging acceptance verified at 31af52c1.
+  Next review release/stacked PR integration and deployment readiness without production
+  changes; do not assert real contract evidence exists. Read PRICE01_STAGING_AND_RELEASE_GATE_2026-11-17.md.
+  Physical device/interactive SwiftUI and owner GO separate; B2B unresolved. No MacBook
+  or live procurement traffic.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
