@@ -1,15 +1,19 @@
 task_id: TA-PRICE01-RELEASE-PACKAGING-20261117
-status: in_progress
+status: completed
 goal: Preserve the pinned reviewed-contract registry at its exact runtime path in local and pilot images.
 definition_of_done:
   - Explicit release file COPY in local and pilot Dockerfiles.
   - Regression proves source and nested destination paths.
-  - Verify source digest, static tests and diff.
+  - Verify source digest, static tests, isolated local image runtime and diff.
 completed:
-  - Found missing runtime asset in both Dockerfiles; root Dockerfile already copies docs.
-current_stage: regression
-remaining:
-  - Execute checks and record exact commit.
-last_verified_commit: 31af52c1
-test_results: []
-resume_instruction: Run packaging tests and verify release SHA; no runtime deployment.
+  - Added exact nested release COPY in local and pilot Dockerfiles.
+  - Static packaging tests 3/3 PASS and pinned SHA256 PASS.
+  - Local overlay image built offline and actual loader accepts release with exact SHA.
+current_stage: completed
+remaining: []
+last_verified_commit: 8678c917aad8b494375fef04c7b2ed4713305ac2
+test_results:
+  - Static packaging tests 3/3 PASS; git diff check PASS.
+  - Offline local image sha256:7c911a4fa7fd77e3aaabf3a70a24c83ceb4fd4f0f3cfc5989bfd2b30b10d9cf4; actual loader PASS.
+  - Pilot Dockerfile path verified statically; full pilot image not rebuilt.
+resume_instruction: Integrate packaging code commit 8678c917 after ongoing PRICE01 staging branch; do not deploy or overwrite concurrent worktree.

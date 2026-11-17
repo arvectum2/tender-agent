@@ -666,3 +666,10 @@ parallel_dtr_product:
   current_stage: price01_local_https_staging_verified_release_gate
   branch: feat/ta-price01-staging-acceptance-20261117
   owner_priority: Product development only in this chat; research separate; Gemma paused
+
+price01_integration_20261117:
+  task_id: TA-PRICE01-INTEGRATION-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-PRICE01-INTEGRATION-20261117.yaml
+  branch: feat/ta-price01-integration-20261117
+  current_stage: targeted_regression

@@ -17,7 +17,9 @@ def test_company_portfolio_browser_script():
         cwd=root,
         env={**os.environ, "PYTHON": sys.executable},
         check=True,
-        timeout=20,
+        # The fixture invokes the independent Python backend repeatedly; allow
+        # loaded CI runners time for imports, while keeping a bounded timeout.
+        timeout=90,
         capture_output=True,
         text=True,
     )

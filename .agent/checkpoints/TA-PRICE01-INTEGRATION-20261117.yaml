@@ -1,0 +1,19 @@
+task_id: TA-PRICE01-INTEGRATION-20261117
+status: in_progress
+goal: Reconcile PRICE-01 accepted staging, runtime packaging and full CI on a consolidated integration candidate.
+definition_of_done:
+  - Preserve existing accepted HTTPS Web/native/iOS evidence and package pinned registry.
+  - Resolve CI failure and run affected regressions.
+  - Review dependency stack against main and validate exact candidate CI before merge.
+  - No production activation or real contract publication.
+completed:
+  - Stage acceptance passed at 31af52c1; PR 602 checkpoint 2a3faa8b.
+  - Packaging fix cherry-picked from 8678c917.
+  - PR601 quality failure isolated to Node fixture exceeding 20 seconds; 5984 other tests passed. Bounded fixture allowance increased to 90 seconds.
+current_stage: targeted_regression
+remaining:
+  - Run focused tests and publish consolidated review candidate.
+  - Exact full CI and integration review.
+last_verified_commit: 2a3faa8b
+test_results: []
+resume_instruction: Run affected packaging, registry and browser fixture tests; then publish consolidated candidate, preserve existing drafts and production.
