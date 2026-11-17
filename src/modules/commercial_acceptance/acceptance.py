@@ -307,7 +307,7 @@ def evaluate_observation(case: dict, obj: dict) -> dict:
         "reviewed_fields": fields, "corrected_fields": corrections,
         "required_facts": required, "unsupported_facts": unknown,
         "blockers_missed": len(missed), "false_go_no_go": false_decision,
-        "decision_comparison_count": int(report_decision in {"GO", "NO_GO"}),
+        "decision_comparison_count": int(report_decision in {"GO", "NO_GO"} and decision in {"GO", "NO_GO"}),
         "package_reviewed": int(package["reviewed"]),
         "package_reworked": int(package["reviewed"] and package["required_rework"]),
         "regressions": found,
@@ -344,7 +344,7 @@ def score(manifest: dict, observations: dict[str, dict], thresholds: dict) -> di
         "manual_correction_rate": _rate(sums("corrected_fields"), sums("reviewed_fields")),
         "citation_coverage": _rate(sums("claims_cited"), sums("claims_total")),
         "unknown_rate": _rate(sums("unsupported_facts"), sums("required_facts")),
-        "missed_blockers": sums("blockers_missed"),
+        "missed_blockers": sums("blockers_missed") if ready else None,
         "false_go_no_go": _rate(sums("false_go_no_go"), sums("decision_comparison_count")),
         "application_package_rework": _rate(sums("package_reworked"), sums("package_reviewed")),
     }
