@@ -70,6 +70,17 @@ def answer_grounded_question(run_id: str, request: GroundedQuestion) -> dict:
               'scope_complete': False, 'semantic_answer_verified': False, 'bid_ready': False,
               'current_revision_attested': False, 'legal_requirement_attested': False,
               'requires_human_review': True, 'external_action_allowed': False}
+    if q == 'покажи архивные сведения 223-фз':
+        from src.modules.tender_operator_agent_demo.evidence_ri223_archive import (
+            ri223_archive_observation,
+        )
+
+        run, metadata = checked_search_run(run_id)
+        observation = ri223_archive_observation(run, metadata)
+        return {**result,'intent':'ri223_archive','status':observation['status'],
+                'reason':observation.get('reason'),'observation':observation,
+                'citations':observation['citations'],'citation_kind':'RI223_ARCHIVED_XML',
+                'answer':'Архивные сведения 223-ФЗ. Цена только единственного лота; часовой пояс срока не установлен. Текущий статус, обеспечение и право участия не подтверждены.'}
     # Only explicit templates are composed. Unrecognized extra instructions still abstain.
     brief = re.fullmatch(r'(?:сводка|составь сводку) условий закупки (услуг|работ|товаров)(?: с расч[её]том ([0-9]{1,3}(?:[.,][0-9]{1,4})?)\s*% нмцк)?', q)
     comparison_brief = re.fullmatch(r'сопоставь обеспечение (заявки|исполнения контракта) и статью (44|96) 44-фз из копии от ([0-9]{2}\.[0-9]{2}\.[0-9]{4})', q)

@@ -14,7 +14,7 @@ assert.equal(target.hostname,'127.0.0.1');assert.equal(target.protocol,'http:');
   const l=id=>page.locator('#'+id);
   await page.goto(origin+'/pilot/tender-agent/workspace?run='+run);
   await l('copilot-panel').waitFor({state:'visible'});
-  if(process.env.APR08_BROWSER_SCENARIO==='pinned') assert(await l('report-panel').isHidden());
+  if(['pinned','ri223'].includes(process.env.APR08_BROWSER_SCENARIO)) assert(await l('report-panel').isHidden());
   else await l('report-panel').waitFor({state:'visible'});
   await page.getByText('Evidence Copilot — вопросы и расчёт по закупке',{exact:true}).click();
   const ask=async(question,pattern)=>{
@@ -24,6 +24,17 @@ assert.equal(target.hostname,'127.0.0.1');assert.equal(target.protocol,'http:');
     await page.waitForFunction(({id,text})=>document.getElementById(id).innerText.includes(text),{id:'copilot-answer-result',text:pattern});
     return await l('copilot-answer-result').innerText();
   };
+  if(process.env.APR08_BROWSER_SCENARIO==='ri223') {
+    const observed=await ask('Покажи архивные сведения 223-ФЗ','Цена единственного лота: 191352');
+    assert.match(observed,/Запрос котировок/);assert.match(observed,/2026-10-15T10:00:00/);
+    assert.match(observed,/часовой пояс UNKNOWN/);assert.match(observed,/Валюта лота: RUB/);
+    assert.match(observed,/правовой статус закупки, обеспечение и победитель: UNKNOWN/);
+    assert.equal(await l('copilot-answer-result').getByText('Проверенный оригинал XML ЕИС:',{exact:false}).count(),5);
+    await l('copilot-answer-result').screenshot({path:process.env.APR08_SCREENSHOT_DIR+'/ri223.png'});
+    await ask('Какова НМЦК?','UNKNOWN');await ask('Какой размер обеспечения заявки?','UNKNOWN');
+    assert.deepEqual(errors,[]);assert(await l('report-panel').isHidden());
+    console.log('APR03B_RI223_BROWSER_PASS five cited fields, no 44-FZ fallback');return;
+  }
   if(process.env.APR08_BROWSER_SCENARIO==='pinned') {
     const fixed=async(question,pattern,percent)=>{
       await l('copilot-question').selectOption(question);

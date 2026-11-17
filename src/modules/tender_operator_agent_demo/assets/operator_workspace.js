@@ -348,10 +348,17 @@
   }
 
   function renderSingleGroundedAnswer(root,data,runId) {
-      if(data.run_id!==runId || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION','TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','ARCHIVED_SECURITY_FIELDS','LITERAL_PERFORMANCE_OBSERVATIONS','CUSTOMER_TERMS_LEGAL_REFERENCES','HISTORICAL_STATUTE_SNAPSHOT_EXCERPT','SECONDARY_AMENDMENT_TIMING_ONLY','GOVERNMENT_COPY_LIST_COMPARISON'].includes(data.status) || !Array.isArray(data.citations) || !data.citations.length) {
+      if(data.run_id!==runId || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION','TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','ARCHIVED_SECURITY_FIELDS','LITERAL_PERFORMANCE_OBSERVATIONS','CUSTOMER_TERMS_LEGAL_REFERENCES','HISTORICAL_STATUTE_SNAPSHOT_EXCERPT','SECONDARY_AMENDMENT_TIMING_ONLY','GOVERNMENT_COPY_LIST_COMPARISON','PINNED_RI223_ARCHIVED_NOTICE'].includes(data.status) || !Array.isArray(data.citations) || !data.citations.length) {
         paragraph(root,'UNKNOWN · Вопрос не поддерживается или доказательство не найдено.','unknown');return;
       }
-      if(['TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','LITERAL_PERFORMANCE_OBSERVATIONS'].includes(data.status) && data.citation_kind==='ORIGINAL_DP_CHUNK') {
+      if(data.status==='PINNED_RI223_ARCHIVED_NOTICE' && data.citation_kind==='RI223_ARCHIVED_XML' && data.observation?.regime==='223fz') {
+        paragraph(root,data.answer,'help-text');
+        const o=data.observation;
+        for(const [key,label] of [['subject','Предмет'],['method','Способ закупки'],['archived_submission_deadline','Архивный срок подачи (часовой пояс UNKNOWN)'],['single_lot_initial_sum','Цена единственного лота'],['single_lot_currency','Валюта лота']]) paragraph(root,label+': '+(o.fields[key]??'UNKNOWN'));
+        renderCitations(root,data.citations,{originalVerified:true});
+        paragraph(root,'SHA-256 XML: '+data.citations[0].source_sha256+' · ZIP: '+data.citations[0].archive_sha256,'help-text');
+        paragraph(root,'Редакция '+o.observed_version+'; правовой статус закупки, обеспечение и победитель: UNKNOWN.','help-text');
+      } else if(['TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','LITERAL_PERFORMANCE_OBSERVATIONS'].includes(data.status) && data.citation_kind==='ORIGINAL_DP_CHUNK') {
         paragraph(root,data.answer,'help-text');
         if(data.status==='LITERAL_PAYMENT_OBSERVATION' && data.observation) {
           const o=data.observation;
