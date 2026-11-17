@@ -1,16 +1,24 @@
-from dataclasses import replace
-from datetime import datetime, timedelta, timezone
 import json
 import unittest
+from dataclasses import replace
+from datetime import UTC, datetime, timedelta
 
 from sqlalchemy import create_engine, event
 from sqlalchemy.orm import Session
 from sqlalchemy.schema import CreateTable
+from src.modules.procurement_portfolio.workspace_reference import (
+    ReferenceDenied,
+    ReferenceScope,
+    read_internal_procurement,
+)
 
 from src.modules.deal_registry.models import Deal
 from src.modules.event_log.models import DecisionRecord, EventRecord
-from src.modules.outcome_intake.models import OutcomeIntakeBinding, OutcomeIntakeRecord, OutcomeIntakeSet
-from src.modules.procurement_portfolio.workspace_reference import ReferenceDenied, ReferenceScope, read_internal_procurement
+from src.modules.outcome_intake.models import (
+    OutcomeIntakeBinding,
+    OutcomeIntakeRecord,
+    OutcomeIntakeSet,
+)
 from src.modules.tender_screening.models import TenderScreeningRecord
 
 
@@ -24,7 +32,7 @@ class InternalProcurementReferenceTests(unittest.TestCase):
                 connection.execute(CreateTable(model.__table__, include_foreign_key_constraints=[]))
         self.session = Session(self.engine)
         self.addCleanup(self.session.close)
-        self.now = datetime(2026, 11, 17, 12, tzinfo=timezone.utc)
+        self.now = datetime(2026, 11, 17, 12, tzinfo=UTC)
         self.scope = ReferenceScope("fixture-binding", "a" * 40, "fixture-database",
             frozenset({"DL-fixture"}), self.now - timedelta(hours=1), self.now + timedelta(days=1))
         for key in ("DL-fixture", "DL-other"):
@@ -82,7 +90,7 @@ class InternalProcurementReferenceTests(unittest.TestCase):
         for scope in (missing, replace(self.scope, expires_at=self.now),
                       replace(self.scope, deal_ids=frozenset(str(i) for i in range(22)))):
             with self.assertRaises(ReferenceDenied):
-                self.read(scope=scope, authorize=lambda: scope)
+                self.read(scope=scope, authorize=lambda scope=scope: scope)
         with self.assertRaises(ReferenceDenied):
             self.read(authorize=lambda: None)
         calls = iter((self.scope, None))
