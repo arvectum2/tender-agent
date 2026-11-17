@@ -70,6 +70,48 @@ def answer_grounded_question(run_id: str, request: GroundedQuestion) -> dict:
               'scope_complete': False, 'semantic_answer_verified': False, 'bid_ready': False,
               'current_revision_attested': False, 'legal_requirement_attested': False,
               'requires_human_review': True, 'external_action_allowed': False}
+    # Only explicit templates are composed. Unrecognized extra instructions still abstain.
+    brief = re.fullmatch(r'(?:сводка|составь сводку) условий закупки (услуг|работ|товаров)(?: с расч[её]том ([0-9]{1,3}(?:[.,][0-9]{1,4})?)\s*% нмцк)?', q)
+    comparison_brief = re.fullmatch(r'сопоставь обеспечение (заявки|исполнения контракта) и статью (44|96) 44-фз из копии от ([0-9]{2}\.[0-9]{2}\.[0-9]{4})', q)
+    if brief or comparison_brief:
+        if brief:
+            subject = brief[1]
+            payment = {'услуг':'Какой срок оплаты услуг?', 'работ':'Какой срок оплаты работ?', 'товаров':None}[subject]
+            performance = {'услуг':'Какой срок оказания услуг?', 'работ':'Какой срок выполнения работ?', 'товаров':'Какой срок поставки товара?'}[subject]
+            plan = [('Предмет закупки','Что закупается?'), ('НМЦК','Какова НМЦК?'),
+                    ('Архивный срок подачи','Какой срок подачи заявок?'), ('Обеспечение заявки','Какой размер обеспечения заявки?'),
+                    ('Обеспечение исполнения','Какой размер обеспечения исполнения контракта?'),
+                    ('Срок оплаты '+subject,payment), ('Срок исполнения ('+subject+')',performance),
+                    ('Нормативные ссылки заказчика','Поясни требования к обеспечению исполнения контракта')]
+            if subject == 'товаров':
+                # Generic payment duration cannot be represented as goods-specific evidence.
+                plan[5] = ('Срок оплаты товара', None)
+            if brief[2]:
+                from pydantic import ValidationError
+
+                try:
+                    EvidenceQuestion(question='nmck_percent', percent=brief[2].replace(',', '.'))
+                except ValidationError:
+                    return {**result, 'reason':'INVALID_EXPLICIT_PERCENT'}
+                plan.append(('Сценарный расчёт '+brief[2]+'% НМЦК',f'Сколько составляет {brief[2]}% от НМЦК?'))
+        else:
+            scope, article, placement = comparison_brief.groups()
+            if (scope, article) not in (('заявки','44'),('исполнения контракта','96')):
+                return {**result,'reason':'UNSUPPORTED_OR_COMPOUND_QUESTION'}
+            plan = [('Размер обеспечения по извещению',f'Какой размер обеспечения {scope}?'),
+                    ('Нормативные ссылки заказчика',f'Поясни требования к обеспечению {scope}'),
+                    ('Явно выбранная копия закона',f'Покажи статью {article} 44-ФЗ из копии от {placement}')]
+        components = []
+        for label, question in plan:
+            child = (answer_grounded_question(run_id, GroundedQuestion(question=question)) if question else
+                     {**result,'reason':'UNSUPPORTED_GOODS_PAYMENT_SCOPE'})
+            components.append({'label':label,'question':question,'evidence':child})
+        count = sum(c['evidence']['status'] != 'UNKNOWN' and bool(c['evidence']['citations']) for c in components)
+        return {**result, 'intent':'composed_evidence', 'status':'COMPOSED_EVIDENCE_ONLY' if count else 'UNKNOWN',
+                'answer':'Составная сводка: каждый раздел имеет самостоятельный источник или UNKNOWN. Это не согласование требований, не проверка применимости закона и не решение об участии.',
+                'components':components, 'source_backed_component_count':count,
+                'current_law_status':'UNKNOWN','actual_profit_and_liquidity_status':'UNKNOWN',
+                'reason':'BOUNDED_INDEPENDENT_EVIDENCE_COMPONENTS'}
     agency_copy = re.fullmatch(r'(?:покажи|показать) статью ([0-9]{1,3}(?:\.[0-9]{1,2})?) (44|223)-фз из копии от ([0-9]{2})\.([0-9]{2})\.([0-9]{4})', q)
     comparison = re.fullmatch(r'сравни списки изменений (44|223)-фз', q)
     if agency_copy or comparison:

@@ -78,6 +78,17 @@ assert.equal(target.hostname,'127.0.0.1');assert.equal(target.protocol,'http:');
       }
 
     }
+    if(process.env.APR08_COMPOSED_BROWSER==='1') {
+      const brief=await ask('Составь сводку условий закупки работ с расчётом 5% НМЦК','Разделы с источниками: 7 из 9');
+      assert.match(brief,/1245000/);assert.match(brief,/62250[.]00/);assert.match(brief,/30[.]0%/);
+      assert.match(brief,/фактическая прибыль и потребность в средствах: UNKNOWN/);
+      assert.equal(await l('copilot-answer-result').locator('details').count(),9);
+      await l('copilot-answer-result').screenshot({path:process.env.APR08_SCREENSHOT_DIR+'/composed-xml.png'});
+      const comparison=await ask('Сопоставь обеспечение исполнения контракта и статью 96 44-ФЗ из копии от 03.11.2026','Разделы с источниками: 3 из 3');
+      assert.match(comparison,/Сумма в XML: UNKNOWN/);assert.match(comparison,/Статья 96[.] Обеспечение исполнения контракта/);assert.match(comparison,/содержание законодательства не проверено/);
+      await l('copilot-answer-result').screenshot({path:process.env.APR08_SCREENSHOT_DIR+'/composed-legal.png'});
+      console.log('APR08_COMPOSED_PINNED_BROWSER_PASS brief 7/9 legal comparison 3/3');
+    }
     await ask('Можно ли подписывать контракт?','UNKNOWN');
     await l('copilot-answer-question').fill('другой вопрос');assert.equal(await l('copilot-answer-result').innerText(),'');
     assert(await l('report-panel').isHidden()); assert.deepEqual(errors,[]);
@@ -92,6 +103,14 @@ assert.equal(target.hostname,'127.0.0.1');assert.equal(target.protocol,'http:');
   await l('copilot-answer-result').screenshot({path:process.env.APR08_SCREENSHOT_DIR+'/delivery.png'});
   await ask('Можно ли подписывать контракт?','UNKNOWN');
   await ask('Какова НМЦК?','UNKNOWN'); // this legacy archived run has no pinned notice receipt
+  if(process.env.APR08_COMPOSED_BROWSER==='1') {
+    const brief=await ask('Составь сводку условий закупки услуг','Разделы с источниками: 2 из 8');
+    assert.match(brief,/7 рабочих дней/);assert.match(brief,/07[.]12[.]2026/);assert.match(brief,/SHA-256 оригинала/);assert.match(brief,/UNKNOWN/);
+    assert.equal(await l('copilot-answer-result').locator('details').count(),8);
+    await l('copilot-answer-result').screenshot({path:process.env.APR08_SCREENSHOT_DIR+'/composed-documents.png'});
+    console.log('APR08_COMPOSED_DP_BROWSER_PASS brief 2/8 independent original citations');
+  }
+
   await l('copilot-search').fill('оплата работ');await l('copilot-search-submit').click();
   await page.waitForFunction(()=>document.getElementById('copilot-search-result').innerText.includes('SHA-256'));
   await l('copilot-search').fill('иная тема');assert.equal(await l('copilot-search-result').innerText(),'');

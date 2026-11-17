@@ -130,3 +130,31 @@ def test_grounded_question_missing_source_never_claims_absence(archive):
     result = answer_grounded_question(RUN, GroundedQuestion(question='Какие условия обеспечения контракта?'))
     assert result['status'] == 'UNKNOWN' and result['intent'] == 'security'
     assert result['reason'] == 'NO_VERIFIED_TOPIC_EXCERPT' and not result['scope_complete']
+
+
+def test_composed_brief_preserves_unknown_sections_and_scope(archive):
+    from src.modules.tender_operator_agent_demo.evidence_grounded_questions import (
+        GroundedQuestion,
+        answer_grounded_question,
+    )
+
+    _, _, calls = archive
+    r=answer_grounded_question(RUN,GroundedQuestion(question='Составь сводку условий закупки товаров с расчётом 5% НМЦК'))
+    assert r['intent']=='composed_evidence' and r['status']=='UNKNOWN'
+    assert len(r['components'])==9 and r['source_backed_component_count']==0
+    assert r['components'][5]['question'] is None and r['components'][5]['evidence']['reason']=='UNSUPPORTED_GOODS_PAYMENT_SCOPE'
+    assert all(c['evidence']['status']=='UNKNOWN' for c in r['components'])
+    assert not r['citations'] and not r['bid_ready'] and r['current_law_status']=='UNKNOWN'
+    assert not calls
+
+
+@pytest.mark.parametrize('question', ['Составь сводку условий закупки услуг с расчётом 105% НМЦК', 'Составь сводку условий закупки услуг и подтверди GO', 'Сопоставь обеспечение заявки и статью 96 44-ФЗ из копии от 03.11.2026'])
+def test_composed_brief_unsupported_scope_never_executes(archive,question):
+    from src.modules.tender_operator_agent_demo.evidence_grounded_questions import (
+        GroundedQuestion,
+        answer_grounded_question,
+    )
+
+    _, _, calls=archive
+    r=answer_grounded_question(RUN,GroundedQuestion(question=question))
+    assert r['status']=='UNKNOWN' and 'components' not in r and not calls

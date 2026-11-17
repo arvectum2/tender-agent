@@ -317,3 +317,19 @@ def test_customer_legal_references_tampered_original_abstains(archive):
     target.write_bytes(target.read_bytes() + b' ')
     result = legal_reference_observation('run', 'contract_security')
     assert result['status'] == 'UNKNOWN' and not result['citations']
+
+
+def test_composed_brief_keeps_archive_and_scenario_separate(archive, monkeypatch):
+    from src.modules.tender_operator_agent_demo import evidence_grounded_questions as qa
+
+    monkeypatch.setattr(qa, 'checked_search_run', lambda _id: (archive[0], archive[1]))
+    monkeypatch.setattr(qa, 'search_run_documents', lambda *args, **kwargs: {'status':'UNKNOWN','citations':[]})
+    r=qa.answer_grounded_question('run',qa.GroundedQuestion(question='Составь сводку условий закупки услуг с расчётом 5% НМЦК'))
+    assert r['status']=='COMPOSED_EVIDENCE_ONLY' and len(r['components'])==9
+    parts=[c['evidence'] for c in r['components']]
+    assert parts[1]['answer']=='400000.00' and parts[8]['answer']=='20000.00'
+    assert parts[8]['status']=='HYPOTHETICAL_CALCULATION'
+    assert parts[5]['status']==parts[6]['status']=='UNKNOWN'
+    assert parts[4]['observation']['amount'] is None
+    assert not r['citations'] and not r['legal_requirement_attested'] and not r['semantic_answer_verified']
+    assert not r['bid_ready'] and not r['external_action_allowed'] and r['actual_profit_and_liquidity_status']=='UNKNOWN'

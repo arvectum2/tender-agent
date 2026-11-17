@@ -333,6 +333,21 @@
       const data=await json(api+'/workspace/runs/'+encodeURIComponent(runId)+'/evidence-answer',
         {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question})});
       if(state.runId!==runId || epoch!==state.copilotAnswerEpoch) return;
+      if(data.run_id===runId && data.intent==='composed_evidence' && ['COMPOSED_EVIDENCE_ONLY','UNKNOWN'].includes(data.status) && Array.isArray(data.components) && data.components.length<=9) {
+        paragraph(root,data.answer,'help-text');
+        paragraph(root,'Разделы с источниками: '+data.source_backed_component_count+' из '+data.components.length);
+        for(const section of data.components) {
+          const detail=document.createElement('details');detail.className='quote-review';detail.open=true;
+          const summary=document.createElement('summary');summary.textContent=section.label;detail.append(summary);
+          renderSingleGroundedAnswer(detail,section.evidence,runId);root.append(detail);
+        }
+        paragraph(root,'Действующая редакция законодательства, фактическая прибыль и потребность в средствах: UNKNOWN.','help-text');
+      } else renderSingleGroundedAnswer(root,data,runId);
+    }catch(error){if(state.runId===runId && epoch===state.copilotAnswerEpoch)paragraph(root,'UNKNOWN · Проверка не выполнена.','unknown');}
+    finally{setBusy(false);}
+  }
+
+  function renderSingleGroundedAnswer(root,data,runId) {
       if(data.run_id!==runId || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION','TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','ARCHIVED_SECURITY_FIELDS','LITERAL_PERFORMANCE_OBSERVATIONS','CUSTOMER_TERMS_LEGAL_REFERENCES','HISTORICAL_STATUTE_SNAPSHOT_EXCERPT','SECONDARY_AMENDMENT_TIMING_ONLY','GOVERNMENT_COPY_LIST_COMPARISON'].includes(data.status) || !Array.isArray(data.citations) || !data.citations.length) {
         paragraph(root,'UNKNOWN · Вопрос не поддерживается или доказательство не найдено.','unknown');return;
       }
@@ -391,8 +406,6 @@
         renderCitations(root,data.citations,{originalVerified:true});
       } else {paragraph(root,'UNKNOWN · Неизвестный вид доказательства.','unknown');return;}
       paragraph(root,'Исторические материалы. Полнота, актуальность и право участия не подтверждены.','help-text');
-    }catch(error){if(state.runId===runId && epoch===state.copilotAnswerEpoch)paragraph(root,'UNKNOWN · Проверка не выполнена.','unknown');}
-    finally{setBusy(false);}
   }
 
   async function searchEvidenceDocuments(event) {
