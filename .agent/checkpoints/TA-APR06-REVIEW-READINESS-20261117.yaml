@@ -1,5 +1,5 @@
 task_id: TA-APR06-REVIEW-READINESS-20261117
-status: in_progress
+status: completed
 goal: Reconcile frozen 20-case development evidence with existing commercial acceptance candidates without promoting development labels into human or legal gold.
 definition_of_done:
   - Reuse pinned cohort integrity audit and exact candidate pool provenance.
@@ -17,11 +17,14 @@ completed:
   - Verified additional four DEVELOPMENT-only 44-FZ ZIP/XML and 21 original binary attachments.
   - Reverified six supplemental historical RI223 archives, ten archived attachment references plus one RAR, exact notice/protocol binding, and original candidate receipt gaps.
   - Exact prior PR605 da55fa7c CI 19/19 SUCCESS.
-current_stage: mixed_archive_ci_pending
-remaining:
-  - Verify exact CI on successor PR.
-  - Commercial acceptance stays blocked pending independent original-source and attributable human reviews; no fabricated metrics.
-last_verified_commit: 08e97473fe849b0b622b5af4cb30ca3b25ad7121
+  - Exact PR605 d3f92266 CI 19/19, 6003 tests passed / 288 skipped.
+  - Prepared pinned 21-case archival shortlist (20 44-FZ / one 223-FZ, 100 original attachment references), reproduced byte-identically.
+current_stage: engineering_readiness_completed_commercial_blocked
+remaining: []
+external_commercial_blockers:
+  - Independent official source and representative mixed-law corpus approval.
+  - Attributed human reviews, time-to-decision, package reviews and owner-approved thresholds.
+last_verified_commit: fdf7c2d5b003cf07d5f86c59bb693d2454c82428
 test_results:
   - 51 targeted pytest PASS; Ruff and git diff check PASS.
   - Deterministic output byte comparison PASS. 28 candidates, 20 archived development, 16 overlap, 12 candidate-only, 4 development-only, 32 unique inventory entries.
@@ -32,4 +35,5 @@ test_results:
   - 117 targeted tests PASS; deterministic findings artifact rerun byte-identical; Ruff PASS.
   - 72 targeted tests PASS; Ruff and byte-identical mixed archive replay PASS. 44-FZ full historical DEVELOPMENT coverage now 20 archives / 96 attached originals.
   - Supplemental RI223: three single-supplier negative controls, one fully archived quotation candidate, one multi-lot competitive candidate with missing binaries, one market-research method requiring classification. Eleven binary references verified including exact source RAR/PDF scoring; eight original APR06 223-FZ candidates still lack independently complete revision-bound documentation.
-resume_instruction: Verify exact new PR605 CI, then delimit completed engineering readiness from externally blocked commercial acceptance. Prepare explicit supplemental review shortlist (20 historical 44-FZ plus complete quotation candidate, not frozen) and do not promote noncompetitive controls, ambiguous market research, or incomplete multi-lot materials into commercial corpus. If source recovery cannot proceed without new EIS requests, mark objective external blocker and move to next independent engineering roadmap item; no Gemma, live requests, production, unauthorized merge or fabricated commercial metrics.
+  - Shortlist final increment 28 targeted tests PASS and deterministic artifact. Full CI on prior exact head d3f92266 SUCCESS; final shortlist increment CI pending.
+resume_instruction: Bounded archival engineering review complete; final increment requires exact CI before merge. Commercial gate remains independently blocked; no paid pilot or commercial acceptance claim. Continue APR07 without model invocation or promotion, using existing ops observability and synthetic isolated data for rolling measurement tests.

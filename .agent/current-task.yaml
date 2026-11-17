@@ -686,7 +686,7 @@ apr05_release_rehearsal_20261117:
 
 apr06_review_readiness_20261117:
   task_id: TA-APR06-REVIEW-READINESS-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR06-REVIEW-READINESS-20261117.yaml
   branch: feat/ta-apr06-review-readiness-20261117
-  current_stage: mixed_archive_ci_pending
+  current_stage: engineering_readiness_completed_commercial_blocked
