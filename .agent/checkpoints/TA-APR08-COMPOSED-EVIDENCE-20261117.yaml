@@ -7,9 +7,14 @@ definition_of_done:
   - Regression, publish draft and verify CI.
 completed:
   - PR625 exact head 17/19, no failures; source copies and browser prior verified.
-current_stage: bounded_composed_evidence_brief
+  - Implemented exact brief template for explicitly selected works/services/goods, optional explicitly supplied NMCK percentage, and exact security plus specified government-copy article comparison. Independent evidence/status/citations, all-UNKNOWN preserved, no cross-source inference. Goods payment explicitly unsupported.
+  - Real Chromium pinned XML brief 7/9 and legal comparison 3/3; real DP archive brief 2/8, previous workflows PASS, repeated after scope labels adjusted. Original archives unchanged, no model.
+current_stage: exact_ci_pending
 remaining:
-  - Implement, verify, publish and check CI.
-last_verified_commit: a763aaf8cf78b9c4b7f0ba16a23c77eba15caf7a
-test_results: []
+  - Verify exact new PR CI and PR625 CI.
+  - Integrated final module acceptance and residual gap audit; authoritative effective-date law gate remains blocked; no general semantic reasoning claim.
+last_verified_commit: e0b422174205a715818feddaf01a9e834e61f4b7
+test_results:
+  - 223 focused PASS, Ruff, diff, JS syntax and Node simulation PASS; post-label change 50 focused PASS.
+  - APR08_COMPOSED_PINNED_BROWSER_PASS and APR08_COMPOSED_DP_BROWSER_PASS twice; prior statutes, copies, amendment, security and real DP regressions PASS.
 resume_instruction: Explicit bounded composed questions only; preserve individual source scopes and UNKNOWN, no production, live procurement, Gemma or auto merge.

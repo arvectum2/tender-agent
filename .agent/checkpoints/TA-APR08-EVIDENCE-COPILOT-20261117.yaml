@@ -23,13 +23,14 @@ completed:
   - Versioned immutable historical statute snapshot corpus, real Rospatent 44-FZ source, 6 article excerpts and Chromium positive/negative flow PASS; no normative effective interval or actual applicability.
   - Cross-checked pinned secondary 279-FZ commencement groups, five date replays and real Chromium PASS; official portal unavailable, no verified effective interval or current law. PR621/622 CI green.
   - Four additional actual government-hosted law copies pinned; 19 bounded excerpts and two amendment-list comparisons, 218 focused and real Chromium PASS. PR623 exact CI green. Official current law remains unverified.
-current_stage: multiedition_review_composed_semantic_and_final_gate_next
+  - Bounded composed independently sourced briefs and explicit security/historical article comparison implemented; real pinned XML and DP Chromium PASS, partial unknowns retained; 223 focused tests PASS.
+current_stage: composed_review_integrated_acceptance_next
 remaining:
   - Verify reproducible APR08 real DP acceptance successor CI.
   - Develop bounded semantic evidence grounded Q&A, legal reasoning boundaries and explicit assumption-based commercial calculations.
   - Real browser acceptance, complete module gate and separate integration consent.
-last_verified_commit: 62aaabbb266eb16096d7bd7ea8077532ce7c65cd
+last_verified_commit: e0b422174205a715818feddaf01a9e834e61f4b7
 test_results:
   - 108 targeted PASS, Ruff/Node syntax/diff check PASS, existing Node UI simulation genuine scenario extension PASS.
   - Real archived XML v3 exact SHA replay 4/4, missing pinned metadata 4/4 UNKNOWN; no live sources/model/production.
-resume_instruction: Verify latest stack CI, then implement bounded multi-evidence questions with explicit independent source classes and unknowns, final integrated acceptance. Keep official consolidated law/effective dates blocked until independent authoritative receipts exist; avoid repeat unproductive searches. No production, live procurement, model or automatic merge.
+resume_instruction: Verify exact latest PR stack CI; perform integrated APR08 module acceptance and explicit remaining gap audit, including general semantic and authoritative as-of law limitations. Do not call full APR08 complete absent DoD; no production, live procurement, model or automatic merge.
