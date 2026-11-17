@@ -1,0 +1,15 @@
+task_id: TA-APR08-MULTIEDITION-CORPUS-20261117
+status: in_progress
+goal: Bind multiple dated government-hosted 44-FZ and 223-FZ copies, distinguish source upload date from effective edition, expose selected article excerpts and amendment coverage differences.
+definition_of_done:
+  - Pinned raw copies and bounded extracted evidence for both laws; strict explicit snapshot identity, no automatic as-of promotion.
+  - Compare source amendment headers; actual newer and older snapshots, safe refusal.
+  - Regression, real source replay and browser, draft PR and exact CI.
+completed:
+  - PR623 17/19, no failures. Actual MCHS and Saratov copies fetched. September 44-FZ copy lacks 278-FZ in header; August 2024 223-FZ copy lacks 318-FZ. November MCHS 44-FZ includes 278/279/330; June 2025 MCHS 223-FZ includes 232/318.
+current_stage: government_source_multiple_snapshot_receipts
+remaining:
+  - Implement, test, publish, verify CI. Official as-of applicability remains blocked.
+last_verified_commit: c7ad209d2c867281a5ea3043631b9fbf0fc43748
+test_results: []
+resume_instruction: Prefer government-hosted files, preserve headings, dates and missing amendments; no law applicability claim, no production, model, live procurement or merge.

@@ -832,3 +832,10 @@ apr08_effective_date_20261117:
   branch: feat/ta-apr08-effective-date-20261117
   current_stage: exact_ci_pending
   last_verified_commit: 1d8dbe64487ce5c207bc3a58dfc16aca3f52db4e
+
+apr08_multiedition_corpus_20261117:
+  task_id: TA-APR08-MULTIEDITION-CORPUS-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR08-MULTIEDITION-CORPUS-20261117.yaml
+  branch: feat/ta-apr08-multiedition-corpus-20261117
+  current_stage: government_source_multiple_snapshot_receipts
