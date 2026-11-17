@@ -8,10 +8,13 @@ definition_of_done:
   - Run affected regression tests, preserve checkpoint and publish review PR; no live deployment.
 completed:
   - PRICE-01 code merged with explicit Owner approval at b843f92c.
-current_stage: implementation
+  - Non-destructive rollback and tenant entitlement regression implemented and verified.
+current_stage: exact_ci_pending
 remaining:
-  - Implement and run bounded entitlement and rollback regression.
   - Review release rehearsal evidence and CI.
-last_verified_commit: b843f92ca129dcf9a57bd7935fb53ec31c1372dc
-test_results: []
-resume_instruction: Add isolated tests of PRICE-01 lifecycle and entitlement gates; no live tenant, payment or production changes.
+last_verified_commit: d5cc68a48979d587f43efc94db84a121d8950c58
+test_results:
+  - Synthetic API release rehearsal PASS; eight read routes and seven valid write/preview requests denied under both master flags, expired trial and suspension.
+  - Per-member legal hold 428; unchanged histories and idempotent replays; foreign isolation; no payment evidence.
+  - APR05, migration, packaging and Node UI regression 79 passed, 2 skipped, 140 warnings; focused rerun 1 PASS; Ruff/diff PASS.
+resume_instruction: Review exact PR CI; then continue isolated migrated PostgreSQL backup/restore rehearsal with saved histories and deployment packaging. No deployment, payments, live tenant or real contract publication.
