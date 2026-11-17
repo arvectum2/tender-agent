@@ -712,5 +712,5 @@ apr_integration_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR-INTEGRATION-20261117.yaml
   branch: checkpoint/ta-apr-integration-20261117
-  current_stage: integrated_local_acceptance_pass_final_ci_pending
+  current_stage: owner_authorized_sequential_merge
   last_verified_commit: 337b1c58cdd7e69c2250a65b7b49a3b825a12a77
