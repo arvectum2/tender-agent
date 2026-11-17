@@ -1,6 +1,7 @@
 """Replay one saved real archive through a disposable authenticated DP HTTP process."""
 from __future__ import annotations
 
+import base64
 import hashlib
 import os
 import secrets
@@ -64,14 +65,37 @@ def main() -> int:
                 os.environ.update(AI_CORP_TENDER_OPERATOR_DEMO_RUNS_DIR=str(RUNS),
                                   AI_CORP_RAG_DATA_PLATFORM_BASE_URL=base, AI_CORP_RAG_DATA_PLATFORM_API_KEY=key,
                                   AI_CORP_RAG_DATA_PLATFORM_TIMEOUT_SECONDS='12')
-                from src.modules.tender_operator_agent_demo.evidence_document_search import (
-                    DocumentSearchQuestion,
-                    search_run_documents,
+                from src.modules.tender_operator_agent_demo import (
+                    router as operator_router,
                 )
                 from src.shared.config.settings import get_settings
 
                 get_settings.cache_clear()
-                result = search_run_documents(RUN, DocumentSearchQuestion(query='оплата работ'))
+                from fastapi import FastAPI
+                from fastapi.testclient import TestClient
+
+                from src.shared.api.middleware import TenderPilotBasicAuthMiddleware
+
+                password = secrets.token_urlsafe(32)
+                os.environ.update(AI_CORP_PILOT_AUTH_ENABLED='true', AI_CORP_PILOT_AUTH_USERNAME='apr08-replay',
+                                  AI_CORP_PILOT_AUTH_PASSWORD=password,
+                                  AI_CORP_PILOT_AUTH_PROTECTED_PREFIXES='/pilot/tender-agent,/api/demo/tender-agent',
+                                  AI_CORP_PILOT_AUTH_PUBLIC_PATHS='/health')
+                get_settings.cache_clear()
+                app = FastAPI()
+                app.include_router(operator_router.router)
+                app.add_middleware(TenderPilotBasicAuthMiddleware, username='apr08-replay', password=password,
+                                   protected=('/pilot/tender-agent','/api/demo/tender-agent'), public=('/health',))
+                url = f'/api/demo/tender-agent/workspace/runs/{RUN}/evidence-search'
+                auth = {'Authorization': 'Basic ' + base64.b64encode(('apr08-replay:' + password).encode()).decode()}
+                with TestClient(app) as client:
+                    assert client.post(url, json={'query':'оплата работ'}).status_code == 401
+                    response = client.post(url, headers=auth, json={'query':'оплата работ'})
+                    assert response.status_code == 200
+                    result = response.json()
+                    absent = client.post(url, headers=auth, json={'query':'несуществующийтерминabcdef'})
+                    assert absent.status_code == 200 and absent.json()['status'] == 'UNKNOWN'
+                    assert not absent.json()['citations']
                 assert result['status'] == 'VERIFIED_EXCERPTS_ONLY' and result['citations']
                 assert result['verification_attempts'] <= 2 and not result['bid_ready'] and not result['scope_complete']
                 for cite in result['citations']:
