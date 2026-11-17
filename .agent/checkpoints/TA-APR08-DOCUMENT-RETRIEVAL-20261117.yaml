@@ -7,9 +7,15 @@ definition_of_done:
   - Adversarial regressions, UI simulation and archive replay; publish draft.
 completed:
   - PR610 exact head fd8c32f8 currently CI pending; main mirror passed.
-current_stage: bounded_local_candidate_and_original_quote_recheck
+  - Implemented private run-local lexical lookup, bounded candidate selection and existing original quote verifier; UI search and stale response reset.
+  - Actual saved archive replay returned UNKNOWN; diagnosed local DP authentication error and unsupported nested XML; excluded nested paths from candidate budget. Original bytes unchanged.
+current_stage: exact_ci_and_authorized_dp_replay_pending
 remaining:
-  - Implement, test, publish; verify exact CI.
-last_verified_commit: fd8c32f811c93508b80efb8c680819db83812249
-test_results: []
-resume_instruction: Work in this branch; use existing quote verifier on selected candidates only. No Gemma, procurement network, new DB, production or unapproved merge.
+  - Verify exact PR610 and successor CI; correct failures.
+  - Obtain sanctioned isolated DP process consumer configuration for real positive original replay; no credential disclosure or change to working service auth.
+  - Continue semantic grounded questions and calculations only after evidence path is accepted.
+last_verified_commit: 572a687a53425540a41fbfcbd6b954f90e265751
+test_results:
+  - 105 focused pytest PASS, Ruff/JS syntax/Node simulation/diff check PASS.
+  - Real archived query UNKNOWN; two candidate attempts, real DP authentication error confirmed; saved run bytes unchanged.
+resume_instruction: Check exact PR610/successor and main CI. Reproduce positive nonpersisting DP retrieval in isolated authorized environment, not production. Existing real DP 8094 returned DataPlatformAuthenticationError; do not weaken auth. Continue APR08 incrementally, no Gemma/live procurement/new DB/automatic merge.
