@@ -1,0 +1,15 @@
+task_id: TA-APR08-COMPOSED-EVIDENCE-20261117
+status: in_progress
+goal: Compose an explicit procurement brief with separately sourced archived facts, contract observations, customer legal references, explicit scenario calculation and unknowns.
+definition_of_done:
+  - Exact supported composite intent, no arbitrary compound question acceptance, bounded existing evidence routes, evidence kind and unknown retained independently.
+  - Real browser and original archive replay, no automatic GO/current statute or commercial decision.
+  - Regression, publish draft and verify CI.
+completed:
+  - PR625 exact head 17/19, no failures; source copies and browser prior verified.
+current_stage: bounded_composed_evidence_brief
+remaining:
+  - Implement, verify, publish and check CI.
+last_verified_commit: a763aaf8cf78b9c4b7f0ba16a23c77eba15caf7a
+test_results: []
+resume_instruction: Explicit bounded composed questions only; preserve individual source scopes and UNKNOWN, no production, live procurement, Gemma or auto merge.

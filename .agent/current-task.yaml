@@ -840,3 +840,10 @@ apr08_multiedition_corpus_20261117:
   branch: feat/ta-apr08-multiedition-corpus-20261117
   current_stage: exact_ci_pending
   last_verified_commit: 62aaabbb266eb16096d7bd7ea8077532ce7c65cd
+
+apr08_composed_evidence_20261117:
+  task_id: TA-APR08-COMPOSED-EVIDENCE-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR08-COMPOSED-EVIDENCE-20261117.yaml
+  branch: feat/ta-apr08-composed-evidence-20261117
+  current_stage: bounded_composed_evidence_brief
