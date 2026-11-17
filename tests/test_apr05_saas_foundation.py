@@ -2700,3 +2700,130 @@ def test_price01_postgres_concurrent_norm_and_estimate(monkeypatch):
     finally:
         app.dependency_overrides.pop(get_db_session,None)
         engine.dispose()
+
+
+def test_price01_pilot_entitlement_and_nondestructive_rollback(client, session, monkeypatch):
+    """Synthetic release rehearsal: deny access without deleting histories."""
+    from src.modules.saas_foundation.models import (
+        CompanyActualCostSnapshot,
+        CompanyCostNormVersion,
+        CompanyPriceScenario,
+    )
+    from src.tender_research.competitive_bid_protocol import AKSAY
+
+    tenant, owner = _seed(client, 'Synthetic rollback owner')
+    _, foreign = _seed(client, 'Synthetic rollback foreign tenant')
+    _legal(client, owner)
+    _legal(client, foreign)
+    h = _auth(owner)
+    base = '/api/saas/company-portfolio'
+    case = client.post(base + '/cases', headers=h, json={'registry_number': AKSAY})
+    assert case.status_code == 201, case.text
+    case_id = case.json()['case_id']
+    path = base + '/cases/' + case_id
+    prices, norms = path + '/price-scenarios', base + '/cost-norms'
+    flags = {'saas_company_' + name + '_enabled': True for name in (
+        'price_scenarios', 'price_itemized', 'cost_evidence', 'actual_costs',
+        'actual_evidence', 'actual_samples', 'cost_norms', 'cost_norm_binding',
+        'historical_comparables', 'reviewed_contract_registry')}
+    active = saas.get_settings().model_copy(update=flags)
+    settings = active
+    monkeypatch.setattr(saas, 'get_settings', lambda: settings)
+
+    def post(url, body, expected=201):
+        result = client.post(url, headers=h, json=body)
+        assert result.status_code == expected, result.text
+        return result.json()
+
+    estimate = {'lines': [{'category': 'own_labor_rub', 'title': 'Development', 'unit': 'h',
+        'quantity': '10', 'rate_rub': '1000', 'source_kind': 'ASSUMPTION', 'source_note': 'Synthetic plan'}],
+        'zero_cost_categories': ['external_direct_rub', 'cash_overhead_rub', 'reserve_rub',
+            'fixed_platform_fees_rub', 'guarantee_financing_cost_rub'],
+        'terms': {'revenue_tax_percent': '6', 'variable_platform_fee_percent': '0',
+            'minimum_profit_rub': '0', 'target_profit_rub': '0', 'manual_bid_prices_rub': [],
+            'assumption_note': 'Synthetic plan', 'accept_hypothetical_assumptions_only': True},
+        'confirm_no_double_count': True}
+    plan_request = {'estimate': estimate, 'expected_revision': 0, 'idempotency_key': 'rollback-plan-1'}
+    plan = post(prices + '/itemized', plan_request)
+    plan_id = plan['scenario_id']
+    actual = prices + '/' + plan_id + '/actual-costs'
+    baseline = client.get(actual, headers=h).json()['baseline_sha256']
+    snapshot = {'baseline_sha256': baseline, 'as_of': '2026-11-15', 'observations': [
+        {'ordinal': 1, 'quantity': '12', 'rate_rub': '1000', 'source_note': 'Synthetic actual'}],
+        'unplanned_costs': [], 'note': 'Synthetic cumulative report',
+        'confirm_cumulative_user_report': True, 'confirm_no_double_count': True}
+    actual_request = {'snapshot': snapshot, 'expected_revision': 0, 'idempotency_key': 'rollback-actual-1'}
+    actual_record = post(actual, actual_request)
+    actual_evidence = actual + '/' + actual_record['snapshot_id'] + '/rows/PLANNED/1/evidence'
+    row = client.get(actual_evidence, headers=h)
+    assert row.status_code == 200, row.text
+    sample = {'category': 'own_labor_rub', 'title': 'Development', 'unit': 'h', 'samples': [
+        {'case_id': case_id, 'scenario_id': plan_id, 'snapshot_id': actual_record['snapshot_id'],
+         'row_kind': 'PLANNED', 'ordinal': 1, 'line_sha256': row.json()['line_sha256']}],
+        'confirm_comparable_reported_rows': True, 'confirm_one_cumulative_row_per_case': True}
+    proposal = {'sample': sample, 'norm_quantity': '10', 'norm_rate_rub': '1000',
+        'rationale': 'Synthetic explicit manager decision', 'confirm_reported_source_limits': True}
+    draft = post(norms + '/preview', proposal, 200)
+    approval = {'proposal': proposal, 'preview_sha256': draft['preview_sha256'], 'expected_revision': 0,
+        'idempotency_key': 'rollback-norm-1', 'confirm_internal_approval': True}
+    norm = post(norms, approval)
+    cost_evidence = prices + '/' + plan_id + '/lines/1/evidence'
+    reads = [prices, actual, cost_evidence, actual_evidence, norms, norms + '/' + norm['norm_key'],
+        path + '/historical-comparables', path + '/reviewed-contracts']
+    writes = [(prices + '/itemized', plan_request), (actual, actual_request), (norms, approval)]
+    previews = [(prices + '/itemized/preview', estimate), (actual + '/preview', snapshot),
+        (base + '/actual-samples/preview', sample), (norms + '/preview', proposal)]
+    originals = {}
+    for url in reads:
+        result = client.get(url, headers=h)
+        assert result.status_code == 200, (url, result.text)
+        originals[url] = result.json()
+    assert originals[prices]['items'] == [plan]
+    assert originals[actual]['items'] == [actual_record]
+    assert originals[norms]['items'] == [norm]
+
+    def denied(status):
+        for url in reads:
+            assert client.get(url, headers=h).status_code == status, url
+        for url, body in writes + previews:
+            response = client.post(url, headers=h, json=body)
+            assert response.status_code == status, (url, response.text)
+
+    settings = active.model_copy(update={'saas_company_price_scenarios_enabled': False})
+    denied(404)
+    settings = active.model_copy(update={'saas_foundation_enabled': False})
+    denied(404)
+    settings = active
+    tenant_row = session.scalar(select(SaasTenant).where(SaasTenant.tenant_id == tenant['tenant_id']))
+    original_end = tenant_row.trial_ends_at
+    tenant_row.trial_ends_at = service.now_utc() - timedelta(seconds=1)
+    session.commit()
+    denied(402)
+    tenant_row.trial_ends_at = original_end
+    tenant_row.lifecycle = 'suspended'
+    session.commit()
+    denied(403)
+    tenant_row.lifecycle = 'active'
+    session.commit()
+    invite = post('/api/saas/invitations', {'role': 'analyst'}, 200)
+    unaccepted = client.post('/api/saas/invitations/redeem', json={
+        'invitation_code': invite['invitation_code'], 'display_name': 'Synthetic unaccepted analyst',
+    }).json()['access_token']
+    for url in reads:
+        assert client.get(url, headers=_auth(unaccepted)).status_code == 428, url
+    for url, body in previews:
+        assert client.post(url, headers=_auth(unaccepted), json=body).status_code == 428, url
+    for url, expected in originals.items():
+        result = client.get(url, headers=h)
+        assert result.status_code == 200 and result.json() == expected, url
+    assert post(prices + '/itemized', plan_request) == plan
+    assert post(actual, actual_request) == actual_record
+    assert post(norms, approval) == norm
+    for url in reads:
+        if url != norms:
+            assert client.get(url, headers=_auth(foreign)).status_code == 404, url
+    assert client.get(norms, headers=_auth(foreign)).json()['items'] == []
+    assert session.query(CompanyPriceScenario).count() == 1
+    assert session.query(CompanyActualCostSnapshot).count() == 1
+    assert session.query(CompanyCostNormVersion).count() == 1
+    assert session.query(SaasPaymentEvidence).count() == 0
