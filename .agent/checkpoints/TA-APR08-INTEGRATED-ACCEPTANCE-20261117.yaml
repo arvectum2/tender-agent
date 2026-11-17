@@ -1,0 +1,19 @@
+task_id: TA-APR08-INTEGRATED-ACCEPTANCE-20261117
+status: in_progress
+goal: Evaluate entire bounded APR08 against canonical roadmap gate; integrated real archived acceptance and review-ready stack; explicitly defer unsupported legal/current/freeform capabilities.
+definition_of_done:
+  - Exact stack CI and base verified; source/runtime isolation, scope/unknown/auth/action boundaries exercised.
+  - Reproducible integrated acceptance, independent gap ledger, roadmap/checkpoints reflect development vs merge/release.
+  - Publish evidence and verify CI; no unapproved merge or release.
+completed:
+  - PR625 and PR626 exact CI 19/19 SUCCESS CLEAN.
+  - Main remains a1686d85; roadmap requires procurement-scoped citations, unknowns, no authoritative approval, not full legal corpus or generic chatbot.
+  - Integrated harness 4/4 PASS, 9/9 legal SHA intact, actual DP and Chromium desktop/narrow, originals unchanged. 223 focused PASS, Ruff/Node/full-stack diff PASS.
+current_stage: exact_ci_pending
+remaining:
+  - Verify exact successor CI; separate owner integration decision.
+last_verified_commit: 427a548cffc5d61aa062826ea82fe43a54d542e5
+test_results:
+  - APR08_INTEGRATED_DEVELOPMENT_PASS 4 scenarios; 9 pinned legal source files unchanged.
+  - 223 focused PASS; PR625/626 CI 19/19 each.
+resume_instruction: Use exact latest branch; no production, live procurement, model or automatic merge.

@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const api = '/api/demo/tender-agent';
-  const state = { runId: null, poll: null, busy: false, registryOffset: 0, registryTotal: 0, registryQuery: '', runReady: false, searchParams: null, searchCursor: null, seenNumbers: [], quoteFileKey: null };
+  const state = { runId: null, poll: null, busy: false, registryOffset: 0, registryTotal: 0, registryQuery: '', runReady: false, searchParams: null, searchCursor: null, seenNumbers: [], quoteFileKey: null, copilotEpoch: 0, copilotSearchEpoch: 0, copilotAnswerEpoch: 0, costEpoch: 0 };
   const $ = id => document.getElementById(id);
   const node = (tag, cls = '', content = null) => {
     const el = document.createElement(tag);
@@ -52,6 +52,9 @@
     $('search-next').disabled = value;
     $('append-files-button').disabled = value;
     $('quote-verify-button').disabled = value;
+    $('copilot-submit').disabled = value;
+    $('copilot-search-submit').disabled = value;
+    $('copilot-answer-submit').disabled = value;
   }
   function tab(name) {
     const labels = {new:'Новый анализ',history:'История анализов',registry:'База закупок',prices:'Цены и протоколы'};
@@ -234,7 +237,12 @@
   async function loadRun() {
     if (!state.runId) return;
     const id = encodeURIComponent(state.runId);
+    show('copilot-panel',false);
+    state.copilotEpoch++;wipe($('copilot-result'));$('copilot-percent').value='';
+    state.copilotSearchEpoch++;wipe($('copilot-search-result'));$('copilot-search').value='';
+    state.copilotAnswerEpoch++;wipe($('copilot-answer-result'));$('copilot-answer-question').value='';
     const run = await json(api + '/runs/' + id);
+    if (encodeURIComponent(state.runId)!==id) return;
     show('run-empty', false);
     show('run-section', true);
     $('run-status').textContent = run.status || 'неизвестен';
@@ -258,6 +266,7 @@
     wipe($('run-warnings'));
     for (const warning of [...(run.warnings || []),...(run.limitations || [])].slice(0,8)) paragraph($('run-warnings'), '⚠ ' + warning);
     renderFiles(run);
+    show('copilot-panel',Array.isArray(run.files) && run.files.length>0);
     await loadEvents();
     await loadReport(run);
     return run;
@@ -294,6 +303,132 @@
       root.append(item);
     }
   }
+  async function answerEvidenceQuestion(event) {
+    event.preventDefault();
+    if (!state.runId || state.busy) return;
+    const runId=state.runId, epoch=++state.copilotEpoch, question=$('copilot-question').value;
+    const body={question};
+    if(question==='nmck_percent') body.percent=$('copilot-percent').value.trim().replace(',','.');
+    const root=$('copilot-result');wipe(root);setBusy(true);
+    try {
+      const data=await json(api+'/workspace/runs/'+encodeURIComponent(runId)+'/evidence-question',
+        {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+      if(state.runId!==runId || epoch!==state.copilotEpoch) return;
+      if(data.run_id!==runId || data.question!==question || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION'].includes(data.status) || !validCitations(data.citations).length) {
+        paragraph(root,'UNKNOWN · Ответ не подтверждён исходным документом.','unknown');return;
+      }
+      paragraph(root,data.status==='HYPOTHETICAL_CALCULATION'?'Сценарная сумма ('+body.percent+'% НМЦК): '+data.answer+' (единицы исходной НМЦК; валюта не подтверждена). Не установленное обеспечение.':String(data.answer));
+      renderCitations(root,data.citations,{originalVerified:true});
+      paragraph(root,'Архивная редакция. Актуальность и право участия не подтверждены.','help-text');
+    }catch(error){if(state.runId===runId && epoch===state.copilotEpoch)paragraph(root,'UNKNOWN · Проверка не выполнена.','unknown');}
+    finally{setBusy(false);}
+  }
+
+  async function answerGroundedQuestion(event) {
+    event.preventDefault();
+    if (!state.runId || state.busy) return;
+    const runId=state.runId, epoch=++state.copilotAnswerEpoch, question=$('copilot-answer-question').value.trim();
+    const root=$('copilot-answer-result');wipe(root);setBusy(true);
+    try {
+      const data=await json(api+'/workspace/runs/'+encodeURIComponent(runId)+'/evidence-answer',
+        {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question})});
+      if(state.runId!==runId || epoch!==state.copilotAnswerEpoch) return;
+      if(data.run_id===runId && data.intent==='composed_evidence' && ['COMPOSED_EVIDENCE_ONLY','UNKNOWN'].includes(data.status) && Array.isArray(data.components) && data.components.length<=9) {
+        paragraph(root,data.answer,'help-text');
+        paragraph(root,'Разделы с источниками: '+data.source_backed_component_count+' из '+data.components.length);
+        for(const section of data.components) {
+          const detail=document.createElement('details');detail.className='quote-review';detail.open=true;
+          const summary=document.createElement('summary');summary.textContent=section.label;detail.append(summary);
+          renderSingleGroundedAnswer(detail,section.evidence,runId);root.append(detail);
+        }
+        paragraph(root,'Действующая редакция законодательства, фактическая прибыль и потребность в средствах: UNKNOWN.','help-text');
+      } else renderSingleGroundedAnswer(root,data,runId);
+    }catch(error){if(state.runId===runId && epoch===state.copilotAnswerEpoch)paragraph(root,'UNKNOWN · Проверка не выполнена.','unknown');}
+    finally{setBusy(false);}
+  }
+
+  function renderSingleGroundedAnswer(root,data,runId) {
+      if(data.run_id!==runId || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION','TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','ARCHIVED_SECURITY_FIELDS','LITERAL_PERFORMANCE_OBSERVATIONS','CUSTOMER_TERMS_LEGAL_REFERENCES','HISTORICAL_STATUTE_SNAPSHOT_EXCERPT','SECONDARY_AMENDMENT_TIMING_ONLY','GOVERNMENT_COPY_LIST_COMPARISON'].includes(data.status) || !Array.isArray(data.citations) || !data.citations.length) {
+        paragraph(root,'UNKNOWN · Вопрос не поддерживается или доказательство не найдено.','unknown');return;
+      }
+      if(['TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','LITERAL_PERFORMANCE_OBSERVATIONS'].includes(data.status) && data.citation_kind==='ORIGINAL_DP_CHUNK') {
+        paragraph(root,data.answer,'help-text');
+        if(data.status==='LITERAL_PAYMENT_OBSERVATION' && data.observation) {
+          const o=data.observation;
+          paragraph(root,'Указано в фрагменте: '+o.mentioned_days+(o.day_unit==='WORKING_DAYS'?' рабочих дней':' календарных дней')+'. Применимый срок не установлен.');
+        }
+        if(data.status==='LITERAL_PERFORMANCE_OBSERVATIONS' && data.observation) {
+          const displayed=new Set();
+          for(const o of data.observation.mentions || []) {
+            const term=String(o.term_literal || '');const key=term.toLocaleLowerCase('ru-RU');
+            if(term && !displayed.has(key)){displayed.add(key);paragraph(root,'Указано в источнике: '+term);}
+          }
+          if(data.observation.distinct_literal_terms>1) paragraph(root,'Найдены разные формулировки; требуется сопоставление.','unknown');
+        }
+        for(const c of data.citations.slice(0,2)) {
+          paragraph(root,c.quote,'citation');
+          paragraph(root,c.file_id+' · чанк '+c.chunk_id+' · SHA-256 оригинала '+c.original_sha256,'help-text');
+        }
+      } else if(data.status==='SECONDARY_AMENDMENT_TIMING_ONLY' && data.citation_kind==='SECONDARY_LEGAL_REFERENCE' && data.observation?.secondary_copies_agree===true) {
+        paragraph(root,data.answer,'help-text');
+        for(const g of data.observation.groups) paragraph(root,g.scope+' · '+g.stated_start_date+' · '+(g.calendar_relation==='DATE_REACHED'?'Дата наступила':'Будущая дата')+(g.date_basis==='SECONDARY_REPORTED_PUBLICATION_DATE'?' (дата публикации по справочному источнику)':''));
+        for(const c of data.citations) {paragraph(root,c.excerpt,'citation');paragraph(root,c.source_url+' · '+c.locator+' · SHA-256 '+c.source_sha256,'help-text');}
+        paragraph(root,'Юридический статус нормы на выбранную дату: UNKNOWN.','help-text');
+      } else if(data.status==='GOVERNMENT_COPY_LIST_COMPARISON' && data.citation_kind==='GOVERNMENT_REPRODUCTION' && data.observation) {
+        paragraph(root,data.answer,'help-text');
+        paragraph(root,'Более ранняя копия: '+data.observation.dates[0]+'; более новая: '+data.observation.dates[1]);
+        for(const o of data.observation.observations) paragraph(root,o.amendment+' · в раннем фрагменте: '+(o.listed_in_older_excerpt?'указан':'не указан')+'; в позднем: '+(o.listed_in_newer_excerpt?'указан':'не указан'));
+        for(const c of data.citations) {paragraph(root,c.document+' · '+c.excerpt,'citation');paragraph(root,c.source_url+' · '+c.locator+' · SHA-256 '+c.source_sha256,'help-text');}
+        paragraph(root,'Сопоставление перечней, не подтверждение полноты изменений или действующей редакции.','help-text');
+      } else if(data.status==='HISTORICAL_STATUTE_SNAPSHOT_EXCERPT' && data.citation_kind==='GOVERNMENT_REPRODUCTION' && data.observation?.snapshot_bytes_verified===true) {
+        paragraph(root,data.answer,'help-text');
+        for(const c of data.citations) {
+          paragraph(root,c.document+' · '+c.locator,'help-text');
+          paragraph(root,c.excerpt,'citation');
+          paragraph(root,c.source_url+' · SHA-256 '+c.source_sha256+(c.projection_sha256?' · SHA-256 текстовой проекции '+c.projection_sha256:''),'help-text');
+        }
+        paragraph(root,'Неполный исторический фрагмент. Действующая редакция и юридическая применимость: UNKNOWN.','help-text');
+      } else if(data.status==='CUSTOMER_TERMS_LEGAL_REFERENCES' && data.citation_kind==='ARCHIVED_XML' && data.observation) {
+        paragraph(root,data.answer,'help-text');
+        renderCitations(root,data.citations,{originalVerified:true});
+        paragraph(root,'Ссылки заказчика на нормы — содержание законодательства не проверено.');
+        for(const ref of data.observation.references || []) paragraph(root,ref.literal,'citation');
+        if(!(data.observation.references || []).length) paragraph(root,'UNKNOWN · Явные ссылки в поддерживаемом формате не найдены.','unknown');
+        summaryList(root,data.observation.review_questions);
+      } else if(data.status==='ARCHIVED_SECURITY_FIELDS' && data.citation_kind==='ARCHIVED_XML' && data.observation) {
+        paragraph(root,data.answer,'help-text');
+        const o=data.observation;
+        paragraph(root,'Сумма в XML: '+(o.amount===null?'UNKNOWN':o.amount)+'; валюта не подтверждена.');
+        paragraph(root,'Процент в XML: '+(o.percent===null?'UNKNOWN':o.percent+'%')+'; база не подтверждена.');
+        renderCitations(root,data.citations,{originalVerified:true});
+      } else if(['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION'].includes(data.status) && data.citation_kind==='ARCHIVED_XML') {
+        paragraph(root,data.status==='HYPOTHETICAL_CALCULATION'?'Сценарная сумма: '+data.answer+' (валюта и фактическое обеспечение не подтверждены).':String(data.answer));
+        renderCitations(root,data.citations,{originalVerified:true});
+      } else {paragraph(root,'UNKNOWN · Неизвестный вид доказательства.','unknown');return;}
+      paragraph(root,'Исторические материалы. Полнота, актуальность и право участия не подтверждены.','help-text');
+  }
+
+  async function searchEvidenceDocuments(event) {
+    event.preventDefault();
+    if (!state.runId || state.busy) return;
+    const runId=state.runId, epoch=++state.copilotSearchEpoch, query=$('copilot-search').value.trim();
+    const root=$('copilot-search-result');wipe(root);setBusy(true);
+    try {
+      const data=await json(api+'/workspace/runs/'+encodeURIComponent(runId)+'/evidence-search',
+        {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({query})});
+      if(state.runId!==runId || epoch!==state.copilotSearchEpoch) return;
+      if(data.run_id!==runId || data.status!=='VERIFIED_EXCERPTS_ONLY' || !Array.isArray(data.citations) || !data.citations.length) {
+        paragraph(root,'UNKNOWN · Подтверждённых совпадений в ограниченной выборке нет. Это не доказывает отсутствие требования.','unknown');return;
+      }
+      for(const c of data.citations.slice(0,2)) {
+        paragraph(root,c.quote,'citation');
+        paragraph(root,c.file_id+' · чанк '+c.chunk_id+' · SHA-256 оригинала '+c.original_sha256,'help-text');
+      }
+      paragraph(root,'Буквальные фрагменты, не юридический вывод. Поиск не исчерпывающий.','help-text');
+    }catch(error){if(state.runId===runId && epoch===state.copilotSearchEpoch)paragraph(root,'UNKNOWN · Проверка не выполнена.','unknown');}
+    finally{setBusy(false);}
+  }
+
   async function verifyQuote(event) {
     event.preventDefault();
     if (!state.runId || state.busy) return;
@@ -821,6 +956,7 @@
   }
   async function calculateExplicitPriceCostScenario(event) {
     event.preventDefault();
+    const epoch=++state.costEpoch;
     const target=$('price-cost-result');
     wipe(target);
     const monetary=/^\d{1,12}(?:[.,]\d{1,2})?$/;
@@ -847,11 +983,20 @@
       }
       payload[field]=entered.replace(',','.');
     }
-    paragraph(target,'Вычисляем пороги на основе семи введённых величин…','empty-state');
+    if($('cost-offer-enabled').checked) {
+      payload.offer_scenario={};
+      for(const [field,id] of [['offer_price_rub','cost-offer-price'],['nonrefundable_guarantee_fees_rub','cost-guarantee-fees'],['refundable_bid_cash_rub','cost-bid-cash'],['refundable_contract_cash_rub','cost-contract-cash']]) {
+        const entered=$(id).value.trim();
+        if(!monetary.test(entered)) {paragraph(target,'Введите все четыре дополнительные суммы, включая нули.','empty-state');return;}
+        payload.offer_scenario[field]=entered.replace(',','.');
+      }
+    }
+    paragraph(target,'Вычисляем сценарные значения…','empty-state');
     try {
       const result=await json(api+'/workspace/price-scenario/calculate',{
         method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),
       });
+      if(epoch!==state.costEpoch) return;
       if(result.state!=='EXPLICIT_USER_ASSUMPTION_BREAK_EVEN_ONLY'
           ||result.inputs_stored!==false||result.assumptions_independently_verified!==false
           ||result.is_procurement_bid_recommendation!==false
@@ -871,9 +1016,19 @@
         }
         appendFact(facts,label,value.replace('.',',')+' ₽');
       }
+      if(payload.offer_scenario) {
+        const o=result.offer_scenario;
+        if(!o||o.kind!=='EXPLICIT_OFFER_AND_PRE_RECEIPT_STRESS_ONLY'||o.actual_peak_working_capital_rub!==null||o.actual_security_requirement_rub!==null||o.labor_treated_as_non_cash!==true||o.collateral_treated_as_fully_refundable!==true) throw new Error('Дополнительный сценарий не прошёл проверку.');
+        for(const [label,key,suffix] of [['Налог по вводным','modeled_revenue_tax_rub',' ₽'],['Переменная комиссия','modeled_variable_fee_rub',' ₽'],['Полная экономическая себестоимость','economic_cost_rub',' ₽'],['Сценарная прибыль','economic_profit_rub',' ₽'],['Маржа от выручки','economic_margin_percent','%'],['Денежные затраты','cash_cost_rub',' ₽'],['Возвратные обеспечения (не расход)','refundable_cash_collateral_rub',' ₽'],['Стресс-потребность до поступления','pre_receipt_stress_cash_rub',' ₽']]) {
+          if(typeof o[key]!=='string'||! /^-?\d{1,22}\.\d{2}$/.test(o[key])) throw new Error('Некорректные значения сценария.');
+          appendFact(facts,label,o[key].replace('.',',')+suffix);
+        }
+        paragraph(target,'Фактический кассовый разрыв и обязательный размер обеспечения: UNKNOWN. Все денежные расходы и оба возвратных обеспечения условно совпадают до первого поступления; собственный труд не денежный расход. Суммы округлены для отображения отдельно.','help-text');
+      }
       target.append(facts);
       paragraph(target,'Это сценарные минимальные пороги при ваших вводных. Фактические расходы, налоговые обязательства, конкурентная цена и вероятность выигрыша не проверены. Автоматической подачи нет.','help-text');
     } catch(error) {
+      if(epoch!==state.costEpoch) return;
       wipe(target);
       paragraph(target,'Не удалось рассчитать сценарий: '+error.message,'empty-state');
     }
@@ -916,6 +1071,13 @@
   });
   $('search-next').addEventListener('click',()=>{if(state.searchCursor)void loadSearchPage(state.searchCursor);});
   $('append-files-form').addEventListener('submit',appendMissingFiles);
+  $('copilot-question').addEventListener('change',()=>{show('copilot-percent-label',$('copilot-question').value==='nmck_percent');wipe($('copilot-result'));state.copilotEpoch++;});
+  $('copilot-percent').addEventListener('input',()=>{wipe($('copilot-result'));state.copilotEpoch++;});
+  $('copilot-form').addEventListener('submit',event=>void answerEvidenceQuestion(event));
+  $('copilot-search').addEventListener('input',()=>{wipe($('copilot-search-result'));state.copilotSearchEpoch++;});
+  $('copilot-search-form').addEventListener('submit',event=>void searchEvidenceDocuments(event));
+  $('copilot-answer-question').addEventListener('input',()=>{wipe($('copilot-answer-result'));state.copilotAnswerEpoch++;});
+  $('copilot-answer-form').addEventListener('submit',event=>void answerGroundedQuestion(event));
   $('quote-verify-form').addEventListener('submit',event=>void verifyQuote(event));
   $('download-pdf').addEventListener('click', event=>void downloadReport(event, 'pdf'));
   $('download-docx').addEventListener('click', event=>void downloadReport(event, 'docx'));
@@ -927,7 +1089,8 @@
   $('price-cohort-btn').addEventListener('click',()=>void loadWebsiteCohort());
   $('price-workload-btn').addEventListener('click',()=>void loadWorkloadNormalization());
   $('price-cost-form').addEventListener('submit',event=>void calculateExplicitPriceCostScenario(event));
-  $('cost-clear-btn').addEventListener('click',()=>{ $('price-cost-form').reset();wipe($('price-cost-result'));paragraph($('price-cost-result'),'Данные очищены в форме, на сервере ничего не сохранялось.','empty-state'); });
+  $('price-cost-form').addEventListener('input',()=>{state.costEpoch++;wipe($('price-cost-result'));show('cost-offer-fields',$('cost-offer-enabled').checked);});
+  $('cost-clear-btn').addEventListener('click',()=>{ state.costEpoch++;$('price-cost-form').reset();show('cost-offer-fields',false);wipe($('price-cost-result'));paragraph($('price-cost-result'),'Данные очищены в форме, на сервере ничего не сохранялось.','empty-state'); });
   $('registry-form').addEventListener('submit',event=>{ event.preventDefault();state.registryOffset=0;state.registryQuery=$('registry-search').value.trim();void loadRegistry(); });
   $('prev-registry').addEventListener('click',()=>{state.registryOffset=Math.max(0,state.registryOffset-25);void loadRegistry();});
   $('next-registry').addEventListener('click',()=>{ if (state.registryOffset+25<state.registryTotal) { state.registryOffset+=25;void loadRegistry();}});

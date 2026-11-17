@@ -133,3 +133,47 @@ def test_near_one_hundred_percent_rate_keeps_exact_decimal_result():
     )
     assert Decimal(result["full_economic_break_even_rub"]) > Decimal(10000000)
     assert result["is_procurement_bid_recommendation"] is False
+
+
+OFFER = {'offer_price_rub': '500', 'nonrefundable_guarantee_fees_rub': '10',
+         'refundable_bid_cash_rub': '30', 'refundable_contract_cash_rub': '40'}
+
+
+def test_explicit_profit_and_refundable_collateral_stress():
+    result = calculate_explicit_cost_thresholds(ExplicitCostScenarioRequest(**SAMPLE, offer_scenario=OFFER))
+    assert result['cash_break_even_rub'] == '146.74'
+    assert result['full_economic_break_even_rub'] == '364.14'
+    assert result['full_cost_plus_explicit_target_rub'] == '418.48'
+    offer = result['offer_scenario']
+    assert offer['modeled_revenue_tax_rub'] == '30.00'
+    assert offer['modeled_variable_fee_rub'] == '10.00'
+    assert offer['economic_cost_rub'] == '375.00'
+    assert offer['economic_profit_rub'] == '125.00' and offer['economic_margin_percent'] == '25.00'
+    assert offer['cash_cost_rub'] == '175.00' and offer['refundable_cash_collateral_rub'] == '70.00'
+    assert offer['pre_receipt_stress_cash_rub'] == '245.00'
+    assert offer['target_profit_met_in_scenario'] is True
+    assert offer['actual_peak_working_capital_rub'] is None and offer['actual_security_requirement_rub'] is None
+    assert not result['commercial_owner_go'] and not result['inputs_stored']
+
+
+@pytest.mark.parametrize('field', list(OFFER))
+def test_optional_extended_scenario_requires_every_assumption(field):
+    with pytest.raises(ValidationError):
+        ExplicitCostScenarioRequest(**SAMPLE, offer_scenario={k:v for k,v in OFFER.items() if k!=field})
+
+
+def test_liquidity_does_not_change_profit_or_threshold():
+    low = calculate_explicit_cost_thresholds(ExplicitCostScenarioRequest(**SAMPLE, offer_scenario=OFFER))
+    high = calculate_explicit_cost_thresholds(ExplicitCostScenarioRequest(**SAMPLE, offer_scenario={**OFFER,'refundable_bid_cash_rub':'10030'}))
+    assert high['full_economic_break_even_rub'] == low['full_economic_break_even_rub']
+    assert high['offer_scenario']['economic_profit_rub'] == low['offer_scenario']['economic_profit_rub']
+    assert high['offer_scenario']['pre_receipt_stress_cash_rub'] == '10245.00'
+
+
+def test_loss_and_zero_offer():
+    result = calculate_explicit_cost_thresholds(ExplicitCostScenarioRequest(**SAMPLE, offer_scenario={**OFFER,'offer_price_rub':'100'}))
+    assert result['offer_scenario']['economic_profit_rub'] == '-243.00'
+    assert not result['offer_scenario']['target_profit_met_in_scenario']
+    with pytest.raises(HTTPException) as exc:
+        calculate_explicit_cost_thresholds(ExplicitCostScenarioRequest(**SAMPLE, offer_scenario={**OFFER,'offer_price_rub':'0'}))
+    assert exc.value.status_code == 422

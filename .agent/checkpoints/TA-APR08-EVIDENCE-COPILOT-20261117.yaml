@@ -1,0 +1,36 @@
+task_id: TA-APR08-EVIDENCE-COPILOT-20261117
+status: in_progress
+goal: Owner-approved APR08 procurement-scoped evidence assistant in existing private Operator Workspace, starting with explicit source questions and hypothetical percentage calculation.
+definition_of_done:
+  - Existing authenticated workspace run scope; no public route or tenant fallback, no model, no new DB.
+  - Three original pinned archived XML fact questions and explicit hypothetical NMCK percentage with source excerpt and decimal calculation; unknown/unsupported fail closed, no legal/GO/current assertion.
+  - Existing Workspace UI with run-bound response and no stale results; targeted HTTP, JS, archived source replay and reg tests.
+  - Publish draft PR and verify exact CI; further general document Q&A/retrieval and commercial/legal interpretations remain future increments.
+completed:
+  - Exact PR608/609 green and owner-authorized merges, main a1686d85 tree matches PR609.
+  - Implemented first vertical slice in existing private workspace with three pinned XML fact questions and explicit Decimal percentage; run-scoped citations, UNKNOWN and no legal/GO claim.
+  - HTTP auth/percent validation and exact URL auth exemption denial, UI simulation with scenario result and cleared response; no real browser session.
+  - Replayed actual archived EOK v3 procurement 0348100024426000039 original ZIP and selected XML rehashed against existing APR06 receipts, 4/4 source-backed results; legacy unpinned archive 0372200172326000015 4/4 UNKNOWN.
+  - PR610 exact head fd8c32f8 CI 19/19 SUCCESS; PR611 exact head ae389369 CI 19/19 SUCCESS; subsequent isolated real retrieval replay passed.
+  - Natural-language bounded grounded question slice implemented and actual DP payment question replay verified; 118 tests PASS, no general semantic/legal approval.
+  - PR612/613 exact CI green; typed payment observation and real isolated DP replay PASS.
+  - PR610 through PR614 exact CI green. Added pinned original security field observation, 146 tests and 3 real archive replay PASS.
+  - Literal performance term observations implemented; archived service question real DP replay 2 citations and 157 regression tests PASS.
+  - Archived customer security procedure and explicit referenced acts distinguished from applicable law; real replay 8 references, 161 regression tests PASS. No versioned statute corpus or legal conclusion.
+  - Extended stateless offer economics and liquidity stress; 195 focused regressions and authenticated HTTP/Node UI simulation PASS. PR615/616 exact CI green.
+  - Actual Chromium loopback workspace acceptance twice; archived DP questions, lexical search, unknown, commercial scenario, input reset and visual review PASS. Pinned XML positives remain API-tested, not browser-tested.
+  - Positive pinned archived XML Chromium desktop/narrow testing PASS; Copilot accessible before report; no model or unsupported legal conclusion. PR617/619/620 exact CI green.
+  - Versioned immutable historical statute snapshot corpus, real Rospatent 44-FZ source, 6 article excerpts and Chromium positive/negative flow PASS; no normative effective interval or actual applicability.
+  - Cross-checked pinned secondary 279-FZ commencement groups, five date replays and real Chromium PASS; official portal unavailable, no verified effective interval or current law. PR621/622 CI green.
+  - Four additional actual government-hosted law copies pinned; 19 bounded excerpts and two amendment-list comparisons, 218 focused and real Chromium PASS. PR623 exact CI green. Official current law remains unverified.
+  - Bounded composed independently sourced briefs and explicit security/historical article comparison implemented; real pinned XML and DP Chromium PASS, partial unknowns retained; 223 focused tests PASS.
+  - Integrated bounded development acceptance PASS 4/4, 9/9 legal SHA, actual DP and Chromium, 223 focused PASS. PR625/626 CI green.
+current_stage: integrated_development_pass_successor_ci_and_owner_integration_pending
+remaining:
+  - Verify successor exact CI, then close bounded development increment.
+  - Separate explicit Owner integration decision; main remains unchanged.
+  - Current-law, broader semantic, 223-FZ procurement evidence and production/business gates remain unproven.
+last_verified_commit: 427a548cffc5d61aa062826ea82fe43a54d542e5
+test_results:
+  - Integrated 4/4, legal source SHA 9/9, 223 focused PASS, Ruff/Node/diff PASS.
+resume_instruction: Verify successor exact CI, then request explicit integration consent. Do not repeat accepted work or expand APR09/10 without triggers. No production, live procurement, Gemma or unapproved merge.

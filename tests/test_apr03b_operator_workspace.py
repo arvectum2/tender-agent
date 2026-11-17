@@ -601,3 +601,71 @@ def test_price01_explicit_cost_form_no_default_values_or_automatic_submission(cl
     assert "result.inputs_stored!==false" in js
     assert "result.is_procurement_bid_recommendation!==false" in js
     assert "Нормализация рублёвой цены НЕ ВЫПОЛНЕНА" in js
+
+
+def test_copilot_private_run_route_validation(client, auth, monkeypatch):
+    route = '/api/demo/tender-agent/workspace/runs/fixture/evidence-question'
+    calls = []
+    def fake_answer(run_id, request):
+        calls.append((run_id, request.question, request.percent))
+        return {'run_id': run_id, 'status': 'UNKNOWN'}
+    monkeypatch.setattr(operator_router, 'answer_question', fake_answer)
+    assert client.post(route, json={'question': 'nmck'}).status_code == 401
+    assert client.post(route, headers=auth, json={'question': 'nmck_percent', 'percent': '100.01'}).status_code == 422
+    assert client.post(route, headers=auth, json={'question': 'nmck_percent', 'percent': '5.50'}).json()['run_id'] == 'fixture'
+    assert calls == [('fixture', 'nmck_percent', '5.50')]
+    monkeypatch.setattr(operator_router, 'get_settings', lambda: Settings(
+        pilot_auth_enabled=True, pilot_auth_username='test-operator', pilot_auth_password='test-secret-unique-12345',
+        pilot_auth_public_paths='/health,' + route))
+    assert client.post(route, headers=auth, json={'question': 'nmck'}).status_code == 503
+    assert len(calls) == 1
+
+
+def test_copilot_document_search_private_route(client, auth, monkeypatch):
+    route = '/api/demo/tender-agent/workspace/runs/fixture/evidence-search'
+    calls = []
+    def fake_search(run_id, request):
+        calls.append((run_id, request.query))
+        return {'run_id': run_id, 'status': 'UNKNOWN'}
+    monkeypatch.setattr(operator_router, 'search_run_documents', fake_search)
+    assert client.post(route, json={'query':'оплата'}).status_code == 401
+    assert client.post(route, headers=auth, json={'query':'а'}).status_code == 422
+    assert client.post(route, headers=auth, json={'query':'оплата'}).json()['status'] == 'UNKNOWN'
+    assert calls == [('fixture','оплата')]
+    monkeypatch.setattr(operator_router, 'get_settings', lambda: Settings(
+        pilot_auth_enabled=True, pilot_auth_username='test-operator', pilot_auth_password='test-secret-unique-12345',
+        pilot_auth_public_paths='/health,' + route))
+    assert client.post(route, headers=auth, json={'query':'оплата'}).status_code == 503
+    assert len(calls) == 1
+
+
+def test_copilot_grounded_question_private_route(client, auth, monkeypatch):
+    route = '/api/demo/tender-agent/workspace/runs/fixture/evidence-answer'
+    calls = []
+    def fake_answer(run_id, request):
+        calls.append((run_id, request.question))
+        return {'run_id': run_id, 'status': 'UNKNOWN'}
+    monkeypatch.setattr(operator_router, 'answer_grounded_question', fake_answer)
+    assert client.post(route, json={'question':'Какова НМЦК?'}).status_code == 401
+    assert client.post(route, headers=auth, json={'question':'а'}).status_code == 422
+    assert client.post(route, headers=auth, json={'question':'Какова НМЦК?'}).json()['status'] == 'UNKNOWN'
+    assert calls == [('fixture','Какова НМЦК?')]
+    monkeypatch.setattr(operator_router, 'get_settings', lambda: Settings(
+        pilot_auth_enabled=True, pilot_auth_username='test-operator', pilot_auth_password='test-secret-unique-12345',
+        pilot_auth_public_paths='/health,' + route))
+    assert client.post(route, headers=auth, json={'question':'Какова НМЦК?'}).status_code == 503
+    assert len(calls) == 1
+
+
+def test_price_extended_offer_private_stateless_and_exact_auth_scope(client, auth, monkeypatch):
+    url = '/api/demo/tender-agent/workspace/price-scenario/calculate'
+    payload = {**_COST_SAMPLE, 'offer_scenario': {'offer_price_rub':'500', 'nonrefundable_guarantee_fees_rub':'10',
+               'refundable_bid_cash_rub':'30', 'refundable_contract_cash_rub':'40'}}
+    assert client.post(url, json=payload).status_code == 401
+    response = client.post(url, headers=auth, json=payload)
+    assert response.status_code == 200 and 'no-store' in response.headers.get('cache-control','')
+    assert response.json()['offer_scenario']['pre_receipt_stress_cash_rub'] == '245.00'
+    monkeypatch.setattr(operator_router, 'get_settings', lambda: Settings(
+        pilot_auth_enabled=True, pilot_auth_username='test-operator', pilot_auth_password='test-secret-unique-12345',
+        pilot_auth_public_paths='/health,' + url))
+    assert client.post(url, headers=auth, json=payload).status_code == 503

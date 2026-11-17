@@ -724,13 +724,136 @@ apr07_role_hardening_20261117:
   status: completed
   checkpoint: .agent/checkpoints/TA-APR07-ROLE-HARDENING-20261117.yaml
   branch: feat/ta-apr07-operator-role-hardening-20261117
-  current_stage: verified_pending_merge
+  current_stage: merged_verified_no_deployment
   last_verified_commit: 21c56ca72a6bff94ec5831bff5f1cfd7d31a9e93
   pr: 608
 
 apr03b_multiple_source_claims_20261117:
   task_id: TA-APR03B-MULTIPLE-SOURCE-CLAIMS-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR03B-MULTIPLE-SOURCE-CLAIMS-20261117.yaml
   branch: feat/ta-apr03b-multiple-source-claims-20261117
+  current_stage: merged_verified_no_deployment
+  last_verified_commit: a1686d85baf139b7a01b0f29ae8283a266938482
+  pr: 609
+
+apr08_evidence_copilot_20261117:
+  task_id: TA-APR08-EVIDENCE-COPILOT-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR08-EVIDENCE-COPILOT-20261117.yaml
+  branch: feat/ta-apr08-evidence-copilot-20261117
+  current_stage: integrated_development_pass_successor_ci_and_owner_integration_pending
+  last_verified_commit: 427a548cffc5d61aa062826ea82fe43a54d542e5
+
+apr08_document_retrieval_20261117:
+  task_id: TA-APR08-DOCUMENT-RETRIEVAL-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-DOCUMENT-RETRIEVAL-20261117.yaml
+  branch: feat/ta-apr08-document-retrieval-20261117
+  current_stage: verified_pending_merge
+  replay_branch: feat/ta-apr08-real-dp-replay-20261117
+  last_verified_commit: a0261f8c82a0195f7a9b08b879dd0b69d1384766
+
+apr08_grounded_questions_20261117:
+  task_id: TA-APR08-GROUNDED-QUESTIONS-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-GROUNDED-QUESTIONS-20261117.yaml
+  branch: feat/ta-apr08-grounded-questions-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: f0d1e152938c95c1f9d5b847fb70d1acb8549906
+
+apr08_typed_payment_20261117:
+  task_id: TA-APR08-TYPED-PAYMENT-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-TYPED-PAYMENT-20261117.yaml
+  branch: feat/ta-apr08-typed-payment-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: f2de139559bfa8f3fa2d10d01dddbfc52c1d21f5
+
+apr08_security_xml_20261117:
+  task_id: TA-APR08-SECURITY-XML-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-SECURITY-XML-20261117.yaml
+  branch: feat/ta-apr08-security-xml-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: 80d8533ba73ddfe8735cf5d1ff4629045a834b84
+
+apr08_delivery_20261117:
+  task_id: TA-APR08-DELIVERY-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-DELIVERY-20261117.yaml
+  branch: feat/ta-apr08-delivery-observation-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: b31b27872ae2907d64f80f7a07299864ff81d1b9
+
+apr08_legal_reference_20261117:
+  task_id: TA-APR08-LEGAL-REFERENCE-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-LEGAL-REFERENCE-20261117.yaml
+  branch: feat/ta-apr08-legal-reference-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: 379f7252f7cead8a02bc42dcbff13c61b03426a9
+
+apr08_commercial_scenario_20261117:
+  task_id: TA-APR08-COMMERCIAL-SCENARIO-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-COMMERCIAL-SCENARIO-20261117.yaml
+  branch: feat/ta-apr08-commercial-scenario-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: e19d79174cc2727dcbfbd6a869577458de853144
+
+apr08_browser_acceptance_20261117:
+  task_id: TA-APR08-BROWSER-ACCEPTANCE-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-BROWSER-ACCEPTANCE-20261117.yaml
+  branch: feat/ta-apr08-browser-acceptance-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: f1e1cdf6c2ae39a7d55bfa6932853994c179e793
+
+apr08_pinned_browser_20261117:
+  task_id: TA-APR08-PINNED-BROWSER-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-PINNED-BROWSER-20261117.yaml
+  branch: feat/ta-apr08-pinned-browser-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: efdaa8b3c9b451b2ae71a90456a27673fb4c4fdd
+
+apr08_statute_corpus_20261117:
+  task_id: TA-APR08-STATUTE-CORPUS-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-STATUTE-CORPUS-20261117.yaml
+  branch: feat/ta-apr08-statute-corpus-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: 38c6ee3e43f481aad5b0e4e1aa92b6c6984ba3ed
+
+apr08_effective_date_20261117:
+  task_id: TA-APR08-EFFECTIVE-DATE-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-EFFECTIVE-DATE-20261117.yaml
+  branch: feat/ta-apr08-effective-date-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: c7ad209d2c867281a5ea3043631b9fbf0fc43748
+
+apr08_multiedition_corpus_20261117:
+  task_id: TA-APR08-MULTIEDITION-CORPUS-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-MULTIEDITION-CORPUS-20261117.yaml
+  branch: feat/ta-apr08-multiedition-corpus-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: a763aaf8cf78b9c4b7f0ba16a23c77eba15caf7a
+
+apr08_composed_evidence_20261117:
+  task_id: TA-APR08-COMPOSED-EVIDENCE-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-COMPOSED-EVIDENCE-20261117.yaml
+  branch: feat/ta-apr08-composed-evidence-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: 5c606bcae85d0e5822d803e07a5f287b97509f02
+
+apr08_integrated_acceptance_20261117:
+  task_id: TA-APR08-INTEGRATED-ACCEPTANCE-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR08-INTEGRATED-ACCEPTANCE-20261117.yaml
+  branch: feat/ta-apr08-integrated-acceptance-20261117
   current_stage: exact_ci_pending
+  last_verified_commit: 427a548cffc5d61aa062826ea82fe43a54d542e5
