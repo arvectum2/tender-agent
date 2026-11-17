@@ -252,6 +252,18 @@ final class CompanyStore: ObservableObject {
         lifecycleMetrics = nil
     }
 
+    func loadReviewedContracts(accountID:String,item:CompanyCase) async throws -> CompanyReviewedContractCatalog {
+        guard !isBusy,canCompareActualSamples,let current=identity else{throw CompanyConnectionError.http(403)}
+        isBusy=true;defer{isBusy=false}
+        do {
+            let (client,actual)=try await lifecycleAccess(accountID:accountID,item:item)
+            guard actual==current else{throw CompanyConnectionError.identityMismatch}
+            let result=try await client.reviewedContracts(identity:actual,item:item)
+            guard selectedID==accountID,identity==actual else{throw CompanyConnectionError.identityMismatch}
+            return result
+        }catch{handleLifecycleError(error);throw error}
+    }
+
     func loadHistoricalCatalog(accountID:String,item:CompanyCase) async throws -> CompanyHistoricalCatalog {
         guard !isBusy,canCompareActualSamples,let current=identity else{throw CompanyConnectionError.http(403)}
         isBusy=true;defer{isBusy=false}

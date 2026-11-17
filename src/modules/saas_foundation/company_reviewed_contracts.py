@@ -8,7 +8,7 @@ from src.tender_research.reviewed_contract_evidence import sealed
 from src.tender_research.reviewed_contract_registry import (
     MAX_RELEASE,
     load_release,
-    replay,
+    public_projection,
 )
 
 _RELEASE_PATH=Path(__file__).resolve().parents[3]/'docs/roadmap/price01_contract_registry/release.json'
@@ -27,16 +27,14 @@ def _approved_release():
 def catalog(session,principal,case_id):
     context=_context(session,principal,case_id)
     release=_approved_release()
-    active,withdrawn=replay(release)
+    projection=public_projection(release,_RELEASE_SHA256)
     groups=[]
-    for group in active.values():
-        value=group.model_dump(mode='json')
-        value['target_reference_identity_matches']=(context['target_source_platform']=='eis' and context['target_external_id']==group.reference_registry_number)
+    for value in projection['active_groups']:
+        value=dict(value)
+        value['target_reference_identity_matches']=(context['target_source_platform']=='eis' and context['target_external_id']==value['reference_registry_number'])
         value['target_scope_equivalence_verified']=False
         groups.append(value)
-    result={**context,'schema':'company_reviewed_contract_registry_v1','release_sha256':_RELEASE_SHA256,
-            'release_revision':len(release.events),'last_event_sha256':release.events[-1].event_sha256 if release.events else None,
-            'active_groups':groups,'withdrawn_groups':[{'group_id':w['group_id'],'revision':w['revision']} for w in withdrawn],
+    result={**context,'schema':'company_reviewed_contract_registry_v1',**projection,'active_groups':groups,
             'basis':'REVIEWER_ATTESTED_SIGNED_CONTRACT_PRICE_PER_EXACT_CONTRACTED_FULL_SCOPE_UNIT',
             'independent_signature_verification':False,'source_authenticity_independently_verified':False,
             'contract_execution_verified':False,'completed_work_quantity_verified':False,

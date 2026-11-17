@@ -1215,6 +1215,39 @@ struct CompanyHistoricalPreview:Sendable {
     }
 }
 
+struct CompanyReviewedContractObservation:Decodable,Sendable,Identifiable {
+    let registryNumber:String;let contractNumber:String;let signedOn:String
+    let signedContractPriceRub:String;let contractedExactFullScopeQuantity:String;let unit:String;let sourceSha256:String;let unitPriceRub:String
+    var id:String {registryNumber}
+}
+struct CompanyReviewedContractGroup:Decodable,Sendable,Identifiable {
+    struct PriceRange:Decodable,Sendable {let minimum:String;let median:String;let maximum:String;let distinctProcurements:Int}
+    let groupId:String;let reviewedManifestSha256:String;let intakeReceiptSha256:String;let referenceRegistryNumber:String
+    let fullScope:String;let taxTerms:String;let priceTerms:String;let unit:String
+    let observations:[CompanyReviewedContractObservation];let rangeRubPerUnit:PriceRange?
+    let targetReferenceIdentityMatches:Bool
+    var id:String {groupId}
+}
+struct CompanyReviewedContractCatalog:Decodable,Sendable {
+    struct Withdrawal:Decodable,Sendable,Identifiable {let groupId:String;let revision:Int;var id:String{groupId}}
+    static let releasePin="015d0d6e0b9b78dc25413189d533919e8f8353886723869315a85245bd051321"
+    static let projectionPin="0d550295ed57d67af96b8ab85bf7348ac8d4443e5950c84723b2dd139b3e71a8"
+    let releaseSha256:String;let releaseRevision:Int;let activeGroups:[CompanyReviewedContractGroup];let withdrawnGroups:[Withdrawal]
+    static func verified(_ raw:CompanyHistoricalJSON,identity:CompanyIdentity,item:CompanyCase,releasePin:String=Self.releasePin,projectionPin:String=Self.projectionPin)throws->Self {
+        guard identity.legalAccepted,["owner","admin","analyst"].contains(identity.role),let external=item.externalId ?? item.registryNumber,var actual=raw.fields,let sha=actual.removeValue(forKey:"catalog_sha256")?.text,sha == (try CompanyHistoricalJSON.object(actual).digest()),let active=actual["active_groups"]?.elements,let withdrawn=actual["withdrawn_groups"],let revision=actual["release_revision"],let last=actual["last_event_sha256"] else{throw CompanyConnectionError.identityMismatch}
+        let expected:[String:CompanyHistoricalJSON]=["customer_id":.text(identity.customerId),"case_id":.text(item.caseId),"target_source_platform":.text(item.sourcePlatform ?? "eis"),"target_external_id":.text(external),"schema":.text("company_reviewed_contract_registry_v1"),"release_sha256":.text(releasePin),"release_revision":revision,"last_event_sha256":last,"active_groups":.array(active),"withdrawn_groups":withdrawn,"basis":.text("REVIEWER_ATTESTED_SIGNED_CONTRACT_PRICE_PER_EXACT_CONTRACTED_FULL_SCOPE_UNIT"),"target_scope_verified":.boolean(false),"independent_signature_verification":.boolean(false),"source_authenticity_independently_verified":.boolean(false),"contract_execution_verified":.boolean(false),"completed_work_quantity_verified":.boolean(false),"external_submission_allowed":.boolean(false),"cross_group_range_rub":.null,"current_market_price":.null,"recommendation":.null]
+        guard actual==expected else{throw CompanyConnectionError.identityMismatch}
+        var groups=[CompanyHistoricalJSON]()
+        for g in active {
+            guard var fields=g.fields,fields.removeValue(forKey:"target_scope_equivalence_verified") == .boolean(false),let ref=fields["reference_registry_number"]?.text,fields.removeValue(forKey:"target_reference_identity_matches") == .boolean((item.sourcePlatform ?? "eis")=="eis" && external==ref) else{throw CompanyConnectionError.identityMismatch}
+            groups.append(.object(fields))
+        }
+        let projection=CompanyHistoricalJSON.object(["release_sha256":.text(releasePin),"release_revision":revision,"last_event_sha256":last,"active_groups":.array(groups),"withdrawn_groups":withdrawn])
+        guard try projection.digest()==projectionPin else{throw CompanyConnectionError.identityMismatch}
+        return try raw.typed(Self.self)
+    }
+}
+
 struct CompanyActualEvidenceScope:Decodable,Equatable,Sendable {
     let base:CompanyActualScope;let snapshotId:String;let snapshotRevision:Int;let asOf:String;let rowKind:String;let lineOrdinal:Int;let lineTitle:String;let actualAmountRub:String;let lineSha256:String
     private enum CodingKeys:String,CodingKey {case snapshotId,snapshotRevision,asOf,rowKind,lineOrdinal,lineTitle,actualAmountRub,lineSha256}
@@ -1620,6 +1653,12 @@ struct CompanyAPIClient: Sendable {
         let e=JSONEncoder();e.keyEncodingStrategy = .convertToSnakeCase
         let r:CompanyNormRecord=try await get("/api/saas/company-portfolio/cost-norms/"+record.normKey+"/withdraw",method:"POST",body:e.encode(attempt))
         guard r.matches(identity),r.memberId==identity.memberId,r.normKey==record.normKey,r.inputs.withdrawal==attempt,r.action=="WITHDRAWN",r.result.withdrawnNormId==record.normId,r.result.withdrawnRecordSha256==record.recordSha256 else{throw CompanyConnectionError.identityMismatch};return r
+    }
+
+    func reviewedContracts(identity:CompanyIdentity,item:CompanyCase) async throws -> CompanyReviewedContractCatalog {
+        _=try CompanyHistoricalCatalog.context(identity:identity,item:item)
+        let raw:CompanyHistoricalJSON=try await get("/api/saas/company-portfolio/cases/"+item.caseId+"/reviewed-contracts")
+        return try .verified(raw,identity:identity,item:item)
     }
 
     func historicalCatalog(identity:CompanyIdentity,item:CompanyCase) async throws -> CompanyHistoricalCatalog {

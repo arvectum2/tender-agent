@@ -39,3 +39,9 @@ A repository-pinned release is intentionally not a runtime-editable database;
 publication or withdrawal requires reviewed release deployment. This is an
 engineering workflow, not authorization to publish or deploy. No independent
 signature, source authenticity, execution or completed quantity claims.
+
+## Client pin update and acceptance
+
+Web and iOS pin both the exact release file SHA and the SHA of the canonical public projection (without target-specific fields). When reviewing a new release, derive the public pin using reviewed_contract_registry.public_projection(load_release(raw, release_sha), release_sha) and sealed(); update both compiled client pins alongside the server release pin and run the client regression before deployment. Never accept a server-provided replacement pin without reviewed code/release changes.
+
+Acceptance commands: run the Node cabinet flow, standalone Swift contract fixtures and Xcode XCTest, python -m scripts.acceptance.run_price01_postgres_tests (starts a disposable local private Unix-socket cluster, migrates it and cleans up), and scripts/acceptance/run_price01_browser_smoke.cjs with a local Playwright installation, PRICE01_PLAYWRIGHT_MODULE and PRICE01_CHROME if needed. Browser requests are intercepted; this is fixture-backed smoke, not a production or live-staging test.

@@ -42,6 +42,38 @@ final class AppStoreTests: XCTestCase {
         XCTAssertEqual(try CompanyAPIClient.validatedOrigin("https://EXAMPLE.invalid:443/").absoluteString, "https://example.invalid")
     }
 
+    func testCompanyReviewedContractRegistry() throws {
+        let decoder=TenderAgentJSON.makeDecoder()
+        let identity=try decoder.decode(CompanyIdentity.self,from:Data(#"{"tenant_id":"a","customer_id":"a","member_id":"m","company_name":"A","role":"owner","legal_accepted":true}"#.utf8))
+        let item=try decoder.decode(CompanyCase.self,from:Data(#"{"case_id":"case-a","registry_number":"0158300034526000388","source_platform":"eis","external_id":"0158300034526000388","source_verified":false,"revision":0,"decision":null}"#.utf8))
+        let empty=try decoder.decode(CompanyHistoricalJSON.self,from:Data(#"{"customer_id":"a","case_id":"case-a","target_source_platform":"eis","target_external_id":"0158300034526000388","target_scope_verified":false,"schema":"company_reviewed_contract_registry_v1","release_sha256":"015d0d6e0b9b78dc25413189d533919e8f8353886723869315a85245bd051321","release_revision":0,"last_event_sha256":null,"active_groups":[],"withdrawn_groups":[],"basis":"REVIEWER_ATTESTED_SIGNED_CONTRACT_PRICE_PER_EXACT_CONTRACTED_FULL_SCOPE_UNIT","independent_signature_verification":false,"source_authenticity_independently_verified":false,"contract_execution_verified":false,"completed_work_quantity_verified":false,"cross_group_range_rub":null,"current_market_price":null,"recommendation":null,"external_submission_allowed":false,"catalog_sha256":"5c3c15dbf4a2222bf4933a3c2d3069793ae90eb82e607113bdd4ea4e40a0dac3"}"#.utf8))
+        let published=try decoder.decode(CompanyHistoricalJSON.self,from:Data(#"{"customer_id":"a","case_id":"case-a","target_source_platform":"eis","target_external_id":"0158300034526000388","target_scope_verified":false,"schema":"company_reviewed_contract_registry_v1","release_sha256":"2e4fa22e49e17647d78e0150670f0a0391f69a5f77c86af6245eeed3a805a229","release_revision":1,"last_event_sha256":"4ed7840b71a20186d85a9f2ed6eee26a36576e14300433d28c04a9293987df60","active_groups":[{"group_id":"fixture-group","reviewed_manifest_sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","intake_receipt_sha256":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb","reference_registry_number":"0158300034526000388","full_scope":"Synthetic full scope","tax_terms":"VAT included","price_terms":"Fixed price","currency":"RUB","unit":"item","observations":[{"registry_number":"0158300034526000388","contract_number":"fixture-1","signed_on":"2026-01-01","signed_contract_price_rub":"100","contracted_exact_full_scope_quantity":"3","unit":"item","source_sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc","unit_price_rub":"33.333333"},{"registry_number":"0000000000000000002","contract_number":"fixture-2","signed_on":"2026-01-02","signed_contract_price_rub":"200","contracted_exact_full_scope_quantity":"4","unit":"item","source_sha256":"dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd","unit_price_rub":"50.000000"}],"range_rub_per_unit":{"minimum":"33.333333","median":"41.666667","maximum":"50.000000","distinct_procurements":2},"target_reference_identity_matches":true,"target_scope_equivalence_verified":false}],"withdrawn_groups":[],"basis":"REVIEWER_ATTESTED_SIGNED_CONTRACT_PRICE_PER_EXACT_CONTRACTED_FULL_SCOPE_UNIT","independent_signature_verification":false,"source_authenticity_independently_verified":false,"contract_execution_verified":false,"completed_work_quantity_verified":false,"cross_group_range_rub":null,"current_market_price":null,"recommendation":null,"external_submission_allowed":false,"catalog_sha256":"b45745481af022a9014ca15e7bbcfb90ffc407cf05a5964511231294a5bfc358"}"#.utf8))
+        let withdrawn=try decoder.decode(CompanyHistoricalJSON.self,from:Data(#"{"customer_id":"a","case_id":"case-a","target_source_platform":"eis","target_external_id":"0158300034526000388","target_scope_verified":false,"schema":"company_reviewed_contract_registry_v1","release_sha256":"b0c7e1fbbfd5ce80ba0e0e08f54185114495cc2c20abc0fec729fc9a0e4d812b","release_revision":2,"last_event_sha256":"428adf5cf36e6c061c83b5c7588f6c8621cec818ba87984230e87da17d6f5dd1","active_groups":[],"withdrawn_groups":[{"group_id":"fixture-group","revision":2}],"basis":"REVIEWER_ATTESTED_SIGNED_CONTRACT_PRICE_PER_EXACT_CONTRACTED_FULL_SCOPE_UNIT","independent_signature_verification":false,"source_authenticity_independently_verified":false,"contract_execution_verified":false,"completed_work_quantity_verified":false,"cross_group_range_rub":null,"current_market_price":null,"recommendation":null,"external_submission_allowed":false,"catalog_sha256":"cce4bd732124f6dba66231e03a4cef9edb248dbfa2fa2bd0b10413c8899a3184"}"#.utf8))
+        let initial=try CompanyReviewedContractCatalog.verified(empty,identity:identity,item:item)
+        XCTAssertEqual(initial.releaseRevision,0)
+        XCTAssertTrue(initial.activeGroups.isEmpty)
+        XCTAssertThrowsError(try CompanyReviewedContractCatalog.verified(published,identity:identity,item:item))
+        let version=try CompanyReviewedContractCatalog.verified(published,identity:identity,item:item,releasePin:"2e4fa22e49e17647d78e0150670f0a0391f69a5f77c86af6245eeed3a805a229",projectionPin:"c8c07007cacc347a66e9a2c07ed58631ff392470ca498a3183d9ba4191b4aeaa")
+        XCTAssertEqual(version.activeGroups.first?.rangeRubPerUnit?.median,"41.666667")
+        XCTAssertEqual(version.activeGroups.first?.observations.count,2)
+        XCTAssertEqual(version.activeGroups.first?.targetReferenceIdentityMatches,true)
+        let revoked=try CompanyReviewedContractCatalog.verified(withdrawn,identity:identity,item:item,releasePin:"b0c7e1fbbfd5ce80ba0e0e08f54185114495cc2c20abc0fec729fc9a0e4d812b",projectionPin:"530c842422265e756cc4d233d86eda5df0e7989f0f4c8a55761da475a2f90a28")
+        XCTAssertTrue(revoked.activeGroups.isEmpty)
+        XCTAssertEqual(revoked.withdrawnGroups.first?.revision,2)
+        var changed=try XCTUnwrap(published.fields)
+        changed["cross_group_range_rub"] = .text("123")
+        changed.removeValue(forKey:"catalog_sha256")
+        changed["catalog_sha256"] = .text(try CompanyHistoricalJSON.object(changed).digest())
+        XCTAssertThrowsError(try CompanyReviewedContractCatalog.verified(.object(changed),identity:identity,item:item,releasePin:"2e4fa22e49e17647d78e0150670f0a0391f69a5f77c86af6245eeed3a805a229",projectionPin:"c8c07007cacc347a66e9a2c07ed58631ff392470ca498a3183d9ba4191b4aeaa"))
+        var groups=try XCTUnwrap(changed["active_groups"]?.elements)
+        var group=try XCTUnwrap(groups[0].fields)
+        group["full_scope"] = .text("Tampered scope")
+        groups[0] = .object(group);changed["active_groups"] = .array(groups);changed["cross_group_range_rub"] = .null
+        changed.removeValue(forKey:"catalog_sha256")
+        changed["catalog_sha256"] = .text(try CompanyHistoricalJSON.object(changed).digest())
+        XCTAssertThrowsError(try CompanyReviewedContractCatalog.verified(.object(changed),identity:identity,item:item,releasePin:"2e4fa22e49e17647d78e0150670f0a0391f69a5f77c86af6245eeed3a805a229",projectionPin:"c8c07007cacc347a66e9a2c07ed58631ff392470ca498a3183d9ba4191b4aeaa"))
+    }
+
     func testCompanyHistoricalEvidenceContract() throws {
         let decoder=TenderAgentJSON.makeDecoder()
         let identity=try decoder.decode(CompanyIdentity.self,from:Data(#"{"tenant_id":"a","customer_id":"a","member_id":"m","company_name":"A","role":"owner","legal_accepted":true}"#.utf8))

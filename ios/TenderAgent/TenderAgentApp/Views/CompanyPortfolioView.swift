@@ -202,6 +202,7 @@ private struct CompanyCaseDetail: View {
                 CompanyLifecycleSection(item: item, accountID: accountID, store: store)
                 if let identity = store.identity, identity.legalAccepted, ["owner", "admin", "analyst"].contains(identity.role) {
                     CompanyHistoricalSection(item: item, accountID: accountID, store: store)
+                    CompanyReviewedContractsSection(item:item,accountID:accountID,store:store)
                     CompanyPriceSection(item: item, accountID: accountID, store: store)
                 }
                 if let decisionError { Section { Text(decisionError).foregroundStyle(.orange) } }
@@ -467,6 +468,61 @@ private struct CompanyEventFileView: View {
         .onChange(of: exporting) { _, value in if !value { export = nil } }
         .onChange(of: store.selectedID) { _, _ in reset() }
         .onChange(of: store.identity?.memberId) { _, value in if value == nil { reset() } }
+    }
+}
+
+private struct CompanyReviewedContractsSection:View {
+    let item:CompanyCase
+    let accountID:String
+    @ObservedObject var store:CompanyStore
+    @State private var catalog:CompanyReviewedContractCatalog?
+    @State private var notice:String?
+    private func clear(){catalog=nil;notice=nil}
+    private func load() async {
+        clear()
+        do{catalog=try await store.loadReviewedContracts(accountID:accountID,item:item)}
+        catch CompanyConnectionError.http(404){notice="Реестр недоступен или функция отключена."}
+        catch{notice=CompanyStore.safeError(error)}
+    }
+    var body:some View {
+        Section("Проверенные контрактные цены"){
+            Text("Договорные количества не означают фактическое исполнение. Независимая проверка ЭП и подлинности отсутствует.").font(.caption).foregroundStyle(.secondary)
+            Button("Загрузить реестр контрактов"){Task{await load()}}
+            if let catalog {
+                Text("Версия "+String(catalog.releaseRevision)+" · SHA-256 "+catalog.releaseSha256).font(.caption.monospaced()).textSelection(.enabled)
+                if catalog.activeGroups.isEmpty {Text("Нет опубликованных групп проверенных контрактов.")}
+                ForEach(catalog.activeGroups){g in
+                    DisclosureGroup(g.groupId+" · "+String(g.observations.count)+" контрактов"){
+                        Text(g.fullScope);Text("Налоги: "+g.taxTerms);Text("Условия цены: "+g.priceTerms)
+                        Text((g.targetReferenceIdentityMatches ? "Номер базовой закупки совпадает. ":"Базовая закупка отличается. ")+"Эквивалентность целевой закупки не установлена.").font(.caption)
+                        if let range=g.rangeRubPerUnit{
+                            Text("Исторический диапазон ₽/"+g.unit).font(.headline)
+                            LabeledContent("Минимум",value:range.minimum)
+                            LabeledContent("Медиана",value:range.median)
+                            LabeledContent("Максимум",value:range.maximum)
+                        }else{Text("Недостаточно контрактов для диапазона.")}
+                        ForEach(g.observations){r in
+                            VStack(alignment:.leading){
+                                Text(r.registryNumber+" · "+r.contractNumber).font(.headline)
+                                Text(r.signedOn+" · "+r.signedContractPriceRub+" ₽")
+                                Text("Договорное количество: "+r.contractedExactFullScopeQuantity+" "+r.unit)
+                                Text(r.unitPriceRub+" ₽/"+r.unit)
+                                Text("SHA-256 оригинала: "+r.sourceSha256).font(.caption.monospaced()).textSelection(.enabled)
+                            }
+                        }
+                        Text("Манифест: "+g.reviewedManifestSha256).font(.caption.monospaced()).textSelection(.enabled)
+                        Text("Проверка импорта: "+g.intakeReceiptSha256).font(.caption.monospaced()).textSelection(.enabled)
+                    }
+                }
+                ForEach(catalog.withdrawnGroups){g in Text("Отозвана группа "+g.groupId+" · версия "+String(g.revision)).font(.caption)}
+                Text("Общая рыночная цена не рассчитывается.").font(.caption)
+            }
+            if let notice {Text(notice).font(.caption).foregroundStyle(.orange)}
+        }
+        .disabled(store.isBusy)
+        .onChange(of:store.identity){_,_ in clear()}
+        .onChange(of:store.selectedID){_,_ in clear()}
+        .onChange(of:item.caseId){_,_ in clear()}
     }
 }
 

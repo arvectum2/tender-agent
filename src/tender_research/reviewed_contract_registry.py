@@ -164,3 +164,10 @@ def publication_group(manifest:bytes,reviewed_pin:str,originals:dict[str,bytes],
         'full_scope':ref.full_scope,'tax_terms':ref.tax_terms,'price_terms':ref.price_terms,'unit':ref.unit,'currency':'RUB',
         'observations':[{k:v for k,v in row.items() if k!='source_url'} for row in receipt['observations']],
         'range_rub_per_unit':receipt['range_rub_per_unit']})
+
+def public_projection(release:Release,release_sha256:str):
+    active,withdrawn=replay(release)
+    return {'release_sha256':release_sha256,'release_revision':len(release.events),
+            'last_event_sha256':release.events[-1].event_sha256 if release.events else None,
+            'active_groups':[g.model_dump(mode='json') for g in active.values()],
+            'withdrawn_groups':[{'group_id':w['group_id'],'revision':w['revision']} for w in withdrawn]}

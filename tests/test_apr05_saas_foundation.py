@@ -2616,3 +2616,87 @@ def test_reviewed_contract_registry_read_only_empty_release(client,session,monke
     assert body['release_revision']==2 and body['active_groups']==[]
     assert body['withdrawn_groups']==[{'group_id':group.group_id,'revision':2}]
     assert session.query(CompanyPriceScenario).count()==before
+
+
+def test_price01_postgres_concurrent_norm_and_estimate(monkeypatch):
+    """Real independent request transactions; disposable local cluster only."""
+    import os
+    from concurrent.futures import ThreadPoolExecutor
+    from pathlib import Path
+    from threading import Barrier
+
+    from fastapi.testclient import TestClient
+    from sqlalchemy import create_engine, func, text
+    from sqlalchemy.engine import make_url
+    from sqlalchemy.orm import sessionmaker
+
+    from src.main import app
+    from src.modules.saas_foundation.models import (
+        CompanyCostNormVersion,
+        CompanyPriceScenario,
+    )
+    from src.shared.api.dependencies import get_db_session
+
+    root=os.environ.get('PRICE01_ISOLATED_PG_DATA')
+    if not root:pytest.skip('Use disposable PRICE-01 PostgreSQL runner')
+    data=Path(root).resolve()
+    assert data.parent.parent==Path('/tmp').resolve() and data.parent.name.startswith('ta-price01-pg-') and data.name=='pg'
+    url=make_url(os.environ['AI_CORP_DATABASE_URL'])
+    assert url.drivername=='postgresql+psycopg' and url.host is None and url.username=='price01_acceptance' and url.database=='postgres' and url.query.get('host')==str(data.parent/'socket')
+    engine=create_engine(url,pool_pre_ping=True)
+    with engine.connect() as conn:
+        assert Path(conn.scalar(text('SHOW data_directory'))).resolve()==data
+        assert conn.scalar(text('SHOW listen_addresses'))==''
+    factory=sessionmaker(bind=engine,expire_on_commit=False)
+    def db():
+        with factory() as s:yield s
+    app.dependency_overrides[get_db_session]=db
+    settings=saas.get_settings().model_copy(update={k:True for k in ('saas_company_price_scenarios_enabled','saas_company_price_itemized_enabled','saas_company_actual_costs_enabled','saas_company_actual_evidence_enabled','saas_company_cost_evidence_enabled','saas_company_actual_samples_enabled','saas_company_cost_norms_enabled','saas_company_cost_norm_binding_enabled')})
+    monkeypatch.setattr(saas,'get_settings',lambda:settings)
+    try:
+        with TestClient(app) as client:
+            _,token=_seed(client,'PRICE01 PG isolated');_legal(client,token)
+            h=_auth(token);cases='/api/saas/company-portfolio/cases'
+            def post(path,payload,status=201):
+                r=client.post(path,headers=h,json=payload);assert r.status_code==status,r.text
+                return r.json()
+            case=post(cases,{'registry_number':'0'*18+'1'})['case_id']
+            path=cases+'/'+case+'/price-scenarios'
+            estimate={'lines':[{'category':'own_labor_rub','title':'Development','unit':'h','quantity':'10','rate_rub':'1000','source_kind':'ASSUMPTION','source_note':'Synthetic plan'}],'zero_cost_categories':['external_direct_rub','cash_overhead_rub','reserve_rub','fixed_platform_fees_rub','guarantee_financing_cost_rub'],'terms':{'revenue_tax_percent':'6','variable_platform_fee_percent':'0','minimum_profit_rub':'0','target_profit_rub':'0','manual_bid_prices_rub':[],'assumption_note':'Synthetic plan','accept_hypothetical_assumptions_only':True},'confirm_no_double_count':True}
+            scenario=post(path+'/itemized',{'estimate':estimate,'expected_revision':0,'idempotency_key':'pg-plan-1'})['scenario_id']
+            actual=path+'/'+scenario+'/actual-costs'
+            baseline=client.get(actual,headers=h).json()['baseline_sha256']
+            snapshot=post(actual,{'snapshot':{'baseline_sha256':baseline,'as_of':'2026-11-15','observations':[{'ordinal':1,'quantity':'12','rate_rub':'1000','source_note':'Synthetic actual'}],'unplanned_costs':[],'note':'Synthetic cumulative report','confirm_cumulative_user_report':True,'confirm_no_double_count':True},'expected_revision':0,'idempotency_key':'pg-actual-1'})['snapshot_id']
+            row=client.get(actual+'/'+snapshot+'/rows/PLANNED/1/evidence',headers=h).json()
+            proposal={'sample':{'category':'own_labor_rub','title':'Development','unit':'h','samples':[{'case_id':case,'scenario_id':scenario,'snapshot_id':snapshot,'row_kind':'PLANNED','ordinal':1,'line_sha256':row['line_sha256']}],'confirm_comparable_reported_rows':True,'confirm_one_cumulative_row_per_case':True},'norm_quantity':'10','norm_rate_rub':'1000','rationale':'Explicit synthetic manager decision','confirm_reported_source_limits':True}
+            norms='/api/saas/company-portfolio/cost-norms'
+            draft=post(norms+'/preview',proposal,200)
+            payload={'proposal':proposal,'preview_sha256':draft['preview_sha256'],'expected_revision':0,'confirm_internal_approval':True}
+            def race(left,right):
+                barrier=Barrier(2)
+                def call(arg):
+                    with TestClient(app) as c:
+                        barrier.wait(timeout=10)
+                        return c.post(arg[0],headers=h,json=arg[1])
+                with ThreadPoolExecutor(max_workers=2) as pool:
+                    a,b=pool.submit(call,left),pool.submit(call,right)
+                    return a.result(timeout=25),b.result(timeout=25)
+            a,b=race((norms,{**payload,'idempotency_key':'pg-approve-a'}),(norms,{**payload,'idempotency_key':'pg-approve-b'}))
+            assert sorted([a.status_code,b.status_code])==[201,409],(a.text,b.text)
+            approved=(a if a.status_code==201 else b).json()
+            estimate['lines'][0].update(source_kind='APPROVED_CORPORATE_NORM',source_note='Explicit source',norm_binding={k:approved[k] for k in ('norm_id','norm_key','revision','record_sha256')})
+            save={'estimate':estimate,'expected_revision':1,'idempotency_key':'pg-bound-save'}
+            withdrawal={'expected_revision':1,'idempotency_key':'pg-withdraw','rationale':'Explicit synthetic withdrawal','confirm_withdrawal':True}
+            drop=norms+'/'+draft['norm_key']+'/withdraw'
+            a,b=race((path+'/itemized',save),(drop,withdrawal))
+            assert b.status_code==201,b.text
+            assert a.status_code in (201,409),a.text
+            assert client.post(path+'/itemized/preview',headers=h,json=estimate).status_code==409
+            if a.status_code==201:
+                assert client.post(path+'/itemized',headers=h,json=save).json()==a.json()
+            with factory() as dbs:
+                assert dbs.scalar(select(func.count()).select_from(CompanyCostNormVersion))==2
+                assert dbs.scalar(select(func.count()).select_from(CompanyPriceScenario))==(2 if a.status_code==201 else 1)
+    finally:
+        app.dependency_overrides.pop(get_db_session,None)
+        engine.dispose()

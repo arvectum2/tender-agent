@@ -51,6 +51,9 @@ const actualExtra={category:'cash_overhead_rub',title:'Extra hosting',unit:'mont
 const actualRows=[];let actualLost=false,actualDisabled=false,actualBad=false;
 let sampleDisabled=false,sampleStale=false,sampleBad=false;
 let historicalDisabled=false,historicalBad=null;
+let reviewedDisabled=false,reviewedBad=null;
+const reviewedFixture=target=>JSON.parse(execFileSync(process.env.PYTHON||'python3',['-c','import json,sys; from src.modules.saas_foundation import company_reviewed_contracts as r; r._context=lambda *a:json.loads(sys.argv[1]); print(json.dumps(r.catalog(None,None,None),ensure_ascii=False))',JSON.stringify(target)],{encoding:'utf8'}));
+
 const historicalFixture=(target,p)=>JSON.parse(execFileSync(process.env.PYTHON||'python3',['-c','import json,sys; from src.modules.saas_foundation import company_historical_comparables as h; h._context=lambda *a:json.loads(sys.argv[1]); p=json.loads(sys.argv[2]); print(json.dumps(h.preview(None,None,None,h.Selection.model_validate(p)) if p else h.catalog(None,None,None),ensure_ascii=False))',JSON.stringify(target),JSON.stringify(p)],{encoding:'utf8'}));
 
 let normDisabled=false,normLost=false,normBad=false;const normRecords=[];let normLastDraft=null;
@@ -113,6 +116,15 @@ async function fetch(route,opts){
  }
  if(route.includes('/commercial-captures/capture-a/requirement-matrix?')){
   assert.equal(key,'a');const offset=route.includes('offset=3')?3:0;return reply({customer_id:fixture.a.customer_id,case_id:'commercial-a',attempt_id:'capture-a',offset,coverage_complete:false,qualification_verified:false,candidate_count:4,missing_copy_count:2,has_more:offset===0,page_summary:{unreviewed:1},documents:[]});
+ }
+ if(route.endsWith('/reviewed-contracts')){
+  if(reviewedDisabled)return reply({detail:'disabled'},404);
+  const c=route.includes('/commercial-a/')?commercialItem:item(key),target={customer_id:fixture[key].customer_id,case_id:c.case_id,target_source_platform:c.source_platform??'eis',target_external_id:c.external_id??c.registry_number,target_scope_verified:false};
+  const r=reviewedFixture(target);
+  if(reviewedBad==='foreign')r.customer_id='foreign';
+  if(reviewedBad==='release')r.release_revision=1;
+  if(reviewedBad){delete r.catalog_sha256;r.catalog_sha256=normSHA(r)}
+  return reply(r);
  }
  if(route.endsWith('/historical-comparables')||route.endsWith('/historical-comparables/preview')){
   assert.equal(key,'a');if(historicalDisabled)return reply({detail:'disabled'},404);
@@ -273,6 +285,23 @@ async function openCase(key){get('company-case').value='case-'+key;change('compa
 async function main(){
  await selectAccount('a');assert.match(get('company-identity').textContent,/Компания A/);
  await openCase('a');assert.equal(get('historical-comparable-panel').hidden,false);
+ assert.equal(get('reviewed-contract-panel').hidden,false);
+ reviewedDisabled=true;await click('reviewed-contract-load');assert.match(get('reviewed-contract-status').textContent,/отключена/);reviewedDisabled=false;
+ await click('reviewed-contract-load');assert.match(get('reviewed-contract-result').children[1].textContent,/Нет опубликованных/);
+ const rr=reviewedFixture({customer_id:'customer-a',case_id:'case-a',target_source_platform:'eis',target_external_id:'0123456789012345678',target_scope_verified:false});
+ const g={group_id:'fixture-group',reviewed_manifest_sha256:'a'.repeat(64),intake_receipt_sha256:'b'.repeat(64),reference_registry_number:'0123456789012345678',full_scope:'Synthetic full scope',tax_terms:'VAT included',price_terms:'Fixed price',currency:'RUB',unit:'item',observations:[{registry_number:'0123456789012345678',contract_number:'fixture',signed_on:'2026-01-01',signed_contract_price_rub:'100',contracted_exact_full_scope_quantity:'2',unit:'item',source_sha256:'c'.repeat(64),unit_price_rub:'50.000000'}],range_rub_per_unit:null};
+ const projection={release_sha256:'d'.repeat(64),release_revision:1,last_event_sha256:'e'.repeat(64),active_groups:[g],withdrawn_groups:[]};
+ const candidate={...rr,...projection,active_groups:[{...g,target_reference_identity_matches:true,target_scope_equivalence_verified:false}]};delete candidate.catalog_sha256;candidate.catalog_sha256=normSHA(candidate);
+ ctx.reviewedCandidate=candidate;ctx.reviewedFixturePin=normSHA(projection);
+ assert.equal(await vm.runInContext('validReviewedContracts(reviewedCandidate,"d".repeat(64),reviewedFixturePin)',ctx),true);
+ vm.runInContext('renderReviewedContracts(reviewedCandidate)',ctx);assert.match(get('reviewed-contract-result').children[1].children[0].textContent,/fixture-group/);
+ candidate.active_groups[0].observations[0].signed_contract_price_rub='999';delete candidate.catalog_sha256;candidate.catalog_sha256=normSHA(candidate);
+ assert.equal(await vm.runInContext('validReviewedContracts(reviewedCandidate,"d".repeat(64),reviewedFixturePin)',ctx),false);
+ const withdrawnProjection={...projection,release_revision:2,active_groups:[],withdrawn_groups:[{group_id:'fixture-group',revision:2}]};
+ const withdrawn={...rr,...withdrawnProjection};delete withdrawn.catalog_sha256;withdrawn.catalog_sha256=normSHA(withdrawn);ctx.reviewedCandidate=withdrawn;ctx.reviewedFixturePin=normSHA(withdrawnProjection);
+ assert.equal(await vm.runInContext('validReviewedContracts(reviewedCandidate,"d".repeat(64),reviewedFixturePin)',ctx),true);vm.runInContext('renderReviewedContracts(reviewedCandidate)',ctx);assert.equal(get('reviewed-contract-result').children.length,3);
+ for(const mode of ['foreign','release']){reviewedBad=mode;await click('reviewed-contract-load');assert.equal(vm.runInContext('token',ctx),'');assert.equal(get('reviewed-contract-result').children.length,0);reviewedBad=null;await selectAccount('a');await openCase('a')}
+
  historicalDisabled=true;await click('historical-load');assert.match(get('historical-status').textContent,/отключена/);historicalDisabled=false;
  await click('historical-load');assert.equal(get('historical-catalog').children[0].children.length,7);assert.equal(get('historical-reference').children.length,7);assert.equal(get('historical-preview').disabled,true);
  const aksay='0158300034526000388',otherHistory='0119200000126013647';
@@ -415,7 +444,7 @@ await click('company-metrics-load');assert.match(get('company-metrics-result').t
  await selectAccount('b');assert.match(get('company-identity').textContent,/Компания B/);assert.equal(get('keywords').value,'');assert.equal(get('run-id').value,'');assert.equal(get('reference-state').textContent,'Список пока не загружен');assert.equal(get('company-history').textContent,'');assert.equal(get('company-event-file-result').textContent,'');assert.equal(get('company-readiness-result').textContent,'');assert.equal(get('company-capture-result').textContent,'');assert.equal(get('company-capture-attempt').children.length,1);assert.equal(get('company-evidence-result').textContent,'');assert.equal(get('company-search-receipts').textContent,'');assert.equal(get('company-search-candidate').children.length,1);
  assert.equal(vm.runInContext('actualSamples.length',ctx),0);assert.equal(get('actual-sample-result').children.length,0);assert.equal(get('price-note').value,'');assert.equal(get('price-cost-result').textContent,'');assert.equal(get('price-cost-line').children.length,1);assert.equal(get('price-version-detail').textContent,'');assert.equal(get('price-results').children.length,0);assert.equal(get('price-line-list').children[0].children.length,0);assert.equal(get('price-line-source_note').value,'');assert.equal(get('price-mode').value,'aggregate');
  assert.equal(get('cost-norm-panel').hidden,true);assert.equal(get('cost-norm-catalog').children.length,0);assert.equal(get('cost-norm-history-result').children.length,0);assert.equal(get('cost-norm-note').value,'');assert.equal(vm.runInContext('normPending',ctx),null);
- await openCase('b');assert.equal(get('historical-comparable-panel').hidden,true);assert.equal(get('historical-catalog').children.length,0);assert.equal(get('historical-load').disabled,true);assert.equal(get('company-price-panel').hidden,true);assert.equal(get('price-preview').disabled,true);await click('company-lifecycle-load');assert.equal(get('company-lifecycle-editor').hidden,true);assert.equal(get('company-lifecycle-current').textContent,'');await click('company-metrics-load');assert.match(get('company-metrics-result').textContent,/нет данных/);assert.equal(get('company-decision-panel').hidden,true);assert.equal(get('company-evidence-panel').hidden,true);assert.equal(get('company-save-panel').hidden,true);assert(!get('company-case').children.some(c=>c.value==='case-a'));
+ await openCase('b');assert.equal(get('reviewed-contract-panel').hidden,true);assert.equal(get('reviewed-contract-result').children.length,0);assert.equal(get('historical-comparable-panel').hidden,true);assert.equal(get('historical-catalog').children.length,0);assert.equal(get('historical-load').disabled,true);assert.equal(get('company-price-panel').hidden,true);assert.equal(get('price-preview').disabled,true);await click('company-lifecycle-load');assert.equal(get('company-lifecycle-editor').hidden,true);assert.equal(get('company-lifecycle-current').textContent,'');await click('company-metrics-load');assert.match(get('company-metrics-result').textContent,/нет данных/);assert.equal(get('company-decision-panel').hidden,true);assert.equal(get('company-evidence-panel').hidden,true);assert.equal(get('company-save-panel').hidden,true);assert(!get('company-case').children.some(c=>c.value==='case-a'));
  lifecycleMismatch=true;await click('company-lifecycle-load');assert.equal(vm.runInContext('token',ctx),'');assert.equal(get('company-metrics-result').textContent,'');lifecycleMismatch=false;await selectAccount('b');
  mismatch=true;await click('company-load');assert.match(get('result').textContent,/другой компании/);assert.equal(get('company-detail').hidden,true);assert.equal(get('company-case').children.length,1);assert.equal(vm.runInContext('token',ctx),'');
  mismatch=false;let release;delayed=new Promise(r=>{release=r});get('saved-token').value='fixture-a';const first=click('use-token');get('saved-token').value='fixture-b';await click('use-token');release();await first;delayed=null;assert.equal(vm.runInContext('token',ctx),'fixture-a');
