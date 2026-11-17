@@ -739,11 +739,11 @@ apr03b_multiple_source_claims_20261117:
 
 apr08_evidence_copilot_20261117:
   task_id: TA-APR08-EVIDENCE-COPILOT-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR08-EVIDENCE-COPILOT-20261117.yaml
   branch: feat/ta-apr08-evidence-copilot-20261117
-  current_stage: integrated_development_pass_successor_ci_and_owner_integration_pending
-  last_verified_commit: 427a548cffc5d61aa062826ea82fe43a54d542e5
+  current_stage: integrated_bounded_development_complete
+  last_verified_commit: 17e64db3a6133f6a8ab1d372be031c72c4c8bd2d
 
 apr08_document_retrieval_20261117:
   task_id: TA-APR08-DOCUMENT-RETRIEVAL-20261117
@@ -852,15 +852,17 @@ apr08_composed_evidence_20261117:
 
 apr08_integrated_acceptance_20261117:
   task_id: TA-APR08-INTEGRATED-ACCEPTANCE-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR08-INTEGRATED-ACCEPTANCE-20261117.yaml
   branch: feat/ta-apr08-integrated-acceptance-20261117
-  current_stage: exact_ci_pending
-  last_verified_commit: 427a548cffc5d61aa062826ea82fe43a54d542e5
+  current_stage: integrated_bounded_development_complete
+  last_verified_commit: 17e64db3a6133f6a8ab1d372be031c72c4c8bd2d
 
 apr08_integration_20261117:
   task_id: TA-APR08-INTEGRATION-20261117
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR08-INTEGRATION-20261117.yaml
   branch: feat/ta-apr08-integration-receipt-20261117
-  current_stage: owner_authorized_exact_stack_merge
+  current_stage: post_merge_main_ci_and_receipt_pending
+  last_verified_commit: 17e64db3a6133f6a8ab1d372be031c72c4c8bd2d
+  merge_commit: cac4cd4a69f2494bff582b94aec80a5ee4d4af4c

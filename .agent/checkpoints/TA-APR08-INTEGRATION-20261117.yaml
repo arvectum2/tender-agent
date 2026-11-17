@@ -6,10 +6,11 @@ definition_of_done:
   - Check main CI and mirror, no production or new scope.
 completed:
   - Owner explicitly authorized integration. All 16 PRs 19/19 CI green, CLEAN; 50 commits, no diff whitespace, main ancestor a1686d85.
-current_stage: owner_authorized_exact_stack_merge
+  - PR627 retargeted main and merged via standard GitHub merge, exact reviewed head and 19/19 green. Main cac4cd4a69f2494bff582b94aec80a5ee4d4af4c tree 542bfa19cbc74d353499a6693074b6405a82bc52 matches reviewed tip.
+current_stage: post_merge_main_ci_and_receipt_pending
 remaining:
-  - Retarget PR627 to main, ready, merge exact head through repository rules, verify main tree, update receipt.
+  - Verify main CI run 44121271063 and GitVerse mirror 44121270969; metadata-only receipt PR CI/merge.
 last_verified_commit: 17e64db3a6133f6a8ab1d372be031c72c4c8bd2d
 test_results:
   - All 304 stack checks SUCCESS, integrated 4/4 and 223 tests PASS.
-resume_instruction: Check PR627 and main first. If already merged, verify tree 542bfa19cbc74d353499a6693074b6405a82bc52; do not merge twice. If pending, merge only exact reviewed tip against unchanged base and normal checks. No production.
+resume_instruction: Main merge is complete; do not remerge. Check exact main cac4cd4a69f2494bff582b94aec80a5ee4d4af4c CI and mirror; verify receipt PR, reconcile final status. No production or untriggered APR09/10.
