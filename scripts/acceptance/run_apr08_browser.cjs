@@ -54,6 +54,15 @@ assert.equal(target.hostname,'127.0.0.1');assert.equal(target.protocol,'http:');
       assert(!asOf.includes('Статья 45. Условия'));
       await ask('Покажи статью 45 44-ФЗ на дату 17.11.2026','UNKNOWN');
       console.log('APR08_STATUTE_BROWSER_PASS historical source SHA and two as-of refusals');
+      if(process.env.APR08_AMENDMENT_BROWSER_ACCEPTANCE==='1') {
+        const timing=await ask('Покажи сроки вступления в силу 279-ФЗ на дату 17.11.2026','Юридический статус нормы на выбранную дату: UNKNOWN');
+        assert.match(timing,/2027-01-01 · Будущая дата/);assert.match(timing,/2026-10-01 · Дата наступила/);assert.match(timing,/2026-08-04 · Дата наступила/);
+        assert.match(timing,/Дата публикации|дата публикации по справочному источнику/);
+        await l('copilot-answer-result').screenshot({path:process.env.APR08_SCREENSHOT_DIR+'/amendment-timing.png'});
+        await ask('Покажи статью 45 44-ФЗ на дату 17.11.2026','UNKNOWN');
+        console.log('APR08_AMENDMENT_BROWSER_PASS secondary schedule, future group, current-law refusal');
+      }
+
     }
     await ask('Можно ли подписывать контракт?','UNKNOWN');
     await l('copilot-answer-question').fill('другой вопрос');assert.equal(await l('copilot-answer-result').innerText(),'');

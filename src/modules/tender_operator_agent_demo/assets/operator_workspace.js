@@ -333,7 +333,7 @@
       const data=await json(api+'/workspace/runs/'+encodeURIComponent(runId)+'/evidence-answer',
         {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question})});
       if(state.runId!==runId || epoch!==state.copilotAnswerEpoch) return;
-      if(data.run_id!==runId || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION','TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','ARCHIVED_SECURITY_FIELDS','LITERAL_PERFORMANCE_OBSERVATIONS','CUSTOMER_TERMS_LEGAL_REFERENCES','HISTORICAL_STATUTE_SNAPSHOT_EXCERPT'].includes(data.status) || !Array.isArray(data.citations) || !data.citations.length) {
+      if(data.run_id!==runId || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION','TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','ARCHIVED_SECURITY_FIELDS','LITERAL_PERFORMANCE_OBSERVATIONS','CUSTOMER_TERMS_LEGAL_REFERENCES','HISTORICAL_STATUTE_SNAPSHOT_EXCERPT','SECONDARY_AMENDMENT_TIMING_ONLY'].includes(data.status) || !Array.isArray(data.citations) || !data.citations.length) {
         paragraph(root,'UNKNOWN · Вопрос не поддерживается или доказательство не найдено.','unknown');return;
       }
       if(['TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','LITERAL_PERFORMANCE_OBSERVATIONS'].includes(data.status) && data.citation_kind==='ORIGINAL_DP_CHUNK') {
@@ -354,6 +354,11 @@
           paragraph(root,c.quote,'citation');
           paragraph(root,c.file_id+' · чанк '+c.chunk_id+' · SHA-256 оригинала '+c.original_sha256,'help-text');
         }
+      } else if(data.status==='SECONDARY_AMENDMENT_TIMING_ONLY' && data.citation_kind==='SECONDARY_LEGAL_REFERENCE' && data.observation?.secondary_copies_agree===true) {
+        paragraph(root,data.answer,'help-text');
+        for(const g of data.observation.groups) paragraph(root,g.scope+' · '+g.stated_start_date+' · '+(g.calendar_relation==='DATE_REACHED'?'Дата наступила':'Будущая дата')+(g.date_basis==='SECONDARY_REPORTED_PUBLICATION_DATE'?' (дата публикации по справочному источнику)':''));
+        for(const c of data.citations) {paragraph(root,c.excerpt,'citation');paragraph(root,c.source_url+' · '+c.locator+' · SHA-256 '+c.source_sha256,'help-text');}
+        paragraph(root,'Юридический статус нормы на выбранную дату: UNKNOWN.','help-text');
       } else if(data.status==='HISTORICAL_STATUTE_SNAPSHOT_EXCERPT' && data.citation_kind==='GOVERNMENT_REPRODUCTION' && data.observation?.snapshot_bytes_verified===true) {
         paragraph(root,data.answer,'help-text');
         for(const c of data.citations) {
