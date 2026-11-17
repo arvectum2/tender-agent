@@ -1203,3 +1203,10 @@ def historical_comparable_catalog(case_id: str, principal: Member, session: DBSe
 def historical_comparable_preview(case_id: str, payload: company_historical_comparables.Selection, principal: Member, session: DBSession) -> dict:
     _historical_comparables_enabled()
     return company_historical_comparables.preview(session,principal,case_id,payload)
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/reviewed-contract-registry")
+def reviewed_contract_registry(case_id: str, principal: Member, session: DBSession) -> dict:
+    _historical_comparables_enabled()
+    if not get_settings().saas_company_reviewed_contract_registry_enabled:
+        raise HTTPException(404,"Reviewed contract registry disabled")
+    return company_historical_comparables.published_contract_catalog(session,principal,case_id)

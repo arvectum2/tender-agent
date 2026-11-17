@@ -156,3 +156,18 @@ def exact_unit_amount(price:Decimal,quantity:Decimal)->Decimal:
         if price!=price.quantize(Decimal('.01')) or quantity!=quantity.quantize(Decimal('.0001')):
             raise ValueError('Unsupported source precision')
         return (price/quantity).quantize(Decimal('.000001'),rounding=ROUND_HALF_UP)
+
+
+def published_contract_catalog(session,principal,case_id):
+    from src.tender_research import reviewed_contract_registry as registry
+
+    context=_context(session,principal,case_id)
+    try:
+        published=registry.load_registry()
+    except (OSError,ValueError,TypeError,RecursionError) as exc:
+        raise HTTPException(503,'Reviewed contract evidence registry unavailable') from exc
+    # Archive groups are not asserted equivalent to the target case.
+    result={**context,**published,'schema':'company_reviewed_contract_registry_v1',
+            'target_equivalence_verified':False,'automatic_estimate_adoption':False,
+            'state':'REVIEWED_GROUPS_AVAILABLE' if published['groups'] else 'NO_PUBLISHED_CONTRACT_EVIDENCE'}
+    return {**result,'catalog_sha256':_digest(result)}

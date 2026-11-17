@@ -2560,3 +2560,40 @@ def test_historical_comparables_archive_is_case_scoped_and_not_pooled(client,ses
     assert history.exact_unit_amount(Decimal('100.00'),Decimal(3))==Decimal('33.333333')
     for price,qty in [('100','0'),('NaN','3'),('100','0.00001'),('1.001','2'),('-1','2')]:
         with pytest.raises(ValueError):history.exact_unit_amount(Decimal(price),Decimal(qty))
+
+
+def test_reviewed_contract_registry_case_scope_disabled_and_fail_closed(client,session,monkeypatch):
+    from src.modules.saas_foundation.models import CompanyPriceScenario
+    from src.tender_research import reviewed_contract_registry as registry
+    from src.tender_research.competitive_bid_protocol import AKSAY
+
+    _,a=_seed(client,'Registry A');_,b=_seed(client,'Registry B');_legal(client,a);_legal(client,b)
+    h=_auth(a);cases='/api/saas/company-portfolio/cases'
+    case=client.post(cases,headers=h,json={'registry_number':AKSAY}).json()['case_id']
+    path=cases+'/'+case+'/reviewed-contract-registry'
+    settings=saas.get_settings().model_copy(update={'saas_company_price_scenarios_enabled':True,'saas_company_historical_comparables_enabled':True})
+    monkeypatch.setattr(saas,'get_settings',lambda:settings)
+    assert client.get(path,headers=h).status_code==404
+    settings=settings.model_copy(update={'saas_company_reviewed_contract_registry_enabled':True})
+    assert client.get(path,headers=_auth(b)).status_code==404
+    initial=session.query(CompanyPriceScenario).count()
+    r=client.get(path,headers=h);assert r.status_code==200,r.text
+    data=r.json()
+    assert data['case_id']==case and data['target_external_id']==AKSAY
+    assert data['schema']=='company_reviewed_contract_registry_v1'
+    assert data['state']=='NO_PUBLISHED_CONTRACT_EVIDENCE'
+    assert data['release']['version']==1 and data['release']['release_sha256']==registry.RELEASE_PINS[0]
+    assert data['release_history']==[data['release']]
+    assert data['groups']==[] and data['current_market_price'] is None and data['recommendation'] is None
+    assert not data['target_equivalence_verified'] and not data['automatic_estimate_adoption'] and not data['external_submission_allowed']
+    assert data.pop('catalog_sha256')==registry.sealed(data)
+    assert client.post(path,headers=h,json={'groups':[]}).status_code==405
+    for role in ('viewer','analyst'):
+        invite=client.post('/api/saas/invitations',headers=h,json={'role':role,'acquisition_channel':'referral'}).json()
+        token=client.post('/api/saas/invitations/redeem',json={'invitation_code':invite['invitation_code'],'display_name':role}).json()['access_token'];_legal(client,token)
+        assert client.get(path,headers=_auth(token)).status_code==(403 if role=='viewer' else 200)
+    def broken():
+        raise ValueError('fixture private source failure')
+    monkeypatch.setattr(registry,'load_registry',broken)
+    r=client.get(path,headers=h);assert r.status_code==503 and 'fixture private' not in r.text
+    assert session.query(CompanyPriceScenario).count()==initial
