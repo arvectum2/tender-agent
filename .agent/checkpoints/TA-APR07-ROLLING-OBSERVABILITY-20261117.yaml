@@ -4,13 +4,16 @@ goal: Extend existing operational observability with a bounded rolling analysis-
 definition_of_done:
   - Measure terminal analysis jobs in stated UTC window, separate completed, warning, failed and cancelled outcomes and invalid timing.
   - Report queue-to-job-finish latency only with explicit denominators, no empty or undersized sample claimed as SLO.
-  - Validate with disposable DB fixture, endpoint contract and regression tests; publish draft PR.
+  - Validate with disposable DB fixture and unchanged existing endpoint contract; publish draft PR. No new public endpoint.
 completed:
   - APR06 bounded engineering readiness complete; commercial blockers separate; final PR605 shortlist CI pending.
-current_stage: implement_measured_job_window
+  - Implemented bounded read-only terminal analysis job rows with explicit outcome counts, P50/P95 queue-to-finish durations, incomplete timing and minimum sample floor.
+  - Verified with isolated existing test DB fixtures, no production data or model invocation.
+current_stage: rolling_measurement_ci_pending
 remaining:
-  - Implementation and targeted isolated tests.
   - Exact CI.
-last_verified_commit: 66e664c41453f609ed6fd393b332439fae6cf560
-test_results: []
-resume_instruction: Implement rolling measurement using existing TenderAnalysisJob records, never access production DB or invoke Gemma; preserve existing operational endpoint behavior and distinguish job latency from operator time and production SLO.
+last_verified_commit: 8f84a8aadf72174a193356d7d0c5cd3a71dbb4a2
+test_results:
+  - 35 targeted pytest PASS, Ruff and git diff check PASS.
+  - Includes half-open seven-day UTC window, cancelled/failed separation, incomplete and empty evidence, 100-row floor, exact nearest-rank P95, overflow and invalid window. Existing /api/ops/observability contract unchanged.
+resume_instruction: Verify exact PR CI and final APR06 predecessor CI; fix failures. Next integrate approved operator-only entrypoint or secure existing operational access and isolated PostgreSQL rolling measurement rehearsal as appropriate. No public unauthenticated aggregate expansion, production DB, Gemma or SLO/model approval.

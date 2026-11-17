@@ -377,7 +377,7 @@ completed:
 - 'Real disposable local HTTPS staging: Web norm-bound itemized save v2, actual native
   macOS and iOS Simulator XCTest read and verify same server data, foreign tenant
   404. Release/projection pin consistency and default-off gates checked.'
-current_stage: apr06_review_readiness
+current_stage: apr07_rolling_observability
 remaining:
 - APR-05 bounded technical rehearsal complete, PR604 exact CI green; owner merge approval and approved staging target remain separate.
 - APR-06 pinned review readiness inventory implemented; exact CI and independent source/attributable human review pending.
