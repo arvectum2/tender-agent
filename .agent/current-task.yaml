@@ -758,4 +758,5 @@ apr08_grounded_questions_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR08-GROUNDED-QUESTIONS-20261117.yaml
   branch: feat/ta-apr08-grounded-questions-20261117
-  current_stage: bounded_natural_language_question_routing
+  current_stage: exact_ci_pending
+  last_verified_commit: 67da3dcfe1e2137c6c377c8a113877b5601561ba

@@ -7,9 +7,14 @@ definition_of_done:
   - Private API and existing UI; tests, real isolated DP replay, publish draft PR and verify exact CI.
 completed:
   - PR610/611 exact CI green; PR612 real replay PASS, 17/19 CI in progress.
-current_stage: bounded_natural_language_question_routing
+  - Implemented full-match Russian intent routing, archived facts and explicit percentage, separate clause topics (payment, delivery, security), nonsemantic excerpt status, unsupported/compound/legal unknown, run validation, private HTTP/UI.
+  - Actual isolated DP and operator HTTP replay: verified payment excerpt, unsupported signature question UNKNOWN, anonymous 401, original inventory unchanged, temporary instance removed.
+current_stage: exact_ci_pending
 remaining:
-  - Implement question router, UI, guard tests and real replay; publish draft.
-last_verified_commit: a0261f8c82a0195f7a9b08b879dd0b69d1384766
-test_results: []
-resume_instruction: Continue from this branch; deterministic Russian intent forms only, existing evidence contracts, no generic chatbot, legal approval, live sources, production, model calls or automatic merge.
+  - Verify exact PR CI, parent PR612 CI; fix actual failures.
+  - Continue bounded typed interpretations, legal explanation and commercial scenario increment; no claim of full semantic Q&A.
+last_verified_commit: 67da3dcfe1e2137c6c377c8a113877b5601561ba
+test_results:
+  - 118 focused PASS, Ruff/diff/Node simulation PASS.
+  - APR08_REAL_GROUNDED_QUESTION_PASS, APR08_REAL_DP_REPLAY_PASS, APR08_ISOLATED_DP_REMOVED; no model or browser visual test.
+resume_instruction: Verify exact grounded-question PR and PR612 CI, then continue typed evidence interpretations, legal and commercial scenario boundaries. No production, Gemma, live sources, external actions or automatic merge. Full APR08 remains in progress.
