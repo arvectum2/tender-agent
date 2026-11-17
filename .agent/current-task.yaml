@@ -857,3 +857,10 @@ apr08_integrated_acceptance_20261117:
   branch: feat/ta-apr08-integrated-acceptance-20261117
   current_stage: exact_ci_pending
   last_verified_commit: 427a548cffc5d61aa062826ea82fe43a54d542e5
+
+apr08_integration_20261117:
+  task_id: TA-APR08-INTEGRATION-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR08-INTEGRATION-20261117.yaml
+  branch: feat/ta-apr08-integration-receipt-20261117
+  current_stage: owner_authorized_exact_stack_merge

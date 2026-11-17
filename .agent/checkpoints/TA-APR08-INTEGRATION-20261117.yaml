@@ -1,0 +1,15 @@
+task_id: TA-APR08-INTEGRATION-20261117
+status: in_progress
+goal: Integrate exact owner-authorized APR08 stack into main, no deployment.
+definition_of_done:
+  - Exact 16 PRs green and main unchanged; merge reviewed tip, prove main tree identical; reconcile checkpoints and stack status.
+  - Check main CI and mirror, no production or new scope.
+completed:
+  - Owner explicitly authorized integration. All 16 PRs 19/19 CI green, CLEAN; 50 commits, no diff whitespace, main ancestor a1686d85.
+current_stage: owner_authorized_exact_stack_merge
+remaining:
+  - Retarget PR627 to main, ready, merge exact head through repository rules, verify main tree, update receipt.
+last_verified_commit: 17e64db3a6133f6a8ab1d372be031c72c4c8bd2d
+test_results:
+  - All 304 stack checks SUCCESS, integrated 4/4 and 223 tests PASS.
+resume_instruction: Check PR627 and main first. If already merged, verify tree 542bfa19cbc74d353499a6693074b6405a82bc52; do not merge twice. If pending, merge only exact reviewed tip against unchanged base and normal checks. No production.
