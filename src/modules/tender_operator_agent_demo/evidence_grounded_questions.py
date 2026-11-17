@@ -10,6 +10,10 @@ from src.modules.tender_operator_agent_demo.evidence_copilot import (
     EvidenceQuestion,
     answer_question,
 )
+from src.modules.tender_operator_agent_demo.evidence_delivery_observation import (
+    delivery_candidate,
+    literal_delivery_observation,
+)
 from src.modules.tender_operator_agent_demo.evidence_document_search import (
     DocumentSearchQuestion,
     checked_search_run,
@@ -96,6 +100,25 @@ def answer_grounded_question(run_id: str, request: GroundedQuestion) -> dict:
                         'answer': 'В найденном фрагменте указан срок оплаты. Это не подтверждение применимого срока; условия, исключения и связанные пункты требуют проверки.'}
         return {**result, 'intent': 'payment_duration', 'reason': 'NO_UNAMBIGUOUS_VERIFIED_PAYMENT_PARAGRAPH',
                 'citations': citations, 'citation_kind': 'ORIGINAL_DP_CHUNK' if citations else None}
+    performance_kind = next((kind for kind, pattern in {
+        'services': r'(?:какой срок оказания услуг|каков срок оказания услуг|какие сроки оказания услуг)',
+        'works': r'(?:какой срок выполнения работ|каков срок выполнения работ|какие сроки выполнения работ|когда должны быть выполнены работы)',
+        'goods': r'(?:какой срок поставки|какой срок поставки товара|каков срок поставки товара)',
+        'contract': r'(?:каков срок исполнения контракта|какой срок исполнения контракта)',
+    }.items() if re.fullmatch(pattern, q)), None)
+    if performance_kind:
+        found = search_run_documents(run_id, DocumentSearchQuestion(query='срок исполнения'),
+                                     candidate_selector=partial(delivery_candidate, object_kind=performance_kind))
+        citations = found['citations']
+        observations = [literal_delivery_observation(c['quote'], object_kind=performance_kind) for c in citations]
+        if found['status'] == 'VERIFIED_EXCERPTS_ONLY' and observations and all(observations):
+            return {**result, 'intent': 'performance_term', 'status': 'LITERAL_PERFORMANCE_OBSERVATIONS',
+                    'observation': {'object_kind': performance_kind, 'mentions': observations,
+                                    'distinct_literal_terms': len({o['term_literal'].casefold() for o in observations}),
+                                    'effective_due_date': None},
+                    'citations': citations, 'citation_kind': 'ORIGINAL_DP_CHUNK',
+                    'answer': 'Явные сроки из проверенных фрагментов. Применимый срок, этапы и исключения не установлены.'}
+        return {**result, 'intent': 'performance_term', 'reason': 'NO_VERIFIED_EXPLICIT_PERFORMANCE_TERM'}
     topic = next(((key, terms, title) for key, (pattern, terms, title) in _TOPICS.items() if re.fullmatch(pattern, q)), None)
     if topic is None:
         return {**result, 'reason': 'UNSUPPORTED_OR_COMPOUND_QUESTION'}

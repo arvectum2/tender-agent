@@ -330,14 +330,18 @@
       const data=await json(api+'/workspace/runs/'+encodeURIComponent(runId)+'/evidence-answer',
         {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question})});
       if(state.runId!==runId || epoch!==state.copilotAnswerEpoch) return;
-      if(data.run_id!==runId || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION','TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','ARCHIVED_SECURITY_FIELDS'].includes(data.status) || !Array.isArray(data.citations) || !data.citations.length) {
+      if(data.run_id!==runId || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION','TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','ARCHIVED_SECURITY_FIELDS','LITERAL_PERFORMANCE_OBSERVATIONS'].includes(data.status) || !Array.isArray(data.citations) || !data.citations.length) {
         paragraph(root,'UNKNOWN · Вопрос не поддерживается или доказательство не найдено.','unknown');return;
       }
-      if(['TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION'].includes(data.status) && data.citation_kind==='ORIGINAL_DP_CHUNK') {
+      if(['TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','LITERAL_PERFORMANCE_OBSERVATIONS'].includes(data.status) && data.citation_kind==='ORIGINAL_DP_CHUNK') {
         paragraph(root,data.answer,'help-text');
         if(data.status==='LITERAL_PAYMENT_OBSERVATION' && data.observation) {
           const o=data.observation;
           paragraph(root,'Указано в фрагменте: '+o.mentioned_days+(o.day_unit==='WORKING_DAYS'?' рабочих дней':' календарных дней')+'. Применимый срок не установлен.');
+        }
+        if(data.status==='LITERAL_PERFORMANCE_OBSERVATIONS' && data.observation) {
+          for(const o of data.observation.mentions || []) paragraph(root,'Указано в источнике: '+o.term_literal);
+          if(data.observation.distinct_literal_terms>1) paragraph(root,'Найдены разные формулировки; требуется сопоставление.','unknown');
         }
         for(const c of data.citations.slice(0,2)) {
           paragraph(root,c.quote,'citation');

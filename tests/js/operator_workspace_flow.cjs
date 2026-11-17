@@ -118,6 +118,9 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
     };
     else if(route.endsWith('/workspace/runs/run-1/evidence-answer') && method==='POST') {
       const request=JSON.parse(opts.body);
+      if(request.question==='Какой срок оказания услуг?') {
+        return {ok:true,json:async()=>({run_id:'run-1',status:'LITERAL_PERFORMANCE_OBSERVATIONS',citation_kind:'ORIGINAL_DP_CHUNK',answer:'Явные сроки из проверенных фрагментов.',observation:{mentions:[{term_literal:'с момента заключения Контракта по 07.12.2026 г. (включительно).'}],distinct_literal_terms:1,effective_due_date:null},citations:[{file_id:'FILE-01',chunk_id:'chunk-1',original_sha256:'a'.repeat(64),quote:'Срок оказания услуг: с момента заключения Контракта по 07.12.2026 г. (включительно).'}]})};
+      }
       if(request.question==='Какой размер обеспечения исполнения контракта?') {
         return {ok:true,json:async()=>({run_id:'run-1',status:'ARCHIVED_SECURITY_FIELDS',citation_kind:'ARCHIVED_XML',answer:'Явные поля архивного извещения.',observation:{amount:null,percent:'30.0'},citations:[{file_id:'FILE-01',source_ref:'eis-xml:FILE-01:contractGuarantee/part',document:'notice.xml',locator:'XML:contractGuarantee/part',excerpt:'30.0'}]})};
       }
@@ -293,6 +296,11 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
     for(let i=0;i<50 && !get('copilot-answer-result').children.length;i++) await new Promise(resolve=>setTimeout(resolve,3));
     assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('Сумма в XML: UNKNOWN')));
     assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('30.0%') && c.textContent.includes('база не подтверждена')));
+    get('copilot-answer-question').value='Какой срок оказания услуг?';get('copilot-answer-question').events.input();get('copilot-answer-form').events.submit({preventDefault(){}});
+    for(let i=0;i<50 && !get('copilot-answer-result').children.length;i++) await new Promise(resolve=>setTimeout(resolve,3));
+    assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('Указано в источнике:') && c.textContent.includes('07.12.2026') && c.textContent.includes('включительно')));
+    assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('SHA-256 оригинала')));
+
 
 
 

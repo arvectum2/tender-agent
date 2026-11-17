@@ -117,6 +117,15 @@ def main() -> int:
                         assert 'предоставления' in typed_packet['citations'][0]['quote']
                         assert 'не несет ответственности' in typed_packet['citations'][0]['quote']
                     assert not typed_packet['bid_ready'] and not typed_packet['scope_complete']
+                    delivery = client.post(qa_url, headers=auth, json={'question':'Какой срок оказания услуг?'})
+                    assert delivery.status_code == 200
+                    term = delivery.json()
+                    print('APR08_REAL_DELIVERY_OBSERVATION', term['status'], 'citations', len(term['citations']), flush=True)
+                    assert term['status'] == 'LITERAL_PERFORMANCE_OBSERVATIONS'
+                    assert term['observation']['effective_due_date'] is None
+                    assert all(o['mentioned_date'] == '2026-12-07' and o['explicit_inclusive'] is True for o in term['observation']['mentions'])
+                    assert all('с момента заключения Контракта' in c['quote'] for c in term['citations'])
+                    assert not term['bid_ready'] and not term['scope_complete']
                     print('APR08_REAL_GROUNDED_QUESTION_PASS', 'verified_excerpts', len(packet['citations']), 'unsupported_unknown', True)
                 assert result['status'] == 'VERIFIED_EXCERPTS_ONLY' and result['citations']
                 assert result['verification_attempts'] <= 2 and not result['bid_ready'] and not result['scope_complete']
