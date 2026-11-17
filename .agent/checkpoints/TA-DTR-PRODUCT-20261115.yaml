@@ -374,7 +374,7 @@ completed:
 - Reviewed registry Web/iOS with exact compiled release/public projection pins; real
   Chrome smoke at desktop/mobile widths; actual iOS XCTest; isolated migrated PostgreSQL
   concurrent approval and binding/withdrawal acceptance.
-current_stage: price01_isolated_acceptance_verified_staging_next
+current_stage: price01_staging_acceptance
 remaining:
 - 'Live staging end-to-end Web/native UI with a non-production backend; verify feature
   gating/deployment readiness and exact reviewed real contract evidence. Real source
@@ -630,10 +630,8 @@ test_results:
   race test 1 PASS, temporary cluster stopped and removed; Ruff/diff PASS; PR600 CI
   19/19. Final broad regression 337 passed, 3 skipped (PG opt-in separately passed),
   144 warnings in 18.57s; Node and Ruff/diff PASS.
-resume_instruction: Registry clients and isolated acceptance verified at 7cb0dddd,
-  final broad regression PASS. Next inspect staging-only acceptance harness and perform
-  non-production integrated Web/native testing; actual source publication and production
-  GO separate. No MacBook, new B2B traffic or production changes.
+resume_instruction: Run disposable loopback HTTP backend and real browser/native client
+  acceptance; no network procurement calls, production or MacBook.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
