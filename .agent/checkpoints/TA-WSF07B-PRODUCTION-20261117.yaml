@@ -1,0 +1,16 @@
+task_id: TA-WSF07B-PRODUCTION-20261117
+status: in_progress
+goal: Owner-authorized Tender Agent production convergence WSF-07B, without Workspace admission.
+definition_of_done:
+  - Exact main/release and CI, preserve all worktrees, pending PR629/630 not silently merged.
+  - Cross-deployment lock, DB writer fence, fresh backup and verified rollback procedure; exact 107 to 122 migration and API verification.
+  - Preserve source identity, 21 deals/307 original table checks, Portfolio ready for separate admission.
+completed:
+  - Main and prepared release both 28e874b65d8aeab5a13e3c2453632810c14140be; CI and mirror SUCCESS. WSF contract and OS PR44 read; prior actual rehearsal PASS. Live DB 107, backend old relocated runtime; DP separate database.
+current_stage: exact_release_and_writer_coordination
+remaining:
+  - Preflight same release and DB, validate cutover and rollback, coordinate writers and deploy only if safe.
+last_verified_commit: 28e874b65d8aeab5a13e3c2453632810c14140be
+test_results:
+  - Prior isolated 15-step migration and 307 original table fingerprint PASS; 21 deals.
+resume_instruction: Read private deployment journal and live state first; never assume cutover. No Workspace admission, grant, OS/Company changes or destructive restore.
