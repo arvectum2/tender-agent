@@ -6,9 +6,15 @@ definition_of_done:
   - Real archive imports and authentic isolated DP extraction/search, tests, draft PR on prior stack with main reconciled.
 completed:
   - PR629/630 each CI 19/19, no merge; current main 3b37fb69 includes WSF07B. Reconcile only checkpoint metadata conflict preserving completed WSF07B.
-current_stage: receipt_bound_attachment_import_and_dp
+  - Implemented receipt-bound binary intake with unique XML reference keys, deduplicated identical bytes, non-persisting DP extraction, and quote-time independent revalidation.
+  - Actual isolated DP and Chromium replay twice PASS: 5 complete receipt sets, 9 unique originals, 11 references, 8 extracted, one RAR preserved unsupported, incomplete multi-lot receipt refused. Tampered original UNKNOWN; source originals unchanged.
+  - 301 focused tests PASS, WSF07B unchanged against main, Ruff/Node/diff PASS.
+current_stage: exact_ci_pending
 remaining:
-  - Implement, test, replay, publish and verify CI.
-last_verified_commit: fe908ebb5374afddd4a12307c4f463189fee4930
-test_results: []
+  - Verify exact draft PR CI; then review integration or next bounded gap. RAR member provenance and full analysis remain unvalidated.
+last_verified_commit: 293c692fe264d495a4828710092f918cda549ee8
+test_results:
+  - 301 passed, 2 existing warnings; Ruff, Node and diff check PASS.
+  - APR03B_RI223_ATTACHMENTS_REPLAY_PASS 9 11 8, actual Chromium PASS twice; originals unchanged, tamper UNKNOWN.
+  - Prior PR629/630 each exact CI 19/19 SUCCESS.
 resume_instruction: Continue local-only artifacts, no live data acquisition or production, no Workspace admission, Gemma or automatic integration.

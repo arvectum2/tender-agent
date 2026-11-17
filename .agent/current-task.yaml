@@ -904,4 +904,5 @@ apr03b_ri223_attachments_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR03B-RI223-ATTACHMENTS-20261117.yaml
   branch: feat/ta-apr03b-ri223-attachments-20261117
-  current_stage: receipt_bound_attachment_import_and_dp
+  current_stage: exact_ci_pending
+  last_verified_commit: 293c692fe264d495a4828710092f918cda549ee8
