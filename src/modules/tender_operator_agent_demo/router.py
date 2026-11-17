@@ -23,6 +23,10 @@ from src.modules.tender_operator_agent_demo.evidence_copilot import (
     EvidenceQuestion,
     answer_question,
 )
+from src.modules.tender_operator_agent_demo.evidence_document_search import (
+    DocumentSearchQuestion,
+    search_run_documents,
+)
 from src.modules.tender_operator_agent_demo.fast_preanalysis import (
     fast_cited_preanalysis,
     preanalysis_from_public_search,
@@ -198,6 +202,15 @@ def operator_workspace_evidence_question(run_id: str, request: EvidenceQuestion,
                               tuple(settings.pilot_auth_public_paths.split(","))):
         raise HTTPException(status_code=503, detail="Private operator authentication must cover this endpoint")
     return answer_question(run_id, request)
+
+
+@router.post("/api/demo/tender-agent/workspace/runs/{run_id}/evidence-search", dependencies=[Depends(require_private_workspace)])
+def operator_workspace_evidence_search(run_id: str, request: DocumentSearchQuestion, http: Request) -> dict:
+    settings = get_settings()
+    if not _is_protected_path(http.url.path, tuple(settings.pilot_auth_protected_prefixes.split(",")),
+                              tuple(settings.pilot_auth_public_paths.split(","))):
+        raise HTTPException(status_code=503, detail="Private operator authentication must cover this endpoint")
+    return search_run_documents(run_id, request)
 
 
 @router.post(

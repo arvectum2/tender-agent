@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const api = '/api/demo/tender-agent';
-  const state = { runId: null, poll: null, busy: false, registryOffset: 0, registryTotal: 0, registryQuery: '', runReady: false, searchParams: null, searchCursor: null, seenNumbers: [], quoteFileKey: null, copilotEpoch: 0 };
+  const state = { runId: null, poll: null, busy: false, registryOffset: 0, registryTotal: 0, registryQuery: '', runReady: false, searchParams: null, searchCursor: null, seenNumbers: [], quoteFileKey: null, copilotEpoch: 0, copilotSearchEpoch: 0 };
   const $ = id => document.getElementById(id);
   const node = (tag, cls = '', content = null) => {
     const el = document.createElement(tag);
@@ -53,6 +53,7 @@
     $('append-files-button').disabled = value;
     $('quote-verify-button').disabled = value;
     $('copilot-submit').disabled = value;
+    $('copilot-search-submit').disabled = value;
   }
   function tab(name) {
     const labels = {new:'Новый анализ',history:'История анализов',registry:'База закупок',prices:'Цены и протоколы'};
@@ -236,6 +237,7 @@
     if (!state.runId) return;
     const id = encodeURIComponent(state.runId);
     state.copilotEpoch++;wipe($('copilot-result'));$('copilot-percent').value='';
+    state.copilotSearchEpoch++;wipe($('copilot-search-result'));$('copilot-search').value='';
     const run = await json(api + '/runs/' + id);
     show('run-empty', false);
     show('run-section', true);
@@ -314,6 +316,27 @@
       renderCitations(root,data.citations,{originalVerified:true});
       paragraph(root,'Архивная редакция. Актуальность и право участия не подтверждены.','help-text');
     }catch(error){if(state.runId===runId && epoch===state.copilotEpoch)paragraph(root,'UNKNOWN · Проверка не выполнена.','unknown');}
+    finally{setBusy(false);}
+  }
+
+  async function searchEvidenceDocuments(event) {
+    event.preventDefault();
+    if (!state.runId || state.busy) return;
+    const runId=state.runId, epoch=++state.copilotSearchEpoch, query=$('copilot-search').value.trim();
+    const root=$('copilot-search-result');wipe(root);setBusy(true);
+    try {
+      const data=await json(api+'/workspace/runs/'+encodeURIComponent(runId)+'/evidence-search',
+        {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({query})});
+      if(state.runId!==runId || epoch!==state.copilotSearchEpoch) return;
+      if(data.run_id!==runId || data.status!=='VERIFIED_EXCERPTS_ONLY' || !Array.isArray(data.citations) || !data.citations.length) {
+        paragraph(root,'UNKNOWN · Подтверждённых совпадений в ограниченной выборке нет. Это не доказывает отсутствие требования.','unknown');return;
+      }
+      for(const c of data.citations.slice(0,2)) {
+        paragraph(root,c.quote,'citation');
+        paragraph(root,c.file_id+' · чанк '+c.chunk_id+' · SHA-256 оригинала '+c.original_sha256,'help-text');
+      }
+      paragraph(root,'Буквальные фрагменты, не юридический вывод. Поиск не исчерпывающий.','help-text');
+    }catch(error){if(state.runId===runId && epoch===state.copilotSearchEpoch)paragraph(root,'UNKNOWN · Проверка не выполнена.','unknown');}
     finally{setBusy(false);}
   }
 
@@ -942,6 +965,8 @@
   $('copilot-question').addEventListener('change',()=>{show('copilot-percent-label',$('copilot-question').value==='nmck_percent');wipe($('copilot-result'));state.copilotEpoch++;});
   $('copilot-percent').addEventListener('input',()=>{wipe($('copilot-result'));state.copilotEpoch++;});
   $('copilot-form').addEventListener('submit',event=>void answerEvidenceQuestion(event));
+  $('copilot-search').addEventListener('input',()=>{wipe($('copilot-search-result'));state.copilotSearchEpoch++;});
+  $('copilot-search-form').addEventListener('submit',event=>void searchEvidenceDocuments(event));
   $('quote-verify-form').addEventListener('submit',event=>void verifyQuote(event));
   $('download-pdf').addEventListener('click', event=>void downloadReport(event, 'pdf'));
   $('download-docx').addEventListener('click', event=>void downloadReport(event, 'docx'));

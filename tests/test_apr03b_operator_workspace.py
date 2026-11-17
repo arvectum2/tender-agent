@@ -619,3 +619,21 @@ def test_copilot_private_run_route_validation(client, auth, monkeypatch):
         pilot_auth_public_paths='/health,' + route))
     assert client.post(route, headers=auth, json={'question': 'nmck'}).status_code == 503
     assert len(calls) == 1
+
+
+def test_copilot_document_search_private_route(client, auth, monkeypatch):
+    route = '/api/demo/tender-agent/workspace/runs/fixture/evidence-search'
+    calls = []
+    def fake_search(run_id, request):
+        calls.append((run_id, request.query))
+        return {'run_id': run_id, 'status': 'UNKNOWN'}
+    monkeypatch.setattr(operator_router, 'search_run_documents', fake_search)
+    assert client.post(route, json={'query':'оплата'}).status_code == 401
+    assert client.post(route, headers=auth, json={'query':'а'}).status_code == 422
+    assert client.post(route, headers=auth, json={'query':'оплата'}).json()['status'] == 'UNKNOWN'
+    assert calls == [('fixture','оплата')]
+    monkeypatch.setattr(operator_router, 'get_settings', lambda: Settings(
+        pilot_auth_enabled=True, pilot_auth_username='test-operator', pilot_auth_password='test-secret-unique-12345',
+        pilot_auth_public_paths='/health,' + route))
+    assert client.post(route, headers=auth, json={'query':'оплата'}).status_code == 503
+    assert len(calls) == 1

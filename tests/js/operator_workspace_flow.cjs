@@ -116,6 +116,11 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
         owner_legal_go:false
       } : null
     };
+    else if(route.endsWith('/workspace/runs/run-1/evidence-search') && method==='POST') {
+      const request=JSON.parse(opts.body);
+      assert.deepEqual(request,{query:'оплата работ'});
+      value={run_id:'run-1',status:'VERIFIED_EXCERPTS_ONLY',citations:[{file_id:'FILE-01',chunk_id:'chunk-1',original_sha256:'a'.repeat(64),quote:'Оплата выполненных работ в течение семи рабочих дней.'}]};
+    }
     else if(route.endsWith('/workspace/runs/run-1/evidence-question') && method==='POST') {
       const request=JSON.parse(opts.body);
       assert.deepEqual(request,{question:'nmck_percent',percent:'5.125'});
@@ -258,6 +263,13 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
     assert(get('copilot-result').children.some(c=>c.textContent.includes('XML:maxPrice')));
     get('copilot-question').value='subject';get('copilot-question').events.change();
     assert.equal(get('copilot-result').children.length,0);
+    get('copilot-search').value='оплата работ';get('copilot-search-form').events.submit({preventDefault(){}});
+    for(let i=0;i<50 && !get('copilot-search-result').children.length;i++) await new Promise(resolve=>setTimeout(resolve,3));
+    assert(get('copilot-search-result').children.some(c=>c.textContent.includes('Оплата выполненных работ')));
+    assert(get('copilot-search-result').children.some(c=>c.textContent.includes('SHA-256 оригинала')));
+    get('copilot-search').value='иная тема';get('copilot-search').events.input();
+    assert.equal(get('copilot-search-result').children.length,0);
+
 
   }else{
     assert(!calls.some(c=>c.includes('/runs/run-1/analyze')),'Never analyze a file-less EIS manifest');

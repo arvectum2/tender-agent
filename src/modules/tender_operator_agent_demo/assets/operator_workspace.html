@@ -127,6 +127,12 @@
                 <button type="submit" id="copilot-submit" class="button button-secondary">Проверить источники</button>
               </form>
               <div id="copilot-result" role="status" aria-live="polite"></div>
+              <form id="copilot-search-form" class="quote-form" autocomplete="off">
+                <label for="copilot-search">Поиск по документам выбранной закупки<input id="copilot-search" type="text" required minlength="3" maxlength="240" autocomplete="off" placeholder="Например: оплата, сроки выполнения работ"></label>
+                <button id="copilot-search-submit" type="submit" class="button button-secondary">Найти подтверждённые фрагменты</button>
+              </form>
+              <p class="help-text">Поиск по точным словам, не смысловой ответ. Проверяются не более двух кандидатов по сохранённым оригиналам через Data Platform. Отсутствие результата не означает отсутствия требования.</p>
+              <div id="copilot-search-result" role="status" aria-live="polite"></div>
             </details>
             <details class="quote-review" id="quote-check" hidden>
               <summary>Проверить точную цитату из оригинального документа</summary>
