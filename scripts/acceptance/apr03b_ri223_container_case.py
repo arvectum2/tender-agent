@@ -45,6 +45,33 @@ def replay_container(runs,app,password):
         assert c.post(f'/api/demo/tender-agent/runs/{run}/analyze',auth=auth).status_code==409
         if os.environ.get('APR08_BROWSER_ACCEPTANCE')=='1':
             run_browser(app,run,password,Path(os.environ['APR08_SCREENSHOT_DIR']),scenario='ri223-container')
+        if os.environ.get('APR03B_DOSSIER_ACCEPTANCE')=='1':
+            endpoint=f'/api/demo/tender-agent/workspace/runs/{run}/evidence-answer'
+            question={'question':'Составь архивное досье 223-ФЗ'}
+            assert c.post(endpoint,json=question).status_code==401
+            response=c.post(endpoint,auth=auth,json=question)
+            assert response.status_code==200
+            data=response.json();assert data['status']=='RI223_ARCHIVED_REVIEW_ONLY',data['reason']
+            dossier=data['observation'];assert len(dossier['domains'])==9 and dossier['inventory']['members_verified']==19
+            assert dossier['inventory']['archived_bytes_complete'] and dossier['inventory']['projection_complete']
+            assert not dossier['go_eligible'] and not dossier['requirements_verified'] and dossier['decision']=='NOT_DECIDED'
+            assert dossier['source_backed_domains']>=6
+            sc=dossier['scoring'];assert sc['status']=='PINNED_SCORING_OBSERVATION_ONLY',sc
+            assert (sc['price_weight_percent'],sc['nonprice_weight_percent'])==(40,60)
+            assert sc['candidate_nonprice_subweights']=={'business_reputation':20,'financial_condition':20,'qualification':60}
+            assert sc['completed_contracts_weight_percent'] is None and sc['competitive_recommendation']=='NOT_ASSESSED'
+            assert all(x['ri223_container']['parent_sha256']==proof['original_attachment_sha256'] for d in dossier['domains'] for x in d['citations'])
+            print('RI223_ARCHIVED_DOSSIER_ACTUAL',dossier['source_backed_domains'],[(d['domain'],len(d['citations'])) for d in dossier['domains']],flush=True)
+            if os.environ.get('APR08_BROWSER_ACCEPTANCE')=='1':
+                run_browser(app,run,password,Path(os.environ['APR08_SCREENSHOT_DIR']),scenario='ri223-dossier')
+            member=directory/'input'/members[-1]['stored_name']
+            content=member.read_bytes();member.unlink()
+            try:
+                denied=c.post(endpoint,auth=auth,json=question).json()
+                assert denied['status']=='UNKNOWN' and not denied['observation']['domains']
+            finally:
+                member.write_bytes(content)
+            print('APR03B_RI223_DOSSIER_ACTUAL_PASS missing member UNKNOWN',flush=True)
         assert inventory(directory)==saved
         parent=directory/'input'/meta['files'][1]['stored_name']
         blob=parent.read_bytes();parent.write_bytes(blob+b' ')

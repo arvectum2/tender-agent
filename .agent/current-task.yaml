@@ -909,16 +909,24 @@ apr03b_ri223_attachments_20261117:
 
 apr03b_ri223_container_20261117:
   task_id: TA-APR03B-RI223-CONTAINER-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR03B-RI223-CONTAINER-20261117.yaml
   branch: feat/ta-apr03b-ri223-container-20261117
-  current_stage: exact_ci_pending
+  current_stage: verified_pending_merge
   last_verified_commit: f07a82d04a0df2ea716974c1a991b87cc0ec2b41
 
 apr03b_ri223_zip_20261117:
   task_id: TA-APR03B-RI223-ZIP-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR03B-RI223-ZIP-20261117.yaml
   branch: feat/ta-apr03b-ri223-zip-20261117
-  current_stage: exact_ci_pending
+  current_stage: verified_pending_merge
   last_verified_commit: 6431f7220d728b838c50f5ad6cff175a9a83e4a3
+
+apr03b_ri223_dossier_20261117:
+  task_id: TA-APR03B-RI223-DOSSIER-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR03B-RI223-DOSSIER-20261117.yaml
+  branch: feat/ta-apr03b-ri223-dossier-20261117
+  current_stage: exact_ci_pending
+  last_verified_commit: 842439935806cf12615a600fc36b314a8afd8120

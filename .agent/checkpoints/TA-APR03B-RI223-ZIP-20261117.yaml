@@ -1,5 +1,5 @@
 task_id: TA-APR03B-RI223-ZIP-20261117
-status: in_progress
+status: completed
 goal: Explicit bounded ZIP projection of receipt-bound original attachments and exact quote-time lineage; retain RAR behavior.
 definition_of_done:
   - Validate entire ZIP inventory before decompression, refuse traversal, links, duplicate paths, unsupported/encrypted/nested files and excessive budgets.
@@ -10,7 +10,7 @@ completed:
   - ZIP projection implemented and tested with explicit opt-in, complete inventory preflight, bounded reads and CRC, parent/member re-attestation. No actual ZIP in trusted corpus.
   - Synthetic ZIP fixture via actual DP and Chromium: 2/2 extracted; parent/child tamper UNKNOWN. Real RAR 19/19 and direct attachment Chromium regression pass, source originals unchanged.
   - 355 focused tests PASS; Ruff/Node/diff PASS; WSF07B unchanged. PR633 last 17/19, no failures.
-current_stage: exact_ci_pending
+current_stage: verified_pending_merge
 remaining:
   - Check exact successor and parent CI; next review existing RI223 full-analysis workflow and implement bounded development dossier without admission/GO. Actual ZIP evidence remains unverified beyond synthetic fixture.
 last_verified_commit: 6431f7220d728b838c50f5ad6cff175a9a83e4a3
@@ -18,3 +18,5 @@ test_results:
   - 355 passed, 2 existing warnings, including 27 ZIP checks; Ruff/Node/diff PASS.
   - APR03B_RI223_ZIP_SYNTHETIC_REPLAY_PASS 2; actual Chromium synthetic ZIP, real RAR and direct attachment PASS.
 resume_instruction: Preserve private originals and WSF07B; no live acquisitions, production, model or automatic merge.
+
+exact_ci: 19/19 SUCCESS, head 49fc850900451cdb1da0a80423a05a97201accc0

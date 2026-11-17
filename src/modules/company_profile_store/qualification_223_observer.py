@@ -8,6 +8,7 @@ from __future__ import annotations
 import hashlib
 import io
 import re
+import subprocess
 import xml.etree.ElementTree as ET
 import zipfile
 from typing import Any
@@ -148,3 +149,15 @@ def observe_ri223_scoring_text(text: str) -> dict[str, Any]:
         "human_gold": False,
         "external_action_allowed": False,
     }
+
+def observe_verified_pdf_layout(pdf: bytes) -> dict[str, Any]:
+    """Call only after independent exact-original verification."""
+    if not pdf.startswith(b"%PDF-") or len(pdf) > _READ_LIMIT:
+        raise ValueError("Expected bounded verified PDF")
+    result = subprocess.run(
+        ["pdftotext", "-layout", "-", "-"], input=pdf,
+        capture_output=True, timeout=20, check=True,
+    )
+    if len(result.stdout) > 1_000_000:
+        raise ValueError("Original PDF text too long for narrow scoring observer")
+    return observe_ri223_scoring_text(result.stdout.decode("utf-8", errors="strict"))

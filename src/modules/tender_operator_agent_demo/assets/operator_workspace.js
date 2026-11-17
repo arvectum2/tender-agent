@@ -333,7 +333,30 @@
       const data=await json(api+'/workspace/runs/'+encodeURIComponent(runId)+'/evidence-answer',
         {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question})});
       if(state.runId!==runId || epoch!==state.copilotAnswerEpoch) return;
-      if(data.run_id===runId && data.intent==='composed_evidence' && ['COMPOSED_EVIDENCE_ONLY','UNKNOWN'].includes(data.status) && Array.isArray(data.components) && data.components.length<=9) {
+      if(data.run_id===runId && data.intent==='ri223_review_dossier') {
+        const d=data.observation;
+        if(!d || data.status!=='RI223_ARCHIVED_REVIEW_ONLY' || !Array.isArray(d.domains) || d.domains.length!==9) {
+          paragraph(root,'UNKNOWN · Полный проверенный архивный комплект не подтверждён.','unknown');
+        } else {
+          paragraph(root,data.answer,'help-text');
+          paragraph(root,'Оригиналы: '+d.inventory.originals_verified+' из '+d.inventory.expected_originals+'; документы внутри контейнеров: '+d.inventory.members_verified+'; непрочитанные контейнеры: '+d.inventory.opaque_containers);
+          paragraph(root,'Разделы с цитатами: '+d.source_backed_domains+' из 9. Это не оценка полноты требований.','help-text');
+          renderSingleGroundedAnswer(root,{run_id:runId,status:d.notice.status,citation_kind:'RI223_ARCHIVED_XML',observation:d.notice,citations:d.notice.citations,answer:'Архивное извещение.'},runId);
+          for(const domain of d.domains) {
+            const section=document.createElement('details');section.className='quote-review';section.open=true;
+            const heading=document.createElement('summary');heading.textContent=domain.title;section.append(heading);
+            renderSingleGroundedAnswer(section,{run_id:runId,status:domain.citations.length?'TOPIC_EXCERPTS_ONLY':'UNKNOWN',citation_kind:'ORIGINAL_DP_CHUNK',citations:domain.citations,answer:'Буквальные фрагменты, условия и применимость к лоту не подтверждены.'},runId);
+            root.append(section);
+          }
+          const sc=d.scoring;
+          if(sc?.status==='PINNED_SCORING_OBSERVATION_ONLY') {
+            paragraph(root,'Методика оценки: стоимостной '+sc.price_weight_percent+'%, нестоимостные '+sc.nonprice_weight_percent+'%.');
+            paragraph(root,'Условный формуляр нестоимостной группы: деловая репутация '+sc.candidate_nonprice_subweights.business_reputation+'%, финансовое состояние '+sc.candidate_nonprice_subweights.financial_condition+'%, квалификация '+sc.candidate_nonprice_subweights.qualification+'%. Применение к лоту не подтверждено.');
+            paragraph(root,sc.source_lineage.member_path+' · SHA-256 PDF '+sc.original_pdf_sha256+' · SHA-256 RAR '+sc.original_rar_sha256,'help-text');
+          } else paragraph(root,'Структурированные веса методики: UNKNOWN.','unknown');
+          paragraph(root,'Соответствие участника: UNKNOWN; затраты: UNKNOWN; риски договора: NOT_ASSESSED; решение: NOT_DECIDED.','unknown');
+        }
+      } else if(data.run_id===runId && data.intent==='composed_evidence'  && ['COMPOSED_EVIDENCE_ONLY','UNKNOWN'].includes(data.status) && Array.isArray(data.components) && data.components.length<=9) {
         paragraph(root,data.answer,'help-text');
         paragraph(root,'Разделы с источниками: '+data.source_backed_component_count+' из '+data.components.length);
         for(const section of data.components) {
