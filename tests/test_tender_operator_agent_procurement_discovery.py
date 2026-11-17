@@ -1107,3 +1107,43 @@ def test_public_44fz_search_drops_exact_total_for_non_native_filters(monkeypatch
     assert result["total_count"] == 99
     assert result["total_count_exact_for_displayed_filters"] is False
     assert "ЕИС найдено" in result["message"]
+
+
+def test_company_search_skips_global_score_and_limits_backfill(monkeypatch):
+    from datetime import date
+
+    import src.modules.tender_operator_agent_demo.procurement_discovery as discovery
+
+    calls = []
+
+    def fetch(url):
+        calls.append(url)
+        return {"status": "parsed", "html": "<html></html>"} if len(calls) == 1 else {"status": "timeout", "html": None}
+
+    def global_profile():
+        raise AssertionError("Company discovery must never read the global supplier profile")
+
+    monkeypatch.setattr(discovery, "get_supplier_profile", global_profile)
+    monkeypatch.setattr(discovery, "fetch_public_44fz_search_page", fetch)
+    monkeypatch.setattr(discovery, "parse_44fz_search_results", lambda _: [{
+        "title": "Разработка сайта", "notice_number": "0123456789012345678", "reestr_number": "0123456789012345678",
+        "customer_name": "Заказчик", "initial_price": 500000, "publication_date": "15.11.2026",
+        "deadline": "30.11.2026", "status": "Подача заявок", "procedure_type": "Электронный аукцион", "warnings": [],
+    } for _ in range(10)])
+    result = discovery.search_public_44fz(query="разработка", reference_date=date(2026, 11, 15),
+                                           max_results=10, apply_supplier_relevance=False, backfill_page_limit=2)
+    assert len(calls) == 2 and len(result["cards"]) == 1
+    assert "relevance" not in result["cards"][0]
+    assert result["source_coverage_complete"] is False
+
+
+def test_company_search_blank_response_is_not_proof_of_empty(monkeypatch):
+    import src.modules.tender_operator_agent_demo.procurement_discovery as discovery
+
+    monkeypatch.setattr(discovery, "fetch_public_44fz_search_page", lambda _: {"status": "empty_results", "html": None})
+    result = discovery.search_public_44fz(query="разработка", apply_supplier_relevance=False)
+    assert result["outcome"] == "success_empty"
+    assert result["source_coverage_complete"] is False
+    monkeypatch.setattr(discovery, "fetch_public_44fz_search_page", lambda _: {"status": "empty_results", "html": None, "explicit_zero_count": True})
+    assert discovery.search_public_44fz(query="разработка", apply_supplier_relevance=False)["source_coverage_complete"] is True
+    assert discovery.search_public_44fz(query="разработка", region="Москва", apply_supplier_relevance=False)["source_coverage_complete"] is False

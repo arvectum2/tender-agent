@@ -11,6 +11,7 @@ manager's GO/NO GO/DEFER choice.
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from pathlib import Path
 
@@ -32,11 +33,19 @@ def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run Daily Tender discovery and analysis")
     parser.add_argument("--profile", default="arvectum-it")
     parser.add_argument("--retry-failed", action="store_true")
+    parser.add_argument("--company-schedule-tick", action="store_true", help="Run only one bounded opt-in company discovery tick")
     return parser
 
 
 def main() -> int:
     args = _parser().parse_args()
+    if args.company_schedule_tick:
+        from src.modules.saas_foundation.company_schedule import tick
+        from src.shared.config.settings import get_settings
+
+        with SessionLocal() as session:
+            print(json.dumps(tick(session, get_settings()), ensure_ascii=False))
+        return 0
     with SessionLocal() as session:
         resumed = resume_pending_daily_tender_runs(
             session,
@@ -61,8 +70,8 @@ def main() -> int:
             "WAITING_OUTCOME",
             "COMPLETED",
         }
-        resumed_ok = all(item.status in non_error_waits for item in resumed)
-        if resumed_ok and response.status in non_error_waits:
+        resumed_ok = all(item.status in non_error_waits and not item.error_summary for item in resumed)
+        if resumed_ok and response.status in non_error_waits and not response.error_summary:
             return 0
         return 20
 

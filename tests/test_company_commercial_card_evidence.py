@@ -1,0 +1,177 @@
+from datetime import UTC, datetime
+
+import pytest
+
+from src.modules.saas_foundation.commercial_card_evidence import verify_card_snapshot
+
+WORKSPACE = 'https://workspace.ru/tenders/fixture-site-development-19043/'
+B2B = 'https://www.b2b-center.ru/app/market-next/fixture-site-development/tender-4643484/'
+NOW = datetime(2026, 10, 17, 12, tzinfo=UTC)
+
+
+def workspace(stage='Идет прием заявок', deadline='31 октября 2026', organizer='Юридическое лицо', visibility='_public', canonical=WORKSPACE):
+    return f'''<html><head><link rel="canonical" href="{canonical}"></head><body>
+    <h1>Разработка корпоративного сайта</h1><div class="tendercart-type__status-public">{stage}</div>
+    <span class="reference {visibility}">Публичный тендер</span>
+    <section>Oрганизатор<div>{organizer}</div></section>
+    <section>Крайний срок приема заявок:<div>{deadline}</div></section></body></html>'''.encode()
+
+
+def b2b(stage='Приём заявок', deadline='до 21.10.2026 06:00, по МСК', heading='Разработка сайта № 4643484'):
+    return f'''<html><body><h1>{heading}</h1><div>{stage}</div><div>{deadline}</div><section>Организатор:<strong>АО ФИКСТУРА</strong></section></body></html>'''.encode()
+
+
+def verify(raw, url=WORKSPACE, **overrides):
+    values = {'requested_url': url, 'final_url': url, 'raw': raw, 'observed_at': NOW, 'status_code': 200, 'tls_verified': True, 'content_type': 'text/html; charset=utf-8'}
+    values.update(overrides)
+    return verify_card_snapshot(**values)
+
+
+def test_workspace_observation_is_not_bid_authorization():
+    import hashlib
+
+    raw = workspace()
+    result = verify(raw)
+    assert result['external_id'] == '19043'
+    assert result['html_sha256'] == hashlib.sha256(raw).hexdigest()
+    assert result['observation_state'] == 'PUBLIC_STAGE_AT_CAPTURE_ONLY'
+    assert result['displayed_deadline'] == '2026-10-31'
+    assert result['deadline_precision'] == 'date_only'
+    assert result['organizer_type'] == 'Юридическое лицо'
+    for field in ('external_submission_allowed', 'current_live_notice_status_verified', 'qualification_verified', 'full_documents_verified', 'legal_identity_verified'):
+        assert result[field] is False
+
+
+@pytest.mark.parametrize(('changes', 'state'), [
+    ({'stage': 'Завершён'}, 'CLOSED_AT_CAPTURE'),
+    ({'deadline': '16 октября 2026'}, 'CLOSED_AT_CAPTURE'),
+    ({'deadline': '17 октября 2026'}, 'CUTOFF_TIME_UNKNOWN'),
+    ({'organizer': 'Частное лицо'}, 'PERSONAL_ORGANIZER_REVIEW'),
+])
+def test_workspace_stage_and_deadline(changes, state):
+    assert verify(workspace(**changes))['observation_state'] == state
+
+
+@pytest.mark.parametrize('changes', [
+    {'visibility': '_private'}, {'canonical': WORKSPACE.replace('19043', '19044')},
+    {'stage': 'Неизвестно'}, {'deadline': '31 февраля 2026'}, {'organizer': 'Не указан'},
+])
+def test_workspace_unverified_body_rejected(changes):
+    with pytest.raises(ValueError):
+        verify(workspace(**changes))
+
+
+@pytest.mark.parametrize('overrides', [
+    {'status_code': 403}, {'status_code': 404}, {'tls_verified': False},
+    {'final_url': 'https://workspace.ru/tenders/'}, {'content_type': 'application/json'},
+    {'observed_at': datetime(2026, 10, 17)},
+])
+def test_transport_errors_never_become_card_observations(overrides):
+    with pytest.raises(ValueError):
+        verify(workspace(), **overrides)
+
+
+def test_conflicting_duplicate_status_and_missing_canonical_rejected():
+    with pytest.raises(ValueError):
+        verify(workspace().replace(b'</body>', b'<div class="tendercart-type__status-public">Other</div></body>'))
+    with pytest.raises(ValueError):
+        verify(workspace().replace(b'rel="canonical"', b'rel="alternate"'))
+
+
+def test_hidden_content_does_not_override_displayed_card():
+    raw = workspace().replace(b'</body>', b'<div hidden class="tendercart-type__status-public">Other</div><script>Another procurement</script></body>')
+    assert verify(raw)['observation_state'] == 'PUBLIC_STAGE_AT_CAPTURE_ONLY'
+
+
+def test_b2b_exact_number_deadline_and_literal_organizer():
+    result = verify(b2b(), B2B)
+    assert result['external_id'] == '4643484'
+    assert result['displayed_deadline'] == '2026-10-21T06:00:00+03:00'
+    assert result['organizer_name_literal'] == 'АО ФИКСТУРА'
+    assert result['organizer_type'] is None and not result['legal_identity_verified']
+    assert result['observation_state'] == 'PUBLIC_STAGE_AT_CAPTURE_ONLY'
+    assert verify(b2b(stage='Завершён'), B2B)['observation_state'] == 'CLOSED_AT_CAPTURE'
+    assert verify(b2b(), B2B, observed_at=datetime(2026, 10, 21, 3, tzinfo=UTC))['observation_state'] == 'CLOSED_AT_CAPTURE'
+
+
+@pytest.mark.parametrize('raw', [b2b(heading='Другая закупка 4643485'), b2b(heading='Другая закупка 14643484'), b2b(deadline='до 21.10.2026 06:00'), b2b().replace(b'</body>', '<div>Приём заявок</div></body>'.encode())])
+def test_ambiguous_or_mismatched_b2b_card_rejected(raw):
+    with pytest.raises(ValueError):
+        verify(raw, B2B)
+
+
+@pytest.mark.parametrize('mode', ['ok','redirect','wrong_mime','compressed','oversized','timeout'])
+def test_public_capture_transport_is_bounded_and_credential_free(monkeypatch, mode):
+    import httpx
+
+    from src.modules.saas_foundation import commercial_capture as capture
+
+    requests = []
+    original = httpx.Client
+
+    def respond(request):
+        requests.append(request)
+        assert str(request.url) == WORKSPACE and request.method == 'GET'
+        assert 'authorization' not in request.headers and 'cookie' not in request.headers
+        assert request.headers['accept-encoding'] == 'identity'
+        if mode == 'timeout':
+            raise httpx.ReadTimeout('fixture')
+        if mode == 'redirect':
+            return httpx.Response(302, headers={'location':'https://evil.invalid/'})
+        h = {'content-type': 'application/json' if mode == 'wrong_mime' else 'text/html'}
+        if mode == 'compressed':
+            h['content-encoding'] = 'gzip'
+        raw = b'x' * (capture.MAX_CARD_BYTES+1) if mode == 'oversized' else workspace()
+        return httpx.Response(200, headers=h, stream=httpx.ByteStream(raw))
+
+    def client(**kwargs):
+        assert kwargs['verify'] is True and kwargs['trust_env'] is False and kwargs['follow_redirects'] is False
+        return original(transport=httpx.MockTransport(respond), **kwargs)
+
+    monkeypatch.setattr(capture.httpx, 'Client', client)
+    if mode == 'ok':
+        assert capture.fetch_card(WORKSPACE).raw == workspace()
+    else:
+        with pytest.raises((ValueError, httpx.HTTPError)):
+            capture.fetch_card(WORKSPACE)
+    assert len(requests)==1
+
+
+def test_attachment_inventory_is_offline_conservative_and_deduplicated():
+    from src.modules.saas_foundation.commercial_attachment_inventory import (
+        attachment_inventory,
+    )
+
+    extra = '''<a href="/docs/spec.pdf">ТЗ</a><a href="https://workspace.ru/docs/spec.pdf">Дубль</a>
+    <a href="/docs/contract.docx">Договор</a><a href="https://evil.invalid/file.pdf">Чужой домен</a>
+    <a href="/download?id=1" download>Неразрешённый ID</a><a href="/docs/file.zip?secret=x">Токен</a>
+    <a href="//workspace.ru/docs/file.pdf">Схема</a><a href="/docs/../file.pdf">Путь</a>
+    <a href="/docs/a%20b.xlsx">Кодирование</a><a hidden href="/docs/hidden.pdf">Скрытый</a>'''.encode()
+    raw = workspace().replace(b'</body>', extra+b'</body>')
+    result = attachment_inventory(WORKSPACE, raw)
+    assert [x['source_url'] for x in result['candidates']] == ['https://workspace.ru/docs/spec.pdf','https://workspace.ru/docs/contract.docx']
+    assert result['rejected_or_opaque_links']==6
+    assert not result['coverage_complete'] and not result['download_enabled'] and not result['full_documents_verified']
+    assert all(not x['download_allowed'] and not x['original_bytes_verified'] for x in result['candidates'])
+    altered = raw.replace(b'<head>', b'<head><base href="https://evil.invalid/">')
+    assert attachment_inventory(WORKSPACE, altered)['candidates'] == []
+
+
+def test_attachment_inventory_caps_untrusted_links():
+    from src.modules.saas_foundation.commercial_attachment_inventory import (
+        attachment_inventory,
+    )
+
+    raw = workspace().replace(b'</body>', b''.join(f'<a href="/f/{i}.pdf">{i}</a>'.encode() for i in range(510))+b'</body>')
+    r = attachment_inventory(WORKSPACE,raw)
+    assert len(r['candidates'])==20 and r['scanned_links']==500 and r['link_scan_truncated']
+    assert r['rejected_or_opaque_links']==480
+
+
+def test_b2b_market_next_separate_exact_number_requires_canonical():
+    raw=b2b(heading='Разработка цифровой платформы').replace(b'<html>',f'<html><head><link rel="canonical" href="{B2B}"></head>'.encode()).replace(b'<body>',b'<body><span>4643484</span>')
+    result=verify(raw,B2B)
+    assert result['external_id']=='4643484' and result['title']=='Разработка цифровой платформы'
+    assert not result['legal_identity_verified'] and not result['current_live_notice_status_verified']
+    for bad in (raw.replace(b'rel="canonical"',b'rel="alternate"'),raw.replace(b'<span>4643484</span>',b'<span>14643484</span>'),raw.replace(b'<span>4643484</span>',b'<span hidden>4643484</span>'),raw.replace(b'<span>4643484</span>',b'<span>4643484</span><span>4643484</span>'),raw.replace(B2B.encode(),B2B.replace('4643484','4643485').encode())):
+        with pytest.raises(ValueError):verify(bad,B2B)

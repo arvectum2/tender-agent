@@ -29,11 +29,11 @@ struct InboxView: View {
             Section("Требуют решения") {
                 if store.decisionNeeded.isEmpty {
                     ContentUnavailableView(
-                        "Решений не требуется",
+                        "Нет закупок, ожидающих решения",
                         systemImage: "checkmark.circle",
                         description: Text(
                             store.isLive
-                                ? "Новые manager-ready отчёты появятся здесь после Daily Tender Run."
+                                ? "Готовые результаты появятся здесь после обработки. Проверяйте состояние поиска выше."
                                 : "Подключите Mac mini, чтобы увидеть live manager inbox."
                         )
                     )
@@ -69,6 +69,23 @@ private struct DailyDigestView: View {
                 Spacer()
                 Image(systemName: store.isLive ? "checkmark.seal.fill" : "testtube.2")
                     .foregroundStyle(store.isLive ? .green : .orange)
+            }
+
+            if store.isLive {
+                if let digest = store.dailyDigest {
+                    Label(digest.statusLabel, systemImage: digest.needsReview ? "exclamationmark.triangle" : "clock")
+                        .font(.subheadline.weight(.medium))
+                        .foregroundStyle(digest.needsReview ? Color.orange : Color.primary)
+                    if digest.discoveryIncomplete == true {
+                        Text("Часть источников недоступна. Подборка может быть неполной.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                } else {
+                    Text("Статус последнего поиска недоступен")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
 
             HStack(spacing: 12) {

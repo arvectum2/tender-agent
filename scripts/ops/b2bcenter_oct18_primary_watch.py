@@ -76,15 +76,7 @@ def fetch_public(url: str) -> bytes:
     if (parsed.scheme != "https" or parsed.netloc != "www.b2b-center.ru"
             or parsed.query or parsed.fragment):
         raise OriginalMarketError("off-platform request")
-    request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    opener = urllib.request.build_opener(_NoRedirect)
-    with opener.open(request, timeout=16) as resp:
-        if resp.status != 200 or resp.geturl() != url:
-            raise OriginalMarketError("non-original redirect/source")
-        raw = resp.read(MAX_BYTES + 1)
-        if not 1200 < len(raw) <= MAX_BYTES:
-            raise OriginalMarketError("source size invalid")
-        return raw
+    raise OriginalMarketError("B2B direct network access disabled; guarded adapter required")
 
 
 def _document(raw: bytes):

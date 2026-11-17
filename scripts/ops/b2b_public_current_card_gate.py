@@ -85,6 +85,8 @@ def _safe_url(requested: str, actual: str) -> bool:
 
 def _read_public(url: str) -> dict:
     """Bounded TLS curl; original HTML is ephemeral, record HTTP outcome only."""
+    if urlsplit(url).netloc != "zakupki.gov.ru":
+        return {"http_state": "GUARDED_ACCESS_REQUIRED", "raw": None}
     with tempfile.TemporaryDirectory(prefix="ta-public-status-") as tmp:
         filename = Path(tmp) / "source"
         attempt = subprocess.run(

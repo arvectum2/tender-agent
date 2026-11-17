@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 from src.modules.daily_tender_run.schemas import DailyTenderProfile
@@ -10,8 +11,8 @@ _PROFILE_DIR = Path(__file__).resolve().parents[3] / "config" / "daily_tender_pr
 
 def load_daily_tender_profile(profile_id: str) -> DailyTenderProfile:
     normalized = str(profile_id or "").strip()
-    if not normalized:
-        raise ValueError("profile_id is required")
+    if not re.fullmatch(r"[a-z0-9][a-z0-9_-]{0,127}", normalized):
+        raise ValueError("Invalid Daily Tender profile_id")
     path = _PROFILE_DIR / f"{normalized}.json"
     if not path.is_file():
         raise ValueError(f"Unknown Daily Tender profile: {normalized}")

@@ -80,6 +80,8 @@ def read_index(url: str) -> tuple[bytes, str]:
         B2B_INDEX.format(x) for x in B2B_CATEGORIES
     ]:
         raise PipelineError("not a configured exact primary source index")
+    if url != WORKSPACE_RSS:
+        raise PipelineError("B2B direct network access disabled; guarded adapter required")
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
     opener = urllib.request.build_opener(_NoRedirect)
     with opener.open(req, timeout=15) as response:

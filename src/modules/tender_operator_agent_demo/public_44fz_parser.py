@@ -104,6 +104,10 @@ def fetch_public_44fz_search_page(url: str) -> dict:
         return {
             "status": classification,
             "html": html_content if classification == PublicSearchStatus.PARSED else None,
+            # A blank HTTP body can be labelled EMPTY_RESULTS by the legacy parser.
+            # Only an actual zero count on a nonblank result page is coverage evidence.
+            "explicit_zero_count": bool(html_content and extract_public_search_total_count(html_content) == 0
+                                        and classification in {PublicSearchStatus.PARSED, PublicSearchStatus.EMPTY_RESULTS}),
             "error": None,
         }
     return {

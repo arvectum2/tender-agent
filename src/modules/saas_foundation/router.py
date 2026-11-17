@@ -5,6 +5,7 @@ AI_CORP_SAAS_FOUNDATION_ENABLED is explicitly true.
 """
 from __future__ import annotations
 
+import asyncio
 import base64
 import binascii
 import hmac
@@ -19,13 +20,15 @@ from fastapi import (
     Form,
     Header,
     HTTPException,
+    Query,
     Request,
     UploadFile,
 )
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, Response
 from pydantic import BaseModel, Field
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
+from starlette.concurrency import run_in_threadpool
 
 from src.modules.company_profile_store.qualification_decision import (
     QualificationAwareDecisionRequest,
@@ -57,6 +60,27 @@ from src.modules.customer_onboarding.router import (
     revise_profile,
     upload_company_document,
 )
+from src.modules.saas_foundation import (
+    commercial_attachment_service,
+    commercial_capture,
+    commercial_requirement_review,
+    company_actual_costs,
+    company_actual_evidence,
+    company_actual_samples,
+    company_case_evidence,
+    company_cost_evidence,
+    company_cost_norms,
+    company_discovery,
+    company_historical_comparables,
+    company_lifecycle,
+    company_lifecycle_artifacts,
+    company_portfolio,
+    company_price_scenarios,
+    company_readiness,
+    company_reviewed_contracts,
+    company_schedule,
+)
+from src.modules.saas_foundation.commercial_attachment_bytes import MAX_ATTACHMENT_BYTES
 from src.modules.saas_foundation.models import (
     SaasAccessToken,
     SaasMember,
@@ -699,3 +723,491 @@ def saas_page() -> str:
     _enabled()
     from src.modules.saas_foundation.ui import render_saas_html
     return render_saas_html()
+
+
+@router.post("/api/saas/company-portfolio/cases", status_code=201, response_model=company_portfolio.CompanyCaseView)
+def save_company_case(payload: company_portfolio.SaveCompanyCase, principal: Member, session: DBSession) -> dict:
+    return company_portfolio.save_case(session, principal, payload)
+
+
+@router.get("/api/saas/company-portfolio/cases", response_model=company_portfolio.CompanyPortfolioPage)
+def list_company_cases(principal: Member, session: DBSession, offset: int = Query(0, ge=0), limit: int = Query(50, ge=1, le=100)) -> dict:
+    return company_portfolio.list_cases(session, principal, offset=offset, limit=limit)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}", response_model=company_portfolio.CompanyCaseView)
+def read_company_case(case_id: str, principal: Member, session: DBSession) -> dict:
+    return company_portfolio.get_case(session, principal, case_id)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/decisions", response_model=company_portfolio.CompanyDecisionPage)
+def read_company_case_decisions(case_id: str, principal: Member, session: DBSession, offset: int = Query(0, ge=0), limit: int = Query(50, ge=1, le=100)) -> dict:
+    return company_portfolio.decision_history(session, principal, case_id, offset=offset, limit=limit)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/decisions", response_model=company_portfolio.CompanyDecisionView)
+def write_company_case_decision(case_id: str, payload: company_portfolio.CompanyDecisionInput, principal: Member, session: DBSession) -> dict:
+    return company_portfolio.record_decision(session, principal, case_id, payload)
+
+
+@router.get("/api/saas/company-portfolio/search-context", response_model=company_case_evidence.SearchContext)
+def company_search_context(principal: Member, session: DBSession):
+    return company_case_evidence.search_context(session, principal)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/evidence", status_code=201)
+def bind_company_evidence(case_id: str, payload: company_case_evidence.BindCaseEvidence, principal: Member, session: DBSession) -> dict:
+    return company_case_evidence.bind_evidence(session, principal, case_id, payload)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/evidence")
+def list_company_evidence(case_id: str, principal: Member, session: DBSession, offset: int = Query(0, ge=0), limit: int = Query(50, ge=1, le=100)) -> dict:
+    return company_case_evidence.list_evidence(session, principal, case_id, offset=offset, limit=limit)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/evidence/{binding_id}")
+def read_company_evidence(case_id: str, binding_id: str, principal: Member, session: DBSession) -> dict:
+    return company_case_evidence.read_evidence(session, principal, case_id, binding_id)
+
+
+
+def _company_discovery_enabled():
+    if not get_settings().saas_company_discovery_enabled:
+        raise HTTPException(404, "Company discovery is disabled")
+
+
+@router.post("/api/saas/company-portfolio/discovery/runs", status_code=201)
+def plan_company_discovery(payload: company_discovery.StartCompanyDiscovery, principal: Member, session: DBSession) -> dict:
+    _company_discovery_enabled()
+    return company_discovery.create_run(session, principal, payload)
+
+
+@router.get("/api/saas/company-portfolio/discovery/latest")
+def latest_company_discovery(principal: Member, session: DBSession) -> dict:
+    return {"enabled": get_settings().saas_company_discovery_enabled, "commercial_indexes": list(company_discovery.INDEXES), "run": company_discovery.latest_run(session, principal)}
+
+
+@router.get("/api/saas/company-portfolio/discovery/runs/{run_id}")
+def read_company_discovery(run_id: str, principal: Member, session: DBSession) -> dict:
+    return company_discovery.read_run(session, principal, run_id)
+
+
+@router.post("/api/saas/company-portfolio/discovery/runs/{run_id}/step")
+def advance_company_discovery(run_id: str, payload: company_discovery.AdvanceCompanyDiscovery, principal: Member, session: DBSession) -> dict:
+    _company_discovery_enabled()
+    return company_discovery.advance_run(session, principal, run_id, payload)
+
+
+@router.post("/api/saas/company-portfolio/commercial-cases", status_code=201, response_model=company_portfolio.CompanyCaseView)
+def save_company_commercial_case(payload: company_portfolio.SaveCommercialCase, principal: Member, session: DBSession) -> dict:
+    return company_portfolio.save_commercial_case(session, principal, payload)
+
+
+@router.get("/api/saas/company-portfolio/discovery/schedule")
+def read_company_schedule(principal: Member, session: DBSession) -> dict:
+    return company_schedule.read_schedule(session, principal, execution_enabled=company_schedule.execution_enabled(get_settings()))
+
+
+@router.put("/api/saas/company-portfolio/discovery/schedule")
+def update_company_schedule(payload: company_schedule.ScheduleInput, principal: Member, session: DBSession) -> dict:
+    return company_schedule.update_schedule(session, principal, payload, execution_enabled=company_schedule.execution_enabled(get_settings()))
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/commercial-captures", status_code=201)
+def capture_company_commercial_card(case_id: str, payload: commercial_capture.CaptureRequest, principal: Member, session: DBSession) -> dict:
+    if not get_settings().saas_commercial_capture_enabled:
+        raise HTTPException(404, "Commercial capture disabled")
+    return commercial_capture.capture(session, principal, case_id, payload)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/commercial-captures")
+def list_company_commercial_captures(case_id: str, principal: Member, session: DBSession, offset: int = Query(0, ge=0), limit: int = Query(10, ge=1, le=20)) -> dict:
+    return {**commercial_capture.list_captures(session, principal, case_id, offset=offset, limit=limit),
+            "capture_enabled": get_settings().saas_commercial_capture_enabled}
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}")
+def recheck_company_commercial_capture(case_id: str, attempt_id: str, principal: Member, session: DBSession, previous_attempt_id: str | None = Query(None, max_length=64)) -> dict:
+    if previous_attempt_id is not None:
+        result = commercial_capture.compare_captures(session, principal, case_id, attempt_id, previous_attempt_id)
+    else:
+        result = commercial_capture.recheck(session, principal, case_id, attempt_id)
+    return {**result, "attachment_intake_enabled": get_settings().saas_commercial_attachment_intake_enabled,
+            "text_projection_enabled": get_settings().saas_commercial_text_projection_enabled,
+            "requirement_review_enabled": get_settings().saas_commercial_requirement_review_enabled}
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}/attachments/{candidate_id}", status_code=201)
+async def save_company_commercial_attachment(case_id: str, attempt_id: str, candidate_id: str, request: Request, principal: Member, session: DBSession, confirm_user_supplied: bool = Query(False)) -> dict:
+    if not get_settings().saas_commercial_attachment_intake_enabled:
+        raise HTTPException(404, "Commercial attachment intake disabled")
+    role_required(principal, "owner", "admin", "analyst")
+    legal_required(session, principal)
+    if not confirm_user_supplied:
+        raise HTTPException(422, "Confirm user-supplied, unverified origin")
+    if request.headers.get("content-encoding", "identity").lower() != "identity":
+        raise HTTPException(415, "Encoded uploads unsupported")
+    length = request.headers.get("content-length")
+    if length is not None and (not length.isascii() or not length.isdecimal() or len(length) > 10):
+        raise HTTPException(400, "Invalid upload length")
+    if length is not None and int(length) > MAX_ATTACHMENT_BYTES:
+        raise HTTPException(413, "Attachment size limit exceeded")
+    # Avoid holding the initial auth transaction across untrusted upload I/O.
+    session.rollback()
+    raw = bytearray()
+    try:
+        async with asyncio.timeout(20):
+            async for chunk in request.stream():
+                if len(raw) + len(chunk) > MAX_ATTACHMENT_BYTES:
+                    raise HTTPException(413, "Attachment size limit exceeded")
+                raw.extend(chunk)
+    except TimeoutError as exc:
+        raise HTTPException(408, "Attachment upload timeout") from exc
+    return await run_in_threadpool(commercial_attachment_service.save, session, principal, case_id, attempt_id, candidate_id, bytes(raw))
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}/attachments")
+def list_company_commercial_attachments(case_id: str, attempt_id: str, principal: Member, session: DBSession) -> dict:
+    return commercial_attachment_service.list_evidence(session, principal, case_id, attempt_id)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}/attachments/{candidate_id}")
+def read_company_commercial_attachment(case_id: str, attempt_id: str, candidate_id: str, principal: Member, session: DBSession, previous_attempt_id: str | None = Query(None, max_length=64)) -> dict:
+    return commercial_attachment_service.read(session, principal, case_id, attempt_id, candidate_id, previous_attempt_id)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}/attachments/{candidate_id}/text-evidence")
+def read_company_commercial_text_evidence(case_id: str, attempt_id: str, candidate_id: str, principal: Member, session: DBSession) -> dict:
+    settings = get_settings()
+    if not settings.saas_commercial_text_projection_enabled:
+        raise HTTPException(404, "Commercial text projection disabled")
+    return commercial_attachment_service.text_evidence(session, principal, case_id, attempt_id, candidate_id,
+        pdf_enabled=settings.saas_commercial_pdf_projection_enabled)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}/attachments/{candidate_id}/requirements")
+def commercial_requirement_matrix(case_id: str, attempt_id: str, candidate_id: str, principal: Member, session: DBSession) -> dict:
+    if not get_settings().saas_commercial_requirement_review_enabled:
+        raise HTTPException(404, "Requirement review disabled")
+    return commercial_requirement_review.matrix(session, principal, case_id, attempt_id, candidate_id)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}/attachments/{candidate_id}/requirements", status_code=201)
+def commercial_requirement_submit(case_id: str, attempt_id: str, candidate_id: str, payload: commercial_requirement_review.ReviewInput, principal: Member, session: DBSession) -> dict:
+    if not get_settings().saas_commercial_requirement_review_enabled:
+        raise HTTPException(404, "Requirement review disabled")
+    return commercial_requirement_review.submit(session, principal, case_id, attempt_id, candidate_id, payload)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}/attachments/{candidate_id}/requirements/{fragment_key}")
+def commercial_requirement_history(case_id: str, attempt_id: str, candidate_id: str, fragment_key: str, principal: Member, session: DBSession) -> dict:
+    if not get_settings().saas_commercial_requirement_review_enabled:
+        raise HTTPException(404, "Requirement review disabled")
+    return commercial_requirement_review.history(session, principal, case_id, attempt_id, candidate_id, fragment_key)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/commercial-captures/{attempt_id}/requirement-matrix")
+def commercial_case_requirement_matrix(case_id: str, attempt_id: str, principal: Member, session: DBSession, offset: int = Query(0, ge=0, le=20), limit: int = Query(3, ge=1, le=3)) -> dict:
+    if not get_settings().saas_commercial_requirement_review_enabled:
+        raise HTTPException(404, "Requirement review disabled")
+    return commercial_requirement_review.case_matrix(session, principal, case_id, attempt_id, offset=offset, limit=limit)
+
+
+@router.get("/api/saas/company-portfolio/manager-inbox")
+def company_manager_inbox(principal: Member, session: DBSession, view: company_portfolio.InboxFilter = "attention", offset: int = Query(0, ge=0), limit: int = Query(50, ge=1, le=100)) -> dict:
+    return company_portfolio.manager_inbox(session, principal, view=view, offset=offset, limit=limit)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/lifecycle")
+def company_lifecycle_state(case_id: str, principal: Member, session: DBSession) -> dict:
+    if not get_settings().saas_company_lifecycle_enabled:
+        raise HTTPException(404, "Company lifecycle disabled")
+    return company_lifecycle.state(session, principal, case_id)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/lifecycle", status_code=201)
+def company_lifecycle_record(case_id: str, payload: company_lifecycle.LifecycleInput, principal: Member, session: DBSession) -> dict:
+    if not get_settings().saas_company_lifecycle_enabled:
+        raise HTTPException(404, "Company lifecycle disabled")
+    return company_lifecycle.record(session, principal, case_id, payload, require_commercial_readiness=get_settings().saas_company_commercial_readiness_required)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/lifecycle/history")
+def company_lifecycle_history(case_id: str, principal: Member, session: DBSession, offset: int = Query(0, ge=0, le=50), limit: int = Query(50, ge=1, le=50)) -> dict:
+    if not get_settings().saas_company_lifecycle_enabled:
+        raise HTTPException(404, "Company lifecycle disabled")
+    return company_lifecycle.history(session, principal, case_id, offset, limit)
+
+
+@router.get("/api/saas/company-portfolio/lifecycle-metrics")
+def company_lifecycle_metrics(principal: Member, session: DBSession) -> dict:
+    if not get_settings().saas_company_lifecycle_enabled:
+        raise HTTPException(404, "Company lifecycle disabled")
+    return company_lifecycle.metrics(session, principal)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/readiness-evidence")
+def company_readiness_state(case_id: str, principal: Member, session: DBSession) -> dict:
+    settings=get_settings()
+    if not (settings.saas_company_lifecycle_enabled and settings.saas_company_readiness_evidence_enabled):
+        raise HTTPException(404, "Readiness evidence disabled")
+    return company_readiness.state(session, principal, case_id)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/readiness-evidence", status_code=201)
+def company_readiness_bind(case_id: str, payload: company_readiness.BindInput, principal: Member, session: DBSession) -> dict:
+    settings=get_settings()
+    if not (settings.saas_company_lifecycle_enabled and settings.saas_company_readiness_evidence_enabled):
+        raise HTTPException(404, "Readiness evidence disabled")
+    return company_readiness.bind(session, principal, case_id, payload)
+
+
+async def _bounded_evidence_upload(request: Request, session: DBSession) -> bytes:
+    if request.headers.get("content-encoding", "identity").lower() != "identity":
+        raise HTTPException(415, "Encoded uploads unsupported")
+    length=request.headers.get("content-length")
+    if length is not None and (not length.isascii() or not length.isdecimal() or len(length)>10):
+        raise HTTPException(400, "Invalid upload length")
+    if length is not None and int(length)>MAX_ATTACHMENT_BYTES:
+        raise HTTPException(413, "Attachment size limit exceeded")
+    session.rollback()
+    raw=bytearray()
+    try:
+        async with asyncio.timeout(20):
+            async for chunk in request.stream():
+                if len(raw)+len(chunk)>MAX_ATTACHMENT_BYTES:
+                    raise HTTPException(413, "Attachment size limit exceeded")
+                raw.extend(chunk)
+    except TimeoutError as exc:
+        raise HTTPException(408, "Attachment upload timeout") from exc
+    return bytes(raw)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/lifecycle/{event_id}/artifact", status_code=201)
+async def upload_lifecycle_artifact(case_id: str, event_id: str, request: Request, principal: Member, session: DBSession, format_hint: company_lifecycle_artifacts.ArtifactFormat, confirm_user_supplied: bool = Query(False)) -> dict:
+    settings=get_settings()
+    if not (settings.saas_company_lifecycle_enabled and settings.saas_company_lifecycle_artifacts_enabled):
+        raise HTTPException(404, "Lifecycle artifacts disabled")
+    role_required(principal, "owner", "admin")
+    company_lifecycle_artifacts._event(session,principal,case_id,event_id)
+    if not confirm_user_supplied:
+        raise HTTPException(422, "Confirm user-supplied unverified origin")
+    raw = await _bounded_evidence_upload(request, session)
+    return await run_in_threadpool(company_lifecycle_artifacts.save, session, principal, case_id, event_id, bytes(raw), format_hint)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/lifecycle/{event_id}/artifact")
+def read_lifecycle_artifact(case_id: str, event_id: str, principal: Member, session: DBSession) -> dict:
+    settings=get_settings()
+    if not (settings.saas_company_lifecycle_enabled and settings.saas_company_lifecycle_artifacts_enabled):
+        raise HTTPException(404, "Lifecycle artifacts disabled")
+    return company_lifecycle_artifacts.read(session, principal, case_id, event_id)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/lifecycle/{event_id}/artifact/download")
+def download_lifecycle_artifact(case_id: str, event_id: str, principal: Member, session: DBSession):
+    settings=get_settings()
+    if not (settings.saas_company_lifecycle_enabled and settings.saas_company_lifecycle_artifacts_enabled):
+        raise HTTPException(404, "Lifecycle artifacts disabled")
+    raw, format_hint, sha=company_lifecycle_artifacts.download(session, principal, case_id, event_id)
+    return Response(content=raw, media_type="application/octet-stream", headers={"Content-Disposition": f'attachment; filename="lifecycle-{sha[:16]}.{format_hint}"', "Cache-Control": "private, no-store", "X-Content-Type-Options": "nosniff", "X-Artifact-SHA256": sha})
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/preview")
+def company_price_preview(case_id: str, payload: company_price_scenarios.ScenarioInput, principal: Member, session: DBSession) -> dict:
+    if not get_settings().saas_company_price_scenarios_enabled:
+        raise HTTPException(404, "Price scenarios disabled")
+    return company_price_scenarios.preview(session, principal, case_id, payload)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/price-scenarios")
+def company_price_history(case_id: str, principal: Member, session: DBSession, offset: int = Query(0, ge=0, le=30), limit: int = Query(10, ge=1, le=30)) -> dict:
+    if not get_settings().saas_company_price_scenarios_enabled:
+        raise HTTPException(404, "Price scenarios disabled")
+    return company_price_scenarios.history(session, principal, case_id, offset, limit)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/price-scenarios", status_code=201)
+def company_price_save(case_id: str, payload: company_price_scenarios.SaveInput, principal: Member, session: DBSession) -> dict:
+    if not get_settings().saas_company_price_scenarios_enabled:
+        raise HTTPException(404, "Price scenarios disabled")
+    return company_price_scenarios.save(session, principal, case_id, payload)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/itemized/preview")
+def company_price_itemized_preview(case_id: str, payload: company_price_scenarios.ItemizedInput, principal: Member, session: DBSession) -> dict:
+    settings=get_settings()
+    if not (settings.saas_company_price_scenarios_enabled and settings.saas_company_price_itemized_enabled):
+        raise HTTPException(404, "Itemized price scenarios disabled")
+    if company_price_scenarios.has_norm_bindings(payload):
+        _cost_norms_enabled()
+        if not settings.saas_company_cost_norm_binding_enabled:raise HTTPException(404,"Norm estimate binding disabled")
+    return company_price_scenarios.preview_itemized(session, principal, case_id, payload)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/itemized", status_code=201)
+def company_price_itemized_save(case_id: str, payload: company_price_scenarios.ItemizedSaveInput, principal: Member, session: DBSession) -> dict:
+    settings=get_settings()
+    if not (settings.saas_company_price_scenarios_enabled and settings.saas_company_price_itemized_enabled):
+        raise HTTPException(404, "Itemized price scenarios disabled")
+    if company_price_scenarios.has_norm_bindings(payload.estimate):
+        _cost_norms_enabled()
+        if not settings.saas_company_cost_norm_binding_enabled:raise HTTPException(404,"Norm estimate binding disabled")
+    return company_price_scenarios.save_itemized(session,principal,case_id,payload)
+
+
+# Evidence is a user-supplied copy, not verification of the price, payment or signature.
+def _cost_evidence_enabled():
+    settings=get_settings()
+    if not (settings.saas_company_price_scenarios_enabled and settings.saas_company_price_itemized_enabled and settings.saas_company_cost_evidence_enabled):
+        raise HTTPException(404, "Cost evidence disabled")
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/{scenario_id}/lines/{ordinal}/evidence")
+def read_cost_evidence(case_id: str, scenario_id: str, ordinal: int, principal: Member, session: DBSession) -> dict:
+    _cost_evidence_enabled()
+    return company_cost_evidence.read(session,principal,case_id,scenario_id,ordinal)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/{scenario_id}/lines/{ordinal}/evidence", status_code=201)
+async def upload_cost_evidence(case_id: str, scenario_id: str, ordinal: int, request: Request, principal: Member, session: DBSession, format_hint: company_cost_evidence.FormatHint, document_kind: company_cost_evidence.DocumentKind, line_sha256: Annotated[str,Query(pattern=r"^[0-9a-f]{64}$")], confirm_user_supplied: bool = Query(False)) -> dict:
+    _cost_evidence_enabled()
+    role_required(principal,"owner","admin")
+    _,_,digest=company_cost_evidence._line(session,principal,case_id,scenario_id,ordinal)
+    if digest!=line_sha256:
+        raise HTTPException(409,"Estimate line binding changed; refresh")
+    if not confirm_user_supplied:
+        raise HTTPException(422,"Confirm user-supplied unverified origin")
+    raw=await _bounded_evidence_upload(request,session)
+    return await run_in_threadpool(company_cost_evidence.save,session,principal,case_id,scenario_id,ordinal,raw,format_hint,document_kind,line_sha256)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/{scenario_id}/lines/{ordinal}/evidence/download")
+def download_cost_evidence(case_id: str, scenario_id: str, ordinal: int, principal: Member, session: DBSession):
+    _cost_evidence_enabled()
+    raw,format_hint,sha=company_cost_evidence.download(session,principal,case_id,scenario_id,ordinal)
+    return Response(content=raw,media_type="application/octet-stream",headers={"Content-Disposition":f'attachment; filename="cost-{sha[:16]}.{format_hint}"',"Cache-Control":"private, no-store","X-Content-Type-Options":"nosniff","X-Artifact-SHA256":sha})
+
+
+def _actual_costs_enabled():
+    settings=get_settings()
+    if not (settings.saas_company_price_scenarios_enabled and settings.saas_company_price_itemized_enabled and settings.saas_company_actual_costs_enabled):
+        raise HTTPException(404,"Actual cost snapshots disabled")
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/{scenario_id}/actual-costs")
+def actual_cost_history(case_id: str, scenario_id: str, principal: Member, session: DBSession, offset: int = Query(0,ge=0,le=30), limit: int = Query(5,ge=1,le=10)) -> dict:
+    _actual_costs_enabled()
+    return company_actual_costs.history(session,principal,case_id,scenario_id,offset,limit)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/{scenario_id}/actual-costs/preview")
+def actual_cost_preview(case_id: str, scenario_id: str, payload: company_actual_costs.SnapshotInput, principal: Member, session: DBSession) -> dict:
+    _actual_costs_enabled()
+    return company_actual_costs.preview(session,principal,case_id,scenario_id,payload)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/{scenario_id}/actual-costs",status_code=201)
+def actual_cost_save(case_id: str, scenario_id: str, payload: company_actual_costs.SaveInput, principal: Member, session: DBSession) -> dict:
+    _actual_costs_enabled()
+    return company_actual_costs.save(session,principal,case_id,scenario_id,payload)
+
+
+def _actual_evidence_enabled():
+    _actual_costs_enabled()
+    if not get_settings().saas_company_actual_evidence_enabled:
+        raise HTTPException(404,"Actual cost evidence disabled")
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/{scenario_id}/actual-costs/{snapshot_id}/rows/{row_kind}/{ordinal}/evidence")
+def read_actual_evidence(case_id: str, scenario_id: str, snapshot_id: str, row_kind: company_actual_evidence.RowKind, ordinal: int, principal: Member, session: DBSession) -> dict:
+    _actual_evidence_enabled()
+    return company_actual_evidence.read(session,principal,case_id,scenario_id,snapshot_id,row_kind,ordinal)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/{scenario_id}/actual-costs/{snapshot_id}/rows/{row_kind}/{ordinal}/evidence",status_code=201)
+async def upload_actual_evidence(case_id: str, scenario_id: str, snapshot_id: str, row_kind: company_actual_evidence.RowKind, ordinal: int, request: Request, principal: Member, session: DBSession, format_hint: company_cost_evidence.FormatHint, document_kind: company_actual_evidence.DocumentKind, line_sha256: Annotated[str,Query(pattern=r"^[0-9a-f]{64}$")], confirm_user_supplied: bool=Query(False)) -> dict:
+    _actual_evidence_enabled()
+    role_required(principal,"owner","admin")
+    scope=company_actual_evidence.target(session,principal,case_id,scenario_id,snapshot_id,row_kind,ordinal)
+    if scope['line_sha256']!=line_sha256:
+        raise HTTPException(409,"Actual row binding changed; refresh")
+    if not confirm_user_supplied:
+        raise HTTPException(422,"Confirm user-supplied unverified origin")
+    raw=await _bounded_evidence_upload(request,session)
+    return await run_in_threadpool(company_actual_evidence.save,session,principal,case_id,scenario_id,snapshot_id,row_kind,ordinal,raw,format_hint,document_kind,line_sha256)
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/price-scenarios/{scenario_id}/actual-costs/{snapshot_id}/rows/{row_kind}/{ordinal}/evidence/download")
+def download_actual_evidence(case_id: str, scenario_id: str, snapshot_id: str, row_kind: company_actual_evidence.RowKind, ordinal: int, principal: Member, session: DBSession):
+    _actual_evidence_enabled()
+    raw,format_hint,sha=company_actual_evidence.download(session,principal,case_id,scenario_id,snapshot_id,row_kind,ordinal)
+    return Response(content=raw,media_type="application/octet-stream",headers={"Content-Disposition":f'attachment; filename="actual-{sha[:16]}.{format_hint}"',"Cache-Control":"private, no-store","X-Content-Type-Options":"nosniff","X-Artifact-SHA256":sha})
+
+
+@router.post("/api/saas/company-portfolio/actual-samples/preview")
+def actual_sample_preview(payload: company_actual_samples.PreviewInput, principal: Member, session: DBSession) -> dict:
+    _actual_costs_enabled()
+    if not get_settings().saas_company_actual_samples_enabled:
+        raise HTTPException(404,"Actual sample preview disabled")
+    return company_actual_samples.preview(session,principal,payload)
+
+def _cost_norms_enabled():
+    _actual_costs_enabled()
+    settings=get_settings()
+    if not (settings.saas_company_actual_samples_enabled and settings.saas_company_cost_norms_enabled):
+        raise HTTPException(404,"Corporate cost norms disabled")
+
+
+@router.post("/api/saas/company-portfolio/cost-norms/preview")
+def cost_norm_preview(payload: company_cost_norms.Proposal, principal: Member, session: DBSession) -> dict:
+    _cost_norms_enabled()
+    return company_cost_norms.preview(session,principal,payload)
+
+
+@router.post("/api/saas/company-portfolio/cost-norms",status_code=201)
+def cost_norm_approve(payload: company_cost_norms.Approval, principal: Member, session: DBSession) -> dict:
+    _cost_norms_enabled()
+    return company_cost_norms.approve(session,principal,payload)
+
+
+@router.get("/api/saas/company-portfolio/cost-norms")
+def cost_norm_catalog(principal: Member, session: DBSession, offset: int=Query(0,ge=0,le=500), limit: int=Query(10,ge=1,le=20)) -> dict:
+    _cost_norms_enabled()
+    return company_cost_norms.catalog(session,principal,offset,limit)
+
+
+@router.get("/api/saas/company-portfolio/cost-norms/{norm_key}")
+def cost_norm_history(norm_key: company_actual_costs.Digest, principal: Member, session: DBSession, offset: int=Query(0,ge=0,le=100), limit: int=Query(10,ge=1,le=20)) -> dict:
+    _cost_norms_enabled()
+    return company_cost_norms.history(session,principal,norm_key,offset,limit)
+
+
+@router.post("/api/saas/company-portfolio/cost-norms/{norm_key}/withdraw",status_code=201)
+def cost_norm_withdraw(norm_key: company_actual_costs.Digest, payload: company_cost_norms.Withdrawal, principal: Member, session: DBSession) -> dict:
+    _cost_norms_enabled()
+    return company_cost_norms.withdraw(session,principal,norm_key,payload)
+
+def _historical_comparables_enabled():
+    settings=get_settings()
+    if not (settings.saas_company_price_scenarios_enabled and settings.saas_company_historical_comparables_enabled):
+        raise HTTPException(404,"Historical comparable evidence disabled")
+
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/historical-comparables")
+def historical_comparable_catalog(case_id: str, principal: Member, session: DBSession) -> dict:
+    _historical_comparables_enabled()
+    return company_historical_comparables.catalog(session,principal,case_id)
+
+
+@router.post("/api/saas/company-portfolio/cases/{case_id}/historical-comparables/preview")
+def historical_comparable_preview(case_id: str, payload: company_historical_comparables.Selection, principal: Member, session: DBSession) -> dict:
+    _historical_comparables_enabled()
+    return company_historical_comparables.preview(session,principal,case_id,payload)
+
+@router.get("/api/saas/company-portfolio/cases/{case_id}/reviewed-contracts")
+def reviewed_contract_catalog(case_id: str, principal: Member, session: DBSession) -> dict:
+    _historical_comparables_enabled()
+    if not get_settings().saas_company_reviewed_contract_registry_enabled:
+        raise HTTPException(404,"Reviewed contract registry disabled")
+    return company_reviewed_contracts.catalog(session,principal,case_id)
