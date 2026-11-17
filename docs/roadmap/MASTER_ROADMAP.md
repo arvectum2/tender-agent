@@ -19,6 +19,8 @@
 - Follow-up APR07 least-privilege hardening: require exactly six readable metric columns and reject overbroad/inherited/partial grants or RLS-filtered snapshots. Actual disposable PG18.7 PASS, 47 regressions PASS; new review CI pending, no further merge authority.
 - Main a08a34a1 postmerge CI SUCCESS (6031 PASS / 288 SKIP), GitVerse mirror SUCCESS; exact PR608 21c56ca7 CI 19/19 (6031 PASS / 288 SKIP). Role hardening bounded engineering complete, separately gated merge.
 - APR03B typed source audit fix: later repeated labelled NMCK/deadline contradictions no longer hidden by first match; aware dates compared by UTC instant, no naive timezone inference, >100 assertions explicitly incomplete/review. 123 focused PASS / 1 SKIP, saved real normalized EIS notice replay 4 synthetic assertions / 2 contradictions, no new model execution or official-state claim. Successor CI pending.
+- Owner-approved PR608/609 merged (38/38 CI, exact tree matches), main `a1686d85baf139b7a01b0f29ae8283a266938482`, no deployment.
+- Owner-approved APR08 transition: first private workspace slice implemented (3 pinned archived XML questions + explicit decimal percentage calculation, cite/UNKNOWN/no GO). 108 focused PASS, Node UI simulation PASS, real archived v3 original ZIP/XML reverified 4/4 positive, unpinned legacy 4/4 UNKNOWN. [Acceptance](../acceptance/APR08_EVIDENCE_COPILOT_FIRST_SLICE_2026-11-17.md). Full document Q&A and legal/commercial explanations remain open, exact PR CI pending.
 - Gemma paused; no repeat B2B live pilot; SIBUR research separate; no automated merge merely from this roadmap entry.
 
 ## 14.11.2026 — Три параллельных прикладных направления

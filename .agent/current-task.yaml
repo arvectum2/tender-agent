@@ -742,4 +742,4 @@ apr08_evidence_copilot_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR08-EVIDENCE-COPILOT-20261117.yaml
   branch: feat/ta-apr08-evidence-copilot-20261117
-  current_stage: bounded_source_question_and_calculation_slice
+  current_stage: first_slice_exact_ci_pending
