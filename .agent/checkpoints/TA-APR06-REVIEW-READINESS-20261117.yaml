@@ -7,9 +7,15 @@ definition_of_done:
   - Test rejection of changed inputs and false acceptance claims; publish review PR.
 completed:
   - APR05 engineering rehearsal exact head 380bbdb0 verified CI 19/19 and full pilot build; merge remains owner-gated.
-current_stage: source_bound_review_inventory
+  - Pinned 28 candidate and corrected 20 development records reconciled without corpus promotion.
+  - Deterministic inventory and adversarial tests implemented.
+current_stage: review_ci_pending
 remaining:
-  - Implement and verify offline inventory and targeted regression.
-last_verified_commit: 380bbdb0bb50ec0557eb40ebf14100da5ed0ff1b
-test_results: []
-resume_instruction: Build and verify readiness inventory from pinned tracked evidence only; no new LLM, EIS traffic, payment, or production activity.
+  - Verify exact CI on successor PR.
+  - Commercial acceptance stays blocked pending independent original-source and attributable human reviews; no fabricated metrics.
+last_verified_commit: c8285b027f63836e5e8d5af982d947d8057522e8
+test_results:
+  - 51 targeted pytest PASS; Ruff and git diff check PASS.
+  - Deterministic output byte comparison PASS. 28 candidates, 20 archived development, 16 overlap, 12 candidate-only, 4 development-only, 32 unique inventory entries.
+  - Seven commercial metrics null; no human review evidence in inputs.
+resume_instruction: Review exact successor CI (base APR05 PR604); resolve failures; keep APR05 merge separate. Next prioritize offline original-source review packet for the 16 overlaps if source receipts are available, without treating historical evidence as current EIS or legal gold. No Gemma, live traffic or deployment.

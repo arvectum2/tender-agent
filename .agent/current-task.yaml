@@ -689,4 +689,4 @@ apr06_review_readiness_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR06-REVIEW-READINESS-20261117.yaml
   branch: feat/ta-apr06-review-readiness-20261117
-  current_stage: source_bound_review_inventory
+  current_stage: review_ci_pending

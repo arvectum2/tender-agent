@@ -377,9 +377,10 @@ completed:
 - 'Real disposable local HTTPS staging: Web norm-bound itemized save v2, actual native
   macOS and iOS Simulator XCTest read and verify same server data, foreign tenant
   404. Release/projection pin consistency and default-off gates checked.'
-current_stage: apr05_release_rehearsal
+current_stage: apr06_review_readiness
 remaining:
-- APR-05 isolated pilot release rehearsal (entitlement/flag rollback verified locally; exact CI, migrated PostgreSQL backup/restore, full pilot package and approved staging target pending).
+- APR-05 bounded technical rehearsal complete, PR604 exact CI green; owner merge approval and approved staging target remain separate.
+- APR-06 pinned review readiness inventory implemented; exact CI and independent source/attributable human review pending.
 - Real reviewed contract source publication, physical device/interactive SwiftUI acceptance and deployment GO remain separate.
 - B2B approved manual observation/document acquisition and legacy cutover; no repeat live pilot.
 last_verified_commit: 31af52c1350100fc9f0aea263c76576914da5072
