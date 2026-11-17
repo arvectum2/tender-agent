@@ -1,0 +1,20 @@
+task_id: TA-APR04-DISPOSABLE-REPLAY-20261117
+status: in_progress
+goal: Repeat the existing private source-backed onboarding HTTP acceptance on current product code without reusing or modifying historical DB or source files.
+definition_of_done:
+  - Bind saved owner identity inputs and archive report to prior private receipt, copy only required bounded source artifacts to disposable private runtime.
+  - Run exact existing onboarding workflow twice with fresh databases, preserve UNKNOWN business qualification and original input hashes; no actual PDF verification claim or production changes.
+  - Add tests and document reproducible bounded acceptance, publish review PR.
+completed:
+  - Confirmed private legacy identity, saved run and original receipt exist. APR07 CI pending, separate predecessor.
+  - Bound legacy receipt to report SHA and both recorded document hashes; checked original tree before and after each reexecution.
+  - Two independent fresh SQLite private HTTP replays PASS, identical sanitized results; temp inputs and DB removed; no existing DB reused.
+  - Added source tamper, receipt GO claim, symlink and excluded old DB regression tests.
+current_stage: disposable_replay_ci_pending
+remaining:
+  - Verify exact CI and predecessors APR05/06/07; no unauthorized merge.
+last_verified_commit: e2069c47fad7c8f0f72b2fb5edfd24569320d9ab
+test_results:
+  - Two actual private source-backed HTTP replays PASS: 401 unauthenticated, 201 create, 409 duplicate, 404 foreign document, source-cited archival price UNKNOWN without limits, qualification UNKNOWN, HUMAN_REVIEW_REQUIRED, no GO.
+  - 72 targeted tests PASS / 2 SKIP, Ruff and diff check PASS.
+resume_instruction: Verify exact PR and ancestor CI; finalize bounded engineering checkpoint when green. Remaining external registration original verification, company qualifications/commercial preferences and paid pilot require actual owner evidence. Do not promote historical receipt to current legal verification. No Gemma, no live procurement, no production or unauthorized merge.
