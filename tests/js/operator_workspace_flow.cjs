@@ -266,6 +266,7 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
     }
 
     assert.equal(get('document-count').textContent,'1');
+    assert.equal(get('copilot-panel').hidden,false,'Copilot available with source files');
     assert.equal(get('quote-check').hidden,false,'Proof-check UI visible only for saved original files');
     get('quote-file').value='FILE-01';
     get('quote-text').value='Оплата производится в течение семи рабочих дней.';
@@ -339,6 +340,7 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
     assert(!calls.some(c=>c.includes('/runs/run-1/analyze')),'Never analyze a file-less EIS manifest');
     assert.equal(get('append-files-form').hidden,false,'Show manual document recovery');
     assert.equal(get('document-count').textContent,'0');
+    assert.equal(get('copilot-panel').hidden,true,'No Copilot on a file-less run');
     assert.equal(get('quote-check').hidden,true,'Proof-check UI must be hidden when no original file exists');
     assert.equal(get('analyze-btn').disabled,true,'Never enable invalid analyze button');
   }

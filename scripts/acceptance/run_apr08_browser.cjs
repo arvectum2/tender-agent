@@ -8,12 +8,14 @@ assert.equal(target.hostname,'127.0.0.1');assert.equal(target.protocol,'http:');
 (async()=>{
  const browser=await chromium.launch({executablePath:process.env.APR08_CHROME,headless:true,args:['--disable-background-networking','--no-first-run']});
  try{
-  const context=await browser.newContext({viewport:{width:1280,height:900},serviceWorkers:'block',httpCredentials:{username:'apr08-replay',password:process.env.APR08_BROWSER_PASSWORD}});
+  const context=await browser.newContext({viewport:process.env.APR08_BROWSER_NARROW==='1'?{width:390,height:844}:{width:1280,height:900},serviceWorkers:'block',httpCredentials:{username:'apr08-replay',password:process.env.APR08_BROWSER_PASSWORD}});
   await context.route('**/*',route=>new URL(route.request().url()).origin===origin?route.continue():route.abort());
   const page=await context.newPage();page.setDefaultTimeout(8000);const errors=[];page.on('pageerror',e=>errors.push(e.message));
   const l=id=>page.locator('#'+id);
   await page.goto(origin+'/pilot/tender-agent/workspace?run='+run);
-  await l('report-panel').waitFor({state:'visible'});
+  await l('copilot-panel').waitFor({state:'visible'});
+  if(process.env.APR08_BROWSER_SCENARIO==='pinned') assert(await l('report-panel').isHidden());
+  else await l('report-panel').waitFor({state:'visible'});
   await page.getByText('Evidence Copilot — вопросы и расчёт по закупке',{exact:true}).click();
   const ask=async(question,pattern)=>{
     await l('copilot-answer-question').fill(question);
@@ -22,6 +24,33 @@ assert.equal(target.hostname,'127.0.0.1');assert.equal(target.protocol,'http:');
     await page.waitForFunction(({id,text})=>document.getElementById(id).innerText.includes(text),{id:'copilot-answer-result',text:pattern});
     return await l('copilot-answer-result').innerText();
   };
+  if(process.env.APR08_BROWSER_SCENARIO==='pinned') {
+    const fixed=async(question,pattern,percent)=>{
+      await l('copilot-question').selectOption(question);
+      if(percent!==undefined) await l('copilot-percent').fill(percent);
+      await l('copilot-submit').click();
+      await page.waitForFunction(text=>document.getElementById('copilot-result').innerText.includes(text),pattern);
+      return await l('copilot-result').innerText();
+    };
+    assert.match(await fixed('subject','Проверенный оригинал XML ЕИС'),/XML:/);
+    assert.match(await fixed('nmck','1245000'),/Проверенный оригинал XML ЕИС/);
+    assert.match(await fixed('deadline','2026-10-19'),/Проверенный оригинал XML ЕИС/);
+    assert.match(await fixed('nmck_percent','62250.00','5'),/Не установленное обеспечение/);
+    assert.match(await ask('Какова НМЦК?','1245000'),/Проверенный оригинал XML ЕИС/);
+    assert.match(await ask('Какой размер обеспечения заявки?','6225.00'),/0.5%|0,5%/);
+    await l('copilot-answer-result').screenshot({path:process.env.APR08_SCREENSHOT_DIR+'/bid-security.png'});
+    assert.match(await ask('Какой размер обеспечения исполнения контракта?','30.0%'),/Сумма в XML: UNKNOWN/);
+    await l('copilot-answer-result').screenshot({path:process.env.APR08_SCREENSHOT_DIR+'/contract-security.png'});
+    assert.match(await ask('Поясни требования к обеспечению заявки','Ссылки заказчика на нормы'),/ст\. 45|стать[яие] 45/i);
+    const legal=await ask('Поясни требования к обеспечению исполнения контракта','Ссылки заказчика на нормы');
+    assert.match(legal,/содержание законодательства не проверено/);assert.match(legal,/44-ФЗ/);
+    await l('copilot-answer-result').screenshot({path:process.env.APR08_SCREENSHOT_DIR+'/legal.png'});
+    await ask('Можно ли подписывать контракт?','UNKNOWN');
+    await l('copilot-answer-question').fill('другой вопрос');assert.equal(await l('copilot-answer-result').innerText(),'');
+    assert(await l('report-panel').isHidden()); assert.deepEqual(errors,[]);
+    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Unexpected horizontal page overflow');
+    console.log('APR08_PINNED_XML_CHROMIUM_PASS subject NMCK deadline percent security legal unknown clear no report no errors');return;
+  }
   assert.match(await ask('Какой срок оплаты услуг?','7 рабочих дней'),/SHA-256 оригинала/);
   await page.locator('#copilot-answer-result').screenshot({path:process.env.APR08_SCREENSHOT_DIR+'/payment.png'});
   assert.match(await ask('Какой срок оказания услуг?','07.12.2026'),/включительно/);

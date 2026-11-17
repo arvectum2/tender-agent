@@ -237,10 +237,12 @@
   async function loadRun() {
     if (!state.runId) return;
     const id = encodeURIComponent(state.runId);
+    show('copilot-panel',false);
     state.copilotEpoch++;wipe($('copilot-result'));$('copilot-percent').value='';
     state.copilotSearchEpoch++;wipe($('copilot-search-result'));$('copilot-search').value='';
     state.copilotAnswerEpoch++;wipe($('copilot-answer-result'));$('copilot-answer-question').value='';
     const run = await json(api + '/runs/' + id);
+    if (encodeURIComponent(state.runId)!==id) return;
     show('run-empty', false);
     show('run-section', true);
     $('run-status').textContent = run.status || 'неизвестен';
@@ -264,6 +266,7 @@
     wipe($('run-warnings'));
     for (const warning of [...(run.warnings || []),...(run.limitations || [])].slice(0,8)) paragraph($('run-warnings'), '⚠ ' + warning);
     renderFiles(run);
+    show('copilot-panel',Array.isArray(run.files) && run.files.length>0);
     await loadEvents();
     await loadReport(run);
     return run;

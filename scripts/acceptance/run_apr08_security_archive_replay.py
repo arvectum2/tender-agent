@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 import re
+import secrets
 import shutil
 import tempfile
 import zipfile
@@ -59,9 +60,14 @@ def main() -> int:
                     raw = z.read(member)
                     (directory / member.filename).write_bytes(raw)
                     files.append({'file_id': f'FILE-{len(files)+1:02d}', 'stored_name': member.filename,
-                                  'original_name': member.filename, 'extension': '.xml'})
+                                  'original_name': member.filename, 'display_name': member.filename, 'extension': '.xml',
+                                  'size_bytes': len(raw), 'content_type': 'application/xml'})
             metadata = {'run_id': run, 'procurement_id': number, 'procurement_source': 'zakupki_gov_ru_getdocs_ip',
-                        'archive_stored_name': archive.name, 'official_eis_procedure': classification, 'files': files}
+                        'archive_stored_name': archive.name, 'official_eis_procedure': classification, 'files': files,
+                        'created_at': '2026-11-17T12:00:00+00:00', 'mode': 'procurement_search_intake',
+                        'tender_title': 'Архивное извещение '+number, 'tender_category': 'Архивная проверка',
+                        'customer_name': 'Не установлен в оболочке теста', 'law': '44-ФЗ', 'notice_number': number,
+                        'status': 'ready_to_analyze', 'archive_downloaded': True, 'attachments_status': 'downloaded'}
             (root / run / 'metadata.json').write_text(json.dumps(metadata))
             for question, expected in zip(('Какой размер обеспечения заявки?', 'Какой размер обеспечения исполнения контракта?'), expectations, strict=True):
                 answer = answer_grounded_question(run, GroundedQuestion(question=question))
@@ -85,6 +91,31 @@ def main() -> int:
                     assert legal['citations'][0]['locator'].endswith(scope+'/procedureInfo')
                     assert not legal['bid_ready'] and not legal['legal_requirement_attested']
                     print('APR08_CUSTOMER_LEGAL_REFERENCE', number, scope, len(obs['references']))
+                if os.environ.get('APR08_PINNED_BROWSER_ACCEPTANCE') == '1':
+                    from fastapi import FastAPI
+
+                    from scripts.acceptance.apr08_browser_harness import run_browser
+                    from src.modules.tender_operator_agent_demo import (
+                        router as operator_router,
+                    )
+                    from src.shared.api.middleware import TenderPilotBasicAuthMiddleware
+                    from src.shared.config.settings import get_settings
+
+                    password = secrets.token_urlsafe(32)
+                    os.environ.update(AI_CORP_PILOT_AUTH_ENABLED='true', AI_CORP_PILOT_AUTH_USERNAME='apr08-replay',
+                                      AI_CORP_PILOT_AUTH_PASSWORD=password,
+                                      AI_CORP_PILOT_AUTH_PROTECTED_PREFIXES='/pilot/tender-agent,/api/demo/tender-agent',
+                                      AI_CORP_PILOT_AUTH_PUBLIC_PATHS='/health')
+                    get_settings.cache_clear()
+                    app = FastAPI()
+                    app.include_router(operator_router.router)
+                    app.add_middleware(TenderPilotBasicAuthMiddleware, username='apr08-replay', password=password,
+                                       protected=('/pilot/tender-agent','/api/demo/tender-agent'), public=('/health',))
+                    from scripts.acceptance.run_apr08_real_dp_replay import inventory
+
+                    before = inventory(root / run)
+                    run_browser(app, run, password, Path(os.environ['APR08_SCREENSHOT_DIR']), scenario='pinned')
+                    assert inventory(root / run) == before
             assert digest(original) == receipt['zip_sha256']
     print('APR08_SECURITY_ARCHIVE_REPLAY_PASS 3 archives 6 questions originals unchanged')
     return 0

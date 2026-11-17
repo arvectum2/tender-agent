@@ -13,7 +13,7 @@ import uvicorn
 from starlette.responses import Response
 
 
-def run_browser(app, run: str, password: str, screenshot_dir: Path) -> None:
+def run_browser(app, run: str, password: str, screenshot_dir: Path, *, scenario: str = 'documents') -> None:
     prefix = '/api/demo/tender-agent'
     workspace = '/pilot/tender-agent/workspace'
     allowed_get = {workspace, workspace+'/assets/workspace.css', workspace+'/assets/workspace.js',
@@ -38,8 +38,8 @@ def run_browser(app, run: str, password: str, screenshot_dir: Path) -> None:
         else:raise RuntimeError('isolated operator server not ready')
         assert httpx.get(origin+workspace,trust_env=False).status_code==401
         assert httpx.post(origin+prefix+f'/runs/{run}/analyze',trust_env=False).status_code==403
-        env={k:v for k,v in os.environ.items() if k in ('HOME','PATH','TMPDIR','LANG','LC_ALL','APR08_PLAYWRIGHT_MODULE','APR08_CHROME')}
-        env.update(APR08_BROWSER_ORIGIN=origin,APR08_BROWSER_RUN=run,APR08_BROWSER_PASSWORD=password,APR08_SCREENSHOT_DIR=str(screenshot_dir))
+        env={k:v for k,v in os.environ.items() if k in ('HOME','PATH','TMPDIR','LANG','LC_ALL','APR08_PLAYWRIGHT_MODULE','APR08_CHROME','APR08_BROWSER_NARROW')}
+        env.update(APR08_BROWSER_ORIGIN=origin,APR08_BROWSER_RUN=run,APR08_BROWSER_PASSWORD=password,APR08_SCREENSHOT_DIR=str(screenshot_dir),APR08_BROWSER_SCENARIO=scenario)
         subprocess.run([os.environ['APR08_NODE'],str(Path(__file__).with_name('run_apr08_browser.cjs'))],env=env,check=True,timeout=60)
     finally:
         server.should_exit=True;thread.join(timeout=10)
