@@ -118,6 +118,9 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
     };
     else if(route.endsWith('/workspace/runs/run-1/evidence-answer') && method==='POST') {
       const request=JSON.parse(opts.body);
+      if(request.question==='Поясни требования к обеспечению исполнения контракта') {
+        return {ok:true,json:async()=>({run_id:'run-1',status:'CUSTOMER_TERMS_LEGAL_REFERENCES',citation_kind:'ARCHIVED_XML',answer:'Текст заказчика проверен по архивному XML.',observation:{references:[{literal:'статьи 45 Федерального закона № 44-ФЗ'}],review_questions:['Сверить официальную редакцию.']},citations:[{file_id:'FILE-01',source_ref:'eis-xml:FILE-01:contractGuarantee/procedureInfo',document:'notice.xml',locator:'XML:contractGuarantee/procedureInfo',excerpt:'Исполнение контракта обеспечивается в соответствии со статьей 45 Федерального закона № 44-ФЗ.'}]})};
+      }
       if(request.question==='Какой срок оказания услуг?') {
         return {ok:true,json:async()=>({run_id:'run-1',status:'LITERAL_PERFORMANCE_OBSERVATIONS',citation_kind:'ORIGINAL_DP_CHUNK',answer:'Явные сроки из проверенных фрагментов.',observation:{mentions:[{term_literal:'с момента заключения Контракта по 07.12.2026 г. (включительно).'}],distinct_literal_terms:1,effective_due_date:null},citations:[{file_id:'FILE-01',chunk_id:'chunk-1',original_sha256:'a'.repeat(64),quote:'Срок оказания услуг: с момента заключения Контракта по 07.12.2026 г. (включительно).'}]})};
       }
@@ -300,6 +303,12 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
     for(let i=0;i<50 && !get('copilot-answer-result').children.length;i++) await new Promise(resolve=>setTimeout(resolve,3));
     assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('Указано в источнике:') && c.textContent.includes('07.12.2026') && c.textContent.includes('включительно')));
     assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('SHA-256 оригинала')));
+    get('copilot-answer-question').value='Поясни требования к обеспечению исполнения контракта';get('copilot-answer-question').events.input();get('copilot-answer-form').events.submit({preventDefault(){}});
+    for(let i=0;i<50 && !get('copilot-answer-result').children.some(c=>c.textContent.includes('Ссылки заказчика на нормы'));i++) await new Promise(resolve=>setTimeout(resolve,3));
+    assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('содержание законодательства не проверено')));
+    assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('статьи 45 Федерального закона')));
+
+
 
 
 

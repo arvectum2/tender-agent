@@ -75,6 +75,16 @@ def main() -> int:
                     assert len(answer['citations']) == sum(value is not None for value in expected)
                 assert not answer['bid_ready'] and not answer['current_revision_attested'] and not answer['legal_requirement_attested']
                 print('APR08_ARCHIVED_SECURITY', number, answer['intent'], answer['status'], *expected)
+            if number == '0348100024426000039':
+                for question, scope in [('Поясни требования к обеспечению заявки','applicationGuarantee'), ('Поясни требования к обеспечению исполнения контракта','contractGuarantee')]:
+                    legal = answer_grounded_question(run, GroundedQuestion(question=question))
+                    assert legal['status'] == 'CUSTOMER_TERMS_LEGAL_REFERENCES'
+                    obs = legal['observation']
+                    assert obs['customer_text_verified'] and not obs['statute_text_verified'] and obs['legal_conclusion'] is None
+                    assert any(ref.get('article') == '45' and ref.get('act') == '44-ФЗ' for ref in obs['references'])
+                    assert legal['citations'][0]['locator'].endswith(scope+'/procedureInfo')
+                    assert not legal['bid_ready'] and not legal['legal_requirement_attested']
+                    print('APR08_CUSTOMER_LEGAL_REFERENCE', number, scope, len(obs['references']))
             assert digest(original) == receipt['zip_sha256']
     print('APR08_SECURITY_ARCHIVE_REPLAY_PASS 3 archives 6 questions originals unchanged')
     return 0

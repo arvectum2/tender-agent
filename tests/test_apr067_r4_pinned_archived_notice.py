@@ -30,7 +30,7 @@ def archive(tmp_path, monkeypatch):
             f"<endDT>2026-10-{version + 10:02d}T11:00:00+03:00</endDT>"
             f"<maxPrice>{100000 * version}.00</maxPrice>"
             f"</commonInfo><notificationInfo><customerRequirementsInfo><customerRequirementInfo><applicationGuarantee><amount>{1000 * version}.00</amount><part>1.0</part></applicationGuarantee>"
-            f"<contractGuarantee><part>{version * 5}.0</part></contractGuarantee></customerRequirementInfo></customerRequirementsInfo></notificationInfo>"
+            f"<contractGuarantee><part>{version * 5}.0</part><procedureInfo>Исполнение контракта обеспечивается в соответствии со статьей 45 Федерального закона № 44-ФЗ. Исключения предусмотрены статьей 96 Закона № 44-ФЗ.</procedureInfo></contractGuarantee></customerRequirementInfo></customerRequirementsInfo></notificationInfo>"
             f"</epNotificationEF2020></export>"
         ).encode()
 
@@ -284,3 +284,36 @@ def test_archived_security_duplicate_scope_and_invalid_fields(archive, replaceme
     result = archived_security_observation('run', kind)
     assert (result['status'],result['amount'],result['percent']) == (status,amount,percent)
     assert result['calculated_amount'] is None
+
+
+def test_customer_legal_references_are_not_verified_statutes(archive, monkeypatch):
+    from src.modules.tender_operator_agent_demo import evidence_grounded_questions as qa
+
+    monkeypatch.setattr(qa, 'checked_search_run', lambda _id: (archive[0], archive[1]))
+    result = qa.answer_grounded_question('run', qa.GroundedQuestion(question='Поясни требования к обеспечению исполнения контракта'))
+    assert result['status'] == 'CUSTOMER_TERMS_LEGAL_REFERENCES'
+    obs = result['observation']
+    assert obs['customer_text_verified'] and not obs['statute_text_verified'] and not obs['current_law_verified']
+    assert obs['legal_conclusion'] is None and not obs['references_complete']
+    assert [r['article'] for r in obs['references']] == ['45','96']
+    quote = result['citations'][0]['excerpt']
+    assert result['citations'][0]['file_id'] == 'FILE-02'
+    assert result['citations'][0]['locator'].endswith('contractGuarantee/procedureInfo')
+    for ref in obs['references']:
+        assert quote[ref['char_start_in_excerpt']:ref['char_end_in_excerpt']] == ref['literal']
+        assert not ref['statute_text_verified'] and not ref['applicability_verified']
+    assert not result['bid_ready'] and not result['legal_requirement_attested']
+    missing = qa.answer_grounded_question('run', qa.GroundedQuestion(question='Поясни требования к обеспечению заявки'))
+    assert missing['status'] == 'UNKNOWN' and not missing['citations']
+
+
+def test_customer_legal_references_tampered_original_abstains(archive):
+    from src.modules.tender_operator_agent_demo.evidence_legal_reference import (
+        legal_reference_observation,
+    )
+
+    directory, _, _ = archive
+    target = next((directory / 'extracted').glob(f'epNotificationEF2020_{NUMBER}_4_*.xml'))
+    target.write_bytes(target.read_bytes() + b' ')
+    result = legal_reference_observation('run', 'contract_security')
+    assert result['status'] == 'UNKNOWN' and not result['citations']

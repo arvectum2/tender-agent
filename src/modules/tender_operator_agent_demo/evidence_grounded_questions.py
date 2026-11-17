@@ -19,6 +19,9 @@ from src.modules.tender_operator_agent_demo.evidence_document_search import (
     checked_search_run,
     search_run_documents,
 )
+from src.modules.tender_operator_agent_demo.evidence_legal_reference import (
+    legal_reference_observation,
+)
 from src.modules.tender_operator_agent_demo.evidence_payment_observation import (
     literal_payment_observation,
     payment_candidate,
@@ -75,6 +78,17 @@ def answer_grounded_question(run_id: str, request: GroundedQuestion) -> dict:
             return {**result, 'intent': intent, 'reason': fact.get('reason', 'SOURCE_FIELD_UNVERIFIED')}
         return {**result, 'intent': intent, 'status': fact['status'], 'answer': fact['answer'],
                 'citations': fact['citations'], 'citation_kind': 'ARCHIVED_XML', 'calculation': fact['calculation']}
+    legal_kind = next((kind for kind, pattern in {
+        'bid_security': r'(?:поясни требования к обеспечению заявки|какие нормы указаны для обеспечения заявки)',
+        'contract_security': r'(?:поясни требования к обеспечению исполнения контракта|какие нормы указаны для обеспечения исполнения контракта)',
+    }.items() if re.fullmatch(pattern, q)), None)
+    if legal_kind:
+        observation = legal_reference_observation(run_id, legal_kind)
+        if observation['status'] != 'CUSTOMER_TERMS_LEGAL_REFERENCES':
+            return {**result, 'intent': 'legal_reference', 'reason': observation['reason']}
+        return {**result, 'intent': 'legal_reference', 'status': observation['status'], 'observation': observation,
+                'citations': observation['citations'], 'citation_kind': 'ARCHIVED_XML',
+                'answer': 'Текст заказчика проверен по архивному XML. Указанные ссылки на нормы не являются независимой проверкой законодательства.'}
     security_kind = next((kind for kind, pattern in {
         'bid_security': r'(?:какой размер обеспечения заявки|сколько составляет обеспечение заявки)',
         'contract_security': r'(?:какой размер обеспечения исполнения контракта|сколько составляет обеспечение исполнения контракта)',

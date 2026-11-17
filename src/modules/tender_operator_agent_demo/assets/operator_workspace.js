@@ -330,7 +330,7 @@
       const data=await json(api+'/workspace/runs/'+encodeURIComponent(runId)+'/evidence-answer',
         {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question})});
       if(state.runId!==runId || epoch!==state.copilotAnswerEpoch) return;
-      if(data.run_id!==runId || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION','TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','ARCHIVED_SECURITY_FIELDS','LITERAL_PERFORMANCE_OBSERVATIONS'].includes(data.status) || !Array.isArray(data.citations) || !data.citations.length) {
+      if(data.run_id!==runId || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION','TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','ARCHIVED_SECURITY_FIELDS','LITERAL_PERFORMANCE_OBSERVATIONS','CUSTOMER_TERMS_LEGAL_REFERENCES'].includes(data.status) || !Array.isArray(data.citations) || !data.citations.length) {
         paragraph(root,'UNKNOWN · Вопрос не поддерживается или доказательство не найдено.','unknown');return;
       }
       if(['TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','LITERAL_PERFORMANCE_OBSERVATIONS'].includes(data.status) && data.citation_kind==='ORIGINAL_DP_CHUNK') {
@@ -347,6 +347,13 @@
           paragraph(root,c.quote,'citation');
           paragraph(root,c.file_id+' · чанк '+c.chunk_id+' · SHA-256 оригинала '+c.original_sha256,'help-text');
         }
+      } else if(data.status==='CUSTOMER_TERMS_LEGAL_REFERENCES' && data.citation_kind==='ARCHIVED_XML' && data.observation) {
+        paragraph(root,data.answer,'help-text');
+        renderCitations(root,data.citations,{originalVerified:true});
+        paragraph(root,'Ссылки заказчика на нормы — содержание законодательства не проверено.');
+        for(const ref of data.observation.references || []) paragraph(root,ref.literal,'citation');
+        if(!(data.observation.references || []).length) paragraph(root,'UNKNOWN · Явные ссылки в поддерживаемом формате не найдены.','unknown');
+        summaryList(root,data.observation.review_questions);
       } else if(data.status==='ARCHIVED_SECURITY_FIELDS' && data.citation_kind==='ARCHIVED_XML' && data.observation) {
         paragraph(root,data.answer,'help-text');
         const o=data.observation;

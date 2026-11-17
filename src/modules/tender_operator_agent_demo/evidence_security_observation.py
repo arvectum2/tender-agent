@@ -11,7 +11,7 @@ from src.modules.tender_operator_agent_demo import operator_workspace_evidence a
 _GROUPS = {'bid_security': 'applicationGuarantee', 'contract_security': 'contractGuarantee'}
 
 
-def archived_security_observation(run_id: str, kind: str) -> dict[str, Any]:
+def archived_security_observation(run_id: str, kind: str, *, include_procedure: bool = False) -> dict[str, Any]:
     result = {'status': 'UNKNOWN', 'kind': kind, 'amount': None, 'percent': None,
               'currency': None, 'calculated_amount': None, 'actual_requirement_attested': False,
               'citations': [], 'reason': 'PINNED_ARCHIVE_REQUIRED'}
@@ -42,6 +42,17 @@ def archived_security_observation(run_id: str, kind: str) -> dict[str, Any]:
     document = Path(str(item.get('original_name') or '')).name
     if not re.fullmatch(r'[A-Za-z0-9_-]{1,64}', file_id) or not document:
         return result
+    if include_procedure:
+        values = [e for e in groups[0] if source._tag(e) == 'procedureInfo']
+        if len(values) != 1 or list(values[0]):
+            return {**result, 'reason': 'PROCEDURE_TEXT_NOT_UNIQUE_OR_MISSING'}
+        raw = (values[0].text or '').strip()
+        if not 20 <= len(raw) <= 12000 or any(ord(c) < 32 and c not in '\r\n\t' for c in raw):
+            return {**result, 'reason': 'PROCEDURE_TEXT_UNSUPPORTED'}
+        path = '/'.join((*scope, group_tag, 'procedureInfo'))
+        return {**result, 'status': 'ARCHIVED_SECURITY_PROCEDURE', 'archived_version': version,
+                'citations': [{'file_id': file_id, 'document': document, 'source_ref': 'eis-xml:' + file_id + ':' + path,
+                               'locator': 'XML:' + path, 'excerpt': raw}], 'reason': 'EXPLICIT_CUSTOMER_PROCEDURE_ONLY'}
     for field, tag in [('amount', 'amount'), ('percent', 'part')]:
         values = [e for e in groups[0] if source._tag(e) == tag]
         if len(values) != 1 or list(values[0]):
