@@ -118,6 +118,16 @@
         <div class="human-gate"><strong>Решение принимает человек.</strong> Модель не подписывает документы, не отправляет заявку и не подтверждает юридическую оценку. Неподтверждённые сведения обозначаются как UNKNOWN.</div>
             <h3 id="report-recommendation"></h3><div id="executive-summary"></div>
             <div id="evidence-facts"></div>
+            <details class="quote-review">
+              <summary>Evidence Copilot — вопросы и расчёт по закупке</summary>
+              <p class="help-text">Только подтверждённая архивная редакция XML ЕИС. Не юридическое заключение и не проверка текущего статуса. Процент задаётся вручную; результат не является требуемым обеспечением.</p>
+              <form id="copilot-form" class="quote-form" autocomplete="off">
+                <label for="copilot-question">Вопрос<select id="copilot-question"><option value="subject">Каков предмет закупки?</option><option value="nmck">Какова НМЦК?</option><option value="deadline">Каков архивный срок подачи?</option><option value="nmck_percent">Сколько составит заданный процент НМЦК?</option></select></label>
+                <label id="copilot-percent-label" hidden for="copilot-percent">Сценарный процент, %<input id="copilot-percent" type="text" inputmode="decimal" maxlength="8" autocomplete="off"></label>
+                <button type="submit" id="copilot-submit" class="button button-secondary">Проверить источники</button>
+              </form>
+              <div id="copilot-result" role="status" aria-live="polite"></div>
+            </details>
             <details class="quote-review" id="quote-check" hidden>
               <summary>Проверить точную цитату из оригинального документа</summary>
               <p class="help-text">Проверка выполняется в приватном контуре. Совпадение буквальной цитаты подтверждает только её наличие в извлечённом тексте, но не правильность вывода модели.</p>

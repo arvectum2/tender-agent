@@ -1,7 +1,16 @@
 from pathlib import Path
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile
+from fastapi import (
+    APIRouter,
+    Depends,
+    File,
+    Form,
+    HTTPException,
+    Query,
+    Request,
+    UploadFile,
+)
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse, Response
 from pydantic import BaseModel, Field
 
@@ -10,6 +19,10 @@ from src.modules.commercial_core.run_service import (
     get_run_commercial_core,
 )
 from src.modules.commercial_core.schemas import CommercialCoreResponse
+from src.modules.tender_operator_agent_demo.evidence_copilot import (
+    EvidenceQuestion,
+    answer_question,
+)
 from src.modules.tender_operator_agent_demo.fast_preanalysis import (
     fast_cited_preanalysis,
     preanalysis_from_public_search,
@@ -176,6 +189,15 @@ def operator_workspace_import(request: OperatorWorkspaceImportRequest) -> Search
 @router.get("/api/demo/tender-agent/workspace/runs/{run_id}/evidence", dependencies=[Depends(require_private_workspace)])
 def operator_workspace_source_evidence(run_id: str) -> dict:
     return get_operator_source_evidence(run_id)
+
+
+@router.post("/api/demo/tender-agent/workspace/runs/{run_id}/evidence-question", dependencies=[Depends(require_private_workspace)])
+def operator_workspace_evidence_question(run_id: str, request: EvidenceQuestion, http: Request) -> dict:
+    settings = get_settings()
+    if not _is_protected_path(http.url.path, tuple(settings.pilot_auth_protected_prefixes.split(",")),
+                              tuple(settings.pilot_auth_public_paths.split(","))):
+        raise HTTPException(status_code=503, detail="Private operator authentication must cover this endpoint")
+    return answer_question(run_id, request)
 
 
 @router.post(

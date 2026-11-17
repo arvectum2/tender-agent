@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const api = '/api/demo/tender-agent';
-  const state = { runId: null, poll: null, busy: false, registryOffset: 0, registryTotal: 0, registryQuery: '', runReady: false, searchParams: null, searchCursor: null, seenNumbers: [], quoteFileKey: null };
+  const state = { runId: null, poll: null, busy: false, registryOffset: 0, registryTotal: 0, registryQuery: '', runReady: false, searchParams: null, searchCursor: null, seenNumbers: [], quoteFileKey: null, copilotEpoch: 0 };
   const $ = id => document.getElementById(id);
   const node = (tag, cls = '', content = null) => {
     const el = document.createElement(tag);
@@ -52,6 +52,7 @@
     $('search-next').disabled = value;
     $('append-files-button').disabled = value;
     $('quote-verify-button').disabled = value;
+    $('copilot-submit').disabled = value;
   }
   function tab(name) {
     const labels = {new:'Новый анализ',history:'История анализов',registry:'База закупок',prices:'Цены и протоколы'};
@@ -234,6 +235,7 @@
   async function loadRun() {
     if (!state.runId) return;
     const id = encodeURIComponent(state.runId);
+    state.copilotEpoch++;wipe($('copilot-result'));$('copilot-percent').value='';
     const run = await json(api + '/runs/' + id);
     show('run-empty', false);
     show('run-section', true);
@@ -294,6 +296,27 @@
       root.append(item);
     }
   }
+  async function answerEvidenceQuestion(event) {
+    event.preventDefault();
+    if (!state.runId || state.busy) return;
+    const runId=state.runId, epoch=++state.copilotEpoch, question=$('copilot-question').value;
+    const body={question};
+    if(question==='nmck_percent') body.percent=$('copilot-percent').value.trim().replace(',','.');
+    const root=$('copilot-result');wipe(root);setBusy(true);
+    try {
+      const data=await json(api+'/workspace/runs/'+encodeURIComponent(runId)+'/evidence-question',
+        {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+      if(state.runId!==runId || epoch!==state.copilotEpoch) return;
+      if(data.run_id!==runId || data.question!==question || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION'].includes(data.status) || !validCitations(data.citations).length) {
+        paragraph(root,'UNKNOWN · Ответ не подтверждён исходным документом.','unknown');return;
+      }
+      paragraph(root,data.status==='HYPOTHETICAL_CALCULATION'?'Сценарная сумма ('+body.percent+'% НМЦК): '+data.answer+' (единицы исходной НМЦК; валюта не подтверждена). Не установленное обеспечение.':String(data.answer));
+      renderCitations(root,data.citations,{originalVerified:true});
+      paragraph(root,'Архивная редакция. Актуальность и право участия не подтверждены.','help-text');
+    }catch(error){if(state.runId===runId && epoch===state.copilotEpoch)paragraph(root,'UNKNOWN · Проверка не выполнена.','unknown');}
+    finally{setBusy(false);}
+  }
+
   async function verifyQuote(event) {
     event.preventDefault();
     if (!state.runId || state.busy) return;
@@ -916,6 +939,9 @@
   });
   $('search-next').addEventListener('click',()=>{if(state.searchCursor)void loadSearchPage(state.searchCursor);});
   $('append-files-form').addEventListener('submit',appendMissingFiles);
+  $('copilot-question').addEventListener('change',()=>{show('copilot-percent-label',$('copilot-question').value==='nmck_percent');wipe($('copilot-result'));state.copilotEpoch++;});
+  $('copilot-percent').addEventListener('input',()=>{wipe($('copilot-result'));state.copilotEpoch++;});
+  $('copilot-form').addEventListener('submit',event=>void answerEvidenceQuestion(event));
   $('quote-verify-form').addEventListener('submit',event=>void verifyQuote(event));
   $('download-pdf').addEventListener('click', event=>void downloadReport(event, 'pdf'));
   $('download-docx').addEventListener('click', event=>void downloadReport(event, 'docx'));

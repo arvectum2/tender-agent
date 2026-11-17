@@ -175,3 +175,37 @@ def test_forged_pinned_archive_cannot_create_html_evidence(archive, tmp_path):
     report.write_text(before)
     assert append_official_eis_citations(report_path=report, run_id="run", metadata=meta) == 0
     assert report.read_text() == before
+
+
+@pytest.mark.parametrize(('question','answer','locator'), [('subject','Предмет версии 4','XML:purchaseObjectInfo'), ('nmck','400000.00','XML:maxPrice'), ('deadline','2026-10-14T11:00:00+03:00','XML:endDT')])
+def test_copilot_answers_from_pinned_original_only(archive, question, answer, locator):
+    from src.modules.tender_operator_agent_demo.evidence_copilot import (
+        EvidenceQuestion,
+        answer_question,
+    )
+
+    result = answer_question('run', EvidenceQuestion(question=question))
+    assert result['status'] == 'ARCHIVED_SOURCE_FACT' and result['answer'] == answer
+    assert result['citations'][0]['locator'] == locator
+    assert result['citations'][0]['file_id'] == 'FILE-02'
+    assert result['requires_human_review'] and not result['bid_ready'] and not result['current_revision_attested']
+
+
+def test_copilot_percentage_and_tamper_abstention(archive):
+    from src.modules.tender_operator_agent_demo.evidence_copilot import (
+        EvidenceQuestion,
+        answer_question,
+    )
+
+    request = EvidenceQuestion(question='nmck_percent', percent='5.125')
+    result = answer_question('run', request)
+    assert result['answer'] == '20500.00' and result['status'] == 'HYPOTHETICAL_CALCULATION'
+    assert result['calculation']['actual_security_requirement'] is None and result['calculation']['currency'] is None
+    assert not result['legal_requirement_attested']
+    for invalid in (EvidenceQuestion(question='nmck_percent'), EvidenceQuestion(question='legal_go'), EvidenceQuestion(question='nmck', percent='4')):
+        assert answer_question('run', invalid)['status'] == 'UNKNOWN'
+    directory, _, _ = archive
+    target = next((directory / 'extracted').glob(f'epNotificationEF2020_{NUMBER}_4_*.xml'))
+    target.write_bytes(target.read_bytes() + b'changed')
+    result = answer_question('run', request)
+    assert result['status'] == 'UNKNOWN' and result['answer'] is None and result['citations'] == []

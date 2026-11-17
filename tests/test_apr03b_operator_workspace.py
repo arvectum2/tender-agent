@@ -601,3 +601,21 @@ def test_price01_explicit_cost_form_no_default_values_or_automatic_submission(cl
     assert "result.inputs_stored!==false" in js
     assert "result.is_procurement_bid_recommendation!==false" in js
     assert "Нормализация рублёвой цены НЕ ВЫПОЛНЕНА" in js
+
+
+def test_copilot_private_run_route_validation(client, auth, monkeypatch):
+    route = '/api/demo/tender-agent/workspace/runs/fixture/evidence-question'
+    calls = []
+    def fake_answer(run_id, request):
+        calls.append((run_id, request.question, request.percent))
+        return {'run_id': run_id, 'status': 'UNKNOWN'}
+    monkeypatch.setattr(operator_router, 'answer_question', fake_answer)
+    assert client.post(route, json={'question': 'nmck'}).status_code == 401
+    assert client.post(route, headers=auth, json={'question': 'nmck_percent', 'percent': '100.01'}).status_code == 422
+    assert client.post(route, headers=auth, json={'question': 'nmck_percent', 'percent': '5.50'}).json()['run_id'] == 'fixture'
+    assert calls == [('fixture', 'nmck_percent', '5.50')]
+    monkeypatch.setattr(operator_router, 'get_settings', lambda: Settings(
+        pilot_auth_enabled=True, pilot_auth_username='test-operator', pilot_auth_password='test-secret-unique-12345',
+        pilot_auth_public_paths='/health,' + route))
+    assert client.post(route, headers=auth, json={'question': 'nmck'}).status_code == 503
+    assert len(calls) == 1

@@ -116,6 +116,11 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
         owner_legal_go:false
       } : null
     };
+    else if(route.endsWith('/workspace/runs/run-1/evidence-question') && method==='POST') {
+      const request=JSON.parse(opts.body);
+      assert.deepEqual(request,{question:'nmck_percent',percent:'5.125'});
+      value={run_id:'run-1',question:'nmck_percent',status:'HYPOTHETICAL_CALCULATION',answer:'5125.00',citations:[{source_ref:'eis-xml:FILE-01:maxPrice',document:'original.xml',locator:'XML:maxPrice',excerpt:'100000.00'}]};
+    }
     else if(route.endsWith('/workspace/runs/run-1/verify-quote') && method==='POST') {
       const body=JSON.parse(opts.body);
       assert.equal(body.file_id,'FILE-01');
@@ -245,6 +250,15 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
     }
     assert(calls.includes('POST /api/demo/tender-agent/workspace/runs/run-1/verify-quote'));
     assert(get('quote-check-result').textContent.includes('dp-real-chunk-01'));
+    get('copilot-question').value='nmck_percent';get('copilot-question').events.change();
+    assert.equal(get('copilot-percent-label').hidden,false);
+    get('copilot-percent').value='5,125';get('copilot-form').events.submit({preventDefault(){}});
+    for(let i=0;i<50 && !get('copilot-result').children.length;i++) await new Promise(resolve=>setTimeout(resolve,3));
+    assert(get('copilot-result').children.some(c=>c.textContent.includes('5125.00') && c.textContent.includes('Не установленное обеспечение')));
+    assert(get('copilot-result').children.some(c=>c.textContent.includes('XML:maxPrice')));
+    get('copilot-question').value='subject';get('copilot-question').events.change();
+    assert.equal(get('copilot-result').children.length,0);
+
   }else{
     assert(!calls.some(c=>c.includes('/runs/run-1/analyze')),'Never analyze a file-less EIS manifest');
     assert.equal(get('append-files-form').hidden,false,'Show manual document recovery');
