@@ -928,4 +928,5 @@ apr03b_ri223_dossier_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR03B-RI223-DOSSIER-20261117.yaml
   branch: feat/ta-apr03b-ri223-dossier-20261117
-  current_stage: independently_bound_review_matrix
+  current_stage: exact_ci_pending
+  last_verified_commit: 842439935806cf12615a600fc36b314a8afd8120

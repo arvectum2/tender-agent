@@ -7,9 +7,16 @@ definition_of_done:
   - actual DP/Chromium archive replay, adversarial tests, draft PR and CI
 completed:
   - PR633 and PR634 exact CI 19/19 each; unchanged main 3b37fb69. Existing RI223 canonical dossier/source-facts and original scoring observer inspected.
-current_stage: independently_bound_review_matrix
+  - Implemented full archived original inventory and container membership verification, explicit nine-domain private workspace dossier and exact original quote discovery.
+  - Reused existing independently pinned scoring observer; real case 32616445795 40/60, conditional nonprice 20/20/60; no effective qualification or completed contract weight.
+  - Actual 19/19 members, 9/9 domains with 14 excerpt occurrences; missing member UNKNOWN. Four final Chromium scenarios PASS; originals unchanged.
+  - 382 focused tests, Ruff/Node/diff PASS, WSF07B unchanged.
+current_stage: exact_ci_pending
 remaining:
-  - Implement, test and publish; structured scoring and substantive supplier/commercial fit remain separate.
-last_verified_commit: 49fc850900451cdb1da0a80423a05a97201accc0
-test_results: []
+  - Verify exact draft PR CI; then substantive requirements and supplier/commercial fit with existing qualification and explicit cost scenario paths. No universal scoring, full current-source analysis or commercial GO.
+last_verified_commit: 842439935806cf12615a600fc36b314a8afd8120
+test_results:
+  - 382 passed, 2 existing warnings; Ruff, Node, diff PASS.
+  - APR03B_RI223_DOSSIER_ACTUAL_PASS and browser PASS, 9/9 domains, 19/19 members, pinned scoring, deleted member UNKNOWN.
+  - Prior PR633/634 exact head CI 19/19 each.
 resume_instruction: Preserve WSF07B, archived sources and no live acquisition, DB mutation, Gemma, Workspace admission or automatic merge.
