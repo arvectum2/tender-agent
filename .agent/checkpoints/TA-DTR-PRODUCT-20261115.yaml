@@ -368,17 +368,20 @@ completed:
 - Reviewed contract evidence offline manifest/XML verification, exact anchors, reviewer-attested
   full scope, source identity and bounded Decimal contracted unit price; local read-only
   CLI.
-current_stage: price01_reviewed_contract_intake_verified_next_publication_registry
+- Repository-pinned versioned reviewed contract release chain, empty genesis and case-scoped
+  default-off API; immutable review identity and exact receipt/manifest pins, decimal
+  validation, removal preserves history, active group uniqueness.
+current_stage: price01_reviewed_contract_registry_verified_next_web
 remaining:
-- 'Implement versioned reviewed-published historical receipt registry with explicit
-  trusted manifest pins; integrate separately from legacy fixed six-source archive
-  into backend and clients. Actual source acquisition research separate: no verified
-  new contracts or full-scope equivalent real quantities.'
+- Web and iOS separate reviewed contract registry UI and exact release/group validation,
+  never pool or automatically adopt rates; existing six-source archive unchanged.
+- 'Actual source acquisition research separate: zero real published new contract groups;
+  review and publication required.'
 - Final PRICE-01 integrated PostgreSQL concurrency and interactive Web/iOS acceptance;
   keep feature gates off.
 - B2B authorized UI observation, document acquisition and legacy cutover; no repeated
   live pilot.
-last_verified_commit: 341d48b3ad10e810e336d070e864430e25f96f02
+last_verified_commit: a68d7caf0a1a6b16325a48ca88fc3b4c563582d7
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -618,11 +621,15 @@ test_results:
 - 20 new tests PASS; 335 full focused tests PASS/2 skipped/142 warnings in 21.82s;
   Ruff/diff PASS. Synthetic XML only, no independent authenticity or signature verification.
   PR597 CI 17 success/2 running at latest check.
-resume_instruction: Offline reviewed contract intake verified at 341d48b3. Next design
-  and implement versioned reviewed-published receipt registry from trusted review
-  pins only; preserve existing fixed archive/client compatibility. No actual new source
-  evidence, no independent signature/authenticity claims. Read PRICE01_REVIEWED_CONTRACT_INTAKE_2026-11-17.md.
-  No production changes or MacBook access; B2B unresolved.
+- 34 intake/registry tests PASS (14 new registry), 350 full focused regression PASS/2
+  skipped/143 warnings in 21.27s; Ruff/diff PASS; API gate/tenant/role/digest/fail-closed
+  tests PASS. PR598 CI 19/19. Only synthetic groups tested.
+resume_instruction: Reviewed contract publication registry backend verified at a68d7caf.
+  Next Web case-scoped GET reviewed-contract-registry client and UI; validate exact
+  chain, group/observation schema and decimal rates, show empty state and reviewer-attested
+  scope limitations, followed by iOS. Read PRICE01_REVIEWED_CONTRACT_REGISTRY_2026-11-17.md.
+  Genesis empty; do not publish fixtures or infer verified contract prices. No production/MacBook
+  changes or live B2B requests.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
