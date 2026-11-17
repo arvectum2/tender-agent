@@ -371,17 +371,17 @@ completed:
 - Reviewed contract publication ledger, offline candidate CLI, immutable chained publication/withdrawal,
   exact repository pin, active groups and read-only case-bound API. Initial release
   empty; legacy archive unchanged.
-current_stage: price01_reviewed_registry_clients
+- Reviewed registry Web/iOS with exact compiled release/public projection pins; real
+  Chrome smoke at desktop/mobile widths; actual iOS XCTest; isolated migrated PostgreSQL
+  concurrent approval and binding/withdrawal acceptance.
+current_stage: price01_registry_clients_verified_final_regression_pending
 remaining:
-- Web and iOS separate reviewed contract registry display, exact pinned release/response
-  verification, per-group range/provenance and withdrawal notices. No cross-group
-  rate or target equivalence.
-- Final PRICE-01 integrated PostgreSQL concurrency and interactive Web/iOS acceptance;
-  default off until approved. Actual source acquisition separate, zero real published
-  contracts.
-- B2B authorized UI observation, document acquisition and legacy cutover; no repeated
+- Run final broad focused regression, publish branch/PR and verify remote head.
+- Live staging end-to-end Web/native UI and reviewed real contract evidence acceptance;
+  feature gates off until separate GO.
+- B2B approved manual observation/document acquisition and legacy cutover; no repeated
   live pilot.
-last_verified_commit: a664b0a4cf41eb219fa5f33a7be6aa16a694ac95
+last_verified_commit: 7cb0dddd53164a9b5175c2abec5bad54382e5bfe
 test_results:
 - 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
   PASS
@@ -624,9 +624,15 @@ test_results:
 - 337 regression tests PASS, 2 skipped, 144 warnings in 18.92s; Ruff/diff PASS. Synthetic
   publication, withdrawal, replacement, duplicate and corruption rejection; read-only
   catalog empty/nonempty, tenant/role and legacy archive tests. PR598 CI 19/19.
-resume_instruction: Implement Web and iOS reviewed contract catalog, pin exact public
-  projection, test empty/nonempty/withdrawn fixtures, then integrated acceptance.
-  Keep defaults off.
+- Node cabinet PASS; stand-alone Swift previous/new contract fixtures PASS; Xcode
+  build-for-testing PASS; actual XCTest AppStoreTests 24/24 PASS; Chrome offline fixture
+  smoke 1280/390px PASS after overflow fix; PostgreSQL 18.7 migration head122 and
+  race test 1 PASS, temporary cluster stopped and removed; Ruff/diff PASS; PR600 CI
+  19/19. Final broad regression not yet confirmed due intermittent transport.
+resume_instruction: Registry clients and isolated acceptance verified at 7cb0dddd.
+  Run final broad regression from this exact worktree, then push/publish and update
+  checkpoint. Real-source/staging acceptance remains outstanding; no production changes
+  or MacBook access.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
