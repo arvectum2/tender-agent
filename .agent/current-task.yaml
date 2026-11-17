@@ -866,3 +866,10 @@ apr08_integration_20261117:
   current_stage: code_integrated_and_main_ci_verified
   last_verified_commit: cac4cd4a69f2494bff582b94aec80a5ee4d4af4c
   merge_commit: cac4cd4a69f2494bff582b94aec80a5ee4d4af4c
+
+apr03b_223_archive_copilot_20261117:
+  task_id: TA-APR03B-223-ARCHIVE-COPILOT-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR03B-223-ARCHIVE-COPILOT-20261117.yaml
+  branch: feat/ta-apr03b-223-archive-copilot-20261117
+  current_stage: ri223_source_and_existing_evidence_path

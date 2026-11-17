@@ -1,0 +1,14 @@
+task_id: TA-APR03B-223-ARCHIVE-COPILOT-20261117
+status: in_progress
+goal: Close bounded 223-FZ archived procurement evidence gap in the existing Copilot, using one independently pinned competitive archive from APR06; no live or commercial assertion.
+definition_of_done:
+  - Reuse original pinned RI223 notice/attachment hashes, distinguish lot/protocol/method and no 44-FZ inference.
+  - Actual private workspace replay or documented technical blocker, focused tests, draft PR and exact CI.
+completed:
+  - PR628 metadata exact 19/19, owner-authorized merge 2cd96ebcdc47e48d212c04faaa165a587d636f76, exact tree matches. APR08 complete.
+current_stage: ri223_source_and_existing_evidence_path
+remaining:
+  - Inspect candidate and current route, implement only missing bounded capability, test, publish.
+last_verified_commit: 2cd96ebcdc47e48d212c04faaa165a587d636f76
+test_results: []
+resume_instruction: No live EIS/B2B or production, Gemma, automatic commercial GO or new APR09/10. Preserve existing 44-FZ path, no invented source metadata.
