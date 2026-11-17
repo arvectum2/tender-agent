@@ -351,7 +351,7 @@ completed:
 - Web explicit selected normative version added to open itemized estimate, validated
   provenance and immutable bound row, duplicate protection, compatible historical
   rendering.
-current_stage: price01_norm_binding_web_verified_next_ios
+current_stage: price01_norm_binding_ios
 remaining:
 - iOS typed approved norm selection, source provenance verification and compatible
   historical estimate/evidence/actual baseline decoding and digest; test Swift/build.
@@ -579,10 +579,10 @@ test_results:
 - 289 focused tests passed, 2 skipped, 136 warnings in 18.94s; Node cabinet flow PASS
   including bound Python projection/save, withdrawal and historical read; Ruff/diff
   PASS. PR592 17 success/2 running. No real-browser acceptance.
-resume_instruction: Backend and Web explicit norm binding verified; Web code ef5bad3e.
-  Next iOS typed binding and line selection, confirm Python-compatible estimate, row
-  and actual baseline digests. Keep feature default off. No MacBook, production changes
-  or new B2B traffic.
+resume_instruction: Implement native version-bound normative estimate selection, typed
+  historical projection and digest compatibility. Test Swift contract with independent
+  Python fixtures and Xcode build. PR593 CI 19/19. Keep feature default off; no production
+  changes.
 owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
   paused; isolated engineering only.
 b2b_dependency:
