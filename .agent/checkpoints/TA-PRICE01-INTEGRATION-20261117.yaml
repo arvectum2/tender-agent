@@ -10,10 +10,11 @@ completed:
   - Stage acceptance passed at 31af52c1; PR 602 checkpoint 2a3faa8b.
   - Packaging fix cherry-picked from 8678c917.
   - PR601 quality failure isolated to Node fixture exceeding 20 seconds; 5984 other tests passed. Bounded fixture allowance increased to 90 seconds.
-current_stage: targeted_regression
+current_stage: exact_ci_pending
 remaining:
-  - Run focused tests and publish consolidated review candidate.
   - Exact full CI and integration review.
-last_verified_commit: 2a3faa8b
-test_results: []
-resume_instruction: Run affected packaging, registry and browser fixture tests; then publish consolidated candidate, preserve existing drafts and production.
+last_verified_commit: 4ae48b94
+test_results:
+  - 26 focused pytest PASS, including Node browser fixture, 13.45s; Ruff and diff check PASS.
+  - Previous isolated local Docker release loader and SHA PASS; iOS HTTPS XCTest PASS.
+resume_instruction: Review consolidated draft PR exact CI and dependency scope; address failures, then integrate only under applicable merge authorization. Preserve production and separate B2B live gates.

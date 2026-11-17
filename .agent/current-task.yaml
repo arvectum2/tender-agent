@@ -672,4 +672,4 @@ price01_integration_20261117:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-PRICE01-INTEGRATION-20261117.yaml
   branch: feat/ta-price01-integration-20261117
-  current_stage: targeted_regression
+  current_stage: exact_ci_pending
