@@ -1,0 +1,15 @@
+task_id: TA-APR08-COMMERCIAL-SCENARIO-20261117
+status: in_progress
+goal: Extend existing PRICE01 stateless what-if with explicit proposal price, guarantee fees and refundable collateral liquidity, no implied procurement recommendation.
+definition_of_done:
+  - Exact decimal scenario economics, explicitly supplied assumptions, separate refundable collateral from costs and no unsupported tax or actual security inference.
+  - Existing private workspace UI and protected endpoint, validation and stale-result guard, no storage or external actions.
+  - Regression and HTTP/UI checks, publish draft, verify exact CI.
+completed:
+  - PR615 exact CI 19/19; PR616/617 17/19 each, no failures. Existing three-price-threshold calculator identified.
+current_stage: explicit_profit_and_liquidity_scenario
+remaining:
+  - Implement, verify, publish and confirm CI.
+last_verified_commit: 379f7252f7cead8a02bc42dcbff13c61b03426a9
+test_results: []
+resume_instruction: Extend stateless PRICE01 without tax advice, assumed actual security or bid readiness; no models, live procurement, production or automatic merge.

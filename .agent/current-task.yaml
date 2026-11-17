@@ -792,3 +792,10 @@ apr08_legal_reference_20261117:
   branch: feat/ta-apr08-legal-reference-20261117
   current_stage: exact_ci_pending
   last_verified_commit: 9519b335199290056120f68c8a59ef214d0ba28f
+
+apr08_commercial_scenario_20261117:
+  task_id: TA-APR08-COMMERCIAL-SCENARIO-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR08-COMMERCIAL-SCENARIO-20261117.yaml
+  branch: feat/ta-apr08-commercial-scenario-20261117
+  current_stage: explicit_profit_and_liquidity_scenario
