@@ -1,0 +1,17 @@
+task_id: TA-APR05-RELEASE-REHEARSAL-20261117
+status: in_progress
+goal: Prove safe pilot activation, entitlement denial and non-destructive feature rollback with saved PRICE-01 history.
+definition_of_done:
+  - Exercise saved estimate, actual snapshot and norm through actual API in isolated fixtures.
+  - Deny protected reads and writes when pilot expires, tenant is suspended or global price gate is disabled.
+  - Restore gates, verify exact unchanged prior history and foreign tenant isolation.
+  - Run affected regression tests, preserve checkpoint and publish review PR; no live deployment.
+completed:
+  - PRICE-01 code merged with explicit Owner approval at b843f92c.
+current_stage: implementation
+remaining:
+  - Implement and run bounded entitlement and rollback regression.
+  - Review release rehearsal evidence and CI.
+last_verified_commit: b843f92ca129dcf9a57bd7935fb53ec31c1372dc
+test_results: []
+resume_instruction: Add isolated tests of PRICE-01 lifecycle and entitlement gates; no live tenant, payment or production changes.
