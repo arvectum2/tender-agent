@@ -663,8 +663,8 @@ parallel_dtr_product:
   task_id: TA-DTR-PRODUCT-20261115
   status: in_progress
   checkpoint: .agent/checkpoints/TA-DTR-PRODUCT-20261115.yaml
-  current_stage: apr06_review_readiness
-  branch: feat/ta-apr06-review-readiness-20261117
+  current_stage: apr07_rolling_observability
+  branch: feat/ta-apr07-rolling-observability-20261117
   owner_priority: Product development only in this chat; research separate; Gemma paused
 
 price01_integration_20261117:
@@ -690,3 +690,10 @@ apr06_review_readiness_20261117:
   checkpoint: .agent/checkpoints/TA-APR06-REVIEW-READINESS-20261117.yaml
   branch: feat/ta-apr06-review-readiness-20261117
   current_stage: engineering_readiness_completed_commercial_blocked
+
+apr07_rolling_observability_20261117:
+  task_id: TA-APR07-ROLLING-OBSERVABILITY-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR07-ROLLING-OBSERVABILITY-20261117.yaml
+  branch: feat/ta-apr07-rolling-observability-20261117
+  current_stage: operator_postgres_ci_pending
