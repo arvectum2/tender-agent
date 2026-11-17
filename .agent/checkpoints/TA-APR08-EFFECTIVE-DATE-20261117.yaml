@@ -1,5 +1,5 @@
 task_id: TA-APR08-EFFECTIVE-DATE-20261117
-status: in_progress
+status: completed
 goal: Evidence-backed amendment timing with explicit scope; prevent future or unreviewed law from being used as an applicable consolidated edition.
 definition_of_done:
   - Pin a real amendment source and literal commencement evidence; distinguish dated provision groups, publication and consolidated law applicability.
@@ -10,13 +10,11 @@ completed:
   - Actual direct official portal requests failed (publication timeout, actual.pravo connection refused); downloaded two actual secondary article 2 copies for 279-FZ and reported publication reference. Pinned raw SHA and normalized paragraph SHA; both copies agree.
   - Calendar groups 2026-08-04 (secondary reported publication), 2026-10-01 (general rule), 2027-01-01 (exceptions); compare chosen date only, never mark legally effective.
   - Real five date replay and isolated Chromium positive schedule/current-law UNKNOWN, prior XML and historical statute flows PASS; 214 focused tests PASS.
-current_stage: exact_ci_pending
-remaining:
-  - Verify exact successor CI.
-  - Obtain authoritative consolidated 44-FZ/223-FZ and official amendment publication/effective interval coverage; do not confuse secondary agreement with authority.
-  - Continue bounded semantic and final acceptance.
-last_verified_commit: 1d8dbe64487ce5c207bc3a58dfc16aca3f52db4e
+  - Exact PR623 head c7ad209d2c867281a5ea3043631b9fbf0fc43748 CI 19/19 SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
+last_verified_commit: c7ad209d2c867281a5ea3043631b9fbf0fc43748
 test_results:
   - 214 focused PASS, Ruff, diff, JS syntax and Node simulation PASS.
   - APR08_AMENDMENT_BROWSER_PASS, APR08_STATUTE_BROWSER_PASS, APR08_PINNED_XML_CHROMIUM_PASS; five real date replays PASS, original archive unchanged.
-resume_instruction: Prefer official publication; distinguish secondary source if official fails. No model, production, live procurement or automatic merge.
+resume_instruction: Bounded increment verified; merge requires separate authorization. Continue parent APR08.
