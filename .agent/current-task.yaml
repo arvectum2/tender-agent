@@ -721,7 +721,16 @@ apr_integration_20261117:
 
 apr07_role_hardening_20261117:
   task_id: TA-APR07-ROLE-HARDENING-20261117
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR07-ROLE-HARDENING-20261117.yaml
   branch: feat/ta-apr07-operator-role-hardening-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: 21c56ca72a6bff94ec5831bff5f1cfd7d31a9e93
+  pr: 608
+
+apr03b_multiple_source_claims_20261117:
+  task_id: TA-APR03B-MULTIPLE-SOURCE-CLAIMS-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR03B-MULTIPLE-SOURCE-CLAIMS-20261117.yaml
+  branch: feat/ta-apr03b-multiple-source-claims-20261117
   current_stage: exact_ci_pending

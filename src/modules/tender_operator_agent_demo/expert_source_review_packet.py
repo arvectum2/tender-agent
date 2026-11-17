@@ -111,6 +111,8 @@ def build_expert_source_review_packet(
         unresolved_reasons.append("SOME_SOURCE_QUOTES_UNVERIFIED")
     if typed.get("contradictions_count", 0) or modality.get("contradiction_count", 0):
         unresolved_reasons.append("MODEL_SOURCE_CONTRADICTION")
+    if typed.get("assertion_limit_exceeded"):
+        unresolved_reasons.append("MODEL_EIS_ASSERTION_LIMIT_EXCEEDED")
     if typed.get("unmentioned_archived_eis_fields"):
         unresolved_reasons.append("MODEL_MISSED_SOURCE_FIELDS")
     # These owner/human gates stay open even if machine evidence is perfect.
