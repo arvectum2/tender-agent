@@ -200,6 +200,7 @@ def read_internal_procurement(session: Session, *, scope, authorize, clock):
         observed = clock()
         _check(scope, authorize, observed)
     return {"schema": SCHEMA, "binding_id": scope.binding_id,
-            "source_release": scope.source_release, "observed_at": _stamp(observed),
+            "source_release": scope.source_release, "database_binding": scope.database_binding,
+            "observed_at": _stamp(observed),
             "coverage": "admitted-identity-set-only", "items": items,
             "canonical_authority": False}
