@@ -690,6 +690,8 @@ apr06_review_readiness_20261117:
   checkpoint: .agent/checkpoints/TA-APR06-REVIEW-READINESS-20261117.yaml
   branch: feat/ta-apr06-review-readiness-20261117
   current_stage: engineering_readiness_completed_commercial_blocked
+  last_verified_commit: 66e664c41453f609ed6fd393b332439fae6cf560
+  pr: 605
 
 apr07_rolling_observability_20261117:
   task_id: TA-APR07-ROLLING-OBSERVABILITY-20261117
@@ -704,3 +706,11 @@ apr04_disposable_replay_20261117:
   checkpoint: .agent/checkpoints/TA-APR04-DISPOSABLE-REPLAY-20261117.yaml
   branch: feat/ta-apr04-disposable-replay-20261117
   current_stage: disposable_replay_ci_pending
+
+apr_integration_20261117:
+  task_id: TA-APR-INTEGRATION-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR-INTEGRATION-20261117.yaml
+  branch: checkpoint/ta-apr-integration-20261117
+  current_stage: integrated_local_acceptance_pass_final_ci_pending
+  last_verified_commit: 337b1c58cdd7e69c2250a65b7b49a3b825a12a77

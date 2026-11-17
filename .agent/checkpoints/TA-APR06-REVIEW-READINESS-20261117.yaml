@@ -24,7 +24,7 @@ remaining: []
 external_commercial_blockers:
   - Independent official source and representative mixed-law corpus approval.
   - Attributed human reviews, time-to-decision, package reviews and owner-approved thresholds.
-last_verified_commit: fdf7c2d5b003cf07d5f86c59bb693d2454c82428
+last_verified_commit: 66e664c41453f609ed6fd393b332439fae6cf560
 test_results:
   - 51 targeted pytest PASS; Ruff and git diff check PASS.
   - Deterministic output byte comparison PASS. 28 candidates, 20 archived development, 16 overlap, 12 candidate-only, 4 development-only, 32 unique inventory entries.

@@ -1,0 +1,24 @@
+task_id: TA-APR-INTEGRATION-20261117
+status: in_progress
+goal: Verify exact stacked APR05/06/07/04 review heads and combined isolated integration without modifying verified PR heads or main.
+definition_of_done:
+  - Verify ancestry and exact green CI for four draft PR heads.
+  - Pass integrated targeted regression, isolated actual PostgreSQL backup restore, operator read-only measurement and private disposable onboarding.
+  - Record verification results and separate owner authorization for main merge.
+completed:
+  - Main b843f92ca129dcf9a57bd7935fb53ec31c1372dc unchanged, exact stack bases match predecessor heads; no migrations changed.
+  - PR604 380bbdb0bb50ec0557eb40ebf14100da5ed0ff1b CI 19/19 CLEAN.
+  - PR605 66e664c41453f609ed6fd393b332439fae6cf560 CI 19/19 CLEAN; 6005 pytest pass, 288 skipped.
+  - Combined 14 targeted suites on exact PR607 head passed; actual PostgreSQL R9 migration122 restore, 7 histories, 2 binary downloads, corrupt/wrong scope reject, kill switch, tenant denial.
+  - Actual PostgreSQL read-only role rehearsal pass, private disposable APR04 replay pass, mixed shortlist deterministic byte match.
+current_stage: integrated_local_acceptance_pass_final_ci_pending
+remaining:
+  - Verify exact PR606 a7dba514f05ce13d1dd50daf2e5a22ddce1ac479 and PR607 337b1c58cdd7e69c2250a65b7b49a3b825a12a77 CI; as of last check 18/19 and 17/19 success, no failures.
+  - Record final CI on checkpoint-only branch; mark bounded APR07/APR04 complete when green.
+  - Do not merge without explicit owner authorization.
+last_verified_commit: 337b1c58cdd7e69c2250a65b7b49a3b825a12a77
+test_results:
+  - 174 passed / 2 skipped / 0 failures (20.15s), git diff check PASS.
+  - APR05_R9_RESTORE_PASS; APR07_POSTGRES_OPERATOR_READONLY_PASS; APR04_DISPOSABLE_REPLAY_PASS.
+  - No production, Gemma, live sources or working database changes.
+resume_instruction: Read this checkpoint from checkpoint/ta-apr-integration-20261117; check exact GitHub PR606/607 CI without changing tested heads. Fix only actual failures, then mark bounded engineering complete. Current independent P0 gates require new official sources, owner business/qualification decisions, live staging or explicit merge consent. Do not start P1 APR08 merely to bypass these gates. Checkpoint-only branch is a record, not a PR to merge; transfer checkpoint completion to successor if explicitly approved.
