@@ -848,3 +848,10 @@ apr08_composed_evidence_20261117:
   branch: feat/ta-apr08-composed-evidence-20261117
   current_stage: exact_ci_pending
   last_verified_commit: e0b422174205a715818feddaf01a9e834e61f4b7
+
+apr08_integrated_acceptance_20261117:
+  task_id: TA-APR08-INTEGRATED-ACCEPTANCE-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR08-INTEGRATED-ACCEPTANCE-20261117.yaml
+  branch: feat/ta-apr08-integrated-acceptance-20261117
+  current_stage: integrated_gate_and_residual_audit
