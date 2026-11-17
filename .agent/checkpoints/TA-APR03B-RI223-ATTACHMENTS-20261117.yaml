@@ -1,0 +1,14 @@
+task_id: TA-APR03B-RI223-ATTACHMENTS-20261117
+status: in_progress
+goal: Independently pinned RI223 attachment intake, non-persisting DP extraction and source-bound quotes, preserve WSF07B.
+definition_of_done:
+  - Verified complete receipt/reference coverage, bounded local binary copies, reject tampering and unpinned files, explicit unsupported formats.
+  - Real archive imports and authentic isolated DP extraction/search, tests, draft PR on prior stack with main reconciled.
+completed:
+  - PR629/630 each CI 19/19, no merge; current main 3b37fb69 includes WSF07B. Reconcile only checkpoint metadata conflict preserving completed WSF07B.
+current_stage: receipt_bound_attachment_import_and_dp
+remaining:
+  - Implement, test, replay, publish and verify CI.
+last_verified_commit: fe908ebb5374afddd4a12307c4f463189fee4930
+test_results: []
+resume_instruction: Continue local-only artifacts, no live data acquisition or production, no Workspace admission, Gemma or automatic integration.
