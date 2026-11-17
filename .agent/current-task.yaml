@@ -816,3 +816,10 @@ apr08_pinned_browser_20261117:
   branch: feat/ta-apr08-pinned-browser-20261117
   current_stage: exact_ci_pending
   last_verified_commit: 2953c0eb1ca47dbe456026a63431a690e8b359d8
+
+apr08_statute_corpus_20261117:
+  task_id: TA-APR08-STATUTE-CORPUS-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR08-STATUTE-CORPUS-20261117.yaml
+  branch: feat/ta-apr08-statute-corpus-20261117
+  current_stage: versioned_source_snapshot_gate

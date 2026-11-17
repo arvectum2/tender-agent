@@ -1,0 +1,15 @@
+task_id: TA-APR08-STATUTE-CORPUS-20261117
+status: in_progress
+goal: Versioned legal source corpus with immutable hash, provenance, explicit reviewed effective interval and source text verification independent of customer references.
+definition_of_done:
+  - Strict local hash-pinned source manifest, date/scope/ambiguity checks; candidates and historical reproductions never imply current applicability.
+  - Separate independent corpus lookup from legal conclusion; safe unavailable state.
+  - Regression, real public-source intake attempt, draft PR and exact CI.
+completed:
+  - PR621 exact head 14/19 SUCCESS, no failures, remaining CI running. Official portal direct lookup timed out; dated government reproduction identified.
+current_stage: versioned_source_snapshot_gate
+remaining:
+  - Implement, test, source replay, publish and verify CI.
+last_verified_commit: efdaa8b3c9b451b2ae71a90456a27673fb4c4fdd
+test_results: []
+resume_instruction: No current legal conclusion from title or digest alone; no auto-trust of source, live tender, production, model or merge.
