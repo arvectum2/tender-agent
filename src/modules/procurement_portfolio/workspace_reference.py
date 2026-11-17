@@ -5,18 +5,21 @@ proof or live access granted by construction of this scope object.
 A server-side admitted source capability must supply authorize and a verified
 read-only session. No generic listing and no title/rationale/payload export.
 """
-from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
 import re
+from dataclasses import dataclass
+from datetime import UTC, datetime, timedelta
 
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from src.modules.deal_registry.models import Deal
 from src.modules.event_log.models import DecisionRecord, EventRecord
-from src.modules.outcome_intake.models import OutcomeIntakeBinding, OutcomeIntakeRecord, OutcomeIntakeSet
+from src.modules.outcome_intake.models import (
+    OutcomeIntakeBinding,
+    OutcomeIntakeRecord,
+    OutcomeIntakeSet,
+)
 from src.modules.tender_screening.models import TenderScreeningRecord
-
 from src.shared.enums import DealStatus
 
 from .service import _EXPLICIT_DECISION_CODES
@@ -48,8 +51,8 @@ def _stamp(value):
         raise ReferenceDenied("invalid timestamp")
     # Product UTC DateTime columns; SQLite tests decode naive UTC.
     if value.tzinfo is None:
-        value = value.replace(tzinfo=timezone.utc)
-    return value.astimezone(timezone.utc).isoformat()
+        value = value.replace(tzinfo=UTC)
+    return value.astimezone(UTC).isoformat()
 
 
 def _utc(value):
