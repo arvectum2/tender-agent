@@ -752,3 +752,10 @@ apr08_document_retrieval_20261117:
   current_stage: replay_verified_successor_ci_pending
   replay_branch: feat/ta-apr08-real-dp-replay-20261117
   last_verified_commit: 66309ab19fe69d3e9efa96e000c89638cf794d8d
+
+apr08_grounded_questions_20261117:
+  task_id: TA-APR08-GROUNDED-QUESTIONS-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR08-GROUNDED-QUESTIONS-20261117.yaml
+  branch: feat/ta-apr08-grounded-questions-20261117
+  current_stage: bounded_natural_language_question_routing

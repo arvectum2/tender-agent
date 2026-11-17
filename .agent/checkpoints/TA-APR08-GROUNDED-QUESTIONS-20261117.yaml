@@ -1,0 +1,15 @@
+task_id: TA-APR08-GROUNDED-QUESTIONS-20261117
+status: in_progress
+goal: Natural-language procurement question routing to pinned source facts and original verified contractual excerpts; no unsupported legal decisions or model call.
+definition_of_done:
+  - Explicit supported Russian question forms, fail closed for ambiguous, multi-intent, legal approval and unsupported questions; run-local scope.
+  - Return archived fact or contextual evidence excerpt, distinct epistemic status, source references, no authoritative interpretation.
+  - Private API and existing UI; tests, real isolated DP replay, publish draft PR and verify exact CI.
+completed:
+  - PR610/611 exact CI green; PR612 real replay PASS, 17/19 CI in progress.
+current_stage: bounded_natural_language_question_routing
+remaining:
+  - Implement question router, UI, guard tests and real replay; publish draft.
+last_verified_commit: a0261f8c82a0195f7a9b08b879dd0b69d1384766
+test_results: []
+resume_instruction: Continue from this branch; deterministic Russian intent forms only, existing evidence contracts, no generic chatbot, legal approval, live sources, production, model calls or automatic merge.
