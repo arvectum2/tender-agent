@@ -19,6 +19,9 @@ from src.modules.tender_operator_agent_demo.evidence_payment_observation import 
     literal_payment_observation,
     payment_candidate,
 )
+from src.modules.tender_operator_agent_demo.evidence_security_observation import (
+    archived_security_observation,
+)
 
 
 class GroundedQuestion(BaseModel):
@@ -68,6 +71,17 @@ def answer_grounded_question(run_id: str, request: GroundedQuestion) -> dict:
             return {**result, 'intent': intent, 'reason': fact.get('reason', 'SOURCE_FIELD_UNVERIFIED')}
         return {**result, 'intent': intent, 'status': fact['status'], 'answer': fact['answer'],
                 'citations': fact['citations'], 'citation_kind': 'ARCHIVED_XML', 'calculation': fact['calculation']}
+    security_kind = next((kind for kind, pattern in {
+        'bid_security': r'(?:какой размер обеспечения заявки|сколько составляет обеспечение заявки)',
+        'contract_security': r'(?:какой размер обеспечения исполнения контракта|сколько составляет обеспечение исполнения контракта)',
+    }.items() if re.fullmatch(pattern, q)), None)
+    if security_kind:
+        observation = archived_security_observation(run_id, security_kind)
+        if observation['status'] != 'ARCHIVED_SECURITY_FIELDS':
+            return {**result, 'intent': security_kind, 'reason': observation['reason']}
+        return {**result, 'intent': security_kind, 'status': 'ARCHIVED_SECURITY_FIELDS',
+                'observation': observation, 'citations': observation['citations'], 'citation_kind': 'ARCHIVED_XML',
+                'answer': 'Явные поля архивного извещения. Фактический применимый размер и база расчёта не подтверждены.'}
     if re.fullmatch(r'(?:какой срок оплаты(?: работ| услуг)?|каков срок оплаты(?: работ| услуг)?)', q):
         kind = 'works' if q.endswith(' работ') else 'services' if q.endswith(' услуг') else None
         found = search_run_documents(run_id, DocumentSearchQuestion(query='оплата'),

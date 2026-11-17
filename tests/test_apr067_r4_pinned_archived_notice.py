@@ -29,7 +29,9 @@ def archive(tmp_path, monkeypatch):
             f"<purchaseObjectInfo>Предмет версии {version}</purchaseObjectInfo>"
             f"<endDT>2026-10-{version + 10:02d}T11:00:00+03:00</endDT>"
             f"<maxPrice>{100000 * version}.00</maxPrice>"
-            f"</commonInfo></epNotificationEF2020></export>"
+            f"</commonInfo><notificationInfo><customerRequirementsInfo><customerRequirementInfo><applicationGuarantee><amount>{1000 * version}.00</amount><part>1.0</part></applicationGuarantee>"
+            f"<contractGuarantee><part>{version * 5}.0</part></contractGuarantee></customerRequirementInfo></customerRequirementsInfo></notificationInfo>"
+            f"</epNotificationEF2020></export>"
         ).encode()
 
     files = []
@@ -225,3 +227,60 @@ def test_grounded_question_routes_to_actual_pinned_xml(archive, monkeypatch, que
     assert (result['status'], result['intent'], result['answer']) == (status, intent, answer)
     assert result['citation_kind'] == 'ARCHIVED_XML' and result['citations'][0]['file_id'] == 'FILE-02'
     assert result['requires_human_review'] and not result['bid_ready'] and not result['current_revision_attested']
+
+
+def test_archived_security_scopes_latest_revision_without_inferred_amount(archive, monkeypatch):
+    from src.modules.tender_operator_agent_demo import evidence_grounded_questions as qa
+
+    monkeypatch.setattr(qa, 'checked_search_run', lambda _id: (archive[0], archive[1]))
+    for text, expected, amount, part in [
+        ('Какой размер обеспечения заявки?', 'bid_security', '4000.00', '1.0'),
+        ('Какой размер обеспечения исполнения контракта?', 'contract_security', None, '20.0'),
+    ]:
+        result = qa.answer_grounded_question('run', qa.GroundedQuestion(question=text))
+        assert result['status'] == 'ARCHIVED_SECURITY_FIELDS' and result['intent'] == expected
+        obs = result['observation']
+        assert obs['amount'] == amount and obs['percent'] == part and obs['archived_version'] == 4
+        assert obs['currency'] is None and obs['calculated_amount'] is None
+        assert all(c['file_id'] == 'FILE-02' for c in obs['citations'])
+        assert all(('applicationGuarantee/' if expected == 'bid_security' else 'contractGuarantee/') in c['locator'] for c in obs['citations'])
+        assert not result['bid_ready'] and not result['legal_requirement_attested'] and not result['current_revision_attested']
+
+
+def test_archived_security_tampered_source_fails_closed(archive):
+    from src.modules.tender_operator_agent_demo.evidence_security_observation import (
+        archived_security_observation,
+    )
+
+    directory, _, _ = archive
+    target = next((directory / 'extracted').glob(f'epNotificationEF2020_{NUMBER}_4_*.xml'))
+    target.write_bytes(target.read_bytes().replace(b'<amount>4000.00</amount>', b'<amount>1</amount>'))
+    result = archived_security_observation('run', 'bid_security')
+    assert result['status'] == 'UNKNOWN' and result['citations'] == []
+
+
+@pytest.mark.parametrize(('replacement','kind','status','amount','percent'), [
+    ('<amount>4000.00</amount><amount>4000.00</amount><part>1.0</part>', 'bid_security', 'ARCHIVED_SECURITY_FIELDS', None, '1.0'),
+    ('<amount>-1</amount><part>101</part>', 'bid_security', 'UNKNOWN', None, None),
+    ('<amount>4000.00</amount><part>1.0</part></applicationGuarantee><applicationGuarantee><part>2</part>', 'bid_security', 'UNKNOWN', None, None),
+    ('<amount>4000.00</amount><part>1.0</part></applicationGuarantee></customerRequirementInfo><customerRequirementInfo><applicationGuarantee><amount>1</amount>', 'bid_security', 'UNKNOWN', None, None),
+])
+def test_archived_security_duplicate_scope_and_invalid_fields(archive, replacement, kind, status, amount, percent):
+    from src.modules.tender_operator_agent_demo.evidence_security_observation import (
+        archived_security_observation,
+    )
+
+    directory, meta, original = archive
+    target = next((directory / 'extracted').glob(f'epNotificationEF2020_{NUMBER}_4_*.xml'))
+    changed = target.read_text().replace('<amount>4000.00</amount><part>1.0</part>', replacement).encode()
+    with zipfile.ZipFile(original) as z:
+        members = {name:z.read(name) for name in z.namelist()}
+    members[target.name] = changed
+    with zipfile.ZipFile(original,'w') as z:
+        for name, raw in members.items():
+            z.writestr(name,raw)
+    target.write_bytes(changed)
+    meta['official_eis_procedure'] = classify_official_eis_archive(original, NUMBER)
+    result = archived_security_observation('run', kind)
+    assert (result['status'],result['amount'],result['percent']) == (status,amount,percent)
+    assert result['calculated_amount'] is None

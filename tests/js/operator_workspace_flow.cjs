@@ -118,6 +118,9 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
     };
     else if(route.endsWith('/workspace/runs/run-1/evidence-answer') && method==='POST') {
       const request=JSON.parse(opts.body);
+      if(request.question==='Какой размер обеспечения исполнения контракта?') {
+        return {ok:true,json:async()=>({run_id:'run-1',status:'ARCHIVED_SECURITY_FIELDS',citation_kind:'ARCHIVED_XML',answer:'Явные поля архивного извещения.',observation:{amount:null,percent:'30.0'},citations:[{file_id:'FILE-01',source_ref:'eis-xml:FILE-01:contractGuarantee/part',document:'notice.xml',locator:'XML:contractGuarantee/part',excerpt:'30.0'}]})};
+      }
       if(request.question==='Какой срок оплаты услуг?') {
         return {ok:true,json:async()=>({run_id:'run-1',status:'LITERAL_PAYMENT_OBSERVATION',citation_kind:'ORIGINAL_DP_CHUNK',answer:'Срок в источнике, не применимый дедлайн.',observation:{mentioned_days:7,day_unit:'WORKING_DAYS'},citations:[{file_id:'FILE-01',chunk_id:'chunk-1',original_sha256:'a'.repeat(64),quote:'Оплата услуг производится в течение 7 рабочих дней с даты приемки.'}]})};
       }
@@ -286,6 +289,11 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
     get('copilot-answer-question').value='Какой срок оплаты услуг?';get('copilot-answer-form').events.submit({preventDefault(){}});
     for(let i=0;i<50 && !get('copilot-answer-result').children.length;i++) await new Promise(resolve=>setTimeout(resolve,3));
     assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('7 рабочих дней') && c.textContent.includes('Применимый срок не установлен')));
+    get('copilot-answer-question').value='Какой размер обеспечения исполнения контракта?';get('copilot-answer-question').events.input();get('copilot-answer-form').events.submit({preventDefault(){}});
+    for(let i=0;i<50 && !get('copilot-answer-result').children.length;i++) await new Promise(resolve=>setTimeout(resolve,3));
+    assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('Сумма в XML: UNKNOWN')));
+    assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('30.0%') && c.textContent.includes('база не подтверждена')));
+
 
 
 

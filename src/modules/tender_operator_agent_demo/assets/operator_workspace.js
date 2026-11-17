@@ -330,7 +330,7 @@
       const data=await json(api+'/workspace/runs/'+encodeURIComponent(runId)+'/evidence-answer',
         {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question})});
       if(state.runId!==runId || epoch!==state.copilotAnswerEpoch) return;
-      if(data.run_id!==runId || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION','TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION'].includes(data.status) || !Array.isArray(data.citations) || !data.citations.length) {
+      if(data.run_id!==runId || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION','TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','ARCHIVED_SECURITY_FIELDS'].includes(data.status) || !Array.isArray(data.citations) || !data.citations.length) {
         paragraph(root,'UNKNOWN · Вопрос не поддерживается или доказательство не найдено.','unknown');return;
       }
       if(['TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION'].includes(data.status) && data.citation_kind==='ORIGINAL_DP_CHUNK') {
@@ -343,6 +343,12 @@
           paragraph(root,c.quote,'citation');
           paragraph(root,c.file_id+' · чанк '+c.chunk_id+' · SHA-256 оригинала '+c.original_sha256,'help-text');
         }
+      } else if(data.status==='ARCHIVED_SECURITY_FIELDS' && data.citation_kind==='ARCHIVED_XML' && data.observation) {
+        paragraph(root,data.answer,'help-text');
+        const o=data.observation;
+        paragraph(root,'Сумма в XML: '+(o.amount===null?'UNKNOWN':o.amount)+'; валюта не подтверждена.');
+        paragraph(root,'Процент в XML: '+(o.percent===null?'UNKNOWN':o.percent+'%')+'; база не подтверждена.');
+        renderCitations(root,data.citations,{originalVerified:true});
       } else if(['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION'].includes(data.status) && data.citation_kind==='ARCHIVED_XML') {
         paragraph(root,data.status==='HYPOTHETICAL_CALCULATION'?'Сценарная сумма: '+data.answer+' (валюта и фактическое обеспечение не подтверждены).':String(data.answer));
         renderCitations(root,data.citations,{originalVerified:true});
