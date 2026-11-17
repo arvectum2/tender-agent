@@ -1,0 +1,20 @@
+task_id: TA-WSF07B-EXACT-BEARER-20261117
+status: in_progress
+goal: Resolve Basic/Bearer collision for exact WSF07B GET; establish private source binding and conservative ownership review package; hand off to Company without activating access.
+definition_of_done:
+  - Exact route/method and registered handler independent Bearer boundary, negative HTTP regressions, CI.
+  - Verify live release and read-only database binding; identify independently proven candidate ownership or explicitly exclude unproven records.
+  - Deliver exact commit, tests and non-sensitive handoff to Company; no credentials, active manifest, Workspace release or real data access.
+completed:
+  - Reopened normative contract and source; live anonymous endpoint 401, collision confirmed. Production prior checkpoint completed.
+  - Fixed exact GET/raw path and registered first matching guarded handler, no broad exemptions. PR631 tested head b48797bf09977530c8b555f6079d10a1ad7bd239.
+  - Focused regression 94 passed, 1 skipped; actual src.main with disposable synthetic PostgreSQL PASS, scoped valid Bearer, forbidden invalid/Basic/revoked, sibling/method Basic protection, SELECT-only and no private-field leaks. Fixture DB removed.
+  - Live source verifier 14/14; prior database binding and exact deal-table fingerprint match, DB 122; 12 corporate profile-correlated candidates, 9 ownership unproven excluded, 0 admitted. Private reviewed nonoperational package checksum verified; no active grant, token or manifest.
+  - Non-sensitive handoff published in Company issue 16, exact commit and tests.
+current_stage: exact_ci_pending_and_separate_product_release_gate
+remaining:
+  - Verify PR631 exact CI, then reconcile product release with explicit approval; no real admission. Current production 28e874b6 still returns 401; no migrations required by patch.
+last_verified_commit: b48797bf09977530c8b555f6079d10a1ad7bd239
+test_results:
+  - 94 passed, 1 skipped, Ruff and git diff check PASS; actual synthetic PostgreSQL integration PASS; CI last observed 17/19 success, 2 running, no failures.
+resume_instruction: Read PR631 exact head CI and live release marker first. Do not activate Workspace, generate access credentials or active manifest. Preserve private package on SSD and zero admitted identities; confirm any real ownership with Owner. Review guarded exact-release rollout separately; no schema migration, unrelated PR merges or DB writes.

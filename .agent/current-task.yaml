@@ -874,3 +874,11 @@ wsf07b_production_20261117:
   branch: ops/ta-wsf07b-production-20261117
   current_stage: production_cutover_and_verification_completed
   last_verified_commit: 28e874b65d8aeab5a13e3c2453632810c14140be
+
+wsf07b_exact_bearer_20261117:
+  task_id: TA-WSF07B-EXACT-BEARER-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-WSF07B-EXACT-BEARER-20261117.yaml
+  branch: fix/ta-wsf07b-exact-bearer-20261117
+  current_stage: exact_ci_pending_and_separate_product_release_gate
+  last_verified_commit: b48797bf09977530c8b555f6079d10a1ad7bd239
