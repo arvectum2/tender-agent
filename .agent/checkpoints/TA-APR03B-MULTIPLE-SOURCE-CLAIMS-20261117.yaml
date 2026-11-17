@@ -7,9 +7,14 @@ definition_of_done:
   - Add adversarial unit and actual operator projection regressions and run focused tests; publish draft PR.
 completed:
   - Verified exact PR608 and main CI, 6031 passed / 288 skipped each.
-current_stage: fix_repeated_claim_and_deadline_normalization
+  - Fixed first-match audit to check labelled price and deadline assertions in source order, maximum 100 plus overflow sentinel. Overflow visible in typed evidence, operator quality gate, limitations and expert prefill.
+  - Equivalent aware timestamps compare UTC instants; timezone-free claim remains UNKNOWN; historic original values unchanged.
+  - Real archived normalized EIS notice replay with four synthetic assertions: two matched, two contradictions detected; no model run.
+current_stage: exact_ci_pending
 remaining:
-  - Implement and test source proof; publish PR and verify CI.
-last_verified_commit: 21c56ca72a6bff94ec5831bff5f1cfd7d31a9e93
-test_results: []
-resume_instruction: Use existing source_claim_proof and operator_full_corpus_runtime, no live requests, models or production. Do not merge PR608 or successor without explicit authorization.
+  - Verify exact successor CI; fix actual failures.
+last_verified_commit: 1e934adb9ca5a551dccfbc1c640ef573a540b37d
+test_results:
+  - 123 focused regressions PASS / 1 SKIP, Ruff and diff check PASS.
+  - Archived normalized real notice 0372200172326000015: 4 assertions, 2 matches and 2 contradictions. Synthetic assertions only, no new legal status.
+resume_instruction: Verify exact new PR CI; mark bounded fix complete. PR608 and successor need separate merge permission. Existing regex supports explicit labelled Russian/English prices and aware dates only, not full semantic entailment. P1 APR08 remains gated by roadmap transition; no live requests, Gemma or production.
