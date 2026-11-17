@@ -1,0 +1,15 @@
+task_id: TA-APR03B-RI223-RECEIPT-INTAKE-20261117
+status: in_progress
+goal: Generalize RI223 archive evidence to independently pinned operator-configured receipt catalog and reusable offline workspace intake.
+definition_of_done:
+  - Trusted read-only catalog digest configured independently of run, strict identity and version, fail closed.
+  - Reusable local intake into isolated workspace, no report or readiness/attachment claims fabricated; regression and actual original multi-case replay.
+  - Publish draft PR, verify CI; no live procurement, production, model or automatic merge.
+completed:
+  - PR629 17/19 SUCCESS no failures; existing RI223 provider and independent APR06 receipt inspected.
+current_stage: trusted_catalog_and_offline_intake
+remaining:
+  - Implement, test, replay and publish.
+last_verified_commit: a0f433bcae911b64cbe3ff4d5ef06e7eb1edf5fe
+test_results: []
+resume_instruction: Never trust arbitrary run pins. Keep 44-FZ path unchanged; preserve no award, legal status or aggregate multi-lot price.

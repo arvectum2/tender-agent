@@ -874,3 +874,10 @@ apr03b_223_archive_copilot_20261117:
   branch: feat/ta-apr03b-223-archive-copilot-20261117
   current_stage: exact_ci_pending
   last_verified_commit: 56ede99234d9f7469b08fb434959c77981176a2b
+
+apr03b_ri223_receipt_intake_20261117:
+  task_id: TA-APR03B-RI223-RECEIPT-INTAKE-20261117
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR03B-RI223-RECEIPT-INTAKE-20261117.yaml
+  branch: feat/ta-apr03b-ri223-receipt-intake-20261117
+  current_stage: trusted_catalog_and_offline_intake
