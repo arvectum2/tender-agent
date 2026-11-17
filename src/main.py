@@ -8,7 +8,9 @@ from fastapi import FastAPI
 from src.modules.electrical_ontology_shadow.middleware import (
     install_electrical_ontology_shadow_middleware,
 )
-from src.modules.procurement_portfolio.workspace_reference_endpoint import install_workspace_reference
+from src.modules.procurement_portfolio.workspace_reference_endpoint import (
+    install_workspace_reference,
+)
 from src.shared.api.errors import register_exception_handlers
 from src.shared.api.middleware import install_runtime_middlewares
 from src.shared.api.router_registry import install_application_routers
