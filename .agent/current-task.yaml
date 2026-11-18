@@ -881,3 +881,10 @@ wsf07b_exact_bearer_20261117:
   checkpoint: .agent/checkpoints/TA-WSF07B-EXACT-BEARER-20261117.yaml
   branch: fix/ta-wsf07b-exact-bearer-20261117
   current_stage: strict_auth_and_private_provenance
+
+wsf07b_recovery_guard_20261118:
+  task_id: TA-WSF07B-RECOVERY-GUARD-20261118
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-WSF07B-RECOVERY-GUARD-20261118.yaml
+  branch: fix/ta-wsf07b-recovery-guard-20261118
+  current_stage: candidate_verifier
