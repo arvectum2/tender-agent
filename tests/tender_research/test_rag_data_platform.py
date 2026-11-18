@@ -141,7 +141,9 @@ class FakeDataPlatformClient:
                 "text": text,
             }
         )
-        return {"chunks": 1, "embeddings": 1}
+        return {"collection_id": collection_id, "canonical_uri": f"tender-chunk://{chunk_id}",
+                "resource_id": f"r-{chunk_id}", "document_id": f"d-{chunk_id}",
+                "extraction_status": "extracted", "chunks": 1, "embeddings": 1}
 
     def collection_stats(self, collection_id: str):
         return {
@@ -918,3 +920,26 @@ def test_cli_retrieval_runtime_skips_legacy_embedding_provider(monkeypatch) -> N
     assert vector_store is None
     retriever.close()
     platform_client.close.assert_called_once()
+
+@pytest.mark.parametrize("change", [
+    {"embeddings": 0}, {"chunks": 2}, {"canonical_uri": "tender-chunk://wrong"},
+    {"collection_id": "foreign"}, {"resource_id": ""}, {"document_id": ""},
+    {"embeddings": True}, {"extraction_status": "failed"},
+])
+def test_indexer_rejects_bad_receipt(change):
+    repo = _repo()
+    tender, _, _ = _seed_chunk(repo)
+    client = FakeDataPlatformClient()
+    orig = client.ingest_chunk
+    client.ingest_chunk = lambda **kw: {**orig(**kw), **change}
+    with pytest.raises(DataPlatformError, match="receipt"):
+        DataPlatformTenderIndexer(repo, client).build_for_tender(tender.id)
+
+
+def test_indexer_rejects_extra_or_missing_vectors_after_ingest():
+    repo = _repo()
+    tender, _, _ = _seed_chunk(repo)
+    client = FakeDataPlatformClient()
+    client.collection_stats = lambda _cid: {"resources": 1, "documents": 1, "chunks": 1, "embeddings": 2}
+    with pytest.raises(DataPlatformError, match="count mismatch"):
+        DataPlatformTenderIndexer(repo, client).build_for_tender(tender.id)

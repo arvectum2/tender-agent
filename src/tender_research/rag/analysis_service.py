@@ -18,16 +18,17 @@ from src.tender_research.rag.data_platform import (
     DataPlatformRagRetriever,
     build_data_platform_client,
     build_tender_collection_id,
+    complete_index_counts,
     retrieval_backend_name,
 )
 from src.tender_research.rag.history_service import record_analysis_run
-from src.tender_research.rag.ri223_document_dossier import (
-    build_ri223_document_dossier,
-    render_ri223_document_dossier,
-)
 from src.tender_research.rag.llm import (
     LocalChatLlmClient,
     build_source_citations,
+)
+from src.tender_research.rag.ri223_document_dossier import (
+    build_ri223_document_dossier,
+    render_ri223_document_dossier,
 )
 from src.tender_research.rag.ri223_source_facts import (
     derive_ri223_review_flags,
@@ -487,11 +488,7 @@ def analyze_tender(
             try:
                 stats = platform_client.collection_stats(collection_id)
                 expected_resources = repo.count_chunks_by_tender(tender.id)
-                platform_index_ready = (
-                    expected_resources > 0
-                    and int(stats.get("resources", 0)) == expected_resources
-                    and int(stats.get("embeddings", 0)) >= expected_resources
-                )
+                platform_index_ready = complete_index_counts(stats, expected_resources)
             except DataPlatformError as exc:
                 # HTTP 404 is a genuinely absent index. All other provider
                 # failures (especially 401/403 auth and 5xx outages) must not

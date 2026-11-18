@@ -18,6 +18,7 @@ from src.tender_research.rag.data_platform import (
     DataPlatformTenderIndexer,
     build_data_platform_client,
     build_tender_collection_id,
+    complete_index_counts,
     resolve_tender_collection_id,
     retrieval_backend_name,
 )
@@ -369,7 +370,7 @@ def prepare_tender_for_analysis(
                 embeddings_created_count = platform_result.embeddings_created
                 if (
                     indexed_chunks_count == chunks_count
-                    and embeddings_created_count > 0
+                    and embeddings_created_count == chunks_count
                 ):
                     step.status = "completed"
                     step.message = (
@@ -414,7 +415,7 @@ def prepare_tender_for_analysis(
         ready = (
             final_chunks > 0
             and indexed_chunks_count == final_chunks
-            and final_embeddings > 0
+            and final_embeddings == final_chunks
         )
         if ready:
             step.status = "completed"
@@ -518,12 +519,8 @@ def check_preparation_status(
                         raise DataPlatformError("Data Platform tender index is missing")
                     platform_collection_id = resolved_collection_id
                     stats = platform_client.collection_stats(resolved_collection_id)
-                resources_indexed = int(stats.get("resources", 0))
                 embeddings_total = int(stats.get("embeddings", 0))
-                platform_ready = (
-                    resources_indexed == chunks_total
-                    and embeddings_total >= chunks_total
-                )
+                platform_ready = complete_index_counts(stats, chunks_total)
             except (DataPlatformError, ValueError) as exc:
                 platform_ready = False
                 platform_error = type(exc).__name__
