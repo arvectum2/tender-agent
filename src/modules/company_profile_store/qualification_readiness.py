@@ -48,7 +48,7 @@ def _date_utc(dt):
     return dt.replace(tzinfo=UTC) if dt.tzinfo is None else dt.astimezone(UTC)
 
 
-def _document_state(session,customer_id,claim,kind,now,root):
+def _document_state(session,customer_id,claim,kind,now,root,*,capture=None):
     doc=session.scalar(select(CompanyDocument).where(CompanyDocument.customer_id==customer_id,
                                                      CompanyDocument.document_key==claim.document_key))
     if not doc or doc.document_type not in _DOC_TYPES[kind]:
@@ -80,10 +80,12 @@ def _document_state(session,customer_id,claim,kind,now,root):
             return 'DOCUMENT_BYTES_MISMATCH'
     except (ValueError,OSError,TypeError):
         return 'DOCUMENT_UNAVAILABLE'
+    if capture is not None:
+        capture[claim.requirement_code]=raw
     return 'DOCUMENT_BYTES_MATCH'
 
 
-def review_profile(session: Session, *, customer_id: str, root: Path, requirements: dict[str,str], now: datetime | None=None):
+def review_profile(session: Session, *, customer_id: str, root: Path, requirements: dict[str,str], now: datetime | None=None, _capture: dict[str,bytes] | None=None):
     """Caller supplies already-authorized customer and reviewed requirement codes.
     Only a claimed fact plus exact current document bytes is a review candidate.
     """
@@ -119,7 +121,8 @@ def review_profile(session: Session, *, customer_id: str, root: Path, requiremen
                         row['state']='IDENTITY_SCOPE_OR_DATE_UNCONFIRMED'
                     else:
                         row['document_key']=claim.document_key
-                        state=_document_state(session,customer_id,claim,kind,now,root)
+                        state=_document_state(session,customer_id,claim,kind,now,root,
+                                              capture=_capture if claim.assertion=='PRESENT' else None)
                         row['state']=state
                         if state=='DOCUMENT_BYTES_MATCH':
                             row.update(state='DOCUMENTED_OWNER_CLAIM_REVIEW_REQUIRED',claim_assertion=claim.assertion,
