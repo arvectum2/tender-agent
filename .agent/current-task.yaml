@@ -1048,7 +1048,13 @@ staged_settlement_20261118:
 
 profile_qualification_readiness_20261118:
   task_id: TA-PROFILE-QUALIFICATION-READINESS-20261118
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-PROFILE-QUALIFICATION-READINESS-20261118.yaml
-  current_stage: exact_ci_pending
+  current_stage: verified_pending_merge
   last_verified_commit: 0da994c661a462a0378252d55fae15ee544fa9b8
+
+application_checklist_20261118:
+  task_id: TA-APPLICATION-CHECKLIST-20261118
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APPLICATION-CHECKLIST-20261118.yaml
+  current_stage: source_bound_checklist

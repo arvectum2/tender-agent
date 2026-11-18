@@ -1,5 +1,5 @@
 task_id: TA-PROFILE-QUALIFICATION-READINESS-20261118
-status: in_progress
+status: completed
 goal: Read-only supplier qualification readiness from tenant versioned facts and source-attested
   requirements; verify Arvectum historical profile safely in isolated SQLite.
 definition_of_done:
@@ -20,10 +20,9 @@ completed:
   facts. Three original archive SME cases pass and all defer: 32616445632, 32616445866,
   32616445795. Seven evidence gaps, no preferences. 165 regression PASS incl 19 focused,
   8 skips, 16 warnings.'
-current_stage: exact_ci_pending
-remaining:
-- Verify exact draft CI. Next source-bound application document completeness and separately
-  authorized current profile intake. No live writes.
+- Exact PR651 e446b45d259061cb8d6d65d20764f8312e33b34e CI 19/19 SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
 last_verified_commit: 0da994c661a462a0378252d55fae15ee544fa9b8
 test_results:
 - 165 passed, 8 skipped, 16 warnings; Ruff/diff PASS.
