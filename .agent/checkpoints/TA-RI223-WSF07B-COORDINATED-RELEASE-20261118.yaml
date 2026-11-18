@@ -1,5 +1,5 @@
 task_id: TA-RI223-WSF07B-COORDINATED-RELEASE-20261118
-status: blocked
+status: in_progress
 goal: Prepare exact green PR640 release while preserving existing WSF07B scope; coordinate source release and Workspace binding without implied authorization; prepare corporate profile intake separately.
 definition_of_done:
   - Rehearse exact candidate release tree and regression on immutable staging, read-only compare live source and existing admitted set.
@@ -11,13 +11,14 @@ completed:
   - Candidate exact tree staged under private SSD release rehearsal directory with clone of current venv; 77 focused tests PASS, WSF07B and dependency/schema diff empty, clean tree.
   - Read-only exact existing admission and DB identity revalidated 21/12/9, schema 122, current profile rows absent; anonymous/dummy/Basic denial PASS, no valid Bearer. Review receipt private, no new binding.
   - Company handoff: https://github.com/arvectum2/arvectum-company/issues/16#issuecomment-6972005779
-current_stage: exact_source_and_workspace_approval_required
+  - Owner explicitly confirmed exact same-scope transfer and coordinated cutover, original expiry unchanged. Actual Workspace runtime advanced independently to 7837a8aeedf6d4259f2843746761535a27be5a71; current P704AccessResolver and RuntimeProcurementReference read exactly 12, manual store 12 projects/12 notes. Existing grant preserved, dedicated source token rotation only. Approval recorded: https://github.com/arvectum2/arvectum-company/issues/16#issuecomment-6972242576
+current_stage: approved_coordinated_cutover
 remaining:
-  - Explicit same-scope approval for coordinated release, actual merge commit verification and independent Workspace binding. Then approved cutover and acceptance. No merge until coordinated plan agreed.
+  - Back up and verify DB and exact configs, guarded merge/cutover, same scoped Workspace read, negative probes, daily pin and verifier. Roll back on failure; keep profile separate.
   - Original corporate PDFs still in project; authorized secure transfer and actual company-profile/tenant constraints remain separate.
 last_verified_commit: 3afb5f8267fef6d02a7162aa82de2f8689b6faf0
 test_results:
   - 77 passed, 2 warnings, exact candidate locked venv; clean source and unchanged WSF07B.
   - Existing scope 21/12/9 and DB revision 122 verified read-only; health and denial boundaries PASS.
   - PR640 19/19 CI PASS.
-resume_instruction: Read private candidate review under ri223-release-rehearsal-20261118.OIDlTQ; do not re-stage. Await explicit exact-scope source and Workspace coordinated cutover decision, verify resulting merge SHA and binding. Keep current backend/manifest/tenant untouched until gates pass.
+resume_instruction: Owner approval obtained; check private cutover journal before any repeat. Preserve exact existing grant and set, rotate token without printing, original expiry. No company profile mutation.

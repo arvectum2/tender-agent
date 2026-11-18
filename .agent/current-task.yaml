@@ -971,7 +971,7 @@ apr04_registration_snapshot_20261118:
 
 ri223_wsf07b_coordinated_release_20261118:
   task_id: TA-RI223-WSF07B-COORDINATED-RELEASE-20261118
-  status: blocked
+  status: in_progress
   checkpoint: .agent/checkpoints/TA-RI223-WSF07B-COORDINATED-RELEASE-20261118.yaml
-  current_stage: exact_source_and_workspace_approval_required
+  current_stage: approved_coordinated_cutover
   last_verified_commit: 3afb5f8267fef6d02a7162aa82de2f8689b6faf0
