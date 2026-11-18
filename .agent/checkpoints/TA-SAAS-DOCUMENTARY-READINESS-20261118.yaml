@@ -1,0 +1,15 @@
+task_id: TA-SAAS-DOCUMENTARY-READINESS-20261118
+status: in_progress
+goal: Tenant-scoped read-only documentary qualification and owned-run checklist matching in SaaS UI.
+definition_of_done:
+  - Reuse existing bearer principal, active role, legal acceptance and owned-run boundary; no arbitrary customer ID.
+  - Show fixed profile readiness categories and reviewed archive matching; minimize response data, no legal pass.
+  - Verify auth, tenant isolation, actual synthetic evidence and UI behavior; publish draft.
+completed:
+  - PR658 exact head 13 success 6 pending. Chose existing gated SaaS UI rather than operator Basic context.
+current_stage: tenant_readiness_api_ui
+remaining:
+  - Implement, test, publish.
+last_verified_commit: 9e4f7a66ec2fb08a6f5050a371c5fa943d17c6d1
+test_results: []
+resume_instruction: Synthetic only; no real tenant creation/grants, private blocked replay, production activation.
