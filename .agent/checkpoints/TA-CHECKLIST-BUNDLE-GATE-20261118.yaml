@@ -1,0 +1,16 @@
+task_id: TA-CHECKLIST-BUNDLE-GATE-20261118
+status: in_progress
+goal: Source-derived checklist-to-bundle bridge and independent coverage gate.
+definition_of_done:
+  - Preserve all reviewed requirement rows and conditional/alternative logic; pin source and plan digest.
+  - Require explicit approval of exact plan; derive only from same-run checklist, refuse unknown or notice-only.
+  - Verify archive independently against expected source plan and pinned digest; classify gaps without GO.
+  - Synthetic round trip, regression, draft PR and checkpoint.
+completed:
+  - PR655 exact CI 17 success, two pending; earlier private replay remains blocked.
+current_stage: source_plan_and_gate
+remaining:
+  - Implement, test, publish.
+last_verified_commit: 720365984c82d0f4c9d4a8c95b86163c638c3ab6
+test_results: []
+resume_instruction: Independent synthetic development. Do not retry blocked private replay or deploy.
