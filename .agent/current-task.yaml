@@ -968,3 +968,9 @@ apr04_registration_snapshot_20261118:
   checkpoint: .agent/checkpoints/TA-APR04-REGISTRATION-SNAPSHOT-20261118.yaml
   current_stage: historical_review_packet_verified
   last_verified_commit: 3afb5f8267fef6d02a7162aa82de2f8689b6faf0
+
+ri223_wsf07b_coordinated_release_20261118:
+  task_id: TA-RI223-WSF07B-COORDINATED-RELEASE-20261118
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-RI223-WSF07B-COORDINATED-RELEASE-20261118.yaml
+  current_stage: candidate_stage_and_revalidation

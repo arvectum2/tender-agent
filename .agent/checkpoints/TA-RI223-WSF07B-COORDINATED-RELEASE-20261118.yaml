@@ -1,0 +1,17 @@
+task_id: TA-RI223-WSF07B-COORDINATED-RELEASE-20261118
+status: in_progress
+goal: Prepare exact green PR640 release while preserving existing WSF07B scope; coordinate source release and Workspace binding without implied authorization; prepare corporate profile intake separately.
+definition_of_done:
+  - Rehearse exact candidate release tree and regression on immutable staging, read-only compare live source and existing admitted set.
+  - Record exact candidate, release plan and required coordinated Company/Workspace approval; no implicit new manifest, token, tenant or expiry.
+  - After separately satisfied binding gates, approved main merge, production cutover and current authorized profile; verify/recover or record precise blocker.
+completed:
+  - User agreed to proceed with coordinated update and profile preparation.
+  - PR640 exact head and base green; source code, authorizer, middleware, requirements and schema unchanged. Existing activated manifest exact old release; contract requires distinct product and Workspace activation gates.
+current_stage: candidate_stage_and_revalidation
+remaining:
+  - Stage/test candidate and verify scope; prepare Company handoff and exact authorization gate.
+  - Original corporate PDFs still in project; authorized secure transfer and actual company-profile/tenant constraints remain separate.
+last_verified_commit: 3afb5f8267fef6d02a7162aa82de2f8689b6faf0
+test_results: []
+resume_instruction: No implicit rebind or token reuse. Keep actual backend, main, manifest and tenant unchanged until exact coordinated release approvals are verified.
