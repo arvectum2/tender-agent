@@ -1,4 +1,5 @@
 """Real source + explicitly synthetic costs; no real company economics assertion."""
+from scripts.acceptance.apr03b_cash_calendar_fixture import calendar_fixture
 from src.modules.tender_operator_agent_demo.operator_cost_scenarios import (
     ExplicitCostScenarioRequest,
 )
@@ -23,7 +24,7 @@ def replay_owner(run):
         offer_scenario={'offer_price_rub':'900000','nonrefundable_guarantee_fees_rub':'5000',
                         'refundable_bid_cash_rub':'20000','refundable_contract_cash_rub':'100000'},
         accept_hypothetical_assumptions_only=True)
-    out=review_archived_owner_run(run,inputs,include_decision=True)
+    out=review_archived_owner_run(run,inputs,include_decision=True,cash_calendar=calendar_fixture())
     assert out['status']=='ARCHIVED_OWNER_REVIEW_ONLY' and not out['go_eligible']
     assert out['decision']=='NOT_DECIDED' and out['competitive_recommendation']=='NOT_ASSESSED'
     decision=out['decision_review'];assert decision['status']=='ARCHIVED_DECISION_REVIEW_ONLY',decision
@@ -54,6 +55,12 @@ def replay_owner(run):
     ec=out['economics'];cell=ec['calculation']['offer_scenario']
     assert ec['archived_lot_initial_sum_rub']=='1020000' and ec['offer_within_archived_initial_sum']
     assert cell['economic_profit_rub']=='222000.00' and cell['pre_receipt_stress_cash_rub']=='498000.00'
+    cash=ec['cash_calendar']
+    assert [c['peak_funding_required_rub'] for c in cash['cases']]==['285000.00','515000.00','628000.00']
+    assert [c['additional_funding_needed_rub'] for c in cash['cases']]==['85000.00','315000.00','428000.00']
+    assert cash['scenario_net_cash_rub']=='372000.00' and cash['actual_peak_working_capital_rub'] is None
+    assert not cash['go_eligible'] and not cash['actual_payment_dates_verified']
+    print('RI223_CASH_CALENDAR_PASS',[(c['receipt_delay_calendar_days'],c['peak_funding_required_rub'],c['additional_funding_needed_rub']) for c in cash['cases']],flush=True)
     assert not ec['actual_costs_verified'] and cell['actual_security_requirement_rub'] is None
     assert ec['target_threshold_within_archived_initial_sum']
     print('RI223_OWNER_ACTUAL_SOURCE_PASS SME participant quote; historical owner 0, current UNKNOWN; synthetic economics',ec['calculation']['full_cost_plus_explicit_target_rub'],cell['economic_profit_rub'],cell['pre_receipt_stress_cash_rub'],flush=True)
