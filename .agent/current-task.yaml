@@ -1106,4 +1106,5 @@ saas_documentary_readiness_20261118:
   task_id: TA-SAAS-DOCUMENTARY-READINESS-20261118
   status: in_progress
   checkpoint: .agent/checkpoints/TA-SAAS-DOCUMENTARY-READINESS-20261118.yaml
-  current_stage: tenant_readiness_api_ui
+  current_stage: exact_ci_pending
+  last_verified_commit: ab25613ce7a9ac93a56b5fae5c0ab06df7808efe

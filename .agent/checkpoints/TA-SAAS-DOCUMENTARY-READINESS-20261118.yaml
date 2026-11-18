@@ -1,15 +1,32 @@
 task_id: TA-SAAS-DOCUMENTARY-READINESS-20261118
 status: in_progress
-goal: Tenant-scoped read-only documentary qualification and owned-run checklist matching in SaaS UI.
+goal: Tenant-scoped read-only documentary qualification and owned-run checklist matching
+  in SaaS UI.
 definition_of_done:
-  - Reuse existing bearer principal, active role, legal acceptance and owned-run boundary; no arbitrary customer ID.
-  - Show fixed profile readiness categories and reviewed archive matching; minimize response data, no legal pass.
-  - Verify auth, tenant isolation, actual synthetic evidence and UI behavior; publish draft.
+- Reuse existing bearer principal, active role, legal acceptance and owned-run boundary;
+  no arbitrary customer ID.
+- Show fixed profile readiness categories and reviewed archive matching; minimize
+  response data, no legal pass.
+- Verify auth, tenant isolation, actual synthetic evidence and UI behavior; publish
+  draft.
 completed:
-  - PR658 exact head 13 success 6 pending. Chose existing gated SaaS UI rather than operator Basic context.
-current_stage: tenant_readiness_api_ui
+- PR658 exact head 13 success 6 pending. Chose existing gated SaaS UI rather than
+  operator Basic context.
+- Added two existing Bearer-bound SaaS read-only routes, fixed seven review categories
+  and own-run source requirements matched against current tenant documentary candidates.
+  Limited response; protected roles and legal acceptance, no new grant.
+- 39 targeted PASS, 1 skipped, 52 deselected, 12 warnings, Ruff/diff/Node syntax PASS.
+  Real Chromium 1280/390 synthetic intercepted network PASS. Actual synthetic HTTP/SQLite
+  two tenants and PDF-header digest, tamper/role/revocation/foreign run tests.
+current_stage: exact_ci_pending
 remaining:
-  - Implement, test, publish.
-last_verified_commit: 9e4f7a66ec2fb08a6f5050a371c5fa943d17c6d1
-test_results: []
-resume_instruction: Synthetic only; no real tenant creation/grants, private blocked replay, production activation.
+- Verify exact draft CI and PR658. Next financial calendar in authorized read-only
+  workspace and trusted evidence approvals; real profile and original acceptance remain
+  open.
+last_verified_commit: ab25613ce7a9ac93a56b5fae5c0ab06df7808efe
+test_results:
+- 39 passed, 1 skipped, 52 deselected, 12 warnings, exit 0; Ruff/diff/Node PASS; Chromium
+  synthetic network 1280/390 PASS.
+resume_instruction: Verify exact CI. Do not retry blocked real private replay or deploy;
+  no actual tenant grants. Continue financial calendar and decision integration with
+  narrow authorization.
