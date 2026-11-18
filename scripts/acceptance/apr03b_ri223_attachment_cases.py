@@ -59,6 +59,11 @@ def replay(runs):
         from scripts.quality.apr067_ri223_domain_coverage import measure_runs
 
         measure_runs(runs,all_runs,ROOT,incomplete_refused)
+    if os.environ.get('APR067_GAP_REVIEW')=='1':
+        from scripts.quality.apr067_ri223_gap_review import observe, summarize
+
+        rows=[row for number,run_id in sorted(all_runs.items()) if number!='32616445795' for row in observe(run_id)]
+        print('APR067_RI223_GAP_REVIEW_PASS',json.dumps(summarize(rows),ensure_ascii=False),flush=True)
     run=all_runs['32616444788'];directory=runs/run
     url=f'/api/demo/tender-agent/workspace/runs/{run}/evidence-search'
     with TestClient(app) as c:

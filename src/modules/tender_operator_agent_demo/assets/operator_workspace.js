@@ -378,6 +378,7 @@
         paragraph(root,data.answer,'help-text');
         const o=data.observation;
         for(const [key,label] of [['subject','Предмет'],['method','Способ закупки'],['archived_submission_deadline','Архивный срок подачи (часовой пояс UNKNOWN)'],['single_lot_initial_sum','Цена единственного лота'],['single_lot_currency','Валюта лота']]) paragraph(root,label+': '+(o.fields[key]??'UNKNOWN'));
+        for(const [key,label] of [['archived_submission_order','Архивный порядок подачи заявок'],['archived_summingup_order','Архивный порядок подведения итогов']]) if(o.fields[key]) paragraph(root,label+': '+o.fields[key]);
         renderCitations(root,data.citations,{originalVerified:true});
         paragraph(root,'SHA-256 XML: '+data.citations[0].source_sha256+' · ZIP: '+data.citations[0].archive_sha256,'help-text');
         paragraph(root,'Редакция '+o.observed_version+'; правовой статус закупки, обеспечение и победитель: UNKNOWN.','help-text');
