@@ -28,3 +28,24 @@ def calendar_fixture():
         events=[{'event_id':f'e{i:02d}','event_date':day,'stage':'synthetic',
                  'category':category,'amount_rub':amount} for i,(day,category,amount) in enumerate(rows)],
         receipt_delay_calendar_days=[7,30],accept_hypothetical_assumptions_only=True)
+
+
+def contract_calendar_fixture():
+    from datetime import date, timedelta
+
+    from src.modules.tender_operator_agent_demo.ri223_payment_calendar import (
+        ContractPaymentCalendarRequest,
+    )
+
+    ledger=calendar_fixture().model_dump()
+    ledger['end_date']='2027-03-31'
+    ledger['events']=[x for x in ledger['events'] if x['category'] not in ('advance','stage_payment','final_payment')]
+    # Explicit synthetic working dates, NOT Russian statutory holidays.
+    start=date(2027,1,1)
+    working=[(start+timedelta(days=i)).isoformat() for i in range(90) if (start+timedelta(days=i)).weekday()<5]
+    return ContractPaymentCalendarRequest(ledger_without_customer_receipts=ledger,
+        work_calendar={'coverage_start':'2027-01-01','coverage_end':'2027-03-31','working_dates':working,
+                       'accept_complete_workday_list_as_assumption':True},
+        act_received_date='2027-01-20',invoice_and_invoice_facture_provided_by_signing=True,
+        assume_no_motivated_refusal=True,assume_bank_transfer_without_alternative_agreement=True,
+        assume_single_full_settlement=True,bank_receipt_lag_calendar_days=2)

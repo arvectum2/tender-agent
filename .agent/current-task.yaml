@@ -1027,7 +1027,14 @@ ri223_linked_contract_economics_20261118:
 
 cashflow_calendar_20261118:
   task_id: TA-CASHFLOW-CALENDAR-20261118
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-CASHFLOW-CALENDAR-20261118.yaml
-  current_stage: exact_ci_pending
+  current_stage: verified_pending_merge
   last_verified_commit: 7a4dba632a76199803a65d1eb20be83c748a8c85
+
+contract_payment_calendar_20261118:
+  task_id: TA-CONTRACT-PAYMENT-CALENDAR-20261118
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-CONTRACT-PAYMENT-CALENDAR-20261118.yaml
+  current_stage: exact_ci_pending
+  last_verified_commit: c6da37e972297c1c969e544c099002e18cdfbadd

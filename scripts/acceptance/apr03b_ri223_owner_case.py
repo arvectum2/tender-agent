@@ -1,5 +1,8 @@
 """Real source + explicitly synthetic costs; no real company economics assertion."""
-from scripts.acceptance.apr03b_cash_calendar_fixture import calendar_fixture
+from scripts.acceptance.apr03b_cash_calendar_fixture import (
+    calendar_fixture,
+    contract_calendar_fixture,
+)
 from src.modules.tender_operator_agent_demo.operator_cost_scenarios import (
     ExplicitCostScenarioRequest,
 )
@@ -64,3 +67,15 @@ def replay_owner(run):
     assert not ec['actual_costs_verified'] and cell['actual_security_requirement_rub'] is None
     assert ec['target_threshold_within_archived_initial_sum']
     print('RI223_OWNER_ACTUAL_SOURCE_PASS SME participant quote; historical owner 0, current UNKNOWN; synthetic economics',ec['calculation']['full_cost_plus_explicit_target_rub'],cell['economic_profit_rub'],cell['pre_receipt_stress_cash_rub'],flush=True)
+
+    projected=review_archived_owner_run(run,inputs,include_decision=True,contract_payment_calendar=contract_calendar_fixture())
+    assert projected['status']=='ARCHIVED_OWNER_REVIEW_ONLY' and projected['decision_review']['recommendation']=='DEFER'
+    pay=projected['economics']['contract_payment_calendar']
+    assert pay['status']=='CONDITIONAL_ARCHIVED_PAYMENT_CALENDAR_ONLY'
+    assert pay['modeled_signing_date']=='2027-02-03' and pay['modeled_customer_debit_date']=='2027-02-12'
+    assert pay['modeled_bank_receipt_date']=='2027-02-14'
+    assert pay['cash_calendar']['worst_modeled_peak_funding_rub']=='628000.00'
+    assert pay['cash_calendar']['worst_modeled_additional_funding_rub']=='428000.00'
+    assert pay['actual_receipt_date'] is None and not pay['go_eligible']
+    assert pay['source_sections']==projected['contract_risk']['linked_conditions']['groups']['acceptance_payment']['source_sections']
+    print('RI223_CONTRACT_PAYMENT_CALENDAR_PASS',pay['modeled_signing_date'],pay['modeled_customer_debit_date'],pay['modeled_bank_receipt_date'],pay['cash_calendar']['worst_modeled_peak_funding_rub'],flush=True)

@@ -1,5 +1,5 @@
 task_id: TA-CASHFLOW-CALENDAR-20261118
-status: in_progress
+status: completed
 goal: Explicit dated scenario ledger tied to PRICE01 cost totals; calculate peak funding
   and stress without claiming actual liquidity or commercial GO.
 definition_of_done:
@@ -19,10 +19,9 @@ completed:
 - 'Actual archived isolated replay exit 0: cash peaks 285000/515000/628000, shortfalls
   85000/315000/428000, ending net 372000. NEEDS_REVIEW and original incomplete refusal
   preserved. 211 tests PASS, two warnings; 16 cashflow/CLI tests.'
-current_stage: exact_ci_pending
-remaining:
-- Verify exact draft CI; next explicit contract-calendar mapping and current authorized
-  company profile/application completeness. No live deployment.
+- Exact PR648 head 56e52d54e723c0f850d35be3b5a6a458ccea7d0b CI 19/19 SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
 last_verified_commit: 7a4dba632a76199803a65d1eb20be83c748a8c85
 test_results:
 - 211 passed, 2 warnings, Ruff/diff PASS

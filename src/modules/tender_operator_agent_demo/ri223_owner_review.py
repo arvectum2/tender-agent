@@ -19,6 +19,10 @@ from .operator_cost_scenarios import (
 from .ri223_attachment_evidence import digest, read_bytes, verified_container_lineage
 from .ri223_container_evidence import container_projection_scope
 from .ri223_contract_risk import observe_contract_risk
+from .ri223_payment_calendar import (
+    ContractPaymentCalendarRequest,
+    project_payment_calendar,
+)
 from .ri223_review_dossier import verified_inventory
 from .ri223_review_scoring import scoring_observation
 from .verified_original_quote import verify_operator_run_quote
@@ -100,7 +104,7 @@ def lot_scenario(notice: dict, scenario: ExplicitCostScenarioRequest | None) -> 
             'current_price_limit_attested':False}
 
 
-def review_archived_owner_run(run_id: str, scenario: ExplicitCostScenarioRequest | None=None, *, include_decision: bool=False, cash_calendar: CashCalendarRequest | None=None) -> dict:
+def review_archived_owner_run(run_id: str, scenario: ExplicitCostScenarioRequest | None=None, *, include_decision: bool=False, cash_calendar: CashCalendarRequest | None=None, contract_payment_calendar: ContractPaymentCalendarRequest | None=None) -> dict:
     """Operator-local, no arbitrary customer ID, database, persistence or HTTP route."""
     run,metadata=checked_search_run(run_id)
     notice=ri223_archive_observation(run,metadata)
@@ -115,6 +119,8 @@ def review_archived_owner_run(run_id: str, scenario: ExplicitCostScenarioRequest
     sme=sme_observation(run_id,run,metadata)
     scoring=scoring_observation(run,metadata)
     calc=lot_scenario(notice,scenario)
+    if cash_calendar is not None and contract_payment_calendar is not None:
+        raise ValueError("Manual and contract-generated calendars are mutually exclusive")
     if cash_calendar is not None:
         if scenario is None or calc['status']!='ARCHIVED_LOT_EXPLICIT_SCENARIO_ONLY':
             raise ValueError('Archived single-lot explicit offer required for cash calendar')
@@ -122,6 +128,10 @@ def review_archived_owner_run(run_id: str, scenario: ExplicitCostScenarioRequest
 
     with container_projection_scope():
         risks=observe_contract_risk(run_id,run,metadata,calc)
+    if contract_payment_calendar is not None:
+        if scenario is None or calc["status"]!="ARCHIVED_LOT_EXPLICIT_SCENARIO_ONLY":
+            raise ValueError("Archived single-lot explicit offer required for payment calendar")
+        calc["contract_payment_calendar"]=project_payment_calendar(scenario,risks.get("linked_conditions",{}),contract_payment_calendar)
     combined={}
     if include_decision:
         from .ri223_decision_review import archived_decision_projection
