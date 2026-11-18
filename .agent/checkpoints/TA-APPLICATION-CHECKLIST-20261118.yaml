@@ -1,15 +1,27 @@
 task_id: TA-APPLICATION-CHECKLIST-20261118
-status: in_progress
+status: blocked
 goal: Source-bound bidder checklist separate from procurement input docs.
 definition_of_done:
-  - Attest actual template and cross-reference technical requirements.
-  - Preserve mandatory, conditional and alternative documents; no application from noncompetitive notices.
-  - Match tenant evidence, test and replay original sources, publish draft.
+- Attest actual template and cross-reference technical requirements.
+- Preserve mandatory, conditional and alternative documents; no application from noncompetitive
+  notices.
+- Match tenant evidence, test and replay original sources, publish draft.
 completed:
-  - PR651 19/19. Read actual quotation template and TZ 32616444788.
-current_stage: source_bound_checklist
+- PR651 19/19. Read actual quotation template and TZ 32616444788.
+- PR651 exact CI 19/19. Implemented nine reviewed checklist rows, conditional signatory/goods
+  cases, alternative rights candidates and notice-only refusal. Read-only exact originals
+  19 source groups / 21 predicted unique chunk fragments. 170 regression tests passed
+  (11 new), 8 skipped, 6 warnings; Ruff/diff PASS.
+current_stage: isolated_private_replay_execution_blocked
 remaining:
-  - Implement, test, replay and publish.
-last_verified_commit: e446b45d259061cb8d6d65d20764f8312e33b34e
-test_results: []
-resume_instruction: Historical review only. No production writes, signature or submission.
+- Exact draft CI; full actual isolated acceptance not performed due execution tool
+  safety block. Do not bypass or retry blocked action. Seek appropriately permitted
+  separate acceptance environment; no production deployment.
+last_verified_commit: 2416621865f2d541576472c90bb8964b1eae6a59
+test_results:
+- 170 passed, 8 skipped, 6 warnings; Ruff/diff PASS
+- Actual original extraction/partition precheck PASS; full private replay BLOCKED
+  before execution.
+resume_instruction: Read checkpoint and draft CI. Do not retry blocked private replay.
+  Candidate code only, no original replay claim. Continue independent safe application
+  form work or obtain permitted acceptance path.

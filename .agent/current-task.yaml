@@ -1055,6 +1055,7 @@ profile_qualification_readiness_20261118:
 
 application_checklist_20261118:
   task_id: TA-APPLICATION-CHECKLIST-20261118
-  status: in_progress
+  status: blocked
   checkpoint: .agent/checkpoints/TA-APPLICATION-CHECKLIST-20261118.yaml
-  current_stage: source_bound_checklist
+  current_stage: isolated_private_replay_execution_blocked
+  last_verified_commit: 2416621865f2d541576472c90bb8964b1eae6a59
