@@ -959,4 +959,5 @@ apr03b_ri223_consolidation_20261118:
   task_id: TA-APR03B-RI223-CONSOLIDATION-20261118
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR03B-RI223-CONSOLIDATION-20261118.yaml
-  current_stage: combined_replay_and_main_review
+  current_stage: consolidated_main_target_ci_pending
+  last_verified_commit: b3d7d14bc1a75b0af61a395a480c20968a925ae4
