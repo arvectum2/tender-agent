@@ -1,16 +1,30 @@
 task_id: TA-SOURCE-BOUND-FORM-FILL-20261118
 status: in_progress
-goal: Source-derived private draft field planning and safe DOCX/XLSX rendering, with no unsupported declarations.
+goal: Source-derived private draft field planning and safe DOCX/XLSX rendering, with
+  no unsupported declarations.
 definition_of_done:
-  - Resolve explicitly mapped identity fields from current scoped owner-reviewed facts, not caller supplied arbitrary values.
-  - Bind template bytes to exact reviewed hash, validate targets, preserve unknown placeholders and immutable original.
-  - Prevent formula and cascading replacements; attach per-field provenance and no signature/submission.
-  - Synthetic disposable database and file round trips, regression tests, draft PR.
+- Resolve explicitly mapped identity fields from current scoped owner-reviewed facts,
+  not caller supplied arbitrary values.
+- Bind template bytes to exact reviewed hash, validate targets, preserve unknown placeholders
+  and immutable original.
+- Prevent formula and cascading replacements; attach per-field provenance and no signature/submission.
+- Synthetic disposable database and file round trips, regression tests, draft PR.
 completed:
-  - Read PR652 checkpoint; original private replay remains blocked and will not be repeated. PR652 CI 17 success two pending.
-current_stage: source_bound_draft
+- Read PR652 checkpoint; original private replay remains blocked and will not be repeated.
+  PR652 CI 17 success two pending.
+- Implemented private in-memory source-derived fill for six identity fields, latest
+  scoped owner-reviewed facts and exact template maps, per-field fact lineage, no
+  unknown substitution or declaration assertion.
+- Synthetic SQLite and real DOCX/XLSX round-trips 21 focused PASS; earlier combined
+  49 PASS printed before tool timeout. Ruff/diff PASS. Prior private replay not retried.
+current_stage: exact_ci_pending
 remaining:
-  - Implement and validate independent synthetic form workflow.
-last_verified_commit: 62a07f47698d0da658ef7f6042c97a6a093eb6ef
-test_results: []
-resume_instruction: Independent synthetic form development only; no production or blocked private replay.
+- Verify exact draft CI. Next reviewed mapping workflow and package assembly on authorized
+  source data; previous private replay remains blocked. No production deployment.
+last_verified_commit: 5f54a62b0ebfb13c5dfde3c1d9551a0105f22b6d
+test_results:
+- 21 focused passed, 9 warnings, exit 0; Ruff/diff PASS
+- 49 combined passed, 9 warnings printed; tool timed out after result.
+resume_instruction: Check exact CI. Do not retry blocked private corporate packet
+  replay. Independent form work only; current actual values and approved real source
+  maps remain unavailable.

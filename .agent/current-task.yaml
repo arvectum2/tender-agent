@@ -1064,4 +1064,5 @@ source_bound_form_fill_20261118:
   task_id: TA-SOURCE-BOUND-FORM-FILL-20261118
   status: in_progress
   checkpoint: .agent/checkpoints/TA-SOURCE-BOUND-FORM-FILL-20261118.yaml
-  current_stage: source_bound_draft
+  current_stage: exact_ci_pending
+  last_verified_commit: 5f54a62b0ebfb13c5dfde3c1d9551a0105f22b6d
