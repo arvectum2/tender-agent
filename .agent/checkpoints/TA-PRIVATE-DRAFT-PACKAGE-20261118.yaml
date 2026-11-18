@@ -1,0 +1,16 @@
+task_id: TA-PRIVATE-DRAFT-PACKAGE-20261118
+status: in_progress
+goal: Assemble bounded private review bundle with generated forms, explicitly selected documentary evidence, scenario price and gap report.
+definition_of_done:
+  - Separate bidder outputs from procurement source documents and existing M-030 collection manifest.
+  - Generate private drafts and select current exact tenant evidence; no automatic qualification satisfaction or filing.
+  - Produce self-checking ZIP manifest, inventory and gap report; synthetic SQLite and OOXML round trip tests.
+  - Publish draft checkpoint; no production or blocked replay.
+completed:
+  - PR652/653 exact CI 19/19; prior blocked real private acceptance unchanged.
+current_stage: private_bundle
+remaining:
+  - Implement, test, publish.
+last_verified_commit: e7a6020e6f67f1349b65048c0455c6464b34e268
+test_results: []
+resume_instruction: Independent synthetic bundle development. Never retry blocked corporate packet replay.
