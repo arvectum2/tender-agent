@@ -1,0 +1,16 @@
+task_id: TA-APR067-RI223-PROJECTION-REUSE-20261118
+status: in_progress
+goal: Reduce repeated RAR projection in a single archived dossier without weakening independent source checks; compare exact evidence and elapsed time on actual archived corpus.
+definition_of_done:
+  - Scope reuse to one dossier and one immutable exact-byte container; no cross-run persisted cache.
+  - Keep parent/child rereads, receipt checks, fresh DP processing and mutation refusal.
+  - Test cache isolation, byte changes, cleanup on errors and exact replay parity; publish draft.
+completed:
+  - PR642 exact head 8e8b005b8ed56dc4290a710324b51cfd56d32428 CI 19/19 SUCCESS.
+  - Identified repeated full container projection in verified_inventory and verified_container_lineage.
+current_stage: scoped_projection_reuse
+remaining:
+  - Implement, run regression and paired replay, publish.
+last_verified_commit: 8e8b005b8ed56dc4290a710324b51cfd56d32428
+test_results: []
+resume_instruction: Do not deploy, bypass tool restriction, mutate production or change frozen coverage. Generic lexical improvements separate.
