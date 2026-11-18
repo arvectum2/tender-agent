@@ -1,0 +1,33 @@
+task_id: TA-STAGED-SETTLEMENT-20261118
+status: in_progress
+goal: Model monthly settlement, discretionary advance and withholding risk without
+  treating scenarios as entitlements.
+definition_of_done:
+- Read exact original contract, annex and notice; preserve different triggers and
+  exceptions.
+- Attest literal source parts and reject changed original or incomplete evidence.
+- Generate conditional staged and discretionary advance scenarios with explicit amounts,
+  dates, workdays and tax assumptions; reconcile PRICE01.
+- Model withheld receipt as distinct stress (not refundable security); test and replay.
+- Publish draft and checkpoint, no live mutation.
+completed:
+- PR649 17/19 CI success, two pending; read two original attachments 32616445632 and
+  original tax-loss clause 32616445795.
+- 17 exact draft/annex/notice paragraphs attested; 13 tax-loss paragraphs in 11 contiguous
+  groups attested. Initial replay failed safely because tax_loss_9 overlaps two chunks;
+  exact neighboring group fixed; final isolated replay exit 0.
+- Monthly/discretionary advance and unrecovered withholding scenarios implemented,
+  local CLI, same-run original checks. 244 regression PASS. Monthly peaks 14000/14000/21000,
+  advance 7000/7000/14000; net 51021.60. Withholding scenario 272000 end net, 345000/515000/628000
+  peaks. No live writes.
+current_stage: exact_ci_pending
+remaining:
+- Verify exact draft CI and previous PR649. Next current authorized profile evidence/application
+  document completeness and generalizable supported rule patterns; no live deployment.
+last_verified_commit: f3a9db9104547aa1346ae52eb879658a7f392690
+test_results:
+- 244 passed, 2 warnings; Ruff/diff PASS
+- Final original isolated replay exit 0; SHA256 79a5aaa22b01d9a5dbdc60430ffd21d7c140b8ea1db89c4827d0926db820c129
+resume_instruction: Check exact draft CI and PR649. Do not repeat index repair. Next
+  profile/application completeness. Source precedence and general extraction unresolved;
+  no current legal or GO claim.

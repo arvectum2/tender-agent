@@ -61,7 +61,7 @@ def _one_scenario(events, start, end, opening, delay):
         if event.category in _RECEIPTS:
             day+=timedelta(days=delay)
         dated[day].append(event)
-    end=max(end,max(dated))
+    end=max(end,max(dated,default=end))
     if (end-start).days>1095:
         raise ValueError('Scenario horizon too long')
     balance=0

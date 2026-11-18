@@ -87,6 +87,10 @@ def replay_container(runs,app,password):
             finally:
                 member.write_bytes(content)
             print('RI223_OWNER_INCOMPLETE_SOURCE_REFUSED',flush=True)
+        if os.environ.get('APR03B_STAGED_ACCEPTANCE')=='1':
+            from scripts.acceptance.apr03b_staged_fixture import replay_withholding
+
+            replay_withholding(run)
         assert inventory(directory)==saved
         parent=directory/'input'/meta['files'][1]['stored_name']
         blob=parent.read_bytes();parent.write_bytes(blob+b' ')

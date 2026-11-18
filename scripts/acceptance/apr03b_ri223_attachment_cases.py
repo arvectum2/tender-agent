@@ -80,6 +80,10 @@ def replay(runs):
         )
 
         measure_clause_ranking(runs,all_runs,ROOT,incomplete_refused)
+    if os.environ.get('APR03B_STAGED_ACCEPTANCE')=='1':
+        from scripts.acceptance.apr03b_staged_fixture import replay_staged
+
+        replay_staged(all_runs['32616445632'])
     run=all_runs['32616444788'];directory=runs/run
     url=f'/api/demo/tender-agent/workspace/runs/{run}/evidence-search'
     with TestClient(app) as c:
