@@ -373,12 +373,18 @@ class Runner:
             self.gate(lane);self.backup_ta(lane);sync(after)
             if self.state["lanes"][lane].get("archive_synced_count")!=len(after):
                 raise Blocked("member pilot direct sync did not reconcile")
-        if error:raise error
+        # Reconcile and publish every successfully indexed member even when
+        # a later member failed.  The original error still blocks the lane.
         cmd=[MI_PY,"-m","scripts.research.link_sibur_member_index",*map(str,args)]
         linked=json.loads(self.cmd(lane,"member registry",cmd,self.sibur,180))
         repeat=json.loads(self.cmd(lane,"member registry replay",cmd,self.sibur,180))
         if repeat["updated"] or any(repeat[k]!=linked[k] for k in ("members","procedure_member_pairs","source_links","registry_sha256")):
             raise Blocked("member registry replay mismatch")
+        if error:
+            self.update(lane,member_pilot_status="partial_reconciled_blocked",
+                        member_partial_registry=linked,member_partial_registry_replay=repeat,
+                        member_partial_new_receipts=len(after)-len(before))
+            raise error
         self.update(lane,index_inflight=False,member_pilot_status="completed",member_pilot_completed_sha256=self.member_plan_sha,member_pilot={"extracted_planned":planned(x,"planned"),"indexed_planned":planned(y,"planned"),"new_receipts":len(after)-len(before),"registry":linked,"replay":repeat})
         return True
 
