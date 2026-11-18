@@ -1,0 +1,16 @@
+task_id: TA-APR067-RI223-CLAUSE-RANKING-20261118
+status: in_progress
+goal: Test clause-aware retrieval for evaluation and contract domains against exact baseline, preserving complete literal lines and source attestation.
+definition_of_done:
+  - Keep default and frozen baseline unchanged; only two targeted domains in opt-in experiment.
+  - Distinguish criterion/winner and obligation/condition signals from generic mentions and valuation; no legal interpretation or inferred absence.
+  - Test synthetic controls, original verifier and tamper; actual same-corpus paired comparison with added/removed excerpts reviewed.
+  - Publish measured results and adoption decision separately; no production mutation.
+completed:
+  - PR644 exact CI 19/19, morphology negative result closed.
+current_stage: bounded_clause_selector
+remaining:
+  - Implement and test, run measured actual replay, inspect excerpts, record and publish.
+last_verified_commit: 3a3f0359d397d0d4644d9aae51f2f6dd4ee93583
+test_results: []
+resume_instruction: No production or index writes, no blocked deployment bypass. Do not call same corpus held-out gold.
