@@ -23,6 +23,8 @@ DB = "arvectum-local-e2e-db-1"
 TASK = "TA-AUTONOMOUS-RESEARCH-RUNNER-20261115"
 ARCHIVE_INDEX_BATCH_SIZE = 10
 ARCHIVE_INDEX_BATCH_TIMEOUT = 2050
+FILE_REVIEW_CIRCUIT_LIMIT = 5
+FILE_REVIEW_REASONS = {"CalledProcessError", "BadZipFile", "UnsupportedOriginalStructure"}
 STATS = """import os,json
 from arvectum_data_client import DataPlatformClient
 with DataPlatformClient(base_url=os.environ['AI_CORP_RAG_DATA_PLATFORM_BASE_URL'],api_key=os.environ['AI_CORP_RAG_DATA_PLATFORM_API_KEY'],timeout_seconds=60) as c:
@@ -57,6 +59,42 @@ def planned(output, key):
 
 class Blocked(RuntimeError):
     pass
+
+
+class FileReview(Blocked):
+    """Explicit file-scoped failure from a bounded, trusted subprocess."""
+    def __init__(self, step, mode, failures):
+        self.step, self.mode, self.failures = step, mode, tuple(failures)
+        super().__init__(f"{step}: file review required; see private log")
+
+
+def classify_file_review(step, args, returncode, stdout):
+    if returncode != 2 or step not in {
+        "member_index_batch_extract", "member_index_batch_index", "archive_index_batch"
+    }:
+        return None
+    try:
+        words = list(map(str, args))
+        mode = words[words.index("--mode") + 1]
+        lines = stdout.decode("utf-8", errors="strict").splitlines()
+    except (ValueError, IndexError, UnicodeError):
+        return None
+    if mode not in {"extract", "index"}:
+        return None
+    if step.startswith("member_") and step != "member_index_batch_" + mode:
+        return None
+    review = [line for line in lines if " review " in line]
+    if not 1 <= len(review) <= 2:
+        return None
+    pairs = []
+    for line in review:
+        match = re.fullmatch(r"([0-9a-f]{12}) review ([A-Za-z]+)", line)
+        if not match or match[2] not in FILE_REVIEW_REASONS:
+            return None
+        pairs.append((match[1], match[2]))
+    if len({prefix for prefix, _ in pairs}) != len(pairs):
+        return None
+    return FileReview(step, mode, pairs)
 
 
 class Runner:
@@ -107,6 +145,9 @@ class Runner:
             if step not in {"link_gpb_document_receipts", "persist_gpb_protocol_decisions"} or result.returncode:
                 log.write(result.stdout[-12000:] + result.stderr[-4000:])
         if result.returncode:
+            review = classify_file_review(step, args, result.returncode, result.stdout)
+            if review is not None and lane == "sibur":
+                raise review
             raise Blocked(f"{step}: exit {result.returncode}; see private log")
         return result.stdout
 
@@ -347,6 +388,90 @@ class Runner:
                                      "prior_state": state_saved.name})
         return new_digest, new["ready"]
 
+    def defer_file_reviews(self, error, plan_path, digest, kind, index, new_receipts):
+        """Under the mutation guard, after receipt reconciliation; no DB writes."""
+        lane = "sibur"
+        if not isinstance(error, FileReview) or kind not in {"member", "archive"}:
+            raise Blocked("unclassified file failure")
+        if plan_path.is_symlink() or hashlib.sha256(plan_path.read_bytes()).hexdigest() != digest:
+            raise Blocked("review plan integrity mismatch")
+        if self.state["lanes"][lane].get("archive_synced_count") != len(index):
+            raise Blocked("review requires synchronized index")
+        plan = read(plan_path)
+        expected = "sibur_member_index_plan_v1" if kind == "member" else "sibur_archive_index_bridge_v1"
+        if plan.get("schema") != expected:
+            raise Blocked("review plan schema mismatch")
+        base = self.root / "sibur-archive-expansion-v86"
+        registry_path = base / "member-index-registry-v1.json"
+        registry = read(registry_path)["rows"] if registry_path.exists() else {}
+        records = {}
+        for prefix, reason in error.failures:
+            candidates = [row for row in plan["ready"] if row["sha256"].startswith(prefix)]
+            if len(candidates) != 1:
+                raise Blocked("failed file identity ambiguous")
+            row = candidates[0]; h = row["sha256"]
+            if not re.fullmatch(r"[0-9a-f]{64}", h) or h in index or h in registry or reason not in FILE_REVIEW_REASONS:
+                raise Blocked("failed file already indexed or identity unverified")
+            if kind == "member":
+                if row["folder"] not in {"committed-members", "nested-members", "deep-members"}:
+                    raise Blocked("failed member source folder mismatch")
+                folder, size = base / row["folder"], row["bytes"]
+            else:
+                folder, size = self.root / "sibur-archive-discovery/categories/documents", row["size_bytes"]
+            source = folder / row["file"]; staged = self.docs / row["file"]
+            if source.parent != folder or staged.parent != self.docs or source.stem != h:
+                raise Blocked("failed file path mismatch")
+            for path in (source, staged):
+                if path.is_symlink() or not path.is_file() or path.stat().st_size != size:
+                    raise Blocked("failed file missing or size mismatch")
+                with path.open("rb") as f:
+                    if hashlib.file_digest(f, "sha256").hexdigest() != h:
+                        raise Blocked("failed file content hash mismatch")
+            preflight = self.docs / (row["file"] + ".dp-result.json")
+            records[h] = {
+                "sha256": h, "reason": "auto_deferred_file_processing_failure",
+                "error_class": reason, "phase": error.mode, "scope": kind,
+                "source": str(source.relative_to(self.root)), "source_bytes": size,
+                "source_preserved": True, "review_required": True,
+                "attempts": 1, "deferred_at": utc(), "plan_sha256": digest,
+                "plan_file": plan_path.name, "private_log": "autonomous-runner/sibur.log",
+                "preflight_file": preflight.name if preflight.is_file() else None,
+            }
+        # A transport error can also indicate an outage or late commit.
+        # Health and exact absence are mandatory before deferring a source.
+        for port in (8094, 8090):
+            health = self.cmd(lane, "file review service health",
+                              ["curl", "--noproxy", "*", "-fsS", "--max-time", "5",
+                               f"http://127.0.0.1:{port}/health"], self.sibur, 10)
+            if json.loads(health).get("status") != "ok":
+                raise Blocked("file review service unhealthy")
+        uris = ",".join("'content-sha256://" + h + "'" for h in records)
+        sql = ("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY; "
+               "SELECT coalesce(json_agg(r.canonical_uri),'[]'::json) FROM dp_resources r "
+               "WHERE r.collection_id='tender-agent:sibur-public-research' AND r.canonical_uri IN (" + uris + "); ROLLBACK;")
+        observed = self.cmd(lane, "file review exact DP absence",
+                            ["docker", "exec", "arvectum-postgres", "psql", "-X", "-qAt", "-U", "arvectum",
+                             "-d", "arvectum_data", "-v", "ON_ERROR_STOP=1", "-c", sql], self.sibur, 30)
+        if json.loads(observed) != []:
+            raise Blocked("failed file exists in DP; reconcile exact identity")
+        self.reconcile_index(index)
+        ledger = base / "member-index-queue-reviews-v1.json"
+        prior = read(ledger) if ledger.exists() else {"schema": "sibur_member_queue_structural_reviews_v1", "rows": {}}
+        if prior.get("schema") != "sibur_member_queue_structural_reviews_v1" or not isinstance(prior.get("rows"), dict):
+            raise Blocked("review ledger schema mismatch")
+        if any(not re.fullmatch(r"[0-9a-f]{64}", h) or row.get("sha256") != h
+               for h, row in prior["rows"].items()):
+            raise Blocked("review ledger identity mismatch")
+        if set(records) & set(prior["rows"]):
+            raise Blocked("deferred file returned to active queue")
+        atomic(ledger, {**prior, "rows": {**prior["rows"], **records}})
+        streak = 0 if new_receipts else self.state["lanes"][lane].get("file_review_failure_streak", 0) + 1
+        self.update(lane, index_inflight=False, file_review_failure_streak=streak,
+                    last_file_reviews=list(records.values()), file_review_total=len(prior["rows"]) + len(records))
+        if streak >= FILE_REVIEW_CIRCUIT_LIMIT:
+            raise Blocked("file review circuit breaker: repeated batches without successful index")
+        return list(records)
+
     def member_index_pilot(self, sync):
         """Single opt-in bounded batch, under the existing mutation lock."""
         lane="sibur";state=self.state["lanes"][lane]
@@ -374,7 +499,7 @@ class Runner:
             if self.state["lanes"][lane].get("archive_synced_count")!=len(after):
                 raise Blocked("member pilot direct sync did not reconcile")
         # Reconcile and publish every successfully indexed member even when
-        # a later member failed.  The original error still blocks the lane.
+        # a later member failed.  Only verified file-scoped failures may be deferred.
         cmd=[MI_PY,"-m","scripts.research.link_sibur_member_index",*map(str,args)]
         linked=json.loads(self.cmd(lane,"member registry",cmd,self.sibur,180))
         repeat=json.loads(self.cmd(lane,"member registry replay",cmd,self.sibur,180))
@@ -384,7 +509,18 @@ class Runner:
             self.update(lane,member_pilot_status="partial_reconciled_blocked",
                         member_partial_registry=linked,member_partial_registry_replay=repeat,
                         member_partial_new_receipts=len(after)-len(before))
-            raise error
+            if not getattr(self, "member_queue", False) or not isinstance(error, FileReview):
+                raise error
+            deferred = self.defer_file_reviews(error, self.member_plan, self.member_plan_sha,
+                                               "member", after, len(after)-len(before))
+            self.update(lane, member_pilot_status="completed_with_file_review",
+                        member_pilot_completed_sha256=self.member_plan_sha,
+                        member_pilot={"extracted_planned": 0, "indexed_planned": len(after)-len(before),
+                                      "new_receipts": len(after)-len(before), "deferred_count": len(deferred),
+                                      "deferred_sha256": deferred, "registry": linked, "replay": repeat})
+            return True
+        if len(after)>len(before):
+            self.update(lane, file_review_failure_streak=0)
         self.update(lane,index_inflight=False,member_pilot_status="completed",member_pilot_completed_sha256=self.member_plan_sha,member_pilot={"extracted_planned":planned(x,"planned"),"indexed_planned":planned(y,"planned"),"new_receipts":len(after)-len(before),"registry":linked,"replay":repeat})
         return True
 
@@ -405,7 +541,7 @@ class Runner:
         try:
             if not self.member_index_pilot(sync):return False
             receipt=self.state["lanes"][lane]["member_pilot"]
-            if not (receipt["extracted_planned"] or receipt["indexed_planned"] or receipt["registry"]["updated"]):raise Blocked("member queue made no progress")
+            if not (receipt["extracted_planned"] or receipt["indexed_planned"] or receipt["registry"]["updated"] or receipt.get("deferred_count", 0)):raise Blocked("member queue made no progress")
             self.update(lane,member_queue_cycles=state.get("member_queue_cycles",0)+1,member_queue_last_receipt=receipt)
             return True
         finally:
@@ -447,9 +583,16 @@ class Runner:
                 after=self.local_index();self.reconcile_index(after)
                 if after!=before:
                     self.gate(lane);self.backup_ta(lane);sync(after)
-                if error:raise error
+                if error:
+                    if not self.member_queue or not isinstance(error, FileReview):
+                        raise error
+                    self.defer_file_reviews(error, bridge, digest, "archive", after, len(after)-len(before))
+                    drained = False
+                else:
+                    if len(after)>len(before):
+                        self.update(lane, file_review_failure_streak=0)
+                    drained = not planned(x,"planned") and not planned(y,"planned")
                 self.update(lane,index_inflight=False,archive_cycles=self.state["lanes"][lane].get("archive_cycles",0)+1)
-                drained = not planned(x,"planned") and not planned(y,"planned")
             if drained:
                 # The archive collector is independent; when the fixed queue
                 # drains, refresh from committed receipts rather than exit.
