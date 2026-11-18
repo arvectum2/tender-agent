@@ -9,10 +9,11 @@ completed:
   - Worker blocked at NotImplementedError on ZIP method 9; actual source SHA 1ad9c2d0c8a5dc479eaddf8f4da99137a104cc10fabf73610ff41efc078371e4 identified among pending originals; 10707 existing evidence files preserved.
   - Four focused tests pass. Actual original method 9 ZIP returns partial_review, four method-9 records and two other unsupported members, zero extracted, exact SHA unchanged.
   - User explicitly approved applying exact implementation b1ba9534 to running worker branch. Real original test and 4 focused tests verified; CI last 17/19 with 2 quality running.
-current_stage: approved_worker_install
+  - Exact patch b1ba9534 cherry-picked under GPB and SIBUR executor locks to live worker branch at 2939897fcbc02f95e5ae2c832255fa346a10b438; clean worktree, exact three changed files match candidate. Installed tests 4/4 PASS, real method-9 original verified by actual scheduled Python interpreter; six review records, zero false extraction, source unchanged. Existing scheduled run 138 started normally and is still processing; no duplicate manual acquisition.
+current_stage: installed_scheduled_run_verification
 remaining:
-  - Apply exact patch under both worker locks, preserve rollback commit and verify installed behavior; observe existing scheduled run.
+  - Verify scheduled run 138 result and source review artifact when available; no forced duplicate run. Host patch rollback base 3623a4553e0d8f05501c7bbc0c73ccf68d14a68d; installation receipt in private SSD backup.
 last_verified_commit: b1ba9534f315a412eaf80ea9664f59d2a6c929f5
 test_results:
   - 4 passed; actual method 9 archive partial_review, source unchanged; diff PASS.
-resume_instruction: Apply approved exact patch only; no manual acquisition, DB mutation or unrelated changes. Verify scheduled offline scan.
+resume_instruction: Patch already installed; observe run 138 and genuine state/artifact, no repeated installation or manually started scan.
