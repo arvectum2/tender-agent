@@ -944,4 +944,5 @@ apr03b_ri223_contract_risk_20261118:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR03B-RI223-CONTRACT-RISK-20261118.yaml
   branch: feat/ta-apr03b-ri223-contract-risk-20261118
-  current_stage: verified_contract_clauses
+  current_stage: exact_ci_pending
+  last_verified_commit: 9b704d0c593c51f61289f22b8743a2ef3e508b6e
