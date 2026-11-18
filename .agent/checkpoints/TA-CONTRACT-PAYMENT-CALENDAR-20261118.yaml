@@ -1,0 +1,21 @@
+task_id: TA-CONTRACT-PAYMENT-CALENDAR-20261118
+status: in_progress
+goal: Generate conditional payment cash events from independently verified archived
+  contract terms and explicit milestone/workday assumptions
+definition_of_done:
+- Extract supported timing rules from verified paragraph group without inventing advance
+  or installment entitlement
+- Require explicit calendar coverage, no-refusal and document conditions, receipt
+  lag and payment amount
+- Reconcile generated events through existing PRICE01 dated ledger, reject missing
+  evidence and conflicting inputs
+- Test actual pinned archive replay and publish draft
+completed:
+- Exact PR648 CI 19/19 verified
+current_stage: source_bound_due_date_projection
+remaining:
+- Implement, test, replay, publish
+last_verified_commit: 56e52d54e723c0f850d35be3b5a6a458ccea7d0b
+test_results: []
+resume_instruction: No live writes. Narrow verified archived rule; do not claim universal
+  interpretation or current legal calendar.
