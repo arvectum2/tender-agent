@@ -723,4 +723,5 @@ technical_zip_review_20261118:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-TECHNICAL-ZIP-REVIEW-20261118.yaml
   branch: fix/ta-technical-zip-review-20261118
-  current_stage: member_review
+  current_stage: exact_ci_pending_and_install_gate
+  last_verified_commit: b1ba9534f315a412eaf80ea9664f59d2a6c929f5

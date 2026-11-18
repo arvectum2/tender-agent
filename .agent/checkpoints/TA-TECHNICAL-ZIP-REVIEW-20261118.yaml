@@ -7,9 +7,11 @@ definition_of_done:
   - Publish separate patch; live worker installation separately authorized.
 completed:
   - Worker blocked at NotImplementedError on ZIP method 9; actual source SHA 1ad9c2d0c8a5dc479eaddf8f4da99137a104cc10fabf73610ff41efc078371e4 identified among pending originals; 10707 existing evidence files preserved.
-current_stage: member_review
+  - Four focused tests pass. Actual original method 9 ZIP returns partial_review, four method-9 records and two other unsupported members, zero extracted, exact SHA unchanged.
+current_stage: exact_ci_pending_and_install_gate
 remaining:
-  - Implement and verify, publish.
-last_verified_commit: 3623a4553e0d8f05501c7bbc0c73ccf68d14a68d
-test_results: []
+  - Verify CI and obtain explicit installation approval before changing running shared worker.
+last_verified_commit: b1ba9534f315a412eaf80ea9664f59d2a6c929f5
+test_results:
+  - 4 passed; actual method 9 archive partial_review, source unchanged; diff PASS.
 resume_instruction: No live corpus writes, capture, worker change or DB mutation until explicit installation. Preserve prior shared worktree.
