@@ -1,0 +1,17 @@
+task_id: TA-STAGED-SETTLEMENT-20261118
+status: in_progress
+goal: Model monthly settlement, discretionary advance and withholding risk without treating scenarios as entitlements.
+definition_of_done:
+  - Read exact original contract, annex and notice; preserve different triggers and exceptions.
+  - Attest literal source parts and reject changed original or incomplete evidence.
+  - Generate conditional staged and discretionary advance scenarios with explicit amounts, dates, workdays and tax assumptions; reconcile PRICE01.
+  - Model withheld receipt as distinct stress (not refundable security); test and replay.
+  - Publish draft and checkpoint, no live mutation.
+completed:
+  - PR649 17/19 CI success, two pending; read two original attachments 32616445632 and original tax-loss clause 32616445795.
+current_stage: source_bound_staged_settlement
+remaining:
+  - Implement, test, actual replay, publish.
+last_verified_commit: d7d7d6f028845a4d9c555f009b15356fe33d85a9
+test_results: []
+resume_instruction: No production or index writes. Source-specific staged assumptions, no automatic legal resolution of inconsistent notice and draft terms.
