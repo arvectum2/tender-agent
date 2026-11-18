@@ -1013,7 +1013,7 @@ apr067_ri223_clause_ranking_20261118:
 
 index_linkage_20261118:
   task_id: TA-INDEX-LINKAGE-20261118
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-INDEX-LINKAGE-20261118.yaml
-  current_stage: live_scoped_apply_running
-  last_verified_commit: 82c6644f47cd45b1fea60a6893625b95c5c8b747
+  current_stage: live_linkage_verified
+  last_verified_commit: f8224e1dbd0e41942e756310132feab23165f8f0
