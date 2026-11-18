@@ -101,11 +101,25 @@ def _approved(*,customer_id,run_id,signatory,goods_used,approved_digest):
     return plan.model_copy(update={'owner_reviewed_plan':True}),scope
 
 
-def build_from_checklist(session,*,customer_id,root,run_id,approved_digest,templates,selections,
+def bundle_inputs_digest(*,approved_digest,templates,selections,cost=None,offer_terms=None,declaration_terms=None):
+    """Pin exact private input bytes and reviewed structured terms, not authority."""
+    return digest({'schema':'checklist-bundle-inputs-v1','plan_approval_digest':approved_digest,
+                   'templates':{k:{'bytes_sha256':hashlib.sha256(raw).hexdigest(),
+                                   'mapping':mapping.model_dump(mode='json')} for k,(raw,mapping) in templates.items()},
+                   'selections':selections,'cost':cost.model_dump(mode='json') if cost is not None else None,
+                   'offer_terms':offer_terms.model_dump(mode='json') if offer_terms is not None else None,
+                   'declaration_terms':declaration_terms.model_dump(mode='json') if declaration_terms is not None else None})
+
+
+def build_from_checklist(session,*,customer_id,root,run_id,approved_digest,approved_inputs_digest,templates,selections,
                          signatory='UNKNOWN',goods_used=None,cost=None,offer_terms=None,declaration_terms=None,now=None):
     now=_utc(now or datetime.now(UTC))
     plan,scope=_approved(customer_id=customer_id,run_id=run_id,signatory=signatory,
                          goods_used=goods_used,approved_digest=approved_digest)
+    inputs={'approved_digest': approved_digest,'templates': templates,'selections': selections,'cost': cost,
+                'offer_terms': offer_terms,'declaration_terms': declaration_terms}
+    if bundle_inputs_digest(**inputs)!=approved_inputs_digest:
+        raise ValueError('Exact bundle input approval required')
     raw,manifest=build_private_review_bundle(session,customer_id=customer_id,root=root,plan=plan,
         templates=templates,selections=selections,cost=cost,offer_terms=offer_terms,
         declaration_terms=declaration_terms,now=now)
@@ -114,9 +128,11 @@ def build_from_checklist(session,*,customer_id,root,run_id,approved_digest,templ
                       goods_used=goods_used,approved_digest=approved_digest)
     if again!=plan:
         raise ValueError('Reviewed plan changed during assembly')
+    if bundle_inputs_digest(**inputs)!=approved_inputs_digest:
+        raise ValueError('Reviewed bundle inputs changed during assembly')
     sha=hashlib.sha256(raw).hexdigest()
     gate=assess_coverage(raw,expected_sha256=sha,plan=plan,scope=scope)
-    return raw,{'archive_sha256':sha,'plan_approval_digest':approved_digest,
+    return raw,{'archive_sha256':sha,'plan_approval_digest':approved_digest,'inputs_approval_digest':approved_inputs_digest,
                 'manifest':manifest,'coverage_review':gate}
 
 

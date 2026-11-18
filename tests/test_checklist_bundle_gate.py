@@ -41,7 +41,10 @@ def build(fixture,**kwargs):
     args={'customer_id':'owner','root':root,'run_id':'fixture','approved_digest':p['approval_digest'],
           'templates':{'application_form':template('docx')},'selections':{},'signatory':'DIRECTOR',
           'goods_used':False,'cost':cost(),'now':NOW}
-    return gate.build_from_checklist(s,**{**args,**kwargs})
+    args.update(kwargs)
+    args.setdefault('approved_inputs_digest',gate.bundle_inputs_digest(**{k:args.get(k) for k in
+        ('approved_digest','templates','selections','cost','offer_terms','declaration_terms')}))
+    return gate.build_from_checklist(s,**args)
 
 
 def test_full_projection_and_gap_report(fixture,observed):
@@ -188,3 +191,30 @@ def test_output_path_role_mismatch(fixture,observed):
     altered=out.getvalue()
     with pytest.raises(ValueError,match='path'):
         gate.assess_coverage(altered,expected_sha256=hashlib.sha256(altered).hexdigest(),plan=plan,scope=p['scope'])
+
+
+def test_bundle_input_approval_binds_every_input(fixture,observed):
+    p=preview()
+    args={'approved_digest':p['approval_digest'],'templates':{'application_form':template('docx')},
+          'selections':{},'cost':cost()}
+    sha=gate.bundle_inputs_digest(**args)
+    _,out=build(fixture,**args,approved_inputs_digest=sha)
+    assert out['inputs_approval_digest']==sha
+    for change in ({'templates':{}},{'selections':{'director_appointment':'director_appointment'}},
+                   {'cost':None},{'templates':{'application_form':template('xlsx')}}):
+        with pytest.raises(ValueError,match='input approval'):
+            build(fixture,**{**args,**change},approved_inputs_digest=sha)
+
+
+def test_terms_digest_changes_on_exact_wording(observed):
+    from test_reviewed_commercial_drafts import declarations, offer
+
+    p=preview()
+    args={'approved_digest':p['approval_digest'],'templates':{},'selections':{},
+          'cost':cost(),'offer_terms':offer(),'declaration_terms':declarations()}
+    sha=gate.bundle_inputs_digest(**args)
+    d=declarations().model_copy(deep=True)
+    d.statements[0].exact_wording+=' changed'
+    assert gate.bundle_inputs_digest(**{**args,'declaration_terms':d})!=sha
+    o=offer().model_copy(update={'vat_basis':'changed'})
+    assert gate.bundle_inputs_digest(**{**args,'offer_terms':o})!=sha
