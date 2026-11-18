@@ -21,11 +21,11 @@ from src.modules.document_store.models import ArtifactVersion, DocumentArtifact
 from src.shared.errors import NotFoundError
 
 _KIND_GROUP={'registry':'IDENTITY','sme':'OTHER','tax':'OTHER','license':'LICENSE',
-             'certificate':'CERTIFICATE','sro':'OTHER','experience':'EXPERIENCE'}
+             'certificate':'CERTIFICATE','sro':'OTHER','experience':'EXPERIENCE','authority':'IDENTITY','rights':'OTHER'}
 _DOC_TYPES={'registry':{'STATUTORY','REQUISITES'},'sme':{'STATUTORY','REQUISITES'},
             'tax':{'REQUISITES','STATUTORY'},'license':{'LICENSE'},'certificate':{'CERTIFICATE'},
-            'sro':{'CERTIFICATE'},'experience':{'EXPERIENCE'}}
-_MAX_AGE={'registry':30,'sme':30,'tax':30,'license':90,'certificate':90,'sro':90,'experience':90}
+            'sro':{'CERTIFICATE'},'experience':{'EXPERIENCE'},'authority':{'STATUTORY'},'rights':{'LICENSE','CERTIFICATE','STATUTORY'}}
+_MAX_AGE={'registry':30,'sme':30,'tax':30,'license':90,'certificate':90,'sro':90,'experience':90,'authority':30,'rights':90}
 _CODE=r'^[a-z0-9][a-z0-9_:-]{0,63}$'
 _SHA=r'^[a-f0-9]{64}$'
 
