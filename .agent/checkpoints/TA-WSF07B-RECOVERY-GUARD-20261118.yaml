@@ -10,10 +10,12 @@ completed:
   - Candidate read-only verifier 14/14 against current real runtime, exact owner receipt, manifest hash, release, scope, expiry and anonymous denial. 23 focused tests pass. No valid token used, no real Workspace payload retrieved.
   - Daily job started automatically at 08:00 but exit 127: missing Docker CLI PATH and legacy checkout. No run row written; existing daily env with canonical release passes read-only DB binding and schema. No live retry.
   - Previous PR637 exact head d3d8dc49 19/19 SUCCESS; operational install not yet executed.
-current_stage: daily_launcher_candidate_and_install_gate
+  - Pinned daily runner implemented, minimal launchd-like env and real DB read-only binding/revision preflight PASS twice. Kernel flock private v2 path, legacy 0755 parent accepted only non-writable by others, no Docker compose. 29 focused tests pass after path fix; earlier broad 47 passed.
+current_stage: exact_ci_pending_and_install_gate
 remaining:
-  - Build and verify canonical release daily launcher in preflight-only mode; install host scripts only after explicit operational approval; do not change admission or backend. SIBUR separate.
-last_verified_commit: 5b60bc2df7ce3fc9b3ca39618d825a390a4f9217
+  - Verify updated PR637 CI; install verifier and daily runner only after explicit operational approval, no live collection. SIBUR PR639 separate operator install.
+last_verified_commit: 3845fd62ac2bfe25fa24590e5d63c890a731c647
 test_results:
   - 23 focused tests PASS, Ruff/diff PASS; real candidate verifier 14/14 OK.
+  - 29 focused tests after lock path fix, previous 47 broader tests before fix; exact daily --preflight on real host passes.
 resume_instruction: Keep live admission, launcher and DB unchanged. Review read-only verifier candidate; no credential access or real Workspace payload.
