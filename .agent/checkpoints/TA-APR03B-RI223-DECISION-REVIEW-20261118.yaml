@@ -1,0 +1,14 @@
+task_id: TA-APR03B-RI223-DECISION-REVIEW-20261118
+status: in_progress
+goal: Unify independently verified archived RI223 dossier, qualification, costs and contract evidence via existing Decision Core, no external action or actual decision.
+definition_of_done:
+  - Use one local explicit review, recheck source inventory before returning, preserve every archived-only scope and unknown; existing core yields NEEDS_REVIEW.
+  - Actual archive replay, fail-closed tests and draft PR.
+completed:
+  - PR638 exact CI 19/19; recovery and technical worker separate PR637/639, operational installation pending.
+current_stage: decision_core_adapter
+remaining:
+  - Implement, test and publish; current company profile, current source, actual costs and independent review remain separate.
+last_verified_commit: 75dfa5ff06acfcd283626917b2737221bbba38c4
+test_results: []
+resume_instruction: No live procurement, DB mutation or admission changes. Preserve actual owner review and operational branches.

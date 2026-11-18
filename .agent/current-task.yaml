@@ -941,8 +941,15 @@ apr03b_ri223_fit_20261117:
 
 apr03b_ri223_contract_risk_20261118:
   task_id: TA-APR03B-RI223-CONTRACT-RISK-20261118
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR03B-RI223-CONTRACT-RISK-20261118.yaml
   branch: feat/ta-apr03b-ri223-contract-risk-20261118
-  current_stage: exact_ci_pending
+  current_stage: verified_pending_merge
   last_verified_commit: 9b704d0c593c51f61289f22b8743a2ef3e508b6e
+
+apr03b_ri223_decision_review_20261118:
+  task_id: TA-APR03B-RI223-DECISION-REVIEW-20261118
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR03B-RI223-DECISION-REVIEW-20261118.yaml
+  branch: feat/ta-apr03b-ri223-decision-review-20261118
+  current_stage: decision_core_adapter
