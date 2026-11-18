@@ -1036,4 +1036,5 @@ contract_payment_calendar_20261118:
   task_id: TA-CONTRACT-PAYMENT-CALENDAR-20261118
   status: in_progress
   checkpoint: .agent/checkpoints/TA-CONTRACT-PAYMENT-CALENDAR-20261118.yaml
-  current_stage: source_bound_due_date_projection
+  current_stage: exact_ci_pending
+  last_verified_commit: c6da37e972297c1c969e544c099002e18cdfbadd
