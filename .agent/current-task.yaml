@@ -884,8 +884,8 @@ wsf07b_exact_bearer_20261117:
 
 wsf07b_recovery_guard_20261118:
   task_id: TA-WSF07B-RECOVERY-GUARD-20261118
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-WSF07B-RECOVERY-GUARD-20261118.yaml
   branch: fix/ta-wsf07b-recovery-guard-20261118
-  current_stage: approved_host_install
+  current_stage: installed_and_verified
   last_verified_commit: 3845fd62ac2bfe25fa24590e5d63c890a731c647
