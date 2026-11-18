@@ -1071,4 +1071,5 @@ private_draft_bundle_20261118:
   task_id: TA-PRIVATE-DRAFT-BUNDLE-20261118
   status: in_progress
   checkpoint: .agent/checkpoints/TA-PRIVATE-DRAFT-BUNDLE-20261118.yaml
-  current_stage: private_bundle_assembly
+  current_stage: exact_ci_pending
+  last_verified_commit: c738147d74add61960b0a223cac19154dbf3741f

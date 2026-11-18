@@ -1,16 +1,35 @@
 task_id: TA-PRIVATE-DRAFT-BUNDLE-20261118
 status: in_progress
-goal: Private review ZIP assembled from explicit scoped plan, rendered forms, selected candidate PDFs, scenario economics, inventory and gaps.
+goal: Private review ZIP assembled from explicit scoped plan, rendered forms, selected
+  candidate PDFs, scenario economics, inventory and gaps.
 definition_of_done:
-  - Use exact reviewed template map and current tenant facts; missing forms/fields stay unresolved.
-  - Include only explicitly selected positive documentary candidates whose current bytes match; respect alternatives/conditions.
-  - Separate internal scenario economics and provenance from draft forms; no submission-ready or binding price claim.
-  - Bounded immutable archive and verify inventory SHA; synthetic disposable DB and actual OOXML/PDF/ZIP roundtrip; publish draft and checkpoint.
+- Use exact reviewed template map and current tenant facts; missing forms/fields stay
+  unresolved.
+- Include only explicitly selected positive documentary candidates whose current bytes
+  match; respect alternatives/conditions.
+- Separate internal scenario economics and provenance from draft forms; no submission-ready
+  or binding price claim.
+- Bounded immutable archive and verify inventory SHA; synthetic disposable DB and
+  actual OOXML/PDF/ZIP roundtrip; publish draft and checkpoint.
 completed:
-  - Exact PR652 and PR653 CI 19/19 each. Earlier private replay remains blocked and not retried.
-current_stage: private_bundle_assembly
+- Exact PR652 and PR653 CI 19/19 each. Earlier private replay remains blocked and
+  not retried.
+- Private scoped plan ZIP builder with exact template maps and tenant-scoped positive
+  attachment candidates captured during byte integrity check, internal PRICE01 scenario,
+  per-field provenance, inventory and gaps; verifier against separately retained archive
+  digest.
+- Synthetic disposable DB and DOCX/XLSX/ZIP roundtrip, synthetic PDF header fixture.
+  9 archive members and 10 gaps asserted. 105 tests passed, including 17 new; final
+  exit 0. Ruff/diff PASS.
+current_stage: exact_ci_pending
 remaining:
-  - Implement, test, publish draft.
-last_verified_commit: e7a6020e6f67f1349b65048c0455c6464b34e268
-test_results: []
-resume_instruction: Independent synthetic development only. No production imports, publication or private replay.
+- Check exact draft CI. Next approved price/field mapping and declaration review,
+  separate submission-only export gate. Actual private acceptance remains blocked
+  and must not be retried or bypassed. No production.
+last_verified_commit: c738147d74add61960b0a223cac19154dbf3741f
+test_results:
+- 105 passed, 30 warnings; exit 0; Ruff/diff PASS
+- Final log SHA256 c9a50aa460fe44a70fd4063ee5175dbb43130538b5e1c4785edc734cfbb6aa94
+resume_instruction: Check exact draft CI, continue independent approved-price and
+  declaration review design on synthetic data. Do not rerun blocked corporate packet
+  acceptance. No real submission or production deployment.
