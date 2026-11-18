@@ -1,0 +1,15 @@
+task_id: TA-AUTHENTICATED-APPLICATION-REVIEW-20261119
+status: in_progress
+goal: Authenticated owner/admin internal review of exact server-built private application ZIP with current evidence recheck.
+definition_of_done:
+  - Server-generated immutable bounded preview, scoped to tenant/run/member; exact ZIP and three approval digests; explicit confirmation and current evidence recheck.
+  - Persist immutable decision actor/time, refuse foreign/revoked/expired/stale approvals, bound storage, feature disabled by default.
+  - UI preview/download/confirm/history, isolated HTTP/SQLite tests and migration test; draft publication.
+completed:
+  - PR661 exact CI 19/19, consolidated branch selected; no duplicate PRs or previous blocked replay.
+current_stage: authenticated_preview_and_decision
+remaining:
+  - Implement and verify.
+last_verified_commit: 9237e1e9d7c65c3e0f95074688d4bcc1344bc193
+test_results: []
+resume_instruction: No production database mutation or deployment, no real applicant approval or private replay.
