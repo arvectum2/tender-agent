@@ -1,0 +1,16 @@
+task_id: TA-APR03B-RI223-CONSOLIDATION-20261118
+status: in_progress
+goal: Consolidate nine reviewed RI223 development PRs into a single main-targeted draft with combined replay and explicit boundaries.
+definition_of_done:
+  - exact branch ancestry and nine prior CI results verified; preserve WSF07B and untouched main
+  - combined genuine archived intake, original DP, Chromium and local decision replay; synthetic ZIP explicitly labeled
+  - consolidate existing draft PR640 against main, no production or automatic merge
+completed:
+  - PR629/630/632/633/634/635/636/638/640 each exact head CI 19/19; current main 3b37fb69 is ancestor, WSF07B diff empty.
+  - Recovery PR637/639 exact heads green, installed successfully, scheduled SIBUR 12179/12179 status finished; daily preflight passed, next natural run not yet attempted.
+current_stage: combined_replay_and_main_review
+remaining:
+  - Run combined replay, record exact evidence and retarget PR640 after success; review exact CI against main.
+last_verified_commit: 6f792e612ab1a422bf9031104df3c30c47342603
+test_results: []
+resume_instruction: No automatic merge, production mutation, live source acquisition, admission change or commercial GO. Continue with recorded replay log and exact CI.
