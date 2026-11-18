@@ -669,3 +669,55 @@ def test_price_extended_offer_private_stateless_and_exact_auth_scope(client, aut
         pilot_auth_enabled=True, pilot_auth_username='test-operator', pilot_auth_password='test-secret-unique-12345',
         pilot_auth_public_paths='/health,' + url))
     assert client.post(url, headers=auth, json=payload).status_code == 503
+
+
+def test_application_review_private_route(client, auth, monkeypatch):
+    from src.modules.tender_operator_agent_demo import (
+        workspace_application_review as review,
+    )
+
+    route='/api/demo/tender-agent/workspace/runs/fixture/application-review'
+    calls=[]
+    def observe(run):
+        calls.append(run)
+        return {'status':'UNKNOWN','procurement_number':'32616444788','source_groups':{}}
+    monkeypatch.setattr(review,'observe_application',observe)
+    assert client.post(route,json={}).status_code==401
+    for payload in ({'goods_used':'false'},{'signatory':'OTHER'},{'customer_id':'foreign'}):
+        assert client.post(route,headers=auth,json=payload).status_code==422
+    response=client.post(route,headers=auth,json={})
+    assert response.status_code==200 and 'no-store' in response.headers['cache-control']
+    assert response.json()['status']=='UNKNOWN' and response.json()['company_profile_checked'] is False
+    assert calls==['fixture']
+    monkeypatch.setattr(operator_router,'get_settings',lambda:Settings(
+        pilot_auth_enabled=True,pilot_auth_username='test-operator',pilot_auth_password='test-secret-unique-12345',
+        pilot_auth_public_paths='/health,'+route))
+    assert client.post(route,headers=auth,json={}).status_code==503
+    assert calls==['fixture']
+
+
+def test_application_review_source_projection(client,auth,monkeypatch):
+    from src.modules.tender_operator_agent_demo import (
+        workspace_application_review as review,
+    )
+    from src.modules.tender_operator_agent_demo.ri223_application_source import (
+        SOURCE_PARAGRAPHS,
+    )
+
+    groups={sha:{k:[{'quote':q,'original_sha256':sha,'file_id':f'FILE-{i+1:02}',
+        'chunk_id':k,'private_path':'not exported'}] for k,q in items.items()} for i,(sha,items) in enumerate(SOURCE_PARAGRAPHS.items())}
+    packet={'status':'ARCHIVED_QUOTATION_CHECKLIST_REVIEW_ONLY','procurement_number':'32616444788','source_groups':groups}
+    monkeypatch.setattr(review,'observe_application',lambda _:packet)
+    route='/api/demo/tender-agent/workspace/runs/fixture/application-review'
+    result=client.post(route,headers=auth,json={'signatory':'DIRECTOR','goods_used':False}).json()
+    rows={r['code']:r for r in result['rows']}
+    assert len(rows)==9 and rows['power_of_attorney']['applicability']=='NOT_TRIGGERED_IN_SCENARIO'
+    assert rows['software_distribution_rights']['applicability']=='OPTIONAL_EVIDENCE_NOT_OPTIONAL_RIGHTS'
+    assert all(r['citations'] for r in rows.values()) and 'private_path' not in str(result)
+    assert result['recommendation']=='DEFER' and not result['application_ready']
+    packet['status']='INCOMPLETE_REVIEWED_SOURCE'
+    assert client.post(route,headers=auth,json={}).json()['rows']==[]
+    packet.update(status='ARCHIVED_NOTIFICATION_NOT_APPLICATION',
+        source_groups={'f'*64:{'notice':[{'quote':'Synthetic notice only','original_sha256':'f'*64,'file_id':'FILE-01','chunk_id':'fixture'}]}})
+    out=client.post(route,headers=auth,json={}).json()
+    assert out['rows']==[] and len(out['notification_sources'])==1 and not out['external_action_allowed']

@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const api = '/api/demo/tender-agent';
-  const state = { runId: null, poll: null, busy: false, registryOffset: 0, registryTotal: 0, registryQuery: '', runReady: false, searchParams: null, searchCursor: null, seenNumbers: [], quoteFileKey: null, copilotEpoch: 0, copilotSearchEpoch: 0, copilotAnswerEpoch: 0, costEpoch: 0 };
+  const state = { runId: null, poll: null, busy: false, registryOffset: 0, registryTotal: 0, registryQuery: '', runReady: false, searchParams: null, searchCursor: null, seenNumbers: [], quoteFileKey: null, copilotEpoch: 0, copilotSearchEpoch: 0, copilotAnswerEpoch: 0, applicationReviewEpoch: 0, costEpoch: 0 };
   const $ = id => document.getElementById(id);
   const node = (tag, cls = '', content = null) => {
     const el = document.createElement(tag);
@@ -55,6 +55,7 @@
     $('copilot-submit').disabled = value;
     $('copilot-search-submit').disabled = value;
     $('copilot-answer-submit').disabled = value;
+    $('application-review-submit').disabled = value;
   }
   function tab(name) {
     const labels = {new:'Новый анализ',history:'История анализов',registry:'База закупок',prices:'Цены и протоколы'};
@@ -238,6 +239,9 @@
     if (!state.runId) return;
     const id = encodeURIComponent(state.runId);
     show('copilot-panel',false);
+    show('application-review-panel',false);
+    state.applicationReviewEpoch++;wipe($('application-review-result'));
+    $('application-signatory').value='UNKNOWN';$('application-goods').value='UNKNOWN';
     state.copilotEpoch++;wipe($('copilot-result'));$('copilot-percent').value='';
     state.copilotSearchEpoch++;wipe($('copilot-search-result'));$('copilot-search').value='';
     state.copilotAnswerEpoch++;wipe($('copilot-answer-result'));$('copilot-answer-question').value='';
@@ -267,6 +271,7 @@
     for (const warning of [...(run.warnings || []),...(run.limitations || [])].slice(0,8)) paragraph($('run-warnings'), '⚠ ' + warning);
     renderFiles(run);
     show('copilot-panel',Array.isArray(run.files) && run.files.length>0);
+    show('application-review-panel',Array.isArray(run.files) && run.files.length>0);
     await loadEvents();
     await loadReport(run);
     return run;
@@ -303,6 +308,53 @@
       root.append(item);
     }
   }
+  function applicationCitations(root, citations) {
+    for(const c of citations) {
+      paragraph(root,c.group+' · '+c.file_id+' · чанк '+c.chunk_id+' · SHA-256 оригинала '+c.original_sha256,'citation');
+      paragraph(root,c.quote);
+    }
+  }
+  function validApplicationCitation(c) {
+    return c && typeof c.group==='string' && typeof c.file_id==='string' && typeof c.chunk_id==='string' &&
+      typeof c.quote==='string' && /^[a-f0-9]{64}$/.test(c.original_sha256);
+  }
+  async function reviewApplication(event) {
+    event.preventDefault();
+    if(!state.runId || state.busy) return;
+    const runId=state.runId,epoch=++state.applicationReviewEpoch,root=$('application-review-result');
+    const choice=$('application-goods').value;
+    const body={signatory:$('application-signatory').value,goods_used:choice==='UNKNOWN'?null:choice==='YES'};
+    wipe(root);setBusy(true);
+    try {
+      const data=await json(api+'/workspace/runs/'+encodeURIComponent(runId)+'/application-review',
+        {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+      if(state.runId!==runId || epoch!==state.applicationReviewEpoch) return;
+      if(data.contract!=='archived_application_review_v1'||data.run_id!==runId||data.signatory!==body.signatory||
+         data.goods_used!==body.goods_used||data.application_ready!==false||data.company_profile_checked!==false||
+         data.external_action_allowed!==false||data.recommendation!=='DEFER') throw new Error('Unexpected review response');
+      if(data.status==='ARCHIVED_NOTIFICATION_NOT_APPLICATION' && Array.isArray(data.notification_sources) &&
+        data.notification_sources.length && data.notification_sources.every(validApplicationCitation)) {
+        paragraph(root,'Архивное извещение носит уведомительный характер. Заявка по нему не формируется.','unknown');
+        applicationCitations(root,data.notification_sources);return;
+      }
+      if(data.status!=='ARCHIVED_QUOTATION_CHECKLIST_REVIEW_ONLY'||!Array.isArray(data.rows)||data.rows.length!==9||
+        new Set(data.rows.map(r=>r.code)).size!==9||!data.rows.every(r=>Array.isArray(r.citations)&&r.citations.length&&r.citations.every(validApplicationCitation))) {
+        paragraph(root,'UNKNOWN · Проверенный чек-лист требований недоступен.','unknown');return;
+      }
+      const labels={REQUIRED:'Обязательно по изученному образцу',REQUIRED_IN_SCENARIO:'Требуется в сценарии',
+        NOT_TRIGGERED_IN_SCENARIO:'Не применяется в выбранном сценарии',CONDITIONAL_UNKNOWN:'Условие не определено',
+        OPTIONAL_EVIDENCE_NOT_OPTIONAL_RIGHTS:'Альтернативные документы; само право требуется',REVIEW_REQUIRED:'Требуется дополнительная проверка'};
+      paragraph(root,'Архивный чек-лист · '+data.rows.length+' групп требований · DEFER. Профиль не проверен.','unknown');
+      for(const r of data.rows) {
+        const item=node('details','evidence-item');
+        item.append(node('summary','',r.title+' — '+(labels[r.applicability]||'UNKNOWN')));
+        applicationCitations(item,r.citations);root.append(item);
+      }
+      paragraph(root,'Актуальная редакция, полнота требований и готовность заявки не подтверждены.','help-text');
+    }catch(error){if(state.runId===runId&&epoch===state.applicationReviewEpoch){wipe(root);paragraph(root,'UNKNOWN · Проверка не выполнена.','unknown');}}
+    finally{setBusy(false);}
+  }
+
   async function answerEvidenceQuestion(event) {
     event.preventDefault();
     if (!state.runId || state.busy) return;
@@ -1105,6 +1157,8 @@
   });
   $('search-next').addEventListener('click',()=>{if(state.searchCursor)void loadSearchPage(state.searchCursor);});
   $('append-files-form').addEventListener('submit',appendMissingFiles);
+  for(const id of ['application-signatory','application-goods']) $(id).addEventListener('change',()=>{state.applicationReviewEpoch++;wipe($('application-review-result'));});
+  $('application-review-form').addEventListener('submit',event=>void reviewApplication(event));
   $('copilot-question').addEventListener('change',()=>{show('copilot-percent-label',$('copilot-question').value==='nmck_percent');wipe($('copilot-result'));state.copilotEpoch++;});
   $('copilot-percent').addEventListener('input',()=>{wipe($('copilot-result'));state.copilotEpoch++;});
   $('copilot-form').addEventListener('submit',event=>void answerEvidenceQuestion(event));
