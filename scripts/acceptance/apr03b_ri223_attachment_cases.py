@@ -68,6 +68,12 @@ def replay(runs):
         from scripts.quality.apr067_ri223_projection_reuse import measure
 
         measure(runs,ROOT)
+    if os.environ.get('APR067_INFLECTION_SEARCH')=='1':
+        from scripts.quality.apr067_ri223_inflection_search import (
+            measure as measure_inflection,
+        )
+
+        measure_inflection(runs,all_runs,ROOT,incomplete_refused)
     run=all_runs['32616444788'];directory=runs/run
     url=f'/api/demo/tender-agent/workspace/runs/{run}/evidence-search'
     with TestClient(app) as c:
