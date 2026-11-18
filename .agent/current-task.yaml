@@ -952,4 +952,5 @@ apr03b_ri223_decision_review_20261118:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR03B-RI223-DECISION-REVIEW-20261118.yaml
   branch: feat/ta-apr03b-ri223-decision-review-20261118
-  current_stage: decision_core_adapter
+  current_stage: exact_ci_pending
+  last_verified_commit: c318d22574a633b88f13b56ba09e4899ed4bbe60

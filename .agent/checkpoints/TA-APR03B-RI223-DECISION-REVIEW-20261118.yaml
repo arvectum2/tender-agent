@@ -6,9 +6,13 @@ definition_of_done:
   - Actual archive replay, fail-closed tests and draft PR.
 completed:
   - PR638 exact CI 19/19; recovery and technical worker separate PR637/639, operational installation pending.
-current_stage: decision_core_adapter
+  - Integrated local owner review with existing Decision Core, nine archived dossier domains and nine explicit unresolved gates; no current-source or owner GO/NO_GO inference.
+  - Real case isolated DP replay exit 0, NEEDS_REVIEW and DEFER, 19/19 members, 14/14 verified contract clauses, missing originals refused. 56 focused tests PASS, 8 skipped; Ruff/diff PASS.
+current_stage: exact_ci_pending
 remaining:
-  - Implement, test and publish; current company profile, current source, actual costs and independent review remain separate.
-last_verified_commit: 75dfa5ff06acfcd283626917b2737221bbba38c4
-test_results: []
+  - Verify exact draft CI. Consolidate and integrate reviewed stack separately; actual current supplier profile, source, costs, lot applicability and independent review remain open; operational install requires permission.
+last_verified_commit: c318d22574a633b88f13b56ba09e4899ed4bbe60
+test_results:
+  - 56 passed, 8 skipped, 2 warnings.
+  - RI223_INTEGRATED_DECISION_PASS NEEDS_REVIEW 9, archive replay exit 0; original sources untouched.
 resume_instruction: No live procurement, DB mutation or admission changes. Preserve actual owner review and operational branches.
