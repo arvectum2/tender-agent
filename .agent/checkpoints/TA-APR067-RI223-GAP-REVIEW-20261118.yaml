@@ -1,0 +1,15 @@
+task_id: TA-APR067-RI223-GAP-REVIEW-20261118
+status: in_progress
+goal: Review all 16 frozen unanswered RI223 domain observations and distinguish literal evidence, referrals and unknowns.
+definition_of_done:
+  - Preserve prior 29/45 baseline; revalidate exact sources and review all 16 gaps.
+  - Expose optional archived summing-up and application order, never imply current eligibility.
+  - Actual isolated DP replay, focused tests and draft PR.
+completed:
+  - Read and SHA-verified eight direct originals and exact selected XML of four cases. Three noncompetitive controls and one quotation external regulation referral.
+current_stage: source_bound_gap_classifier
+remaining:
+  - Implement, replay, test and publish.
+last_verified_commit: b6b9ee4b0f576782238b47bec26912c097bf0d77
+test_results: []
+resume_instruction: Frozen baseline unchanged; no independent gold, live acquisition, production, DB or admission change.
