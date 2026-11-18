@@ -1,5 +1,5 @@
 task_id: TA-STAGED-SETTLEMENT-20261118
-status: in_progress
+status: completed
 goal: Model monthly settlement, discretionary advance and withholding risk without
   treating scenarios as entitlements.
 definition_of_done:
@@ -20,10 +20,9 @@ completed:
   local CLI, same-run original checks. 244 regression PASS. Monthly peaks 14000/14000/21000,
   advance 7000/7000/14000; net 51021.60. Withholding scenario 272000 end net, 345000/515000/628000
   peaks. No live writes.
-current_stage: exact_ci_pending
-remaining:
-- Verify exact draft CI and previous PR649. Next current authorized profile evidence/application
-  document completeness and generalizable supported rule patterns; no live deployment.
+- Exact draft head 071c9857bf93b6d5a6dba62d1970d0f7dfc1ea15 CI 19/19 SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
 last_verified_commit: f3a9db9104547aa1346ae52eb879658a7f392690
 test_results:
 - 244 passed, 2 warnings; Ruff/diff PASS

@@ -1,0 +1,33 @@
+task_id: TA-PROFILE-QUALIFICATION-READINESS-20261118
+status: in_progress
+goal: Read-only supplier qualification readiness from tenant versioned facts and source-attested
+  requirements; verify Arvectum historical profile safely in isolated SQLite.
+definition_of_done:
+- Keep historical identity, screening preferences and current qualification evidence
+  distinct.
+- Scope latest claims to tenant, identity, requirement, assessment date, expiry, reviewable
+  document versions; no fallback or false legal pass.
+- Attest actual archived SME requirements; demonstrate historical Arvectum status
+  remains unknown; synthetic positive and negative lifecycle cases.
+- Local tests and isolated original replay, publish draft and checkpoint.
+completed:
+- PR649 19/19 SUCCESS, PR650 17/19 success two pending. Existing historical registration
+  packet checksum verified; no original transfer, no authorized live customer.
+- PR649 and PR650 exact CI 19/19. Read-only tenant documentary readiness, current
+  scoped owner claims, expiry, latest artifact version, tenant-local PDF digest; no
+  semantic/legal pass.
+- 'Actual private historical packet digest verified, disposable SQLite, two historical
+  facts. Three original archive SME cases pass and all defer: 32616445632, 32616445866,
+  32616445795. Seven evidence gaps, no preferences. 165 regression PASS incl 19 focused,
+  8 skips, 16 warnings.'
+current_stage: exact_ci_pending
+remaining:
+- Verify exact draft CI. Next source-bound application document completeness and separately
+  authorized current profile intake. No live writes.
+last_verified_commit: 0da994c661a462a0378252d55fae15ee544fa9b8
+test_results:
+- 165 passed, 8 skipped, 16 warnings; Ruff/diff PASS.
+- Three actual archived SME/profile cases PASS; isolated replay exit 0, SHA256 7676ad9e88ee73da4e9f97fcbeacfea0718c658ff5891604db1c135ef1d3b7a0
+resume_instruction: Check exact draft CI. Next distinguish procurement input docs
+  from bidder deliverables and build source-bound application checklist; actual profile
+  activation still requires authorization and current evidence.

@@ -91,6 +91,10 @@ def replay_container(runs,app,password):
             from scripts.acceptance.apr03b_staged_fixture import replay_withholding
 
             replay_withholding(run)
+        if os.environ.get('APR04_PROFILE_READINESS_ACCEPTANCE')=='1':
+            from scripts.acceptance.apr04_archived_profile_case import replay_profile
+
+            replay_profile(run)
         assert inventory(directory)==saved
         parent=directory/'input'/meta['files'][1]['stored_name']
         blob=parent.read_bytes();parent.write_bytes(blob+b' ')
