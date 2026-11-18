@@ -1,5 +1,5 @@
 task_id: TA-APR067-RI223-GAP-REVIEW-20261118
-status: in_progress
+status: completed
 goal: Review all 16 frozen unanswered RI223 domain observations and distinguish literal evidence, referrals and unknowns.
 definition_of_done:
   - Preserve prior 29/45 baseline; revalidate exact sources and review all 16 gaps.
@@ -8,9 +8,9 @@ definition_of_done:
 completed:
   - Read and SHA-verified eight direct originals and exact selected XML of four cases. Three noncompetitive controls and one quotation external regulation referral.
   - All 16 frozen missing domain rows reviewed, 14 independently source-byte attested contextual fragments, two unknown; no change to frozen 29/45 lexical denominator. New optional archived submission/summing-up order extraction and UI labels. Actual isolated DP replay exit 0; six original notices and two Chromium scenarios exit 0. 207 targeted tests PASS; Node simulation and Ruff/diff PASS.
-current_stage: exact_ci_pending
+current_stage: verified_pending_merge
 remaining:
-  - Verify exact CI. Next improve generic retrieval without training on the frozen observations as independent gold; investigate archive verification cost without weakening source binding.
+  - Exact PR642 head 8e8b005b8ed56dc4290a710324b51cfd56d32428 CI 19/19 SUCCESS. Follow-up projection reuse separate.
 last_verified_commit: 452e70d158e88561c95360c0f245534247905e67
 test_results:
   - 207 passed, 12 warnings; Ruff, Node syntax and UI simulation PASS.

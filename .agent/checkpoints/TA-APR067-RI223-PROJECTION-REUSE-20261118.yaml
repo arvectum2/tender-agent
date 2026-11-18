@@ -8,9 +8,12 @@ definition_of_done:
 completed:
   - PR642 exact head 8e8b005b8ed56dc4290a710324b51cfd56d32428 CI 19/19 SUCCESS.
   - Identified repeated full container projection in verified_inventory and verified_container_lineage.
-current_stage: scoped_projection_reuse
+  - Scoped exact-byte reuse of single immutable successful projection, fresh parent/child and independent receipts every time, no persistent cache. Six new cache/tamper tests; 256 regression tests PASS. Real isolated DP replay exit 0; all five complete-case domain counts identical to frozen 29/45 and 42 citations. Paired actual RAR dossier exactly equal, 21 to 1 projections, 22.164 to 6.500 s. Originals unchanged, isolated DP removed.
+current_stage: exact_ci_pending
 remaining:
-  - Implement, run regression and paired replay, publish.
-last_verified_commit: 8e8b005b8ed56dc4290a710324b51cfd56d32428
-test_results: []
+  - Verify exact draft CI. Then perform generic lexical discovery improvement separately, without claiming independent gold.
+last_verified_commit: 9e07a92f5dab9e4281e4ed3d03c2c78981c4e73f
+test_results:
+  - 256 passed, 2 warnings; Ruff/diff PASS.
+  - Actual paired RAR replay 21 -> 1 projections, 22.164 -> 6.500 s, exact packet equality. Five cases fixed counters unchanged, incomplete refused, exit 0.
 resume_instruction: Do not deploy, bypass tool restriction, mutate production or change frozen coverage. Generic lexical improvements separate.
