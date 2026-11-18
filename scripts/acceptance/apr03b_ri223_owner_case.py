@@ -26,6 +26,12 @@ def replay_owner(run):
     out=review_archived_owner_run(run,inputs)
     assert out['status']=='ARCHIVED_OWNER_REVIEW_ONLY' and not out['go_eligible']
     assert out['decision']=='NOT_DECIDED' and out['competitive_recommendation']=='NOT_ASSESSED'
+    risks=out['contract_risk'];print('RI223_CONTRACT_RISK_ACTUAL',risks['status'],risks.get('verified_clause_count'),[(x['clause'],x['status']) for x in risks['clauses']],risks.get('scenario_exposure'),flush=True)
+    assert risks['status']=='ARCHIVED_CONTRACT_CLAUSE_REVIEW_ONLY' and risks['verified_clause_count']==14
+    assert risks['scenario_exposure']['daily_delay_penalty_rub']=='900.00'
+    assert risks['scenario_exposure']['delay_10_days_rub']=='9000.00'
+    assert risks['scenario_exposure']['unauthorized_assignment_penalty_rub']=='180000.00'
+    assert risks['liability_cap_rub'] is None and not risks['go_eligible']
     ec=out['economics'];cell=ec['calculation']['offer_scenario']
     assert ec['archived_lot_initial_sum_rub']=='1020000' and ec['offer_within_archived_initial_sum']
     assert cell['economic_profit_rub']=='222000.00' and cell['pre_receipt_stress_cash_rub']=='498000.00'
