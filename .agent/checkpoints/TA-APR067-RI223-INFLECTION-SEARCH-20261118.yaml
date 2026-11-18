@@ -1,0 +1,15 @@
+task_id: TA-APR067-RI223-INFLECTION-SEARCH-20261118
+status: in_progress
+goal: Evaluate generic bounded Russian inflection-aware candidate discovery alongside exact lexical baseline.
+definition_of_done:
+  - Preserve default exact search and frozen benchmark; experimental selector exact-first, only original literal quote attestation.
+  - Test Russian inflections, letter variants, false-positive boundaries, priority, scope and tampered source.
+  - Same-corpus comparison, retain baseline cited rows and inspect new excerpt relevance; publish draft without independent gold claim.
+completed:
+  - PR643 17/19 completed success, two quality jobs in progress. Actual projection-reuse verified.
+current_stage: candidate_discovery
+remaining:
+  - Implement tests and run paired isolated corpus, review additions, document adoption recommendation.
+last_verified_commit: effe9bf0011acc4a1913361547242c1eabcc9ef8
+test_results: []
+resume_instruction: Never bypass blocked deployment; no production writes or current-law inference. Frozen exact baseline unchanged; no promotion until reviewed.
