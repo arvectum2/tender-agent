@@ -18,7 +18,7 @@ def archived_decision_projection(notice: dict, inventory: dict, dossier: dict,
             or dossier.get("notice")!=notice or dossier.get("inventory")!=inventory):
         return {**unknown,"reason":"VERIFIED_CONSISTENT_ARCHIVED_DOSSIER_REQUIRED"}
     model={"procurement_law":"223fz","notice_revision_requires_review":True,"field_evidence":{},
-           "risks":[],"evidence_map":[],"contract_draft_evidence_ids":[]}
+           "risks":[],"evidence_map":[],"contract_draft_evidence_ids":[],"source_consistency_requires_review":True}
     fields=notice["fields"]
     for origin,target in (("subject","procurement_title"),("single_lot_initial_sum","nmck")):
         if origin=="single_lot_initial_sum" and (notice["lot_count"]!=1 or fields.get("single_lot_currency")!="RUB"):
@@ -29,25 +29,46 @@ def archived_decision_projection(notice: dict, inventory: dict, dossier: dict,
             model[target]=fields[origin]
             model["field_evidence"][target]=refs
     # Keep archival deadline separate; never expose it as a current open window.
+    projected=[]
     for clause in risks.get("clauses",[]):
         source=clause.get("source")
-        if clause.get("status")!="VERIFIED_LITERAL_FRAGMENT" or not isinstance(source,dict):
+        if clause.get("status")!="VERIFIED_LITERAL_FRAGMENT":
             continue
+        if not isinstance(source,dict):
+            return {**unknown,"reason":"VERIFIED_RISK_LINEAGE_INCOMPLETE"}
         n=len(model["risks"])+1
         locator=source.get("ri223_container",{}).get("member_path")
-        if not locator or not source.get("chunk_id") or not source.get("original_sha256"):
-            continue
+        if (not locator or not source.get("chunk_id") or not source.get("original_sha256")
+                or not source.get("quote") or not clause.get("section") or not clause.get("operator_review_note")
+                or (risks.get("source_lineage") is not None and source.get("ri223_container")!=risks["source_lineage"])):
+            return {**unknown,"reason":"VERIFIED_RISK_LINEAGE_INCOMPLETE"}
         eid=f'risk:{n}:{source["original_sha256"]}:{source["chunk_id"]}'
         model["risks"].append({"risk":clause["operator_review_note"],"operator_decision_required":True})
         model["evidence_map"].append({"evidence_id":eid,"document":locator,"row":clause["section"],
                                       "short_excerpt":source["quote"]})
         model["contract_draft_evidence_ids"].append(eid)
+        projected.append({"clause":clause.get("clause"),"section":clause["section"],"source_ref":eid,"source":source})
+    if risks.get("verified_clause_count",len(projected))!=len(projected):
+        return {**unknown,"reason":"VERIFIED_RISK_COUNT_MISMATCH"}
+    linked=risks.get("linked_conditions")
+    if linked:
+        for group in linked["groups"].values():
+            for section,paragraph in group["source_sections"].items():
+                for index,source in enumerate(paragraph["fragments"],start=1):
+                    if (source.get("ri223_container")!=risks.get("source_lineage") or not source.get("chunk_id")
+                            or not source.get("original_sha256") or not source.get("quote")):
+                        return {**unknown,"reason":"LINKED_PARAGRAPH_LINEAGE_INCOMPLETE"}
+                    eid=f'archived-clause:{section}:{index}:{source["original_sha256"]}:{source["chunk_id"]}'
+                    model["evidence_map"].append({"evidence_id":eid,"document":source["ri223_container"]["member_path"],
+                                                  "row":section,"short_excerpt":source["quote"]})
+                    model["contract_draft_evidence_ids"].append(eid)
     core=build_decision_core(model)
     if core["decision"]["status"]!="NEEDS_REVIEW" or core["decision"]["external_action_allowed"]:
         return {**unknown,"reason":"ARCHIVE_DECISION_INVARIANT_FAILED"}
     return {**unknown,"status":"ARCHIVED_DECISION_REVIEW_ONLY","decision_core":core,
             "archive_deadline":fields.get("archived_submission_deadline"),
             "current_revision_attested":False,"source_consistency_exhaustive":False,
+            "projected_risk_evidence":projected,"linked_contract_review":linked,
             "scenario_price_comparison":economics.get("offer_within_archived_initial_sum"),
             "review_gates":[
                 {"code":"CURRENT_SOURCE","status":"UNKNOWN"},
