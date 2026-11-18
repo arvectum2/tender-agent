@@ -11,11 +11,12 @@ completed:
   - Daily job started automatically at 08:00 but exit 127: missing Docker CLI PATH and legacy checkout. No run row written; existing daily env with canonical release passes read-only DB binding and schema. No live retry.
   - Previous PR637 exact head d3d8dc49 19/19 SUCCESS; operational install not yet executed.
   - Pinned daily runner implemented, minimal launchd-like env and real DB read-only binding/revision preflight PASS twice. Kernel flock private v2 path, legacy 0755 parent accepted only non-writable by others, no Docker compose. 29 focused tests pass after path fix; earlier broad 47 passed.
-current_stage: exact_ci_pending_and_install_gate
+  - User explicitly approved installing verifier/daily launcher and SIBUR patch; no live daily run, no backend restart or admission change. PR637/639 latest CI 17/19 success, two quality jobs running; prior verifier exact head green. Exact candidate files and real minimal-env preflight reverified.
+current_stage: approved_host_install
 remaining:
-  - Verify updated PR637 CI; install verifier and daily runner only after explicit operational approval, no live collection. SIBUR PR639 separate operator install.
+  - Back up and atomically install exact scripts, validate installed verifier/guard and daily preflight, record rollback artifacts. No live collection; verify latest CI. SIBUR separate authorized patch.
 last_verified_commit: 3845fd62ac2bfe25fa24590e5d63c890a731c647
 test_results:
   - 23 focused tests PASS, Ruff/diff PASS; real candidate verifier 14/14 OK.
   - 29 focused tests after lock path fix, previous 47 broader tests before fix; exact daily --preflight on real host passes.
-resume_instruction: Keep live admission, launcher and DB unchanged. Review read-only verifier candidate; no credential access or real Workspace payload.
+resume_instruction: Install only explicitly approved host scripts with rollback; preserve backend launcher, admission and DB; no valid Bearer or live daily run.
