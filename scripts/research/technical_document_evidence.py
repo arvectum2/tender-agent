@@ -139,6 +139,11 @@ def extract(path,expected_sha):
                     data=z.read(info)
                     for part,text in office_parts(data,suffix):
                         add(info.filename,digest(data),part,text)
+                except NotImplementedError:
+                    # A single unsupported compression method must not poison the
+                    # entire batch or masquerade as an extracted document.
+                    review.append({"member":info.filename,"reason":"unsupported ZIP compression or member feature",
+                                   "compression_method":info.compress_type})
                 except (ValueError,KeyError,ET.ParseError,zipfile.BadZipFile) as exc:
                     review.append({"member":info.filename,"reason":str(exc)[:130]})
     elif ext==".pdf":
