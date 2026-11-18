@@ -1,32 +1,60 @@
 task_id: TA-INDEX-LINKAGE-20261118
-status: in_progress
-goal: Verify actual embedding-to-document-to-procurement identities, repair confirmed partial-batch member lineage loss, isolate legacy missing active tender collections.
+status: completed
+goal: Verify actual embedding-to-document-to-procurement identities, repair confirmed
+  partial-batch member lineage loss, isolate legacy missing active tender collections.
 definition_of_done:
-  - Exact read-only joins and source receipt verification in both production DBs and the SIBUR research DB.
-  - Repair durable SIBUR registry for the exact verified member; test partial failure registration without swallowing original error.
-  - Prepare exact legacy missing-index repair scope and safe readiness checks; no unapproved production DB write or previously blocked deploy.
+- Exact read-only joins and source receipt verification in both production DBs and
+  the SIBUR research DB.
+- Repair durable SIBUR registry for the exact verified member; test partial failure
+  registration without swallowing original error.
+- Prepare exact legacy missing-index repair scope and safe readiness checks; no unapproved
+  production DB write or previously blocked deploy.
 completed:
-  - DP 8483 documents/74861 chunks/74861 vectors, zero parent orphans; TA 1619 local chunks/1339 exact active index matches, 280 missing in six older tenders, 638 historical DP URI rows not present locally.
-  - SIBUR 6291 documents/72175 vectors, exact 6291 local/server receipts, 2264 distinct directly linked hashes, 4170 member registry, union 6290. One missing exact member in blocked plan; partial ingest error occurs before member registry command.
-  - SIBUR exact registry repaired: 4170 -> 4171 members, missing 1 -> 0, 6291/6291 distinct indexed originals covered by direct/member linkage, private backup PASS receipt. No DB write or runner state change. Candidate runner 7b95849a two tests PASS, not installed.
-  - Core 280 legacy chunks verified against all 14 exact archived originals and historical extracted texts; private plan d974162fbb77fad3ffabf0d5624a0d8bb58914973650af098f2ce60b63070a65, six collections absent, no live writes. Code receipt/count guards, 34 tests PASS; plan CLI read-only PASS.
-  - Installed exact SIBUR runner patch under both locks, live head 3828589971510c7356465469d5197539d0651871; 2 tests PASS, backup /Volumes/ArvectumSSD/Arvectum/backups/sibur-runner-install-20261118.yr_cxvbt, blocked state preserved.
-  - Scoped authorized apply actually launched once, PID 19937; fresh MI backup and gate PASS; receipt log mode 600, source plan unchanged. Independent read-only audit and 10 negative/positive tests PASS.
-  - Owner explicitly confirmed scoped 280 historical embedding restoration and installation of exact SIBUR runner fix on Mac mini. Read-only plan revalidated, 280/280, 0 present; DP and embedding health OK.
-current_stage: live_scoped_apply_running
+- DP 8483 documents/74861 chunks/74861 vectors, zero parent orphans; TA 1619 local
+  chunks/1339 exact active index matches, 280 missing in six older tenders, 638 historical
+  DP URI rows not present locally.
+- SIBUR 6291 documents/72175 vectors, exact 6291 local/server receipts, 2264 distinct
+  directly linked hashes, 4170 member registry, union 6290. One missing exact member
+  in blocked plan; partial ingest error occurs before member registry command.
+- SIBUR exact registry repaired: 4170 -> 4171 members, missing 1 -> 0, 6291/6291 distinct
+    indexed originals covered by direct/member linkage, private backup PASS receipt.
+    No DB write or runner state change. Candidate runner 7b95849a two tests PASS,
+    not installed.
+- Core 280 legacy chunks verified against all 14 exact archived originals and historical
+  extracted texts; private plan d974162fbb77fad3ffabf0d5624a0d8bb58914973650af098f2ce60b63070a65,
+  six collections absent, no live writes. Code receipt/count guards, 34 tests PASS;
+  plan CLI read-only PASS.
+- Installed exact SIBUR runner patch under both locks, live head 3828589971510c7356465469d5197539d0651871;
+  2 tests PASS, backup /Volumes/ArvectumSSD/Arvectum/backups/sibur-runner-install-20261118.yr_cxvbt,
+  blocked state preserved.
+- Scoped authorized apply actually launched once, PID 19937; fresh MI backup and gate
+  PASS; receipt log mode 600, source plan unchanged. Independent read-only audit and
+  10 negative/positive tests PASS.
+- Owner explicitly confirmed scoped 280 historical embedding restoration and installation
+  of exact SIBUR runner fix on Mac mini. Read-only plan revalidated, 280/280, 0 present;
+  DP and embedding health OK.
+- Owner-authorized exact repair exit 0; 280/280 receipts, all six collections passed.
+  Independent final DB audit 1619/1619 and 18/18 groups, 0 missing; SIBUR registry
+  SHA unchanged, 4171 members; both health endpoints 200.
+- Three outdated test fixtures corrected; 62 targeted tests PASS.
+current_stage: live_linkage_verified
 remaining:
-  - Inspect existing apply.pid, apply.exit, apply.log and plan.json.apply.jsonl under the private plan directory; never launch another while PID alive. On successful exit with final HISTORICAL_INDEX_REPAIR_PASS receipt, run python -m scripts.ops.audit_tender_index_linkage --require-complete, require 1619/1619 and 18/18 tender groups, exact source plan 280/280; verify health and SIBUR registry unchanged. If failure reconcile exact identities and retain guard before any approved resume; never bypass a failed gate. Runner next-document error remains separately blocked.
-last_verified_commit: 82c6644f47cd45b1fea60a6893625b95c5c8b747
+- PR646 new exact CI pending; runtime index guard candidate not deployed. SIBUR next-member
+  failure separate.
+last_verified_commit: f8224e1dbd0e41942e756310132feab23165f8f0
 test_results:
-  - 34 core tests passed, 2 runner tests passed, exact read-only plan PASS.
-  - SIBUR registry repair PASS; 6291/6291 exact indexed originals linked.
-  - Legacy source hashes 14/14, normalized text containment 280/280; actual legacy insertion not run.
-resume_instruction: Existing authorized host process is already running. Read its status/exit and exact plan, do not launch another while alive. Use private plan /Volumes/ArvectumSSD/Arvectum/private/tender-agent/legacy-index-repair-20261118.s4wZB3/plan.json, exact digest above; approved apply script from fix/ta-index-linkage-audit-20261118 (owner already confirmed this exact plan), with actual backend env and mandatory MI backup/gate. No reindex of SIBUR or deletion. SIBUR registry backup .../sibur-member-link-20261118.qtkqaugn. Existing runner blocked due next member error; do not clear or force retry.
-
+- 34 core tests passed, 2 runner tests passed, exact read-only plan PASS.
+- SIBUR registry repair PASS; 6291/6291 exact indexed originals linked.
+- Legacy source hashes 14/14, normalized text containment 280/280; actual legacy insertion
+  not run.
+- Exact repair exit 0 and final independent audit PASS.
+- 62 targeted index/analysis tests PASS.
+resume_instruction: Repair complete; do not repeat. Preserve historical indices. PR646
+  CI and runtime rollout separate.
 live_apply_observation:
   pid: 19937
-  exit: "RUNNING"
-  successful_receipts: 34
-  independently_verified_chunks: 1372
+  exit: '0'
+  successful_receipts: 280
+  independently_verified_chunks: 1619
   plan_dir: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/legacy-index-repair-20261118.s4wZB3
-  next_check: Verify actual process exit and independent audit before completing.
+  next_check: No further apply. Verify CI independently.
