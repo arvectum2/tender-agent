@@ -1,0 +1,16 @@
+task_id: TA-EVIDENCE-APPROVAL-GATE-20261118
+status: in_progress
+goal: Advance consolidated development candidate with exact evidence-version approval for reviewed commercial offer, declarations and application bundle.
+definition_of_done:
+  - Recover parallel PR654-659 and choose consolidated main-based successor; preserve PR660 untouched, document divergence.
+  - Pin current fact identities/versions, rendered identity values, selected documentary state/bytes, offer/declaration exact affirmation and scope to approved inputs.
+  - Require retained digest in opt-in safe gate, compare before/after and actual manifest receipts, reject unknown conditional outputs.
+  - Synthetic tests and exact draft publication, no production or blocked private replay.
+completed:
+  - PR654-659 exact CI 19/19 each; PR660 separate duplicate branch 17/19 success, no changes. Adopt 659 because it includes 655-658 and integrated main-based audit.
+current_stage: pin_reviewed_evidence_projection
+remaining:
+  - Implement and verify.
+last_verified_commit: 227950d0bea3f1ca52db161a8012f5b60de39abe
+test_results: []
+resume_instruction: Work only on consolidated development successor. No retry of prior blocked operations, actual approval or production.

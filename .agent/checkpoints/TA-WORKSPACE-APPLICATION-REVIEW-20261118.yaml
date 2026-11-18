@@ -1,5 +1,5 @@
 task_id: TA-WORKSPACE-APPLICATION-REVIEW-20261118
-status: in_progress
+status: completed
 goal: Expose bounded archival application requirement review in existing private operator
   workspace; no company data or submission.
 definition_of_done:
@@ -18,10 +18,9 @@ completed:
   groups, conditional and alternative evidence, notice-only or UNKNOWN.
 - 87 tests PASS (3 warnings), existing Node UI simulation PASS, isolated real Chromium
   desktop and 390px PASS with synthetic observer. Ruff/diff PASS.
-current_stage: exact_ci_pending
-remaining:
-- Verify exact draft CI. Next authorized tenant binding/read-only profile integration
-  and trusted approval; preserve previous safety blocks.
+- 'Exact CI 19/19 SUCCESS: 9e4f7a66ec2fb08a6f5050a371c5fa943d17c6d1'
+current_stage: verified_pending_merge
+remaining: []
 last_verified_commit: 87af606a5505176225c2edd780c2e51526d7177a
 test_results:
 - 87 passed, 3 warnings, exit 0; Node simulation and real synthetic Chromium desktop/390px
