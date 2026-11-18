@@ -1,5 +1,5 @@
 task_id: TA-RI223-WSF07B-COORDINATED-RELEASE-20261118
-status: in_progress
+status: blocked
 goal: Prepare exact green PR640 release while preserving existing WSF07B scope; coordinate source release and Workspace binding without implied authorization; prepare corporate profile intake separately.
 definition_of_done:
   - Rehearse exact candidate release tree and regression on immutable staging, read-only compare live source and existing admitted set.
@@ -12,13 +12,15 @@ completed:
   - Read-only exact existing admission and DB identity revalidated 21/12/9, schema 122, current profile rows absent; anonymous/dummy/Basic denial PASS, no valid Bearer. Review receipt private, no new binding.
   - Company handoff: https://github.com/arvectum2/arvectum-company/issues/16#issuecomment-6972005779
   - Owner explicitly confirmed exact same-scope transfer and coordinated cutover, original expiry unchanged. Actual Workspace runtime advanced independently to 7837a8aeedf6d4259f2843746761535a27be5a71; current P704AccessResolver and RuntimeProcurementReference read exactly 12, manual store 12 projects/12 notes. Existing grant preserved, dedicated source token rotation only. Approval recorded: https://github.com/arvectum2/arvectum-company/issues/16#issuecomment-6972242576
-current_stage: approved_coordinated_cutover
+  - Private backup of nine live files and PostgreSQL custom dump created; dump SHA verified and pg_restore table-of-contents check PASS. Owner approval recorded. Initial command-size validation failed without execution; backup then succeeded. Actual coordinated-switch command was blocked by tool security and did not execute.
+  - Post-block state: PR640 OPEN draft, main/source/Workspace still prior exact release, backend PID 7284 unchanged, 21 deals schema 122, both health 200, no maintenance locks; all nine live files byte-identical to backup.
+current_stage: execution_tool_security_block
 remaining:
-  - Back up and verify DB and exact configs, guarded merge/cutover, same scoped Workspace read, negative probes, daily pin and verifier. Roll back on failure; keep profile separate.
+  - Guarded coordinated merge/cutover remains unexecuted due tool security restriction; owner authorization already obtained. Do not bypass safety block or execute incomplete rehearsal script. Use an approved deployment mechanism, preserving original scope and expiry, and verify end-to-end before claiming success. Keep profile separate.
   - Original corporate PDFs still in project; authorized secure transfer and actual company-profile/tenant constraints remain separate.
 last_verified_commit: 3afb5f8267fef6d02a7162aa82de2f8689b6faf0
 test_results:
   - 77 passed, 2 warnings, exact candidate locked venv; clean source and unchanged WSF07B.
   - Existing scope 21/12/9 and DB revision 122 verified read-only; health and denial boundaries PASS.
   - PR640 19/19 CI PASS.
-resume_instruction: Owner approval obtained; check private cutover journal before any repeat. Preserve exact existing grant and set, rotate token without printing, original expiry. No company profile mutation.
+resume_instruction: Owner approval obtained. Private backup and journal in ri223-wsf07b-coordinated-20261118.bcHKpx. Tool security blocked switch; no state change. Do not rerun or circumvent blocked operation. Proceed only via an approved deployment mechanism with exact same scope, and revalidate current runtime before cutover.
