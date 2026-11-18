@@ -1,0 +1,15 @@
+task_id: TA-RI223-LINKED-CONTRACT-ECONOMICS-20261118
+status: in_progress
+goal: Link original archived contract paragraphs to explicit economic sensitivity and Decision Core.
+definition_of_done:
+  - Attest linked paragraphs for payment/acceptance, delay/termination, assignment and withdrawal; refuse incomplete groups.
+  - Preserve clause lineage in Decision Core, no decision or current revision inference.
+  - Test conditional scenario sensitivity and real isolated replay; publish draft.
+completed:
+  - Verified original parent and member SHA and read paragraphs.
+current_stage: linked_source_groups
+remaining:
+  - Implement, test, replay, publish.
+last_verified_commit: f8224e1dbd0e41942e756310132feab23165f8f0
+test_results: []
+resume_instruction: Isolated work only. No production/index/model writes. Existing watchdog owns authorized index repair.
