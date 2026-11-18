@@ -1122,4 +1122,5 @@ authenticated_application_review_20261119:
   task_id: TA-AUTHENTICATED-APPLICATION-REVIEW-20261119
   status: in_progress
   checkpoint: .agent/checkpoints/TA-AUTHENTICATED-APPLICATION-REVIEW-20261119.yaml
-  current_stage: authenticated_preview_and_decision
+  current_stage: exact_ci_pending
+  last_verified_commit: 3999fe199acf71a82cfbc6f770a1043ab6964223
