@@ -6,6 +6,8 @@ import io
 import stat
 import zipfile
 import zlib
+from contextlib import contextmanager
+from contextvars import ContextVar
 from pathlib import Path, PurePosixPath
 from tempfile import TemporaryDirectory
 
@@ -115,7 +117,36 @@ def project_zip(content: bytes) -> tuple[Ri223RarMember, ...]:
         raise ValueError('ZIP integrity or decompression failure') from exc
 
 
+# Only one immutable successful projection per synchronous dossier. The cache
+# key contains exact bytes, not file name, mtime, supplied hash or metadata.
+# Every caller still reads and verifies its current original before this call.
+_projection_scope: ContextVar[list | None] = ContextVar("ri223_projection_scope", default=None)
+
+
+@contextmanager
+def container_projection_scope():
+    cache = []
+    token = _projection_scope.set(cache)
+    try:
+        yield
+    finally:
+        cache.clear()
+        _projection_scope.reset(token)
+
+
 def project_container(content: bytes, extension: str):
+    cache = _projection_scope.get()
+    if cache is not None and type(content) is bytes:
+        if cache and cache[0] == extension and cache[1] == content:
+            return cache[2]
+        result = tuple(_project_container(content, extension))
+        # Replace rather than accumulate: one parent, existing size limits.
+        cache[:] = [extension, content, result]
+        return result
+    return _project_container(content, extension)
+
+
+def _project_container(content: bytes, extension: str):
     if extension == '.rar':
         return project_rar(content)
     if extension == '.zip':

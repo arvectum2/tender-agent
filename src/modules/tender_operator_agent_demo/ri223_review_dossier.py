@@ -20,7 +20,11 @@ from .ri223_attachment_evidence import (
     expected_documents,
     read_bytes,
 )
-from .ri223_container_evidence import member_receipt, project_container
+from .ri223_container_evidence import (
+    container_projection_scope,
+    member_receipt,
+    project_container,
+)
 
 _PROBES = {
     'technical_scope':'техническое задание объем услуги',
@@ -118,6 +122,11 @@ def verified_inventory(run: Path, metadata: dict) -> dict:
 
 
 def build_archived_review(run_id: str, run: Path, metadata: dict) -> dict:
+    with container_projection_scope():
+        return _build_archived_review(run_id, run, metadata)
+
+
+def _build_archived_review(run_id: str, run: Path, metadata: dict) -> dict:
     notice=ri223_archive_observation(run,metadata)
     inventory=verified_inventory(run,metadata) if notice['status']=='PINNED_RI223_ARCHIVED_NOTICE' else None
     result={'status':'UNKNOWN','notice':notice,'inventory':inventory,'domains':[],
