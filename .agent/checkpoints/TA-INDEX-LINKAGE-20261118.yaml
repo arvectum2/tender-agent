@@ -1,5 +1,5 @@
 task_id: TA-INDEX-LINKAGE-20261118
-status: in_progress
+status: blocked
 goal: Verify actual embedding-to-document-to-procurement identities, repair confirmed partial-batch member lineage loss, isolate legacy missing active tender collections.
 definition_of_done:
   - Exact read-only joins and source receipt verification in both production DBs and the SIBUR research DB.
@@ -8,9 +8,14 @@ definition_of_done:
 completed:
   - DP 8483 documents/74861 chunks/74861 vectors, zero parent orphans; TA 1619 local chunks/1339 exact active index matches, 280 missing in six older tenders, 638 historical DP URI rows not present locally.
   - SIBUR 6291 documents/72175 vectors, exact 6291 local/server receipts, 2264 distinct directly linked hashes, 4170 member registry, union 6290. One missing exact member in blocked plan; partial ingest error occurs before member registry command.
-current_stage: partial_member_linkage_recovery
+  - SIBUR exact registry repaired: 4170 -> 4171 members, missing 1 -> 0, 6291/6291 distinct indexed originals covered by direct/member linkage, private backup PASS receipt. No DB write or runner state change. Candidate runner 7b95849a two tests PASS, not installed.
+  - Core 280 legacy chunks verified against all 14 exact archived originals and historical extracted texts; private plan d974162fbb77fad3ffabf0d5624a0d8bb58914973650af098f2ce60b63070a65, six collections absent, no live writes. Code receipt/count guards, 34 tests PASS; plan CLI read-only PASS.
+current_stage: exact_legacy_index_apply_authorization
 remaining:
-  - Test and publish runner patch; verify exact lineage repair and legacy backfill gate.
-last_verified_commit: cd2733bb14202066b83ca548627fe9f04a8f00d6
-test_results: []
-resume_instruction: Preserve all corpus and prior indices. No DB mutation without watchdog MI acceptance gate; no retry of failed member or production deploy. Verify latest live files before work.
+  - Specific approval for Mac mini scoped legacy index apply and active runner code installation; preserve existing credentials and blocked deployment boundary. After fresh MI backup/gate, execute exact plan, verify 280/280 and full 1619/1619, no historical deletion. Runner error remains blocked until diagnosed separately.
+last_verified_commit: 82c6644f47cd45b1fea60a6893625b95c5c8b747
+test_results:
+  - 34 core tests passed, 2 runner tests passed, exact read-only plan PASS.
+  - SIBUR registry repair PASS; 6291/6291 exact indexed originals linked.
+  - Legacy source hashes 14/14, normalized text containment 280/280; actual legacy insertion not run.
+resume_instruction: Use private plan /Volumes/ArvectumSSD/Arvectum/private/tender-agent/legacy-index-repair-20261118.s4wZB3/plan.json, exact digest above; apply script from fix/ta-index-linkage-audit-20261118 only after specific approval, with actual backend env and mandatory MI backup/gate. No reindex of SIBUR or deletion. SIBUR registry backup .../sibur-member-link-20261118.qtkqaugn. Existing runner blocked due next member error; do not clear or force retry.
