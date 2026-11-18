@@ -45,7 +45,7 @@ def partition_paragraph(quote, chunks):
     return result if result and ' '.join(result)==quote else None
 
 
-def _attest(run_id,run,meta,sha,*,verifier):
+def _attest(run_id,run,meta,sha,*,verifier,paragraphs=None):
     rows=[x for x in meta.get('files',[]) if x.get('data_platform_source',{}).get('canonical_uri')=='tender-upload://'+sha]
     if len(rows)!=1:
         return {}
@@ -63,7 +63,7 @@ def _attest(run_id,run,meta,sha,*,verifier):
     if not chunks:
         return {}
     verified={}
-    for label,quote in SOURCE_PARAGRAPHS[sha].items():
+    for label,quote in (SOURCE_PARAGRAPHS[sha] if paragraphs is None else paragraphs).items():
         parts=partition_paragraph(quote,chunks)
         if not parts:
             continue
