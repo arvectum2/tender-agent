@@ -1034,20 +1034,21 @@ cashflow_calendar_20261118:
 
 contract_payment_calendar_20261118:
   task_id: TA-CONTRACT-PAYMENT-CALENDAR-20261118
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-CONTRACT-PAYMENT-CALENDAR-20261118.yaml
-  current_stage: exact_ci_pending
+  current_stage: verified_pending_merge
   last_verified_commit: c6da37e972297c1c969e544c099002e18cdfbadd
 
 staged_settlement_20261118:
   task_id: TA-STAGED-SETTLEMENT-20261118
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-STAGED-SETTLEMENT-20261118.yaml
-  current_stage: exact_ci_pending
+  current_stage: verified_pending_merge
   last_verified_commit: f3a9db9104547aa1346ae52eb879658a7f392690
 
 profile_qualification_readiness_20261118:
   task_id: TA-PROFILE-QUALIFICATION-READINESS-20261118
   status: in_progress
   checkpoint: .agent/checkpoints/TA-PROFILE-QUALIFICATION-READINESS-20261118.yaml
-  current_stage: qualification_evidence_readiness
+  current_stage: exact_ci_pending
+  last_verified_commit: 0da994c661a462a0378252d55fae15ee544fa9b8

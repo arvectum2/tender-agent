@@ -1,5 +1,5 @@
 task_id: TA-CONTRACT-PAYMENT-CALENDAR-20261118
-status: in_progress
+status: completed
 goal: Generate conditional payment cash events from independently verified archived
   contract terms and explicit milestone/workday assumptions
 definition_of_done:
@@ -18,10 +18,9 @@ completed:
 - Actual final isolated replay exit 0; Feb 3 signing, Feb 12 debit, Feb 14 conditional
   credit, peak 628000, additional 428000; previous manual scenario and DEFER preserved.
   227 tests PASS incl 32 calendar tests.
-current_stage: exact_ci_pending
-remaining:
-- Verify exact draft CI. Extend supported rule patterns and staged payment/exception
-  handling or prepare application completeness; no live deployment.
+- Exact draft head d7d7d6f028845a4d9c555f009b15356fe33d85a9 CI 19/19 SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
 last_verified_commit: c6da37e972297c1c969e544c099002e18cdfbadd
 test_results:
 - 227 passed, 2 warnings; Ruff/diff PASS; actual isolated replay exit 0
