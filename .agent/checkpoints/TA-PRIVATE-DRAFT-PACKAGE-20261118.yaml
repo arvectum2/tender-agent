@@ -1,5 +1,5 @@
 task_id: TA-PRIVATE-DRAFT-PACKAGE-20261118
-status: in_progress
+status: completed
 goal: Assemble bounded private review bundle with generated forms, explicitly selected
   documentary evidence, scenario price and gap report.
 definition_of_done:
@@ -17,10 +17,9 @@ completed:
   item report. Recheck field lineage across forms and documentary facts in same session.'
 - 17 new tests; 68 joined regression PASS, 28 warnings, exit 0. Ruff/diff PASS. No
   real corporate data or blocked replay.
-current_stage: exact_ci_pending
-remaining:
-- Verify exact draft CI. Next approved checklist-to-package mapping and reviewed price/declaration
-  workflow; real source acceptance remains blocked.
+- Exact PR654 CI 19/19 SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
 last_verified_commit: ac0a8cc857e23a364a18f5d9efa50788b5b71b5f
 test_results:
 - 68 passed, 28 warnings; exit 0; Ruff/diff PASS.

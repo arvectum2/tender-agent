@@ -58,6 +58,7 @@
 - APR04 reviewed application checklist candidate: nine rows, 19 original groups, 170 regression PASS; real isolated private replay blocked by execution safety before execution. [Review](../quality/APR04_APPLICATION_CHECKLIST_2026-11-18.md). No exhaustive requirement, real acceptance, legal or submission claim.
 - APR04 reviewed identity form autofill: six identity field codes, current scoped facts, exact template map and field lineage, real synthetic DOCX/XLSX round trips, 21 focused tests PASS. [Review](../quality/APR04_SOURCE_BOUND_FORM_FILL_2026-11-18.md). Actual intake, real customer mapping, package acceptance and prior blocked replay remain open.
 - APR04 private draft review bundle: generated forms, explicit documentary candidate, internal price scenario, manifest and gap report; 68 regression PASS. [Review](../quality/APR04_PRIVATE_DRAFT_PACKAGE_2026-11-18.md). Synthetic only; real checklist/approved mapping, actual profile and customer-facing offer remain open.
+- APR04 reviewed offer/declarations: scoped current owner assertions and exact terms digest; separate unsigned drafts in private ZIP, no unverified declaration or automatic price. 34 tests PASS. [Review](../quality/APR04_REVIEWED_OFFER_DECLARATIONS_2026-11-18.md). Next checklist-to-package mapping and independent completeness gate; real acceptance still open.
 - Gemma paused; no repeat B2B live pilot; SIBUR research separate; no automated merge merely from this roadmap entry.
 
 ## 14.11.2026 — Три параллельных прикладных направления
