@@ -11,14 +11,14 @@ from pathlib import Path
 from xml.etree import ElementTree
 
 
-def prepare(root):
+def prepare(root, *, verified_receipts=None):
     from scripts.research.capture_gpb_priority_details import Visible
     from scripts.research.link_gpb_document_receipts import prepare as prepare_originals
     from scripts.research.read_gpb_named_decisions import parse_named_protocol
     from scripts.research.read_gpb_protocol_decisions import parse_protocol
 
     rows = []
-    for receipt in prepare_originals(root):
+    for receipt in (prepare_originals(root) if verified_receipts is None else verified_receipts):
         if receipt.get("document_role") != "published_protocol":
             continue
         raw = (root / "originals" / receipt["file"]).read_bytes()

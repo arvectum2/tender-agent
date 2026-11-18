@@ -21,9 +21,11 @@ MI_PY = "/Users/master/ArvectumSafe/.venvs/tender-agent-mi/bin/python"
 API = "arvectum-local-e2e-api-1"
 DB = "arvectum-local-e2e-db-1"
 TASK = "TA-AUTONOMOUS-RESEARCH-RUNNER-20261115"
+ARCHIVE_INDEX_BATCH_SIZE = 10
+ARCHIVE_INDEX_BATCH_TIMEOUT = 2050
 STATS = """import os,json
 from arvectum_data_client import DataPlatformClient
-with DataPlatformClient(base_url=os.environ['AI_CORP_RAG_DATA_PLATFORM_BASE_URL'],api_key=os.environ['AI_CORP_RAG_DATA_PLATFORM_API_KEY'],timeout_seconds=15) as c:
+with DataPlatformClient(base_url=os.environ['AI_CORP_RAG_DATA_PLATFORM_BASE_URL'],api_key=os.environ['AI_CORP_RAG_DATA_PLATFORM_API_KEY'],timeout_seconds=60) as c:
  s=c.collection_stats('tender-agent:sibur-public-research')
  print(json.dumps({k:s[k] for k in ('documents','chunks','embeddings')}))
 """
@@ -70,6 +72,10 @@ class Runner:
         self.gpb_root = root / "parallel-sources"
         self.docs = root / "documents"
         self.last_link_input = self.docs / "verified-ta-link-input-138.json"
+        self.member_plan = None
+        self.member_plan_sha = None
+        self.member_queue = False
+        self.member_batch_limit = 3
 
     def record_heads(self):
         with self.mutex:
@@ -219,7 +225,7 @@ class Runner:
 
     def reconcile_index(self, index):
         stats = json.loads(self.cmd("sibur", "DP collection stats",
-                           ["docker", "exec", API, "python", "-c", STATS], self.sibur, 30))
+                           ["docker", "exec", API, "python", "-c", STATS], self.sibur, 80))
         recovered = read(self.docs / "dp-recovered-server-resource.json")
         legacy = recovered["source_sha256"] not in index
         expected = {"documents": len(index) + int(legacy),
@@ -240,6 +246,9 @@ class Runner:
         lane = "sibur"
         if self.state["lanes"].get(lane, {}).get("index_inflight"):
             raise Blocked("previous ingest interrupted before reconciliation; review exact DP resources")
+        if self.state["lanes"][lane].get("archive_bridge_sha256"):
+            self.archive_index_lane()
+            return
         args = ["--snapshot", self.root / "sibur-full-sweep-v2", "--directory", self.docs,
                 "--priority-queue", self.root / "sibur-preliminary-priority-queue.json"]
         for cap in (8, 12, 20, 40, 100):
@@ -261,7 +270,7 @@ class Runner:
                         out = self.module(lane, self.sibur, "process_sibur_document_batch", *args,
                                           "--mode", "index", "--limit", 5, "--max-chunks", cap,
                                           "--formats", "docx", "xlsx", "pptx",
-                                          "--prewrite-receipt", gate, "--request-timeout", 120, timeout=680).decode()
+                                          "--prewrite-receipt", gate, "--request-timeout", 180, timeout=1050).decode()
                     except Blocked as exc:
                         error = exc
                     after = self.local_index()
@@ -285,7 +294,217 @@ class Runner:
             if self.stop_requested():
                 self.update(lane, status="stopped", step="operator STOP")
                 return
-        self.update(lane, status="exhausted", step="supported pre-extracted OOXML index queue drained; PDF/legacy review remains")
+        self.archive_index_lane()
+
+    def refresh_archive_bridge(self, lane, bridge, digest):
+        """Called under executor and mutation locks, with reconciled receipts."""
+        before = bridge.read_bytes()
+        if hashlib.sha256(before).hexdigest() != digest:
+            raise Blocked("archive bridge changed before refresh")
+        result = json.loads(self.module(lane, self.sibur, "refresh_sibur_archive_index",
+                                        "--root", self.root, "--digest", digest, timeout=150))
+        if result["prior_digest"] != digest or result["indexed_count"] != len(self.local_index()):
+            raise Blocked("archive refresh baseline changed")
+        count = result["new_ready"]
+        reviews = result.get("new_review", 0)
+        if not count and not result.get("file"):
+            self.update(lane, archive_refresh=result)
+            return None
+        if type(count) is not int or type(reviews) is not int or min(count,reviews)<0 or not 1 <= count+reviews <= 160:
+            raise Blocked("archive refresh exceeds bound")
+        path = bridge.parent / result["file"]
+        if path.parent != bridge.parent or not re.fullmatch(r"archive-index-bridge-auto-[0-9]{8}T[0-9]{12}Z\.json", path.name) or path.is_symlink():
+            raise Blocked("invalid prepared bridge path")
+        raw = path.read_bytes()
+        new_digest = hashlib.sha256(raw).hexdigest()
+        old, new = json.loads(before), json.loads(raw)
+        n = len(old["ready"])
+        if (new_digest != result["digest"] or new["schema"] != old["schema"]
+                or new["ready"][:n] != old["ready"] or len(new["ready"]) != n + count
+                or new["review"][:len(old["review"])] != old["review"]
+                or len(new["review"]) != len(old["review"])+reviews):
+            raise Blocked("prepared bridge identity mismatch")
+        added = [r["sha256"] for r in new["ready"][n:]]
+        if len(set(added)) != count or set(added) & ({r["sha256"] for r in old["ready"]} | set(self.local_index())):
+            raise Blocked("duplicate archive refresh entry")
+        if not count and not any(r["reason"]=="structure_review" for r in new["review"][len(old["review"]):]):
+            raise Blocked("review-only refresh without structural progress")
+        stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%S%fZ")
+        saved = bridge.parent / ("archive-index-bridge-before-auto-" + stamp + ".json")
+        state_saved = self.run / ("state-before-auto-refresh-" + stamp + ".json")
+        for target, data in ((saved, before), (state_saved, self.state_path.read_bytes())):
+            with target.open("xb") as f:
+                f.write(data); f.flush(); os.fsync(f.fileno())
+        # A crash between the two atomic replacements fails closed on digest
+        # mismatch at the next launch. The immutable prepared and prior files
+        # remain available for explicit reconciliation.
+        tmp = bridge.with_suffix(".refresh-partial")
+        with tmp.open("xb") as f:
+            f.write(raw); f.flush(); os.fsync(f.fileno())
+        tmp.replace(bridge)
+        self.update(lane, archive_bridge_sha256=new_digest,
+                    archive_refresh={**result, "prior_bridge": saved.name,
+                                     "prior_state": state_saved.name})
+        return new_digest, new["ready"]
+
+    def member_index_pilot(self, sync):
+        """Single opt-in bounded batch, under the existing mutation lock."""
+        lane="sibur";state=self.state["lanes"][lane]
+        if not self.member_plan or state.get("member_pilot_completed_sha256")==self.member_plan_sha:
+            return False
+        if self.stop_requested() or state.get("index_inflight"):
+            return False
+        if self.member_plan.is_symlink() or hashlib.sha256(self.member_plan.read_bytes()).hexdigest()!=self.member_plan_sha:
+            raise Blocked("member plan identity mismatch")
+        before=self.local_index();self.reconcile_index(before)
+        if state.get("archive_synced_count")!=len(before):
+            raise Blocked("member pilot requires synchronized direct receipts")
+        gate=self.gate(lane)
+        self.update(lane,index_inflight=True,index_baseline=len(before),member_pilot_status="in_progress",member_plan_sha256=self.member_plan_sha)
+        args=["--root",self.root,"--plan",self.member_plan,"--digest",self.member_plan_sha]
+        def batch(mode):
+            return self.cmd(lane,"member_index_batch_"+mode,[MI_PY,"-m","scripts.research.member_index_batch",*map(str,args),"--mode",mode,"--gate",str(gate),"--limit",str(self.member_batch_limit)],self.sibur,2050).decode()
+        error=None
+        try:
+            x=batch("extract");self.reconcile_index(self.local_index());y=batch("index")
+        except Blocked as exc:error=exc
+        after=self.local_index();self.reconcile_index(after)
+        if after!=before:
+            self.gate(lane);self.backup_ta(lane);sync(after)
+            if self.state["lanes"][lane].get("archive_synced_count")!=len(after):
+                raise Blocked("member pilot direct sync did not reconcile")
+        if error:raise error
+        cmd=[MI_PY,"-m","scripts.research.link_sibur_member_index",*map(str,args)]
+        linked=json.loads(self.cmd(lane,"member registry",cmd,self.sibur,180))
+        repeat=json.loads(self.cmd(lane,"member registry replay",cmd,self.sibur,180))
+        if repeat["updated"] or any(repeat[k]!=linked[k] for k in ("members","procedure_member_pairs","source_links","registry_sha256")):
+            raise Blocked("member registry replay mismatch")
+        self.update(lane,index_inflight=False,member_pilot_status="completed",member_pilot_completed_sha256=self.member_plan_sha,member_pilot={"extracted_planned":planned(x,"planned"),"indexed_planned":planned(y,"planned"),"new_receipts":len(after)-len(before),"registry":linked,"replay":repeat})
+        return True
+
+    def member_queue_cycle(self, sync):
+        """Select and process a fresh bounded queue from verified receipts."""
+        if not self.member_queue or self.stop_requested():return False
+        lane="sibur";state=self.state["lanes"][lane]
+        if state.get("index_inflight"):raise Blocked("member queue has unreconciled ingest")
+        result=json.loads(self.cmd(lane,"prepare member queue",[MI_PY,"-m","scripts.research.prepare_sibur_member_queue","--root",str(self.root),"--limit","10"],self.sibur,180))
+        self.update(lane,member_queue=result)
+        if not result.get("file"):
+            if result.get("new_review",0):return True
+            return False
+        folder=self.root/"sibur-sales-map-20261115";p=folder/result["file"];digest=result["digest"]
+        if p.parent!=folder or p.is_symlink() or not re.fullmatch(r"member-index-auto-[0-9]{8}T[0-9]{12}Z\.json",p.name) or hashlib.sha256(p.read_bytes()).hexdigest()!=digest:raise Blocked("member queue plan identity mismatch")
+        if state.get("member_pilot_completed_sha256")==digest:raise Blocked("member queue repeated completed plan")
+        self.member_plan=p;self.member_plan_sha=digest;self.member_batch_limit=10
+        try:
+            if not self.member_index_pilot(sync):return False
+            receipt=self.state["lanes"][lane]["member_pilot"]
+            if not (receipt["extracted_planned"] or receipt["indexed_planned"] or receipt["registry"]["updated"]):raise Blocked("member queue made no progress")
+            self.update(lane,member_queue_cycles=state.get("member_queue_cycles",0)+1,member_queue_last_receipt=receipt)
+            return True
+        finally:
+            self.member_plan=None;self.member_plan_sha=None;self.member_batch_limit=3
+
+    def archive_index_lane(self):
+        lane="sibur"
+        digest=self.state["lanes"][lane].get("archive_bridge_sha256")
+        if not digest:
+            self.update(lane,status="exhausted",step="legacy queue drained; archive bridge not activated")
+            return
+        bridge=self.root/"sibur-sales-map-20261115/archive-index-bridge-v1.json"
+        raw=bridge.read_bytes()
+        if hashlib.sha256(raw).hexdigest()!=digest:raise Blocked("archive bridge changed")
+        rows=json.loads(raw)["ready"]
+        def sync(index):
+            selected=[r for r in rows if r["sha256"] in index]
+            if not selected:return
+            payload=json.dumps({"rows":selected,"indexed":{r["sha256"]:index[r["sha256"]] for r in selected}},ensure_ascii=False).encode()
+            linked=self.importer(lane,self.sibur,"link_sibur_archive_index",payload)
+            repeat=self.importer(lane,self.sibur,"link_sibur_archive_index",payload)
+            if repeat["updated"] or repeat["verified_links"]!=linked["verified_links"]:raise Blocked("archive index link replay mismatch")
+            self.update(lane,archive_indexed=len(selected),archive_links=linked,archive_synced_count=len(index))
+        while not self.stop_requested():
+            with self.mutation_guard():
+                before=self.local_index();self.reconcile_index(before)
+                if self.state["lanes"][lane].get("archive_synced_count")!=len(before):
+                    self.gate(lane);self.backup_ta(lane);sync(before)
+                gate=self.gate(lane)
+                # Process_document may have side effects: keep the same gate and
+                # reconcile the collection even after extraction transport failure.
+                self.update(lane,index_inflight=True,index_baseline=len(before),archive_index_batch_size=ARCHIVE_INDEX_BATCH_SIZE)
+                error=None
+                try:
+                    x=self.module(lane,self.sibur,"archive_index_batch","--root",self.root,"--digest",digest,"--mode","extract","--gate",gate,"--limit",ARCHIVE_INDEX_BATCH_SIZE,timeout=ARCHIVE_INDEX_BATCH_TIMEOUT).decode()
+                    self.reconcile_index(self.local_index())
+                    y=self.module(lane,self.sibur,"archive_index_batch","--root",self.root,"--digest",digest,"--mode","index","--gate",gate,"--limit",ARCHIVE_INDEX_BATCH_SIZE,"--cap",100,timeout=ARCHIVE_INDEX_BATCH_TIMEOUT).decode()
+                except Blocked as exc:error=exc
+                after=self.local_index();self.reconcile_index(after)
+                if after!=before:
+                    self.gate(lane);self.backup_ta(lane);sync(after)
+                if error:raise error
+                self.update(lane,index_inflight=False,archive_cycles=self.state["lanes"][lane].get("archive_cycles",0)+1)
+                drained = not planned(x,"planned") and not planned(y,"planned")
+            if drained:
+                # The archive collector is independent; when the fixed queue
+                # drains, refresh from committed receipts rather than exit.
+                while not self.stop_requested():
+                    with self.mutation_guard():
+                        self.reconcile_index(self.local_index())
+                        refreshed = self.refresh_archive_bridge(lane, bridge, digest)
+                        if refreshed:
+                            digest, rows = refreshed
+                            break
+                        if self.member_index_pilot(sync):
+                            continue
+                        if self.member_queue_cycle(sync):
+                            continue
+                    collector = self.root / "sibur-archive-discovery/categories/documents/state.json"
+                    if not self.member_queue and (not collector.exists() or read(collector).get("status") != "running"):
+                        self.update(lane,status="exhausted",step="committed priority queue drained; collector not running; review remains")
+                        return
+                    self.update(lane,step="waiting for committed archive receipts",deadline_seconds=60)
+                    # No database mutation lock or backup while waiting.
+                    for _ in range(12):
+                        if self.stop_requested():
+                            break
+                        time.sleep(5)
+            time.sleep(1)
+        self.update(lane,status="stopped",step="operator STOP")
+
+    def resume_sibur_refresh(self):
+        """Recover only the known pre-ingest refresh failure, under executor lock."""
+        lane = "sibur"
+        state = self.state["lanes"].get(lane, {})
+        if (state.get("status") != "blocked"
+                or state.get("step") != "refresh_sibur_archive_index"
+                or state.get("error") != "refresh_sibur_archive_index: exit 1; see private log"
+                or state.get("index_inflight") is not False
+                or self.stop_requested()):
+            raise Blocked("not an eligible pre-ingest refresh recovery")
+        bridge = self.root / "sibur-sales-map-20261115/archive-index-bridge-v1.json"
+        digest = state.get("archive_bridge_sha256")
+        if not digest or hashlib.sha256(bridge.read_bytes()).hexdigest() != digest:
+            raise Blocked("archive bridge changed before recovery")
+        with self.mutation_guard():
+            index = self.local_index()
+            if state.get("archive_synced_count") != len(index):
+                raise Blocked("unreconciled archive receipts before recovery")
+            stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%S%fZ")
+            saved = self.run / ("state-before-refresh-recovery-" + stamp + ".json")
+            with saved.open("xb") as f:
+                f.write(self.state_path.read_bytes()); f.flush(); os.fsync(f.fileno())
+            try:
+                self.reconcile_index(index)
+                refreshed = self.refresh_archive_bridge(lane, bridge, digest)
+                if refreshed is None:
+                    raise Blocked("no verified refresh progress")
+            except Exception as exc:
+                self.update(lane, status="blocked", step="refresh_sibur_archive_index",
+                            error="refresh recovery failed; review private log",
+                            error_type=type(exc).__name__)
+                raise
+            self.update(lane, status="running", step="verified refresh recovery",
+                        error=None, error_type=None, refresh_recovery_state=saved.name)
 
     def guarded(self, lane, callback):
         if self.state["lanes"].get(lane, {}).get("status") in {"blocked", "exhausted"}:
@@ -304,7 +523,14 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     for name in ("root", "gpb", "sibur", "mi"):
         p.add_argument("--" + name, type=Path, required=True)
+    p.add_argument("--resume-sibur-refresh", action="store_true", help="recover only a reconciled pre-ingest refresh failure")
+    p.add_argument("--member-plan", type=Path)
+    p.add_argument("--member-plan-sha256")
+    p.add_argument("--member-queue", action="store_true", help="continuously process bounded source-bound member plans")
     args = p.parse_args()
+    if args.member_queue and args.member_plan:p.error("choose a pilot or continuous queue")
+    if bool(args.member_plan)!=bool(args.member_plan_sha256):p.error("member plan and digest must be supplied together")
+    if args.member_plan and (args.member_plan.is_symlink() or not re.fullmatch(r"[a-f0-9]{64}",args.member_plan_sha256) or hashlib.sha256(args.member_plan.read_bytes()).hexdigest()!=args.member_plan_sha256):p.error("member plan identity mismatch")
     os.umask(0o077)
     folder = args.root / "autonomous-runner"
     folder.mkdir(mode=0o700, exist_ok=True)
@@ -315,6 +541,11 @@ def main():
             print("Executor already running")
             return
         r = Runner(args.root, args.gpb, args.sibur, args.mi)
+        r.member_queue=args.member_queue
+        r.member_plan=args.member_plan
+        r.member_plan_sha=args.member_plan_sha256
+        if args.resume_sibur_refresh:
+            r.resume_sibur_refresh()
         r.record_heads()
         with ThreadPoolExecutor(max_workers=2) as pool:
             jobs = [pool.submit(r.guarded, "gpb", r.gpb_lane),

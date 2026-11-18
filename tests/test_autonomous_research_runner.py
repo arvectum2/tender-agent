@@ -61,3 +61,177 @@ def test_gpb_multiple_batches_are_one_run(tmp_path, monkeypatch):
     assert len(detail_calls) == 3
     assert r.state["lanes"]["gpb"]["cycles"] == 3
     assert r.state["lanes"]["gpb"]["status"] == "exhausted"
+
+
+def test_archive_refresh_append_preserves_and_checks_identity(tmp_path, monkeypatch):
+    import hashlib
+    r = Runner(tmp_path, tmp_path, tmp_path, tmp_path)
+    folder = tmp_path / "sibur-sales-map-20261115"
+    folder.mkdir()
+    bridge = folder / "archive-index-bridge-v1.json"
+    old = {"schema": "sibur_archive_index_bridge_v1", "ready": [{"sha256": "a"*64}], "review": []}
+    atomic(bridge, old)
+    digest = hashlib.sha256(bridge.read_bytes()).hexdigest()
+    r.update("sibur", status="running", archive_bridge_sha256=digest)
+    prepared = folder / "archive-index-bridge-auto-20261116T081835120216Z.json"
+    new = {**old, "ready": old["ready"] + [{"sha256": "b"*64}]}
+    atomic(prepared, new)
+    new_digest = hashlib.sha256(prepared.read_bytes()).hexdigest()
+    monkeypatch.setattr(r, "local_index", lambda: {"a"*64: {}})
+    result = {"prior_digest": digest, "indexed_count": 1, "new_ready": 1,
+              "file": prepared.name, "digest": new_digest}
+    monkeypatch.setattr(r, "module", lambda *a, **k: json.dumps(result).encode())
+    assert r.refresh_archive_bridge("sibur", bridge, digest) == (new_digest, new["ready"])
+    assert json.loads(bridge.read_text()) == new
+    assert r.state["lanes"]["sibur"]["archive_bridge_sha256"] == new_digest
+    assert len(list(folder.glob("archive-index-bridge-before-auto-*.json"))) == 1
+    with pytest.raises(Blocked, match="changed"):
+        r.refresh_archive_bridge("sibur", bridge, digest)
+
+
+def test_archive_refresh_empty_does_not_change_bridge(tmp_path, monkeypatch):
+    import hashlib
+    r = Runner(tmp_path, tmp_path, tmp_path, tmp_path)
+    bridge = tmp_path / "bridge.json"
+    atomic(bridge, {"ready": []})
+    digest = hashlib.sha256(bridge.read_bytes()).hexdigest()
+    monkeypatch.setattr(r, "local_index", lambda: {})
+    monkeypatch.setattr(r, "module", lambda *a, **k: json.dumps({"prior_digest": digest, "indexed_count": 0, "new_ready": 0}).encode())
+    assert r.refresh_archive_bridge("sibur", bridge, digest) is None
+    assert hashlib.sha256(bridge.read_bytes()).hexdigest() == digest
+
+
+def test_drained_archive_refresh_continues_without_restart(tmp_path, monkeypatch):
+    import hashlib
+    r = Runner(tmp_path, tmp_path, tmp_path, tmp_path)
+    folder = tmp_path / "sibur-sales-map-20261115"
+    folder.mkdir()
+    bridge = folder / "archive-index-bridge-v1.json"
+    atomic(bridge, {"ready": []})
+    digest = hashlib.sha256(bridge.read_bytes()).hexdigest()
+    r.update("sibur", archive_bridge_sha256=digest, archive_synced_count=0)
+    monkeypatch.setattr(r, "local_index", lambda: {})
+    monkeypatch.setattr(r, "reconcile_index", lambda _: None)
+    monkeypatch.setattr(r, "gate", lambda _: tmp_path / "gate.json")
+    monkeypatch.setattr("scripts.research.autonomous_runner.time.sleep", lambda _: None)
+    calls = []
+    def module(lane, repo, name, *args, **kwargs):
+        calls.append(args[args.index("--digest")+1])
+        assert args[args.index("--limit")+1] == 10
+        assert kwargs["timeout"] == 2050
+        return b"planned 0\n"
+    monkeypatch.setattr(r, "module", module)
+    refreshes = []
+    def refresh(lane, path, sha):
+        refreshes.append(sha)
+        return ("b"*64, []) if len(refreshes)==1 else None
+    monkeypatch.setattr(r, "refresh_archive_bridge", refresh)
+    r.archive_index_lane()
+    assert calls == [digest, digest, "b"*64, "b"*64]
+    assert refreshes == [digest, "b"*64]
+    assert r.state["lanes"]["sibur"]["status"] == "exhausted"
+    assert r.state["lanes"]["sibur"]["index_inflight"] is False
+
+
+def test_review_only_refresh_commits_bounded_structural_progress(tmp_path, monkeypatch):
+    import hashlib,json
+    from scripts.research.autonomous_runner import Runner
+    import inspect
+    # Construct the minimal runner state in the same way as the append test.
+    r=Runner(tmp_path,tmp_path,tmp_path,tmp_path)
+    r.run.mkdir(parents=True,exist_ok=True)
+    bridge=tmp_path/"archive-index-bridge-v1.json"
+    old={"schema":"sibur_archive_index_bridge_v1","ready":[],"review":[]}
+    bridge.write_text(json.dumps(old));digest=hashlib.sha256(bridge.read_bytes()).hexdigest()
+    new={**old,"review":[{"sha256":"a"*64,"reason":"structure_review"}]}
+    p=tmp_path/"archive-index-bridge-auto-20261116T160000000001Z.json";p.write_text(json.dumps(new))
+    new_digest=hashlib.sha256(p.read_bytes()).hexdigest()
+    r.state_path.write_text(json.dumps(r.state))
+    monkeypatch.setattr(r,"local_index",lambda:{})
+    monkeypatch.setattr(r,"module",lambda *a,**k:json.dumps({"new_ready":0,"new_review":1,"prior_digest":digest,"indexed_count":0,"file":p.name,"digest":new_digest}))
+    assert r.refresh_archive_bridge("sibur",bridge,digest)==(new_digest,[])
+    assert json.loads(bridge.read_text())==new
+
+
+def test_resume_refresh_only_after_reconciled_progress(tmp_path, monkeypatch):
+    import hashlib
+    r = Runner(tmp_path, tmp_path, tmp_path, tmp_path)
+    folder = tmp_path / "sibur-sales-map-20261115"
+    folder.mkdir()
+    bridge = folder / "archive-index-bridge-v1.json"
+    atomic(bridge, {"ready": []})
+    digest = hashlib.sha256(bridge.read_bytes()).hexdigest()
+    r.update("sibur", status="blocked", step="refresh_sibur_archive_index",
+             error="refresh_sibur_archive_index: exit 1; see private log",
+             index_inflight=False, archive_synced_count=1, archive_bridge_sha256=digest)
+    calls = []
+    monkeypatch.setattr(r, "local_index", lambda: {"a": {}})
+    monkeypatch.setattr(r, "reconcile_index", lambda x: calls.append("reconcile"))
+    monkeypatch.setattr(r, "refresh_archive_bridge", lambda *a: (calls.append("refresh") or ("b", [])))
+    r.resume_sibur_refresh()
+    assert calls == ["reconcile", "refresh"]
+    assert r.state["lanes"]["sibur"]["status"] == "running"
+    assert len(list(r.run.glob("state-before-refresh-recovery-*.json"))) == 1
+    with pytest.raises(Blocked):
+        r.resume_sibur_refresh()
+
+
+def test_resume_refresh_refuses_unreconciled_or_inflight(tmp_path, monkeypatch):
+    import hashlib
+    r = Runner(tmp_path, tmp_path, tmp_path, tmp_path)
+    folder = tmp_path / "sibur-sales-map-20261115"
+    folder.mkdir()
+    bridge = folder / "archive-index-bridge-v1.json"
+    atomic(bridge, {"ready": []})
+    digest = hashlib.sha256(bridge.read_bytes()).hexdigest()
+    r.update("sibur", status="blocked", step="refresh_sibur_archive_index",
+             error="refresh_sibur_archive_index: exit 1; see private log",
+             index_inflight=True, archive_synced_count=2, archive_bridge_sha256=digest)
+    with pytest.raises(Blocked):
+        r.resume_sibur_refresh()
+    r.update("sibur", index_inflight=False)
+    monkeypatch.setattr(r, "local_index", lambda: {"a": {}})
+    with pytest.raises(Blocked, match="unreconciled"):
+        r.resume_sibur_refresh()
+    assert r.state["lanes"]["sibur"]["status"] == "blocked"
+
+
+def test_member_pilot_gated_reconciled_and_idempotent(tmp_path,monkeypatch):
+    import hashlib
+    r=Runner(tmp_path,tmp_path,tmp_path,tmp_path);r.member_plan=tmp_path/'plan.json';atomic(r.member_plan,{})
+    r.member_plan_sha=hashlib.sha256(r.member_plan.read_bytes()).hexdigest();r.update('sibur',archive_synced_count=1,index_inflight=False)
+    index={'old':{}};calls=[]
+    monkeypatch.setattr(r,'local_index',lambda:dict(index))
+    monkeypatch.setattr(r,'reconcile_index',lambda i:calls.append('reconcile'))
+    monkeypatch.setattr(r,'gate',lambda lane:(calls.append('gate') or tmp_path/'gate.json'))
+    monkeypatch.setattr(r,'backup_ta',lambda lane:calls.append('backup'))
+    def cmd(lane,step,args,cwd,timeout):
+        calls.append(step)
+        assert r.state['lanes']['sibur']['index_inflight']
+        if step=='member_index_batch_index':index['new']={}
+        if step.startswith('member_index_batch'):return b'planned 1\n'
+        return json.dumps({'updated':int(step=='member registry'),'members':2,'procedure_member_pairs':3,'source_links':3,'registry_sha256':'test'}).encode()
+    monkeypatch.setattr(r,'cmd',cmd)
+    def sync(i):calls.append('sync');r.update('sibur',archive_synced_count=len(i))
+    assert r.member_index_pilot(sync)
+    assert calls==['reconcile','gate','member_index_batch_extract','reconcile','member_index_batch_index','reconcile','gate','backup','sync','member registry','member registry replay']
+    assert r.state['lanes']['sibur']['index_inflight'] is False
+    assert r.state['lanes']['sibur']['member_pilot']['new_receipts']==1
+    assert not r.member_index_pilot(sync)
+
+
+def test_member_queue_uses_new_authenticated_plan_and_requires_progress(tmp_path,monkeypatch):
+    import hashlib
+    r=Runner(tmp_path,tmp_path,tmp_path,tmp_path);r.member_queue=True;r.update('sibur',index_inflight=False)
+    f=tmp_path/'sibur-sales-map-20261115';f.mkdir();p=f/'member-index-auto-20261116T223304950437Z.json';atomic(p,{})
+    result={'file':p.name,'digest':hashlib.sha256(p.read_bytes()).hexdigest(),'new_review':0}
+    monkeypatch.setattr(r,'cmd',lambda *a:json.dumps(result).encode())
+    def pilot(sync):
+        assert r.member_plan==p and r.member_batch_limit==10
+        r.update('sibur',member_pilot_completed_sha256=result['digest'],member_pilot={'extracted_planned':1,'indexed_planned':1,'registry':{'updated':1}});return True
+    monkeypatch.setattr(r,'member_index_pilot',pilot)
+    assert r.member_queue_cycle(None) and r.state['lanes']['sibur']['member_queue_cycles']==1
+    assert r.member_plan is None
+    with pytest.raises(Blocked,match='repeated'):r.member_queue_cycle(None)
+    result.update(file=None,digest=None,new_review=1);assert r.member_queue_cycle(None)
+    result['new_review']=0;assert not r.member_queue_cycle(None)

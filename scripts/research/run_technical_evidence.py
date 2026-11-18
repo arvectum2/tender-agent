@@ -38,7 +38,7 @@ def checksum(path):
 def review_extract(original,sha):
     try:
         return extract(original,sha)
-    except (ValueError,KeyError,ET.ParseError,zipfile.BadZipFile,subprocess.SubprocessError) as exc:
+    except (ValueError,KeyError,ET.ParseError,zipfile.BadZipFile,subprocess.SubprocessError,NotImplementedError) as exc:
         return {"schema":"technical_document_evidence_v1","source_sha256":sha,"status":"review",
                 "parts":[],"review":[{"reason":type(exc).__name__+": "+str(exc)[:150]}]}
 

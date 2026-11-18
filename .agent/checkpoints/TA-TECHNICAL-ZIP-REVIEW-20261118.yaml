@@ -1,0 +1,20 @@
+task_id: TA-TECHNICAL-ZIP-REVIEW-20261118
+status: completed
+goal: Keep technical evidence worker progressing when a receipt-bound ZIP member uses unsupported compression; preserve source and review status.
+definition_of_done:
+  - Unsupported member produces explicit partial review, supported siblings still processed; direct unsupported OOXML fails closed.
+  - Synthetic mixed archive and actual saved method-9 ZIP demonstrate no fabricated evidence.
+  - Publish separate patch; live worker installation separately authorized.
+completed:
+  - Worker blocked at NotImplementedError on ZIP method 9; actual source SHA 1ad9c2d0c8a5dc479eaddf8f4da99137a104cc10fabf73610ff41efc078371e4 identified among pending originals; 10707 existing evidence files preserved.
+  - Four focused tests pass. Actual original method 9 ZIP returns partial_review, four method-9 records and two other unsupported members, zero extracted, exact SHA unchanged.
+  - User explicitly approved applying exact implementation b1ba9534 to running worker branch. Real original test and 4 focused tests verified; CI last 17/19 with 2 quality running.
+  - Exact patch b1ba9534 cherry-picked under GPB and SIBUR executor locks to live worker branch at 2939897fcbc02f95e5ae2c832255fa346a10b438; clean worktree, exact three changed files match candidate. Installed tests 4/4 PASS, real method-9 original verified by actual scheduled Python interpreter; six review records, zero false extraction, source unchanged. Existing scheduled run 138 started normally and is still processing; no duplicate manual acquisition.
+  - Actual scheduled worker recovered: 12179 evidence files for 12179 eligible originals; state finished, last launchd exit 0, problematic ZIP partial_review (6 review records, 0 extracted). Exact PR639 af405e18 CI 19/19 success.
+current_stage: installed_and_verified
+remaining:
+  - None for scoped repair; unsupported Deflate64 files remain manual review, no claim of text extraction. Rollback evidence retained.
+last_verified_commit: 2939897fcbc02f95e5ae2c832255fa346a10b438
+test_results:
+  - 4 passed; actual method 9 archive partial_review, source unchanged; diff PASS.
+resume_instruction: Completed. Do not repeat installation; existing scheduled worker continues.
