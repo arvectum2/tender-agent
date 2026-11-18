@@ -11,6 +11,7 @@ from src.modules.company_profile_store.qualification_references import (
 
 from .evidence_document_search import checked_search_run
 from .evidence_ri223_archive import ri223_archive_observation
+from .operator_cashflow_calendar import CashCalendarRequest, calculate_cash_calendar
 from .operator_cost_scenarios import (
     ExplicitCostScenarioRequest,
     calculate_explicit_cost_thresholds,
@@ -99,7 +100,7 @@ def lot_scenario(notice: dict, scenario: ExplicitCostScenarioRequest | None) -> 
             'current_price_limit_attested':False}
 
 
-def review_archived_owner_run(run_id: str, scenario: ExplicitCostScenarioRequest | None=None, *, include_decision: bool=False) -> dict:
+def review_archived_owner_run(run_id: str, scenario: ExplicitCostScenarioRequest | None=None, *, include_decision: bool=False, cash_calendar: CashCalendarRequest | None=None) -> dict:
     """Operator-local, no arbitrary customer ID, database, persistence or HTTP route."""
     run,metadata=checked_search_run(run_id)
     notice=ri223_archive_observation(run,metadata)
@@ -114,6 +115,11 @@ def review_archived_owner_run(run_id: str, scenario: ExplicitCostScenarioRequest
     sme=sme_observation(run_id,run,metadata)
     scoring=scoring_observation(run,metadata)
     calc=lot_scenario(notice,scenario)
+    if cash_calendar is not None:
+        if scenario is None or calc['status']!='ARCHIVED_LOT_EXPLICIT_SCENARIO_ONLY':
+            raise ValueError('Archived single-lot explicit offer required for cash calendar')
+        calc['cash_calendar']=calculate_cash_calendar(scenario,cash_calendar)
+
     with container_projection_scope():
         risks=observe_contract_risk(run_id,run,metadata,calc)
     combined={}
