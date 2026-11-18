@@ -1043,4 +1043,5 @@ staged_settlement_20261118:
   task_id: TA-STAGED-SETTLEMENT-20261118
   status: in_progress
   checkpoint: .agent/checkpoints/TA-STAGED-SETTLEMENT-20261118.yaml
-  current_stage: source_bound_staged_settlement
+  current_stage: exact_ci_pending
+  last_verified_commit: f3a9db9104547aa1346ae52eb879658a7f392690
