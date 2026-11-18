@@ -23,9 +23,14 @@ def replay_owner(run):
         offer_scenario={'offer_price_rub':'900000','nonrefundable_guarantee_fees_rub':'5000',
                         'refundable_bid_cash_rub':'20000','refundable_contract_cash_rub':'100000'},
         accept_hypothetical_assumptions_only=True)
-    out=review_archived_owner_run(run,inputs)
+    out=review_archived_owner_run(run,inputs,include_decision=True)
     assert out['status']=='ARCHIVED_OWNER_REVIEW_ONLY' and not out['go_eligible']
     assert out['decision']=='NOT_DECIDED' and out['competitive_recommendation']=='NOT_ASSESSED'
+    decision=out['decision_review'];assert decision['status']=='ARCHIVED_DECISION_REVIEW_ONLY',decision
+    assert decision['decision_core']['decision']['status']=='NEEDS_REVIEW' and decision['recommendation']=='DEFER'
+    assert not decision['go_eligible'] and not decision['external_action_allowed']
+    assert out['dossier']['source_backed_domains']==9 and len(decision['review_gates'])==9
+    print('RI223_INTEGRATED_DECISION_PASS',decision['decision_core']['decision']['status'],len(decision['review_gates']),flush=True)
     risks=out['contract_risk'];print('RI223_CONTRACT_RISK_ACTUAL',risks['status'],risks.get('verified_clause_count'),[(x['clause'],x['status']) for x in risks['clauses']],risks.get('scenario_exposure'),flush=True)
     assert risks['status']=='ARCHIVED_CONTRACT_CLAUSE_REVIEW_ONLY' and risks['verified_clause_count']==14
     assert risks['scenario_exposure']['daily_delay_penalty_rub']=='900.00'

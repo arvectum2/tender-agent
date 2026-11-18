@@ -98,7 +98,7 @@ def lot_scenario(notice: dict, scenario: ExplicitCostScenarioRequest | None) -> 
             'current_price_limit_attested':False}
 
 
-def review_archived_owner_run(run_id: str, scenario: ExplicitCostScenarioRequest | None=None) -> dict:
+def review_archived_owner_run(run_id: str, scenario: ExplicitCostScenarioRequest | None=None, *, include_decision: bool=False) -> dict:
     """Operator-local, no arbitrary customer ID, database, persistence or HTTP route."""
     run,metadata=checked_search_run(run_id)
     notice=ri223_archive_observation(run,metadata)
@@ -114,10 +114,20 @@ def review_archived_owner_run(run_id: str, scenario: ExplicitCostScenarioRequest
     scoring=scoring_observation(run,metadata)
     calc=lot_scenario(notice,scenario)
     risks=observe_contract_risk(run_id,run,metadata,calc)
+    combined={}
+    if include_decision:
+        from .ri223_decision_review import archived_decision_projection
+        from .ri223_review_dossier import build_archived_review
+
+        dossier=build_archived_review(run_id,run,metadata)
+        projection=archived_decision_projection(notice,inventory,dossier,risks,calc)
+        if projection["status"]!="ARCHIVED_DECISION_REVIEW_ONLY":
+            return {**base,"reason":"COMBINED_REVIEW_UNVERIFIED"}
+        combined={"dossier":dossier,"decision_review":projection}
     current,meta=checked_search_run(run_id)
     if current!=run or meta!=metadata or verified_inventory(run,metadata)!=inventory or ri223_archive_observation(run,metadata)!=notice:
         return {**base,'reason':'SOURCE_CHANGED_DURING_REVIEW'}
-    return {**base,'status':'ARCHIVED_OWNER_REVIEW_ONLY','notice':notice,'inventory':inventory,
+    return {**base,**combined,'status':'ARCHIVED_OWNER_REVIEW_ONLY','notice':notice,'inventory':inventory,
             'historical_reference_list':owner,'participant_sme_clause':sme,'scoring':scoring,
             'economics':calc,'contract_risk':risks,'missing_review_inputs':['CURRENT_AUTHORIZED_COMPANY_PROFILE','DATED_SME_REGISTRY_EVIDENCE',
              'APPLIED_LOT_SCORING_FORMULA','ACTUAL_COSTS_AND_PAYMENT_TIMING','OWNER_COMMERCIAL_DECISION']}
