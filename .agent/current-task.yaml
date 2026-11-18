@@ -1006,7 +1006,14 @@ apr067_ri223_inflection_search_20261118:
 
 apr067_ri223_clause_ranking_20261118:
   task_id: TA-APR067-RI223-CLAUSE-RANKING-20261118
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR067-RI223-CLAUSE-RANKING-20261118.yaml
-  current_stage: exact_ci_pending
+  current_stage: verified_pending_merge
   last_verified_commit: dc394e9e5f86d320c6fb2b1b43d0a556af7aa8e1
+
+index_linkage_20261118:
+  task_id: TA-INDEX-LINKAGE-20261118
+  status: completed
+  checkpoint: .agent/checkpoints/TA-INDEX-LINKAGE-20261118.yaml
+  current_stage: live_linkage_verified
+  last_verified_commit: f8224e1dbd0e41942e756310132feab23165f8f0

@@ -616,6 +616,24 @@ def build_recovery_chunk_indexer(
     return DataPlatformRecoveryChunkIndexer(repo, config)
 
 
+def complete_index_counts(stats: dict, expected: int) -> bool:
+    """Each tender resource is one pre-chunked document and one embedding."""
+    return expected > 0 and all(type(stats.get(k)) is int and stats[k] == expected
+                                for k in ("resources", "documents", "chunks", "embeddings"))
+
+
+def validate_chunk_ingest_receipt(result: dict, collection_id: str, chunk_id: str) -> tuple[str, str]:
+    """Never count a partial or foreign receipt as an indexed local chunk."""
+    if (not isinstance(result, dict)
+            or result.get("collection_id") != collection_id
+            or result.get("canonical_uri") != _chunk_uri(chunk_id)
+            or result.get("extraction_status") != "extracted"
+            or any(type(result.get(k)) is not int or result[k] != 1 for k in ("chunks", "embeddings"))
+            or any(not isinstance(result.get(k), str) or not result[k].strip() for k in ("resource_id", "document_id"))):
+        raise DataPlatformError("Incomplete or mismatched Data Platform chunk receipt")
+    return result["resource_id"], result["document_id"]
+
+
 class DataPlatformTenderIndexer:
     def __init__(
         self,
@@ -649,6 +667,8 @@ class DataPlatformTenderIndexer:
         indexed = 0
         platform_chunks = 0
         embeddings = 0
+        resource_ids: set[str] = set()
+        document_ids: set[str] = set()
         for chunk in chunks:
             result = self._client.ingest_chunk(
                 collection_id=collection_id,
@@ -656,9 +676,16 @@ class DataPlatformTenderIndexer:
                 file_name=chunk.source_file_name or f"{chunk.document_id}.txt",
                 text=chunk.text,
             )
+            resource_id, document_id = validate_chunk_ingest_receipt(result, collection_id, chunk.id)
+            if resource_id in resource_ids or document_id in document_ids:
+                raise DataPlatformError("Duplicate Data Platform identity across tender chunks")
+            resource_ids.add(resource_id)
+            document_ids.add(document_id)
             indexed += 1
-            platform_chunks += int(result.get("chunks", 0) or 0)
-            embeddings += int(result.get("embeddings", 0) or 0)
+            platform_chunks += result["chunks"]
+            embeddings += result["embeddings"]
+        if not complete_index_counts(self._client.collection_stats(collection_id), len(chunks)):
+            raise DataPlatformError("Data Platform collection count mismatch after indexing")
 
         return DataPlatformIndexSummary(
             collection_id=collection_id,

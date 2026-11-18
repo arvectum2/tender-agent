@@ -1,5 +1,5 @@
 task_id: TA-APR067-RI223-CLAUSE-RANKING-20261118
-status: in_progress
+status: completed
 goal: Test clause-aware retrieval for evaluation and contract domains against exact baseline, preserving complete literal lines and source attestation.
 definition_of_done:
   - Keep default and frozen baseline unchanged; only two targeted domains in opt-in experiment.
@@ -9,9 +9,9 @@ definition_of_done:
 completed:
   - PR644 exact CI 19/19, morphology negative result closed.
   - Clause cues and original-quote attestation: raw whole-line variant 27/45, 41 citations; chunk-aligned variant 28/45, 44 citations, exact excerpt parity after resource caps. Default exact baseline 29/45, 42 citations. Three genuine replays exit 0, six notices including incomplete refusal, original bytes unchanged. 282 regression tests and 16 focused final tests PASS; original tamper refuses. Context improved in three complete cases; contextual NDA exceptions incomplete; no independent gold.
-current_stage: exact_ci_pending
+current_stage: verified_pending_merge
 remaining:
-  - Verify exact draft CI; next prepare held-out review and complete clause-boundary/exception handling; keep experiment opt-in.
+  - Exact PR645 CI 19/19 SUCCESS; next clause boundary and held-out review postponed for index linkage repair.
 last_verified_commit: dc394e9e5f86d320c6fb2b1b43d0a556af7aa8e1
 test_results:
   - 282 regression PASS, 16 final focused PASS; two warnings; Ruff/diff PASS.
