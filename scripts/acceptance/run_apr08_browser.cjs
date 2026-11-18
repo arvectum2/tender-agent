@@ -72,11 +72,12 @@ assert.equal(target.hostname,'127.0.0.1');assert.equal(target.protocol,'http:');
     assert.match(observed,/Запрос котировок/);assert.match(observed,/2026-10-15T10:00:00/);
     assert.match(observed,/часовой пояс UNKNOWN/);assert.match(observed,/Валюта лота: RUB/);
     assert.match(observed,/правовой статус закупки, обеспечение и победитель: UNKNOWN/);
-    assert.equal(await l('copilot-answer-result').getByText('Проверенный оригинал XML ЕИС:',{exact:false}).count(),5);
+    assert.match(observed,/Архивный порядок подачи заявок:/);assert.match(observed,/Архивный порядок подведения итогов:/);assert.match(observed,/18\.6\./);
+    assert.equal(await l('copilot-answer-result').getByText('Проверенный оригинал XML ЕИС:',{exact:false}).count(),7);
     await l('copilot-answer-result').screenshot({path:process.env.APR08_SCREENSHOT_DIR+'/ri223.png'});
     await ask('Какова НМЦК?','UNKNOWN');await ask('Какой размер обеспечения заявки?','UNKNOWN');
     assert.deepEqual(errors,[]);assert(await l('report-panel').isHidden());
-    console.log('APR03B_RI223_BROWSER_PASS five cited fields, no 44-FZ fallback');return;
+    console.log('APR03B_RI223_BROWSER_PASS seven cited fields, no 44-FZ fallback');return;
   }
   if(process.env.APR08_BROWSER_SCENARIO==='pinned') {
     const fixed=async(question,pattern,percent)=>{

@@ -107,6 +107,8 @@ def ri223_archive_observation(run: Path, metadata: dict) -> dict:
             if isinstance(amount,str) and re.fullmatch(r'[0-9]{1,15}(?:\.[0-9]{1,2})?',amount) and currency=='RUB':
                 literal('single_lot_initial_sum',amount,'/lots/lot[1]/lotData/initialSum')
                 literal('single_lot_currency',currency,'/lots/lot[1]/lotData/currency/code')
+        literal('archived_submission_order',_text(root,'applSubmisionOrder'),'/applSubmisionOrder')
+        literal('archived_summingup_order',_text(root,'summingupOrder'),'/summingupOrder')
         if not cites or _digest(archive,MAX_ARCHIVE_BYTES)!=archive_hash:
             raise ValueError('no verified fields')
         return {**result,'status':'PINNED_RI223_ARCHIVED_NOTICE','fields':fields,'citations':cites,

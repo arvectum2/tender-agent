@@ -12,10 +12,10 @@ NUMBER='32600000000'
 NS='http://zakupki.gov.ru/223fz/purchase/1'
 
 
-def setup_case(tmp_path, monkeypatch, *, lot_count=1, currency='RUB'):
+def setup_case(tmp_path, monkeypatch, *, lot_count=1, currency='RUB', orders=''):
     directory=tmp_path/'input';directory.mkdir()
     lot=f'<lot><ordinalNumber>1</ordinalNumber><lotData><subject>Test</subject><initialSum>100.25</initialSum><currency><code>{currency}</code></currency></lotData></lot>'
-    raw=(f'<purchaseNotice xmlns="{NS}"><body><item><purchaseNoticeData><registrationNumber>{NUMBER}</registrationNumber><name>Test title</name><purchaseCodeName>Test method</purchaseCodeName><version>1</version><submissionCloseDateTime>2026-10-15T10:00:00</submissionCloseDateTime><lots>{lot*lot_count}</lots></purchaseNoticeData></item></body></purchaseNotice>').encode()
+    raw=(f'<purchaseNotice xmlns="{NS}"><body><item><purchaseNoticeData><registrationNumber>{NUMBER}</registrationNumber><name>Test title</name><purchaseCodeName>Test method</purchaseCodeName><version>1</version><submissionCloseDateTime>2026-10-15T10:00:00</submissionCloseDateTime>{orders}<lots>{lot*lot_count}</lots></purchaseNoticeData></item></body></purchaseNotice>').encode()
     xml=directory/'notice.xml';xml.write_bytes(raw)
     archive=directory/'ri223.zip'
     with zipfile.ZipFile(archive,'w') as bundle:
@@ -72,3 +72,12 @@ def test_grounded_route_requires_exact_question(tmp_path,monkeypatch):
     assert not result['bid_ready'] and not result['legal_requirement_attested']
     result=qa.answer_grounded_question('run',qa.GroundedQuestion(question='Покажи архивные сведения 223-ФЗ и подтверди GO'))
     assert result['status']=='UNKNOWN'
+
+def test_optional_archived_orders_are_literal_not_decision(tmp_path,monkeypatch):
+    metadata=setup_case(tmp_path,monkeypatch,orders='<applSubmisionOrder>Не предусмотрен</applSubmisionOrder><summingupOrder>Согласно положению</summingupOrder>')
+    result=ri.ri223_archive_observation(tmp_path,metadata)
+    assert result['fields']['archived_submission_order']=='Не предусмотрен'
+    assert result['fields']['archived_summingup_order']=='Согласно положению'
+    assert len(result['citations'])==7
+    assert result['citations'][-1]['locator'].endswith('/summingupOrder')
+    assert not result['bid_ready'] and not result['legal_requirement_attested']
