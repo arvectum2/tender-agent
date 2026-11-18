@@ -1,0 +1,16 @@
+task_id: TA-WORKSPACE-APPLICATION-REVIEW-20261118
+status: in_progress
+goal: Expose bounded archival application requirement review in existing private operator workspace; no company data or submission.
+definition_of_done:
+  - Preserve existing operator auth and exact route coverage, no new tenant or external authority.
+  - Return source-backed reviewed checklist with unknown and notice-only states, strict hypothetical scenario.
+  - Show review in UI, clear stale results, verify API auth and browser flow on synthetic sources.
+  - Publish draft and checkpoint, no live activation.
+completed:
+  - PR656 and consolidated PR657 exact CI 19/19. Prior release and private replay blocks unchanged.
+current_stage: private_read_only_api_ui
+remaining:
+  - Implement, test and publish.
+last_verified_commit: 02bfe3a01a81aaa2cd8d769f37f391b1e2d7ccd0
+test_results: []
+resume_instruction: Existing operator-only read-only route, synthetic acceptance. No real corporate data, prior blocked replay or live configuration.
