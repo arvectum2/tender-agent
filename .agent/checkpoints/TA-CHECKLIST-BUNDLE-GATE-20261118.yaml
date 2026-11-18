@@ -1,0 +1,32 @@
+task_id: TA-CHECKLIST-BUNDLE-GATE-20261118
+status: in_progress
+goal: Source-derived checklist-to-bundle bridge and independent coverage gate.
+definition_of_done:
+- Preserve all reviewed requirement rows and conditional/alternative logic; pin source
+  and plan digest.
+- Require explicit approval of exact plan; derive only from same-run checklist, refuse
+  unknown or notice-only.
+- Verify archive independently against expected source plan and pinned digest; classify
+  gaps without GO.
+- Synthetic round trip, regression, draft PR and checkpoint.
+completed:
+- PR655 exact CI 17 success, two pending; earlier private replay remains blocked.
+- Derived nine reviewed source rows into ten plan items, exact source/tenant/run/scenario
+  approval digest, repeat observation, integrated private ZIP. Independent structural
+  gate detects omitted/changed requirements, incorrect role/path, inconsistent receipts
+  and unresolved gaps.
+- Synthetic integrated form/document/offer/declaration/price scenario ZIP pass; 67
+  joined regression PASS before final path guard, final 23 focused PASS, Ruff/diff
+  PASS. No private real replay.
+current_stage: exact_ci_pending
+remaining:
+- Verify exact draft CI and PR655. Real source acceptance, current profile, trusted
+  approvals, template/statement mapping and controlled release review remain open;
+  do not bypass prior blocked action.
+last_verified_commit: c86819923be17f865f02bdcf335542610998b920
+test_results:
+- 67 passed, 24 warnings before final path guard; final 23 passed, 2 warnings, exit
+  0; Ruff/diff PASS.
+resume_instruction: Check exact CI. Preserve blocked private replay. Prioritize integration/release
+  readiness gap review and permitted acceptance, no production writes or claim of
+  actual readiness.

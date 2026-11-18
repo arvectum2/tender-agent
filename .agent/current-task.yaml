@@ -1080,3 +1080,10 @@ reviewed_offer_declarations_20261118:
   checkpoint: .agent/checkpoints/TA-REVIEWED-OFFER-DECLARATIONS-20261118.yaml
   current_stage: exact_ci_pending
   last_verified_commit: 2fbc562f901c8f758a69223e852ee13b882d060d
+
+checklist_bundle_gate_20261118:
+  task_id: TA-CHECKLIST-BUNDLE-GATE-20261118
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-CHECKLIST-BUNDLE-GATE-20261118.yaml
+  current_stage: exact_ci_pending
+  last_verified_commit: c86819923be17f865f02bdcf335542610998b920
