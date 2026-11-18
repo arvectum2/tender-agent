@@ -1,0 +1,16 @@
+task_id: TA-CASHFLOW-CALENDAR-20261118
+status: in_progress
+goal: Explicit dated scenario ledger tied to PRICE01 cost totals; calculate peak funding and stress without claiming actual liquidity or commercial GO.
+definition_of_done:
+  - Reconcile dated revenues, costs, labor cash portion and refundable security against explicit PRICE01 assumptions.
+  - Reject missing/duplicate/mismatched amounts, premature refunds and invalid horizons; conservative same-day order.
+  - Independent receipt-delay scenarios, peak funding, budget shortfall, daily balances; integrate optional archived owner review and test real isolated replay.
+  - Publish draft and checkpoint; no production write/deployment.
+completed:
+  - PR646 and PR647 exact CI 19/19; previous stage closed.
+current_stage: explicit_calendar
+remaining:
+  - Implement, test, replay and document.
+last_verified_commit: 210a64740bb44657c605d41fec6893e4799cf760
+test_results: []
+resume_instruction: No new production writes, no current terms inferred, explicit scenario only.

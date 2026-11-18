@@ -1020,7 +1020,13 @@ index_linkage_20261118:
 
 ri223_linked_contract_economics_20261118:
   task_id: TA-RI223-LINKED-CONTRACT-ECONOMICS-20261118
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-RI223-LINKED-CONTRACT-ECONOMICS-20261118.yaml
-  current_stage: exact_ci_pending
+  current_stage: verified_pending_merge
   last_verified_commit: f948a02bf5cfb8585ee3cf44cfc240bbb67e1751
+
+cashflow_calendar_20261118:
+  task_id: TA-CASHFLOW-CALENDAR-20261118
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-CASHFLOW-CALENDAR-20261118.yaml
+  current_stage: explicit_calendar

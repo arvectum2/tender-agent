@@ -1,5 +1,5 @@
 task_id: TA-RI223-LINKED-CONTRACT-ECONOMICS-20261118
-status: in_progress
+status: completed
 goal: Link original archived contract paragraphs to explicit economic sensitivity
   and Decision Core.
 definition_of_done:
@@ -20,11 +20,10 @@ completed:
 - Authorized index repair independent final audit 1619/1619, 18/18 with chunks; parent
   branch checkpoint completed. PR646 three stale fixtures corrected, 62 tests PASS;
   fresh CI pending.
-current_stage: exact_ci_pending
-remaining:
-- Verify exact draft CI; then generic linked clause handling, explicit timing cash-flow
-  model and application completeness using current authorized profile. No commercial
-  GO without required evidence.
+- Exact PR647 210a64740bb44657c605d41fec6893e4799cf760 CI 19/19; PR646 a511566f33fd3e5c774075a17dfffcc8bca3f277
+  CI 19/19.
+current_stage: verified_pending_merge
+remaining: []
 last_verified_commit: f948a02bf5cfb8585ee3cf44cfc240bbb67e1751
 test_results:
 - 211 passed, 8 skipped, 2 warnings; Ruff/diff PASS; final real isolated original
