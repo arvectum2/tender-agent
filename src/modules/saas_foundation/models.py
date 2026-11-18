@@ -472,3 +472,36 @@ class CompanyCostNormVersion(UUIDPrimaryKeyMixin, Base):
 
 event.listen(CompanyCostNormVersion,"before_update",_immutable_company_decision)
 event.listen(CompanyCostNormVersion,"before_delete",_immutable_company_decision)
+
+
+class ApplicationReviewPreview(UUIDPrimaryKeyMixin, Base):
+    """Exact private server-generated draft; historical, not a submission."""
+    __tablename__ = 'application_review_previews'
+    tenant_id: Mapped[str] = mapped_column(String(64), ForeignKey('saas_tenants.tenant_id'), nullable=False)
+    member_id: Mapped[str] = mapped_column(String(36), ForeignKey('saas_members.id'), nullable=False)
+    run_id: Mapped[str] = mapped_column(String(128), ForeignKey('saas_runs.run_id'), nullable=False)
+    procurement_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    input_json: Mapped[dict] = mapped_column(JSON, nullable=False)
+    archive_bytes: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
+    archive_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    plan_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    inputs_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    evidence_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    __table_args__ = (Index('ix_application_preview_scope', 'tenant_id', 'run_id', 'created_at'),)
+
+
+class ApplicationReviewDecision(UUIDPrimaryKeyMixin, Base):
+    """Explicit internal acknowledgement of one exact private preview."""
+    __tablename__ = 'application_review_decisions'
+    preview_id: Mapped[str] = mapped_column(ForeignKey('application_review_previews.id'), nullable=False, unique=True)
+    tenant_id: Mapped[str] = mapped_column(String(64), ForeignKey('saas_tenants.tenant_id'), nullable=False)
+    member_id: Mapped[str] = mapped_column(String(36), ForeignKey('saas_members.id'), nullable=False)
+    archive_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+
+
+for _review_model in (ApplicationReviewPreview, ApplicationReviewDecision):
+    event.listen(_review_model, 'before_update', _immutable_company_decision)
+    event.listen(_review_model, 'before_delete', _immutable_company_decision)

@@ -62,6 +62,7 @@ from src.modules.customer_onboarding.router import (
     upload_company_document,
 )
 from src.modules.saas_foundation import (
+    application_review,
     commercial_attachment_service,
     commercial_capture,
     commercial_requirement_review,
@@ -612,6 +613,49 @@ def owned_run_qualification(run_id: str, principal: Member, session: DBSession) 
 @router.post("/api/saas/runs/{run_id}/application-readiness")
 def documentary_run(run_id: str, payload: ApplicationReviewRequest, principal: Member, session: DBSession) -> dict:
     return documentary_readiness.run_readiness(session,principal,Path(get_settings().arvectum_data_dir),run_id,payload)
+
+
+def _application_review_enabled():
+    if not get_settings().saas_application_review_enabled:
+        raise HTTPException(404, "Private application review disabled")
+
+
+@router.post("/api/saas/runs/{run_id}/application-review/previews",status_code=201)
+async def create_application_preview(run_id: str, request: Request, principal: Member, session: DBSession) -> dict:
+    _application_review_enabled()
+    application_review._access(session,principal,run_id)
+    body=bytearray()
+    async for chunk in request.stream():
+        if len(body)+len(chunk)>application_review.MAX_REQUEST_BYTES:
+            raise HTTPException(413,"Private review input too large")
+        body.extend(chunk)
+    try:
+        payload=application_review.PreviewInput.model_validate_json(body)
+    except ValueError as exc:
+        raise HTTPException(422,"Invalid private review input") from exc
+    return await run_in_threadpool(application_review.create_preview,session,principal,
+        Path(get_settings().arvectum_data_dir),run_id,payload)
+
+
+@router.get("/api/saas/runs/{run_id}/application-review/previews")
+def application_preview_history(run_id: str, principal: Member, session: DBSession) -> dict:
+    _application_review_enabled()
+    return application_review.history(session,principal,run_id)
+
+
+@router.get("/api/saas/runs/{run_id}/application-review/previews/{preview_id}/archive")
+def download_application_preview(run_id: str, preview_id: str, principal: Member, session: DBSession):
+    _application_review_enabled()
+    raw=application_review.download(session,principal,run_id,preview_id)
+    return Response(content=raw,media_type="application/zip",headers={
+        "Content-Disposition": 'attachment; filename="PRIVATE-REVIEW-DO-NOT-SUBMIT.zip"',
+        "Cache-Control":"no-store","X-Content-Type-Options":"nosniff"})
+
+
+@router.post("/api/saas/runs/{run_id}/application-review/previews/{preview_id}/confirm")
+def confirm_application_preview(run_id: str, preview_id: str, payload: application_review.ConfirmInput, principal: Member, session: DBSession) -> dict:
+    _application_review_enabled()
+    return application_review.confirm(session,principal,Path(get_settings().arvectum_data_dir),run_id,preview_id,payload)
 
 
 @router.post("/api/saas/runs/{run_id}/screen")

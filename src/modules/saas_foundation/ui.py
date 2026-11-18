@@ -89,6 +89,14 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 <label>Подписание<select id="documentary-signatory"><option value="UNKNOWN">Не определено</option><option value="DIRECTOR">Руководитель</option><option value="REPRESENTATIVE">Представитель по доверенности руководителя</option><option value="DELEGATED_SIGNER">Доверенность от иного уполномоченного лица</option></select></label>
 <label>Товары по условию образца<select id="documentary-goods"><option value="UNKNOWN">Не определено</option><option value="YES">Предусмотрены</option><option value="NO">Не предусмотрены</option></select></label>
 <button id="read-documentary-run">Сопоставить документы</button><div id="documentary-run-result" aria-live="polite"></div></details>
+<details><summary>Внутреннее согласование комплекта заявки (эксперимент)</summary>
+<p>Только собственный архивный прогон и роль owner/admin. Файл JSON с проверенными картами форм, выбранными приложениями, условиями цены и декларациями. Без подписи и подачи. ZIP содержит внутреннюю экономику — не загружать на ЭТП.</p>
+<label>Параметры черновика (.json, до 1 МиБ)<input id="application-review-input" type="file" accept=".json,application/json"></label>
+<button id="application-review-preview">Сформировать черновик</button><button id="application-review-history">История согласований</button>
+<div id="application-review-summary" aria-live="polite" style="overflow-wrap:anywhere"></div>
+<button id="application-review-download" disabled>Скачать и проверить приватный ZIP</button>
+<label><input type="checkbox" id="application-review-ack" disabled style="width:auto"> Я проверил именно этот архив; согласование только для внутренней работы, открытые вопросы остаются.</label>
+<button id="application-review-confirm" disabled>Зафиксировать внутреннее согласование</button></details>
 <div id="qualification-panel" hidden role="status" aria-live="polite" style="border:1px solid #496477;border-radius:10px;padding:12px;margin-top:12px">
 <strong id="qualification-verdict"></strong>
 <p id="qualification-source-note"></p>
@@ -183,6 +191,7 @@ let token="";
 let legalVersions=null;
 let uiBusy=false;
 let sessionEpoch=0;
+let applicationReview=null,applicationDownloaded=false;
 const val=id=>document.getElementById(id).value.trim();
 const split=id=>val(id).split(",").map(x=>x.trim()).filter(Boolean);
 const num=id=>val(id)===""?null:Number(val(id));
@@ -360,6 +369,49 @@ bind("read-documentary-run",async()=>{
  documentaryLine(root,"Готовность заявки и актуальная редакция не подтверждены. DEFER.");return {status:r.status,recommendation:"DEFER"};
 });
 for(const id of ["run-id","documentary-signatory","documentary-goods"])document.getElementById(id).addEventListener("input",()=>document.getElementById("documentary-run-result").replaceChildren());
+function applicationReviewPath(){const id=val("run-id");if(!id)throw Error("Укажите ID собственного прогона");return "/api/saas/runs/"+encodeURIComponent(id)+"/application-review/previews";}
+function syncApplicationReview(){
+ const current=applicationReview&&applicationReview.run_id===val("run-id")&&applicationReview.status==="PRIVATE_PREVIEW";
+ document.getElementById("application-review-download").disabled=uiBusy||!current;
+ document.getElementById("application-review-ack").disabled=uiBusy||!current||!applicationDownloaded;
+ document.getElementById("application-review-confirm").disabled=uiBusy||!current||!applicationDownloaded||!document.getElementById("application-review-ack").checked;
+}
+function clearApplicationReview(){applicationReview=null;applicationDownloaded=false;document.getElementById("application-review-ack").checked=false;document.getElementById("application-review-summary").replaceChildren();syncApplicationReview();}
+function showApplicationReview(r){
+ const root=document.getElementById("application-review-summary");root.replaceChildren();
+ documentaryLine(root,r.status==="INTERNAL_REVIEW_RECORDED"?"Внутреннее согласование записано. Не разрешение на подачу.":"Черновик для проверки. Не готов к подаче.");
+ documentaryLine(root,"Закупка: "+r.procurement_ref+" · SHA-256: "+r.archive_sha256);
+ documentaryLine(root,"Создан: "+r.created_at+" · действует до "+r.expires_at);
+ if(r.reviewed_at)documentaryLine(root,"Согласовано: "+r.reviewed_at+" · участник "+r.reviewed_by_member_id);
+ for(const x of r.inventory||[])documentaryLine(root,x.path+" · "+x.role);
+ if(r.open_item_codes)documentaryLine(root,"Открытые пункты: "+r.open_item_codes.join(", "));
+}
+bind("application-review-preview",async()=>{
+ clearApplicationReview();const runId=val("run-id"),path=applicationReviewPath(),f=document.getElementById("application-review-input").files[0];
+ if(!f||f.size>1048576)throw Error("Выберите JSON до 1 МиБ");
+ const body=JSON.parse(await f.text());const r=await call(path,{method:"POST",body});
+ if(r.run_id!==runId||r.run_id!==val("run-id")||r.status!=="PRIVATE_PREVIEW"||r.application_ready!==false||r.external_action_allowed!==false||!/^[a-f0-9]{64}$/.test(r.archive_sha256))throw Error("Неожиданный ответ черновика");
+ applicationReview=r;showApplicationReview(r);return {status:r.status,preview_id:r.preview_id,application_ready:false};
+});
+bind("application-review-download",async()=>{
+ const p=applicationReview,epoch=sessionEpoch;if(!p||!token||p.run_id!==val("run-id")||!window.crypto?.subtle)throw Error("Нет актуального черновика или безопасного контекста проверки SHA");
+ const response=await fetch(applicationReviewPath()+"/"+encodeURIComponent(p.preview_id)+"/archive",{credentials:"omit",cache:"no-store",redirect:"error",headers:{Authorization:"Bearer "+token}});
+ if(!response.ok){const e=Error("HTTP "+response.status);e.status=response.status;throw e;}
+ const buf=await response.arrayBuffer();if(buf.byteLength>2097152)throw Error("Размер архива превышен");
+ const sha=Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256",buf))).map(x=>x.toString(16).padStart(2,"0")).join("");
+ if(sha!==p.archive_sha256||epoch!==sessionEpoch||applicationReview!==p||p.run_id!==val("run-id"))throw Error("Архив или сессия изменены");
+ const url=URL.createObjectURL(new Blob([buf],{type:"application/zip"}));const a=document.createElement("a");a.href=url;a.download="PRIVATE-REVIEW-DO-NOT-SUBMIT.zip";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ applicationDownloaded=true;return {status:"PRIVATE_ARCHIVE_DOWNLOADED",sha256:sha};
+});
+bind("application-review-confirm",async()=>{
+ const p=applicationReview;if(!p||!applicationDownloaded||!document.getElementById("application-review-ack").checked||p.run_id!==val("run-id"))throw Error("Скачайте и проверьте точный архив");
+ const r=await call(applicationReviewPath()+"/"+encodeURIComponent(p.preview_id)+"/confirm",{method:"POST",body:{archive_sha256:p.archive_sha256,confirm_reviewed_private_archive:true}});
+ if(r.preview_id!==p.preview_id||r.archive_sha256!==p.archive_sha256||r.status!=="INTERNAL_REVIEW_RECORDED"||r.application_ready!==false||r.external_action_allowed!==false)throw Error("Неожиданное согласование");
+ applicationReview=r;applicationDownloaded=false;document.getElementById("application-review-ack").checked=false;showApplicationReview(r);return r;
+});
+bind("application-review-history",async()=>{const r=await call(applicationReviewPath());if(r.historical_only!==true||r.application_ready!==false)throw Error("Неожиданная история");return r});
+for(const id of ["run-id","application-review-input"])document.getElementById(id).addEventListener("input",clearApplicationReview);
+document.getElementById("application-review-ack").addEventListener("change",syncApplicationReview);
 bind("read-profile",async()=>{
  const r=await call("/api/saas/profile"),p=r.profile||{},c=p.criteria||{},q=p.qualification||{},m=p.commercial||{};
  for(const k of ["categories","regions","keywords"])document.getElementById(k).value=(c[k]||[]).join(", ");
@@ -457,7 +509,7 @@ function clearCompany(){
  el("company-registry").value="";el("company-commercial-url").value="";syncCompanyControls();
 }
 function clearSession(){
- clearDocumentary();
+ clearApplicationReview();clearDocumentary();
  token="";sessionEpoch++;legalVersions=null;referenceVersion=null;
  // Clear also the legacy profile, references, file forms, and report output.
  for(const field of document.querySelectorAll("input,textarea,select")){
@@ -472,6 +524,7 @@ function clearSession(){
 function companyCanWrite(){return companyIdentity?.legal_accepted===true&&["owner","admin","analyst"].includes(companyIdentity.role)}
 function companyCanDecide(){return companyIdentity?.legal_accepted===true&&["owner","admin"].includes(companyIdentity.role)}
 function syncCompanyControls(){
+ syncApplicationReview();
  const read=Boolean(companyIdentity?.legal_accepted), detail=Boolean(companyCase);
  el("company-more").disabled=uiBusy||!read||!companyMore;
  el("company-inbox-load").disabled=uiBusy||!read;
