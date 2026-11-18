@@ -7,9 +7,12 @@ definition_of_done:
   - Actual isolated DP replay, focused tests and draft PR.
 completed:
   - Read and SHA-verified eight direct originals and exact selected XML of four cases. Three noncompetitive controls and one quotation external regulation referral.
-current_stage: source_bound_gap_classifier
+  - All 16 frozen missing domain rows reviewed, 14 independently source-byte attested contextual fragments, two unknown; no change to frozen 29/45 lexical denominator. New optional archived submission/summing-up order extraction and UI labels. Actual isolated DP replay exit 0; six original notices and two Chromium scenarios exit 0. 207 targeted tests PASS; Node simulation and Ruff/diff PASS.
+current_stage: exact_ci_pending
 remaining:
-  - Implement, replay, test and publish.
-last_verified_commit: b6b9ee4b0f576782238b47bec26912c097bf0d77
-test_results: []
+  - Verify exact CI. Next improve generic retrieval without training on the frozen observations as independent gold; investigate archive verification cost without weakening source binding.
+last_verified_commit: 452e70d158e88561c95360c0f245534247905e67
+test_results:
+  - 207 passed, 12 warnings; Ruff, Node syntax and UI simulation PASS.
+  - Actual isolated gap review 16/14/2, source originals unchanged; six original notices and two Chromium scenarios PASS. Both replay exits 0.
 resume_instruction: Frozen baseline unchanged; no independent gold, live acquisition, production, DB or admission change.

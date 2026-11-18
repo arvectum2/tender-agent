@@ -1,5 +1,5 @@
 task_id: TA-APR067-RI223-DOMAIN-COVERAGE-20261118
-status: in_progress
+status: completed
 goal: Measure actual archived mixed-case document-domain retrieval coverage and refusal on incomplete originals, reusing existing isolated DP replay.
 definition_of_done:
   - Measure five complete original-receipt cases with nine fixed probes each; incomplete sixth excluded and refused.
@@ -9,9 +9,9 @@ completed:
   - Coordinated release remains blocked by remote tool; no repeat or bypass. APR04 profile and APR06 human gold gates separate. APR07 rolling operator requires dedicated authorized role.
   - Existing replay extended with fixed probes and bounded counts, no change to product behavior. Initial replay canonical-path mismatch failed closed; corrected via checked_search_run.
   - Final actual isolated replay exit 0: 5 complete cases, 1 incomplete refused, 29/45 probes with citations, 42 excerpts, 16 unknown; originals unchanged and isolated DP removed. 176 targeted tests PASS, Ruff/diff PASS.
-current_stage: exact_ci_pending
+current_stage: verified_pending_merge
 remaining:
-  - Verify exact draft PR CI; then review unknowns against original procedure/applicability without changing frozen baseline. Commercial human gold and rolling SLO separate.
+  - Exact PR641 b6b9ee4b0f576782238b47bec26912c097bf0d77 CI 19/19 SUCCESS. Further gap review separate.
 last_verified_commit: 9f7785db79474e3b74cfbb808f85011a1237e8fb
 test_results:
   - 176 passed, 12 warnings; Ruff/diff PASS.

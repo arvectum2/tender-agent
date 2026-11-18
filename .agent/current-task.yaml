@@ -978,13 +978,14 @@ ri223_wsf07b_coordinated_release_20261118:
 
 apr067_ri223_domain_coverage_20261118:
   task_id: TA-APR067-RI223-DOMAIN-COVERAGE-20261118
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR067-RI223-DOMAIN-COVERAGE-20261118.yaml
-  current_stage: exact_ci_pending
+  current_stage: verified_pending_merge
   last_verified_commit: 9f7785db79474e3b74cfbb808f85011a1237e8fb
 
 apr067_ri223_gap_review_20261118:
   task_id: TA-APR067-RI223-GAP-REVIEW-20261118
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR067-RI223-GAP-REVIEW-20261118.yaml
-  current_stage: source_bound_gap_classifier
+  current_stage: exact_ci_pending
+  last_verified_commit: 452e70d158e88561c95360c0f245534247905e67
