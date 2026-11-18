@@ -1,16 +1,30 @@
 task_id: TA-REVIEWED-OFFER-DECLARATIONS-20261118
 status: in_progress
-goal: Generate separate reviewed price and declaration drafts without leaking internal economics or inventing attestations.
+goal: Generate separate reviewed price and declaration drafts without leaking internal
+  economics or inventing attestations.
 definition_of_done:
-  - Explicit scoped price terms, exact sums, ceiling and VAT treatment; match PRICE01 proposed price without implying GO.
-  - Latest current owner-reviewed fact tied to exact procurement and terms/statement hash; leave unsupported declarations unanswered.
-  - Separate private lineage from draft documents; integrate with review ZIP and verify checksums.
-  - Synthetic tests, publish draft, checkpoint. No real private replay or production change.
+- Explicit scoped price terms, exact sums, ceiling and VAT treatment; match PRICE01
+  proposed price without implying GO.
+- Latest current owner-reviewed fact tied to exact procurement and terms/statement
+  hash; leave unsupported declarations unanswered.
+- Separate private lineage from draft documents; integrate with review ZIP and verify
+  checksums.
+- Synthetic tests, publish draft, checkpoint. No real private replay or production
+  change.
 completed:
-  - PR654 exact head 17/19 successful, 2 in progress; prior blocked replay unchanged.
-current_stage: reviewed_commercial_drafts
+- PR654 exact head 17/19 successful, 2 in progress; prior blocked replay unchanged.
+- Reviewed explicit gross price and declaration wording digest, latest scoped owner
+  assertions, missing confirmation refusal and unresolved declaration fields; separate
+  unsigned DOCX drafts in private ZIP, no internal cost values propagated.
+- 34 targeted tests PASS including 17 new; actual synthetic DOCX/ZIP round trip; Ruff/diff
+  PASS. Wider combined test transport disconnected, no result claimed.
+current_stage: exact_ci_pending
 remaining:
-  - Implement, test, publish.
-last_verified_commit: a0e9dbdfa0787f2d13bb08b787d6e33dd2c8ff1a
-test_results: []
-resume_instruction: Independent synthetic development only. Never retry blocked private replay.
+- Verify exact draft CI and PR654. Next reviewed checklist-to-package bridge and independent
+  final completeness gate; actual profile/source acceptance open.
+last_verified_commit: 2fbc562f901c8f758a69223e852ee13b882d060d
+test_results:
+- 34 passed, 24 warnings, exit 0; Ruff/diff PASS
+resume_instruction: Verify exact CI and prior PR654. Do not retry blocked private
+  original replay. Next explicit checklist-to-bundle mapping with source provenance
+  and final completeness gate.

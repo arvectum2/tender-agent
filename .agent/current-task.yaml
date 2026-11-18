@@ -1069,13 +1069,14 @@ source_bound_form_fill_20261118:
 
 private_draft_package_20261118:
   task_id: TA-PRIVATE-DRAFT-PACKAGE-20261118
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-PRIVATE-DRAFT-PACKAGE-20261118.yaml
-  current_stage: exact_ci_pending
+  current_stage: verified_pending_merge
   last_verified_commit: ac0a8cc857e23a364a18f5d9efa50788b5b71b5f
 
 reviewed_offer_declarations_20261118:
   task_id: TA-REVIEWED-OFFER-DECLARATIONS-20261118
   status: in_progress
   checkpoint: .agent/checkpoints/TA-REVIEWED-OFFER-DECLARATIONS-20261118.yaml
-  current_stage: reviewed_commercial_drafts
+  current_stage: exact_ci_pending
+  last_verified_commit: 2fbc562f901c8f758a69223e852ee13b882d060d
