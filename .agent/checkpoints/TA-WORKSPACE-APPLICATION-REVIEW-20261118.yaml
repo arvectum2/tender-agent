@@ -1,0 +1,31 @@
+task_id: TA-WORKSPACE-APPLICATION-REVIEW-20261118
+status: in_progress
+goal: Expose bounded archival application requirement review in existing private operator
+  workspace; no company data or submission.
+definition_of_done:
+- Preserve existing operator auth and exact route coverage, no new tenant or external
+  authority.
+- Return source-backed reviewed checklist with unknown and notice-only states, strict
+  hypothetical scenario.
+- Show review in UI, clear stale results, verify API auth and browser flow on synthetic
+  sources.
+- Publish draft and checkpoint, no live activation.
+completed:
+- PR656 and consolidated PR657 exact CI 19/19. Prior release and private replay blocks
+  unchanged.
+- Read-only private workspace application-review API and expandable UI; exact route
+  auth, strict scenario, no profile or external action. Source projection with nine
+  groups, conditional and alternative evidence, notice-only or UNKNOWN.
+- 87 tests PASS (3 warnings), existing Node UI simulation PASS, isolated real Chromium
+  desktop and 390px PASS with synthetic observer. Ruff/diff PASS.
+current_stage: exact_ci_pending
+remaining:
+- Verify exact draft CI. Next authorized tenant binding/read-only profile integration
+  and trusted approval; preserve previous safety blocks.
+last_verified_commit: 87af606a5505176225c2edd780c2e51526d7177a
+test_results:
+- 87 passed, 3 warnings, exit 0; Node simulation and real synthetic Chromium desktop/390px
+  PASS; Ruff/diff PASS.
+resume_instruction: Verify exact draft CI. Continue safe UI integration only; no actual
+  private replay, tenant grants or production cutover. New endpoint has no company
+  data.

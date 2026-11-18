@@ -132,6 +132,11 @@ from src.modules.tender_operator_agent_demo.upload_service import (
 from src.modules.tender_operator_agent_demo.verified_original_quote import (
     verify_operator_run_quote,
 )
+from src.modules.tender_operator_agent_demo.workspace_application_review import (
+    ApplicationReviewRequest,
+    ApplicationReviewResponse,
+    review_workspace_application,
+)
 from src.shared.api.middleware import _is_protected_path
 from src.shared.config.settings import get_settings
 
@@ -224,6 +229,19 @@ def operator_workspace_evidence_answer(run_id: str, request: GroundedQuestion, h
                               tuple(settings.pilot_auth_public_paths.split(","))):
         raise HTTPException(status_code=503, detail="Private operator authentication must cover this endpoint")
     return answer_grounded_question(run_id, request)
+
+
+@router.post(
+    "/api/demo/tender-agent/workspace/runs/{run_id}/application-review",
+    response_model=ApplicationReviewResponse,
+    dependencies=[Depends(require_private_workspace)],
+)
+def operator_workspace_application_review(run_id: str, request: ApplicationReviewRequest, http: Request) -> ApplicationReviewResponse:
+    settings = get_settings()
+    if not _is_protected_path(http.url.path, tuple(settings.pilot_auth_protected_prefixes.split(",")),
+                              tuple(settings.pilot_auth_public_paths.split(","))):
+        raise HTTPException(status_code=503, detail="Private operator authentication must cover this endpoint")
+    return review_workspace_application(run_id, request)
 
 
 @router.post(
