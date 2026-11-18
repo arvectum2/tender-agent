@@ -10,6 +10,7 @@ import base64
 import binascii
 import hmac
 from datetime import datetime, timedelta
+from pathlib import Path
 from typing import Annotated, Literal
 from zoneinfo import ZoneInfo
 
@@ -79,6 +80,7 @@ from src.modules.saas_foundation import (
     company_readiness,
     company_reviewed_contracts,
     company_schedule,
+    documentary_readiness,
 )
 from src.modules.saas_foundation.commercial_attachment_bytes import MAX_ATTACHMENT_BYTES
 from src.modules.saas_foundation.models import (
@@ -121,6 +123,9 @@ from src.modules.tender_operator_agent_demo.upload_service import (
     create_uploaded_demo_run,
     get_uploaded_demo_report,
     get_uploaded_demo_run,
+)
+from src.modules.tender_operator_agent_demo.workspace_application_review import (
+    ApplicationReviewRequest,
 )
 from src.shared.api.dependencies import DBSession
 from src.shared.config.settings import get_settings
@@ -363,6 +368,11 @@ def profile(principal: Member, session: DBSession) -> dict:
     return inspect_onboarding(principal.customer_id, session)
 
 
+@router.get("/api/saas/profile/documentary-readiness")
+def documentary_profile(principal: Member, session: DBSession) -> dict:
+    return documentary_readiness.profile_readiness(session,principal,Path(get_settings().arvectum_data_dir))
+
+
 @router.put("/api/saas/profile")
 def update_profile(payload: OnboardingProfile, principal: Member, session: DBSession) -> dict:
     role_required(principal, "owner", "admin")
@@ -597,6 +607,11 @@ def owned_run_qualification(run_id: str, principal: Member, session: DBSession) 
         session, run_id=run_id, customer_id=principal.customer_id,
         as_of=datetime.now(ZoneInfo("Europe/Moscow")).date(),
     )
+
+
+@router.post("/api/saas/runs/{run_id}/application-readiness")
+def documentary_run(run_id: str, payload: ApplicationReviewRequest, principal: Member, session: DBSession) -> dict:
+    return documentary_readiness.run_readiness(session,principal,Path(get_settings().arvectum_data_dir),run_id,payload)
 
 
 @router.post("/api/saas/runs/{run_id}/screen")

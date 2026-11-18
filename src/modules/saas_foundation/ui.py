@@ -47,7 +47,9 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 <label>Целевая маржа, %<input id="margin" type="number" min="0" max="100" value="20"></label>
 <label>Лицензии через запятую<input id="licenses"></label>
 <label>Допуски СРО через запятую<input id="sro"></label></div>
-<button id="read-profile">Показать профиль</button><button id="save-profile">Сохранить новую версию</button></section>
+<button id="read-profile">Показать профиль</button><button id="save-profile">Сохранить новую версию</button>
+<details><summary>Квалификационные доказательства</summary><p>Семь направлений проверки профиля, не список обязательных требований каждой закупки. Наличие PDF не означает юридического допуска.</p>
+<button id="read-documentary-profile">Проверить доказательства профиля</button><div id="documentary-profile-result" aria-live="polite"></div></details></section>
 <section><h2>3a. Референс-лист исполненных контрактов</h2>
 <p>Версии не удаляются: новая запись замещает предыдущую для будущей оценки. Отсутствие списка — UNKNOWN, а не ноль контрактов. Указывайте только фактически исполненные договоры и ссылки на подписанные акты.</p>
 <p id="reference-state" role="status">Список пока не загружен</p>
@@ -82,6 +84,11 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 <button id="analyze-run">Анализировать</button><button id="report-run">Посмотреть отчёт</button>
 <button id="screen-run">Сопоставить с профилем</button>
 <button id="qualify-run">Оценить шансы по оригинальным критериям ЕИС</button>
+<details><summary>Комплектность заявки и документы компании</summary>
+<p>Только изученные архивные требования собственного прогона. Выбор сценария не подтверждает полномочий или фактической поставки.</p>
+<label>Подписание<select id="documentary-signatory"><option value="UNKNOWN">Не определено</option><option value="DIRECTOR">Руководитель</option><option value="REPRESENTATIVE">Представитель по доверенности руководителя</option><option value="DELEGATED_SIGNER">Доверенность от иного уполномоченного лица</option></select></label>
+<label>Товары по условию образца<select id="documentary-goods"><option value="UNKNOWN">Не определено</option><option value="YES">Предусмотрены</option><option value="NO">Не предусмотрены</option></select></label>
+<button id="read-documentary-run">Сопоставить документы</button><div id="documentary-run-result" aria-live="polite"></div></details>
 <div id="qualification-panel" hidden role="status" aria-live="polite" style="border:1px solid #496477;border-radius:10px;padding:12px;margin-top:12px">
 <strong id="qualification-verdict"></strong>
 <p id="qualification-source-note"></p>
@@ -208,7 +215,7 @@ function showQualification(reply){
    "%. Источник: " + (item.source_status || "не подтверждён") +
    ". Это не юридический отказ, подпись ЕИС не проверена, подача заявки запрещена без решения человека.";
 }
-async function run(task){if(uiBusy)return;uiBusy=true;const enabled=[...document.querySelectorAll("button,input,textarea,select")].filter(x=>!x.disabled);for(const el of enabled)el.disabled=true;document.getElementById("state").textContent="Обработка…";try{
+async function run(task){if(uiBusy)return;clearDocumentary();uiBusy=true;const enabled=[...document.querySelectorAll("button,input,textarea,select")].filter(x=>!x.disabled);for(const el of enabled)el.disabled=true;document.getElementById("state").textContent="Обработка…";try{
  const result=await task();document.getElementById("state").textContent="Готово";output(result);showQualification(result);
 }catch(err){if([401,402,403].includes(err.status))clearSession();document.getElementById("state").textContent="Нужна проверка";output({error:err.message});document.getElementById("qualification-panel").hidden=true;}finally{uiBusy=false;for(const el of enabled)el.disabled=false;syncCompanyControls();}}
 function bind(id,task){document.getElementById(id).addEventListener("click",()=>run(task))}
@@ -328,6 +335,31 @@ bind("references-save",async()=>{
  displayReferences(refreshed);
  return {saved_version:saved.fact_version,current_snapshot:refreshed};
 });
+const documentaryLabels={current_registry:"Регистрация",sme_membership:"Статус МСП",current_tax:"Налоговый режим",completed_experience:"Исполненные контракты",license_scope_review:"Лицензии",certificate_scope_review:"Сертификаты",sro_scope_review:"Допуски СРО"};
+function clearDocumentary(){for(const id of ["documentary-profile-result","documentary-run-result"])document.getElementById(id).replaceChildren();}
+function documentaryLine(root,text){const p=document.createElement("p");p.textContent=text;root.append(p);}
+function documentaryClaim(c){return c.state==="DOCUMENTED_OWNER_CLAIM_REVIEW_REQUIRED"?(c.claim_assertion==="PRESENT"?"Подтверждение владельца; требуется проверка содержания":"Заявление об отсутствии; требуется проверка"):(c.state==="MISSING"?"Нет подтверждённого факта":"Требуется проверка: "+c.state);}
+bind("read-documentary-profile",async()=>{
+ const root=document.getElementById("documentary-profile-result");root.replaceChildren();
+ const r=await call("/api/saas/profile/documentary-readiness");
+ if(r.contract!=="tenant_documentary_readiness_v1"||r.qualification_verified!==false||r.external_action_allowed!==false||r.recommendation!=="DEFER"||!Array.isArray(r.requirements)||r.requirements.length!==7)throw Error("Неподтверждённая структура ответа");
+ for(const c of r.requirements)documentaryLine(root,(documentaryLabels[c.requirement_code]||c.requirement_code)+" — "+documentaryClaim(c));
+ documentaryLine(root,"Реестры и юридическая квалификация не проверены. DEFER.");return {status:r.contract,recommendation:"DEFER"};
+});
+bind("read-documentary-run",async()=>{
+ const root=document.getElementById("documentary-run-result");root.replaceChildren();
+ const runId=val("run-id"),signatory=val("documentary-signatory"),goods=val("documentary-goods");
+ if(!runId)throw Error("Укажите ID собственного прогона");
+ const body={signatory,goods_used:goods==="UNKNOWN"?null:goods==="YES"};
+ const r=await call("/api/saas/runs/"+encodeURIComponent(runId)+"/application-readiness",{method:"POST",body});
+ if(runId!==val("run-id")||signatory!==val("documentary-signatory")||goods!==val("documentary-goods"))return {status:"STALE_REVIEW_IGNORED"};
+ if(r.contract!=="tenant_archived_application_readiness_v1"||r.run_id!==runId||r.signatory!==signatory||r.goods_used!==body.goods_used||r.qualification_verified!==false||r.application_ready!==false||r.external_action_allowed!==false||r.recommendation!=="DEFER")throw Error("Неподтверждённая структура ответа");
+ if(r.status!=="ARCHIVED_QUOTATION_CHECKLIST_REVIEW_ONLY"){documentaryLine(root,r.status==="ARCHIVED_NOTIFICATION_NOT_APPLICATION"?"Архивное извещение без подачи заявки":"UNKNOWN — проверенный чек-лист недоступен");return {status:r.status,recommendation:"DEFER"};}
+ if(!Array.isArray(r.rows)||r.rows.length!==9)throw Error("Неполный чек-лист");
+ for(const row of r.rows){documentaryLine(root,row.title+" — "+row.applicability+" · "+row.state);for(const c of row.documentary_candidates)documentaryLine(root,"↳ "+c.requirement_code+": "+documentaryClaim(c));}
+ documentaryLine(root,"Готовность заявки и актуальная редакция не подтверждены. DEFER.");return {status:r.status,recommendation:"DEFER"};
+});
+for(const id of ["run-id","documentary-signatory","documentary-goods"])document.getElementById(id).addEventListener("input",()=>document.getElementById("documentary-run-result").replaceChildren());
 bind("read-profile",async()=>{
  const r=await call("/api/saas/profile"),p=r.profile||{},c=p.criteria||{},q=p.qualification||{},m=p.commercial||{};
  for(const k of ["categories","regions","keywords"])document.getElementById(k).value=(c[k]||[]).join(", ");
@@ -425,6 +457,7 @@ function clearCompany(){
  el("company-registry").value="";el("company-commercial-url").value="";syncCompanyControls();
 }
 function clearSession(){
+ clearDocumentary();
  token="";sessionEpoch++;legalVersions=null;referenceVersion=null;
  // Clear also the legacy profile, references, file forms, and report output.
  for(const field of document.querySelectorAll("input,textarea,select")){
