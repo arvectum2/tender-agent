@@ -1,0 +1,16 @@
+task_id: TA-SOURCE-BOUND-FORM-FILL-20261118
+status: in_progress
+goal: Source-derived private draft field planning and safe DOCX/XLSX rendering, with no unsupported declarations.
+definition_of_done:
+  - Resolve explicitly mapped identity fields from current scoped owner-reviewed facts, not caller supplied arbitrary values.
+  - Bind template bytes to exact reviewed hash, validate targets, preserve unknown placeholders and immutable original.
+  - Prevent formula and cascading replacements; attach per-field provenance and no signature/submission.
+  - Synthetic disposable database and file round trips, regression tests, draft PR.
+completed:
+  - Read PR652 checkpoint; original private replay remains blocked and will not be repeated. PR652 CI 17 success two pending.
+current_stage: source_bound_draft
+remaining:
+  - Implement and validate independent synthetic form workflow.
+last_verified_commit: 62a07f47698d0da658ef7f6042c97a6a093eb6ef
+test_results: []
+resume_instruction: Independent synthetic form development only; no production or blocked private replay.
