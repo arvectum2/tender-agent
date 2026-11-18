@@ -1,0 +1,15 @@
+task_id: TA-INTEGRATED-RELEASE-AUDIT-20261118
+status: in_progress
+goal: Audit integrated candidate against live main and existing release gates; resolve safe engineering gaps and produce evidence-based release decision.
+definition_of_done:
+  - Verify exact branch ancestry, CI, runtime health and change boundaries.
+  - Run combined isolated regression across touched modules; review integration and security gaps.
+  - Record explicit no-go/conditions, prioritized blockers and safe candidate followup, no deployment.
+completed:
+  - Candidate 846dece7 includes main 3b37fb69 and PR640; 151 files delta. Three live health endpoints PASS. PR655 18/19 and PR656 17/19 success remainder running.
+current_stage: integrated_regression_and_audit
+remaining:
+  - Combined regression and release matrix, publish audit checkpoint.
+last_verified_commit: 846dece712f06ba9c23d891f7e10a5dbb8af7301
+test_results: []
+resume_instruction: Prior WSF07B coordinated deployment and private replay safety blocks remain. No retries, bypass or live changes.
