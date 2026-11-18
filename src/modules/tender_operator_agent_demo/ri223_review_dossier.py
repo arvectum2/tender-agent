@@ -121,12 +121,12 @@ def verified_inventory(run: Path, metadata: dict) -> dict:
         return {**empty,'reason':'ARCHIVED_INVENTORY_UNVERIFIED'}
 
 
-def build_archived_review(run_id: str, run: Path, metadata: dict) -> dict:
+def build_archived_review(run_id: str, run: Path, metadata: dict, *, candidate_selector=None) -> dict:
     with container_projection_scope():
-        return _build_archived_review(run_id, run, metadata)
+        return _build_archived_review(run_id, run, metadata, candidate_selector=candidate_selector)
 
 
-def _build_archived_review(run_id: str, run: Path, metadata: dict) -> dict:
+def _build_archived_review(run_id: str, run: Path, metadata: dict, *, candidate_selector=None) -> dict:
     notice=ri223_archive_observation(run,metadata)
     inventory=verified_inventory(run,metadata) if notice['status']=='PINNED_RI223_ARCHIVED_NOTICE' else None
     result={'status':'UNKNOWN','notice':notice,'inventory':inventory,'domains':[],
@@ -139,7 +139,9 @@ def _build_archived_review(run_id: str, run: Path, metadata: dict) -> dict:
     plan=list(review_domains())
     plan.extend([('payment','Условия оплаты','contract_terms'),('security','Обеспечение заявки и договора','contract_terms')])
     for key,title,section in plan:
-        evidence=search_run_documents(run_id,DocumentSearchQuestion(query=_PROBES[key]))
+        question=DocumentSearchQuestion(query=_PROBES[key])
+        evidence=(search_run_documents(run_id,question) if candidate_selector is None else
+                  search_run_documents(run_id,question,candidate_selector=candidate_selector))
         citations=evidence['citations'] if evidence['status']=='VERIFIED_EXCERPTS_ONLY' else []
         result['domains'].append({'domain':key,'title':title,'analysis_section_id':section,
             'query':_PROBES[key],'status':'NEEDS_HUMAN_DOCUMENT_REVIEW' if citations else 'NO_CITED_DOCUMENT_EXCERPT',
