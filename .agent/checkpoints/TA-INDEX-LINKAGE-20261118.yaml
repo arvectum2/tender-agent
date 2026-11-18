@@ -12,8 +12,8 @@ completed:
   - Core 280 legacy chunks verified against all 14 exact archived originals and historical extracted texts; private plan d974162fbb77fad3ffabf0d5624a0d8bb58914973650af098f2ce60b63070a65, six collections absent, no live writes. Code receipt/count guards, 34 tests PASS; plan CLI read-only PASS.
   - Installed exact SIBUR runner patch under both locks, live head 3828589971510c7356465469d5197539d0651871; 2 tests PASS, backup /Volumes/ArvectumSSD/Arvectum/backups/sibur-runner-install-20261118.yr_cxvbt, blocked state preserved.
   - Scoped authorized apply actually launched once, PID 19937; fresh MI backup and gate PASS; receipt log mode 600, source plan unchanged. Independent read-only audit and 10 negative/positive tests PASS.
-current_stage: live_scoped_apply_running
   - Owner explicitly confirmed scoped 280 historical embedding restoration and installation of exact SIBUR runner fix on Mac mini. Read-only plan revalidated, 280/280, 0 present; DP and embedding health OK.
+current_stage: live_scoped_apply_running
 remaining:
   - Inspect existing apply.pid, apply.exit, apply.log and plan.json.apply.jsonl under the private plan directory; never launch another while PID alive. On successful exit with final HISTORICAL_INDEX_REPAIR_PASS receipt, run python -m scripts.ops.audit_tender_index_linkage --require-complete, require 1619/1619 and 18/18 tender groups, exact source plan 280/280; verify health and SIBUR registry unchanged. If failure reconcile exact identities and retain guard before any approved resume; never bypass a failed gate. Runner next-document error remains separately blocked.
 last_verified_commit: 82c6644f47cd45b1fea60a6893625b95c5c8b747

@@ -119,6 +119,8 @@ class TestDataPlatformAnalysis:
         platform_client = MagicMock()
         platform_client.collection_stats.return_value = {
             "resources": 2,
+            "documents": 2,
+            "chunks": 2,
             "embeddings": 2,
         }
         retriever = MagicMock()
@@ -302,7 +304,7 @@ class TestRi223RegimeBoundAnalysis:
         repo.get_tender_by_registry_number.return_value = tender
         repo.count_chunks_by_tender.return_value = 2
         client = MagicMock()
-        client.collection_stats.return_value = {"resources": 2, "embeddings": 2}
+        client.collection_stats.return_value = {"resources": 2, "documents": 2, "chunks": 2, "embeddings": 2}
         retriever = MagicMock()
         retriever.search_documents.return_value = []
         with (
