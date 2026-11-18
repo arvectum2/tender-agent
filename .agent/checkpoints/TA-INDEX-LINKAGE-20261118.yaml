@@ -1,0 +1,16 @@
+task_id: TA-INDEX-LINKAGE-20261118
+status: in_progress
+goal: Verify actual embedding-to-document-to-procurement identities, repair confirmed partial-batch member lineage loss, isolate legacy missing active tender collections.
+definition_of_done:
+  - Exact read-only joins and source receipt verification in both production DBs and the SIBUR research DB.
+  - Repair durable SIBUR registry for the exact verified member; test partial failure registration without swallowing original error.
+  - Prepare exact legacy missing-index repair scope and safe readiness checks; no unapproved production DB write or previously blocked deploy.
+completed:
+  - DP 8483 documents/74861 chunks/74861 vectors, zero parent orphans; TA 1619 local chunks/1339 exact active index matches, 280 missing in six older tenders, 638 historical DP URI rows not present locally.
+  - SIBUR 6291 documents/72175 vectors, exact 6291 local/server receipts, 2264 distinct directly linked hashes, 4170 member registry, union 6290. One missing exact member in blocked plan; partial ingest error occurs before member registry command.
+current_stage: partial_member_linkage_recovery
+remaining:
+  - Test and publish runner patch; verify exact lineage repair and legacy backfill gate.
+last_verified_commit: cd2733bb14202066b83ca548627fe9f04a8f00d6
+test_results: []
+resume_instruction: Preserve all corpus and prior indices. No DB mutation without watchdog MI acceptance gate; no retry of failed member or production deploy. Verify latest live files before work.
