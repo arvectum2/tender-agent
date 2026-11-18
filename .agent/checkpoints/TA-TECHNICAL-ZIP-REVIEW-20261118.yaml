@@ -1,0 +1,15 @@
+task_id: TA-TECHNICAL-ZIP-REVIEW-20261118
+status: in_progress
+goal: Keep technical evidence worker progressing when a receipt-bound ZIP member uses unsupported compression; preserve source and review status.
+definition_of_done:
+  - Unsupported member produces explicit partial review, supported siblings still processed; direct unsupported OOXML fails closed.
+  - Synthetic mixed archive and actual saved method-9 ZIP demonstrate no fabricated evidence.
+  - Publish separate patch; live worker installation separately authorized.
+completed:
+  - Worker blocked at NotImplementedError on ZIP method 9; actual source SHA 1ad9c2d0c8a5dc479eaddf8f4da99137a104cc10fabf73610ff41efc078371e4 identified among pending originals; 10707 existing evidence files preserved.
+current_stage: member_review
+remaining:
+  - Implement and verify, publish.
+last_verified_commit: 3623a4553e0d8f05501c7bbc0c73ccf68d14a68d
+test_results: []
+resume_instruction: No live corpus writes, capture, worker change or DB mutation until explicit installation. Preserve prior shared worktree.
