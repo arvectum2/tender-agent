@@ -7,9 +7,14 @@ definition_of_done:
   - Test counting and fail-closed invariants; run genuine isolated replay and publish draft.
 completed:
   - Coordinated release remains blocked by remote tool; no repeat or bypass. APR04 profile and APR06 human gold gates separate. APR07 rolling operator requires dedicated authorized role.
-current_stage: fixed_archived_domain_coverage
+  - Existing replay extended with fixed probes and bounded counts, no change to product behavior. Initial replay canonical-path mismatch failed closed; corrected via checked_search_run.
+  - Final actual isolated replay exit 0: 5 complete cases, 1 incomplete refused, 29/45 probes with citations, 42 excerpts, 16 unknown; originals unchanged and isolated DP removed. 176 targeted tests PASS, Ruff/diff PASS.
+current_stage: exact_ci_pending
 remaining:
-  - Implement measure, test and actual replay, publish.
-last_verified_commit: 4ad1b797f4d98ff94ea69ff620b224237e3e0f92
-test_results: []
+  - Verify exact draft PR CI; then review unknowns against original procedure/applicability without changing frozen baseline. Commercial human gold and rolling SLO separate.
+last_verified_commit: 9f7785db79474e3b74cfbb808f85011a1237e8fb
+test_results:
+  - 176 passed, 12 warnings; Ruff/diff PASS.
+  - Actual isolated replay exit 0; 29/45, 42 citations, 5 complete cases, 1 incomplete refused; source originals unchanged.
+  - Report docs/quality/APR067_RI223_DOMAIN_COVERAGE_2026-11-18.json.
 resume_instruction: Use isolated offline corpus, existing DP harness, no production DB mutations, model promotion, live acquisition or independent gold claim.

@@ -980,4 +980,5 @@ apr067_ri223_domain_coverage_20261118:
   task_id: TA-APR067-RI223-DOMAIN-COVERAGE-20261118
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR067-RI223-DOMAIN-COVERAGE-20261118.yaml
-  current_stage: fixed_archived_domain_coverage
+  current_stage: exact_ci_pending
+  last_verified_commit: 9f7785db79474e3b74cfbb808f85011a1237e8fb
