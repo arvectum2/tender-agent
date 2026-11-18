@@ -1,5 +1,5 @@
 task_id: TA-SOURCE-BOUND-FORM-FILL-20261118
-status: in_progress
+status: completed
 goal: Source-derived private draft field planning and safe DOCX/XLSX rendering, with
   no unsupported declarations.
 definition_of_done:
@@ -17,10 +17,10 @@ completed:
   unknown substitution or declaration assertion.
 - Synthetic SQLite and real DOCX/XLSX round-trips 21 focused PASS; earlier combined
   49 PASS printed before tool timeout. Ruff/diff PASS. Prior private replay not retried.
-current_stage: exact_ci_pending
-remaining:
-- Verify exact draft CI. Next reviewed mapping workflow and package assembly on authorized
-  source data; previous private replay remains blocked. No production deployment.
+- Exact PR653 e7a6020e6f67f1349b65048c0455c6464b34e268 CI 19/19; PR652 62a07f47698d0da658ef7f6042c97a6a093eb6ef
+  CI 19/19 but private acceptance remains blocked.
+current_stage: verified_pending_merge
+remaining: []
 last_verified_commit: 5f54a62b0ebfb13c5dfde3c1d9551a0105f22b6d
 test_results:
 - 21 focused passed, 9 warnings, exit 0; Ruff/diff PASS
