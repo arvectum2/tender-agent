@@ -7,9 +7,11 @@ definition_of_done:
   - Test candidate against real runtime without installing; publish isolated change and document operational install gate.
 completed:
   - PostgreSQL automatic WAL recovery, 21 exact identities, DB 122, health and Basic protected UI PASS; existing 12 admitted and 9 excluded match owner and activation receipts. Existing guard false positive. ML endpoints healthy; separate SIBUR ZIP error.
-current_stage: candidate_verifier
+  - Candidate read-only verifier 14/14 against current real runtime, exact owner receipt, manifest hash, release, scope, expiry and anonymous denial. 23 focused tests pass. No valid token used, no real Workspace payload retrieved.
+current_stage: exact_ci_pending_and_install_gate
 remaining:
-  - Implement, test, record exact CI and installation gate.
-last_verified_commit: 3b37fb6988dd996efeb55e69058016a22a2bd48f
-test_results: []
+  - Review draft CI and separately install approved verifier only; do not change launcher, admission or backend. SIBUR unsupported compression remains separate.
+last_verified_commit: 5b60bc2df7ce3fc9b3ca39618d825a390a4f9217
+test_results:
+  - 23 focused tests PASS, Ruff/diff PASS; real candidate verifier 14/14 OK.
 resume_instruction: Keep live admission, launcher and DB unchanged. Review read-only verifier candidate; no credential access or real Workspace payload.
