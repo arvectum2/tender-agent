@@ -12,6 +12,8 @@ completed:
   cases, alternative rights candidates and notice-only refusal. Read-only exact originals
   19 source groups / 21 predicted unique chunk fragments. 170 regression tests passed
   (11 new), 8 skipped, 6 warnings; Ruff/diff PASS.
+- Exact PR652 62a07f47698d0da658ef7f6042c97a6a093eb6ef CI 19/19 SUCCESS; private replay
+  remains blocked.
 current_stage: isolated_private_replay_execution_blocked
 remaining:
 - Exact draft CI; full actual isolated acceptance not performed due execution tool

@@ -1,0 +1,16 @@
+task_id: TA-PRIVATE-DRAFT-BUNDLE-20261118
+status: in_progress
+goal: Private review ZIP assembled from explicit scoped plan, rendered forms, selected candidate PDFs, scenario economics, inventory and gaps.
+definition_of_done:
+  - Use exact reviewed template map and current tenant facts; missing forms/fields stay unresolved.
+  - Include only explicitly selected positive documentary candidates whose current bytes match; respect alternatives/conditions.
+  - Separate internal scenario economics and provenance from draft forms; no submission-ready or binding price claim.
+  - Bounded immutable archive and verify inventory SHA; synthetic disposable DB and actual OOXML/PDF/ZIP roundtrip; publish draft and checkpoint.
+completed:
+  - Exact PR652 and PR653 CI 19/19 each. Earlier private replay remains blocked and not retried.
+current_stage: private_bundle_assembly
+remaining:
+  - Implement, test, publish draft.
+last_verified_commit: e7a6020e6f67f1349b65048c0455c6464b34e268
+test_results: []
+resume_instruction: Independent synthetic development only. No production imports, publication or private replay.
