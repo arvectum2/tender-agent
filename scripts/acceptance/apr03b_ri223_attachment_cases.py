@@ -84,6 +84,11 @@ def replay(runs):
         from scripts.acceptance.apr03b_staged_fixture import replay_staged
 
         replay_staged(all_runs['32616445632'])
+    if os.environ.get('APR04_PROFILE_READINESS_ACCEPTANCE')=='1':
+        from scripts.acceptance.apr04_archived_profile_case import replay_profile
+
+        for n in ('32616445632','32616445866'):
+            replay_profile(all_runs[n])
     run=all_runs['32616444788'];directory=runs/run
     url=f'/api/demo/tender-agent/workspace/runs/{run}/evidence-search'
     with TestClient(app) as c:
