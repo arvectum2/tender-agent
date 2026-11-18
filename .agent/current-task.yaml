@@ -1085,4 +1085,5 @@ checklist_bundle_gate_20261118:
   task_id: TA-CHECKLIST-BUNDLE-GATE-20261118
   status: in_progress
   checkpoint: .agent/checkpoints/TA-CHECKLIST-BUNDLE-GATE-20261118.yaml
-  current_stage: source_plan_and_gate
+  current_stage: exact_ci_pending
+  last_verified_commit: c86819923be17f865f02bdcf335542610998b920
