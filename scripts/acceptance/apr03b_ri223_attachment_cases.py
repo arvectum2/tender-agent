@@ -36,11 +36,14 @@ def replay(runs):
     app.add_middleware(TenderPilotBasicAuthMiddleware,username='apr08-replay',password=password,
         protected=('/pilot/tender-agent','/api/demo/tender-agent'),public=('/health',))
     all_runs={};unique=references=searchable=0
+    incomplete_refused=False
     for number,r in sorted(catalog.items()):
         archive=ROOT/number/('documentation-archive.zip' if number=='32616376947' else 'ri223-soap.zip')
         if not r['archived_attachment_reference_coverage_complete']:
             try:import_archive(runs,archive,number,attachments=[])
-            except ValueError:print('INCOMPLETE_RECEIPT_REFUSED',number)
+            except ValueError:
+                print('INCOMPLETE_RECEIPT_REFUSED',number)
+                incomplete_refused=number=='32616376947'
             else:raise AssertionError('incomplete receipt accepted')
             continue
         paths=([ROOT/number/'attachments/01-3727.rar'] if number=='32616445795' else
@@ -52,6 +55,10 @@ def replay(runs):
         assert meta['status']=='needs_review' and not counts['full_analysis_allowed']
         print('RI223_ATTACHMENTS',number,counts,[(f['extension'],f.get('extraction_status')) for f in meta['files'][1:]],flush=True)
     assert (unique,references)==(9,11) and searchable>=3
+    if os.environ.get('APR067_DOMAIN_COVERAGE')=='1':
+        from scripts.quality.apr067_ri223_domain_coverage import measure_runs
+
+        measure_runs(runs,all_runs,ROOT,incomplete_refused)
     run=all_runs['32616444788'];directory=runs/run
     url=f'/api/demo/tender-agent/workspace/runs/{run}/evidence-search'
     with TestClient(app) as c:
