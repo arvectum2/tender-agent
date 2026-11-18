@@ -1,16 +1,32 @@
 task_id: TA-CASHFLOW-CALENDAR-20261118
 status: in_progress
-goal: Explicit dated scenario ledger tied to PRICE01 cost totals; calculate peak funding and stress without claiming actual liquidity or commercial GO.
+goal: Explicit dated scenario ledger tied to PRICE01 cost totals; calculate peak funding
+  and stress without claiming actual liquidity or commercial GO.
 definition_of_done:
-  - Reconcile dated revenues, costs, labor cash portion and refundable security against explicit PRICE01 assumptions.
-  - Reject missing/duplicate/mismatched amounts, premature refunds and invalid horizons; conservative same-day order.
-  - Independent receipt-delay scenarios, peak funding, budget shortfall, daily balances; integrate optional archived owner review and test real isolated replay.
-  - Publish draft and checkpoint; no production write/deployment.
+- Reconcile dated revenues, costs, labor cash portion and refundable security against
+  explicit PRICE01 assumptions.
+- Reject missing/duplicate/mismatched amounts, premature refunds and invalid horizons;
+  conservative same-day order.
+- Independent receipt-delay scenarios, peak funding, budget shortfall, daily balances;
+  integrate optional archived owner review and test real isolated replay.
+- Publish draft and checkpoint; no production write/deployment.
 completed:
-  - PR646 and PR647 exact CI 19/19; previous stage closed.
-current_stage: explicit_calendar
+- PR646 and PR647 exact CI 19/19; previous stage closed.
+- Dated ledger ties all modeled category totals to PRICE01, bounded explicit cash
+  labor, fully returned security, same-day outflows first. Base and receipt-only stress
+  cases include daily balances, peak funding and own cash shortfall. Local CLI optional
+  JSON.
+- 'Actual archived isolated replay exit 0: cash peaks 285000/515000/628000, shortfalls
+  85000/315000/428000, ending net 372000. NEEDS_REVIEW and original incomplete refusal
+  preserved. 211 tests PASS, two warnings; 16 cashflow/CLI tests.'
+current_stage: exact_ci_pending
 remaining:
-  - Implement, test, replay and document.
-last_verified_commit: 210a64740bb44657c605d41fec6893e4799cf760
-test_results: []
-resume_instruction: No new production writes, no current terms inferred, explicit scenario only.
+- Verify exact draft CI; next explicit contract-calendar mapping and current authorized
+  company profile/application completeness. No live deployment.
+last_verified_commit: 7a4dba632a76199803a65d1eb20be83c748a8c85
+test_results:
+- 211 passed, 2 warnings, Ruff/diff PASS
+- Actual isolated replay exit 0, SHA256 d59ce5ea7716352a62d765701198a5c27e9af384e037eff2f7c0755faae1eaed
+resume_instruction: Verify exact draft CI. Do not repeat completed index repair. Explicit
+  synthetic cash dates only; no actual dates or liquidity inferred. Next generic source-bound
+  timing/exception handling and application completeness.
