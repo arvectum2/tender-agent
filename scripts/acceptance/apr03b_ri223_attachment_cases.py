@@ -64,6 +64,10 @@ def replay(runs):
 
         rows=[row for number,run_id in sorted(all_runs.items()) if number!='32616445795' for row in observe(run_id)]
         print('APR067_RI223_GAP_REVIEW_PASS',json.dumps(summarize(rows),ensure_ascii=False),flush=True)
+    if os.environ.get('APR067_PROJECTION_REUSE')=='1':
+        from scripts.quality.apr067_ri223_projection_reuse import measure
+
+        measure(runs,ROOT)
     run=all_runs['32616444788'];directory=runs/run
     url=f'/api/demo/tender-agent/workspace/runs/{run}/evidence-search'
     with TestClient(app) as c:
