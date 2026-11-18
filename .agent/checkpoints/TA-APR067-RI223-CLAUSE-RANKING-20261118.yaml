@@ -8,9 +8,12 @@ definition_of_done:
   - Publish measured results and adoption decision separately; no production mutation.
 completed:
   - PR644 exact CI 19/19, morphology negative result closed.
-current_stage: bounded_clause_selector
+  - Clause cues and original-quote attestation: raw whole-line variant 27/45, 41 citations; chunk-aligned variant 28/45, 44 citations, exact excerpt parity after resource caps. Default exact baseline 29/45, 42 citations. Three genuine replays exit 0, six notices including incomplete refusal, original bytes unchanged. 282 regression tests and 16 focused final tests PASS; original tamper refuses. Context improved in three complete cases; contextual NDA exceptions incomplete; no independent gold.
+current_stage: exact_ci_pending
 remaining:
-  - Implement and test, run measured actual replay, inspect excerpts, record and publish.
-last_verified_commit: 3a3f0359d397d0d4644d9aae51f2f6dd4ee93583
-test_results: []
+  - Verify exact draft CI; next prepare held-out review and complete clause-boundary/exception handling; keep experiment opt-in.
+last_verified_commit: dc394e9e5f86d320c6fb2b1b43d0a556af7aa8e1
+test_results:
+  - 282 regression PASS, 16 final focused PASS; two warnings; Ruff/diff PASS.
+  - Three actual replays exit 0; final candidate 28/45, 44, prior aligned output identical by original hash and literal quote.
 resume_instruction: No production or index writes, no blocked deployment bypass. Do not call same corpus held-out gold.

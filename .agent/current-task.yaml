@@ -1008,4 +1008,5 @@ apr067_ri223_clause_ranking_20261118:
   task_id: TA-APR067-RI223-CLAUSE-RANKING-20261118
   status: in_progress
   checkpoint: .agent/checkpoints/TA-APR067-RI223-CLAUSE-RANKING-20261118.yaml
-  current_stage: bounded_clause_selector
+  current_stage: exact_ci_pending
+  last_verified_commit: dc394e9e5f86d320c6fb2b1b43d0a556af7aa8e1

@@ -1,0 +1,1602 @@
+{
+  "schema": "arvectum.tender.apr067.clause-ranking-experiment/1",
+  "implementation_commit": "dc394e9e5f86d320c6fb2b1b43d0a556af7aa8e1",
+  "observed_on": "2026-11-18",
+  "experiments": [
+    {
+      "scope": "EXPLORATORY_SAME_CORPUS_NOT_GOLD",
+      "baseline": {
+        "scope": "ARCHIVED_LEXICAL_ORIGINAL_QUOTE_COVERAGE_ONLY",
+        "complete_cases": 5,
+        "incomplete_cases_refused": 1,
+        "probe_count": 45,
+        "probes_with_citations": 29,
+        "domain_cases_with_citations": {
+          "technical_scope": 3,
+          "qualification": 3,
+          "application": 3,
+          "evaluation": 1,
+          "contract": 4,
+          "participation": 4,
+          "schedule": 4,
+          "payment": 3,
+          "security": 4
+        },
+        "citation_occurrences": 42,
+        "cases": [
+          {
+            "case": "32616444788",
+            "counts": {
+              "technical_scope": 1,
+              "qualification": 1,
+              "application": 2,
+              "evaluation": 0,
+              "contract": 1,
+              "participation": 1,
+              "schedule": 2,
+              "payment": 2,
+              "security": 2
+            },
+            "elapsed_seconds": 4.105,
+            "originals": 4,
+            "members": 0,
+            "searchable_candidates": 4
+          },
+          {
+            "case": "32616445632",
+            "counts": {
+              "technical_scope": 2,
+              "qualification": 1,
+              "application": 1,
+              "evaluation": 0,
+              "contract": 1,
+              "participation": 2,
+              "schedule": 1,
+              "payment": 2,
+              "security": 2
+            },
+            "elapsed_seconds": 1.538,
+            "originals": 2,
+            "members": 0,
+            "searchable_candidates": 2
+          },
+          {
+            "case": "32616445795",
+            "counts": {
+              "technical_scope": 2,
+              "qualification": 2,
+              "application": 1,
+              "evaluation": 1,
+              "contract": 2,
+              "participation": 2,
+              "schedule": 2,
+              "payment": 1,
+              "security": 1
+            },
+            "elapsed_seconds": 7.031,
+            "originals": 1,
+            "members": 19,
+            "searchable_candidates": 19
+          },
+          {
+            "case": "32616445866",
+            "counts": {
+              "technical_scope": 0,
+              "qualification": 0,
+              "application": 0,
+              "evaluation": 0,
+              "contract": 1,
+              "participation": 1,
+              "schedule": 0,
+              "payment": 0,
+              "security": 0
+            },
+            "elapsed_seconds": 0.802,
+            "originals": 1,
+            "members": 0,
+            "searchable_candidates": 1
+          },
+          {
+            "case": "32616447910",
+            "counts": {
+              "technical_scope": 0,
+              "qualification": 0,
+              "application": 0,
+              "evaluation": 0,
+              "contract": 0,
+              "participation": 0,
+              "schedule": 1,
+              "payment": 0,
+              "security": 1
+            },
+            "elapsed_seconds": 0.296,
+            "originals": 1,
+            "members": 0,
+            "searchable_candidates": 1
+          }
+        ],
+        "semantic_precision": null,
+        "semantic_recall": null,
+        "current_source_accuracy": null,
+        "human_gold": null,
+        "commercial_acceptance": false,
+        "rolling_slo": false
+      },
+      "candidate": {
+        "scope": "ARCHIVED_LEXICAL_ORIGINAL_QUOTE_COVERAGE_ONLY",
+        "complete_cases": 5,
+        "incomplete_cases_refused": 1,
+        "probe_count": 45,
+        "probes_with_citations": 27,
+        "domain_cases_with_citations": {
+          "technical_scope": 3,
+          "qualification": 3,
+          "application": 3,
+          "evaluation": 1,
+          "contract": 2,
+          "participation": 4,
+          "schedule": 4,
+          "payment": 3,
+          "security": 4
+        },
+        "citation_occurrences": 41,
+        "cases": [
+          {
+            "case": "32616444788",
+            "counts": {
+              "technical_scope": 1,
+              "qualification": 1,
+              "application": 2,
+              "evaluation": 0,
+              "contract": 2,
+              "participation": 1,
+              "schedule": 2,
+              "payment": 2,
+              "security": 2
+            },
+            "elapsed_seconds": 4.036,
+            "originals": 4,
+            "members": 0,
+            "searchable_candidates": 4
+          },
+          {
+            "case": "32616445632",
+            "counts": {
+              "technical_scope": 2,
+              "qualification": 1,
+              "application": 1,
+              "evaluation": 0,
+              "contract": 1,
+              "participation": 2,
+              "schedule": 1,
+              "payment": 2,
+              "security": 2
+            },
+            "elapsed_seconds": 1.561,
+            "originals": 2,
+            "members": 0,
+            "searchable_candidates": 2
+          },
+          {
+            "case": "32616445795",
+            "counts": {
+              "technical_scope": 2,
+              "qualification": 2,
+              "application": 1,
+              "evaluation": 2,
+              "contract": 0,
+              "participation": 2,
+              "schedule": 2,
+              "payment": 1,
+              "security": 1
+            },
+            "elapsed_seconds": 6.977,
+            "originals": 1,
+            "members": 19,
+            "searchable_candidates": 19
+          },
+          {
+            "case": "32616445866",
+            "counts": {
+              "technical_scope": 0,
+              "qualification": 0,
+              "application": 0,
+              "evaluation": 0,
+              "contract": 0,
+              "participation": 1,
+              "schedule": 0,
+              "payment": 0,
+              "security": 0
+            },
+            "elapsed_seconds": 0.587,
+            "originals": 1,
+            "members": 0,
+            "searchable_candidates": 1
+          },
+          {
+            "case": "32616447910",
+            "counts": {
+              "technical_scope": 0,
+              "qualification": 0,
+              "application": 0,
+              "evaluation": 0,
+              "contract": 0,
+              "participation": 0,
+              "schedule": 1,
+              "payment": 0,
+              "security": 1
+            },
+            "elapsed_seconds": 0.308,
+            "originals": 1,
+            "members": 0,
+            "searchable_candidates": 1
+          }
+        ],
+        "semantic_precision": null,
+        "semantic_recall": null,
+        "current_source_accuracy": null,
+        "human_gold": null,
+        "commercial_acceptance": false,
+        "rolling_slo": false
+      },
+      "targeted_domains": [
+        {
+          "case": "32616444788",
+          "domain": "evaluation",
+          "before": [],
+          "after": []
+        },
+        {
+          "case": "32616444788",
+          "domain": "contract",
+          "before": [
+            {
+              "file_id": "FILE-02",
+              "chunk_id": "970df20c7df2d62e13a811d9b47e814b13697f4ea3f34b5276fc88d2a236b18b",
+              "original_sha256": "b48065a5740710738c7144be9bcf52116d1f548d2e63e2990cff470ce6320ff8",
+              "quote_char_start_in_chunk": 268,
+              "quote_char_end_in_chunk": 443,
+              "offset_space": "data_platform_chunk_text"
+            }
+          ],
+          "after": [
+            {
+              "file_id": "FILE-02",
+              "chunk_id": "fdc428f5936db704ac6f1b6e0497d031eadee60973708a640f42f4265bc7059f",
+              "original_sha256": "b48065a5740710738c7144be9bcf52116d1f548d2e63e2990cff470ce6320ff8",
+              "quote_char_start_in_chunk": 116,
+              "quote_char_end_in_chunk": 720,
+              "offset_space": "data_platform_chunk_text"
+            },
+            {
+              "file_id": "FILE-03",
+              "chunk_id": "67e0d166b23d99d6288f84e8cfd2104620a5eff7f7e4de8a88abdd9225f290e5",
+              "original_sha256": "a3023549337bb36def28f214a7993313e250ce1ebb1035cad89b78288ec08ac7",
+              "quote_char_start_in_chunk": 703,
+              "quote_char_end_in_chunk": 820,
+              "offset_space": "data_platform_chunk_text"
+            }
+          ]
+        },
+        {
+          "case": "32616445632",
+          "domain": "evaluation",
+          "before": [],
+          "after": []
+        },
+        {
+          "case": "32616445632",
+          "domain": "contract",
+          "before": [
+            {
+              "file_id": "FILE-02",
+              "chunk_id": "3f17cc30d80cf6515f528f9fcbb02d4886129109e9afcf62f055983d8c2cabf2",
+              "original_sha256": "2b1f6b6dc23511382f7fe836146ccb3d7b1974767af18483c1283a74e5230c8d",
+              "quote_char_start_in_chunk": 1128,
+              "quote_char_end_in_chunk": 1230,
+              "offset_space": "data_platform_chunk_text"
+            }
+          ],
+          "after": [
+            {
+              "file_id": "FILE-02",
+              "chunk_id": "7cc7e48ec7d2428103107f5407b00284cd314e44b42cc0fa1a24e6b1eec78046",
+              "original_sha256": "2b1f6b6dc23511382f7fe836146ccb3d7b1974767af18483c1283a74e5230c8d",
+              "quote_char_start_in_chunk": 617,
+              "quote_char_end_in_chunk": 1025,
+              "offset_space": "data_platform_chunk_text"
+            }
+          ]
+        },
+        {
+          "case": "32616445795",
+          "domain": "evaluation",
+          "before": [
+            {
+              "file_id": "FILE-19",
+              "chunk_id": "46a3a68c6cfd9dab68b6969c6efd8889b01ad73f36efeeaf1144420b34559670",
+              "original_sha256": "a44d95730fad4fe3b117544b5b651cdfdf70514fb2c8ce9a7febdbb69cd2c826",
+              "quote_char_start_in_chunk": 256,
+              "quote_char_end_in_chunk": 302,
+              "offset_space": "data_platform_chunk_text",
+              "ri223_container": {
+                "parent_sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                "member_path": "3727-МИ/РАЗДЕЛ 9. МЕТОДИКА ОЦЕНКИ (работы-услуги) 40х60.pdf",
+                "member_sha256": "a44d95730fad4fe3b117544b5b651cdfdf70514fb2c8ce9a7febdbb69cd2c826",
+                "member_bytes": 328157,
+                "container_format": "RAR",
+                "parent_file_id": "FILE-02",
+                "parent_name": "3727_МИ.rar",
+                "source_references": [
+                  {
+                    "name": "3727_МИ.rar",
+                    "source_kind": "purchaseNotice",
+                    "xml_sha256": "9a62ab86cce33934853e1c7fd1fe369dc4aed607350b20cb3d24a17c943dc0d5",
+                    "sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                    "bytes": 3606714
+                  }
+                ]
+              }
+            }
+          ],
+          "after": [
+            {
+              "file_id": "FILE-17",
+              "chunk_id": "67bae46ea7430da9734953d5b04ad6cf6cd7d23668552a73233a0d1991465e71",
+              "original_sha256": "366fc747cd6d77f846fe95f422d3a81abf5d0899c74111f90af5e07614df18ef",
+              "quote_char_start_in_chunk": 322,
+              "quote_char_end_in_chunk": 492,
+              "offset_space": "data_platform_chunk_text",
+              "ri223_container": {
+                "parent_sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                "member_path": "3727-МИ/Извещение.docx",
+                "member_sha256": "366fc747cd6d77f846fe95f422d3a81abf5d0899c74111f90af5e07614df18ef",
+                "member_bytes": 34116,
+                "container_format": "RAR",
+                "parent_file_id": "FILE-02",
+                "parent_name": "3727_МИ.rar",
+                "source_references": [
+                  {
+                    "name": "3727_МИ.rar",
+                    "source_kind": "purchaseNotice",
+                    "xml_sha256": "9a62ab86cce33934853e1c7fd1fe369dc4aed607350b20cb3d24a17c943dc0d5",
+                    "sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                    "bytes": 3606714
+                  }
+                ]
+              }
+            },
+            {
+              "file_id": "FILE-19",
+              "chunk_id": "46a3a68c6cfd9dab68b6969c6efd8889b01ad73f36efeeaf1144420b34559670",
+              "original_sha256": "a44d95730fad4fe3b117544b5b651cdfdf70514fb2c8ce9a7febdbb69cd2c826",
+              "quote_char_start_in_chunk": 256,
+              "quote_char_end_in_chunk": 302,
+              "offset_space": "data_platform_chunk_text",
+              "ri223_container": {
+                "parent_sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                "member_path": "3727-МИ/РАЗДЕЛ 9. МЕТОДИКА ОЦЕНКИ (работы-услуги) 40х60.pdf",
+                "member_sha256": "a44d95730fad4fe3b117544b5b651cdfdf70514fb2c8ce9a7febdbb69cd2c826",
+                "member_bytes": 328157,
+                "container_format": "RAR",
+                "parent_file_id": "FILE-02",
+                "parent_name": "3727_МИ.rar",
+                "source_references": [
+                  {
+                    "name": "3727_МИ.rar",
+                    "source_kind": "purchaseNotice",
+                    "xml_sha256": "9a62ab86cce33934853e1c7fd1fe369dc4aed607350b20cb3d24a17c943dc0d5",
+                    "sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                    "bytes": 3606714
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "case": "32616445795",
+          "domain": "contract",
+          "before": [
+            {
+              "file_id": "FILE-04",
+              "chunk_id": "918f66113e9b740b8aa9dcf1f4dee70bfafd1ffcf62d0d04ed64c99d5a1b68b9",
+              "original_sha256": "b2b274f79179853452f8d549cd5797cbdebcbc54b638c15d7404d76de006a7a5",
+              "quote_char_start_in_chunk": 255,
+              "quote_char_end_in_chunk": 286,
+              "offset_space": "data_platform_chunk_text",
+              "ri223_container": {
+                "parent_sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                "member_path": "3727-МИ/2_1-2_Приложения к ТЗ-А2.pdf",
+                "member_sha256": "b2b274f79179853452f8d549cd5797cbdebcbc54b638c15d7404d76de006a7a5",
+                "member_bytes": 347312,
+                "container_format": "RAR",
+                "parent_file_id": "FILE-02",
+                "parent_name": "3727_МИ.rar",
+                "source_references": [
+                  {
+                    "name": "3727_МИ.rar",
+                    "source_kind": "purchaseNotice",
+                    "xml_sha256": "9a62ab86cce33934853e1c7fd1fe369dc4aed607350b20cb3d24a17c943dc0d5",
+                    "sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                    "bytes": 3606714
+                  }
+                ]
+              }
+            },
+            {
+              "file_id": "FILE-11",
+              "chunk_id": "4806310d5e3a1a3c1426b7bbb434e4ed7a086adac8ab1a71b1838e429b377305",
+              "original_sha256": "201e072d429d90310a1eac0888fc34c7e00922d63a8b11775cd8bddfc0c0af0b",
+              "quote_char_start_in_chunk": 621,
+              "quote_char_end_in_chunk": 795,
+              "offset_space": "data_platform_chunk_text",
+              "ri223_container": {
+                "parent_sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                "member_path": "3727-МИ/2_4_ Приложение к ТЗ.docx",
+                "member_sha256": "201e072d429d90310a1eac0888fc34c7e00922d63a8b11775cd8bddfc0c0af0b",
+                "member_bytes": 37593,
+                "container_format": "RAR",
+                "parent_file_id": "FILE-02",
+                "parent_name": "3727_МИ.rar",
+                "source_references": [
+                  {
+                    "name": "3727_МИ.rar",
+                    "source_kind": "purchaseNotice",
+                    "xml_sha256": "9a62ab86cce33934853e1c7fd1fe369dc4aed607350b20cb3d24a17c943dc0d5",
+                    "sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                    "bytes": 3606714
+                  }
+                ]
+              }
+            }
+          ],
+          "after": []
+        },
+        {
+          "case": "32616445866",
+          "domain": "evaluation",
+          "before": [],
+          "after": []
+        },
+        {
+          "case": "32616445866",
+          "domain": "contract",
+          "before": [
+            {
+              "file_id": "FILE-02",
+              "chunk_id": "57749235369e8fd9fabd6d85118cfdf1882cb48d4bdb2f7402e854f7e9d37d03",
+              "original_sha256": "a8645964df2203e09abb34dd9d64b88c8bea607031ebde80ff89362914979550",
+              "quote_char_start_in_chunk": 210,
+              "quote_char_end_in_chunk": 291,
+              "offset_space": "data_platform_chunk_text"
+            }
+          ],
+          "after": []
+        },
+        {
+          "case": "32616447910",
+          "domain": "evaluation",
+          "before": [],
+          "after": []
+        },
+        {
+          "case": "32616447910",
+          "domain": "contract",
+          "before": [],
+          "after": []
+        }
+      ],
+      "default_promoted": false,
+      "semantic_precision": null,
+      "semantic_recall": null,
+      "replay_sha256": "23f9fd27373201c35c2ba8d84f2a6e13a48d7bc53496a0a28526c45ced9a7406"
+    },
+    {
+      "scope": "EXPLORATORY_SAME_CORPUS_NOT_GOLD",
+      "chunk_aligned": true,
+      "baseline": {
+        "scope": "ARCHIVED_LEXICAL_ORIGINAL_QUOTE_COVERAGE_ONLY",
+        "complete_cases": 5,
+        "incomplete_cases_refused": 1,
+        "probe_count": 45,
+        "probes_with_citations": 29,
+        "domain_cases_with_citations": {
+          "technical_scope": 3,
+          "qualification": 3,
+          "application": 3,
+          "evaluation": 1,
+          "contract": 4,
+          "participation": 4,
+          "schedule": 4,
+          "payment": 3,
+          "security": 4
+        },
+        "citation_occurrences": 42,
+        "cases": [
+          {
+            "case": "32616444788",
+            "counts": {
+              "technical_scope": 1,
+              "qualification": 1,
+              "application": 2,
+              "evaluation": 0,
+              "contract": 1,
+              "participation": 1,
+              "schedule": 2,
+              "payment": 2,
+              "security": 2
+            },
+            "elapsed_seconds": 3.919,
+            "originals": 4,
+            "members": 0,
+            "searchable_candidates": 4
+          },
+          {
+            "case": "32616445632",
+            "counts": {
+              "technical_scope": 2,
+              "qualification": 1,
+              "application": 1,
+              "evaluation": 0,
+              "contract": 1,
+              "participation": 2,
+              "schedule": 1,
+              "payment": 2,
+              "security": 2
+            },
+            "elapsed_seconds": 1.497,
+            "originals": 2,
+            "members": 0,
+            "searchable_candidates": 2
+          },
+          {
+            "case": "32616445795",
+            "counts": {
+              "technical_scope": 2,
+              "qualification": 2,
+              "application": 1,
+              "evaluation": 1,
+              "contract": 2,
+              "participation": 2,
+              "schedule": 2,
+              "payment": 1,
+              "security": 1
+            },
+            "elapsed_seconds": 6.823,
+            "originals": 1,
+            "members": 19,
+            "searchable_candidates": 19
+          },
+          {
+            "case": "32616445866",
+            "counts": {
+              "technical_scope": 0,
+              "qualification": 0,
+              "application": 0,
+              "evaluation": 0,
+              "contract": 1,
+              "participation": 1,
+              "schedule": 0,
+              "payment": 0,
+              "security": 0
+            },
+            "elapsed_seconds": 0.725,
+            "originals": 1,
+            "members": 0,
+            "searchable_candidates": 1
+          },
+          {
+            "case": "32616447910",
+            "counts": {
+              "technical_scope": 0,
+              "qualification": 0,
+              "application": 0,
+              "evaluation": 0,
+              "contract": 0,
+              "participation": 0,
+              "schedule": 1,
+              "payment": 0,
+              "security": 1
+            },
+            "elapsed_seconds": 0.239,
+            "originals": 1,
+            "members": 0,
+            "searchable_candidates": 1
+          }
+        ],
+        "semantic_precision": null,
+        "semantic_recall": null,
+        "current_source_accuracy": null,
+        "human_gold": null,
+        "commercial_acceptance": false,
+        "rolling_slo": false
+      },
+      "candidate": {
+        "scope": "ARCHIVED_LEXICAL_ORIGINAL_QUOTE_COVERAGE_ONLY",
+        "complete_cases": 5,
+        "incomplete_cases_refused": 1,
+        "probe_count": 45,
+        "probes_with_citations": 28,
+        "domain_cases_with_citations": {
+          "technical_scope": 3,
+          "qualification": 3,
+          "application": 3,
+          "evaluation": 1,
+          "contract": 3,
+          "participation": 4,
+          "schedule": 4,
+          "payment": 3,
+          "security": 4
+        },
+        "citation_occurrences": 44,
+        "cases": [
+          {
+            "case": "32616444788",
+            "counts": {
+              "technical_scope": 1,
+              "qualification": 1,
+              "application": 2,
+              "evaluation": 0,
+              "contract": 2,
+              "participation": 1,
+              "schedule": 2,
+              "payment": 2,
+              "security": 2
+            },
+            "elapsed_seconds": 4.106,
+            "originals": 4,
+            "members": 0,
+            "searchable_candidates": 4
+          },
+          {
+            "case": "32616445632",
+            "counts": {
+              "technical_scope": 2,
+              "qualification": 1,
+              "application": 1,
+              "evaluation": 0,
+              "contract": 2,
+              "participation": 2,
+              "schedule": 1,
+              "payment": 2,
+              "security": 2
+            },
+            "elapsed_seconds": 1.487,
+            "originals": 2,
+            "members": 0,
+            "searchable_candidates": 2
+          },
+          {
+            "case": "32616445795",
+            "counts": {
+              "technical_scope": 2,
+              "qualification": 2,
+              "application": 1,
+              "evaluation": 2,
+              "contract": 2,
+              "participation": 2,
+              "schedule": 2,
+              "payment": 1,
+              "security": 1
+            },
+            "elapsed_seconds": 6.346,
+            "originals": 1,
+            "members": 19,
+            "searchable_candidates": 19
+          },
+          {
+            "case": "32616445866",
+            "counts": {
+              "technical_scope": 0,
+              "qualification": 0,
+              "application": 0,
+              "evaluation": 0,
+              "contract": 0,
+              "participation": 1,
+              "schedule": 0,
+              "payment": 0,
+              "security": 0
+            },
+            "elapsed_seconds": 0.559,
+            "originals": 1,
+            "members": 0,
+            "searchable_candidates": 1
+          },
+          {
+            "case": "32616447910",
+            "counts": {
+              "technical_scope": 0,
+              "qualification": 0,
+              "application": 0,
+              "evaluation": 0,
+              "contract": 0,
+              "participation": 0,
+              "schedule": 1,
+              "payment": 0,
+              "security": 1
+            },
+            "elapsed_seconds": 0.239,
+            "originals": 1,
+            "members": 0,
+            "searchable_candidates": 1
+          }
+        ],
+        "semantic_precision": null,
+        "semantic_recall": null,
+        "current_source_accuracy": null,
+        "human_gold": null,
+        "commercial_acceptance": false,
+        "rolling_slo": false
+      },
+      "targeted_domains": [
+        {
+          "case": "32616444788",
+          "domain": "evaluation",
+          "before": [],
+          "after": []
+        },
+        {
+          "case": "32616444788",
+          "domain": "contract",
+          "before": [
+            {
+              "file_id": "FILE-02",
+              "chunk_id": "970df20c7df2d62e13a811d9b47e814b13697f4ea3f34b5276fc88d2a236b18b",
+              "original_sha256": "b48065a5740710738c7144be9bcf52116d1f548d2e63e2990cff470ce6320ff8",
+              "quote_char_start_in_chunk": 268,
+              "quote_char_end_in_chunk": 443,
+              "offset_space": "data_platform_chunk_text"
+            }
+          ],
+          "after": [
+            {
+              "file_id": "FILE-02",
+              "chunk_id": "fdc428f5936db704ac6f1b6e0497d031eadee60973708a640f42f4265bc7059f",
+              "original_sha256": "b48065a5740710738c7144be9bcf52116d1f548d2e63e2990cff470ce6320ff8",
+              "quote_char_start_in_chunk": 116,
+              "quote_char_end_in_chunk": 720,
+              "offset_space": "data_platform_chunk_text"
+            },
+            {
+              "file_id": "FILE-03",
+              "chunk_id": "67e0d166b23d99d6288f84e8cfd2104620a5eff7f7e4de8a88abdd9225f290e5",
+              "original_sha256": "a3023549337bb36def28f214a7993313e250ce1ebb1035cad89b78288ec08ac7",
+              "quote_char_start_in_chunk": 703,
+              "quote_char_end_in_chunk": 820,
+              "offset_space": "data_platform_chunk_text"
+            }
+          ]
+        },
+        {
+          "case": "32616445632",
+          "domain": "evaluation",
+          "before": [],
+          "after": []
+        },
+        {
+          "case": "32616445632",
+          "domain": "contract",
+          "before": [
+            {
+              "file_id": "FILE-02",
+              "chunk_id": "3f17cc30d80cf6515f528f9fcbb02d4886129109e9afcf62f055983d8c2cabf2",
+              "original_sha256": "2b1f6b6dc23511382f7fe836146ccb3d7b1974767af18483c1283a74e5230c8d",
+              "quote_char_start_in_chunk": 1128,
+              "quote_char_end_in_chunk": 1230,
+              "offset_space": "data_platform_chunk_text"
+            }
+          ],
+          "after": [
+            {
+              "file_id": "FILE-02",
+              "chunk_id": "7cc7e48ec7d2428103107f5407b00284cd314e44b42cc0fa1a24e6b1eec78046",
+              "original_sha256": "2b1f6b6dc23511382f7fe836146ccb3d7b1974767af18483c1283a74e5230c8d",
+              "quote_char_start_in_chunk": 617,
+              "quote_char_end_in_chunk": 1025,
+              "offset_space": "data_platform_chunk_text"
+            },
+            {
+              "file_id": "FILE-03",
+              "chunk_id": "90ab696421708683503ea54de8c720079b1d9cc368f1dff3950187bff9255720",
+              "original_sha256": "066252cac6ba7d9bfc876c9ac9a5e5425df31497fe37683dd7cdc5bdf4fa2558",
+              "quote_char_start_in_chunk": 656,
+              "quote_char_end_in_chunk": 1260,
+              "offset_space": "data_platform_chunk_text"
+            }
+          ]
+        },
+        {
+          "case": "32616445795",
+          "domain": "evaluation",
+          "before": [
+            {
+              "file_id": "FILE-19",
+              "chunk_id": "46a3a68c6cfd9dab68b6969c6efd8889b01ad73f36efeeaf1144420b34559670",
+              "original_sha256": "a44d95730fad4fe3b117544b5b651cdfdf70514fb2c8ce9a7febdbb69cd2c826",
+              "quote_char_start_in_chunk": 256,
+              "quote_char_end_in_chunk": 302,
+              "offset_space": "data_platform_chunk_text",
+              "ri223_container": {
+                "parent_sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                "member_path": "3727-МИ/РАЗДЕЛ 9. МЕТОДИКА ОЦЕНКИ (работы-услуги) 40х60.pdf",
+                "member_sha256": "a44d95730fad4fe3b117544b5b651cdfdf70514fb2c8ce9a7febdbb69cd2c826",
+                "member_bytes": 328157,
+                "container_format": "RAR",
+                "parent_file_id": "FILE-02",
+                "parent_name": "3727_МИ.rar",
+                "source_references": [
+                  {
+                    "name": "3727_МИ.rar",
+                    "source_kind": "purchaseNotice",
+                    "xml_sha256": "9a62ab86cce33934853e1c7fd1fe369dc4aed607350b20cb3d24a17c943dc0d5",
+                    "sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                    "bytes": 3606714
+                  }
+                ]
+              }
+            }
+          ],
+          "after": [
+            {
+              "file_id": "FILE-17",
+              "chunk_id": "67bae46ea7430da9734953d5b04ad6cf6cd7d23668552a73233a0d1991465e71",
+              "original_sha256": "366fc747cd6d77f846fe95f422d3a81abf5d0899c74111f90af5e07614df18ef",
+              "quote_char_start_in_chunk": 322,
+              "quote_char_end_in_chunk": 492,
+              "offset_space": "data_platform_chunk_text",
+              "ri223_container": {
+                "parent_sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                "member_path": "3727-МИ/Извещение.docx",
+                "member_sha256": "366fc747cd6d77f846fe95f422d3a81abf5d0899c74111f90af5e07614df18ef",
+                "member_bytes": 34116,
+                "container_format": "RAR",
+                "parent_file_id": "FILE-02",
+                "parent_name": "3727_МИ.rar",
+                "source_references": [
+                  {
+                    "name": "3727_МИ.rar",
+                    "source_kind": "purchaseNotice",
+                    "xml_sha256": "9a62ab86cce33934853e1c7fd1fe369dc4aed607350b20cb3d24a17c943dc0d5",
+                    "sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                    "bytes": 3606714
+                  }
+                ]
+              }
+            },
+            {
+              "file_id": "FILE-19",
+              "chunk_id": "46a3a68c6cfd9dab68b6969c6efd8889b01ad73f36efeeaf1144420b34559670",
+              "original_sha256": "a44d95730fad4fe3b117544b5b651cdfdf70514fb2c8ce9a7febdbb69cd2c826",
+              "quote_char_start_in_chunk": 256,
+              "quote_char_end_in_chunk": 302,
+              "offset_space": "data_platform_chunk_text",
+              "ri223_container": {
+                "parent_sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                "member_path": "3727-МИ/РАЗДЕЛ 9. МЕТОДИКА ОЦЕНКИ (работы-услуги) 40х60.pdf",
+                "member_sha256": "a44d95730fad4fe3b117544b5b651cdfdf70514fb2c8ce9a7febdbb69cd2c826",
+                "member_bytes": 328157,
+                "container_format": "RAR",
+                "parent_file_id": "FILE-02",
+                "parent_name": "3727_МИ.rar",
+                "source_references": [
+                  {
+                    "name": "3727_МИ.rar",
+                    "source_kind": "purchaseNotice",
+                    "xml_sha256": "9a62ab86cce33934853e1c7fd1fe369dc4aed607350b20cb3d24a17c943dc0d5",
+                    "sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                    "bytes": 3606714
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "case": "32616445795",
+          "domain": "contract",
+          "before": [
+            {
+              "file_id": "FILE-04",
+              "chunk_id": "918f66113e9b740b8aa9dcf1f4dee70bfafd1ffcf62d0d04ed64c99d5a1b68b9",
+              "original_sha256": "b2b274f79179853452f8d549cd5797cbdebcbc54b638c15d7404d76de006a7a5",
+              "quote_char_start_in_chunk": 255,
+              "quote_char_end_in_chunk": 286,
+              "offset_space": "data_platform_chunk_text",
+              "ri223_container": {
+                "parent_sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                "member_path": "3727-МИ/2_1-2_Приложения к ТЗ-А2.pdf",
+                "member_sha256": "b2b274f79179853452f8d549cd5797cbdebcbc54b638c15d7404d76de006a7a5",
+                "member_bytes": 347312,
+                "container_format": "RAR",
+                "parent_file_id": "FILE-02",
+                "parent_name": "3727_МИ.rar",
+                "source_references": [
+                  {
+                    "name": "3727_МИ.rar",
+                    "source_kind": "purchaseNotice",
+                    "xml_sha256": "9a62ab86cce33934853e1c7fd1fe369dc4aed607350b20cb3d24a17c943dc0d5",
+                    "sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                    "bytes": 3606714
+                  }
+                ]
+              }
+            },
+            {
+              "file_id": "FILE-11",
+              "chunk_id": "4806310d5e3a1a3c1426b7bbb434e4ed7a086adac8ab1a71b1838e429b377305",
+              "original_sha256": "201e072d429d90310a1eac0888fc34c7e00922d63a8b11775cd8bddfc0c0af0b",
+              "quote_char_start_in_chunk": 621,
+              "quote_char_end_in_chunk": 795,
+              "offset_space": "data_platform_chunk_text",
+              "ri223_container": {
+                "parent_sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                "member_path": "3727-МИ/2_4_ Приложение к ТЗ.docx",
+                "member_sha256": "201e072d429d90310a1eac0888fc34c7e00922d63a8b11775cd8bddfc0c0af0b",
+                "member_bytes": 37593,
+                "container_format": "RAR",
+                "parent_file_id": "FILE-02",
+                "parent_name": "3727_МИ.rar",
+                "source_references": [
+                  {
+                    "name": "3727_МИ.rar",
+                    "source_kind": "purchaseNotice",
+                    "xml_sha256": "9a62ab86cce33934853e1c7fd1fe369dc4aed607350b20cb3d24a17c943dc0d5",
+                    "sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                    "bytes": 3606714
+                  }
+                ]
+              }
+            }
+          ],
+          "after": [
+            {
+              "file_id": "FILE-15",
+              "chunk_id": "bb47ac202aa8f72acd5bce911770cba40bcedfc1cf861a518c1920c96d49835a",
+              "original_sha256": "32d01aa62b786c14db26fba8e600eb7cdea61d6412d0f24253fc3ef004401c05",
+              "quote_char_start_in_chunk": 1204,
+              "quote_char_end_in_chunk": 1473,
+              "offset_space": "data_platform_chunk_text",
+              "ri223_container": {
+                "parent_sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                "member_path": "3727-МИ/3. Проект договора с приложениями новый.docx",
+                "member_sha256": "32d01aa62b786c14db26fba8e600eb7cdea61d6412d0f24253fc3ef004401c05",
+                "member_bytes": 93727,
+                "container_format": "RAR",
+                "parent_file_id": "FILE-02",
+                "parent_name": "3727_МИ.rar",
+                "source_references": [
+                  {
+                    "name": "3727_МИ.rar",
+                    "source_kind": "purchaseNotice",
+                    "xml_sha256": "9a62ab86cce33934853e1c7fd1fe369dc4aed607350b20cb3d24a17c943dc0d5",
+                    "sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                    "bytes": 3606714
+                  }
+                ]
+              }
+            },
+            {
+              "file_id": "FILE-11",
+              "chunk_id": "7151fb74a73736f25e0b760b20fba7d08b004b0cf693a8a69fd49aef4d1cf244",
+              "original_sha256": "201e072d429d90310a1eac0888fc34c7e00922d63a8b11775cd8bddfc0c0af0b",
+              "quote_char_start_in_chunk": 808,
+              "quote_char_end_in_chunk": 1295,
+              "offset_space": "data_platform_chunk_text",
+              "ri223_container": {
+                "parent_sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                "member_path": "3727-МИ/2_4_ Приложение к ТЗ.docx",
+                "member_sha256": "201e072d429d90310a1eac0888fc34c7e00922d63a8b11775cd8bddfc0c0af0b",
+                "member_bytes": 37593,
+                "container_format": "RAR",
+                "parent_file_id": "FILE-02",
+                "parent_name": "3727_МИ.rar",
+                "source_references": [
+                  {
+                    "name": "3727_МИ.rar",
+                    "source_kind": "purchaseNotice",
+                    "xml_sha256": "9a62ab86cce33934853e1c7fd1fe369dc4aed607350b20cb3d24a17c943dc0d5",
+                    "sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                    "bytes": 3606714
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "case": "32616445866",
+          "domain": "evaluation",
+          "before": [],
+          "after": []
+        },
+        {
+          "case": "32616445866",
+          "domain": "contract",
+          "before": [
+            {
+              "file_id": "FILE-02",
+              "chunk_id": "57749235369e8fd9fabd6d85118cfdf1882cb48d4bdb2f7402e854f7e9d37d03",
+              "original_sha256": "a8645964df2203e09abb34dd9d64b88c8bea607031ebde80ff89362914979550",
+              "quote_char_start_in_chunk": 210,
+              "quote_char_end_in_chunk": 291,
+              "offset_space": "data_platform_chunk_text"
+            }
+          ],
+          "after": []
+        },
+        {
+          "case": "32616447910",
+          "domain": "evaluation",
+          "before": [],
+          "after": []
+        },
+        {
+          "case": "32616447910",
+          "domain": "contract",
+          "before": [],
+          "after": []
+        }
+      ],
+      "default_promoted": false,
+      "semantic_precision": null,
+      "semantic_recall": null,
+      "replay_sha256": "ed8b46c421c94094be6fd96279ba913b99b351c035edf42c002ba99d9d2522c5"
+    },
+    {
+      "scope": "EXPLORATORY_SAME_CORPUS_NOT_GOLD",
+      "chunk_aligned": true,
+      "baseline": {
+        "scope": "ARCHIVED_LEXICAL_ORIGINAL_QUOTE_COVERAGE_ONLY",
+        "complete_cases": 5,
+        "incomplete_cases_refused": 1,
+        "probe_count": 45,
+        "probes_with_citations": 29,
+        "domain_cases_with_citations": {
+          "technical_scope": 3,
+          "qualification": 3,
+          "application": 3,
+          "evaluation": 1,
+          "contract": 4,
+          "participation": 4,
+          "schedule": 4,
+          "payment": 3,
+          "security": 4
+        },
+        "citation_occurrences": 42,
+        "cases": [
+          {
+            "case": "32616444788",
+            "counts": {
+              "technical_scope": 1,
+              "qualification": 1,
+              "application": 2,
+              "evaluation": 0,
+              "contract": 1,
+              "participation": 1,
+              "schedule": 2,
+              "payment": 2,
+              "security": 2
+            },
+            "elapsed_seconds": 5.158,
+            "originals": 4,
+            "members": 0,
+            "searchable_candidates": 4
+          },
+          {
+            "case": "32616445632",
+            "counts": {
+              "technical_scope": 2,
+              "qualification": 1,
+              "application": 1,
+              "evaluation": 0,
+              "contract": 1,
+              "participation": 2,
+              "schedule": 1,
+              "payment": 2,
+              "security": 2
+            },
+            "elapsed_seconds": 1.849,
+            "originals": 2,
+            "members": 0,
+            "searchable_candidates": 2
+          },
+          {
+            "case": "32616445795",
+            "counts": {
+              "technical_scope": 2,
+              "qualification": 2,
+              "application": 1,
+              "evaluation": 1,
+              "contract": 2,
+              "participation": 2,
+              "schedule": 2,
+              "payment": 1,
+              "security": 1
+            },
+            "elapsed_seconds": 7.534,
+            "originals": 1,
+            "members": 19,
+            "searchable_candidates": 19
+          },
+          {
+            "case": "32616445866",
+            "counts": {
+              "technical_scope": 0,
+              "qualification": 0,
+              "application": 0,
+              "evaluation": 0,
+              "contract": 1,
+              "participation": 1,
+              "schedule": 0,
+              "payment": 0,
+              "security": 0
+            },
+            "elapsed_seconds": 0.906,
+            "originals": 1,
+            "members": 0,
+            "searchable_candidates": 1
+          },
+          {
+            "case": "32616447910",
+            "counts": {
+              "technical_scope": 0,
+              "qualification": 0,
+              "application": 0,
+              "evaluation": 0,
+              "contract": 0,
+              "participation": 0,
+              "schedule": 1,
+              "payment": 0,
+              "security": 1
+            },
+            "elapsed_seconds": 0.364,
+            "originals": 1,
+            "members": 0,
+            "searchable_candidates": 1
+          }
+        ],
+        "semantic_precision": null,
+        "semantic_recall": null,
+        "current_source_accuracy": null,
+        "human_gold": null,
+        "commercial_acceptance": false,
+        "rolling_slo": false
+      },
+      "candidate": {
+        "scope": "ARCHIVED_LEXICAL_ORIGINAL_QUOTE_COVERAGE_ONLY",
+        "complete_cases": 5,
+        "incomplete_cases_refused": 1,
+        "probe_count": 45,
+        "probes_with_citations": 28,
+        "domain_cases_with_citations": {
+          "technical_scope": 3,
+          "qualification": 3,
+          "application": 3,
+          "evaluation": 1,
+          "contract": 3,
+          "participation": 4,
+          "schedule": 4,
+          "payment": 3,
+          "security": 4
+        },
+        "citation_occurrences": 44,
+        "cases": [
+          {
+            "case": "32616444788",
+            "counts": {
+              "technical_scope": 1,
+              "qualification": 1,
+              "application": 2,
+              "evaluation": 0,
+              "contract": 2,
+              "participation": 1,
+              "schedule": 2,
+              "payment": 2,
+              "security": 2
+            },
+            "elapsed_seconds": 4.651,
+            "originals": 4,
+            "members": 0,
+            "searchable_candidates": 4
+          },
+          {
+            "case": "32616445632",
+            "counts": {
+              "technical_scope": 2,
+              "qualification": 1,
+              "application": 1,
+              "evaluation": 0,
+              "contract": 2,
+              "participation": 2,
+              "schedule": 1,
+              "payment": 2,
+              "security": 2
+            },
+            "elapsed_seconds": 1.741,
+            "originals": 2,
+            "members": 0,
+            "searchable_candidates": 2
+          },
+          {
+            "case": "32616445795",
+            "counts": {
+              "technical_scope": 2,
+              "qualification": 2,
+              "application": 1,
+              "evaluation": 2,
+              "contract": 2,
+              "participation": 2,
+              "schedule": 2,
+              "payment": 1,
+              "security": 1
+            },
+            "elapsed_seconds": 7.296,
+            "originals": 1,
+            "members": 19,
+            "searchable_candidates": 19
+          },
+          {
+            "case": "32616445866",
+            "counts": {
+              "technical_scope": 0,
+              "qualification": 0,
+              "application": 0,
+              "evaluation": 0,
+              "contract": 0,
+              "participation": 1,
+              "schedule": 0,
+              "payment": 0,
+              "security": 0
+            },
+            "elapsed_seconds": 0.652,
+            "originals": 1,
+            "members": 0,
+            "searchable_candidates": 1
+          },
+          {
+            "case": "32616447910",
+            "counts": {
+              "technical_scope": 0,
+              "qualification": 0,
+              "application": 0,
+              "evaluation": 0,
+              "contract": 0,
+              "participation": 0,
+              "schedule": 1,
+              "payment": 0,
+              "security": 1
+            },
+            "elapsed_seconds": 0.323,
+            "originals": 1,
+            "members": 0,
+            "searchable_candidates": 1
+          }
+        ],
+        "semantic_precision": null,
+        "semantic_recall": null,
+        "current_source_accuracy": null,
+        "human_gold": null,
+        "commercial_acceptance": false,
+        "rolling_slo": false
+      },
+      "targeted_domains": [
+        {
+          "case": "32616444788",
+          "domain": "evaluation",
+          "before": [],
+          "after": []
+        },
+        {
+          "case": "32616444788",
+          "domain": "contract",
+          "before": [
+            {
+              "file_id": "FILE-02",
+              "chunk_id": "970df20c7df2d62e13a811d9b47e814b13697f4ea3f34b5276fc88d2a236b18b",
+              "original_sha256": "b48065a5740710738c7144be9bcf52116d1f548d2e63e2990cff470ce6320ff8",
+              "quote_char_start_in_chunk": 268,
+              "quote_char_end_in_chunk": 443,
+              "offset_space": "data_platform_chunk_text"
+            }
+          ],
+          "after": [
+            {
+              "file_id": "FILE-02",
+              "chunk_id": "fdc428f5936db704ac6f1b6e0497d031eadee60973708a640f42f4265bc7059f",
+              "original_sha256": "b48065a5740710738c7144be9bcf52116d1f548d2e63e2990cff470ce6320ff8",
+              "quote_char_start_in_chunk": 116,
+              "quote_char_end_in_chunk": 720,
+              "offset_space": "data_platform_chunk_text"
+            },
+            {
+              "file_id": "FILE-03",
+              "chunk_id": "67e0d166b23d99d6288f84e8cfd2104620a5eff7f7e4de8a88abdd9225f290e5",
+              "original_sha256": "a3023549337bb36def28f214a7993313e250ce1ebb1035cad89b78288ec08ac7",
+              "quote_char_start_in_chunk": 703,
+              "quote_char_end_in_chunk": 820,
+              "offset_space": "data_platform_chunk_text"
+            }
+          ]
+        },
+        {
+          "case": "32616445632",
+          "domain": "evaluation",
+          "before": [],
+          "after": []
+        },
+        {
+          "case": "32616445632",
+          "domain": "contract",
+          "before": [
+            {
+              "file_id": "FILE-02",
+              "chunk_id": "3f17cc30d80cf6515f528f9fcbb02d4886129109e9afcf62f055983d8c2cabf2",
+              "original_sha256": "2b1f6b6dc23511382f7fe836146ccb3d7b1974767af18483c1283a74e5230c8d",
+              "quote_char_start_in_chunk": 1128,
+              "quote_char_end_in_chunk": 1230,
+              "offset_space": "data_platform_chunk_text"
+            }
+          ],
+          "after": [
+            {
+              "file_id": "FILE-02",
+              "chunk_id": "7cc7e48ec7d2428103107f5407b00284cd314e44b42cc0fa1a24e6b1eec78046",
+              "original_sha256": "2b1f6b6dc23511382f7fe836146ccb3d7b1974767af18483c1283a74e5230c8d",
+              "quote_char_start_in_chunk": 617,
+              "quote_char_end_in_chunk": 1025,
+              "offset_space": "data_platform_chunk_text"
+            },
+            {
+              "file_id": "FILE-03",
+              "chunk_id": "90ab696421708683503ea54de8c720079b1d9cc368f1dff3950187bff9255720",
+              "original_sha256": "066252cac6ba7d9bfc876c9ac9a5e5425df31497fe37683dd7cdc5bdf4fa2558",
+              "quote_char_start_in_chunk": 656,
+              "quote_char_end_in_chunk": 1260,
+              "offset_space": "data_platform_chunk_text"
+            }
+          ]
+        },
+        {
+          "case": "32616445795",
+          "domain": "evaluation",
+          "before": [
+            {
+              "file_id": "FILE-19",
+              "chunk_id": "46a3a68c6cfd9dab68b6969c6efd8889b01ad73f36efeeaf1144420b34559670",
+              "original_sha256": "a44d95730fad4fe3b117544b5b651cdfdf70514fb2c8ce9a7febdbb69cd2c826",
+              "quote_char_start_in_chunk": 256,
+              "quote_char_end_in_chunk": 302,
+              "offset_space": "data_platform_chunk_text",
+              "ri223_container": {
+                "parent_sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                "member_path": "3727-МИ/РАЗДЕЛ 9. МЕТОДИКА ОЦЕНКИ (работы-услуги) 40х60.pdf",
+                "member_sha256": "a44d95730fad4fe3b117544b5b651cdfdf70514fb2c8ce9a7febdbb69cd2c826",
+                "member_bytes": 328157,
+                "container_format": "RAR",
+                "parent_file_id": "FILE-02",
+                "parent_name": "3727_МИ.rar",
+                "source_references": [
+                  {
+                    "name": "3727_МИ.rar",
+                    "source_kind": "purchaseNotice",
+                    "xml_sha256": "9a62ab86cce33934853e1c7fd1fe369dc4aed607350b20cb3d24a17c943dc0d5",
+                    "sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                    "bytes": 3606714
+                  }
+                ]
+              }
+            }
+          ],
+          "after": [
+            {
+              "file_id": "FILE-17",
+              "chunk_id": "67bae46ea7430da9734953d5b04ad6cf6cd7d23668552a73233a0d1991465e71",
+              "original_sha256": "366fc747cd6d77f846fe95f422d3a81abf5d0899c74111f90af5e07614df18ef",
+              "quote_char_start_in_chunk": 322,
+              "quote_char_end_in_chunk": 492,
+              "offset_space": "data_platform_chunk_text",
+              "ri223_container": {
+                "parent_sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                "member_path": "3727-МИ/Извещение.docx",
+                "member_sha256": "366fc747cd6d77f846fe95f422d3a81abf5d0899c74111f90af5e07614df18ef",
+                "member_bytes": 34116,
+                "container_format": "RAR",
+                "parent_file_id": "FILE-02",
+                "parent_name": "3727_МИ.rar",
+                "source_references": [
+                  {
+                    "name": "3727_МИ.rar",
+                    "source_kind": "purchaseNotice",
+                    "xml_sha256": "9a62ab86cce33934853e1c7fd1fe369dc4aed607350b20cb3d24a17c943dc0d5",
+                    "sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                    "bytes": 3606714
+                  }
+                ]
+              }
+            },
+            {
+              "file_id": "FILE-19",
+              "chunk_id": "46a3a68c6cfd9dab68b6969c6efd8889b01ad73f36efeeaf1144420b34559670",
+              "original_sha256": "a44d95730fad4fe3b117544b5b651cdfdf70514fb2c8ce9a7febdbb69cd2c826",
+              "quote_char_start_in_chunk": 256,
+              "quote_char_end_in_chunk": 302,
+              "offset_space": "data_platform_chunk_text",
+              "ri223_container": {
+                "parent_sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                "member_path": "3727-МИ/РАЗДЕЛ 9. МЕТОДИКА ОЦЕНКИ (работы-услуги) 40х60.pdf",
+                "member_sha256": "a44d95730fad4fe3b117544b5b651cdfdf70514fb2c8ce9a7febdbb69cd2c826",
+                "member_bytes": 328157,
+                "container_format": "RAR",
+                "parent_file_id": "FILE-02",
+                "parent_name": "3727_МИ.rar",
+                "source_references": [
+                  {
+                    "name": "3727_МИ.rar",
+                    "source_kind": "purchaseNotice",
+                    "xml_sha256": "9a62ab86cce33934853e1c7fd1fe369dc4aed607350b20cb3d24a17c943dc0d5",
+                    "sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                    "bytes": 3606714
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "case": "32616445795",
+          "domain": "contract",
+          "before": [
+            {
+              "file_id": "FILE-04",
+              "chunk_id": "918f66113e9b740b8aa9dcf1f4dee70bfafd1ffcf62d0d04ed64c99d5a1b68b9",
+              "original_sha256": "b2b274f79179853452f8d549cd5797cbdebcbc54b638c15d7404d76de006a7a5",
+              "quote_char_start_in_chunk": 255,
+              "quote_char_end_in_chunk": 286,
+              "offset_space": "data_platform_chunk_text",
+              "ri223_container": {
+                "parent_sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                "member_path": "3727-МИ/2_1-2_Приложения к ТЗ-А2.pdf",
+                "member_sha256": "b2b274f79179853452f8d549cd5797cbdebcbc54b638c15d7404d76de006a7a5",
+                "member_bytes": 347312,
+                "container_format": "RAR",
+                "parent_file_id": "FILE-02",
+                "parent_name": "3727_МИ.rar",
+                "source_references": [
+                  {
+                    "name": "3727_МИ.rar",
+                    "source_kind": "purchaseNotice",
+                    "xml_sha256": "9a62ab86cce33934853e1c7fd1fe369dc4aed607350b20cb3d24a17c943dc0d5",
+                    "sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                    "bytes": 3606714
+                  }
+                ]
+              }
+            },
+            {
+              "file_id": "FILE-11",
+              "chunk_id": "4806310d5e3a1a3c1426b7bbb434e4ed7a086adac8ab1a71b1838e429b377305",
+              "original_sha256": "201e072d429d90310a1eac0888fc34c7e00922d63a8b11775cd8bddfc0c0af0b",
+              "quote_char_start_in_chunk": 621,
+              "quote_char_end_in_chunk": 795,
+              "offset_space": "data_platform_chunk_text",
+              "ri223_container": {
+                "parent_sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                "member_path": "3727-МИ/2_4_ Приложение к ТЗ.docx",
+                "member_sha256": "201e072d429d90310a1eac0888fc34c7e00922d63a8b11775cd8bddfc0c0af0b",
+                "member_bytes": 37593,
+                "container_format": "RAR",
+                "parent_file_id": "FILE-02",
+                "parent_name": "3727_МИ.rar",
+                "source_references": [
+                  {
+                    "name": "3727_МИ.rar",
+                    "source_kind": "purchaseNotice",
+                    "xml_sha256": "9a62ab86cce33934853e1c7fd1fe369dc4aed607350b20cb3d24a17c943dc0d5",
+                    "sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                    "bytes": 3606714
+                  }
+                ]
+              }
+            }
+          ],
+          "after": [
+            {
+              "file_id": "FILE-15",
+              "chunk_id": "bb47ac202aa8f72acd5bce911770cba40bcedfc1cf861a518c1920c96d49835a",
+              "original_sha256": "32d01aa62b786c14db26fba8e600eb7cdea61d6412d0f24253fc3ef004401c05",
+              "quote_char_start_in_chunk": 1204,
+              "quote_char_end_in_chunk": 1473,
+              "offset_space": "data_platform_chunk_text",
+              "ri223_container": {
+                "parent_sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                "member_path": "3727-МИ/3. Проект договора с приложениями новый.docx",
+                "member_sha256": "32d01aa62b786c14db26fba8e600eb7cdea61d6412d0f24253fc3ef004401c05",
+                "member_bytes": 93727,
+                "container_format": "RAR",
+                "parent_file_id": "FILE-02",
+                "parent_name": "3727_МИ.rar",
+                "source_references": [
+                  {
+                    "name": "3727_МИ.rar",
+                    "source_kind": "purchaseNotice",
+                    "xml_sha256": "9a62ab86cce33934853e1c7fd1fe369dc4aed607350b20cb3d24a17c943dc0d5",
+                    "sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                    "bytes": 3606714
+                  }
+                ]
+              }
+            },
+            {
+              "file_id": "FILE-11",
+              "chunk_id": "7151fb74a73736f25e0b760b20fba7d08b004b0cf693a8a69fd49aef4d1cf244",
+              "original_sha256": "201e072d429d90310a1eac0888fc34c7e00922d63a8b11775cd8bddfc0c0af0b",
+              "quote_char_start_in_chunk": 808,
+              "quote_char_end_in_chunk": 1295,
+              "offset_space": "data_platform_chunk_text",
+              "ri223_container": {
+                "parent_sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                "member_path": "3727-МИ/2_4_ Приложение к ТЗ.docx",
+                "member_sha256": "201e072d429d90310a1eac0888fc34c7e00922d63a8b11775cd8bddfc0c0af0b",
+                "member_bytes": 37593,
+                "container_format": "RAR",
+                "parent_file_id": "FILE-02",
+                "parent_name": "3727_МИ.rar",
+                "source_references": [
+                  {
+                    "name": "3727_МИ.rar",
+                    "source_kind": "purchaseNotice",
+                    "xml_sha256": "9a62ab86cce33934853e1c7fd1fe369dc4aed607350b20cb3d24a17c943dc0d5",
+                    "sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+                    "bytes": 3606714
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "case": "32616445866",
+          "domain": "evaluation",
+          "before": [],
+          "after": []
+        },
+        {
+          "case": "32616445866",
+          "domain": "contract",
+          "before": [
+            {
+              "file_id": "FILE-02",
+              "chunk_id": "57749235369e8fd9fabd6d85118cfdf1882cb48d4bdb2f7402e854f7e9d37d03",
+              "original_sha256": "a8645964df2203e09abb34dd9d64b88c8bea607031ebde80ff89362914979550",
+              "quote_char_start_in_chunk": 210,
+              "quote_char_end_in_chunk": 291,
+              "offset_space": "data_platform_chunk_text"
+            }
+          ],
+          "after": []
+        },
+        {
+          "case": "32616447910",
+          "domain": "evaluation",
+          "before": [],
+          "after": []
+        },
+        {
+          "case": "32616447910",
+          "domain": "contract",
+          "before": [],
+          "after": []
+        }
+      ],
+      "default_promoted": false,
+      "semantic_precision": null,
+      "semantic_recall": null,
+      "replay_sha256": "b09dcf1238a8bc3060165657e8e267d0629973449a8dd8607a7bfc0bf7a0158e"
+    }
+  ],
+  "final_alignment_stable": true,
+  "originals_unchanged": true,
+  "independent_gold": false,
+  "decision": "EXPERIMENT_ONLY_NO_DEFAULT_PROMOTION"
+}
