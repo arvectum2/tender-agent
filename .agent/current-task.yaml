@@ -1045,3 +1045,9 @@ staged_settlement_20261118:
   checkpoint: .agent/checkpoints/TA-STAGED-SETTLEMENT-20261118.yaml
   current_stage: exact_ci_pending
   last_verified_commit: f3a9db9104547aa1346ae52eb879658a7f392690
+
+profile_qualification_readiness_20261118:
+  task_id: TA-PROFILE-QUALIFICATION-READINESS-20261118
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-PROFILE-QUALIFICATION-READINESS-20261118.yaml
+  current_stage: qualification_evidence_readiness

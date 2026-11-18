@@ -1,0 +1,16 @@
+task_id: TA-PROFILE-QUALIFICATION-READINESS-20261118
+status: in_progress
+goal: Read-only supplier qualification readiness from tenant versioned facts and source-attested requirements; verify Arvectum historical profile safely in isolated SQLite.
+definition_of_done:
+  - Keep historical identity, screening preferences and current qualification evidence distinct.
+  - Scope latest claims to tenant, identity, requirement, assessment date, expiry, reviewable document versions; no fallback or false legal pass.
+  - Attest actual archived SME requirements; demonstrate historical Arvectum status remains unknown; synthetic positive and negative lifecycle cases.
+  - Local tests and isolated original replay, publish draft and checkpoint.
+completed:
+  - PR649 19/19 SUCCESS, PR650 17/19 success two pending. Existing historical registration packet checksum verified; no original transfer, no authorized live customer.
+current_stage: qualification_evidence_readiness
+remaining:
+  - Implement, test, isolated replay, document and publish.
+last_verified_commit: 071c9857bf93b6d5a6dba62d1970d0f7dfc1ea15
+test_results: []
+resume_instruction: No production import, tenant grant, external filing or profile preference inference. Read-only current facts and historical isolated replay only.
