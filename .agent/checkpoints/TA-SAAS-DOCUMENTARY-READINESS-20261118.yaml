@@ -1,5 +1,5 @@
 task_id: TA-SAAS-DOCUMENTARY-READINESS-20261118
-status: in_progress
+status: completed
 goal: Tenant-scoped read-only documentary qualification and owned-run checklist matching
   in SaaS UI.
 definition_of_done:
@@ -18,11 +18,9 @@ completed:
 - 39 targeted PASS, 1 skipped, 52 deselected, 12 warnings, Ruff/diff/Node syntax PASS.
   Real Chromium 1280/390 synthetic intercepted network PASS. Actual synthetic HTTP/SQLite
   two tenants and PDF-header digest, tamper/role/revocation/foreign run tests.
-current_stage: exact_ci_pending
-remaining:
-- Verify exact draft CI and PR658. Next financial calendar in authorized read-only
-  workspace and trusted evidence approvals; real profile and original acceptance remain
-  open.
+- 'Exact CI 19/19 SUCCESS: 227950d0bea3f1ca52db161a8012f5b60de39abe'
+current_stage: verified_pending_merge
+remaining: []
 last_verified_commit: ab25613ce7a9ac93a56b5fae5c0ab06df7808efe
 test_results:
 - 39 passed, 1 skipped, 52 deselected, 12 warnings, exit 0; Ruff/diff/Node PASS; Chromium

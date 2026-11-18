@@ -1,0 +1,32 @@
+task_id: TA-EVIDENCE-APPROVAL-GATE-20261118
+status: in_progress
+goal: Advance consolidated development candidate with exact evidence-version approval
+  for reviewed commercial offer, declarations and application bundle.
+definition_of_done:
+- Recover parallel PR654-659 and choose consolidated main-based successor; preserve
+  PR660 untouched, document divergence.
+- Pin current fact identities/versions, rendered identity values, selected documentary
+  state/bytes, offer/declaration exact affirmation and scope to approved inputs.
+- Require retained digest in opt-in safe gate, compare before/after and actual manifest
+  receipts, reject unknown conditional outputs.
+- Synthetic tests and exact draft publication, no production or blocked private replay.
+completed:
+- PR654-659 exact CI 19/19 each; PR660 separate duplicate branch 17/19 success, no
+  changes. Adopt 659 because it includes 655-658 and integrated main-based audit.
+- PR659 consolidated successor chosen; PR660 intact. Exact plan+input+evidence digest
+  opt-in gate, latest facts and exact receipt checks; unresolved conditional outputs
+  refused.
+- 125 regression PASS incl 15 new, 33 warnings, exit 0. Synthetic SQLite/DOCX/ZIP;
+  Ruff/diff PASS.
+current_stage: exact_ci_pending
+remaining:
+- Check exact draft CI. Continue consolidated successor with authenticated approval
+  persistence and tenant-bound financial review; no production or blocked private
+  replay.
+last_verified_commit: 8c3c47b9d8beea6a2a750e0ec78b7ada9f06bda8
+test_results:
+- 125 passed, 33 warnings, exit 0
+- Ruff/diff PASS; log SHA256 53f10be40921a9b70667e38c6907a976c49d02dc764be9b415f9043d282681cd
+resume_instruction: Check exact draft CI and continue from this consolidated branch,
+  not divergent PR660. Do not retry blocked private replay or deployment. Next authenticated
+  approval and current evidence; no legal GO.
