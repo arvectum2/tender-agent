@@ -1,5 +1,5 @@
 task_id: TA-REVIEWED-OFFER-DECLARATIONS-20261118
-status: in_progress
+status: completed
 goal: Generate separate reviewed price and declaration drafts without leaking internal
   economics or inventing attestations.
 definition_of_done:
@@ -18,10 +18,9 @@ completed:
   unsigned DOCX drafts in private ZIP, no internal cost values propagated.
 - 34 targeted tests PASS including 17 new; actual synthetic DOCX/ZIP round trip; Ruff/diff
   PASS. Wider combined test transport disconnected, no result claimed.
-current_stage: exact_ci_pending
-remaining:
-- Verify exact draft CI and PR654. Next reviewed checklist-to-package bridge and independent
-  final completeness gate; actual profile/source acceptance open.
+- Exact PR655 CI 19/19 SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
 last_verified_commit: 2fbc562f901c8f758a69223e852ee13b882d060d
 test_results:
 - 34 passed, 24 warnings, exit 0; Ruff/diff PASS

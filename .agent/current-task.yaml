@@ -1076,9 +1076,9 @@ private_draft_package_20261118:
 
 reviewed_offer_declarations_20261118:
   task_id: TA-REVIEWED-OFFER-DECLARATIONS-20261118
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-REVIEWED-OFFER-DECLARATIONS-20261118.yaml
-  current_stage: exact_ci_pending
+  current_stage: verified_pending_merge
   last_verified_commit: 2fbc562f901c8f758a69223e852ee13b882d060d
 
 checklist_bundle_gate_20261118:
@@ -1090,6 +1090,7 @@ checklist_bundle_gate_20261118:
 
 integrated_release_audit_20261118:
   task_id: TA-INTEGRATED-RELEASE-AUDIT-20261118
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-INTEGRATED-RELEASE-AUDIT-20261118.yaml
-  current_stage: integrated_regression_and_audit
+  current_stage: audit_complete_production_no_go
+  last_verified_commit: 2c94f9a2c3f0da4273cd2d058bc965ac304a3177
