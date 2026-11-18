@@ -16,6 +16,7 @@ from .operator_cost_scenarios import (
     calculate_explicit_cost_thresholds,
 )
 from .ri223_attachment_evidence import digest, read_bytes, verified_container_lineage
+from .ri223_container_evidence import container_projection_scope
 from .ri223_contract_risk import observe_contract_risk
 from .ri223_review_dossier import verified_inventory
 from .ri223_review_scoring import scoring_observation
@@ -113,7 +114,8 @@ def review_archived_owner_run(run_id: str, scenario: ExplicitCostScenarioRequest
     sme=sme_observation(run_id,run,metadata)
     scoring=scoring_observation(run,metadata)
     calc=lot_scenario(notice,scenario)
-    risks=observe_contract_risk(run_id,run,metadata,calc)
+    with container_projection_scope():
+        risks=observe_contract_risk(run_id,run,metadata,calc)
     combined={}
     if include_decision:
         from .ri223_decision_review import archived_decision_projection

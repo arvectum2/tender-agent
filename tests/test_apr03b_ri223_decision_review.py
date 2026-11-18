@@ -58,3 +58,24 @@ def test_multilot_no_aggregate_and_unverified_clause_excluded():
     assert out["decision_core"]["facts"]["nmck"]["status"]=="UNKNOWN"
     assert not out["decision_core"]["facts"]["contract_draft"]["evidence"]
     assert out["recommendation"]=="DEFER"
+
+
+def test_verified_risk_incomplete_fails_closed():
+    n,i,d,r,e=fixture()
+    r['verified_clause_count']=1
+    del r['clauses'][0]['source']['chunk_id']
+    assert archived_decision_projection(n,i,d,r,e)['reason']=='VERIFIED_RISK_LINEAGE_INCOMPLETE'
+
+
+def test_verified_risk_count_mismatch_fails_closed():
+    n,i,d,r,e=fixture()
+    r['verified_clause_count']=2
+    assert archived_decision_projection(n,i,d,r,e)['reason']=='VERIFIED_RISK_COUNT_MISMATCH'
+
+
+def test_evidence_retained_and_consistency_not_assumed():
+    n,i,d,r,e=fixture()
+    out=archived_decision_projection(n,i,d,r,e)
+    assert len(out['projected_risk_evidence'])==1
+    assert len(out['decision_core']['facts']['contract_draft']['evidence'])==1
+    assert next(x for x in out['decision_core']['readiness'] if x['code']=='SOURCE_CONSISTENCY')['status']=='REVIEW'

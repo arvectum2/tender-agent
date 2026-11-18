@@ -33,6 +33,20 @@ def replay_owner(run):
     print('RI223_INTEGRATED_DECISION_PASS',decision['decision_core']['decision']['status'],len(decision['review_gates']),flush=True)
     risks=out['contract_risk'];print('RI223_CONTRACT_RISK_ACTUAL',risks['status'],risks.get('verified_clause_count'),[(x['clause'],x['status']) for x in risks['clauses']],risks.get('scenario_exposure'),flush=True)
     assert risks['status']=='ARCHIVED_CONTRACT_CLAUSE_REVIEW_ONLY' and risks['verified_clause_count']==14
+    assert len(decision['projected_risk_evidence'])==14
+    assert {r['clause'] for r in decision['projected_risk_evidence']}=={r['clause'] for r in risks['clauses']}
+    assert len([r for r in decision['decision_core']['facts']['contract_draft']['evidence'] if r['source_ref'].startswith('risk:')])==14
+    linked=risks['linked_conditions']
+    print('RI223_LINKED_CONTRACT_ACTUAL',[(k,v['status'],list(v['source_sections'])) for k,v in linked['groups'].items()],linked['payment_sequence'],linked['scenario_sensitivity'],flush=True)
+    assert decision['linked_contract_review']==linked
+    assert not linked['whole_contract_complete'] and not linked['go_eligible']
+    assert linked['actual_peak_working_capital_rub'] is None
+    assert all(v['status']=='VERIFIED_REVIEWED_PARAGRAPH_GROUP' for v in linked['groups'].values())
+    assert linked['payment_sequence']['illustrative_no_refusal_working_days']==17
+    sc={s['code']:s for s in linked['scenario_sensitivity']}
+    assert sc['DELAY_10']['profit_less_assumed_penalty_rub']=='213000.00'
+    assert sc['UNAUTHORIZED_ASSIGNMENT']['profit_less_assumed_penalty_rub']=='42000.00'
+
     assert risks['scenario_exposure']['daily_delay_penalty_rub']=='900.00'
     assert risks['scenario_exposure']['delay_10_days_rub']=='9000.00'
     assert risks['scenario_exposure']['unauthorized_assignment_penalty_rub']=='180000.00'

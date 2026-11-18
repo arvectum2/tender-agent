@@ -6,6 +6,7 @@ from pathlib import Path
 from unicodedata import normalize
 
 from .ri223_attachment_evidence import verified_container_lineage
+from .ri223_linked_contract import linked_contract_observation
 from .verified_original_quote import verify_operator_run_quote
 
 _NUMBER = '32616445795'
@@ -83,6 +84,7 @@ def observe_contract_risk(run_id: str, run: Path, metadata: dict, economics: dic
                    'all_sanctions_additive':None}
     return {**base,'status':'ARCHIVED_CONTRACT_CLAUSE_REVIEW_ONLY' if verified else 'UNKNOWN',
             'clauses':clauses,'verified_clause_count':len(verified),
+            'linked_conditions':linked_contract_observation(run_id,row['file_id'],lineage,economics,verifier=verify_operator_run_quote),
             'source_lineage':lineage,'scenario_exposure':exposures,
             'subcontract_variant_selected':None,'risk_score':None,
             'current_revision_attested':False,'requires_human_review':True}
