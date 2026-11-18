@@ -28,6 +28,12 @@ from src.modules.tender_operator_agent_demo.operator_cost_scenarios import (
     calculate_explicit_cost_thresholds,
 )
 
+from .reviewed_commercial_drafts import (
+    DeclarationTerms,
+    OfferTerms,
+    render_declarations,
+    render_offer,
+)
 from .source_bound_fill import (
     ReviewedTemplateMap,
     _resolve,
@@ -92,7 +98,8 @@ def _read_selected(session,root,cid,claim):
 
 
 def build_private_review_bundle(session,*,customer_id,root:Path,plan:ReviewPlan,templates:dict[str,tuple[bytes,ReviewedTemplateMap]],
-                                selections:dict[str,str],cost:ExplicitCostScenarioRequest|None=None,now=None):
+                                selections:dict[str,str],cost:ExplicitCostScenarioRequest|None=None,
+                                offer_terms:OfferTerms|None=None,declaration_terms:DeclarationTerms|None=None,now=None):
     now=_utc(now or datetime.now(UTC))
     if not re.fullmatch(r'[A-Za-z0-9_-]{1,64}',customer_id) or not plan.owner_reviewed_plan or not plan.plan_review_ref.strip():
         raise ValueError('Authorized reviewed plan required')
@@ -126,6 +133,11 @@ def build_private_review_bundle(session,*,customer_id,root:Path,plan:ReviewPlan,
     price_items=[x for x in active.values() if x.role=='PRICE']
     if len(price_items)>1 or cost is not None and not price_items:
         raise ValueError('Unexpected price scenario')
+    declaration_items=[x for x in active.values() if x.role=='DECLARATION']
+    if offer_terms is not None and (not price_items or cost is None or offer_terms.procurement_ref!=plan.procurement_ref):
+        raise ValueError('Offer outside reviewed procurement or price item')
+    if declaration_terms is not None and (len(declaration_items)!=1 or declaration_terms.procurement_ref!=plan.procurement_ref):
+        raise ValueError('Declarations outside reviewed procurement or declaration item')
     for code,item in items.items():
         row={'code':code,'role':item.role,'applicability':item.applicability,'review_ref':item.review_ref,
              'state':'MISSING_OR_REVIEW_REQUIRED','satisfied':None,'paths':[]}
@@ -158,11 +170,30 @@ def build_private_review_bundle(session,*,customer_id,root:Path,plan:ReviewPlan,
             path='internal/price-scenario.json'
             add(path,_json({'status':'HYPOTHETICAL_PRICE_NOT_OFFER','calculation':calc}),'INTERNAL_SCENARIO',code)
             row.update(state='PRICE_SCENARIO_REVIEW_REQUIRED',paths=[path])
+            if offer_terms is not None:
+                draft,receipt=render_offer(session,customer_id=customer_id,terms=offer_terms,cost=cost,now=now)
+                row['offer_receipt']=receipt
+                if draft is not None:
+                    add('drafts/price-offer.docx',draft,'UNSIGNED_OFFER',code)
+                    row['paths'].append('drafts/price-offer.docx')
+                row['state']=receipt['status']
+        elif item.role=='DECLARATION' and declaration_terms is not None:
+            draft,receipt=render_declarations(session,customer_id=customer_id,terms=declaration_terms,now=now)
+            add('drafts/declarations.docx',draft,'UNSIGNED_DECLARATIONS',code)
+            row.update(state=receipt['status'],paths=['drafts/declarations.docx'],declaration_receipt=receipt)
         rows.append(row)
     # The same identity field must agree across all generated forms and
     # match the final current fact projection in this session.
     seen_fields={}
     for row in rows:
+        if 'offer_receipt' in row:
+            _,current=render_offer(session,customer_id=customer_id,terms=offer_terms,cost=cost,now=now)
+            if current!=row['offer_receipt']:
+                raise ValueError('Offer confirmation changed during assembly')
+        if 'declaration_receipt' in row:
+            _,current=render_declarations(session,customer_id=customer_id,terms=declaration_terms,now=now)
+            if current!=row['declaration_receipt']:
+                raise ValueError('Declaration confirmation changed during assembly')
         receipt=row.get('field_receipt')
         if receipt:
             current=_resolve(session,customer_id,templates[row['code']][1].fields,now)
@@ -199,7 +230,7 @@ def verify_private_review_bundle(raw,*,expected_sha256=None):
         raise ValueError('Archive too large')
     with zipfile.ZipFile(io.BytesIO(raw)) as z:
         infos=z.infolist();names=[x.filename for x in infos]
-        if len(names)>65 or len(names)!=len(set(names)) or sum(x.file_size for x in infos)>70*1024*1024:
+        if len(names)>67 or len(names)!=len(set(names)) or sum(x.file_size for x in infos)>70*1024*1024:
             raise ValueError('Invalid bounded archive')
         m=json.loads(z.read('manifest.json'))
         expected={r['path']:r for r in m['inventory']}
@@ -216,7 +247,7 @@ def verify_private_review_bundle(raw,*,expected_sha256=None):
         if len(paths)!=len(set(paths)) or set(paths)!=set(expected):
             raise ValueError('Review row inventory mismatch')
         for path,r in expected.items():
-            if not re.fullmatch(r'(?:forms/[a-z][a-z0-9_-]{0,63}\.(?:docx|xlsx)|evidence/[a-z][a-z0-9_-]{0,63}\.pdf|internal/price-scenario\.json)',path):
+            if not re.fullmatch(r'(?:forms/[a-z][a-z0-9_-]{0,63}\.(?:docx|xlsx)|evidence/[a-z][a-z0-9_-]{0,63}\.pdf|internal/price-scenario\.json|drafts/(?:price-offer|declarations)\.docx)',path):
                 raise ValueError('Invalid archive member')
             if r['item_code'] not in rows or path not in rows[r['item_code']]['paths']:
                 raise ValueError('Inventory association mismatch')
