@@ -7,9 +7,11 @@ definition_of_done:
   - Same-corpus comparison, retain baseline cited rows and inspect new excerpt relevance; publish draft without independent gold claim.
 completed:
   - PR643 17/19 completed success, two quality jobs in progress. Actual projection-reuse verified.
-current_stage: candidate_discovery
+  - Loose 32/45 and 47 citations, two off-topic valuation excerpts, two generic contract mentions, one contextual anti-collusion excerpt; guarded 29/45 and 42 citations, no additions. Both replays exit 0, all earlier citations retained, source originals unchanged; 267 tests PASS. Default unchanged.
+current_stage: exact_ci_pending
 remaining:
-  - Implement tests and run paired isolated corpus, review additions, document adoption recommendation.
-last_verified_commit: effe9bf0011acc4a1913361547242c1eabcc9ef8
-test_results: []
+  - Verify exact draft CI; next investigate clause-aware ranking and separate held-out evaluation.
+last_verified_commit: 97be9bf11b01178503eba6c671a31f8c42e7642f
+test_results:
+  - 267 passed, 2 warnings; Ruff/diff PASS. Both actual replays exit 0. No confirmed quality gain.
 resume_instruction: Never bypass blocked deployment; no production writes or current-law inference. Frozen exact baseline unchanged; no promotion until reviewed.
