@@ -717,3 +717,9 @@ archive_snapshot_2026_11_15_0936:
     and SIBUR original acquisition workers active at last check; do not duplicate.
     DP blocked remains; no bypass or blind reindex. Prioritize contract-linked identities
     and exact scope.
+sibur_auto_file_review_2026_11_18:
+  checkpoint: .agent/checkpoints/TA-SIBUR-AUTO-FILE-REVIEW-20261118.yaml
+  status: in_progress
+  resume: Install both tested candidate commits only at a reconciled safe executor boundary;
+    read runtime canonical checkpoint and verify actual new index receipts, deferred file
+    preservation, and intact legacy repair. Never force-kill in-flight ingestion.

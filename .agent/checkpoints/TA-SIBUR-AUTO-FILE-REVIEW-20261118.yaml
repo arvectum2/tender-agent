@@ -1,0 +1,35 @@
+{
+  "task_id": "TA-SIBUR-AUTO-FILE-REVIEW-20261118",
+  "status": "in_progress",
+  "goal": "Automatically defer individual verified file processing failures to durable review ledger while retaining fail-closed database/integrity guards.",
+  "definition_of_done": [
+    "Source-bound failed SHA, explicit error, preserved original, durable review entry",
+    "Reconcile before deferral, protect systemic failures, do not hide committed/unknown data",
+    "Skip deferred entries in continuous member and archive queues",
+    "Targeted regression tests, safe rollout at reconciled boundary and verified actual progress"
+  ],
+  "completed": [
+    "Existing member queue already honors durable review ledger; manual PDF exclusion retained",
+    "Isolated candidate worktrees created",
+    "Runner recognizes bounded source-specific failure output and checks source/stage hashes, both service health checks, exact DP absence, aggregate reconciliation and durable ledger.",
+    "Direct archive and member queues honor SHA-bound exclusions; original remains intact. Five consecutive failed batches without successful indexing trip circuit breaker.",
+    "48 focused tests passed (23 runner/25 archive), includes continuation across successive member batches and fail-closed integrity scenarios."
+  ],
+  "current_stage": "candidate_verified_waiting_safe_rollout",
+  "remaining": [
+    "Install both exact commits at safe quiescent point; preserve active ingest",
+    "Verify production service and real index progress; monitor first actual automatic deferral",
+    "Diagnose existing deferred documents separately"
+  ],
+  "last_verified_commit": {
+    "runner": "00ed25a7f5fa35a354bf9ff45d85335d7aa79ee4",
+    "archive": "0c7c9b2b591d958f02773daf55a89f6ef1f21fee"
+  },
+  "test_results": {
+    "runner": 23,
+    "archive": 25,
+    "failures": 0
+  },
+  "resume_instruction": "Use candidate commits 00ed25a7f5fa35a354bf9ff45d85335d7aa79ee4 and 0c7c9b2b591d958f02773daf55a89f6ef1f21fee. Current live service may still ingest: do not force kill, wait safe boundary, verify exact receipt/registry and preserve GPB state. Install both commits together, restart existing LaunchAgent, verify successful progress. Only source-specific reconciled failures are now deferrable.",
+  "updated_at": "2026-11-18T21:56:14.906920+03:00"
+}
