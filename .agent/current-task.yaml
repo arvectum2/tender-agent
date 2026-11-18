@@ -975,3 +975,9 @@ ri223_wsf07b_coordinated_release_20261118:
   checkpoint: .agent/checkpoints/TA-RI223-WSF07B-COORDINATED-RELEASE-20261118.yaml
   current_stage: execution_tool_security_block
   last_verified_commit: 3afb5f8267fef6d02a7162aa82de2f8689b6faf0
+
+apr067_ri223_domain_coverage_20261118:
+  task_id: TA-APR067-RI223-DOMAIN-COVERAGE-20261118
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR067-RI223-DOMAIN-COVERAGE-20261118.yaml
+  current_stage: fixed_archived_domain_coverage

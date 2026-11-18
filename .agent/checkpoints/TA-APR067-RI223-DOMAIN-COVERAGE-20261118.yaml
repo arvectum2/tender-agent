@@ -1,0 +1,15 @@
+task_id: TA-APR067-RI223-DOMAIN-COVERAGE-20261118
+status: in_progress
+goal: Measure actual archived mixed-case document-domain retrieval coverage and refusal on incomplete originals, reusing existing isolated DP replay.
+definition_of_done:
+  - Measure five complete original-receipt cases with nine fixed probes each; incomplete sixth excluded and refused.
+  - Report per-case and per-domain citation coverage, no semantic accuracy or commercial SLO inference; validate bounded source identity and unchanged archive.
+  - Test counting and fail-closed invariants; run genuine isolated replay and publish draft.
+completed:
+  - Coordinated release remains blocked by remote tool; no repeat or bypass. APR04 profile and APR06 human gold gates separate. APR07 rolling operator requires dedicated authorized role.
+current_stage: fixed_archived_domain_coverage
+remaining:
+  - Implement measure, test and actual replay, publish.
+last_verified_commit: 4ad1b797f4d98ff94ea69ff620b224237e3e0f92
+test_results: []
+resume_instruction: Use isolated offline corpus, existing DP harness, no production DB mutations, model promotion, live acquisition or independent gold claim.
