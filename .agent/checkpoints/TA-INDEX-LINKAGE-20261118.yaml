@@ -1,5 +1,5 @@
 task_id: TA-INDEX-LINKAGE-20261118
-status: blocked
+status: in_progress
 goal: Verify actual embedding-to-document-to-procurement identities, repair confirmed partial-batch member lineage loss, isolate legacy missing active tender collections.
 definition_of_done:
   - Exact read-only joins and source receipt verification in both production DBs and the SIBUR research DB.
@@ -10,9 +10,10 @@ completed:
   - SIBUR 6291 documents/72175 vectors, exact 6291 local/server receipts, 2264 distinct directly linked hashes, 4170 member registry, union 6290. One missing exact member in blocked plan; partial ingest error occurs before member registry command.
   - SIBUR exact registry repaired: 4170 -> 4171 members, missing 1 -> 0, 6291/6291 distinct indexed originals covered by direct/member linkage, private backup PASS receipt. No DB write or runner state change. Candidate runner 7b95849a two tests PASS, not installed.
   - Core 280 legacy chunks verified against all 14 exact archived originals and historical extracted texts; private plan d974162fbb77fad3ffabf0d5624a0d8bb58914973650af098f2ce60b63070a65, six collections absent, no live writes. Code receipt/count guards, 34 tests PASS; plan CLI read-only PASS.
-current_stage: exact_legacy_index_apply_authorization
+current_stage: authorized_scoped_apply
+  - Owner explicitly confirmed scoped 280 historical embedding restoration and installation of exact SIBUR runner fix on Mac mini. Read-only plan revalidated, 280/280, 0 present; DP and embedding health OK.
 remaining:
-  - Specific approval for Mac mini scoped legacy index apply and active runner code installation; preserve existing credentials and blocked deployment boundary. After fresh MI backup/gate, execute exact plan, verify 280/280 and full 1619/1619, no historical deletion. Runner error remains blocked until diagnosed separately.
+  - Execute authorized Mac mini scoped legacy index apply and active runner code installation; preserve existing credentials and blocked deployment boundary. After fresh MI backup/gate, execute exact plan, verify 280/280 and full 1619/1619, no historical deletion. Runner error remains blocked until diagnosed separately.
 last_verified_commit: 82c6644f47cd45b1fea60a6893625b95c5c8b747
 test_results:
   - 34 core tests passed, 2 runner tests passed, exact read-only plan PASS.

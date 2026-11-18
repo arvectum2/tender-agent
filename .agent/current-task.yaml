@@ -1013,7 +1013,7 @@ apr067_ri223_clause_ranking_20261118:
 
 index_linkage_20261118:
   task_id: TA-INDEX-LINKAGE-20261118
-  status: blocked
+  status: in_progress
   checkpoint: .agent/checkpoints/TA-INDEX-LINKAGE-20261118.yaml
-  current_stage: exact_legacy_index_apply_authorization
+  current_stage: authorized_scoped_apply
   last_verified_commit: 82c6644f47cd45b1fea60a6893625b95c5c8b747
