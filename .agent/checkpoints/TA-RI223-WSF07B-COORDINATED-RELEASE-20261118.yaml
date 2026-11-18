@@ -1,5 +1,5 @@
 task_id: TA-RI223-WSF07B-COORDINATED-RELEASE-20261118
-status: in_progress
+status: blocked
 goal: Prepare exact green PR640 release while preserving existing WSF07B scope; coordinate source release and Workspace binding without implied authorization; prepare corporate profile intake separately.
 definition_of_done:
   - Rehearse exact candidate release tree and regression on immutable staging, read-only compare live source and existing admitted set.
@@ -8,10 +8,16 @@ definition_of_done:
 completed:
   - User agreed to proceed with coordinated update and profile preparation.
   - PR640 exact head and base green; source code, authorizer, middleware, requirements and schema unchanged. Existing activated manifest exact old release; contract requires distinct product and Workspace activation gates.
-current_stage: candidate_stage_and_revalidation
+  - Candidate exact tree staged under private SSD release rehearsal directory with clone of current venv; 77 focused tests PASS, WSF07B and dependency/schema diff empty, clean tree.
+  - Read-only exact existing admission and DB identity revalidated 21/12/9, schema 122, current profile rows absent; anonymous/dummy/Basic denial PASS, no valid Bearer. Review receipt private, no new binding.
+  - Company handoff: https://github.com/arvectum2/arvectum-company/issues/16#issuecomment-6972005779
+current_stage: exact_source_and_workspace_approval_required
 remaining:
-  - Stage/test candidate and verify scope; prepare Company handoff and exact authorization gate.
+  - Explicit same-scope approval for coordinated release, actual merge commit verification and independent Workspace binding. Then approved cutover and acceptance. No merge until coordinated plan agreed.
   - Original corporate PDFs still in project; authorized secure transfer and actual company-profile/tenant constraints remain separate.
 last_verified_commit: 3afb5f8267fef6d02a7162aa82de2f8689b6faf0
-test_results: []
-resume_instruction: No implicit rebind or token reuse. Keep actual backend, main, manifest and tenant unchanged until exact coordinated release approvals are verified.
+test_results:
+  - 77 passed, 2 warnings, exact candidate locked venv; clean source and unchanged WSF07B.
+  - Existing scope 21/12/9 and DB revision 122 verified read-only; health and denial boundaries PASS.
+  - PR640 19/19 CI PASS.
+resume_instruction: Read private candidate review under ri223-release-rehearsal-20261118.OIDlTQ; do not re-stage. Await explicit exact-scope source and Workspace coordinated cutover decision, verify resulting merge SHA and binding. Keep current backend/manifest/tenant untouched until gates pass.
