@@ -1114,4 +1114,5 @@ evidence_approval_gate_20261118:
   task_id: TA-EVIDENCE-APPROVAL-GATE-20261118
   status: in_progress
   checkpoint: .agent/checkpoints/TA-EVIDENCE-APPROVAL-GATE-20261118.yaml
-  current_stage: pin_reviewed_evidence_projection
+  current_stage: exact_ci_pending
+  last_verified_commit: 8c3c47b9d8beea6a2a750e0ec78b7ada9f06bda8
