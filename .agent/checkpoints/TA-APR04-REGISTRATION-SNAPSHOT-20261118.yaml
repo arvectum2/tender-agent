@@ -1,5 +1,5 @@
 task_id: TA-APR04-REGISTRATION-SNAPSHOT-20261118
-status: in_progress
+status: completed
 goal: Prepare minimal provenance-bound historical legal-entity registration snapshot from actual owner-provided originals; verify isolated existing Company Profile Store import without current tenant binding.
 definition_of_done:
   - Verify two exact original registration PDFs against historical source hashes and literal fields; no sensitive personal/banking identifiers copied.
@@ -7,9 +7,13 @@ definition_of_done:
   - Existing Customer Registry and Company Profile Store isolated import, readback and missing-fact checks; no production mutation, signature or current EGRUL assertion.
 completed:
   - PR640 exact CI 19/19, main integration awaits coordinated release; source registration documents in current project match historical private evidence hashes. No originals found by filename on Mac mini in bounded search.
-current_stage: isolated_registration_snapshot
+  - Both original PDF hashes match historical private receipt; read actual sources, corporate identity, dated EGRUL/OKVED and tax observations; absent embedded PDF signatures, no crypto attestation. Private source-bound review packet and receipt stored on Mac mini, 0700/0600, SHA checked.
+  - Existing Customer Registry and Company Profile Store isolated trial: 1 customer, 2 historical fact versions, reopened readback, no supplier_profile or document upload, SQLite removed. No production import.
+current_stage: historical_review_packet_verified
 remaining:
-  - Validate and store private review packet, run isolated existing services and record result.
+  - Remaining separate business gates: originals physically imported into approved storage, current registry/SME and company documentary review, authorized tenant binding and actual supplier preferences; production authorization. Main integration awaits coordinated release.
 last_verified_commit: 3afb5f8267fef6d02a7162aa82de2f8689b6faf0
-test_results: []
+test_results:
+  - PRIVATE_PACKET_INTEGRITY_PASS; isolated Customer Registry and Company Profile Store 1 customer/2 historical fact versions, source refs exact, document count 0, current supplier profile absent; temporary DB removed.
+  - Production read-only check unchanged (0 customer/fact/document records, 21 active deals, schema 122); active release unchanged.
 resume_instruction: Do not write production DB, grant tenant/admission, upload personal/bank data or invent supplier preferences. Keep raw PDFs in owner project until authorized secure transport is available.

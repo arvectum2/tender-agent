@@ -964,6 +964,7 @@ apr03b_ri223_consolidation_20261118:
 
 apr04_registration_snapshot_20261118:
   task_id: TA-APR04-REGISTRATION-SNAPSHOT-20261118
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR04-REGISTRATION-SNAPSHOT-20261118.yaml
-  current_stage: isolated_registration_snapshot
+  current_stage: historical_review_packet_verified
+  last_verified_commit: 3afb5f8267fef6d02a7162aa82de2f8689b6faf0
