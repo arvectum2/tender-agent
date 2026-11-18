@@ -999,7 +999,14 @@ apr067_ri223_projection_reuse_20261118:
 
 apr067_ri223_inflection_search_20261118:
   task_id: TA-APR067-RI223-INFLECTION-SEARCH-20261118
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR067-RI223-INFLECTION-SEARCH-20261118.yaml
-  current_stage: exact_ci_pending
+  current_stage: verified_pending_merge
   last_verified_commit: 97be9bf11b01178503eba6c671a31f8c42e7642f
+
+apr067_ri223_clause_ranking_20261118:
+  task_id: TA-APR067-RI223-CLAUSE-RANKING-20261118
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR067-RI223-CLAUSE-RANKING-20261118.yaml
+  current_stage: exact_ci_pending
+  last_verified_commit: dc394e9e5f86d320c6fb2b1b43d0a556af7aa8e1
