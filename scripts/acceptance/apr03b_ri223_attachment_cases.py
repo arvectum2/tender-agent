@@ -74,6 +74,12 @@ def replay(runs):
         )
 
         measure_inflection(runs,all_runs,ROOT,incomplete_refused)
+    if os.environ.get('APR067_CLAUSE_RANKING')=='1':
+        from scripts.quality.apr067_ri223_clause_ranking import (
+            measure as measure_clause_ranking,
+        )
+
+        measure_clause_ranking(runs,all_runs,ROOT,incomplete_refused)
     run=all_runs['32616444788'];directory=runs/run
     url=f'/api/demo/tender-agent/workspace/runs/{run}/evidence-search'
     with TestClient(app) as c:
