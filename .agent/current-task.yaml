@@ -255,7 +255,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-10-20: APR03B/07 child TA-GEMMA-CITED-FALLBACK-FIX-20261019 reviewed original Smolensk data. Prior final4 actual Gemma 3/4; separate evaltrace5 0/1 with unsupported invented 100% twice, while pinned original percentages are 20/30/70/80. PR500 draft has prompt rule forbidding inferred percentages and new exclusive criteria_only receipt variant; code/guards remain review-only and unmerged. Read-only one-section rerun blocked BEFORE model by Data Platform collection_stats HTTP401 (existing local client credentials not configured; service process exists). Child checkpoint status BLOCKED; do not bypass authentication or claim 4/4. Restore existing authorized Data Platform client configuration (no secrets in Git/Chat), reverify index 86/86/86 and start a single read-only criteria_only probe with original SHA; audit citations/numeric facts before declaring acceptance. While blocked, continue independent approved parent tasks APR04/05/06 and B2B qualification without bid/ETP/payment/deploy or changing benchmark gold. Single manual_override remains true."
+resume_instruction: "2026-11-19: APR04 authenticated review development verified PR662 2558f0f5, CI19/19, 23 HTTP/migration and Chromium synthetic 1280/390 PASS. Next controlled customer-facing-only unsigned draft export with current evidence and retained approval. No production migration, actual approval, auto merge or submission. Prior safety-blocked replay remains prohibited."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -1120,7 +1120,7 @@ evidence_approval_gate_20261118:
 
 authenticated_application_review_20261119:
   task_id: TA-AUTHENTICATED-APPLICATION-REVIEW-20261119
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-AUTHENTICATED-APPLICATION-REVIEW-20261119.yaml
-  current_stage: exact_ci_pending
-  last_verified_commit: 3999fe199acf71a82cfbc6f770a1043ab6964223
+  current_stage: bounded_development_verified_pending_merge
+  last_verified_commit: 2558f0f5a4705731a87851e15ec7f8aae8f82e0b

@@ -1,33 +1,34 @@
 task_id: TA-AUTHENTICATED-APPLICATION-REVIEW-20261119
-status: in_progress
-goal: Authenticated owner/admin internal review of exact server-built private application
-  ZIP with current evidence recheck.
+status: completed
+goal: Authenticated owner/admin internal review of exact server-built private application ZIP with
+  current evidence recheck.
 definition_of_done:
-- Server-generated immutable bounded preview, scoped to tenant/run/member; exact ZIP
-  and three approval digests; explicit confirmation and current evidence recheck.
-- Persist immutable decision actor/time, refuse foreign/revoked/expired/stale approvals,
-  bound storage, feature disabled by default.
-- UI preview/download/confirm/history, isolated HTTP/SQLite tests and migration test;
-  draft publication.
+- Server-generated immutable bounded preview, scoped to tenant/run/member; exact ZIP and three approval
+  digests; explicit confirmation and current evidence recheck.
+- Persist immutable decision actor/time, refuse foreign/revoked/expired/stale approvals, bound storage,
+  feature disabled by default.
+- UI preview/download/confirm/history, isolated HTTP/SQLite tests and migration test; draft publication.
 completed:
-- PR661 exact CI 19/19, consolidated branch selected; no duplicate PRs or previous
-  blocked replay.
+- PR661 exact CI 19/19, consolidated branch selected; no duplicate PRs or previous blocked replay.
 - Server-built exact preview and authenticated same-member owner/admin acknowledgement/history/download;
-  bounded opt-in feature; immutable migration 123, current evidence and token/role
-  recheck, explicit exact archive review. UI implemented, JavaScriptCore parse PASS.
-- 97 targeted regression PASS before final auth recheck; final 10 relevant HTTP PASS,
-  including five new. Isolated SQLite migration roundtrip and populated downgrade
-  refusal PASS.
-current_stage: exact_ci_pending
+  bounded opt-in feature; immutable migration 123, current evidence and token/role recheck, explicit
+  exact archive review. UI implemented, JavaScriptCore parse PASS.
+- 97 targeted regression PASS before final auth recheck; final 10 relevant HTTP PASS, including
+  five new. Isolated SQLite migration roundtrip and populated downgrade refusal PASS.
+- 'Exact PR662 CI 19/19 SUCCESS. Fresh HTTP and SQLite migration tests 23 PASS. Real Chromium synthetic
+  network fixtures desktop 1280 and mobile 390 PASS: archive tamper refusal, SHA-exact download,
+  explicit acknowledgement, history, run/logout reset.'
+current_stage: bounded_development_verified_pending_merge
 remaining:
-- Verify exact draft CI. Browser full flow not run; PostgreSQL and actual private
-  source acceptance remain open. Next controlled customer-facing-only draft export
-  with explicit retained approval and independent review, not submission.
-last_verified_commit: 3999fe199acf71a82cfbc6f770a1043ab6964223
+- Real browser-to-API and real source/profile acceptance, PostgreSQL restore/locking, retention
+  and release authorization; no automatic merge.
+last_verified_commit: 2558f0f5a4705731a87851e15ec7f8aae8f82e0b
 test_results:
 - 97 passed, 116 warnings, exit 0; log SHA256 1159fad18f1e3eaf2d2c9d9d74ffcf76a614f76c85dafc67df78b5090d3e16d9
-- Final post-auth-recheck 10 passed, 57 deselected, 12 warnings, exit 0. Migration
-  roundtrip PASS; JSC syntax, Ruff/diff PASS.
-resume_instruction: Check exact CI of consolidated successor; preserve feature default
-  off. No production migration or blocked private replay. Continue safe draft-only
-  export gate and permitted actual acceptance; no submission or real approval.
+- Final post-auth-recheck 10 passed, 57 deselected, 12 warnings, exit 0. Migration roundtrip PASS;
+  JSC syntax, Ruff/diff PASS.
+- CI 44401102935,44401088400 and mirror 44401088316 SUCCESS.
+- 23 passed, 92 warnings in 17.77s; Chromium 1280/390 PASS; existing bundled Node 22.20.0.
+resume_instruction: Next controlled customer-facing-only unsigned draft export, with exact retained
+  approval, current evidence recheck and independent review; exclude internal economics and evidence.
+  No production migration, actual approval, merge or submission without authorization.
