@@ -1,15 +1,31 @@
 task_id: TA-CUSTOMER-DRAFT-EXPORT-20261119
 status: in_progress
-goal: Controlled local download of unsigned customer-oriented draft subset after exact internal acknowledgement.
+goal: Controlled local download of unsigned customer-oriented draft subset after exact internal
+  acknowledgement.
 definition_of_done:
-  - Explicit allowlist of server-generated commercial drafts, independent archive integrity validation, no private manifest, economics, evidence or unverified forms.
-  - Same authorized owner/admin and owned run, retained exact acknowledgement, unexpired and freshly rechecked evidence; explicit selected subset.
-  - Default-off endpoint, synthetic isolated HTTP and archive tests, documented remaining deployment gates.
+- Explicit allowlist of server-generated commercial drafts, independent archive integrity validation,
+  no private manifest, economics, evidence or unverified forms.
+- Same authorized owner/admin and owned run, retained exact acknowledgement, unexpired and freshly
+  rechecked evidence; explicit selected subset.
+- Default-off endpoint, synthetic isolated HTTP and archive tests, documented remaining deployment
+  gates.
 completed:
-  - Previous stage verified locally at 8155f67e; its CI still running at start.
-current_stage: implementation
+- Previous stage verified locally at 8155f67e; its CI still running at start.
+- Default-off API, retained exact acknowledgement, evidence recheck, explicit unsigned subset, deterministic
+  independent ZIP integrity check; seven projection tests and five existing HTTP regressions passed.
+current_stage: isolated_http_and_regression_pending
 remaining:
-  - Projection, endpoint, regression and documentation.
-last_verified_commit: 8155f67e95aa4b82cd0aa841f49281bcc933e34d
-test_results: []
-resume_instruction: Implement bounded unsigned offer/declaration export; do not export arbitrary uploaded forms or documentary evidence. No actual send, production, merge, or signature.
+- 'New endpoint-specific isolated HTTP acceptance was not executed: compound tool call rejected.
+  Do not repeat the blocked call.'
+- Complete bounded independent validation and CI; customer-facing UI separately; real source/profile
+  and production remain unapproved.
+last_verified_commit: 215c486326466e67c920f821467d59cfff0b8608
+test_results:
+- Projection 7 PASS, 9 warnings, 7.67s.
+- Existing authenticated review 5 PASS, 7 warnings, 7.31s.
+- Ruff and git diff --check PASS.
+- Combined private bundle/evidence/offer regression stopped by SIGKILL after 29 progress dots; no
+  result accepted.
+resume_instruction: Resume at independent isolated endpoint acceptance (do not repeat rejected tool
+  call), remaining regression and exact CI; then add separate draft export UI. No real source replay,
+  production, signature or submission.

@@ -999,3 +999,6 @@ While `OWNER-CONTINUOUS-ROADMAP-2026-09-18` is active, its deterministic one-at-
 
 
 19.11.2026 — APR04 authenticated review bounded development: PR662 exact 2558f0f5 CI19/19, 23 HTTP/migration PASS, Chromium synthetic desktop/mobile PASS. Next controlled customer-facing-only draft export; real source/profile, PostgreSQL and release gates open.
+
+
+19.11.2026 — APR04 customer draft export: bounded separate unsigned price/declarations projection and default-off API implemented; 7 projection tests and 5 existing authenticated review tests PASS, Ruff PASS. New HTTP acceptance and exact CI pending. Arbitrary forms/evidence excluded; actual delivery, signature, deployment prohibited.

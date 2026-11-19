@@ -1129,4 +1129,5 @@ customer_draft_export_20261119:
   task_id: TA-CUSTOMER-DRAFT-EXPORT-20261119
   status: in_progress
   checkpoint: .agent/checkpoints/TA-CUSTOMER-DRAFT-EXPORT-20261119.yaml
-  current_stage: implementation
+  current_stage: isolated_http_and_regression_pending
+  last_verified_commit: 215c486326466e67c920f821467d59cfff0b8608
