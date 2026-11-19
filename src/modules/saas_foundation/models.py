@@ -13,6 +13,7 @@ from sqlalchemy import (
     Date,
     DateTime,
     ForeignKey,
+    ForeignKeyConstraint,
     Index,
     Integer,
     LargeBinary,
@@ -573,3 +574,37 @@ class PrivateReviewRetentionProposal(UUIDPrimaryKeyMixin, Base):
 
 event.listen(PrivateReviewRetentionProposal, 'before_update', _immutable_company_decision)
 event.listen(PrivateReviewRetentionProposal, 'before_delete', _immutable_company_decision)
+
+
+# Composite keys prevent a proposed association from crossing tenant boundaries.
+for _parent, _idx in (
+    (ApplicationReviewPreview, 'uq_retention_preview_tenant_id'),
+    (OriginalFormReviewCandidate, 'uq_retention_candidate_tenant_id'),
+    (PrivateReviewRetentionProposal, 'uq_retention_proposal_tenant_id'),
+):
+    Index(_idx, _parent.tenant_id, _parent.id, unique=True)
+
+
+class PrivateReviewOrderLink(UUIDPrimaryKeyMixin, Base):
+    """One proposed association per exact retained document; no verified ownership claim."""
+    __tablename__ = 'private_review_order_links'
+    tenant_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    proposal_id: Mapped[str] = mapped_column(String, nullable=False)
+    preview_id: Mapped[str | None] = mapped_column(String, unique=True)
+    candidate_id: Mapped[str | None] = mapped_column(String, unique=True)
+    evidence_ref: Mapped[str] = mapped_column(String(128), nullable=False)
+    recorded_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    __table_args__ = (
+        ForeignKeyConstraint(['tenant_id', 'proposal_id'],
+                             ['private_review_retention_proposals.tenant_id', 'private_review_retention_proposals.id']),
+        ForeignKeyConstraint(['tenant_id', 'preview_id'],
+                             ['application_review_previews.tenant_id', 'application_review_previews.id']),
+        ForeignKeyConstraint(['tenant_id', 'candidate_id'],
+                             ['original_form_review_candidates.tenant_id', 'original_form_review_candidates.id']),
+        CheckConstraint('(preview_id IS NULL) <> (candidate_id IS NULL)', name='ck_retention_order_link_one_document'),
+        Index('ix_retention_order_links_scope', 'tenant_id', 'proposal_id'),
+    )
+
+
+event.listen(PrivateReviewOrderLink, 'before_update', _immutable_company_decision)
+event.listen(PrivateReviewOrderLink, 'before_delete', _immutable_company_decision)

@@ -11,7 +11,7 @@ import subprocess
 import sys
 import tempfile
 from concurrent.futures import ThreadPoolExecutor
-from datetime import date
+from datetime import UTC, date, datetime
 from pathlib import Path
 from threading import Barrier
 
@@ -21,11 +21,15 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from alembic import command
-from src.modules.saas_foundation.models import PrivateReviewRetentionProposal
+from src.modules.saas_foundation.models import (
+    PrivateReviewOrderLink,
+    PrivateReviewRetentionProposal,
+)
 from src.modules.saas_foundation.private_review_retention import (
     ScheduleProposal,
     describe,
     latest_proposal,
+    storage_summary,
 )
 from src.shared.config.settings import invalidate_settings_cache
 
@@ -71,7 +75,8 @@ def main():
                 conn.exec_driver_sql("INSERT INTO saas_tenants VALUES ('tenant')")
                 conn.exec_driver_sql("INSERT INTO saas_members VALUES ('creator'),('reviewer')")
                 conn.exec_driver_sql("INSERT INTO saas_runs VALUES ('run')")
-            command.stamp(cfg, '123_application_review')
+            command.stamp(cfg, '122_company_cost_norms')
+            command.upgrade(cfg, '123_application_review')
             command.upgrade(cfg, '124_original_form_review')
             command.downgrade(cfg, '123_application_review')
             command.upgrade(cfg, '124_original_form_review')
@@ -152,6 +157,44 @@ def main():
                 assert conn.scalar(text('SELECT count(*) FROM private_review_retention_proposals')) == 1
                 assert conn.scalar(text('SELECT count(*) FROM original_form_review_candidates')) == 1
             print('PG16_RETENTION_PROPOSAL_ROUNDTRIP_AND_GUARD_PASS')
+            command.upgrade(cfg, '126_private_review_order_links')
+            command.downgrade(cfg, '125_private_review_retention')
+            command.upgrade(cfg, '126_private_review_order_links')
+            with engine.begin() as conn:
+                conn.exec_driver_sql("INSERT INTO saas_tenants VALUES ('other')")
+            with Session(engine) as session:
+                pinned=latest_proposal(session,tenant_id='tenant',order_ref='fixture-order')
+                for wrong in (
+                    {'tenant_id':'other','proposal_id':pinned.id,'candidate_id':'candidate'},
+                    {'tenant_id':'tenant','proposal_id':pinned.id,'candidate_id':'missing'},
+                ):
+                    session.add(PrivateReviewOrderLink(evidence_ref='fixture',**wrong))
+                    try:
+                        session.commit()
+                    except IntegrityError as exc:
+                        assert exc.orig.sqlstate=='23503'
+                        session.rollback()
+                    else:
+                        raise AssertionError('Wrong tenant or missing document accepted')
+                session.add(PrivateReviewOrderLink(tenant_id='tenant',proposal_id=pinned.id,
+                                                   candidate_id='candidate',evidence_ref='fixture'))
+                session.commit()
+                observed=storage_summary(session,tenant_id='tenant',now=datetime.now(UTC))
+                assert observed['forms']['payload_bytes']==len(raw)
+                assert observed['forms']['proposed_links']==1
+                assert observed['forms']['hold_unknown']==1
+                assert observed['deletion_authorized'] is False
+                assert storage_summary(session,tenant_id='other',now=datetime.now(UTC))['forms']['count']==0
+            try:
+                command.downgrade(cfg,'125_private_review_retention')
+            except RuntimeError as exc:
+                assert 'Cannot discard proposed document-order links' in str(exc)
+            else:
+                raise AssertionError('Nonempty order link history discarded')
+            with engine.connect() as conn:
+                assert conn.scalar(text('SELECT count(*) FROM private_review_order_links'))==1
+            print('PG16_DOCUMENT_ORDER_LINKS_AND_ACCOUNTING_PASS')
+
 
             run('createdb', '-h', str(sock), '-p', port, '-U', role, 'api_fixture')
             api_env = dict(env, AI_CORP_DATABASE_URL=url('api_fixture'),
