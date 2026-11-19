@@ -1,0 +1,15 @@
+task_id: TA-PRIVATE-REVIEW-RETENTION-20261119
+status: in_progress
+goal: Document and test actual private-review document lifecycle; propose safe retention controls without deletion.
+definition_of_done:
+- Compare existing legal package and actual expiration, historical access, quotas and persistence.
+- Produce an operational policy proposal with explicit approval gates and a deletion/restore verification plan.
+- Add isolated regressions for current expiry and quota behavior; no production mutation or access change.
+completed:
+- Read legal policy and contract retention clauses plus existing review models and services.
+current_stage: policy_and_regression_tests
+remaining:
+- Write proposal; run targeted tests; record findings and publication state.
+last_verified_commit: 666d4379fbe41d56e64c69ef1210912fb5ee6708
+test_results: []
+resume_instruction: Finish read-only policy documentation and synthetic regression tests; no deletion or rejected readiness operation.
