@@ -255,7 +255,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-11-19: Check exact successor PR662 CI for TA-CUSTOMER-DRAFT-EXPORT-20261119; isolated HTTP and Chromium synthetic desktop/mobile acceptance passed, local grouped regressions SIGKILL. Confirm CI then mark bounded stage complete; proceed to independent wording review and safe customer forms. No deployment, auto merge, signature or submission."
+resume_instruction: "2026-11-19: Continue TA-CUSTOMER-CONTENT-REVIEW-20261119. Previous exact CI green. Independent deterministic content audit, restricted form release design; no automatic approval or production."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -1127,7 +1127,13 @@ authenticated_application_review_20261119:
 
 customer_draft_export_20261119:
   task_id: TA-CUSTOMER-DRAFT-EXPORT-20261119
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-CUSTOMER-DRAFT-EXPORT-20261119.yaml
-  current_stage: exact_successor_ci_pending
-  last_verified_commit: d63e353f24b707206e710ff91af81549ad28c5c3
+  current_stage: bounded_development_verified_pending_merge
+  last_verified_commit: 6d0281dd5b2c2eaa2f6029017314eddb54df281e
+
+customer_content_review_20261119:
+  task_id: TA-CUSTOMER-CONTENT-REVIEW-20261119
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-CUSTOMER-CONTENT-REVIEW-20261119.yaml
+  current_stage: implementation

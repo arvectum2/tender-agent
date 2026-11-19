@@ -1,0 +1,16 @@
+task_id: TA-CUSTOMER-CONTENT-REVIEW-20261119
+status: in_progress
+goal: Independent limited deterministic review of unsigned customer-oriented DOCX content.
+definition_of_done:
+  - Independently reconstruct expected commercial wording from retained structured terms; verify whole OOXML package and block known internal markers.
+  - Integrate on export, preserve unknown semantic/privacy review and no submission.
+  - Define safe form release constraints, keep arbitrary original forms unavailable pending independent review and genuine source acceptance.
+  - Synthetic targeted tests, checkpoint and draft CI.
+completed:
+  - Previous exact PR662 6d0281dd CI 19/19 successful.
+current_stage: implementation
+remaining:
+  - Implement checks and focused acceptance.
+last_verified_commit: 6d0281dd5b2c2eaa2f6029017314eddb54df281e
+test_results: []
+resume_instruction: Implement bounded commercial document audit; no real documents, production or external action.
