@@ -255,7 +255,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-11-19: Exact 666d4379 CI 19/19 PASS. Verify published PG16 acceptance head 55b349eb, then publish local loopback browser acceptance. Readiness diagnostic blocked; no bypass, production or release."
+resume_instruction: "2026-11-19: Remote PR662 head 55b349eb CI 17/19, quality pending. Local browser acceptance and retention policy/regressions ready; publish after CI, verify successor. Production retention unapproved; no deletion, rejected readiness operation or release."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -1159,3 +1159,10 @@ application_release_readiness_20261119:
   checkpoint: .agent/checkpoints/TA-APPLICATION-RELEASE-READINESS-20261119.yaml
   current_stage: implementation_tool_rejected
   last_verified_commit: ea771b717a3c595075f24115d1369d6cec4d951a
+
+private_review_retention_20261119:
+  task_id: TA-PRIVATE-REVIEW-RETENTION-20261119
+  status: completed
+  checkpoint: .agent/checkpoints/TA-PRIVATE-REVIEW-RETENTION-20261119.yaml
+  current_stage: bounded_policy_and_regressions_complete_local
+  last_verified_commit: 839147aa

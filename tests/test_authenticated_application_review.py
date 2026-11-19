@@ -122,3 +122,19 @@ def test_feature_roles_and_bounds(client,session,review,monkeypatch):
     assert client.post(path,headers=_auth(a),json=payload).status_code==429
     monkeypatch.setattr(router,'get_settings',lambda:settings.model_copy(update={'saas_application_review_enabled':False}))
     assert client.get(path,headers=_auth(a)).status_code==404
+
+
+def test_expiry_preserves_history_and_consumes_quota(client,session,review,monkeypatch):
+    path,owner,foreign,payload,*_=review
+    p=create(client,review)
+    now=application_review.now_utc()
+    monkeypatch.setattr(application_review,'now_utc',lambda:now+timedelta(minutes=16))
+    archive=path+'/'+p['preview_id']+'/archive'
+    assert client.get(archive,headers=_auth(owner)).status_code==200  # current historical access
+    assert client.get(archive,headers=_auth(foreign)).status_code==404
+    assert confirm(client,path,owner,p).status_code==409
+    monkeypatch.setattr(application_review,'MAX_PREVIEWS_PER_TENANT',1)
+    assert client.post(path,headers=_auth(owner),json=payload).status_code==429
+    assert client.get(path,headers=_auth(owner)).json()['items'][0]['preview_id']==p['preview_id']
+    assert session.get(ApplicationReviewPreview,p['preview_id']) is not None
+    assert not list(session.scalars(select(ApplicationReviewDecision)))

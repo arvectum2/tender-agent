@@ -111,3 +111,18 @@ def test_review_rechecks_current_state(client, session, scenario, monkeypatch, c
         assert r.status_code == 200
     assert ack(client,s,p).status_code == (401 if change == 'revoked' else 409)
     assert not list(session.scalars(select(OriginalFormReviewReceipt)))
+
+
+def test_expired_form_retained_but_download_and_new_review_denied(client,session,scenario,monkeypatch):
+    s=scenario
+    p=create(client,s)
+    monkeypatch.setattr(service,'now_utc',lambda:NOW+timedelta(minutes=31))
+    route=s['path']+'/'+p['candidate_id']+'/document'
+    for token in (s['creator'],s['reviewer']):
+        assert client.get(route,headers=_auth(token)).status_code==409
+        assert client.get(s['path'],headers=_auth(token)).json()['items'][0]['candidate_id']==p['candidate_id']
+    assert client.get(route,headers=_auth(s['foreign'])).status_code==404
+    assert ack(client,s,p).status_code==409
+    monkeypatch.setattr(service,'MAX_CANDIDATES',1)
+    assert client.post(s['path'],headers=_auth(s['creator']),json=s['payload']).status_code==429
+    assert not list(session.scalars(select(OriginalFormReviewReceipt)))
