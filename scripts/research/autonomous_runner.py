@@ -156,14 +156,31 @@ class Runner:
 
     @contextmanager
     def mutation_guard(self):
-        with self.write_mutex, (self.run / "mutation.lock").open("a") as lock:
-            fcntl.flock(lock, fcntl.LOCK_EX)
-            yield
+        # A fresh-public importer holds the exclusive priority lease before
+        # waiting for mutation.lock. Never wait for priority while holding
+        # mutation. Kernel locks are automatically released on process exit.
+        with self.write_mutex, (self.run / "mutation.lock").open("a") as lock, (self.run / "fresh-procurement-priority.lock").open("a") as priority:
+            while True:
+                fcntl.flock(lock, fcntl.LOCK_EX)
+                try:
+                    fcntl.flock(priority, fcntl.LOCK_SH | fcntl.LOCK_NB)
+                except BlockingIOError:
+                    fcntl.flock(lock, fcntl.LOCK_UN)
+                    if self.stop_requested():
+                        raise Blocked("STOP while waiting for priority procurement writer")
+                    time.sleep(2)
+                    continue
+                fcntl.flock(priority, fcntl.LOCK_UN)
+                try:
+                    yield
+                finally:
+                    fcntl.flock(lock, fcntl.LOCK_UN)
+                return
 
     def gate(self, lane):
         if shutil.disk_usage(self.root).free < 15 * 1024**3:
             raise Blocked("runtime disk safety threshold reached")
-        self.cmd(lane, "MI backup", [MI_PY, "-m", "scripts.market_intelligence.backup_pq_postgres"], self.mi, 150)
+        self.cmd(lane, "MI backup", [MI_PY, "-m", "scripts.market_intelligence.backup_pq_postgres"], self.mi, 330)
         raw = self.cmd(lane, "MI runtime gate", [MI_PY, "-m", "scripts.market_intelligence.verify_internal_runtime"], self.mi, 150)
         gate = json.loads(raw)
         if gate["status"] != "pass" or not gate.get("backup", {}).get("sha256"):

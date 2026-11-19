@@ -1,0 +1,65 @@
+{
+  "task_id": "TA-FRESHNESS-PRIORITY-20261119",
+  "status": "in_progress",
+  "goal": "Reduce verified queue preparation overhead; assess actual research corpus freshness and prepare safe source expansion.",
+  "definition_of_done": [
+    "Measure and reduce queue selection I/O without dropping provenance or safety gates",
+    "Regression tests, benchmark equivalence and safe deployment",
+    "Check live source records versus both databases; distinguish capture from committed ingestion",
+    "Track model throughput tuning and outstanding collector failures"
+  ],
+  "completed": [
+    "Adaptive rollout produced a verified 65-chunk document",
+    "Fresh SIBUR snapshot: 29/29 pages, 341 exact IDs, 181 absent from research DB; 123 with document links",
+    "Research DB 59120 procedures and 19134 distinct document hashes; no new tenders in preceding 24 hours",
+    "Daily production preflight passes; last actual daily workflow October 6",
+    "Pending preflight scan 19.5 s for 6529 sources; 37 eligible pending before latest cycle",
+    "Queue-only receipt filtering implemented; all full audit routines preserved",
+    "48 targeted tests passed; live-data benchmark and exact selection equivalence passed"
+  ],
+  "current_stage": "priority_writer_and_backup_timeout_recovery",
+  "remaining": [
+    "Fix bounded backup deadline and priority writer arbitration; test",
+    "Reconcile four already committed DP documents with original plan and member registry using fresh MI and TA backups",
+    "Import fresh validated sources under priority writer lease and verify counts; link originals",
+    "Restart existing executor without resetting GPB or historical repair"
+  ],
+  "last_verified_commit": "3b343284581dcbe06a07b121e69d579604d549d5",
+  "test_results": {
+    "focused_tests": 48,
+    "failed": 0,
+    "benchmark": {
+      "checked_at": "2026-11-19T00:22:28.129778+03:00",
+      "full_sources": 6529,
+      "unindexed_sources": 234,
+      "plan_sources": 10,
+      "full_read_seconds": 18.966,
+      "queue_read_seconds": 4.968,
+      "plan_read_seconds": 0.334,
+      "queue_speedup": 3.8,
+      "plan_speedup": 56.8,
+      "identical_classification": true,
+      "identical_selection": true,
+      "stable_receipt_manifest": true,
+      "database_modified": false
+    }
+  },
+  "resume_instruction": "Inspect candidate worktrees ta-freshness-priority-20261119 and ta-backup-timeout-20261119. Prior import f45e92c4 exited before any write because SIBUR post-index MI backup exceeded 70s. Exactly four receipts committed (6423 docs/74629 vectors vs synced 6419); do not reingest. Recover exact links first then import.",
+  "updated_at": "2026-11-19T08:59:58.038261+03:00",
+  "rollout_pid": 99483,
+  "candidate_commit": "c1a116563b091726d41b9537140227dc2e030506",
+  "queue_speed_rollout": {
+    "at": "2026-11-19T00:28:40.601017+03:00",
+    "commit": "c1a116563b091726d41b9537140227dc2e030506",
+    "baseline": {
+      "documents": 6296,
+      "chunks": 72320,
+      "embeddings": 72320
+    },
+    "registry": 4176,
+    "backup": "state-before-queue-speed-20261118T212836855393Z.json",
+    "gate_pass": true,
+    "resume": true
+  },
+  "fresh_import_state": "/Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/autonomous-runner/fresh-public-import-20261119T045743393621Z/state.json"
+}

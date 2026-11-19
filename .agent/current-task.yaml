@@ -723,3 +723,7 @@ sibur_auto_file_review_2026_11_18:
   resume: Install both tested candidate commits only at a reconciled safe executor boundary;
     read runtime canonical checkpoint and verify actual new index receipts, deferred file
     preservation, and intact legacy repair. Never force-kill in-flight ingestion.
+freshness_priority_2026_11_19:
+  checkpoint: .agent/checkpoints/TA-FRESHNESS-PRIORITY-20261119.yaml
+  status: in_progress
+  resume: Recover four committed receipts, prioritize verified new procurement imports, keep all backup and linkage gates.
