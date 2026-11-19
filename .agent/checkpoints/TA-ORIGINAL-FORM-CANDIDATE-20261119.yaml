@@ -1,16 +1,29 @@
 task_id: TA-ORIGINAL-FORM-CANDIDATE-20261119
 status: in_progress
-goal: Private archived original DOCX form candidate, exact source, map, current fact and rendered byte binding.
+goal: Private archived original DOCX form candidate, exact source, map, current fact and rendered
+  byte binding.
 definition_of_done:
-  - Select exact verified archived source member through server inventory and source requirement.
-  - Independently constrain DOCX mutations to mapped textual identity tokens, reject unsupported constructs and missing values.
-  - Bind candidate receipt to scope, revision, map, fact versions, output SHA; no release or legal readiness.
-  - Synthetic focused tests and draft publication.
+- Select exact verified archived source member through server inventory and source requirement.
+- Independently constrain DOCX mutations to mapped textual identity tokens, reject unsupported constructs
+  and missing values.
+- Bind candidate receipt to scope, revision, map, fact versions, output SHA; no release or legal
+  readiness.
+- Synthetic focused tests and draft publication.
 completed:
-  - Previous PR662 exact 383d819f CI 19/19.
-current_stage: implementation
+- Previous PR662 exact 383d819f CI 19/19.
+- Restricted internal DOCX candidate binds archived inventory, exact requirement-source file SHA,
+  observed notice revision, map, current identity projection and output; independently checks allowed
+  XML delta and exact default ancillary bytes. No route or export. Synthetic source and document
+  tests passed.
+current_stage: exact_successor_ci_pending
 remaining:
-  - Implement source binding and structural review.
-last_verified_commit: 383d819f199657d0c22c0fb0164fe3e5cba21412
-test_results: []
-resume_instruction: Build private-only candidate; do not import real sources, enable export, deploy or submit.
+- Verify exact successor GitHub CI.
+- Independent authenticated reviewer and real original/profile acceptance remain open. DOCX scope
+  is deliberately narrow; XLSX and nonstandard ancillary parts rejected.
+last_verified_commit: 9ca458a11dbc86d725dc6c44ab51b57c497b1c41
+test_results:
+- '11 passed, 2 warnings in 16.23s: tests/test_original_form_candidate.py.'
+- Ruff and git diff --check PASS.
+resume_instruction: Verify exact PR662 successor CI, fix confirmed failures, close bounded candidate
+  development if green. Continue independent authenticated reviewer receipt bound to exact source/map/facts/output,
+  no export or production.

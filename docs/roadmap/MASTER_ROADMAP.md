@@ -1006,3 +1006,5 @@ While `OWNER-CONTINUOUS-ROADMAP-2026-09-18` is active, its deterministic one-at-
 19.11.2026 — APR04 controlled external draft UI: predecessor exact CI 19/19 green; new HTTP acceptance 1 PASS and Chromium synthetic desktop/390px PASS with selection, explicit confirmation, SHA mismatch refusal and reset. Successor exact CI pending; grouped local runs SIGKILL, real source and semantic review remain open.
 
 19.11.2026 — APR04 external draft content review: previous PR662 exact CI 19/19; independent reconstruction and exact OOXML comparison now guard commercial export; known internal markers and unresolved placeholders blocked. 11 targeted tests PASS, exact successor CI pending. Original forms remain excluded; independent reviewer and real customer source acceptance still required.
+
+19.11.2026 — APR04 restricted archived original DOCX candidate: exact source/revision/map/facts/output binding; independently verified identity-only XML delta and default ancillary bytes; 11 synthetic tests PASS. Original form export still disabled; exact successor CI and independent authenticated review remain open.
