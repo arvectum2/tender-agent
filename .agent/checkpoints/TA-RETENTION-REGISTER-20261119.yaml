@@ -1,0 +1,15 @@
+task_id: TA-RETENTION-REGISTER-20261119
+status: in_progress
+goal: Internal append-only proposed retention schedule and hold register per tenant/order, not a deletion authority.
+definition_of_done:
+- Versioned schema, validated proposed dates and unknown/active/cleared restriction state.
+- Isolated tests and migration roundtrip; no public route, production writes, access change, or deletion.
+- Document missing real contract and document/order bindings.
+completed:
+- Prior policy reviewed; lifetime quotas and historical ZIP access reproduced.
+current_stage: implementation
+remaining:
+- Schema, proposal validation, tests, documentation, publication after current CI.
+last_verified_commit: 666d4379fbe41d56e64c69ef1210912fb5ee6708
+test_results: []
+resume_instruction: Implement bounded internal proposal register only. No deletion executor or previously rejected readiness operation.
