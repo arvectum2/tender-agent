@@ -255,7 +255,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-11-19: Remote PR662 head 55b349eb CI 17/19, quality pending. Local browser acceptance and retention policy/regressions ready; publish after CI, verify successor. Production retention unapproved; no deletion, rejected readiness operation or release."
+resume_instruction: "Verify PR662 remote 55b349eb CI (17/19, quality in progress); publish local browser, retention policy and proposal-register acceptance successors when green. Production retention and document/order binding unapproved; no deletion, access change, rejected readiness operation or release."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -1169,7 +1169,7 @@ private_review_retention_20261119:
 
 retention_register_20261119:
   task_id: TA-RETENTION-REGISTER-20261119
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-RETENTION-REGISTER-20261119.yaml
-  current_stage: implementation
-  last_verified_commit: 666d4379fbe41d56e64c69ef1210912fb5ee6708
+  current_stage: bounded_schema_and_planning_verified_local
+  last_verified_commit: c2f17cb1e12978872edf686a21b29746f6d85f70
