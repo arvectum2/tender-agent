@@ -114,6 +114,7 @@ class Runner:
         self.member_plan_sha = None
         self.member_queue = False
         self.member_batch_limit = 3
+        self.archive_refresh_retry_at = 0.0
 
     def record_heads(self):
         with self.mutex:
@@ -360,7 +361,7 @@ class Runner:
         if hashlib.sha256(before).hexdigest() != digest:
             raise Blocked("archive bridge changed before refresh")
         result = json.loads(self.module(lane, self.sibur, "refresh_sibur_archive_index",
-                                        "--root", self.root, "--digest", digest, timeout=150))
+                                        "--root", self.root, "--digest", digest, timeout=600))
         if result["prior_digest"] != digest or result["indexed_count"] != len(self.local_index()):
             raise Blocked("archive refresh baseline changed")
         count = result["new_ready"]
@@ -404,6 +405,38 @@ class Runner:
                     archive_refresh={**result, "prior_bridge": saved.name,
                                      "prior_state": state_saved.name})
         return new_digest, new["ready"]
+
+    def refresh_archive_when_due(self, lane, bridge, digest):
+        """An optional preparation-only scan must not starve verified members.
+
+        A timeout cannot activate a bridge: refresh_sibur_archive_index only
+        prepares a separate file. Recheck the actual active digest, exact
+        receipt totals and absence of an inflight write before deferring it.
+        Any other failure remains fail-closed.
+        """
+        if time.monotonic() < self.archive_refresh_retry_at:
+            return None
+        try:
+            result = self.refresh_archive_bridge(lane, bridge, digest)
+        except Blocked as exc:
+            if str(exc) != "refresh_sibur_archive_index: timeout; reconcile before retry":
+                raise
+            state = self.state["lanes"][lane]
+            if state.get("index_inflight") is not False or hashlib.sha256(bridge.read_bytes()).hexdigest() != digest:
+                raise
+            index = self.local_index()
+            if state.get("archive_synced_count") != len(index):
+                raise
+            self.reconcile_index(index)
+            self.archive_refresh_retry_at = time.monotonic() + 900
+            self.update(lane, step="archive refresh deferred; member queue available",
+                        archive_refresh_deferred={"reason": "preparation timeout", "at": utc(), "retry_seconds": 900, "digest": digest})
+            return None
+        if result is None:
+            self.archive_refresh_retry_at = time.monotonic() + 900
+        else:
+            self.archive_refresh_retry_at = 0.0
+        return result
 
     def defer_file_reviews(self, error, plan_path, digest, kind, index, new_receipts):
         """Under the mutation guard, after receipt reconciliation; no DB writes."""
@@ -518,8 +551,8 @@ class Runner:
         # Reconcile and publish every successfully indexed member even when
         # a later member failed.  Only verified file-scoped failures may be deferred.
         cmd=[MI_PY,"-m","scripts.research.link_sibur_member_index",*map(str,args)]
-        linked=json.loads(self.cmd(lane,"member registry",cmd,self.sibur,180))
-        repeat=json.loads(self.cmd(lane,"member registry replay",cmd,self.sibur,180))
+        linked=json.loads(self.cmd(lane,"member registry",cmd,self.sibur,600))
+        repeat=json.loads(self.cmd(lane,"member registry replay",cmd,self.sibur,600))
         if repeat["updated"] or any(repeat[k]!=linked[k] for k in ("members","procedure_member_pairs","source_links","registry_sha256")):
             raise Blocked("member registry replay mismatch")
         if error:
@@ -616,7 +649,7 @@ class Runner:
                 while not self.stop_requested():
                     with self.mutation_guard():
                         self.reconcile_index(self.local_index())
-                        refreshed = self.refresh_archive_bridge(lane, bridge, digest)
+                        refreshed = self.refresh_archive_when_due(lane, bridge, digest)
                         if refreshed:
                             digest, rows = refreshed
                             break
