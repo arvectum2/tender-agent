@@ -1173,3 +1173,10 @@ retention_register_20261119:
   checkpoint: .agent/checkpoints/TA-RETENTION-REGISTER-20261119.yaml
   current_stage: bounded_schema_and_planning_verified_local
   last_verified_commit: c2f17cb1e12978872edf686a21b29746f6d85f70
+
+retention_accounting_20261119:
+  task_id: TA-RETENTION-ACCOUNTING-20261119
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-RETENTION-ACCOUNTING-20261119.yaml
+  current_stage: implementation
+  last_verified_commit: 55b349eb6d1dfbb3ea977cc4e6bd743fc1c7053a

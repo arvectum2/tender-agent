@@ -1,0 +1,15 @@
+task_id: TA-RETENTION-ACCOUNTING-20261119
+status: in_progress
+goal: Internal proposed document-order links and aggregate binary storage accounting, not verified order ownership or deletion authority.
+definition_of_done:
+- Immutable scoped links to exact document IDs and an existing proposed schedule; no automatic backfill.
+- Aggregate counts, binary byte lengths, expiry and proposed hold/coverage categories without document content.
+- Synthetic scoped tests and migration checks; no API, production write or deletion.
+completed:
+- Exact 55b349eb CI 19/19; published predecessor f2cf1037.
+current_stage: implementation
+remaining:
+- Model, migration, aggregate report, synthetic tests, publication checkpoint.
+last_verified_commit: 55b349eb6d1dfbb3ea977cc4e6bd743fc1c7053a
+test_results: []
+resume_instruction: Implement internal proposed associations and read-only accounting only. Do not repeat rejected readiness operation.
