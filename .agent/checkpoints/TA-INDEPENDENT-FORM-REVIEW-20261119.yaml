@@ -1,0 +1,15 @@
+task_id: TA-INDEPENDENT-FORM-REVIEW-20261119
+status: in_progress
+goal: Assigned independent tenant member review of an exact immutable private original-form candidate.
+definition_of_done:
+  - Separate creator and named active authorized reviewer; tenant/run access and default-off API.
+  - Bounded immutable candidate bytes/source/map/facts; exact acknowledgement after fresh recheck; no external export.
+  - Isolated synthetic tests, migration verification and draft publication.
+completed:
+  - Previous PR662 exact ad0b7f24 CI 19/19.
+current_stage: implementation
+remaining:
+  - Persistence, service, API, tests and documentation.
+last_verified_commit: ad0b7f243f8dbfab0299f4e8e7546bb47bf0191a
+test_results: []
+resume_instruction: Implement independent original-form review; no actual approval or production migration.
