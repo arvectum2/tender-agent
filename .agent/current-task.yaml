@@ -1180,3 +1180,10 @@ retention_accounting_20261119:
   checkpoint: .agent/checkpoints/TA-RETENTION-ACCOUNTING-20261119.yaml
   current_stage: bounded_accounting_verified_local
   last_verified_commit: 90d06ae09b15c7fb730fab15c28d240590240e30
+
+retention_operator_20261119:
+  task_id: TA-RETENTION-OPERATOR-20261119
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-RETENTION-OPERATOR-20261119.yaml
+  current_stage: implementation
+  last_verified_commit: f2cf1037e5dc4aebfea613ffc27dd88c885313cd

@@ -1,0 +1,16 @@
+task_id: TA-RETENTION-OPERATOR-20261119
+status: in_progress
+goal: Opt-in internal operator console for proposed retention schedules, initial document associations and aggregate accounting.
+definition_of_done:
+- Reuse existing operator authorization; default off; typed bounded requests, tenant scope and same-origin browser writes.
+- Append-only schedule revision with optimistic concurrency; initial exact document association only; audit without document content.
+- Actual browser and isolated API tests; no deletion or access changes; correction, real evidence and named operator approval remain open.
+completed:
+- Exact f2cf1037 CI 19/19, published accounting successor 58bbca2b.
+- Owner clarified to keep operator interface in scope.
+current_stage: implementation
+remaining:
+- Implement UI, API and synthetic validation; checkpoint and publish after existing CI.
+last_verified_commit: f2cf1037e5dc4aebfea613ffc27dd88c885313cd
+test_results: []
+resume_instruction: Continue internal proposal-only operator console. Do not repeat rejected readiness operation or enable deletion.
