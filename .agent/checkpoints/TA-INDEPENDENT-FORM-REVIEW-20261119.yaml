@@ -2,14 +2,30 @@ task_id: TA-INDEPENDENT-FORM-REVIEW-20261119
 status: in_progress
 goal: Assigned independent tenant member review of an exact immutable private original-form candidate.
 definition_of_done:
-  - Separate creator and named active authorized reviewer; tenant/run access and default-off API.
-  - Bounded immutable candidate bytes/source/map/facts; exact acknowledgement after fresh recheck; no external export.
-  - Isolated synthetic tests, migration verification and draft publication.
+- Separate creator and named active authorized reviewer; tenant/run access and default-off API.
+- Bounded immutable candidate bytes/source/map/facts; exact acknowledgement after fresh recheck;
+  no external export.
+- Isolated synthetic tests, migration verification and draft publication.
 completed:
-  - Previous PR662 exact ad0b7f24 CI 19/19.
-current_stage: implementation
+- Previous PR662 exact ad0b7f24 CI 19/19.
+- Migration 124 and immutable bounded candidate/receipt models; default-off authenticated scoped
+  API, explicit distinct assigned reviewer, repeated evidence/source/member checks and exact byte
+  acknowledgement.
+- SaaS UI assignment, queue, SHA-verified DOCX download and explicit acknowledgement; no release/export.
+  Synthetic HTTP, migration and actual Chromium synthetic network acceptance passed.
+current_stage: exact_successor_ci_pending
 remaining:
-  - Persistence, service, API, tests and documentation.
-last_verified_commit: ad0b7f243f8dbfab0299f4e8e7546bb47bf0191a
-test_results: []
-resume_instruction: Implement independent original-form review; no actual approval or production migration.
+- Verify exact successor GitHub CI.
+- Real source/profile and browser-to-API acceptance, independent human/semantic review, PostgreSQL
+  restore and concurrency acceptance, retention and authorized release remain open.
+last_verified_commit: 4c2e554230e7e91ae4432c248825e844b88bd7c1
+test_results:
+- 33 passed, 18 warnings in 3.50s exit 0, targeted original candidate/review, authenticated private
+  review, commercial export/content review and migration 124 isolated SQLite.
+- Actual Chromium 1280/390 synthetic network PASS for original-form review and prior private/customer
+  archive regression; tamper refusal, explicit selection, separate participants, reset.
+- Ruff and git diff --check PASS.
+resume_instruction: Check exact PR662 successor CI, fix confirmed failures; close bounded independent
+  form review if green. Next design private form release-readiness gate (current revision, independent
+  semantic/legal and disclosure acceptance, retention/concurrency, exact evidence) without extending
+  external export until verified. No actual authorization, production or submission.
