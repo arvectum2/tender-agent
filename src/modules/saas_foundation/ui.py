@@ -493,14 +493,14 @@ function resetOriginalFormSelection(){
  documentaryLine(root,"Привязка источника, карты и реквизитов: "+p.candidate_sha256);
 }
 function setOriginalFormItems(items,preferred=""){
- originalFormItems=items;const select=el("original-form-select");select.replaceChildren(new Option("Выберите форму",""));
- for(const p of items)select.add(new Option((p.reviewer_id===originalFormContext.member_id?"На моей проверке: ":"Мой документ: ")+p.candidate_id+" · "+p.status,p.candidate_id));
+ originalFormItems=items;blankSelect("original-form-select","Выберите форму");const select=el("original-form-select");
+ for(const p of items){const opt=document.createElement("option");opt.value=p.candidate_id;opt.textContent=(p.reviewer_id===originalFormContext.member_id?"На моей проверке: ":"Мой документ: ")+p.candidate_id+" · "+p.status;select.append(opt);}
  select.value=preferred;resetOriginalFormSelection();
 }
 function clearOriginalFormReview(){
  originalFormContext=null;originalFormItems=[];originalFormDownloaded=null;
- el("original-form-reviewer").replaceChildren(new Option("Выберите другого участника",""));
- el("original-form-select").replaceChildren(new Option("Выберите форму",""));
+ blankSelect("original-form-reviewer","Выберите другого участника");
+ blankSelect("original-form-select","Выберите форму");
  el("original-form-input").value="";resetOriginalFormSelection();syncOriginalFormReview();
 }
 function syncOriginalFormReview(){
@@ -522,7 +522,7 @@ bind("original-form-refresh",async()=>{
  if(runId!==val("run-id")||epoch!==sessionEpoch||history.historical_only!==true||history.external_export_allowed!==false||
  !Array.isArray(history.items)||!history.items.every(p=>validOriginalForm(p,runId,me.member_id))||!Array.isArray(directory.members))throw Error("Неожиданный ответ очереди");
  originalFormContext={run_id:runId,member_id:me.member_id,epoch};
- for(const m of directory.members)if(m.active===true&&["owner","admin"].includes(m.role)&&m.member_id!==me.member_id)el("original-form-reviewer").add(new Option(m.name+" · "+m.role,m.member_id));
+ for(const m of directory.members)if(m.active===true&&["owner","admin"].includes(m.role)&&m.member_id!==me.member_id){const opt=document.createElement("option");opt.value=m.member_id;opt.textContent=m.name+" · "+m.role;el("original-form-reviewer").append(opt);}
  setOriginalFormItems(history.items);return {status:"PRIVATE_FORM_QUEUE_LOADED",count:history.items.length};
 });
 bind("original-form-create",async()=>{
