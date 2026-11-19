@@ -1002,3 +1002,5 @@ While `OWNER-CONTINUOUS-ROADMAP-2026-09-18` is active, its deterministic one-at-
 
 
 19.11.2026 — APR04 customer draft export: bounded separate unsigned price/declarations projection and default-off API implemented; 7 projection tests and 5 existing authenticated review tests PASS, Ruff PASS. New HTTP acceptance and exact CI pending. Arbitrary forms/evidence excluded; actual delivery, signature, deployment prohibited.
+
+19.11.2026 — APR04 controlled external draft UI: predecessor exact CI 19/19 green; new HTTP acceptance 1 PASS and Chromium synthetic desktop/390px PASS with selection, explicit confirmation, SHA mismatch refusal and reset. Successor exact CI pending; grouped local runs SIGKILL, real source and semantic review remain open.

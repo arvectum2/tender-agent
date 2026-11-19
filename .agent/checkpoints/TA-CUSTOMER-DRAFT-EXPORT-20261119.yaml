@@ -13,19 +13,30 @@ completed:
 - Previous stage verified locally at 8155f67e; its CI still running at start.
 - Default-off API, retained exact acknowledgement, evidence recheck, explicit unsigned subset, deterministic
   independent ZIP integrity check; seven projection tests and five existing HTTP regressions passed.
-current_stage: isolated_http_and_regression_pending
+- Predecessor 2de9663a exact GitHub CI 19/19 SUCCESS. Added UI options from allowed manifest roles;
+  explicit selection and acknowledgement; download SHA header and browser integrity check; synthetic
+  isolated real HTTP/SQLite positive and denial scenarios PASS; Chromium at 1280 and 390 PASS including
+  tamper refusal and reset.
+current_stage: exact_successor_ci_pending
 remaining:
-- 'New endpoint-specific isolated HTTP acceptance was not executed: compound tool call rejected.
-  Do not repeat the blocked call.'
-- Complete bounded independent validation and CI; customer-facing UI separately; real source/profile
-  and production remain unapproved.
-last_verified_commit: 215c486326466e67c920f821467d59cfff0b8608
+- Verify exact successor full CI, including projection regression; repeated local grouped runs killed
+  by SIGKILL, not accepted.
+- Real browser-to-API, real source/profile acceptance and independent customer wording review remain
+  open. No full submission package or production authorization.
+last_verified_commit: d63e353f24b707206e710ff91af81549ad28c5c3
 test_results:
 - Projection 7 PASS, 9 warnings, 7.67s.
 - Existing authenticated review 5 PASS, 7 warnings, 7.31s.
 - Ruff and git diff --check PASS.
 - Combined private bundle/evidence/offer regression stopped by SIGKILL after 29 progress dots; no
   result accepted.
-resume_instruction: Resume at independent isolated endpoint acceptance (do not repeat rejected tool
-  call), remaining regression and exact CI; then add separate draft export UI. No real source replay,
-  production, signature or submission.
+- Predecessor exact CI 19/19 SUCCESS (2de9663a).
+- 'New isolated HTTP acceptance 1 passed, 3 warnings, 3.19s, exit 0: exact bytes, ownership, explicit
+  decision, feature switch, stale source denial.'
+- Actual Chromium 1280/390 synthetic HTTP PASS; tampered bytes rejected, explicit selection/ack,
+  valid download, state reset. Ruff/diff PASS.
+- Subsequent grouped and projection-only local regressions stopped SIGKILL; rely on exact successor
+  CI, not partial dots.
+resume_instruction: Check exact successor PR662 CI, fix confirmed failures only, then mark bounded
+  export development completed if green. Next independent review of customer-facing free text and
+  safe customer form release design with real acceptance gates. Do not deploy, merge, sign or submit.
