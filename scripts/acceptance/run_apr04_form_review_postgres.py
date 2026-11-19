@@ -1,13 +1,14 @@
 """Disposable Unix-socket PostgreSQL 16 migration/constraint/restore acceptance.
 
 Only synthetic schema prerequisites and rows; no deployment credentials,
-real documents, or service database. Tests DB constraints, not API concurrency.
+real documents, or service database. Also exercises concurrent ASGI requests.
 """
 from __future__ import annotations
 
 import hashlib
 import os
 import subprocess
+import sys
 import tempfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -121,6 +122,15 @@ def main():
                 assert conn.execute(text('SELECT * FROM original_form_review_receipts')).all() == receipt
                 assert conn.scalar(text('SELECT version_num FROM alembic_version')) == '124_original_form_review'
             print('PG16_SYNTHETIC_BACKUP_RESTORE_EXACT_ROWS_PASS')
+            run('createdb', '-h', str(sock), '-p', port, '-U', role, 'api_fixture')
+            api_env = dict(env, AI_CORP_DATABASE_URL=url('api_fixture'),
+                           AI_CORP_ARVECTUM_DATA_DIR=str(root/'api-data'),
+                           RUN_R8_POSTGRES_INTEGRATION='1', RUN_APR04_FORM_REVIEW_PG='1')
+            subprocess.run([sys.executable, '-m', 'pytest', '-q',
+                'tests/test_original_form_review_pg_concurrency.py', '--run-postgres'],
+                cwd=ROOT, env=api_env, check=True, timeout=60)
+            print('PG16_CONCURRENT_AUTHENTICATED_ASGI_REVIEW_PASS')
+
         finally:
             if engine:
                 engine.dispose()

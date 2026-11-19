@@ -18,13 +18,18 @@ completed:
 - Isolated local PostgreSQL 16.16 synthetic migration 124 empty roundtrip, distinct-member CHECK,
   concurrent unique receipt, nonempty downgrade refusal and pg_dump/pg_restore exact row comparison
   all passed. Reproducible scripts/acceptance/run_apr04_form_review_postgres.py.
-current_stage: exact_successor_ci_pending
+- 'Disposable PG16.16 API fixture: concurrent independent authenticated ASGI requests with independent
+  sessions both returned the same receipt id; exactly one persisted receipt and one audit event;
+  release flags false. Reused synthetic source/identity fixture. All earlier migration/restore assertions
+  passed again.'
+current_stage: remote_ci_pending_local_pg16_http_concurrency_pass
 remaining:
-- Verify exact PR662 remote head 666d4379 CI (17 SUCCESS, 2 quality running at last observation).
-- Local PG16 acceptance script and checkpoint are a separate local successor; publish after current
-  CI finishes, then verify successor CI.
-- Real source/profile and browser-to-API acceptance, independent human/semantic review, actual concurrent
-  API transactions, production restore and retention and authorized release remain open.
+- 'Check exact remote PR662 head 666d4379 CI: 17 SUCCESS, 2 quality in progress; no failures as
+  of last check.'
+- Publish local synthetic acceptance successor after CI finishes; verify exact successor CI.
+- Production recovery/retention, live browser-to-API and real source/profile, independent human/semantic
+  review and authorized release remain open. Parallel ASGI duplicate acknowledgement test passed;
+  broader concurrency not established.
 last_verified_commit: ea771b717a3c595075f24115d1369d6cec4d951a
 test_results:
 - 33 passed, 18 warnings in 3.50s exit 0, targeted original candidate/review, authenticated private
@@ -36,6 +41,9 @@ test_results:
   PASS after fix.
 - PG16 acceptance script exit 0; Ruff PASS. No production DB, actual API concurrency, retention
   or real data tested.
-resume_instruction: Check exact remote PR662 head CI; if green, preserve verified hash and publish
-  locally committed PG16 acceptance successor, then verify its CI. Do not rerun rejected readiness
-  operation; no external release.
+- PG16 integrated runner exit 0 including concurrent HTTP/ASGI 1 passed, 2 warnings; ordinary isolated
+  test selection 5 passed, 1 PG opt-in skipped, Ruff and git diff --check PASS. First fixture execution
+  rejected macOS /tmp symlink; corrected path resolution and reran successfully.
+resume_instruction: Verify exact PR662 remote head 666d4379 CI, publish locally committed PG16 migration/restore/ASGI
+  concurrency acceptance successor after completion and check successor CI. Do not rerun rejected
+  readiness operation; no external release or production.
