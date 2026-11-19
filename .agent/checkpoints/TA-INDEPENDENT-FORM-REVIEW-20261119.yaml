@@ -15,11 +15,16 @@ completed:
   Synthetic HTTP, migration and actual Chromium synthetic network acceptance passed.
 - CI at 1aa2ee16 quality failed twice at hosted company cabinet JS; fixed new Option dependency
   via shared DOM helpers. Actual existing Node regression and all 4 Chromium scenarios pass.
+- Isolated local PostgreSQL 16.16 synthetic migration 124 empty roundtrip, distinct-member CHECK,
+  concurrent unique receipt, nonempty downgrade refusal and pg_dump/pg_restore exact row comparison
+  all passed. Reproducible scripts/acceptance/run_apr04_form_review_postgres.py.
 current_stage: exact_successor_ci_pending
 remaining:
-- Verify exact successor GitHub CI.
-- Real source/profile and browser-to-API acceptance, independent human/semantic review, PostgreSQL
-  restore and concurrency acceptance, retention and authorized release remain open.
+- Verify exact PR662 remote head 666d4379 CI (17 SUCCESS, 2 quality running at last observation).
+- Local PG16 acceptance script and checkpoint are a separate local successor; publish after current
+  CI finishes, then verify successor CI.
+- Real source/profile and browser-to-API acceptance, independent human/semantic review, actual concurrent
+  API transactions, production restore and retention and authorized release remain open.
 last_verified_commit: ea771b717a3c595075f24115d1369d6cec4d951a
 test_results:
 - 33 passed, 18 warnings in 3.50s exit 0, targeted original candidate/review, authenticated private
@@ -29,5 +34,8 @@ test_results:
 - Ruff and git diff --check PASS.
 - Node tests/js/company_portfolio_flow.cjs PASS; Chromium original and authenticated desktop/mobile
   PASS after fix.
-resume_instruction: Check exact successor PR662 CI; independent form review remains in progress
-  until green. Readiness diagnostic child task may run without enabling release.
+- PG16 acceptance script exit 0; Ruff PASS. No production DB, actual API concurrency, retention
+  or real data tested.
+resume_instruction: Check exact remote PR662 head CI; if green, preserve verified hash and publish
+  locally committed PG16 acceptance successor, then verify its CI. Do not rerun rejected readiness
+  operation; no external release.
