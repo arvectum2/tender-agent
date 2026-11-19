@@ -22,15 +22,20 @@ completed:
   sessions both returned the same receipt id; exactly one persisted receipt and one audit event;
   release flags false. Reused synthetic source/identity fixture. All earlier migration/restore assertions
   passed again.'
-current_stage: remote_ci_pending_local_pg16_http_concurrency_pass
+- Exact PR662 head 666d4379 CI 19/19 SUCCESS; local PG16 migration/restore/concurrent API acceptance
+  successor 55b349eb published.
+- Actual Chromium desktop 1280/mobile 390 against local Uvicorn/FastAPI with per-request sessions
+  and temporary SQLite DB; actual creator/reviewer authentication, assigned candidate creation,
+  downloaded DOCX SHA, confirmation, logout and one receipt/audit verified without mocked HTTP responses.
+  Source observation and identity data synthetic.
+current_stage: remote_ci_pending_live_loopback_browser_pass
 remaining:
-- 'Check exact remote PR662 head 666d4379 CI: 17 SUCCESS, 2 quality in progress; no failures as
-  of last check.'
-- Publish local synthetic acceptance successor after CI finishes; verify exact successor CI.
-- Production recovery/retention, live browser-to-API and real source/profile, independent human/semantic
-  review and authorized release remain open. Parallel ASGI duplicate acknowledgement test passed;
-  broader concurrency not established.
-last_verified_commit: ea771b717a3c595075f24115d1369d6cec4d951a
+- Verify exact PR662 remote head 55b349eb CI; 11 SUCCESS / 8 pending at last check, no failures.
+- Publish local loopback browser acceptance successor after current CI. Verify exact successor CI.
+- Production recovery/retention, real source/profile, independent human/semantic review and authorized
+  release remain open. Browser acceptance uses temporary SQLite and synthetic source, real API;
+  PostgreSQL concurrency exercised separately.
+last_verified_commit: 666d4379fbe41d56e64c69ef1210912fb5ee6708
 test_results:
 - 33 passed, 18 warnings in 3.50s exit 0, targeted original candidate/review, authenticated private
   review, commercial export/content review and migration 124 isolated SQLite.
@@ -44,6 +49,8 @@ test_results:
 - PG16 integrated runner exit 0 including concurrent HTTP/ASGI 1 passed, 2 warnings; ordinary isolated
   test selection 5 passed, 1 PG opt-in skipped, Ruff and git diff --check PASS. First fixture execution
   rejected macOS /tmp symlink; corrected path resolution and reran successfully.
-resume_instruction: Verify exact PR662 remote head 666d4379 CI, publish locally committed PG16 migration/restore/ASGI
-  concurrency acceptance successor after completion and check successor CI. Do not rerun rejected
-  readiness operation; no external release or production.
+- Opt-in actual loopback browser 2 passed, 2 warnings in 10.67s; ordinary suite 5 passed, 3 opt-in
+  skipped, Ruff and git diff --check PASS.
+resume_instruction: Verify exact remote PR662 head 55b349eb CI; then publish local loopback browser
+  acceptance successor and verify its CI. Do not rerun rejected readiness operation. No production
+  or external release.
