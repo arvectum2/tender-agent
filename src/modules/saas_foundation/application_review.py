@@ -17,6 +17,9 @@ from src.modules.application_package_generator.checklist_bundle_gate import (
     bundle_inputs_digest,
     preview_plan,
 )
+from src.modules.application_package_generator.customer_content_review import (
+    review_customer_export,
+)
 from src.modules.application_package_generator.customer_draft_export import (
     build_customer_draft_export,
     customer_draft_options,
@@ -272,6 +275,8 @@ def customer_draft_export(session, principal, root, run_id, preview_id, payload)
         _verify_receipts(manifest, snap['projection'])
         raw = build_customer_draft_export(p.archive_bytes, expected_sha256=p.archive_sha256,
                                          selection=payload.selection)
+        review_customer_export(raw, selection=payload.selection, offer_terms=original.offer_terms,
+                               declaration_terms=original.declaration_terms)
     except (ValueError, ValidationError, KeyError, TypeError, EOFError, OSError, zipfile.BadZipFile) as exc:
         raise HTTPException(409, 'Selected draft unavailable or evidence changed; review again') from exc
     recheck_tenant_principal(session, principal)
