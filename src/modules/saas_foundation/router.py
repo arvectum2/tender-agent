@@ -8,6 +8,7 @@ from __future__ import annotations
 import asyncio
 import base64
 import binascii
+import hashlib
 import hmac
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -83,6 +84,7 @@ from src.modules.saas_foundation import (
     company_schedule,
     documentary_readiness,
     original_form_review,
+    retention_operator,
 )
 from src.modules.saas_foundation.commercial_attachment_bytes import MAX_ATTACHMENT_BYTES
 from src.modules.saas_foundation.models import (
@@ -1332,3 +1334,65 @@ def reviewed_contract_catalog(case_id: str, principal: Member, session: DBSessio
     if not get_settings().saas_company_reviewed_contract_registry_enabled:
         raise HTTPException(404,"Reviewed contract registry disabled")
     return company_reviewed_contracts.catalog(session,principal,case_id)
+
+
+def _retention_operator(request: Request):
+    _operator(request)
+    if not get_settings().saas_retention_operator_enabled:
+        raise HTTPException(404, 'Retention operator console disabled')
+
+
+_RETENTION_HEADERS = {'Cache-Control':'no-store', 'X-Content-Type-Options':'nosniff',
+                      'X-Frame-Options':'DENY', 'Referrer-Policy':'no-referrer'}
+
+
+@router.get('/api/operator/saas/retention-console', response_class=HTMLResponse)
+def retention_console(request: Request):
+    _retention_operator(request)
+    from src.modules.saas_foundation.retention_operator_ui import render_console
+    html = render_console()
+    script = html.split('<script>', 1)[1].split('</script>', 1)[0]
+    digest = base64.b64encode(hashlib.sha256(script.encode('utf-8')).digest()).decode('ascii')
+    return HTMLResponse(html, headers={**_RETENTION_HEADERS,
+        'Content-Security-Policy': f"default-src 'none'; script-src 'sha256-{digest}'; style-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'"})
+
+
+@router.get('/api/operator/saas/tenants/{tenant_id}/retention')
+def retention_overview(tenant_id: str, request: Request, session: DBSession, response: Response):
+    _retention_operator(request)
+    response.headers.update(_RETENTION_HEADERS)
+    return retention_operator.overview(session, tenant_id)
+
+
+async def _retention_payload(request: Request, payload_type):
+    _retention_operator(request)
+    if (request.headers.get('X-Retention-Intent') != 'proposal-only'
+            or request.headers.get('content-type','').split(';')[0].strip().lower() != 'application/json'
+            or request.headers.get('sec-fetch-site') not in (None,'same-origin','none')):
+        raise HTTPException(403, 'Explicit same-origin proposal request required')
+    origin = request.headers.get('origin')
+    if origin is not None and origin != f'{request.url.scheme}://{request.url.netloc}':
+        raise HTTPException(403, 'Cross-origin proposal refused')
+    data = bytearray()
+    async for chunk in request.stream():
+        if len(data)+len(chunk)>8192:
+            raise HTTPException(413, 'Proposal input too large')
+        data.extend(chunk)
+    try:
+        return payload_type.model_validate_json(data)
+    except ValueError as exc:
+        raise HTTPException(422, 'Invalid retention proposal') from exc
+
+
+@router.post('/api/operator/saas/tenants/{tenant_id}/retention/proposals', status_code=201)
+async def retention_append(tenant_id: str, request: Request, session: DBSession, response: Response):
+    payload = await _retention_payload(request, retention_operator.AppendProposal)
+    response.headers.update(_RETENTION_HEADERS)
+    return await run_in_threadpool(retention_operator.append_proposal, session, tenant_id, payload)
+
+
+@router.post('/api/operator/saas/tenants/{tenant_id}/retention/links', status_code=201)
+async def retention_link(tenant_id: str, request: Request, session: DBSession, response: Response):
+    payload = await _retention_payload(request, retention_operator.ProposeLink)
+    response.headers.update(_RETENTION_HEADERS)
+    return await run_in_threadpool(retention_operator.propose_link, session, tenant_id, payload)
