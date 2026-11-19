@@ -16,6 +16,9 @@ from src.modules.application_package_generator.checklist_bundle_gate import (
     bundle_inputs_digest,
     preview_plan,
 )
+from src.modules.application_package_generator.customer_draft_export import (
+    build_customer_draft_export,
+)
 from src.modules.application_package_generator.evidence_approval_gate import (
     _verify_receipts,
     build_with_evidence_approval,
@@ -235,3 +238,42 @@ def confirm(session,principal,root,run_id,preview_id,payload):
         session.rollback()
         raise HTTPException(409,'Concurrent review; refresh history') from exc
     return _view(p,d)
+
+
+class CustomerDraftExportInput(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    archive_sha256: str = Field(pattern=SHA)
+    decision_id: str = Field(min_length=1, max_length=64)
+    selection: list[Literal['price_offer', 'declarations']] = Field(min_length=1, max_length=2)
+    confirm_unsigned_subset: StrictBool
+
+
+def customer_draft_export(session, principal, root, run_id, preview_id, payload):
+    p = _owned(session, principal, run_id, preview_id)
+    d = _decision(session, p)
+    if (not payload.confirm_unsigned_subset or payload.archive_sha256 != p.archive_sha256
+            or not d or d.id != payload.decision_id or d.archive_sha256 != p.archive_sha256
+            or d.member_id != principal.member_id or d.tenant_id != principal.tenant_id):
+        raise HTTPException(409, 'Exact retained internal acknowledgement required')
+    manifest = _checked_manifest(p, principal)
+    now = now_utc()
+    if _utc(p.expires_at) <= now:
+        raise HTTPException(409, 'Private review preview expired; generate again')
+    try:
+        original = PreviewInput.model_validate(p.input_json)
+        args = _args(session, principal, root, run_id, original, now)
+        if args['approved_digest'] != p.plan_sha256 or args['approved_inputs_digest'] != p.inputs_sha256:
+            raise ValueError('Reviewed inputs changed')
+        snap = preview_evidence_approval(session, **args)
+        if snap['evidence_approval_digest'] != p.evidence_sha256:
+            raise ValueError('Reviewed evidence changed')
+        _verify_receipts(manifest, snap['projection'])
+        raw = build_customer_draft_export(p.archive_bytes, expected_sha256=p.archive_sha256,
+                                         selection=payload.selection)
+    except (ValueError, ValidationError, KeyError, TypeError, EOFError, OSError, zipfile.BadZipFile) as exc:
+        raise HTTPException(409, 'Selected draft unavailable or evidence changed; review again') from exc
+    recheck_tenant_principal(session, principal)
+    _access(session, principal, run_id)
+    if _utc(p.expires_at) <= now_utc():
+        raise HTTPException(409, 'Private review preview expired; generate again')
+    return raw

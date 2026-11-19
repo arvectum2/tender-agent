@@ -658,6 +658,19 @@ def confirm_application_preview(run_id: str, preview_id: str, payload: applicati
     return application_review.confirm(session,principal,Path(get_settings().arvectum_data_dir),run_id,preview_id,payload)
 
 
+@router.post("/api/saas/runs/{run_id}/application-review/previews/{preview_id}/customer-draft")
+def export_customer_draft(run_id: str, preview_id: str, payload: application_review.CustomerDraftExportInput,
+                          principal: Member, session: DBSession):
+    _application_review_enabled()
+    if not get_settings().saas_customer_draft_export_enabled:
+        raise HTTPException(404, "Customer draft export disabled")
+    raw = application_review.customer_draft_export(session, principal, Path(get_settings().arvectum_data_dir),
+                                                   run_id, preview_id, payload)
+    return Response(content=raw, media_type="application/zip", headers={
+        "Content-Disposition": 'attachment; filename="UNSIGNED-PARTIAL-DRAFT-REVIEW-ONLY.zip"',
+        "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"})
+
+
 @router.post("/api/saas/runs/{run_id}/screen")
 def screen_run(run_id: str, principal: Member, session: DBSession) -> dict:
     role_required(principal, "owner", "admin", "analyst")
