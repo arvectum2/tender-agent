@@ -1,0 +1,15 @@
+task_id: TA-APPLICATION-RELEASE-READINESS-20261119
+status: in_progress
+goal: Read-only scoped diagnosis of exact private application preview and independent original-form review evidence.
+definition_of_done:
+  - Recheck archive, source plan, facts, retained acknowledgement and explicit candidate links; show blocking reasons without claiming release readiness.
+  - Separate structural presence from legal, semantic, revision and operational gates; never permit submission or export.
+  - Default-off scoped API, targeted synthetic tests, documentation and draft publication.
+completed:
+  - Recovered predecessor quality regression; Node cabinet and Chromium 4 scenarios passed.
+current_stage: implementation
+remaining:
+  - Diagnostic API, tests and checkpoint.
+last_verified_commit: ea771b717a3c595075f24115d1369d6cec4d951a
+test_results: []
+resume_instruction: Implement private report only without real source access, actual release or production.
