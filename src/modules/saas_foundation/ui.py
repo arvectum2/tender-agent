@@ -96,7 +96,15 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 <div id="application-review-summary" aria-live="polite" style="overflow-wrap:anywhere"></div>
 <button id="application-review-download" disabled>Скачать и проверить приватный ZIP</button>
 <label><input type="checkbox" id="application-review-ack" disabled style="width:auto"> Я проверил именно этот архив; согласование только для внутренней работы, открытые вопросы остаются.</label>
-<button id="application-review-confirm" disabled>Зафиксировать внутреннее согласование</button></details>
+<button id="application-review-confirm" disabled>Зафиксировать внутреннее согласование</button>
+<div id="customer-draft-panel" hidden>
+<h3>Отдельный внешний черновик</h3>
+<p>Только выбранные неподписанные документы. Это неполная заявка, не разрешение на отправку. Проверьте свободный текст на конфиденциальные сведения.</p>
+<label><input type="checkbox" id="customer-draft-price" style="width:auto" disabled> Ценовое предложение</label>
+<label><input type="checkbox" id="customer-draft-declarations" style="width:auto" disabled> Декларации</label>
+<label><input type="checkbox" id="customer-draft-ack" style="width:auto" disabled> Скачать только выбранные черновики для дополнительной проверки, не для подачи.</label>
+<button id="customer-draft-download" disabled>Скачать отдельный ZIP</button>
+<div id="customer-draft-result" aria-live="polite" style="overflow-wrap:anywhere"></div></div></details>
 <div id="qualification-panel" hidden role="status" aria-live="polite" style="border:1px solid #496477;border-radius:10px;padding:12px;margin-top:12px">
 <strong id="qualification-verdict"></strong>
 <p id="qualification-source-note"></p>
@@ -370,13 +378,33 @@ bind("read-documentary-run",async()=>{
 });
 for(const id of ["run-id","documentary-signatory","documentary-goods"])document.getElementById(id).addEventListener("input",()=>document.getElementById("documentary-run-result").replaceChildren());
 function applicationReviewPath(){const id=val("run-id");if(!id)throw Error("Укажите ID собственного прогона");return "/api/saas/runs/"+encodeURIComponent(id)+"/application-review/previews";}
+const customerDraftFields={"price_offer":"customer-draft-price","declarations":"customer-draft-declarations"};
+function customerDraftSelection(){return Object.keys(customerDraftFields).filter(k=>document.getElementById(customerDraftFields[k]).checked&&!document.getElementById(customerDraftFields[k]).disabled);}
+function clearCustomerDraft(){
+ for(const id of [...Object.values(customerDraftFields),"customer-draft-ack"])document.getElementById(id).checked=false;
+ document.getElementById("customer-draft-result").replaceChildren();
+}
+function syncCustomerDraft(){
+ const p=applicationReview,options=p?.customer_draft_options;
+ const current=Boolean(p&&p.run_id===val("run-id")&&p.status==="INTERNAL_REVIEW_RECORDED"&&p.decision_id&&Array.isArray(options)&&options.length);
+ document.getElementById("customer-draft-panel").hidden=!current;
+ for(const [key,id] of Object.entries(customerDraftFields)){
+  const el=document.getElementById(id),eligible=current&&options.includes(key);
+  if(!eligible)el.checked=false;
+  el.disabled=uiBusy||!eligible;
+ }
+ const selected=customerDraftSelection(),ack=document.getElementById("customer-draft-ack");
+ ack.disabled=uiBusy||!current||!selected.length;
+ document.getElementById("customer-draft-download").disabled=uiBusy||!current||!selected.length||!ack.checked;
+}
 function syncApplicationReview(){
  const current=applicationReview&&applicationReview.run_id===val("run-id")&&applicationReview.status==="PRIVATE_PREVIEW";
  document.getElementById("application-review-download").disabled=uiBusy||!current;
  document.getElementById("application-review-ack").disabled=uiBusy||!current||!applicationDownloaded;
  document.getElementById("application-review-confirm").disabled=uiBusy||!current||!applicationDownloaded||!document.getElementById("application-review-ack").checked;
+ syncCustomerDraft();
 }
-function clearApplicationReview(){applicationReview=null;applicationDownloaded=false;document.getElementById("application-review-ack").checked=false;document.getElementById("application-review-summary").replaceChildren();syncApplicationReview();}
+function clearApplicationReview(){clearCustomerDraft();applicationReview=null;applicationDownloaded=false;document.getElementById("application-review-ack").checked=false;document.getElementById("application-review-summary").replaceChildren();syncApplicationReview();}
 function showApplicationReview(r){
  const root=document.getElementById("application-review-summary");root.replaceChildren();
  documentaryLine(root,r.status==="INTERNAL_REVIEW_RECORDED"?"Внутреннее согласование записано. Не разрешение на подачу.":"Черновик для проверки. Не готов к подаче.");
@@ -407,8 +435,26 @@ bind("application-review-confirm",async()=>{
  const p=applicationReview;if(!p||!applicationDownloaded||!document.getElementById("application-review-ack").checked||p.run_id!==val("run-id"))throw Error("Скачайте и проверьте точный архив");
  const r=await call(applicationReviewPath()+"/"+encodeURIComponent(p.preview_id)+"/confirm",{method:"POST",body:{archive_sha256:p.archive_sha256,confirm_reviewed_private_archive:true}});
  if(r.preview_id!==p.preview_id||r.archive_sha256!==p.archive_sha256||r.status!=="INTERNAL_REVIEW_RECORDED"||r.application_ready!==false||r.external_action_allowed!==false)throw Error("Неожиданное согласование");
- applicationReview=r;applicationDownloaded=false;document.getElementById("application-review-ack").checked=false;showApplicationReview(r);return r;
+ clearCustomerDraft();applicationReview=r;applicationDownloaded=false;document.getElementById("application-review-ack").checked=false;showApplicationReview(r);return r;
 });
+bind("customer-draft-download",async()=>{
+ const p=applicationReview,epoch=sessionEpoch;
+ const selected=Object.keys(customerDraftFields).filter(k=>document.getElementById(customerDraftFields[k]).checked&&p?.customer_draft_options?.includes(k));
+ if(!p||p.status!=="INTERNAL_REVIEW_RECORDED"||!p.decision_id||p.run_id!==val("run-id")||!token||!selected.length||!document.getElementById("customer-draft-ack").checked||!window.crypto?.subtle)throw Error("Выберите согласованные черновики и подтвердите скачивание");
+ document.getElementById("customer-draft-result").replaceChildren();
+ const response=await fetch(applicationReviewPath()+"/"+encodeURIComponent(p.preview_id)+"/customer-draft",{method:"POST",credentials:"omit",cache:"no-store",redirect:"error",headers:{Authorization:"Bearer "+token,"Content-Type":"application/json"},body:JSON.stringify({archive_sha256:p.archive_sha256,decision_id:p.decision_id,selection:selected,confirm_unsigned_subset:true})});
+ if(!response.ok){const e=Error("HTTP "+response.status+" — повторно проверьте согласование");e.status=response.status;throw e;}
+ const expected=response.headers.get("X-Draft-SHA256");
+ if(!/^[a-f0-9]{64}$/.test(expected||"")||response.headers.get("Content-Type")?.split(";")[0]!=="application/zip")throw Error("Неожиданный формат внешнего черновика");
+ const buf=await response.arrayBuffer();if(!buf.byteLength||buf.byteLength>2097152)throw Error("Размер архива недопустим");
+ const sha=Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256",buf))).map(x=>x.toString(16).padStart(2,"0")).join("");
+ if(sha!==expected||epoch!==sessionEpoch||applicationReview!==p||p.run_id!==val("run-id"))throw Error("Архив или сессия изменены");
+ const url=URL.createObjectURL(new Blob([buf],{type:"application/zip"}));const a=document.createElement("a");a.href=url;a.download="UNSIGNED-PARTIAL-DRAFT-REVIEW-ONLY.zip";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ clearCustomerDraft();documentaryLine(document.getElementById("customer-draft-result"),"Неполный неподписанный черновик скачан. SHA-256: "+sha+"; необходима дополнительная проверка.");
+ return {status:"UNSIGNED_PARTIAL_DRAFT_DOWNLOADED",sha256:sha,application_ready:false};
+});
+for(const id of Object.values(customerDraftFields))document.getElementById(id).addEventListener("change",()=>{document.getElementById("customer-draft-ack").checked=false;syncCustomerDraft();});
+document.getElementById("customer-draft-ack").addEventListener("change",syncCustomerDraft);
 bind("application-review-history",async()=>{const r=await call(applicationReviewPath());if(r.historical_only!==true||r.application_ready!==false)throw Error("Неожиданная история");return r});
 for(const id of ["run-id","application-review-input"])document.getElementById(id).addEventListener("input",clearApplicationReview);
 document.getElementById("application-review-ack").addEventListener("change",syncApplicationReview);

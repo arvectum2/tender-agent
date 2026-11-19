@@ -9,7 +9,7 @@ const p={preview_id:'p1',run_id:'fixture',procurement_ref:'synthetic',archive_sh
 (async()=>{const browser=await chromium.launch({executablePath:process.env.APR08_CHROME,headless:true,args:['--disable-background-networking','--no-first-run']});
 try{for(const width of [1280,390]){
 const c=await browser.newContext({viewport:{width,height:900},acceptDownloads:true,serviceWorkers:'block'}),page=await c.newPage();
-page.setDefaultTimeout(6000);let tamper=true,confirmed=0;const errors=[];page.on('pageerror',e=>errors.push(e.message));
+page.setDefaultTimeout(6000);let tamper=true,exportTamper=true,confirmed=0,exports=0;const errors=[];page.on('pageerror',e=>errors.push(e.message));
 await c.route('**/*',async route=>{
  const req=route.request(),u=new URL(req.url());if(u.origin!==origin)return route.abort();
  if(u.pathname==='/saas')return route.fulfill({contentType:'text/html',body:html});
@@ -18,7 +18,8 @@ await c.route('**/*',async route=>{
  if(u.pathname==='/api/saas/logout')return route.fulfill({json:{status:'logged_out'}});
  if(u.pathname===base&&req.method()==='POST'){assert.equal(req.postDataJSON().signatory,'DIRECTOR');return route.fulfill({status:201,json:p});}
  if(u.pathname===base+'/p1/archive')return route.fulfill({contentType:'application/zip',body:tamper?Buffer.from('tampered'):archive});
- if(u.pathname===base+'/p1/confirm'){assert.deepEqual(req.postDataJSON(),{archive_sha256:sha,confirm_reviewed_private_archive:true});confirmed++;return route.fulfill({json:{...p,status:'INTERNAL_REVIEW_RECORDED',decision_id:'d1'}});}
+ if(u.pathname===base+'/p1/confirm'){assert.deepEqual(req.postDataJSON(),{archive_sha256:sha,confirm_reviewed_private_archive:true});confirmed++;return route.fulfill({json:{...p,status:'INTERNAL_REVIEW_RECORDED',decision_id:'d1',customer_draft_options:['price_offer']}});}
+ if(u.pathname===base+'/p1/customer-draft'){assert.deepEqual(req.postDataJSON(),{archive_sha256:sha,decision_id:'d1',selection:['price_offer'],confirm_unsigned_subset:true});exports++;return route.fulfill({contentType:'application/zip',headers:{'X-Draft-SHA256':sha},body:exportTamper?Buffer.from('altered'):archive});}
  if(u.pathname===base&&req.method()==='GET')return route.fulfill({json:{historical_only:true,application_ready:false,items:[{decision_id:'d1'}]}});
  throw Error('unexpected request '+u.pathname);
 });
@@ -33,8 +34,19 @@ tamper=false;const pending=page.waitForEvent('download');await l('application-re
 assert.equal(d.suggestedFilename(),'PRIVATE-REVIEW-DO-NOT-SUBMIT.zip');assert.equal(hash(fs.readFileSync(await d.path())),sha);
 assert(await l('application-review-confirm').isDisabled());await l('application-review-ack').check();await l('application-review-confirm').click();
 await l('application-review-summary').getByText(/Внутреннее согласование записано/).waitFor();assert.equal(confirmed,1);assert(await l('application-review-confirm').isDisabled());
+assert(await l('customer-draft-panel').isVisible());
+assert(await l('customer-draft-declarations').isDisabled());
+assert(await l('customer-draft-download').isDisabled());
+await l('customer-draft-price').check();assert(await l('customer-draft-download').isDisabled());
+await l('customer-draft-ack').check();
+await l('customer-draft-download').click();await state('Нужна проверка');assert.equal(exports,1);
+exportTamper=false;const exported=page.waitForEvent('download');await l('customer-draft-download').click();
+const ext=await exported;await state('Готово');
+assert.equal(ext.suggestedFilename(),'UNSIGNED-PARTIAL-DRAFT-REVIEW-ONLY.zip');
+assert.equal(hash(fs.readFileSync(await ext.path())),sha);assert.equal(exports,2);
+assert(await l('customer-draft-download').isDisabled());
 await l('application-review-history').click();await state('Готово');assert((await l('result').innerText()).includes('historical_only'));
-await l('run-id').fill('other');assert.equal(await l('application-review-summary').innerText(),'');assert(await l('application-review-download').isDisabled());
+await l('run-id').fill('other');assert.equal(await l('application-review-summary').innerText(),'');assert(await l('application-review-download').isDisabled());assert(await l('customer-draft-panel').isHidden());
 await l('logout').click();await state('Готово');assert.equal(await l('run-id').inputValue(),'');assert.deepEqual(errors,[]);
 await c.close();console.log('AUTHENTICATED_REVIEW_CHROMIUM_PASS',width);
 }}finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

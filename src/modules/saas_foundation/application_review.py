@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import base64
 import binascii
+import hashlib
 import zipfile
 from datetime import timedelta
 from typing import Literal
@@ -18,6 +19,7 @@ from src.modules.application_package_generator.checklist_bundle_gate import (
 )
 from src.modules.application_package_generator.customer_draft_export import (
     build_customer_draft_export,
+    customer_draft_options,
 )
 from src.modules.application_package_generator.evidence_approval_gate import (
     _verify_receipts,
@@ -207,7 +209,7 @@ def confirm(session,principal,root,run_id,preview_id,payload):
         if (previous.tenant_id!=principal.tenant_id or previous.member_id!=principal.member_id
                 or previous.archive_sha256!=p.archive_sha256):
             raise HTTPException(409,'Stored acknowledgement scope mismatch')
-        return _view(p,previous)
+        return {**_view(p,previous), 'customer_draft_options': customer_draft_options(manifest)}
     now=now_utc()
     if _utc(p.expires_at)<=now:
         raise HTTPException(409,'Private review preview expired; generate again')
@@ -237,7 +239,7 @@ def confirm(session,principal,root,run_id,preview_id,payload):
     except IntegrityError as exc:
         session.rollback()
         raise HTTPException(409,'Concurrent review; refresh history') from exc
-    return _view(p,d)
+    return {**_view(p,d), 'customer_draft_options': customer_draft_options(manifest)}
 
 
 class CustomerDraftExportInput(BaseModel):
@@ -277,3 +279,7 @@ def customer_draft_export(session, principal, root, run_id, preview_id, payload)
     if _utc(p.expires_at) <= now_utc():
         raise HTTPException(409, 'Private review preview expired; generate again')
     return raw
+
+
+def export_digest(raw: bytes) -> str:
+    return hashlib.sha256(raw).hexdigest()

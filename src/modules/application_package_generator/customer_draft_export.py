@@ -18,37 +18,49 @@ def _sha(raw):
     return hashlib.sha256(raw).hexdigest()
 
 
+def _eligible_member(manifest, key):
+    inventory = {i['path']: i for i in manifest['inventory']}
+    rows = {r['code']: r for r in manifest['items']}
+    path, role, receipt_key = ALLOWED[key]
+    item = inventory.get(path)
+    if not item or item['role'] != role:
+        raise ValueError('Selected reviewed draft unavailable')
+    row = rows[item['item_code']]
+    if row['applicability'] not in ('REQUIRED', 'OPTIONAL_EVIDENCE'):
+        raise ValueError('Unresolved applicability')
+    receipt = row.get(receipt_key) or {}
+    if key == 'price_offer':
+        if (row['role'] != 'PRICE' or row['state'] != 'OFFER_OWNER_REVIEW_REQUIRED'
+                or receipt.get('status') != 'OFFER_OWNER_REVIEW_REQUIRED' or not receipt.get('source')):
+            raise ValueError('Offer confirmation unavailable')
+    else:
+        statements = receipt.get('rows') or []
+        if (row['role'] != 'DECLARATION' or receipt.get('status') != 'DECLARATIONS_DRAFT_REVIEW_ONLY'
+                or receipt.get('unanswered_count') != 0 or not statements
+                or any(s.get('state') != 'OWNER_CONFIRMED_REVIEW_REQUIRED' or not s.get('source') for s in statements)):
+            raise ValueError('Declarations contain unresolved statements')
+    if any(receipt.get(k) is not False for k in ('application_ready', 'signed', 'submitted')):
+        raise ValueError('Unexpected approval state')
+    return path
+
+
+def customer_draft_options(manifest):
+    result = []
+    for key in ALLOWED:
+        try:
+            _eligible_member(manifest, key)
+        except ValueError:
+            continue
+        result.append(key)
+    return result
+
+
 def _selected(raw, expected_sha256, selection):
     if not selection or len(selection) != len(set(selection)) or set(selection) - set(ALLOWED):
         raise ValueError('Explicit distinct export selection required')
     m = verify_private_review_bundle(raw, expected_sha256=expected_sha256)
-    inventory = {i['path']: i for i in m['inventory']}
-    rows = {r['code']: r for r in m['items']}
-    files = {}
     with zipfile.ZipFile(io.BytesIO(raw)) as z:
-        for key in selection:
-            path, role, receipt_key = ALLOWED[key]
-            item = inventory.get(path)
-            if not item or item['role'] != role:
-                raise ValueError('Selected reviewed draft unavailable')
-            row = rows[item['item_code']]
-            if row['applicability'] not in ('REQUIRED', 'OPTIONAL_EVIDENCE'):
-                raise ValueError('Unresolved applicability')
-            receipt = row.get(receipt_key) or {}
-            if key == 'price_offer':
-                if (row['role'] != 'PRICE' or row['state'] != 'OFFER_OWNER_REVIEW_REQUIRED'
-                        or receipt.get('status') != 'OFFER_OWNER_REVIEW_REQUIRED' or not receipt.get('source')):
-                    raise ValueError('Offer confirmation unavailable')
-            else:
-                statements = receipt.get('rows') or []
-                if (row['role'] != 'DECLARATION' or receipt.get('status') != 'DECLARATIONS_DRAFT_REVIEW_ONLY'
-                        or receipt.get('unanswered_count') != 0 or not statements
-                        or any(s.get('state') != 'OWNER_CONFIRMED_REVIEW_REQUIRED' or not s.get('source') for s in statements)):
-                    raise ValueError('Declarations contain unresolved statements')
-            if any(receipt.get(k) is not False for k in ('application_ready', 'signed', 'submitted')):
-                raise ValueError('Unexpected approval state')
-            files[OUTPUT[key]] = z.read(path)
-    return files
+        return {OUTPUT[key]: z.read(_eligible_member(m, key)) for key in selection}
 
 
 def verify_customer_draft_export(export, expected_files):

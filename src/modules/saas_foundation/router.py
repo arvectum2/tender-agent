@@ -655,7 +655,10 @@ def download_application_preview(run_id: str, preview_id: str, principal: Member
 @router.post("/api/saas/runs/{run_id}/application-review/previews/{preview_id}/confirm")
 def confirm_application_preview(run_id: str, preview_id: str, payload: application_review.ConfirmInput, principal: Member, session: DBSession) -> dict:
     _application_review_enabled()
-    return application_review.confirm(session,principal,Path(get_settings().arvectum_data_dir),run_id,preview_id,payload)
+    result = application_review.confirm(session,principal,Path(get_settings().arvectum_data_dir),run_id,preview_id,payload)
+    if not get_settings().saas_customer_draft_export_enabled:
+        result.pop("customer_draft_options", None)
+    return result
 
 
 @router.post("/api/saas/runs/{run_id}/application-review/previews/{preview_id}/customer-draft")
@@ -668,7 +671,8 @@ def export_customer_draft(run_id: str, preview_id: str, payload: application_rev
                                                    run_id, preview_id, payload)
     return Response(content=raw, media_type="application/zip", headers={
         "Content-Disposition": 'attachment; filename="UNSIGNED-PARTIAL-DRAFT-REVIEW-ONLY.zip"',
-        "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"})
+        "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff",
+        "X-Draft-SHA256": application_review.export_digest(raw)})
 
 
 @router.post("/api/saas/runs/{run_id}/screen")
