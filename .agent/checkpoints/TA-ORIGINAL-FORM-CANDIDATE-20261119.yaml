@@ -1,0 +1,16 @@
+task_id: TA-ORIGINAL-FORM-CANDIDATE-20261119
+status: in_progress
+goal: Private archived original DOCX form candidate, exact source, map, current fact and rendered byte binding.
+definition_of_done:
+  - Select exact verified archived source member through server inventory and source requirement.
+  - Independently constrain DOCX mutations to mapped textual identity tokens, reject unsupported constructs and missing values.
+  - Bind candidate receipt to scope, revision, map, fact versions, output SHA; no release or legal readiness.
+  - Synthetic focused tests and draft publication.
+completed:
+  - Previous PR662 exact 383d819f CI 19/19.
+current_stage: implementation
+remaining:
+  - Implement source binding and structural review.
+last_verified_commit: 383d819f199657d0c22c0fb0164fe3e5cba21412
+test_results: []
+resume_instruction: Build private-only candidate; do not import real sources, enable export, deploy or submit.
