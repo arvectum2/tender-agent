@@ -255,7 +255,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-11-19: APR04 authenticated review development verified PR662 2558f0f5, CI19/19, 23 HTTP/migration and Chromium synthetic 1280/390 PASS. Next controlled customer-facing-only unsigned draft export with current evidence and retained approval. No production migration, actual approval, auto merge or submission. Prior safety-blocked replay remains prohibited."
+resume_instruction: "2026-11-19: Continue TA-CUSTOMER-DRAFT-EXPORT-20261119 checkpoint on current authenticated-review branch. Explicit exact retained acknowledgement and fresh evidence; bounded unsigned customer draft subset, no production or submission."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -1124,3 +1124,9 @@ authenticated_application_review_20261119:
   checkpoint: .agent/checkpoints/TA-AUTHENTICATED-APPLICATION-REVIEW-20261119.yaml
   current_stage: bounded_development_verified_pending_merge
   last_verified_commit: 2558f0f5a4705731a87851e15ec7f8aae8f82e0b
+
+customer_draft_export_20261119:
+  task_id: TA-CUSTOMER-DRAFT-EXPORT-20261119
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-CUSTOMER-DRAFT-EXPORT-20261119.yaml
+  current_stage: implementation
