@@ -105,6 +105,19 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 <label><input type="checkbox" id="customer-draft-ack" style="width:auto" disabled> Скачать только выбранные черновики для дополнительной проверки, не для подачи.</label>
 <button id="customer-draft-download" disabled>Скачать отдельный ZIP</button>
 <div id="customer-draft-result" aria-live="polite" style="overflow-wrap:anywhere"></div></div></details>
+<details><summary>Независимая проверка оригинальной формы (эксперимент)</summary>
+<p>Только архивная форма своего прогона. Автор назначает другого участника owner/admin; проверяющий скачивает точный DOCX. Не является готовой заявкой, подписью или разрешением на отправку.</p>
+<button id="original-form-refresh">Загрузить очередь проверки и участников</button>
+<div id="original-form-editor" hidden>
+<label>Назначенный проверяющий<select id="original-form-reviewer"><option value="">Выберите другого участника</option></select></label>
+<label>Карта исходной формы (.json, до 32 КиБ: item_code, file_id, mapping, signatory, goods_used)<input id="original-form-input" type="file" accept=".json,application/json"></label>
+<button id="original-form-create" disabled>Подготовить форму для проверки</button>
+<label>Мои формы на проверке<select id="original-form-select"><option value="">Выберите форму</option></select></label>
+<div id="original-form-summary" aria-live="polite" style="overflow-wrap:anywhere"></div>
+<button id="original-form-download" disabled>Скачать приватный DOCX и проверить SHA-256</button>
+<label><input id="original-form-ack" type="checkbox" style="width:auto" disabled> Я проверил именно этот документ, исходную архивную редакцию и заполненные поля; согласование только внутреннее.</label>
+<button id="original-form-confirm" disabled>Записать независимое согласование</button>
+</div></details>
 <div id="qualification-panel" hidden role="status" aria-live="polite" style="border:1px solid #496477;border-radius:10px;padding:12px;margin-top:12px">
 <strong id="qualification-verdict"></strong>
 <p id="qualification-source-note"></p>
@@ -200,6 +213,7 @@ let legalVersions=null;
 let uiBusy=false;
 let sessionEpoch=0;
 let applicationReview=null,applicationDownloaded=false;
+let originalFormContext=null,originalFormItems=[],originalFormDownloaded=null;
 const val=id=>document.getElementById(id).value.trim();
 const split=id=>val(id).split(",").map(x=>x.trim()).filter(Boolean);
 const num=id=>val(id)===""?null:Number(val(id));
@@ -402,7 +416,7 @@ function syncApplicationReview(){
  document.getElementById("application-review-download").disabled=uiBusy||!current;
  document.getElementById("application-review-ack").disabled=uiBusy||!current||!applicationDownloaded;
  document.getElementById("application-review-confirm").disabled=uiBusy||!current||!applicationDownloaded||!document.getElementById("application-review-ack").checked;
- syncCustomerDraft();
+ syncCustomerDraft();syncOriginalFormReview();
 }
 function clearApplicationReview(){clearCustomerDraft();applicationReview=null;applicationDownloaded=false;document.getElementById("application-review-ack").checked=false;document.getElementById("application-review-summary").replaceChildren();syncApplicationReview();}
 function showApplicationReview(r){
@@ -458,6 +472,89 @@ document.getElementById("customer-draft-ack").addEventListener("change",syncCust
 bind("application-review-history",async()=>{const r=await call(applicationReviewPath());if(r.historical_only!==true||r.application_ready!==false)throw Error("Неожиданная история");return r});
 for(const id of ["run-id","application-review-input"])document.getElementById(id).addEventListener("input",clearApplicationReview);
 document.getElementById("application-review-ack").addEventListener("change",syncApplicationReview);
+function originalFormPath(){const id=val("run-id");if(!id)throw Error("Укажите ID своего архивного прогона");return "/api/saas/runs/"+encodeURIComponent(id)+"/original-form-review/candidates";}
+function originalFormCurrent(){return originalFormContext&&originalFormContext.run_id===val("run-id")&&originalFormContext.epoch===sessionEpoch;}
+function selectedOriginalForm(){return originalFormCurrent()?originalFormItems.find(p=>p.candidate_id===val("original-form-select")):null;}
+function validOriginalForm(p,runId,memberId){
+ return p&&p.run_id===runId&&(p.creator_id===memberId||p.reviewer_id===memberId)&&p.creator_id!==p.reviewer_id&&
+ typeof p.candidate_id==="string"&&/^[a-f0-9]{64}$/.test(p.candidate_sha256)&&/^[a-f0-9]{64}$/.test(p.document_sha256)&&
+ ["PRIVATE_FORM_REVIEW_PENDING","INDEPENDENT_INTERNAL_REVIEW_RECORDED"].includes(p.status)&&p.historical_only===true&&
+ p.application_ready===false&&p.external_export_allowed===false&&p.signed===false&&p.submitted===false;
+}
+function resetOriginalFormSelection(){
+ originalFormDownloaded=null;el("original-form-ack").checked=false;el("original-form-summary").replaceChildren();
+ const p=selectedOriginalForm();if(!p)return;
+ const root=el("original-form-summary"),src=p.source||{};
+ documentaryLine(root,p.status==="PRIVATE_FORM_REVIEW_PENDING"?"Ожидает внутренней проверки":"Историческое согласование записано. Не разрешение на отправку.");
+ documentaryLine(root,"Автор: "+p.creator_id+" · проверяющий: "+p.reviewer_id);
+ documentaryLine(root,"Исходный файл: "+(src.file_id||"—")+" · редакция: "+(src.observed_version||"—")+" · до "+p.expires_at);
+ documentaryLine(root,"SHA-256 исходника: "+(src.template_sha256||"—"));
+ documentaryLine(root,"SHA-256 полученного DOCX: "+p.document_sha256);
+ documentaryLine(root,"Привязка источника, карты и реквизитов: "+p.candidate_sha256);
+}
+function setOriginalFormItems(items,preferred=""){
+ originalFormItems=items;const select=el("original-form-select");select.replaceChildren(new Option("Выберите форму",""));
+ for(const p of items)select.add(new Option((p.reviewer_id===originalFormContext.member_id?"На моей проверке: ":"Мой документ: ")+p.candidate_id+" · "+p.status,p.candidate_id));
+ select.value=preferred;resetOriginalFormSelection();
+}
+function clearOriginalFormReview(){
+ originalFormContext=null;originalFormItems=[];originalFormDownloaded=null;
+ el("original-form-reviewer").replaceChildren(new Option("Выберите другого участника",""));
+ el("original-form-select").replaceChildren(new Option("Выберите форму",""));
+ el("original-form-input").value="";resetOriginalFormSelection();syncOriginalFormReview();
+}
+function syncOriginalFormReview(){
+ const ready=Boolean(originalFormCurrent()),p=selectedOriginalForm(),pending=p?.status==="PRIVATE_FORM_REVIEW_PENDING";
+ const reviewer=ready&&pending&&p.reviewer_id===originalFormContext.member_id&&originalFormDownloaded===p.candidate_id;
+ el("original-form-editor").hidden=!ready;
+ el("original-form-reviewer").disabled=uiBusy||!ready;
+ el("original-form-input").disabled=uiBusy||!ready;
+ el("original-form-select").disabled=uiBusy||!ready;
+ el("original-form-create").disabled=uiBusy||!ready||!val("original-form-reviewer")||!el("original-form-input").files?.length;
+ el("original-form-download").disabled=uiBusy||!ready||!pending;
+ el("original-form-ack").disabled=uiBusy||!reviewer;
+ el("original-form-confirm").disabled=uiBusy||!reviewer||!el("original-form-ack").checked;
+}
+bind("original-form-refresh",async()=>{
+ clearOriginalFormReview();const runId=val("run-id"),epoch=sessionEpoch,path=originalFormPath();
+ const me=await call("/api/saas/me");if(!["owner","admin"].includes(me.role)||me.legal_accepted!==true||!me.member_id)throw Error("Требуются полномочия и принятие условий");
+ const history=await call(path),directory=await call("/api/saas/members");
+ if(runId!==val("run-id")||epoch!==sessionEpoch||history.historical_only!==true||history.external_export_allowed!==false||
+ !Array.isArray(history.items)||!history.items.every(p=>validOriginalForm(p,runId,me.member_id))||!Array.isArray(directory.members))throw Error("Неожиданный ответ очереди");
+ originalFormContext={run_id:runId,member_id:me.member_id,epoch};
+ for(const m of directory.members)if(m.active===true&&["owner","admin"].includes(m.role)&&m.member_id!==me.member_id)el("original-form-reviewer").add(new Option(m.name+" · "+m.role,m.member_id));
+ setOriginalFormItems(history.items);return {status:"PRIVATE_FORM_QUEUE_LOADED",count:history.items.length};
+});
+bind("original-form-create",async()=>{
+ const c=originalFormContext,f=el("original-form-input").files[0],reviewer=val("original-form-reviewer");
+ if(!originalFormCurrent()||!f||f.size>32768||!reviewer||reviewer===c.member_id)throw Error("Выберите карту и другого проверяющего");
+ const map=JSON.parse(await f.text());if(!map||typeof map!=="object"||Array.isArray(map)||Object.prototype.hasOwnProperty.call(map,"reviewer_id"))throw Error("Проверяющий выбирается отдельно, не из JSON");
+ const r=await call(originalFormPath(),{method:"POST",body:{...map,reviewer_id:reviewer}});
+ if(originalFormContext!==c||!originalFormCurrent()||!validOriginalForm(r,c.run_id,c.member_id)||r.creator_id!==c.member_id||r.reviewer_id!==reviewer||r.status!=="PRIVATE_FORM_REVIEW_PENDING")throw Error("Неожиданный ответ создания формы");
+ setOriginalFormItems([r,...originalFormItems.filter(p=>p.candidate_id!==r.candidate_id)],r.candidate_id);return r;
+});
+bind("original-form-download",async()=>{
+ const p=selectedOriginalForm(),c=originalFormContext;originalFormDownloaded=null;el("original-form-ack").checked=false;
+ if(!p||!token||p.status!=="PRIVATE_FORM_REVIEW_PENDING"||!window.crypto?.subtle)throw Error("Нет приватной формы или проверки SHA");
+ const response=await fetch(originalFormPath()+"/"+encodeURIComponent(p.candidate_id)+"/document",{credentials:"omit",cache:"no-store",redirect:"error",headers:{Authorization:"Bearer "+token}});
+ if(!response.ok){const e=Error("HTTP "+response.status);e.status=response.status;throw e;}
+ if(response.headers.get("Content-Type")?.split(";")[0]!=="application/vnd.openxmlformats-officedocument.wordprocessingml.document")throw Error("Неожиданный формат формы");
+ const buf=await response.arrayBuffer();if(!buf.byteLength||buf.byteLength>524288)throw Error("Недопустимый размер DOCX");
+ const sha=Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256",buf))).map(x=>x.toString(16).padStart(2,"0")).join("");
+ if(sha!==p.document_sha256||originalFormContext!==c||selectedOriginalForm()!==p)throw Error("Форма или сессия изменены");
+ const url=URL.createObjectURL(new Blob([buf],{type:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"}));const a=document.createElement("a");a.href=url;a.download="PRIVATE-UNSIGNED-FORM-DO-NOT-SUBMIT.docx";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ originalFormDownloaded=p.candidate_id;return {status:"PRIVATE_DOCX_DOWNLOADED",sha256:sha};
+});
+bind("original-form-confirm",async()=>{
+ const p=selectedOriginalForm(),c=originalFormContext;
+ if(!p||p.status!=="PRIVATE_FORM_REVIEW_PENDING"||p.reviewer_id!==c.member_id||originalFormDownloaded!==p.candidate_id||!el("original-form-ack").checked)throw Error("Требуется скачивание и явное подтверждение проверяющего");
+ const r=await call(originalFormPath()+"/"+encodeURIComponent(p.candidate_id)+"/acknowledge",{method:"POST",body:{candidate_sha256:p.candidate_sha256,document_sha256:p.document_sha256,confirm_exact_private_form:true}});
+ if(originalFormContext!==c||selectedOriginalForm()!==p||!validOriginalForm(r,c.run_id,c.member_id)||r.candidate_id!==p.candidate_id||r.candidate_sha256!==p.candidate_sha256||r.document_sha256!==p.document_sha256||r.status!=="INDEPENDENT_INTERNAL_REVIEW_RECORDED"||!r.receipt_id)throw Error("Неожиданный ответ согласования");
+ setOriginalFormItems(originalFormItems.map(x=>x===p?r:x),r.candidate_id);return r;
+});
+document.getElementById("run-id").addEventListener("input",clearOriginalFormReview);
+document.getElementById("original-form-select").addEventListener("change",()=>{resetOriginalFormSelection();syncOriginalFormReview();});
+for(const id of ["original-form-reviewer","original-form-input","original-form-ack"])document.getElementById(id).addEventListener("change",syncOriginalFormReview);
 bind("read-profile",async()=>{
  const r=await call("/api/saas/profile"),p=r.profile||{},c=p.criteria||{},q=p.qualification||{},m=p.commercial||{};
  for(const k of ["categories","regions","keywords"])document.getElementById(k).value=(c[k]||[]).join(", ");
@@ -555,7 +652,7 @@ function clearCompany(){
  el("company-registry").value="";el("company-commercial-url").value="";syncCompanyControls();
 }
 function clearSession(){
- clearApplicationReview();clearDocumentary();
+ clearOriginalFormReview();clearApplicationReview();clearDocumentary();
  token="";sessionEpoch++;legalVersions=null;referenceVersion=null;
  // Clear also the legacy profile, references, file forms, and report output.
  for(const field of document.querySelectorAll("input,textarea,select")){

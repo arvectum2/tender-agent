@@ -34,6 +34,7 @@ class Settings(BaseSettings):
     saas_company_actual_samples_enabled: bool = False
     saas_application_review_enabled: bool = False
     saas_customer_draft_export_enabled: bool = False
+    saas_original_form_review_enabled: bool = False
     saas_company_cost_norms_enabled: bool = False
     saas_company_cost_norm_binding_enabled: bool = False
     saas_company_historical_comparables_enabled: bool = False

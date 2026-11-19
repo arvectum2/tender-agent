@@ -82,6 +82,7 @@ from src.modules.saas_foundation import (
     company_reviewed_contracts,
     company_schedule,
     documentary_readiness,
+    original_form_review,
 )
 from src.modules.saas_foundation.commercial_attachment_bytes import MAX_ATTACHMENT_BYTES
 from src.modules.saas_foundation.models import (
@@ -673,6 +674,50 @@ def export_customer_draft(run_id: str, preview_id: str, payload: application_rev
         "Content-Disposition": 'attachment; filename="UNSIGNED-PARTIAL-DRAFT-REVIEW-ONLY.zip"',
         "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff",
         "X-Draft-SHA256": application_review.export_digest(raw)})
+
+
+def _original_form_review_enabled():
+    _application_review_enabled()
+    if not get_settings().saas_original_form_review_enabled:
+        raise HTTPException(404, "Original form review disabled")
+
+
+@router.post("/api/saas/runs/{run_id}/original-form-review/candidates", status_code=201)
+async def create_original_form_candidate(run_id: str, request: Request, principal: Member, session: DBSession):
+    _original_form_review_enabled()
+    application_review._access(session, principal, run_id)
+    data = bytearray()
+    async for chunk in request.stream():
+        if len(data)+len(chunk)>32768:
+            raise HTTPException(413, "Original form mapping too large")
+        data.extend(chunk)
+    try:
+        payload = original_form_review.CandidateInput.model_validate_json(data)
+    except ValueError as exc:
+        raise HTTPException(422, "Invalid original form mapping") from exc
+    return await run_in_threadpool(original_form_review.create, session, principal, run_id, payload)
+
+
+@router.get("/api/saas/runs/{run_id}/original-form-review/candidates")
+def original_form_history(run_id: str, principal: Member, session: DBSession):
+    _original_form_review_enabled()
+    return original_form_review.history(session, principal, run_id)
+
+
+@router.get("/api/saas/runs/{run_id}/original-form-review/candidates/{candidate_id}/document")
+def download_original_form_candidate(run_id: str, candidate_id: str, principal: Member, session: DBSession):
+    _original_form_review_enabled()
+    raw = original_form_review.download(session, principal, run_id, candidate_id)
+    return Response(content=raw, media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        headers={"Content-Disposition": 'attachment; filename="PRIVATE-UNSIGNED-FORM-DO-NOT-SUBMIT.docx"',
+                 "Cache-Control":"no-store","X-Content-Type-Options":"nosniff"})
+
+
+@router.post("/api/saas/runs/{run_id}/original-form-review/candidates/{candidate_id}/acknowledge")
+def acknowledge_original_form(run_id: str, candidate_id: str, payload: original_form_review.ReviewInput,
+                              principal: Member, session: DBSession):
+    _original_form_review_enabled()
+    return original_form_review.acknowledge(session, principal, run_id, candidate_id, payload)
 
 
 @router.post("/api/saas/runs/{run_id}/screen")

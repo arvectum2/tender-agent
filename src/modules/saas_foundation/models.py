@@ -505,3 +505,38 @@ class ApplicationReviewDecision(UUIDPrimaryKeyMixin, Base):
 for _review_model in (ApplicationReviewPreview, ApplicationReviewDecision):
     event.listen(_review_model, 'before_update', _immutable_company_decision)
     event.listen(_review_model, 'before_delete', _immutable_company_decision)
+
+
+class OriginalFormReviewCandidate(UUIDPrimaryKeyMixin, Base):
+    """Immutable private original-form candidate assigned to one other member."""
+    __tablename__ = 'original_form_review_candidates'
+    tenant_id: Mapped[str] = mapped_column(String(64), ForeignKey('saas_tenants.tenant_id'), nullable=False)
+    run_id: Mapped[str] = mapped_column(String(128), ForeignKey('saas_runs.run_id'), nullable=False)
+    creator_id: Mapped[str] = mapped_column(String(36), ForeignKey('saas_members.id'), nullable=False)
+    reviewer_id: Mapped[str] = mapped_column(String(36), ForeignKey('saas_members.id'), nullable=False)
+    input_json: Mapped[dict] = mapped_column(JSON, nullable=False)
+    receipt_json: Mapped[dict] = mapped_column(JSON, nullable=False)
+    document_bytes: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
+    document_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    candidate_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    __table_args__ = (
+        CheckConstraint('creator_id <> reviewer_id', name='ck_original_form_distinct_members'),
+        Index('ix_original_form_review_scope', 'tenant_id', 'run_id', 'created_at'),
+    )
+
+
+class OriginalFormReviewReceipt(UUIDPrimaryKeyMixin, Base):
+    """Historical acknowledgement, not a release authorization."""
+    __tablename__ = 'original_form_review_receipts'
+    candidate_id: Mapped[str] = mapped_column(ForeignKey('original_form_review_candidates.id'), nullable=False, unique=True)
+    reviewer_id: Mapped[str] = mapped_column(String(36), ForeignKey('saas_members.id'), nullable=False)
+    candidate_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    document_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+
+
+for _form_model in (OriginalFormReviewCandidate, OriginalFormReviewReceipt):
+    event.listen(_form_model, 'before_update', _immutable_company_decision)
+    event.listen(_form_model, 'before_delete', _immutable_company_decision)

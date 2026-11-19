@@ -501,3 +501,32 @@ def test_application_review_migration_preserves_history(tmp_path, monkeypatch):
         with engine.connect() as conn:assert conn.scalar(text('SELECT count(*) FROM application_review_decisions'))==1
     finally:
         engine.dispose();invalidate_settings_cache()
+
+
+def test_original_form_review_migration_preserves_history(tmp_path, monkeypatch):
+    import pytest
+    db_url = 'sqlite:///'+str(tmp_path/'original-form-review.sqlite')
+    monkeypatch.setenv('AI_CORP_DATABASE_URL', db_url)
+    invalidate_settings_cache()
+    cfg = Config(str(Path(__file__).resolve().parents[1]/'alembic.ini'))
+    engine = create_engine(db_url)
+    try:
+        with engine.begin() as conn:
+            for table, identity in (('saas_tenants','tenant_id'),('saas_members','id'),('saas_runs','run_id')):
+                conn.execute(text(f'CREATE TABLE {table} ({identity} VARCHAR PRIMARY KEY)'))
+        command.stamp(cfg,'123_application_review')
+        command.upgrade(cfg,'124_original_form_review')
+        assert {'original_form_review_candidates','original_form_review_receipts'} <= set(inspect(engine).get_table_names())
+        command.downgrade(cfg,'123_application_review')
+        command.upgrade(cfg,'124_original_form_review')
+        with engine.begin() as conn:
+            conn.execute(text("INSERT INTO original_form_review_candidates (id,tenant_id,run_id,creator_id,reviewer_id,input_json,receipt_json,document_bytes,document_sha256,candidate_sha256,created_at,expires_at) VALUES ('fixture-candidate','tenant','run','creator','reviewer','{}','{}',:raw,:sha,:sha,'2026-11-19','2026-11-20')"),{'raw':b'synthetic','sha':'a'*64})
+            conn.execute(text("INSERT INTO original_form_review_receipts (id,candidate_id,reviewer_id,candidate_sha256,document_sha256,created_at) VALUES ('fixture-receipt','fixture-candidate','reviewer',:sha,:sha,'2026-11-19')"),{'sha':'a'*64})
+        with pytest.raises(RuntimeError,match='Cannot discard original form review history'):
+            command.downgrade(cfg,'123_application_review')
+        with engine.connect() as conn:
+            assert conn.scalar(text('SELECT document_bytes FROM original_form_review_candidates')) == b'synthetic'
+            assert conn.scalar(text('SELECT count(*) FROM original_form_review_receipts')) == 1
+    finally:
+        engine.dispose()
+        invalidate_settings_cache()
