@@ -11,14 +11,22 @@ import subprocess
 import sys
 import tempfile
 from concurrent.futures import ThreadPoolExecutor
+from datetime import date
 from pathlib import Path
 from threading import Barrier
 
 from alembic.config import Config
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import Session
 
 from alembic import command
+from src.modules.saas_foundation.models import PrivateReviewRetentionProposal
+from src.modules.saas_foundation.private_review_retention import (
+    ScheduleProposal,
+    describe,
+    latest_proposal,
+)
 from src.shared.config.settings import invalidate_settings_cache
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -122,6 +130,29 @@ def main():
                 assert conn.execute(text('SELECT * FROM original_form_review_receipts')).all() == receipt
                 assert conn.scalar(text('SELECT version_num FROM alembic_version')) == '124_original_form_review'
             print('PG16_SYNTHETIC_BACKUP_RESTORE_EXACT_ROWS_PASS')
+            command.upgrade(cfg, '125_private_review_retention')
+            command.downgrade(cfg, '124_original_form_review')
+            command.upgrade(cfg, '125_private_review_retention')
+            proposal = ScheduleProposal(order_ref='fixture-order', policy_ref='fixture-policy',
+                working_days=30, backup_days=90, order_ended_on=date(2026,10,1), end_evidence_ref='fixture-end')
+            with Session(engine) as session:
+                session.add(PrivateReviewRetentionProposal(tenant_id='tenant',revision=1,**proposal.model_dump()))
+                session.commit()
+                row=latest_proposal(session,tenant_id='tenant',order_ref='fixture-order')
+                assert row.revision==1 and row.hold_state=='UNKNOWN'
+                assert latest_proposal(session,tenant_id='other',order_ref='fixture-order') is None
+                assert describe(proposal,as_of=date(2026,11,19))['deletion_authorized'] is False
+            try:
+                command.downgrade(cfg,'124_original_form_review')
+            except RuntimeError as exc:
+                assert 'Cannot discard retention proposal history' in str(exc)
+            else:
+                raise AssertionError('Nonempty proposal downgrade allowed')
+            with engine.connect() as conn:
+                assert conn.scalar(text('SELECT count(*) FROM private_review_retention_proposals')) == 1
+                assert conn.scalar(text('SELECT count(*) FROM original_form_review_candidates')) == 1
+            print('PG16_RETENTION_PROPOSAL_ROUNDTRIP_AND_GUARD_PASS')
+
             run('createdb', '-h', str(sock), '-p', port, '-U', role, 'api_fixture')
             api_env = dict(env, AI_CORP_DATABASE_URL=url('api_fixture'),
                            AI_CORP_ARVECTUM_DATA_DIR=str(root/'api-data'),

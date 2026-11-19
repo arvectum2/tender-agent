@@ -4,12 +4,13 @@ Opaque secrets are never stored; only SHA-256 digests of 256-bit random tokens.
 """
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import date, datetime
 
 from sqlalchemy import (
     JSON,
     Boolean,
     CheckConstraint,
+    Date,
     DateTime,
     ForeignKey,
     Index,
@@ -540,3 +541,35 @@ class OriginalFormReviewReceipt(UUIDPrimaryKeyMixin, Base):
 for _form_model in (OriginalFormReviewCandidate, OriginalFormReviewReceipt):
     event.listen(_form_model, 'before_update', _immutable_company_decision)
     event.listen(_form_model, 'before_delete', _immutable_company_decision)
+
+
+class PrivateReviewRetentionProposal(UUIDPrimaryKeyMixin, Base):
+    """Internal order-level planning snapshots; never a retention authorization."""
+    __tablename__ = 'private_review_retention_proposals'
+    tenant_id: Mapped[str] = mapped_column(String(64), ForeignKey('saas_tenants.tenant_id'), nullable=False)
+    order_ref: Mapped[str] = mapped_column(String(128), nullable=False)
+    revision: Mapped[int] = mapped_column(Integer, nullable=False)
+    policy_ref: Mapped[str] = mapped_column(String(128), nullable=False)
+    order_ended_on: Mapped[date | None] = mapped_column(Date)
+    end_evidence_ref: Mapped[str | None] = mapped_column(String(128))
+    working_days: Mapped[int] = mapped_column(Integer, nullable=False)
+    backup_days: Mapped[int] = mapped_column(Integer, nullable=False)
+    hold_state: Mapped[str] = mapped_column(String(16), nullable=False)
+    hold_evidence_ref: Mapped[str | None] = mapped_column(String(128))
+    hold_review_on: Mapped[date | None] = mapped_column(Date)
+    recorded_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    __table_args__ = (
+        UniqueConstraint('tenant_id', 'order_ref', 'revision', name='uq_retention_proposal_revision'),
+        CheckConstraint('revision > 0', name='ck_retention_proposal_revision'),
+        CheckConstraint("working_days >= 0 AND working_days <= 3650 AND backup_days >= working_days AND backup_days <= 3650",
+                        name='ck_retention_proposal_days'),
+        CheckConstraint("(order_ended_on IS NULL AND end_evidence_ref IS NULL) OR (order_ended_on IS NOT NULL AND end_evidence_ref IS NOT NULL)",
+                        name='ck_retention_proposal_end'),
+        CheckConstraint("(hold_state = 'UNKNOWN' AND hold_evidence_ref IS NULL AND hold_review_on IS NULL) OR "
+                        "(hold_state IN ('ACTIVE','CLEAR') AND hold_evidence_ref IS NOT NULL AND hold_review_on IS NOT NULL)",
+                        name='ck_retention_proposal_hold'),
+    )
+
+
+event.listen(PrivateReviewRetentionProposal, 'before_update', _immutable_company_decision)
+event.listen(PrivateReviewRetentionProposal, 'before_delete', _immutable_company_decision)
