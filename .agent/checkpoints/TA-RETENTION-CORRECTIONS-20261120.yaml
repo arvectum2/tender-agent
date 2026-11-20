@@ -1,0 +1,15 @@
+task_id: TA-RETENTION-CORRECTIONS-20261120
+status: in_progress
+goal: Append-only correction of proposed document-order associations in the operator console.
+definition_of_done:
+- Same-tenant correction history with optimistic revision check and composite foreign keys.
+- Accounting and console show current proposed association; prior history preserved.
+- Isolated API, migration and browser tests; no deletion, access change or release.
+completed:
+- Exact 58bbca2b CI 19/19; published ca0d4a81.
+current_stage: implementation
+remaining:
+- Model, migration, scoped service, console and test acceptance.
+last_verified_commit: 58bbca2b5d9ad6e9e9c2be25d4054183d467478a
+test_results: []
+resume_instruction: Continue bounded proposed link correction. No previously rejected readiness operation, production or deletion.
