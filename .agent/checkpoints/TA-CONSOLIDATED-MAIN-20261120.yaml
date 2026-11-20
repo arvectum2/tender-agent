@@ -1,0 +1,18 @@
+task_id: TA-CONSOLIDATED-MAIN-20261120
+status: in_progress
+goal: Integrate exact PR657 development candidate with current main without regressing fresh recovery or modifying production.
+definition_of_done:
+  - Preserve both current main and source candidate ancestry and all unrelated changes.
+  - Resolve only four overlapping files; preserve both sets of tests and exact historic roadmap evidence separately.
+  - Exact integration CI and independent review; real acceptance and production separate.
+completed_stages:
+  - Closed all 81 already integrated PRs after ancestry/dependency verification; open PR count 48 before this candidate.
+  - Verified PR632 and PR640 are complete ancestors of PR657.
+  - Merged code overlaps with three-way merge; preserved independent signed ZIP/tamper and strict receipt/count test additions.
+  - Historical 26 roadmap lines relocated verbatim to docs/roadmap/TA_INTEGRATED_CANDIDATE_HISTORY_2026-11-18.md; pinned master source unchanged.
+current_stage: candidate_ci
+remaining_stages: [exact CI, correct any regressions, review, reconcile extension PR662 and other unique roots]
+last_verified_commit: abcd8727326c398d870edbc4a2da793e090ac8eb
+source_candidate: 02bfe3a01a81aaa2cd8d769f37f391b1e2d7ccd0
+last_checks: Read-only runtime HTTP 200 for backend and DP; overlapping Python files compile in isolated temporary directory; actual candidate CI not yet run.
+resume_instruction: Check review branch and its exact CI; do not merge or deploy automatically. Preserve live MI worktree and its nine local commits; continue other unique PRs only after exact reconciliation.

@@ -1,5 +1,5 @@
 task_id: TA-WSF07B-EXACT-BEARER-20261117
-status: in_progress
+status: completed
 goal: Resolve Basic/Bearer collision for exact WSF07B GET; establish private source binding and conservative ownership review package; hand off to Company without activating access.
 definition_of_done:
   - Exact route/method and registered handler independent Bearer boundary, negative HTTP regressions, CI.
@@ -7,9 +7,20 @@ definition_of_done:
   - Deliver exact commit, tests and non-sensitive handoff to Company; no credentials, active manifest, Workspace release or real data access.
 completed:
   - Reopened normative contract and source; live anonymous endpoint 401, collision confirmed. Production prior checkpoint completed.
-current_stage: strict_auth_and_private_provenance
-remaining:
-  - Implement, test, review release and source binding, package and handoff.
-last_verified_commit: 28e874b65d8aeab5a13e3c2453632810c14140be
-test_results: []
-resume_instruction: Read checkpoint and live release first. Never activate real records or issue credentials. No unreviewed deployment, unrelated merges, or DB writes.
+  - Fixed exact GET/raw path and registered first matching guarded handler, no broad exemptions. PR631 tested head b48797bf09977530c8b555f6079d10a1ad7bd239.
+  - Focused regression 94 passed, 1 skipped; actual src.main with disposable synthetic PostgreSQL PASS, scoped valid Bearer, forbidden invalid/Basic/revoked, sibling/method Basic protection, SELECT-only and no private-field leaks. Fixture DB removed.
+  - Live source verifier 14/14; prior database binding and exact deal-table fingerprint match, DB 122; 12 corporate profile-correlated candidates, 9 ownership unproven excluded, 0 admitted. Private reviewed nonoperational package checksum verified; no active grant, token or manifest.
+  - Non-sensitive handoff published in Company issue 16, exact commit and tests.
+  - Owner continuation authorized code-only rollout, not admission. PR631 exact CI 19/19, merged exact reviewed tree b32e68d164958cf1ab95644cc901aaeb01ab08b1 into main 3b37fb6988dd996efeb55e69058016a22a2bd48f. Isolated exact release prepared with copied unchanged venv; 94 passed/1 skipped on release.
+  - Guarded code-only deployment of exact main 3b37fb6988dd996efeb55e69058016a22a2bd48f completed 2026-11-17T17:37:50Z. First launchd bootstrap transient error; old launcher restored, service recovered, old API verified; guarded retry waited for actual removal and succeeded. Lock released. No DB migration or mutation.
+  - Actual API exact GET anonymous/invalid Bearer/Basic 503 SOURCE_NOT_ADMITTED, cache no-store; other methods and neighboring paths retain Basic; health/readiness/Portfolio/UI and DP health pass. Release verifier 14/14 OK. DB binding and prior deal checksum, exact 21 identities and provenance unchanged; private review package revalidated on new release, no admission.
+  - Company issue 16 updated with deployment commit and acceptance results, no private IDs or credentials.
+  - Exact main CI run 44138601320 completed SUCCESS 9/9; mirror SUCCESS; live drift verifier 14/14 reconfirmed; Company issue 16 final confirmation posted.
+current_stage: deployed_verified_completed
+remaining: []
+last_verified_commit: 3b37fb6988dd996efeb55e69058016a22a2bd48f
+test_results:
+  - Exact PR CI 19/19 SUCCESS; 94 passed/1 skipped on release, Ruff/diff, actual synthetic PostgreSQL PASS.
+  - Production exact GET 503 not admitted; neighboring Basic regressions, release marker and DB binding/21 identity/provenance/fingerprint checks PASS; GitVerse mirror SUCCESS.
+  - Final exact main CI 9/9 SUCCESS, production reference remains 503 SOURCE_NOT_ADMITTED.
+resume_instruction: WSF07B source fix and rollout complete. Do not repeat deployment or activate Workspace. Real admission requires separate authorized Company ownership review and contract gates.

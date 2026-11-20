@@ -333,7 +333,30 @@
       const data=await json(api+'/workspace/runs/'+encodeURIComponent(runId)+'/evidence-answer',
         {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question})});
       if(state.runId!==runId || epoch!==state.copilotAnswerEpoch) return;
-      if(data.run_id===runId && data.intent==='composed_evidence' && ['COMPOSED_EVIDENCE_ONLY','UNKNOWN'].includes(data.status) && Array.isArray(data.components) && data.components.length<=9) {
+      if(data.run_id===runId && data.intent==='ri223_review_dossier') {
+        const d=data.observation;
+        if(!d || data.status!=='RI223_ARCHIVED_REVIEW_ONLY' || !Array.isArray(d.domains) || d.domains.length!==9) {
+          paragraph(root,'UNKNOWN · Полный проверенный архивный комплект не подтверждён.','unknown');
+        } else {
+          paragraph(root,data.answer,'help-text');
+          paragraph(root,'Оригиналы: '+d.inventory.originals_verified+' из '+d.inventory.expected_originals+'; документы внутри контейнеров: '+d.inventory.members_verified+'; непрочитанные контейнеры: '+d.inventory.opaque_containers);
+          paragraph(root,'Разделы с цитатами: '+d.source_backed_domains+' из 9. Это не оценка полноты требований.','help-text');
+          renderSingleGroundedAnswer(root,{run_id:runId,status:d.notice.status,citation_kind:'RI223_ARCHIVED_XML',observation:d.notice,citations:d.notice.citations,answer:'Архивное извещение.'},runId);
+          for(const domain of d.domains) {
+            const section=document.createElement('details');section.className='quote-review';section.open=true;
+            const heading=document.createElement('summary');heading.textContent=domain.title;section.append(heading);
+            renderSingleGroundedAnswer(section,{run_id:runId,status:domain.citations.length?'TOPIC_EXCERPTS_ONLY':'UNKNOWN',citation_kind:'ORIGINAL_DP_CHUNK',citations:domain.citations,answer:'Буквальные фрагменты, условия и применимость к лоту не подтверждены.'},runId);
+            root.append(section);
+          }
+          const sc=d.scoring;
+          if(sc?.status==='PINNED_SCORING_OBSERVATION_ONLY') {
+            paragraph(root,'Методика оценки: стоимостной '+sc.price_weight_percent+'%, нестоимостные '+sc.nonprice_weight_percent+'%.');
+            paragraph(root,'Условный формуляр нестоимостной группы: деловая репутация '+sc.candidate_nonprice_subweights.business_reputation+'%, финансовое состояние '+sc.candidate_nonprice_subweights.financial_condition+'%, квалификация '+sc.candidate_nonprice_subweights.qualification+'%. Применение к лоту не подтверждено.');
+            paragraph(root,sc.source_lineage.member_path+' · SHA-256 PDF '+sc.original_pdf_sha256+' · SHA-256 RAR '+sc.original_rar_sha256,'help-text');
+          } else paragraph(root,'Структурированные веса методики: UNKNOWN.','unknown');
+          paragraph(root,'Соответствие участника: UNKNOWN; затраты: UNKNOWN; риски договора: NOT_ASSESSED; решение: NOT_DECIDED.','unknown');
+        }
+      } else if(data.run_id===runId && data.intent==='composed_evidence'  && ['COMPOSED_EVIDENCE_ONLY','UNKNOWN'].includes(data.status) && Array.isArray(data.components) && data.components.length<=9) {
         paragraph(root,data.answer,'help-text');
         paragraph(root,'Разделы с источниками: '+data.source_backed_component_count+' из '+data.components.length);
         for(const section of data.components) {
@@ -348,10 +371,18 @@
   }
 
   function renderSingleGroundedAnswer(root,data,runId) {
-      if(data.run_id!==runId || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION','TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','ARCHIVED_SECURITY_FIELDS','LITERAL_PERFORMANCE_OBSERVATIONS','CUSTOMER_TERMS_LEGAL_REFERENCES','HISTORICAL_STATUTE_SNAPSHOT_EXCERPT','SECONDARY_AMENDMENT_TIMING_ONLY','GOVERNMENT_COPY_LIST_COMPARISON'].includes(data.status) || !Array.isArray(data.citations) || !data.citations.length) {
+      if(data.run_id!==runId || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION','TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','ARCHIVED_SECURITY_FIELDS','LITERAL_PERFORMANCE_OBSERVATIONS','CUSTOMER_TERMS_LEGAL_REFERENCES','HISTORICAL_STATUTE_SNAPSHOT_EXCERPT','SECONDARY_AMENDMENT_TIMING_ONLY','GOVERNMENT_COPY_LIST_COMPARISON','PINNED_RI223_ARCHIVED_NOTICE'].includes(data.status) || !Array.isArray(data.citations) || !data.citations.length) {
         paragraph(root,'UNKNOWN · Вопрос не поддерживается или доказательство не найдено.','unknown');return;
       }
-      if(['TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','LITERAL_PERFORMANCE_OBSERVATIONS'].includes(data.status) && data.citation_kind==='ORIGINAL_DP_CHUNK') {
+      if(data.status==='PINNED_RI223_ARCHIVED_NOTICE' && data.citation_kind==='RI223_ARCHIVED_XML' && data.observation?.regime==='223fz') {
+        paragraph(root,data.answer,'help-text');
+        const o=data.observation;
+        for(const [key,label] of [['subject','Предмет'],['method','Способ закупки'],['archived_submission_deadline','Архивный срок подачи (часовой пояс UNKNOWN)'],['single_lot_initial_sum','Цена единственного лота'],['single_lot_currency','Валюта лота']]) paragraph(root,label+': '+(o.fields[key]??'UNKNOWN'));
+        for(const [key,label] of [['archived_submission_order','Архивный порядок подачи заявок'],['archived_summingup_order','Архивный порядок подведения итогов']]) if(o.fields[key]) paragraph(root,label+': '+o.fields[key]);
+        renderCitations(root,data.citations,{originalVerified:true});
+        paragraph(root,'SHA-256 XML: '+data.citations[0].source_sha256+' · ZIP: '+data.citations[0].archive_sha256,'help-text');
+        paragraph(root,'Редакция '+o.observed_version+'; правовой статус закупки, обеспечение и победитель: UNKNOWN.','help-text');
+      } else if(['TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','LITERAL_PERFORMANCE_OBSERVATIONS'].includes(data.status) && data.citation_kind==='ORIGINAL_DP_CHUNK') {
         paragraph(root,data.answer,'help-text');
         if(data.status==='LITERAL_PAYMENT_OBSERVATION' && data.observation) {
           const o=data.observation;
@@ -368,6 +399,7 @@
         for(const c of data.citations.slice(0,2)) {
           paragraph(root,c.quote,'citation');
           paragraph(root,c.file_id+' · чанк '+c.chunk_id+' · SHA-256 оригинала '+c.original_sha256,'help-text');
+          if(c.ri223_container) paragraph(root,'Контейнер '+c.ri223_container.parent_name+' · '+c.ri223_container.member_path+' · SHA-256 контейнера '+c.ri223_container.parent_sha256,'help-text');
         }
       } else if(data.status==='SECONDARY_AMENDMENT_TIMING_ONLY' && data.citation_kind==='SECONDARY_LEGAL_REFERENCE' && data.observation?.secondary_copies_agree===true) {
         paragraph(root,data.answer,'help-text');
@@ -423,6 +455,7 @@
       for(const c of data.citations.slice(0,2)) {
         paragraph(root,c.quote,'citation');
         paragraph(root,c.file_id+' · чанк '+c.chunk_id+' · SHA-256 оригинала '+c.original_sha256,'help-text');
+          if(c.ri223_container) paragraph(root,'Контейнер '+c.ri223_container.parent_name+' · '+c.ri223_container.member_path+' · SHA-256 контейнера '+c.ri223_container.parent_sha256,'help-text');
       }
       paragraph(root,'Буквальные фрагменты, не юридический вывод. Поиск не исчерпывающий.','help-text');
     }catch(error){if(state.runId===runId && epoch===state.copilotSearchEpoch)paragraph(root,'UNKNOWN · Проверка не выполнена.','unknown');}
@@ -450,6 +483,7 @@
       $('quote-check-result').textContent = result?.status === 'literal_quote_found_in_extracted_original_only' && evidence?.chunk_id
         ? 'Буквальное совпадение с извлечённым оригиналом: '+fileId+' · чанк '+evidence.chunk_id+
           ' · символы '+evidence.quote_char_start_in_chunk+'–'+evidence.quote_char_end_in_chunk+
+          (evidence.ri223_container ? ' · Контейнер '+evidence.ri223_container.parent_name+' · '+evidence.ri223_container.member_path+' · SHA-256 контейнера '+evidence.ri223_container.parent_sha256 : '')+
           '. Юридический и коммерческий смысл не подтверждён автоматически.'
         : 'UNKNOWN · Буквальное совпадение с подтверждённым оригиналом не установлено. Проверьте текст цитаты, исходник и доступность Data Platform.';
     } catch(error) {
