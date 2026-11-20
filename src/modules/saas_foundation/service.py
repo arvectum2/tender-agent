@@ -70,6 +70,10 @@ def require_tenant(session: Session, token: str | None) -> TenantPrincipal:
     if not token or not token.startswith("saas_") or len(token) > 160:
         raise HTTPException(401, "Valid tenant bearer token required")
     stored = session.scalar(select(SaasAccessToken).where(SaasAccessToken.token_sha256 == digest(token)))
+    return _stored_principal(session, stored)
+
+
+def _stored_principal(session: Session, stored: SaasAccessToken | None) -> TenantPrincipal:
     if not stored or stored.revoked_at or _aware(stored.expires_at) <= now_utc():
         raise HTTPException(401, "Token expired or invalid")
     member = session.scalar(select(SaasMember).where(SaasMember.id == stored.member_id))
@@ -85,6 +89,17 @@ def require_tenant(session: Session, token: str | None) -> TenantPrincipal:
     if tenant.billing_state not in {"trial", "verified_manual_payment"}:
         raise HTTPException(402, "No active entitlement")
     return TenantPrincipal(tenant.tenant_id, tenant.customer_id, member.id, member.role, stored.id)
+
+
+
+def recheck_tenant_principal(session: Session, principal: TenantPrincipal) -> None:
+    """Repeat the existing auth boundary before a long-running review write."""
+    if session.new or session.dirty or session.deleted:
+        raise ValueError("Principal recheck requires a clean session")
+    session.expire_all()
+    current = _stored_principal(session, session.get(SaasAccessToken, principal.token_id))
+    if current != principal:
+        raise HTTPException(403, "Tenant identity changed; authenticate again")
 
 
 def role_required(principal: TenantPrincipal, *allowed: str) -> None:
