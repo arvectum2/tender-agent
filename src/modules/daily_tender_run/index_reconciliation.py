@@ -90,3 +90,83 @@ def reconcile(chunks, rows: list[StoredChunk], contract: EmbeddingContract) -> d
         and counts.get("verified_resource", 0) == len(expected),
         "requires_review": not unambiguous,
     }
+
+
+@dataclass(frozen=True)
+class IndexSnapshot:
+    collection_id: str
+    contract: EmbeddingContract
+    rows: tuple[StoredChunk, ...]
+
+
+def repair_absent_batch(
+    *,
+    repo,
+    client,
+    tender_id: str,
+    collection_id: str,
+    expected_contract: EmbeddingContract,
+    read_snapshot,
+    admitted_write,
+    limit: int = 10,
+) -> dict:
+    """Bounded repair core for a reviewed operator runner, not a live CLI.
+
+    The caller must implement authenticated independent snapshots and a real
+    context manager for mandatory prewrite backup, identity and source locks.
+    The core does not grant admission. Never treat an interrupted API response
+    as success or immediately retry it; independently reconcile before resume.
+    """
+    from src.tender_research.rag.data_platform import build_tender_collection_id
+
+    if type(limit) is not int or not 1 <= limit <= 10:
+        raise ValueError("invalid repair batch limit")
+    if not collection_id:
+        raise ValueError("existing collection required")
+
+    def inventory():
+        if build_tender_collection_id(repo, tender_id) != collection_id:
+            raise ValueError("local collection revision changed")
+        chunks = repo.list_chunks_by_tender(tender_id)
+        if not chunks:
+            raise ValueError("no local chunks")
+        snapshot = read_snapshot(collection_id)
+        if (
+            snapshot.collection_id != collection_id
+            or snapshot.contract != expected_contract
+        ):
+            raise ValueError("collection identity or embedding contract changed")
+        reconciled = reconcile(chunks, list(snapshot.rows), expected_contract)
+        if reconciled["requires_review"]:
+            raise ValueError("collection evidence requires review")
+        return chunks, reconciled
+
+    with admitted_write():
+        _, first = inventory()
+        targets = first["eligible_absent_uris"][:limit]
+        verified = []
+        for uri in targets:
+            chunks, current = inventory()
+            if uri not in current["eligible_absent_uris"]:
+                # A previously interrupted or concurrent successful ingest was
+                # already reconciled by the exact identity checks.
+                continue
+            chunk = next(ch for ch in chunks if "tender-chunk://" + str(ch.id) == uri)
+            client.ingest_chunk(
+                collection_id=collection_id,
+                chunk_id=chunk.id,
+                file_name=chunk.source_file_name or f"{chunk.document_id}.txt",
+                text=chunk.text,
+            )
+            _, after = inventory()
+            if uri in after["eligible_absent_uris"]:
+                raise RuntimeError(
+                    "ingest response has no independently verified resource"
+                )
+            verified.append(uri)
+        _, final = inventory()
+    return {
+        "verified_added": verified,
+        "remaining": len(final["eligible_absent_uris"]),
+        "complete": final["complete"],
+    }
