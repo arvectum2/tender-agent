@@ -964,3 +964,8 @@ The successor loop is constrained to attributable correction → immutable human
 `.agent/execution-queue.yaml` must point back to this master roadmap and may contain only explicitly admitted executable items. The executor may update queue execution status/evidence within its existing authority, but it must not arbitrarily promote a master-roadmap item, resolve an ID collision, change priority/scope, or infer a new ARV mapping by itself.
 
 While `OWNER-CONTINUOUS-ROADMAP-2026-09-18` is active, its deterministic one-at-a-time bounded-materialization rule is itself an explicitly authorized canonical admission mechanism: the watchdog may select the next eligible continuation item in document order and admit only the bounded form permitted by `.agent/owner-directive.yaml`. Outside that mechanism, roadmap promotion still requires Product Owner/Owner or another separately authorized canonical source.
+
+
+## Spec Kit — master roadmap traceability candidate (2026-11-20)
+
+[Specification](../../specs/002-master-roadmap-traceability/spec.md) · [Plan](../../specs/002-master-roadmap-traceability/plan.md) · [Integration tasks](../../specs/002-master-roadmap-traceability/tasks.md). Existing [Power Quality package](../../specs/001-power-quality-evidence-closure/spec.md) is preserved. No status, authority, executor, or priority changes; master roadmap stays canonical.
