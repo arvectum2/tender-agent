@@ -14,6 +14,7 @@ from src.tender_research.rag.presets import (
     tender_recovery_processing_collection_id,
 )
 from src.tender_research.rag.search_types import RagSearchHit
+from src.tender_research.rag.signed_zip import DOCX_MIME, unwrap_signed_docx
 from src.tender_research.repository import TenderRepository
 
 _CHUNK_URI_PREFIX = "tender-chunk://"
@@ -129,6 +130,23 @@ def _processing_collection_id(tender_id: str) -> str:
 
 def _document_uri(document_id: str) -> str:
     return f"tender-document://{document_id}"
+
+
+def _processing_source(document, source_path: Path, *, recovery=False):
+    filename = document.file_name or source_path.name
+    uri = _document_uri(str(document.id))
+    if filename.lower().endswith(".docx.zip"):
+        content, evidence = unwrap_signed_docx(source_path, str(document.sha256 or ""))
+        return {"content": content, "filename": filename[:-4], "content_type": DOCX_MIME,
+                "canonical_uri": uri + "/member/" + evidence["member_sha256"]}, evidence
+    return {"content": source_path.read_bytes(), "filename": filename,
+            "content_type": "application/octet-stream" if recovery else (document.content_type or "application/octet-stream"),
+            "canonical_uri": uri}, None
+
+
+def _preserve_zip_evidence(document, evidence):
+    if evidence is not None:
+        document.raw_meta = {**(document.raw_meta or {}), "signed_zip": evidence}
 
 
 def _tender_collection_revision(
@@ -304,13 +322,11 @@ class DataPlatformDocumentProjector:
                 continue
 
             try:
+                source, zip_evidence = _processing_source(document, local_path)
                 payload = self._client.process_document(
                     collection_id=_processing_collection_id(str(tender.id)),
-                    canonical_uri=_document_uri(str(document.id)),
                     title=document.file_name or str(document.id),
-                    content=local_path.read_bytes(),
-                    filename=document.file_name or local_path.name,
-                    content_type=document.content_type or "application/octet-stream",
+                    **source,
                     chunk_size_chars=self._config.rag_chunk_size_chars,
                     overlap_chars=self._config.rag_chunk_overlap_chars,
                     min_chunk_chars=self._config.rag_min_chunk_chars,
@@ -334,6 +350,7 @@ class DataPlatformDocumentProjector:
                 continue
             processed += 1
             _project_processing_evidence(document, payload)
+            _preserve_zip_evidence(document, zip_evidence)
             status = str(payload.get("extraction_status") or "failed")
             text = str(payload.get("text") or "")
             document.text_extraction_status = status
@@ -453,20 +470,19 @@ def extract_document_with_data_platform(
             f"recovery document {document.id} source file is unavailable"
         )
     factory = client_factory or build_data_platform_client
+    source, zip_evidence = _processing_source(document, source_path, recovery=True)
     with factory(config) as client:
         payload = client.process_document(
             collection_id=tender_recovery_processing_collection_id(),
-            canonical_uri=_document_uri(str(document.id)),
             title=document.file_name or str(document.id),
-            content=source_path.read_bytes(),
-            filename=document.file_name or source_path.name,
-            content_type="application/octet-stream",
+            **source,
             chunk_size_chars=config.rag_chunk_size_chars,
             overlap_chars=config.rag_chunk_overlap_chars,
             min_chunk_chars=config.rag_min_chunk_chars,
             max_chars=config.document_extract_max_chars,
         )
     _project_processing_evidence(document, payload)
+    _preserve_zip_evidence(document, zip_evidence)
     status = str(payload.get("extraction_status") or "failed")
     text = str(payload.get("text") or "")
     document.text_extraction_status = status
@@ -519,19 +535,18 @@ class DataPlatformRecoveryChunkIndexer:
                         f"recovery document {document.id} is missing source or extracted text"
                     )
                 expected_text = text_path.read_text(encoding="utf-8")
+                source, zip_evidence = _processing_source(document, source_path)
                 payload = client.process_document(
                     collection_id=_processing_collection_id(str(tender_id)),
-                    canonical_uri=_document_uri(str(document.id)),
                     title=document.file_name or str(document.id),
-                    content=source_path.read_bytes(),
-                    filename=document.file_name or source_path.name,
-                    content_type=document.content_type or "application/octet-stream",
+                    **source,
                     chunk_size_chars=self._config.rag_chunk_size_chars,
                     overlap_chars=self._config.rag_chunk_overlap_chars,
                     min_chunk_chars=self._config.rag_min_chunk_chars,
                     max_chars=self._config.document_extract_max_chars,
                 )
                 _project_processing_evidence(document, payload)
+                _preserve_zip_evidence(document, zip_evidence)
                 if (
                     str(payload.get("extraction_status") or "") != "extracted"
                     or str(payload.get("text") or "") != expected_text
