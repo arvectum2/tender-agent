@@ -280,3 +280,15 @@ recovery_apply_2026_11_20:
   previous_job: 14385b13-2d69-456e-b2a9-292f2e3b80b4
   corrected: checkpoint commits; clean MI checkout; retry with same source fingerprint and all gates
   resume_instruction: Read ARC job status; verify operator-recovery-7f60ce4fc9c29282ca02c6a9beae642800c8bb3bbf9e1770f790da3e37e3d224.json and archive lane state. Never repeat mutations if receipt confirms zero pending; reconcile any inflight state before retry.
+
+recovery_verified_2026_11_20:
+  status: completed
+  recovery_job: 35d78b5c-5b16-45c6-a793-ae8f26c59e7d
+  verified_at: 2026-11-20T06:44:30.138614Z
+  inserted_links: 14
+  updated_decisions: 8
+  verified_pending_after: 0
+  archive_launchd: restarted; independently observed running
+  last_verified_commit: 1f891c6d78f465e26362984cf12945898972ebd8
+  latest_tests: focused 3 passed; actual gated delta and idempotent replay passed
+  resume_instruction: Recovery complete; continue normal archive detail worker; do not repeat the recovery delta.
