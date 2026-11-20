@@ -7,7 +7,7 @@ on:
       - 'specs/001-power-quality-evidence-closure/spec.md'
       - 'specs/001-power-quality-evidence-closure/tasks.md'
       - 'scripts/check_spec_criterion_review.py'
-      - 'tests/test_spec_criterion_review.py'
+      - 'specs/002-master-roadmap-traceability/checks/test_spec_criterion_review.py'
       - '.github/workflows/spec-criterion-review.yml'
 permissions:
   contents: read
@@ -23,4 +23,4 @@ jobs:
         with:
           python-version: '3.12'
       - run: python scripts/check_spec_criterion_review.py
-      - run: python -m unittest discover -s tests -p test_spec_criterion_review.py -v
+      - run: python -m unittest discover -s specs/002-master-roadmap-traceability/checks -p test_spec_criterion_review.py -v
