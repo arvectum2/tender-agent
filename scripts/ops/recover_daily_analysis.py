@@ -86,7 +86,10 @@ def execute(args, release):
 
     from sqlalchemy import create_engine, select, text
 
-    from scripts.ops.daily_index_recovery_host import admit_index_batch
+    from scripts.ops.daily_index_recovery_host import (
+        admit_analysis_commit,
+        admit_analysis_compute,
+    )
     from src.modules.daily_tender_run.analysis_recovery import (
         complete_indexed_analysis,
         profile_for_target,
@@ -179,11 +182,11 @@ def execute(args, release):
                 pending_journal(JOURNAL_ROOT, target.registry_number)
             with (
                 _run_execution_guard(session, target.run_id),
-                admit_index_batch() as (_, receipt),
+                admit_analysis_compute(),
                 journal(
                     JOURNAL_ROOT,
                     target.registry_number,
-                    {"identity_sha256": digest, "prewrite": receipt},
+                    {"identity_sha256": digest, "phase": "read_only_generation"},
                 ) as record,
             ):
                 session.execute(text("SET TRANSACTION READ ONLY"))
@@ -214,39 +217,52 @@ def execute(args, release):
                 if scope()[1] != digest:
                     raise RuntimeError("analysis evidence changed during generation")
                 session.rollback()
-                report, report_hash = persist_report(
-                    Path(load_config().data_dir).resolve() / "rag" / "reports",
-                    target.registry_number,
-                    result.report_markdown,
-                )
-                record("report_persisted", {"path": str(report), "sha256": report_hash})
-                saved = complete_indexed_analysis(
-                    session,
-                    target=target,
-                    analysis=result,
-                    synthesis=synthesis,
-                    report=report,
-                    expected_profile=profile,
-                    index_identity_sha256=digest,
-                    report_sha256=report_hash,
-                )
-                session.commit()
-                session.expire_all()
-                row = session.scalars(
-                    select(DailyTenderRunItem).where(
-                        DailyTenderRunItem.run_id == target.run_id,
-                        DailyTenderRunItem.registry_number == target.registry_number,
+                record("generation_completed", {"sections": result.sections_count})
+                # The write lease and restore point are acquired only now.
+                # Recheck the exact evidence in a fresh read-only transaction
+                # while holding the mutation fence, before saving anything.
+                with admit_analysis_commit() as (_, receipt):
+                    record("write_admitted", {"prewrite": receipt})
+                    session.execute(text("SET TRANSACTION READ ONLY"))
+                    if scope()[1] != digest:
+                        raise RuntimeError("analysis evidence changed before commit")
+                    session.rollback()
+                    report, report_hash = persist_report(
+                        Path(load_config().data_dir).resolve() / "rag" / "reports",
+                        target.registry_number,
+                        result.report_markdown,
                     )
-                ).one()
-                if (
-                    row.analysis_run_id != saved["analysis_run_id"]
-                    or row.status != "MANAGER_READY"
-                ):
-                    raise RuntimeError("committed recovery could not be verified")
-                session.rollback()
-                record("verified_batch", saved)
-                print(json.dumps(saved))
-                return 0
+                    record(
+                        "report_persisted", {"path": str(report), "sha256": report_hash}
+                    )
+                    saved = complete_indexed_analysis(
+                        session,
+                        target=target,
+                        analysis=result,
+                        synthesis=synthesis,
+                        report=report,
+                        expected_profile=profile,
+                        index_identity_sha256=digest,
+                        report_sha256=report_hash,
+                    )
+                    session.commit()
+                    session.expire_all()
+                    row = session.scalars(
+                        select(DailyTenderRunItem).where(
+                            DailyTenderRunItem.run_id == target.run_id,
+                            DailyTenderRunItem.registry_number
+                            == target.registry_number,
+                        )
+                    ).one()
+                    if (
+                        row.analysis_run_id != saved["analysis_run_id"]
+                        or row.status != "MANAGER_READY"
+                    ):
+                        raise RuntimeError("committed recovery could not be verified")
+                    session.rollback()
+                    record("verified_batch", saved)
+                    print(json.dumps(saved))
+                    return 0
     finally:
         platform.dispose()
 
