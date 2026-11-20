@@ -191,3 +191,37 @@ def test_prewrite_error_never_retried(tmp_path, monkeypatch):
     ):
         pytest.fail("unexpected admission")
     assert calls == [True]
+
+
+def test_compute_wait_does_not_block_historical_commit(tmp_path, monkeypatch):
+    from scripts.ops import daily_index_recovery_host as host
+
+    slot = tmp_path / "heavy-slot.lock"
+    priority = tmp_path / "fresh-procurement-priority.lock"
+    mutation = tmp_path / "mutation.lock"
+    for path in (slot, priority, mutation):
+        path.touch(mode=0o600)
+    monkeypatch.setattr(host, "RUNTIME", tmp_path)
+    monkeypatch.setattr(host, "RESOURCE", tmp_path)
+    monkeypatch.setattr(host, "check_admission", lambda _: 3)
+    active = host.existing_lease(slot)
+    active.__enter__()
+    calls = []
+
+    def finish_historical_batch(delay):
+        assert 0 < delay <= 0.25
+        with host.existing_lease(priority), host.existing_lease(mutation):
+            calls.append("historical commit not blocked")
+        active.__exit__(None, None, None)
+
+    monkeypatch.setattr(host.time, "sleep", finish_historical_batch)
+    with host.admit_analysis_compute(wait_seconds=5):
+        assert calls == ["historical commit not blocked"]
+        with pytest.raises(BlockingIOError), host.existing_lease(slot):
+            pytest.fail("second heavy task admitted")
+    with (
+        host.existing_lease(slot),
+        pytest.raises(BlockingIOError),
+        host.admit_analysis_compute(wait_seconds=0),
+    ):
+        pytest.fail("busy heavy slot should refuse without waiting")

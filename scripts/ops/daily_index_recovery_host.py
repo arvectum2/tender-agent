@@ -167,17 +167,30 @@ def check_admission(runtime: Path):
 
 
 @contextmanager
-def admit_analysis_compute():
-    """Only the compute lease is held during read-only LLM generation.
+def admit_analysis_compute(*, wait_seconds=300):
+    """Wait for a batch boundary without stopping the historical executor.
 
-    Historical capture and light writes may proceed. Other expensive
-    extraction/embedding batches still respect the existing heavy slot.
+    Only the compute lease is held during read-only LLM generation; lighter
+    historical work retains its own admission. Never hold a priority lease
+    while waiting for an active historical heavy/source batch.
     """
+    if not 0 <= wait_seconds <= 300:
+        raise ValueError("invalid compute lease wait")
     runtime = RUNTIME.resolve(strict=True)
-    check_admission(runtime)
-    with existing_lease(RESOURCE / "heavy-slot.lock"):
+    deadline = time.monotonic() + wait_seconds
+    while True:
         check_admission(runtime)
-        yield
+        with ExitStack() as leases:
+            try:
+                leases.enter_context(existing_lease(RESOURCE / "heavy-slot.lock"))
+            except BlockingIOError:
+                if time.monotonic() >= deadline:
+                    raise
+            else:
+                check_admission(runtime)
+                yield
+                return
+        time.sleep(min(0.25, max(0, deadline - time.monotonic())))
 
 
 @contextmanager
