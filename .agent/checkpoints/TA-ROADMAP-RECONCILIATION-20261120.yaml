@@ -1,0 +1,18 @@
+task_id: TA-ROADMAP-RECONCILIATION-20261120
+status: completed
+goal: Reconcile canonical roadmap against verified main and local evidence; report remaining work and repository hygiene without disturbing runtime.
+definition_of_done:
+  - Verify current main and remote reference, CI and mirror.
+  - Inspect canonical MI and old SSD worktree and active checkpoints.
+  - Preserve existing roadmap and append management-only reconciliation in Markdown and YAML.
+  - Verify exact written content and prepare review-only PR; no merge or runtime changes.
+completed_stages:
+  - Main abcd8727 matched remote; CI and mirror success.
+  - MI clean, nine commits ahead; old SSD checkout dirty; 183 registered worktrees and at least 40 open PRs.
+  - Both roadmap documents written and read back exactly; original content preserved.
+current_stage: documentation_candidate_complete
+remaining_stages: []
+last_verified_commit: 2a5e5ebe516b7b16ad90e9ff33c08b88db9c7604
+last_checks: Exact content readback passed; main CI and mirror passed; candidate CI not yet verified.
+limitations: Full worktree inventory unavailable after device transport interruption; rollout and commercial gates not inferred; active canonical MI checkpoint untouched to avoid interfering with live work.
+resume_instruction: Review this documentation-only candidate and exact CI before separately approved merge; perform remaining repository hygiene as independent non-destructive inventory.
