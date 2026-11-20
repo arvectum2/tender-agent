@@ -10,8 +10,23 @@ definition_of_done:
 completed_stages:
   - Inspected active release and canonical checkpoint.
   - Confirmed long analysis currently holds heavy, priority and mutation locks; archive collector blocked before linkage with inflight false and pending zero.
-current_stage: implement split analysis admission and inspect archive receipt/DB binding
-remaining_stages: [tests, archive reconciliation, review, release, live verification]
-last_verified_commit: dd867387d87823394c2a72724af27ce15d4b0aff
+current_stage: split analysis admission implemented, PR671 CI pending, read-only SIBUR receipt reconciliation running
+remaining_stages: [archive reconciliation, exact CI, review, release, live verification]
+last_verified_commit: d2848544a91bc826bc0fcd84fcc3ccceac8ea72e
 last_checks: production preflight pass; current analysis job f48135b2-2455-4f4f-b24d-b089f75ebaf0 running; no changes to active release
-resume_instruction: Read existing canary journal first; never interrupt or duplicate it. Review split lease changes, confirm collector proof before making any change. Keep resource governor pinned and MI clean.
+
+implementation:
+  pr: https://github.com/arvectum2/tender-agent/pull/671
+  head: d2848544a91bc826bc0fcd84fcc3ccceac8ea72e
+  tests: 68 focused pass; real flock test demonstrates free priority/mutation/backup during analysis compute, exclusive GPU slot, short commit fences, no retries of prewrite failures; Ruff and diff check pass
+  policy: preserve heavy-slot exclusivity while LLM generates; only write admission is split; no simultaneous heavy embedding under GPU99 and memory pressure. Light capture and orthogonal writers can continue under their own gates. Exact recheck before commit. Existing active canary uses previous immutable release.
+archive_collector:
+  status: read_only_reconciliation_running
+  job: d1d6a492-df0f-4cbf-b119-173f7a6e0ebc
+  original_error: docker exit 1 before linkage, 2026-11-19
+  state: inflight false, pending_batches 0, committed_captures 15375, sync and pending hash equal, last verified receipt replay inserted 0 and links equal 56055; compressed attempted 5272/5272
+  actual_db: read-only query recovered, arvectum_local PG16 exact cluster 7694400479046774822, 30632 procedures and 56928 document links
+  proof_scope: replay committed raw archive page evidence, reconstruct exact last receipt payload hash, check current receipt reference membership, file sizes and DB link presence; does not rehash original bytes in this pass
+  limitation: do not reset blocked state before checking proof, full bytes and metadata if needed. If compressed queue drained verify and mark accurately, not pretend new capture.
+  next: Inspect exact reconciliation job; distinguish actual remaining acquisition from pending historical indexing. Historical executor at 7086 paused until old analysis exits; technical evidence lane independently has 12179 processed originals.
+resume_instruction: Inspect current old analysis job f48135b2-2455-4f4f-b24d-b089f75ebaf0 and terminal journal before any new analysis or deploy. Check archive proof job and exact PR671 CI/review. Restore historical executor after old analysis critical section releases; coordinate approved new release so daily lock is not contested. Preserve existing 12-item Workspace scope and verify fresh backup after any canary DB changes. No new scheduled tasks.
