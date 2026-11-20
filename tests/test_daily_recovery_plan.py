@@ -125,3 +125,14 @@ def test_human_or_processing_protected(session, scenario):
     item.status = "PROCESSING"
     session.commit()
     assert plan_target(session, target)["status"] == "human_or_active_work_review"
+
+
+def test_active_rag_job_is_not_recovery_candidate(session, scenario):
+    from src.tender_research.models import TenderAnalysisJob
+
+    target, _ = scenario
+    session.add(
+        TenderAnalysisJob(registry_number=N, job_type="prepare", status="running")
+    )
+    session.commit()
+    assert plan_target(session, target)["status"] == "active_rag_job_review"

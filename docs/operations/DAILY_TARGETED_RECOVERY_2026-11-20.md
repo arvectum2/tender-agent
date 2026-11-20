@@ -32,3 +32,45 @@ automatic treatment as absent. Production read-only verification of the five
 incident collections found 563 expected, 20 present with matching three hashes
 and embedding contract, 543 absent resources, zero unexpected/conflicting
 identities. This is not a completed ingestion receipt.
+
+## Bounded index-only operator command
+
+After independent review and deployment of this exact release, run from its
+immutable source directory with its own venv:
+`venv/bin/python -m scripts.ops.recover_daily_index --run RUN --registry NUMBER --deal DEAL --fingerprint FULL_SHA256`
+(use the actual absolute interpreter path from the deployed release). Default
+is read-only; result contains the exact release/target/collection/chunk/model
+identity SHA and current missing-resource counts. Apply mode additionally
+requires explicit `--apply --confirm-release EXACT_ACTIVE_SHA --expected-identity-sha PLAN_SHA`.
+
+The launcher checks that the source and Python venv belong to the active
+release, uses the existing daily preflight and daily lock, uses read-only
+PostgreSQL transactions and independently validates actual stored text hashes,
+owner, unversioned collection, resource/extraction status, vector dimensions
+and embedding contract. Before each bounded batch, existing host resource,
+fresh priority, mutation and backup leases must be available. The current
+MI verifier, independently archived backup identity and fresh durable PITR
+restore point must pass. A paused/stale monitor, maintenance/STOP, competing
+lease, changed target, active RAG job or receipt discrepancy refuses work.
+Normal/reduced limits are 10/3. Existing indexes are not rebuilt, only absent
+canonical chunk resources use the supported Data Platform ingest API.
+The private append-only attempt journal stores prewrite proof and request/
+response markers before each API action and a final independent verification.
+A missing verified end marker prevents automatic repeat. Never delete or
+modify a pending journal to force a retry; reconcile it with independent
+Data Platform evidence and operator review first.
+
+The scope is index-only, not the four missing-document cases or analysis/
+manager-ready transitions. This does not create a second procurement database,
+change tender status, submit an application, or trigger notifications. Existing
+legacy/manual ingestion endpoints are not claimed to be universally protected
+by these host leases; ensure no competing manual repair for the target during
+the reviewed canary. The operator must not use unreviewed source or weaken
+prewrite gates. Actual live apply acceptance remains outstanding.
+
+Validation: 54 focused tests passed, including interrupted journals and
+competing leases. New operator planning core replay against all five real
+production collections returned 543 absent and 20 matching resources;
+all nine original recovery candidates and two excluded completed siblings
+were revalidated. The MI gate passed in the exact operator subprocess
+environment; read-only PITR readiness also passed. No live business writes.

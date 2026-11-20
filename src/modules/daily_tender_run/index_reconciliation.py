@@ -141,9 +141,11 @@ def repair_absent_batch(
             raise ValueError("collection evidence requires review")
         return chunks, reconciled
 
-    with admitted_write():
+    with admitted_write() as admitted_limit:
+        if type(admitted_limit) is not int or not 1 <= admitted_limit <= 10:
+            raise RuntimeError("invalid admitted resource batch limit")
         _, first = inventory()
-        targets = first["eligible_absent_uris"][:limit]
+        targets = first["eligible_absent_uris"][: min(limit, admitted_limit)]
         verified = []
         for uri in targets:
             chunks, current = inventory()

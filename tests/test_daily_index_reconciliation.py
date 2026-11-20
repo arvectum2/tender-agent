@@ -91,7 +91,7 @@ def test_bounded_repair_and_resume(monkeypatch):
     def gate():
         admitted.append(True)
         try:
-            yield
+            yield 2
         finally:
             admitted.pop()
 
@@ -156,7 +156,7 @@ def test_response_without_persisted_resource_fails_closed(monkeypatch):
         "collection_id": "collection",
         "expected_contract": CONTRACT,
         "read_snapshot": lambda cid: IndexSnapshot(cid, CONTRACT, ()),
-        "admitted_write": nullcontext,
+        "admitted_write": lambda: nullcontext(1),
         "limit": 1,
     }
     with pytest.raises(RuntimeError, match="independently verified"):

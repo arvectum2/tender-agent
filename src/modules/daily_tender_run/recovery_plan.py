@@ -14,7 +14,11 @@ from sqlalchemy.orm import Session
 
 from src.modules.daily_tender_run.models import DailyTenderRun, DailyTenderRunItem
 from src.modules.deal_registry.models import Deal
-from src.tender_research.models import ProcurementTender, TenderAnalysisRun
+from src.tender_research.models import (
+    ProcurementTender,
+    TenderAnalysisJob,
+    TenderAnalysisRun,
+)
 from src.tender_research.rag.data_platform import build_tender_collection_id
 from src.tender_research.repository import TenderRepository
 
@@ -92,6 +96,16 @@ def plan_target(session: Session, target: RecoveryTarget) -> dict:
         or item.synthesis_json
     ):
         return decision("prior_analysis_or_status_review")
+    active_jobs = session.scalars(
+        select(TenderAnalysisJob.id).where(
+            TenderAnalysisJob.registry_number == target.registry_number,
+            TenderAnalysisJob.status.in_(
+                ("queued", "running", "pending", "in_progress")
+            ),
+        )
+    ).all()
+    if active_jobs:
+        return decision("active_rag_job_review")
     histories = session.scalars(
         select(TenderAnalysisRun).where(
             TenderAnalysisRun.registry_number == target.registry_number
