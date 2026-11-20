@@ -118,6 +118,7 @@ def prepare_tender_for_analysis(
     rebuild_embeddings: bool = False,
     session: Session | None = None,
     progress_callback=None,
+    data_platform_timeout_seconds: int | None = None,
 ) -> TenderPreparationResult:
     check_ingestion_allowed()
 
@@ -131,6 +132,10 @@ def prepare_tender_for_analysis(
         warnings: list[str] = []
         errors: list[str] = []
         config = load_config()
+        if data_platform_timeout_seconds is not None:
+            if not 30 <= data_platform_timeout_seconds <= 300:
+                raise ValueError("invalid Data Platform preparation timeout")
+            config.rag_data_platform_timeout_seconds = max(config.rag_data_platform_timeout_seconds, data_platform_timeout_seconds)
 
         def emit_progress(progress_percent: int, current_step: str, message: str = "") -> None:
             if progress_callback is None:

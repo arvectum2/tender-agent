@@ -200,3 +200,33 @@ def test_parse_customer_name_keeps_explicit_customer_pair():
     by_number = {card["reestr_number"]: card for card in cards}
     assert by_number["0888200000224000038"]["customer_name"] == 'ООО "Примерный заказчик"'
     assert by_number["0778200000224000055"]["customer_name"] == 'АО "Кабельный завод"'
+
+
+def test_live_eis_zero_record_layout_is_explicit_empty(monkeypatch):
+    from src.modules.tender_operator_agent_demo import public_44fz_parser as parser
+
+    html = """<html><title>Закупки</title>
+<div class="search-results__title">Результаты поиска</div>
+<div class="search-results__total">
+    0 записей
+</div>
+<div class="search-registry-entrys-block">
+</div>
+<div class="paginator"><p class="noRecords">Поиск не дал результатов</p></div>
+</html>"""
+    assert classify_public_search_response(html) == Public44FzSearchStatus.EMPTY_RESULTS
+    for broken in (
+        html.replace("0 записей", "10 записей"),
+        html.replace('class="noRecords"', 'class="other"'),
+        html.replace('class="search-registry-entrys-block"', 'class="other"'),
+    ):
+        assert classify_public_search_response(broken) != Public44FzSearchStatus.EMPTY_RESULTS
+
+    class Provider:
+        def _fetch_page(self, url):
+            return {"status": Public44FzSearchStatus.SUCCESS, "html": html}
+
+    monkeypatch.setattr(parser, "_get_provider", lambda: Provider())
+    result = parser.fetch_public_44fz_search_page("https://zakupki.gov.ru/")
+    assert result["explicit_zero_count"] is True
+    assert result["status"] == Public44FzSearchStatus.EMPTY_RESULTS
