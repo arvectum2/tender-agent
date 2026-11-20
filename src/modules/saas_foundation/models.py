@@ -608,3 +608,30 @@ class PrivateReviewOrderLink(UUIDPrimaryKeyMixin, Base):
 
 event.listen(PrivateReviewOrderLink, 'before_update', _immutable_company_decision)
 event.listen(PrivateReviewOrderLink, 'before_delete', _immutable_company_decision)
+
+
+Index('uq_retention_link_tenant_id', PrivateReviewOrderLink.tenant_id,
+      PrivateReviewOrderLink.id, unique=True)
+
+
+class PrivateReviewLinkCorrection(UUIDPrimaryKeyMixin, Base):
+    """Append-only correction of a proposed link; no change to underlying document."""
+    __tablename__ = 'private_review_link_corrections'
+    tenant_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    link_id: Mapped[str] = mapped_column(String, nullable=False)
+    proposal_id: Mapped[str] = mapped_column(String, nullable=False)
+    revision: Mapped[int] = mapped_column(Integer, nullable=False)
+    evidence_ref: Mapped[str] = mapped_column(String(128), nullable=False)
+    recorded_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    __table_args__ = (
+        ForeignKeyConstraint(['tenant_id', 'link_id'],
+                             ['private_review_order_links.tenant_id', 'private_review_order_links.id']),
+        ForeignKeyConstraint(['tenant_id', 'proposal_id'],
+                             ['private_review_retention_proposals.tenant_id', 'private_review_retention_proposals.id']),
+        UniqueConstraint('tenant_id', 'link_id', 'revision', name='uq_retention_link_correction_revision'),
+        CheckConstraint('revision > 0 AND revision <= 200', name='ck_retention_link_correction_revision'),
+    )
+
+
+event.listen(PrivateReviewLinkCorrection, 'before_update', _immutable_company_decision)
+event.listen(PrivateReviewLinkCorrection, 'before_delete', _immutable_company_decision)

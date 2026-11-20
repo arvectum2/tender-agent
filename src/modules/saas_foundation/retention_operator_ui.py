@@ -32,13 +32,21 @@ fieldset{border:0;padding:0;min-width:0}
 <p id="revision"></p><p id="planning"></p>
 <label class="check"><input id="confirm-schedule" type="checkbox" required>Подтверждаю запись предложения</label>
 <button type="submit">Записать новую версию</button></fieldset></form></section>
-<section><h2>Первичная привязка документа</h2><p>Существующие связи неизменяемы; исправление требует отдельной процедуры.</p>
+<section><h2>Первичная привязка документа</h2><p>Первичная запись сохраняется; исправления записываются отдельными версиями.</p>
 <form id="link"><fieldset id="link-fields"><div class="grid">
 <label>Документ без связи<select id="document" required></select></label>
 <label>Версия условий<select id="proposal" required></select></label>
 <label>Основание связи<input id="evidence" maxlength="128" required></label></div>
 <label class="check"><input id="confirm-link" type="checkbox" required>Подтверждаю только предлагаемую связь</label>
-<button type="submit">Записать привязку</button></fieldset></form></section></div>
+<button type="submit">Записать привязку</button></fieldset></form></section>
+<section><h2>Исправление привязки</h2><p>Предыдущая связь сохраняется. Изменение не подтверждает принадлежность заказу.</p>
+<form id="correction"><fieldset id="correction-fields"><div class="grid">
+<label>Документ с привязкой<select id="linked-document" required></select></label>
+<label>Новая версия условий<select id="correction-proposal" required></select></label>
+<label>Основание исправления<input id="correction-evidence" required maxlength="128"></label></div>
+<button type="button" id="history-load">Показать историю</button><pre id="history"></pre>
+<label class="check"><input id="confirm-correction" type="checkbox" required>Подтверждаю запись предложения об исправлении</label>
+<button type="submit">Записать исправление</button></fieldset></form></section></div>
 <script>
 'use strict';
 const by=id=>document.getElementById(id), val=id=>by(id).value.trim(), nullable=id=>val(id)||null;
@@ -63,14 +71,16 @@ function fill(){
 function render(d){
  state=d;const lines=[];
  for(const [k,label] of [['archives','Комплекты'],['forms','Формы']]){
- const r=d.accounting[k];lines.push(label+': '+r.count+' шт. / '+r.payload_bytes+' байт','  Истекли: '+r.expired+'; без связи: '+r.unlinked+'; ограничения: '+r.hold_active+'; устарели: '+r.proposal_superseded)}
+ const r=d.accounting[k];lines.push(label+': '+r.count+' шт. / '+r.payload_bytes+' байт','  Истекли: '+r.expired+'; без связи: '+r.unlinked+'; ограничения: '+r.hold_active+'; устарели: '+r.proposal_superseded+'; исправлены: '+r.corrected_links)}
  by('metrics').textContent=lines.join('\n');
- reset('existing','Новое предложение');reset('proposal','Выберите условия');reset('document','Выберите документ');
- for(const p of d.proposals){const title=p.schedule.order_ref+' / версия '+p.revision;option('existing',p.proposal_id,title);option('proposal',p.proposal_id,title)}
+ reset('existing','Новое предложение');reset('proposal','Выберите условия');reset('document','Выберите документ');reset('linked-document','Выберите связь');reset('correction-proposal','Выберите новые условия');
+ for(const p of d.proposals){const title=p.schedule.order_ref+' / версия '+p.revision;option('existing',p.proposal_id,title);option('proposal',p.proposal_id,title);option('correction-proposal',p.proposal_id,title)}
  for(const f of d.documents.filter(f=>!f.proposed_link))option('document',f.kind+':'+f.id,(f.kind==='archive'?'Комплект ':'Форма ')+f.id);
+ for(const f of d.documents.filter(f=>f.link_id))option('linked-document',f.link_id,(f.kind==='archive'?'Комплект ':'Форма ')+f.id+' / версия связи '+f.link_revision);
+ by('history').textContent='';by('confirm-correction').checked=false;by('correction-evidence').value='';
  by('confirm-link').checked=false;by('evidence').value='';fill();by('workspace').hidden=false
 }
-function lock(v){busy=v;for(const id of ['tenant','load','schedule-fields','link-fields','existing'])by(id).disabled=v}
+function lock(v){busy=v;for(const id of ['tenant','load','schedule-fields','link-fields','correction-fields','existing'])by(id).disabled=v}
 async function load(){
  if(busy)return;clear();const t=val('tenant');
  if(!/^[A-Za-z0-9_-]{1,128}$/.test(t)){status('Укажите идентификатор клиента');return}
@@ -93,5 +103,17 @@ by('schedule').addEventListener('submit',e=>{
 by('link').addEventListener('submit',e=>{
  e.preventDefault();if(!by('confirm-link').checked)return;const i=val('document').indexOf(':');if(i<1)return;
  write('/links',{proposal_id:val('proposal'),document_kind:val('document').slice(0,i),document_id:val('document').slice(i+1),evidence_ref:val('evidence'),confirm_proposal_only:true})
+});
+by('linked-document').addEventListener('change',()=>{by('history').textContent='';by('confirm-correction').checked=false});
+by('history-load').addEventListener('click',async()=>{
+ if(busy||!active||!val('linked-document'))return;
+ lock(true);try{const h=await api(path(active)+'/links/'+encodeURIComponent(val('linked-document'))+'/history');
+ by('history').textContent=h.history.map(r=>'Версия '+r.revision+' / '+r.proposal_id+' / '+r.evidence_ref+' / '+r.recorded_at).join('\n')}
+ catch(e){status(e.message)}finally{lock(false)}
+});
+by('correction').addEventListener('submit',e=>{
+ e.preventDefault();if(!by('confirm-correction').checked||!state)return;
+ const d=state.documents.find(d=>d.link_id===val('linked-document'));if(!d)return;
+ write('/link-corrections',{link_id:d.link_id,expected_revision:d.link_revision,proposal_id:val('correction-proposal'),evidence_ref:val('correction-evidence'),confirm_proposal_only:true})
 });
 </script></body></html>"""

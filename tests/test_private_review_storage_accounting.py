@@ -41,9 +41,9 @@ def test_migrated_accounting_and_links(tmp_path, monkeypatch):
             conn.exec_driver_sql("INSERT INTO saas_members VALUES ('creator'),('reviewer')")
             conn.exec_driver_sql("INSERT INTO saas_runs VALUES ('run')")
         command.stamp(cfg,'122_company_cost_norms')
-        command.upgrade(cfg,'126_private_review_order_links')
+        command.upgrade(cfg,'127_private_review_link_corrections')
         command.downgrade(cfg,'125_private_review_retention')
-        command.upgrade(cfg,'126_private_review_order_links')
+        command.upgrade(cfg,'127_private_review_link_corrections')
         with engine.begin() as conn:
             for identity, tenant, raw, expires in (
                     ('a1','a',b'123',NOW), ('a2','a',b'4567',NOW+timedelta(days=1)),

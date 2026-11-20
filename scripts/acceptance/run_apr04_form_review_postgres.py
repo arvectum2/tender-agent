@@ -16,12 +16,13 @@ from pathlib import Path
 from threading import Barrier
 
 from alembic.config import Config
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, select, text
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from alembic import command
 from src.modules.saas_foundation.models import (
+    PrivateReviewLinkCorrection,
     PrivateReviewOrderLink,
     PrivateReviewRetentionProposal,
 )
@@ -157,9 +158,9 @@ def main():
                 assert conn.scalar(text('SELECT count(*) FROM private_review_retention_proposals')) == 1
                 assert conn.scalar(text('SELECT count(*) FROM original_form_review_candidates')) == 1
             print('PG16_RETENTION_PROPOSAL_ROUNDTRIP_AND_GUARD_PASS')
-            command.upgrade(cfg, '126_private_review_order_links')
+            command.upgrade(cfg, '127_private_review_link_corrections')
             command.downgrade(cfg, '125_private_review_retention')
-            command.upgrade(cfg, '126_private_review_order_links')
+            command.upgrade(cfg, '127_private_review_link_corrections')
             with engine.begin() as conn:
                 conn.exec_driver_sql("INSERT INTO saas_tenants VALUES ('other')")
             with Session(engine) as session:
@@ -194,6 +195,43 @@ def main():
             with engine.connect() as conn:
                 assert conn.scalar(text('SELECT count(*) FROM private_review_order_links'))==1
             print('PG16_DOCUMENT_ORDER_LINKS_AND_ACCOUNTING_PASS')
+            with Session(engine) as session:
+                link=session.scalar(select(PrivateReviewOrderLink))
+                original=link.proposal_id
+                target=PrivateReviewRetentionProposal(tenant_id='tenant',revision=2,**proposal.model_dump())
+                foreign=PrivateReviewRetentionProposal(tenant_id='other',revision=1,**proposal.model_dump())
+                session.add_all([target,foreign]);session.commit()
+                for wrong in (
+                    {'tenant_id':'tenant','link_id':link.id,'proposal_id':foreign.id},
+                    {'tenant_id':'other','link_id':link.id,'proposal_id':foreign.id},
+                ):
+                    session.add(PrivateReviewLinkCorrection(revision=1,evidence_ref='fixture',**wrong))
+                    try:
+                        session.commit()
+                    except IntegrityError as exc:
+                        assert exc.orig.sqlstate=='23503'
+                        session.rollback()
+                    else:
+                        raise AssertionError('Cross-tenant correction accepted')
+                session.add(PrivateReviewLinkCorrection(tenant_id='tenant',link_id=link.id,
+                    proposal_id=target.id,revision=1,evidence_ref='fixture-correction'))
+                session.commit()
+                assert link.proposal_id==original
+                summary=storage_summary(session,tenant_id='tenant',now=datetime.now(UTC))
+                assert summary['forms']['corrected_links']==1
+                assert summary['forms']['proposal_superseded']==0
+                assert summary['deletion_authorized'] is False
+            try:
+                command.downgrade(cfg,'126_private_review_order_links')
+            except RuntimeError as exc:
+                assert 'Cannot discard proposed link correction history' in str(exc)
+            else:
+                raise AssertionError('Nonempty correction history discarded')
+            with engine.connect() as conn:
+                assert conn.scalar(text('SELECT count(*) FROM private_review_link_corrections'))==1
+                assert conn.scalar(text('SELECT count(*) FROM private_review_order_links'))==1
+            print('PG16_LINK_CORRECTION_SCOPE_AND_HISTORY_PASS')
+
 
 
             run('createdb', '-h', str(sock), '-p', port, '-U', role, 'api_fixture')

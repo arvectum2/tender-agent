@@ -8,6 +8,7 @@ from sqlalchemy import and_, func, select
 from .models import (
     ApplicationReviewPreview,
     OriginalFormReviewCandidate,
+    PrivateReviewLinkCorrection,
     PrivateReviewOrderLink,
     PrivateReviewRetentionProposal,
 )
@@ -80,6 +81,13 @@ def latest_proposal(session, *, tenant_id: str, order_ref: str):
     ).order_by(PrivateReviewRetentionProposal.revision.desc()).limit(1))
 
 
+def latest_link_correction(session, *, tenant_id: str, link_id: str):
+    return session.scalar(select(PrivateReviewLinkCorrection).where(
+        PrivateReviewLinkCorrection.tenant_id == tenant_id,
+        PrivateReviewLinkCorrection.link_id == link_id
+    ).order_by(PrivateReviewLinkCorrection.revision.desc()).limit(1))
+
+
 def storage_summary(session, *, tenant_id: str, now: datetime) -> dict:
     """Scoped internal counts only. Caller independently authorizes tenant.
 
@@ -104,7 +112,7 @@ def storage_summary(session, *, tenant_id: str, now: datetime) -> dict:
         if len(rows) > 1000:
             raise ValueError('Accounting scope exceeds bounded report')
         counts = dict.fromkeys(('count', 'payload_bytes', 'expired', 'unlinked', 'proposed_links',
-                                'proposal_missing', 'proposal_superseded', 'hold_unknown',
+                                'proposal_missing', 'proposal_superseded', 'corrected_links', 'hold_unknown',
                                 'hold_active', 'hold_review_due', 'working_horizon_reached',
                                 'backup_horizon_reached'), 0)
         for expiry, length, link_id, proposal_id in rows:
@@ -116,6 +124,10 @@ def storage_summary(session, *, tenant_id: str, now: datetime) -> dict:
                 counts['unlinked'] += 1
                 continue
             counts['proposed_links'] += 1
+            correction = latest_link_correction(session, tenant_id=tenant_id, link_id=link_id)
+            if correction is not None:
+                counts['corrected_links'] += 1
+                proposal_id = correction.proposal_id
             pinned = session.scalar(select(PrivateReviewRetentionProposal).where(
                 PrivateReviewRetentionProposal.tenant_id == tenant_id,
                 PrivateReviewRetentionProposal.id == proposal_id))

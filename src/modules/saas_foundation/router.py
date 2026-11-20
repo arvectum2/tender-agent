@@ -1396,3 +1396,18 @@ async def retention_link(tenant_id: str, request: Request, session: DBSession, r
     payload = await _retention_payload(request, retention_operator.ProposeLink)
     response.headers.update(_RETENTION_HEADERS)
     return await run_in_threadpool(retention_operator.propose_link, session, tenant_id, payload)
+
+
+@router.post('/api/operator/saas/tenants/{tenant_id}/retention/link-corrections', status_code=201)
+async def retention_correct_link(tenant_id: str, request: Request, session: DBSession, response: Response):
+    payload = await _retention_payload(request, retention_operator.CorrectLink)
+    response.headers.update(_RETENTION_HEADERS)
+    return await run_in_threadpool(retention_operator.correct_link, session, tenant_id, payload)
+
+
+@router.get('/api/operator/saas/tenants/{tenant_id}/retention/links/{link_id}/history')
+def retention_correction_history(tenant_id: str, link_id: str, request: Request,
+                                 session: DBSession, response: Response):
+    _retention_operator(request)
+    response.headers.update(_RETENTION_HEADERS)
+    return retention_operator.correction_history(session, tenant_id, link_id)

@@ -9,6 +9,7 @@ from sqlalchemy.exc import IntegrityError
 from .models import (
     ApplicationReviewPreview,
     OriginalFormReviewCandidate,
+    PrivateReviewLinkCorrection,
     PrivateReviewOrderLink,
     PrivateReviewRetentionProposal,
     SaasTenant,
@@ -17,6 +18,7 @@ from .private_review_retention import (
     Reference,
     ScheduleProposal,
     describe,
+    latest_link_correction,
     latest_proposal,
     storage_summary,
 )
@@ -38,6 +40,15 @@ class ProposeLink(BaseModel):
     proposal_id: Identifier
     document_kind: Literal['archive', 'form']
     document_id: Identifier
+    evidence_ref: Reference
+    confirm_proposal_only: StrictBool
+
+
+class CorrectLink(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    link_id: Identifier
+    expected_revision: StrictInt = Field(ge=0, le=200)
+    proposal_id: Identifier
     evidence_ref: Reference
     confirm_proposal_only: StrictBool
 
@@ -81,14 +92,18 @@ def overview(session, tenant_id):
         ('archive', ApplicationReviewPreview, PrivateReviewOrderLink.preview_id),
         ('form', OriginalFormReviewCandidate, PrivateReviewOrderLink.candidate_id),
     ):
-        q = select(model.id, model.expires_at, PrivateReviewOrderLink.proposal_id).outerjoin(
+        q = select(model.id, model.expires_at, PrivateReviewOrderLink.id, PrivateReviewOrderLink.proposal_id).outerjoin(
             PrivateReviewOrderLink, (model.tenant_id == PrivateReviewOrderLink.tenant_id) & (model.id == col)
         ).where(model.tenant_id == tenant_id).order_by(model.id).limit(21)
         found = list(session.execute(q))
         if len(found) > 20:
             raise HTTPException(409, 'Document inventory exceeds console limit')
-        documents.extend({'kind': kind, 'id': identity, 'expires_at': expiry.isoformat(),
-                          'proposed_link': linked} for identity, expiry, linked in found)
+        for identity, expiry, link_id, original in found:
+            correction = latest_link_correction(session, tenant_id=tenant_id, link_id=link_id) if link_id else None
+            documents.append({'kind': kind, 'id': identity, 'expires_at': expiry.isoformat(),
+                'link_id': link_id, 'original_proposal': original,
+                'proposed_link': correction.proposal_id if correction else original,
+                'link_revision': correction.revision if correction else 0})
     return {'accounting': result, 'proposals': list(proposals.values()), 'documents': documents,
             'operator_identity_verified': False, 'deletion_authorized': False}
 
@@ -148,3 +163,64 @@ def propose_link(session, tenant_id, payload):
         session.rollback()
         raise HTTPException(409, 'Concurrent link; refresh') from exc
     return {'link_id':link.id, 'status':'PROPOSED_NOT_APPROVED', 'deletion_authorized':False}
+
+
+def correct_link(session, tenant_id, payload):
+    if not payload.confirm_proposal_only:
+        raise HTTPException(409, 'Confirm proposal-only recording')
+    _tenant(session, tenant_id, lock=True)
+    link = session.scalar(select(PrivateReviewOrderLink).where(
+        PrivateReviewOrderLink.tenant_id == tenant_id,
+        PrivateReviewOrderLink.id == payload.link_id))
+    if link is None:
+        raise HTTPException(404, 'Link not found')
+    previous = latest_link_correction(session, tenant_id=tenant_id, link_id=link.id)
+    revision = previous.revision if previous else 0
+    if revision != payload.expected_revision:
+        raise HTTPException(409, 'Link revision changed; refresh')
+    if revision >= 200:
+        raise HTTPException(429, 'Link correction history limit reached')
+    target = session.scalar(select(PrivateReviewRetentionProposal).where(
+        PrivateReviewRetentionProposal.tenant_id == tenant_id,
+        PrivateReviewRetentionProposal.id == payload.proposal_id))
+    if target is None:
+        raise HTTPException(404, 'Proposal not found')
+    current = latest_proposal(session, tenant_id=tenant_id, order_ref=target.order_ref)
+    if current is None or current.id != target.id:
+        raise HTTPException(409, 'Proposal is superseded')
+    if target.id == (previous.proposal_id if previous else link.proposal_id):
+        raise HTTPException(409, 'Proposed link already points to this version')
+    correction = PrivateReviewLinkCorrection(tenant_id=tenant_id, link_id=link.id,
+        proposal_id=target.id, revision=revision+1, evidence_ref=payload.evidence_ref)
+    session.add(correction)
+    try:
+        session.flush()
+        audit(session, tenant_id, 'retention_link_corrected', detail=correction.id)
+        session.commit()
+    except IntegrityError as exc:
+        session.rollback()
+        raise HTTPException(409, 'Concurrent correction; refresh') from exc
+    return {'correction_id': correction.id, 'link_id': link.id, 'revision': correction.revision,
+            'status': 'PROPOSED_NOT_APPROVED', 'deletion_authorized': False,
+            'access_change_authorized': False}
+
+
+def correction_history(session, tenant_id, link_id):
+    _tenant(session, tenant_id)
+    link = session.scalar(select(PrivateReviewOrderLink).where(
+        PrivateReviewOrderLink.tenant_id == tenant_id,
+        PrivateReviewOrderLink.id == link_id))
+    if link is None:
+        raise HTTPException(404, 'Link not found')
+    rows = list(session.scalars(select(PrivateReviewLinkCorrection).where(
+        PrivateReviewLinkCorrection.tenant_id == tenant_id,
+        PrivateReviewLinkCorrection.link_id == link.id
+    ).order_by(PrivateReviewLinkCorrection.revision).limit(201)))
+    if len(rows) > 200:
+        raise HTTPException(409, 'Correction history exceeds limit')
+    history = [{'revision': 0, 'proposal_id': link.proposal_id, 'evidence_ref': link.evidence_ref,
+                'recorded_at': link.recorded_at.isoformat()}]
+    history.extend({'revision': row.revision, 'proposal_id': row.proposal_id, 'evidence_ref': row.evidence_ref,
+                    'recorded_at': row.recorded_at.isoformat()} for row in rows)
+    return {'link_id': link.id, 'history': history, 'status': 'PROPOSED_NOT_APPROVED',
+            'deletion_authorized': False}

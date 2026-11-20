@@ -25,6 +25,17 @@ assert.equal(origin.protocol,'http:');assert.equal(origin.hostname,'127.0.0.1');
   assert(await l('order').evaluate(e=>e.readOnly));await l('working').fill('31');
   await l('confirm-schedule').check();await l('schedule').locator('button').click();await wait(recorded);
   assert((await l('metrics').innerText()).includes('устарели: 1'));
+  const links=await l('linked-document').locator('option').evaluateAll(o=>o.map(x=>x.value).filter(Boolean));
+  const targets=await l('correction-proposal').locator('option').evaluateAll(o=>o.map(x=>x.value).filter(Boolean));
+  assert.equal(links.length,1);assert.equal(targets.length,1);
+  await l('linked-document').selectOption(links[0]);await l('correction-proposal').selectOption(targets[0]);
+  await l('correction-evidence').fill('fixture-correction');await l('confirm-correction').check();
+  await l('correction').locator('button[type=submit]').click();await wait(recorded);
+  assert((await l('metrics').innerText()).includes('устарели: 0; исправлены: 1'));
+  await l('linked-document').selectOption(links[0]);await l('history-load').click();
+  await page.waitForFunction(()=>document.getElementById('history').textContent.includes('fixture-correction'));
+  assert((await l('history').innerText()).includes('Версия 0'));assert((await l('history').innerText()).includes('Версия 1'));
+
   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
   await l('tenant').fill('different');assert(await l('workspace').isHidden());assert.deepEqual(errors,[]);
   await context.close();console.log('RETENTION_OPERATOR_BROWSER_PASS',cfg.width);
