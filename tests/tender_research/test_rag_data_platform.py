@@ -918,3 +918,63 @@ def test_cli_retrieval_runtime_skips_legacy_embedding_provider(monkeypatch) -> N
     assert vector_store is None
     retriever.close()
     platform_client.close.assert_called_once()
+
+
+def test_signed_docx_zip_projected_without_replacing_original(tmp_path):
+    import hashlib
+    import io
+    import zipfile
+
+    from src.tender_research.config import TenderResearchConfig
+
+    inner = io.BytesIO()
+    with zipfile.ZipFile(inner, "w") as z:
+        z.writestr("[Content_Types].xml", "<Types/>")
+        z.writestr("word/document.xml", "<document/>")
+    parent = tmp_path / "originals"
+    parent.mkdir()
+    source = parent / "contract.docx.zip"
+    with zipfile.ZipFile(source, "w") as z:
+        z.writestr("contract.docx", inner.getvalue())
+        z.writestr("contract.docx_author.sig", b"signature")
+    digest = hashlib.sha256(source.read_bytes()).hexdigest()
+    repo = _repo()
+    tender = repo.upsert_tender({"source":"eis","external_id":"signed-zip","registry_number":"DP-ZIP","title":"ZIP test"})
+    document = repo.upsert_document({"tender_id":tender.id,"file_name":source.name,"local_path":str(source),"sha256":digest,"download_status":"downloaded","text_extraction_status":"unsupported"})
+    repo._session.commit()
+    client = FakeDataPlatformClient(process_text="Terms of the contract.")
+    projector = DataPlatformDocumentProjector(repo, client, TenderResearchConfig(data_dir=str(tmp_path)))
+    first = projector.build_for_tender(tender)
+    assert first.extracted_documents == 1
+    assert client.ingested[0]["content"] == inner.getvalue()
+    assert client.ingested[0]["filename"] == "contract.docx"
+    assert "/member/" in client.ingested[0]["canonical_uri"]
+    repo._session.refresh(document)
+    assert document.sha256 == digest
+    assert document.local_path == str(source)
+    assert document.raw_meta["signed_zip"]["archive_sha256"] == digest
+    assert hashlib.sha256(source.read_bytes()).hexdigest() == digest
+    first_ids = [c.id for c in repo.list_document_chunks(document.id)]
+    second = projector.build_for_tender(tender)
+    assert second.documents_skipped_existing == 1
+    assert len(client.ingested) == 1
+    assert [c.id for c in repo.list_document_chunks(document.id)] == first_ids
+
+
+def test_signed_zip_hash_mismatch_never_sent_to_data_platform(tmp_path):
+    import pytest
+
+    from src.tender_research.config import TenderResearchConfig
+
+    repo = _repo()
+    tender = repo.upsert_tender({"source":"eis","external_id":"bad-zip","registry_number":"DP-BAD-ZIP","title":"ZIP test"})
+    source = tmp_path / "contract.docx.zip"
+    source.write_bytes(b"tampered")
+    document = repo.upsert_document({"tender_id":tender.id,"file_name":source.name,"local_path":str(source),"sha256":"0"*64,"download_status":"downloaded","text_extraction_status":"unsupported"})
+    repo._session.commit()
+    client = FakeDataPlatformClient()
+    with pytest.raises(ValueError, match="hash mismatch"):
+        DataPlatformDocumentProjector(repo, client, TenderResearchConfig(data_dir=str(tmp_path))).build_for_tender(tender)
+    assert client.ingested == []
+    assert repo.list_document_chunks(document.id) == []
+    assert source.read_bytes() == b"tampered"
