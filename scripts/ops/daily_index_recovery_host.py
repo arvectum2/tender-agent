@@ -21,8 +21,8 @@ from pathlib import Path
 HOME = Path("/Users/master")
 SAFE = HOME / "ArvectumSafe"
 MI = SAFE / "worktrees/tender-agent-mi"
-RESEARCH = SAFE / "worktrees/ta-resource-governor-20261120"
-RESEARCH_SHA = "7bbb4163856042ca9f2b56c15e7f1aa8581d7da6"
+RESEARCH = SAFE / "worktrees/ta-fresh-compute-turn-20261120"
+RESEARCH_SHA = "d632b81d269ac4f999dcaaf1e58cf8d1046693b1"
 PYTHON = SAFE / ".venvs/tender-agent-mi/bin/python"
 RESOURCE = SAFE / "runtime/ta-resource-governor"
 RUNTIME = SAFE / "runtime/ta-source-discovery-20261114/autonomous-runner"
@@ -167,22 +167,12 @@ def check_admission(runtime: Path):
 
 
 @contextmanager
-def admit_analysis_compute(*, wait_seconds=300):
-    """Wait for a batch boundary without stopping the historical executor.
-
-    Only the compute lease is held during read-only LLM generation; lighter
-    historical work retains its own admission. Never hold a priority lease
-    while waiting for an active historical heavy/source batch.
-    """
-    if not 0 <= wait_seconds <= 300:
-        raise ValueError("invalid compute lease wait")
-    runtime = RUNTIME.resolve(strict=True)
-    deadline = time.monotonic() + wait_seconds
+def wait_compute_lease(path, runtime, deadline):
     while True:
         check_admission(runtime)
         with ExitStack() as leases:
             try:
-                leases.enter_context(existing_lease(RESOURCE / "heavy-slot.lock"))
+                leases.enter_context(existing_lease(path))
             except BlockingIOError:
                 if time.monotonic() >= deadline:
                     raise
@@ -191,6 +181,30 @@ def admit_analysis_compute(*, wait_seconds=300):
                 yield
                 return
         time.sleep(min(0.25, max(0, deadline - time.monotonic())))
+
+
+@contextmanager
+def admit_analysis_compute(*, wait_seconds=600):
+    """Reserve a future compute turn without blocking historical commits.
+
+    History probes the turn before taking its next heavy slot. The
+    existing in-flight batch can finish; waiting analysis holds neither
+    the historical priority nor mutation nor backup fence. Once acquired,
+    the heavy lease alone protects the LLM generation.
+    """
+    if not 0 <= wait_seconds <= 600:
+        raise ValueError("invalid compute lease wait")
+    runtime = RUNTIME.resolve(strict=True)
+    deadline = time.monotonic() + wait_seconds
+    with ExitStack() as compute:
+        with wait_compute_lease(
+            RESOURCE / "fresh-compute-turn.lock", runtime, deadline
+        ):
+            compute.enter_context(
+                wait_compute_lease(RESOURCE / "heavy-slot.lock", runtime, deadline)
+            )
+        check_admission(runtime)
+        yield
 
 
 @contextmanager
