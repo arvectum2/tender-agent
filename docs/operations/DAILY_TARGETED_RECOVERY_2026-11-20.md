@@ -22,3 +22,13 @@ mandatory MI/PITR prewrite acceptance and shared fresh lease, no broad discovery
 post-decision automation or external submission. Reconcile any interrupted
 analysis history rather than starting a duplicate. Do not use this planner as
 a write authorization. Actual repair remains a separate reviewed operation.
+
+## Exact index reconciliation
+The pure reconciliation helper compares canonical tender-chunk URI and SHA-256
+of original text against resource, document and projected chunk hashes; it
+checks provider/model/dimension against the collection contract. Duplicate,
+unknown, mismatched, or partially indexed existing resource identities block
+automatic treatment as absent. Production read-only verification of the five
+incident collections found 563 expected, 20 present with matching three hashes
+and embedding contract, 543 absent resources, zero unexpected/conflicting
+identities. This is not a completed ingestion receipt.

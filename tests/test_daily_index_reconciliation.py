@@ -42,6 +42,7 @@ def test_missing_only_and_complete():
     [
         [row(document_hash="bad")],
         [row(chunk_hash=None)],
+        [row(chunk_hash="different")],
         [row(embedding=None)],
         [row(embedding=EmbeddingContract("test", "other", 32))],
         [row(), row()],

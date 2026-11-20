@@ -59,7 +59,7 @@ def reconcile(chunks, rows: list[StoredChunk], contract: EmbeddingContract) -> d
             if (
                 m.resource_hash != digest
                 or m.document_hash != digest
-                or not m.chunk_hash
+                or m.chunk_hash != digest
             ):
                 decisions[uri] = "identity_conflict"
             elif m.embedding is None:
