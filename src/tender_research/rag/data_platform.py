@@ -286,9 +286,17 @@ class DataPlatformDocumentProjector:
         tender,
         *,
         rebuild: bool = False,
+        document_ids: set[str] | None = None,
     ) -> DataPlatformProjectionSummary:
+        documents = list(tender.documents)
+        if document_ids is not None:
+            documents = [doc for doc in documents if doc.id in document_ids]
+            if len(documents) != len(document_ids) or not documents:
+                raise ValueError("projection document scope mismatch")
+            if any(is_ri223_rar_document(doc) for doc in documents):
+                raise ValueError("RAR inventory requires full projection scope")
         seen = processed = skipped = failed = extracted = projected = pruned = 0
-        for document in list(tender.documents):
+        for document in documents:
             # Source-bound RAR is an opaque container; only verified inner documents
             # are eligible for Data Platform text/OCR/chunk extraction.
             if is_ri223_rar_document(document):
@@ -407,7 +415,7 @@ class DataPlatformDocumentProjector:
                 document.id,
                 keep_chunk_ids=keep_ids,
             )
-        for parent in list(tender.documents):
+        for parent in documents:
             if not is_ri223_rar_document(parent):
                 continue
             meta = parent.raw_meta if isinstance(parent.raw_meta, dict) else {}
