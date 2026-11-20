@@ -82,9 +82,9 @@ def classify_public_search_response(html_content: str) -> str:
     # a blocked page, or a blank transport response.
     if classified != "captcha_or_blocked" and (
         extract_public_search_total_count(html_content) == 0
-        and re.search(r'<div\s+class="search-results__total">\s*0\s+записей\s*</div>', html_content, re.I)
-        and re.search(r'<div\s+class="search-registry-entrys-block">\s*</div>', html_content, re.I)
-        and re.search(r'<p\s+class="noRecords">\s*Поиск не дал результатов\s*</p>', html_content, re.I)
+        and re.search(r'<div\s+class="search-results__total">\s*0\s+записей\s*</div>', html_content, re.IGNORECASE)
+        and re.search(r'<div\s+class="search-registry-entrys-block">\s*</div>', html_content, re.IGNORECASE)
+        and re.search(r'<p\s+class="noRecords">\s*Поиск не дал результатов\s*</p>', html_content, re.IGNORECASE)
     ):
         return PublicSearchStatus.EMPTY_RESULTS
     if classified == "empty_results":
