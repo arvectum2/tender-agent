@@ -21,6 +21,7 @@ from src.tender_research.rag.data_platform import (
     resolve_tender_collection_id,
     retrieval_backend_name,
 )
+from src.tender_research.rag.missing_attachments import recover_missing_attachments
 from src.tender_research.repository import TenderRepository
 
 logger = logging.getLogger(__name__)
@@ -228,6 +229,16 @@ def prepare_tender_for_analysis(
         step = TenderPreparationStep("load_or_ingest_tender", "completed", "Tender data loaded")
         steps.append(step)
         emit_progress(25, "load_or_ingest_tender", step.message)
+
+        # Retry a previously failed public card inventory, not an already
+        # populated inventory or an ambiguous/new revision.
+        try:
+            recovered = recover_missing_attachments(repo, tender)
+            if recovered:
+                session.commit()
+                steps.append(TenderPreparationStep("recover_attachments", "completed", f"Recovered {recovered} document link(s)"))
+        except (ValueError, OSError) as exc:
+            warnings.append(f"Missing document inventory recovery refused: {exc}")
 
         step = TenderPreparationStep("download_documents", "in_progress", "Starting document download...")
         steps.append(step)
