@@ -253,3 +253,27 @@ pq_targeted_2026_11_15_0744:
   dp_manifest: documents/dp-reconciled-resources-v1.json
   dp_status: blocked; exact read-only reconciliation complete, separate deployment
     not applied
+
+continuation_2026_11_20_gpb_resume:
+  status: in_progress
+  goal: Resume GPB technical evidence and safely reconcile blocked archive preparation.
+  definition_of_done: Verify technical batch progress and exact archive delta; resume archive writer only after source and database reconciliation with mandatory MI gate and backup.
+  completed: Original recovery queue exhausted with 726 verified decisions; historical import finished; technical GPB launchd batch restarted (PID 32485).
+  current_stage: Read-only archive preparation and delta reconciliation
+  remaining: Inspect diagnostic output, resolve any conflicts or timeout without discarding originals, then resume archive writer if safe; check technical batch completion.
+  last_verified_commit: 770ae56c42221b456b4ba021ca4cfb5d455c48ca
+  latest_tests: Runtime state verified; previous archive write inflight false; no DB changes in diagnostic.
+  diagnostic_job: e49554e0-d75e-4262-835a-7ee288561363
+  resume_instruction: Read the ARC diagnostic job status and GPB technical state; if preparation succeeds, revalidate source-bound delta under shared mutation lock and mandatory gate before any DB write. Do not reset blocked status blindly.
+
+recovery_apply_2026_11_20:
+  status: in_progress
+  goal: Restore archive detail writer after verified read-only delta.
+  definition_of_done: MI gate and backup passed; exact delta applied; replay has zero pending; launchd archive detail job resumed and verified.
+  completed: Read-only preparation passed; 2354 links, 1222 decisions, 14 pending link receipts and 8 pending decisions; three focused tests passed with --noconftest.
+  current_stage: Revalidation and guarded delta application
+  remaining: Verify recovery receipt, launchd state, technical batch, and final checkpoint.
+  last_verified_commit: 770ae56c42221b456b4ba021ca4cfb5d455c48ca
+  latest_tests: 3 passed; default pytest conftest missing arvectum_data_client, isolated pure-module tests passed.
+  recovery_job: 14385b13-2d69-456e-b2a9-292f2e3b80b4
+  resume_instruction: Read ARC job status; verify operator-recovery-7f60ce4fc9c29282ca02c6a9beae642800c8bb3bbf9e1770f790da3e37e3d224.json and archive lane state. Never repeat mutations if receipt confirms zero pending; reconcile any inflight state before retry.
