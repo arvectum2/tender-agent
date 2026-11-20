@@ -3934,3 +3934,33 @@ roadmap_reconciliation_2026_11_20:
   authority: existing_owner_scope_and_approval_gates_unchanged
   queue_modified: false
   production_acceptance_inferred_from_merge: false
+
+roadmap_reconciliation_2026_11_21:
+  role: read_only_management_and_integrated_candidate_audit
+  baseline_main: abcd8727326c398d870edbc4a2da793e090ac8eb
+  main_ci_and_gitverse: verified_success
+  reviewed_documentation_pr: 673
+  reviewed_documentation_exact_ci: 20_of_20_success_before_current_update
+  consolidated_review_candidate_pr: 674
+  reviewed_consolidated_prior_head: 0720f0793715978e45093be089d2b6c64d503737
+  reviewed_consolidated_prior_ci: 19_of_19_success_6649_passed_293_skipped
+  consolidated_current_head: c0efa7e6e227b022f9b0a0e3f24f9bbf00ad2245
+  current_head_ci_at_reconciliation: pending
+  integrated_source_heads: [02bfe3a01a81aaa2cd8d769f37f391b1e2d7ccd0, 5ef2b43c21abd7a80f39157181512d125d73cd25, 7bd3e0c7aae238305f2c83dc34a4e33105e34344]
+  retired_prs_exact_main_ancestry: 81
+  remaining_open_prs_observed: 49
+  git_worktrees_registered: 183
+  git_worktrees_clean_in_mi_clone: 183
+  worktree_head_ancestor_main: 114
+  worktree_head_not_ancestor_main: 69
+  provisional_archive_candidates: 114
+  archival_safety: requires_launchd_cwd_checkpoint_external_reference_review_no_delete_performed
+  independent_source_gates: [real_customer_originals, current_law, commercial_gold, actual_signed_contracts, reviewed_release_authorization]
+  live_runtime_health: backend_and_data_platform_http_200
+  live_cutover_evidence: fairness_abcd8727_activated
+  ta_pitr_first_prewrite: pending_independent_receipt_observation
+  daily_tender_run_last_exit: 20
+  daily_tender_run_timeout_status: needs_source_scoped_reconciliation_no_blind_retry
+  all_feature_flags_and_approval_gates: unchanged
+  canonical_execution_queue_modified: false
+  production_mutated_by_this_reconciliation: false
