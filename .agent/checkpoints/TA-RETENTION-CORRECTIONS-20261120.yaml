@@ -1,5 +1,5 @@
 task_id: TA-RETENTION-CORRECTIONS-20261120
-status: in_progress
+status: completed
 goal: Append-only correction of proposed document-order associations in the operator console.
 definition_of_done:
 - Same-tenant correction history with optimistic revision check and composite foreign keys.
@@ -7,9 +7,22 @@ definition_of_done:
 - Isolated API, migration and browser tests; no deletion, access change or release.
 completed:
 - Exact 58bbca2b CI 19/19; published ca0d4a81.
-current_stage: implementation
+- Migration 127 append-only link corrections; composite same-tenant FKs, revision bound and uniqueness,
+  nonempty downgrade guard. Operator routes and existing console support explicit correction to
+  latest proposal, original association and history retained. Accounting reflects latest correction,
+  not a legal approval.
+- 31 focused tests PASS; Chromium desktop/mobile real loopback API 2/2 PASS; disposable PostgreSQL
+  16 runner PASS, including cross-tenant correction denial and retained history.
+current_stage: bounded_correction_flow_verified_local
 remaining:
-- Model, migration, scoped service, console and test acceptance.
-last_verified_commit: 58bbca2b5d9ad6e9e9c2be25d4054183d467478a
-test_results: []
-resume_instruction: Continue bounded proposed link correction. No previously rejected readiness operation, production or deletion.
+- Verify exact PR662 remote ca0d4a81 CI and publish successor when green; verify exact successor
+  CI.
+- Named operator identity and separate approval authority, actual contract evidence and approved
+  production retention remain OPEN. Rebinding is proposed only; no unlink/deletion/access change.
+last_verified_commit: 1f78eb4b757a4c3111ab3bdc8c5f9315cd5541a1
+test_results:
+- 31 passed, 35 warnings in 4.32s; Chromium 2 passed, 2 warnings in 14.21s; PostgreSQL disposable
+  runner exit 0; Ruff and git diff check PASS; single Alembic head 127.
+resume_instruction: Verify exact remote ca0d4a81 CI and publish local correction successor; next
+  bounded named operator authorization design. No rejected readiness operation, production deletion
+  or external release.

@@ -255,7 +255,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "Owner clarified retain operator interface. Exact f2cf1037 CI 19/19 PASS; published 58bbca2b. Verify its CI then publish local operator console. Next bounded correction flow; no operational deletion/access change or release; previous rejected readiness operation remains blocked."
+resume_instruction: "20 Nov: exact 58bbca2b CI 19/19 PASS; published ca0d4a81. Verify its CI then publish local link correction successor. Named operator authorization/approval and actual evidence remain open; no deletion, access change, rejected readiness operation or external release."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -1190,7 +1190,7 @@ retention_operator_20261119:
 
 retention_corrections_20261120:
   task_id: TA-RETENTION-CORRECTIONS-20261120
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-RETENTION-CORRECTIONS-20261120.yaml
-  current_stage: implementation
-  last_verified_commit: 58bbca2b5d9ad6e9e9c2be25d4054183d467478a
+  current_stage: bounded_correction_flow_verified_local
+  last_verified_commit: 1f78eb4b757a4c3111ab3bdc8c5f9315cd5541a1
