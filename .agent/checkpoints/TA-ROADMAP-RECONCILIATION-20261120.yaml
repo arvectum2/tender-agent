@@ -1,18 +1,28 @@
 task_id: TA-ROADMAP-RECONCILIATION-20261120
 status: in_progress
-goal: Reconcile roadmap, preserve Spec Kit immutable original criteria and inventory branches before consolidation.
+goal: Stabilize Tender Agent by reconciling canonical roadmap, preserving Spec Kit source constraints, and consolidating reviewed existing branches.
 definition_of_done:
-  - Exact current main and CI verified.
-  - Roadmap overlay preserves all source text and exact criterion links.
-  - Criterion review and candidate CI pass.
-  - Non-destructive branch/worktree inventory and dependency triage recorded.
+  - Verify exact main and CI, runtime health and worktree safety.
+  - Preserve source text and criterion links; validate updated roadmap with exact CI.
+  - Classify existing PRs by exact main ancestry, preserve all unique changes and dependencies.
+  - Reconcile consolidated release candidates and verify relevant integration tests.
+  - Complete live acceptance only after existing runtime gates and attributable approval.
 completed_stages:
-  - Verified main abcd8727; CI and mirror success.
-  - PR 673 initial documentation candidate; source criterion gate correctly rejected prepended overlay.
-  - Reconciled exact reviewed appendix to pinned baseline, without changing acceptance or validation conditions.
-  - 129 open PRs, 113 draft, 13 base main, 183 registered worktrees all clean: 114 ancestors of main, 69 not ancestors.
-current_stage: exact candidate CI and non-destructive consolidation inventory
-remaining_stages: [criterion CI, dependency triage, review integration]
-last_verified_commit: abcd8727326c398d870edbc4a2da793e090ac8eb
-last_checks: Initial PR criterion-review failed on unreviewed source change; corrected candidate requires exact CI.
-resume_instruction: Inspect PR673 exact head CI and dependency inventory. Preserve live MI checkout and private runtime references. Do not automatically merge other PRs or remove any unmerged or dirty worktree.
+  - main abcd8727 matched remote; main CI and GitVerse mirror successful.
+  - PR673 corrected to append exact reviewed source text; pinned baseline and validator conditions unchanged; criterion-review success at 0304f557.
+  - MI clone 183 registered worktrees clean: 114 ancestor HEADs, 69 not ancestors. Separate SSD clone remains dirty with 4 modified files, 3 untracked paths and 224 added tracked lines.
+  - 129 open PRs initial, 113 drafts, 13 base main, 116 stacked; 16 dependency groups.
+  - Initial exact main ancestry classification: 81 ancestors, 43 non-ancestors, 5 unknown to local clone (477,479,483,618,673).
+  - Closed verified already-integrated leaf PRs 602 and 601 after exact GitHub compare ahead=0; no branches deleted.
+  - Runtime active uvicorn on release abcd8727 and recovery process at same release observed; both localhost health endpoints 8001 and 8094 returned 200. Live recovery completion not established.
+current_stage: dependency-safe PR retirement and integrated release reconciliation
+remaining_stages:
+  - Verify exact current CI for PR673; merge documentation only after required approval and gates.
+  - Refresh PR inventory after closures; retire only ancestor leaf PRs after rechecking exact remote head and dependencies; retain shared bases for unmatched open children.
+  - Review PR657 candidate (153 changed files, 92 commits not in main history, merge conflict), compare its ancestry and scope against PR640 (29 commits, 60 files) and PR632 (9 commits, 26 files); preserve non-overlapping changes.
+  - Compare unknown PR head SHAs against remote main; protect releases, live worktrees, MI nine unpushed commits and separate dirty SSD clone; no forced clean or deletion.
+  - Verify active fresh analysis and archive receipts, PITR, governor, source catalog; complete existing acceptance gates.
+last_verified_commit: 0304f557f69bdb247a862e0bcb708fb3498baf2c
+last_checks: PR673 exact head criterion-review SUCCESS; 17 checks successful and 3 in progress at last observation; later checkpoint-only head requires fresh CI. Main health endpoints 200; no live mutation.
+resume_instruction: Read this child checkpoint in PR673 branch and canonical MI checkpoint. Recheck exact PR673 CI, current main, and dependency graph. Continue safe leaf retirement and isolated PR657/640/632 reconciliation using existing authorization; do not reset active runtime or close non-ancestor PRs on inference.
+limitations: Active canonical MI checkpoint not modified because production recovery is running; this child checkpoint is review-branch persistent. No production cutover, DB mutation, branch or worktree deletion, or new Watchdog.
