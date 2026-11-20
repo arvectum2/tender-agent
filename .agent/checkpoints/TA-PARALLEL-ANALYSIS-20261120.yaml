@@ -1,0 +1,17 @@
+task_id: TA-PARALLEL-ANALYSIS-20261120
+status: in_progress
+goal: Separate long read-only LLM computation from short database write admission and permit independent historical acquisition while respecting resource limits.
+definition_of_done:
+  - Existing canary allowed to finish without interruption.
+  - Analysis compute and commit use separate audited lease lifetimes; preserve exact input identity, atomic history, PITR and MI checks.
+  - Prove concurrent safe acquisition and no competing GPU admission under reduced or paused resources.
+  - Reconcile blocked SIBUR archive collector against actual source receipts and DB before restart; no automatic ambiguous replay.
+  - Focused tests, exact CI, approved rollout and live verification; SIBUR resumed safely.
+completed_stages:
+  - Inspected active release and canonical checkpoint.
+  - Confirmed long analysis currently holds heavy, priority and mutation locks; archive collector blocked before linkage with inflight false and pending zero.
+current_stage: implement split analysis admission and inspect archive receipt/DB binding
+remaining_stages: [tests, archive reconciliation, review, release, live verification]
+last_verified_commit: dd867387d87823394c2a72724af27ce15d4b0aff
+last_checks: production preflight pass; current analysis job f48135b2-2455-4f4f-b24d-b089f75ebaf0 running; no changes to active release
+resume_instruction: Read existing canary journal first; never interrupt or duplicate it. Review split lease changes, confirm collector proof before making any change. Keep resource governor pinned and MI clean.
