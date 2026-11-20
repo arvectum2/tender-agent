@@ -4,14 +4,16 @@ Opaque secrets are never stored; only SHA-256 digests of 256-bit random tokens.
 """
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import date, datetime
 
 from sqlalchemy import (
     JSON,
     Boolean,
     CheckConstraint,
+    Date,
     DateTime,
     ForeignKey,
+    ForeignKeyConstraint,
     Index,
     Integer,
     LargeBinary,
@@ -472,3 +474,164 @@ class CompanyCostNormVersion(UUIDPrimaryKeyMixin, Base):
 
 event.listen(CompanyCostNormVersion,"before_update",_immutable_company_decision)
 event.listen(CompanyCostNormVersion,"before_delete",_immutable_company_decision)
+
+
+class ApplicationReviewPreview(UUIDPrimaryKeyMixin, Base):
+    """Exact private server-generated draft; historical, not a submission."""
+    __tablename__ = 'application_review_previews'
+    tenant_id: Mapped[str] = mapped_column(String(64), ForeignKey('saas_tenants.tenant_id'), nullable=False)
+    member_id: Mapped[str] = mapped_column(String(36), ForeignKey('saas_members.id'), nullable=False)
+    run_id: Mapped[str] = mapped_column(String(128), ForeignKey('saas_runs.run_id'), nullable=False)
+    procurement_ref: Mapped[str] = mapped_column(String(64), nullable=False)
+    input_json: Mapped[dict] = mapped_column(JSON, nullable=False)
+    archive_bytes: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
+    archive_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    plan_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    inputs_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    evidence_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    __table_args__ = (Index('ix_application_preview_scope', 'tenant_id', 'run_id', 'created_at'),)
+
+
+class ApplicationReviewDecision(UUIDPrimaryKeyMixin, Base):
+    """Explicit internal acknowledgement of one exact private preview."""
+    __tablename__ = 'application_review_decisions'
+    preview_id: Mapped[str] = mapped_column(ForeignKey('application_review_previews.id'), nullable=False, unique=True)
+    tenant_id: Mapped[str] = mapped_column(String(64), ForeignKey('saas_tenants.tenant_id'), nullable=False)
+    member_id: Mapped[str] = mapped_column(String(36), ForeignKey('saas_members.id'), nullable=False)
+    archive_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+
+
+for _review_model in (ApplicationReviewPreview, ApplicationReviewDecision):
+    event.listen(_review_model, 'before_update', _immutable_company_decision)
+    event.listen(_review_model, 'before_delete', _immutable_company_decision)
+
+
+class OriginalFormReviewCandidate(UUIDPrimaryKeyMixin, Base):
+    """Immutable private original-form candidate assigned to one other member."""
+    __tablename__ = 'original_form_review_candidates'
+    tenant_id: Mapped[str] = mapped_column(String(64), ForeignKey('saas_tenants.tenant_id'), nullable=False)
+    run_id: Mapped[str] = mapped_column(String(128), ForeignKey('saas_runs.run_id'), nullable=False)
+    creator_id: Mapped[str] = mapped_column(String(36), ForeignKey('saas_members.id'), nullable=False)
+    reviewer_id: Mapped[str] = mapped_column(String(36), ForeignKey('saas_members.id'), nullable=False)
+    input_json: Mapped[dict] = mapped_column(JSON, nullable=False)
+    receipt_json: Mapped[dict] = mapped_column(JSON, nullable=False)
+    document_bytes: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
+    document_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    candidate_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    __table_args__ = (
+        CheckConstraint('creator_id <> reviewer_id', name='ck_original_form_distinct_members'),
+        Index('ix_original_form_review_scope', 'tenant_id', 'run_id', 'created_at'),
+    )
+
+
+class OriginalFormReviewReceipt(UUIDPrimaryKeyMixin, Base):
+    """Historical acknowledgement, not a release authorization."""
+    __tablename__ = 'original_form_review_receipts'
+    candidate_id: Mapped[str] = mapped_column(ForeignKey('original_form_review_candidates.id'), nullable=False, unique=True)
+    reviewer_id: Mapped[str] = mapped_column(String(36), ForeignKey('saas_members.id'), nullable=False)
+    candidate_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    document_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+
+
+for _form_model in (OriginalFormReviewCandidate, OriginalFormReviewReceipt):
+    event.listen(_form_model, 'before_update', _immutable_company_decision)
+    event.listen(_form_model, 'before_delete', _immutable_company_decision)
+
+
+class PrivateReviewRetentionProposal(UUIDPrimaryKeyMixin, Base):
+    """Internal order-level planning snapshots; never a retention authorization."""
+    __tablename__ = 'private_review_retention_proposals'
+    tenant_id: Mapped[str] = mapped_column(String(64), ForeignKey('saas_tenants.tenant_id'), nullable=False)
+    order_ref: Mapped[str] = mapped_column(String(128), nullable=False)
+    revision: Mapped[int] = mapped_column(Integer, nullable=False)
+    policy_ref: Mapped[str] = mapped_column(String(128), nullable=False)
+    order_ended_on: Mapped[date | None] = mapped_column(Date)
+    end_evidence_ref: Mapped[str | None] = mapped_column(String(128))
+    working_days: Mapped[int] = mapped_column(Integer, nullable=False)
+    backup_days: Mapped[int] = mapped_column(Integer, nullable=False)
+    hold_state: Mapped[str] = mapped_column(String(16), nullable=False)
+    hold_evidence_ref: Mapped[str | None] = mapped_column(String(128))
+    hold_review_on: Mapped[date | None] = mapped_column(Date)
+    recorded_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    __table_args__ = (
+        UniqueConstraint('tenant_id', 'order_ref', 'revision', name='uq_retention_proposal_revision'),
+        CheckConstraint('revision > 0', name='ck_retention_proposal_revision'),
+        CheckConstraint("working_days >= 0 AND working_days <= 3650 AND backup_days >= working_days AND backup_days <= 3650",
+                        name='ck_retention_proposal_days'),
+        CheckConstraint("(order_ended_on IS NULL AND end_evidence_ref IS NULL) OR (order_ended_on IS NOT NULL AND end_evidence_ref IS NOT NULL)",
+                        name='ck_retention_proposal_end'),
+        CheckConstraint("(hold_state = 'UNKNOWN' AND hold_evidence_ref IS NULL AND hold_review_on IS NULL) OR "
+                        "(hold_state IN ('ACTIVE','CLEAR') AND hold_evidence_ref IS NOT NULL AND hold_review_on IS NOT NULL)",
+                        name='ck_retention_proposal_hold'),
+    )
+
+
+event.listen(PrivateReviewRetentionProposal, 'before_update', _immutable_company_decision)
+event.listen(PrivateReviewRetentionProposal, 'before_delete', _immutable_company_decision)
+
+
+# Composite keys prevent a proposed association from crossing tenant boundaries.
+for _parent, _idx in (
+    (ApplicationReviewPreview, 'uq_retention_preview_tenant_id'),
+    (OriginalFormReviewCandidate, 'uq_retention_candidate_tenant_id'),
+    (PrivateReviewRetentionProposal, 'uq_retention_proposal_tenant_id'),
+):
+    Index(_idx, _parent.tenant_id, _parent.id, unique=True)
+
+
+class PrivateReviewOrderLink(UUIDPrimaryKeyMixin, Base):
+    """One proposed association per exact retained document; no verified ownership claim."""
+    __tablename__ = 'private_review_order_links'
+    tenant_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    proposal_id: Mapped[str] = mapped_column(String, nullable=False)
+    preview_id: Mapped[str | None] = mapped_column(String, unique=True)
+    candidate_id: Mapped[str | None] = mapped_column(String, unique=True)
+    evidence_ref: Mapped[str] = mapped_column(String(128), nullable=False)
+    recorded_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    __table_args__ = (
+        ForeignKeyConstraint(['tenant_id', 'proposal_id'],
+                             ['private_review_retention_proposals.tenant_id', 'private_review_retention_proposals.id']),
+        ForeignKeyConstraint(['tenant_id', 'preview_id'],
+                             ['application_review_previews.tenant_id', 'application_review_previews.id']),
+        ForeignKeyConstraint(['tenant_id', 'candidate_id'],
+                             ['original_form_review_candidates.tenant_id', 'original_form_review_candidates.id']),
+        CheckConstraint('(preview_id IS NULL) <> (candidate_id IS NULL)', name='ck_retention_order_link_one_document'),
+        Index('ix_retention_order_links_scope', 'tenant_id', 'proposal_id'),
+    )
+
+
+event.listen(PrivateReviewOrderLink, 'before_update', _immutable_company_decision)
+event.listen(PrivateReviewOrderLink, 'before_delete', _immutable_company_decision)
+
+
+Index('uq_retention_link_tenant_id', PrivateReviewOrderLink.tenant_id,
+      PrivateReviewOrderLink.id, unique=True)
+
+
+class PrivateReviewLinkCorrection(UUIDPrimaryKeyMixin, Base):
+    """Append-only correction of a proposed link; no change to underlying document."""
+    __tablename__ = 'private_review_link_corrections'
+    tenant_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    link_id: Mapped[str] = mapped_column(String, nullable=False)
+    proposal_id: Mapped[str] = mapped_column(String, nullable=False)
+    revision: Mapped[int] = mapped_column(Integer, nullable=False)
+    evidence_ref: Mapped[str] = mapped_column(String(128), nullable=False)
+    recorded_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    __table_args__ = (
+        ForeignKeyConstraint(['tenant_id', 'link_id'],
+                             ['private_review_order_links.tenant_id', 'private_review_order_links.id']),
+        ForeignKeyConstraint(['tenant_id', 'proposal_id'],
+                             ['private_review_retention_proposals.tenant_id', 'private_review_retention_proposals.id']),
+        UniqueConstraint('tenant_id', 'link_id', 'revision', name='uq_retention_link_correction_revision'),
+        CheckConstraint('revision > 0 AND revision <= 200', name='ck_retention_link_correction_revision'),
+    )
+
+
+event.listen(PrivateReviewLinkCorrection, 'before_update', _immutable_company_decision)
+event.listen(PrivateReviewLinkCorrection, 'before_delete', _immutable_company_decision)

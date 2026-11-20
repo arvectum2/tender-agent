@@ -255,7 +255,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-10-20: APR03B/07 child TA-GEMMA-CITED-FALLBACK-FIX-20261019 reviewed original Smolensk data. Prior final4 actual Gemma 3/4; separate evaltrace5 0/1 with unsupported invented 100% twice, while pinned original percentages are 20/30/70/80. PR500 draft has prompt rule forbidding inferred percentages and new exclusive criteria_only receipt variant; code/guards remain review-only and unmerged. Read-only one-section rerun blocked BEFORE model by Data Platform collection_stats HTTP401 (existing local client credentials not configured; service process exists). Child checkpoint status BLOCKED; do not bypass authentication or claim 4/4. Restore existing authorized Data Platform client configuration (no secrets in Git/Chat), reverify index 86/86/86 and start a single read-only criteria_only probe with original SHA; audit citations/numeric facts before declaring acceptance. While blocked, continue independent approved parent tasks APR04/05/06 and B2B qualification without bid/ETP/payment/deploy or changing benchmark gold. Single manual_override remains true."
+resume_instruction: "20 Nov: exact 58bbca2b CI 19/19 PASS; published ca0d4a81. Verify its CI then publish local link correction successor. Named operator authorization/approval and actual evidence remain open; no deletion, access change, rejected readiness operation or external release."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -1083,9 +1083,9 @@ reviewed_offer_declarations_20261118:
 
 checklist_bundle_gate_20261118:
   task_id: TA-CHECKLIST-BUNDLE-GATE-20261118
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-CHECKLIST-BUNDLE-GATE-20261118.yaml
-  current_stage: exact_ci_pending
+  current_stage: verified_pending_merge
   last_verified_commit: c86819923be17f865f02bdcf335542610998b920
 
 integrated_release_audit_20261118:
@@ -1094,3 +1094,103 @@ integrated_release_audit_20261118:
   checkpoint: .agent/checkpoints/TA-INTEGRATED-RELEASE-AUDIT-20261118.yaml
   current_stage: audit_complete_production_no_go
   last_verified_commit: 2c94f9a2c3f0da4273cd2d058bc965ac304a3177
+
+workspace_application_review_20261118:
+  task_id: TA-WORKSPACE-APPLICATION-REVIEW-20261118
+  status: completed
+  checkpoint: .agent/checkpoints/TA-WORKSPACE-APPLICATION-REVIEW-20261118.yaml
+  current_stage: verified_pending_merge
+  last_verified_commit: 87af606a5505176225c2edd780c2e51526d7177a
+
+saas_documentary_readiness_20261118:
+  task_id: TA-SAAS-DOCUMENTARY-READINESS-20261118
+  status: completed
+  checkpoint: .agent/checkpoints/TA-SAAS-DOCUMENTARY-READINESS-20261118.yaml
+  current_stage: verified_pending_merge
+  last_verified_commit: ab25613ce7a9ac93a56b5fae5c0ab06df7808efe
+
+
+evidence_approval_gate_20261118:
+  task_id: TA-EVIDENCE-APPROVAL-GATE-20261118
+  status: completed
+  checkpoint: .agent/checkpoints/TA-EVIDENCE-APPROVAL-GATE-20261118.yaml
+  current_stage: verified_pending_merge
+  last_verified_commit: 8c3c47b9d8beea6a2a750e0ec78b7ada9f06bda8
+
+
+authenticated_application_review_20261119:
+  task_id: TA-AUTHENTICATED-APPLICATION-REVIEW-20261119
+  status: completed
+  checkpoint: .agent/checkpoints/TA-AUTHENTICATED-APPLICATION-REVIEW-20261119.yaml
+  current_stage: bounded_development_verified_pending_merge
+  last_verified_commit: 2558f0f5a4705731a87851e15ec7f8aae8f82e0b
+
+customer_draft_export_20261119:
+  task_id: TA-CUSTOMER-DRAFT-EXPORT-20261119
+  status: completed
+  checkpoint: .agent/checkpoints/TA-CUSTOMER-DRAFT-EXPORT-20261119.yaml
+  current_stage: bounded_development_verified_pending_merge
+  last_verified_commit: 6d0281dd5b2c2eaa2f6029017314eddb54df281e
+
+customer_content_review_20261119:
+  task_id: TA-CUSTOMER-CONTENT-REVIEW-20261119
+  status: completed
+  checkpoint: .agent/checkpoints/TA-CUSTOMER-CONTENT-REVIEW-20261119.yaml
+  current_stage: bounded_development_verified_pending_merge
+  last_verified_commit: 383d819f199657d0c22c0fb0164fe3e5cba21412
+
+original_form_candidate_20261119:
+  task_id: TA-ORIGINAL-FORM-CANDIDATE-20261119
+  status: completed
+  checkpoint: .agent/checkpoints/TA-ORIGINAL-FORM-CANDIDATE-20261119.yaml
+  current_stage: bounded_development_verified_pending_merge
+  last_verified_commit: ad0b7f243f8dbfab0299f4e8e7546bb47bf0191a
+
+independent_form_review_20261119:
+  task_id: TA-INDEPENDENT-FORM-REVIEW-20261119
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-INDEPENDENT-FORM-REVIEW-20261119.yaml
+  current_stage: remote_ci_pending_live_loopback_browser_pass
+  last_verified_commit: 666d4379fbe41d56e64c69ef1210912fb5ee6708
+
+application_release_readiness_20261119:
+  task_id: TA-APPLICATION-RELEASE-READINESS-20261119
+  status: blocked
+  checkpoint: .agent/checkpoints/TA-APPLICATION-RELEASE-READINESS-20261119.yaml
+  current_stage: implementation_tool_rejected
+  last_verified_commit: ea771b717a3c595075f24115d1369d6cec4d951a
+
+private_review_retention_20261119:
+  task_id: TA-PRIVATE-REVIEW-RETENTION-20261119
+  status: completed
+  checkpoint: .agent/checkpoints/TA-PRIVATE-REVIEW-RETENTION-20261119.yaml
+  current_stage: bounded_policy_and_regressions_complete_local
+  last_verified_commit: 839147aa
+
+retention_register_20261119:
+  task_id: TA-RETENTION-REGISTER-20261119
+  status: completed
+  checkpoint: .agent/checkpoints/TA-RETENTION-REGISTER-20261119.yaml
+  current_stage: bounded_schema_and_planning_verified_local
+  last_verified_commit: c2f17cb1e12978872edf686a21b29746f6d85f70
+
+retention_accounting_20261119:
+  task_id: TA-RETENTION-ACCOUNTING-20261119
+  status: completed
+  checkpoint: .agent/checkpoints/TA-RETENTION-ACCOUNTING-20261119.yaml
+  current_stage: bounded_accounting_verified_local
+  last_verified_commit: 90d06ae09b15c7fb730fab15c28d240590240e30
+
+retention_operator_20261119:
+  task_id: TA-RETENTION-OPERATOR-20261119
+  status: completed
+  checkpoint: .agent/checkpoints/TA-RETENTION-OPERATOR-20261119.yaml
+  current_stage: bounded_operator_console_verified_local
+  last_verified_commit: a855d6a77537e36567cfc52d2c02aa02c01d7477
+
+retention_corrections_20261120:
+  task_id: TA-RETENTION-CORRECTIONS-20261120
+  status: completed
+  checkpoint: .agent/checkpoints/TA-RETENTION-CORRECTIONS-20261120.yaml
+  current_stage: bounded_correction_flow_verified_local
+  last_verified_commit: 1f78eb4b757a4c3111ab3bdc8c5f9315cd5541a1

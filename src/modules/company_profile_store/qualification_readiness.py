@@ -2,7 +2,9 @@
 from __future__ import annotations
 
 import hashlib
+import os
 import re
+import stat
 from datetime import UTC, date, datetime
 from pathlib import Path
 from typing import Literal
@@ -74,7 +76,10 @@ def _document_state(session,customer_id,claim,kind,now,root):
                 or base.parent.is_symlink() or p.is_symlink() or p.parent.resolve()!=base.resolve()
                 or not p.is_file() or p.suffix.lower()!='.pdf'):
             return 'DOCUMENT_OUTSIDE_PRIVATE_STORE'
-        with p.open('rb') as f:
+        fd=os.open(p,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK)
+        with os.fdopen(fd,'rb') as f:
+            if not stat.S_ISREG(os.fstat(f.fileno()).st_mode):
+                return 'DOCUMENT_UNAVAILABLE'
             raw=f.read(10*1024*1024+1)
         if not raw.startswith(b'%PDF-') or len(raw)>10*1024*1024 or hashlib.sha256(raw).hexdigest()!=claim.sha256:
             return 'DOCUMENT_BYTES_MISMATCH'

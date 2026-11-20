@@ -1,0 +1,32 @@
+task_id: TA-RETENTION-OPERATOR-20261119
+status: completed
+goal: Opt-in internal operator console for proposed retention schedules, initial document associations
+  and aggregate accounting.
+definition_of_done:
+- Reuse existing operator authorization; default off; typed bounded requests, tenant scope and same-origin
+  browser writes.
+- Append-only schedule revision with optimistic concurrency; initial exact document association
+  only; audit without document content.
+- Actual browser and isolated API tests; no deletion or access changes; correction, real evidence
+  and named operator approval remain open.
+completed:
+- Exact f2cf1037 CI 19/19, published accounting successor 58bbca2b.
+- Owner clarified to keep operator interface in scope.
+- Opt-in existing Basic operator auth console and bounded proposal-only routes; tenant scoped inventory,
+  append-only revisions, first document link, stale/duplicate refusal, audit event per write, explicit
+  confirmation and same-origin guard.
+- Actual Chromium 1280/390 vs real loopback FastAPI and temporary SQLite; schedule creation, initial
+  document link, revision and stale-link indicator, tenant change and no horizontal overflow; CSP
+  script hash final run 2/2 PASS.
+current_stage: bounded_operator_console_verified_local
+remaining:
+- Verify published 58bbca2b CI then publish local operator successor and verify its CI.
+- Append-only correction/rebinding process, named operator identity and independent authorization,
+  production approval and actual order evidence remain OPEN. No deletion or access authority.
+last_verified_commit: a855d6a77537e36567cfc52d2c02aa02c01d7477
+test_results:
+- 30 focused tests passed, 34 warnings in 4.94s; actual Chromium 2 passed, 2 warnings in 6.95s after
+  CSP change; Ruff and git diff check PASS. No production mutation.
+resume_instruction: Verify exact PR662 remote 58bbca2b CI (17/19 at last check), publish local operator
+  console successor when green, verify successor. Next bounded operator correction flow; no deletion,
+  access changes, release or rejected readiness operation.

@@ -113,6 +113,18 @@
               <div id="copilot-search-result" role="status" aria-live="polite"></div>
             </details>
           </section>
+          <section class="panel" id="application-review-panel" hidden>
+            <details class="quote-review">
+              <summary>Комплектность заявки — требования заказчика</summary>
+              <p class="help-text">Только изученные архивные требования. Сценарий подписания и поставки не подтверждает факты о компании. Профиль компании не проверяется; готовность и право участия не устанавливаются.</p>
+              <form id="application-review-form" class="quote-form" autocomplete="off">
+                <label for="application-signatory">Сценарий подписания<select id="application-signatory"><option value="UNKNOWN">Не определён</option><option value="DIRECTOR">Руководитель</option><option value="REPRESENTATIVE">Представитель по доверенности руководителя</option><option value="DELEGATED_SIGNER">Доверенность от иного уполномоченного лица</option></select></label>
+                <label for="application-goods">Товары и материалы по условию образца<select id="application-goods"><option value="UNKNOWN">Не определено</option><option value="YES">Предусмотрены</option><option value="NO">Не предусмотрены</option></select></label>
+                <button id="application-review-submit" type="submit" class="button button-secondary">Проверить требования</button>
+              </form>
+              <div id="application-review-result" role="status" aria-live="polite"></div>
+            </details>
+          </section>
           <section class="panel report-panel" id="report-panel" hidden>
             <div class="panel-title"><div><div class="eyebrow">РЕЗУЛЬТАТ АВТОМАТИЧЕСКОГО АНАЛИЗА · ПРОВЕРЬТЕ ИСТОЧНИКИ</div><h2>Результаты и доказательства</h2></div><div class="report-actions"><a id="download-pdf" class="button button-secondary" download>PDF ↓</a><a id="download-docx" class="button button-secondary" download>DOCX ↓</a></div></div>
             <p id="report-analysis-mode" role="status" class="muted"></p>

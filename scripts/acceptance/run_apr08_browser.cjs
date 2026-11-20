@@ -14,7 +14,7 @@ assert.equal(target.hostname,'127.0.0.1');assert.equal(target.protocol,'http:');
   const l=id=>page.locator('#'+id);
   await page.goto(origin+'/pilot/tender-agent/workspace?run='+run);
   await l('copilot-panel').waitFor({state:'visible'});
-  if(['pinned','ri223','ri223-multilot','ri223-attachments','ri223-container','ri223-zip','ri223-dossier'].includes(process.env.APR08_BROWSER_SCENARIO)) assert(await l('report-panel').isHidden());
+  if(['pinned','ri223','ri223-multilot','ri223-attachments','ri223-container','ri223-zip','ri223-dossier','application-review-synthetic'].includes(process.env.APR08_BROWSER_SCENARIO)) assert(await l('report-panel').isHidden());
   else await l('report-panel').waitFor({state:'visible'});
   await page.getByText('Evidence Copilot — вопросы и расчёт по закупке',{exact:true}).click();
   const ask=async(question,pattern)=>{
@@ -24,6 +24,26 @@ assert.equal(target.hostname,'127.0.0.1');assert.equal(target.protocol,'http:');
     await page.waitForFunction(({id,text})=>document.getElementById(id).innerText.includes(text),{id:'copilot-answer-result',text:pattern});
     return await l('copilot-answer-result').innerText();
   };
+  if(process.env.APR08_BROWSER_SCENARIO==='application-review-synthetic') {
+    await page.getByText('Комплектность заявки — требования заказчика',{exact:true}).click();
+    const root=l('application-review-result');
+    await l('application-review-submit').click();
+    await root.getByText('Архивный чек-лист · 9 групп требований · DEFER. Профиль не проверен.').waitFor();
+    assert.equal(await root.locator('details').count(),9);
+    await root.getByText(/Доверенность представителя — Условие не определено/).click();
+    assert.match(await root.innerText(),/SHA-256 оригинала/);
+    await l('application-signatory').selectOption('DIRECTOR');
+    assert.equal(await root.innerText(),'');
+    await l('application-goods').selectOption('NO');
+    await l('application-review-submit').click();
+    await root.getByText(/Доверенность представителя — Не применяется/).waitFor();
+    assert.match(await root.innerText(),/Альтернативные документы; само право требуется/);
+    await l('refresh-run').click();
+    await page.waitForFunction(()=>document.getElementById('application-signatory').value==='UNKNOWN');
+    assert.equal(await root.innerText(),'');
+    assert.deepEqual(errors,[]);
+    console.log('APPLICATION_REVIEW_SYNTHETIC_BROWSER_PASS',process.env.APR08_BROWSER_NARROW==='1'?'390px':'desktop');return;
+  }
   if(process.env.APR08_BROWSER_SCENARIO==='ri223-dossier') {
     page.setDefaultTimeout(45000);
     const observed=await ask('Составь архивное досье 223-ФЗ','решение: NOT_DECIDED');

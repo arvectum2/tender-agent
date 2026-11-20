@@ -1,5 +1,5 @@
 task_id: TA-CHECKLIST-BUNDLE-GATE-20261118
-status: in_progress
+status: completed
 goal: Source-derived checklist-to-bundle bridge and independent coverage gate.
 definition_of_done:
 - Preserve all reviewed requirement rows and conditional/alternative logic; pin source
@@ -18,11 +18,9 @@ completed:
 - Synthetic integrated form/document/offer/declaration/price scenario ZIP pass; 67
   joined regression PASS before final path guard, final 23 focused PASS, Ruff/diff
   PASS. No private real replay.
-current_stage: exact_ci_pending
-remaining:
-- Verify exact draft CI and PR655. Real source acceptance, current profile, trusted
-  approvals, template/statement mapping and controlled release review remain open;
-  do not bypass prior blocked action.
+- Exact PR656 846dece712f06ba9c23d891f7e10a5dbb8af7301 CI 19/19 SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
 last_verified_commit: c86819923be17f865f02bdcf335542610998b920
 test_results:
 - 67 passed, 24 warnings before final path guard; final 23 passed, 2 warnings, exit
