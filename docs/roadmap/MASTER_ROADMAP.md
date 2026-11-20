@@ -2,6 +2,29 @@
 
 > Canonical scope/history source for `arvectum2/tender-agent`. The executor queue is only a filtered executable projection and is **not** the complete roadmap.
 
+## 20.11.2026 — Current reconciliation (management view; not executor authority)
+
+Verified GitHub main: `abcd8727326c398d870edbc4a2da793e090ac8eb`, exact main CI and GitVerse mirror success. PRs #663–666 and #668–672 merged: Daily Tender Run production fixes, signed ZIP/missing attachments, selective document recovery, index recovery, bounded original recovery, split compute/write admission and fresh-compute fairness. #667 Spec Kit source review merged; criterion review tasks remain open. A merge is not proof of rollout or live acceptance. WSF07B #624 and #631 merged; checkpoint can lag actual merge.
+
+| Stage | Current status | Residual gate |
+|---|---|---|
+| APR-01 / 02 | Bounded development complete | No blanket claim of all 223-FZ methods |
+| APR-03 / 03B | Partial; main recovery/fairness changes integrated | Coordinated runtime/worker verification, exact fresh original-to-report runs; reconcile RI223 draft stack #629–640; current source status; external VPS/DR separate |
+| APR-04 | Bounded development complete; follow-up drafts #651–662 | Review private real company qualifications, documentary and application review stack; no submission |
+| APR-05 | Integrated engineering rehearsal complete | Real staging release acceptance, isolation, legal and Owner approval for paid pilot/production |
+| APR-06 | Archived development shortlist 21 cases, 100 attachment references | Independent human/legal review, representative frozen corpus, seven measured commercial KPIs |
+| APR-07 | Measurement tooling integrated | Real rolling SLO, current model quality and independent benchmark; Gemma remains paused unless authorized |
+| APR-08 | Bounded integrated development acceptance complete (#627/#628) | Official current legal applicability and production separate |
+| APR-09 / 10 | Trigger-wait | Two paid pilots with recurring RFQ/TKP demand; 30 confirmed corrections across >=3 pilot contexts respectively |
+| PRICE-01 | Engineering integration #603 complete | Real reviewed cross-procurement evidence, empty reviewed registry; #647–650 economic follow-up drafts, no market price claim |
+| Daily Run / iOS / WSF07B | Core implementation and recent main fixes | Verify exact release, authorized real fresh results and device acceptance as applicable; no automated bid |
+
+Operational P0, from local MI child checkpoints (not independently fresh production acceptance): dual PITR activated, first TA prewrite receipt and seven-day WAL/restore proof pending; resource governor active per checkpoint, first successful post-cutover batch pending; source-scoped concurrency active per checkpoint, verify overlap and independent receipts; source catalog stage ledger isolated, next typed receipt and reconciliation; fresh-index checkpoint records one indexed analysis completed and eight remaining (reconcile current receipts before action). PR #672 merged and CI green; coordinated production activation, historical worker boundary, exact live analysis and unchanged historical receipts remain to be proved. SIBUR archive reconciliation remains open; do not blindly retry or re-run completed cutovers.
+
+Repository hygiene: canonical MI worktree clean, nine commits ahead of its own upstream at b13eec87; older SSD checkout at fc41e652 has four modified files and three untracked paths. 183 registered worktrees and at least 40 open PRs observed. Inventory unique commits, active runtime references and dirty worktrees; distinguish stacked drafts from independent changes; archive before removal, no forced reset/clean/prune, no automatic merges. Full worktree inventory was not verified due to device transport interruption.
+
+Recommended continuation within existing approved scope: (1) verify actual active runtime/receipts and coordinate fresh fairness and historical recovery; (2) reconcile draft dependency stacks against exact main and CI, prioritizing RI223/quality, then APR04 and PRICE01, not duplicating already merged changes; (3) finish Spec Kit original criteria traceability and commercial acceptance gates; (4) prepare one isolated customer pilot with explicit results/metrics; continue existing SIBUR/GEH/PQ and paper-trading discovery lanes independently where admitted. B2B target 15–20 qualified current IT opportunities still requires evidence; no legal BID_GO inferred. Existing owner-defined order, source permissions, human decisions, single Watchdog, queue and financial/production approval boundaries unchanged.
+
 ## 17.11.2026 — PRICE-01 integrated; APR-05 release rehearsal
 
 - PRICE-01 engineering integration **completed**: Owner-approved PR #603 merged as `b843f92ca129dcf9a57bd7935fb53ec31c1372dc`; exact candidate CI 19/19, both quality jobs 5987 passed / 288 skipped / 0 failed. Local HTTPS Web/Swift/iOS Simulator acceptance and offline local image registry loader verified. This supersedes earlier draft-only statements in historical snapshots below.
