@@ -108,3 +108,75 @@ def test_invalid_evidence_is_not_persisted(scenario, defect):
     with pytest.raises(ValueError):
         recover_missing_attachments(repo, tender, provider=provider)
     assert tender.documents == []
+
+
+def test_ordinary_reimport_keeps_recovered_inventory_and_status(scenario):
+    from src.tender_research.rag.missing_attachments import preserve_recovered_inventory
+
+    repo, tender, detail, provider = scenario
+    assert recover_missing_attachments(repo, tender, provider=provider) == 1
+    doc = tender.documents[0]
+    doc.download_status = "downloaded"
+    doc.text_extraction_status = "extracted"
+    repo._session.commit()
+    assert preserve_recovered_inventory(tender, detail)
+    assert len(tender.documents) == 1
+    assert doc.download_status == "downloaded"
+    assert doc.text_extraction_status == "extracted"
+
+
+@pytest.mark.parametrize(
+    "defect", ["new_revision", "missing_link", "changed_link", "soap", "network"]
+)
+def test_recovered_inventory_reimport_fails_closed(scenario, defect):
+    from src.tender_research.errors import DocumentIdentityConflictError
+    from src.tender_research.rag.missing_attachments import preserve_recovered_inventory
+
+    repo, tender, detail, provider = scenario
+    assert recover_missing_attachments(repo, tender, provider=provider) == 1
+    repo._session.commit()
+    if defect == "new_revision":
+        detail.active_revision.revision = 2
+    elif defect == "missing_link":
+        detail.document_links.clear()
+    elif defect == "changed_link":
+        detail.document_links[0].url += "2"
+    elif defect == "network":
+        detail.network_status = "network_error"
+    with pytest.raises(DocumentIdentityConflictError):
+        preserve_recovered_inventory(tender, detail, soap_documents=defect == "soap")
+    assert len(tender.documents) == 1
+
+
+def test_ordinary_empty_card_unaffected(scenario):
+    from src.tender_research.rag.missing_attachments import preserve_recovered_inventory
+
+    _, tender, detail, _ = scenario
+    assert not preserve_recovered_inventory(tender, detail)
+
+
+def test_pipeline_reimport_does_not_duplicate_or_reset(scenario):
+    from src.tender_research.pipeline import TenderResearchPipeline
+    from src.tender_research.registry_discovery import DiscoveredRegistryNumber
+
+    repo, tender, detail, provider = scenario
+    assert recover_missing_attachments(repo, tender, provider=provider) == 1
+    doc = tender.documents[0]
+    original_id = doc.id
+    doc.download_status = "downloaded"
+    doc.text_extraction_status = "extracted"
+    repo._session.commit()
+    pipeline = TenderResearchPipeline.__new__(TenderResearchPipeline)
+    discovered = DiscoveredRegistryNumber(registry_number=NUMBER, card_url=CARD)
+    result = pipeline._build_upsert_from_discovery(
+        discovered, detail, None, "test", existing_tender=tender
+    )
+    assert result.documents == []
+    for row in result.documents:
+        repo.upsert_document({**row, "tender_id": tender.id})
+    repo._session.flush()
+    repo._session.expire(tender, ["documents"])
+    assert len(tender.documents) == 1
+    assert tender.documents[0].id == original_id
+    assert tender.documents[0].download_status == "downloaded"
+    assert tender.documents[0].text_extraction_status == "extracted"
