@@ -122,3 +122,73 @@ def recover_missing_attachments(repo, tender, *, provider=None) -> int:
             repo.upsert_document(row)
     session.expire(tender, ["documents"])
     return len(rows)
+
+
+def preserve_recovered_inventory(tender, detail, *, soap_documents=False) -> bool:
+    """Prove an ordinary public reimport matches the recovered inventory.
+
+    Do not rewrite the revision-bound identities or reset download/extraction
+    statuses. Changed, incomplete or cross-source inventories need review.
+    Legacy ordinary documents remain outside this compatibility rule.
+    """
+    from src.tender_research.errors import DocumentIdentityConflictError
+
+    if tender is None or tender.source != "eis" or tender.law_type != "44fz":
+        return False
+    recovered = [
+        d
+        for d in tender.documents
+        if (d.raw_meta or {}).get("source") == "external_public_44fz_detail"
+        and (d.raw_meta or {}).get("documents_html_sha256")
+    ]
+    if not recovered:
+        return False
+    revision = detail.active_revision
+    selection = detail.raw.get("document_revision_selection") or {}
+
+    def conflict():
+        raise DocumentIdentityConflictError(
+            "Recovered EIS document inventory changed or cannot be verified; explicit reconciliation required"
+        )
+
+    if (
+        soap_documents
+        or detail.registry_number != tender.registry_number
+        or detail.law_type != "44fz"
+        or detail.network_status != "success"
+        or detail.raw.get("documents_fetch_status") != "success"
+        or selection.get("status") != "active_revision_selected"
+        or selection.get("requires_review") is not False
+        or revision is None
+        or revision.active is not True
+        or detail.document_links != revision.document_links
+        or len(recovered) != len(tender.documents)
+    ):
+        conflict()
+    prior = set()
+    for doc in recovered:
+        meta = doc.raw_meta
+        if (
+            meta.get("revision") != revision.revision
+            or meta.get("revision_publication_timestamp")
+            != revision.publication_timestamp
+            or meta.get("revision_source_url") != revision.source_url
+            or not doc.source_document_id
+            or not doc.file_url
+        ):
+            conflict()
+        key = (doc.source_document_id.casefold(), doc.file_url, doc.file_name)
+        if key in prior:
+            conflict()
+        prior.add(key)
+    current = set()
+    for link in detail.document_links:
+        identity = str((link.raw or {}).get("uid") or link.url)
+        name = link.file_name or link.title
+        key = (identity.casefold(), link.url, name)
+        if key in current:
+            conflict()
+        current.add(key)
+    if current != prior:
+        conflict()
+    return True
