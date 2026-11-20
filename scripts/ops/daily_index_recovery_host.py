@@ -13,6 +13,7 @@ import os
 import shutil
 import stat
 import subprocess
+import time
 from contextlib import ExitStack, contextmanager
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
@@ -157,36 +158,99 @@ def verified_prewrite():
     }
 
 
-@contextmanager
-def admit_index_batch(*, prewrite=verified_prewrite):
-    """Caller already holds canonical daily lock and exact-release preflight."""
-    runtime = RUNTIME.resolve(strict=True)
+def check_admission(runtime: Path):
     if DEPLOY_LOCK.exists() or (runtime / "STOP").exists():
         raise RuntimeError("maintenance or STOP prevents recovery")
     if shutil.disk_usage(runtime).free < 15 * 1024**3:
         raise RuntimeError("insufficient recovery disk headroom")
-    limit = resource_limit()
-    with ExitStack() as leases:
-        # Match heavy-worker ordering; do not wait while retaining a lease.
-        for path in (
-            RESOURCE / "heavy-slot.lock",
-            runtime / "fresh-procurement-priority.lock",
-            runtime / "mutation.lock",
-        ):
-            leases.enter_context(existing_lease(path))
-        with existing_lease(runtime / "research-backup-gate.lock"):
-            receipt = prewrite()
-        if not isinstance(receipt, dict) or not all(
-            receipt.get(k)
-            for k in (
-                "mi_head",
-                "backup_sha256",
-                "restore_point",
-                "restore_lsn",
-                "base_manifest_sha256",
-            )
-        ):
-            raise RuntimeError("missing accepted host prewrite receipt")
-        if DEPLOY_LOCK.exists() or (runtime / "STOP").exists():
-            raise RuntimeError("maintenance or STOP before recovery write")
-        yield min(limit, resource_limit()), receipt
+    return resource_limit()
+
+
+@contextmanager
+def admit_analysis_compute(*, wait_seconds=300):
+    """Wait for a batch boundary without stopping the historical executor.
+
+    Only the compute lease is held during read-only LLM generation; lighter
+    historical work retains its own admission. Never hold a priority lease
+    while waiting for an active historical heavy/source batch.
+    """
+    if not 0 <= wait_seconds <= 300:
+        raise ValueError("invalid compute lease wait")
+    runtime = RUNTIME.resolve(strict=True)
+    deadline = time.monotonic() + wait_seconds
+    while True:
+        check_admission(runtime)
+        with ExitStack() as leases:
+            try:
+                leases.enter_context(existing_lease(RESOURCE / "heavy-slot.lock"))
+            except BlockingIOError:
+                if time.monotonic() >= deadline:
+                    raise
+            else:
+                check_admission(runtime)
+                yield
+                return
+        time.sleep(min(0.25, max(0, deadline - time.monotonic())))
+
+
+@contextmanager
+def _admit_write(runtime, *, prewrite, wait_seconds=0):
+    # Retain neither priority nor mutation while waiting for a legacy writer.
+    # A short bounded wait avoids discarding an already generated report.
+    deadline = time.monotonic() + wait_seconds
+    while True:
+        limit = check_admission(runtime)
+        with ExitStack() as leases:
+            try:
+                leases.enter_context(
+                    existing_lease(runtime / "fresh-procurement-priority.lock")
+                )
+                leases.enter_context(existing_lease(runtime / "mutation.lock"))
+                backup = ExitStack()
+                leases.callback(backup.close)
+                backup.enter_context(
+                    existing_lease(runtime / "research-backup-gate.lock")
+                )
+            except BlockingIOError:
+                if time.monotonic() >= deadline:
+                    raise
+            else:
+                with backup:
+                    receipt = prewrite()
+                if not isinstance(receipt, dict) or not all(
+                    receipt.get(key)
+                    for key in (
+                        "mi_head",
+                        "backup_sha256",
+                        "restore_point",
+                        "restore_lsn",
+                        "base_manifest_sha256",
+                    )
+                ):
+                    raise RuntimeError("missing accepted host prewrite receipt")
+                yield min(limit, check_admission(runtime)), receipt
+                return
+        time.sleep(min(1, max(0, deadline - time.monotonic())))
+
+
+@contextmanager
+def admit_analysis_commit(*, prewrite=verified_prewrite, wait_seconds=120):
+    """Caller holds analysis compute and daily/run leases; no LLM inside."""
+    if not 0 <= wait_seconds <= 120:
+        raise ValueError("invalid commit lease wait")
+    with _admit_write(
+        RUNTIME.resolve(strict=True), prewrite=prewrite, wait_seconds=wait_seconds
+    ) as evidence:
+        yield evidence
+
+
+@contextmanager
+def admit_index_batch(*, prewrite=verified_prewrite):
+    """Preserve original heavyweight batch admission semantics."""
+    runtime = RUNTIME.resolve(strict=True)
+    check_admission(runtime)
+    with (
+        existing_lease(RESOURCE / "heavy-slot.lock"),
+        _admit_write(runtime, prewrite=prewrite) as evidence,
+    ):
+        yield evidence
