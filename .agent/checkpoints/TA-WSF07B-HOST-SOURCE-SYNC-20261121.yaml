@@ -1,5 +1,5 @@
 task_id: TA-WSF07B-HOST-SOURCE-SYNC-20261121
-status: in_progress
+status: completed
 goal: Version current production daily runner and drift verifier exactly in the Tender Agent repository, without overwriting live host scripts or changing source permission.
 definition_of_done:
   - Bring historic PR637 onto latest protected main without clobbering canonical task checkpoint.
@@ -13,14 +13,14 @@ completed_stages:
   - Byte-for-byte source-control copies of installed runner SHA256 30356482a2008b304376394be025c98c2572227acbf5339c6c2b2d5a0c5779a5 and verifier SHA256 7068c164830af0add8675015abc9c518020f12632ac62d4df286c3b5fd6534cf.
   - New owner source SHA rebind and docs-only GitHub-main parity negative tests, including tamper, missing/false permission and code drift; 14 focused PASS and Ruff PASS.
   - After PR677 source-code merge #b646e431 (19/19 CI), integrated latest protected main into PR637 without conflict, byte-identical host files preserved, source-receipt checkpoint final completed state updated.
-current_stage: new_main_merged_waiting_exact_host_source_ci
-remaining_stages:
-  - Refresh branch on latest completed PRs and run source/test/full required GitHub checks.
-  - Integrate source code only with owner+AI review, no host installation, no outside reviewer.
-  - Mark checkpoint completed after merge and verify production remains healthy.
-last_verified_commit: 96ce74d7a7e7bb248105ffd6adcd23d57bd83bad
-last_checks: 14/14 focused pytest PASS, Ruff PASS, actual live 15/15 drift guard OK, exact installed SHA parity, daily preflight PASS, backend/Data Platform HTTP 200.
-resume_instruction: Existing host launchers work on SHA9b650a2b/schema127; do not install/replace them or alter private owner source grant. Complete source-only PR637 after latest main and exact CI, then mark checkpoint completed. Preserve MI/DP PITR, existing Watchdog, no source EIS/ETP fetch or DTR replay.
+current_stage: exact_ci_19_of_19_passed_and_protected_source_merge
+remaining_stages: []
+last_verified_commit: b73dae89c3066df82b10ff4141fb0750d4f67bb0
+last_checks: Exact host-source PR637 head 939e7d682538ecdec574c67093c1ea9289b754e0 passed 19/19 GitHub CI including GitVerse, merged to protected main b73dae89c3066df82b10ff4141fb0750d4f67bb0. 14 host focused tests + 23 source tests PASS, Ruff PASS, byte-identical installed runner and monitor verified. Actual installed host unchanged, daily read-only preflight pass, 8001/8094 HTTP200.
+resume_instruction: Completed exact-host-source archival PR637 in main b73dae89. No more host installation or source grants; do not repeat merge. Continue source-lane PR524 on latest main while preserving older 313 historical IDs, no reimport or live source calls. Original source incident #679 and seven-day physical PITR #685 remain separate outstanding gates.
 installed_backend_source_sha: 9b650a2b818032389cfd6e13799acad33c72089b
 production_modified_by_this_task: false
 live_source_grant_extended: false
+merged_pr: 637
+merged_main_commit: b73dae89c3066df82b10ff4141fb0750d4f67bb0
+completed_at_utc: 2026-11-21T13:40:56Z
