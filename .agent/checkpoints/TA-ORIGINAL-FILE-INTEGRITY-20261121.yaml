@@ -1,0 +1,26 @@
+task_id: TA-ORIGINAL-FILE-INTEGRITY-20261121
+status: in_progress
+goal: Make existing EIS 44-FZ and 223-FZ original-file acquisition fail closed on missing, mutated or unverified local bytes, without changing production workers or original access permissions.
+definition_of_done:
+  - Check already-downloaded bytes against pinned SHA-256 and optional byte length before counting them usable.
+  - Reject unverified or symlinked filename collisions; prevent blind cache reuse and remote hash/length mismatch.
+  - Bound response reads and write complete files via exclusive atomic publication without clobbering originals.
+  - Stop readiness/old index reuse when original integrity fails, preserving actionable error state.
+  - Pass focused and exact GitHub CI; document source authorization, PITR and deployment approval gates.
+completed_stages:
+  - Verified exact main abcd8727 existing downloader blindly trusted database downloaded flags and filename caches; PR674 did not touch document_store.py.
+  - Implemented read-only existing-file verification, bounded fresh download and atomic non-clobber publication.
+  - Preparation and status endpoints now refuse stale chunks/index when a known original has failed verification.
+  - Rehearsed synthetic EIS originals and existing RI223 RAR processing without any network requests.
+  - 111 focused RAG, source file, RAR, Data Platform and storage guardrail tests PASS, 13 warnings; Ruff PASS, git diff check PASS.
+current_stage: exact_main_based_pr_ci
+remaining_stages:
+  - Submit isolated PR from current main and confirm exact CI and GitVerse mirror.
+  - Independently test review of real source-original metadata, upstream redirects and revision boundaries under source-specific admission.
+  - Verify production release pin, original-source authorization, full PITR and AM4 owner approval before any deployment or reprocessing.
+base_main: abcd8727326c398d870edbc4a2da793e090ac8eb
+last_verified_commit: abcd8727326c398d870edbc4a2da793e090ac8eb
+last_checks: 111 focused PASS / 13 warnings, Ruff PASS, diff-check PASS; exact PR CI pending.
+original_recovery_performed: false
+production_changed: false
+resume_instruction: Inspect PR exact HEAD CI, fix failures if any and rerun. Do not fetch EIS, SOAP or other original files automatically, retry failed Daily Tender Run cases, migrate a live DB, activate features or deploy until explicit production/source gates and rollback. Preserve main, MI nine unpushed commits and original research worktrees.
