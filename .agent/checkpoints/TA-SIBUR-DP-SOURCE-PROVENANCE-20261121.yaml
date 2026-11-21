@@ -1,0 +1,40 @@
+task_id: TA-SIBUR-DP-SOURCE-PROVENANCE-20261121
+status: in_progress
+goal: Reproduce verified historical first-party SIBUR URL→source row→archived document bytes→saved Data Platform identity for seven XLSX without live
+  network or database access.
+definition_of_done:
+- Preserve exact seven SHA-grounded existing DP files and historical 958 embeddings, and source provenance across verified full registry and separate
+  archived categories.
+- Implement offline deterministic source proof in repo with strict URL/doc/path/receipt/source page SHA checks and negative tests.
+- Pass focused tests/Ruff and actual seven-source archived reproduction; no new network, DB/DP writes, production activation or claims of current legal
+  status.
+- Integrate protected main after PR689, publish small standalone PR and pass exact CI/GitVerse; complete checkpoint only after protected merge.
+completed_stages:
+- Independent original 14-Nov registry source exact 4/7 and separate historical archive category page source exact 3/7, all seven SHA/row/url/DP lineage
+  verified in private 0600 proof.
+- Closed narrow missing source URL issue
+- Created isolated worktree on existing PR689 source-auditor head without touching production or DB.
+- Replayed all 7 saved source SHA using verified 4 first-party registry URL receipts and 3 separate original archive category/page/row SHA+external
+  IDs; historical DP 958 matching chunk/embeddings, private 0600 proof
+- Added standalone no-network reproducible first-party source lineage verifier using pinned registry, original archive and saved DP attestations; actual
+  7/7 exact source proof output verified
+- Added nine adversarial/focused tests for missing URL, wrong source row/page SHA, unsafe URL, duplicated receipt, altered XLSX and linked file; nine
+  pytest and Ruff PASS
+current_stage: 7_of_7_historical_source_lineage_reproducible_in_code_waiting_parent_pr689_CI
+remaining_stages:
+- Run combined 66+ source-only tests and Ruff, commit/persist local review candidate without changing actual historical data
+- When PR689 19/19 CI protected merges, integrate latest main into source-proof review branch, run exact CI of new PR and merge
+- Mark checkpoint completed only after protected merge, no live collector/indexing/source authority
+last_verified_commit: 6adcfdc3986309b39a455bae9e69df0edad10ecf
+last_checks: Actual offline 7/7 first-party original URL→page→row→bytes→historic DP identity, 4 registry+3 archive, 958 embeddings; 9 focused pytest/Ruff
+  PASS, no network or DB writes.
+resume_instruction: 'Source provenance 7/7 verified with read-only script, 9 focused tests/Ruff and private 0600 first-party URL proof. Commit branch,
+  await parent PR689 exact 19 CI and protected merge, integrate main, push small PR with required CI owner+AI review. No new source calls/DB writes,
+  do not touch old DRAFT #527 or source legal currentness.'
+full_historical_DP_source_lineage_proven: 7
+primary_registry_source_docs: 4
+archive_category_source_docs: 3
+archived_DP_chunk_embedding_matches: 958
+private_original_url_proof: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/sibur-dp-seven-original-url-proof-20261121.json
+source_current_status_verified: false
+live_DP_state_verified: false
