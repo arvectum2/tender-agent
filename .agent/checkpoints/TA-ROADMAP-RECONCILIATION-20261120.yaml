@@ -1,0 +1,23 @@
+task_id: TA-ROADMAP-RECONCILIATION-20261120
+status: in_progress
+goal: Reconcile Tender Agent roadmap and repository hygiene with exact code, CI, source gates and preserved runtime history.
+definition_of_done:
+  - Verify exact canonical main, CI and GitVerse.
+  - Preserve original immutable Spec Kit source criteria and add a reviewed management appendix.
+  - Record branch/worktree inventory and classify unmerged source candidates.
+  - Verify exact documentation CI, independent review and approved merge before closing.
+completed_stages:
+  - Canonical main abcd8727 and mirror verified; latest main CI success.
+  - Initial source-criterion check rejected prepended roadmap edits; corrected appendix passed criterion-review without weakening checks.
+  - PR673 head 5905e3c1 CI 20/20 passed.
+  - 129 open PRs reduced to 48 by closing 81 exact-main-ancestor PRs with dependency-safe order; PR674 review candidate added, total observed 49.
+  - 183 MI worktrees all clean: 114 HEAD ancestors of main, 69 not ancestors; 114 provisional archive candidates require cross-reference checks before deletion.
+  - Separate SSD clone has four modified and three untracked paths; never cleaned or reset.
+  - PR674 development stack 657+662+618 reconciled in review-only branch: prior extended head 0720f079 CI 19/19, 6649 passed/293 skipped, latest head c0efa7e6 adds unmounted read-only Workspace source; exact CI pending.
+  - PR599 and PR660 distinct incompatible versions of registry and bundle, not mechanically overlaid or removed.
+  - Backend and DP HTTP 200; fairness activation receipt abcd8727 observed, PITR pending first verified TA prewrite, no automatic replay.
+current_stage: documentation_candidate_final_ci_and_review
+remaining_stages: [exact_candidate_ci, independent_review, separately_authorized_merge]
+last_verified_commit: 5905e3c1ab1da69a4f971c1fc9e1ce70dd322fec
+last_checks: 20/20 PR673 at previous exact head; this documentation-only update requires fresh exact CI. No runtime mutation, no deletion.
+resume_instruction: Check PR673 new head exact checks, then PR674 exact CI. Preserve current MI checkpoint and all active releases. Review remaining PR660/599 functional alternatives and isolated source safety; do not merge without the required owner/AM4 gates or change live systems.
