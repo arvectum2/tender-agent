@@ -15,25 +15,22 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 from scripts.research.capture_sibur_public_snapshot import NoRedirect
-from src.modules.tender_connectors.sibur.parser import parse_page
+from scripts.research.verify_sibur_public_snapshot import replay_verified_originals
 
 MAX_BYTES = 25 * 1024 * 1024
 SUPPORTED = {".docx", ".xlsx", ".pdf"}
 
 
 def source_refs(snapshot):
-    receipt = json.loads((snapshot / "receipts.json").read_text())
-    if not receipt["advertised_pages_traversed"] or receipt["errors"]:
-        raise ValueError("incomplete source snapshot")
+    """Only accept links derived from a full first-party SHA-replayed archive."""
     refs = defaultdict(list)
-    for entry in receipt["pages"]:
-        page = parse_page((snapshot / f"page-{entry['page']:03d}.json").read_bytes(), entry["page"])
-        if page.sha256 != entry["sha256"]:
-            raise ValueError("source receipt mismatch")
-        for row in page.records:
+    for group in replay_verified_originals(snapshot):
+        for row in group["observations"]:
             for url in row["documentation_urls"]:
-                refs[url].append({"external_id": row["external_id"], "source_sha256": page.sha256,
-                                  "source_row": row["source_row"], "source_url": row["source_url"]})
+                refs[url].append({"external_id": row["external_id"],
+                                  "source_sha256": row["source_sha256"],
+                                  "source_row": row["source_row"],
+                                  "source_url": row["source_url"]})
     return dict(refs)
 
 
@@ -132,13 +129,17 @@ def acquire(snapshot, output, limit):
 
 
 def main():
+    """Audit an existing bounded first-party archive without downloading or writing."""
+    from scripts.research.audit_sibur_saved_documents import audit_saved_documents
+
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--snapshot", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
-    parser.add_argument("--limit", type=int, default=30)
     args = parser.parse_args()
-    os.umask(0o077)
-    print("attempted", acquire(args.snapshot, args.output, args.limit))
+    report = audit_saved_documents(args.snapshot, args.output)
+    print(json.dumps(report, ensure_ascii=False, sort_keys=True))
+    if report["status"] != "verified_historical_offline":
+        raise SystemExit(2)
 
 
 if __name__ == "__main__":

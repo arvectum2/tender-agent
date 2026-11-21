@@ -10,12 +10,20 @@ definition_of_done:
 completed_stages:
   - Identified PR526 source_refs uses obsolete receipt field and lacks full-page verification; existing approved parent now enforces 27/27 SHA original-pages and read-only CLI.
   - Created isolated original PR526 reviewer worktree with original stacked branch head unchanged.
-current_stage: integrate_updated_parent_and_review_original_receipts
+  - Merged reviewed PR524 and current protected main, preserving canonical main task and original PR526 history.
+  - Replaced obsolete advertised_pages_traversed with strict 27-page first-party SHA replay; CLI is read-only audit and cannot call network acquisition.
+  - Independently validated 516 saved SHA/size/URL receipts (717 links), 515 extensions aligned and one .ppt source saved .pptx quarantined. 424 recognized PDF/DOCX/XLSX signatures checked, other 92 SHA-only.
+  - Private 0600 receipt saved; full status needs_review and nonzero CLI exit 2, 36 focused pytest and Ruff PASS.
+current_stage: original_27_pages_and_saved_516_files_verified_one_ppt_mismatch_quarantined_waiting_parent_merge
 remaining_stages:
-  - Merge current parent without losing canonical checkpoint; confirm exact source-only changed files.
-  - Implement strictly read-only document receipt source checks and tests, audit stored attachment evidence.
-  - Run focused tests and verify no source/DB mutations, then push existing PR526 branch only after parent merge.
-  - Await protected CI and merge source-only package; preserve dependent PR527 draft and safety gate.
+  - When PR524 merges, reconcile newest main preserving original PR526/PR527 history.
+  - Push safe source-only PR526 original branch and run exact GitHub/GitVerse CI.
+  - Merge only if review/CI pass and record completed; preserve one quarantined file and separate rights grant.
 last_verified_commit: 2c16798c0d2e74a4e087f6a66448756c0d0dbc4a
-last_checks: Original source and tests inspected; 30 historic PDF/DOCX/XLSX capture referenced, must verify bytes independent of claim.
-resume_instruction: Reconcile child #526 against parent #524 exact SHA-verified replay. Preserve #527 history and old source receipts. Do not send new SIBUR HTTP requests, mutate TA/DP databases, enable workers or submit ETP bids. Confirm provenance+offline hashes before any source authorization decision.
+last_checks: 27 original pages complete by SHA, 516 saved file receipts/bytes SHA and source refs verified; 515 aligned source extensions, 1 quarantined .ppt to .pptx; 424 signatures, 92 other formats SHA only. Read-only CLI exits 2; 36 pytest and Ruff PASS, no source network/DB writes.
+resume_instruction: Child PR526 locally reconciled with reviewed parent. Existing 27 originals and 516 saved receipt-linked files SHA-verified; 1 source .ppt vs saved .pptx quarantined, audit status needs_review nonzero 2. 36 pytest/Ruff PASS. After parent PR524 merges, merge latest protected main and push updated old PR526 preserving PR527 stack, await exact CI. No external fetch, reimport, DB/DP writes, ETP or claim that .pptx is genuine original.
+private_saved_document_receipt: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/sibur-document-source-audit-20261121.json
+saved_receipts_sha_verified: 516
+source_ext_aligned_receipts: 515
+quarantined_extension_mismatch: 1
+source_current_status_verified: false

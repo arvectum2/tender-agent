@@ -35,10 +35,17 @@ def test_verified_source_links(tmp_path):
     page = parse_page(raw, 1)
     (tmp_path / "page-001.json").write_bytes(raw)
     (tmp_path / "receipts.json").write_text(json.dumps({
-        "advertised_pages_traversed": True, "errors": [],
-        "pages": [{"page": 1, "sha256": page.sha256}]}))
+        "source": "sibur_public", "verification": "PUBLIC_LIST_SNAPSHOT_NOT_HISTORICAL_COVERAGE",
+        "page_count_stable": True, "errors": [], "announced_pages": 1,
+        "validated_pages": 1, "raw_rows": len(page.records), "unique_ids": 1,
+        "pages": [{"page": 1, "last_page": 1, "sha256": page.sha256,
+                   "bytes": len(raw), "rows": len(page.records)}],
+    }))
+    (tmp_path / "normalized.json").write_text(json.dumps([{
+        "external_id": page.records[0]["external_id"], "observations": page.records
+    }]))
     refs = source_refs(tmp_path)
     assert refs["https://www.sibur.ru/upload/tmp/example/a.pdf"][0]["external_id"] == "1234567/1"
     (tmp_path / "page-001.json").write_bytes(raw + b" ")
-    with pytest.raises(ValueError, match="receipt mismatch"):
+    with pytest.raises(ValueError, match="raw page digest"):
         source_refs(tmp_path)
