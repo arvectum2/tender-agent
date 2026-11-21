@@ -1,0 +1,23 @@
+task_id: TA-WSF07B-RECOVERY-GUARD-20261118
+status: completed
+goal: Verify post-outage production recovery and reconcile read-only verifier with separately approved WSF07B admission.
+definition_of_done:
+  - Verify production health, release, DB binding and exact identity set; no change to admission or data.
+  - Preserve existing checks; validate approved admission receipts and anonymous deny rather than unconditional not-admitted expectation.
+  - Test candidate against real runtime without installing; publish isolated change and document operational install gate.
+completed:
+  - PostgreSQL automatic WAL recovery, 21 exact identities, DB 122, health and Basic protected UI PASS; existing 12 admitted and 9 excluded match owner and activation receipts. Existing guard false positive. ML endpoints healthy; separate SIBUR ZIP error.
+  - Candidate read-only verifier 14/14 against current real runtime, exact owner receipt, manifest hash, release, scope, expiry and anonymous denial. 23 focused tests pass. No valid token used, no real Workspace payload retrieved.
+  - Daily job started automatically at 08:00 but exit 127: missing Docker CLI PATH and legacy checkout. No run row written; existing daily env with canonical release passes read-only DB binding and schema. No live retry.
+  - Previous PR637 exact head d3d8dc49 19/19 SUCCESS; operational install not yet executed.
+  - Pinned daily runner implemented, minimal launchd-like env and real DB read-only binding/revision preflight PASS twice. Kernel flock private v2 path, legacy 0755 parent accepted only non-writable by others, no Docker compose. 29 focused tests pass after path fix; earlier broad 47 passed.
+  - User explicitly approved installing verifier/daily launcher and SIBUR patch; no live daily run, no backend restart or admission change. PR637/639 latest CI 17/19 success, two quality jobs running; prior verifier exact head green. Exact candidate files and real minimal-env preflight reverified.
+  - Installed exact approved verifier and daily launcher atomically, backup /Volumes/ArvectumSSD/Arvectum/backups/ta-recovery-host-20261118.SMqDsB. Installed daily preflight PASS under minimal launchd-like environment; existing guard scheduled label kicked once without backend restart, exit 0 and actual report 14/14 OK. Backend PID 7284, marker, admission manifest and backend launcher hashes unchanged; API/DP HTTP 200, DB schema 122, 21 deals, 2 daily rows unchanged.
+current_stage: installed_and_verified
+remaining:
+  - No further host change required for this scoped installation. Next natural daily schedule is 08:00 MSK; historical exit 127 remains until next actual run. Full daily run deliberately not triggered. Updated PR CI and SIBUR separate.
+last_verified_commit: 3845fd62ac2bfe25fa24590e5d63c890a731c647
+test_results:
+  - 23 focused tests PASS, Ruff/diff PASS; real candidate verifier 14/14 OK.
+  - 29 focused tests after lock path fix, previous 47 broader tests before fix; exact daily --preflight on real host passes.
+resume_instruction: Completed host installation. Verify next natural daily run if asked; no manually triggered collection. Keep admission and backend unchanged.
