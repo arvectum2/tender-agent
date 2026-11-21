@@ -1,0 +1,23 @@
+task_id: TA-PITR-7DAY-20261121
+status: blocked
+goal: Prove a real seven-day continuous point-in-time recovery window for Tender Agent and Data Platform, with independent restore and backup identity verification.
+definition_of_done:
+  - Verify exact current production source and PostgreSQL identities separately for TA and DP.
+  - Verify independent base snapshots, full WAL continuity for seven days and actual oldest-window recovery points on network-isolated clones.
+  - Retain the source backups, prove no gaps/unsafe pruning, document restore tests and SHA identities.
+  - Confirm next scheduled daily run on new release using a real run receipt rather than preflight only.
+completed_stages:
+  - 2026-11-21 both current TA and DP PITR health/restore proofs PASS, active asynchronous WAL receivers and recent verified restore points.
+  - 2026-11-21 read-only archive inventory TA 1024 and DP 1014 16-MiB complete WAL segments, no filename gaps in current respective ranges.
+  - Verified earliest visible physical base is Nov20 09:47 UTC TA and Nov20 08:46 UTC DP, so current 7-day window is not established.
+  - Maintenance code refreshes physical restore-tested base after 23h and explicitly does not prune; launchd checks every 300s.
+current_stage: waiting_for_seven_days_actual_retained_wal_and_restore_proof
+remaining_stages:
+  - No earlier than 2026-11-27T09:47:06Z, verify both actual seven-day source/base/WAL timelines and independent old+current restore points.
+  - Verify actual next production daily scheduled run evidence and any blocked tasks; do not substitute read-only preflight.
+last_verified_commit: 9c877ec706812696c2525f57ee37466749fee8d3
+last_checks: Current TA/DP restore PASS; WAL segment count TA1024 and DP1014, no visible gaps; earliest physical base Nov20, seven-day coverage NOT PROVEN.
+resume_instruction: Before 2026-11-27 do not claim seven-day PITR. Continue collecting restore-tested private daily physical bases and WAL via existing maintainers (do not prune). On/after 2026-11-27T09:47:06Z verify full actual seven-day WAL+two isolated recoveries for both databases and exact cluster identity; if successful mark completed, else record explicit missing segments/backup. Existing single Tender Agent Watchdog is the monitoring mechanism; do not create duplicate tasks.
+seven_day_verified: false
+next_earliest_attestable_at_utc: 2026-11-27T09:47:06Z
+production_deployed_sha: 9b650a2b818032389cfd6e13799acad33c72089b
