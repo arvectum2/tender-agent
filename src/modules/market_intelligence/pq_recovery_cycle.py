@@ -5,28 +5,36 @@ import argparse
 import json
 from pathlib import Path
 
-from .pq_gap_recovery import inventory
-from .pq_source_recovery import run as search_eis
-from .pq_indexed_recovery import recover_indexed
-from .pq_queue_seed import seed
+from .pq_b2b_primary_audit import verify as verify_b2b
+from .pq_b2b_primary_capture import batch as fetch_b2b
+from .pq_commission_candidate_audit import extract as extract_commission_candidates
+from .pq_commission_fact_audit import verify as verify_commission_facts
+from .pq_contract_outcome_audit import audit as audit_contracts
+from .pq_contract_xml_index import scan as scan_contracts
 from .pq_dp_ingest import ingest
+from .pq_etp_card_audit import audit as audit_etp
+from .pq_gap_recovery import inventory
+from .pq_indexed_recovery import recover_indexed
+from .pq_official_url_sha_acquire import batch as fetch_official_url_sha
+from .pq_primary_etp_audit import verify as verify_primary_etp
+from .pq_primary_etp_capture import batch as fetch_primary_etp
+from .pq_project_links import resolve as resolve_projects
+from .pq_public_223_acquire import batch as fetch_public_223
+from .pq_public_223_canonical import canonicalize as canonicalize_public_223
+from .pq_public_223_direct import merge_direct
+from .pq_public_223_expand import expand as expand_public_223
+from .pq_public_dp_resume import run as resume_public_dp
+from .pq_quality_gate import audit as audit_quality
+from .pq_queue_seed import seed
+from .pq_rad_primary_audit import verify as verify_rad
+from .pq_research_coverage import build as build_coverage
+from .pq_source_recovery import run as search_eis
+from .pq_verified_market_report import exact_filestore_sha_receipts
+from .pq_verified_market_report import markdown as market_markdown
+from .pq_verified_market_report import run as build_market_snapshot
 from .pq_verified_stage import stage
 from .pq_verified_zip_expand import expand
 from .pq_zip_dp_resume import run as resume_zip_ingest
-from .pq_etp_card_audit import audit as audit_etp
-from .pq_contract_xml_index import scan as scan_contracts
-from .pq_contract_outcome_audit import audit as audit_contracts
-from .pq_commission_candidate_audit import extract as extract_commission_candidates
-from .pq_public_223_acquire import batch as fetch_public_223
-from .pq_public_223_expand import expand as expand_public_223
-from .pq_public_223_canonical import canonicalize as canonicalize_public_223
-from .pq_public_dp_resume import run as resume_public_dp
-from .pq_public_223_direct import merge_direct
-from .pq_commission_fact_audit import verify as verify_commission_facts
-from .pq_primary_etp_capture import batch as fetch_primary_etp
-from .pq_primary_etp_audit import verify as verify_primary_etp
-from .pq_official_url_sha_acquire import batch as fetch_official_url_sha
-from .pq_verified_market_report import exact_filestore_sha_receipts
 
 
 def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
@@ -39,7 +47,10 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
               commission_facts: Path | None = None,
               primary_etp_source: Path | None = None,
               primary_etp_facts: Path | None = None,
-              official_filestore_source: Path | None = None) -> dict:
+              official_filestore_source: Path | None = None,
+              b2b_source: Path | None = None,
+              rad_source: Path | None = None,
+              project_links: Path | None = None) -> dict:
     if not 1 <= max_cases <= 30 or not source_roots:
         raise ValueError("Invalid cycle scope")
     runtime.mkdir(parents=True, exist_ok=True)
@@ -199,6 +210,92 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
                 "signed_contracts_verified": etp_facts["signed_contracts_verified"],
                 "artifact": str(etp_facts_file),
             }
+    if b2b_source is not None:
+        report["primary_b2b_fetch"] = (
+            fetch_b2b(
+                leads=leads, root=b2b_source,
+                journal=runtime / "primary-b2b-attempts.json",
+                max_cards=min(max_cases, 4))
+            if network else {"status": "skipped_offline"})
+        if b2b_source.is_dir():
+            b2b_evidence = verify_b2b(source_root=b2b_source)
+            (runtime / "verified-primary-b2b-facts.json").write_text(
+                json.dumps(b2b_evidence, ensure_ascii=False, indent=2),
+                encoding="utf-8")
+            report["primary_b2b_evidence"] = {
+                "original_cards_verified": b2b_evidence["first_party_cards_verified"],
+                "signed_contracts_verified": 0,
+                "results_hidden_cases": sum(
+                    bool(x["results_hidden_by_organizer"])
+                    for x in b2b_evidence["source_records"]),
+            }
+    if rad_source is not None:
+        rad_evidence = verify_rad(root=rad_source, queue=queue)
+        (runtime / "verified-primary-rad-facts.json").write_text(
+            json.dumps(rad_evidence, ensure_ascii=False, indent=2), encoding="utf-8")
+        report["primary_rad_evidence"] = {
+            "original_223_cases_verified": rad_evidence["first_party_223_notice_cases"],
+            "commission_protocol_cases_verified": rad_evidence["reviewed_original_commission_protocol_cases"],
+            "signed_contracts_verified": 0,
+        }
+    if project_links is not None:
+        required = (
+            public223_source, official_filestore_source,
+            primary_etp_source, primary_etp_facts, b2b_source,
+            contract_root, commission_facts)
+        if any(p is None for p in required):
+            raise ValueError("Spec Kit source audit requires existing full primary-source inputs")
+        assert public223_source is not None
+        assert official_filestore_source is not None
+        assert primary_etp_source is not None
+        assert primary_etp_facts is not None
+        assert b2b_source is not None
+        assert contract_root is not None
+        assert commission_facts is not None
+        coverage = build_coverage(
+            leads=leads, public223=public223_source,
+            filestore=official_filestore_source,
+            etp_facts=primary_etp_facts, etp_originals=primary_etp_source,
+            b2b_originals=b2b_source,
+            rad_originals=rad_source, rad_queue=queue,
+            b2b_journal=runtime / "primary-b2b-attempts.json",
+            eis_journal=runtime / "source-attempts.json",
+            month_journal=runtime / "month-eis-search-attempts.json",
+            public_journal=runtime / "public223-attempts.json",
+            primary_etp_journal=runtime / "primary-etp-attempts.json")
+        resolved = resolve_projects(leads=leads, links=project_links, queue=queue)
+        market = build_market_snapshot(
+            leads=leads, eis_originals=public223_source,
+            commission_facts=commission_facts, review_queue=queue,
+            etp_facts=primary_etp_facts, etp_originals=primary_etp_source,
+            contract_root=contract_root, day_scan=contract_day_scan,
+            official_filestore_root=official_filestore_source,
+            b2b_originals=b2b_source, rad_originals=rad_source)
+        quality = audit_quality(
+            coverage=coverage, projects=resolved, market=market,
+            data_platform=report.get("public223_data_platform"))
+        for filename, artifact in (
+                ("coverage.json", coverage),
+                ("project_register.json", resolved),
+                ("verified-market-snapshot.json", market),
+                ("quality_report.json", quality)):
+            (runtime / filename).write_text(
+                json.dumps(artifact, ensure_ascii=False, indent=2),
+                encoding="utf-8")
+        (runtime / "report.md").write_text(market_markdown(market), encoding="utf-8")
+        report["spec_kit_evidence_closure"] = {
+            "source_consistency_passed": quality["source_arithmetic_consistency_passed"],
+            "data_platform_extraction_complete": quality["data_platform_extraction_complete"],
+            "data_platform_extraction_status": quality["data_platform_extraction_status"],
+            "pending_data_platform_original_files": quality["data_platform_pending_source_files"],
+            "full_market_acceptance_passed": quality["full_market_acceptance_passed"],
+            "primary_procedure_ids": quality["unique_primary_source_procedures"],
+            "remaining_candidate_rows_without_primary": quality["source_missing_candidate_rows"],
+            "reviewed_project_links": resolved["source_verified_relation_edges"],
+            "unverified_signed_contract_suppliers": quality["verified_signed_contract_suppliers"],
+            "artifacts": ["coverage.json", "project_register.json",
+                          "verified-market-snapshot.json", "quality_report.json", "report.md"],
+        }
     (runtime / "last-recovery-cycle.json").write_text(
         json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     return report
@@ -223,6 +320,9 @@ def main() -> None:
     p.add_argument("--primary-etp-source", type=Path)
     p.add_argument("--primary-etp-facts", type=Path)
     p.add_argument("--official-filestore-source", type=Path)
+    p.add_argument("--b2b-source", type=Path)
+    p.add_argument("--rad-source", type=Path)
+    p.add_argument("--project-links", type=Path)
     a = p.parse_args()
     result = run_cycle(leads=a.leads, source_roots=a.source_root,
                        archive_index=a.archive_index, runtime=a.runtime,
@@ -233,7 +333,9 @@ def main() -> None:
                        commission_facts=a.commission_facts,
                        primary_etp_source=a.primary_etp_source,
                        primary_etp_facts=a.primary_etp_facts,
-                       official_filestore_source=a.official_filestore_source)
+                       official_filestore_source=a.official_filestore_source,
+                       b2b_source=a.b2b_source, rad_source=a.rad_source,
+                       project_links=a.project_links)
     print(json.dumps(result, ensure_ascii=False))
 
 

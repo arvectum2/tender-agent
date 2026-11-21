@@ -1,0 +1,124 @@
+{
+  "schema_version": "pq-watchdog-eis-registered-contract/1",
+  "as_of_moscow": "2026-10-31T05:37:14.679679+03:00",
+  "issue_comment_id": 6537825525,
+  "canonical_pr": 521,
+  "code_commit": "c0fce8c37880471cd578c0b7e393a63fc6fa063d",
+  "postgres": {
+    "collection": "arvectum_data.arvectum-market-pq-6-35kv",
+    "unique_lots_before": 117,
+    "unique_lots_after": 117,
+    "distinct_procedures": 106,
+    "numeric_eis_223_notices": 40,
+    "new_unique_lots": 0,
+    "new_deduplicated_projects": 0,
+    "new_verified_core_lots": 0
+  },
+  "source_requests": {
+    "first_party_exact_GET_attempts": 6,
+    "http_200": 4,
+    "http_404": 2,
+    "new_immutable_sha_verified_originals": 4,
+    "new_month_source_searches": 0,
+    "failed_urls": [
+      "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32514476448",
+      "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32515582393"
+    ]
+  },
+  "originals": [
+    {
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=50277071467250001900000",
+      "sha256": "8162f01dee6578dfa1255724dfa2ed93428d937df8b8ffb70d7d108c831ba05b",
+      "bytes": 136186,
+      "http": 200
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=50277071467250001900000",
+      "sha256": "9829cd966e60fa7e924c4b1a23b4dc0315fe7d145318d08c7a614e869b018b5b",
+      "bytes": 142337,
+      "http": 200
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=50277071467250001900000",
+      "sha256": "e2cda53c6d962d101846d25b4f2d3881b63a4f6c9c21db70b98c9c299e750dbc",
+      "bytes": 10343,
+      "http": 200
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/event-log.html?reestrNumber=50277071467250001900000",
+      "sha256": "61d110b017ac6449cc1d7a2813f52d9284cb659db0de4b521b676c7cdb2262fe",
+      "bytes": 130326,
+      "http": 200
+    }
+  ],
+  "verified_case": {
+    "canonical_id": "223fz:32514476448:lot1",
+    "project": "ПС Уфимка, БСК 10 кВ, 2×0,9 Мвар",
+    "scope": "mixed EPC/electrical installation, not separate capacitor sale",
+    "buyer": "ООО Башкирэнерго",
+    "buyer_inn": "0277071467",
+    "registry_number": "50277071467250001900000",
+    "contract_number": "РЭС-1.16.7/Д-01408",
+    "signed_date": "2025-03-26",
+    "registered_total_rub": "2922405.35",
+    "official_status": "Исполнение завершено",
+    "completion_event": "2025-12-17",
+    "registry_procurement": "32514476448",
+    "commission_protocol_number": "32514476448-03",
+    "named_winner": null,
+    "named_signed_supplier": null,
+    "supplier_inn": null,
+    "paid_amount": null,
+    "equipment_only_price": null,
+    "signed_contract_source_verified": true,
+    "completion_source_verified": true
+  },
+  "db_enrichment": {
+    "new_source_verified_fields": 5,
+    "old_null_only_CAS": true,
+    "postwrite_readback": true,
+    "receipt": "pq-eis-ufimka-contract-enrichment-20261031T0237.json",
+    "backup_sha256": "c5b8ea7a6acad8c585cd0604c8089750d44621a8cce33440bdd3b0e49623cb24",
+    "verified_signed_contracts_in_deck_before": 1,
+    "verified_signed_contracts_in_deck_after": 2,
+    "new_named_winners": 0,
+    "new_named_signed_suppliers": 0,
+    "new_executed_payments": 0
+  },
+  "client_dossier": {
+    "version": "V7",
+    "snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261031_v7.json",
+    "audit": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261031_v7.json",
+    "backlog": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_BACKLOG_20261031_v7.md",
+    "ru_pdf": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_RU_20261031_V7.pdf",
+    "en_pdf": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_EN_20261031_V7.pdf",
+    "pages_each": 256,
+    "legacy_html_not_regenerated": true
+  },
+  "tests": "8 targeted passed, Ruff passed, pdfinfo 256 pages each, pdftotext registry number visible",
+  "next_three": [
+    {
+      "case": "32615966040",
+      "retry_after_moscow": "2026-10-31 09:00",
+      "goal": "EIS signed contractor for RAD recommendation"
+    },
+    {
+      "case": "32615684088",
+      "retry_after_moscow": "2026-10-31 09:00",
+      "goal": "signed supplier and contract register original"
+    },
+    {
+      "case": "RN61003961",
+      "retry_after_moscow": "2026-10-31 10:00",
+      "goal": "TEK-Torg post-deadline result for 6kV equipment"
+    }
+  ],
+  "limitations": [
+    "EIS notice document pages returned 404, not market absence",
+    "Original EIS 223 contract does not identify contractor or payments",
+    "Completed EPC total is not equipment-only revenue",
+    "One participant and failed competitive procedure do not negate subsequently registered contract",
+    "Canonical v29 remains 101 rows, not overwritten",
+    "No auto-merge"
+  ]
+}

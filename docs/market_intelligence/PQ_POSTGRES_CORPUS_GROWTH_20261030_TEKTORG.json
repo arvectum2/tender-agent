@@ -1,0 +1,30 @@
+{
+  "schema_version": "pq-incremental-db-import-receipt/1",
+  "before": {
+    "rows": 113,
+    "owner": "tender-agent",
+    "unique": 113,
+    "records": 113
+  },
+  "after": {
+    "rows": 114,
+    "owner": "tender-agent",
+    "unique": 114,
+    "records": 114
+  },
+  "readback": [
+    {
+      "id": "commercial:РН61003961:lot1",
+      "hash": "bdd3dd637c41c81ff20385caec84733f9d3ea69316998337094f7913a325e1f3",
+      "review": "unreviewed",
+      "status": "staged_unreviewed",
+      "revision": 1
+    }
+  ],
+  "backup_sha256": "0a0f70808968fcc975199bedd4e90e1878651a76e579e86cf0595bd5727d28f3",
+  "backup_file": "data-platform-arvectum_data-20261030T034218Z-25440.dump",
+  "source_manifest_sha256": "0f4ad05aca6763e0d254f624cf5ee0a124613d0b0de3c78dba8b117b43f5d8ff",
+  "new_unique_lots": 1,
+  "signed_supplier_additions": 0,
+  "verified_equipment_sales_rub_additions": 0
+}

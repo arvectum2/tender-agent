@@ -9,11 +9,37 @@ import argparse
 import json
 import os
 import tempfile
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
+from urllib.parse import urlsplit
 
 FIELDS = ("original_notice", "technical_specification", "award_protocol",
           "signed_contract", "winner", "initial_price", "contract_price")
+
+
+def _source_urls(lead: dict, *, limit: int = 10) -> list[str]:
+    """Preserve exact public URLs across all immutable MI-013 v20 delta schemas.
+
+    Inventory only; this does not authorize downloading or promote a secondary
+    index to original evidence. Retrieval adapters enforce their own allowlists.
+    """
+    result: list[str] = []
+    for key in ("evidence", "sources", "source_url", "source", "supporting_source"):
+        values = lead.get(key) or []
+        if not isinstance(values, list):
+            values = [values]
+        for value in values:
+            url = value.get("url") if isinstance(value, dict) else value
+            if not isinstance(url, str) or url in result:
+                continue
+            parsed = urlsplit(url)
+            if (parsed.scheme not in ("http", "https") or not parsed.hostname
+                    or parsed.username or parsed.password):
+                continue
+            result.append(url)
+            if len(result) == limit:
+                return result
+    return result
 
 
 def inventory(*, leads_file: Path, source_roots: list[Path],
@@ -41,12 +67,26 @@ def inventory(*, leads_file: Path, source_roots: list[Path],
         number = str(lead.get("procedure_id") or "")
         docs = []
         for root in source_roots:
+            # An unnumbered index lead is not a procurement folder. root / ""
+            # would otherwise scan the entire source root and count manifests
+            # as case-specific original documents.
+            if not number:
+                continue
             folder = root / number
             if folder.is_dir() and not folder.is_symlink():
+                # Receipts prove that a retrieval was attempted; they are not
+                # original procurement documents. Counting receipt-only
+                # directories as source coverage overstates the denominator.
+                metadata_names = {
+                    "public-page-receipt.json", "download_receipt.json",
+                    "source-receipt.json", "receipt.json", "manifest.json",
+                }
                 docs.extend(str(p) for p in folder.iterdir()
-                            if p.is_file() and not p.is_symlink())
+                            if p.is_file() and not p.is_symlink()
+                            and p.name.lower() not in metadata_names
+                            and p.suffix.lower() != ".sha256")
         reviewed = [r for r in existing.get(number, []) if r.get("state") == "reviewed"]
-        evidence = lead.get("evidence") or []
+        evidence_urls = _source_urls(lead)
         # Source-grounded verification requires document-level inspection; no
         # winner/contract/price is considered verified from mere file presence.
         gaps = list(FIELDS)
@@ -61,7 +101,7 @@ def inventory(*, leads_file: Path, source_roots: list[Path],
             "family": lead.get("family"), "scope": lead.get("scope"),
             "source_documents_local": docs[:40],
             "reviewed_packets": len(reviewed),
-            "evidence_urls": [e.get("url") for e in evidence if e.get("url")][:10],
+            "evidence_urls": evidence_urls,
             "missing_or_unverified": gaps,
             "recovery_actions": [
                 "Search official EIS notice/protocol by exact procedure ID",
@@ -71,7 +111,7 @@ def inventory(*, leads_file: Path, source_roots: list[Path],
             ],
         })
     payload = {"schema_version": "pq-evidence-gap-recovery/1",
-               "generated_at": datetime.now(timezone.utc).isoformat(),
+               "generated_at": datetime.now(UTC).isoformat(),
                "lead_count": len(results), "coverage": "known_leads_only_not_market_population",
                "cases": results}
     output.parent.mkdir(parents=True, exist_ok=True)

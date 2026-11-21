@@ -1,0 +1,187 @@
+{
+  "schema": "pq-watchdog-bounded-research/1",
+  "issue_comment_id": 6569145998,
+  "moscow_completed": "2026-11-02T07:41:36.268445+03:00",
+  "corpus_unique_lots_before": 121,
+  "corpus_unique_lots_after": 121,
+  "procedures": 110,
+  "eis_223_notices": 43,
+  "new_lots": 0,
+  "new_projects": 0,
+  "new_verified_fields": 0,
+  "new_winners": 0,
+  "new_signed_suppliers": 0,
+  "new_paid_sales": 0,
+  "capture_http200": 12,
+  "capture_http404": 1,
+  "search_http200": 8,
+  "unique_month_source_queries": 7,
+  "new_substantive_originals": 0,
+  "captures": [
+    {
+      "case_id": "commercial:4158439:lot1",
+      "source_url": "https://www.b2b-center.ru/market/modernizatsiia-ustanovki-kompensatsii-reaktivnoi-moshchnosti-ukrm/tender-4158439/",
+      "sha256": "edf884146c9099b3590848f0588ec495f543681eed1bc96cf73b8ad8f4030c9f",
+      "relative_file": "captures/commercial_4158439_lot1/20261102T043543575750Z-7d8ff846-edf884146c9099b3.bin",
+      "bytes": 70407
+    },
+    {
+      "case_id": "commercial:4158439:lot1",
+      "source_url": "https://www.b2b-center.ru/market/modernizatsiia-ustanovki-kompensatsii-reaktivnoi-moshchnosti-ukrm/tender-4158439/?action=offers",
+      "sha256": "a47ccfc787d20439f128b6ce92fd026b1c129b2d03ca0bb4372488733ebd8d08",
+      "relative_file": "captures/commercial_4158439_lot1/20261102T043615576630Z-9087ecd2-a47ccfc787d20439.bin",
+      "bytes": 56247
+    },
+    {
+      "case_id": "commercial:4304120:lot1",
+      "source_url": "https://www.b2b-center.ru/app/market/postavka-ustanovki-kompensatsii-reaktivnoi-moshchnosti-ukrm-350-kvar-v/tender-4304120/?utm_campaign=ref_id&utm_medium=referral&utm_source=kontur",
+      "sha256": "7f57b85b0466cfa6fb45d6a3022c0d7dade8f676eade8bdeaf52bb3da18ba90e",
+      "relative_file": "captures/commercial_4304120_lot1/20261102T043615171249Z-81dceb11-7f57b85b0466cfa6.bin",
+      "bytes": 19138
+    },
+    {
+      "case_id": "commercial:4302914:lot1",
+      "source_url": "https://www.b2b-center.ru/market/view.html?id=4302914",
+      "sha256": "f7399b0ca0f9e95a8461d4f9a9f317c0955d20864addfaba59492e04a1704c97",
+      "relative_file": "captures/commercial_4302914_lot1/20261102T043701329584Z-59c37fa9-f7399b0ca0f9e95a.bin",
+      "bytes": 76611
+    },
+    {
+      "case_id": "223fz:32515208744:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32515208744",
+      "sha256": "080e48e5aede0ff8d44cbdc59b43918644c2f76a935298b1974c5319be0fd18d",
+      "relative_file": "captures/223fz_32515208744_lot1/20261102T043743004488Z-d2db7180-080e48e5aede0ff8.bin",
+      "bytes": 153857
+    },
+    {
+      "case_id": "223fz:32616506708:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616506708",
+      "sha256": "9ecb0dab2ed15573a387f258c3a9f4301e65dd53f9b280d4568258bfa908d749",
+      "relative_file": "captures/223fz_32616506708_lot1/20261102T043743352966Z-1f4e2b4c-9ecb0dab2ed15573.bin",
+      "bytes": 148841
+    },
+    {
+      "case_id": "223fz:32515029641:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32515029641",
+      "sha256": "1f3304c51ed517bcde8648500f3515146175b20027a5c8f7ae5edaba167a44b8",
+      "relative_file": "captures/223fz_32515029641_lot1/20261102T043830734820Z-7e06a6c4-1f3304c51ed517bc.bin",
+      "bytes": 132845
+    },
+    {
+      "case_id": "223fz:32515029641:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32515029641",
+      "sha256": "1464b261e4dd8b6ed6a4321f6202521587f477784c4757530e6a2dde79aabd9a",
+      "relative_file": "captures/223fz_32515029641_lot1/20261102T043830365124Z-880b827b-1464b261e4dd8b6e.bin",
+      "bytes": 141192
+    },
+    {
+      "case_id": "223fz:32515029641:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32515029641",
+      "sha256": "d7da597b09b5702c958985efc1e16630546fae82cb6d46d83cbd3b9667e2d6be",
+      "relative_file": "captures/223fz_32515029641_lot1/20261102T043829902517Z-b255b0b8-d7da597b09b5702c.bin",
+      "bytes": 145773
+    },
+    {
+      "case_id": "223fz:32615700251:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32615700251",
+      "sha256": "881848bd2db647710718922bb7b8d76a494b784f4bbd216d7971637ca74f5a78",
+      "relative_file": "captures/223fz_32615700251_lot1/20261102T043945645913Z-94e7c70e-881848bd2db64771.bin",
+      "bytes": 146884
+    },
+    {
+      "case_id": "223fz:32615700251:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32615700251",
+      "sha256": "022fa62839b28058b8111b0eb78bfd68386cc4165cc750cab1d381df716bac38",
+      "relative_file": "captures/223fz_32615700251_lot1/20261102T043946478077Z-d07ae9ee-022fa62839b28058.bin",
+      "bytes": 132792
+    },
+    {
+      "case_id": "223fz:32615700251:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32615700251",
+      "sha256": "01483ce85df17d3635c033387bb217308d7c6fe497cb3af67cee4446a82e527f",
+      "relative_file": "captures/223fz_32615700251_lot1/20261102T043946059139Z-f4ecaf3b-01483ce85df17d36.bin",
+      "bytes": 133202
+    }
+  ],
+  "searches": [
+    {
+      "regime": "fz223",
+      "query": "Гравийная",
+      "month": "2026-02",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.02.2026&publishDateTo=28.02.2026&searchString=%D0%93%D1%80%D0%B0%D0%B2%D0%B8%D0%B9%D0%BD%D0%B0%D1%8F",
+      "http": 200,
+      "result_count_first_page": 17,
+      "exhaustive": false
+    },
+    {
+      "regime": "fz223",
+      "query": "конденсаторной установки",
+      "month": "2026-02",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.02.2026&publishDateTo=28.02.2026&searchString=%D0%BA%D0%BE%D0%BD%D0%B4%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80%D0%BD%D0%BE%D0%B9+%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B8",
+      "http": 200,
+      "result_count_first_page": 3,
+      "exhaustive": false
+    },
+    {
+      "regime": "fz223",
+      "query": "фильтр гармоник",
+      "month": "2025-08",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.08.2025&publishDateTo=31.08.2025&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80+%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D0%BD%D0%B8%D0%BA",
+      "http": 200,
+      "result_count_first_page": 0,
+      "exhaustive": false
+    },
+    {
+      "regime": "fz44",
+      "query": "СТАТКОМ",
+      "month": "2025-08",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz44=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.08.2025&publishDateTo=31.08.2025&searchString=%D0%A1%D0%A2%D0%90%D0%A2%D0%9A%D0%9E%D0%9C",
+      "http": 200,
+      "result_count_first_page": 59,
+      "exhaustive": false
+    },
+    {
+      "regime": "fz223",
+      "query": "УКРМ 10 кВ",
+      "month": "2024-11",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.11.2024&publishDateTo=30.11.2024&searchString=%D0%A3%D0%9A%D0%A0%D0%9C+10+%D0%BA%D0%92",
+      "http": 200,
+      "result_count_first_page": 0,
+      "exhaustive": false
+    },
+    {
+      "regime": "fz44",
+      "query": "УКРМ 10 кВ",
+      "month": "2024-11",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz44=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.11.2024&publishDateTo=30.11.2024&searchString=%D0%A3%D0%9A%D0%A0%D0%9C+10+%D0%BA%D0%92",
+      "http": 200,
+      "result_count_first_page": 0,
+      "exhaustive": false
+    },
+    {
+      "regime": "fz223",
+      "query": "фильтры высших гармоник",
+      "month": "2025-08",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.08.2025&publishDateTo=31.08.2025&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D1%8B+%D0%B2%D1%8B%D1%81%D1%88%D0%B8%D1%85+%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D0%BD%D0%B8%D0%BA",
+      "http": 200,
+      "result_count_first_page": 0,
+      "exhaustive": false
+    }
+  ],
+  "known_negative_checks": [
+    "32615700251: already documented 10kV switchgear modernization, NOT PQ equipment supply",
+    "32515029641: existing signed contract 3,490,560 RUB already source-bound, supplier still unverified",
+    "4302914: maintenance existing STATCOM; model-derived 6.3kV not promoted as independently verified spec",
+    "4158439: 0 bids, 1 modernization work unit, not device sale",
+    "4304120: B2B app returns generic JS shell, identity not proven",
+    "44-FZ 2025-08 СТАТКОМ: 59 morphological matches, first page dominated by остатки/недостатки"
+  ],
+  "limitations": "Seven distinct first-page query/month pairs, not exhaustive; 2026-02 конденсаторной установки repeated once and excluded from distinct coverage; all primary cases previously researched; no new supplier or equipment sale.",
+  "next": [
+    "32616433248 after 2026-11-02 09:00 MSK",
+    "32616497692 after 2026-11-02 16:30 MSK",
+    "32616474682 after 2026-12-03 10:00 MSK"
+  ],
+  "client_reports_unchanged": true,
+  "no_auto_merge": true
+}

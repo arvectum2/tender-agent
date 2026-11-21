@@ -1,0 +1,31 @@
+{
+  "schema_version": "mi-supplier-profile/1",
+  "profile_id": "fgi-pq-ru",
+  "supplier": {
+    "name": "FGI Energy Router",
+    "official_portfolio_urls": [
+      "https://www.fgi-energyrouter.com/products/all.html"
+    ],
+    "models_verified": false
+  },
+  "study": {
+    "country": "RU",
+    "from": "2024-01-01",
+    "through": "2026-10-29",
+    "voltage_kv": [
+      6,
+      35
+    ],
+    "adjacent_voltages_separate": true
+  },
+  "ontology_file": "data/market_intelligence/power_quality/ontology.v1.yaml",
+  "family_ids": [
+    "ukrm",
+    "thyristor",
+    "statcom",
+    "harmonic_filter",
+    "power_quality_system"
+  ],
+  "evidence_status": "supplier_technical_fit_unverified",
+  "product_evidence_file": "docs/market_intelligence/FGI_PRIMARY_PRODUCT_AND_GPB_SOURCE_20261029.json"
+}

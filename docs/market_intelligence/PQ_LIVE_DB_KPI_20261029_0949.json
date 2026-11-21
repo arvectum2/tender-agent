@@ -1,0 +1,26 @@
+{
+  "schema_version": "pq-live-corpus-kpi/1",
+  "scope": "research_corpus_not_national_market_population",
+  "counts": {
+    "database": "arvectum_data",
+    "lot_rows": 108,
+    "collection": "arvectum-market-pq-6-35kv",
+    "unique_lots": 108,
+    "eis_223_lots": 37,
+    "eis_223_notices": 36,
+    "other_lot_cards": 71,
+    "unreviewed_rows": 108,
+    "distinct_procedure_tokens": 97,
+    "rows_with_original_shas_in_metadata": 4,
+    "rows_marked_research_not_market_population": 108,
+    "registered_signed_supplier_ids_in_resource_metadata": 0
+  },
+  "definitions": {
+    "unique_lots": "One canonical notice:lot ID per legal or commercial request; may be non-binding",
+    "distinct_procedure_tokens": "Count of distinct second-colon ID parts; not the same as unique projects or executed contracts",
+    "eis_223_notices": "Distinct 11-digit 223-FZ identifiers, not contracts signed",
+    "other_lot_cards": "Commercial and nonstandard research lots; may include unverified technical voltage",
+    "original_sha_metadata": "Only SHA in dp_resources.metadata; excludes historical source verification stored elsewhere",
+    "verified_equipment_sales_rub": "Not computed without independent signed supplier, item price and execution records"
+  }
+}

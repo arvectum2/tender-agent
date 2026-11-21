@@ -1,6 +1,6 @@
 {
   "schema_version": "pq-commission-facts/1",
-  "source_scope": "original_eis_public_223_protocol_documents_sha",
+  "source_scope": "sha_bound_original_eis_and_first_party_223_etp_commission_protocol_documents",
   "facts": [
     {
       "procedure_id": "32514947144",
@@ -105,6 +105,76 @@
       "signed_contract_verified": false,
       "supplier_of_signed_contract_verified": false,
       "market_category": "capacitor_bank_component_supply"
+    },
+    {
+      "procedure_id": "32514720691",
+      "lot": "25-004033",
+      "queue_id": "32514720691-b443cec594311db0ae525720",
+      "source_sha256": "225a5149205a542ff2f56751f55b8a7f411ac5a54f18620345434e22fb9ba926",
+      "source_quote": "Провести преддоговорные переговоры с ООО «ТД «УК Конденсатор».",
+      "amount_quote": "14 790 000 руб. без НДС",
+      "nmck_quote": "27 318 000 руб. без НДС",
+      "proposed_or_selected_participant": "ООО «ТД «УК Конденсатор»",
+      "decision_type": "commission_single_compliant_offer_negotiations_no_signed_contract",
+      "price_kind": "commission_proposed_ukrm_supply_offer_vat_excluded",
+      "offer_rub": "14790000.00",
+      "nmck_rub": "27318000.00",
+      "signed_contract_verified": false,
+      "supplier_of_signed_contract_verified": false,
+      "market_category": "ukrm_equipment_supply_commission_offer"
+    },
+    {
+      "procedure_id": "32514754857",
+      "lot": "25-004035",
+      "queue_id": "32514754857-1c80b84dcd3911e2d2f7a08d",
+      "source_sha256": "eb94ebe8b7019383ffbd4cd7781bca158c97d7a72248e19ca6febc94f17ec24f",
+      "source_quote": "первое место ООО «ТЕХНОПРОМ» (97 баллов).",
+      "amount_quote": "6 732 104,09 руб. без НДС",
+      "nmck_quote": "7 030 423,59 руб. без НДС",
+      "proposed_or_selected_participant": "ООО «ТЕХНОПРОМ»",
+      "decision_type": "commission_ranks_first_mixed_reconstruction_with_ukrm",
+      "price_kind": "commission_first_place_mixed_epc_vat_excluded_not_pq_only",
+      "offer_rub": "6732104.09",
+      "nmck_rub": "7030423.59",
+      "signed_contract_verified": false,
+      "supplier_of_signed_contract_verified": false,
+      "market_category": "mixed_epc_6kv_ukrm_substation_reconstruction"
+    },
+    {
+      "procedure_id": "32514842313",
+      "lot": "PS Irkutskaya 500 kV",
+      "queue_id": "32514842313-9d6286036ac5317c2931804c",
+      "source_sha256": "cfc5e5c6d12217dc687af9a9e1fdfe17b3d006055e5b446e18553c4a197e2db3",
+      "source_quote": "Заключить договор с единственным участником закупки АО \"ЭНЕРГЕТИЧЕСКИЕ ТЕХНОЛОГИИ\" (ИНН: 3812082002)",
+      "amount_quote": "111 079 600,00 рублей без учета НДС",
+      "nmck_quote": "112 201 596,67 рублей без учета НДС",
+      "proposed_or_selected_participant": "АО \"ЭНЕРГЕТИЧЕСКИЕ ТЕХНОЛОГИИ\"",
+      "decision_type": "failed_tender_single_eligible_commission_instructs_contract_not_signed_evidence",
+      "price_kind": "commission_sole_eligible_mixed_ps_equipment_vat_excluded_not_pq_only",
+      "offer_rub": "111079600.00",
+      "nmck_rub": "112201596.67",
+      "signed_contract_verified": false,
+      "supplier_of_signed_contract_verified": false,
+      "market_category": "adjacent_epc_500kv_substation_bsk_voltage_unknown"
+    },
+    {
+      "procedure_id": "32615966040",
+      "lot": "RAD260020676",
+      "queue_id": "32615966040-26fad6b664141900a39c3a1c",
+      "source_sha256": "c4259db4db81d2d0af153acf2fc56ac6e3ac354999c84b9248431bb6814338d6",
+      "source_quote": "с Участником № 490997, ООО \"ЭНЕРГОСЕТЬ\"",
+      "amount_quote": "5 273 763,77 руб.",
+      "nmck_quote": "5 273 763,77 руб. с НДС",
+      "proposed_or_selected_participant": "ООО \"ЭНЕРГОСЕТЬ\"",
+      "decision_type": "failed_single_application_commission_instructs_contract_not_signed",
+      "price_kind": "commission_mixed_epc_offer_vat_included_22_percent_not_signed",
+      "offer_rub": "5273763.77",
+      "nmck_rub": "5273763.77",
+      "signed_contract_verified": false,
+      "supplier_of_signed_contract_verified": false,
+      "market_category": "mixed_epc_10kv_reactive_compensation_ps110kv",
+      "source_etp": "RAD260020676",
+      "equipment_only_price_verified": false
     }
   ]
 }

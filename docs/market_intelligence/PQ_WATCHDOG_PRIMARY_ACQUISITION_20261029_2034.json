@@ -1,0 +1,153 @@
+{
+  "schema_version": "pq-watchdog-primary-acquisition-20261029/1",
+  "completed_moscow": "2026-10-29T20:34:28+03:00",
+  "run_id": "automation-turn-11",
+  "issue_comment_id": 6503785009,
+  "canonical_pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "parent_head": "e47e71ac65c309565e3783b26cac727abfd94054",
+  "status": "in_progress",
+  "canonical_v29_rows_unchanged": 101,
+  "postgres_before": {
+    "unique_lots": 113,
+    "distinct_procedures": 102,
+    "eis_223_notices": 37
+  },
+  "postgres_after": {
+    "unique_lots": 113,
+    "distinct_procedures": 102,
+    "eis_223_notices": 37
+  },
+  "db_mutation": false,
+  "acceptance_before": "pass",
+  "metrics": {
+    "primary_source_attempts": 7,
+    "http_200": 4,
+    "http_404": 1,
+    "strict_tls_errors": 2,
+    "new_sha_verified_first_party_captures": 4,
+    "new_original_procurement_cards": 0,
+    "updated_first_party_card_versions": 1,
+    "new_first_party_search_pages": 3,
+    "new_unique_lots": 0,
+    "new_projects": 0,
+    "new_named_winner_protocols": 0,
+    "new_signed_suppliers": 0,
+    "new_executed_prices": 0,
+    "new_verified_core_equipment_sales": 0,
+    "new_month_source_coverage": 0
+  },
+  "primary_captures": [
+    {
+      "case_id": "commercial:4617521:lot1",
+      "url": "https://www.b2b-center.ru/app/market-next/vybor-ispolnitelia-na-postavku-montazh-i-pnr-ustanovok-kompensatsii/tender-4617521/",
+      "sha256": "9bbad81be4e390dcece2abe7ad5ae29adade7ecaf63d13ade352822b7c484d59",
+      "bytes": 326210,
+      "http": 200,
+      "kind": "first_party_card_updated",
+      "finding": "АО Тандер, УКРМ поставка/монтаж/ПНР; 3 заявки; рассмотрение, победитель и напряжение скрыты"
+    },
+    {
+      "case_id": "commercial:sibur-search-statcom-20261029:lot1",
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%A1%D0%A2%D0%90%D0%A2%D0%9A%D0%9E%D0%9C",
+      "sha256": "7f1ac49910d31c9e762ad99e7ad84e9594853bccdbef4050825968f213e83837",
+      "bytes": 173852,
+      "http": 200,
+      "kind": "first_party_search_page",
+      "first_page_rows": 0,
+      "finding": "СТАТКОМ: 0 строк на первой странице; не означает отсутствие рынка"
+    },
+    {
+      "case_id": "commercial:sibur-search-harmonics-20261029:lot1",
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80+%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D0%BD%D0%B8%D0%BA",
+      "sha256": "e704c7eed19ccf4b664618906f1c969630b01382a7bac761e5007c37ca79bd71",
+      "bytes": 182244,
+      "http": 200,
+      "kind": "first_party_search_page",
+      "first_page_rows": 1,
+      "finding": "Одна процедура 2101170/1: VEDA VEDAHF-05-055-400-50-20, ранее подтверждённые 3x400В; исключить из core"
+    },
+    {
+      "case_id": "commercial:sibur-search-capinstall-20261029:lot1",
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%BA%D0%BE%D0%BD%D0%B4%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80%D0%BD%D0%B0%D1%8F+%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0",
+      "sha256": "2d3a2b549bf6fa42785ac38a273caaee0776275d66c21dfd9382871da7f519c5",
+      "bytes": 173852,
+      "http": 200,
+      "kind": "first_party_search_page",
+      "first_page_rows": 0,
+      "finding": "0 строк на первой странице; не исчерпывающий поиск"
+    }
+  ],
+  "failed_source_attempts": [
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616296418",
+      "source": "ЕИС 223-ФЗ",
+      "attempts": [
+        {
+          "transport": "httpx",
+          "error": "strict_tls_certificate_verify_failed"
+        },
+        {
+          "transport": "curl-direct",
+          "http": 404
+        }
+      ],
+      "case": "32616296418",
+      "assessment": "дугогасительные реакторы 6-35 кВ; смежное оборудование, не доказательство компенсации реактивной мощности; не импортировано"
+    },
+    {
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%A1%D0%A2%D0%90%D0%A2%D0%9A%D0%9E%D0%9C",
+      "source": "СИБУР",
+      "attempts": [
+        {
+          "transport": "httpx",
+          "error": "strict_tls_certificate_verify_failed"
+        },
+        {
+          "transport": "curl-direct",
+          "http": 200
+        }
+      ],
+      "assessment": "retry succeeded with strict certificate verification"
+    }
+  ],
+  "secondary_unverified_lead": {
+    "buyer": "ООО Подпорожские электрические сети, ИНН 4711011840",
+    "supplier_claim": "ООО ЭНЕРГОЗАПАД, ИНН 7819319755",
+    "equipment": "УКРМ-6,3-300-УХЛ1-IP54",
+    "claimed_value_rub": 293080,
+    "source_urls": [
+      "https://b2b.house/company/OOO-ENERGOZAPAD_5798ff19-5211-40b9-9abb-d179ec363666/",
+      "https://b2b.house/company/OOO-PES_01eef801-88e4-41db-aa2e-30d823b0a109/"
+    ],
+    "qualification": "ТОЛЬКО вторичный индекс; год/номер извещения, подписанный договор, фактическое исполнение не подтверждены; не считать продажей, не импортировать"
+  },
+  "limitations": [
+    "Нет первичного протокола с победителем или подписанного договора",
+    "СИБУР фильтры не гарантируют календарное покрытие; только первая страница",
+    "ЕИС по 32616296418 вернул HTTP404, это не отсутствие закупки",
+    "Изменение динамического SHA B2B не доказывает новую сделку",
+    "Без новой source-verified unique notice:lot записи БД не изменялась"
+  ],
+  "next_targets": [
+    {
+      "rank": 1,
+      "case": "2103585/2",
+      "eligibility": "immediate via independent public contract/award registry, not repeat archived 7z",
+      "goal": "10 кВ УКРМ, подписанный поставщик/цена"
+    },
+    {
+      "rank": 2,
+      "case": "ЭНЕРГОЗАПАД / ПЭС УКРМ-6,3-300",
+      "eligibility": "immediate when exact official notice/contract identifier found",
+      "goal": "validate 6.3 кВ secondary claimed 293080 RUB and 2024-2026 date; no speculative sale"
+    },
+    {
+      "rank": 3,
+      "case": "106044-ТТ",
+      "eligibility": "2026-10-30 09:00 МСК",
+      "goal": "3 STATCOM 6.3 кВ original award/protocol/contract"
+    }
+  ],
+  "safety": "single PR #521; no DB insert, no backup required; no bids/production/merge"
+}

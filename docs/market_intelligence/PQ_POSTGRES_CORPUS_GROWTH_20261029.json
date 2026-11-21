@@ -1,0 +1,44 @@
+{
+  "schema_version": "pq-incremental-db-import-receipt/1",
+  "date_moscow": "2026-10-29",
+  "target": "arvectum_data/arvectum-market-pq-6-35kv",
+  "before": {
+    "rows": 104,
+    "owner": "tender-agent",
+    "unique": 104,
+    "records": 104
+  },
+  "after": {
+    "rows": 106,
+    "owner": "tender-agent",
+    "unique": 106,
+    "records": 106
+  },
+  "inserted_case_ids": [
+    "223fz:32413195287:lot1",
+    "223fz:32413764701:lot1"
+  ],
+  "readback": [
+    {
+      "id": "223fz:32413764701:lot1",
+      "hash": "f0da871163e4ef8554f5d140c3591c7e0918f7b4bfdb6c74ab90ecf74cb18ae7",
+      "review": "unreviewed",
+      "status": "staged_unreviewed",
+      "revision": 1
+    },
+    {
+      "id": "223fz:32413195287:lot1",
+      "hash": "0d01f89e1d566f2a2b060040027506fe2e65dfa212ef4fc0fa6ad85ea21b86a0",
+      "review": "unreviewed",
+      "status": "staged_unreviewed",
+      "revision": 1
+    }
+  ],
+  "source_manifest_sha256": "733e720b48d7ca417a662ed5de54dab9081ae732eea7183b2dc68417843af8a0",
+  "backup_sha256": "03cf1bc983c9ff4e9c69149d8818f9413489731f13dc7723fb1ee68923e33769",
+  "backed_up_bytes": 37481346,
+  "new_signed_supplier_verified": false,
+  "new_executed_sales_verified": false,
+  "scope_note": "32413764701 = new equipment 10 kV, 32413195287 = repair installed 6.3 kV UKRM; do not sum mixed contract price as new equipment volume",
+  "excluded_source_only": "32413631624 is 0.4 kV AUKRM plus KSO (outside core 6-35kV); preserve first-party originals outside core."
+}

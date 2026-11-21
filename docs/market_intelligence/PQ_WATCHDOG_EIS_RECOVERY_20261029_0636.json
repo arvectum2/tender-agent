@@ -1,0 +1,404 @@
+{
+  "schema_version": "pq-watchdog-eis-firstparty/1",
+  "run_comment_id": 6487198366,
+  "v29_rows_unchanged": 101,
+  "source_recovery": "EIS direct noproxy HTTP200, no auth bypass",
+  "new_notice_ids": 0,
+  "new_project_ids": 0,
+  "new_eis_notice_archives": [
+    {
+      "notice": "32616433248",
+      "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=0B71CDD1BF2B40F3AB1CA3A9AD876C4E",
+      "http": 200,
+      "bytes": 1613528,
+      "sha256": "5a40a25595b7e12050acedfec723857f5fd14cbdd2520932ce9389006e0579ca",
+      "content_type": "application/download",
+      "zip_magic": "504b0304",
+      "retrieved_at_utc": "2026-10-29T03:46:53.309666+00:00",
+      "saved_original": "eis-32616433248-firstparty-original.bin",
+      "zip_members": [
+        {
+          "name": "Извещение о закупке_5147/",
+          "size": 0,
+          "compressed": 0
+        },
+        {
+          "name": "Извещение о закупке_5147/ МСП_ЗЦ_Извещение_Работы_5147.docx",
+          "size": 152619,
+          "compressed": 147792
+        },
+        {
+          "name": "Извещение о закупке_5147/Приложение № 1 Проект договора/",
+          "size": 0,
+          "compressed": 0
+        },
+        {
+          "name": "Извещение о закупке_5147/Приложение № 1 Проект договора/ДОГОВОР ПОДРЯДА (проект).docx",
+          "size": 269927,
+          "compressed": 263151
+        },
+        {
+          "name": "Извещение о закупке_5147/Приложение № 2 Техническое задание/",
+          "size": 0,
+          "compressed": 0
+        },
+        {
+          "name": "Извещение о закупке_5147/Приложение № 2 Техническое задание/ТЗ ПИР ПС 35 кВ Кяппесельга (ПС 27П).docx",
+          "size": 107137,
+          "compressed": 102653
+        },
+        {
+          "name": "Извещение о закупке_5147/Приложение № 2 Техническое задание/ТЗ Под ключ ПС 35 кВ Кяппесельга (ПС 27П).docx",
+          "size": 49701,
+          "compressed": 44715
+        },
+        {
+          "name": "Извещение о закупке_5147/Приложение № 3 Обоснование НМЦД/",
+          "size": 0,
+          "compressed": 0
+        },
+        {
+          "name": "Извещение о закупке_5147/Приложение № 3 Обоснование НМЦД/ПротоколНМЦ.docx",
+          "size": 22463,
+          "compressed": 19027
+        },
+        {
+          "name": "Извещение о закупке_5147/Приложение № 3 Обоснование НМЦД/Расчет ИП БИОЭН Трейд.xlsx",
+          "size": 926633,
+          "compressed": 742485
+        },
+        {
+          "name": "Извещение о закупке_5147/Приложение № 3 Обоснование НМЦД/Расчет НМЦ БИОЭН Трейд.xlsx",
+          "size": 347819,
+          "compressed": 289723
+        }
+      ]
+    },
+    {
+      "notice": "32616497692",
+      "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=F1217EB50B7340E09557E0AD74864C9C",
+      "http": 200,
+      "bytes": 3536921,
+      "sha256": "95b59be1435f52da4ac039025824cabd6f0a944b1486585085ec41d05f67e629",
+      "content_type": "application/download",
+      "zip_magic": "504b0304",
+      "retrieved_at_utc": "2026-10-29T03:46:53.948281+00:00",
+      "saved_original": "eis-32616497692-firstparty-original.bin",
+      "zip_members": [
+        {
+          "name": "Извещение о закупке_5237/",
+          "size": 0,
+          "compressed": 0
+        },
+        {
+          "name": "Извещение о закупке_5237/ЗЦ_Извещение_Работы_5237.docx",
+          "size": 159594,
+          "compressed": 153748
+        },
+        {
+          "name": "Извещение о закупке_5237/Приложение № 1 Проект договора/",
+          "size": 0,
+          "compressed": 0
+        },
+        {
+          "name": "Извещение о закупке_5237/Приложение № 1 Проект договора/ДОГОВОР ПОДРЯДА (проект).docx",
+          "size": 384042,
+          "compressed": 375397
+        },
+        {
+          "name": "Извещение о закупке_5237/Приложение № 2 Техническое задание/",
+          "size": 0,
+          "compressed": 0
+        },
+        {
+          "name": "Извещение о закупке_5237/Приложение № 2 Техническое задание/07. ТЗ ячейка+УКРМ Черные камни - v5.docx",
+          "size": 62922,
+          "compressed": 59129
+        },
+        {
+          "name": "Извещение о закупке_5237/Приложение № 2 Техническое задание/Утвержденное ТЗ на ПИР ПС Октябрь _ПС12С_ замена тр-ра 1МВА на 4МВА.docx",
+          "size": 87050,
+          "compressed": 83287
+        },
+        {
+          "name": "Извещение о закупке_5237/Приложение № 2 Техническое задание/Утвержденное ТЗ на ключ ПС Октябрь _ПС12С_ замена тр-ра 1МВА на 4МВА.docx",
+          "size": 44230,
+          "compressed": 40157
+        },
+        {
+          "name": "Извещение о закупке_5237/Приложение № 3 Обоснование НМЦД/",
+          "size": 0,
+          "compressed": 0
+        },
+        {
+          "name": "Извещение о закупке_5237/Приложение № 3 Обоснование НМЦД/НМЦ -1003 Черные камни УКРМ.xlsx",
+          "size": 480413,
+          "compressed": 389417
+        },
+        {
+          "name": "Извещение о закупке_5237/Приложение № 3 Обоснование НМЦД/НМЦ -3003 Черные камни ПС Октябрь.xlsx",
+          "size": 479541,
+          "compressed": 389835
+        },
+        {
+          "name": "Извещение о закупке_5237/Приложение № 3 Обоснование НМЦД/Протокол НМЦ.docx",
+          "size": 22805,
+          "compressed": 19365
+        },
+        {
+          "name": "Извещение о закупке_5237/Приложение № 3 Обоснование НМЦД/Расчет ИП -1003 Черные камни УКРМ.xlsx",
+          "size": 885185,
+          "compressed": 525754
+        },
+        {
+          "name": "Извещение о закупке_5237/Приложение № 3 Обоснование НМЦД/Расчет ИП -3003 Черные камни ПС Октябрь.xlsx",
+          "size": 1199108,
+          "compressed": 1075393
+        },
+        {
+          "name": "Извещение о закупке_5237/Приложение № 3 Обоснование НМЦД/Сводный НМЦ Черные камни.xlsx",
+          "size": 511506,
+          "compressed": 419453
+        }
+      ]
+    }
+  ],
+  "new_eis_protocol_archives": [
+    {
+      "uid": "D12310E98C084DC0B90B88C588DA72E7",
+      "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=D12310E98C084DC0B90B88C588DA72E7",
+      "http": 200,
+      "bytes": 181744,
+      "sha256": "842c06f3d0944e8266fd2aefaeb538ab04b19a5195fe91172fbad923684ad861",
+      "type": "application/download",
+      "magic": "504b030414030008",
+      "saved_original": "eis-32616433248-protocol-D12310E98C084DC0B90B88C588DA72E7.bin",
+      "members": [
+        {
+          "name": "Протокол рассм.+ переторжка_5147.docx",
+          "size": 28883
+        },
+        {
+          "name": "Протокол рассм.+ переторжка_5147.pdf",
+          "size": 166086
+        }
+      ]
+    },
+    {
+      "uid": "B2DC4E3EBEE64DB6ADB57D33C419BD97",
+      "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=B2DC4E3EBEE64DB6ADB57D33C419BD97",
+      "http": 200,
+      "bytes": 187120,
+      "sha256": "98062c8f6bb47d177c7630374a8f57193dcf4177e7fd37f3204cf140de05de4e",
+      "type": "application/download",
+      "magic": "504b030414030008",
+      "saved_original": "eis-32616433248-protocol-B2DC4E3EBEE64DB6ADB57D33C419BD97.bin",
+      "members": [
+        {
+          "name": "Протокол 3 итоги_5147.docx",
+          "size": 28353
+        },
+        {
+          "name": "Протокол 3 итоги_5147.pdf",
+          "size": 172112
+        }
+      ]
+    }
+  ],
+  "cases": {
+    "32616433248": {
+      "scope": "mixed EPC; UKRM 35kV for PS Kyappeselga, not equipment-only sale",
+      "technical_docx_sha": "bb4c130dee74117c98c716cdf1365ae4d9742bfeee94d9cae69917c969e89bcb",
+      "original_tech_quote": "Установка устройств компенсации реактивной мощности (УКРМ) мощностью не менее 3,5  Мвар  на шинах 35  кВ  со ступенчатым регулированием.",
+      "power_mvar_min": 3.5,
+      "steps_kvar": "1000 base; additional 500",
+      "nmck_rub": "56330673.93",
+      "nmck_xlsx_sha": "839a86c3c4b19e24fa35bd5d6e2bcedc1d7093e0cfcae91aac2f1b2d55b4781b",
+      "estimate_cell": "sheet1!H30",
+      "estimate_label": "Монтаж УКРМ ПС 35кВ Кяппесельга",
+      "estimate_thousand_rub_pre_vat_pre_limit": "13342.4724",
+      "commissioning_cell": "sheet1!H39",
+      "commissioning_thousand_rub": "197.58135",
+      "final_protocol_docx_sha": "56e4511d7ca688108a1d9c96505ee54578986d1247db03e4b486b454b176007e",
+      "final_protocol_pdf_sha": "7e1d4a7132947c5686d3854a2b45a64cd4e8c7f133685b82b808b8beff1081ca",
+      "protocol_date": "2026-10-19",
+      "bidder": "anonymous participant #1",
+      "commission_offer_rub": "56330673.93",
+      "outcome": "one bid; procurement declared unsuccessful; commission proposes possible sole-bidder contract and negotiations",
+      "secondary_winner_StroyEnergoImport_not_verified": true,
+      "public_signed_contract": null,
+      "executed_price": null
+    },
+    "32616497692": {
+      "scope": "mixed EPC; PS Vyartsilya 10kV UKRM + PS Oktyabr reconstruction",
+      "technical_docx_sha": "28982223fc3f30dba1eefbfd0cf2c23200a192621b0b11b3d4f2e2fbf3ff272a",
+      "original_tech_quote": "Монтаж УКРМ 10  кВ  3  МВАр  (1шт.)",
+      "equipment": "10kV UKRM 3Mvar; specification 10.5kV 3150kvar; 2x450 fixed and 5x450 switched stages",
+      "nmck_rub": "79101498.40",
+      "overall_xlsx_sha": "eaad6b87ea98f3ffdf51d11126bafa9ae0234f631e41b912d33d4079c341e92b",
+      "site_subproject_Vyartsilya_with_vat_rub": "8955286.21",
+      "site_subproject_cell": "Svodny sheet1!J18",
+      "ukrm_estimate_xlsx_sha": "edba9cbded1eb55ebdf111aba179dd4cc55a2eb2362f3fd4beb84887a81ccbd1",
+      "ukrm_estimate_cell": "NMCK-1003 sheet1!H24",
+      "ukrm_estimate_thousand_rub_pre_vat": "4346.79332",
+      "ukrm_commissioning_cell": "NMCK-1003 sheet1!H26",
+      "ukrm_commissioning_thousand_rub": "153.83076",
+      "original_protocol": "not published on official notice page",
+      "public_signed_contract": null,
+      "executed_price": null
+    }
+  },
+  "additional_contract_printform": {
+    "notice": "32515582393",
+    "url": "https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=50277071467260001550000",
+    "sha256": "bac0d89f450f32cdfb6cada70f6976dfaec1ade599ff104898c5338a91a1d553",
+    "contract_number": "РЭС-1.26.1/Д-01071",
+    "contract_date": "2026-02-27",
+    "registered_price_rub": "4850000.00",
+    "declared_country_of_goods_origin": "Республика Казахстан",
+    "not_independent_OEM_proof": true,
+    "signed_supplier_name": null,
+    "executed_payment": null
+  },
+  "other_contract_reverification": {
+    "notice": "32413764701",
+    "registry_card_sha_duplicate": "24c041d6d1419f0564ce85777c0ff3ad96314f71df7180469dd4c0dfa2bc6f28",
+    "status": "Исполнение завершено",
+    "registry_price_rub": "4077120.00",
+    "executed_payment_not_verified": true,
+    "printform_generic_shell_not_proof": true
+  },
+  "limitations": [
+    "no new named winner/signed supplier/paid amount",
+    "original protocol #32616433248 does not name bidder, secondary name cannot be promoted",
+    "all NMCK and subproject estimate lines are pre-contract, not PQ equipment-only signed prices",
+    "no source-grade protocol for #32616497692",
+    "15 SDK-blocked DP files unchanged"
+  ],
+  "firstparty_html_cards": [
+    {
+      "notice": "32616433248",
+      "kind": "documents",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616433248&noticeGuid=e5083f5e-3ce6-3bb6-921b-1b72ad8b6a0a",
+      "http": 200,
+      "bytes": 152272,
+      "sha256": "41c717cce51d1c659f1910eb414ec1ae56afc8a1f7f148d7afaef809d7a83662",
+      "has_notice": true,
+      "protocol_word_count": 10,
+      "download_links": 6,
+      "saved": true
+    },
+    {
+      "notice": "32616433248",
+      "kind": "protocols",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616433248",
+      "http": 200,
+      "bytes": 136230,
+      "sha256": "d9e097c59b644b204d9c7ee47f3436b290039625fb2910aeda78c8238c853a24",
+      "has_notice": true,
+      "protocol_word_count": 4,
+      "download_links": 0,
+      "saved": true
+    },
+    {
+      "notice": "32616433248",
+      "kind": "contracts",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616433248",
+      "http": 200,
+      "bytes": 131652,
+      "sha256": "69a10a0942ef9fa0797a04434658b314509a437c8c5838b644de7507ce5ada64",
+      "has_notice": true,
+      "protocol_word_count": 1,
+      "download_links": 0,
+      "saved": true
+    },
+    {
+      "notice": "32616497692",
+      "kind": "documents",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616497692&noticeGuid=0289674a-798d-0056-f69f-ca4f0518aba0",
+      "http": 200,
+      "bytes": 141122,
+      "sha256": "aa549a718909a37752e2498330376a4fdfefdc52b29b6c602b4a15efadd2544e",
+      "has_notice": true,
+      "protocol_word_count": 4,
+      "download_links": 2,
+      "saved": true
+    },
+    {
+      "notice": "32616497692",
+      "kind": "protocols",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616497692",
+      "http": 200,
+      "bytes": 131228,
+      "sha256": "03069f7d9c0dc78826b30038fe1993061193edeea75a91ceeeaff16905d80ed5",
+      "has_notice": true,
+      "protocol_word_count": 2,
+      "download_links": 0,
+      "saved": true
+    },
+    {
+      "notice": "32616497692",
+      "kind": "contracts",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616497692",
+      "http": 200,
+      "bytes": 131953,
+      "sha256": "6b78f118923c07e28ffc15d09e8634f227110a274309abc21e6ebf2bd38933ce",
+      "has_notice": true,
+      "protocol_word_count": 1,
+      "download_links": 0,
+      "saved": true
+    },
+    {
+      "notice": "32616433248",
+      "type": "notice",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616433248",
+      "http": 200,
+      "bytes": 148575,
+      "sha256": "21addf1b4986daa96725a638d5ca7b476461bf9650e4aa9ca060b4749e08f21a",
+      "has_notice": true,
+      "protocol_word_count": 1,
+      "filestore_links": 0,
+      "saved_original": true
+    },
+    {
+      "notice": "32616497692",
+      "type": "notice",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616497692",
+      "http": 200,
+      "bytes": 149176,
+      "sha256": "acaa537181b9657344357d1687d6f2b12565d9881c812bff3cd2a2f20b5f980a",
+      "has_notice": true,
+      "protocol_word_count": 1,
+      "filestore_links": 0,
+      "saved_original": true
+    },
+    {
+      "notice": "32616433248",
+      "type": "protocol-common-info",
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/protocol-common-info.html?protocolGuid=8c9119ed-3a6a-658c-bbe8-851cbf20dac7&purchaseNoticeNumber=32616433248",
+      "http": 200,
+      "sha256": "31717fee0124ebadf584db33c41378fc6421d03aa23956e621bf0690e30f4631"
+    },
+    {
+      "notice": "32616433248",
+      "type": "protocol-common-info",
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/protocol-common-info.html?protocolGuid=d1a04f2f-bfb9-6410-f02c-164e31d5d301&purchaseNoticeNumber=32616433248",
+      "http": 200,
+      "sha256": "32dc0f5abc86d55b71fc3c0c4b290161ef1b300bf12df7711ccb3e7368c02628"
+    }
+  ],
+  "source_card_failed_attempts": [
+    {
+      "notice": "32616433248",
+      "type": "documents",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616433248",
+      "http": 404
+    },
+    {
+      "notice": "32616497692",
+      "type": "documents",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616497692",
+      "http": 404
+    }
+  ]
+}

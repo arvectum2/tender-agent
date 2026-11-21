@@ -1,0 +1,142 @@
+{
+  "schema_version": "pq-watchdog-rad-commission-enrichment/1",
+  "as_of_moscow": "2026-10-31T03:41:31.060314+03:00",
+  "issue_comment_id": 6536554169,
+  "canonical_pr": 521,
+  "tested_code_commit": "6c505acd4842c7bf39cc1e433f83653b97ba2daa",
+  "db": {
+    "collection": "arvectum_data.arvectum-market-pq-6-35kv",
+    "unique_lots_before": 117,
+    "unique_lots_after": 117,
+    "distinct_procedures": 106,
+    "eis_223_notices": 40,
+    "new_unique_lots": 0,
+    "new_core_6_35kv_lots": 0,
+    "verified_fields_before": {
+      "winner": 3
+    },
+    "verified_fields_after": {
+      "winner": 4
+    },
+    "new_verified_fields": 1,
+    "other_collections_untouched": true
+  },
+  "case": {
+    "id": "223fz:32615966040:lot1",
+    "procedure": "RAD260020676",
+    "buyer": "ПАО Россети Московский регион",
+    "project": "Модернизация ПС Никитская, компенсация реактивной мощности на РУ 10 кВ",
+    "commission_recommended_contractor": "ООО ЭНЕРГОСЕТЬ",
+    "commission_protocol": "МВС-61/26, decision 19 May 2026, signed 21 May 2026",
+    "admissibility_protocol": "МВС-56/26, one admitted bidder, zero rejected",
+    "outcome": "procurement_failed_one_application_commission_directed_contract",
+    "recommended_total_epc_price_rub": "5273763.77",
+    "signed_contract_verified": false,
+    "signed_supplier_verified": false,
+    "equipment_only_price_verified": false,
+    "paid_verified": false,
+    "technical_scope": "10 kV bus reactive compensation, device rated voltage/power not yet independently verified",
+    "contract_date_secondary_report_only": "2026-06-03"
+  },
+  "first_party_source_requests": 5,
+  "sources": [
+    {
+      "type": "RAD official procedure card",
+      "url": "https://tender.lot-online.ru/etp/app/OfferCard/page?OfferCard.offerUUID=Scorebo19718u80000prm9gt3apraje6o",
+      "http": 200,
+      "sha256": "b42f28b4a00769fea3f4a53be9b363b31e329485bfe8d4cd1c2b3e5229d2c1f5"
+    },
+    {
+      "type": "RAD official lot card",
+      "url": "https://tender.lot-online.ru/etp/app/LotCard/page?LotCard.lotEntity=LT%3Acorebo19718u80000prm9h0urtg9e1u8",
+      "http": 200,
+      "sha256": "522df115aded8866baa444e728b0e597be76de11f6f1b7c85bd74a2c5d703ac8"
+    },
+    {
+      "type": "RAD final commission protocol RAR",
+      "url": "https://tender.lot-online.ru/etp/downloadppf?uuid=dbfile19718u80000psji766culv1bck",
+      "http": 200,
+      "sha256": "86a6d2605f575465feebfb5cb84eae1d90f7f4ed56bd178588061dc200273744"
+    },
+    {
+      "type": "RAD original technical specifications RAR",
+      "url": "https://tender.lot-online.ru/etp/downloadppf?uuid=dbfile19718u80000prm9gasi45ej20g",
+      "http": 200,
+      "sha256": "0d1b4730cf2ce43237c79ad7175063a528a40e611a6d8c2caa50264e346f42e3"
+    },
+    {
+      "type": "RAD admissibility commission protocol RAR",
+      "url": "https://tender.lot-online.ru/etp/downloadppf?uuid=dbfile19718u80000psaqa4v3qlsqq34",
+      "http": 200,
+      "sha256": "92676bcfcd00a25cc3d90b9a5d29ba97ca0a9b6b6cefa5b9a28203a02bf66db7"
+    }
+  ],
+  "fresh_sha_verified_originals": 5,
+  "fresh_original_protocols": 2,
+  "protocol_docx_sha256": [
+    "c4259db4db81d2d0af153acf2fc56ac6e3ac354999c84b9248431bb6814338d6",
+    "cfd166eadd678712739f160de7184a3acc47d5ea805817609cd7a8d28b8bee73"
+  ],
+  "new_named_committee_recommended_contractors": 1,
+  "new_named_signed_suppliers": 0,
+  "new_executed_sales": 0,
+  "new_month_source_searches": 0,
+  "nonpromoted_secondary_evidence": "Synapse reports contract dated 03 June 2026 at 5,273,764 RUB, but no primary signed contract/registry supplier original verified.",
+  "limits": [
+    "Official procurement status failed due to one application; recommendation to sign is not a signed contract.",
+    "Technical RAR contains PDF files without text-extractable device ratings; no OCR promotion or assumed PQ-only allocation.",
+    "No new unique notice; research focused on P3 missing fields, not month completeness."
+  ],
+  "safety": {
+    "acceptance": "pass on commit 6c505ac",
+    "fresh_backup_sha256": "43cf2f7cb21a88101873495e7ece7d71f2ce69244b1817b5f1bb75b6c26a0384",
+    "backup_pg_restore_verified": true,
+    "atomic_null_only_CAS": true,
+    "postwrite_readback": true,
+    "db_receipt": "receipts/pq-rad-32615966040-20261031T0338.json",
+    "no_auto_merge": true
+  },
+  "client_report": {
+    "version": "V6",
+    "snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261031_v6.json",
+    "snapshot_sha256": "7eedf7292ddc6645b33fe5c1d53ba2f0a513c051797a1f1c0f0153cd17dcb4cb",
+    "audit": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261031_v6.json",
+    "audit_sha256": "056f9f8bf4ab8abf16f38833246086ffb5a14afdcf35259fbaa03b402480ec20",
+    "backlog": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_BACKLOG_20261031_v6.md",
+    "pdf_ru": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_RU_20261031_V6.pdf",
+    "pdf_ru_sha256": "ad5d7a2ebcebff3279d99ff7737f3108438dffecd81e8070d447367acc4581b1",
+    "pdf_en": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_EN_20261031_V6.pdf",
+    "pdf_en_sha256": "597f520bd610b41dcd2c6d1c8bf8bf6ed1580a123f7fa729a0291002c31cbd21",
+    "pages_each": 256,
+    "frozen_v2_to_v5_unchanged": true,
+    "legacy_html_regenerated": false
+  },
+  "tests": {
+    "focused": "17 passed, 1 Starlette deprecation warning",
+    "ruff": "pass",
+    "pdf_pages": "256 RU / 256 EN"
+  },
+  "next_three": [
+    {
+      "case": "32615966040",
+      "retry_after_moscow": "2026-10-31 09:00",
+      "goal": "EIS official signed contract and supplier, distinct from commission recommendation"
+    },
+    {
+      "case": "32615684088",
+      "retry_after_moscow": "2026-10-31 09:00",
+      "goal": "official signed contract/supplier"
+    },
+    {
+      "case": "РН61003961",
+      "retry_after_moscow": "2026-10-31 10:00",
+      "goal": "TEK-Torg post-deadline award/price"
+    }
+  ],
+  "additional_retry": {
+    "case": "106044-ТТ",
+    "retry_after_moscow": "2026-10-31 09:00",
+    "goal": "STATCOM native protocol"
+  },
+  "canonical_v29_materialized_rows_unchanged": 101
+}

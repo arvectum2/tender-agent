@@ -1,0 +1,162 @@
+{
+  "schema_version": "pq-watchdog-source-review/1",
+  "run_start_moscow": "2026-11-03T00:33:35+03:00",
+  "run_end_moscow": "2026-11-03T00:38:35.250711+03:00",
+  "issue_comment_id": 6589004525,
+  "pr": 521,
+  "head_before": "7d4f33bd0e48e32a8c3f02854abfc0630b6393e1",
+  "gate": "pass",
+  "pg_before_after": {
+    "unique_lots": 123,
+    "distinct_procedures": 112,
+    "eis_223_notices": 45
+  },
+  "new_lots": 0,
+  "new_projects": 0,
+  "new_db_fields": 0,
+  "new_signed_suppliers": 0,
+  "new_paid_sales": 0,
+  "new_exhaustive_months": 0,
+  "source_requests": 52,
+  "failed_default_tls": 12,
+  "http200_sha_captures": 40,
+  "newly_distinct_sha": 15,
+  "new_protocol_printform_sha": 9,
+  "new_contract_printform_sha": 3,
+  "novel_originals": [
+    {
+      "case": "223fz:32515218366:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=42940da7-d089-49d3-9dc1-0795d9491117&purchaseNoticeNumber=32515218366",
+      "sha256": "7e7e0df54468e619069fff6cbf48d566cf6835eb8131e2bd5fceaf7b81c2fb34"
+    },
+    {
+      "case": "223fz:32515218366:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=a1309327-9637-4d57-89ab-33c33754c9da&purchaseNoticeNumber=32515218366",
+      "sha256": "e7de1b71961db900f822158f1daf33ebce60e8673f9f42088b24cfefbdc74a82"
+    },
+    {
+      "case": "223fz:32515218366:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=7b54d215-e035-42e8-8579-b10dc674e4e1&purchaseNoticeNumber=32515218366",
+      "sha256": "f72f90fdf8f5ce260711a4832fef743f1aa5508d3d3a81a10b7f50d62aae38b5"
+    },
+    {
+      "case": "223fz:32515218366:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract/printForm/viewXml.html?contractRegistrationNumber=67728589190250000820001",
+      "sha256": "410040a22bf16b95e5d72eacfaf01301a0bb347234f233e94be96b9e0b940198"
+    },
+    {
+      "case": "223fz:32616296475:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=355185fe-2a2c-4329-976d-be9868a3c884&purchaseNoticeNumber=32616296475",
+      "sha256": "725179f78b491dab4af55db17d8758106150c8aea0106ec042bcdb864acfaf7e"
+    },
+    {
+      "case": "223fz:32616355390:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=9d539a0a-075f-48b8-8d4b-b3062f2a38ab&purchaseNoticeNumber=32616355390",
+      "sha256": "c08f8d08792688a2d0a6455f24ac72915ebe6bd127f1ec462e11d7810bac84ba"
+    },
+    {
+      "case": "223fz:32616355390:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=5521d0f7-6afb-4d5f-b980-292d86a9f276&purchaseNoticeNumber=32616355390",
+      "sha256": "d4e072b4dcf2294782be256e2e3582b0215332128b4a43be438ab25740017239"
+    },
+    {
+      "case": "223fz:32616355390:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=a6510ebf-6f74-4eb6-ad55-1a707d7fab5b&purchaseNoticeNumber=32616355390",
+      "sha256": "29583fc265edf12a11476fad2625b06f5e2a7f8b90407261f4f448f3cbf93a76"
+    },
+    {
+      "case": "223fz:32616355390:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616355390",
+      "sha256": "e41275e7e74bed9b155d2d0e4f9f395f87d418cfc669575b4bef55123bad7adb"
+    },
+    {
+      "case": "223fz:32515582393:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=a9898519-3612-0004-0000-6977152e96bc&purchaseNoticeNumber=32515582393",
+      "sha256": "e13034e74be9d29cdecdab1ee3b704cfd4b91429ce921a25dd345dd8dc6f2415"
+    },
+    {
+      "case": "223fz:32515582393:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract/printForm/viewXml.html?contractRegistrationNumber=50277071467260001550001",
+      "sha256": "4dd83b7ab6f4834e20100a64ad5583fb7eb0955db9bbc6ed131be967d23d3120"
+    },
+    {
+      "case": "223fz:32515582393:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32515582393",
+      "sha256": "6fdd8f308b75cc30a483d66946e4326136f7f052e914006663c83d3b4f570049"
+    },
+    {
+      "case": "223fz:32515582393:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32515582393",
+      "sha256": "fa724ff300143fc8d1b4998eceb95666fc84c9ef814d463d0b34f66788d32706"
+    },
+    {
+      "case": "223fz:32616412267:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract/printForm/viewXml.html?contractRegistrationNumber=53801006828260000720001",
+      "sha256": "858b31d2200d39f0294f10a38f1d28b37baf54c81794c35c9ceb9b718f82d8fc"
+    },
+    {
+      "case": "223fz:32616412267:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=ac15a5fe-775b-4f5b-8d90-1eb2ef74f94f&purchaseNoticeNumber=32616412267",
+      "sha256": "58c357a73b1ebee2a54430f3f6e2d689c7ded58613c5f2c0e866875456286f02"
+    }
+  ],
+  "findings": [
+    {
+      "case": "223fz:32616355390:lot1",
+      "source_sha": "94bd8d4124a8c7cdcb6fed30c8b9a13a74ee0313b3ced4f541adbaf9cbdf851d",
+      "exact_quote": "Цена поставщика: 399 120 560.00",
+      "conclusion": "Anonymous application #1, one bid, competition failed; commission permits contract, but no signed contract or PQ-only allocation proven. Mixed HVDC/PQ component framework; candidate missing field for later CAS."
+    },
+    {
+      "case": "223fz:32515218366:lot1",
+      "source_sha": "3f7510aeceaf8caae6a86b4fa3b6b7761ed5d7cb4ef5b3197d87f4054ff3de05",
+      "exact_quote": "Цена поставщика: 49 900 000.00",
+      "conclusion": "Anonymous first-place application, existing signed registry price 49.9m RUB, HVDC/PQ components mixed; no PQ-only price or signed supplier."
+    },
+    {
+      "case": "223fz:32515582393:lot1",
+      "source_sha": "4dd83b7ab6f4834e20100a64ad5583fb7eb0955db9bbc6ed131be967d23d3120",
+      "exact_quote": "Цена договора: 4 850 000.00",
+      "conclusion": "Already imported UKRM supply registry; one item, Kazakhstan origin; voltage and signatory unknown."
+    },
+    {
+      "case": "223fz:32616296475:lot1",
+      "source_sha": "51d201695c4aa97264e17922a053ba6eca03b0032c13d7cd815dff487c9de90f",
+      "exact_quote": "Цена договора: 3 865 725.99",
+      "conclusion": "Already imported 6.3kV mixed UKRM+installation contract; line item equipment 3,501,200 RUB, not proof of payment or signed supplier."
+    },
+    {
+      "case": "223fz:32616412267:lot1",
+      "source_sha": "858b31d2200d39f0294f10a38f1d28b37baf54c81794c35c9ceb9b718f82d8fc",
+      "exact_quote": "Цена договора: 2 639 026.64",
+      "conclusion": "Already imported 6kV maintenance/commissioning service, not new UKRM sale."
+    }
+  ],
+  "blockers": [
+    "12 default httpx SSL self-signed chain errors; documented native-trust transport returned HTTP200 without TLS bypass",
+    "32514565977 EIS returned generic shell, not verified case",
+    "32616400421 EIS tabs show no protocol/registered contract",
+    "No named signed suppliers, executed prices or paid PQ equipment sales"
+  ],
+  "next_targets": [
+    {
+      "id": "223fz:32616355390:lot1",
+      "retry": "now",
+      "task": "guarded CAS missing anonymous bid after new backup; mixed adjacent scope"
+    },
+    {
+      "id": "223fz:32616497692:lot1",
+      "retry": "2026-11-03 09:00 MSK",
+      "task": "final protocol"
+    },
+    {
+      "id": "223fz:32616433248:lot1",
+      "retry": "2026-11-03 09:00 MSK",
+      "task": "signed registry"
+    }
+  ],
+  "db_mutated": false,
+  "client_html_unchanged": true,
+  "frozen_pdf_version": "V57",
+  "no_refresh_reason": "No DB lot/field increase"
+}

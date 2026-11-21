@@ -1,0 +1,116 @@
+{
+  "schema": "pq-watchdog-buyer-inns/1",
+  "moscow_completed": "2026-11-02T10:50:56.555072+03:00",
+  "issue_comment_id": 6571821735,
+  "canonical_pr": 521,
+  "parent_head": "e172eaf09d69377ea39167f12416d96255528e61",
+  "acceptance": "pass",
+  "db_before": {
+    "lots": 123,
+    "procedures": 112,
+    "eis223": 45
+  },
+  "db_after": {
+    "lots": 123,
+    "procedures": 112,
+    "eis223": 45
+  },
+  "new_unique_lots": 0,
+  "new_core_lots": 0,
+  "new_projects": 0,
+  "new_verified_fields": 6,
+  "new_buyer_inns": 3,
+  "new_source_urls": 3,
+  "new_named_winners": 0,
+  "new_signed_suppliers": 0,
+  "new_paid_sales": 0,
+  "new_original_final_protocols": 0,
+  "exhaustive_month_searches": 0,
+  "capture_attempts": 6,
+  "capture_http200": 5,
+  "capture_http301": 1,
+  "new_substantive_originals": 0,
+  "new_distinct_source_sha_versions": 3,
+  "source_captures": [
+    {
+      "case_id": "223fz:32616430382:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616430382",
+      "sha256": "e5e890b524e774d9d437567813fa70d073cbcda938785794e55e64d3761b97a3",
+      "http_status": 200,
+      "bytes": 141879,
+      "relative_file": "captures/223fz_32616430382_lot1/20261102T074736858329Z-2752acbf-e5e890b524e774d9.bin"
+    },
+    {
+      "case_id": "223fz:32616430382:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616430382",
+      "sha256": "2b43c21de1a5cf8f6fb3737d3579f827aee2c0ef82aaf046fa9a5ac4721ec333",
+      "http_status": 200,
+      "bytes": 131174,
+      "relative_file": "captures/223fz_32616430382_lot1/20261102T074737387290Z-714858d0-2b43c21de1a5cf8f.bin"
+    },
+    {
+      "case_id": "commercial:4535313:lot1",
+      "source_url": "https://www.b2b-center.ru/market/zakupka-kondensatornoi-ustanovki-srednego-napriazheniia-ukrm-6kv-630-kvar/tender-4535313/?action=offers",
+      "sha256": "54e74c5ebd292536993700605e56e4fabf2f21ef04a78820d787fffda9e02a4f",
+      "http_status": 200,
+      "bytes": 62128,
+      "relative_file": "captures/commercial_4535313_lot1/20261102T074737886589Z-4b20a2c7-54e74c5ebd292536.bin"
+    },
+    {
+      "case_id": "commercial:4565274:lot1",
+      "source_url": "https://www.b2b-center.ru/market/zakupka-kondensatornoi-ustanovki-10-kv-aukrm-uk1-uk2-dlia-mgbzh-ps/tender-4565274/",
+      "sha256": "e83b6385ef88a387d1a090fdde4777f599fe3d2d0793c565e7b10a5db65f4ce8",
+      "http_status": 200,
+      "bytes": 76146,
+      "relative_file": "captures/commercial_4565274_lot1/20261102T074955398865Z-f50f2502-e83b6385ef88a387.bin"
+    },
+    {
+      "case_id": "commercial:4565274:lot1",
+      "source_url": "https://www.b2b-center.ru/market/zakupka-kondensatornoi-ustanovki-10-kv-aukrm-uk1-uk2-dlia-mgbzh-ps/tender-4565274/?action=offers",
+      "sha256": "35de8bc9a4859a9f0175a2c70ad8c23372bfb7a303832619cc8c6de171caeb4a",
+      "http_status": 200,
+      "bytes": 65878,
+      "relative_file": "captures/commercial_4565274_lot1/20261102T074955830066Z-3cea7f13-35de8bc9a4859a9f.bin"
+    }
+  ],
+  "enrichment_results": [
+    {
+      "case": "223fz:32616430382:lot1",
+      "field": "customer.inn",
+      "value": "4716016979",
+      "source_sha256": "5c324d6252eaee04a36dd6e28acfb90de3995eabfd5296bb55875d4194128098",
+      "new_hash": "776894629a92c283b4340c47f3f623d904bd4136b513b7ab34356858d24d144a"
+    },
+    {
+      "case": "223fz:32515029641:lot1",
+      "field": "customer.inn",
+      "value": "4716016979",
+      "source_sha256": "d7da597b09b5702c958985efc1e16630546fae82cb6d46d83cbd3b9667e2d6be",
+      "new_hash": "bdaa85044228288981169a076284a2279f8d6cc32afc57984997291a68d1a4b3"
+    },
+    {
+      "case": "223fz:32515225588:lot1",
+      "field": "customer.inn",
+      "value": "4716016979",
+      "source_sha256": "953f9740005d2b10eaf618800cd4a820304299d243a14e31c7cb8e8d6c75e5f4",
+      "new_hash": "bceed6683c2d7d0b04ac3a36bf135a987b14a59d661d3a2fcbb425e3afc44ba5"
+    }
+  ],
+  "backup_sha256": "74e8969c3cad6132d678cda0c59bd6c5568ebc693ed586d210a04f2d397e6234",
+  "db_receipt": "receipts/pq-rosseti-buyer-inns-20261102T1048.json",
+  "findings": [
+    "32616430382: only first-parts protocol, no registered contract",
+    "4535313: 4 offers, names hidden by B2B login",
+    "4565274: 11 offers, organizer hides outcome; successor to 4538400, no new project",
+    "view.html?id=4565274 HTTP301 to canonical B2B slug; captured canonical HTTP200"
+  ],
+  "client_version": "V46",
+  "bilingual_pdf_pages_each": 268,
+  "legacy_html_unchanged": true,
+  "tests": "4 passed, Ruff clean; 268-page RU/EN PDFs with current date",
+  "next_targets": [
+    "32616497692 after 2026-11-02 16:30 MSK",
+    "32616433248 after 2026-11-03 09:00 MSK or observed registry publication",
+    "32616474682 after 2026-12-03 10:00 MSK"
+  ]
+}

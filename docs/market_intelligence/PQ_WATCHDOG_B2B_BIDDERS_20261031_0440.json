@@ -1,0 +1,140 @@
+{
+  "schema_version": "pq-watchdog-b2b-verified-bidders/1",
+  "as_of_moscow": "2026-10-31T04:39:45.516422+03:00",
+  "issue_comment_id": 6537265337,
+  "canonical_pr": 521,
+  "code_base_head": "3e4987c24140b89ad17061b25a7516d0d768452a",
+  "database": {
+    "collection": "arvectum_data.arvectum-market-pq-6-35kv",
+    "unique_lots_before": 117,
+    "unique_lots_after": 117,
+    "distinct_procedures": 106,
+    "numeric_eis_223_notices": 40,
+    "new_unique_lots": 0,
+    "new_source_verified_db_fields": 0,
+    "db_mutated": false
+  },
+  "case": {
+    "procedure_id": "32616474682",
+    "commercial_etp_number": "4642507",
+    "canonical_lot_ids": [
+      "223fz:32616474682:lot1",
+      "223fz:32616474682:lot2"
+    ],
+    "subject": "Поставка конденсаторов КЭП для ООО Башкирэнерго / ООО БСК",
+    "source_grade": "first_party_b2b_center_public_card",
+    "newly_identified_named_bidders": 4,
+    "named_bidders": [
+      {
+        "organization": "ООО \"УК КОНДЕНСАТОР\"",
+        "offer_rub_ex_vat": "2362900.00",
+        "offer_scope": "both_lots_combined_not_attributable_to_individual_lot"
+      },
+      {
+        "organization": "ООО \"АСПЕКТ\"",
+        "offer_rub_ex_vat": "2377049.18",
+        "offer_scope": "both_lots_combined_not_attributable_to_individual_lot"
+      },
+      {
+        "organization": "ООО \"РЗА\"",
+        "offer_rub_ex_vat": "2422650.00",
+        "offer_scope": "both_lots_combined_not_attributable_to_individual_lot"
+      },
+      {
+        "organization": "ООО \"ТД \"СибЭнерго\"",
+        "offer_rub_ex_vat": "2449000.00",
+        "offer_scope": "both_lots_combined_not_attributable_to_individual_lot"
+      }
+    ],
+    "bidder_not_winner": true,
+    "committee_result_due": "2026-12-03 10:00 Moscow",
+    "named_winners_verified": 0,
+    "signed_suppliers_verified": 0,
+    "signed_contracts_verified": 0,
+    "equipment_only_sales_verified": 0
+  },
+  "source_originals": [
+    {
+      "url": "https://www.b2b-center.ru/market/postavka-kondensatorov-kep-dlia-ooo-bashkirenergo-ooo-bsk-27-000090/tender-4642507/",
+      "http": 200,
+      "sha256": "439919c11ddd8c430e717aa90e1fbe170d1bf68bd0e98d2517118ec9b285e69f",
+      "bytes": 80709,
+      "private_relative_file": "captures/223fz_32616474682_lot1/20261031T013848965157Z-baccf729-439919c11ddd8c43.bin",
+      "new_evidence": "four legal-entity names and combined-lot bid prices"
+    },
+    {
+      "url": "https://www.tektorg.ru/223-fz/procedures/13319469",
+      "http": 200,
+      "sha256": "b37177ac970edc7f2ae67511d11023c52514610991d1b08d233a3e393c254984",
+      "bytes": 439440,
+      "private_relative_file": "captures/223fz_32514565977_lot1/20261031T013810566302Z-10b1dbed-b37177ac970edc7f.bin",
+      "new_evidence": "RZD TEK card rechecked; no newly verified signed supplier"
+    }
+  ],
+  "observed_access_gaps": [
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616412267",
+      "observed": "HTTP 404 via native trust after httpx certificate chain failure"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616506708",
+      "observed": "HTTP 404 via native trust after httpx certificate chain failure"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=57724646338260000460000",
+      "observed": "body rejected by immutable capture size/identity gate; no new signed supplier"
+    },
+    {
+      "url": "https://www.b2b-center.ru/search/number/l4561228-1/",
+      "observed": "non-200 via curl-direct"
+    },
+    {
+      "url": "https://www.b2b-center.ru/search/number/l4559984-1/",
+      "observed": "non-200 via curl-direct"
+    },
+    {
+      "url": "https://www.b2b-center.ru/search/number/l4302914-1/",
+      "observed": "non-200 via curl-direct"
+    }
+  ],
+  "research_metrics": {
+    "new_direct_first_party_GET_HEAD_attempts_approx": 15,
+    "new_immutable_originals": 2,
+    "new_named_bidder_legal_entities": 4,
+    "new_named_commission_winners": 0,
+    "new_signed_suppliers": 0,
+    "new_executed_sales": 0,
+    "new_month_source_searches": 0,
+    "independent_new_projects": 0
+  },
+  "cautions": [
+    "The four offers each cover both lots; never split amounts or attribute any offer to one lot.",
+    "A named bidder is not a winner; no committee award or signed supplier before results.",
+    "Do not regenerate client reports without DB lot/field increase.",
+    "B2B card dynamic content changed relative to previous captures; retain each immutable SHA."
+  ],
+  "next_three": [
+    {
+      "case": "32616474682",
+      "retry_after_moscow": "2026-12-03 10:00",
+      "goal": "official commission result and winner/signed supplier, if published"
+    },
+    {
+      "case": "32615966040",
+      "retry_after_moscow": "2026-10-31 09:00",
+      "goal": "official EIS signed contract and contractor"
+    },
+    {
+      "case": "32615684088",
+      "retry_after_moscow": "2026-10-31 09:00",
+      "goal": "official signed contract and supplier"
+    }
+  ],
+  "safety": {
+    "acceptance": "pass",
+    "backup_created": false,
+    "reason_no_backup": "read-only research, no PostgreSQL mutation",
+    "no_auto_merge": true,
+    "v29_materialized_rows_unchanged": 101
+  }
+}

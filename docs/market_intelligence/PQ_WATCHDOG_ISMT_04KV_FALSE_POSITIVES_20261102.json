@@ -1,0 +1,129 @@
+{
+  "schema_version": "pq-first-party-native-mt-review/1",
+  "as_of_moscow": "2026-11-02T01:43:02+03:00",
+  "run_issue_comment_id": 6564921147,
+  "canonical_pr": 521,
+  "initial_git_head": "917513588ccf8fdc791f567fb568bc6e9d3f8b96",
+  "postgres_before": {
+    "unique_lots": 120,
+    "distinct_procedures": 109,
+    "eis_223_notices": 43
+  },
+  "postgres_after": {
+    "unique_lots": 120,
+    "distinct_procedures": 109,
+    "eis_223_notices": 43
+  },
+  "new_originals_sha_verified": 6,
+  "new_commercial_source_cards": 2,
+  "new_core_6_35kv_lots": 0,
+  "new_source_verified_signed_contracts": 0,
+  "new_original_commission_protocols": 0,
+  "new_selected_winners_on_native_cards": 1,
+  "new_db_rows": 0,
+  "new_db_enriched_fields": 0,
+  "exhaustive_month_source_searches": 0,
+  "targeted_direct_http_requests_minimum": 10,
+  "http_summary": "6 first-party immutable GET HTTP200; 2 first-party native preview GET HTTP200; 1 Rostender redirect HEAD403; 1 B2B malformed path HEAD404; additional public is-mt search GET/POST did not filter and is not exhaustive.",
+  "discovery_query": "2026 конденсаторные установки 6-35кВ; site:is-mt.pro/Purchase/Details; compare secondary Rostender 93448632 (2026-07-01) and Kontur IS80350584 / IS81821708 (2026-10).",
+  "cases": [
+    {
+      "canonical_candidate_id": "commercial:is-mt-c396eb0d-7a51-447e-9fac-d0c030f41c60:lot1",
+      "source_identity": "is-mt.pro public UUID c396eb0d-7a51-447e-9fac-d0c030f41c60",
+      "buyer": "ООО Стронекс",
+      "buyer_inn": "7453193258",
+      "title": "Комплектные конденсаторные установки для КНС-1",
+      "published": "2026-10-08",
+      "scope": "EXCLUDED_FROM_CORE_6_35KV: original ListCgc explicitly УКМ58-0,4-70-10 У3, 0.4kV, 2 pcs.",
+      "source_quotes": [
+        "Комплектные конденсаторные установки типа УКМ58-0,4-70-10 У3",
+        "2 шт",
+        "Победители : Инеск ООО (7451384296)",
+        "Статус закупки : Закупка завершена"
+      ],
+      "organizer_selected_winner": "ООО Инеск",
+      "winner_inn": "7451384296",
+      "bid_offers_rub_incl_vat": {
+        "ООО МЕГАВАР (7733884561)": 107800.0,
+        "ООО Инеск (7451384296)": 159500.0,
+        "ООО Новосибирский завод конденсаторов (5408283308)": 265730.64
+      },
+      "advertised_initial_ceiling_rub": 20000000.0,
+      "financial_caveat": "20m initial ceiling not equipment sale; lowest offer 107800 belongs to nonselected MEGAVAR; selected INESK 159500 is only a public bid, not signed contract or paid amount.",
+      "signed_contract_supplier": null,
+      "paid_equipment_sales_rub": null,
+      "possible_related_july_notice": "Rostender 93448632 / Komtender 2419071618, same KNS-1 title and 20m initial ceiling; original July UUID not verified, no project merge.",
+      "originals": [
+        {
+          "source_url": "https://is-mt.pro/Purchase/Details?id=c396eb0d-7a51-447e-9fac-d0c030f41c60",
+          "sha256": "0ed055f35a9a63c8cf3ccc198714526a3ccbacbbf645e779e79d493b11fa91e5",
+          "bytes": 37927,
+          "private_receipt_relative": "captures/commercial_is-mt-c396eb0d-7a51-447e-9fac-d0c030f41c60_lot1/20261101T223909354448Z-b734dc6e-0ed055f35a9a63c8.bin.json"
+        },
+        {
+          "source_url": "https://is-mt.pro/Purchase/ListCgc?id=c396eb0d-7a51-447e-9fac-d0c030f41c60&cache=172e3e29-8f04-490d-9d15-f5fa7a42720b",
+          "sha256": "b03f7db6be9c4cf9047c7947a1096874085953b1c94610a955851c499f15994d",
+          "bytes": 3035,
+          "private_receipt_relative": "captures/commercial_is-mt-c396eb0d-7a51-447e-9fac-d0c030f41c60_lot1/20261101T224142584249Z-0aa76373-b03f7db6be9c4cf9.bin.json"
+        },
+        {
+          "source_url": "https://is-mt.pro/Purchase/ListOffersWithChangeHistory?id=c396eb0d-7a51-447e-9fac-d0c030f41c60&cache=f6668ad9-54a0-4278-b021-cd2eb37bdda6",
+          "sha256": "797dfe5f95cdc1805f6f85c8e7d26491c89549e70e81cc04d45606f94d6581b4",
+          "bytes": 11910,
+          "private_receipt_relative": "captures/commercial_is-mt-c396eb0d-7a51-447e-9fac-d0c030f41c60_lot1/20261101T224143096148Z-859f4ed1-797dfe5f95cdc180.bin.json"
+        }
+      ]
+    },
+    {
+      "canonical_candidate_id": "commercial:is-mt-31a23033-970b-4c4e-b446-238484f2c55e:lot1",
+      "source_identity": "is-mt.pro public UUID 31a23033-970b-4c4e-b446-238484f2c55e",
+      "buyer": "ООО Стронекс",
+      "buyer_inn": "7453193258",
+      "title": "Комплектные конденсаторные установки для Стронекс Строительство КНС-2",
+      "published": "2026-10-15",
+      "scope": "EXCLUDED_FROM_CORE_6_35KV: original ListCgc explicitly УКМ58-0,4-45-15 У3, 0.4kV, 2 pcs.",
+      "source_quotes": [
+        "Комплектные конденсаторные установки типа УКМ58-0,4-45-15 У3",
+        "2 шт",
+        "Статус закупки : Подводятся итоги",
+        "Победители : Не определены"
+      ],
+      "organizer_selected_winner": null,
+      "bid_offers_rub_incl_vat": {
+        "ООО Инеск (7451384296)": 148250.0,
+        "ООО Новосибирский завод конденсаторов (5408283308)": 172882.54
+      },
+      "advertised_initial_ceiling_rub": null,
+      "financial_caveat": "Offers are not a contract; status pending outcomes, no named winner.",
+      "signed_contract_supplier": null,
+      "paid_equipment_sales_rub": null,
+      "originals": [
+        {
+          "source_url": "https://is-mt.pro/Purchase/Details?id=31a23033-970b-4c4e-b446-238484f2c55e",
+          "sha256": "ec6dcb875028a6e4f85cd043fc0d9be236c8758abf70dce8f333b44e878c328c",
+          "bytes": 40496,
+          "private_receipt_relative": "captures/commercial_is-mt-31a23033-970b-4c4e-b446-238484f2c55e_lot1/20261101T224205089716Z-99ddc536-ec6dcb875028a6e4.bin.json"
+        },
+        {
+          "source_url": "https://is-mt.pro/Purchase/ListCgc?id=31a23033-970b-4c4e-b446-238484f2c55e&cache=70967e9f-a886-4553-a3a9-5360891d9b35",
+          "sha256": "d7fb80448e26d0e6e84bca29f5b2d3e1fceddc73d3c8ad96c746449f53d300db",
+          "bytes": 3087,
+          "private_receipt_relative": "captures/commercial_is-mt-31a23033-970b-4c4e-b446-238484f2c55e_lot1/20261101T224217052638Z-1d3b4899-d7fb80448e26d0e6.bin.json"
+        },
+        {
+          "source_url": "https://is-mt.pro/Purchase/ListOffersWithChangeHistory?id=31a23033-970b-4c4e-b446-238484f2c55e&cache=79edb261-727c-485d-baf1-e0066b276e9a",
+          "sha256": "66f26e2b7e27507b4469adcf39da05ea3eafe7f980fb8054f99470d6bf3e97ef",
+          "bytes": 8682,
+          "private_receipt_relative": "captures/commercial_is-mt-31a23033-970b-4c4e-b446-238484f2c55e_lot1/20261101T224217512390Z-c1e5db98-66f26e2b7e27507b.bin.json"
+        }
+      ]
+    }
+  ],
+  "coverage_limitation": "Two direct commercial cases checked; no 44/223 exhaustive month search, no population inference. The first-party electrical specification contradicts keyword-only classification as 6-35kV.",
+  "next_targets": [
+    "223fz:32616474682:lot1+lot2 after 2026-11-02 06:30 MSK",
+    "223fz:32616433248:lot1 after 2026-11-02 09:00 MSK",
+    "223fz:32616497692:lot1 after 2026-11-02 16:30 MSK"
+  ],
+  "client_report_refresh": "Not permitted: no new source-verified 6-35kV lot or newly verified field in owned collection."
+}

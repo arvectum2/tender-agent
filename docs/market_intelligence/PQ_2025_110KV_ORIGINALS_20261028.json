@@ -1,0 +1,27 @@
+{
+  "schema_version": "pq-2025-110kv-source-exclusion/1",
+  "notice_id": "32515257631",
+  "procedure": "25-1173",
+  "source_tier": "verified_public_eis_page_native_7z",
+  "original_archive_sha256": "343c89f466415f772370a0b922b31f430282d8ce873591b9f63bf0c1ee4e93db",
+  "original_technical_docx_sha256": [
+    "522cefb8e525b5a31d0d9f36ff5b212d310f9a214bdc84f09300ba8ada08feb1",
+    "7613d20e714890ffbbeb290b5aace21da89535682acc853befde2e08a3e5d8e1"
+  ],
+  "equipment_rated_voltage_kv": 110,
+  "source_quotes": [
+    "Технические характеристики и требования к комплекту оборудования источника реактивной мощности 110 кВ",
+    "Общие требования к конденсаторным установкам БСК-110-26000-УХЛ1"
+  ],
+  "target_market_kv": [
+    6,
+    35
+  ],
+  "classification": "irrelevant",
+  "source_commission_outcome": "two_bids_rejected_tender_unsuccessful",
+  "initial_maximum_price_rub_ex_vat": 412500000,
+  "signed_contract_verified": false,
+  "winner_verified": false,
+  "executed_price_verified": false,
+  "market_total_rub": null
+}

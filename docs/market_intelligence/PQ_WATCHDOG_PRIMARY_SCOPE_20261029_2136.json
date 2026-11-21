@@ -1,0 +1,157 @@
+{
+  "schema_version": "pq-watchdog-scope/1",
+  "run_id": "20261029-2136-6505210387",
+  "issue_comment_id": 6505210387,
+  "status": "in_progress",
+  "pr": 521,
+  "parent_head": "954162f3767f9068b9b12e670f380982c4663010",
+  "postgres_before_after": {
+    "unique_lots": 113,
+    "procedures": 102,
+    "eis223": 37
+  },
+  "db_mutation": false,
+  "canonical_v29_rows": 101,
+  "acceptance": "pass",
+  "metrics": {
+    "http_requests": 11,
+    "http_200": 9,
+    "http_403": 1,
+    "http_404": 1,
+    "pre_http_allowlist_reject": 1,
+    "new_sha_captures": 9,
+    "new_candidate_lots_unimported": 1,
+    "new_projects_provisional": 1,
+    "named_winner_protocols": 0,
+    "signed_suppliers": 0,
+    "executed_prices": 0,
+    "new_month_coverage": 0,
+    "new_keyword_queries": 5
+  },
+  "sources": [
+    {
+      "case_id": "commercial:sibur-search-pq-2136-1:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80%20%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9",
+      "sha256": "8000927a6b208a0ce9e79b2e8dd155cd6fe5b3f2ea5915fd1401265a77ac8253",
+      "relative_file": "captures/commercial_sibur-search-pq-2136-1_lot1/20261029T183718659527Z-57321485-8000927a6b208a0c.bin",
+      "http_status": 200,
+      "bytes": 173852
+    },
+    {
+      "case_id": "commercial:sibur-search-pq-2136-2:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%20%D0%B2%D1%8B%D1%81%D1%88%D0%B8%D1%85%20%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D0%BD%D0%B8%D0%BA",
+      "sha256": "300fc3d7616281f8df50dfff18111276d866815215d64e8a805f67714dbb755c",
+      "relative_file": "captures/commercial_sibur-search-pq-2136-2_lot1/20261029T183720049233Z-10e8e36f-300fc3d7616281f8.bin",
+      "http_status": 200,
+      "bytes": 173852
+    },
+    {
+      "case_id": "commercial:sibur-search-pq-2136-3:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%9A%D0%A0%D0%9C-6",
+      "sha256": "4a1844ac83dfd5866afb8c98d921e6508d86b81cfcb526a437d3afc50c839b3b",
+      "relative_file": "captures/commercial_sibur-search-pq-2136-3_lot1/20261029T183721608922Z-0c3fa3c0-4a1844ac83dfd586.bin",
+      "http_status": 200,
+      "bytes": 173852
+    },
+    {
+      "case_id": "commercial:sibur-search-pq-2136-4:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%B1%D0%B0%D1%82%D0%B0%D1%80%D0%B5%D1%8F%20%D1%81%D1%82%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D1%85%20%D0%BA%D0%BE%D0%BD%D0%B4%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2",
+      "sha256": "fbe39fdd19a7d9a8e59b2a9c3fc84f9b49ad47cb4e5e68f0c29d3b1b9945ca99",
+      "relative_file": "captures/commercial_sibur-search-pq-2136-4_lot1/20261029T183722931424Z-f2566012-fbe39fdd19a7d9a8.bin",
+      "http_status": 200,
+      "bytes": 173852
+    },
+    {
+      "case_id": "commercial:sibur-search-pq-2136-5:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8",
+      "sha256": "3fd07f17b915784abc276018ab99955ef6f5c154f1c32a995904eee8b8c1da96",
+      "relative_file": "captures/commercial_sibur-search-pq-2136-5_lot1/20261029T183724347441Z-672657be-3fd07f17b915784a.bin",
+      "http_status": 200,
+      "bytes": 173852
+    },
+    {
+      "case_id": "commercial:bidzaar-337-355:lot1",
+      "source_url": "https://bidzaar.com/app/process/light/019e87c6-ddea-712a-aeb9-fcc0d1a10cd1",
+      "sha256": "cf5765ee6715dd6c964d01f3d34cf518dde667b4a7e7283099e970ec35374dad",
+      "relative_file": "captures/commercial_bidzaar-337-355_lot1/20261029T183756731793Z-eebabda1-cf5765ee6715dd6c.bin",
+      "http_status": 200,
+      "bytes": 334725
+    },
+    {
+      "case_id": "commercial:b2b-search-krasnoyarsk-design-20261029:lot1",
+      "source_url": "https://www.b2b-center.ru/search/krasnoyarskiy-kray/razrabotka-konstruktorskoj-dokumentacii/",
+      "sha256": "6d9648f845464080f9c8da709097bfa81fbc538beabf516b04ff4add001e56ec",
+      "relative_file": "captures/commercial_b2b-search-krasnoyarsk-design-20261029_lot1/20261029T183848353141Z-5ed69846-6d9648f845464080.bin",
+      "http_status": 200,
+      "bytes": 184341
+    },
+    {
+      "case_id": "223fz:32615852898:lot1",
+      "source_url": "https://www.b2b-center.ru/search/number/c52460069527260006170000/",
+      "sha256": "14d57481bab26b7caa99dbd40ec4d720a994f04947aececfb55b5f3e08b37e09",
+      "relative_file": "captures/223fz_32615852898_lot1/20261029T183923596884Z-232835e0-14d57481bab26b7c.bin",
+      "http_status": 200,
+      "bytes": 84457
+    },
+    {
+      "case_id": "223fz:32615852898:lot1",
+      "source_url": "https://www.recko.ru/files/doc/20250324140802_82.pdf",
+      "sha256": "d2970bb52545fb37d164f4b70a77ac7a987c8d368230e8b2994156d5b952b7c4",
+      "relative_file": "captures/223fz_32615852898_lot1/20261029T184044914454Z-59094259-d2970bb52545fb37.bin",
+      "http_status": 200,
+      "bytes": 1801043
+    }
+  ],
+  "case": {
+    "notice": "32615852898",
+    "project": "ПС 35 кВ Сосновская / ВЛ 10 кВ Ф-10-17-Л",
+    "buyer": "ПАО Россети Сибирь",
+    "role": "design only, not equipment supply",
+    "regulator_pdf": "https://www.recko.ru/files/doc/20250324140802_82.pdf",
+    "regulator_pdf_sha256": "d2970bb52545fb37d164f4b70a77ac7a987c8d368230e8b2994156d5b952b7c4",
+    "regulator_pdf_page": 5,
+    "official_quote": "Запроектировать и построить (установить) устройство компенсации реактивной мощности (УКРМ) на ВЛ 10 кВ Ф-10-17-Л.",
+    "regulator_context": "2025 regulatory technical-connection scope, not a procurement award; same feeder and PS as 2026 design tender; project identity provisional",
+    "b2b_mirror_contract_token": "52460069527260006170000",
+    "b2b_mirror_signed_date": "2026-06-15",
+    "b2b_mirror_contract_price_rub": 2787700,
+    "notice_price_rub_from_mirror": 2950502.46,
+    "eis_original_http": 404,
+    "signed_supplier_original": null,
+    "equipment_sale_confirmed": false
+  },
+  "negative": {
+    "bidzaar_337_355": "2026 lighting retrofit, only hermetization of existing UKRM cabinets; no PQ equipment supply",
+    "sibur_queries": [
+      "компенсатор реактивной",
+      "фильтр высших гармоник",
+      "КРМ-6",
+      "батарея статических конденсаторов",
+      "компенсация мощности"
+    ],
+    "sibur_first_page_candidate_ids": 0,
+    "p_seti_official_url_allowlist_rejected": true,
+    "recko_curl_http403_httpx_http200": true
+  },
+  "next": [
+    {
+      "case": "32615852898",
+      "retry": "2026-10-30 21:40 MSK or new official EIS original"
+    },
+    {
+      "case": "2103585/2",
+      "retry": "immediate independent contract original"
+    },
+    {
+      "case": "106044-ТТ",
+      "retry": "2026-10-30 09:00 MSK"
+    }
+  ],
+  "limits": [
+    "B2B mirrored signed design price is NOT original EIS contract",
+    "No named signed designer or PQ-only price",
+    "EIS HTTP404 is not absence of market",
+    "No calendar exhaustive coverage",
+    "No DB insert without new backup and source identity"
+  ]
+}

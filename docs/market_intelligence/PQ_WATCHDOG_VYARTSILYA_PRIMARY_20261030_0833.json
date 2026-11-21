@@ -1,0 +1,144 @@
+{
+  "schema_version": "pq-watchdog-first-party-research/1",
+  "run_start_moscow": "2026-10-30T08:33:51+03:00",
+  "finished_moscow": "2026-10-30T08:38:56+03:00",
+  "issue_comment_id": 6515796701,
+  "canonical_pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "internal_apfs_gate": "pass_after_code_commit",
+  "parent_head": "e7f86022cb76a1914251da4eba6c5cdcb09ccdcf",
+  "source_capture_allowlist_commit": "ad49c93197cb2a5c8d6b1e14a68128e68c325fd1",
+  "postgres": {
+    "unique_lots_before": 114,
+    "unique_lots_after": 114,
+    "distinct_procedures": 103,
+    "eis_223_notices": 37,
+    "new_unique_lots": 0,
+    "new_underlying_projects": 0,
+    "new_signed_suppliers": 0,
+    "new_executed_prices": 0,
+    "new_verified_sales_rub": 0,
+    "db_mutation": false
+  },
+  "primary_source_requests": {
+    "mac_mini_http200": 7,
+    "mac_mini_transport_errors": 1,
+    "web_navigation_timeouts": 2,
+    "unique_first_party_endpoints": 5,
+    "new_calendar_month_search_coverage": 0,
+    "details": "B2B exact card 1x200; Roseltorg card httpx disconnect and curl-direct 200; three official file probes 200 (one login HTML, two ZIP); two verified original ZIP captures 200. Browser navigation two timeouts. No failed response is negative market evidence."
+  },
+  "originals_sha_verified": [
+    {
+      "case_id": "commercial:4657777:lot1",
+      "source_url": "https://www.b2b-center.ru/market/postavka-blokov-kondensatornykh-dlia-nuzhd-po-btses-po-kes-ooo/tender-4657777/?utm_campaign=ref_id&utm_medium=referral&utm_source=kontur",
+      "relative_file": "captures/commercial_4657777_lot1/20261030T053525676624Z-4bddc0ec-427f4d252aa04b3d.bin",
+      "sha256": "427f4d252aa04b3dcea9de8abc3b3ac9413240132e0e4f66e4d03c5e78f7201b",
+      "bytes": 74684,
+      "http_status": 200,
+      "captured_utc": "2026-10-30T05:35:25.679633+00:00"
+    },
+    {
+      "case_id": "223fz:32616497692:lot1",
+      "source_url": "https://www.roseltorg.ru/procedure/32616497692?utm_campaign=etp&utm_medium=referral&utm_referrer=https%253A%252F%252Fzakupki.kontur.ru&utm_source=kontur_zakupki",
+      "relative_file": "captures/223fz_32616497692_lot1/20261030T053640101166Z-097e6866-5def385708847ef1.bin",
+      "sha256": "5def385708847ef10ed0b25ab43eeeb134e4ff9c114da2c5634e4e41f84af6e9",
+      "bytes": 240892,
+      "http_status": 200,
+      "captured_utc": "2026-10-30T05:36:40.102789+00:00"
+    },
+    {
+      "case_id": "223fz:32616497692:lot1",
+      "source_url": "https://rosseti.roseltorg.ru/file/get/t/ProcedureDocuments/id/188880",
+      "relative_file": "captures/223fz_32616497692_lot1/20261030T053735102348Z-9dafc726-66f2dec7487352c6.bin",
+      "sha256": "66f2dec7487352c6bba4e7f5f182a3e2a614c7310dfec9ac2b9e82ed87d7c834",
+      "bytes": 3537131,
+      "http_status": 200,
+      "captured_utc": "2026-10-30T05:37:35.105354+00:00"
+    },
+    {
+      "case_id": "223fz:32616497692:lot1",
+      "source_url": "https://rosseti.roseltorg.ru/file/get/t/ProtocolFiles/id/299297/user/-1/name/Протокол_2_рассм_переторжка_5237.zip",
+      "relative_file": "captures/223fz_32616497692_lot1/20261030T053735275833Z-d25d9e50-2f5ad8ba337f60c1.bin",
+      "sha256": "2f5ad8ba337f60c1e50cb42bed4c6d420be608619f533c51850448db549ddd97",
+      "bytes": 163069,
+      "http_status": 200,
+      "captured_utc": "2026-10-30T05:37:35.276261+00:00"
+    }
+  ],
+  "new_primary_captures": 4,
+  "new_original_protocols_with_named_winner": 0,
+  "new_original_protocols_with_anonymous_participant": 1,
+  "case_32616497692": {
+    "canonical_id": "223fz:32616497692:lot1",
+    "already_in_postgresql": true,
+    "customer": "ПАО «Россети Северо-Запад»",
+    "scope": "mixed_epc_two_substations",
+    "source_grade": "first_party_card_plus_official_nested_zip_technical_docx_and_protocol_docx",
+    "verified_technical": {
+      "site": "ПС 110 кВ Вяртсиля (ПС 28), Карелия",
+      "equipment": "УКРМ 10 кВ",
+      "quantity": 1,
+      "power_mvar": 3,
+      "control": "ступенчатое регулирование по напряжению на шинах 10 кВ",
+      "associated_work": "ячейка КРУН 10 кВ, кабельная линия 10 кВ около 0.05 км"
+    },
+    "technical_docx_sha256": "28982223fc3f30dba1eefbfd0cf2c23200a192621b0b11b3d4f2e2fbf3ff272a",
+    "technical_quote": "Монтаж УКРМ 10 кВ 3 МВАр (1шт.)",
+    "protocol_docx_sha256": "72ec1ac68fef8b1f7eeb073417cd8603ecf299cb5232dde796db7ec403fb920f",
+    "protocol_date_signed": "2026-10-29",
+    "protocol_quote": "В рамках процедуры закупки по окончании срока подачи заявок было подано 1 заявка",
+    "protocol_outcome": "anonymous bidder #1 admitted to retender; no named winner, no contract",
+    "nmck_mixed_epc_rub": 79101498.4,
+    "pq_equipment_only_price_rub": null,
+    "signed_supplier": null,
+    "executed_price": null,
+    "official_file_access_limitation": "LotDocuments endpoint returned 200 HTML login shell; ProcedureDocuments 3.5MB original ZIP and ProtocolFiles 163KB original ZIP were accessible and SHA verified."
+  },
+  "case_4657777": {
+    "canonical_id": "commercial:4657777:lot1",
+    "new_public_original": true,
+    "buyer": "ООО «Башкирэнерго»",
+    "publication": "2026-10-27",
+    "quantity": 6,
+    "official_price_ex_vat_rub": 208419.3,
+    "secondary_price_incl_vat_rub": 254271.54,
+    "applications_at_capture": 0,
+    "application_deadline": "2026-11-09 10:00 MSK",
+    "outcome_due": "2026-12-15 10:00 MSK",
+    "voltage_kv": null,
+    "pq_6_35kv_scope": "unverified",
+    "decision": "stage research only; no DB insert; 26.51.45.190 measuring devices and no technical specification publicly visible"
+  },
+  "tests": {
+    "targeted_capture_tests": "8 passed",
+    "ruff": "pass",
+    "git_diff_check": "pass"
+  },
+  "client_html_regenerated": false,
+  "canonical_v29_rows_unchanged": 101,
+  "no_auto_merge": true,
+  "why_no_db_growth": "The 10 kV / 3 Mvar Roseltorg EPC lot is already one of 114 canonical lot IDs; other new B2B candidate lacks technical voltage and PQ equipment relevance. No source-verified unique lot eligible for append-only insertion, so no new backup or client HTML regeneration.",
+  "next": [
+    {
+      "case": "106044-ТТ",
+      "retry_after_moscow": "2026-10-30 09:00",
+      "goal": "Metal-IT original named outcome/contract; avoid JS shell as proof"
+    },
+    {
+      "case": "32616435269",
+      "retry_after_moscow": "2026-10-30 10:38",
+      "goal": "Roseltorg technical archive, voltage, scope"
+    },
+    {
+      "case": "РН61003961",
+      "retry_after_moscow": "2026-10-30 20:00",
+      "goal": "TEK-Torg result/contract after close"
+    },
+    {
+      "case": "4657777",
+      "retry_after_moscow": "2026-11-09 10:00",
+      "goal": "voltage-bearing technical file, after close results; do not import before PQ relevance"
+    }
+  ]
+}

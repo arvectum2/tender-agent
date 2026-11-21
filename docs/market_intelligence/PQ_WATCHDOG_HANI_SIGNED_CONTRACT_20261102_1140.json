@@ -1,0 +1,354 @@
+{
+  "schema": "pq-watchdog-hani-source-reconciliation/1",
+  "moscow_completed": "2026-11-02T11:41:26.198727+03:00",
+  "issue_comment_id": 6572651348,
+  "canonical_pr": 521,
+  "parent_head": "81f0d17ee73eab694b417a4e55690ad99d57b3c3",
+  "db_before": {
+    "rows": 123,
+    "owner": "tender-agent",
+    "unique": 123,
+    "records": 123
+  },
+  "db_after": {
+    "rows": 123,
+    "owner": "tender-agent",
+    "unique": 123,
+    "records": 123
+  },
+  "new_unique_lots": 0,
+  "new_core_lots": 0,
+  "new_db_fields": 0,
+  "new_verified_research_fields": 7,
+  "new_registered_signed_contracts": 1,
+  "new_named_winners": 0,
+  "new_signed_suppliers": 0,
+  "new_paid_equipment_sales": 0,
+  "first_party_sha_verified_captures": 10,
+  "substantive_originals": 6,
+  "first_page_search_http200": 26,
+  "direct_curl_routing_http404": 8,
+  "exhaustive_searches": 0,
+  "search_queries": [
+    {
+      "law": "fz223",
+      "query": "УКРМ",
+      "month": "2025-09",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "УКРМ",
+      "month": "2026-07",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "УКРМ",
+      "month": "2026-08",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "БСК 10 кВ",
+      "month": "2025-08",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "компенсатор реактивной мощности",
+      "month": "2026-08",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz44",
+      "query": "УКРМ",
+      "month": "2025-09",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz44",
+      "query": "установка компенсации реактивной мощности",
+      "month": "2026-07",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz44",
+      "query": "фильтр гармоник",
+      "month": "2025-08",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "конденсаторная установка",
+      "month": "2026-10",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "конденсаторная установка",
+      "month": "2025-10",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "батарея конденсаторов",
+      "month": "2026-07",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "компенсация реактивной мощности",
+      "month": "2025-07",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "СТК",
+      "month": "2026-09",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz44",
+      "query": "конденсаторная установка",
+      "month": "2026-05",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz44",
+      "query": "компенсация реактивной мощности",
+      "month": "2025-10",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz44",
+      "query": "компенсатор реактивной мощности",
+      "month": "2026-06",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "устройство компенсации",
+      "month": "2024-09",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "конденсатор",
+      "month": "2026-10",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "конденсатор",
+      "month": "2026-09",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "компенсация",
+      "month": "2026-10",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "реактивной мощности",
+      "month": "2026-09",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "батарея статических конденсаторов",
+      "month": "2026-09",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz223",
+      "query": "фильтр высших гармоник",
+      "month": "2025-10",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz44",
+      "query": "конденсатор",
+      "month": "2026-10",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    },
+    {
+      "law": "fz44",
+      "query": "компенсация",
+      "month": "2026-09",
+      "page": 1,
+      "http_status": 200,
+      "exhaustive": false
+    }
+  ],
+  "search_observations": [
+    "2026-10 223-FZ capacitor search: 10 cards; 32616497692/32616435269/32616474682 already known; 32616526537/32616510013 are communications capacitors, not verified PQ",
+    "2026-09 223-FZ reactive power: 32616412267/32616354211 already known",
+    "СТК and 44-FZ broad searches mostly lexical false positives; no new core 6-35kV lots",
+    "8 initial curl HTTP404 were route errors, native-trust HTTP200; no absence inference"
+  ],
+  "case": {
+    "canonical_id": "223fz:32413581034:lot2",
+    "notice": "32413581034",
+    "title_project_lot": "лот 2 ПС 220 кВ Хани",
+    "official_legal_lot": "Лот №1",
+    "identity_conflict": "Canonical :lot2 is project-title label, EIS legal lot №1; hold DB updates pending reconciliation",
+    "customer_inn": "4716016979",
+    "scope": "220kV mixed EPC with 128 Mvar SKRM Hani; title also mentions 154 Mvar Lopcha wider project",
+    "contract_registry": "54716016979240031870000",
+    "contract_no": "1277102",
+    "signed_date": "2024-08-02",
+    "signed_total_rub": "1517360443.50",
+    "final_protocol": "32413581034-02",
+    "final_protocol_date": "2024-07-16",
+    "rank1_bid_rub": "1517360443.50",
+    "rank2_bid_rub": "1517414869.36",
+    "commission_winner": "anonymous applicant №1",
+    "signed_supplier": null,
+    "paid_amount": null,
+    "registry_status": "Исполнение, not completed",
+    "equipment_category_rub": "1116853914.00",
+    "equipment_category_is_not_pq_only": true,
+    "payment_schedule_not_paid": {
+      "2024": "454649359.02",
+      "2025": "16901166.58",
+      "2026": "1045809917.90"
+    },
+    "other_categories": {
+      "прочие": "125533280.26",
+      "ПИР": "24585549.79",
+      "монтаж": "125193849.73",
+      "строительство": "125193849.73"
+    },
+    "category_sum_rounding_delta_rub": "0.01",
+    "core_6_35kv_equipment_sale_verified": false
+  },
+  "originals": [
+    {
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32413581034",
+      "sha256": "3c3fe76cdebd2bbc2bc6d7d9623deada4f932636c0c3eade43c3af25319323fd",
+      "relative_file": "captures/223fz_32413581034_lot2/20261102T083710250141Z-33ebcdd5-3c3fe76cdebd2bbc.bin",
+      "bytes": 148184,
+      "http_status": 200
+    },
+    {
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32413581034",
+      "sha256": "377060b2001fb1da460033553f27317774c38fc53479b072a76d3f346a9b93f0",
+      "relative_file": "captures/223fz_32413581034_lot2/20261102T083710756607Z-321099d1-377060b2001fb1da.bin",
+      "bytes": 135878,
+      "http_status": 200
+    },
+    {
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32413581034",
+      "sha256": "5c2b896f98bcd37953591e8a8203b0769ba999398d862d31fc843f79acefdcb7",
+      "relative_file": "captures/223fz_32413581034_lot2/20261102T083711209796Z-066a7406-5c2b896f98bcd379.bin",
+      "bytes": 133355,
+      "http_status": 200
+    },
+    {
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract/printForm/viewXml.html?contractRegistrationNumber=54716016979240031870003",
+      "sha256": "0bbe99520fb3036a55abe0ce00baf6df1a6ca592fdc5c857ed5c54a3110ffbc1",
+      "relative_file": "captures/223fz_32413581034_lot2/20261102T083745310043Z-3abf947c-0bbe99520fb3036a.bin",
+      "bytes": 16069,
+      "http_status": 200
+    },
+    {
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=809e5486-f9f3-4e58-9292-a05e276ebf37&purchaseNoticeNumber=32413581034",
+      "sha256": "9d82e8c856ae9a19f07d2df182c27b527c6ea5ac4ede6ebe28e27574e3418149",
+      "relative_file": "captures/223fz_32413581034_lot2/20261102T083745821132Z-5fed3b70-9d82e8c856ae9a19.bin",
+      "bytes": 13344,
+      "http_status": 200
+    },
+    {
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=469bc54c-a89b-42d7-bce0-3294d5d5e063&purchaseNoticeNumber=32413581034",
+      "sha256": "b900b8eebf679b19f2eedf8ad5a92b80e77b9345a241f3a19c7203bc6c8280a7",
+      "relative_file": "captures/223fz_32413581034_lot2/20261102T083746300190Z-52892c23-b900b8eebf679b19.bin",
+      "bytes": 14655,
+      "http_status": 200
+    },
+    {
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/search/results.html?searchString=54716016979240031870000&statuses=0,1,2,3",
+      "sha256": "9f9399409b6bdbf8d3393148cba2669ae82481a477e078255e1f180b8a7fa23a",
+      "relative_file": "captures/223fz_32413581034_lot2/20261102T083805794020Z-c387ee83-9f9399409b6bdbf8.bin",
+      "bytes": 190188,
+      "http_status": 200
+    },
+    {
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=54716016979240031870000",
+      "sha256": "64ef4ca0a783921b7f83599866102b33bea24cbcd83758fd4af5dae6a3fd54ce",
+      "relative_file": "captures/223fz_32413581034_lot2/20261102T083818825333Z-1b5a5dfe-64ef4ca0a783921b.bin",
+      "bytes": 136898,
+      "http_status": 200
+    },
+    {
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=54716016979240031870000&version=2",
+      "sha256": "4b3b245ad4c17bd4a7c62f442633595a3f664d6f580ecaf3ccfe18ec317554ef",
+      "relative_file": "captures/223fz_32413581034_lot2/20261102T083819414984Z-e3aab9fc-4b3b245ad4c17bd4.bin",
+      "bytes": 16026,
+      "http_status": 200
+    },
+    {
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=54716016979240031870000",
+      "sha256": "d15e0f71df22f03525a4ebcc98c706417fdc276de646e24f841bf19c119592dd",
+      "relative_file": "captures/223fz_32413581034_lot2/20261102T083841251240Z-03583f0d-d15e0f71df22f035.bin",
+      "bytes": 153684,
+      "http_status": 200
+    }
+  ],
+  "write_policy": "fail closed: legal lot identity conflict, no DB write, no backup, no client HTML/PDF refresh",
+  "next_targets": [
+    "32413581034 resolve EIS lot1 vs title lot2, supplier identity read-only",
+    "32616497692 after 2026-11-02 16:30 Moscow",
+    "32616433248 after 2026-11-03 09:00 Moscow"
+  ]
+}

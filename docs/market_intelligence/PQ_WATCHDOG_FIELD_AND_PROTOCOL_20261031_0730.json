@@ -1,0 +1,144 @@
+{
+  "schema_version": "pq-watchdog-20261031-0730/1",
+  "as_of_moscow": "2026-10-31T07:37:50.017916+03:00",
+  "issue_comment_id": 6539046707,
+  "canonical_pr": 521,
+  "postgres": {
+    "collection": "arvectum_data.arvectum-market-pq-6-35kv",
+    "unique_lots_before": 117,
+    "unique_lots_after": 117,
+    "distinct_procedures": 106,
+    "eis_223_notices": 40,
+    "new_unique_lots": 0,
+    "new_deduplicated_projects": 0,
+    "new_core_6_35kv_lots": 0
+  },
+  "source_requests": {
+    "first_party_requests": 6,
+    "http200": 3,
+    "http404": 1,
+    "http503": 1,
+    "httpx_transport_failure": 1,
+    "new_month_source_coverage": 0,
+    "web_search_queries_exploratory_not_exhaustive": 24
+  },
+  "new_primary_original_captures": [
+    {
+      "case": "223fz:32514565977:lot1",
+      "url": "https://api.tektorg.ru/open-api/documents/protocol/1961956",
+      "sha256": "e6166f104aa5a45b4ca87c52b69e670fcd0fdd20631598f4dc71324d7e5bd51b",
+      "type": "final_protocol",
+      "status": "already_bound_to_existing_DB_lot"
+    },
+    {
+      "case": "223fz:32514565977:lot1",
+      "url": "https://api.tektorg.ru/open-api/documents/protocol/1961953",
+      "sha256": "e01dbcb39a07d658d7a359345fc3898edb76f52e7d447bfe035bc4c2f20da45f",
+      "type": "second_parts_protocol",
+      "finding": "two admitted anonymous bidders, no names"
+    },
+    {
+      "case": "223fz:32514565977:lot1",
+      "url": "https://api.tektorg.ru/open-api/documents/protocol/1951222",
+      "sha256": "69c75d4a3809a955d73283a45789728586c242fd250a93403e4dd73594b6f8eb",
+      "type": "auction_protocol",
+      "status": "already_bound_to_existing_DB_lot"
+    }
+  ],
+  "primary_case_findings": {
+    "32514565977": {
+      "scope": "27.5kV UKRM commissioning service, NOT equipment supply",
+      "committee_winner": "anonymous participant 1",
+      "winning_bid_rub": "9529662.76",
+      "initial_ceiling_rub": "9625921.98",
+      "named_winner_verified": false,
+      "signed_supplier_verified": false,
+      "already_present_in_DB": true
+    }
+  },
+  "secondary_lead_not_promoted": {
+    "case": "223fz:32615937898:lot1",
+    "contract_registry_number_candidate": "67728589190260001030000",
+    "amount_rub_candidate": "3050000.00",
+    "scope": "110kV design only, outside core 6-35kV device sales",
+    "first_party_eis_attempt_url": "https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=67728589190260001030000",
+    "attempts": [
+      "httpx transport failure",
+      "native-trust HTTP503",
+      "curl-direct HTTP404"
+    ],
+    "signed_contract_verified": false,
+    "signed_supplier_verified": false,
+    "note": "Secondary listing is a lead, not signed-contract original"
+  },
+  "db_field_enrichment": {
+    "case": "commercial:4617521:lot1",
+    "field": "buyer_inn",
+    "value": "2310031475",
+    "new_verified_fields": 1,
+    "client_visible_fields": 1,
+    "source_sha256": "02d956e85a58cd254b9e1503a892acc94bddb38849bf20f0b1ca721a679dc50f",
+    "source_tier": "first_party_B2B_original_20261029",
+    "source_age": "existing captured original, independently reverified this run",
+    "backup_sha256": "93fff4a108d6531dab399fd268f1e11f3f4f00c4ee9a27ec53b7fa95b18d9d05",
+    "atomic_CAS": true,
+    "readback_verified": true,
+    "signed_supplier_verified": false
+  },
+  "outcomes": {
+    "new_original_protocols": 1,
+    "new_named_commission_winners": 0,
+    "new_verified_signed_suppliers": 0,
+    "new_verified_signed_contracts": 0,
+    "new_executed_payments": 0,
+    "new_unique_lots": 0,
+    "new_field_coverage_buyer_inn": "71 -> 72"
+  },
+  "client_report": {
+    "version": "V9",
+    "lots": 117,
+    "pages_each": 256,
+    "languages": [
+      "RU",
+      "EN"
+    ],
+    "v8_unchanged": true,
+    "legacy_html_unchanged": true,
+    "artifacts_sha256": {
+      "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261031_v9.json": "b679975a90c18857bb0a766690e4216b63faccc396ffa6d34448ab8fa60ce999",
+      "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261031_v9.json": "ef1f0dd0e348a28b7ebd61b54d38db666aca4077fd5d1ac34595ddbe1757107a",
+      "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_BACKLOG_20261031_v9.md": "a82bbdba1fbc56df90866b375ec15c292970a505748e6cae2d50a7a4ea7d2e40",
+      "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_RU_20261031_V9.pdf": "0d642c68d2b1c1128421aba3da6f5f2e2208f98a711253ccc6a3eca55feff566",
+      "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_EN_20261031_V9.pdf": "777289ea5ba9705989da7a4ff960b9ec0bab34810d67d074cfc24074e19455f1"
+    }
+  },
+  "engineering": {
+    "first_commit": "4fcc4310654ca8811a913fcbb7622bac46cd6719",
+    "targeted_tests": "10 passed, Ruff pass, pdfinfo 256 pages each, PT Sans embedded",
+    "new_final_commit": "see_issue_57_after_push"
+  },
+  "next_three": [
+    {
+      "case": "32615966040",
+      "retry_after_moscow": "2026-10-31 09:00",
+      "goal": "official signed supplier for RAD commission decision"
+    },
+    {
+      "case": "32615937898",
+      "retry_after_moscow": "2026-11-01 07:30",
+      "goal": "EIS signed contract original; current 503/404, no supplier attribution"
+    },
+    {
+      "case": "RN61003961",
+      "retry_after_moscow": "2026-10-31 10:00",
+      "goal": "TEK-Torg post-deadline 6kV result"
+    }
+  ],
+  "limitations": [
+    "EIS contract 67728589190260001030000 not verified by official original",
+    "27.5kV RZD protocol does not name winner",
+    "buyer INN of voltage-unverified commercial lot is not proof of 6-35kV market scope",
+    "No signed supplier/payment or national TAM inference",
+    "No new unique lot; no legacy HTML refresh"
+  ]
+}

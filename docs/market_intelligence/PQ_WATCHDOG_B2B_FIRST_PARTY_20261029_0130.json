@@ -1,0 +1,232 @@
+{
+  "schema_version": "pq-watchdog-first-party-delta/1",
+  "date_moscow": "2026-10-29",
+  "corpus": "v29-101-unchanged",
+  "research_pr": 521,
+  "source_requests_total": 15,
+  "source_http_200": 13,
+  "source_http_404": 2,
+  "new_unique_first_party_html_sha_count": 6,
+  "new_unique_original_binary_sha_count": 0,
+  "reverified_duplicate_zip_sha": "842cfe42c4ad5f797cf6d4d104015406ea43d246ecc8c1cf60364861ea69ffae",
+  "reverified_duplicate_pdf_sha": [
+    "a5d0232672daf75f602b1cfe8dc60d0b1cff30e8605f17d2c7dac539132151e7",
+    "028b7c02597f2f5adb7b4881334b9e4f13dc39d5e8b4a54c660c2ea7dd66298f"
+  ],
+  "new_notices": 0,
+  "new_lots": 0,
+  "new_projects": 0,
+  "new_signed_suppliers": 0,
+  "new_executed_prices": 0,
+  "new_calendar_searches": 0,
+  "source_records": [
+    {
+      "case": "223fz:32616474682:lot1+lot2",
+      "platform_id": "4642507",
+      "first_party_card_url": "https://www.b2b-center.ru/market/postavka-kondensatorov-kep-dlia-ooo-bashkirenergo-ooo-bsk-27-000090/tender-4642507/",
+      "card_sha256": "49fceacfc73a815e352be428824921573f83b7a9c065239bebaff1989e6bc5e5",
+      "lot_page_sha256": "04edcba19cca8ea55d822265d43ff22d07d0a36670f4cd5c00b40c4e906a38e4",
+      "positions_sha256": "8cecef685b51e39df64573f1ce6e0cb3bbaafa1e0a305bc667fdf07231f33777",
+      "buyer": "АО БЭСК / joint ООО БСК + ООО Башкирэнерго",
+      "lots": [
+        {
+          "lot": 1,
+          "buyer": "ООО БСК",
+          "units": 11,
+          "nmck_ex_vat_rub": "981354.33"
+        },
+        {
+          "lot": 2,
+          "buyer": "ООО Башкирэнерго",
+          "units": 16,
+          "nmck_ex_vat_rub": "1471296.08"
+        }
+      ],
+      "total_nmck_ex_vat_rub": "2452650.41",
+      "bids_ex_vat_rub": [
+        {
+          "bidder": "ООО УК КОНДЕНСАТОР",
+          "amount": "2362900.00"
+        },
+        {
+          "bidder": "ООО АСПЕКТ",
+          "amount": "2377049.18"
+        },
+        {
+          "bidder": "ООО РЗА",
+          "amount": "2422650.00"
+        },
+        {
+          "bidder": "ООО ТД СибЭнерго",
+          "amount": "2449000.00"
+        }
+      ],
+      "award_status": "not_yet_decided_planned_2026-12-03",
+      "voltage_kv": null,
+      "pq_market_eligible": false,
+      "source_grade": "first_party_card_bid_offers_not_award"
+    },
+    {
+      "case": "223fz:32515582393:lot1",
+      "platform_id": "4283612",
+      "first_party_card_url": "https://www.b2b-center.ru/market/postavka-ustanovki-kondensatornoi-ukrm-dlia-po-nes-ooo-bashkirenergo/tender-4283612/",
+      "card_sha256": "221abf33d9ae836f362ab1e05c7482ebe0aeaeb8d4c1f9d566b13a280f5b0763",
+      "commission_named_party": "ООО УК КОНДЕНСАТОР",
+      "initial_offer_ex_vat_rub": "4900000.00",
+      "negotiated_offer_ex_vat_rub": "4850000.00",
+      "negotiation_protocol_pdf_sha": "a5d0232672daf75f602b1cfe8dc60d0b1cff30e8605f17d2c7dac539132151e7",
+      "final_protocol_pdf_sha": "028b7c02597f2f5adb7b4881334b9e4f13dc39d5e8b4a54c660c2ea7dd66298f",
+      "source_grade": "independent_first_party_confirmation_of_already_reviewed_original_protocol",
+      "signed_supplier_verified": false,
+      "paid_price_verified": false
+    }
+  ],
+  "unverified_gaps": [
+    "4642507: original final award/contract and capacitor voltage unknown; committee scheduled 2026-12-03",
+    "4283612: signed supplier/execution unverified; commission negotiation not signed contract",
+    "4304120 and 4559984: documented B2B exact-ID probe returned HTTP404, not no-market",
+    "15 Data Platform files remain SDK auth-blocked"
+  ],
+  "next_three_targets": [
+    "32616474682: obtain official technical specifications/voltage and 03 Dec award when published",
+    "32515582393: verify signed supplier/contract in legally public first-party registry after 06:46 MSK",
+    "32413764701: verify signed 10 kV UKRM supplier/contract after 06:46 MSK"
+  ],
+  "source_attempts": [
+    {
+      "id": "4561228",
+      "url": "https://www.b2b-center.ru/market/view.html?id=4561228",
+      "http_status": "200",
+      "curl_exit": 0,
+      "sha256": "5b107540cb987135c83c469bef09ba4566cf5f421ec19c654b774deed8d35274",
+      "bytes": 75677,
+      "timestamp_utc": "2026-10-28T22:33:34.767603+00:00"
+    },
+    {
+      "id": "4561243",
+      "url": "https://www.b2b-center.ru/market/view.html?id=4561243",
+      "http_status": "200",
+      "curl_exit": 0,
+      "sha256": "555774373ad979be23dc37be20c560916c21d2338e38c753a92137d7aca1fa2a",
+      "bytes": 75670,
+      "timestamp_utc": "2026-10-28T22:33:35.324467+00:00"
+    },
+    {
+      "id": "4256170",
+      "url": "https://www.b2b-center.ru/market/view.html?id=4256170",
+      "http_status": "200",
+      "curl_exit": 0,
+      "sha256": "b8c054071e94f253ca7b755123c0b840b7806ac269ba1e2a8fbb40946982b6f4",
+      "bytes": 69910,
+      "timestamp_utc": "2026-10-28T22:33:35.879366+00:00"
+    },
+    {
+      "id": "4565274",
+      "url": "https://www.b2b-center.ru/market/view.html?id=4565274",
+      "http_status": "200",
+      "curl_exit": 0,
+      "sha256": "8b7232d9aca473647d24f2c741e44d36042ab6ae325d77d263dc6cbff528cf78",
+      "bytes": 76146,
+      "timestamp_utc": "2026-10-28T22:33:54.091267+00:00"
+    },
+    {
+      "id": "4302914",
+      "url": "https://www.b2b-center.ru/market/view.html?id=4302914",
+      "http_status": "200",
+      "curl_exit": 0,
+      "sha256": "b3d52ea654d03d1d91a2c276cec37dc16c0ece9f43e4550dce7d3cd4e314c439",
+      "bytes": 76611,
+      "timestamp_utc": "2026-10-28T22:33:54.729215+00:00"
+    },
+    {
+      "id": "4526968",
+      "url": "https://www.b2b-center.ru/market/view.html?id=4526968",
+      "http_status": "200",
+      "curl_exit": 0,
+      "sha256": "70c87f4882f88dc6e31b4955117f784eaf38fcb1e0e792c3ef6f656457ea909f",
+      "bytes": 71133,
+      "timestamp_utc": "2026-10-28T22:33:55.256441+00:00"
+    },
+    {
+      "id": "4304120",
+      "url": "https://www.b2b-center.ru/market/view.html?id=4304120",
+      "http_status": "404",
+      "curl_exit": 0,
+      "sha256": "3e4df8d855ce06ed981b6209f56da338f69d9545af76f41fee30e49584ccf8e6",
+      "bytes": 13222,
+      "timestamp_utc": "2026-10-28T22:34:28.815112+00:00"
+    },
+    {
+      "id": "4559984",
+      "url": "https://www.b2b-center.ru/market/view.html?id=4559984",
+      "http_status": "404",
+      "curl_exit": 0,
+      "sha256": "f24f613e8a231a7e3cf3ddbe90fc4b4b2b4af20ddc3c6bf24052cd4aa842f2aa",
+      "bytes": 13222,
+      "timestamp_utc": "2026-10-28T22:34:28.943604+00:00"
+    },
+    {
+      "id": "4642507",
+      "url": "https://www.b2b-center.ru/market/view.html?id=4642507",
+      "http_status": "200",
+      "curl_exit": 0,
+      "sha256": "49fceacfc73a815e352be428824921573f83b7a9c065239bebaff1989e6bc5e5",
+      "bytes": 80709,
+      "timestamp_utc": "2026-10-28T22:34:29.728056+00:00"
+    },
+    {
+      "id": "4283612",
+      "url": "https://www.b2b-center.ru/market/view.html?id=4283612",
+      "http_status": "200",
+      "curl_exit": 0,
+      "sha256": "221abf33d9ae836f362ab1e05c7482ebe0aeaeb8d4c1f9d566b13a280f5b0763",
+      "bytes": 79944,
+      "timestamp_utc": "2026-10-28T22:34:30.543426+00:00"
+    },
+    {
+      "id": "4283612-protocol-zip",
+      "url": "https://www.b2b-center.ru/download.html?checksum=05032315&file=file%2F518470152.zip&title=%D0%BF%D1%80%D0%BE%D1%82%D0%BE%D0%BA%D0%BE%D0%BB%D1%8B+%D0%BD%D0%B0+%D0%AD%D0%A2%D0%9F.zip",
+      "http_status": "200",
+      "curl_exit": 0,
+      "sha256": "842cfe42c4ad5f797cf6d4d104015406ea43d246ecc8c1cf60364861ea69ffae",
+      "bytes": 657694,
+      "timestamp_utc": "2026-10-28T22:35:06.957547+00:00"
+    },
+    {
+      "id": "4283612-participants-protocol",
+      "url": "https://www.b2b-center.ru/market/auction_protocol.html?id=4283612&type=participants_protocol",
+      "http_status": "200",
+      "curl_exit": 0,
+      "sha256": "bac70f04e7cd6ab5ab0cf951d257ae04620da2f698ea08432007f70d162e873e",
+      "bytes": 18427,
+      "timestamp_utc": "2026-10-28T22:35:07.239653+00:00"
+    },
+    {
+      "id": "4642507-participants-protocol",
+      "url": "https://www.b2b-center.ru/market/auction_protocol.html?id=4642507&type=participants_protocol",
+      "http_status": "200",
+      "curl_exit": 0,
+      "sha256": "20a6c2c7150912a03c3b3efd8aea8b5721c6ee15e71e01571a5615547a4823ea",
+      "bytes": 20718,
+      "timestamp_utc": "2026-10-28T22:35:07.528395+00:00"
+    },
+    {
+      "id": "4642507-positions",
+      "url": "https://www.b2b-center.ru/market/postavka-kondensatorov-kep-dlia-ooo-bashkirenergo-ooo-bsk-27-000090/tender-4642507/?action=positions",
+      "http_status": "200",
+      "curl_exit": 0,
+      "sha256": "8cecef685b51e39df64573f1ce6e0cb3bbaafa1e0a305bc667fdf07231f33777",
+      "bytes": 58635,
+      "timestamp_utc": "2026-10-28T22:36:36.383512+00:00"
+    },
+    {
+      "id": "4642507-lots",
+      "url": "https://www.b2b-center.ru/market/postavka-kondensatorov-kep-dlia-ooo-bashkirenergo-ooo-bsk-27-000090/tender-4642507/?action=positions_groups",
+      "http_status": "200",
+      "curl_exit": 0,
+      "sha256": "04edcba19cca8ea55d822265d43ff22d07d0a36670f4cd5c00b40c4e906a38e4",
+      "bytes": 57342,
+      "timestamp_utc": "2026-10-28T22:36:36.791565+00:00"
+    }
+  ]
+}

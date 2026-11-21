@@ -1,0 +1,175 @@
+{
+  "schema_version": "pq-watchdog-source-bound/1",
+  "completed_moscow": "2026-10-31T21:41:21+03:00",
+  "run_id": "20261031T213517+0300",
+  "issue_comment_id": 6547516658,
+  "canonical_pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "source_checkout_head_at_start": "0ce444cf40e411daa177bbdee34275a2b2863ac2",
+  "internal_apfs_acceptance": "pass",
+  "new_full_backup_sha256": "f856fe91be3d5cddbd9b964bfe7de22de341e33c3fdefb19b1bafe75dbc29514",
+  "postgres_before": {
+    "unique_lots": 118,
+    "distinct_procedures": 107,
+    "eis_223_notices": 41
+  },
+  "postgres_after": {
+    "unique_lots": 118,
+    "distinct_procedures": 107,
+    "eis_223_notices": 41
+  },
+  "new_unique_lots": 0,
+  "new_deduplicated_projects": 0,
+  "new_verified_db_fields": 7,
+  "new_client_visible_fields": 4,
+  "new_named_commission_winners": 0,
+  "new_signed_supplier_identities": 0,
+  "new_executed_prices": 0,
+  "new_paid_sales": 0,
+  "first_party_http_requests": 9,
+  "first_party_http200": 9,
+  "fresh_sha_verified_primary_captures": 9,
+  "new_distinct_original_shas": 6,
+  "new_original_protocols": 1,
+  "new_exhaustively_covered_month_source_pairs": 0,
+  "web_discovery_queries": 5,
+  "source_captures": [
+    {
+      "url": "https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=54716016979260041190000",
+      "http": 200,
+      "sha256": "08b09706b512f497b94941b5de857d0aabbda3eac9f1df64b4c8bd0d4e8b375c",
+      "relative_file": "captures/223fz_32616266007_lot1/20261031T183613863556Z-44b6572e-08b09706b512f497.bin",
+      "bytes": 9372
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=54716016979260041190000",
+      "http": 200,
+      "sha256": "a2865ba18ce0e67bcb45d8bf6054e1dbe13e71a15fb78287ce6cdcf273a97f74",
+      "relative_file": "captures/223fz_32616266007_lot1/20261031T183616079027Z-3d85bd1d-a2865ba18ce0e67b.bin",
+      "bytes": 142421
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/journal-version.html?reestrNumber=54716016979260041190000",
+      "http": 200,
+      "sha256": "21d32efda4ad55b2e1b3fe234d7c3eb436bf7f833ac6fb0052da51b6ade1250e",
+      "relative_file": "captures/223fz_32616266007_lot1/20261031T183619103747Z-c59bc1b8-21d32efda4ad55b2.bin",
+      "bytes": 127429
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616266007",
+      "http": 200,
+      "sha256": "e3ee6bb5649962e110b578de8325becb2b512237b1a1f1b02a9ae68b8b0a874c",
+      "relative_file": "captures/223fz_32616266007_lot1/20261031T183730923756Z-faf4ade4-e3ee6bb5649962e1.bin",
+      "bytes": 132769
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616266007",
+      "http": 200,
+      "sha256": "a27f49574b8bf4fe59fe26d2700e15387bb7ff63919ca80722b90ca12564cd4a",
+      "relative_file": "captures/223fz_32616266007_lot1/20261031T183742005129Z-0079d32b-a27f49574b8bf4fe.bin",
+      "bytes": 138946
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract/printForm/viewXml.html?contractRegistrationNumber=54716016979260041190001",
+      "http": 200,
+      "sha256": "fbd9ab8e7a409ffc7e8ed2b475d0346b8100a3a45ee1179d40aedff4d526b8d5",
+      "relative_file": "captures/223fz_32616266007_lot1/20261031T183744474504Z-cfbeee90-fbd9ab8e7a409ffc.bin",
+      "bytes": 9415
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/printForm/view.html?purchaseNoticeGuid=02d450e6-9e48-40f6-82a3-bbb1b3bfb3e0&purchaseNoticeNumber=32616266007",
+      "http": 200,
+      "sha256": "379ba26bfef111dedafffb853ba9464df59751024cbc17899c15cb5bf5c04ede",
+      "relative_file": "captures/223fz_32616266007_lot1/20261031T183746504437Z-ba332011-379ba26bfef111de.bin",
+      "bytes": 11876
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=424ae8a9-7f1c-435d-a43f-03976de01316&purchaseNoticeNumber=32616266007",
+      "http": 200,
+      "sha256": "123fc325189f8393fd83c73da47768fa56af9034554772331e6250a61b0e45fa",
+      "relative_file": "captures/223fz_32616266007_lot1/20261031T183757406458Z-94394dfb-123fc325189f8393.bin",
+      "bytes": 12048
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/protocol-common-info.html?protocolGuid=424ae8a9-7f1c-435d-a43f-03976de01316&purchaseNoticeNumber=32616266007",
+      "http": 200,
+      "sha256": "4d7bbdd2df215a0cf2f5d0de58a3b1d80d2261e8885e0ec3f202556f7f9e084f",
+      "relative_file": "captures/223fz_32616266007_lot1/20261031T183758992239Z-3b125c47-4d7bbdd2df215a0c.bin",
+      "bytes": 134789
+    }
+  ],
+  "verified_case": {
+    "id": "223fz:32616266007:lot1",
+    "registry": "54716016979260041190000",
+    "contract_number": "1605245",
+    "contract_signed_date": "2026-10-14",
+    "contract_registered_price_rub": "662460.00",
+    "protocol": "32616266007-01 dated 2026-08-28",
+    "commission_bids_rub": {
+      "admitted_application_2": "662460.00",
+      "rejected_application_1": "847290.00"
+    },
+    "commission_result": "one_admissible_of_two_competitive_procedure_failed",
+    "contract_exists_despite_failed_procedure": true,
+    "signed_supplier_identity": "unverified",
+    "payment": "unverified",
+    "market_scope": "adjacent_500kv_substation_8p3kv_capacitor_spares_not_core_6_35kv",
+    "db_receipt": "receipts/pq-eis-32616266007-signed-20261031T2140.json",
+    "db_content_hash": "a9455a3ae7c087cd626dc28200bafc44e27f2c6aac68482fc6dfbf7424399cbf"
+  },
+  "bidzaar_351062_conflict": {
+    "doc_sha256": "e7927732264deb30813bcf967740763cfb032f5710ca78156f76646f8cc0d831",
+    "source": "existing original OЛ УКРМ 6 кВ.doc (Bidzaar)",
+    "finding": "Legacy DOC table text extraction places ДА in fourth nominal-voltage column (10.0 kV) while file title says 6 kV and project PS 35/6 kV; requires visual table verification before voltage field update.",
+    "verified_technical": "3000 kvar, four 750 kvar steps, outdoor UHL1, Lovato controller, 220 V operational circuit",
+    "db_updated": false
+  },
+  "snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261031_v21.json",
+  "snapshot_sha256": "571302dcad081711d8683e4523d36ae480d92b6c752f0728dd5c451a4afff787",
+  "audit": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261031_V21.json",
+  "audit_sha256": "e13ebe16c42e06010249366f9430f0d8c071c53923c0016b6d1f4fbd24995daa",
+  "pdfs": {
+    "RU": {
+      "path": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_RU_20261031_V21.pdf",
+      "sha256": "58ddfe84ea084ca45d6defa5efa192a37a7fe7ec7f3a1741c182af97dced4e1e",
+      "bytes": 6711101,
+      "pages": 258
+    },
+    "EN": {
+      "path": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_EN_20261031_V21.pdf",
+      "sha256": "bba401c3b555fcdaafbd5f5f7359b2371fa86460ab5d8d5e608054344d217426",
+      "bytes": 6672962,
+      "pages": 258
+    }
+  },
+  "client_html_preview_unchanged": true,
+  "canonical_v29_rows_unchanged": 101,
+  "tests": "13 targeted pytest passed; Ruff passed; 258-page RU/EN PDFs checked; stale unsigned description corrected in rendered output only",
+  "next_three": [
+    {
+      "case": "commercial:351-062:lot1",
+      "eligible": "now",
+      "goal": "visually verify 6/10 kV DOC table and unit allocation; do not overwrite voltage until resolved"
+    },
+    {
+      "case": "223fz:32616266007:lot1",
+      "eligible": "now",
+      "goal": "first-party signed supplier identity and performance/payment; failed-procedure status remains immutable"
+    },
+    {
+      "case": "223fz:32616400421:lot1",
+      "eligible": "2026-11-01 07:30 MSK",
+      "goal": "official technical original/protocol retry after cooldown"
+    }
+  ],
+  "limitations": [
+    "No newly unique lot or deduplicated project; 118/107/41 unchanged.",
+    "One admitted bidder is not independently proven signed supplier.",
+    "Registered signed contract is not proof of payment or equipment OEM revenue.",
+    "No full month/source coverage; web discovery returned no promotable primary new lot.",
+    "Client HTML preview not regenerated because lot count did not increase.",
+    "PR 521 remains review; no auto-merge."
+  ],
+  "task_status": "in_progress",
+  "auto_merge": false
+}

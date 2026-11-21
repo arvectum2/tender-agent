@@ -1,0 +1,628 @@
+{
+  "schema": "arvectum-reference-procurement/1",
+  "as_of": "2026-10-31",
+  "case_id": "223fz:32616181358:lot1",
+  "snapshot_live_db_original": true,
+  "buyer": "АО «Завод РЭТО»",
+  "buyer_inn": "7724646338",
+  "organizer": "АО «Завод РЭТО»",
+  "beneficiary": null,
+  "location": "Москва, Старокаширское шоссе, 4А",
+  "procedure": "32616181358",
+  "etp_id": "RAD260032779",
+  "lot_no": 1,
+  "regime": "223-ФЗ",
+  "method": "Запрос котировок в электронной форме",
+  "subject": "Поставка конденсаторов косинусных КЭПФ для БСК",
+  "publication": "2026-07-06",
+  "revision": "2026-07-14",
+  "deadline": "2026-07-20 11:00 МСК",
+  "protocol_date": "2026-08-03",
+  "protocol_published": "2026-08-05",
+  "protocol_number": "186-2",
+  "contract_date_archive": "2026-08-19",
+  "contract_number_archive": "060-26-Р",
+  "registry_number": "57724646338260000460000",
+  "contract_term_end": "2026-12-31",
+  "scope": "Компоненты БСК, НЕ завершённая установка STATCOM/SVG",
+  "nmck_rub": 3078500,
+  "vat_on_initial_percent": 22,
+  "nmck_without_vat_rub": 2523360.66,
+  "nmck_vat_rub": 555139.34,
+  "winning_bid_rub": 3050000,
+  "contract_total_archived_rub": 3050000,
+  "discount_rub": 28500,
+  "discount_percent": 0.93,
+  "physical_delivery_verified": false,
+  "payment_verified": false,
+  "signed_supplier_verified": false,
+  "signed_supplier": null,
+  "oem_verified": false,
+  "oem": null,
+  "manufacturer_registered_country_archive": "Республика Казахстан",
+  "manufactured_country_verified": false,
+  "contract_registry_live_accessible": false,
+  "participation": [
+    {
+      "inn": "7720494275",
+      "name": "ООО «ЭКСПЕРТ ГРУПП»",
+      "factory_proven": false,
+      "bid_inc_vat22_rub": "3050000.00",
+      "original_decision": "winner_and_first_rank"
+    },
+    {
+      "inn": "7721814062",
+      "name": "ООО «ТО-СТРОЙМОНТАЖ»",
+      "bid_inc_vat22_rub": "3078500.00",
+      "original_decision": "admitted_second_rank"
+    },
+    {
+      "inn": "5043061102",
+      "name": "ООО «Серпуховский конденсаторный завод «КВАР»",
+      "bid_inc_vat22_rub": "1960906.00",
+      "original_decision": "rejected"
+    }
+  ],
+  "bids_received": 3,
+  "bids_admitted": 2,
+  "bids_rejected": 1,
+  "winner": "ООО «ЭКСПЕРТ ГРУПП»",
+  "winner_inn": "7720494275",
+  "source_provenance": {
+    "TZ": {
+      "label": "Оригинальное ТЗ КЭПФ_186, 7 стр.",
+      "grade": "A",
+      "url": "https://tender.lot-online.ru/etp/downloadppf?uuid=dbfile19718u80000punsoc08chcr834",
+      "sha": "9ceb44be68abcf07729cb9045b1a3ce7b54456810c93c9a32885781d3a578032"
+    },
+    "PROTOCOL": {
+      "label": "Оригинал протокола комиссии 186-2, 3 стр.",
+      "grade": "A",
+      "url": "https://tender.lot-online.ru/etp/downloadppf?uuid=dbfile19718u80000pvkg89is0k0tsd4",
+      "sha": "92874d098feb7dc6c283bd7b66c5218e11e472f27eddffc75edd6613fb5b21ef"
+    },
+    "ETP": {
+      "label": "Официальная карточка Lot-online RAD260032779",
+      "grade": "B",
+      "url": "https://tender.lot-online.ru/etp/app/LotCard/page?LotCard.lotEntity=LT%3Acorebo19718u80000pudvaupvhqhhca4",
+      "sha": "6c770a82a2093fe09e9152e208bccced7e452bf4a5545200dbd9a16fb3cdf453"
+    },
+    "EIS": {
+      "label": "Исторический реестр договора ЕИС, 31.10 HTTP404",
+      "grade": "archived_A_unavailable_today",
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=57724646338260000460000",
+      "sha": "94170a4d9314d78307300f410c2e71fc3ee8ab4a3c9ea86633e48d1809b390aa"
+    },
+    "ITEMS": {
+      "label": "Исторические позиции договора ЕИС, 31.10 HTTP404",
+      "grade": "archived_A_unavailable_today",
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=57724646338260000460000",
+      "sha": "76d050d1fd3f65a6a5eb2f58358fa376b5cc280abe6ff1207122698d73c5f6cf"
+    },
+    "XLSX": {
+      "label": "Шаблон предложения поставки ТМЦ",
+      "grade": "A",
+      "url": "https://tender.lot-online.ru/etp/downloadppf?uuid=dbfile19718u80000punsoc1paupdotk",
+      "sha": "547d1bb48ef8525148dc3a07344d5c6806a21b4b6fbf1e9a413e6ee8d08e36b9"
+    }
+  },
+  "evidence_notes": "Поля договора — исторический архив ЕИС, страницы сегодня 404. Итоговый протокол и ТЗ получены первично; не приписывать победителю статус подписавшего поставщика.",
+  "hardware": {
+    "technology": "КЭПФ: компоненты батареи статических конденсаторов",
+    "voltage_kv": 12,
+    "frequency_hz": 50,
+    "units_total": 10,
+    "power_total_kvar": 5250,
+    "items": [
+      {
+        "model": "КЭПФ-12-450-2УХЛ1",
+        "qty": 5,
+        "power_each_kvar": 450,
+        "current_a": 37.5,
+        "capacitance_uf": 9.95,
+        "dimensions_mm": "345×178×700",
+        "nmc_unit_inc_vat_rub": 294500,
+        "archived_contract_unit_rub": 292000
+      },
+      {
+        "model": "КЭПФ-12-600-2УХЛ1",
+        "qty": 5,
+        "power_each_kvar": 600,
+        "current_a": 50.0,
+        "capacitance_uf": 13.26,
+        "dimensions_mm": "380×200×950",
+        "nmc_unit_inc_vat_rub": 321200,
+        "archived_contract_unit_rub": 318000
+      }
+    ],
+    "replacement": "Позиция КЭПФ-12-450 — замена CHDB-992 ABB по письму покупателя",
+    "requirements": [
+      "Новые изделия, не восстановленные",
+      "Не менее 12 мес. гарантии с даты поставки",
+      "МЭК 60871-4: внутренние плавкие предохранители",
+      "Встроенные разрядные резисторы, экологически безопасная пропиточная жидкость",
+      "Требуется положительная аттестация ПАО «Россети» и подтверждающие документы",
+      "Изделия одной даты изготовления, не старше 3 месяцев на момент поставки"
+    ],
+    "delivery_due": "80 календарных дней после подписания договора; досрочная поставка допустима",
+    "delivery_place": "Склад заказчика, г. Москва, Старокаширское ш., 4А",
+    "payment_terms": "30 раб. дней после приёмки либо 7 раб. дней для победителя-МСП; в итоговом протоколе указано 7 раб. дней",
+    "price_scope": "НМЦ включает доставку, страхование, пошлины, налоги и иные расходы",
+    "source_codes": [
+      "TZ",
+      "PROTOCOL",
+      "ITEMS"
+    ]
+  },
+  "bid_rejection": {
+    "company": "ООО «Серпуховский конденсаторный завод «КВАР»",
+    "inn": "5043061102",
+    "offer_rub": 1960906,
+    "reason1": "Отсутствует справка ФНС КНД 1120101",
+    "reason2": "В предложении на КЭПФ-12-600 ток 37,5 А, требуется 50 А",
+    "conclusion": "Отклонённая цена не считается победившей ставкой, договором или продажей",
+    "source_codes": [
+      "PROTOCOL"
+    ]
+  },
+  "missing_and_conflicts": [
+    "Подписавший договор поставщик и его ИНН не раскрыты доступной публичной карточкой",
+    "Фактический OEM неизвестен; страна регистрации изготовителя (Казахстан) не подтверждает страну производства",
+    "Подписанный текст договора и товарные накладные не получены",
+    "Фактическая отгрузка, приёмка и оплата не подтверждены",
+    "Текущий статус ЕИС не перепроверен — публичный URL возвращает HTTP 404",
+    "НДС исторической записи договора не перепроверен отдельно (НДС 22% подтверждён в протоколе и ТЗ)"
+  ],
+  "field_evidence": [
+    {
+      "field": "canonical_id",
+      "value": "223fz:32616181358:lot1",
+      "status": "verified",
+      "source_ids": [
+        "ETP"
+      ],
+      "note": ""
+    },
+    {
+      "field": "procedure",
+      "value": "32616181358",
+      "status": "verified",
+      "source_ids": [
+        "ETP"
+      ],
+      "note": ""
+    },
+    {
+      "field": "etp_id",
+      "value": "RAD260032779",
+      "status": "verified",
+      "source_ids": [
+        "ETP"
+      ],
+      "note": ""
+    },
+    {
+      "field": "lot_no",
+      "value": 1,
+      "status": "verified",
+      "source_ids": [
+        "ETP"
+      ],
+      "note": ""
+    },
+    {
+      "field": "regime",
+      "value": "223-ФЗ",
+      "status": "verified",
+      "source_ids": [
+        "ETP"
+      ],
+      "note": ""
+    },
+    {
+      "field": "purchase_method",
+      "value": "Запрос котировок в электронной форме",
+      "status": "verified",
+      "source_ids": [
+        "ETP"
+      ],
+      "note": ""
+    },
+    {
+      "field": "buyer",
+      "value": "АО «Завод РЭТО»",
+      "status": "verified",
+      "source_ids": [
+        "PROTOCOL"
+      ],
+      "note": ""
+    },
+    {
+      "field": "buyer_inn",
+      "value": "7724646338",
+      "status": "verified",
+      "source_ids": [
+        "PROTOCOL"
+      ],
+      "note": ""
+    },
+    {
+      "field": "organizer",
+      "value": "АО «Завод РЭТО»",
+      "status": "verified",
+      "source_ids": [
+        "ETP"
+      ],
+      "note": ""
+    },
+    {
+      "field": "beneficiary",
+      "value": null,
+      "status": "not_verified",
+      "source_ids": [],
+      "note": ""
+    },
+    {
+      "field": "delivery_address",
+      "value": "Москва, Старокаширское шоссе, 4А",
+      "status": "verified",
+      "source_ids": [
+        "TZ"
+      ],
+      "note": ""
+    },
+    {
+      "field": "subject",
+      "value": "Поставка конденсаторов косинусных КЭПФ для БСК",
+      "status": "verified",
+      "source_ids": [
+        "TZ",
+        "PROTOCOL"
+      ],
+      "note": ""
+    },
+    {
+      "field": "publication_date",
+      "value": "2026-07-06",
+      "status": "verified",
+      "source_ids": [
+        "ETP"
+      ],
+      "note": ""
+    },
+    {
+      "field": "revision_date",
+      "value": "2026-07-14",
+      "status": "verified",
+      "source_ids": [
+        "ETP"
+      ],
+      "note": ""
+    },
+    {
+      "field": "deadline",
+      "value": "2026-07-20 11:00 МСК",
+      "status": "verified",
+      "source_ids": [
+        "ETP"
+      ],
+      "note": ""
+    },
+    {
+      "field": "protocol_date",
+      "value": "2026-08-03",
+      "status": "verified",
+      "source_ids": [
+        "PROTOCOL"
+      ],
+      "note": ""
+    },
+    {
+      "field": "protocol_published",
+      "value": "2026-08-05",
+      "status": "verified",
+      "source_ids": [
+        "ETP"
+      ],
+      "note": ""
+    },
+    {
+      "field": "protocol_number",
+      "value": "186-2",
+      "status": "verified",
+      "source_ids": [
+        "PROTOCOL"
+      ],
+      "note": ""
+    },
+    {
+      "field": "component_voltage_kv",
+      "value": 12,
+      "status": "verified",
+      "source_ids": [
+        "TZ"
+      ],
+      "note": ""
+    },
+    {
+      "field": "model_450_quantity",
+      "value": 5,
+      "status": "verified",
+      "source_ids": [
+        "TZ"
+      ],
+      "note": ""
+    },
+    {
+      "field": "model_600_quantity",
+      "value": 5,
+      "status": "verified",
+      "source_ids": [
+        "TZ"
+      ],
+      "note": ""
+    },
+    {
+      "field": "total_nameplate_kvar",
+      "value": 5250,
+      "status": "derived_verified",
+      "source_ids": [
+        "TZ"
+      ],
+      "note": ""
+    },
+    {
+      "field": "model_450_current_a",
+      "value": 37.5,
+      "status": "verified",
+      "source_ids": [
+        "TZ"
+      ],
+      "note": ""
+    },
+    {
+      "field": "model_600_current_a",
+      "value": 50,
+      "status": "verified",
+      "source_ids": [
+        "TZ"
+      ],
+      "note": ""
+    },
+    {
+      "field": "frequency_hz",
+      "value": 50,
+      "status": "verified",
+      "source_ids": [
+        "TZ"
+      ],
+      "note": ""
+    },
+    {
+      "field": "warranty_months_min",
+      "value": 12,
+      "status": "verified",
+      "source_ids": [
+        "TZ"
+      ],
+      "note": ""
+    },
+    {
+      "field": "safety_and_approval",
+      "value": "IEC 60871-4; аттестация Россетей",
+      "status": "verified",
+      "source_ids": [
+        "TZ"
+      ],
+      "note": ""
+    },
+    {
+      "field": "initial_price_rub",
+      "value": 3078500,
+      "status": "verified",
+      "source_ids": [
+        "TZ",
+        "PROTOCOL"
+      ],
+      "note": ""
+    },
+    {
+      "field": "vat_initial_percent",
+      "value": 22,
+      "status": "verified",
+      "source_ids": [
+        "TZ",
+        "PROTOCOL"
+      ],
+      "note": ""
+    },
+    {
+      "field": "winner_offer_rub",
+      "value": 3050000,
+      "status": "verified",
+      "source_ids": [
+        "PROTOCOL"
+      ],
+      "note": ""
+    },
+    {
+      "field": "competing_bids",
+      "value": 3,
+      "status": "verified",
+      "source_ids": [
+        "PROTOCOL"
+      ],
+      "note": ""
+    },
+    {
+      "field": "commission_winner",
+      "value": "ООО «ЭКСПЕРТ ГРУПП»",
+      "status": "verified",
+      "source_ids": [
+        "PROTOCOL"
+      ],
+      "note": ""
+    },
+    {
+      "field": "commission_winner_inn",
+      "value": "7720494275",
+      "status": "verified",
+      "source_ids": [
+        "PROTOCOL"
+      ],
+      "note": ""
+    },
+    {
+      "field": "rank2",
+      "value": "ООО «ТО-СТРОЙМОНТАЖ» · 3 078 500 ₽",
+      "status": "verified",
+      "source_ids": [
+        "PROTOCOL"
+      ],
+      "note": ""
+    },
+    {
+      "field": "rejected_bid",
+      "value": "КВАР · 1 960 906 ₽",
+      "status": "verified",
+      "source_ids": [
+        "PROTOCOL"
+      ],
+      "note": ""
+    },
+    {
+      "field": "rejection_reason",
+      "value": "В предложении на КЭПФ-12-600 ток 37,5 А, требуется 50 А",
+      "status": "verified",
+      "source_ids": [
+        "PROTOCOL"
+      ],
+      "note": ""
+    },
+    {
+      "field": "contract_registry_number",
+      "value": "57724646338260000460000",
+      "status": "archived_primary",
+      "source_ids": [
+        "EIS"
+      ],
+      "note": ""
+    },
+    {
+      "field": "registered_contract_amount_rub",
+      "value": 3050000,
+      "status": "archived_primary",
+      "source_ids": [
+        "EIS"
+      ],
+      "note": ""
+    },
+    {
+      "field": "contract_internal_number",
+      "value": "060-26-Р",
+      "status": "archived_primary",
+      "source_ids": [
+        "EIS"
+      ],
+      "note": ""
+    },
+    {
+      "field": "contract_date",
+      "value": "2026-08-19",
+      "status": "archived_primary",
+      "source_ids": [
+        "EIS"
+      ],
+      "note": ""
+    },
+    {
+      "field": "historical_contract_item_prices",
+      "value": 292000,
+      "status": "archived_primary",
+      "source_ids": [
+        "ITEMS"
+      ],
+      "note": ""
+    },
+    {
+      "field": "signed_supplier_name",
+      "value": null,
+      "status": "not_verified",
+      "source_ids": [],
+      "note": ""
+    },
+    {
+      "field": "signed_supplier_inn",
+      "value": null,
+      "status": "not_verified",
+      "source_ids": [],
+      "note": ""
+    },
+    {
+      "field": "manufacturer_oem",
+      "value": null,
+      "status": "not_verified",
+      "source_ids": [],
+      "note": ""
+    },
+    {
+      "field": "country_manufactured",
+      "value": null,
+      "status": "not_verified",
+      "source_ids": [],
+      "note": ""
+    },
+    {
+      "field": "registered_manufacturer_country",
+      "value": "Республика Казахстан",
+      "status": "archived_primary",
+      "source_ids": [
+        "EIS"
+      ],
+      "note": ""
+    },
+    {
+      "field": "physical_delivery",
+      "value": null,
+      "status": "not_verified",
+      "source_ids": [],
+      "note": ""
+    },
+    {
+      "field": "acceptance_certificate",
+      "value": null,
+      "status": "not_verified",
+      "source_ids": [],
+      "note": ""
+    },
+    {
+      "field": "actual_payment_rub",
+      "value": null,
+      "status": "not_verified",
+      "source_ids": [],
+      "note": ""
+    },
+    {
+      "field": "epc_contractor",
+      "value": null,
+      "status": "not_applicable",
+      "source_ids": [],
+      "note": "Не предмет договора: поставка компонентов"
+    },
+    {
+      "field": "design_contractor",
+      "value": null,
+      "status": "not_verified",
+      "source_ids": [],
+      "note": ""
+    },
+    {
+      "field": "contract_vat_basis",
+      "value": null,
+      "status": "not_verified",
+      "source_ids": [],
+      "note": ""
+    }
+  ],
+  "reference_template_status": "working_exemplar_complete_fields_not_all_independently_verified"
+}

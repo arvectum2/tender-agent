@@ -1,0 +1,117 @@
+{
+  "schema_version": "pq-watchdog-first-party-evidence/1",
+  "run_start_moscow": "2026-10-30T09:30:26+03:00",
+  "finished_moscow": "2026-10-30T09:34:42+03:00",
+  "issue_comment_id": 6516535129,
+  "canonical_pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "parent_head": "cf0f3bd0d36e7988af845ebf55a4cfdae531e52b",
+  "internal_apfs_gate": "pass_prewrite",
+  "postgres": {
+    "unique_lots_before": 114,
+    "unique_lots_after": 114,
+    "distinct_procedures": 103,
+    "eis_223_notices": 37,
+    "new_unique_lots": 0,
+    "new_underlying_projects": 0,
+    "new_signed_suppliers": 0,
+    "new_executed_prices": 0,
+    "db_mutation": false
+  },
+  "source_requests": {
+    "verified_direct_http_200": 4,
+    "verified_direct_http_404": 2,
+    "tls_proxy_certificate_failures": 3,
+    "total_verified_attempts": 9,
+    "new_calendar_month_source_searches": 0,
+    "note": "Metal-IT official trade info 2x200 identical generic JS shell; B2B 4302914 official card 2x200; EIS three httpx TLS errors and two direct-curl 404. Web secondary discovery did not establish exhaustive coverage."
+  },
+  "new_sha_verified_originals": [
+    {
+      "case_id": "commercial:4302914:lot1",
+      "url": "https://www.b2b-center.ru/market/view.html?id=4302914",
+      "relative_file": "captures/commercial_4302914_lot1/20261030T063226034579Z-06453407-637e83a78485ad78.bin",
+      "receipt_relative_path": "captures/commercial_4302914_lot1/20261030T063226034579Z-06453407-637e83a78485ad78.bin.json",
+      "sha256": "637e83a78485ad78668405ecfee27267d8bda7f0f5231351fcf84918892176d0",
+      "bytes": 76611,
+      "http_status": 200,
+      "captured_utc": "2026-10-30T06:32:26.037887+00:00"
+    }
+  ],
+  "new_primary_captures": 1,
+  "case_4302914": {
+    "buyer": "АО «Лебединский ГОК»",
+    "organizer": "ООО УК «МЕТАЛЛОИНВЕСТ»",
+    "equipment": "СТАТКОМ RU-DRIVE SVG 6,3/5-3 МВар на ПС 3",
+    "voltage_kv": 6.3,
+    "scope": "service_existing_equipment_not_new_sale",
+    "publication": "2026-01-22 12:21 MSK",
+    "application_deadline": "2026-03-05 12:00 MSK",
+    "source_grade": "first_party_b2b_html",
+    "exact_quotes": [
+      "Статус объявления: в архиве.",
+      "Результаты процедуры скрыты по решению ее организатора.",
+      "Всего заявок: 1"
+    ],
+    "bids_count": 1,
+    "winner": null,
+    "signed_supplier": null,
+    "executed_price": null,
+    "already_in_corpus": true,
+    "decision": "Source-grade upgrade only; no new lot or PQ equipment revenue"
+  },
+  "case_106044_TT": {
+    "official_urls": [
+      "https://etp.metal-it.ru/trades/431640997/info",
+      "https://etp.metal-it.ru/trades/475802614/info"
+    ],
+    "http_statuses": [
+      200,
+      200
+    ],
+    "sha256_both": "455aa5185b862a91a297b31a111671becb309a7f61d548f63331f06faa640943",
+    "same_generic_js_shell": true,
+    "case_identity_in_html": false,
+    "outcome": "unverified",
+    "already_in_corpus": true
+  },
+  "eis_retries": [
+    {
+      "url": "https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=50277071467260001550000",
+      "curl_direct_http": 404,
+      "tls_verify_result": 0,
+      "outcome": "signed_supplier_unverified"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616435269",
+      "curl_direct_http": 404,
+      "tls_verify_result": 0,
+      "outcome": "technical_archive_not_recovered"
+    }
+  ],
+  "new_protocols_named_winner": 0,
+  "new_signed_suppliers": 0,
+  "new_verified_equipment_sales_rub": 0,
+  "new_month_source_coverage": 0,
+  "client_html_regenerated": false,
+  "canonical_v29_rows_unchanged": 101,
+  "no_auto_merge": true,
+  "next_three": [
+    {
+      "case": "32616435269",
+      "retry_after_moscow": "2026-10-30 10:38",
+      "goal": "official Roseltorg technical 7z and voltage"
+    },
+    {
+      "case": "РН61003961",
+      "retry_after_moscow": "2026-10-30 20:00",
+      "goal": "TEK-Torg original final outcome / signed supplier"
+    },
+    {
+      "case": "106044-ТТ",
+      "retry_after_moscow": "2026-10-31 09:00 or first-party result publication",
+      "goal": "Metal-IT named result, not generic JS shell"
+    }
+  ],
+  "why_no_db_growth": "B2B 4302914 is already represented and concerns maintenance of installed 6.3 kV STATCOM, not new equipment. Metal-IT offers no public outcome; EIS exact official endpoints returned 404."
+}

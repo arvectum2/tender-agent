@@ -1,0 +1,107 @@
+{
+  "schema_version": "pq-watchdog-evidence-run/20261102",
+  "run": "2026-11-02T15:32+03:00",
+  "moscow_run_end": "2026-11-02T15:39:00.609382+03:00",
+  "issue_comment_id": 6577241940,
+  "single_pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "base_git_head": "7aad871348b8d3a14816fff83ff63af120761fc0",
+  "code_commit": "d1f9000af8be36067cdb10d9c7c36e41796380fe",
+  "internal_apfs_acceptance": "pass on updated commit",
+  "db_before": {
+    "unique_lots": 123,
+    "distinct_procedures": 112,
+    "eis_223_notices": 45
+  },
+  "db_after": {
+    "unique_lots": 123,
+    "distinct_procedures": 112,
+    "eis_223_notices": 45
+  },
+  "new_unique_lots": 0,
+  "new_deduplicated_projects": 0,
+  "new_verified_db_fields": 1,
+  "enrichment": {
+    "case": "commercial:РН61005187:lot1",
+    "field": "customer.inn",
+    "value": "7536125117",
+    "official_url": "https://www.tektorg.ru/rosnefttkp/procedures/20083978",
+    "source_sha256": "ad145e070ebaf2d085781beddf15a07a46b38ff3a92a141eb0c3b281f44bc037",
+    "source_reused_from": "2026-10-30 first-party TEK-Torg original",
+    "receipt": "receipts/pq-rn61005187-buyer-inn-20261102T1538.json",
+    "original_case_alias": "commercial:RN61005187:lot1",
+    "canonical_case": "commercial:РН61005187:lot1"
+  },
+  "new_named_winners": 0,
+  "new_signed_suppliers": 0,
+  "new_paid_sales": 0,
+  "fresh_first_party_requests": 3,
+  "fresh_first_party_http200": 2,
+  "fresh_first_party_tls_blocked": 1,
+  "fresh_sha_verified_generic_search_captures": 2,
+  "fresh_case_specific_originals": 0,
+  "reused_case_specific_originals": 1,
+  "new_protocols": 0,
+  "new_month_source_pairs_exhaustively_covered": 0,
+  "attempts": [
+    {
+      "url": "https://www.tektorg.ru/rosneft/procedures?name=954014",
+      "http": 200,
+      "sha256": "b28af67a1be809e5bbff435fb17b6bb50c0257c3cbbfbb460152cb05827d7ad7",
+      "finding": "generic search shell, exact ID only in request; not a PQ original"
+    },
+    {
+      "url": "https://www.tektorg.ru/rosnefttkp/procedures?name=954014",
+      "http": 200,
+      "sha256": "4997885b742159b3be8e7f6f4bb43496ba7ab1a712766ae43e08354747d2fd89",
+      "finding": "generic search shell, no case-specific procurement data"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32514947144",
+      "http": null,
+      "error": "SSL CERTIFICATE_VERIFY_FAILED (self-signed chain); no TLS bypass"
+    }
+  ],
+  "secondary_research": [
+    {
+      "url": "https://zakupki.kontur.ru/customers/7536125117",
+      "finding": "954014 is a separate fire-suppression maintenance RFQ; adjacent RN61005187 is the actual PQ market-sounding; do not count 954014 as PQ"
+    },
+    {
+      "url": "https://synapsenet.ru/zakupki/gazprombank/%D0%B3%D0%BF630876%231344734--leningradskaya-obl-postavka-oborudovaniya-s",
+      "finding": "GP630876 10kV modernization secondary technical positions; no new primary original, no winner"
+    }
+  ],
+  "research_limitations": [
+    "EIS contract-info TLS certificate failure; no trust override",
+    "TEK-Torg 954014 searches return only generic SSR; false-positive removed",
+    "GPB source previously generic; no case-specific first-party document",
+    "2026-11-02 16:30 Moscow is first eligible retry for 32616497692 final protocol",
+    "No exhaustive month coverage and no evidence of signed equipment sales"
+  ],
+  "full_backup_sha256": "03e1985c39d2c0347cb7238887064e2da45af728b2a17e82daac440325a79b66",
+  "client_report_version": "V51",
+  "snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261102_v51.json",
+  "audit": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261102_V51.json",
+  "field_coverage_buyer_inn": "85/123",
+  "bilingual_pdf_pages_each": 268,
+  "tests": "9 passed; Ruff clean; both PDF page counts 268; source and DB readback 123/112/45",
+  "client_html_unchanged": true,
+  "next_targets": [
+    {
+      "case": "223fz:32514947144:lot1",
+      "retry": "on new official registry revision / valid TLS",
+      "goal": "supplier INN, contract-signatory only from official original"
+    },
+    {
+      "case": "223fz:32514720691:lot1",
+      "retry": "on new first-party technical/OEM document",
+      "goal": "OEM, technical rating, signed supplier"
+    },
+    {
+      "case": "223fz:32616497692:lot1",
+      "retry": "after 2026-11-02 16:30 Moscow",
+      "goal": "final commission protocol, named outcome if public"
+    }
+  ]
+}

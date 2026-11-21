@@ -1,0 +1,24 @@
+{
+  "case_id": "223fz:32514947144:lot1",
+  "db_before": {
+    "rows": 118,
+    "owner": "tender-agent",
+    "unique": 118,
+    "records": 118
+  },
+  "db_after": {
+    "rows": 118,
+    "owner": "tender-agent",
+    "unique": 118,
+    "records": 118
+  },
+  "new_verified_fields": 8,
+  "source_shas": [
+    "23f49591598c82ae010d28a2e1373d6f567654e9c83821e1adab8635c37b589c",
+    "5aee81a7a8dc65d4314ba718ab7621293ca3d708448958fd22c1cd5bdeb2f94c",
+    "1f3cde0fa95d5187b707e978108553894dea2c1377ca0123b5a3d7b08a113fd8"
+  ],
+  "new_hash": "5cce6121ee1c99a9d46c038fe2d224f0d591187c760abf6a2e1909b840c8c842",
+  "winner_not_signed_supplier": true,
+  "backup_sha256": "269c84fde09c8ccb1e8b5a57921cb64d2efe32213a5cc1cd40111a4a8f855394"
+}
