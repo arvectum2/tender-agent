@@ -1,5 +1,5 @@
 task_id: TA-SIBUR-DOC-REVIEW-20261121
-status: in_progress
+status: completed
 goal: Make SIBUR document acquisition prototype accept only SHA-verified complete original source snapshots and safely audit previously preserved original attachments without new source requests.
 definition_of_done:
   - Integrate original stacked PR526 with reviewed parent PR524 without losing prior merge history or main current-task checkpoint.
@@ -16,16 +16,16 @@ completed_stages:
   - Private 0600 receipt saved; full status needs_review and nonzero CLI exit 2, 36 focused pytest and Ruff PASS.
   - PR524 exact-source head passed 19/19 CI and protected main merged as 0af718499498f398a3a339dfa8c714c96e8b28af; child merged this current main without conflicts, source archive checksum and quarantined original unchanged.
   - Opened issue #686 for one source .ppt URL saved as .pptx; stored file valid OOXML PPTX but authenticity as source original .ppt remains NOT verified.
-current_stage: original_pr526_reconciled_with_protected_main_0af718_waiting_exact_ci
-remaining_stages:
-  - Push original PR526 branch with unchanged historical source branches and current verified parent, run exact GitHub/GitVerse CI.
-  - Merge source-only code if current protected checks pass and mark checkpoint completed.
-  - Keep issue #686 quarantined and actual network authorization separate from code integration.
-last_verified_commit: ea8817430c0e417d4fe127e9021b0041f2159a47
-last_checks: 27 original pages complete by SHA, 516 saved file receipts/bytes SHA and source refs verified; 515 aligned source extensions, 1 quarantined .ppt to .pptx; 424 signatures, 92 other formats SHA only. Read-only CLI exits 2; 36 pytest and Ruff PASS, no source network/DB writes.
-resume_instruction: Parent PR524 completed in protected main 0af71849 and child PR526 already integrated latest protected main, 27 pages and all 516 saved file receipts verified, one source .ppt saved as .pptx quarantined issue #686; CLI read-only exit2. 36 tests/Ruff PASS. Push existing PR526 original branch nonforce, await new exact-head CI, then merge owner+AI source-only, mark completed. No HTTP source fetch, reimport, DB/DP writes, bids or assumption of present-day completeness.
+current_stage: exact_ci_19_of_19_green_and_protected_merge_complete
+remaining_stages: []
+last_verified_commit: 7ea192b3c17f47122569eea99a1893c5566a0d3c
+last_checks: PR526 exact reviewed head ef7653a5224dc04f88e098ab8cf8a86e3690e5e3 passed 19/19 CI including GitVerse, protected merge 7ea192b3c17f47122569eea99a1893c5566a0d3c. 36 focused pytest and Ruff PASS. All 516 saved source receipts hash/size verified; one PPT URL/PPTX saved quarantine issue #686. No network calls or DB/DP write.
+resume_instruction: PR526 source-document offline auditor is COMPLETED in protected main 7ea192b3; do not repeat or fetch the 516 historical links. One saved PPTX whose original URL ends .ppt stays quarantined under issue #686. Continue isolated pure source archive parser task with historical SHA receipts, no source rights/DB activation.
 private_saved_document_receipt: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/sibur-document-source-audit-20261121.json
 saved_receipts_sha_verified: 516
 source_ext_aligned_receipts: 515
 quarantined_extension_mismatch: 1
 source_current_status_verified: false
+merged_pr: 526
+merged_main_commit: 7ea192b3c17f47122569eea99a1893c5566a0d3c
+completed_at_utc: 2026-11-21T14:10:20Z
