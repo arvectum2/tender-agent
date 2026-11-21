@@ -16,24 +16,26 @@ completed_stages:
   - Combined source-integrity PR678 exact head ed0253dd with prior PR674 head 4e333fcf; automatic merge was conflict-free. Bounded original downloads, exact SHA and length checks, non-clobber atomic write, fail-closed preparation and status added without source network access or live runtime mutation.
   - Combined Ruff PASS and 134 focused RAG/RI223/DP/storage/Workspace tests PASS (13 warnings); current main canonical .agent/current-task.yaml remains blob 54c21dcc.
   - Follow-up PR678 source 07afb473 persists verified downloaded-file metadata before DP processing; integration SQLite outage test proves file path/hash/status visible from new session after Data Platform fails. Exact merge with PR674 automatic, no conflicts; 135 combined focused PASS (13 warnings), Ruff PASS, main task blob unchanged.
+  - Source follow-up 3befa34b closes direct analyze_tender/API/background-job bypass: EIS original files are read-only SHA/size checked before querying old DP index, damaged/missing/unloaded inventory fails closed. No conflicts on merge; combined 245 focused tests PASS and Ruff PASS, no live source fetch or production mutation.
+  - Verified previous PR674 exact 3bad0af1 19/19 CI PASS, PR678 07afb473 19/19 PASS, mirror PASS; new combined head requires its own exact CI.
   - PR675 exact head 1bb655db0ab5ad5427d044bf275164290709f49f passed CI 19/19; 6232 tests passed / 288 skipped and is ready for human review.
   - Compared PR674 vs PR675 against main: 4 diagnostic PR675 file changes, only prepare_service.py overlaps. Applied exact diagnostic helper and zero-chunk refusal branch to PR674 source without altering its other recovery changes; imported 6 regression cases, durable DTR audit and child checkpoint from PR675 exact blobs.
   - Nov20 DTR had 17 manager-ready, 22 duplicate, 20 screened-out and 3 failures; PostgreSQL READ ONLY verified two procurements without document metadata and one with four original URLs but no downloaded bytes; no automatic retry.
   - PR599 and PR660 are incompatible registry and review-bundle alternatives, not discarded; PR637 needs current production release safeguard review.
   - 183 MI worktrees remain untouched (114 ancestor, 69 unique); separate SSD dirty clone and MI nine commits protected.
-current_stage: original_file_durability_combined_ci
+current_stage: direct_analysis_integrity_combined_ci
 remaining_stages:
-  - Verify latest exact combined CI after adding PR678 durability successor 07afb473 as second parent; preserve both source histories and canonical checkpoint blob.
+  - Verify newest exact combined CI after adding source PR678 direct-analysis gate 3befa34b as second parent; preserve source history and canonical checkpoint blob.
   - Independently review PR674 original-source, operator gates, migrations and commercial readiness.
   - Complete first live TA PITR prewrite receipt, verify dual WAL and active source catalog; no blind DTR retry or deletion.
   - Reconcile remaining independent PR599/660/637 and SIBUR/GPB/PQ/Gemma scopes.
   - Obtain owner/AM4 review before any main merge, live migration, bid submission or commercial activation.
-last_verified_commit: 6275055768f08e497e0677f1d843ecb5b091840f
+last_verified_commit: 3bad0af105c5ed1fa831eaa90d32dc684714a4fe
 source_candidate: 02bfe3a01a81aaa2cd8d769f37f391b1e2d7ccd0
 extension_candidate: 5ef2b43c21abd7a80f39157181512d125d73cd25
 workspace_candidate: 7bd3e0c7aae238305f2c83dc34a4e33105e34344
 dtr_diagnostic_candidate: 1bb655db0ab5ad5427d044bf275164290709f49f
-last_checks: PR674 4e333fcf exact CI 19/19 SUCCESS, 6663 pass, 293 skip. PR678 source successor 112 focused PASS. Latest combined 135 focused PASS, Ruff PASS; latest exact CI pending. No production DB/runtime or main mutation.
-resume_instruction: Verify exact latest PR674 CI including PR678 durability successor 07afb473; resolve any failure on draft only, then independently review original source admission, current EIS revision and 223-FZ archive links. No live EIS/ETP fetch, failed-run replay, production migration/deploy, bid or deletion without AM4/owner and branch protection #676. Preserve main task blob 54c21dcc and nine unpushed MI commits.
-original_file_integrity_candidate: 07afb473e7a9d1f8d92f49f3c8c0233d3cbde7dd
-original_file_integrity_combined_tests: 135_passed_13_warnings
+last_checks: Prior PR674 and PR678 exact heads 19/19 SUCCESS; newest combined 245 focused PASS (30 warnings), Ruff PASS. Latest exact combined CI pending. No production DB/runtime/main mutation.
+resume_instruction: Check exact new PR674 CI after PR678 3befa34b direct-analysis guard. If failure repair draft only, rerun focused+full CI. Must not infer real originals, source rights or restored Nov20 jobs; before live changes require AM4/owner, branch governance #676, PITR/rollback and primary-source revision. No live EIS/ETP fetch, DTR retry, DB mutation, deployment, bid, source branch deletion. Preserve main task blob 54c21dcc and MI nine unpushed commits.
+original_file_integrity_candidate: 3befa34bfc7a885ba99b635e335d95f72450488c
+original_file_integrity_combined_tests: 245_passed_30_warnings

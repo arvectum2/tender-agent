@@ -13,6 +13,7 @@ from sqlalchemy.orm import Session
 from src.shared.config.settings import get_settings
 from src.shared.db.base import Base
 from src.tender_research.config import load_config
+from src.tender_research.document_store import source_originals_not_ready
 from src.tender_research.rag.data_platform import (
     DataPlatformError,
     DataPlatformRagRetriever,
@@ -466,6 +467,28 @@ def analyze_tender(
                 _record_history(
                     result, session, duration_seconds=0.0, source=history_source
                 )
+            return result
+
+        # A caller can request analysis directly, bypassing preparation.
+        # The presence of historical embeddings must never override missing,
+        # altered or not-yet-downloaded original EIS documents.
+        original_issue = source_originals_not_ready(
+            tender, config.document_download_max_size_mb * 1024 * 1024
+        )
+        if original_issue is not None:
+            result = TenderAnalysisResult(
+                status="failed",
+                registry_number=registry_number,
+                sections=[],
+                sections_count=0,
+                sources_count=0,
+                analysis_mode=analysis_mode,
+                errors=[original_issue],
+                retrieval_provider="data_platform",
+                retrieval_model="hybrid",
+            )
+            if record_history:
+                _record_history(result, session, duration_seconds=0.0, source=history_source)
             return result
 
         # Only source-verified 223fz tenders change document questions.
