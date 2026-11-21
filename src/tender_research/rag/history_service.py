@@ -114,6 +114,7 @@ def record_analysis_run(
     duration_seconds: float | None = None,
     source: str | None = None,
     metadata: dict | None = None,
+    commit: bool = True,
 ) -> TenderAnalysisRun:
     now = datetime.now(UTC)
     preview = _generate_preview(report_markdown) if report_markdown else None
@@ -154,7 +155,10 @@ def record_analysis_run(
 
         session.flush()
         append_candidate(session, make_analysis_candidate(run))
-    session.commit()
+    if commit:
+        session.commit()
+    else:
+        session.flush()
     return run
 
 

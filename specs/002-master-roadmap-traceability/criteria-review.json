@@ -1,0 +1,344 @@
+{
+  "schema": "arvectum.source-criterion-review/1",
+  "scope": "13 native PQ AC and nine selected master gates; not full master roadmap",
+  "source_commit": "6799bdef88cbe64b4d769f4af4e50f724cc0e312",
+  "actual_acceptance_verified": false,
+  "execution_authorized": false,
+  "rows": [
+    {
+      "id": "TA-PQ-AC1",
+      "source": "specs/001-power-quality-evidence-closure/spec.md",
+      "first_line": 14,
+      "last_line": 14,
+      "exact_text": "- **AC1:** `v29_candidate_leads = source_number_223_leads + non_223_or_nonstandard_leads`; output narrative warning counts are derived from these values, not manually entered constants.",
+      "label": "AC1",
+      "state": "partial",
+      "next_action": "Existing native tasks record engineering completion; inspect exact current tests and receipts before accepting this criterion.",
+      "task_id": "REVIEW-TA-PQ-AC1",
+      "native_task_ids": [
+        "T004",
+        "T005",
+        "T006"
+      ],
+      "acceptance_evidence": []
+    },
+    {
+      "id": "TA-PQ-AC2",
+      "source": "specs/001-power-quality-evidence-closure/spec.md",
+      "first_line": 15,
+      "last_line": 15,
+      "exact_text": "- **AC2:** Counterexample regression: a corpus of 3 leads with 2 distinct 11-digit EIS numbers generates warnings about 3 candidates and 1 non-223/nonstandard lead, never 101/69.",
+      "label": "AC2",
+      "state": "partial",
+      "next_action": "Existing native tasks record engineering completion; inspect exact current tests and receipts before accepting this criterion.",
+      "task_id": "REVIEW-TA-PQ-AC2",
+      "native_task_ids": [
+        "T004",
+        "T005",
+        "T006"
+      ],
+      "acceptance_evidence": []
+    },
+    {
+      "id": "TA-PQ-AC3",
+      "source": "specs/001-power-quality-evidence-closure/spec.md",
+      "first_line": 16,
+      "last_line": 16,
+      "exact_text": "- **AC3:** Historical 101-lead fixture, 33 unique 223 numbers, produces exactly 68 non-223/nonstandard leads in warnings; keep report's `completeness=partial_do_not_extrapolate`.",
+      "label": "AC3",
+      "state": "partial",
+      "next_action": "Existing native tasks record engineering completion; inspect exact current tests and receipts before accepting this criterion.",
+      "task_id": "REVIEW-TA-PQ-AC3",
+      "native_task_ids": [
+        "T004",
+        "T005",
+        "T006"
+      ],
+      "acceptance_evidence": []
+    },
+    {
+      "id": "TA-PQ-AC4",
+      "source": "specs/001-power-quality-evidence-closure/spec.md",
+      "first_line": 17,
+      "last_line": 17,
+      "exact_text": "- **AC4:** SHA integrity and numeric distinction regression tests remain passing. Bids, NMCK, public register prices and signed contract amounts are never conflated.",
+      "label": "AC4",
+      "state": "partial",
+      "next_action": "Existing native tasks record engineering completion; inspect exact current tests and receipts before accepting this criterion.",
+      "task_id": "REVIEW-TA-PQ-AC4",
+      "native_task_ids": [
+        "T005",
+        "T006",
+        "T014"
+      ],
+      "acceptance_evidence": []
+    },
+    {
+      "id": "TA-PQ-AC5",
+      "source": "specs/001-power-quality-evidence-closure/spec.md",
+      "first_line": 22,
+      "last_line": 22,
+      "exact_text": "- **AC5:** Per-period + per-source discovery/coverage ledger; ЕИС 44/223 and named commercial ETP sources with query provenance and honest source unavailability.",
+      "label": "AC5",
+      "state": "open",
+      "next_action": "Reconcile current MI checkpoint, original sources and exact review evidence; preserve existing Watchdog and legal/data boundaries.",
+      "task_id": "REVIEW-TA-PQ-AC5",
+      "native_task_ids": [
+        "T008",
+        "T009",
+        "T010",
+        "T014"
+      ],
+      "acceptance_evidence": []
+    },
+    {
+      "id": "TA-PQ-AC6",
+      "source": "specs/001-power-quality-evidence-closure/spec.md",
+      "first_line": 23,
+      "last_line": 23,
+      "exact_text": "- **AC6:** For each relevant notice/lot, link original technical specification, final protocol and public contract registry or signed evidence where legally available. Price fields `nmck`, `winning_offer`, `registry_price`, `signed_contract`, `pq_component` separately; mark unknown explicitly.",
+      "label": "AC6",
+      "state": "open",
+      "next_action": "Reconcile current MI checkpoint, original sources and exact review evidence; preserve existing Watchdog and legal/data boundaries.",
+      "task_id": "REVIEW-TA-PQ-AC6",
+      "native_task_ids": [
+        "T009",
+        "T010",
+        "T011",
+        "T014"
+      ],
+      "acceptance_evidence": []
+    },
+    {
+      "id": "TA-PQ-AC7",
+      "source": "specs/001-power-quality-evidence-closure/spec.md",
+      "first_line": 24,
+      "last_line": 24,
+      "exact_text": "- **AC7:** Deduplicate notices / lots / repeated procurements / projects / contracts with reviewable merge/split evidence.",
+      "label": "AC7",
+      "state": "open",
+      "next_action": "Reconcile current MI checkpoint, original sources and exact review evidence; preserve existing Watchdog and legal/data boundaries.",
+      "task_id": "REVIEW-TA-PQ-AC7",
+      "native_task_ids": [
+        "T013",
+        "T014"
+      ],
+      "acceptance_evidence": []
+    },
+    {
+      "id": "TA-PQ-AC8",
+      "source": "specs/001-power-quality-evidence-closure/spec.md",
+      "first_line": 25,
+      "last_line": 25,
+      "exact_text": "- **AC8:** Buyers, verified participants, EPC, designers, suppliers and OEM roles are evidence-attributed; no automatic inference that a commission member is the signed supplier or OEM.",
+      "label": "AC8",
+      "state": "open",
+      "next_action": "Reconcile current MI checkpoint, original sources and exact review evidence; preserve existing Watchdog and legal/data boundaries.",
+      "task_id": "REVIEW-TA-PQ-AC8",
+      "native_task_ids": [
+        "T011",
+        "T012",
+        "T014"
+      ],
+      "acceptance_evidence": []
+    },
+    {
+      "id": "TA-PQ-AC9",
+      "source": "specs/001-power-quality-evidence-closure/spec.md",
+      "first_line": 26,
+      "last_line": 26,
+      "exact_text": "- **AC9:** For mixed EPC, isolate PQ component only when technical bills or trustworthy price allocation exist; otherwise omit from PQ equipment total.",
+      "label": "AC9",
+      "state": "open",
+      "next_action": "Reconcile current MI checkpoint, original sources and exact review evidence; preserve existing Watchdog and legal/data boundaries.",
+      "task_id": "REVIEW-TA-PQ-AC9",
+      "native_task_ids": [
+        "T013",
+        "T014"
+      ],
+      "acceptance_evidence": []
+    },
+    {
+      "id": "TA-PQ-AC10",
+      "source": "specs/001-power-quality-evidence-closure/spec.md",
+      "first_line": 27,
+      "last_line": 27,
+      "exact_text": "- **AC10:** Produce source-linked registers and `report.md`, `coverage.json`, `quality_report.json`; do not claim census or estimate national TAM from discovered examples.",
+      "label": "AC10",
+      "state": "open",
+      "next_action": "Reconcile current MI checkpoint, original sources and exact review evidence; preserve existing Watchdog and legal/data boundaries.",
+      "task_id": "REVIEW-TA-PQ-AC10",
+      "native_task_ids": [
+        "T014",
+        "T017"
+      ],
+      "acceptance_evidence": []
+    },
+    {
+      "id": "TA-PQ-AC11",
+      "source": "specs/001-power-quality-evidence-closure/spec.md",
+      "first_line": 32,
+      "last_line": 32,
+      "exact_text": "- **AC11:** Reuse `.agent/checkpoints/TA-MI-AUTONOMY-20261027.yaml`, source hash ledger, current lease and existing canonical corpus; do not replace unrelated `.agent/current-task.yaml`.",
+      "label": "AC11",
+      "state": "open",
+      "next_action": "Reconcile current MI checkpoint, original sources and exact review evidence; preserve existing Watchdog and legal/data boundaries.",
+      "task_id": "REVIEW-TA-PQ-AC11",
+      "native_task_ids": [
+        "T015",
+        "T016"
+      ],
+      "acceptance_evidence": []
+    },
+    {
+      "id": "TA-PQ-AC12",
+      "source": "specs/001-power-quality-evidence-closure/spec.md",
+      "first_line": 33,
+      "last_line": 33,
+      "exact_text": "- **AC12:** Preserve S0–S11 event boundaries, source provenance, append-only conclusions with rights/privacy gates; no AI-made gold labels.",
+      "label": "AC12",
+      "state": "open",
+      "next_action": "Reconcile current MI checkpoint, original sources and exact review evidence; preserve existing Watchdog and legal/data boundaries.",
+      "task_id": "REVIEW-TA-PQ-AC12",
+      "native_task_ids": [
+        "T015",
+        "T016",
+        "T017"
+      ],
+      "acceptance_evidence": []
+    },
+    {
+      "id": "TA-PQ-AC13",
+      "source": "specs/001-power-quality-evidence-closure/spec.md",
+      "first_line": 34,
+      "last_line": 34,
+      "exact_text": "- **AC13:** One existing Tender Agent Watchdog continues unchanged; no disabling, duplicate scheduling, uncontrolled live ETП requests or write to production DB.",
+      "label": "AC13",
+      "state": "open",
+      "next_action": "Reconcile current MI checkpoint, original sources and exact review evidence; preserve existing Watchdog and legal/data boundaries.",
+      "task_id": "REVIEW-TA-PQ-AC13",
+      "native_task_ids": [
+        "T015",
+        "T016"
+      ],
+      "acceptance_evidence": []
+    },
+    {
+      "id": "TA-APR05",
+      "source": "docs/roadmap/MASTER_ROADMAP.md",
+      "first_line": 9,
+      "last_line": 9,
+      "exact_text": "- Next product P0: APR-05 isolated release readiness. New rollback/entitlement regression verifies saved estimates, actual cost snapshots and norms across master-gate disable/re-enable, trial expiry, suspension, individual legal hold and foreign tenant denial. Local focused regression: 79 passed / 2 skipped. Disposable migrated PostgreSQL 122 + R9 backup/restore PASS: seven exact API histories, two byte-exact evidence downloads, tenant isolation, wrong-scope/corrupt backup rejection, restart kill switch. Pilot Dockerfile standalone build and offline gate/archive/registry smoke added to CI; existing overlay smoke PASS. Updated exact CI 19/19, 5988 passed / 288 skipped, fresh pilot Dockerfile offline verification PASS (PR #604, head 380bbdb0). Engineering rehearsal complete; draft merge and actual pilot release separate. No production or live billing.",
+      "label": "APR-05 isolated release readiness",
+      "state": "partial",
+      "next_action": "Engineering rehearsal recorded; staging, actual paid pilot, legal and release approval remain separate.",
+      "task_id": "REVIEW-TA-APR05",
+      "native_task_ids": [],
+      "acceptance_evidence": []
+    },
+    {
+      "id": "TA-APR06",
+      "source": "docs/roadmap/MASTER_ROADMAP.md",
+      "first_line": 291,
+      "last_line": 291,
+      "exact_text": "- [ ] **APR-06 — Commercial Acceptance Gate (код PR #254 и зависимых веток в main через #459; human/commercial gate открыт).** 20–30 реальных закупок сквозным сценарием; измеряем time-to-decision, correction rate, citation coverage, unknown rate, missed blockers, false GO/NO-GO, rework application package.",
+      "label": "APR-06 commercial criteria",
+      "state": "blocked",
+      "next_action": "Obtain independent human/legal reviews and measured commercial KPI; archived development not a commercial frozen corpus.",
+      "task_id": "REVIEW-TA-APR06",
+      "native_task_ids": [],
+      "acceptance_evidence": []
+    },
+    {
+      "id": "TA-PRICE01",
+      "source": "docs/roadmap/MASTER_ROADMAP.md",
+      "first_line": 347,
+      "last_line": 347,
+      "exact_text": "- [ ] **PRICE-01 / ARV-057 — Конкурентная цена на основе протоколов и себестоимости (P1, Owner-requested, 2026-10-14).** Подключить накопленные результаты определения поставщика к расчёту рекомендуемой ставки Tender Agent. Считать отдельно: (1) прямые внешние затраты, УСН/налоги, комиссию ЭТП и резерв, (2) стоимость собственного труда/полную экономическую себестоимость, (3) распределение реальных допущенных цен по сопоставимым закупкам, НМЦК и число конкурентов, (4) причины отклонений и риск недопуска, (5) стратегический сценарий «первый контракт» с явно заданным пользователем допустимым порогом доходности. Выдавать несколько сценариев (безубыточный/агрессивный/коммерческий) с доказательной базой, источником, датой и предупреждением о малой выборке; **никакого автоматического демпинга и автоподачи без решения человека**. Стартовый реальный кейс: закупка 0158300034526000388, протокол от 14.10.2026; 55 ставок, 45 допущено, 10 отклонено, победитель 28 400 ₽, Arvectum 119 000 ₽ / 38-е место и допуск. Данные импортированы в PostgreSQL tender_bid_result_snapshots / tender_bid_result_offers; копия CSV/JSON: Arvectum/data/tenders/results/0158300034526000388/. **Критерии приёмки:** воспроизводимая загрузка и дедупликация протоколов; сохранение исходных идентификаторов и причин отклонений; фильтрация несопоставимых контрактов; независимый расчёт себестоимости; объяснимое ценовое предложение с диапазоном и ссылками на доказательства; тест на кейсе Аксая с сохранением цены 28 400 ₽ и нашего 38-го места. **Не путать с ARV-069:** вероятностный прогноз победителя и автопромоция моделей остаются deferred до достаточной статистики/frozen benchmark.",
+      "label": "PRICE-01 / ARV-057 pricing",
+      "state": "partial",
+      "next_action": "Technical integration is recorded closed in master lines 7–8; independent cross-procurement real evidence remains open; no bids or price claims.",
+      "task_id": "REVIEW-TA-PRICE01",
+      "native_task_ids": [],
+      "acceptance_evidence": []
+    },
+    {
+      "id": "TA-APR03B",
+      "source": "docs/roadmap/MASTER_ROADMAP.md",
+      "first_line": 121,
+      "last_line": 121,
+      "exact_text": "- [ ] **Приоритет 1 · APR-03B:** в существующем интерфейсе воспроизвести полный source-locked сценарий на доступной официальной редакции и проверить цитаты, потери документов, UNKNOWN, ограничения экспорта. Не создавать второй UI/стенд/БД.",
+      "label": "APR-03B workspace source-locked scenario",
+      "state": "open",
+      "next_action": "Reconcile authoritative current sources and cited output in existing workspace; no second UI or DB.",
+      "task_id": "REVIEW-TA-APR03B",
+      "native_task_ids": [],
+      "acceptance_evidence": []
+    },
+    {
+      "id": "TA-APR04",
+      "source": "docs/roadmap/MASTER_ROADMAP.md",
+      "first_line": 122,
+      "last_line": 122,
+      "exact_text": "- [ ] **Приоритет 2 · APR-04:** подготовить приватный source-backed acceptance-пакет реального профиля ООО «Арвектум»: подтвержденные поля, неизвестные квалификационные критерии, ограничения по лицензиям/референсам; не публиковать private реквизиты.",
+      "label": "APR-04 real company profile",
+      "state": "open",
+      "next_action": "Private evidence only, check rights and actual qualifications; no publication.",
+      "task_id": "REVIEW-TA-APR04",
+      "native_task_ids": [],
+      "acceptance_evidence": []
+    },
+    {
+      "id": "TA-SIBUR",
+      "source": "docs/roadmap/MASTER_ROADMAP.md",
+      "first_line": 46,
+      "last_line": 46,
+      "exact_text": "| TA-SIBUR-INTELLIGENCE | SAP SRM СИБУР — прямые закупки; B2B-Center — генподрядчики | Реестр, история 24–36 месяцев при наличии, карта проектов и контрагентов, мониторинг |",
+      "label": "TA-SIBUR-INTELLIGENCE",
+      "state": "open",
+      "next_action": "Reconcile authorized SAP SRM/B2B source discovery and documented object links; source availability unverified here.",
+      "task_id": "REVIEW-TA-SIBUR",
+      "native_task_ids": [],
+      "acceptance_evidence": []
+    },
+    {
+      "id": "TA-GEH",
+      "source": "docs/roadmap/MASTER_ROADMAP.md",
+      "first_line": 47,
+      "last_line": 47,
+      "exact_text": "| TA-GEH-INTELLIGENCE | ЭТП ГПБ — прямые закупки; TEK-Torg — генподрядчики | Реестр ГЭХ и дочерних обществ, фокус на Мосэнерго |",
+      "label": "TA-GEH-INTELLIGENCE",
+      "state": "open",
+      "next_action": "Reconcile source discovery and actual registry evidence; no external actions.",
+      "task_id": "REVIEW-TA-GEH",
+      "native_task_ids": [],
+      "acceptance_evidence": []
+    },
+    {
+      "id": "TA-AI-TRADING",
+      "source": "docs/roadmap/MASTER_ROADMAP.md",
+      "first_line": 48,
+      "last_line": 48,
+      "exact_text": "| TA-AI-TRADING | Портал поставщиков Москвы, ЕАТ Берёзка и другие электронные магазины (доступность проверяется) | База ЗМО, товаров и цен, автоматический расчёт и paper-trading |",
+      "label": "TA-AI-TRADING",
+      "state": "open",
+      "next_action": "Paper-trading only; no real bidding, payments or commercial promises.",
+      "task_id": "REVIEW-TA-AI-TRADING",
+      "native_task_ids": [],
+      "acceptance_evidence": []
+    },
+    {
+      "id": "TA-TRACK-SHARED",
+      "source": "docs/roadmap/MASTER_ROADMAP.md",
+      "first_line": 50,
+      "last_line": 56,
+      "exact_text": "SIBUR/GEH: проверка доступов и адаптеров → первоисточники → историческое наполнение → дедупликация и связи заказчик/генподрядчик/объект → регулярное обновление и аналитика. Привязку закупки генподрядчика к объекту подтверждать документами.\n\nAI Trading: выбор категорий на данных → каталог SKU и поставщиков → наличие/сроки и полная экономика (налоги/НДС, логистика, комиссии, обеспечение, капитал, риски) → виртуальные ставки → сверка с опубликованными итогами → backtest без подглядывания в будущие цены → оценка прибыли, капитала и ошибок. Целевые 99% — доля рутинных операций без человека, не достигнутый результат. Реальная торговля только после отдельного решения Owner; сейчас исключительно симуляция.\n\nДоступы, закрытые данные, профили и решения разделяются по клиентам/юрлицам. Не публиковать конфиденциальные данные. Сбор только разрешёнными read-only способами; внешние сообщения, подпись, заявки, оплата и закупка товаров запрещены текущим scope.\n\nПервые задачи: TA-SIBUR-SOURCE-DISCOVERY-001, TA-GEH-SOURCE-DISCOVERY-001, TA-AI-TRADING-SOURCE-DISCOVERY-001. Machine-readable scope: master-roadmap.yaml#owner_business_tracks_2026_11_14.",
+      "label": "Shared business track controls",
+      "state": "open",
+      "next_action": "Keep original source/discovery actions, client/legal isolation and paper-trading constraints; no new execution rights.",
+      "task_id": "REVIEW-TA-TRACK-SHARED",
+      "native_task_ids": [],
+      "acceptance_evidence": []
+    }
+  ]
+}

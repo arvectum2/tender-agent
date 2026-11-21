@@ -46,6 +46,7 @@ from src.tender_research.registry_discovery import (
     RegistryNumberDiscovery,
     SourceType,
 )
+from src.tender_research.rag.missing_attachments import preserve_recovered_inventory
 from src.tender_research.repository import TenderRepository
 from src.tender_research.search_provider import SearchProvider
 from src.tender_research.schemas import EisDocumentRaw, EisTenderRaw, TenderUpsertData
@@ -591,7 +592,10 @@ class TenderResearchPipeline:
         include_public_documents: bool = True,
     ) -> TenderUpsertData:
         soap_documents = self._load_soap_documents(soap_raw)
-        public_documents = [] if soap_documents or not include_public_documents else self._public_documents_to_rows(detail)
+        preserve_inventory = include_public_documents and preserve_recovered_inventory(
+            existing_tender, detail, soap_documents=bool(soap_documents)
+        )
+        public_documents = [] if soap_documents or not include_public_documents or preserve_inventory else self._public_documents_to_rows(detail)
         existing_title = None
         if existing_tender is not None and not _is_placeholder_title(existing_tender.title, discovered.registry_number):
             existing_title = existing_tender.title

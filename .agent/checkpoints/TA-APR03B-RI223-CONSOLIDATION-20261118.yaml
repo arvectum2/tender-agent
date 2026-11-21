@@ -1,0 +1,20 @@
+task_id: TA-APR03B-RI223-CONSOLIDATION-20261118
+status: completed
+goal: Consolidate nine reviewed RI223 development PRs into a single main-targeted draft with combined replay and explicit boundaries.
+definition_of_done:
+  - exact branch ancestry and nine prior CI results verified; preserve WSF07B and untouched main
+  - combined genuine archived intake, original DP, Chromium and local decision replay; synthetic ZIP explicitly labeled
+  - consolidate existing draft PR640 against main, no production or automatic merge
+completed:
+  - PR629/630/632/633/634/635/636/638/640 each exact head CI 19/19; current main 3b37fb69 is ancestor, WSF07B diff empty.
+  - Recovery PR637/639 exact heads green, installed successfully, scheduled SIBUR 12179/12179 status finished; daily preflight passed, next natural run not yet attempted.
+  - Combined regression 334 PASS, 9 skipped, Node UI simulation/syntax PASS, diff check PASS; WSF07B unchanged.
+  - Full six-case and integrated DP replay launched, private log /Users/master/ArvectumSafe/apr03b-ri223-consolidated.03agsX/replay.log, exit file in same directory. Full replay exit 0; six browser scenarios PASS, five real and one synthetic ZIP, nine domains, 14/14 contract fragments, integrated NEEDS_REVIEW/DEFER, original corpus unchanged.
+current_stage: verified_pending_coordinated_release
+remaining:
+  - PR640 exact main-target CI 19/19 SUCCESS. Merge/release separate because active WSF07B admission pins current release and installed drift guard requires main equality. No merge or release here.
+last_verified_commit: 3afb5f8267fef6d02a7162aa82de2f8689b6faf0
+test_results:
+  - 334 passed, 9 skipped, 2 warnings; Node syntax and UI simulation PASS.
+  - Six archived notices, six Chromium scenarios, full combined DP replay exit 0.
+resume_instruction: No automatic merge, production mutation, live source acquisition, admission change or commercial GO. Continue with recorded replay log and exact CI.

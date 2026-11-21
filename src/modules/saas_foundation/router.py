@@ -8,8 +8,10 @@ from __future__ import annotations
 import asyncio
 import base64
 import binascii
+import hashlib
 import hmac
 from datetime import datetime, timedelta
+from pathlib import Path
 from typing import Annotated, Literal
 from zoneinfo import ZoneInfo
 
@@ -61,6 +63,7 @@ from src.modules.customer_onboarding.router import (
     upload_company_document,
 )
 from src.modules.saas_foundation import (
+    application_review,
     commercial_attachment_service,
     commercial_capture,
     commercial_requirement_review,
@@ -79,6 +82,9 @@ from src.modules.saas_foundation import (
     company_readiness,
     company_reviewed_contracts,
     company_schedule,
+    documentary_readiness,
+    original_form_review,
+    retention_operator,
 )
 from src.modules.saas_foundation.commercial_attachment_bytes import MAX_ATTACHMENT_BYTES
 from src.modules.saas_foundation.models import (
@@ -121,6 +127,9 @@ from src.modules.tender_operator_agent_demo.upload_service import (
     create_uploaded_demo_run,
     get_uploaded_demo_report,
     get_uploaded_demo_run,
+)
+from src.modules.tender_operator_agent_demo.workspace_application_review import (
+    ApplicationReviewRequest,
 )
 from src.shared.api.dependencies import DBSession
 from src.shared.config.settings import get_settings
@@ -363,6 +372,11 @@ def profile(principal: Member, session: DBSession) -> dict:
     return inspect_onboarding(principal.customer_id, session)
 
 
+@router.get("/api/saas/profile/documentary-readiness")
+def documentary_profile(principal: Member, session: DBSession) -> dict:
+    return documentary_readiness.profile_readiness(session,principal,Path(get_settings().arvectum_data_dir))
+
+
 @router.put("/api/saas/profile")
 def update_profile(payload: OnboardingProfile, principal: Member, session: DBSession) -> dict:
     role_required(principal, "owner", "admin")
@@ -597,6 +611,115 @@ def owned_run_qualification(run_id: str, principal: Member, session: DBSession) 
         session, run_id=run_id, customer_id=principal.customer_id,
         as_of=datetime.now(ZoneInfo("Europe/Moscow")).date(),
     )
+
+
+@router.post("/api/saas/runs/{run_id}/application-readiness")
+def documentary_run(run_id: str, payload: ApplicationReviewRequest, principal: Member, session: DBSession) -> dict:
+    return documentary_readiness.run_readiness(session,principal,Path(get_settings().arvectum_data_dir),run_id,payload)
+
+
+def _application_review_enabled():
+    if not get_settings().saas_application_review_enabled:
+        raise HTTPException(404, "Private application review disabled")
+
+
+@router.post("/api/saas/runs/{run_id}/application-review/previews",status_code=201)
+async def create_application_preview(run_id: str, request: Request, principal: Member, session: DBSession) -> dict:
+    _application_review_enabled()
+    application_review._access(session,principal,run_id)
+    body=bytearray()
+    async for chunk in request.stream():
+        if len(body)+len(chunk)>application_review.MAX_REQUEST_BYTES:
+            raise HTTPException(413,"Private review input too large")
+        body.extend(chunk)
+    try:
+        payload=application_review.PreviewInput.model_validate_json(body)
+    except ValueError as exc:
+        raise HTTPException(422,"Invalid private review input") from exc
+    return await run_in_threadpool(application_review.create_preview,session,principal,
+        Path(get_settings().arvectum_data_dir),run_id,payload)
+
+
+@router.get("/api/saas/runs/{run_id}/application-review/previews")
+def application_preview_history(run_id: str, principal: Member, session: DBSession) -> dict:
+    _application_review_enabled()
+    return application_review.history(session,principal,run_id)
+
+
+@router.get("/api/saas/runs/{run_id}/application-review/previews/{preview_id}/archive")
+def download_application_preview(run_id: str, preview_id: str, principal: Member, session: DBSession):
+    _application_review_enabled()
+    raw=application_review.download(session,principal,run_id,preview_id)
+    return Response(content=raw,media_type="application/zip",headers={
+        "Content-Disposition": 'attachment; filename="PRIVATE-REVIEW-DO-NOT-SUBMIT.zip"',
+        "Cache-Control":"no-store","X-Content-Type-Options":"nosniff"})
+
+
+@router.post("/api/saas/runs/{run_id}/application-review/previews/{preview_id}/confirm")
+def confirm_application_preview(run_id: str, preview_id: str, payload: application_review.ConfirmInput, principal: Member, session: DBSession) -> dict:
+    _application_review_enabled()
+    result = application_review.confirm(session,principal,Path(get_settings().arvectum_data_dir),run_id,preview_id,payload)
+    if not get_settings().saas_customer_draft_export_enabled:
+        result.pop("customer_draft_options", None)
+    return result
+
+
+@router.post("/api/saas/runs/{run_id}/application-review/previews/{preview_id}/customer-draft")
+def export_customer_draft(run_id: str, preview_id: str, payload: application_review.CustomerDraftExportInput,
+                          principal: Member, session: DBSession):
+    _application_review_enabled()
+    if not get_settings().saas_customer_draft_export_enabled:
+        raise HTTPException(404, "Customer draft export disabled")
+    raw = application_review.customer_draft_export(session, principal, Path(get_settings().arvectum_data_dir),
+                                                   run_id, preview_id, payload)
+    return Response(content=raw, media_type="application/zip", headers={
+        "Content-Disposition": 'attachment; filename="UNSIGNED-PARTIAL-DRAFT-REVIEW-ONLY.zip"',
+        "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff",
+        "X-Draft-SHA256": application_review.export_digest(raw)})
+
+
+def _original_form_review_enabled():
+    _application_review_enabled()
+    if not get_settings().saas_original_form_review_enabled:
+        raise HTTPException(404, "Original form review disabled")
+
+
+@router.post("/api/saas/runs/{run_id}/original-form-review/candidates", status_code=201)
+async def create_original_form_candidate(run_id: str, request: Request, principal: Member, session: DBSession):
+    _original_form_review_enabled()
+    application_review._access(session, principal, run_id)
+    data = bytearray()
+    async for chunk in request.stream():
+        if len(data)+len(chunk)>32768:
+            raise HTTPException(413, "Original form mapping too large")
+        data.extend(chunk)
+    try:
+        payload = original_form_review.CandidateInput.model_validate_json(data)
+    except ValueError as exc:
+        raise HTTPException(422, "Invalid original form mapping") from exc
+    return await run_in_threadpool(original_form_review.create, session, principal, run_id, payload)
+
+
+@router.get("/api/saas/runs/{run_id}/original-form-review/candidates")
+def original_form_history(run_id: str, principal: Member, session: DBSession):
+    _original_form_review_enabled()
+    return original_form_review.history(session, principal, run_id)
+
+
+@router.get("/api/saas/runs/{run_id}/original-form-review/candidates/{candidate_id}/document")
+def download_original_form_candidate(run_id: str, candidate_id: str, principal: Member, session: DBSession):
+    _original_form_review_enabled()
+    raw = original_form_review.download(session, principal, run_id, candidate_id)
+    return Response(content=raw, media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        headers={"Content-Disposition": 'attachment; filename="PRIVATE-UNSIGNED-FORM-DO-NOT-SUBMIT.docx"',
+                 "Cache-Control":"no-store","X-Content-Type-Options":"nosniff"})
+
+
+@router.post("/api/saas/runs/{run_id}/original-form-review/candidates/{candidate_id}/acknowledge")
+def acknowledge_original_form(run_id: str, candidate_id: str, payload: original_form_review.ReviewInput,
+                              principal: Member, session: DBSession):
+    _original_form_review_enabled()
+    return original_form_review.acknowledge(session, principal, run_id, candidate_id, payload)
 
 
 @router.post("/api/saas/runs/{run_id}/screen")
@@ -1211,3 +1334,80 @@ def reviewed_contract_catalog(case_id: str, principal: Member, session: DBSessio
     if not get_settings().saas_company_reviewed_contract_registry_enabled:
         raise HTTPException(404,"Reviewed contract registry disabled")
     return company_reviewed_contracts.catalog(session,principal,case_id)
+
+
+def _retention_operator(request: Request):
+    _operator(request)
+    if not get_settings().saas_retention_operator_enabled:
+        raise HTTPException(404, 'Retention operator console disabled')
+
+
+_RETENTION_HEADERS = {'Cache-Control':'no-store', 'X-Content-Type-Options':'nosniff',
+                      'X-Frame-Options':'DENY', 'Referrer-Policy':'no-referrer'}
+
+
+@router.get('/api/operator/saas/retention-console', response_class=HTMLResponse)
+def retention_console(request: Request):
+    _retention_operator(request)
+    from src.modules.saas_foundation.retention_operator_ui import render_console
+    html = render_console()
+    script = html.split('<script>', 1)[1].split('</script>', 1)[0]
+    digest = base64.b64encode(hashlib.sha256(script.encode('utf-8')).digest()).decode('ascii')
+    return HTMLResponse(html, headers={**_RETENTION_HEADERS,
+        'Content-Security-Policy': f"default-src 'none'; script-src 'sha256-{digest}'; style-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'"})
+
+
+@router.get('/api/operator/saas/tenants/{tenant_id}/retention')
+def retention_overview(tenant_id: str, request: Request, session: DBSession, response: Response):
+    _retention_operator(request)
+    response.headers.update(_RETENTION_HEADERS)
+    return retention_operator.overview(session, tenant_id)
+
+
+async def _retention_payload(request: Request, payload_type):
+    _retention_operator(request)
+    if (request.headers.get('X-Retention-Intent') != 'proposal-only'
+            or request.headers.get('content-type','').split(';')[0].strip().lower() != 'application/json'
+            or request.headers.get('sec-fetch-site') not in (None,'same-origin','none')):
+        raise HTTPException(403, 'Explicit same-origin proposal request required')
+    origin = request.headers.get('origin')
+    if origin is not None and origin != f'{request.url.scheme}://{request.url.netloc}':
+        raise HTTPException(403, 'Cross-origin proposal refused')
+    data = bytearray()
+    async for chunk in request.stream():
+        if len(data)+len(chunk)>8192:
+            raise HTTPException(413, 'Proposal input too large')
+        data.extend(chunk)
+    try:
+        return payload_type.model_validate_json(data)
+    except ValueError as exc:
+        raise HTTPException(422, 'Invalid retention proposal') from exc
+
+
+@router.post('/api/operator/saas/tenants/{tenant_id}/retention/proposals', status_code=201)
+async def retention_append(tenant_id: str, request: Request, session: DBSession, response: Response):
+    payload = await _retention_payload(request, retention_operator.AppendProposal)
+    response.headers.update(_RETENTION_HEADERS)
+    return await run_in_threadpool(retention_operator.append_proposal, session, tenant_id, payload)
+
+
+@router.post('/api/operator/saas/tenants/{tenant_id}/retention/links', status_code=201)
+async def retention_link(tenant_id: str, request: Request, session: DBSession, response: Response):
+    payload = await _retention_payload(request, retention_operator.ProposeLink)
+    response.headers.update(_RETENTION_HEADERS)
+    return await run_in_threadpool(retention_operator.propose_link, session, tenant_id, payload)
+
+
+@router.post('/api/operator/saas/tenants/{tenant_id}/retention/link-corrections', status_code=201)
+async def retention_correct_link(tenant_id: str, request: Request, session: DBSession, response: Response):
+    payload = await _retention_payload(request, retention_operator.CorrectLink)
+    response.headers.update(_RETENTION_HEADERS)
+    return await run_in_threadpool(retention_operator.correct_link, session, tenant_id, payload)
+
+
+@router.get('/api/operator/saas/tenants/{tenant_id}/retention/links/{link_id}/history')
+def retention_correction_history(tenant_id: str, link_id: str, request: Request,
+                                 session: DBSession, response: Response):
+    _retention_operator(request)
+    response.headers.update(_RETENTION_HEADERS)
+    return retention_operator.correction_history(session, tenant_id, link_id)

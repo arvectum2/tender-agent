@@ -1,0 +1,3 @@
+# Plan — source-conserving traceability
+
+Read exact seven-source Company manifest at commit `4b734f04ead196cc76f1940bc50a9910be1d08ef`. Preserve historical and current source identities; check all 166 master-roadmap checkbox occurrences including inline open markers, 211 table lines and the existing 18 PQ markers; reconcile YAML queue/checkpoint and unmarked items. Review latest authoritative product/QA state and candidate branch divergence before mapping. Link verified results to original acceptance and preserve all open criteria. No change to current execution queue, runtime, active Watchdog or production. Derive management view via approved Company/OS boundary, not a second source of truth.

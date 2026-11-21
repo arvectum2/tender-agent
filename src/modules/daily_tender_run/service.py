@@ -14,6 +14,7 @@ from sqlalchemy import select, text
 from sqlalchemy.engine import Connection
 from sqlalchemy.orm import Session
 
+from src.modules.daily_tender_run.fresh_priority import fresh_preparation_priority
 from src.modules.daily_tender_run.manager_synthesis import synthesize_manager_brief
 from src.modules.daily_tender_run.models import DailyTenderRun, DailyTenderRunItem
 from src.modules.daily_tender_run.post_go import advance_post_decision_items
@@ -590,10 +591,12 @@ def _process_item(
     _set_run_stage(session, run, "INDEX_DATA_PLATFORM")
     session.add(item)
     session.commit()
-    prepared = prepare_tender_for_analysis(
-        registry_number=item.registry_number,
-        session=session,
-    )
+    with fresh_preparation_priority():
+        prepared = prepare_tender_for_analysis(
+            registry_number=item.registry_number,
+            session=session,
+            data_platform_timeout_seconds=180,
+        )
     if not prepared.ready_for_analysis:
         details = "; ".join(prepared.errors or prepared.warnings or ["data_platform_not_ready"])
         raise RuntimeError(f"Data Platform preparation is not ready: {details}")
