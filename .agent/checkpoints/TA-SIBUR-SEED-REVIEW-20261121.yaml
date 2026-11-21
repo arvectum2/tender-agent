@@ -25,3 +25,7 @@ last_checks: Real existing v2 27/27 first-party page SHA verified, 314 observati
 resume_instruction: Historic PR524 reviewed in isolated worktree on current main b646e431. 27 real archived originals SHA-verified and 24 pytest/Ruff passed; new read-only CLI. Do not reimport the 313 already seeded records, do not activate a SIBUR worker, and do not change either working or production DB. After host PR637 safely merges, integrate new main in this branch, run exact CI for PR524 with stacked #526/#527 history preserved. Require source-specific admission for any future writes.
 production_modified: false
 working_db_modified: false
+private_source_replay_receipt: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/sibur-original-replay-20261121.json
+original_historical_15_field_projection_sha_verified: true
+original_source_page_count_verified: 27
+local_review_commit: a709a50b080dfc9241995caa23b0ff99678141d4
