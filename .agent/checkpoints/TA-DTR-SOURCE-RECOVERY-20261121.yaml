@@ -1,0 +1,53 @@
+task_id: TA-DTR-SOURCE-RECOVERY-20261121
+status: blocked
+goal: Resolve the three DTR 2026-11-20 official-original-source gaps without any fabricated documents or blind mass source replay.
+definition_of_done:
+- Identify exact three affected notice records, source timestamps, URLs, attachment provenance and read-only status, with no synthetic primary
+  sources.
+- Independently verify the currently active official notice revision and complete original-document inventory or record durable source-unavailable
+  evidence, per notice.
+- For available original bytes, admit only authorized first-party HTTPS or official SOAP retrieval, verify exact identity, length/SHA, no duplicates
+  and correct tenant/source scope.
+- Run bounded Data Platform projection/analysis only after authenticated originals and TA/DP PITR/MI prewrite, scoped locks, budgets and explicit
+  release/source authorization.
+- Never promote failed items to MANAGER_READY/GO without full original evidence and independent decision review.
+- Record exact tests, incident dispositions, production effects and verified commit.
+completed_stages:
+- Owner approved sequential completion of outstanding Tender Agent roadmap; prior production code release successful and source-bound WSF scope
+  unchanged.
+- Independent production PostgreSQL 127 read-only check of three notices 2026-11-21; two have zero documents/chunks, one has four failed DOCX
+  links and no source bytes/chunks.
+- EIS notice 0128200000126007558 official HTML artifacts 216571 and 143222 bytes SHA validated; offline active revision
+- One scoped official 7558 GET via production provider on Nov21 timed out; official homepage HEAD200, exact card HEAD404 not usable as legal status.
+  No retry, write, recovery, ETP bid or DTR replay.
+- Issue
+- Official individual getDocsIP configured and returned one completed metadata response for 0128200000126007558, one HTTPS archive URL, no warnings,
+  at 2026-11-21T12:39:09Z; no ZIP downloaded
+- Subsequent bounded official archive collector 12-second SOAP and one scoped 25-second SOAP attempt both timed out BEFORE archive URL/download;
+  no ZIP/DOCX bytes or production writes; no further retries
+- Independent dual TA/DP PITR restore proof PASS but observed full base snapshots only since 2026-11-20; seven-day continuity not established
+- 'Historical 7558 SHA-pinned original HTML contains Nov20 one active revision1 and exactly four URLs; not proof of current EIS version. Evidence
+  recorded in docs/ops/TA_DTR_3_ORIGINAL_GAPS_SOURCE_20261121.md and GitHub issue #679'
+current_stage: upstream_official_SOAP_timeout_after_bounded_attempts
+remaining_stages:
+- Establish lawful first-party active revision and full attachment inventory independently for each exact notice.
+- Diagnose source transport (public EIS card vs official EIS SOAP/archive) with bounded single-notice probe, no unbounded retry.
+- Preserve actual original bytes with full SHA/source UID and date/revision, then align DB and DP under recorded prewrite+owner source gate.
+- If official upstream inaccessible, keep durable WAITING_HUMAN fail-closed status and prepare scoped future recovery, not invented readiness.
+last_verified_commit: 9c877ec706812696c2525f57ee37466749fee8d3
+last_checks: Production SHA9b650a2b DB127 health 200; official SOAP response metadata once completed then 12s and 25s timeout; no original ZIP
+  saved; two notices zero docs, one notice four historical URLs without DOCX; dual PITR current PASS, seven-day NOT PROVEN
+resume_instruction: Upstream official EIS getDocsIP intermittently succeeded for 7558 metadata only, later two bounded timeouts. Do not automatically
+  retry or invent source original bytes. Resume only after safe upstream health and source-owner permission; validate unique exact original ZIP/XML
+  UID/hash and fresh legal revision before DB/DP stage, with full PITR/MI prewrite. All three incident cases remain fail-closed. Old release and
+  WSF 12-deal grant not affected; separate seven-day PITR evidence task can proceed.
+production_deployed_source_sha: 9b650a2b818032389cfd6e13799acad33c72089b
+production_db_revision: 127_private_review_link_corrections
+source_retries_completed: 0
+dtr_statuses_mutated: false
+source_metadata_soap_success_utc: '2026-11-21T12:39:09Z'
+source_official_zip_saved: false
+source_original_docx_saved: 0
+visible_pitr_7day_coverage_verified: false
+issue: 679
+evidence_document: docs/ops/TA_DTR_3_ORIGINAL_GAPS_SOURCE_20261121.md
