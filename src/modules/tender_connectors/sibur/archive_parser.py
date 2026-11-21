@@ -3,7 +3,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from datetime import datetime
+from pathlib import Path
 from urllib.parse import urlencode, urljoin, urlsplit
 
 from src.modules.tender_connectors.sibur.parser import (
@@ -92,3 +94,40 @@ def archive_page(raw, category, page):
     if not 1 <= len(rows) <= PAGE_SIZE:
         raise ValueError("unexpected archive page size")
     return RegistryPage(page, last, digest, tuple(rows))
+
+
+def replay_archived_page(source_dir: Path, category: str, page: int) -> RegistryPage:
+    """Replay already saved original archive bytes from a strict first-party receipt.
+
+    This deliberately cannot initiate HTTP, authorize records or mutate a database.
+    """
+    archive_url(category, page)  # Validate source identity *before* touching input.
+    if (not source_dir.is_dir() or source_dir.is_symlink()
+            or source_dir.resolve() != source_dir):
+        raise ValueError("unsafe original archive directory")
+    receipt_path = source_dir / f"p{page:05d}.json"
+    if (receipt_path.is_symlink() or not receipt_path.is_file()
+            or not 0 < receipt_path.stat().st_size <= 8192):
+        raise ValueError("unverified archived page receipt")
+    evidence = json.loads(receipt_path.read_bytes(), object_pairs_hook=_unique_json_members)
+    if not isinstance(evidence, dict):
+        raise TypeError("invalid archived source receipt")
+    digest = evidence.get("sha256")
+    if (not isinstance(digest, str) or re.fullmatch(r"[0-9a-f]{64}", digest) is None
+            or evidence.get("category") != category or evidence.get("page") != page
+            or evidence.get("url") != archive_url(category, page)
+            or evidence.get("file") != f"p{page:05d}-{digest}.raw.json"):
+        raise ValueError("original archived page identity mismatch")
+    rawfile = source_dir / evidence["file"]
+    if rawfile.is_symlink() or not rawfile.is_file() or not 0 < rawfile.stat().st_size <= MAX_RESPONSE:
+        raise ValueError("original archive bytes missing or unsafe")
+    raw = rawfile.read_bytes()
+    if hashlib.sha256(raw).hexdigest() != digest:
+        raise ValueError("original archive bytes hash mismatch")
+    parsed = archive_page(raw, category, page)
+    if (parsed.sha256 != digest or evidence.get("last_page") != parsed.last_page
+            or type(evidence.get("rows")) is not int
+            or evidence["rows"] != len(parsed.records)
+            or evidence.get("ids") != [r["external_id"] for r in parsed.records]):
+        raise ValueError("original archive receipt and parsed members disagree")
+    return parsed
