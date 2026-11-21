@@ -1,0 +1,21 @@
+task_id: TA-ROADMAP-PR673-REVIEW-20261121
+status: in_progress
+goal: Reconcile outdated November 20 management roadmap appendix while preserving strict Spec Kit source criterion guard.
+definition_of_done:
+  - Keep original pinned criterion source and all exact Spec Kit task mappings unchanged.
+  - Distinguish historical November 20 snapshot from actual November 21 production release and owner+AI governance.
+  - Preserve protected MI and unrelated existing roadmap sections; no runtime changes.
+  - Verify exact checker, YAML parse and latest GitHub/GitVerse CI, then merge normal protected PR.
+completed_stages:
+  - Original PR673 exact 20/20 CI green; checker passed on the integrated current-main tree.
+  - Isolated current-main merge was conflict-free and source original criterion text unchanged.
+  - Corrected stale Nov20 label, appended dated Nov21 production/source/PITR/owner+AI record; original criterion sources and hashes unchanged.
+  - Regenerated only strict expected management appendix literal; strict source-criterion checker, Ruff, structured YAML and diff checks pass locally.
+current_stage: strict_source_checker_and_yaml_pass_awaiting_exact_github_ci
+remaining_stages:
+  - Update historical and current dated management notes and strict checker literal.
+  - Validate exact source guard, YAML and CI.
+  - Fast-forward update PR673 and merge if strict required checks pass.
+last_verified_commit: 480fbf49b0a92712c12cd229bc86612f60b51bf6
+last_checks: PR673 20/20 earlier CI, local merged-tree strict criterion PASS.
+resume_instruction: Preserve spec source and pinned baseline, append corrected dated management notes, run exact CI and merge per owner+AI policy without outside reviewer. No live changes or EIS retry.
