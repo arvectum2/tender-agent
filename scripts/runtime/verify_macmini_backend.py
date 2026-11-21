@@ -3,14 +3,25 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import os
 import pathlib
 import plistlib
+import re
+import shlex
+import stat
 import subprocess
 import sys
+import urllib.error
 import urllib.request
+from datetime import UTC, datetime
 
 ROOT = pathlib.Path("/Volumes/ArvectumSSD/Arvectum/repos/tender-agent")
+RELEASES = pathlib.Path("/Volumes/ArvectumSSD/Arvectum/releases")
+RELEASE_CONFIG = pathlib.Path("/Users/master/Library/Application Support/Arvectum/tender-agent/runtime.env")
+RELEASE_LAUNCHER = "/Users/master/arvectum-ops/arv-075/scripts/tender-agent-backend-ssd.sh"
+LOCK = pathlib.Path("/Volumes/ArvectumSSD/Arvectum/runtime/tender-agent/deploy.lock")
 CONFIG = pathlib.Path("/Volumes/ArvectumSSD/Arvectum/private/tender-agent/runtime/backend.env")
 RUNTIME = pathlib.Path("/Volumes/ArvectumSSD/Arvectum/runtime/tender-agent/backend-active.json")
 PLIST = pathlib.Path("/Users/master/Library/LaunchAgents/com.arvectum.backend.plist")
@@ -23,7 +34,163 @@ def run(*args: str) -> tuple[int, str]:
     except (OSError, subprocess.TimeoutExpired):
         return 99, ""
 
+ADMISSION = pathlib.Path("/Volumes/ArvectumSSD/Arvectum/private/tender-agent/wsf07b-live-admission")
+REFERENCE_URL = "http://127.0.0.1:8001/api/internal/workspace/procurement-reference"
+
+
+def private_json(path):
+    if path.resolve() != path or path.is_symlink():
+        raise ValueError("Unsafe receipt path")
+    with os.fdopen(os.open(path, os.O_RDONLY | os.O_NOFOLLOW), "rb") as f:
+        st = os.fstat(f.fileno())
+        if not stat.S_ISREG(st.st_mode) or st.st_uid != os.getuid() or st.st_mode & 0o077 or st.st_nlink != 1:
+            raise ValueError("Unsafe receipt")
+        raw = f.read(32769)
+    if len(raw) > 32768:
+        raise ValueError("Receipt too large")
+    data = json.loads(raw)
+    if not isinstance(data, dict):
+        raise TypeError("Invalid receipt")
+    return data, hashlib.sha256(raw).hexdigest()
+
+
+def anonymous_reference_status():
+    try:
+        with urllib.request.build_opener(urllib.request.ProxyHandler({})).open(REFERENCE_URL, timeout=4) as response:
+            return response.status
+    except urllib.error.HTTPError as exc:
+        return exc.code
+    except (OSError, ValueError):
+        return None
+
+
+def workspace_state_matches(active, commit):
+    """Never use credentials. Check local approval, exact set, release and denial.
+    This does not attest that a valid credential can currently read the source.
+    """
+    try:
+        launcher = pathlib.Path(RELEASE_LAUNCHER).read_text()
+        exports = {}
+        for line in launcher.splitlines():
+            match = re.fullmatch(r'export (ARVECTUM_WORKSPACE_PROCUREMENT_[A-Z0-9_]+)="([^"]*)"', line)
+            if match:
+                if match[1] in exports:
+                    return False
+                exports[match[1]] = match[2]
+        mode = active.get("workspace_admitted")
+        status = anonymous_reference_status()
+        if mode is False:
+            return not exports and status == 503
+        if mode is not True or status != 403:
+            return False
+        manifest, pin = private_json(ADMISSION / "source-access.json")
+        owner, _ = private_json(ADMISSION / "owner-admission.json")
+        activation, _ = private_json(ADMISSION / "activation-evidence.json")
+        prefix = "ARVECTUM_WORKSPACE_PROCUREMENT_"
+        if exports != {prefix+"MANIFEST":str(ADMISSION / "source-access.json"),
+                       prefix+"MANIFEST_SHA256":pin,prefix+"SOURCE_RELEASE":"$SHA"}:
+            return False
+        ids = manifest["deal_ids"]
+        approved = owner["deal_ids"]
+        start, end = (datetime.fromisoformat(manifest[k]) for k in ("starts_at","expires_at"))
+        if (start.utcoffset()!=UTC.utcoffset(start) or end.utcoffset()!=UTC.utcoffset(end)
+                or not start <= datetime.now(UTC) < end <= datetime.fromisoformat("2026-12-17T09:35:36.060836+00:00")):
+            return False
+        return (
+            manifest["schema"] == "arvectum.tender.internal-procurement-access/1"
+            and manifest["draft_blob"] == "9c0f7caa552613ab598d9de05b819524a74e8c73"
+            and owner["schema"] == "arvectum.company.wsf07b.owner-admission-decision/1"
+            and owner["organization"] == "organization/arvectum-company"
+            and owner["source_product"] == "Tender Agent / Procurement Portfolio"
+            and owner["status"] == "approved-exact-set-pending-product-and-workspace-activation"
+            and activation["status"] == "source-and-workspace-read-verified"
+            and activation["source_manifest_sha256"] == pin
+            and activation["source_release"] == owner["source_release"] == manifest["source_release"] == commit
+            and activation["owner_approval_reference"] == owner["owner_approval_reference"]
+            and bool(owner["owner_approval_reference"])
+            and owner["database_binding"] == manifest["database_binding"]
+            and owner["binding_id"] == manifest["binding_id"]
+            and owner["draft_blob"] == manifest["draft_blob"]
+            and owner["expires_at"] == manifest["expires_at"] == activation["expiry"]
+            and isinstance(ids,list) and isinstance(approved,list)
+            and len(ids) == len(set(ids)) == len(approved) == activation["admitted_count"] == 12
+            and set(ids) == set(approved)
+            and all(isinstance(x,str) and re.fullmatch(r"DL-[A-Za-z0-9-]{1,60}",x) for x in ids)
+            and owner["excluded_count"] == activation["excluded_count"] == 9
+        )
+    except (OSError, ValueError, TypeError, KeyError, AttributeError):
+        return False
+
+
+def check_release(active: dict) -> dict:
+    """Check immutable release rather than a mutable developer checkout."""
+    checks: dict[str, bool] = {}
+    commit = active.get("commit")
+    valid_sha = isinstance(commit, str) and re.fullmatch(r"[0-9a-f]{40}", commit)
+    result = {"checks": checks, "expected_repo": str(RELEASES), "active_backend_sha": None,
+              "github_main_sha": None, "local_main_sha": None}
+    if not valid_sha:
+        checks["valid_release_sha"] = False
+        return {**result, "status": "DRIFT_OR_DEGRADED"}
+    result["active_backend_sha"] = commit[:12]
+    release = RELEASES / ("tender-agent-" + commit)
+    source = release / "source"
+    venv = release / "venv"
+    checks["expected_release_source"] = (
+        active.get("source") == str(source) and active.get("venv") == str(venv)
+        and source.is_dir() and source.resolve() == source and venv.is_dir()
+        and venv.resolve() == venv
+    )
+    if not checks["expected_release_source"]:
+        return {**result, "status": "DRIFT_OR_DEGRADED"}
+    code, head = run("git", "-C", str(source), "rev-parse", "HEAD")
+    checks["release_head_matches_marker"] = code == 0 and head == commit
+    result["local_main_sha"] = head[:12] if code == 0 else None
+    code, dirty = run("git", "-C", str(source), "status", "--porcelain", "--untracked-files=all")
+    checks["release_tree_clean"] = code == 0 and not dirty
+    code, github = run("gh", "api", "repos/arvectum2/tender-agent/commits/main", "--jq", ".sha")
+    result["github_main_sha"] = github[:12] if code == 0 else None
+    checks["release_matches_github_main"] = code == 0 and github == commit
+    checks["private_config"] = RELEASE_CONFIG.is_file() and RELEASE_CONFIG.stat().st_mode & 0o077 == 0
+    try:
+        plist = plistlib.loads(PLIST.read_bytes())
+    except (OSError, ValueError):
+        plist = {}
+    checks["launch_agent_uses_release_launcher"] = plist.get("ProgramArguments") == ["/bin/bash", RELEASE_LAUNCHER]
+    code, launch = run("launchctl", "print", f"gui/{os.getuid()}/com.arvectum.backend")
+    checks["launch_agent_running"] = code == 0 and "state = running" in launch
+    code, raw = run("lsof", "-nP", "-iTCP:8001", "-sTCP:LISTEN", "-t")
+    pids = {p.strip() for p in raw.splitlines() if p.strip().isdigit()}
+    checks["one_backend_listener"] = code == 0 and len(pids) == 1
+    pid = next(iter(pids)) if checks["one_backend_listener"] else ""
+    checks["marker_pid_matches_listener"] = bool(pid) and str(active.get("backend_pid")) == pid
+    checks["launch_agent_pid_matches_listener"] = bool(pid) and bool(re.search(r"(?m)^\s*pid = " + re.escape(pid) + r"\s*$", launch))
+    code, command = run("ps", "-p", pid, "-o", "command=") if pid else (1, "")
+    try:
+        args = shlex.split(command)
+    except ValueError:
+        args = []
+    checks["process_uses_release_venv"] = code == 0 and args == [
+        str(venv / "bin/python"), "-m", "uvicorn", "src.main:app", "--host", "127.0.0.1", "--port", "8001",
+    ]
+    checks["workspace_admission_receipt_and_anonymous_denial"] = workspace_state_matches(active, commit)
+    checks["maintenance_lock_released"] = not LOCK.exists()
+    try:
+        op = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+        with op.open("http://127.0.0.1:8001/health", timeout=4) as r:
+            checks["http_health_200"] = r.status == 200
+    except (OSError, ValueError):
+        checks["http_health_200"] = False
+    return {**result, "status": "OK" if all(checks.values()) else "DRIFT_OR_DEGRADED"}
+
+
 def check() -> dict:
+    try:
+        marker = json.loads(RUNTIME.read_text())
+    except (OSError, json.JSONDecodeError):
+        marker = {}
+    if isinstance(marker, dict) and ("venv" in marker or str(marker.get("source", "")).startswith(str(RELEASES) + "/")):
+        return check_release(marker)
     result: dict = {"checks": {}, "expected_repo": str(ROOT)}
     checks = result["checks"]
     def record(label: str, good: bool):
