@@ -9,8 +9,9 @@ completed_stages:
   - Read-only 20 November DTR run and DB counts verified; three failed public 44-FZ cases.
   - Investigated public source failures: zero original metadata for two cases, four records with zero downloads for a third; existing web source not authoritative original.
   - Implemented diagnostic-only classification with no status, execution or retry change.
-current_stage: exact_ci
+  - Added two full prepare_tender_for_analysis fail-closed regression scenarios on missing metadata and pending downloads; no live run or source fetch.
+current_stage: full_prepare_regression_ci
 remaining_stages: [exact_ci, independent_original_coverage, human_release_review]
-last_verified_commit: abcd8727326c398d870edbc4a2da793e090ac8eb
-last_checks: Production main CI success; candidate pending exact-head CI, 4 offline unit branches.
+last_verified_commit: a3db86a4f4c1fe15844c1237502d2e5fcafc7e5e
+last_checks: Initial a3db86a4 candidate CI was running with no failures at last observation; new commit adds two full prepare fail-closed cases and requires fresh exact CI.
 resume_instruction: Verify PR exact head CI and focused tests. Never retry live DTR or use third-party documents as originals. Read first source attachment receipts and actual active revision under existing access, then consider bounded original recovery with proper prewrite and approval.
