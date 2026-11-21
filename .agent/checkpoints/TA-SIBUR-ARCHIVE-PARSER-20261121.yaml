@@ -1,0 +1,26 @@
+task_id: TA-SIBUR-ARCHIVE-PARSER-20261121
+status: in_progress
+goal: Extract and independently verify the pure source-specific SIBUR archive category/parser from giant DRAFT PR527 without importing any live runner or DB writer.
+definition_of_done:
+  - Preserve original #527 history and separate its pure archive parser and tests from more than 7000 lines of legacy mixed source/DB/sales work.
+  - Test exact source category and page identity, bounded pagination, safe document-origin allowlist and privacy redaction.
+  - Prove behavior on existing SHA-pinned original archived category pages in private SSD, with no new network calls, source grants or writes.
+  - Verify Ruff and focused tests on protected main, after PR526 approval merge current main and run exact CI.
+  - Merge pure source parsing code only; leave PR527 original giant branch DRAFT for independent source authorization, MI/PITR and DP decisions.
+completed_stages:
+  - Classified PR527 original 62-file/7008-insertion delta, including DB writers and 1489 changed canonical task lines; not safe to bulk merge.
+  - Created fresh isolated review worktree from protected main, copied exactly the two source-only archive parser and test files for independent audit.
+  - Independently SHA-replayed actual archived page1 from all 9 source categories with source receipt URL, bytes, exact IDs and pagination: 9/9 pages, 108 original rows; private proof 0600 persisted. Historical full archive coverage not claimed.
+  - Added duplicate JSON-member rejection and negative tests for all categories, wrong page, out-of-origin attachment, URL bound/type; 15 focused pytest and Ruff PASS.
+current_stage: nine_categories_original_sha_verified_15_tests_pass_waiting_pr526_merge
+remaining_stages:
+  - After PR526 CI/merge, integrate latest protected main, confirm original source/parser proof unchanged, push bounded source-only PR and require exact CI.
+  - Mark checkpoint completed after owner+AI-reviewed protected merge, with live source capture and DB indexing still separately blocked.
+last_verified_commit: 0af718499498f398a3a339dfa8c714c96e8b28af
+last_checks: Real nine archived first-party page1 SHA/bytes/source URL/category/row IDs all validated, 108 rows; parser 15 pytest PASS and Ruff PASS. No HTTP/network, no source rights or DB writes.
+resume_instruction: Pure SIBUR archive source parser extracted from DRAFT #527 on main 0af718 with 9/9 actual historical category page1 SHA plus 108 original rows verified in private proof. 15 local parser tests/Ruff PASS, no network/DB. When PR526 safely merges, integrate latest main and publish bounded parser-only PR, await exact CI; do not touch or bulk merge #527 or activate live archive source, DB, DP or ETP.
+first_party_category_page_one_verified: 9
+first_party_archived_rows_verified: 108
+all_historical_archive_pages_verified: false
+private_original_archive_proof: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/sibur-archive-category-page-audit-20261121.json
+production_or_working_db_mutated: false
