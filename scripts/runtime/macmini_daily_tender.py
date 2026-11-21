@@ -15,8 +15,8 @@ from pathlib import Path
 
 BASE = Path("/Volumes/ArvectumSSD/Arvectum")
 HOME = Path("/Users/master")
-SHA = "3b37fb6988dd996efeb55e69058016a22a2bd48f"
-REVISION = "122_company_cost_norms"
+SHA = "9b650a2b818032389cfd6e13799acad33c72089b"
+REVISION = "127_private_review_link_corrections"
 RELEASE = BASE / "releases" / ("tender-agent-" + SHA)
 MARKER = BASE / "runtime/tender-agent/backend-active.json"
 DEPLOY_LOCK = BASE / "runtime/tender-agent/deploy.lock"
@@ -36,7 +36,7 @@ with Session(engine) as s:
     row=s.execute(text('''SELECT current_database(),current_user,
           (SELECT oid::text FROM pg_database WHERE datname=current_database()),
           system_identifier::text FROM pg_control_system()''')).one()
-    if row[0]!='arvectum' or row[1]!='arvectum' or s.execute(text('select version_num from alembic_version')).scalar_one()!='122_company_cost_norms':
+    if row[0]!='arvectum' or row[1]!='arvectum' or s.execute(text('select version_num from alembic_version')).scalar_one()!='127_private_review_link_corrections':
         raise RuntimeError('unexpected DB identity')
     if s.execute(text('select pg_is_in_recovery()')).scalar_one():
         raise RuntimeError('standby not permitted')
@@ -115,6 +115,7 @@ def preflight():
         if response.status!=200:
             raise RuntimeError("Backend unavailable")
     daily_env=load_env(DAILY_ENV)
+    daily_env["ARVECTUM_DAILY_FRESH_PRIORITY_DIRECTORY"]='/Volumes/ArvectumSSD/Arvectum/storage/tender-agent-safe-20261115/ta-source-discovery-20261114/autonomous-runner'
     backend_env=load_env(BACKEND_ENV)
     a=run_text([str(python),"-c",PROBE],env=daily_env,cwd=HOME).decode().strip()
     b=run_text([str(python),"-c",PROBE],env=backend_env,cwd=HOME).decode().strip()

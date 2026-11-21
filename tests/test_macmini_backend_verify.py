@@ -150,3 +150,77 @@ def test_inactive_requires_no_exports(tmp_path, monkeypatch):
     assert not verify.workspace_state_matches({'workspace_admitted':False},release)
     launcher.write_text('# inactive')
     assert verify.workspace_state_matches({'workspace_admitted':False},release)
+
+
+def test_owner_rebound_new_release_exact_same_scope(tmp_path, monkeypatch):
+    """Owner's 12 allowed IDs remain invariant when source release SHA changes."""
+    import hashlib
+
+    release, base, launcher, original, _owner, _activation, write = _admission_fixture(
+        tmp_path, monkeypatch
+    )
+    current = "d" * 40
+    new = dict(original, source_release=current)
+    pin = write(f"source-access-{current}.json", new)
+    exact_set = hashlib.sha256(
+        json.dumps(sorted(original["deal_ids"]), separators=(",", ":")).encode()
+    ).hexdigest()
+    receipt = {
+        "schema": "arvectum.wsf07b.release-rebind-local-evidence/1",
+        "not_external_signature": True,
+        "source_release_previous": release,
+        "source_release_target": current,
+        "source_manifest_sha256": pin,
+        "source_identity_count": 12,
+        "excluded_count": 9,
+        "unchanged_database_binding": True,
+        "unchanged_token_hash": True,
+        "unchanged_validity_interval": True,
+        "unchanged_source_id_set_sha256": exact_set,
+    }
+    write(f"release-rebind-{current}.json", receipt)
+    launcher.write_text(
+        f'export ARVECTUM_WORKSPACE_PROCUREMENT_MANIFEST="{base}/source-access-{current}.json"\n'
+        f'export ARVECTUM_WORKSPACE_PROCUREMENT_MANIFEST_SHA256="{pin}"\n'
+        'export ARVECTUM_WORKSPACE_PROCUREMENT_SOURCE_RELEASE="$SHA"\n'
+    )
+    assert verify.workspace_state_matches({"workspace_admitted": True}, current)
+    assert not verify.workspace_state_matches({"workspace_admitted": True}, "e" * 40)
+
+    receipt["source_identity_count"] = 13
+    write(f"release-rebind-{current}.json", receipt)
+    assert not verify.workspace_state_matches({"workspace_admitted": True}, current)
+    receipt["source_identity_count"] = 12
+    write(f"release-rebind-{current}.json", receipt)
+    new["deal_ids"] = [*new["deal_ids"][:-1], "DL-unauthorized"]
+    new_pin = write(f"source-access-{current}.json", new)
+    launcher.write_text(launcher.read_text().replace(pin, new_pin))
+    assert not verify.workspace_state_matches({"workspace_admitted": True}, current)
+
+
+def test_docs_only_newer_main_is_acceptable_but_code_drift_is_not(monkeypatch):
+    import json as json_lib
+
+    production = "a" * 40
+    newer = "b" * 40
+    def compare(files, ahead=2, behind=0):
+        monkeypatch.setattr(
+            verify, "run",
+            lambda *args: (0, json_lib.dumps({
+                "ahead_by": ahead, "behind_by": behind, "files": files
+            })),
+        )
+
+    compare(["docs/roadmap/MASTER_ROADMAP.md", ".agent/current-task.yaml"])
+    assert verify.release_code_parity(None, production, newer)
+    compare(["src/main.py"])
+    assert not verify.release_code_parity(None, production, newer)
+    compare([".github/workflows/ci.yml"])
+    assert not verify.release_code_parity(None, production, newer)
+    compare(["docs/roadmap/MASTER_ROADMAP.md"], behind=1)
+    assert not verify.release_code_parity(None, production, newer)
+    compare(["docs/roadmap/MASTER_ROADMAP.md"], ahead=51)
+    assert not verify.release_code_parity(None, production, newer)
+    compare([])
+    assert not verify.release_code_parity(None, production, newer)
+    assert verify.release_code_parity(None, production, production)

@@ -65,8 +65,11 @@ def anonymous_reference_status():
 
 
 def workspace_state_matches(active, commit):
-    """Never use credentials. Check local approval, exact set, release and denial.
-    This does not attest that a valid credential can currently read the source.
+    """Verify old owner grant and exact owner-approved immutable release rebind.
+
+    The old activation evidence is retained. A new manifest only attests to the
+    original 12 IDs under a new SHA, never grants extra access or credentials.
+    This read-only check does not use bearer credentials or attest fresh EIS docs.
     """
     try:
         launcher = pathlib.Path(RELEASE_LAUNCHER).read_text()
@@ -78,23 +81,56 @@ def workspace_state_matches(active, commit):
                     return False
                 exports[match[1]] = match[2]
         mode = active.get("workspace_admitted")
-        status = anonymous_reference_status()
         if mode is False:
-            return not exports and status == 503
-        if mode is not True or status != 403:
+            return not exports and anonymous_reference_status() == 503
+        if mode is not True or anonymous_reference_status() != 403:
             return False
-        manifest, pin = private_json(ADMISSION / "source-access.json")
+        old_path = ADMISSION / "source-access.json"
         owner, _ = private_json(ADMISSION / "owner-admission.json")
         activation, _ = private_json(ADMISSION / "activation-evidence.json")
+        expected_path = ADMISSION / f"source-access-{commit}.json"
+        path = expected_path if expected_path.exists() else old_path
+        manifest, pin = private_json(path)
         prefix = "ARVECTUM_WORKSPACE_PROCUREMENT_"
-        if exports != {prefix+"MANIFEST":str(ADMISSION / "source-access.json"),
-                       prefix+"MANIFEST_SHA256":pin,prefix+"SOURCE_RELEASE":"$SHA"}:
+        if exports != {prefix + "MANIFEST": str(path),
+                       prefix + "MANIFEST_SHA256": pin,
+                       prefix + "SOURCE_RELEASE": "$SHA"}:
             return False
+        if manifest["source_release"] != commit:
+            return False
+        owner_release = owner["source_release"]
+        if commit == owner_release:
+            if path != old_path or activation["source_manifest_sha256"] != pin:
+                return False
+        else:
+            if path == old_path:
+                return False
+            original, oldpin = private_json(old_path)
+            rebind, _ = private_json(ADMISSION / f"release-rebind-{commit}.json")
+            if (original["source_release"] != owner_release
+                or any(manifest[k] != original[k] for k in original if k != "source_release")
+                or set(manifest) != set(original)
+                or activation["source_manifest_sha256"] != oldpin
+                or rebind["schema"] != "arvectum.wsf07b.release-rebind-local-evidence/1"
+                or rebind["not_external_signature"] is not True
+                or rebind["source_release_previous"] != owner_release
+                or rebind["source_release_target"] != commit
+                or rebind["source_manifest_sha256"] != pin
+                or rebind["source_identity_count"] != 12
+                or rebind["excluded_count"] != 9
+                or not all(rebind[k] is True for k in (
+                    "unchanged_database_binding", "unchanged_token_hash", "unchanged_validity_interval"))
+                or rebind["unchanged_source_id_set_sha256"] != hashlib.sha256(
+                    json.dumps(sorted(manifest["deal_ids"]), separators=(",", ":")).encode()
+                ).hexdigest()):
+                return False
         ids = manifest["deal_ids"]
         approved = owner["deal_ids"]
-        start, end = (datetime.fromisoformat(manifest[k]) for k in ("starts_at","expires_at"))
-        if (start.utcoffset()!=UTC.utcoffset(start) or end.utcoffset()!=UTC.utcoffset(end)
-                or not start <= datetime.now(UTC) < end <= datetime.fromisoformat("2026-12-17T09:35:36.060836+00:00")):
+        start, end = (datetime.fromisoformat(manifest[k]) for k in ("starts_at", "expires_at"))
+        if (start.utcoffset() != UTC.utcoffset(start)
+            or end.utcoffset() != UTC.utcoffset(end)
+            or not start <= datetime.now(UTC) < end <= datetime.fromisoformat(
+                "2026-12-17T09:35:36.060836+00:00")):
             return False
         return (
             manifest["schema"] == "arvectum.tender.internal-procurement-access/1"
@@ -104,21 +140,47 @@ def workspace_state_matches(active, commit):
             and owner["source_product"] == "Tender Agent / Procurement Portfolio"
             and owner["status"] == "approved-exact-set-pending-product-and-workspace-activation"
             and activation["status"] == "source-and-workspace-read-verified"
-            and activation["source_manifest_sha256"] == pin
-            and activation["source_release"] == owner["source_release"] == manifest["source_release"] == commit
+            and activation["source_release"] == owner_release
             and activation["owner_approval_reference"] == owner["owner_approval_reference"]
             and bool(owner["owner_approval_reference"])
             and owner["database_binding"] == manifest["database_binding"]
             and owner["binding_id"] == manifest["binding_id"]
             and owner["draft_blob"] == manifest["draft_blob"]
             and owner["expires_at"] == manifest["expires_at"] == activation["expiry"]
-            and isinstance(ids,list) and isinstance(approved,list)
+            and isinstance(ids, list) and isinstance(approved, list)
             and len(ids) == len(set(ids)) == len(approved) == activation["admitted_count"] == 12
             and set(ids) == set(approved)
-            and all(isinstance(x,str) and re.fullmatch(r"DL-[A-Za-z0-9-]{1,60}",x) for x in ids)
+            and all(isinstance(x, str) and re.fullmatch(r"DL-[A-Za-z0-9-]{1,60}", x) for x in ids)
             and owner["excluded_count"] == activation["excluded_count"] == 9
         )
     except (OSError, ValueError, TypeError, KeyError, AttributeError):
+        return False
+
+
+def release_code_parity(source, commit, main_sha):
+    """Allow bounded docs-only main commits, NEVER silently accept code drift.
+
+    Uses GitHub's current compare, not mutable developer worktrees. If the
+    compare cannot be proved, fail closed rather than trusting a stale local
+    main checkout or converting all GitHub ancestors to accepted releases.
+    """
+    if main_sha == commit:
+        return True
+    if not re.fullmatch(r"[0-9a-f]{40}", main_sha):
+        return False
+    code, raw = run("gh", "api",
+        f"repos/arvectum2/tender-agent/compare/{commit}...{main_sha}",
+        "--jq", "{ahead_by:.ahead_by,behind_by:.behind_by,files:[.files[].filename]}")
+    if code:
+        return False
+    try:
+        proof = json.loads(raw)
+        files = proof["files"]
+        return (proof["behind_by"] == 0 and 1 <= proof["ahead_by"] <= 50
+                and isinstance(files, list) and 1 <= len(files) <= 100
+                and all(isinstance(f, str) and f.startswith((".agent/", "docs/", "specs/"))
+                        for f in files))
+    except (ValueError, KeyError, TypeError):
         return False
 
 
@@ -150,8 +212,18 @@ def check_release(active: dict) -> dict:
     checks["release_tree_clean"] = code == 0 and not dirty
     code, github = run("gh", "api", "repos/arvectum2/tender-agent/commits/main", "--jq", ".sha")
     result["github_main_sha"] = github[:12] if code == 0 else None
-    checks["release_matches_github_main"] = code == 0 and github == commit
+    checks["release_code_parity_with_github_main"] = code == 0 and release_code_parity(source, commit, github)
     checks["private_config"] = RELEASE_CONFIG.is_file() and RELEASE_CONFIG.stat().st_mode & 0o077 == 0
+    try:
+        backend_launcher = pathlib.Path(RELEASE_LAUNCHER).read_text()
+        daily_launcher = pathlib.Path("/Users/master/arvectum-ops/arv-075/scripts/daily-tender-ssd.sh").read_text()
+        checks["backend_and_daily_release_pins"] = (
+            re.findall(r"(?m)^SHA=([a-f0-9]{40})$", backend_launcher) == [commit]
+            and re.findall(r'(?m)^SHA = "([a-f0-9]{40})"$', daily_launcher) == [commit]
+            and 'REVISION = "127_private_review_link_corrections"' in daily_launcher
+        )
+    except (OSError, ValueError):
+        checks["backend_and_daily_release_pins"] = False
     try:
         plist = plistlib.loads(PLIST.read_bytes())
     except (OSError, ValueError):
