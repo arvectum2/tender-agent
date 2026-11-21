@@ -12,6 +12,10 @@ Scope: public GitHub repository `arvectum2/tender-agent`, **only** `refs/heads/m
 
 Verified with both `GET /repos/arvectum2/tender-agent/rulesets/27788179` and `GET /repos/arvectum2/tender-agent/rules/branches/main`. The ten contexts are shared by existing CI-green PRs #673, #674, #675, #677, #678; `criterion-review` is a separate, conditional job and intentionally is **not** globally required. GitVerse is required intentionally to keep the GitHub/GitVerse mirrors in sync; if it fails transiently (e.g. provider HTTP 502), repeat the failed mirror job after checking the cause, never bypass its evidence.
 
+## Recorded enforcement test
+
+On 2026-11-21, new non-draft [PR #680](https://github.com/arvectum2/tender-agent/pull/680) reported `mergeStateStatus=BLOCKED` while 16 of its 19 CI checks were still in progress, whereas already-green PR #673 reported `CLEAN`. No attempt to push directly to main, force-update, delete, bypass or merge was made. The test shows effective pending required-check enforcement; a separate future reviewer test is still needed after the second collaborator is onboarded.
+
 ## Reviewer limitation (not satisfied)
 
 `GET /repos/arvectum2/tender-agent/collaborators` returned exactly one person, `arvectum2`, who authored PR #674. GitHub cannot count an author's self-approval as an independent review. A one-review minimum today would make every owner-authored PR permanently blocked until a second eligible collaborator is invited. Therefore this *initial technical policy* uses `required_approving_review_count=0`, no bypass. This does **not** waive the separate AM-4/owner independent-review release gate. Before raising the threshold to 1, a named independent collaborator must be added and accept the invitation; then update rule 27788179 and prove both an unreviewed PR is blocked and a valid independent review can unblock it. Do not fabricate a reviewer or treat a green CI as authorization.

@@ -1,5 +1,5 @@
 task_id: TA-MAIN-GOVERNANCE-20261121
-status: in_progress
+status: blocked
 goal: Enforce safely reversible GitHub main branch change control, verify resulting effective rules and prepare exact PR674 release gate without bypassing AM-4 authority.
 definition_of_done:
   - Enforce pull-request-only merges and stable exact-head CI checks on main.
@@ -13,11 +13,13 @@ completed_stages:
   - Confirmed no effective protection or rulesets initially applied to main; exact stable CI names shared by PR673/674/675/677/678.
   - Activated main-only GitHub ruleset 27788179 with PR, strict ten required checks, no force push/deletion and no bypass actors; re-read effective rules.
   - Preserved zero required self-approvals while only one collaborator exists; independent AM-4 review remains an explicit release blocker, not silently waived.
-current_stage: verify_pr_checks_and_document_review_gap
-remaining_stages: [negative_branch_PR_check, validate_candidate_release_gates, record_exact_state, second_human_review_activation]
-last_verified_commit: abcd8727326c398d870edbc4a2da793e090ac8eb
-last_checks: Ruleset 27788179 effective GET on main, ten named required checks, empty bypasses. PR674 19/19 success, GitVerse success, main unchanged abcd8727; independent human reviewer absent.
-resume_instruction: Create review-only governance PR, verify effective ruleset 27788179 and unreviewed PR with pending checks cannot merge; never direct-push main. Owner still must add a distinct independent GitHub collaborator before changing required review threshold from 0 to 1. PR674 remains draft with pending AM-4 owner, current originals #679, rollback and PITR acceptance. No live worker, source fetch, bid, migration, deployment, deletion or token action.
+  - Non-draft PR680 was BLOCKED with 16 checks running; green existing PR673 remained CLEAN. No direct main push or attempted merge.
+  - Repository rule set readback confirmed all four rule types with ten required contexts; recorded source-controlled governance document and issue #676 evidence.
+current_stage: waiting_independent_reviewer_and_owner_release_gates
+remaining_stages: [invite_independent_collaborator_and_accept, require_one_independent_approval, prove_review_gate, owner_release_and_source_pitr_rollback_decision]
+last_verified_commit: 7f6a25b8c52bb3671c4bafd42826a05b74e522ac
+last_checks: Active main-only ruleset 27788179 verified with effective API, 10 strict checks, no bypass; new non-draft PR680 BLOCKED while checks pending, PR673 CLEAN with 20/20, PR674 19/19. Main remains abcd8727; sole collaborator is PR author, independent review unavailable.
+resume_instruction: Technical main protection is active, issue #676 remains OPEN. Owner must nominate a distinct eligible GitHub reviewer and accept invite, then PATCH active ruleset 27788179 required_approving_review_count 0 -> 1 and verify an independently approved PR. PR674 remains DRAFT despite green 19/19 until AM-4 owner consent, original-document issue #679, PITR retention and migrations/rollback gates. Do not repeat active ruleset creation, directly push main, attempt merge, source fetch, bid, migration, deployment, backup deletion or token changes.
 ruleset_id: 27788179
 ruleset_enforcement: active
 required_status_check_count: 10
