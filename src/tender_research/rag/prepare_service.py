@@ -214,7 +214,7 @@ def prepare_tender_for_analysis(
                         steps=steps,
                         errors=errors,
                     )
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001 - legacy ingestion/download boundary
                 logger.error("Failed to ingest tender %s: %s", registry_number, e)
                 step.status = "failed"
                 step.message = f"Ingestion failed: {e}"
@@ -269,12 +269,42 @@ def prepare_tender_for_analysis(
                 step.status = "completed"
                 step.message = "Documents already downloaded"
             emit_progress(40, "download_documents", step.message)
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001 - legacy ingestion/download boundary
             logger.error("Document download failed for %s: %s", registry_number, e)
             step.status = "failed"
             step.message = f"Download failed: {e}"
             warnings.append(f"Document download failed: {e}")
             emit_progress(40, "download_documents", step.message)
+
+        # Treat damaged/missing originals as a blocking failure even when an
+        # old chunk index happens to remain in the database. Never permit
+        # those stale vectors to make a tender appear ready for analysis.
+        unverified = [
+            doc for doc in tender.documents
+            if doc.download_status == "failed"
+            and isinstance(doc.error_message, str)
+            and doc.error_message.startswith("Original integrity failed:")
+        ]
+        if unverified:
+            reason = f"Original document verification failed for {len(unverified)} file(s)"
+            steps.append(TenderPreparationStep("verify_originals", "failed", reason))
+            errors.append(reason)
+            emit_progress(100, "verify_originals", reason)
+            session.commit()  # Persist the refusal; do not re-fetch or index.
+            return TenderPreparationResult(
+                status="failed",
+                registry_number=registry_number,
+                ready_for_analysis=False,
+                steps=steps,
+                tender_found=True,
+                documents_total=len(tender.documents),
+                documents_downloaded=sum(
+                    doc.download_status == "downloaded" for doc in tender.documents
+                ),
+                warnings=warnings,
+                errors=errors,
+                tender_id=tender.id,
+            )
 
         platform_projection = None
         try:
@@ -517,6 +547,12 @@ def check_preparation_status(
             }
 
         docs_total = len(tender.documents)
+        integrity_blocked = any(
+            doc.download_status == "failed"
+            and isinstance(doc.error_message, str)
+            and doc.error_message.startswith("Original integrity failed:")
+            for doc in tender.documents
+        )
         docs_downloaded = sum(1 for d in tender.documents if d.download_status == "downloaded")
         docs_with_text = repo.count_extracted_documents_by_tender(tender.id)
         chunks_total = repo.count_chunks_by_tender(tender.id)
@@ -524,7 +560,7 @@ def check_preparation_status(
         canonical_collection_id = build_tender_collection_id(repo, tender.id)
         platform_collection_id = canonical_collection_id
         embeddings_total = 0
-        if canonical_collection_id and chunks_total > 0:
+        if canonical_collection_id and chunks_total > 0 and not integrity_blocked:
             try:
                 with build_data_platform_client(config) as platform_client:
                     resolved_collection_id = resolve_tender_collection_id(
@@ -546,6 +582,8 @@ def check_preparation_status(
         else:
             platform_ready = False
         missing = []
+        if integrity_blocked:
+            missing.append("original_integrity")
         if not tender:
             missing.append("tender")
         if docs_total == 0:
@@ -556,7 +594,7 @@ def check_preparation_status(
             missing.append("chunks")
         if not platform_ready:
             missing.append("data_platform_index")
-        ready = chunks_total > 0 and platform_ready
+        ready = chunks_total > 0 and platform_ready and not integrity_blocked
 
         return {
             "registry_number": registry_number,

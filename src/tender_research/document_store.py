@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import hashlib
+import os
+import tempfile
 import urllib.request
 from pathlib import Path
 from urllib.request import HTTPSHandler, ProxyHandler, build_opener
@@ -32,6 +34,13 @@ def download_tender_documents(
     expanded = 0
     for doc in list(documents):
         if doc.download_status == "downloaded":
+            # Never trust a historical database status without verifying its
+            # captured original. A missing/replaced file must not reach RAG.
+            issue = _original_file_problem(doc, max_bytes)
+            if issue is not None:
+                _block_unverified_original(repo, doc, issue)
+                failed += 1
+                continue
             downloaded += 1
             expanded += _expand_source_bound_ri223_rar(repo, doc, doc_dir)
             continue
@@ -41,7 +50,15 @@ def download_tender_documents(
             repo._session.flush()
             continue
         local_path = doc_dir / _safe_filename(doc.file_name, doc.id)
-        if local_path.exists():
+        if local_path.exists() or local_path.is_symlink():
+            # A previously interrupted write or colliding filename is not
+            # proof of a source original. Only a pinned, matching hash may
+            # be reused; never overwrite an unverified cached path.
+            issue = _original_file_problem(doc, max_bytes, path=local_path)
+            if issue is not None:
+                _block_unverified_original(repo, doc, issue)
+                failed += 1
+                continue
             doc = _mark_downloaded(repo, doc, local_path)
             repo._session.flush()
             downloaded += 1
@@ -54,14 +71,42 @@ def download_tender_documents(
             )
             opener = _build_url_opener(doc.file_url, config)
             with opener.open(req, timeout=30) as resp:
-                content = resp.read()
+                # Reads at most the configured limit plus one byte, rather
+                # than allocating an unlimited server response in memory.
+                content = resp.read(max_bytes + 1)
             if len(content) > max_bytes:
                 doc.download_status = "skipped"
-                doc.error_message = f"File too large: {len(content)} bytes"
+                doc.error_message = f"File too large: >{max_bytes} bytes"
                 repo._session.flush()
                 failed += 1
                 continue
-            local_path.write_bytes(content)
+            if not content:
+                _block_unverified_original(repo, doc, "empty download")
+                failed += 1
+                continue
+            if doc.sha256 and hashlib.sha256(content).hexdigest() != doc.sha256:
+                _block_unverified_original(repo, doc, "download hash differs from pinned original")
+                failed += 1
+                continue
+            if doc.size_bytes is not None and len(content) != doc.size_bytes:
+                _block_unverified_original(repo, doc, "download length differs from source metadata")
+                failed += 1
+                continue
+            # Publish completed bytes atomically and exclusively: crashes
+            # leave no trusted partial original, races never clobber files.
+            with tempfile.NamedTemporaryFile(prefix=".source-", dir=doc_dir, delete=False) as tmp:
+                staged = Path(tmp.name)
+                try:
+                    tmp.write(content)
+                    tmp.flush()
+                    os.fsync(tmp.fileno())
+                except BaseException:
+                    staged.unlink(missing_ok=True)
+                    raise
+            try:
+                os.link(staged, local_path)
+            finally:
+                staged.unlink(missing_ok=True)
             doc = _mark_downloaded(repo, doc, local_path)
             repo._session.flush()
             downloaded += 1
@@ -136,6 +181,37 @@ def _expand_source_bound_ri223_rar(repo: TenderRepository, document, doc_dir: Pa
     }
     repo._session.flush()
     return len(members)
+
+
+def _original_file_problem(doc, max_bytes: int, *, path: Path | None = None) -> str | None:
+    """Check the existing original without fetching or trusting a DB status."""
+    if not doc.sha256 or len(doc.sha256) != 64:
+        return "missing pinned original SHA-256"
+    original = path if path is not None else Path(doc.local_path) if doc.local_path else None
+    if original is None or original.is_symlink() or not original.is_file():
+        return "original file missing or symlinked"
+    try:
+        size = original.stat().st_size
+        if not 0 < size <= max_bytes:
+            return "original file empty or beyond size limit"
+        digest = hashlib.sha256()
+        with original.open("rb") as stream:
+            while chunk := stream.read(1024 * 1024):
+                digest.update(chunk)
+        if digest.hexdigest() != doc.sha256:
+            return "original SHA-256 mismatch"
+        if doc.size_bytes is not None and size != doc.size_bytes:
+            return "original recorded length mismatch"
+    except OSError:
+        return "original file unreadable"
+    return None
+
+
+def _block_unverified_original(repo: TenderRepository, doc, issue: str) -> None:
+    doc.download_status = "failed"
+    doc.text_extraction_status = "failed"
+    doc.error_message = "Original integrity failed: " + issue
+    repo._session.flush()
 
 
 def _mark_downloaded(repo: TenderRepository, doc, path: Path):
