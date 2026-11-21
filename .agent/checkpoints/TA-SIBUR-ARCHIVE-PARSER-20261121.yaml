@@ -13,15 +13,24 @@ completed_stages:
   - Independently SHA-replayed actual archived page1 from all 9 source categories with source receipt URL, bytes, exact IDs and pagination: 9/9 pages, 108 original rows; private proof 0600 persisted. Historical full archive coverage not claimed.
   - Added duplicate JSON-member rejection and negative tests for all categories, wrong page, out-of-origin attachment, URL bound/type; 15 focused pytest and Ruff PASS.
   - Implemented reusable replay_archived_page read-only SHA+category+page+source URL+row-ID proof, file symlink/path guard, source receipt duplicate-key fail-closed; verified all nine actual page1 bytes and 108 rows. 32 focused tests and Ruff PASS.
-current_stage: nine_categories_original_sha_replay_api_32_tests_pass_waiting_pr526_merge
+  - Verified ALL 4052 of 4052 original historical archived pages in 9 categories, 48536 total source observations, exact SHA+receipt+row ID+stable source pagination, zero missing/extra/invalid; private 0600 complete deterministic category digest proof persisted. No network/DB writes.
+  - Added read-only full archive corpus auditor, 5 corpus negative checks, 37 focused tests and Ruff PASS.
+  - Parent PR526 saved-doc source audit passed 19/19 GitHub CI and merged into protected main 7ea192b3; its checkpoint completed, issue #686 PPT ambiguity still open.
+current_stage: full_historical_archive_4052_pages_48536_rows_verified_waiting_exact_ci
 remaining_stages:
-  - After PR526 CI/merge, integrate latest protected main, confirm original source/parser proof unchanged, push bounded source-only PR and require exact CI.
-  - Mark checkpoint completed after owner+AI-reviewed protected merge, with live source capture and DB indexing still separately blocked.
-last_verified_commit: 0af718499498f398a3a339dfa8c714c96e8b28af
-last_checks: Real nine archived first-party page1 SHA/bytes/source URL/category/row IDs replayed through new API, 108 rows. 32 focused pytest PASS (including raw-byte/ID/path/symlink/receipt tamper), Ruff PASS. No HTTP/network, no rights or DB writes.
-resume_instruction: Pure SIBUR archive parser and SHA-verified read-only page replay isolated from DRAFT #527, 9/9 actual historical category pages/108 rows verified; 32 pytest and Ruff PASS. After PR526 merges protected main, integrate latest main and publish a small pure parser-only PR, await exact CI owner+AI review; do not bulk merge #527, activate live archive source, DB, DP or ETP.
+  - Merge latest protected main 7ea192b3, rerun 37 focused tests/Ruff and source proof read-only receipt validation.
+  - Push bounded source-only branch and create PR with current main as base, require exact GitHub/GitVerse CI.
+  - Mark completed only after reviewed protected merge; all new live archive source, DB and DP activation stays separate.
+last_verified_commit: 6bf0a141108b32cfb34613ee291894aee7cec50f
+last_checks: Full 9-category primary-source archived corpus 4052/4052 SHA+receipt+member/pagination verified, 48536 row observations, zero errors; private complete 0600 aggregate category digest. 37 focused pytest and Ruff PASS, no HTTP or DB writes. Parent source PR526 merged 7ea192b3, no source-right expansion.
+resume_instruction: Complete source/archive task - full 4052/4052 historical original archive pages (48536 rows) SHA verified, no gaps, private 0600 receipt saved. Parent PR526 merged 7ea192b3. Finish merging latest protected main, run 37 focused tests/Ruff, publish small pure parser+full auditor PR, await exact CI and merge owner+AI; do not bulk merge old DRAFT #527 or activate live archive capture, index, ETP or DB.
 first_party_category_page_one_verified: 9
 first_party_archived_rows_verified: 108
 all_historical_archive_pages_verified: false
 private_original_archive_proof: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/sibur-archive-category-page-audit-20261121.json
 production_or_working_db_mutated: false
+full_historical_archived_pages_verified: 4052
+full_historical_archive_source_rows: 48536
+full_historical_archive_categories: 9
+private_full_corpus_proof: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/sibur-archive-corpus-proof-20261121.json
+continuous_current_source_status_verified: false
