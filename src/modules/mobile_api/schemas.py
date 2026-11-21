@@ -126,6 +126,9 @@ class MobileDigestResponse(APIModel):
     run_id: str | None = None
     profile_id: str | None = None
     profile_version: str | None = None
+    run_status: str | None = None
+    current_stage: str | None = None
+    discovery_incomplete: bool | None = None
     counts: dict = Field(default_factory=dict)
     actionable: list[dict] = Field(default_factory=list)
     human_control: dict = Field(default_factory=dict)

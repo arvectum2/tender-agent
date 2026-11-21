@@ -1,7 +1,16 @@
 from pathlib import Path
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile
+from fastapi import (
+    APIRouter,
+    Depends,
+    File,
+    Form,
+    HTTPException,
+    Query,
+    Request,
+    UploadFile,
+)
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse, Response
 from pydantic import BaseModel, Field
 
@@ -10,9 +19,30 @@ from src.modules.commercial_core.run_service import (
     get_run_commercial_core,
 )
 from src.modules.commercial_core.schemas import CommercialCoreResponse
+from src.modules.tender_operator_agent_demo.evidence_copilot import (
+    EvidenceQuestion,
+    answer_question,
+)
+from src.modules.tender_operator_agent_demo.evidence_document_search import (
+    DocumentSearchQuestion,
+    search_run_documents,
+)
+from src.modules.tender_operator_agent_demo.evidence_grounded_questions import (
+    GroundedQuestion,
+    answer_grounded_question,
+)
 from src.modules.tender_operator_agent_demo.fast_preanalysis import (
     fast_cited_preanalysis,
     preanalysis_from_public_search,
+)
+from src.modules.tender_operator_agent_demo.operator_cost_scenarios import (
+    ExplicitCostScenarioRequest,
+    calculate_explicit_cost_thresholds,
+)
+from src.modules.tender_operator_agent_demo.operator_price_context import (
+    archived_competitive_price_context,
+    archived_website_price_cohort,
+    archived_website_workload_normalization,
 )
 from src.modules.tender_operator_agent_demo.operator_workspace_evidence import (
     get_operator_source_evidence,
@@ -102,6 +132,11 @@ from src.modules.tender_operator_agent_demo.upload_service import (
 from src.modules.tender_operator_agent_demo.verified_original_quote import (
     verify_operator_run_quote,
 )
+from src.modules.tender_operator_agent_demo.workspace_application_review import (
+    ApplicationReviewRequest,
+    ApplicationReviewResponse,
+    review_workspace_application,
+)
 from src.shared.api.middleware import _is_protected_path
 from src.shared.config.settings import get_settings
 
@@ -169,6 +204,46 @@ def operator_workspace_source_evidence(run_id: str) -> dict:
     return get_operator_source_evidence(run_id)
 
 
+@router.post("/api/demo/tender-agent/workspace/runs/{run_id}/evidence-question", dependencies=[Depends(require_private_workspace)])
+def operator_workspace_evidence_question(run_id: str, request: EvidenceQuestion, http: Request) -> dict:
+    settings = get_settings()
+    if not _is_protected_path(http.url.path, tuple(settings.pilot_auth_protected_prefixes.split(",")),
+                              tuple(settings.pilot_auth_public_paths.split(","))):
+        raise HTTPException(status_code=503, detail="Private operator authentication must cover this endpoint")
+    return answer_question(run_id, request)
+
+
+@router.post("/api/demo/tender-agent/workspace/runs/{run_id}/evidence-search", dependencies=[Depends(require_private_workspace)])
+def operator_workspace_evidence_search(run_id: str, request: DocumentSearchQuestion, http: Request) -> dict:
+    settings = get_settings()
+    if not _is_protected_path(http.url.path, tuple(settings.pilot_auth_protected_prefixes.split(",")),
+                              tuple(settings.pilot_auth_public_paths.split(","))):
+        raise HTTPException(status_code=503, detail="Private operator authentication must cover this endpoint")
+    return search_run_documents(run_id, request)
+
+
+@router.post("/api/demo/tender-agent/workspace/runs/{run_id}/evidence-answer", dependencies=[Depends(require_private_workspace)])
+def operator_workspace_evidence_answer(run_id: str, request: GroundedQuestion, http: Request) -> dict:
+    settings = get_settings()
+    if not _is_protected_path(http.url.path, tuple(settings.pilot_auth_protected_prefixes.split(",")),
+                              tuple(settings.pilot_auth_public_paths.split(","))):
+        raise HTTPException(status_code=503, detail="Private operator authentication must cover this endpoint")
+    return answer_grounded_question(run_id, request)
+
+
+@router.post(
+    "/api/demo/tender-agent/workspace/runs/{run_id}/application-review",
+    response_model=ApplicationReviewResponse,
+    dependencies=[Depends(require_private_workspace)],
+)
+def operator_workspace_application_review(run_id: str, request: ApplicationReviewRequest, http: Request) -> ApplicationReviewResponse:
+    settings = get_settings()
+    if not _is_protected_path(http.url.path, tuple(settings.pilot_auth_protected_prefixes.split(",")),
+                              tuple(settings.pilot_auth_public_paths.split(","))):
+        raise HTTPException(status_code=503, detail="Private operator authentication must cover this endpoint")
+    return review_workspace_application(run_id, request)
+
+
 @router.post(
     "/api/demo/tender-agent/workspace/runs/{run_id}/verify-quote",
     dependencies=[Depends(require_private_workspace)],
@@ -180,6 +255,48 @@ def operator_workspace_verify_quote(
     return verify_operator_run_quote(
         run_id=run_id, file_id=request.file_id, exact_quote=request.exact_quote,
     )
+
+
+@router.post(
+    "/api/demo/tender-agent/workspace/price-scenario/calculate",
+    dependencies=[Depends(require_private_workspace)],
+)
+def operator_workspace_explicit_price_scenario(
+    request: ExplicitCostScenarioRequest, http: Request,
+) -> dict:
+    """Stateless what-if; no quote, company costs storage or ETP actions."""
+    settings = get_settings()
+    if not _is_protected_path(http.url.path, tuple(settings.pilot_auth_protected_prefixes.split(",")),
+                              tuple(settings.pilot_auth_public_paths.split(","))):
+        raise HTTPException(status_code=503, detail="Private operator authentication must cover this endpoint")
+    return calculate_explicit_cost_thresholds(request)
+
+
+@router.get(
+    "/api/demo/tender-agent/workspace/website-workload-normalization",
+    dependencies=[Depends(require_private_workspace)],
+)
+def operator_workspace_website_workload_normalization() -> dict:
+    """Workload differences from original attested TЗ, not monetary quotes."""
+    return archived_website_workload_normalization()
+
+
+@router.get(
+    "/api/demo/tender-agent/workspace/website-price-cohort",
+    dependencies=[Depends(require_private_workspace)],
+)
+def operator_workspace_website_price_cohort() -> dict:
+    """Archived distinct original websites, not a blended procurement price."""
+    return archived_website_price_cohort()
+
+
+@router.get(
+    "/api/demo/tender-agent/workspace/competitive-prices/{registry_number}",
+    dependencies=[Depends(require_private_workspace)],
+)
+def operator_workspace_competitive_prices(registry_number: str) -> dict:
+    """Read-only independently checked archived one-procedure price evidence."""
+    return archived_competitive_price_context(registry_number)
 
 
 @router.get("/api/demo/tender-agent/workspace/registry", dependencies=[Depends(require_private_workspace)])

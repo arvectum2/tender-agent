@@ -1,0 +1,18 @@
+task_id: TA-APR08-INTEGRATED-ACCEPTANCE-20261117
+status: completed
+goal: Evaluate entire bounded APR08 against canonical roadmap gate; integrated real archived acceptance and review-ready stack; explicitly defer unsupported legal/current/freeform capabilities.
+definition_of_done:
+  - Exact stack CI and base verified; source/runtime isolation, scope/unknown/auth/action boundaries exercised.
+  - Reproducible integrated acceptance, independent gap ledger, roadmap/checkpoints reflect development vs merge/release.
+  - Publish evidence and verify CI; no unapproved merge or release.
+completed:
+  - PR625 and PR626 exact CI 19/19 SUCCESS CLEAN.
+  - Main remains a1686d85; roadmap requires procurement-scoped citations, unknowns, no authoritative approval, not full legal corpus or generic chatbot.
+  - Integrated harness 4/4 PASS, 9/9 legal SHA intact, actual DP and Chromium desktop/narrow, originals unchanged. 223 focused PASS, Ruff/Node/full-stack diff PASS.
+  - Exact final stack PR627 CI 19/19; owner authorized merge, merged to main cac4cd4a69f2494bff582b94aec80a5ee4d4af4c; tree matches reviewed head 17e64db3a6133f6a8ab1d372be031c72c4c8bd2d.
+current_stage: integrated_bounded_development_complete
+remaining: []
+last_verified_commit: 17e64db3a6133f6a8ab1d372be031c72c4c8bd2d
+test_results:
+  - Integrated 4/4, 9/9 legal-source SHA, 223 focused tests PASS; all 16 PRs 304/304 checks SUCCESS.
+resume_instruction: Bounded APR08 engineering complete and merged. Verify main post-merge CI in integration checkpoint. Authoritative current law, broad semantic/223-FZ document coverage and production/business acceptance remain separate open gates. No APR09/10 trigger.

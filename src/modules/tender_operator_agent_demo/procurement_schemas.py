@@ -95,6 +95,7 @@ class PublicProcurementSearchResponse(APIModel):
     local_post_filter_applied: bool = False
     eis_pages_fetched: int = Field(default=1, ge=0)
     has_more: bool = False
+    source_coverage_complete: bool = False
     next_page: int | None = Field(default=None, ge=1)
     next_cursor: str | None = None
     requested_limit: int | None = Field(default=None, ge=1)

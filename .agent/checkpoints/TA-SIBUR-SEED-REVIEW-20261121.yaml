@@ -1,0 +1,23 @@
+task_id: TA-SIBUR-SEED-REVIEW-20261121
+status: in_progress
+goal: Reconcile historical SIBUR public-source seed code with protected main without changing either production or already seeded working DB.
+definition_of_done:
+  - Preserve the original 313-record working database seed and all historical observations without re-import or new source requests.
+  - Preserve source namespace sibur_public independent of EIS, GPB and the dormant generalized source_catalog's source identity.
+  - Review code and tests for exact original-byte/source receipt checks, idempotent import, immutable existing rows, and production DB separation.
+  - Remove outdated canonical current-task conflict when merging current main and preserve the original PR524 history and #526/#527 dependencies.
+  - Pass scoped tests and current exact GitHub CI; no external live writer or collection automation.
+completed_stages:
+  - Identified PR524 historic 313 distinct public procedures/314 observations with owner-approved working-DB-only seed; PR526/PR527 depend on its head.
+  - Created fresh review-only isolated worktree from old PR524 head without changing old source branches or production.
+current_stage: examine_original_source_binding_and_current_main_compatibility
+remaining_stages:
+  - Integrate latest protected main and resolve only stale task checkpoint.
+  - Check source provenance, exact digest validation and behavior under duplicates/adversarial data, add negative tests where needed.
+  - Run tests/Ruff and verify no live DB/source calls; update PR524 behind latest stable main after PR637 acceptance.
+  - Merge source-only code through owner+AI and required CI or leave draft with precise blockers.
+last_verified_commit: 650bc75b3c5fcd22ba66e712b64db73fb9e36e33
+last_checks: Historic original source entry confirmed; no replay or source requests.
+resume_instruction: Begin with original import_sibur_public_snapshot.py and original SIBUR receipt evidence. Never reimport 313 records, never enable actual source worker, avoid changes to actual working/production DB, preserve stacked PR526/527 history and canonical main task file. Complete current-main merge and bounded tests only.
+production_modified: false
+working_db_modified: false

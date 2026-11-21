@@ -231,7 +231,7 @@ def test_concurrent_different_keys_create_only_one_active_run(tmp_path):
         with factory() as session:
             try:
                 return start_run("CUST-RACE", case_id, StartIn(), session, key)
-            except Exception as exc:
+            except Exception as exc:  # noqa: BLE001 - existing explicit concurrency stress test
                 return getattr(exc, "status_code", 500)
 
     with ThreadPoolExecutor(max_workers=2) as pool:
@@ -292,14 +292,14 @@ def test_completed_pilot_run_captures_tenant_candidate_only_after_completion(
     assert session.query(ProcurementLearningObservation).count() == 1
 
 
-def test_completed_pilot_run_capture_off_does_not_write(
+def test_completed_pilot_run_explicitly_disabled_does_not_write(
     client, session, tmp_path, monkeypatch
 ):
     from src.modules.procurement_learning_corpus.models import (
         ProcurementLearningObservation,
     )
 
-    monkeypatch.delenv("TENDER_LEARNING_CAPTURE_ENABLED", raising=False)
+    monkeypatch.setenv("TENDER_LEARNING_CAPTURE_ENABLED", "0")
     _customer(session, "CORP-NO-CAPTURE")
     _trusted_analysis(monkeypatch, tmp_path, session)
     case = _case(client, "CORP-NO-CAPTURE")

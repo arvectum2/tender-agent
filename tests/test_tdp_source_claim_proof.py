@@ -298,3 +298,60 @@ def test_operator_projection_does_not_claim_223_fz_as_official_eis_xml():
     result=out["trace"]["source_eis_typed_claims"]
     assert result["claims"][0]["status"]=="UNKNOWN_NOT_ATTESTED"
     assert out["trace"]["source_research_quality_gate"]["bid_ready"] is False
+
+
+def test_repeated_labelled_claims_expose_later_contradictions():
+    from src.modules.tender_operator_agent_demo.source_claim_proof import (
+        audit_model_eis_summary,
+    )
+
+    corpus = research_full_corpus([d('n', 'notice', purchase_xml('1000000', '2026-10-16T10:00:00+03:00'))])
+    result = audit_model_eis_summary(corpus, {'tender_summary': (
+        'НМЦК: 1 000 000 ₽; срок подачи заявок: 16.10.2026 10:00 +03:00; '
+        'NMCK: 900000 RUB; Submission deadline: 2026-10-16T06:00:00Z.'
+    )})
+    assert result['explicit_assertions_count'] == 4
+    assert result['contradictions_count'] == 2
+    assert [item['status'] for item in result['claims']] == [
+        'MATCHES_HISTORICAL_EIS_SOURCE', 'MATCHES_HISTORICAL_EIS_SOURCE',
+        'CONTRADICTED_BY_HISTORICAL_EIS_SOURCE', 'CONTRADICTED_BY_HISTORICAL_EIS_SOURCE']
+
+
+def test_aware_deadline_compares_same_instant_and_rejects_naive():
+    corpus = research_full_corpus([d('n', 'notice', purchase_xml('1000000', '2026-10-16T10:00:00+03:00'))])
+    checked = check_typed_original_facts(corpus, [
+        {'field': 'submission_deadline', 'value': value} for value in (
+            '2026-10-16T07:00:00Z', '16.10.2026 12:00 +05:00',
+            '2026-10-16T07:00:00+0000', '2026-10-16T07:00:00', '2026-10-16T06:59:59Z')])
+    assert [item['status'] for item in checked['claims']] == [
+        'MATCHES_HISTORICAL_EIS_SOURCE', 'MATCHES_HISTORICAL_EIS_SOURCE',
+        'MATCHES_HISTORICAL_EIS_SOURCE', 'UNKNOWN_NOT_ATTESTED', 'CONTRADICTED_BY_HISTORICAL_EIS_SOURCE']
+
+
+def test_first_correct_claim_no_longer_hides_later_wrong_claim_in_operator_projection():
+    from src.modules.tender_operator_agent_demo.operator_full_corpus_runtime import (
+        run_with_full_corpus_research,
+    )
+
+    xml = d('n', 'notice', purchase_xml('1000000', '2026-10-16T10:00:00+03:00'))
+    for summary, expected in (
+        ('NMCK: 1000000 RUB; NMCK: 900000 RUB', 'CONTRADICTION_REVIEW_REQUIRED'),
+        ('NMCK: 1000000 RUB; ' * 101, 'EVIDENCE_INTEGRITY_REVIEW'),
+    ):
+        metadata = {'files': [{'file_id': 'n'}], 'limitations': []}
+        def handler(run_id, *, metadata=metadata, summary=summary, **deps):
+            return deps['_build_output_payloads'](metadata=metadata,
+                documents=deps['_collect_documents'](run_id, metadata),
+                requirements={'tender_summary': summary}, calibrated_risks=[])
+        out = run_with_full_corpus_research(handler, 'synthetic-repeat',
+            _collect_documents=lambda *_: [xml], _try_run_llm_workflow=lambda **_: None,
+            _build_output_payloads=lambda **_: {'trace': {}, 'requirements': {}})
+        gate = out['trace']['source_research_quality_gate']
+        typed = out['trace']['source_eis_typed_claims']
+        assert gate['status'] == expected and not gate['bid_ready']
+        if expected == 'EVIDENCE_INTEGRITY_REVIEW':
+            assert gate['eis_assertion_limit_exceeded']
+            assert len(typed['claims']) == 100 and typed['explicit_assertions_count_is_lower_bound']
+            assert any('лимит' in str(item) for item in metadata['limitations'])
+        else:
+            assert typed['contradictions_count'] == 1

@@ -1,0 +1,32 @@
+task_id: TA-CORE-RUNTIME-PACKAGING-20261115
+status: completed
+goal: Build isolated ARM64 candidate with compatible dependency base and required
+  source receipts; do not switch existing services.
+definition_of_done:
+- Fail-closed stale dependency overlay guard
+- Required runtime receipts included in pilot and local images
+- Isolated network-disabled image build and receipt validation, rollback preparation
+completed:
+- Verified existing runtime SDK 0.3.0 versus candidate 0.4.0; compatible QA base SDK
+  0.4.0, pip check PASS; no schema migration delta.
+- Fixed local overlay dependency declaration guard and pip check; explicit base arg
+  in Compose; packaged seven allowlisted runtime JSON receipts in local/pilot Dockerfiles.
+- 51 focused tests PASS, Ruff PASS, diff check PASS.
+- Offline ARM64 image core-review-03cb55f1 built on existing verified SDK 0.4.0 base;
+  all three price loaders and source policy PASS.
+- Negative build on old SDK 0.3.0 runtime base rejected by dependency guard; offline
+  FastAPI health 200, configured synthetic auth unauthorized 401 and authorized 200.
+- Prepared review/switch/rollback gates; no running service or data modified.
+current_stage: offline_packaging_verified
+remaining: []
+last_verified_commit: 03cb55f1774cc1a4b07dc1a276c13f45ca5d2e1b
+test_results:
+- PR529 and PR530 exact-head CI 19/19 each
+- 51 passed, 4 warnings; Ruff PASS
+- Docker network-none positive build PASS; incompatible base negative build PASS
+- Isolated image SDK0.4.0, price evidence 3/3, source policy PASS; health 200/auth
+  401/200
+- Image ID sha256:087c73bad201a7141d265ad0908633e47f0a27d189bbb9b27e3a6f3975147e9b
+resume_instruction: Packaging bounded child complete. Review deploy/local/CORE_RUNTIME_REVIEW_2026-11-15.md;
+  publish review-only stacked PR, await acceptance and separately approved runtime
+  switch. Do not deploy this image as an accepted release.

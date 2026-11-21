@@ -1,0 +1,29 @@
+task_id: TA-RETENTION-REGISTER-20261119
+status: completed
+goal: Internal append-only proposed retention schedule and hold register per tenant/order, not a
+  deletion authority.
+definition_of_done:
+- Versioned schema, validated proposed dates and unknown/active/cleared restriction state.
+- Isolated tests and migration roundtrip; no public route, production writes, access change, or
+  deletion.
+- Document missing real contract and document/order bindings.
+completed:
+- Prior policy reviewed; lifetime quotas and historical ZIP access reproduced.
+- Immutable order-level proposal snapshot model and migration 125; internal scoped latest revision
+  lookup and typed calendar planning validation. No write service, API, deletion or access authority.
+- 28 targeted tests PASS; SQLite migration and nonempty rollback guard; disposable PostgreSQL 16.16
+  migration 125 roundtrip and guard plus previous migration/restore/concurrent ASGI acceptance PASS.
+  Single Alembic head 125, Ruff and diff check PASS.
+current_stage: bounded_schema_and_planning_verified_local
+remaining:
+- Publish local successor after existing CI; verify exact successor CI.
+- Actual order-to-document binding, authorized registry intake, approved policy/hold evidence, owner
+  approval, operational deletion and recovery acceptance remain OPEN.
+last_verified_commit: c2f17cb1e12978872edf686a21b29746f6d85f70
+test_results:
+- 28 passed, 24 warnings in 3.26s; PG16 integrated disposable runner exit 0; Ruff and git diff check
+  PASS.
+resume_instruction: Verify exact PR662 remote 55b349eb CI; publish local successors once green,
+  verify successor. Next independent task may design order-to-document scope binding and read-only
+  aggregate storage accounting, never infer authorization or execute deletion; do not repeat rejected
+  readiness operation.

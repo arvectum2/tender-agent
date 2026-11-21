@@ -1,0 +1,36 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-PRICE01-WORKLOAD-NORMALIZATION-20261018
+status: completed
+goal: Verify the source-anchored measurable work components of Aksay, Krasnoyarsk and Chemal from 3 exact DOCX TЗ originals; present non-price workload differences and unknown cost inputs without arbitrary multipliers.
+definition_of_done:
+  - Use only SHA-pinned original filestore DOCX, exact distinct source quote anchors; no inferred man-hours, prices, market ratios or missing-fact substitutions.
+  - Model deadline in working days, CMS constraints, design/templating, quantified content pages where stated, post-acceptance maintenance vs warranty, domain/hosting/licenses, integrations and training.
+  - Emit machine original-SHA and evidence-text digests with per-case statuses and explicit unknowns; keep revenue/normalized_price/profit fields null and baseline single comparable.
+  - Expose authenticated read-only matrix in existing Price tab through pinned SHA-bound cohort receipt, still no comparable pooling or replacement for previously verified EIS prices.
+  - Adversarial offline tests for SHA/anchor drifts, null unknowns, unavailable/tampered API payload, UI and auth; run Ruff/JS+focused regression.
+  - Update canonical roadmap/checkpoints; commit/push PR478 as draft; verify CI latest head.
+completed:
+  - Resumed canonical parent, previous 6-source original comparison and UI children completed and CI success on head b70aa60d.
+  - Source documents on local ArvectumSSD independently matched original sha. Identified Aksay 14 days / Russian CMS / owner-provided design / regular support excluded, Krasnoyarsk 10 days / original Figma / 12-month service SLA, Chemal 21 days / specified Bitrix / up to 40 text pages / 12-month warranty.
+current: Completed original SHA/quote-bound contractual workload matrix, private UI/API and tests; final CI after push pending.
+pending: []
+last_verified_commit: 70aaec824ab927f8b76cd2482c5b02a38c76bfca
+test_results:
+  - Original three specific technical DOCX SHA validated against previously retrieved official EIS filestore source hashes; zero raw DOCX added to Git.
+  - Eight Aksay, nine Krasnoyarsk and nine Chemal source-attested rules with quote, exact original line ordinal, line SHA, constraint type and reviewed interpretation.
+  - Aksay 14 contract days Russian CMS provided mockup no regular support; Krasnoyarsk 10 days new Figma 12-month SLA support; Chemal 21 days Bitrix Standard ready template up to 40 original content pages defect-only year warranty; unknown case costs/person-hours/null monetary factors preserved.
+  - Protected GET private workload normalization auth 401, tampered file 503, precise three-case source constraints and quote digests; no auto-bid, no DB writes and no synthetic market rate.
+  - 128 relevant pytest PASS / 10 SKIP / 6 existing warnings, Ruff clean and Node syntax and git diff checks clean.
+  - Implementation code commit 70aaec824ab927f8b76cd2482c5b02a38c76bfca, exact-head GitHub CI pending after push.
+resume_instruction: >-
+  TA-PRICE01-WORKLOAD-NORMALIZATION-20261018 completed on code SHA
+  70aaec824ab927f8b76cd2482c5b02a38c76bfca; PR478 remains draft.
+  Next unfinished PRICE-01 phase: use actual source-backed company labor,
+  license/domain/hosting costs and SLA reserve or new genuinely equivalent
+  completed scopes to ground cost-adjusted price comparisons; do not invent
+  quantitative ruble multipliers from mere delivery deadlines or 40-page cap.
+  Keep original six website cohort separate and Aksay-only price API 404 for
+  others until evidence-verified comparability. CI latest head must be checked
+  and human review/GO required before merge, bidding or any spending.
+  Parent TA-ROADMAP-EXEC-20261012 remains in_progress, B2B 15-20 open.

@@ -1,0 +1,673 @@
+{
+  "all_fixed_pattern_occurrences": 1633,
+  "case_count": 16,
+  "cases": [
+    {
+      "all_fixed_pattern_occurrences": 46,
+      "archived_deadline": "2026-09-30T07:30:00+03:00",
+      "cross_document_review_question": "ТЗ содержит обязанности по защите сайта от атак, а контракт устанавливает оплату после оказания услуг. Проверить расходы и исполнимость требований по ИБ отдельно от режима расчётов.",
+      "cross_document_source_refs": [
+        {
+          "original_binary_sha256": "8c6eabfe92f7d8597391c4272a5a5d6a770975dc76eed47bf72ac31711f0fabb",
+          "original_filename": "проект контракта.doc",
+          "quote_sha256": "f3877332a63119e95e70b5071eb492a0884ffa7ff9f8e03f205f1323219a8208",
+          "source_locator": "Строка 20",
+          "source_text_sha256": "0c090a967e6d1b6e3a7cb22b0d7a8c86eede9e3f67c430cf3c5ea773cf78b5a3"
+        },
+        {
+          "original_binary_sha256": "40b7f02c04139923e45ecb1c9e6e07b4b0b14a617841468beb53755eccb5ae17",
+          "original_filename": "ТЗ обслуживание Сайта.doc",
+          "quote_sha256": "d264d9b3d0bec18840004f6a3c646d68b7dca51ea07c1c206c5c3a15b5eafd02",
+          "source_locator": "Строка 20",
+          "source_text_sha256": "5dadd2705e0783d30da24f7ef4375e009ba029da53731daaf7950f2fb26ef8ff"
+        }
+      ],
+      "human_commercial_decision": null,
+      "registry_number": "0127100008626000013",
+      "sampled_quote_states": {},
+      "sampled_saved_quotes": 0,
+      "saved_report_deadline_review": null,
+      "source_document_count": 4,
+      "topic_first_mentions": 8,
+      "unsupported_quote_sha256": []
+    },
+    {
+      "all_fixed_pattern_occurrences": 68,
+      "archived_deadline": "2026-10-08T08:00:00+03:00",
+      "cross_document_review_question": "Описание объекта закупки рекомендует свободные шрифты и компоненты, а контракт предусматривает оплату платных лицензий исполнителем, если они используются. Не выдавать предпочтение за абсолютный запрет.",
+      "cross_document_source_refs": [
+        {
+          "original_binary_sha256": "a30954f2ba0cfce49c13af94e887174329e6591bb046764de8a4be5e4d693791",
+          "original_filename": "Проект конкракта_сайт.doc",
+          "quote_sha256": "712d2ee209f2fa304dabf1b61fed744c0c0aba6b02123ba6b9264a4fce146c37",
+          "source_locator": "Строка 441",
+          "source_text_sha256": "eed9f61144d6d2d1a1e4e3732b60347e1a8875fb5c9c4873463899cbb4bbffc9"
+        },
+        {
+          "original_binary_sha256": "816b8f182ce6d99aad80ca2b5af1d16179cd4b9c41248625aa194c399cdfaac6",
+          "original_filename": "Описание объекта закупки_сайт.docx",
+          "quote_sha256": "514f682087ca45064a4fb273a41c708da3ca728c01550a991c6ed747703d18ca",
+          "source_locator": "Строка 303",
+          "source_text_sha256": "ede9e05cf7bc0766f7c44bf2ced9dd178fe9e152e4c94fb4a8bc1991f109ae56"
+        }
+      ],
+      "human_commercial_decision": null,
+      "registry_number": "0137200001226007700",
+      "sampled_quote_states": {
+        "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA": 1,
+        "WHITESPACE_VARIANT_WITH_OFFICIAL_BINARY_SHA": 1
+      },
+      "sampled_saved_quotes": 2,
+      "saved_report_deadline_review": {
+        "archived_deadline": "2026-10-08T08:00:00+03:00",
+        "bid_ready": false,
+        "historical_deadline_relation": "CONSISTENT_WITH_HISTORICAL_ORIGINAL",
+        "human_decision_reviewed": false,
+        "live_eis_revision_attested": false,
+        "model_claims_strong_blocker": true,
+        "previous_report_deadline": "08.10.2026 08:00:00 +03:00",
+        "registry_number": "0137200001226007700",
+        "saved_report_sha256": "f658d10d74fc16a6fd133b9fdc642c1f270ab7c2436f3fd5b24cd31fbd2c69b7"
+      },
+      "source_document_count": 4,
+      "topic_first_mentions": 12,
+      "unsupported_quote_sha256": []
+    },
+    {
+      "all_fixed_pattern_occurrences": 66,
+      "archived_deadline": "2026-09-18T07:00:00+03:00",
+      "cross_document_review_question": "ТЗ фиксирует платформу заказчика. Документ о заявке отдельно перечисляет варианты подтверждения прав на неё и лицензию ФСТЭК. Нужно проверить объём допустимых прав и точную обязанность участника.",
+      "cross_document_source_refs": [
+        {
+          "original_binary_sha256": "8142d03a12475aa5ab382286d654ad694f0408ea69c7c4c5aa59f1a81dc5c455",
+          "original_filename": "3_Описание объекта закупки.docx",
+          "quote_sha256": "12cecff88e7163dcfe633057c78638fb89655e1dc0c46d63e881073874227694",
+          "source_locator": "PARAGRAPH-0056",
+          "source_text_sha256": "673ae2b54f51ab32d3ddf5f3dd618126629e7072737615b52c966a36ae7c8efd"
+        },
+        {
+          "original_binary_sha256": "b98dd0a2a09ad857f277b9d6da7858d873ee5d6216d66954fb0fb45575416860",
+          "original_filename": "4_Требования к содержанию, составу заявки.docx",
+          "quote_sha256": "81f54e042226b04bbc017dd0e0a4f70e07cad9739428b314984f20d3142592fa",
+          "source_locator": "PARAGRAPH-0037",
+          "source_text_sha256": "c9aa5aca35106eab8db72fb516d662e408d80bd41e6d94e60ace75ab1d208055"
+        },
+        {
+          "original_binary_sha256": "b98dd0a2a09ad857f277b9d6da7858d873ee5d6216d66954fb0fb45575416860",
+          "original_filename": "4_Требования к содержанию, составу заявки.docx",
+          "quote_sha256": "f1fc6cad1480b58c26ee07a0ea99b2a7ed121bb6621105cf56792c81dbaa35f0",
+          "source_locator": "PARAGRAPH-0038",
+          "source_text_sha256": "c9aa5aca35106eab8db72fb516d662e408d80bd41e6d94e60ace75ab1d208055"
+        },
+        {
+          "original_binary_sha256": "b98dd0a2a09ad857f277b9d6da7858d873ee5d6216d66954fb0fb45575416860",
+          "original_filename": "4_Требования к содержанию, составу заявки.docx",
+          "quote_sha256": "d179d961064ea7a7cb018a65436bd7382ccb6860ad29090c0aaea2607226a6f2",
+          "source_locator": "PARAGRAPH-0039",
+          "source_text_sha256": "c9aa5aca35106eab8db72fb516d662e408d80bd41e6d94e60ace75ab1d208055"
+        }
+      ],
+      "human_commercial_decision": null,
+      "registry_number": "0148200000526000028",
+      "sampled_quote_states": {},
+      "sampled_saved_quotes": 0,
+      "saved_report_deadline_review": null,
+      "source_document_count": 4,
+      "topic_first_mentions": 14,
+      "unsupported_quote_sha256": []
+    },
+    {
+      "all_fixed_pattern_occurrences": 99,
+      "archived_deadline": "2026-04-07T07:00:00+03:00",
+      "cross_document_review_question": "Описание объекта закупки называет правообладателя ПО «Фактор», требования к заявке — наличие у участника неисключительных прав на переработку, а контракт — передачу используемых прав заказчику. Проверить источник прав и допустимость их передачи.",
+      "cross_document_source_refs": [
+        {
+          "original_binary_sha256": "5018d0b6313546ae0ee58a60d2fe9503d061d65c5bbba69ad0bbb58a30376041",
+          "original_filename": "Описание объекта закупки.docx",
+          "quote_sha256": "356896e5119309748e63eb7f7cbb380f206958deeb8b1dd4148cdba278eb8c68",
+          "source_locator": "PARAGRAPH-0035",
+          "source_text_sha256": "2433de1359d4f665a5e064c25b7ddd90d49fe1acd2465efc92f2ac719ca8cfd1"
+        },
+        {
+          "original_binary_sha256": "98e3be9768d9f062f894117fe5e5782ce96a6d314bdb4374f5c00506e44b9ec9",
+          "original_filename": "Требования к содержанию и составу заявки.docx",
+          "quote_sha256": "6ef54540c69a702d0d17cdc1dbe5647913341a24e49f09a6404847497d1feb3b",
+          "source_locator": "PARAGRAPH-0024",
+          "source_text_sha256": "1949b1a9ec72498f5583b03780ac43bfa989d3303410170dcf15a3650b9b9dfa"
+        },
+        {
+          "original_binary_sha256": "810c0693336171845bf7ab7e3685ba098ae48defad756f716161c1e1316c3a05",
+          "original_filename": "Проект контракта.docx",
+          "quote_sha256": "dd6b6bf14d77fd7e26b954ec0e3c8bb59bdda9602119d92c28f221e2b13a224a",
+          "source_locator": "PARAGRAPH-0064",
+          "source_text_sha256": "088f8579fe8de438f39eecd170b069e154ba3ad10a85fd1e0adc0a0a94183a5a"
+        }
+      ],
+      "human_commercial_decision": null,
+      "registry_number": "0149200002326001555",
+      "sampled_quote_states": {},
+      "sampled_saved_quotes": 0,
+      "saved_report_deadline_review": null,
+      "source_document_count": 5,
+      "topic_first_mentions": 14,
+      "unsupported_quote_sha256": []
+    },
+    {
+      "all_fixed_pattern_occurrences": 48,
+      "archived_deadline": "2026-10-12T08:00:00+03:00",
+      "cross_document_review_question": "Контракт описывает итоговый передаваемый сайт, а ТЗ требует до начала разработки определить наименование, версию, лицензию и реестровую запись выбранной CMS. Проверить достаточность прав и передаваемых административных доступов.",
+      "cross_document_source_refs": [
+        {
+          "original_binary_sha256": "8ca942f6a5860a99824fc57a0b017bc251b8e13e85521d187824d2c49a013403",
+          "original_filename": "контракт Разработка веб сайта Молодежный центр.docx",
+          "quote_sha256": "01847ebe06c4414016bb794100ae7e41458db53147baf7c1cfd9e6acb087611f",
+          "source_locator": "Строка 196",
+          "source_text_sha256": "8a1dc25f4ea7ff5b5dcdffab62c9283b0aa53e891ae7c4e64e3d28f2c8060cc8"
+        },
+        {
+          "original_binary_sha256": "0e40a162e85a69b496fb350e846a39c90695033fd5a46ebfb2683f9996132f7a",
+          "original_filename": "описание объекта закупки 2.docx",
+          "quote_sha256": "0c912292f76ec66ba5608a6cce6a92529a6a619311c3851b69ae2a6509f29ed0",
+          "source_locator": "Строка 67",
+          "source_text_sha256": "9345f6974c06b4f3683ebb14693fe5edc4175b9b1679433a705967e631f1ab75"
+        }
+      ],
+      "human_commercial_decision": null,
+      "registry_number": "0158300034526000388",
+      "sampled_quote_states": {
+        "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA": 3
+      },
+      "sampled_saved_quotes": 3,
+      "saved_report_deadline_review": {
+        "archived_deadline": "2026-10-12T08:00:00+03:00",
+        "bid_ready": false,
+        "historical_deadline_relation": "CONFLICTS_WITH_HISTORICAL_ORIGINAL",
+        "human_decision_reviewed": false,
+        "live_eis_revision_attested": false,
+        "model_claims_strong_blocker": true,
+        "previous_report_deadline": "09.10.2026 08:00:00 +03:00",
+        "registry_number": "0158300034526000388",
+        "saved_report_sha256": "af74fbd8472220e9482318b944ef887ad11f16a11d3a34143089a3a2800632b1"
+      },
+      "source_document_count": 5,
+      "topic_first_mentions": 8,
+      "unsupported_quote_sha256": []
+    },
+    {
+      "all_fixed_pattern_occurrences": 118,
+      "archived_deadline": "2026-06-17T07:00:00+05:00",
+      "cross_document_review_question": "Неисключительное право на программный сервис передаётся бессрочно; отдельно описание объекта закупки устанавливает гарантийный срок 12 месяцев. Не сокращать срок права использования до длительности гарантии.",
+      "cross_document_source_refs": [
+        {
+          "original_binary_sha256": "64f1dd988630665dbca3f28ca8516408fccfe4cd6e40b76536b1175300783ce8",
+          "original_filename": "Проект контракта.docx",
+          "quote_sha256": "c58b1bc9ea6eb97213302ceed168e423cc337ebd2306084abb211d67080ca047",
+          "source_locator": "Строка 11",
+          "source_text_sha256": "f5d67cd58f55078cafb2fffdc167d18bd2f129ae821c4dc4b5c2b535c40d14e3"
+        },
+        {
+          "original_binary_sha256": "84752ad82bec1c16106f04ec398584f81f1fc05ae314d34fa280d00a0525f78a",
+          "original_filename": "Описание объекта закупки.doc",
+          "quote_sha256": "f20ad1b26703b72f14c8b9bae9b129d4328f304174c18824493863fe114f50e9",
+          "source_locator": "Строка 89",
+          "source_text_sha256": "224421e384b2e8c8c00bb08710ddd0feb59ebcc96d52b02b538c367c657fde0e"
+        }
+      ],
+      "human_commercial_decision": null,
+      "registry_number": "0162300005826000156",
+      "sampled_quote_states": {
+        "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA": 2
+      },
+      "sampled_saved_quotes": 2,
+      "saved_report_deadline_review": {
+        "archived_deadline": "2026-06-17T07:00:00+05:00",
+        "bid_ready": false,
+        "historical_deadline_relation": "CONSISTENT_WITH_HISTORICAL_ORIGINAL",
+        "human_decision_reviewed": false,
+        "live_eis_revision_attested": false,
+        "model_claims_strong_blocker": true,
+        "previous_report_deadline": "17.06.2026 07:00:00 +05:00",
+        "registry_number": "0162300005826000156",
+        "saved_report_sha256": "cf87770fd19f19cb93440b7bf0167d05888bc7d8fb5c623e644e098d2f305bf1"
+      },
+      "source_document_count": 5,
+      "topic_first_mentions": 16,
+      "unsupported_quote_sha256": []
+    },
+    {
+      "all_fixed_pattern_occurrences": 232,
+      "archived_deadline": "2026-07-27T07:00:00+05:00",
+      "cross_document_review_question": "Проект контракта предусматривает бессрочную передачу неисключительных прав на модуль сайта для слабовидящих, а ТЗ определяет срок гарантии на ПО сроком контракта. Уточнить права и поддержку как разные условия.",
+      "cross_document_source_refs": [
+        {
+          "original_binary_sha256": "27fe6bfa83e6bf497a6678218b32a7ba984de8b9b5f260e5526f92774f6d3ed5",
+          "original_filename": "Приложение 2 Проект контракта (с приложениями).docx",
+          "quote_sha256": "25110bcc62253d4b4890da040c5d001f9e172255bbc5b4a3b40c3225dbe65cb5",
+          "source_locator": "Строка 153",
+          "source_text_sha256": "14c503828631c4df344e00b1c64c2dcfdb42de0c61c924692296f01d93faff00"
+        },
+        {
+          "original_binary_sha256": "2aaf7f8d4377d941c94fdbcca329b3cc7f90639fed23697940f7811f91dc0c7c",
+          "original_filename": "Приложение 3 Техническое задание (Описание объекта закупки).docx",
+          "quote_sha256": "0c561c874fcae2d1f2be2374ce729e7f561d4f91ffbc1d6a9a583f9fef4ab6c7",
+          "source_locator": "Строка 220",
+          "source_text_sha256": "88d8180175e68815d4d83642258ab716b2b3c5b42e965fd929a44f3f23fa08e2"
+        }
+      ],
+      "human_commercial_decision": null,
+      "registry_number": "0169300003326000181",
+      "sampled_quote_states": {
+        "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA": 3
+      },
+      "sampled_saved_quotes": 3,
+      "saved_report_deadline_review": {
+        "archived_deadline": "2026-07-27T07:00:00+05:00",
+        "bid_ready": false,
+        "historical_deadline_relation": "CONSISTENT_WITH_HISTORICAL_ORIGINAL",
+        "human_decision_reviewed": false,
+        "live_eis_revision_attested": false,
+        "model_claims_strong_blocker": true,
+        "previous_report_deadline": "27.07.2026 07:00:00 +05:00",
+        "registry_number": "0169300003326000181",
+        "saved_report_sha256": "2f8de7a21339ad0b6f0e0730bd7175954d9b51045298a6d38e3016b2ebc93dae"
+      },
+      "source_document_count": 5,
+      "topic_first_mentions": 19,
+      "unsupported_quote_sha256": []
+    },
+    {
+      "all_fixed_pattern_occurrences": 76,
+      "archived_deadline": "2026-09-14T09:00:00+05:00",
+      "cross_document_review_question": "Проект контракта требует обеспечение гарантийных обязательств в размере 10 процентов, а ТЗ устанавливает срок исправления недостатков до 10 рабочих дней. Финансовое обеспечение и обязанность устранения недостатков не являются одним и тем же.",
+      "cross_document_source_refs": [
+        {
+          "original_binary_sha256": "d4793e94b272b1f06a79e75600c2f01481a219799b211ac5ca0b692d14107b02",
+          "original_filename": "Проект контракта.docx",
+          "quote_sha256": "96bcff5f60f655f0ca02218dacdafcbcd8ec466e8eb73726c9f0729f36ad0a85",
+          "source_locator": "Строка 72",
+          "source_text_sha256": "bb05a1934625b30f5e8e62ab2d7e2786e8b8d3674bcd39830925436e0094ff66"
+        },
+        {
+          "original_binary_sha256": "b2af61e3c9ea8bbea3e0cf72f3b7e8f4fb23d1c3e9c2f4bef4c9e9ad955b8f9d",
+          "original_filename": "Приложение 1 - Описание объекта закупки.docx",
+          "quote_sha256": "b90af10e4fde4e594cc2d591712e4dcecfe096e3ce4a18860e5f75926311d8de",
+          "source_locator": "Строка 120",
+          "source_text_sha256": "c4f9cbb708d6994f8883aa1352cdb738d64510bf1446e1b56c0ac8acf9c8963e"
+        }
+      ],
+      "human_commercial_decision": null,
+      "registry_number": "0169300008226000223",
+      "sampled_quote_states": {
+        "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA": 2,
+        "WHITESPACE_VARIANT_WITH_OFFICIAL_BINARY_SHA": 1
+      },
+      "sampled_saved_quotes": 3,
+      "saved_report_deadline_review": {
+        "archived_deadline": "2026-09-14T09:00:00+05:00",
+        "bid_ready": false,
+        "historical_deadline_relation": "CONSISTENT_WITH_HISTORICAL_ORIGINAL",
+        "human_decision_reviewed": false,
+        "live_eis_revision_attested": false,
+        "model_claims_strong_blocker": true,
+        "previous_report_deadline": "14.09.2026 09:00:00 +05:00",
+        "registry_number": "0169300008226000223",
+        "saved_report_sha256": "0eb9aea5c38e8ed250301699d21f8d11b0a35731c93f4dc01baa5e5632243652"
+      },
+      "source_document_count": 4,
+      "topic_first_mentions": 11,
+      "unsupported_quote_sha256": []
+    },
+    {
+      "all_fixed_pattern_occurrences": 61,
+      "archived_deadline": "2026-09-14T09:00:00+05:00",
+      "cross_document_review_question": "Контракт содержит восьмичасовой срок устранения критической ошибки AR-приложения, ТЗ отдельно описывает передачу результата по неисключительной лицензии. Проверить SLA и режим прав независимо.",
+      "cross_document_source_refs": [
+        {
+          "original_binary_sha256": "704a9fc8ba767767060267795795a3a1960e5a6843c68a50127d538005a0c4e4",
+          "original_filename": "Проект контракта.docx",
+          "quote_sha256": "caac043c6d267fcd8b66f9750e73adf7df3184f91c7f4a90dd9ce99d71cb0988",
+          "source_locator": "Строка 97",
+          "source_text_sha256": "c1550ad5697ab3b2ab41ba1902d8cbd128285728750fe1133071f5f1959fcadc"
+        },
+        {
+          "original_binary_sha256": "762a0ea182ac4ae7a7f7ec922c089fe1d44bad096348517b4abf995bce409935",
+          "original_filename": "Приложение 1 - Описание объекта закупки.docx",
+          "quote_sha256": "4200429b4afa36c4fc18fc6720dd6fc75376334e0318842d15d5cd23ff3c19a2",
+          "source_locator": "Строка 10",
+          "source_text_sha256": "28ffc2ef311806ceb264def3ecb090c35419812cf336e4372a949e0343e33906"
+        }
+      ],
+      "human_commercial_decision": null,
+      "registry_number": "0169300008226000225",
+      "sampled_quote_states": {
+        "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA": 2
+      },
+      "sampled_saved_quotes": 2,
+      "saved_report_deadline_review": {
+        "archived_deadline": "2026-09-14T09:00:00+05:00",
+        "bid_ready": false,
+        "historical_deadline_relation": "CONSISTENT_WITH_HISTORICAL_ORIGINAL",
+        "human_decision_reviewed": false,
+        "live_eis_revision_attested": false,
+        "model_claims_strong_blocker": true,
+        "previous_report_deadline": "14.09.2026 09:00:00 +05:00",
+        "registry_number": "0169300008226000225",
+        "saved_report_sha256": "8a6e603356a6dac23ff9bee0b18d0dac308167326a1db377eb82eebd48de7aa6"
+      },
+      "source_document_count": 4,
+      "topic_first_mentions": 10,
+      "unsupported_quote_sha256": []
+    },
+    {
+      "all_fixed_pattern_occurrences": 146,
+      "archived_deadline": "2026-10-19T10:00:00+03:00",
+      "cross_document_review_question": "Основной проект контракта содержит обязанность исправления недостатков в гарантийный срок; отдельное приложение задаёт длительность 12 месяцев. Не пропускать срок, если он находится не в основном файле.",
+      "cross_document_source_refs": [
+        {
+          "original_binary_sha256": "32937d17caa22051df72bc5002f4af6bb15d23d76c638e573b2702094c698185",
+          "original_filename": "Проект контракта, сост. 08.10.2026.zip",
+          "quote_sha256": "ba18457c9cf3a5e1d0c32890b765ce6c87487d15562b2ad841a2f435a618a9e4",
+          "source_locator": "PARAGRAPH-0106",
+          "source_text_sha256": "784d0838134ef42f32fb2e6a535e1fba56c0fa338c491c0cd98d450c244140cf"
+        },
+        {
+          "original_binary_sha256": "5d1411e9788212a7c7ef12ccc02d6182bf8ebf905e4a73acbb2d460c436ac8d9",
+          "original_filename": "Приложение к проекту контракта, сост. 08.10.2026.zip",
+          "quote_sha256": "a006db47bb5d45503e4eb23b6b0d6f83cd2391c3c560bc5db12514134a8d1c27",
+          "source_locator": "TABLE-003 ROW-004 CELL-02",
+          "source_text_sha256": "d2bcc7494e7e727012766e5abf56ed10952fd3a3e993fa5ce0242d10ce5f6cef"
+        }
+      ],
+      "human_commercial_decision": null,
+      "registry_number": "0348100024426000039",
+      "sampled_quote_states": {
+        "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA": 3
+      },
+      "sampled_saved_quotes": 3,
+      "saved_report_deadline_review": {
+        "archived_deadline": "2026-10-19T10:00:00+03:00",
+        "bid_ready": false,
+        "historical_deadline_relation": "CONFLICTS_WITH_HISTORICAL_ORIGINAL",
+        "human_decision_reviewed": false,
+        "live_eis_revision_attested": false,
+        "model_claims_strong_blocker": false,
+        "previous_report_deadline": "16.10.2026 10:00:00 +03:00",
+        "registry_number": "0348100024426000039",
+        "saved_report_sha256": "6f06e68614b5108a20ed1e4b9c2b752f1dfac79b4190abf1ebd9237f43b91f02"
+      },
+      "source_document_count": 7,
+      "topic_first_mentions": 21,
+      "unsupported_quote_sha256": []
+    },
+    {
+      "all_fixed_pattern_occurrences": 74,
+      "archived_deadline": "2026-03-02T07:00:00+03:00",
+      "cross_document_review_question": "В ТЗ допускается лицензия у исполнителя и/или соисполнителя; контракт и требования к заявке называют исполнителя. Проверить применимость к участнику и допустимость соисполнителя.",
+      "cross_document_source_refs": [
+        {
+          "original_binary_sha256": "aa2a235185682736cf3b04fa7a6149ca1e13f3a97995ed75b6be739d5ef3e9f7",
+          "original_filename": "Приложение 5_ Проект Контракта.docx",
+          "quote_sha256": "773726eb98ebb7b7c7319d0dba89cec173d762d0ef949b28c3de0ee050b4bb72",
+          "source_locator": "PARAGRAPH-0031",
+          "source_text_sha256": "c8c1435efb89a4324465488353b9f36c6ff443aaad247f26cee955e75e19dacc"
+        },
+        {
+          "original_binary_sha256": "44cf5037944f23432af1c6e904c12e10cf3167cd3a4632a83178c2b98e1c2678",
+          "original_filename": "Приложение  2_Описание обьекта закупки. Техническое задание. Сверенное - Актуальное 18.10.2024.doc",
+          "quote_sha256": "dfac636b0f554d50ae87cf03febec89741063d1b5542ff8a634367b726d6dc90",
+          "source_locator": "Строка 90",
+          "source_text_sha256": "fb73686126c37dab7eba74164bcdadd06423a6854385d14edf6cd04834de9a82"
+        },
+        {
+          "original_binary_sha256": "2ec9091585b1e82d4be175d2c5521ae7a1a6f6b72b80b0450b158426fbc389cd",
+          "original_filename": "Приложение  3_ Требования к содержанию, составу заявки и инструкцию по ее заполнению..docx",
+          "quote_sha256": "b56c4b4f195f7b6680c69c70427352dd570ca9af2ecdd84e5f715895de93bb33",
+          "source_locator": "PARAGRAPH-0038",
+          "source_text_sha256": "abb1c257a6e305ea4d2c8958d272c1c315e3eef573a467e7634ea8e670c2838d"
+        }
+      ],
+      "human_commercial_decision": null,
+      "registry_number": "0349100009326000005",
+      "sampled_quote_states": {},
+      "sampled_saved_quotes": 0,
+      "saved_report_deadline_review": null,
+      "source_document_count": 5,
+      "topic_first_mentions": 13,
+      "unsupported_quote_sha256": []
+    },
+    {
+      "all_fixed_pattern_occurrences": 86,
+      "archived_deadline": "2026-04-06T10:00:00+04:00",
+      "cross_document_review_question": "По извещению закупается VR-контент для музея; в разделе о гарантиях проекта контракта говорится о строительном контроле и конструктивных элементах, тогда как ТЗ определяет поддержку VR 12 месяцев. Проверить правильность проекта и толкование гарантийного пункта.",
+      "cross_document_source_refs": [
+        {
+          "original_binary_sha256": "e8082053921f097d1d735b11d44918a651599ded5b2544a5ac024f543b8adc56",
+          "original_filename": "Проект контракта.docx",
+          "quote_sha256": "346ea3b4bba6a26e4ffe369d89f2ba68b3d6aa35b83eb70308a6acfbb1ec6c26",
+          "source_locator": "PARAGRAPH-0119",
+          "source_text_sha256": "b92d4c7132e4f817e91e5964b8c03196a18fc22796e6a230b5170ce1abdfbc64"
+        },
+        {
+          "original_binary_sha256": "431daee8d0870540aedd2520652ed879061d7e9c90e92c591d1664cf26b008b3",
+          "original_filename": "Техническое задание и технические характеристики.doc",
+          "quote_sha256": "d2c9d86d2fcb73be03633856f0067528d0c69c8d6bfa960d0cb2c96ca72e8728",
+          "source_locator": "Строка 66",
+          "source_text_sha256": "88dfe78b65cb9d1b973bcd40f65871f922739a6dd43227665e92e31b705ccab2"
+        }
+      ],
+      "human_commercial_decision": null,
+      "registry_number": "0360600005326000018",
+      "sampled_quote_states": {},
+      "sampled_saved_quotes": 0,
+      "saved_report_deadline_review": null,
+      "source_document_count": 4,
+      "topic_first_mentions": 9,
+      "unsupported_quote_sha256": []
+    },
+    {
+      "all_fixed_pattern_occurrences": 107,
+      "archived_deadline": "2026-10-16T10:00:00+03:00",
+      "cross_document_review_question": "В контракте установлено соблюдение чужих исключительных прав, ТЗ предусматривает передачу прав на создаваемый сайт, а требования к заявке описывают владение правами участником. Не считать эти три формулировки тождественными.",
+      "cross_document_source_refs": [
+        {
+          "original_binary_sha256": "9294908cc3aec0bda85c84d41cd19b80fe1e5ddebd1b386b4830466d64eca091",
+          "original_filename": "Приложение_1_Проект_контракта.doc",
+          "quote_sha256": "ce9850c0756aebb8a580bbbb58526d34e877b5b253cb53fc7a11629d22a82acb",
+          "source_locator": "Строка 100",
+          "source_text_sha256": "6812b7d14f9ea4548129818efcf555e492e463197999b2bd29bbbb21d2a80f2e"
+        },
+        {
+          "original_binary_sha256": "3e029344d179742632d519d4e425e6f8e9f757ce4df23e0419aa4302d4068536",
+          "original_filename": "Приложение_3_Описание_объекта_закупки_сайт.docx",
+          "quote_sha256": "79d21afef436b417a424aca96e60536692345ab3d4b927a40ffd8f7fdd6c3b95",
+          "source_locator": "Строка 282",
+          "source_text_sha256": "16fcb1b330d562cedda811b7188b6cd3b0034d8851e65bc114b8d8715c8945a7"
+        },
+        {
+          "original_binary_sha256": "69f5c122eef4ebb2d4130a9950cc1ba269f2a72b01a049268b014b0d77fd2bed",
+          "original_filename": "приложение_4_Требования_к_содержанию,_составу_заявки_и_инструкция_по_заполнению.docx",
+          "quote_sha256": "47269c66551ec1de332f0d910d38839527573f354bf4f527c3e4932c3571018d",
+          "source_locator": "Строка 18",
+          "source_text_sha256": "53bdfbe2ba528e06556f63dbeb758e3e1734a9e291b06e5780a06eb1f553b2bc"
+        }
+      ],
+      "human_commercial_decision": null,
+      "registry_number": "0372200172326000015",
+      "sampled_quote_states": {
+        "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA": 2,
+        "WHITESPACE_VARIANT_WITH_OFFICIAL_BINARY_SHA": 1
+      },
+      "sampled_saved_quotes": 3,
+      "saved_report_deadline_review": {
+        "archived_deadline": "2026-10-16T10:00:00+03:00",
+        "bid_ready": false,
+        "historical_deadline_relation": "CONSISTENT_WITH_HISTORICAL_ORIGINAL",
+        "human_decision_reviewed": false,
+        "live_eis_revision_attested": false,
+        "model_claims_strong_blocker": false,
+        "previous_report_deadline": "16.10.2026 10:00:00 +03:00",
+        "registry_number": "0372200172326000015",
+        "saved_report_sha256": "e1d36ee54fcbab5c9ee86209ec3184a42488043f716fb7825d2035623130da6a"
+      },
+      "source_document_count": 5,
+      "topic_first_mentions": 16,
+      "unsupported_quote_sha256": []
+    },
+    {
+      "all_fixed_pattern_occurrences": 37,
+      "archived_deadline": "2026-06-02T07:00:00+03:00",
+      "cross_document_review_question": "Проект контракта требует устранять обнаруженные недостатки в день обнаружения, а ТЗ указывает до пяти рабочих дней для выполнения задач. Проверить границу между дефектами и обычными задачами техподдержки, не считать сроки взаимозаменяемыми.",
+      "cross_document_source_refs": [
+        {
+          "original_binary_sha256": "01710aa6addbea66d1bdff43891fc2f98cfb503dc29b2247455c5338ee6209c8",
+          "original_filename": "Пр 4. Проект контракта. Создание сайта и ТП.docx",
+          "quote_sha256": "b06b22b22450422a6b5b470ddc75b83b13af9fe2c71f8a4341b519dd3bccbb2b",
+          "source_locator": "Строка 59",
+          "source_text_sha256": "a23c14c241551e0cfab6d63e46bd43622f9aae162356fd0ab358c5e6044312fe"
+        },
+        {
+          "original_binary_sha256": "6a408d91d6148e2c6a88c1b087ed7ad1601910d0ca99d921a73acdbd49e77edc",
+          "original_filename": "Пр 1. Описание объекта закупки.  Создание сайта и ТП..docx",
+          "quote_sha256": "386bfa87c1ca8813db70cd3e3ca0e1a7d7cf8c8a1a00493f9c90fad65933c2d1",
+          "source_locator": "Строка 169",
+          "source_text_sha256": "1758b9d52f8dd7addfa7032e82d4bcdcc2f42e9a506ea1108141210f60f1e69f"
+        }
+      ],
+      "human_commercial_decision": null,
+      "registry_number": "0376300000126000193",
+      "sampled_quote_states": {
+        "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA": 1,
+        "QUOTE_NOT_SUPPORTED_AS_LIVE_QUOTATION": 1
+      },
+      "sampled_saved_quotes": 2,
+      "saved_report_deadline_review": {
+        "archived_deadline": "2026-06-02T07:00:00+03:00",
+        "bid_ready": false,
+        "historical_deadline_relation": "CONSISTENT_WITH_HISTORICAL_ORIGINAL",
+        "human_decision_reviewed": false,
+        "live_eis_revision_attested": false,
+        "model_claims_strong_blocker": true,
+        "previous_report_deadline": "02.06.2026 07:00:00 +03:00",
+        "registry_number": "0376300000126000193",
+        "saved_report_sha256": "9c20827359b7a05beb31105dcdf9d07a5ed0aad6cdfd0e7be63d83da49eefc3e"
+      },
+      "source_document_count": 4,
+      "topic_first_mentions": 8,
+      "unsupported_quote_sha256": [
+        "622118e34c5f187287bf45d56529a53d99d52739ae1e06b799beb8e09fb25f49"
+      ]
+    },
+    {
+      "all_fixed_pattern_occurrences": 65,
+      "archived_deadline": "2026-08-13T08:00:00+07:00",
+      "cross_document_review_question": "Проект контракта устанавливает последствия неустранения недостатков; в ТЗ гарантийный срок указан как 12 месяцев либо иной срок по проекту контракта. Проверить согласованную длительность и процедуры исправлений по полной редакции.",
+      "cross_document_source_refs": [
+        {
+          "original_binary_sha256": "b9a8468f35a5d1108463dd500875256f969ae161b937d54943cb748985d7cbb0",
+          "original_filename": "Приложение №2.Проект  контракта.docx",
+          "quote_sha256": "3b0417ff50df85420ce299afd2717e4c9f9f2a7d1ad938a9018851852b18d6d3",
+          "source_locator": "Строка 78",
+          "source_text_sha256": "e1ab1a0b7a1806d4409770a2bf572c8dc2f717c631d3ccfaf7b01a290dbf6c0a"
+        },
+        {
+          "original_binary_sha256": "a099f70cda44c5cdd52fe5ddcab6c462d24a5222f167d97d88d7e47b6a2481cd",
+          "original_filename": "Приложение № 3 Описание объекта закупки.docx",
+          "quote_sha256": "8784ddfb84229c482102a4dd0bc844d75678d52ebc9550749db8e4e6bd20e1d8",
+          "source_locator": "Строка 43",
+          "source_text_sha256": "db40a3f2dcc9fbdfe719845e4055eed65c421192826bd2c1113cc24640039514"
+        }
+      ],
+      "human_commercial_decision": null,
+      "registry_number": "0377100005726000128",
+      "sampled_quote_states": {
+        "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA": 3
+      },
+      "sampled_saved_quotes": 3,
+      "saved_report_deadline_review": {
+        "archived_deadline": "2026-08-13T08:00:00+07:00",
+        "bid_ready": false,
+        "historical_deadline_relation": "CONSISTENT_WITH_HISTORICAL_ORIGINAL",
+        "human_decision_reviewed": false,
+        "live_eis_revision_attested": false,
+        "model_claims_strong_blocker": true,
+        "previous_report_deadline": "13.08.2026 08:00:00 +07:00",
+        "registry_number": "0377100005726000128",
+        "saved_report_sha256": "2bcf0ab5e59c3f07d61e436b7275a17f598f1006e032cbd6991e1026b29d42e6"
+      },
+      "source_document_count": 4,
+      "topic_first_mentions": 13,
+      "unsupported_quote_sha256": []
+    },
+    {
+      "all_fixed_pattern_occurrences": 304,
+      "archived_deadline": "2026-06-19T09:00:00+03:00",
+      "cross_document_review_question": "В требованиях к заявке лицензии ФСТЭК и ФСБ названы для участника; в контракте фигурируют подрядчик, субподрядчик, соисполнитель. Проверить законность и субъект каждого требования.",
+      "cross_document_source_refs": [
+        {
+          "original_binary_sha256": "8f75485f0d7c8f316177733f6b3cb6553e26c3b486c5bbf47763759c2eb36335",
+          "original_filename": "4 Требования к содержанию, составу заявки ОАЭФ-098.docx",
+          "quote_sha256": "541cbd36887fe4944ec59572c3cfc41ddc3b1383372b8a0da6f2f8a2d7a37866",
+          "source_locator": "PARAGRAPH-0029",
+          "source_text_sha256": "e11df28cc3cc8bcedcbff7473cb6ea350ed2742d3c6af437375b2b32c1adacbd"
+        },
+        {
+          "original_binary_sha256": "8f75485f0d7c8f316177733f6b3cb6553e26c3b486c5bbf47763759c2eb36335",
+          "original_filename": "4 Требования к содержанию, составу заявки ОАЭФ-098.docx",
+          "quote_sha256": "4fe9fdb693279fbce2cb7afd669a7cfb1c6752ac232ef3165301266e95235f8f",
+          "source_locator": "PARAGRAPH-0030",
+          "source_text_sha256": "e11df28cc3cc8bcedcbff7473cb6ea350ed2742d3c6af437375b2b32c1adacbd"
+        },
+        {
+          "original_binary_sha256": "8f75485f0d7c8f316177733f6b3cb6553e26c3b486c5bbf47763759c2eb36335",
+          "original_filename": "4 Требования к содержанию, составу заявки ОАЭФ-098.docx",
+          "quote_sha256": "e25642fe59c37c9ec62542ac8d9ffd4148e981bdd1f98b61425c740752f0267d",
+          "source_locator": "PARAGRAPH-0033",
+          "source_text_sha256": "e11df28cc3cc8bcedcbff7473cb6ea350ed2742d3c6af437375b2b32c1adacbd"
+        },
+        {
+          "original_binary_sha256": "cf0453e8a18887c57b4129e92fb5155a0242760f3733a65cddd6de20337bcf50",
+          "original_filename": "2 Проект контракта ОАЭФ-098.docx",
+          "quote_sha256": "8c711d88dfdcd3cc96a6ae81c77d7a3c08cc791dac65211c9261f832c324a12a",
+          "source_locator": "PARAGRAPH-0214",
+          "source_text_sha256": "f09a80b23a8a7ae26e6c64cdc1947bcdf3f1a0f7be20d06799cddfcac797e906"
+        }
+      ],
+      "human_commercial_decision": null,
+      "registry_number": "0895100000126000897",
+      "sampled_quote_states": {},
+      "sampled_saved_quotes": 0,
+      "saved_report_deadline_review": null,
+      "source_document_count": 6,
+      "topic_first_mentions": 17,
+      "unsupported_quote_sha256": []
+    }
+  ],
+  "commercial_metrics": {
+    "application_package_rework": null,
+    "citation_coverage": null,
+    "false_go_no_go": null,
+    "manual_correction_rate": null,
+    "missed_blockers": null,
+    "time_to_decision_minutes_p90": null,
+    "unknown_rate": null
+  },
+  "commercial_release_authorized": false,
+  "current_eis_checked": false,
+  "first_topic_mentions": 209,
+  "historical_audit_sha256": "707e5bbb3ab5c18c8b42f2cfda89e6ae3770a2a0c4b41978969905c9d8652e0d",
+  "historical_deadline_conflicts": 2,
+  "historical_deadline_report_count": 10,
+  "historical_strong_blocker_claims_unattested": 8,
+  "human_reviews_in_this_run": 0,
+  "sampled_quote_case_count": 10,
+  "sampled_quote_count": 26,
+  "sampled_quote_states": {
+    "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA": 22,
+    "QUOTE_NOT_SUPPORTED_AS_LIVE_QUOTATION": 1,
+    "WHITESPACE_VARIANT_WITH_OFFICIAL_BINARY_SHA": 3
+  },
+  "schema": "apr06_historical_review_findings_v1",
+  "scope": "ARCHIVED_DEVELOPMENT_OVERLAP_SELECTED_CLAIMS_NOT_COMMERCIAL_ACCEPTANCE",
+  "source_document_count": 75,
+  "source_packet_sha256": "89a8e3b4d690710fe51e70df8c26739452d31b7ac75ee4b1d082113a0beee77c"
+}

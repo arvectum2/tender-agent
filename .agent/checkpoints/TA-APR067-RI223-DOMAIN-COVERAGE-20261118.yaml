@@ -1,0 +1,20 @@
+task_id: TA-APR067-RI223-DOMAIN-COVERAGE-20261118
+status: completed
+goal: Measure actual archived mixed-case document-domain retrieval coverage and refusal on incomplete originals, reusing existing isolated DP replay.
+definition_of_done:
+  - Measure five complete original-receipt cases with nine fixed probes each; incomplete sixth excluded and refused.
+  - Report per-case and per-domain citation coverage, no semantic accuracy or commercial SLO inference; validate bounded source identity and unchanged archive.
+  - Test counting and fail-closed invariants; run genuine isolated replay and publish draft.
+completed:
+  - Coordinated release remains blocked by remote tool; no repeat or bypass. APR04 profile and APR06 human gold gates separate. APR07 rolling operator requires dedicated authorized role.
+  - Existing replay extended with fixed probes and bounded counts, no change to product behavior. Initial replay canonical-path mismatch failed closed; corrected via checked_search_run.
+  - Final actual isolated replay exit 0: 5 complete cases, 1 incomplete refused, 29/45 probes with citations, 42 excerpts, 16 unknown; originals unchanged and isolated DP removed. 176 targeted tests PASS, Ruff/diff PASS.
+current_stage: verified_pending_merge
+remaining:
+  - Exact PR641 b6b9ee4b0f576782238b47bec26912c097bf0d77 CI 19/19 SUCCESS. Further gap review separate.
+last_verified_commit: 9f7785db79474e3b74cfbb808f85011a1237e8fb
+test_results:
+  - 176 passed, 12 warnings; Ruff/diff PASS.
+  - Actual isolated replay exit 0; 29/45, 42 citations, 5 complete cases, 1 incomplete refused; source originals unchanged.
+  - Report docs/quality/APR067_RI223_DOMAIN_COVERAGE_2026-11-18.json.
+resume_instruction: Use isolated offline corpus, existing DP harness, no production DB mutations, model promotion, live acquisition or independent gold claim.

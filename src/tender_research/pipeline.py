@@ -10,6 +10,14 @@ from typing import Any
 
 from sqlalchemy.orm import Session
 
+from src.modules.procurement_learning_corpus.service import (
+    append_candidate,
+    learning_capture_enabled,
+)
+from src.modules.procurement_learning_corpus.web_source_capture import (
+    make_fetched_web_source_candidate,
+)
+
 from src.tender_research.browser.fetcher import WebPageFetcher
 from src.tender_research.browser.requests_fetcher import RequestsFetcher
 from src.tender_research.config import TenderResearchConfig, load_config
@@ -38,6 +46,7 @@ from src.tender_research.registry_discovery import (
     RegistryNumberDiscovery,
     SourceType,
 )
+from src.tender_research.rag.missing_attachments import preserve_recovered_inventory
 from src.tender_research.repository import TenderRepository
 from src.tender_research.search_provider import SearchProvider
 from src.tender_research.schemas import EisDocumentRaw, EisTenderRaw, TenderUpsertData
@@ -583,7 +592,10 @@ class TenderResearchPipeline:
         include_public_documents: bool = True,
     ) -> TenderUpsertData:
         soap_documents = self._load_soap_documents(soap_raw)
-        public_documents = [] if soap_documents or not include_public_documents else self._public_documents_to_rows(detail)
+        preserve_inventory = include_public_documents and preserve_recovered_inventory(
+            existing_tender, detail, soap_documents=bool(soap_documents)
+        )
+        public_documents = [] if soap_documents or not include_public_documents or preserve_inventory else self._public_documents_to_rows(detail)
         existing_title = None
         if existing_tender is not None and not _is_placeholder_title(existing_tender.title, discovered.registry_number):
             existing_title = existing_tender.title
@@ -893,12 +905,24 @@ class TenderResearchPipeline:
             )
             wp_path = self._save_web_page(tender, fetch_result)
             wp_path["search_result_id"] = sr.id
-            self._repo.upsert_web_page(wp_path)
-            if fetch_result.status == "fetched":
-                fetched += 1
-            else:
-                failed += 1
-            self._session.flush()
+            try:
+                self._repo.upsert_web_page(wp_path)
+                if learning_capture_enabled():
+                    # The page and the unreviewed source evidence share one
+                    # PostgreSQL transaction; no separate store or legal GO.
+                    candidate = make_fetched_web_source_candidate(
+                        tender.registry_number or tender.external_id, fetch_result
+                    )
+                    if candidate is not None:
+                        append_candidate(self._session, candidate)
+                if fetch_result.status == "fetched":
+                    fetched += 1
+                else:
+                    failed += 1
+                self._session.flush()
+            except Exception:  # Roll back the page and candidate atomically.
+                self._session.rollback()
+                raise
         self._session.commit()
         return {"fetched": fetched, "failed": failed}
 

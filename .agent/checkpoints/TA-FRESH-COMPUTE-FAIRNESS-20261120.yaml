@@ -1,0 +1,21 @@
+task_id: TA-FRESH-COMPUTE-FAIRNESS-20261120
+status: in_progress
+goal: Guarantee the next heavy compute turn to a waiting fresh analysis without stopping the current historical batch or retaining DB fences while waiting.
+definition_of_done: [reviewed two-sided change, cross-process exclusion proof, exact CI, coordinated worker and production rollout, successful real analysis and unchanged historical receipts]
+prior_incident:
+  active_release: b31ff64e2900b997d6bfea17b0cb33d3133dfaae
+  canary_job: f536421e-5375-4c38-ac83-06b2481da7d5
+  exit: 1 at 18:26:32 UTC, heavy-slot acquisition timed out before journal or generation
+  registry: "0137200001226009248"
+  prior_plan: facaca0ba73ab963182b49b4ad515507d6a00cc5f3a75219d1080e8d78bd9cdb
+  note: No report or analysis write from failed attempt; confirm exact current item before next application.
+completed_stages:
+  - Isolated historical worker candidate d632b81d269ac4f999dcaaf1e58cf8d1046693b1; 26 tests.
+  - Fresh analysis reserves dedicated turn, waits up to 600 seconds, releases reservation after heavy acquisition; no write fences held until final commit; 69 tests.
+  - Real two-process isolated lock integration passed: current history finishes, next turn goes to analysis, write fences available while queued, history resumes after generation.
+current_stage: review and coordinated release
+last_verified_commit: b31ff64e2900b997d6bfea17b0cb33d3133dfaae
+remaining_stages: [CI, immutable release, safe historical boundary and worker update, production cutover, exact analysis verification]
+research_candidate: /Users/master/ArvectumSafe/worktrees/ta-fresh-compute-turn-20261120
+parent_checkpoint: /Users/master/ArvectumSafe/worktrees/ta-parallel-analysis-20261120/.agent/checkpoints/TA-PARALLEL-ANALYSIS-20261120.yaml
+resume_instruction: Check new PR and exact historical candidate, review both. Provision dedicated regular owner-only fresh-compute-turn.lock before coordinated activation. Do not change active pinned research files; stop old historical worker once at reconciled batch boundary using existing runbook, switch reviewed launch configuration to clean new pinned candidate with rollback and start it. Verify source proof, unchanged receipts, PITR and MI. Activate exact green reviewed production release keeping Workspace scope; replan analysis for new SHA and retry only after read-only proof no history/journal for failed attempt. Confirm live journal and no-STOP historical wait/resume. No new scheduled tasks. Previous parent checkpoint update was blocked by safety system; do not retry denied command or circumvent.

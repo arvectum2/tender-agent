@@ -1,0 +1,29 @@
+task_id: TA-PRIVATE-REVIEW-RETENTION-20261119
+status: completed
+goal: Document and test actual private-review document lifecycle; propose safe retention controls
+  without deletion.
+definition_of_done:
+- Compare existing legal package and actual expiration, historical access, quotas and persistence.
+- Produce an operational policy proposal with explicit approval gates and a deletion/restore verification
+  plan.
+- Add isolated regressions for current expiry and quota behavior; no production mutation or access
+  change.
+completed:
+- Read legal policy and contract retention clauses plus existing review models and services.
+- Policy proposal recorded in docs/quality/APR04_PRIVATE_REVIEW_RETENTION_2026-11-19.md, explicitly
+  not approved. Existing expiry, 20-record lifetime quota, historical archive access and missing
+  contract end/hold registry documented.
+- Added two isolated expiry/quota regression tests; 13 targeted tests passed, Ruff and diff check
+  PASS.
+current_stage: bounded_policy_and_regressions_complete_local
+remaining:
+- Publish local successor after current CI; verify exact successor.
+- Separate approval of contract retention/hold/deletion rules; production implementation and actual
+  deletion/restore acceptance remain OPEN.
+last_verified_commit: 839147aa
+test_results:
+- 13 passed, 15 warnings in 3.01s, exit 0; Ruff and diff check PASS. No real data or production
+  mutation.
+resume_instruction: Verify remote PR662 CI 55b349eb; publish local browser and retention policy/testing
+  successors. Keep production retention open; no automatic deletion, rejected readiness operation,
+  or external release.

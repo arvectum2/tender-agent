@@ -1,0 +1,34 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-LIVE-STATUS-GATES-20261018
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Independently inspect official public EIS procurement-stage cards and B2B-Center primary public status, bind outcomes to existing archived source SHA, and classify legal/owner qualification gates without creating a false bid GO.
+definition_of_done:
+  - Use exact three preverified 44-FZ procurement identifiers and source route type, original official HTTPS card only, record first-party current display status if visible.
+  - Distinguish HTML at observation-time from digitally verified latest XML, legal enforceability and account eligibility; unknowns must remain unknown.
+  - Recheck commercial B2B-Center original public stage and full-scope/price availability, annotate deadline and platform access without credentials.
+  - Provide executable fail-closed source evidence logic and adversarial tests; update roadmap, completed checkpoint, create reviewable stacked PR.
+  - No EIS/ETP bid, signature, customer message, fee, second UI, production modification or unauthorized merge.
+completed:
+  - "2026-10-18 19:04 MSK parent main d2a927ecebc9222bb3b38b47aa14c7024ccec4f0 unchanged. PR484 19/19 pass open, PR485 17/19 pass 2 pending open, both mergeable."
+  - "Prior 3 EIS ZIP/XML + 17 original attachments first-party SHA verified in PR484; pre-bid internal cost matrix completed in stacked PR485; no need to repeat."
+current: "Bounded first-party public display audit and historical dedupe completed."
+remaining: []
+last_verified_commit: 98930db852b8e9f7b53f333ff11c90d32f68b6d8
+test_results:
+  - "121 related pytest PASS, 3 SKIP, Ruff PASS, diff check PASS, 23 explicit status/dedupe tests."
+  - "Original EIS notice pages and printForm exact URLs: 6/6 HTTP404 at fresh capture; no current stage proved."
+  - "Original B2B-Center public card 4643484: HTTP200, visible accepting label, timestamped HTML SHA, printed deadline 2026-10-21 06:00 MSK; legal/account GO still false."
+  - "Dedupe historical Oct17 primary source notices: one repeated Smolensk 0163200000326005243; only two newly primary-attested EIS numbers Oct18."
+resume_instruction: "Bounded current HTML/2026-10-17 dedupe audit complete. Check new stacked PR exact-head CI, do not merge without Company AM-4/queue authority. Resume parent 15-20 unique qualified opportunities; verify current legal EIS via authorized source when available, and real owner bidder credentials/costs without guessing. Never submit bids, sign, pay, send customer messages or create second UI."
+source_status_report: docs/roadmap/B2B_OCT18_PUBLIC_STAGE_AND_DEDUPE_AUDIT.md
+source_status_receipt: docs/roadmap/b2b_oct18_current_public_display_check.json
+corrected_prior_unique_count: true
+new_unique_original_44fz_numbers: 2
+previously_original_smolensk_recounted_as_new: false
+new_primary_commercial_proof: 1
+verified_live_eis_status_count: 0
+company_authorized_bid_count: 0
+review_gate: stacked_pr_exact_head_ci_and_authorized_merge_pending
+external_side_effects: false

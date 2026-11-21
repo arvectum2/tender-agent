@@ -1,0 +1,22 @@
+task_id: TA-APR07-ROLLING-OBSERVABILITY-20261117
+status: completed
+goal: Extend existing operational observability with a bounded rolling analysis-job measurement, not model inference or production SLO acceptance.
+definition_of_done:
+  - Measure terminal analysis jobs in stated UTC window, separate completed, warning, failed and cancelled outcomes and invalid timing.
+  - Report queue-to-job-finish latency only with explicit denominators, no empty or undersized sample claimed as SLO.
+  - Validate with disposable DB fixture and unchanged existing endpoint contract; publish draft PR. No new public endpoint.
+completed:
+  - APR06 bounded engineering readiness complete; commercial blockers separate; final PR605 shortlist CI pending.
+  - Implemented bounded read-only terminal analysis job rows with explicit outcome counts, P50/P95 queue-to-finish durations, incomplete timing and minimum sample floor.
+  - Verified with isolated existing test DB fixtures, no production data or model invocation.
+  - Local operator CLI, explicit Unix socket DSN, dedicated non-writing PostgreSQL role, repeatable-read read-only transaction and no public endpoint expansion.
+  - PostgreSQL 18.7 disposable actual table acceptance PASS; 100 synthetic rows, P95 95 sec, superuser/writer/sensitive field/write denied, immutable fixture rows, cluster removed.
+  - Exact source head a7dba514f05ce13d1dd50daf2e5a22ddce1ac479 CI 19/19 and Owner-approved merge a97ba52b67f89b1ce214b6d77f5642c5655d4fca.
+current_stage: merged_engineering_completed_slo_unmeasured
+remaining: []
+last_verified_commit: a7dba514f05ce13d1dd50daf2e5a22ddce1ac479
+test_results:
+  - 35 targeted pytest PASS, Ruff and git diff check PASS.
+  - Includes half-open seven-day UTC window, cancelled/failed separation, incomplete and empty evidence, 100-row floor, exact nearest-rank P95, overflow and invalid window. Existing /api/ops/observability contract unchanged.
+  - 47 focused tests PASS, Ruff PASS, PostgreSQL rehearsal PASS; startup locale fixed using LC_ALL=C for subprocess only. PR605/606 prior heads each 17 SUCCESS/2 IN_PROGRESS.
+resume_instruction: Bounded engineering complete, merged a97ba52b67f89b1ce214b6d77f5642c5655d4fca; external commercial/operational gates remain separate. No deployment or automatic approval.

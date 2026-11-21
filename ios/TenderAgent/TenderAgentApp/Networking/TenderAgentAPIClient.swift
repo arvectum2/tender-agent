@@ -149,6 +149,10 @@ struct TenderAgentAPIClient {
         try await request(path: "mobile/v1/inbox")
     }
 
+    func fetchDailyDigest() async throws -> MobileDailyDigest {
+        try await request(path: "mobile/v1/digest/latest")
+    }
+
     func fetchProcurement(dealID: String) async throws -> MobileAPIProcurement {
         try await request(path: "mobile/v1/procurements/\(dealID)")
     }
