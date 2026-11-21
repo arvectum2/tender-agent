@@ -1,0 +1,26 @@
+task_id: TA-MAIN-GOVERNANCE-20261121
+status: in_progress
+goal: Enforce safely reversible GitHub main branch change control, verify resulting effective rules and prepare exact PR674 release gate without bypassing AM-4 authority.
+definition_of_done:
+  - Enforce pull-request-only merges and stable exact-head CI checks on main.
+  - Prohibit force-push and deletion; verify rules via GitHub effective-branch API.
+  - Preserve single existing Tender Agent Watchdog and active MI working tree.
+  - Document solo-author reviewer limitation and avoid an impossible mandatory self-review.
+  - Report remaining owner/independent review, PITR, original-source and rollout gates separately.
+completed_stages:
+  - Confirmed main abcd8727 and PR674 19/19 green, current production HTTP 200, canonical MI ahead nine clean.
+  - Confirmed repository is public; authenticated account arvectum2 is its only collaborator and author of PR674.
+  - Confirmed no effective protection or rulesets initially applied to main; exact stable CI names shared by PR673/674/675/677/678.
+  - Activated main-only GitHub ruleset 27788179 with PR, strict ten required checks, no force push/deletion and no bypass actors; re-read effective rules.
+  - Preserved zero required self-approvals while only one collaborator exists; independent AM-4 review remains an explicit release blocker, not silently waived.
+current_stage: verify_pr_checks_and_document_review_gap
+remaining_stages: [negative_branch_PR_check, validate_candidate_release_gates, record_exact_state, second_human_review_activation]
+last_verified_commit: abcd8727326c398d870edbc4a2da793e090ac8eb
+last_checks: Ruleset 27788179 effective GET on main, ten named required checks, empty bypasses. PR674 19/19 success, GitVerse success, main unchanged abcd8727; independent human reviewer absent.
+resume_instruction: Create review-only governance PR, verify effective ruleset 27788179 and unreviewed PR with pending checks cannot merge; never direct-push main. Owner still must add a distinct independent GitHub collaborator before changing required review threshold from 0 to 1. PR674 remains draft with pending AM-4 owner, current originals #679, rollback and PITR acceptance. No live worker, source fetch, bid, migration, deployment, deletion or token action.
+ruleset_id: 27788179
+ruleset_enforcement: active
+required_status_check_count: 10
+required_approvals_current: 0
+independent_review_gate_closed: false
+production_deployed: false
