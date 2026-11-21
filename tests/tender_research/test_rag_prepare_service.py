@@ -7,6 +7,7 @@ import pytest
 from src.tender_research.rag.prepare_service import (
     TenderPreparationResult,
     TenderPreparationStep,
+    _missing_indexable_source_reason,
     check_preparation_status,
     prepare_tender_for_analysis,
 )
@@ -246,3 +247,23 @@ def test_status_without_tender_is_not_ready() -> None:
         status = check_preparation_status("missing", session=MagicMock())
     assert status["tender_found"] is False
     assert status["ready_for_analysis"] is False
+
+@pytest.mark.parametrize(
+    ("docs", "downloaded", "extracted", "code"),
+    [
+        (0, 0, 0, "source_document_metadata_unavailable"),
+        (4, 0, 0, "source_original_download_unavailable"),
+        (4, 2, 0, "source_text_extraction_unavailable"),
+        (4, 2, 1, "data_platform_projection_empty"),
+    ],
+)
+def test_no_chunks_diagnoses_source_stage_without_implicit_retry(
+    docs: int, downloaded: int, extracted: int, code: str,
+) -> None:
+    message = _missing_indexable_source_reason(
+        documents_total=docs,
+        documents_downloaded=downloaded,
+        extracted_texts_total=extracted,
+    )
+    assert message.startswith(code + ":")
+    assert "ready" not in message.lower()

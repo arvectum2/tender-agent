@@ -1,0 +1,16 @@
+task_id: TA-DTR-SOURCE-GAPS-20261121
+status: in_progress
+goal: Differentiate blocked EIS originals and Data Platform projection failures without weakening Daily Tender Run readiness.
+definition_of_done:
+  - Verify exact fail-closed production evidence and source availability without DB mutation.
+  - Add four source-stage diagnostic reasons, no fetching or permission changes.
+  - Pass exact focused and full CI; review targeted replay and release gates separately.
+completed_stages:
+  - Read-only 20 November DTR run and DB counts verified; three failed public 44-FZ cases.
+  - Investigated public source failures: zero original metadata for two cases, four records with zero downloads for a third; existing web source not authoritative original.
+  - Implemented diagnostic-only classification with no status, execution or retry change.
+current_stage: exact_ci
+remaining_stages: [exact_ci, independent_original_coverage, human_release_review]
+last_verified_commit: abcd8727326c398d870edbc4a2da793e090ac8eb
+last_checks: Production main CI success; candidate pending exact-head CI, 4 offline unit branches.
+resume_instruction: Verify PR exact head CI and focused tests. Never retry live DTR or use third-party documents as originals. Read first source attachment receipts and actual active revision under existing access, then consider bounded original recovery with proper prewrite and approval.
