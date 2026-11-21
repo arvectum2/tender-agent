@@ -1,0 +1,30 @@
+task_id: TA-CONTRACT-PAYMENT-CALENDAR-20261118
+status: completed
+goal: Generate conditional payment cash events from independently verified archived
+  contract terms and explicit milestone/workday assumptions
+definition_of_done:
+- Extract supported timing rules from verified paragraph group without inventing advance
+  or installment entitlement
+- Require explicit calendar coverage, no-refusal and document conditions, receipt
+  lag and payment amount
+- Reconcile generated events through existing PRICE01 dated ledger, reject missing
+  evidence and conflicting inputs
+- Test actual pinned archive replay and publish draft
+completed:
+- Exact PR648 CI 19/19 verified
+- Exact source-bound single-settlement projection and explicit workday calendar; generates
+  final receipt event only when all assumptions and original payment paragraphs hold.
+  Optional CLI; manual mode mutually exclusive.
+- Actual final isolated replay exit 0; Feb 3 signing, Feb 12 debit, Feb 14 conditional
+  credit, peak 628000, additional 428000; previous manual scenario and DEFER preserved.
+  227 tests PASS incl 32 calendar tests.
+- Exact draft head d7d7d6f028845a4d9c555f009b15356fe33d85a9 CI 19/19 SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
+last_verified_commit: c6da37e972297c1c969e544c099002e18cdfbadd
+test_results:
+- 227 passed, 2 warnings; Ruff/diff PASS; actual isolated replay exit 0
+- Replay SHA256 e130c53a59be609ad9f5b7867a6f22c27a1e68ad3fe2a05da09a3d9206c54358
+resume_instruction: Verify exact draft CI; no index repair repetition. Narrow archived
+  source rule only; no statutory calendar or actual dates. Next generalizable schedule
+  and profile/application checks.

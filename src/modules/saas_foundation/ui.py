@@ -47,7 +47,9 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 <label>Целевая маржа, %<input id="margin" type="number" min="0" max="100" value="20"></label>
 <label>Лицензии через запятую<input id="licenses"></label>
 <label>Допуски СРО через запятую<input id="sro"></label></div>
-<button id="read-profile">Показать профиль</button><button id="save-profile">Сохранить новую версию</button></section>
+<button id="read-profile">Показать профиль</button><button id="save-profile">Сохранить новую версию</button>
+<details><summary>Квалификационные доказательства</summary><p>Семь направлений проверки профиля, не список обязательных требований каждой закупки. Наличие PDF не означает юридического допуска.</p>
+<button id="read-documentary-profile">Проверить доказательства профиля</button><div id="documentary-profile-result" aria-live="polite"></div></details></section>
 <section><h2>3a. Референс-лист исполненных контрактов</h2>
 <p>Версии не удаляются: новая запись замещает предыдущую для будущей оценки. Отсутствие списка — UNKNOWN, а не ноль контрактов. Указывайте только фактически исполненные договоры и ссылки на подписанные акты.</p>
 <p id="reference-state" role="status">Список пока не загружен</p>
@@ -82,6 +84,40 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 <button id="analyze-run">Анализировать</button><button id="report-run">Посмотреть отчёт</button>
 <button id="screen-run">Сопоставить с профилем</button>
 <button id="qualify-run">Оценить шансы по оригинальным критериям ЕИС</button>
+<details><summary>Комплектность заявки и документы компании</summary>
+<p>Только изученные архивные требования собственного прогона. Выбор сценария не подтверждает полномочий или фактической поставки.</p>
+<label>Подписание<select id="documentary-signatory"><option value="UNKNOWN">Не определено</option><option value="DIRECTOR">Руководитель</option><option value="REPRESENTATIVE">Представитель по доверенности руководителя</option><option value="DELEGATED_SIGNER">Доверенность от иного уполномоченного лица</option></select></label>
+<label>Товары по условию образца<select id="documentary-goods"><option value="UNKNOWN">Не определено</option><option value="YES">Предусмотрены</option><option value="NO">Не предусмотрены</option></select></label>
+<button id="read-documentary-run">Сопоставить документы</button><div id="documentary-run-result" aria-live="polite"></div></details>
+<details><summary>Внутреннее согласование комплекта заявки (эксперимент)</summary>
+<p>Только собственный архивный прогон и роль owner/admin. Файл JSON с проверенными картами форм, выбранными приложениями, условиями цены и декларациями. Без подписи и подачи. ZIP содержит внутреннюю экономику — не загружать на ЭТП.</p>
+<label>Параметры черновика (.json, до 1 МиБ)<input id="application-review-input" type="file" accept=".json,application/json"></label>
+<button id="application-review-preview">Сформировать черновик</button><button id="application-review-history">История согласований</button>
+<div id="application-review-summary" aria-live="polite" style="overflow-wrap:anywhere"></div>
+<button id="application-review-download" disabled>Скачать и проверить приватный ZIP</button>
+<label><input type="checkbox" id="application-review-ack" disabled style="width:auto"> Я проверил именно этот архив; согласование только для внутренней работы, открытые вопросы остаются.</label>
+<button id="application-review-confirm" disabled>Зафиксировать внутреннее согласование</button>
+<div id="customer-draft-panel" hidden>
+<h3>Отдельный внешний черновик</h3>
+<p>Только выбранные неподписанные документы. Это неполная заявка, не разрешение на отправку. Проверьте свободный текст на конфиденциальные сведения.</p>
+<label><input type="checkbox" id="customer-draft-price" style="width:auto" disabled> Ценовое предложение</label>
+<label><input type="checkbox" id="customer-draft-declarations" style="width:auto" disabled> Декларации</label>
+<label><input type="checkbox" id="customer-draft-ack" style="width:auto" disabled> Скачать только выбранные черновики для дополнительной проверки, не для подачи.</label>
+<button id="customer-draft-download" disabled>Скачать отдельный ZIP</button>
+<div id="customer-draft-result" aria-live="polite" style="overflow-wrap:anywhere"></div></div></details>
+<details><summary>Независимая проверка оригинальной формы (эксперимент)</summary>
+<p>Только архивная форма своего прогона. Автор назначает другого участника owner/admin; проверяющий скачивает точный DOCX. Не является готовой заявкой, подписью или разрешением на отправку.</p>
+<button id="original-form-refresh">Загрузить очередь проверки и участников</button>
+<div id="original-form-editor" hidden>
+<label>Назначенный проверяющий<select id="original-form-reviewer"><option value="">Выберите другого участника</option></select></label>
+<label>Карта исходной формы (.json, до 32 КиБ: item_code, file_id, mapping, signatory, goods_used)<input id="original-form-input" type="file" accept=".json,application/json"></label>
+<button id="original-form-create" disabled>Подготовить форму для проверки</button>
+<label>Мои формы на проверке<select id="original-form-select"><option value="">Выберите форму</option></select></label>
+<div id="original-form-summary" aria-live="polite" style="overflow-wrap:anywhere"></div>
+<button id="original-form-download" disabled>Скачать приватный DOCX и проверить SHA-256</button>
+<label><input id="original-form-ack" type="checkbox" style="width:auto" disabled> Я проверил именно этот документ, исходную архивную редакцию и заполненные поля; согласование только внутреннее.</label>
+<button id="original-form-confirm" disabled>Записать независимое согласование</button>
+</div></details>
 <div id="qualification-panel" hidden role="status" aria-live="polite" style="border:1px solid #496477;border-radius:10px;padding:12px;margin-top:12px">
 <strong id="qualification-verdict"></strong>
 <p id="qualification-source-note"></p>
@@ -176,6 +212,8 @@ let token="";
 let legalVersions=null;
 let uiBusy=false;
 let sessionEpoch=0;
+let applicationReview=null,applicationDownloaded=false;
+let originalFormContext=null,originalFormItems=[],originalFormDownloaded=null;
 const val=id=>document.getElementById(id).value.trim();
 const split=id=>val(id).split(",").map(x=>x.trim()).filter(Boolean);
 const num=id=>val(id)===""?null:Number(val(id));
@@ -208,7 +246,7 @@ function showQualification(reply){
    "%. Источник: " + (item.source_status || "не подтверждён") +
    ". Это не юридический отказ, подпись ЕИС не проверена, подача заявки запрещена без решения человека.";
 }
-async function run(task){if(uiBusy)return;uiBusy=true;const enabled=[...document.querySelectorAll("button,input,textarea,select")].filter(x=>!x.disabled);for(const el of enabled)el.disabled=true;document.getElementById("state").textContent="Обработка…";try{
+async function run(task){if(uiBusy)return;clearDocumentary();uiBusy=true;const enabled=[...document.querySelectorAll("button,input,textarea,select")].filter(x=>!x.disabled);for(const el of enabled)el.disabled=true;document.getElementById("state").textContent="Обработка…";try{
  const result=await task();document.getElementById("state").textContent="Готово";output(result);showQualification(result);
 }catch(err){if([401,402,403].includes(err.status))clearSession();document.getElementById("state").textContent="Нужна проверка";output({error:err.message});document.getElementById("qualification-panel").hidden=true;}finally{uiBusy=false;for(const el of enabled)el.disabled=false;syncCompanyControls();}}
 function bind(id,task){document.getElementById(id).addEventListener("click",()=>run(task))}
@@ -328,6 +366,195 @@ bind("references-save",async()=>{
  displayReferences(refreshed);
  return {saved_version:saved.fact_version,current_snapshot:refreshed};
 });
+const documentaryLabels={current_registry:"Регистрация",sme_membership:"Статус МСП",current_tax:"Налоговый режим",completed_experience:"Исполненные контракты",license_scope_review:"Лицензии",certificate_scope_review:"Сертификаты",sro_scope_review:"Допуски СРО"};
+function clearDocumentary(){for(const id of ["documentary-profile-result","documentary-run-result"])document.getElementById(id).replaceChildren();}
+function documentaryLine(root,text){const p=document.createElement("p");p.textContent=text;root.append(p);}
+function documentaryClaim(c){return c.state==="DOCUMENTED_OWNER_CLAIM_REVIEW_REQUIRED"?(c.claim_assertion==="PRESENT"?"Подтверждение владельца; требуется проверка содержания":"Заявление об отсутствии; требуется проверка"):(c.state==="MISSING"?"Нет подтверждённого факта":"Требуется проверка: "+c.state);}
+bind("read-documentary-profile",async()=>{
+ const root=document.getElementById("documentary-profile-result");root.replaceChildren();
+ const r=await call("/api/saas/profile/documentary-readiness");
+ if(r.contract!=="tenant_documentary_readiness_v1"||r.qualification_verified!==false||r.external_action_allowed!==false||r.recommendation!=="DEFER"||!Array.isArray(r.requirements)||r.requirements.length!==7)throw Error("Неподтверждённая структура ответа");
+ for(const c of r.requirements)documentaryLine(root,(documentaryLabels[c.requirement_code]||c.requirement_code)+" — "+documentaryClaim(c));
+ documentaryLine(root,"Реестры и юридическая квалификация не проверены. DEFER.");return {status:r.contract,recommendation:"DEFER"};
+});
+bind("read-documentary-run",async()=>{
+ const root=document.getElementById("documentary-run-result");root.replaceChildren();
+ const runId=val("run-id"),signatory=val("documentary-signatory"),goods=val("documentary-goods");
+ if(!runId)throw Error("Укажите ID собственного прогона");
+ const body={signatory,goods_used:goods==="UNKNOWN"?null:goods==="YES"};
+ const r=await call("/api/saas/runs/"+encodeURIComponent(runId)+"/application-readiness",{method:"POST",body});
+ if(runId!==val("run-id")||signatory!==val("documentary-signatory")||goods!==val("documentary-goods"))return {status:"STALE_REVIEW_IGNORED"};
+ if(r.contract!=="tenant_archived_application_readiness_v1"||r.run_id!==runId||r.signatory!==signatory||r.goods_used!==body.goods_used||r.qualification_verified!==false||r.application_ready!==false||r.external_action_allowed!==false||r.recommendation!=="DEFER")throw Error("Неподтверждённая структура ответа");
+ if(r.status!=="ARCHIVED_QUOTATION_CHECKLIST_REVIEW_ONLY"){documentaryLine(root,r.status==="ARCHIVED_NOTIFICATION_NOT_APPLICATION"?"Архивное извещение без подачи заявки":"UNKNOWN — проверенный чек-лист недоступен");return {status:r.status,recommendation:"DEFER"};}
+ if(!Array.isArray(r.rows)||r.rows.length!==9)throw Error("Неполный чек-лист");
+ for(const row of r.rows){documentaryLine(root,row.title+" — "+row.applicability+" · "+row.state);for(const c of row.documentary_candidates)documentaryLine(root,"↳ "+c.requirement_code+": "+documentaryClaim(c));}
+ documentaryLine(root,"Готовность заявки и актуальная редакция не подтверждены. DEFER.");return {status:r.status,recommendation:"DEFER"};
+});
+for(const id of ["run-id","documentary-signatory","documentary-goods"])document.getElementById(id).addEventListener("input",()=>document.getElementById("documentary-run-result").replaceChildren());
+function applicationReviewPath(){const id=val("run-id");if(!id)throw Error("Укажите ID собственного прогона");return "/api/saas/runs/"+encodeURIComponent(id)+"/application-review/previews";}
+const customerDraftFields={"price_offer":"customer-draft-price","declarations":"customer-draft-declarations"};
+function customerDraftSelection(){return Object.keys(customerDraftFields).filter(k=>document.getElementById(customerDraftFields[k]).checked&&!document.getElementById(customerDraftFields[k]).disabled);}
+function clearCustomerDraft(){
+ for(const id of [...Object.values(customerDraftFields),"customer-draft-ack"])document.getElementById(id).checked=false;
+ document.getElementById("customer-draft-result").replaceChildren();
+}
+function syncCustomerDraft(){
+ const p=applicationReview,options=p?.customer_draft_options;
+ const current=Boolean(p&&p.run_id===val("run-id")&&p.status==="INTERNAL_REVIEW_RECORDED"&&p.decision_id&&Array.isArray(options)&&options.length);
+ document.getElementById("customer-draft-panel").hidden=!current;
+ for(const [key,id] of Object.entries(customerDraftFields)){
+  const el=document.getElementById(id),eligible=current&&options.includes(key);
+  if(!eligible)el.checked=false;
+  el.disabled=uiBusy||!eligible;
+ }
+ const selected=customerDraftSelection(),ack=document.getElementById("customer-draft-ack");
+ ack.disabled=uiBusy||!current||!selected.length;
+ document.getElementById("customer-draft-download").disabled=uiBusy||!current||!selected.length||!ack.checked;
+}
+function syncApplicationReview(){
+ const current=applicationReview&&applicationReview.run_id===val("run-id")&&applicationReview.status==="PRIVATE_PREVIEW";
+ document.getElementById("application-review-download").disabled=uiBusy||!current;
+ document.getElementById("application-review-ack").disabled=uiBusy||!current||!applicationDownloaded;
+ document.getElementById("application-review-confirm").disabled=uiBusy||!current||!applicationDownloaded||!document.getElementById("application-review-ack").checked;
+ syncCustomerDraft();syncOriginalFormReview();
+}
+function clearApplicationReview(){clearCustomerDraft();applicationReview=null;applicationDownloaded=false;document.getElementById("application-review-ack").checked=false;document.getElementById("application-review-summary").replaceChildren();syncApplicationReview();}
+function showApplicationReview(r){
+ const root=document.getElementById("application-review-summary");root.replaceChildren();
+ documentaryLine(root,r.status==="INTERNAL_REVIEW_RECORDED"?"Внутреннее согласование записано. Не разрешение на подачу.":"Черновик для проверки. Не готов к подаче.");
+ documentaryLine(root,"Закупка: "+r.procurement_ref+" · SHA-256: "+r.archive_sha256);
+ documentaryLine(root,"Создан: "+r.created_at+" · действует до "+r.expires_at);
+ if(r.reviewed_at)documentaryLine(root,"Согласовано: "+r.reviewed_at+" · участник "+r.reviewed_by_member_id);
+ for(const x of r.inventory||[])documentaryLine(root,x.path+" · "+x.role);
+ if(r.open_item_codes)documentaryLine(root,"Открытые пункты: "+r.open_item_codes.join(", "));
+}
+bind("application-review-preview",async()=>{
+ clearApplicationReview();const runId=val("run-id"),path=applicationReviewPath(),f=document.getElementById("application-review-input").files[0];
+ if(!f||f.size>1048576)throw Error("Выберите JSON до 1 МиБ");
+ const body=JSON.parse(await f.text());const r=await call(path,{method:"POST",body});
+ if(r.run_id!==runId||r.run_id!==val("run-id")||r.status!=="PRIVATE_PREVIEW"||r.application_ready!==false||r.external_action_allowed!==false||!/^[a-f0-9]{64}$/.test(r.archive_sha256))throw Error("Неожиданный ответ черновика");
+ applicationReview=r;showApplicationReview(r);return {status:r.status,preview_id:r.preview_id,application_ready:false};
+});
+bind("application-review-download",async()=>{
+ const p=applicationReview,epoch=sessionEpoch;if(!p||!token||p.run_id!==val("run-id")||!window.crypto?.subtle)throw Error("Нет актуального черновика или безопасного контекста проверки SHA");
+ const response=await fetch(applicationReviewPath()+"/"+encodeURIComponent(p.preview_id)+"/archive",{credentials:"omit",cache:"no-store",redirect:"error",headers:{Authorization:"Bearer "+token}});
+ if(!response.ok){const e=Error("HTTP "+response.status);e.status=response.status;throw e;}
+ const buf=await response.arrayBuffer();if(buf.byteLength>2097152)throw Error("Размер архива превышен");
+ const sha=Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256",buf))).map(x=>x.toString(16).padStart(2,"0")).join("");
+ if(sha!==p.archive_sha256||epoch!==sessionEpoch||applicationReview!==p||p.run_id!==val("run-id"))throw Error("Архив или сессия изменены");
+ const url=URL.createObjectURL(new Blob([buf],{type:"application/zip"}));const a=document.createElement("a");a.href=url;a.download="PRIVATE-REVIEW-DO-NOT-SUBMIT.zip";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ applicationDownloaded=true;return {status:"PRIVATE_ARCHIVE_DOWNLOADED",sha256:sha};
+});
+bind("application-review-confirm",async()=>{
+ const p=applicationReview;if(!p||!applicationDownloaded||!document.getElementById("application-review-ack").checked||p.run_id!==val("run-id"))throw Error("Скачайте и проверьте точный архив");
+ const r=await call(applicationReviewPath()+"/"+encodeURIComponent(p.preview_id)+"/confirm",{method:"POST",body:{archive_sha256:p.archive_sha256,confirm_reviewed_private_archive:true}});
+ if(r.preview_id!==p.preview_id||r.archive_sha256!==p.archive_sha256||r.status!=="INTERNAL_REVIEW_RECORDED"||r.application_ready!==false||r.external_action_allowed!==false)throw Error("Неожиданное согласование");
+ clearCustomerDraft();applicationReview=r;applicationDownloaded=false;document.getElementById("application-review-ack").checked=false;showApplicationReview(r);return r;
+});
+bind("customer-draft-download",async()=>{
+ const p=applicationReview,epoch=sessionEpoch;
+ const selected=Object.keys(customerDraftFields).filter(k=>document.getElementById(customerDraftFields[k]).checked&&p?.customer_draft_options?.includes(k));
+ if(!p||p.status!=="INTERNAL_REVIEW_RECORDED"||!p.decision_id||p.run_id!==val("run-id")||!token||!selected.length||!document.getElementById("customer-draft-ack").checked||!window.crypto?.subtle)throw Error("Выберите согласованные черновики и подтвердите скачивание");
+ document.getElementById("customer-draft-result").replaceChildren();
+ const response=await fetch(applicationReviewPath()+"/"+encodeURIComponent(p.preview_id)+"/customer-draft",{method:"POST",credentials:"omit",cache:"no-store",redirect:"error",headers:{Authorization:"Bearer "+token,"Content-Type":"application/json"},body:JSON.stringify({archive_sha256:p.archive_sha256,decision_id:p.decision_id,selection:selected,confirm_unsigned_subset:true})});
+ if(!response.ok){const e=Error("HTTP "+response.status+" — повторно проверьте согласование");e.status=response.status;throw e;}
+ const expected=response.headers.get("X-Draft-SHA256");
+ if(!/^[a-f0-9]{64}$/.test(expected||"")||response.headers.get("Content-Type")?.split(";")[0]!=="application/zip")throw Error("Неожиданный формат внешнего черновика");
+ const buf=await response.arrayBuffer();if(!buf.byteLength||buf.byteLength>2097152)throw Error("Размер архива недопустим");
+ const sha=Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256",buf))).map(x=>x.toString(16).padStart(2,"0")).join("");
+ if(sha!==expected||epoch!==sessionEpoch||applicationReview!==p||p.run_id!==val("run-id"))throw Error("Архив или сессия изменены");
+ const url=URL.createObjectURL(new Blob([buf],{type:"application/zip"}));const a=document.createElement("a");a.href=url;a.download="UNSIGNED-PARTIAL-DRAFT-REVIEW-ONLY.zip";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ clearCustomerDraft();documentaryLine(document.getElementById("customer-draft-result"),"Неполный неподписанный черновик скачан. SHA-256: "+sha+"; необходима дополнительная проверка.");
+ return {status:"UNSIGNED_PARTIAL_DRAFT_DOWNLOADED",sha256:sha,application_ready:false};
+});
+for(const id of Object.values(customerDraftFields))document.getElementById(id).addEventListener("change",()=>{document.getElementById("customer-draft-ack").checked=false;syncCustomerDraft();});
+document.getElementById("customer-draft-ack").addEventListener("change",syncCustomerDraft);
+bind("application-review-history",async()=>{const r=await call(applicationReviewPath());if(r.historical_only!==true||r.application_ready!==false)throw Error("Неожиданная история");return r});
+for(const id of ["run-id","application-review-input"])document.getElementById(id).addEventListener("input",clearApplicationReview);
+document.getElementById("application-review-ack").addEventListener("change",syncApplicationReview);
+function originalFormPath(){const id=val("run-id");if(!id)throw Error("Укажите ID своего архивного прогона");return "/api/saas/runs/"+encodeURIComponent(id)+"/original-form-review/candidates";}
+function originalFormCurrent(){return originalFormContext&&originalFormContext.run_id===val("run-id")&&originalFormContext.epoch===sessionEpoch;}
+function selectedOriginalForm(){return originalFormCurrent()?originalFormItems.find(p=>p.candidate_id===val("original-form-select")):null;}
+function validOriginalForm(p,runId,memberId){
+ return p&&p.run_id===runId&&(p.creator_id===memberId||p.reviewer_id===memberId)&&p.creator_id!==p.reviewer_id&&
+ typeof p.candidate_id==="string"&&/^[a-f0-9]{64}$/.test(p.candidate_sha256)&&/^[a-f0-9]{64}$/.test(p.document_sha256)&&
+ ["PRIVATE_FORM_REVIEW_PENDING","INDEPENDENT_INTERNAL_REVIEW_RECORDED"].includes(p.status)&&p.historical_only===true&&
+ p.application_ready===false&&p.external_export_allowed===false&&p.signed===false&&p.submitted===false;
+}
+function resetOriginalFormSelection(){
+ originalFormDownloaded=null;el("original-form-ack").checked=false;el("original-form-summary").replaceChildren();
+ const p=selectedOriginalForm();if(!p)return;
+ const root=el("original-form-summary"),src=p.source||{};
+ documentaryLine(root,p.status==="PRIVATE_FORM_REVIEW_PENDING"?"Ожидает внутренней проверки":"Историческое согласование записано. Не разрешение на отправку.");
+ documentaryLine(root,"Автор: "+p.creator_id+" · проверяющий: "+p.reviewer_id);
+ documentaryLine(root,"Исходный файл: "+(src.file_id||"—")+" · редакция: "+(src.observed_version||"—")+" · до "+p.expires_at);
+ documentaryLine(root,"SHA-256 исходника: "+(src.template_sha256||"—"));
+ documentaryLine(root,"SHA-256 полученного DOCX: "+p.document_sha256);
+ documentaryLine(root,"Привязка источника, карты и реквизитов: "+p.candidate_sha256);
+}
+function setOriginalFormItems(items,preferred=""){
+ originalFormItems=items;blankSelect("original-form-select","Выберите форму");const select=el("original-form-select");
+ for(const p of items){const opt=document.createElement("option");opt.value=p.candidate_id;opt.textContent=(p.reviewer_id===originalFormContext.member_id?"На моей проверке: ":"Мой документ: ")+p.candidate_id+" · "+p.status;select.append(opt);}
+ select.value=preferred;resetOriginalFormSelection();
+}
+function clearOriginalFormReview(){
+ originalFormContext=null;originalFormItems=[];originalFormDownloaded=null;
+ blankSelect("original-form-reviewer","Выберите другого участника");
+ blankSelect("original-form-select","Выберите форму");
+ el("original-form-input").value="";resetOriginalFormSelection();syncOriginalFormReview();
+}
+function syncOriginalFormReview(){
+ const ready=Boolean(originalFormCurrent()),p=selectedOriginalForm(),pending=p?.status==="PRIVATE_FORM_REVIEW_PENDING";
+ const reviewer=ready&&pending&&p.reviewer_id===originalFormContext.member_id&&originalFormDownloaded===p.candidate_id;
+ el("original-form-editor").hidden=!ready;
+ el("original-form-reviewer").disabled=uiBusy||!ready;
+ el("original-form-input").disabled=uiBusy||!ready;
+ el("original-form-select").disabled=uiBusy||!ready;
+ el("original-form-create").disabled=uiBusy||!ready||!val("original-form-reviewer")||!el("original-form-input").files?.length;
+ el("original-form-download").disabled=uiBusy||!ready||!pending;
+ el("original-form-ack").disabled=uiBusy||!reviewer;
+ el("original-form-confirm").disabled=uiBusy||!reviewer||!el("original-form-ack").checked;
+}
+bind("original-form-refresh",async()=>{
+ clearOriginalFormReview();const runId=val("run-id"),epoch=sessionEpoch,path=originalFormPath();
+ const me=await call("/api/saas/me");if(!["owner","admin"].includes(me.role)||me.legal_accepted!==true||!me.member_id)throw Error("Требуются полномочия и принятие условий");
+ const history=await call(path),directory=await call("/api/saas/members");
+ if(runId!==val("run-id")||epoch!==sessionEpoch||history.historical_only!==true||history.external_export_allowed!==false||
+ !Array.isArray(history.items)||!history.items.every(p=>validOriginalForm(p,runId,me.member_id))||!Array.isArray(directory.members))throw Error("Неожиданный ответ очереди");
+ originalFormContext={run_id:runId,member_id:me.member_id,epoch};
+ for(const m of directory.members)if(m.active===true&&["owner","admin"].includes(m.role)&&m.member_id!==me.member_id){const opt=document.createElement("option");opt.value=m.member_id;opt.textContent=m.name+" · "+m.role;el("original-form-reviewer").append(opt);}
+ setOriginalFormItems(history.items);return {status:"PRIVATE_FORM_QUEUE_LOADED",count:history.items.length};
+});
+bind("original-form-create",async()=>{
+ const c=originalFormContext,f=el("original-form-input").files[0],reviewer=val("original-form-reviewer");
+ if(!originalFormCurrent()||!f||f.size>32768||!reviewer||reviewer===c.member_id)throw Error("Выберите карту и другого проверяющего");
+ const map=JSON.parse(await f.text());if(!map||typeof map!=="object"||Array.isArray(map)||Object.prototype.hasOwnProperty.call(map,"reviewer_id"))throw Error("Проверяющий выбирается отдельно, не из JSON");
+ const r=await call(originalFormPath(),{method:"POST",body:{...map,reviewer_id:reviewer}});
+ if(originalFormContext!==c||!originalFormCurrent()||!validOriginalForm(r,c.run_id,c.member_id)||r.creator_id!==c.member_id||r.reviewer_id!==reviewer||r.status!=="PRIVATE_FORM_REVIEW_PENDING")throw Error("Неожиданный ответ создания формы");
+ setOriginalFormItems([r,...originalFormItems.filter(p=>p.candidate_id!==r.candidate_id)],r.candidate_id);return r;
+});
+bind("original-form-download",async()=>{
+ const p=selectedOriginalForm(),c=originalFormContext;originalFormDownloaded=null;el("original-form-ack").checked=false;
+ if(!p||!token||p.status!=="PRIVATE_FORM_REVIEW_PENDING"||!window.crypto?.subtle)throw Error("Нет приватной формы или проверки SHA");
+ const response=await fetch(originalFormPath()+"/"+encodeURIComponent(p.candidate_id)+"/document",{credentials:"omit",cache:"no-store",redirect:"error",headers:{Authorization:"Bearer "+token}});
+ if(!response.ok){const e=Error("HTTP "+response.status);e.status=response.status;throw e;}
+ if(response.headers.get("Content-Type")?.split(";")[0]!=="application/vnd.openxmlformats-officedocument.wordprocessingml.document")throw Error("Неожиданный формат формы");
+ const buf=await response.arrayBuffer();if(!buf.byteLength||buf.byteLength>524288)throw Error("Недопустимый размер DOCX");
+ const sha=Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256",buf))).map(x=>x.toString(16).padStart(2,"0")).join("");
+ if(sha!==p.document_sha256||originalFormContext!==c||selectedOriginalForm()!==p)throw Error("Форма или сессия изменены");
+ const url=URL.createObjectURL(new Blob([buf],{type:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"}));const a=document.createElement("a");a.href=url;a.download="PRIVATE-UNSIGNED-FORM-DO-NOT-SUBMIT.docx";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ originalFormDownloaded=p.candidate_id;return {status:"PRIVATE_DOCX_DOWNLOADED",sha256:sha};
+});
+bind("original-form-confirm",async()=>{
+ const p=selectedOriginalForm(),c=originalFormContext;
+ if(!p||p.status!=="PRIVATE_FORM_REVIEW_PENDING"||p.reviewer_id!==c.member_id||originalFormDownloaded!==p.candidate_id||!el("original-form-ack").checked)throw Error("Требуется скачивание и явное подтверждение проверяющего");
+ const r=await call(originalFormPath()+"/"+encodeURIComponent(p.candidate_id)+"/acknowledge",{method:"POST",body:{candidate_sha256:p.candidate_sha256,document_sha256:p.document_sha256,confirm_exact_private_form:true}});
+ if(originalFormContext!==c||selectedOriginalForm()!==p||!validOriginalForm(r,c.run_id,c.member_id)||r.candidate_id!==p.candidate_id||r.candidate_sha256!==p.candidate_sha256||r.document_sha256!==p.document_sha256||r.status!=="INDEPENDENT_INTERNAL_REVIEW_RECORDED"||!r.receipt_id)throw Error("Неожиданный ответ согласования");
+ setOriginalFormItems(originalFormItems.map(x=>x===p?r:x),r.candidate_id);return r;
+});
+document.getElementById("run-id").addEventListener("input",clearOriginalFormReview);
+document.getElementById("original-form-select").addEventListener("change",()=>{resetOriginalFormSelection();syncOriginalFormReview();});
+for(const id of ["original-form-reviewer","original-form-input","original-form-ack"])document.getElementById(id).addEventListener("change",syncOriginalFormReview);
 bind("read-profile",async()=>{
  const r=await call("/api/saas/profile"),p=r.profile||{},c=p.criteria||{},q=p.qualification||{},m=p.commercial||{};
  for(const k of ["categories","regions","keywords"])document.getElementById(k).value=(c[k]||[]).join(", ");
@@ -425,6 +652,7 @@ function clearCompany(){
  el("company-registry").value="";el("company-commercial-url").value="";syncCompanyControls();
 }
 function clearSession(){
+ clearOriginalFormReview();clearApplicationReview();clearDocumentary();
  token="";sessionEpoch++;legalVersions=null;referenceVersion=null;
  // Clear also the legacy profile, references, file forms, and report output.
  for(const field of document.querySelectorAll("input,textarea,select")){
@@ -439,6 +667,7 @@ function clearSession(){
 function companyCanWrite(){return companyIdentity?.legal_accepted===true&&["owner","admin","analyst"].includes(companyIdentity.role)}
 function companyCanDecide(){return companyIdentity?.legal_accepted===true&&["owner","admin"].includes(companyIdentity.role)}
 function syncCompanyControls(){
+ syncApplicationReview();
  const read=Boolean(companyIdentity?.legal_accepted), detail=Boolean(companyCase);
  el("company-more").disabled=uiBusy||!read||!companyMore;
  el("company-inbox-load").disabled=uiBusy||!read;

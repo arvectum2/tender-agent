@@ -1,0 +1,22 @@
+task_id: TA-APR03B-RI223-FIT-20261117
+status: completed
+goal: Source-bound offline owner review of RI223 qualification readiness and explicit lot-level economics, without inventing profile or executable participation.
+definition_of_done:
+  - Reuse reference-list snapshot and PRICE01 calculator; distinguish missing profile and historical owner input, never score conditional formula.
+  - Bind scenario to independent exact original single RUB lot, compare explicit offer and thresholds; no inferred actual cost, guarantees or tax.
+  - Actual archived replay, tests, checkpoint and draft PR; no public profile endpoint or DB writes.
+completed:
+  - PR635 19/19 SUCCESS. Main 3b37fb69 unchanged. Read-only production DB inspection: customer_profiles, company_profile_fact_versions, company_documents all empty. Historical 2026-10-13 owner reference-list receipt exists but no live tenant profile. Existing calculator and qualification path inspected.
+  - Implemented local owner review reusing historical pinned reference snapshot and PRICE01, exact archived SME participant clause and conditional scoring; explicit single RUB lot scenario.
+  - Real archived replay PASS, 19 originals, incomplete member UNKNOWN, illustrative arithmetic 768817.21/222000/498000, no actual cost or legal GO.
+  - 411 passed, 8 skipped, 6 warnings; 12 new tests, 3 Chromium regression scenarios PASS, WSF07B unchanged.
+current_stage: verified_pending_merge
+remaining:
+  - Verify draft exact CI; then source-bound contract risk review. Current canonical owner profile/tenant and actual company cost evidence remain unestablished; no launch, qualification verdict or real commercial GO.
+last_verified_commit: f7d036a4e604960a004fba73882769a185f8d5b4
+test_results:
+  - 411 passed, 8 skipped, 6 warnings; Ruff, Node/diff PASS.
+  - RI223_OWNER_ACTUAL_SOURCE_PASS and RI223_OWNER_INCOMPLETE_SOURCE_REFUSED; 3 actual browser regressions PASS.
+resume_instruction: No company tenant creation, private data publication, Workspace admission, live purchase, model or production changes; no automatic merge.
+
+exact_ci: 19/19 SUCCESS, head f0b96054dbc9e84d646b409675aa02f18ac2cde1

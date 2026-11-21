@@ -1,0 +1,20 @@
+task_id: TA-APR03B-RI223-DECISION-REVIEW-20261118
+status: completed
+goal: Unify independently verified archived RI223 dossier, qualification, costs and contract evidence via existing Decision Core, no external action or actual decision.
+definition_of_done:
+  - Use one local explicit review, recheck source inventory before returning, preserve every archived-only scope and unknown; existing core yields NEEDS_REVIEW.
+  - Actual archive replay, fail-closed tests and draft PR.
+completed:
+  - PR638 exact CI 19/19; recovery and technical worker separate PR637/639, operational installation pending.
+  - Integrated local owner review with existing Decision Core, nine archived dossier domains and nine explicit unresolved gates; no current-source or owner GO/NO_GO inference.
+  - Real case isolated DP replay exit 0, NEEDS_REVIEW and DEFER, 19/19 members, 14/14 verified contract clauses, missing originals refused. 56 focused tests PASS, 8 skipped; Ruff/diff PASS.
+current_stage: verified_pending_merge
+remaining:
+  - Current supplier profile, current source, actual costs, lot applicability and independent review remain separate. Consolidation follows next checkpoint.
+last_verified_commit: c318d22574a633b88f13b56ba09e4899ed4bbe60
+test_results:
+  - 56 passed, 8 skipped, 2 warnings.
+  - RI223_INTEGRATED_DECISION_PASS NEEDS_REVIEW 9, archive replay exit 0; original sources untouched.
+resume_instruction: No live procurement, DB mutation or admission changes. Preserve actual owner review and operational branches.
+
+exact_ci: 19/19 SUCCESS, head 6f792e612ab1a422bf9031104df3c30c47342603

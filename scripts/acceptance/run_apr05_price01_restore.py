@@ -135,7 +135,7 @@ def main():
                 with engine.connect() as conn:
                     assert Path(conn.execute(text('SHOW data_directory')).scalar_one()).resolve() == data
                     if migrated:
-                        assert conn.execute(text('SELECT version_num FROM alembic_version')).scalar_one() == '122_company_cost_norms'
+                        assert conn.execute(text('SELECT version_num FROM alembic_version')).scalar_one() == '123_application_review'
             finally:
                 engine.dispose()
 

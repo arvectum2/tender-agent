@@ -1,0 +1,25 @@
+task_id: TA-MAIN-GOVERNANCE-20261121
+status: completed
+goal: Enforce and verify main branch governance, using owner+AI review with no external reviewer requirement.
+definition_of_done:
+  - Verify active main-only PR and strict ten required CI contexts.
+  - Verify main cannot be force-pushed or deleted and has no bypass actors.
+  - Record explicit owner decision that AI engineer reviews technically and owner approves, with zero required GitHub approving reviews.
+  - Verify actual PR674 merge and preserve independent production release and source/rollback authority.
+  - Document final policy and close issue #676; preserve existing Tender Agent Watchdog and protected MI checkout.
+completed_stages:
+  - Activated main-only ruleset 27788179 with four rule types and ten strict status contexts, empty bypass set.
+  - Tested required-check enforcement using pending PR680; later PR674 successful 19/19 CI and normal protected merge.
+  - Owner expressly declined a third-party reviewer; required_approving_review_count=0 is intentional, not temporary.
+  - Issue #676 closed completed; owner and ChatGPT technical review is the accepted process, without impersonating separate GitHub reviewer.
+  - Exact PR674 merged main 9b650a2b818032389cfd6e13799acad33c72089b, production separately owner-approved and verified; private old source and backup retained.
+current_stage: policy_active_and_documented
+remaining_stages: []
+last_verified_commit: 45e8c6ff4c939747ee91cdb168b3922ddd9bb93f
+last_checks: Effective GitHub ruleset 27788179 ACTIVE, PR requirement, strict ten CI, no non-fast-forward or deletion, no bypass and 0 required approvals. PR674 MERGED, main 45e8c6ff includes PR681 checkpoint; production backend SHA9b650a2b, DB127, services 200.
+resume_instruction: Governance completed; DO NOT seek or require a third-party reviewer. For future code perform AI technical review, exact CI, owner merge decision. Preserve PR rules, ten required checks and owner-only authorized release boundaries. No automatic paid/public deployment, ETP bidding or source expansion.
+ruleset_id: 27788179
+required_status_check_count: 10
+required_approvals: 0
+third_party_reviewer_required: false
+production_deployed_target: 9b650a2b818032389cfd6e13799acad33c72089b
