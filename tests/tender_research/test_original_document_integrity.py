@@ -167,7 +167,7 @@ def test_preparation_refuses_stale_chunks_when_original_integrity_failed(monkeyp
     assert any("Original document verification failed" in e for e in result.errors)
     assert any(s.name == "verify_originals" and s.status == "failed" for s in result.steps)
     platform.assert_not_called()
-    session.commit.assert_called_once()
+    assert session.commit.call_count == 2  # Download state, then explicit refusal.
 
 
 def test_status_flags_existing_integrity_block_without_querying_data_platform():
@@ -196,3 +196,51 @@ def test_status_flags_existing_integrity_block_without_querying_data_platform():
     assert status["ready_for_analysis"] is False
     assert "original_integrity" in status["missing"]
     platform.assert_not_called()
+
+
+def test_downloaded_original_remains_in_database_when_data_platform_fails(tmp_path, monkeypatch):
+    from unittest.mock import patch
+
+    from sqlalchemy import select
+
+    from src.shared.data_platform import DataPlatformError
+    from src.tender_research.config import TenderResearchConfig
+    from src.tender_research.models import ProcurementTenderDocument
+    from src.tender_research.rag.prepare_service import prepare_tender_for_analysis
+
+    engine = create_engine("sqlite+pysqlite:///:memory:")
+    Base.metadata.create_all(engine)
+    with Session(engine) as setup:
+        repo = TenderRepository(setup)
+        tender = repo.upsert_tender({
+            "source": "eis", "external_id": "00000000000001",
+            "registry_number": "00000000000001", "title": "Synthetic tender",
+            "law_type": "44fz",
+        })
+        repo.upsert_document({
+            "tender_id": tender.id, "source_document_id": "source-file",
+            "file_name": "synthetic.pdf", "file_url": URL,
+            "download_status": "pending",
+        })
+        setup.commit()
+
+    monkeypatch.setattr(document_store, "_build_url_opener", lambda *_: SimpleNamespace(
+        open=lambda *_args, **_kwargs: io.BytesIO(BODY)))
+    config = TenderResearchConfig(data_dir=str(tmp_path), document_download_max_size_mb=1)
+    with (
+        Session(engine) as process,
+        patch("src.tender_research.rag.prepare_service.load_config", return_value=config),
+        patch("src.tender_research.rag.prepare_service.recover_missing_attachments", return_value=0),
+        patch("src.tender_research.rag.prepare_service.build_data_platform_client",
+              side_effect=DataPlatformError("synthetic Data Platform outage")),
+    ):
+        result = prepare_tender_for_analysis("00000000000001", session=process)
+        assert result.ready_for_analysis is False
+
+    # A *new* session sees committed original bytes, even after processing failed.
+    with Session(engine) as verify:
+        document = verify.scalars(select(ProcurementTenderDocument)).one()
+        assert document.download_status == "downloaded"
+        assert document.sha256 == hashlib.sha256(BODY).hexdigest()
+        assert document.size_bytes == len(BODY)
+        assert Path(document.local_path).read_bytes() == BODY

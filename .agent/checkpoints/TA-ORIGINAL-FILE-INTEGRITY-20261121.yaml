@@ -13,14 +13,15 @@ completed_stages:
   - Preparation and status endpoints now refuse stale chunks/index when a known original has failed verification.
   - Rehearsed synthetic EIS originals and existing RI223 RAR processing without any network requests.
   - 111 focused RAG, source file, RAR, Data Platform and storage guardrail tests PASS, 13 warnings; Ruff PASS, git diff check PASS.
-current_stage: exact_main_based_pr_ci
+  - Added a transaction durability boundary: source file metadata is committed before Data Platform processing; a real SQLite synthetic outage verifies that a new session retains the original file SHA, status and bytes. Successor 112 tests PASS, 13 warnings; Ruff PASS.
+current_stage: source_file_durability_successor_ci
 remaining_stages:
   - Submit isolated PR from current main and confirm exact CI and GitVerse mirror.
   - Independently test review of real source-original metadata, upstream redirects and revision boundaries under source-specific admission.
   - Verify production release pin, original-source authorization, full PITR and AM4 owner approval before any deployment or reprocessing.
 base_main: abcd8727326c398d870edbc4a2da793e090ac8eb
-last_verified_commit: abcd8727326c398d870edbc4a2da793e090ac8eb
-last_checks: 111 focused PASS / 13 warnings, Ruff PASS, diff-check PASS; exact PR CI pending.
+last_verified_commit: ed0253dd90d97fc516f8b725568138f2110fcd2e
+last_checks: 112 focused PASS / 13 warnings with new SQLAlchemy durability regression, Ruff PASS, diff-check PASS; new exact successor PR CI pending.
 original_recovery_performed: false
 production_changed: false
-resume_instruction: Inspect PR exact HEAD CI, fix failures if any and rerun. Do not fetch EIS, SOAP or other original files automatically, retry failed Daily Tender Run cases, migrate a live DB, activate features or deploy until explicit production/source gates and rollback. Preserve main, MI nine unpushed commits and original research worktrees.
+resume_instruction: Inspect exact successor PR678 head CI and PR674 combined CI; keep both review-only until original authenticity, source access, runtime/PITR and AM-4 owner gates are verified. No EIS/ETP fetch, live database mutation, blocked Daily Tender Run retry, migration or deploy. Preserve current main, MI nine unpushed commits and source research worktrees.

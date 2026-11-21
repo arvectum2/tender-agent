@@ -256,6 +256,10 @@ def prepare_tender_for_analysis(
             )
             downloaded = result.get("downloaded", 0)
             failed = result.get("failed", 0)
+            # Original files exist on disk independently of Data Platform.
+            # Persist verified local paths, hashes and refusal states before
+            # any external processing call can fail/rollback this session.
+            session.commit()
             if downloaded > 0 or failed == 0:
                 step.status = "completed"
                 step.message = f"Downloaded {downloaded} document(s)"
