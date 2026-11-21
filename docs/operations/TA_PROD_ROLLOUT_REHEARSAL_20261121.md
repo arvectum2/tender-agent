@@ -1,6 +1,6 @@
-# Tender Agent production upgrade rehearsal — 2026-11-21
+# Tender Agent production release: rehearsal and verified activation, 2026-11-21
 
-**Disposition: candidate staged, live activation blocked on exact original-source admission.** Owner approved controlled rollout work, but the old private WSF-07B grant does not cover the new build.
+**Historical rehearsal disposition:** candidate initially blocked pending exact source rebind. Owner approved continuation later on 2026-11-21. See final production activation evidence below.
 
 - Target GitHub main `9b650a2b818032389cfd6e13799acad33c72089b`, post-merge GitHub CI and GitVerse SUCCESS. Running backend and daily runner still pinned to `abcd8727326c398d870edbc4a2da793e090ac8eb`; live database migration revision `122_company_cost_norms`, no live migration or restart. Backend 8001 and Data Platform 8094 return HTTP 200.
 - Prepared clean detached source and 152 MB venv in `/Volumes/ArvectumSSD/Arvectum/releases/tender-agent-9b650a2b818032389cfd6e13799acad33c72089b`; dependency lock and pyproject exactly match old pinned release. New app imports 118 routes.
@@ -11,3 +11,13 @@
 - TA/DP PITR health PASS, WAL receivers active, but seven-day continuity has not been independently proved. Existing backup bases observed 20-21 Nov.
 
 **Next gate:** owner separately approves re-binding the **same 21 IDs** on the same actual PostgreSQL identity specifically to `9b650a2b818032389cfd6e13799acad33c72089b`; then safely create/pin new private source-admission proof, verify TA/DP PITR and maintenance rollback, coordinate DB 127 + versioned backend AND daily runner (old job insists on DB 122). If failure, rollback both schema and code to prior immutable version. Otherwise leave live service untouched. This is not a demand for any third-party reviewer.
+
+## Actual production activation — SUCCESS (2026-11-21 11:54 UTC)
+
+The source-admission review corrected a prior counting error: **12 authorized original deal IDs**, not 21; 9 other IDs are explicitly excluded in the original owner decision. Owner approved rebinding the **unchanged 12** to exact code release `9b650a2b818032389cfd6e13799acad33c72089b`. New private `0600` manifest retained all data except `source_release` (same physical database identity, bearer credential digest, validity period, expiry and 12 IDs), SHA-256 `80b4919188af1ba64b3ab66bd9fc914bf922c791d45dd46e2eedc0f5e9e68bf5`. Original manifest/decision retained as rollback evidence; no broader access claimed or granted.
+
+Before modifying the live DB, created and validated a fresh `pg_dump --format=custom` snapshot, SHA-256 `0996430c1bce223087411a18561b2d9e29cde7233f72e9fa656520c11bd61852`, 6,397,645 bytes, under private release-transition directory. The prior real-data snapshot was fully restored in a separate PostgreSQL instance, migration/downgrade cycle `122→127→122→127` passed, and TA/DP PITR restoration proofs are `pass` with active WAL receivers. Full seven-day PITR history remains a monitoring item, not a claim of proof.
+
+Under maintenance lock stopped old backend and daily services, upgraded production schema to `127_private_review_link_corrections`, updated exact pinned backend and daily-runner launch scripts atomically, and restarted both services. Final actual evidence: backend PID `44717`, active SHA `9b650a2b`, 7 new tables, HTTP 200 on 8001/8094, private docs/openapi HTTP 401, internal procurement endpoint without valid bearer HTTP 403, **12/12 real IDs retrieved by read-only source-bound model**. Daily job `--preflight` PASS for new SHA and schema127 without executing the job. All newly introduced SaaS/application/commercial scheduling features remain disabled. Maintenance lock removed, source checkout clean and original old code/config/DB backups preserved. No rollback was needed.
+
+**Disposition: production deployment COMPLETED and smoke-tested.** Does not close outstanding original-document recovery [issue #679](https://github.com/arvectum2/tender-agent/issues/679), authorize source EIS retries, submit bids or grant commercial approval.
