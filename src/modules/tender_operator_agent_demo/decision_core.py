@@ -509,6 +509,9 @@ def build_decision_core(
             )
         )
         rationale.append("Обнаружены противоречия между источниками; без ручной проверки решение не может быть безусловным.")
+    elif model.get("source_consistency_requires_review") is True:
+        readiness.append(_readiness("SOURCE_CONSISTENCY", "Согласованность источников", "REVIEW",
+                      "Полная согласованность архивных источников не проверена.", blocking=True))
     else:
         readiness.append(
             _readiness("SOURCE_CONSISTENCY", "Согласованность источников", "SATISFIED", "Зафиксированных противоречий источников нет.")

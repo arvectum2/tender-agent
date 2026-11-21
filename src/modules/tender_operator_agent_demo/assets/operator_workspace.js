@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const api = '/api/demo/tender-agent';
-  const state = { runId: null, poll: null, busy: false, registryOffset: 0, registryTotal: 0, registryQuery: '', runReady: false, searchParams: null, searchCursor: null, seenNumbers: [], quoteFileKey: null, copilotEpoch: 0, copilotSearchEpoch: 0, copilotAnswerEpoch: 0, costEpoch: 0 };
+  const state = { runId: null, poll: null, busy: false, registryOffset: 0, registryTotal: 0, registryQuery: '', runReady: false, searchParams: null, searchCursor: null, seenNumbers: [], quoteFileKey: null, copilotEpoch: 0, copilotSearchEpoch: 0, copilotAnswerEpoch: 0, applicationReviewEpoch: 0, costEpoch: 0 };
   const $ = id => document.getElementById(id);
   const node = (tag, cls = '', content = null) => {
     const el = document.createElement(tag);
@@ -55,6 +55,7 @@
     $('copilot-submit').disabled = value;
     $('copilot-search-submit').disabled = value;
     $('copilot-answer-submit').disabled = value;
+    $('application-review-submit').disabled = value;
   }
   function tab(name) {
     const labels = {new:'Новый анализ',history:'История анализов',registry:'База закупок',prices:'Цены и протоколы'};
@@ -238,6 +239,9 @@
     if (!state.runId) return;
     const id = encodeURIComponent(state.runId);
     show('copilot-panel',false);
+    show('application-review-panel',false);
+    state.applicationReviewEpoch++;wipe($('application-review-result'));
+    $('application-signatory').value='UNKNOWN';$('application-goods').value='UNKNOWN';
     state.copilotEpoch++;wipe($('copilot-result'));$('copilot-percent').value='';
     state.copilotSearchEpoch++;wipe($('copilot-search-result'));$('copilot-search').value='';
     state.copilotAnswerEpoch++;wipe($('copilot-answer-result'));$('copilot-answer-question').value='';
@@ -267,6 +271,7 @@
     for (const warning of [...(run.warnings || []),...(run.limitations || [])].slice(0,8)) paragraph($('run-warnings'), '⚠ ' + warning);
     renderFiles(run);
     show('copilot-panel',Array.isArray(run.files) && run.files.length>0);
+    show('application-review-panel',Array.isArray(run.files) && run.files.length>0);
     await loadEvents();
     await loadReport(run);
     return run;
@@ -303,6 +308,53 @@
       root.append(item);
     }
   }
+  function applicationCitations(root, citations) {
+    for(const c of citations) {
+      paragraph(root,c.group+' · '+c.file_id+' · чанк '+c.chunk_id+' · SHA-256 оригинала '+c.original_sha256,'citation');
+      paragraph(root,c.quote);
+    }
+  }
+  function validApplicationCitation(c) {
+    return c && typeof c.group==='string' && typeof c.file_id==='string' && typeof c.chunk_id==='string' &&
+      typeof c.quote==='string' && /^[a-f0-9]{64}$/.test(c.original_sha256);
+  }
+  async function reviewApplication(event) {
+    event.preventDefault();
+    if(!state.runId || state.busy) return;
+    const runId=state.runId,epoch=++state.applicationReviewEpoch,root=$('application-review-result');
+    const choice=$('application-goods').value;
+    const body={signatory:$('application-signatory').value,goods_used:choice==='UNKNOWN'?null:choice==='YES'};
+    wipe(root);setBusy(true);
+    try {
+      const data=await json(api+'/workspace/runs/'+encodeURIComponent(runId)+'/application-review',
+        {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+      if(state.runId!==runId || epoch!==state.applicationReviewEpoch) return;
+      if(data.contract!=='archived_application_review_v1'||data.run_id!==runId||data.signatory!==body.signatory||
+         data.goods_used!==body.goods_used||data.application_ready!==false||data.company_profile_checked!==false||
+         data.external_action_allowed!==false||data.recommendation!=='DEFER') throw new Error('Unexpected review response');
+      if(data.status==='ARCHIVED_NOTIFICATION_NOT_APPLICATION' && Array.isArray(data.notification_sources) &&
+        data.notification_sources.length && data.notification_sources.every(validApplicationCitation)) {
+        paragraph(root,'Архивное извещение носит уведомительный характер. Заявка по нему не формируется.','unknown');
+        applicationCitations(root,data.notification_sources);return;
+      }
+      if(data.status!=='ARCHIVED_QUOTATION_CHECKLIST_REVIEW_ONLY'||!Array.isArray(data.rows)||data.rows.length!==9||
+        new Set(data.rows.map(r=>r.code)).size!==9||!data.rows.every(r=>Array.isArray(r.citations)&&r.citations.length&&r.citations.every(validApplicationCitation))) {
+        paragraph(root,'UNKNOWN · Проверенный чек-лист требований недоступен.','unknown');return;
+      }
+      const labels={REQUIRED:'Обязательно по изученному образцу',REQUIRED_IN_SCENARIO:'Требуется в сценарии',
+        NOT_TRIGGERED_IN_SCENARIO:'Не применяется в выбранном сценарии',CONDITIONAL_UNKNOWN:'Условие не определено',
+        OPTIONAL_EVIDENCE_NOT_OPTIONAL_RIGHTS:'Альтернативные документы; само право требуется',REVIEW_REQUIRED:'Требуется дополнительная проверка'};
+      paragraph(root,'Архивный чек-лист · '+data.rows.length+' групп требований · DEFER. Профиль не проверен.','unknown');
+      for(const r of data.rows) {
+        const item=node('details','evidence-item');
+        item.append(node('summary','',r.title+' — '+(labels[r.applicability]||'UNKNOWN')));
+        applicationCitations(item,r.citations);root.append(item);
+      }
+      paragraph(root,'Актуальная редакция, полнота требований и готовность заявки не подтверждены.','help-text');
+    }catch(error){if(state.runId===runId&&epoch===state.applicationReviewEpoch){wipe(root);paragraph(root,'UNKNOWN · Проверка не выполнена.','unknown');}}
+    finally{setBusy(false);}
+  }
+
   async function answerEvidenceQuestion(event) {
     event.preventDefault();
     if (!state.runId || state.busy) return;
@@ -333,7 +385,30 @@
       const data=await json(api+'/workspace/runs/'+encodeURIComponent(runId)+'/evidence-answer',
         {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question})});
       if(state.runId!==runId || epoch!==state.copilotAnswerEpoch) return;
-      if(data.run_id===runId && data.intent==='composed_evidence' && ['COMPOSED_EVIDENCE_ONLY','UNKNOWN'].includes(data.status) && Array.isArray(data.components) && data.components.length<=9) {
+      if(data.run_id===runId && data.intent==='ri223_review_dossier') {
+        const d=data.observation;
+        if(!d || data.status!=='RI223_ARCHIVED_REVIEW_ONLY' || !Array.isArray(d.domains) || d.domains.length!==9) {
+          paragraph(root,'UNKNOWN · Полный проверенный архивный комплект не подтверждён.','unknown');
+        } else {
+          paragraph(root,data.answer,'help-text');
+          paragraph(root,'Оригиналы: '+d.inventory.originals_verified+' из '+d.inventory.expected_originals+'; документы внутри контейнеров: '+d.inventory.members_verified+'; непрочитанные контейнеры: '+d.inventory.opaque_containers);
+          paragraph(root,'Разделы с цитатами: '+d.source_backed_domains+' из 9. Это не оценка полноты требований.','help-text');
+          renderSingleGroundedAnswer(root,{run_id:runId,status:d.notice.status,citation_kind:'RI223_ARCHIVED_XML',observation:d.notice,citations:d.notice.citations,answer:'Архивное извещение.'},runId);
+          for(const domain of d.domains) {
+            const section=document.createElement('details');section.className='quote-review';section.open=true;
+            const heading=document.createElement('summary');heading.textContent=domain.title;section.append(heading);
+            renderSingleGroundedAnswer(section,{run_id:runId,status:domain.citations.length?'TOPIC_EXCERPTS_ONLY':'UNKNOWN',citation_kind:'ORIGINAL_DP_CHUNK',citations:domain.citations,answer:'Буквальные фрагменты, условия и применимость к лоту не подтверждены.'},runId);
+            root.append(section);
+          }
+          const sc=d.scoring;
+          if(sc?.status==='PINNED_SCORING_OBSERVATION_ONLY') {
+            paragraph(root,'Методика оценки: стоимостной '+sc.price_weight_percent+'%, нестоимостные '+sc.nonprice_weight_percent+'%.');
+            paragraph(root,'Условный формуляр нестоимостной группы: деловая репутация '+sc.candidate_nonprice_subweights.business_reputation+'%, финансовое состояние '+sc.candidate_nonprice_subweights.financial_condition+'%, квалификация '+sc.candidate_nonprice_subweights.qualification+'%. Применение к лоту не подтверждено.');
+            paragraph(root,sc.source_lineage.member_path+' · SHA-256 PDF '+sc.original_pdf_sha256+' · SHA-256 RAR '+sc.original_rar_sha256,'help-text');
+          } else paragraph(root,'Структурированные веса методики: UNKNOWN.','unknown');
+          paragraph(root,'Соответствие участника: UNKNOWN; затраты: UNKNOWN; риски договора: NOT_ASSESSED; решение: NOT_DECIDED.','unknown');
+        }
+      } else if(data.run_id===runId && data.intent==='composed_evidence'  && ['COMPOSED_EVIDENCE_ONLY','UNKNOWN'].includes(data.status) && Array.isArray(data.components) && data.components.length<=9) {
         paragraph(root,data.answer,'help-text');
         paragraph(root,'Разделы с источниками: '+data.source_backed_component_count+' из '+data.components.length);
         for(const section of data.components) {
@@ -348,10 +423,18 @@
   }
 
   function renderSingleGroundedAnswer(root,data,runId) {
-      if(data.run_id!==runId || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION','TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','ARCHIVED_SECURITY_FIELDS','LITERAL_PERFORMANCE_OBSERVATIONS','CUSTOMER_TERMS_LEGAL_REFERENCES','HISTORICAL_STATUTE_SNAPSHOT_EXCERPT','SECONDARY_AMENDMENT_TIMING_ONLY','GOVERNMENT_COPY_LIST_COMPARISON'].includes(data.status) || !Array.isArray(data.citations) || !data.citations.length) {
+      if(data.run_id!==runId || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION','TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','ARCHIVED_SECURITY_FIELDS','LITERAL_PERFORMANCE_OBSERVATIONS','CUSTOMER_TERMS_LEGAL_REFERENCES','HISTORICAL_STATUTE_SNAPSHOT_EXCERPT','SECONDARY_AMENDMENT_TIMING_ONLY','GOVERNMENT_COPY_LIST_COMPARISON','PINNED_RI223_ARCHIVED_NOTICE'].includes(data.status) || !Array.isArray(data.citations) || !data.citations.length) {
         paragraph(root,'UNKNOWN · Вопрос не поддерживается или доказательство не найдено.','unknown');return;
       }
-      if(['TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','LITERAL_PERFORMANCE_OBSERVATIONS'].includes(data.status) && data.citation_kind==='ORIGINAL_DP_CHUNK') {
+      if(data.status==='PINNED_RI223_ARCHIVED_NOTICE' && data.citation_kind==='RI223_ARCHIVED_XML' && data.observation?.regime==='223fz') {
+        paragraph(root,data.answer,'help-text');
+        const o=data.observation;
+        for(const [key,label] of [['subject','Предмет'],['method','Способ закупки'],['archived_submission_deadline','Архивный срок подачи (часовой пояс UNKNOWN)'],['single_lot_initial_sum','Цена единственного лота'],['single_lot_currency','Валюта лота']]) paragraph(root,label+': '+(o.fields[key]??'UNKNOWN'));
+        for(const [key,label] of [['archived_submission_order','Архивный порядок подачи заявок'],['archived_summingup_order','Архивный порядок подведения итогов']]) if(o.fields[key]) paragraph(root,label+': '+o.fields[key]);
+        renderCitations(root,data.citations,{originalVerified:true});
+        paragraph(root,'SHA-256 XML: '+data.citations[0].source_sha256+' · ZIP: '+data.citations[0].archive_sha256,'help-text');
+        paragraph(root,'Редакция '+o.observed_version+'; правовой статус закупки, обеспечение и победитель: UNKNOWN.','help-text');
+      } else if(['TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','LITERAL_PERFORMANCE_OBSERVATIONS'].includes(data.status) && data.citation_kind==='ORIGINAL_DP_CHUNK') {
         paragraph(root,data.answer,'help-text');
         if(data.status==='LITERAL_PAYMENT_OBSERVATION' && data.observation) {
           const o=data.observation;
@@ -368,6 +451,7 @@
         for(const c of data.citations.slice(0,2)) {
           paragraph(root,c.quote,'citation');
           paragraph(root,c.file_id+' · чанк '+c.chunk_id+' · SHA-256 оригинала '+c.original_sha256,'help-text');
+          if(c.ri223_container) paragraph(root,'Контейнер '+c.ri223_container.parent_name+' · '+c.ri223_container.member_path+' · SHA-256 контейнера '+c.ri223_container.parent_sha256,'help-text');
         }
       } else if(data.status==='SECONDARY_AMENDMENT_TIMING_ONLY' && data.citation_kind==='SECONDARY_LEGAL_REFERENCE' && data.observation?.secondary_copies_agree===true) {
         paragraph(root,data.answer,'help-text');
@@ -423,6 +507,7 @@
       for(const c of data.citations.slice(0,2)) {
         paragraph(root,c.quote,'citation');
         paragraph(root,c.file_id+' · чанк '+c.chunk_id+' · SHA-256 оригинала '+c.original_sha256,'help-text');
+          if(c.ri223_container) paragraph(root,'Контейнер '+c.ri223_container.parent_name+' · '+c.ri223_container.member_path+' · SHA-256 контейнера '+c.ri223_container.parent_sha256,'help-text');
       }
       paragraph(root,'Буквальные фрагменты, не юридический вывод. Поиск не исчерпывающий.','help-text');
     }catch(error){if(state.runId===runId && epoch===state.copilotSearchEpoch)paragraph(root,'UNKNOWN · Проверка не выполнена.','unknown');}
@@ -450,6 +535,7 @@
       $('quote-check-result').textContent = result?.status === 'literal_quote_found_in_extracted_original_only' && evidence?.chunk_id
         ? 'Буквальное совпадение с извлечённым оригиналом: '+fileId+' · чанк '+evidence.chunk_id+
           ' · символы '+evidence.quote_char_start_in_chunk+'–'+evidence.quote_char_end_in_chunk+
+          (evidence.ri223_container ? ' · Контейнер '+evidence.ri223_container.parent_name+' · '+evidence.ri223_container.member_path+' · SHA-256 контейнера '+evidence.ri223_container.parent_sha256 : '')+
           '. Юридический и коммерческий смысл не подтверждён автоматически.'
         : 'UNKNOWN · Буквальное совпадение с подтверждённым оригиналом не установлено. Проверьте текст цитаты, исходник и доступность Data Platform.';
     } catch(error) {
@@ -1071,6 +1157,8 @@
   });
   $('search-next').addEventListener('click',()=>{if(state.searchCursor)void loadSearchPage(state.searchCursor);});
   $('append-files-form').addEventListener('submit',appendMissingFiles);
+  for(const id of ['application-signatory','application-goods']) $(id).addEventListener('change',()=>{state.applicationReviewEpoch++;wipe($('application-review-result'));});
+  $('application-review-form').addEventListener('submit',event=>void reviewApplication(event));
   $('copilot-question').addEventListener('change',()=>{show('copilot-percent-label',$('copilot-question').value==='nmck_percent');wipe($('copilot-result'));state.copilotEpoch++;});
   $('copilot-percent').addEventListener('input',()=>{wipe($('copilot-result'));state.copilotEpoch++;});
   $('copilot-form').addEventListener('submit',event=>void answerEvidenceQuestion(event));

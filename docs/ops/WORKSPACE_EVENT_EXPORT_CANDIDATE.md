@@ -1,0 +1,18 @@
+# Workspace event export — WSF-07B candidate
+
+Status: implementation candidate; NOT mounted, admitted or enabled.
+Source main: a1686d85baf139b7a01b0f29ae8283a266938482.
+Consumer: Arvectum OS PR #37, exact head 380221cf1adf31a2e4c0d1f1b1fb607ea4caa951.
+
+The current outbox remains authoritative for emitted event history; no duplication, delivery, acknowledgement, state transition or change to monitoring/watchdog. Existing optional tenant-filter endpoint is not the Workspace source. Source export module is a bounded SELECT-only projection, with a caller-supplied explicitly authenticated principal revalidation callback and separate fixed server-side ExportScope. It is not a public route or proof of authentication by itself.
+
+## Proposed first source binding
+
+- Exact existing SaaS tenant, corresponding CustomerProfile customer_id (outbox tenant_id in the two inspected producers), owner member, access-token record id (not token value), and exact permitted PilotProject ids. Check active role, token expiry/revocation, tenant status and current legal acknowledgement using existing SaaS authorization service. No broad operator Basic credentials, no client-selected tenant, no personal or financial data. Live identity, token purpose, project ownership and consumer mapping remain to be verified. Do not create or reuse credentials implicitly.
+- Proposed authenticated local GET /api/saas/workspace/events with UTC since/until, maximum 24-hour half-open window, max 100 rows. Restricted response schema arvectum.tender.workspace-event-window/1; observed or overflow, coverage partial. Overflow returns no rows; subdivide the interval or escalate if same-time overflow cannot be resolved. No silent truncation. A bounded overlapping window is not a complete transaction commit cursor: late commits outside overlap may be missed. Source retention and actual boundary semantics must be reviewed; no completeness claim.
+- Only analysis_completed / analysis_run and review_required / procurement_case, exact producer key, explicit customer and allowlisted project metadata, timestamp and strict payload fields. Unscoped monitoring/readiness events remain excluded. Source timestamps are historical signals, not current status, business obligation, bid decision or Owner action. No documents, contact data, analysis text, attachments, registration numbers, commercial amounts, raw correspondence or arbitrary fields.
+- No new destination/transport enabled. Before mounting: publish exact endpoint binding and source/consumer contract, verify least privilege and credential handling, actual owner/tenant/project source mapping, source read access, revocation and legal review. Consumer must implement durable dedup across overlapping windows and review/backup, no automatic canonical tasks. No unattended service or network exposure by implication.
+
+## Evidence
+
+Exact source candidate 00c6518cd237d8bd8ad2f2b0014b5e3df8ae00df: 6/6 tests PASS on Mac mini using exact remote modules and in-memory SQLite; foreign/unscoped/project mismatch excluded by SQL, SELECT-only verified, scope/expiry/revocation and dirty-session denial, strict malformed metadata and whole-window overflow. No production DB, checkout changes, or watchdog operations. Cross-repository synthetic check: actual SQL projection from this exact source head passed the exact OS PR #37 normalizer, produced two accepted events grouped into one operator-review signal; foreign customer excluded, owner_action unknown. No transport or real event imported. Actual PostgreSQL query/authorization and endpoint tests remain required after composition; full CI pending.

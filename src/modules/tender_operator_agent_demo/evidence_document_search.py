@@ -91,7 +91,7 @@ def checked_search_run(run_id: str) -> tuple[Path, dict[str, Any]]:
     return run, metadata
 
 
-def search_run_documents(run_id: str, request: DocumentSearchQuestion, *, candidate_selector: Callable[[str, set[str]], tuple[int, str] | None] = _candidate) -> dict[str, Any]:
+def search_run_documents(run_id: str, request: DocumentSearchQuestion, *, candidate_selector: Callable[[str, set[str]], tuple[int, str] | None] = _candidate, record_candidate_selector: Callable[[str, set[str], dict], tuple[int, str] | None] | None = None) -> dict[str, Any]:
     run, metadata = checked_search_run(run_id)
     result = {'contract': 'apr08_run_lexical_evidence_v1', 'run_id': run_id,
               'status': 'UNKNOWN', 'citations': [], 'files_examined': 0, 'verification_attempts': 0,
@@ -122,7 +122,8 @@ def search_run_documents(run_id: str, request: DocumentSearchQuestion, *, candid
         if text is None:
             continue
         result['files_examined'] += 1
-        candidate = candidate_selector(text, terms)
+        candidate = (candidate_selector(text, terms) if record_candidate_selector is None else
+                     record_candidate_selector(text, terms, record))
         if candidate:
             candidates.append((candidate[0], fid, candidate[1], source.get('canonical_uri')))
     for _, fid, quote, uri in sorted(candidates, key=lambda c: (-c[0], c[1]))[:_MAX_CHECKS]:
@@ -142,8 +143,11 @@ def search_run_documents(run_id: str, request: DocumentSearchQuestion, *, candid
                 or evidence['quote_char_start_in_chunk'] < 0
                 or evidence['quote_char_end_in_chunk'] - evidence['quote_char_start_in_chunk'] != len(quote)):
             continue
-        result['citations'].append({k: evidence[k] for k in ('file_id','chunk_id','quote','original_sha256',
-                                    'quote_char_start_in_chunk','quote_char_end_in_chunk','offset_space')})
+        cite = {k: evidence[k] for k in ('file_id','chunk_id','quote','original_sha256',
+                                    'quote_char_start_in_chunk','quote_char_end_in_chunk','offset_space')}
+        if 'ri223_container' in evidence:
+            cite['ri223_container'] = evidence['ri223_container']
+        result['citations'].append(cite)
     if not result['citations']:
         return {**result, 'reason': 'NO_VERIFIED_MATCH_IN_BOUNDED_SEARCH'}
     return {**result, 'status': 'VERIFIED_EXCERPTS_ONLY', 'reason': 'LEXICAL_MATCH_NOT_SEMANTIC_ANSWER'}

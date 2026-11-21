@@ -1,0 +1,245 @@
+{
+  "scope": "POST_BASELINE_SOURCE_LED_GAP_REVIEW_ONLY",
+  "frozen_baseline_cited": 29,
+  "frozen_baseline_total": 45,
+  "gaps_reviewed": 16,
+  "gaps_with_contextual_source": 14,
+  "rows_without_source": 2,
+  "rows": [
+    {
+      "case": "32616444788",
+      "domain": "evaluation",
+      "status": "EXTERNAL_REGULATION_REFERENCE_ONLY",
+      "evidence": {
+        "source_ref": "ri223-xml:5bdc923c00021779a197b69b30a4fb00d2f6949282d0f84f60756e204aa71ee3:archived_summingup_order",
+        "source_sha256": "5bdc923c00021779a197b69b30a4fb00d2f6949282d0f84f60756e204aa71ee3",
+        "archive_sha256": "494da21fc92e14d950e6cdc767b06ade83708f964cbac67332128f77692dbcc4",
+        "file_id": "FILE-01",
+        "locator": "XML:/purchaseNotice/body/item/purchaseNoticeData/summingupOrder"
+      },
+      "requirements_verified": false,
+      "legal_applicability_attested": false
+    },
+    {
+      "case": "32616445632",
+      "domain": "evaluation",
+      "status": "NOTICE_NOT_INVITATION_REVIEW",
+      "evidence": {
+        "original_sha256": "066252cac6ba7d9bfc876c9ac9a5e5425df31497fe37683dd7cdc5bdf4fa2558",
+        "file_id": "FILE-03",
+        "chunk_id": "01a7068a8d3a95c78f7ab859e152ba783f72b136ac17b86196278b313cd35b63",
+        "quote_char_start_in_chunk": 1196,
+        "quote_char_end_in_chunk": 1448,
+        "offset_space": "data_platform_chunk_text"
+      },
+      "requirements_verified": false,
+      "legal_applicability_attested": false
+    },
+    {
+      "case": "32616445866",
+      "domain": "technical_scope",
+      "status": "SUBJECT_ONLY",
+      "evidence": {
+        "original_sha256": "a8645964df2203e09abb34dd9d64b88c8bea607031ebde80ff89362914979550",
+        "file_id": "FILE-02",
+        "chunk_id": "57749235369e8fd9fabd6d85118cfdf1882cb48d4bdb2f7402e854f7e9d37d03",
+        "quote_char_start_in_chunk": 1248,
+        "quote_char_end_in_chunk": 1411,
+        "offset_space": "data_platform_chunk_text"
+      },
+      "requirements_verified": false,
+      "legal_applicability_attested": false
+    },
+    {
+      "case": "32616445866",
+      "domain": "qualification",
+      "status": "SME_ONLY_NOT_FULL_QUALIFICATION",
+      "evidence": {
+        "original_sha256": "a8645964df2203e09abb34dd9d64b88c8bea607031ebde80ff89362914979550",
+        "file_id": "FILE-02",
+        "chunk_id": "57749235369e8fd9fabd6d85118cfdf1882cb48d4bdb2f7402e854f7e9d37d03",
+        "quote_char_start_in_chunk": 744,
+        "quote_char_end_in_chunk": 821,
+        "offset_space": "data_platform_chunk_text"
+      },
+      "requirements_verified": false,
+      "legal_applicability_attested": false
+    },
+    {
+      "case": "32616445866",
+      "domain": "application",
+      "status": "NOTICE_NOT_COMPETITIVE_REVIEW",
+      "evidence": {
+        "original_sha256": "a8645964df2203e09abb34dd9d64b88c8bea607031ebde80ff89362914979550",
+        "file_id": "FILE-02",
+        "chunk_id": "57749235369e8fd9fabd6d85118cfdf1882cb48d4bdb2f7402e854f7e9d37d03",
+        "quote_char_start_in_chunk": 206,
+        "quote_char_end_in_chunk": 414,
+        "offset_space": "data_platform_chunk_text"
+      },
+      "requirements_verified": false,
+      "legal_applicability_attested": false
+    },
+    {
+      "case": "32616445866",
+      "domain": "evaluation",
+      "status": "NOTICE_NOT_COMPETITIVE_REVIEW",
+      "evidence": {
+        "original_sha256": "a8645964df2203e09abb34dd9d64b88c8bea607031ebde80ff89362914979550",
+        "file_id": "FILE-02",
+        "chunk_id": "57749235369e8fd9fabd6d85118cfdf1882cb48d4bdb2f7402e854f7e9d37d03",
+        "quote_char_start_in_chunk": 206,
+        "quote_char_end_in_chunk": 414,
+        "offset_space": "data_platform_chunk_text"
+      },
+      "requirements_verified": false,
+      "legal_applicability_attested": false
+    },
+    {
+      "case": "32616445866",
+      "domain": "schedule",
+      "status": "CONTRACT_REFERENCE_ONLY",
+      "evidence": {
+        "original_sha256": "a8645964df2203e09abb34dd9d64b88c8bea607031ebde80ff89362914979550",
+        "file_id": "FILE-02",
+        "chunk_id": "fff75f725c69aa0ab34a4b324b8f6e1387924f95a1e5f933e8653bda5db16d90",
+        "quote_char_start_in_chunk": 236,
+        "quote_char_end_in_chunk": 327,
+        "offset_space": "data_platform_chunk_text"
+      },
+      "requirements_verified": false,
+      "legal_applicability_attested": false
+    },
+    {
+      "case": "32616445866",
+      "domain": "payment",
+      "status": "TERMS_UNKNOWN_DOCUMENTATION_NOT_PROVIDED",
+      "evidence": {
+        "original_sha256": "a8645964df2203e09abb34dd9d64b88c8bea607031ebde80ff89362914979550",
+        "file_id": "FILE-02",
+        "chunk_id": "fff75f725c69aa0ab34a4b324b8f6e1387924f95a1e5f933e8653bda5db16d90",
+        "quote_char_start_in_chunk": 597,
+        "quote_char_end_in_chunk": 692,
+        "offset_space": "data_platform_chunk_text"
+      },
+      "requirements_verified": false,
+      "legal_applicability_attested": false
+    },
+    {
+      "case": "32616445866",
+      "domain": "security",
+      "status": "TERMS_UNKNOWN_DOCUMENTATION_NOT_PROVIDED",
+      "evidence": {
+        "original_sha256": "a8645964df2203e09abb34dd9d64b88c8bea607031ebde80ff89362914979550",
+        "file_id": "FILE-02",
+        "chunk_id": "fff75f725c69aa0ab34a4b324b8f6e1387924f95a1e5f933e8653bda5db16d90",
+        "quote_char_start_in_chunk": 597,
+        "quote_char_end_in_chunk": 692,
+        "offset_space": "data_platform_chunk_text"
+      },
+      "requirements_verified": false,
+      "legal_applicability_attested": false
+    },
+    {
+      "case": "32616447910",
+      "domain": "technical_scope",
+      "status": "CONTRACT_REFERENCE_ONLY",
+      "evidence": {
+        "original_sha256": "297e426b920b361ec90b323fdf1444eeb3d709b858216ef14a2aabdb6f07b908",
+        "file_id": "FILE-02",
+        "chunk_id": "b474278f076611d2ed5fa0d68f98d16a40ce58105422ba62bcfe03cbc0e43596",
+        "quote_char_start_in_chunk": 262,
+        "quote_char_end_in_chunk": 340,
+        "offset_space": "data_platform_chunk_text"
+      },
+      "requirements_verified": false,
+      "legal_applicability_attested": false
+    },
+    {
+      "case": "32616447910",
+      "domain": "qualification",
+      "status": "UNKNOWN_NO_REQUIREMENT_ATTESTED",
+      "evidence": null,
+      "requirements_verified": false,
+      "legal_applicability_attested": false
+    },
+    {
+      "case": "32616447910",
+      "domain": "application",
+      "status": "NOTICE_NOT_INVITATION_REVIEW",
+      "evidence": {
+        "original_sha256": "297e426b920b361ec90b323fdf1444eeb3d709b858216ef14a2aabdb6f07b908",
+        "file_id": "FILE-02",
+        "chunk_id": "b474278f076611d2ed5fa0d68f98d16a40ce58105422ba62bcfe03cbc0e43596",
+        "quote_char_start_in_chunk": 1132,
+        "quote_char_end_in_chunk": 1292,
+        "offset_space": "data_platform_chunk_text"
+      },
+      "requirements_verified": false,
+      "legal_applicability_attested": false
+    },
+    {
+      "case": "32616447910",
+      "domain": "evaluation",
+      "status": "NOTICE_NOT_INVITATION_REVIEW",
+      "evidence": {
+        "original_sha256": "297e426b920b361ec90b323fdf1444eeb3d709b858216ef14a2aabdb6f07b908",
+        "file_id": "FILE-02",
+        "chunk_id": "b474278f076611d2ed5fa0d68f98d16a40ce58105422ba62bcfe03cbc0e43596",
+        "quote_char_start_in_chunk": 1132,
+        "quote_char_end_in_chunk": 1292,
+        "offset_space": "data_platform_chunk_text"
+      },
+      "requirements_verified": false,
+      "legal_applicability_attested": false
+    },
+    {
+      "case": "32616447910",
+      "domain": "contract",
+      "status": "CONTRACT_REFERENCE_ONLY",
+      "evidence": {
+        "original_sha256": "297e426b920b361ec90b323fdf1444eeb3d709b858216ef14a2aabdb6f07b908",
+        "file_id": "FILE-02",
+        "chunk_id": "b474278f076611d2ed5fa0d68f98d16a40ce58105422ba62bcfe03cbc0e43596",
+        "quote_char_start_in_chunk": 605,
+        "quote_char_end_in_chunk": 798,
+        "offset_space": "data_platform_chunk_text"
+      },
+      "requirements_verified": false,
+      "legal_applicability_attested": false
+    },
+    {
+      "case": "32616447910",
+      "domain": "participation",
+      "status": "UNKNOWN_NO_REQUIREMENT_ATTESTED",
+      "evidence": null,
+      "requirements_verified": false,
+      "legal_applicability_attested": false
+    },
+    {
+      "case": "32616447910",
+      "domain": "payment",
+      "status": "FUNDING_ONLY_PAYMENT_TERMS_UNKNOWN",
+      "evidence": {
+        "original_sha256": "297e426b920b361ec90b323fdf1444eeb3d709b858216ef14a2aabdb6f07b908",
+        "file_id": "FILE-02",
+        "chunk_id": "b474278f076611d2ed5fa0d68f98d16a40ce58105422ba62bcfe03cbc0e43596",
+        "quote_char_start_in_chunk": 153,
+        "quote_char_end_in_chunk": 261,
+        "offset_space": "data_platform_chunk_text"
+      },
+      "requirements_verified": false,
+      "legal_applicability_attested": false
+    }
+  ],
+  "changed_baseline": false,
+  "semantic_precision": null,
+  "semantic_recall": null,
+  "independent_gold": false,
+  "commercial_acceptance": false,
+  "go_eligible": false,
+  "schema": "arvectum.tender.apr067.ri223-source-led-gap-review/1",
+  "observed_on": "2026-11-18",
+  "implementation_commit": "452e70d158e88561c95360c0f245534247905e67",
+  "replay_sha256": "8826210de88912c44e077596983dd8a8cabfc66d161c82bf80e3024709a10ea5"
+}

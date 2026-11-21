@@ -27,6 +27,11 @@ _MAX_FILE_NAME_CHARS = 180
 _MAX_CHUNK_ID_CHARS = 128
 
 
+def review_domains() -> tuple[tuple[str, str, str], ...]:
+    """Canonical domain order shared by the archived operator review."""
+    return _DOMAIN_SECTIONS
+
+
 def build_ri223_document_dossier(
     *,
     law_type: str | None,

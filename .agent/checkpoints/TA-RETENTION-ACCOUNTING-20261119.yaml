@@ -1,0 +1,31 @@
+task_id: TA-RETENTION-ACCOUNTING-20261119
+status: completed
+goal: Internal proposed document-order links and aggregate binary storage accounting, not verified
+  order ownership or deletion authority.
+definition_of_done:
+- Immutable scoped links to exact document IDs and an existing proposed schedule; no automatic backfill.
+- Aggregate counts, binary byte lengths, expiry and proposed hold/coverage categories without document
+  content.
+- Synthetic scoped tests and migration checks; no API, production write or deletion.
+completed:
+- Exact 55b349eb CI 19/19; published predecessor f2cf1037.
+- 'Migration 126: proposed immutable links to exactly one same-tenant preview or original form and
+  pinned retention proposal. Composite foreign keys, uniqueness, downgrade guard; no auto-association.'
+- Internal scoped aggregate document count, logical binary bytes, expired and unlinked counts, proposed
+  hold status/horizon and superseded proposal counts. No source payload/JSON selected, no returned
+  document/order identifiers. Clean session and aware clock required.
+- 29 targeted tests PASS, PG16.16 isolated migration 126 and cross-tenant/missing document constraints,
+  accounting and downgrade guard PASS; previous migration, restore and concurrent API acceptance
+  PASS.
+current_stage: bounded_accounting_verified_local
+remaining:
+- Publish local successor after existing CI f2cf1037 and verify exact successor CI.
+- Actual order ownership/evidence, correction/rebinding process, authorized intake, production report
+  access and scope, policy approval, no deletion authority; physical DB/backup usage not measured.
+last_verified_commit: 90d06ae09b15c7fb730fab15c28d240590240e30
+test_results:
+- 29 passed, 33 warnings in 4.66s; disposable PG16 runner exit 0; Ruff and diff check PASS; single
+  Alembic head 126.
+resume_instruction: Verify exact PR662 remote f2cf1037 CI (15/19 at observation); then publish local
+  accounting successor and verify exact CI. Next independently design authorized operator intake
+  and correction envelope, not deletion or previously rejected readiness operation.

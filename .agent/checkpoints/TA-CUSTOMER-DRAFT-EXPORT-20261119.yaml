@@ -1,0 +1,44 @@
+task_id: TA-CUSTOMER-DRAFT-EXPORT-20261119
+status: completed
+goal: Controlled local download of unsigned customer-oriented draft subset after exact internal
+  acknowledgement.
+definition_of_done:
+- Explicit allowlist of server-generated commercial drafts, independent archive integrity validation,
+  no private manifest, economics, evidence or unverified forms.
+- Same authorized owner/admin and owned run, retained exact acknowledgement, unexpired and freshly
+  rechecked evidence; explicit selected subset.
+- Default-off endpoint, synthetic isolated HTTP and archive tests, documented remaining deployment
+  gates.
+completed:
+- Previous stage verified locally at 8155f67e; its CI still running at start.
+- Default-off API, retained exact acknowledgement, evidence recheck, explicit unsigned subset, deterministic
+  independent ZIP integrity check; seven projection tests and five existing HTTP regressions passed.
+- Predecessor 2de9663a exact GitHub CI 19/19 SUCCESS. Added UI options from allowed manifest roles;
+  explicit selection and acknowledgement; download SHA header and browser integrity check; synthetic
+  isolated real HTTP/SQLite positive and denial scenarios PASS; Chromium at 1280 and 390 PASS including
+  tamper refusal and reset.
+current_stage: bounded_development_verified_pending_merge
+remaining:
+- Verify exact successor full CI, including projection regression; repeated local grouped runs killed
+  by SIGKILL, not accepted.
+- Real browser-to-API, real source/profile acceptance and independent customer wording review remain
+  open. No full submission package or production authorization.
+last_verified_commit: 6d0281dd5b2c2eaa2f6029017314eddb54df281e
+test_results:
+- Projection 7 PASS, 9 warnings, 7.67s.
+- Existing authenticated review 5 PASS, 7 warnings, 7.31s.
+- Ruff and git diff --check PASS.
+- Combined private bundle/evidence/offer regression stopped by SIGKILL after 29 progress dots; no
+  result accepted.
+- Predecessor exact CI 19/19 SUCCESS (2de9663a).
+- 'New isolated HTTP acceptance 1 passed, 3 warnings, 3.19s, exit 0: exact bytes, ownership, explicit
+  decision, feature switch, stale source denial.'
+- Actual Chromium 1280/390 synthetic HTTP PASS; tampered bytes rejected, explicit selection/ack,
+  valid download, state reset. Ruff/diff PASS.
+- Subsequent grouped and projection-only local regressions stopped SIGKILL; rely on exact successor
+  CI, not partial dots.
+resume_instruction: Check exact successor PR662 CI, fix confirmed failures only, then mark bounded
+  export development completed if green. Next independent review of customer-facing free text and
+  safe customer form release design with real acceptance gates. Do not deploy, merge, sign or submit.
+
+final_verification: Exact PR662 head 6d0281dd CI 19/19 SUCCESS; no merge or deployment.
