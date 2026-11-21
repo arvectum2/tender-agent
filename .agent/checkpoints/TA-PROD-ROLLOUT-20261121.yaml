@@ -1,0 +1,34 @@
+task_id: TA-PROD-ROLLOUT-20261121
+status: blocked
+goal: Safely activate merged Tender Agent main 9b650a2b while preserving the source-admitted 21-record workflow, PostgreSQL data, daily runner and recoverability.
+definition_of_done:
+  - Exact code and dependencies, hosted CI and local API canary verified.
+  - Production schema 122-to-127 verified on independent real-data clone with tested downgrade.
+  - New source admission expressly bound to exact target release, unchanged physical database and original 21 authorized records.
+  - Rollback and TA/DP PITR gates passed; production backend, DB and daily runner coordinated; functional smoke verified.
+  - Final actual deployed SHA and DB revision documented; never claim deployment from code merge alone.
+completed_stages:
+  - PR674 merged into protected main 9b650a2b; post-merge GitHub CI and GitVerse PASS.
+  - Production current SHA abcd8727 and DB122 confirmed, 8001/8094 health 200.
+  - Immutable detached target release staged with matching dependency lock, 118 API routes; canary /health 200, guarded docs 401, denied source read 503; canary stopped.
+  - Read-only live PG17 backup to private 0600 source SHA256 29fea54bfeb19973a314725a06da1b8c1df976e56210f999f721032f761ee6ec.
+  - Backup restored to isolated no-TCP PG17 clone; migrations 122->127, 127->122, 122->127 PASS; clone stopped.
+  - Exact old WSF-07B manifest valid only for old source release abcd8727, target fails closed with manifest mismatch; 21 original IDs must not be widened.
+  - TA/DP PITR health PASS with active receivers, but 7-day history not independently proved; canonical SSD checkout is dirty unrelated branch and not reset.
+current_stage: blocked_until_source_access_exact_release_binding_authorized
+remaining_stages:
+  - Owner authorizes same 21 existing IDs and same physical DB identity newly bound to exact source release 9b650a2b818032389cfd6e13799acad33c72089b.
+  - Recreate and verify exact new private source manifest only after owner decision; revalidate PTIR and rollback readiness.
+  - Lock workers and coordinate production schema127, backend and daily runner pin together; verify real health and restored bounded source feature.
+  - On failure restore BOTH old schema122 and previous backend/daily runner using verified backup path.
+last_verified_commit: 9b650a2b818032389cfd6e13799acad33c72089b
+last_checks: New main CI+mirror PASS; offline API import 118 routes; canary HTTP200, docs401, source503; independent PG dump/restore and migration 122->127->122->127 PASS; production old SHA and health200 both; original source binding mismatch confirmed.
+resume_instruction: Read this checkpoint. Do NOT repeat source build, immutable dependencies or successful clone migration. Do NOT activate new code, alter legacy source SHA claims, extend original scope or apply live migration while no exact owner release binding exists. Obtain owner approval specifically re-admitting unchanged original 21-record set to exact 9b650a2b SHA, then verify secure new private manifest, dual PITR and maintenance rollback. Coordinate schema127/backend/daily-runner; old daily runner enforces schema122. Preserve old production and MI 9 unpushed commits.
+source_release_current: abcd8727326c398d870edbc4a2da793e090ac8eb
+source_release_target: 9b650a2b818032389cfd6e13799acad33c72089b
+source_grant_target_authorized: false
+clone_migration_final: 127_private_review_link_corrections
+clone_migration_downgrade_proven: true
+backup_sha256: 29fea54bfeb19973a314725a06da1b8c1df976e56210f999f721032f761ee6ec
+production_db_revision: 122_company_cost_norms
+production_deployed: false

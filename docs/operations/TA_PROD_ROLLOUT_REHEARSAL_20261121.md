@@ -1,0 +1,13 @@
+# Tender Agent production upgrade rehearsal — 2026-11-21
+
+**Disposition: candidate staged, live activation blocked on exact original-source admission.** Owner approved controlled rollout work, but the old private WSF-07B grant does not cover the new build.
+
+- Target GitHub main `9b650a2b818032389cfd6e13799acad33c72089b`, post-merge GitHub CI and GitVerse SUCCESS. Running backend and daily runner still pinned to `abcd8727326c398d870edbc4a2da793e090ac8eb`; live database migration revision `122_company_cost_norms`, no live migration or restart. Backend 8001 and Data Platform 8094 return HTTP 200.
+- Prepared clean detached source and 152 MB venv in `/Volumes/ArvectumSSD/Arvectum/releases/tender-agent-9b650a2b818032389cfd6e13799acad33c72089b`; dependency lock and pyproject exactly match old pinned release. New app imports 118 routes.
+- Created a PostgreSQL 17 custom-format backup from READ-ONLY source DB connection (52.4 MB database) to private `0600` file `/Volumes/ArvectumSSD/Arvectum/private/tender-agent/rehearsal-20261121-9b650a2b/snapshot-122.dump`; SHA256 `29fea54bfeb19973a314725a06da1b8c1df976e56210f999f721032f761ee6ec` (6,397,645 bytes). Contents/credentials are private, never committed.
+- Restored production snapshot to independent PostgreSQL 17.12 via private Unix socket with **no TCP listener**; actual Alembic `122→127→122→127` succeeded, all seven new tables present, and no production writes. Stopped isolated PG afterwards; preserved source snapshot and clone for audit.
+- Local canary: port 18086, HTTP /health=200, /docs=401, /openapi.json=401; WSF-07B route=503 without admitted grant (expected fail closed). Canary process stopped. No live EIS/ETP reads, bids, fees, backups deleted or production settings changed.
+- Live WSF-07B private source-access manifest has `source_release=abcd8727` and expires 2026-12-17; verified new `load_scope()` rejects it as `manifest mismatch`. Do not set old release claim on new code, change original grant digest, remove verification or broaden original 21 admitted IDs.
+- TA/DP PITR health PASS, WAL receivers active, but seven-day continuity has not been independently proved. Existing backup bases observed 20-21 Nov.
+
+**Next gate:** owner separately approves re-binding the **same 21 IDs** on the same actual PostgreSQL identity specifically to `9b650a2b818032389cfd6e13799acad33c72089b`; then safely create/pin new private source-admission proof, verify TA/DP PITR and maintenance rollback, coordinate DB 127 + versioned backend AND daily runner (old job insists on DB 122). If failure, rollback both schema and code to prior immutable version. Otherwise leave live service untouched. This is not a demand for any third-party reviewer.
