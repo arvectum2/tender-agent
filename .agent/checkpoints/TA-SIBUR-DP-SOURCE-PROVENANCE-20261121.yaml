@@ -22,18 +22,19 @@ completed_stages:
   pytest and Ruff PASS
 - Committed standalone pure source-provenance verifier and tests at 38dd3948fbd1fead79f46d2dc519e857b89ba29d, 66 combined focused pytest + Ruff PASS
   and actual 7/7 archived original source lineage PASS; no runtime module imports
-current_stage: local_38dd3948_verified_waiting_parent_pr689_second_quality_then_protected_merge
+- Parent original historical DP receipt PR689 passed 19/19 CI and merged main 8d53899, source-provenance child now includes complete protected main
+  without conflicts.
+current_stage: parent_689_merged_source_proof_ready_for_exact_ci
 remaining_stages:
-- Run combined 66+ source-only tests and Ruff, commit/persist local review candidate without changing actual historical data
-- When PR689 19/19 CI protected merges, integrate latest main into source-proof review branch, run exact CI of new PR and merge
-- Mark checkpoint completed only after protected merge, no live collector/indexing/source authority
+- Run combined 66 provenance/DP/source tests, Ruff and exact original archived offline proof on current protected main
+- Push branch and open small standalone PR; await all 19 exact GitHub/GitVerse CI checks
+- Merge only after owner+AI source-only review, then mark completed; no live source/DB/DP activation
 last_verified_commit: 38dd3948fbd1fead79f46d2dc519e857b89ba29d
 last_checks: 66 combined pytest+Ruff PASS, real 7/7 first-party URL and page SHA original bytes, 958 historic DP embeddings, 4 registry plus 3 archives;
   original source code isolated with no network, live DB/DP or production writes.
-resume_instruction: 'Local clean review branch review/ta-sibur-dp-provenance-20261121 HEAD 38dd3948 passed 66 tests/Ruff and real 7/7 first-party historical
-  source replay. Parent PR689 head 6adcfdc has 18/19 exact CI with final quality pending. Wait for 19/19, normal protected merge, fetch/merge main,
-  then push/create separate narrow provenance PR, rerun exact CI and complete checkpoint. No source calls, database writes, current-status claims or
-  bulk DRAFT #527 merge.'
+resume_instruction: Parent PR689 completed merge 8d53899; source provenance local review branch includes it. Revalidate 7/7 original archived page
+  URL→row→content SHA plus 958 DP chunks and 66 tests. Push source-only branch/open PR, wait exact 19/19 CI, normal protected merge. No live source/DB/DP
+  writes, no currentness claims.
 full_historical_DP_source_lineage_proven: 7
 primary_registry_source_docs: 4
 archive_category_source_docs: 3
