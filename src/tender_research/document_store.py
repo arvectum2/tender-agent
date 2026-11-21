@@ -183,6 +183,35 @@ def _expand_source_bound_ri223_rar(repo: TenderRepository, document, doc_dir: Pa
     return len(members)
 
 
+def source_originals_not_ready(tender, max_bytes: int) -> str | None:
+    """Read-only integrity gate before directly using an existing RAG index.
+
+    A verified vector collection alone does not establish that its source
+    originals still exist or match the retained source-document bytes.
+    """
+    docs = getattr(tender, "documents", ())
+    source = getattr(tender, "source", None)
+    source_bound = source in {"eis", "external_public_44fz"}
+    for doc in docs:
+        status = getattr(doc, "download_status", None)
+        error = getattr(doc, "error_message", None)
+        if status == "failed" and isinstance(error, str) and error.startswith(
+            "Original integrity failed:"
+        ):
+            return "Source original integrity failed; rerun approved document preparation"
+        if not source_bound:
+            continue
+        if status == "downloaded":
+            issue = _original_file_problem(doc, max_bytes)
+            if issue is not None:
+                return "Source original integrity failed: " + issue
+        elif getattr(doc, "file_url", None):
+            return "Source document inventory includes an unverified original"
+    if source_bound and not docs:
+        return "Source document inventory has no originals"
+    return None
+
+
 def _original_file_problem(doc, max_bytes: int, *, path: Path | None = None) -> str | None:
     """Check the existing original without fetching or trusting a DB status."""
     if not doc.sha256 or len(doc.sha256) != 64:

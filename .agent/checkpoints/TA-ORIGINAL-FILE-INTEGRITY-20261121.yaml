@@ -14,14 +14,15 @@ completed_stages:
   - Rehearsed synthetic EIS originals and existing RI223 RAR processing without any network requests.
   - 111 focused RAG, source file, RAR, Data Platform and storage guardrail tests PASS, 13 warnings; Ruff PASS, git diff check PASS.
   - Added a transaction durability boundary: source file metadata is committed before Data Platform processing; a real SQLite synthetic outage verifies that a new session retains the original file SHA, status and bytes. Successor 112 tests PASS, 13 warnings; Ruff PASS.
-current_stage: source_file_durability_successor_ci
+  - Fixed direct analyze_tender/API/async job bypass with read-only EIS original-byte check before Data Platform, even if previously indexed. Missing/pending/mutated and previously failed originals block. New 5 regressions, 176 focused analysis, DP, RAG, DTR and file tests PASS (30 warnings); Ruff PASS.
+current_stage: analysis_entrypoint_integrity_successor_ci
 remaining_stages:
   - Submit isolated PR from current main and confirm exact CI and GitVerse mirror.
   - Independently test review of real source-original metadata, upstream redirects and revision boundaries under source-specific admission.
   - Verify production release pin, original-source authorization, full PITR and AM4 owner approval before any deployment or reprocessing.
 base_main: abcd8727326c398d870edbc4a2da793e090ac8eb
-last_verified_commit: ed0253dd90d97fc516f8b725568138f2110fcd2e
-last_checks: 112 focused PASS / 13 warnings with new SQLAlchemy durability regression, Ruff PASS, diff-check PASS; new exact successor PR CI pending.
+last_verified_commit: 07afb473e7a9d1f8d92f49f3c8c0233d3cbde7dd
+last_checks: 176 focused PASS / 30 warnings after direct analysis source check, Ruff PASS and diff-check PASS. New exact PR CI pending, prior PR heads 19/19 PASS.
 original_recovery_performed: false
 production_changed: false
-resume_instruction: Inspect exact successor PR678 head CI and PR674 combined CI; keep both review-only until original authenticity, source access, runtime/PITR and AM-4 owner gates are verified. No EIS/ETP fetch, live database mutation, blocked Daily Tender Run retry, migration or deploy. Preserve current main, MI nine unpushed commits and source research worktrees.
+resume_instruction: Validate new exact PR678 and PR674 integrated CI after direct analysis original-integrity guard; keep drafts until original EIS/223-FZ source permission, revision, current runtime/PITR and AM-4 owner gates. Do not fetch EIS/ETP, retry blocked DTR, modify live DB, merge main or deploy. Preserve source history, current main task and 9 unpushed MI commits.

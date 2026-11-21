@@ -244,3 +244,68 @@ def test_downloaded_original_remains_in_database_when_data_platform_fails(tmp_pa
         assert document.sha256 == hashlib.sha256(BODY).hexdigest()
         assert document.size_bytes == len(BODY)
         assert Path(document.local_path).read_bytes() == BODY
+
+
+@pytest.mark.parametrize("case", ["tampered_after_preparation", "previous_failure", "pending_source_document", "missing_inventory"])
+def test_direct_analysis_refuses_unverified_eis_originals_without_data_platform(
+    tmp_path, case,
+):
+    from unittest.mock import MagicMock, patch
+
+    from src.tender_research.config import TenderResearchConfig
+    from src.tender_research.rag.analysis_service import analyze_tender
+
+    file = tmp_path / "original.pdf"
+    file.write_bytes(BODY)
+    docs = [SimpleNamespace(
+        download_status="downloaded", error_message=None, local_path=str(file),
+        sha256=hashlib.sha256(BODY).hexdigest(), size_bytes=len(BODY), file_url=URL,
+    )]
+    if case == "tampered_after_preparation":
+        file.write_bytes(b"altered after it was indexed")
+    elif case == "previous_failure":
+        docs[0].download_status = "failed"
+        docs[0].error_message = "Original integrity failed: SHA mismatch"
+    elif case == "pending_source_document":
+        docs[0].download_status = "pending"
+    elif case == "missing_inventory":
+        docs = []
+    tender = SimpleNamespace(
+        id="saved-tender", source="eis", law_type="44fz", documents=docs,
+        raw_payload={},
+    )
+    repo = MagicMock()
+    repo.get_tender_by_registry_number.return_value = tender
+    repo.count_chunks_by_tender.return_value = 10
+    config = TenderResearchConfig(
+        rag_retrieval_backend="data_platform", document_download_max_size_mb=1,
+    )
+    with (
+        patch("src.tender_research.rag.analysis_service.TenderRepository", return_value=repo),
+        patch("src.tender_research.rag.analysis_service.load_config", return_value=config),
+        patch("src.tender_research.rag.analysis_service.build_data_platform_client") as platform,
+    ):
+        result = analyze_tender(
+            "00000000000001", session=MagicMock(), record_history=False,
+        )
+    assert result.status == "failed"
+    assert result.sources_count == 0
+    assert result.sections == []
+    assert any("original" in reason.lower() or "document" in reason.lower() for reason in result.errors)
+    platform.assert_not_called()
+
+
+def test_direct_analysis_source_gate_accepts_verified_original_bytes(tmp_path):
+    from src.tender_research.document_store import source_originals_not_ready
+
+    file = tmp_path / "verified.pdf"
+    file.write_bytes(BODY)
+    doc = SimpleNamespace(
+        download_status="downloaded", error_message=None,
+        local_path=str(file), sha256=hashlib.sha256(BODY).hexdigest(),
+        size_bytes=len(BODY), file_url=URL,
+    )
+    tender = SimpleNamespace(source="eis", documents=[doc])
+    assert source_originals_not_ready(tender, max_bytes=1024) is None
+    file.unlink()
+    assert "integrity" in source_originals_not_ready(tender, max_bytes=1024).lower()
