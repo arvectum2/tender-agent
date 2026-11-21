@@ -10,14 +10,18 @@ definition_of_done:
 completed_stages:
   - Identified PR524 historic 313 distinct public procedures/314 observations with owner-approved working-DB-only seed; PR526/PR527 depend on its head.
   - Created fresh review-only isolated worktree from old PR524 head without changing old source branches or production.
-current_stage: examine_original_source_binding_and_current_main_compatibility
+  - Merged protected main b646e431 safely, preserving its canonical current-task and original PR524 history; no service or worker changed.
+  - Found first SIBUR snapshot partial (6/27 pages, 72 procedures, parser error); rejected. Independently SHA-replayed complete corrected v2 (27/27 pages, 314 observations, 313 unique procedures) read-only with latest parser.
+  - Verified exact 15-field historical normalized projection; latest parser derives only documentation_urls and unverified_document_links from original raw pages, with no original archive mutation.
+  - Added fail-closed verify_sibur_public_snapshot helper and read-only CLI; no arbitrary stdin write path. 24 focused pytest and Ruff PASS. Historical working DB seed unchanged.
+current_stage: read_only_full_original_replay_verified_and_negative_tests_pass_waiting_host_pr637
 remaining_stages:
   - Integrate latest protected main and resolve only stale task checkpoint.
   - Check source provenance, exact digest validation and behavior under duplicates/adversarial data, add negative tests where needed.
   - Run tests/Ruff and verify no live DB/source calls; update PR524 behind latest stable main after PR637 acceptance.
   - Merge source-only code through owner+AI and required CI or leave draft with precise blockers.
 last_verified_commit: 650bc75b3c5fcd22ba66e712b64db73fb9e36e33
-last_checks: Historic original source entry confirmed; no replay or source requests.
-resume_instruction: Begin with original import_sibur_public_snapshot.py and original SIBUR receipt evidence. Never reimport 313 records, never enable actual source worker, avoid changes to actual working/production DB, preserve stacked PR526/527 history and canonical main task file. Complete current-main merge and bounded tests only.
+last_checks: Real existing v2 27/27 first-party page SHA verified, 314 observations, 313 IDs, strict 15-field projection; partial v1 fails closed. 24 focused pytest PASS, Ruff PASS; CLI dry-run emits no database changes, no live source calls or DB connections.
+resume_instruction: Historic PR524 reviewed in isolated worktree on current main b646e431. 27 real archived originals SHA-verified and 24 pytest/Ruff passed; new read-only CLI. Do not reimport the 313 already seeded records, do not activate a SIBUR worker, and do not change either working or production DB. After host PR637 safely merges, integrate new main in this branch, run exact CI for PR524 with stacked #526/#527 history preserved. Require source-specific admission for any future writes.
 production_modified: false
 working_db_modified: false

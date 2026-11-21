@@ -1,16 +1,18 @@
-"""Import an independently SHA-replayed public registry snapshot into TA only."""
+"""Read-only SIBUR original registry replay; DB application requires separate authority."""
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
-import sys
+import re
 import uuid
 from datetime import UTC, datetime
+from pathlib import Path
 
-from sqlalchemy import create_engine, func, select
+from sqlalchemy import func, select
 from sqlalchemy.dialects.postgresql import insert
-from sqlalchemy.orm import Session
 
+from scripts.research.verify_sibur_public_snapshot import replay_verified_originals
 from src.tender_research.models import ProcurementTender
 
 SOURCE = "sibur_public"
@@ -36,7 +38,9 @@ def build_rows(groups):
             if (row["external_id"] != identity or row["source"] != SOURCE
                     or row["verification"] != "PUBLIC_SNAPSHOT_ONLY"
                     or not row["source_url"].startswith("https://www.sibur.ru/ru/procurement/buy/?")
-                    or len(row["source_sha256"]) != 64 or set(row) != allowed):
+                    or not isinstance(row["source_sha256"], str)
+                    or re.fullmatch(r"[0-9a-f]{64}", row["source_sha256"]) is None
+                    or set(row) != allowed):
                 raise ValueError("source or shape mismatch")
         def agreed(key, observations=observations):
             values = {r[key] for r in observations}
@@ -80,17 +84,21 @@ def import_rows(session, rows):
     return {"inserted": inserted, "verified": len(actual), "by_source": after}
 
 
-def main():
-    import os
-
-    from sqlalchemy import text
-    rows = build_rows(json.load(sys.stdin))
-    engine = create_engine(os.environ["AI_CORP_DATABASE_URL"])
-    with Session(engine) as session, session.begin():
-        if session.execute(text("select current_database()")).scalar_one() != "arvectum_local":
-            raise ValueError("unexpected target database")
-        result = import_rows(session, rows)
-    print(json.dumps(result, ensure_ascii=False))
+def main() -> None:
+    """Read-only original-page audit. Explicit separately reviewed application is not a CLI action."""
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--snapshot-dir", type=Path, required=True)
+    args = parser.parse_args()
+    rows = build_rows(replay_verified_originals(args.snapshot_dir))
+    print(json.dumps({
+        "mode": "read_only_verified_originals",
+        "source": SOURCE,
+        "rows": len(rows),
+        "observations": sum(len(x["raw_payload"]["observations"]) for x in rows),
+        "database_mutated": False,
+        "originals_fetch_performed": False,
+        "authorized_to_write": False,
+    }, ensure_ascii=False))
 
 
 if __name__ == "__main__":
