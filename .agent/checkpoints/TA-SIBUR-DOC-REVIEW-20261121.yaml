@@ -1,0 +1,21 @@
+task_id: TA-SIBUR-DOC-REVIEW-20261121
+status: in_progress
+goal: Make SIBUR document acquisition prototype accept only SHA-verified complete original source snapshots and safely audit previously preserved original attachments without new source requests.
+definition_of_done:
+  - Integrate original stacked PR526 with reviewed parent PR524 without losing prior merge history or main current-task checkpoint.
+  - Reuse SHA+length+member replay from parent, never accept false advertised_pages_traversed or original-link guesses.
+  - Keep actual first-party fetch disabled by default and verify saved originals offline against authenticated receipts, fail closed on malformed bytes/path/hash.
+  - Pass focused tests, Ruff and original 27-page replay/legacy receipt checks.
+  - Only publish/merge source-only changes after parent PR524 merges and exact CI; no live worker or actual SIBUR network calls.
+completed_stages:
+  - Identified PR526 source_refs uses obsolete receipt field and lacks full-page verification; existing approved parent now enforces 27/27 SHA original-pages and read-only CLI.
+  - Created isolated original PR526 reviewer worktree with original stacked branch head unchanged.
+current_stage: integrate_updated_parent_and_review_original_receipts
+remaining_stages:
+  - Merge current parent without losing canonical checkpoint; confirm exact source-only changed files.
+  - Implement strictly read-only document receipt source checks and tests, audit stored attachment evidence.
+  - Run focused tests and verify no source/DB mutations, then push existing PR526 branch only after parent merge.
+  - Await protected CI and merge source-only package; preserve dependent PR527 draft and safety gate.
+last_verified_commit: 2c16798c0d2e74a4e087f6a66448756c0d0dbc4a
+last_checks: Original source and tests inspected; 30 historic PDF/DOCX/XLSX capture referenced, must verify bytes independent of claim.
+resume_instruction: Reconcile child #526 against parent #524 exact SHA-verified replay. Preserve #527 history and old source receipts. Do not send new SIBUR HTTP requests, mutate TA/DP databases, enable workers or submit ETP bids. Confirm provenance+offline hashes before any source authorization decision.

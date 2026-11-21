@@ -240,3 +240,35 @@ extension Procurement {
         )
     }
 }
+
+
+/// An absent flag is unknown, never proof of a successful empty search.
+struct MobileDailyDigest: Decodable, Equatable {
+    let runId: String?
+    let profileId: String?
+    let profileVersion: String?
+    let runStatus: String?
+    let currentStage: String?
+    let discoveryIncomplete: Bool?
+    let counts: [String: Int]?
+
+    var statusLabel: String {
+        guard runId != nil else { return "Нет данных о последнем запуске" }
+        if discoveryIncomplete == true { return "Поиск неполный" }
+        switch runStatus {
+        case "PENDING": return "Ожидает запуска"
+        case "RUNNING": return "Выполняется"
+        case "WAITING_HUMAN": return "Ожидает решения"
+        case "COMPLETED_WITH_ERRORS": return "Завершён с ошибками"
+        case "FAILED": return "Ошибка запуска"
+        case "COMPLETED":
+            if discoveryIncomplete == false && counts?["discovered"] == 0 { return "Новых закупок нет" }
+            return discoveryIncomplete == false ? "Завершён" : "Полнота поиска неизвестна"
+        default: return "Состояние требует уточнения"
+        }
+    }
+
+    var needsReview: Bool {
+        discoveryIncomplete == true || runStatus == "COMPLETED_WITH_ERRORS" || runStatus == "FAILED"
+    }
+}

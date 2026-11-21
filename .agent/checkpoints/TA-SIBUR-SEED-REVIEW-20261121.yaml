@@ -1,0 +1,33 @@
+task_id: TA-SIBUR-SEED-REVIEW-20261121
+status: in_progress
+goal: Reconcile historical SIBUR public-source seed code with protected main without changing either production or already seeded working DB.
+definition_of_done:
+  - Preserve the original 313-record working database seed and all historical observations without re-import or new source requests.
+  - Preserve source namespace sibur_public independent of EIS, GPB and the dormant generalized source_catalog's source identity.
+  - Review code and tests for exact original-byte/source receipt checks, idempotent import, immutable existing rows, and production DB separation.
+  - Remove outdated canonical current-task conflict when merging current main and preserve the original PR524 history and #526/#527 dependencies.
+  - Pass scoped tests and current exact GitHub CI; no external live writer or collection automation.
+completed_stages:
+  - Identified PR524 historic 313 distinct public procedures/314 observations with owner-approved working-DB-only seed; PR526/PR527 depend on its head.
+  - Created fresh review-only isolated worktree from old PR524 head without changing old source branches or production.
+  - Merged protected main b646e431 safely, preserving its canonical current-task and original PR524 history; no service or worker changed.
+  - Found first SIBUR snapshot partial (6/27 pages, 72 procedures, parser error); rejected. Independently SHA-replayed complete corrected v2 (27/27 pages, 314 observations, 313 unique procedures) read-only with latest parser.
+  - Verified exact 15-field historical normalized projection; latest parser derives only documentation_urls and unverified_document_links from original raw pages, with no original archive mutation.
+  - Added fail-closed verify_sibur_public_snapshot helper and read-only CLI; no arbitrary stdin write path. 24 focused pytest and Ruff PASS. Historical working DB seed unchanged.
+  - Real current read-only PostgreSQL cluster split verified: arvectum_local PG16 cluster has 30632 sibur_public rows, all 313/313 from original 14-Nov archive present; production arvectum PG17 cluster has 64 tenders and zero sibur_public rows. No DB mutation.
+  - Integrated protected main b73dae89 after PR637 host runtime source code passed 19/19 CI, no merge conflicts, SIBUR original PR524 head remains ancestor and stacked PR526/527 unchanged.
+  - Completed host source-snapshot task checkpoint #637 on exact main merge, preserving installed host and GitHub/GitVerse checks.
+current_stage: main_b73dae89_merged_review_ready_waiting_exact_ci
+remaining_stages:
+  - Run exact current-main focused tests and publish PR524 with source-gated read-only CLI, preserving historical 313 seed and dependencies PR526/527.
+  - Wait for required GitHub CI/GitVerse; merge source-only review if passing and owner+AI review approves.
+  - Mark checkpoint completed after actual merge, without enabling live SIBUR workers or writing production/working databases.
+last_verified_commit: 650bc75b3c5fcd22ba66e712b64db73fb9e36e33
+last_checks: V2 27/27 original raw page SHA verified, 314 observations/313 IDs; incomplete 6/27 refused. 24 pytest + Ruff PASS. 2026-11-21 read-only PG cluster audit - 30632 existing SIBUR public unique IDs in local, historical 313/313 subset present, zero in production arvectum, two distinct cluster identifiers. CLI dry-run no DB connection and no source calls.
+resume_instruction: SIBUR PR524 original head included with protected main b73dae89; complete v2 27/27 original raw page SHA replay, 314/313 rows, 313/313 historical original ID subset of 30632 already present in working DB; dry-run CLI and 24 tests/Ruff pass. Push safe review head to existing PR524 then run exact CI and normal owner+AI merge; preserve PR526/527 history, no live source requests, reimport, working/production DB writes or worker activation. Mark checkpoint completed only after actual merge.
+production_modified: false
+working_db_modified: false
+private_source_replay_receipt: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/sibur-original-replay-20261121.json
+original_historical_15_field_projection_sha_verified: true
+original_source_page_count_verified: 27
+local_review_commit: a709a50b080dfc9241995caa23b0ff99678141d4

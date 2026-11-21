@@ -1,0 +1,21 @@
+task_id: TA-APR08-DOCUMENT-RETRIEVAL-20261117
+status: completed
+goal: Free-text lexical lookup within selected saved run; original-verified DP excerpts only, no semantic answer or legal decision.
+definition_of_done:
+  - Bounded run-local candidate lookup and original raw SHA/chunk verification through existing nonpersisting DP quote checker, no cross-run fallback.
+  - Private API and existing UI with safe display and request scoping; unsupported/missing evidence UNKNOWN, completeness not implied.
+  - Adversarial regressions, UI simulation and archive replay; publish draft.
+completed:
+  - Exact PR610 fd8c32f8 and PR611 ae389369 CI 19/19 SUCCESS each, main postmerge CI SUCCESS.
+  - Implemented private run-local lexical lookup, bounded candidate selection and existing original quote verifier; UI search and stale response reset.
+  - Actual saved archive replay returned UNKNOWN; diagnosed local DP authentication error and unsupported nested XML; excluded nested paths from candidate budget. Original bytes unchanged.
+  - Authorized isolated real DP replay PASS: ephemeral key, no models, anonymous 401, archived query оплатa работ returned one verified excerpt, original run SHA inventory unchanged, instance removed.
+  - Reproducible scripts.acceptance.run_apr08_real_dp_replay: real DP checkout 38322fd5, ephemeral authenticated loopback server, existing archived file/chunk receipts, actual operator FastAPI route via TestClient, anonymous 401 on both levels, positive one cited excerpt, absent term UNKNOWN, source inventory unchanged; temporary instance removed.
+  - Exact reviewed head a0261f8c82a0195f7a9b08b879dd0b69d1384766 CI 19/19 SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
+last_verified_commit: a0261f8c82a0195f7a9b08b879dd0b69d1384766
+test_results:
+  - 105 focused pytest PASS, Ruff/JS syntax/Node simulation/diff check PASS.
+  - Earlier working DP auth rejection resolved by isolated authorized replay; three positive real DP rehearsals including final HTTP route, each one verified excerpt, no actual legal inference. 105 targeted tests PASS on replay code.
+resume_instruction: Bounded increment verified; merge requires separate authorization. Continue parent APR08.

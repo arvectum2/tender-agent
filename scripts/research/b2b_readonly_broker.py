@@ -1,0 +1,98 @@
+"""Explicit read-only HTTP broker; transport supplied only by offline acceptance.
+
+Attached to the offline HTTP browser fixture only. Every redirect hop is an independent admission;
+no implicit redirect/retry/proxy from the HTTP client. Never expose response or
+request secrets in error messages or the rate log.
+"""
+from __future__ import annotations
+
+import math
+import time
+from dataclasses import dataclass
+from datetime import UTC
+from email.utils import parsedate_to_datetime
+from urllib.parse import urljoin, urlsplit
+
+import httpx
+
+from scripts.research.b2b_network_guard import GuardError
+
+MAX_RESPONSE = 25*1024*1024
+MAX_REDIRECTS = 5
+REDIRECTS = {301,302,303,307,308}
+
+
+def retry_delay(value, *, wall_clock=time.time):
+    if value is None:return 60
+    value=value.strip()
+    try:
+        if value.isascii() and value.isdecimal():return max(60,int(value))
+        moment=parsedate_to_datetime(value)
+        if moment.tzinfo is None:moment=moment.replace(tzinfo=UTC)
+        return max(60,math.ceil(moment.timestamp()-wall_clock()))
+    except (ValueError,TypeError,OverflowError):return 60
+
+
+@dataclass(frozen=True)
+class Receipt:
+    status: int
+    headers: tuple[tuple[str,str],...]
+    data: bytes
+    redirects: int
+    final_url: str
+
+
+class ReadOnlyBroker:
+    def __init__(self,gate,*,origin,permitted,transport,wall_clock=time.time,cookies=None,max_response_bytes=MAX_RESPONSE):
+        # No default live transport. A separately accepted browser integration
+        # must provide the dedicated transport and its egress/timeout guarantees.
+        parsed=urlsplit(origin)
+        if parsed.scheme not in ('https','http') or not parsed.netloc or parsed.path not in ('','/') or parsed.query or parsed.fragment or parsed.username or parsed.password:raise GuardError('Invalid broker origin')
+        if parsed.scheme=='http' and parsed.hostname not in ('127.0.0.1','::1','localhost'):raise GuardError('HTTP only for localhost fixture')
+        if type(max_response_bytes) is not int or not 1<=max_response_bytes<=MAX_RESPONSE:raise GuardError('Invalid response byte bound')
+        self.max_response_bytes=max_response_bytes
+        self.origin=(parsed.scheme,parsed.netloc);self.gate=gate;self.permitted=permitted;self.wall_clock=wall_clock
+        self.client=httpx.Client(transport=transport,follow_redirects=False,trust_env=False,timeout=httpx.Timeout(10.0),cookies=cookies,headers={'Accept-Encoding':'identity'})
+
+    def close(self):self.client.close()
+
+    def _check(self,url,method):
+        try:
+            p=urlsplit(url);normalized=urlsplit(str(httpx.URL(url)))
+            if (p.scheme,p.netloc)!=self.origin or (normalized.scheme,normalized.netloc)!=self.origin or p.username or p.password or p.fragment or method not in ('GET','HEAD') or not self.permitted(str(httpx.URL(url)),method):raise ValueError
+        except (ValueError,TypeError,httpx.InvalidURL) as exc:raise GuardError('Blocked unapproved HTTP route') from exc
+
+    def fetch_one(self,url,method='GET'):
+        """Exactly one charged hop; browser bridge may return the redirect to UI."""
+        self._check(url,method)
+        def attempt():
+            try:
+                with self.client.stream(method,url,follow_redirects=False) as response:
+                    status=response.status_code
+                    headers=tuple(response.headers.multi_items())
+                    if status==429:
+                        return Receipt(status,headers,b'',0,url),status,retry_delay(response.headers.get('retry-after'),wall_clock=self.wall_clock)
+                    if status in REDIRECTS:
+                        return Receipt(status,headers,b'',0,url),status,0
+                    if response.headers.get('content-encoding','identity').lower() not in ('','identity'):
+                        raise GuardError('Unsupported response encoding')
+                    data=bytearray()
+                    for part in response.iter_raw():
+                        if len(data)+len(part)>self.max_response_bytes:raise GuardError('Bounded response exceeded')
+                        data.extend(part)
+                    return Receipt(status,headers,bytes(data),0,url),status,0
+            except httpx.HTTPError:raise GuardError('HTTP transport failed; attempt charged') from None
+        return self.gate.dispatch(attempt,method=method)
+
+    def redirect_target(self,result,method):
+        locations=[v for k,v in result.headers if k.lower()=='location']
+        if result.status not in REDIRECTS or len(locations)!=1:raise GuardError('Redirect missing or ambiguous')
+        target=urljoin(result.final_url,locations[0]);self._check(target,method);return target
+
+    def fetch(self,url,method='GET'):
+        for hop in range(MAX_REDIRECTS+1):
+            result=self.fetch_one(url,method)
+            if result.status not in REDIRECTS:return Receipt(result.status,result.headers,result.data,hop,result.final_url)
+            if hop==MAX_REDIRECTS:raise GuardError('Redirect limit exceeded')
+            url=self.redirect_target(result,method)
+        raise GuardError('Redirect limit exceeded')

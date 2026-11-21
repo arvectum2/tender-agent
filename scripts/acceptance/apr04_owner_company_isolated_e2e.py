@@ -10,19 +10,28 @@ import base64
 import hashlib
 import json
 import os
+import shutil
+import subprocess
+import sys
+import tempfile
 from pathlib import Path
 from secrets import token_urlsafe
 
+LEGACY_ROOT = Path("/Volumes/ArvectumSSD/Arvectum/runtime/ta-apr04-owner-onboarding-20261015")
+RUN_ID = "toa-run-20261012200402-7249ed"
+RECEIPT = "output/apr04_owner_onboarding_e2e_receipt.json"
 
-def main() -> int:
-    root = Path("/Volumes/ArvectumSSD/Arvectum/runtime/ta-apr04-owner-onboarding-20261015")
+
+def _run(root: Path) -> int:
     identity_file = root / "company-identity-private.json"
-    if not identity_file.is_file() or root.name != "ta-apr04-owner-onboarding-20261015":
+    if (not identity_file.is_file() or not root.name.startswith("ta-apr04-replay-")
+            or root.parent.resolve() != Path("/tmp").resolve()
+            or (root / "apr04-isolated.sqlite").exists()):
         raise RuntimeError("APR04 isolated private runtime was not initialized")
     profile = json.loads(identity_file.read_text())
     assert len(profile["inn"]) == 10 and len(profile["kpp"]) == 9
     assert len(profile["documents_offline_not_uploaded"]) == 2
-    original_id = "toa-run-20261012200402-7249ed"
+    original_id = RUN_ID
     report_path = root / "runs" / original_id / "output" / "report.json"
     source_report_sha = hashlib.sha256(report_path.read_bytes()).hexdigest()
     runtime_password = token_urlsafe(32)
@@ -207,7 +216,7 @@ def main() -> int:
         "go_permission": False, "etp_actions": False,
         "external_emails": False, "legal_bid_approval": False,
     })
-    output = root / "output" / "apr04_owner_onboarding_e2e_receipt.json"
+    output = root / RECEIPT
     output.write_text(json.dumps(checks, ensure_ascii=False, indent=2) + "\n")
     print("APR04_E2E_RESULT", json.dumps({
         k: checks[k] for k in (
@@ -219,7 +228,76 @@ def main() -> int:
             "database_session_reopen",
         )
     }, ensure_ascii=False), flush=True)
-    print("PRIVATE_EVIDENCE", output, flush=True)
+    return 0
+
+
+def evidence_inventory(root: Path) -> dict[str, str]:
+    """Bounded original files only; no old database or uploaded documents."""
+    if root.is_symlink() or not root.is_dir():
+        raise ValueError("Invalid historical source root")
+    run = root / "runs" / RUN_ID
+    if not run.is_dir() or run.is_symlink() or (root / "runs").is_symlink() or (root / "output").is_symlink():
+        raise ValueError("Invalid historical source directories")
+    members = list(run.rglob("*"))
+    if len(members) > 128 or any(p.is_symlink() for p in members):
+        raise ValueError("Unsafe saved run tree")
+    paths = [root / "company-identity-private.json", root / RECEIPT] + [p for p in members if p.is_file()]
+    if any(p.is_symlink() or not p.is_file() for p in paths) or sum(p.stat().st_size for p in paths) > 20_000_000:
+        raise ValueError("Unsafe or oversize replay inputs")
+    return {str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
+
+
+def verify_legacy(root: Path) -> dict[str, str]:
+    inventory = evidence_inventory(root)
+    prev = json.loads((root / RECEIPT).read_bytes())
+    identity = json.loads((root / "company-identity-private.json").read_bytes())
+    if (inventory.get(f"runs/{RUN_ID}/output/report.json") != prev.get("source_report_sha256_unchanged")
+            or [v["source_sha256"] for v in identity["documents_offline_not_uploaded"]] != prev.get("corporate_documents_offline_source_hashes")
+            or prev.get("actual_official_pdfs_copied_to_remote") is not False
+            or prev.get("go_permission") is not False):
+        raise ValueError("Historical receipt binding mismatch")
+    return inventory
+
+
+def main() -> int:
+    try:
+        before = verify_legacy(LEGACY_ROOT)
+        with tempfile.TemporaryDirectory(prefix="ta-apr04-replay-", dir="/tmp") as tmp:
+            root = Path(tmp)
+            (root / "output").mkdir(mode=0o700)
+            for relative, sha in before.items():
+                if relative == RECEIPT:
+                    continue
+                target = root / relative
+                target.parent.mkdir(mode=0o700, exist_ok=True, parents=True)
+                shutil.copyfile(LEGACY_ROOT / relative, target)
+                target.chmod(0o600)
+                if hashlib.sha256(target.read_bytes()).hexdigest() != sha:
+                    raise ValueError("Copied input digest mismatch")
+            proc = subprocess.run([sys.executable, "-c",
+                "from pathlib import Path; import sys; from scripts.acceptance.apr04_owner_company_isolated_e2e import _run; raise SystemExit(_run(Path(sys.argv[1])))", str(root)],
+                check=False, capture_output=True, text=True, timeout=90)
+            if proc.returncode:
+                # Never print subprocess output: failed HTTP assertions can include private values.
+                raise RuntimeError("Private isolated workflow failed")
+            result = json.loads((root / RECEIPT).read_bytes())
+            if (result.get("source_report_sha256_unchanged") != before[f"runs/{RUN_ID}/output/report.json"]
+                    or result.get("go_permission") is not False
+                    or not result.get("database_session_reopen")):
+                raise ValueError("Replay receipt mismatch")
+            for relative, sha in before.items():
+                if relative != RECEIPT and hashlib.sha256((root / relative).read_bytes()).hexdigest() != sha:
+                    raise ValueError("Replay input changed")
+        if verify_legacy(LEGACY_ROOT) != before:
+            raise ValueError("Historical source changed")
+    except (OSError, ValueError, KeyError, TypeError, RuntimeError, subprocess.SubprocessError):
+        print("APR04_DISPOSABLE_REPLAY_BLOCKED: private evidence or isolated workflow failed", file=sys.stderr)
+        return 2
+    safe_keys = ("ui_auth", "onboarding_no_auth", "customer_create", "duplicate_guard", "profile_reopened",
+                 "archived_eis_screen_http", "archived_eis_price_check", "qualification_check", "decision",
+                 "test_bound_nmck_status", "restored_profile_version", "synthetic_document_roundtrip",
+                 "cross_customer_document", "database_session_reopen", "go_permission")
+    print("APR04_DISPOSABLE_REPLAY_PASS", json.dumps({k: result[k] for k in safe_keys}, sort_keys=True))
     return 0
 
 

@@ -1,0 +1,570 @@
+{
+  "schema": "arvectum.tender.apr067.inflection-search-experiment/1",
+  "implementation_commit": "97be9bf11b01178503eba6c671a31f8c42e7642f",
+  "observed_on": "2026-11-18",
+  "frozen_baseline_sha256": "850f7b0f9a77661d8fa9800c2fc8f568d239dcc807dfbb9efaf69831125a1e37",
+  "experiments": [
+    {
+      "scope": "EXPLORATORY_SAME_CORPUS_NOT_GOLD",
+      "baseline": {
+        "scope": "ARCHIVED_LEXICAL_ORIGINAL_QUOTE_COVERAGE_ONLY",
+        "complete_cases": 5,
+        "incomplete_cases_refused": 1,
+        "probe_count": 45,
+        "probes_with_citations": 29,
+        "domain_cases_with_citations": {
+          "technical_scope": 3,
+          "qualification": 3,
+          "application": 3,
+          "evaluation": 1,
+          "contract": 4,
+          "participation": 4,
+          "schedule": 4,
+          "payment": 3,
+          "security": 4
+        },
+        "citation_occurrences": 42,
+        "cases": [
+          {
+            "case": "32616444788",
+            "counts": {
+              "technical_scope": 1,
+              "qualification": 1,
+              "application": 2,
+              "evaluation": 0,
+              "contract": 1,
+              "participation": 1,
+              "schedule": 2,
+              "payment": 2,
+              "security": 2
+            },
+            "elapsed_seconds": 3.961,
+            "originals": 4,
+            "members": 0,
+            "searchable_candidates": 4
+          },
+          {
+            "case": "32616445632",
+            "counts": {
+              "technical_scope": 2,
+              "qualification": 1,
+              "application": 1,
+              "evaluation": 0,
+              "contract": 1,
+              "participation": 2,
+              "schedule": 1,
+              "payment": 2,
+              "security": 2
+            },
+            "elapsed_seconds": 1.455,
+            "originals": 2,
+            "members": 0,
+            "searchable_candidates": 2
+          },
+          {
+            "case": "32616445795",
+            "counts": {
+              "technical_scope": 2,
+              "qualification": 2,
+              "application": 1,
+              "evaluation": 1,
+              "contract": 2,
+              "participation": 2,
+              "schedule": 2,
+              "payment": 1,
+              "security": 1
+            },
+            "elapsed_seconds": 6.787,
+            "originals": 1,
+            "members": 19,
+            "searchable_candidates": 19
+          },
+          {
+            "case": "32616445866",
+            "counts": {
+              "technical_scope": 0,
+              "qualification": 0,
+              "application": 0,
+              "evaluation": 0,
+              "contract": 1,
+              "participation": 1,
+              "schedule": 0,
+              "payment": 0,
+              "security": 0
+            },
+            "elapsed_seconds": 0.685,
+            "originals": 1,
+            "members": 0,
+            "searchable_candidates": 1
+          },
+          {
+            "case": "32616447910",
+            "counts": {
+              "technical_scope": 0,
+              "qualification": 0,
+              "application": 0,
+              "evaluation": 0,
+              "contract": 0,
+              "participation": 0,
+              "schedule": 1,
+              "payment": 0,
+              "security": 1
+            },
+            "elapsed_seconds": 0.292,
+            "originals": 1,
+            "members": 0,
+            "searchable_candidates": 1
+          }
+        ],
+        "semantic_precision": null,
+        "semantic_recall": null,
+        "current_source_accuracy": null,
+        "human_gold": null,
+        "commercial_acceptance": false,
+        "rolling_slo": false
+      },
+      "candidate": {
+        "scope": "ARCHIVED_LEXICAL_ORIGINAL_QUOTE_COVERAGE_ONLY",
+        "complete_cases": 5,
+        "incomplete_cases_refused": 1,
+        "probe_count": 45,
+        "probes_with_citations": 32,
+        "domain_cases_with_citations": {
+          "technical_scope": 3,
+          "qualification": 3,
+          "application": 3,
+          "evaluation": 3,
+          "contract": 5,
+          "participation": 4,
+          "schedule": 4,
+          "payment": 3,
+          "security": 4
+        },
+        "citation_occurrences": 47,
+        "cases": [
+          {
+            "case": "32616444788",
+            "counts": {
+              "technical_scope": 1,
+              "qualification": 1,
+              "application": 2,
+              "evaluation": 1,
+              "contract": 1,
+              "participation": 2,
+              "schedule": 2,
+              "payment": 2,
+              "security": 2
+            },
+            "elapsed_seconds": 4.497,
+            "originals": 4,
+            "members": 0,
+            "searchable_candidates": 4
+          },
+          {
+            "case": "32616445632",
+            "counts": {
+              "technical_scope": 2,
+              "qualification": 1,
+              "application": 1,
+              "evaluation": 1,
+              "contract": 2,
+              "participation": 2,
+              "schedule": 1,
+              "payment": 2,
+              "security": 2
+            },
+            "elapsed_seconds": 1.698,
+            "originals": 2,
+            "members": 0,
+            "searchable_candidates": 2
+          },
+          {
+            "case": "32616445795",
+            "counts": {
+              "technical_scope": 2,
+              "qualification": 2,
+              "application": 1,
+              "evaluation": 1,
+              "contract": 2,
+              "participation": 2,
+              "schedule": 2,
+              "payment": 1,
+              "security": 1
+            },
+            "elapsed_seconds": 7.423,
+            "originals": 1,
+            "members": 19,
+            "searchable_candidates": 19
+          },
+          {
+            "case": "32616445866",
+            "counts": {
+              "technical_scope": 0,
+              "qualification": 0,
+              "application": 0,
+              "evaluation": 0,
+              "contract": 1,
+              "participation": 1,
+              "schedule": 0,
+              "payment": 0,
+              "security": 0
+            },
+            "elapsed_seconds": 0.806,
+            "originals": 1,
+            "members": 0,
+            "searchable_candidates": 1
+          },
+          {
+            "case": "32616447910",
+            "counts": {
+              "technical_scope": 0,
+              "qualification": 0,
+              "application": 0,
+              "evaluation": 0,
+              "contract": 1,
+              "participation": 0,
+              "schedule": 1,
+              "payment": 0,
+              "security": 1
+            },
+            "elapsed_seconds": 0.644,
+            "originals": 1,
+            "members": 0,
+            "searchable_candidates": 1
+          }
+        ],
+        "semantic_precision": null,
+        "semantic_recall": null,
+        "current_source_accuracy": null,
+        "human_gold": null,
+        "commercial_acceptance": false,
+        "rolling_slo": false
+      },
+      "added_citations": [
+        {
+          "case": "32616444788",
+          "domain": "evaluation",
+          "new_domain": true,
+          "citation": {
+            "original_sha256": "b48065a5740710738c7144be9bcf52116d1f548d2e63e2990cff470ce6320ff8",
+            "file_id": "FILE-02",
+            "chunk_id": "5beead2b70c0dd0ba723b0d8f2024dfffbf8509fcac084ab3bc2c9f798afe375",
+            "quote_char_start_in_chunk": 1071,
+            "quote_char_end_in_chunk": 1124,
+            "offset_space": "data_platform_chunk_text"
+          },
+          "review_label": "OFF_TOPIC_PROPERTY_VALUATION"
+        },
+        {
+          "case": "32616444788",
+          "domain": "participation",
+          "new_domain": false,
+          "citation": {
+            "original_sha256": "047ff985b2dbd3cc706b35bcf5b507f820bcd10e61eb2402d6153ba27c5c89ca",
+            "file_id": "FILE-04",
+            "chunk_id": "d1b741505cf8461c005afced373794450200620a1f3e5f4f1529f6d3fe7a1779",
+            "quote_char_start_in_chunk": 723,
+            "quote_char_end_in_chunk": 854,
+            "offset_space": "data_platform_chunk_text"
+          },
+          "review_label": "CONTEXTUAL_ANTICOLLUSION_NOT_COMPLETE_ELIGIBILITY"
+        },
+        {
+          "case": "32616445632",
+          "domain": "evaluation",
+          "new_domain": true,
+          "citation": {
+            "original_sha256": "2b1f6b6dc23511382f7fe836146ccb3d7b1974767af18483c1283a74e5230c8d",
+            "file_id": "FILE-02",
+            "chunk_id": "8c1cd29d3c621e8d5849129c4c0b076bc31c611d149aa9af27ef7103c0fc0c67",
+            "quote_char_start_in_chunk": 294,
+            "quote_char_end_in_chunk": 432,
+            "offset_space": "data_platform_chunk_text"
+          },
+          "review_label": "OFF_TOPIC_PENALTY_VALUATION"
+        },
+        {
+          "case": "32616445632",
+          "domain": "contract",
+          "new_domain": false,
+          "citation": {
+            "original_sha256": "066252cac6ba7d9bfc876c9ac9a5e5425df31497fe37683dd7cdc5bdf4fa2558",
+            "file_id": "FILE-03",
+            "chunk_id": "01a7068a8d3a95c78f7ab859e152ba783f72b136ac17b86196278b313cd35b63",
+            "quote_char_start_in_chunk": 300,
+            "quote_char_end_in_chunk": 328,
+            "offset_space": "data_platform_chunk_text"
+          },
+          "review_label": "GENERIC_CONTRACT_MENTION_NOT_TERM"
+        },
+        {
+          "case": "32616447910",
+          "domain": "contract",
+          "new_domain": true,
+          "citation": {
+            "original_sha256": "297e426b920b361ec90b323fdf1444eeb3d709b858216ef14a2aabdb6f07b908",
+            "file_id": "FILE-02",
+            "chunk_id": "71f7ef085cffe0e4c4e91c78765e9e58855f2195748ad58f141b3ae029be996d",
+            "quote_char_start_in_chunk": 211,
+            "quote_char_end_in_chunk": 274,
+            "offset_space": "data_platform_chunk_text"
+          },
+          "review_label": "NOTICE_ONLY_CONTRACT_MENTION_NOT_TERM"
+        }
+      ],
+      "prior_citations_retained": true,
+      "default_promoted": false,
+      "semantic_precision": null,
+      "semantic_recall": null,
+      "replay_sha256": "19a51a4bc6a4b7de89d392208781d2c2d2c55a2d2d61f3f50701db44c194014e"
+    },
+    {
+      "scope": "EXPLORATORY_SAME_CORPUS_NOT_GOLD",
+      "guarded_two_term": true,
+      "baseline": {
+        "scope": "ARCHIVED_LEXICAL_ORIGINAL_QUOTE_COVERAGE_ONLY",
+        "complete_cases": 5,
+        "incomplete_cases_refused": 1,
+        "probe_count": 45,
+        "probes_with_citations": 29,
+        "domain_cases_with_citations": {
+          "technical_scope": 3,
+          "qualification": 3,
+          "application": 3,
+          "evaluation": 1,
+          "contract": 4,
+          "participation": 4,
+          "schedule": 4,
+          "payment": 3,
+          "security": 4
+        },
+        "citation_occurrences": 42,
+        "cases": [
+          {
+            "case": "32616444788",
+            "counts": {
+              "technical_scope": 1,
+              "qualification": 1,
+              "application": 2,
+              "evaluation": 0,
+              "contract": 1,
+              "participation": 1,
+              "schedule": 2,
+              "payment": 2,
+              "security": 2
+            },
+            "elapsed_seconds": 4.177,
+            "originals": 4,
+            "members": 0,
+            "searchable_candidates": 4
+          },
+          {
+            "case": "32616445632",
+            "counts": {
+              "technical_scope": 2,
+              "qualification": 1,
+              "application": 1,
+              "evaluation": 0,
+              "contract": 1,
+              "participation": 2,
+              "schedule": 1,
+              "payment": 2,
+              "security": 2
+            },
+            "elapsed_seconds": 1.646,
+            "originals": 2,
+            "members": 0,
+            "searchable_candidates": 2
+          },
+          {
+            "case": "32616445795",
+            "counts": {
+              "technical_scope": 2,
+              "qualification": 2,
+              "application": 1,
+              "evaluation": 1,
+              "contract": 2,
+              "participation": 2,
+              "schedule": 2,
+              "payment": 1,
+              "security": 1
+            },
+            "elapsed_seconds": 6.754,
+            "originals": 1,
+            "members": 19,
+            "searchable_candidates": 19
+          },
+          {
+            "case": "32616445866",
+            "counts": {
+              "technical_scope": 0,
+              "qualification": 0,
+              "application": 0,
+              "evaluation": 0,
+              "contract": 1,
+              "participation": 1,
+              "schedule": 0,
+              "payment": 0,
+              "security": 0
+            },
+            "elapsed_seconds": 0.687,
+            "originals": 1,
+            "members": 0,
+            "searchable_candidates": 1
+          },
+          {
+            "case": "32616447910",
+            "counts": {
+              "technical_scope": 0,
+              "qualification": 0,
+              "application": 0,
+              "evaluation": 0,
+              "contract": 0,
+              "participation": 0,
+              "schedule": 1,
+              "payment": 0,
+              "security": 1
+            },
+            "elapsed_seconds": 0.239,
+            "originals": 1,
+            "members": 0,
+            "searchable_candidates": 1
+          }
+        ],
+        "semantic_precision": null,
+        "semantic_recall": null,
+        "current_source_accuracy": null,
+        "human_gold": null,
+        "commercial_acceptance": false,
+        "rolling_slo": false
+      },
+      "candidate": {
+        "scope": "ARCHIVED_LEXICAL_ORIGINAL_QUOTE_COVERAGE_ONLY",
+        "complete_cases": 5,
+        "incomplete_cases_refused": 1,
+        "probe_count": 45,
+        "probes_with_citations": 29,
+        "domain_cases_with_citations": {
+          "technical_scope": 3,
+          "qualification": 3,
+          "application": 3,
+          "evaluation": 1,
+          "contract": 4,
+          "participation": 4,
+          "schedule": 4,
+          "payment": 3,
+          "security": 4
+        },
+        "citation_occurrences": 42,
+        "cases": [
+          {
+            "case": "32616444788",
+            "counts": {
+              "technical_scope": 1,
+              "qualification": 1,
+              "application": 2,
+              "evaluation": 0,
+              "contract": 1,
+              "participation": 1,
+              "schedule": 2,
+              "payment": 2,
+              "security": 2
+            },
+            "elapsed_seconds": 4.22,
+            "originals": 4,
+            "members": 0,
+            "searchable_candidates": 4
+          },
+          {
+            "case": "32616445632",
+            "counts": {
+              "technical_scope": 2,
+              "qualification": 1,
+              "application": 1,
+              "evaluation": 0,
+              "contract": 1,
+              "participation": 2,
+              "schedule": 1,
+              "payment": 2,
+              "security": 2
+            },
+            "elapsed_seconds": 2.123,
+            "originals": 2,
+            "members": 0,
+            "searchable_candidates": 2
+          },
+          {
+            "case": "32616445795",
+            "counts": {
+              "technical_scope": 2,
+              "qualification": 2,
+              "application": 1,
+              "evaluation": 1,
+              "contract": 2,
+              "participation": 2,
+              "schedule": 2,
+              "payment": 1,
+              "security": 1
+            },
+            "elapsed_seconds": 7.091,
+            "originals": 1,
+            "members": 19,
+            "searchable_candidates": 19
+          },
+          {
+            "case": "32616445866",
+            "counts": {
+              "technical_scope": 0,
+              "qualification": 0,
+              "application": 0,
+              "evaluation": 0,
+              "contract": 1,
+              "participation": 1,
+              "schedule": 0,
+              "payment": 0,
+              "security": 0
+            },
+            "elapsed_seconds": 0.721,
+            "originals": 1,
+            "members": 0,
+            "searchable_candidates": 1
+          },
+          {
+            "case": "32616447910",
+            "counts": {
+              "technical_scope": 0,
+              "qualification": 0,
+              "application": 0,
+              "evaluation": 0,
+              "contract": 0,
+              "participation": 0,
+              "schedule": 1,
+              "payment": 0,
+              "security": 1
+            },
+            "elapsed_seconds": 0.249,
+            "originals": 1,
+            "members": 0,
+            "searchable_candidates": 1
+          }
+        ],
+        "semantic_precision": null,
+        "semantic_recall": null,
+        "current_source_accuracy": null,
+        "human_gold": null,
+        "commercial_acceptance": false,
+        "rolling_slo": false
+      },
+      "added_citations": [],
+      "prior_citations_retained": true,
+      "default_promoted": false,
+      "semantic_precision": null,
+      "semantic_recall": null,
+      "replay_sha256": "ebe537e6acc88a0fbe9451a699415e99b4a21e237a784f28b56f596bc2d45447"
+    }
+  ],
+  "decision": "NO_DEFAULT_PROMOTION_NO_CONFIRMED_QUALITY_GAIN",
+  "independent_gold": false,
+  "originals_unchanged": true,
+  "isolated_dp_removed": true
+}

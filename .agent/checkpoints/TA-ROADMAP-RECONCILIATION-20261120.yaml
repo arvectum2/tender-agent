@@ -1,0 +1,29 @@
+task_id: TA-ROADMAP-RECONCILIATION-20261120
+status: completed
+goal: Reconcile Tender Agent roadmap and repository hygiene with exact code, CI, source gates and preserved runtime history.
+definition_of_done:
+  - Verify exact canonical main, CI and GitVerse.
+  - Preserve original immutable Spec Kit source criteria and add a reviewed management appendix.
+  - Record branch/worktree inventory and classify unmerged source candidates.
+  - Verify exact documentation CI, independent review and approved merge before closing.
+completed_stages:
+  - Canonical main abcd8727 and mirror verified; latest main CI success.
+  - Initial source-criterion check rejected prepended roadmap edits; corrected appendix passed criterion-review without weakening checks.
+  - PR673 head 5905e3c1 CI 20/20 passed.
+  - On Nov21 reconciled management appendix with verified owner-approved code merge 9b650a2b and actual production DB127; Nov20 state explicitly historical.
+  - Owner+AI review is accepted, no external reviewer; exact original Spec Kit source hashes and criterion/task binding unchanged; strict checker and Ruff PASS locally.
+  - Independent offline restoration of both production physical cluster databases proves archived DP-PITR backup, but post-release schema127 and seven-day horizon remain unproven; issues #679 and #685 separate.
+  - 129 open PRs reduced to 48 by closing 81 exact-main-ancestor PRs with dependency-safe order; PR674 review candidate added, total observed 49.
+  - 183 MI worktrees all clean: 114 HEAD ancestors of main, 69 not ancestors; 114 provisional archive candidates require cross-reference checks before deletion.
+  - Separate SSD clone has four modified and three untracked paths; never cleaned or reset.
+  - PR674 development stack 657+662+618 reconciled in review-only branch: prior extended head 0720f079 CI 19/19, 6649 passed/293 skipped, latest head c0efa7e6 adds unmounted read-only Workspace source; exact CI pending.
+  - PR599 and PR660 distinct incompatible versions of registry and bundle, not mechanically overlaid or removed.
+  - Backend and DP HTTP 200; fairness activation receipt abcd8727 observed, PITR pending first verified TA prewrite, no automatic replay.
+current_stage: exact_ci_20_of_20_success_and_merged_to_main
+remaining_stages: []
+last_verified_commit: b75cd7fedb59ac9841ab17c711271bac891ab7c9
+last_checks: PR673 final reviewed head bc74202b0c0188edc7004c5515f64a8ea723d327 exact GitHub CI 20/20 SUCCESS including GitVerse and criterion review; protected merge created b75cd7fedb59ac9841ab17c711271bac891ab7c9. Local original source tampering negative tests, checker, YAML and Ruff PASS. Production left on prior pinned 9b650a2b.
+resume_instruction: PR673 roadmap update is COMPLETED, merged to main b75cd7fe. Do not repeat merge or reinterpret dated historical status as current. Continue issue #679 original source and #685 physical PITR seven-day, and separately review PR677 dormant catalog; preserve protected original MI, source access 12/9 and existing Watchdog.
+completed_at_utc: 2026-11-21T13:15:50Z
+merged_pr: 673
+merged_main_commit: b75cd7fedb59ac9841ab17c711271bac891ab7c9

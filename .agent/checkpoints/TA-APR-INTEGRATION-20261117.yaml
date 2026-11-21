@@ -1,0 +1,23 @@
+task_id: TA-APR-INTEGRATION-20261117
+status: completed
+goal: Verify exact stacked APR05/06/07/04 review heads and combined isolated integration without modifying verified PR heads or main.
+definition_of_done:
+  - Verify ancestry and exact green CI for four draft PR heads.
+  - Pass integrated targeted regression, isolated actual PostgreSQL backup restore, operator read-only measurement and private disposable onboarding.
+  - Record verification results and separate owner authorization for main merge.
+completed:
+  - Main b843f92ca129dcf9a57bd7935fb53ec31c1372dc unchanged, exact stack bases match predecessor heads; no migrations changed.
+  - PR604 380bbdb0bb50ec0557eb40ebf14100da5ed0ff1b CI 19/19 CLEAN.
+  - PR605 66e664c41453f609ed6fd393b332439fae6cf560 CI 19/19 CLEAN; 6005 pytest pass, 288 skipped.
+  - Combined 14 targeted suites on exact PR607 head passed; actual PostgreSQL R9 migration122 restore, 7 histories, 2 binary downloads, corrupt/wrong scope reject, kill switch, tenant denial.
+  - Actual PostgreSQL read-only role rehearsal pass, private disposable APR04 replay pass, mixed shortlist deterministic byte match.
+  - Owner explicitly authorized merge of PR604 through 607 into main without production deployment; all four exact heads now CI 19/19 CLEAN.
+  - Merged PR604 bbb099ba75bd9fcea612069404d342ee044c0f5d, PR605 c1c2aa1f74a309c03439b26610dddb01795e911e, PR606 a97ba52b67f89b1ce214b6d77f5642c5655d4fca, PR607 a08a34a1d9d51ff6df15f2cf174e000d149209e3 into main. All exact source heads 19/19 successful, each resulting main tree identical to verified head.
+current_stage: merged_verified_no_deployment
+remaining: []
+last_verified_commit: a08a34a1d9d51ff6df15f2cf174e000d149209e3
+test_results:
+  - 174 passed / 2 skipped / 0 failures (20.15s), git diff check PASS.
+  - APR05_R9_RESTORE_PASS; APR07_POSTGRES_OPERATOR_READONLY_PASS; APR04_DISPOSABLE_REPLAY_PASS.
+  - No production, Gemma, live sources or working database changes.
+resume_instruction: Owner-approved PR604–607 merges complete without deployment. Main a08a34a1 tree equals exact PR607 head. Verify new main CI when available. Remaining commercial and production gates external. Continue only independent P0 technical work with no live procurement, model launches, deployment, or further unapproved merges.

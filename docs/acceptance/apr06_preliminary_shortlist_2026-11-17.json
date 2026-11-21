@@ -1,0 +1,216 @@
+{
+  "blockers": [
+    "Independent official source and representative mixed-law corpus approval",
+    "Attributable human review, operator timings and package review",
+    "Owner KPI threshold approval"
+  ],
+  "case_count": 21,
+  "cases": [
+    {
+      "archived_notice_sha256": "5bdc923c00021779a197b69b30a4fb00d2f6949282d0f84f60756e204aa71ee3",
+      "archived_version": "1",
+      "human_review": null,
+      "law": "223fz",
+      "original_attachment_count": 4,
+      "registry_number": "32616444788",
+      "selection_basis": "SUPPLEMENTAL_ARCHIVED_SOURCE_ONLY"
+    },
+    {
+      "archived_notice_sha256": "4a046442328e9917a49dbafdad9712600ecd51f0b709b5224fad28f947f6d6a6",
+      "archived_version": 1,
+      "human_review": null,
+      "law": "44fz",
+      "original_attachment_count": 4,
+      "registry_number": "0127100008626000013",
+      "selection_basis": "HISTORICAL_DEVELOPMENT_ONLY"
+    },
+    {
+      "archived_notice_sha256": "ae2ff6b5a68999ffb7c70cc8c762f101ffb70363b0b913e0e5c5475bea2ac26d",
+      "archived_version": 1,
+      "human_review": null,
+      "law": "44fz",
+      "original_attachment_count": 4,
+      "registry_number": "0137200001226007700",
+      "selection_basis": "HISTORICAL_DEVELOPMENT_ONLY"
+    },
+    {
+      "archived_notice_sha256": "d78c77d484130e004c6678b0e41608c847487f462da873fd226d8a5b3b20a3ce",
+      "archived_version": 1,
+      "human_review": null,
+      "law": "44fz",
+      "original_attachment_count": 4,
+      "registry_number": "0148200000526000028",
+      "selection_basis": "HISTORICAL_DEVELOPMENT_ONLY"
+    },
+    {
+      "archived_notice_sha256": "4d204d076a2386adc1c94db8299b1ffa7a6dcff9b4163126c3097d2594af1d1a",
+      "archived_version": 1,
+      "human_review": null,
+      "law": "44fz",
+      "original_attachment_count": 5,
+      "registry_number": "0149200002326001555",
+      "selection_basis": "HISTORICAL_DEVELOPMENT_ONLY"
+    },
+    {
+      "archived_notice_sha256": "8e35b7f24d4059f9f2b6bf490afccd0ba8346a926cc95d2e0365c0a5bf799611",
+      "archived_version": 1,
+      "human_review": null,
+      "law": "44fz",
+      "original_attachment_count": 4,
+      "registry_number": "0151600003226000011",
+      "selection_basis": "HISTORICAL_DEVELOPMENT_ONLY"
+    },
+    {
+      "archived_notice_sha256": "67daa28bbbc539b07afc18808959a27c78706feef27c94aba2b2be5bbb363029",
+      "archived_version": 1,
+      "human_review": null,
+      "law": "44fz",
+      "original_attachment_count": 6,
+      "registry_number": "0152200004026000069",
+      "selection_basis": "HISTORICAL_DEVELOPMENT_ONLY"
+    },
+    {
+      "archived_notice_sha256": "2fe41acb72bc73d3f165829aa06ecc43cffc225e5de0ef333c20ba51fd2ecc4b",
+      "archived_version": 5,
+      "human_review": null,
+      "law": "44fz",
+      "original_attachment_count": 5,
+      "registry_number": "0158300034526000388",
+      "selection_basis": "HISTORICAL_DEVELOPMENT_ONLY"
+    },
+    {
+      "archived_notice_sha256": "6712bf2058e7f7d047d6fb15467b7d173de48e06dbd82fff6295e8f69f6b6b20",
+      "archived_version": 4,
+      "human_review": null,
+      "law": "44fz",
+      "original_attachment_count": 5,
+      "registry_number": "0162200011826003089",
+      "selection_basis": "HISTORICAL_DEVELOPMENT_ONLY"
+    },
+    {
+      "archived_notice_sha256": "54530f2cdcf6f4e459f0b539d932ac5067e2ea026a956718cd8a69ce98955614",
+      "archived_version": 1,
+      "human_review": null,
+      "law": "44fz",
+      "original_attachment_count": 5,
+      "registry_number": "0162300005826000156",
+      "selection_basis": "HISTORICAL_DEVELOPMENT_ONLY"
+    },
+    {
+      "archived_notice_sha256": "04b3a50909decfd6d0a431b466a0359001ad124f58c648b86948328490b05298",
+      "archived_version": 1,
+      "human_review": null,
+      "law": "44fz",
+      "original_attachment_count": 5,
+      "registry_number": "0169300003326000181",
+      "selection_basis": "HISTORICAL_DEVELOPMENT_ONLY"
+    },
+    {
+      "archived_notice_sha256": "498ee1b2f907b263cd946949ca343972758b70f9334c5dacafad370b512265a6",
+      "archived_version": 1,
+      "human_review": null,
+      "law": "44fz",
+      "original_attachment_count": 4,
+      "registry_number": "0169300008226000223",
+      "selection_basis": "HISTORICAL_DEVELOPMENT_ONLY"
+    },
+    {
+      "archived_notice_sha256": "12533a5fb07fe6152310fbaf1f636b99b538d72ac1ceeb9c6cd0673e0aa09f12",
+      "archived_version": 1,
+      "human_review": null,
+      "law": "44fz",
+      "original_attachment_count": 4,
+      "registry_number": "0169300008226000225",
+      "selection_basis": "HISTORICAL_DEVELOPMENT_ONLY"
+    },
+    {
+      "archived_notice_sha256": "e52bb5a8cea4160987bd9a77f79a62bca3530410ca227e6ca3dde2d71a0d1f57",
+      "archived_version": 1,
+      "human_review": null,
+      "law": "44fz",
+      "original_attachment_count": 6,
+      "registry_number": "0348100024426000021",
+      "selection_basis": "HISTORICAL_DEVELOPMENT_ONLY"
+    },
+    {
+      "archived_notice_sha256": "2580e43ef01f2a3b57f6e690bc09572859eafb1b7c43243b511890c083182a9d",
+      "archived_version": 3,
+      "human_review": null,
+      "law": "44fz",
+      "original_attachment_count": 7,
+      "registry_number": "0348100024426000039",
+      "selection_basis": "HISTORICAL_DEVELOPMENT_ONLY"
+    },
+    {
+      "archived_notice_sha256": "02fb7a3e0bb7297417f715e2cae144d8a96dddfcfc5a4ec512a0fdd042213adf",
+      "archived_version": 1,
+      "human_review": null,
+      "law": "44fz",
+      "original_attachment_count": 5,
+      "registry_number": "0349100009326000005",
+      "selection_basis": "HISTORICAL_DEVELOPMENT_ONLY"
+    },
+    {
+      "archived_notice_sha256": "0e4b65ba36fad901856783aa2c1903ed9a70eae98966c663bc67e16565826db8",
+      "archived_version": 2,
+      "human_review": null,
+      "law": "44fz",
+      "original_attachment_count": 4,
+      "registry_number": "0360600005326000018",
+      "selection_basis": "HISTORICAL_DEVELOPMENT_ONLY"
+    },
+    {
+      "archived_notice_sha256": "ed5c742b554913c65d9001b658aa23619df418b2d19e6f6d6754a1bc70141bba",
+      "archived_version": 1,
+      "human_review": null,
+      "law": "44fz",
+      "original_attachment_count": 5,
+      "registry_number": "0372200172326000015",
+      "selection_basis": "HISTORICAL_DEVELOPMENT_ONLY"
+    },
+    {
+      "archived_notice_sha256": "9709b7c86856fe8f1f53e0a090e1a0094bc3a03dd7e15da98e571a6126dd505d",
+      "archived_version": 1,
+      "human_review": null,
+      "law": "44fz",
+      "original_attachment_count": 4,
+      "registry_number": "0376300000126000193",
+      "selection_basis": "HISTORICAL_DEVELOPMENT_ONLY"
+    },
+    {
+      "archived_notice_sha256": "3bb0c7f143df7a71cafd4b4fcaa336f0e197bafbac30590178da70887c9dc777",
+      "archived_version": 1,
+      "human_review": null,
+      "law": "44fz",
+      "original_attachment_count": 4,
+      "registry_number": "0377100005726000128",
+      "selection_basis": "HISTORICAL_DEVELOPMENT_ONLY"
+    },
+    {
+      "archived_notice_sha256": "d0a17037e52e9ae7a0ef374241bf865a0efaf2a9db7cdfc278f36b720a7b0f04",
+      "archived_version": 1,
+      "human_review": null,
+      "law": "44fz",
+      "original_attachment_count": 6,
+      "registry_number": "0895100000126000897",
+      "selection_basis": "HISTORICAL_DEVELOPMENT_ONLY"
+    }
+  ],
+  "commercial_corpus_frozen": false,
+  "commercial_release_authorized": false,
+  "current_eis_checked": false,
+  "human_reviews": 0,
+  "law_counts": {
+    "223fz": 1,
+    "44fz": 20
+  },
+  "original_attachment_count": 100,
+  "original_candidate_selection_changed": false,
+  "representativeness_approved": false,
+  "schema": "apr06_preliminary_archived_review_shortlist_v1",
+  "source_sha256": {
+    "apr06_mixed_archive_readiness_2026-11-17.json": "f1bf6d1cb683738545e9e231fbb8a8e2f5ed174bf3e315ef14a19a73a57e6ef0",
+    "apr06_overlap_historical_source_packets_2026-11-17.json": "89a8e3b4d690710fe51e70df8c26739452d31b7ac75ee4b1d082113a0beee77c"
+  },
+  "state": "REVIEW_SHORTLIST_NOT_FROZEN"
+}

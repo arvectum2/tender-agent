@@ -206,7 +206,7 @@ def run_with_full_corpus_research(
                     or typed_eis_audit["contradictions_count"]
                 )
                 else "EVIDENCE_INTEGRITY_REVIEW"
-                if invalid_proofs
+                if invalid_proofs or typed_eis_audit["assertion_limit_exceeded"]
                 else "SEMANTIC_REVIEW_REQUIRED"
             ),
             "documents_indexed": research["extracted_document_count"],
@@ -219,6 +219,7 @@ def run_with_full_corpus_research(
             "ambiguous_or_missing_clause_refs": len(unresolved),
             "source_modality_contradictions": modality_audit["contradiction_count"],
             "historical_eis_value_contradictions": typed_eis_audit["contradictions_count"],
+            "eis_assertion_limit_exceeded": typed_eis_audit["assertion_limit_exceeded"],
             "missing_eis_fields_in_llm_summary": typed_eis_audit["unmentioned_archived_eis_fields"],
             "source_quote_proof_failures": invalid_proofs,
             "claim_semantics_verified": False,
@@ -246,6 +247,10 @@ def run_with_full_corpus_research(
                     "историческому оригиналу XML ЕИС. Нужна сверка актуальной "
                     "официальной редакции; допуск заблокирован.",
                 )
+        if typed_eis_audit["assertion_limit_exceeded"]:
+            limitations = metadata.setdefault("limitations", [])
+            if isinstance(limitations, list):
+                _once(limitations, "Превышен лимит проверки явных утверждений ЕИС; часть утверждений не проверена.")
         if invalid_proofs:
             limitations = metadata.setdefault("limitations", [])
             if isinstance(limitations, list):

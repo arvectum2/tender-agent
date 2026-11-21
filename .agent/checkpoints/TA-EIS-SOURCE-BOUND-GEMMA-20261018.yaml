@@ -1,0 +1,73 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-EIS-SOURCE-BOUND-GEMMA-20261018
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Preserve actual quality profile Gemma 4 12B via llama.cpp and prepare one verified original EIS 44-FZ archive with exact XML and filestore attachments for Tender Research / Data Platform and first actual source-bound LLM evaluation.
+definition_of_done:
+  - Verify canonical source/worker checkpoints, PR #495, production Gemma endpoint and model ID with actual server process; never conflate Ollama or Qwen with default quality model.
+  - Set worker model default or explicit quality profile to live Gemma llama.cpp 8081 without altering global runtime or starting second LLM process.
+  - Implement strict archive XML and official attachments SHA manifest with bounded offline/first-party acquisition, private no-symlink owner storage, reject missing/unsupported/ambiguous attachment without fake extraction.
+  - Prepare exact source-backed Tender Research records and full original docs using existing Data Platform indexing without misrepresenting archived legal status.
+  - Validate first small actual model evaluation only after live source/version, Data Platform readiness and prewrite backup gates; save genuine run and report in canonical existing database if possible, otherwise document objective blockers accurately.
+  - Add adversarial and regression tests, update roadmap and checkpoint, publish review-only stacked PR and verify CI; no main merge/deploy/ETP/customer actions without AM-4.
+completed:
+  - "2026-10-18 23:38 MSK official local Gemma 4 12B quality profile PID 53560 llama-server, model GGUF gemma4-12b-qat-q4.gguf, localhost 8081/v1/models HTTP200 ID arvectum-gemma4-12b-it-qat-q4_0; Ollama separate PID 56617 11434; Qwen3Embedding llama-server separate and Qwen 4B Ollama only, not intended analysis quality model."
+  - "PR #495 exact-head 19/19 PASS; main/production unchanged, DB 119 learning and 45 existing analysis runs."
+current: "Completed one true source-SHA-bound local Gemma 4 12B llama.cpp 8081 analysis on version-2 official Smolensk EIS documentation; persisted full real report and source-verified completion."
+remaining: []
+last_verified_commit: 0f473a4231287866053be9622c74fad43a42a3f7
+test_results:
+  - "Real primary 44-FZ Smolensk Duma original getDocsIP ZIP v2 SHA 4cec297f6bd040723105fab5ac03a3d10e986b3c03b03032a7da3c3769389d5d, 6/6 attachments freshly fetched and magic/SHA checked; 5 DOCX +1 opaque ZIP."
+  - "Originals private 0600 owner ArvectumSSD saved; existing canonical DB tender count 20 -> 21, original documents +6. Learning remains 119 and no fabricated analysis."
+  - "Protected operator Data Platform API key from existing ~/.config/arvectum/apr04-local.env 0600; initial without key HTTP401, with key expected HTTP404 for nonexistent test collection."
+  - "Verified mounted ArvectumSSD ingestion-capacity state NORMAL; full prewrite pg_dump SHA 5ac55cd76c8f45c8720a49011b7ffbce3b6888ab4b3de3348f20f099bf836698 for Data Platform prepare."
+  - "Existing prepare_tender_for_analysis succeeded: 5 original DOCX extracted, 72 real chunks and 72 embeddings, 0 warnings/errors, result ready_for_analysis True; local Gemma worker preflight 1/10 truly ready."
+  - "Full backup SHA a5f9b90df2beb240ba1f264e7068eb9aa521910550454e444f92d70516e0684a verified prior to live Gemma analysis; actual 251-second inference completed."
+  - "Saved real TenderAnalysisRun ee8b1140-1cc6-46ef-b1db-661931fac69a: status completed, used_llm true, Gemma 4 12B llama.cpp model, 10 completed sections, 19 unique cited sources, source source_queue."
+  - "One unreviewed immutable source-version completion persisted with SHA of original EIS ZIP and new RAG markdown report, report mode 0600; independent SQL and on-disk SHA audit PASS; 1 source is marked fully analyzed, 9 remain pending."
+  - "Canonical database 119 -> 121 learning observations, 45 -> 46 historical+new actual analysis runs; 0 human-gold, 0 ETP/bid GO; operator/backend, Data Platform and Gemma 8081 health all HTTP200."
+  - "12 targeted source manifest and anti-tamper tests PASS, complete relevant regression 885 PASS / 4 SKIP, Ruff PASS, bash -n PASS, Git diff check PASS; upstream #495 19/19 CI."
+
+
+resume_instruction: "EIS Smolensk exact archived ZIP v2 six originals, Data Platform 72 chunks/72 embeddings and real Gemma 4 12B llama.cpp 8081 run ee8b1140-1cc6-46ef-b1db-661931fac69a completed and saved source bound (DB 121 learning, 46 analysis, 9 pending). Check current PR exact-head CI and AM-4 approval. Next prepare the remaining NGTU and Moscow Region original EIS attachment sets, handle opaque ZIP/DOC files with explicit evidence limits; source bound index and actual Gemma run for qualified docs. Add a protected orchestration call after accepted release and configure canonical DB/operator env; no automatic training/ETP bids/merge until authorized."
+code_commit: 0f473a4231287866053be9622c74fad43a42a3f7
+report: docs/roadmap/TENDER_AGENT_EIS_ORIGINAL_GEMMA_FIRST_REAL_RUN_2026-10-18.md
+entrypoint: scripts/procurement_llm/prepare_eis_original_documents.py
+actual_model_backend: llama.cpp
+actual_model_url: http://127.0.0.1:8081/v1
+actual_model_id: arvectum-gemma4-12b-it-qat-q4_0
+actual_model_gguf: gemma4-12b-qat-q4.gguf
+actual_ollama_used_for_generation: false
+actual_qwen_used_for_generation: false
+smolensk_registry_number: "0163200000326005243"
+smolensk_official_archived_zip_sha256: 4cec297f6bd040723105fab5ac03a3d10e986b3c03b03032a7da3c3769389d5d
+smolensk_official_archived_notice_version: 2
+smolensk_official_attached_originals: 6
+smolensk_docx_processed: 5
+smolensk_opaque_zip_not_text_read: 1
+smolensk_data_platform_chunks: 72
+smolensk_data_platform_embeddings: 72
+smolensk_preparation_ready_for_analysis: true
+real_gemma_analysis_run_id: ee8b1140-1cc6-46ef-b1db-661931fac69a
+real_gemma_analysis_status: completed
+real_gemma_analysis_llm_used: true
+real_gemma_analysis_sections: 10
+real_gemma_analysis_unique_cited_sources: 19
+real_gemma_analysis_seconds_approx: 251
+real_gemma_analysis_report_sha_verified: true
+real_gemma_analysis_report_mode_0600_verified: true
+learning_observations_before: 119
+learning_observations_after: 121
+analysis_runs_before: 45
+analysis_runs_after: 46
+source_versions_pending_before: 10
+source_versions_pending_after: 9
+source_version_verified_completion_events_created: 1
+model_human_gold_promotions: 0
+current_live_eis_legal_status_verified: false
+actual_bid_go: false
+source_pipeline_and_worker_installed_scheduler: false
+regression_passed: 885
+regression_skipped: 4
+review_status: review_only_pr_ci_and_am4_approval_pending

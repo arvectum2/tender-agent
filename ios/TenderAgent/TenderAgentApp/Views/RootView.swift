@@ -4,6 +4,7 @@ private enum RootTab: Hashable {
     case inbox
     case portfolio
     case settings
+    case companies
 }
 
 struct RootView: View {
@@ -31,6 +32,10 @@ struct RootView: View {
                             ProcurementDetailView(procurementID: id)
                         }
                 }
+            }
+
+            Tab("Компании", systemImage: "building.2", value: RootTab.companies) {
+                NavigationStack { CompanyPortfolioView() }
             }
 
             Tab("Настройки", systemImage: "gearshape", value: RootTab.settings) {

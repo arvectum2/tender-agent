@@ -1,3 +1,4 @@
+import os
 from contextlib import asynccontextmanager
 from datetime import UTC, datetime
 from pathlib import Path
@@ -7,11 +8,15 @@ from fastapi import FastAPI
 from src.modules.electrical_ontology_shadow.middleware import (
     install_electrical_ontology_shadow_middleware,
 )
+from src.modules.procurement_portfolio.workspace_reference_endpoint import (
+    install_workspace_reference,
+)
 from src.shared.api.errors import register_exception_handlers
 from src.shared.api.middleware import install_runtime_middlewares
 from src.shared.api.router_registry import install_application_routers
 from src.shared.api.site_mount import install_optional_site_mount
 from src.shared.config.settings import get_settings
+from src.shared.db.session import engine
 from src.shared.redis.client import close_client, health_snapshot
 from src.shared.storage.capacity import storage_metrics_dict
 
@@ -29,6 +34,12 @@ install_runtime_middlewares(app, settings)
 install_electrical_ontology_shadow_middleware(app)
 register_exception_handlers(app)
 install_application_routers(app)
+install_workspace_reference(
+    app, engine=engine,
+    path=os.environ.get("ARVECTUM_WORKSPACE_PROCUREMENT_MANIFEST"),
+    pin=os.environ.get("ARVECTUM_WORKSPACE_PROCUREMENT_MANIFEST_SHA256"),
+    release=os.environ.get("ARVECTUM_WORKSPACE_PROCUREMENT_SOURCE_RELEASE"),
+)
 
 
 @app.get("/health")

@@ -1,0 +1,56 @@
+task_id: TA-INDEPENDENT-FORM-REVIEW-20261119
+status: in_progress
+goal: Assigned independent tenant member review of an exact immutable private original-form candidate.
+definition_of_done:
+- Separate creator and named active authorized reviewer; tenant/run access and default-off API.
+- Bounded immutable candidate bytes/source/map/facts; exact acknowledgement after fresh recheck;
+  no external export.
+- Isolated synthetic tests, migration verification and draft publication.
+completed:
+- Previous PR662 exact ad0b7f24 CI 19/19.
+- Migration 124 and immutable bounded candidate/receipt models; default-off authenticated scoped
+  API, explicit distinct assigned reviewer, repeated evidence/source/member checks and exact byte
+  acknowledgement.
+- SaaS UI assignment, queue, SHA-verified DOCX download and explicit acknowledgement; no release/export.
+  Synthetic HTTP, migration and actual Chromium synthetic network acceptance passed.
+- CI at 1aa2ee16 quality failed twice at hosted company cabinet JS; fixed new Option dependency
+  via shared DOM helpers. Actual existing Node regression and all 4 Chromium scenarios pass.
+- Isolated local PostgreSQL 16.16 synthetic migration 124 empty roundtrip, distinct-member CHECK,
+  concurrent unique receipt, nonempty downgrade refusal and pg_dump/pg_restore exact row comparison
+  all passed. Reproducible scripts/acceptance/run_apr04_form_review_postgres.py.
+- 'Disposable PG16.16 API fixture: concurrent independent authenticated ASGI requests with independent
+  sessions both returned the same receipt id; exactly one persisted receipt and one audit event;
+  release flags false. Reused synthetic source/identity fixture. All earlier migration/restore assertions
+  passed again.'
+- Exact PR662 head 666d4379 CI 19/19 SUCCESS; local PG16 migration/restore/concurrent API acceptance
+  successor 55b349eb published.
+- Actual Chromium desktop 1280/mobile 390 against local Uvicorn/FastAPI with per-request sessions
+  and temporary SQLite DB; actual creator/reviewer authentication, assigned candidate creation,
+  downloaded DOCX SHA, confirmation, logout and one receipt/audit verified without mocked HTTP responses.
+  Source observation and identity data synthetic.
+current_stage: remote_ci_pending_live_loopback_browser_pass
+remaining:
+- Verify exact PR662 remote head 55b349eb CI; 11 SUCCESS / 8 pending at last check, no failures.
+- Publish local loopback browser acceptance successor after current CI. Verify exact successor CI.
+- Production recovery/retention, real source/profile, independent human/semantic review and authorized
+  release remain open. Browser acceptance uses temporary SQLite and synthetic source, real API;
+  PostgreSQL concurrency exercised separately.
+last_verified_commit: 666d4379fbe41d56e64c69ef1210912fb5ee6708
+test_results:
+- 33 passed, 18 warnings in 3.50s exit 0, targeted original candidate/review, authenticated private
+  review, commercial export/content review and migration 124 isolated SQLite.
+- Actual Chromium 1280/390 synthetic network PASS for original-form review and prior private/customer
+  archive regression; tamper refusal, explicit selection, separate participants, reset.
+- Ruff and git diff --check PASS.
+- Node tests/js/company_portfolio_flow.cjs PASS; Chromium original and authenticated desktop/mobile
+  PASS after fix.
+- PG16 acceptance script exit 0; Ruff PASS. No production DB, actual API concurrency, retention
+  or real data tested.
+- PG16 integrated runner exit 0 including concurrent HTTP/ASGI 1 passed, 2 warnings; ordinary isolated
+  test selection 5 passed, 1 PG opt-in skipped, Ruff and git diff --check PASS. First fixture execution
+  rejected macOS /tmp symlink; corrected path resolution and reran successfully.
+- Opt-in actual loopback browser 2 passed, 2 warnings in 10.67s; ordinary suite 5 passed, 3 opt-in
+  skipped, Ruff and git diff --check PASS.
+resume_instruction: Verify exact remote PR662 head 55b349eb CI; then publish local loopback browser
+  acceptance successor and verify its CI. Do not rerun rejected readiness operation. No production
+  or external release.

@@ -1,0 +1,20 @@
+task_id: TA-APR03B-MULTIPLE-SOURCE-CLAIMS-20261117
+status: completed
+goal: Prevent first-match-only audit from hiding later conflicting labelled price/deadline claims and normalize equivalent aware timestamps.
+definition_of_done:
+  - Audit each supported explicit labelled assertion, not only first match, with bounded overflow exposed and review required.
+  - Compare aware timestamps by UTC instant; preserve source values and never infer missing timezone.
+  - Add adversarial unit and actual operator projection regressions and run focused tests; publish draft PR.
+completed:
+  - Verified exact PR608 and main CI, 6031 passed / 288 skipped each.
+  - Fixed first-match audit to check labelled price and deadline assertions in source order, maximum 100 plus overflow sentinel. Overflow visible in typed evidence, operator quality gate, limitations and expert prefill.
+  - Equivalent aware timestamps compare UTC instants; timezone-free claim remains UNKNOWN; historic original values unchanged.
+  - Real archived normalized EIS notice replay with four synthetic assertions: two matched, two contradictions detected; no model run.
+  - Exact PR609 head 00debad91eb1f704f35bccc3be54acefd3d456f4 CI 19/19; owner-approved merges PR608 f39faa556c9575993cf777b065c018e7ddce2de7 and PR609 a1686d85baf139b7a01b0f29ae8283a266938482; both tree matches.
+current_stage: merged_verified_no_deployment
+remaining: []
+last_verified_commit: a1686d85baf139b7a01b0f29ae8283a266938482
+test_results:
+  - 123 focused regressions PASS / 1 SKIP, Ruff and diff check PASS.
+  - Archived normalized real notice 0372200172326000015: 4 assertions, 2 matches and 2 contradictions. Synthetic assertions only, no new legal status.
+resume_instruction: Engineering completed, merged into main. Owner approved APR08 development; no production, live sources, model or commercial gate approval.

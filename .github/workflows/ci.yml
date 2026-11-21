@@ -23,6 +23,26 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build runtime image from clean checkout
         run: docker build --tag tender-agent-ci:${{ github.sha }} .
+      - name: Build exact pilot image and verify packaged PRICE-01 gates
+        timeout-minutes: 20
+        shell: bash
+        run: |
+          image="tender-agent-pilot-ci:${GITHUB_SHA}"
+          docker build --file deploy/pilot/Dockerfile --build-arg REVISION="${GITHUB_SHA}" --tag "$image" .
+          docker run --rm -i --network=none --entrypoint python "$image" - <<'PYTHON'
+          import os
+          from scripts.acceptance.run_price01_staging import FLAGS
+          from src.modules.saas_foundation.company_historical_comparables import _archives
+          from src.modules.saas_foundation.company_reviewed_contracts import _approved_release
+          from src.shared.config.settings import Settings
+          settings = Settings(_env_file=None)
+          assert os.getuid() != 0, 'Pilot image must run as non-root'
+          assert not settings.saas_foundation_enabled
+          assert all(not getattr(settings, 'saas_company_' + flag + '_enabled') for flag in FLAGS)
+          assert len(_archives()[3]) == 6, 'Historical archive incomplete'
+          assert _approved_release() is not None, 'Reviewed registry unavailable'
+          print('PILOT_IMAGE_PRICE01_OFFLINE_PASS')
+          PYTHON
       - name: Verify optional landing preview dependency is explicit
         shell: bash
         run: |
@@ -54,6 +74,10 @@ jobs:
       - name: Install locked Python dependencies
         run: python -m pip install --require-hashes -r requirements.lock
       - run: make check
+      - name: Require hosted Node for company cabinet contract
+        run: |
+          node --version
+          PYTHON="$(command -v python)" node tests/js/company_portfolio_flow.cjs
       - name: Run make test
         shell: bash
         run: |
@@ -145,6 +169,15 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install --yes poppler-utils
       - name: Install locked Python dependencies
         run: python -m pip install --require-hashes -r requirements.lock
+      - name: Pre-pull R8 database image (bounded registry retry)
+        run: |
+          for attempt in 1 2 3; do
+            if timeout 120 docker pull pgvector/pgvector:pg16; then
+              exit 0
+            fi
+            if [ "$attempt" -lt 3 ]; then sleep "$((attempt * 10))"; fi
+          done
+          exit 1
       - run: make test-r8-acceptance-tenant-concurrency
         env:
           GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}

@@ -20,6 +20,7 @@ if __package__ in (None, "") and __file__ != "<stdin>":
 from src.modules.tender_operator_agent_demo.eis_archived_source_integrity import (
     RECEIPT_NAME,
     fetch_current_getdocs_and_binaries,
+    valid_original_retrieval_timestamp,
     verify_saved_source_snapshot,
 )
 from src.modules.tender_operator_agent_demo.upload_service import (
@@ -33,6 +34,8 @@ def save_receipt(run_id: str, record: dict) -> bool:
             or record.get("current_live_notice_status_verified") is not False
             or record.get("owner_legal_go") is not False):
         raise ValueError("cannot save incomplete or misleading EIS original receipt")
+    if not valid_original_retrieval_timestamp(record.get("fresh_observation_utc")):
+        raise ValueError("missing, naive or implausibly future original retrieval observation time")
     if record["run_id"] != run_id:
         raise ValueError("receipt run identity mismatch")
     source = verify_saved_source_snapshot(run_id)

@@ -242,9 +242,12 @@ def build_mobile_digest(session: Session) -> dict:
     )
     if run is None or not isinstance(run.digest_json, dict):
         return {
-            "run_id": None,
-            "profile_id": None,
-            "profile_version": None,
+            "run_id": run.run_id if run else None,
+            "profile_id": run.profile_id if run else None,
+            "profile_version": run.profile_version if run else None,
+            "run_status": run.status if run else None,
+            "current_stage": run.current_stage if run else None,
+            "discovery_incomplete": None,
             "counts": {},
             "actionable": [],
             "human_control": {
@@ -255,6 +258,8 @@ def build_mobile_digest(session: Session) -> dict:
         }
 
     digest = dict(run.digest_json)
+    digest["run_status"] = run.status
+    digest["current_stage"] = run.current_stage
     portfolio = build_mobile_portfolio(session)
     current_by_deal = {item["deal_id"]: item for item in portfolio["items"]}
     actionable: list[dict] = []

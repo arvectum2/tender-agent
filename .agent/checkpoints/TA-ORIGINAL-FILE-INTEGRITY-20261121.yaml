@@ -1,0 +1,28 @@
+task_id: TA-ORIGINAL-FILE-INTEGRITY-20261121
+status: in_progress
+goal: Make existing EIS 44-FZ and 223-FZ original-file acquisition fail closed on missing, mutated or unverified local bytes, without changing production workers or original access permissions.
+definition_of_done:
+  - Check already-downloaded bytes against pinned SHA-256 and optional byte length before counting them usable.
+  - Reject unverified or symlinked filename collisions; prevent blind cache reuse and remote hash/length mismatch.
+  - Bound response reads and write complete files via exclusive atomic publication without clobbering originals.
+  - Stop readiness/old index reuse when original integrity fails, preserving actionable error state.
+  - Pass focused and exact GitHub CI; document source authorization, PITR and deployment approval gates.
+completed_stages:
+  - Verified exact main abcd8727 existing downloader blindly trusted database downloaded flags and filename caches; PR674 did not touch document_store.py.
+  - Implemented read-only existing-file verification, bounded fresh download and atomic non-clobber publication.
+  - Preparation and status endpoints now refuse stale chunks/index when a known original has failed verification.
+  - Rehearsed synthetic EIS originals and existing RI223 RAR processing without any network requests.
+  - 111 focused RAG, source file, RAR, Data Platform and storage guardrail tests PASS, 13 warnings; Ruff PASS, git diff check PASS.
+  - Added a transaction durability boundary: source file metadata is committed before Data Platform processing; a real SQLite synthetic outage verifies that a new session retains the original file SHA, status and bytes. Successor 112 tests PASS, 13 warnings; Ruff PASS.
+  - Fixed direct analyze_tender/API/async job bypass with read-only EIS original-byte check before Data Platform, even if previously indexed. Missing/pending/mutated and previously failed originals block. New 5 regressions, 176 focused analysis, DP, RAG, DTR and file tests PASS (30 warnings); Ruff PASS.
+current_stage: analysis_entrypoint_integrity_successor_ci
+remaining_stages:
+  - Submit isolated PR from current main and confirm exact CI and GitVerse mirror.
+  - Independently test review of real source-original metadata, upstream redirects and revision boundaries under source-specific admission.
+  - Verify production release pin, original-source authorization, full PITR and AM4 owner approval before any deployment or reprocessing.
+base_main: abcd8727326c398d870edbc4a2da793e090ac8eb
+last_verified_commit: 07afb473e7a9d1f8d92f49f3c8c0233d3cbde7dd
+last_checks: 176 focused PASS / 30 warnings after direct analysis source check, Ruff PASS and diff-check PASS. New exact PR CI pending, prior PR heads 19/19 PASS.
+original_recovery_performed: false
+production_changed: false
+resume_instruction: Validate new exact PR678 and PR674 integrated CI after direct analysis original-integrity guard; keep drafts until original EIS/223-FZ source permission, revision, current runtime/PITR and AM-4 owner gates. Do not fetch EIS/ETP, retry blocked DTR, modify live DB, merge main or deploy. Preserve source history, current main task and 9 unpushed MI commits.

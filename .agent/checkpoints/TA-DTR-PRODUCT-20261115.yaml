@@ -1,0 +1,668 @@
+task_id: TA-DTR-PRODUCT-20261115
+status: in_progress
+goal: 'Owner-approved parallel product roadmap: DTR reliability, profile separation,
+  mobile API and SwiftUI, existing workspace UX, isolated acceptance; preserve live
+  SIBUR collection.'
+definition_of_done:
+- Reliable restartable DTR with truthful discovery and bounded concurrency
+- Profile-aware separation of company decisions and data, no unverified Sionika live
+  activation
+- Shared mobile/web contract and native client improvements
+- Isolated end-to-end acceptance; no live deployment without permission
+completed:
+- Canonical accepted main 35c44a89 audited; DTR existing modules and specification
+  inspected; uncovered dropped PENDING/RUNNING recovery, false-success discovery,
+  missing Docker profile config, profile-version reuse issue.
+- DTR same-run execution lock, PENDING/RUNNING recovery, original discovery window
+  retry, explicit incomplete-source result, frozen-profile snapshot dedupe, invalid
+  profile ID rejection, all image profile packaging.
+- Mobile digest now distinguishes queued run from no run and includes status/stage
+  and discovery completeness.
+- 39 targeted offline tests PASS, Ruff and make check PASS; isolated ARM64 image dtr-review-85937edb
+  loads arvectum-it v2 13 queries and mobile contract.
+- 'Profile isolation audit: global canonical intake/deal dedupe by procurement number
+  and deal-based decision identity; mobile projections unscoped; intake IT classification
+  hardcoded. No second company profile activated. Documented next design in docs/product/DTR_PARALLEL_PRODUCT_INCREMENT_2026-11-15.md.'
+- Found existing scoped ProcurementCase/PilotProject and SaaS principal; reuse them,
+  no global Deal rewrite.
+- 'Company portfolio foundation: reuse company-scoped PilotProject/ProcurementCase,
+  existing SaaS Bearer principal and legal/role gates; independent manual EIS reference
+  cases and typed API; no global Deal or source duplication.'
+- Migration 108 adds append-only case decision history, member/tenant binding, revision
+  conflict protection, idempotency and timezone-aware DEFER. No legacy backfill; populated
+  history downgrade prohibited.
+- 'Cross-company HTTP tests: same reference yields separate case IDs and decisions;
+  foreign case/history read and write denied; role and legal gates, replay, pagination,
+  optimistic conflict checked.'
+- '79 offline tests passed, 1 optional skipped, Ruff/make check/diff PASS. Disposable
+  PostgreSQL: DTR same-run guard held across commit, independent session rejected,
+  release on normal and exception paths; actual migration 108 and concurrent decision
+  race PASS (200/409, one stored row). Temporary DB containers removed.'
+- PR532 and PR533 exact heads CLEAN, CI 19/19 each. Existing supplier_profile fact
+  versions and source snapshot verifier identified for scoped case evidence.
+- PR532/533 exact head CI 19/19 CLEAN. Company search-context API reads own versioned
+  criteria; migration 109 binds existing company case to owned SaaS run and immutable
+  supplier-profile fact, with pinned local saved-source receipt fingerprint. Foreign
+  requests rejected; same EIS number required; profile updates make old evidence historical;
+  tamper rejected.
+- 149 offline tests passed, 1 optional skipped. Integrated HTTP test verifies actual
+  synthetic original ZIP/XML/attachment files; report/qualification projection mocked
+  for isolation. Existing qualification and source integrity suites included; migration
+  SQLite upgrade/downgrade and populated rollback denial PASS. Ruff/make check PASS.
+- Evidence PR534 published at 305f43ad.
+- Native SwiftUI owner mobile fetches canonical DTR digest, distinguishes pending/running/incomplete/error/complete/unknown
+  old backend, separate unavailable state without dropping portfolio; refresh after
+  decision, clear on disconnect, configuration guard before digest assignment.
+- Actual Swift decoder/status runtime probes 6/6 PASS; unsigned generic iOS simulator
+  build-for-testing PASS twice with Xcode 27.1. No simulator XCTest execution or physical
+  device installation.
+- 'Native Companies tab: existing SaaS token import, separate device-only Keychain
+  origin+credentials, account selection with fail-closed tenant/customer/member identity
+  comparison, explicit HTTPS origin trust and redirect denial, scoped paginated cases/read-only
+  decisions and role-gated evidence binding list. No owner token or global portfolio
+  fallback. Backend /api/saas/me now includes authenticated company name.'
+- 31 SaaS tests PASS, 1 optional skipped; Ruff PASS; actual Swift standalone identity/portfolio/HTTPS
+  checks 11/11; unsigned Xcode 27.1 build-for-testing PASS twice. Additional mock
+  account-switch scenario tool call declined; no live token, Keychain/device or simulator
+  execution performed.
+- 'Existing /saas web cabinet extends canonical company portfolio routes: manual case,
+  paged list, history, explicit versioned human decision, source binding and qualified
+  evidence projection. Session replacement clears all prior private forms/reports
+  and portfolio, requests serialized, role/identity mismatches fail closed.'
+- 41 backend tests PASS, 1 optional skipped; rendered JS Node flow exercise identity
+  and session clearing, explicit confirmation, lost response replay and stale 409;
+  pytest wrapper PASS, node syntax/Ruff/make check PASS. Actual browser visual acceptance
+  not performed.
+- Web PR537 published at da99cde7.
+- 'Native company case decision write: owner/admin only, explicit confirmation of
+  identity/case/action/revision, rationale and DEFER date validation, exact-draft
+  account/case idempotency, response member/revision checks, refresh on success/conflict.
+  Shared SaaS API, no external action or legacy owner token.'
+- Swift standalone draft, idempotency, response and wire checks 14/14 PASS; unsigned
+  Xcode build-for-testing PASS twice. Combined SaaS and browser-script regression
+  33 passed, 1 skipped. Separate members test verifies shared decision visibility,
+  rejects stale revision and cross-member replay, preserves two history entries.
+- PR536–538 exact heads CI 19/19 CLEAN.
+- Opt-in bounded company discovery with current frozen supplier profile, daily run
+  and persisted query receipts, per-run advisory lock, committed replay without repeated
+  source request, fail-closed stale profile/window. Source adapter optional global
+  scoring bypass and conservative coverage proof, bounded page calls, no raw global
+  relevance persisted. Web existing company cabinet executes steps on explicit request
+  and accepts selected unverified EIS candidate into scoped portfolio.
+- 136 offline tests PASS, 1 optional skipped; Node rendered workflow PASS; make check
+  and new module Ruff PASS, existing adapter lint baseline unchanged. Disposable PostgreSQL
+  actual migrations 109/110 PASS, concurrent daily plan admission same ID PASS, concurrent
+  step 409 and committed replay single source callback PASS. Temporary DB removed.
+- Source-qualified commercial company cases for B2B-Center and Workspace reuse scoped
+  ProcurementCase with separate platform-specific projects, preserve exact original
+  URL audit reference, independent decisions, no EIS alias or global Deal. Existing
+  EIS API backward compatible.
+- Bounded daily discovery supports explicit public RSS and four allowlisted category
+  indexes, local company keyword/exclusion filter, qualified IDs and receipt SHA;
+  always conservative incomplete coverage. Web accepts selected commercial candidate
+  or exact reference URL; iOS displays platform/ID/URL and same decision API. No new
+  migration.
+- 54 passed, 1 skipped, 38 warnings; rendered JS workflow PASS including commercial
+  selection and EIS evidence panel suppression; Ruff/make check PASS; Xcode unsigned
+  build-for-testing PASS twice. No live HTTP, credentials, DB changes or application
+  install.
+- Explicit per-company owner grant, frozen profile identity and source selection,
+  Moscow daily hour, schedule revision and separate default-off server gate. Existing
+  DTR CLI --company-schedule-tick invokes one bounded worker tick without owner-global
+  DTR; no live scheduling installation.
+- Durable attempt reservations before source call, retryable outcomes 5/15 minute
+  backoff, three logical attempts max, crash consumes reserved slot, shared manual-resume
+  budget, existing daily uniqueness/advisory guard. Owner status/role/legal/entitlement/profile
+  and grant revision rechecked before/after scheduled source access.
+- Web owner schedule controls, scoped state and confirmation; 113 offline tests passed,
+  one skipped, JS fixture/Ruff/make check PASS; disabled CLI returns no work. Disposable
+  PostgreSQL 110/111 migration upgrade/empty downgrade/re-upgrade, populated downgrade
+  denial, concurrent global tick lock, pre-request reservation and daily replay PASS;
+  database removed.
+- 'Commercial B2B-Center/Workspace bounded pure observation parser: exact URL/TLS
+  observation contract, corroborated source identity, unambiguous fields, conservative
+  historical status/deadline classification and raw SHA. No new source network calls,
+  original storage or tenant binding.'
+- 'Migration 112 and default-off explicit commercial card capture: trusted saved URL,
+  TLS no credentials/redirects, bounded original bytes, durable per-case/day reservation
+  and ten/company/day, immutable scoped capture outcomes, authorization recheck and
+  offline original integrity recheck. HTTP returns observations only. No live source
+  or production changes.'
+- Commercial capture history and explicit confirmation in web cabinet; original offline
+  recheck available with capture gate off; case/customer/reference checks and state
+  clearing. Bounded offline candidate attachment link inventory, no downloads; two
+  reverified historical originals compared for displayed fields/digest and candidate
+  link differences.
+- 'Existing B2B/Workspace audit contracts reviewed; no source-specific document endpoint
+  proof. Implemented separate explicit default-off user-supplied attachment intake
+  (not source-attested): reverified card/candidate, bounded raw upload, PDF header/EOF
+  or OOXML package checks, immutable bytes and SHA, offline integrity recheck, same-link
+  historical comparison, bounded DOCX text preview with part/paragraph provenance.
+  Migration 113; web controls implemented. No automatic downloads.'
+- Separate immutable-receipt-compatible offline text projection for DOCX, XLSX (literal
+  visible worksheet cells, no formulas), optional bounded PDF process (first 8 pages),
+  source SHA and locators, unreviewed literal requirement categories, current scoped
+  supplier profile version/state, explicit web button. Both extraction flags default
+  off; no direct ETP acquisition.
+- Default-off human review ledger for reverified DOCX/XLSX literal fragments, stable
+  digest/location keys, current company profile binding, optional own reference-list
+  and document version, missing evidence/human support/gap/not-requirement states,
+  optimistic revision, replay protection, history and stale flags, web matrix controls.
+  Migration 114. No automated qualification scoring or claims of original ETP evidence.
+- Case-wide historical requirement matrix for exact owned card snapshot, 3 documents/page,
+  missing user copies and unsupported formats explicit, per-page review gap/stale
+  counts, web pagination and invalidation after writes. No mixed revisions or new
+  migrations.
+- PR547 JS fixture routing correction pushed a396fcc1. PR546 R8 failure confirmed
+  from hosted evidence Docker Hub HTTP502 pgvector pull; bounded hosted pre-pull retry
+  added, unchanged acceptance gate. Existing audit proves 17 EIS official attachments
+  only, no commercial download contract.
+- Official B2B web service/API exists; methods/XML examples and tariffs require cabinet.
+  Modern Positions/Download as file/Procurement documentation documented. Workspace
+  public attachment restrictions confirmed. Exact live anonymous HTTP and Chromium
+  observations on B2B 4664540, Workspace 19019 returned 200, no authorized attachment
+  access.
+- 'Standalone bounded B2B Playwright operator pilot: private dedicated explicitly
+  authorized session, exact visible documented controls, restricted requests, ZIP
+  CRC/path/size/member/SHA checks, offline Chromium synthetic exact-byte download
+  verified. Workspace diagnostic only. No actual authenticated original download or
+  API contract.'
+- 'MacBook authorized Arvectum Chromium-GOST cabinet observed: no paid tariff selected,
+  search by exact number 4664540 succeeds, filter fields and templates confirmed,
+  authorized notice has organizer DOCX 138.3 KB and Скачать все документы button.
+  Notice-level path precedes positions; original bytes not obtained. API section not
+  found in inspected cabinet menus. B2B regulation 5.4 requires written operator permission
+  for automated collection, 60 HTTP requests/minute/IP cap; separate pilot CLI refuses
+  B2B network access without explicit permission reference.'
+- 'Scoped manager inbox: latest human decision per owned case, server-time due deferrals,
+  pending attention, GO/NO_GO, full scoped counts, bounded filter/paging and web refresh/session
+  isolation. No separate store, migration, model or source calls. B2B support inquiry
+  sent; acquisition blocked pending written permission/API contract.'
+- 'Native company manager inbox: seven scoped filters, server time and validated summary,
+  unique bounded page, identity/access clearing, post-decision refresh, due markers.
+  No alternate data store or global fallback.'
+- Append-only scoped case lifecycle and migration 115, manual readiness bound to GO
+  revision, receipt/protocol reference and aware dates, explicit terminal corrections,
+  same-case locking, replay/version control, all-time distinct-case conversion/win
+  metrics. No external fact verification or submission.
+- 'B2B supplier API official support response PN-1356710-26 supplied by owner: active
+  participated/recommended IDs only as described; no invitation/document downloads
+  or submission; paid maximum/pro supplier tariff. Prefer permitted browser path;
+  no written operator consent granted.'
+- Explicit scoped web lifecycle state/valid transitions, manual receipt and protocol
+  reference, timestamp, history, terminal correction, confirmation and replay, recorded-fact
+  commercial metrics; server gate, viewer read-only, stale and session clearing.
+- 'Native scoped lifecycle controls, history and metrics against same API: owner/admin
+  writes only, explicit human attestation/confirmation, current decision binding,
+  exact response/actor/payload match, same draft retry key, scope and coherent metrics
+  validation, access clearing.'
+- Immutable partial-review binding (migration 116) to current GO-bound READY, latest
+  owned commercial observation, active profile and per-document reviewed fragments
+  including versioned support references; exact digest, explicit partial-scope acknowledgement,
+  stale detection, separate default-off commercial submission recording gate. No full
+  qualification/source claims.
+- Default-off immutable event-bound receipt/protocol user-copy artifact intake (migration
+  117), bounded PDF/DOCX/XLSX, manager-only writes, current authorization recheck,
+  per-tenant quota, exact replay, SHA/integrity verification and authenticated exact-byte
+  attachment download. No platform-origin or signature claims.
+- 'Web readiness and event file controls: explicit partial acknowledgement, bound/stale
+  snapshot, event-scoped user-copy upload with SHA match, authorized bounded binary
+  download checked before save, case/session clearing. No backend/migration changes.'
+- Native readiness partial projection, current/stale binding, explicit acknowledgment;
+  scoped event file import/export controls, 2 MiB limit, SHA and size response validation,
+  authenticated bounded streaming, no trusted provenance claims.
+- PRICE-01 scoped preview and append-only scenario history, migration 118, reuse existing
+  Decimal engine; six explicit cost categories, explicit revenue rates, minimum and
+  target profit, optional ceiling and manual bid prices, four economic thresholds
+  and profit/margin; no tax/market verification or bid/GO claim. Owner/admin/analyst
+  read/preview, manager save, viewer restricted.
+- 'PRICE-01 web controls: explicit blank inputs and provenance, server Decimal comparison,
+  stateless preview, explicit version save, immutable history, exact replay/result
+  validation and scope clearing.'
+- Native PRICE-01 explicit costs/rates, server result comparison, version history
+  and explicit manager save; scope, actor, payload/result and replay validation. Actual
+  server-generated fixture tested in Swift.
+- 'PRICE-01 itemized estimates backend: up to 60 cost lines with quantity/unit/rate/category
+  and declared source type/note, explicit zero categories and no-double-count acknowledgement,
+  per-line ceil kopecks followed by category aggregation, existing Decimal engine
+  and immutable shared revision history. Legacy aggregate records intact; tagged new
+  history allows old clients to read aggregate.'
+- 'PRICE-01 itemized web editor: aggregate/itemized mode, bounded row add/edit/remove/cancel,
+  explicit zero categories and source notes, no-double-count acknowledgement, exact
+  BigInt line/rollup verification of server projection, existing immutable history
+  and preview/save/replay, session clearing.'
+- 'Native PRICE-01 itemized editor: bounded rows, zero category and provenance acknowledgement,
+  typed Decimal rollup verification, scoped mixed history, explicit manager save and
+  exact projection/replay; legacy aggregate supported.'
+- 'PRICE-01 document evidence backend (migration 119): exact saved scenario revision/line
+  digest, immutable one user-copy PDF/DOCX/XLSX per line, explicit document type and
+  confirmation, manager writes and scoped owner/admin/analyst reads, size/quota, exact
+  retry, verified stored-byte download. No inheritance or independent cost/payment/source
+  authentication claim.'
+- 'Web PRICE-01 cost documents: saved version/line selector, independent canonical
+  binding digest, explicit manager upload and source acknowledgement, file SHA/size,
+  bounded verified download, exact retry and state clearing; analyst read/download,
+  viewer restricted.'
+- 'Native PRICE-01 cost evidence: saved version/line picker, Python-compatible canonical
+  digest, current scoped manager upload with explicit user-copy confirmation and document
+  type, bounded import/export and SHA/size, analyst read/download and immutable retry.
+  Shared verified native downloads and session/view invalidation.'
+- 'PRICE-01 actual cost backend (migration 120): exact saved itemized baseline SHA,
+  immutable cumulative snapshots with explicit per-line quantity/rate/source, missing
+  vs reported zero, separate unplanned costs, exact Decimal rollup and matched/full-plan
+  variance, manager-only version save, analyst read/preview, identical retry and date/scope
+  validation. No payment/accounting/whole-contract completeness claim.'
+- 'PRICE-01 Web actual snapshot controls: exact saved baseline and canonical digest,
+  explicit cumulative date/quantity/rate/source/zero vs missing, separate unplanned
+  expenses, server preview verified with BigInt cents and half-up percentage, explicit
+  manager version save and exact retry, history and scope clearing.'
+- 'Native PRICE-01 cumulative actual cost editor and history: canonical Python-compatible
+  baseline digest, typed independently verified Decimal line/category variance, missing
+  vs explicit zero, unplanned costs, scoped manager-confirmed save and exact replay,
+  paginated bounded history and view/session clearing.'
+- 'PRICE-01 actual evidence backend (migration 121): immutable user-copy PDF/DOCX/XLSX
+  for exact saved snapshot/date/baseline and reported planned or unplanned row SHA;
+  no inheritance or missing-row attachment, explicit consent, manager writes, analyst/manager
+  reads, bounded file and per-tenant quota, exact replay and verified-byte download.
+  No independent amount/payment/origin verification.'
+- B2B PN-1356710-26 new operator response and sent technical specification recorded;
+  60 HTTP requests per 60 seconds per IP target, written approval still pending; no
+  traffic.
+- 'PRICE-01 Web actual evidence: exact saved snapshot/date/row namespace and canonical
+  digest, missing vs zero, explicit manager upload and user-copy consent, validated
+  metadata and SHA/size, shared verified download, uncertain retry and state clearing.'
+- 'Native PRICE-01 actual cost evidence: reported planned/unplanned snapshot row selector,
+  Python-compatible digest with exact baseline/snapshot/date/namespace, explicit manager
+  user-copy upload, verified bounded transfer, analyst read/download, immutable exact
+  retry and scoped state clearing.'
+- B2B operator permission received from owner for submitted internal browser agent
+  specification, PN-1356710-26; PR573 exact ddf92b0a CI 19/19 successful.
+- B2B shared single-host persistent rolling 60 HTTP attempts/60s admission gate, durable
+  pending reservation and process serialization, crash quarantine and persisted known
+  cooldown, sanitized activity log. Explicit read-only HTTP broker with charged redirects
+  and bounded download, same-origin policy, 429 Retry-After. Old pilot B2B refuses
+  before launch until integrated.
+- 'B2B real offline Chrome/Playwright HTTP accounting bridge: explicit loopback proxy
+  with same-origin approved routes and exact single-hop broker accounting, rejects
+  CONNECT, cross-origin/mutating/unapproved requests and stops after 429. Initial
+  route interception redirect experiment failed closed; replaced with network-level
+  HTTP proxy. Browser fixture 7 actual origin requests = 7 charged, exact 129-byte
+  ZIP and nine direct proxy refusals.'
+- Offline Chrome HTTPS fixture verified using distinct disposable loopback TLS identities,
+  explicit request-level TLS termination (not opaque CONNECT), exact authority/path/Host
+  and read-only method checks, verified upstream TLS, fixture-scoped SPKI trust, synthetic
+  broker cookie session isolation. 7/7 received HTTP requests charged plus one failed
+  TLS attempt; exact 133-byte ZIP, untrusted TLS refused, forbidden POST/path blocked,
+  stop after 429. No real-site interception or credential support.
+- 'Verified isolated Chrome renderer and direct TLS broker candidate: exact reviewed
+  routes, private authenticated local IPC, no upstream credentials in renderer, no
+  live TLS interception/cert exception, network sandbox port restriction, explicit
+  archive redirect namespace, stop on 401/403/429, real loopback 7/7 counted and exact
+  ZIP. Private cookie-only state validation, manual local session CLI, one-card manifest
+  preflight without live activation.'
+- MacBook EDS login requirement incorporated; dedicated persistent Chrome profile
+  (extension support, positive local confirmation, exact B2B page, owner-only cookie
+  state, no ordinary profile reuse/key access or automatic signing), verified two
+  real Chrome starts/restart offline on Mac mini. Legacy direct B2B fetch entrypoints
+  audited and recorded for activation gate.
+- Supervised B2B offline runner with canonical private root convention, single-runner
+  lock and hard process deadline, actual isolated HTTPS Chrome fixture PASS; seven
+  former direct HTTP paths fail closed in candidate branch before transport. MacBook
+  read-only runtime inspection confirms Chrome/Python3.12/uv/sandbox/CryptoPro; Playwright
+  absent in default Python.
+- Owner chose manual password login on Mac mini instead of MacBook EDS. Password-mode
+  dedicated Chrome profile and private launcher created on Mac mini, Terminal opened,
+  profile marker and single manual session process verified. MacBook untouched.
+- Owner confirmed manual login on Mac mini. Dedicated profile retained 20 platform
+  cookies, 12 secure validated; recovered owner-private local session candidate, no
+  secret transfer. Supervised exact one-card GET runner tested; canonical egress initialized,
+  quarantine completed. First real B2B pilot procurement 4664540 returned HTTP200,
+  exactly one charged request, no redirects/retry/download/submission; no visible
+  card ID or documented controls, server auth unverified.
+- 'Actual reviewed first-party CDN scope and isolated browser pilot: 19/19 static
+  HTTP200, 2538847 bytes, exact card GET HTTP200. No rendered card number or documented
+  download controls; account remains unverified. Shared counter 27 cumulative HTTP200.'
+- 'GitHub publication restored: PR583 and PR584 published and remote refs verified.
+  Real CDN diagnostics identified four missing static JS modules. Reviewed supplemental
+  scope implemented; 23/23 static HTTP200, prior module-loading error resolved. Actual
+  UI/card identity and account remain unverified. Manual UI observation helper prepared.'
+- Owner reported completed manual review. Dedicated history confirms same card path
+  and title with query at 20:14:14Z; previous full URL check would reject it. Fixed
+  manual-only observed identity, visible number requirement and durable progress/failure
+  metadata. Actual offline Chrome query variant test PASS.
+- PRICE-01 descriptive sample backend d06c553d and Web cohort selection fcd56e81 verified;
+  explicit latest row per distinct procurement, same work/category/unit, source digest
+  and client-side decimal recomputation, no persistence or automatic approved norms.
+- Native PRICE-01 actual-cost sample selection and preview, typed exact row and decimal
+  validation, ephemeral company cohort and explicit confirmations.
+- PRICE-01 corporate norm approval, catalog, immutable history and withdrawal backend
+  implemented, migration 122. Explicit manager-selected quantities/rates, source sample
+  and preview digests, tenant role and optimistic concurrency, no automatic estimate
+  use.
+- Corporate norm Web approval, catalog, paginated version history and explicit withdrawal
+  implemented. Client verifies canonical preview and record digests, source bindings
+  and identity; unchanged lost-response retry uses same key.
+- Corporate normative catalog, history, explicit preview, approval and withdrawal
+  implemented in iOS; typed tenant/role and canonical preview/record SHA256/source
+  validation, in-memory retry keys and state clearing.
+- Explicit approved corporate norm version binding in itemized estimate backend, immutable
+  original norm verification on historical reads, current-version checks on preview/new
+  save under tenant-before-case locking. Legacy lines/projections unchanged.
+- Web explicit selected normative version added to open itemized estimate, validated
+  provenance and immutable bound row, duplicate protection, compatible historical
+  rendering.
+- Native explicit norm version selection into itemized estimate, typed source binding
+  and protected bound row, provenance in historical projection and Python-compatible
+  actual/evidence digests.
+- Case-scoped historical evidence catalog and comparison backend from existing pinned
+  EIS receipts; distinct selected procedures, explicit reference, scope difference
+  evidence, admitted offers separated from unknown signed contract amounts. No unsupported
+  normalization.
+- Web historical comparable archive, explicit selected reference/observations, separate
+  admitted prices and unknown contracts, scope comparison with original quotes and
+  provenance. Client validates pinned receipt identities, exact response digest, scope
+  and selected observations.
+- Native historical comparable evidence catalog and explicit case-bound selection/preview,
+  exact source/response digest validation, locally reconstructed scope comparison;
+  Web and iOS pin entire reviewed six-record projection.
+- Reviewed contract evidence offline manifest/XML verification, exact anchors, reviewer-attested
+  full scope, source identity and bounded Decimal contracted unit price; local read-only
+  CLI.
+- Reviewed contract publication ledger, offline candidate CLI, immutable chained publication/withdrawal,
+  exact repository pin, active groups and read-only case-bound API. Initial release
+  empty; legacy archive unchanged.
+- Reviewed registry Web/iOS with exact compiled release/public projection pins; real
+  Chrome smoke at desktop/mobile widths; actual iOS XCTest; isolated migrated PostgreSQL
+  concurrent approval and binding/withdrawal acceptance.
+- 'Real disposable local HTTPS staging: Web norm-bound itemized save v2, actual native
+  macOS and iOS Simulator XCTest read and verify same server data, foreign tenant
+  404. Release/projection pin consistency and default-off gates checked.'
+current_stage: apr07_rolling_observability
+remaining:
+- APR-05 bounded technical rehearsal complete, PR604 exact CI green; owner merge approval and approved staging target remain separate.
+- APR-06 pinned review readiness inventory implemented; exact CI and independent source/attributable human review pending.
+- Real reviewed contract source publication, physical device/interactive SwiftUI acceptance and deployment GO remain separate.
+- B2B approved manual observation/document acquisition and legacy cutover; no repeat live pilot.
+last_verified_commit: 31af52c1350100fc9f0aea263c76576914da5072
+test_results:
+- 39 passed, 30 warnings, 4.60s hermetic SQLite; Ruff and make check PASS; diff check
+  PASS
+- Offline network-none ARM64 build and packaged profile/digest validation PASS (sha256:fa60d6cadfbde364a28dd92dd7b72d000ef990ca9799be19161de240ef20f992)
+- No live PostgreSQL lock acceptance, live research ingestion, APNs or LLM invocation
+- 79 passed, 1 skipped, 68 warnings (9.50s), Ruff/make check PASS
+- Disposable PostgreSQL actual migration 108 PASS; concurrent decision 200/409 and
+  exactly one record PASS; DTR session advisory lock four checks PASS
+- 149 passed, 1 skipped, 91 warnings in 12.96s; Ruff and make check PASS; Alembic
+  head 109
+- Xcode 27.1 generic simulator build-for-testing PASS (no signing); Swift runtime
+  decoder/status 6/6 PASS; diff check PASS. Native XCTest compiled not executed.
+- 31 SaaS passed, 1 skipped, 33 warnings; Ruff PASS; Swift standalone assertions 11/11;
+  native unsigned build-for-testing PASS; simulator XCTest compiled not executed.
+- 41 backend passed, 1 skipped; standalone rendered JS scenario and pytest wrapper
+  PASS; node --check, Ruff, make check, diff PASS
+- 33 passed, 1 skipped, 34 warnings in 5.37s; Swift standalone 14/14 PASS; unsigned
+  Xcode build-for-testing PASS twice; Ruff/diff PASS.
+- 136 passed, 1 skipped, 76 warnings in 9.67s; Node rendered script flow/syntax PASS;
+  Ruff/make check PASS; legacy adapter lint counts unchanged; PostgreSQL migrations
+  109/110 and daily admission/step concurrency PASS
+- 54 passed, 1 skipped, 38 warnings in 6.63s; rendered JS, Ruff/make check/diff PASS;
+  unsigned Xcode build-for-testing PASS twice
+- 113 passed, 1 skipped, 84 warnings in 9.76s; Node workflow, Ruff/make check/diff
+  PASS; disabled CLI no-op PASS; disposable PG migration 111, downgrade guard, concurrency
+  and reserved attempt/daily replay PASS
+- 37 focused offline fixture tests passed, 1 warning; Ruff and diff check PASS; no
+  live model or DB calls.
+- 92 passed, 2 skipped, 73 warnings in 8.39s; SQLite migration 112 upgrade/empty downgrade/re-upgrade/populated
+  refusal, HTTP fixture replay/isolation/tamper/crash, transport mock limits and regression
+  UI; Ruff and diff PASS. Actual PG admission concurrency and live platform acceptance
+  pending.
+- 95 passed, 2 skipped, 74 warnings in 8.54s; rendered Node cabinet fixture (confirmation,
+  gate off, historical compare, identity mismatch, session reset), attachment candidate
+  bounds/negative cases, cross-tenant comparison, migration regression; Ruff/diff
+  PASS.
+- '105 passed, 2 skipped, 80 warnings in 8.99s; SQLite migration 113 downgrade guard,
+  format safety, idempotence, cross-tenant/invalid candidate and tamper/revision coverage;
+  Ruff/diff PASS. Local JS fixture skipped: Node26 missing libada, Node22 missing
+  libsimdjson. Explicit hosted Node CI step added; do not claim browser fixture accepted
+  yet.'
+- PR545 exact head 45395db6 CI 18/19 success, including hosted Node and quality; Mirror
+  repository only failure.
+- 109 passed, 2 skipped, 80 warnings in 8.98s; real synthetic PDF page extraction,
+  XLSX literal/formula/hidden-sheet behavior, DOCX bounds, API default-off and tenant
+  isolation, SQLite migration regression; Ruff/diff PASS. Current hosted Node/CI pending.
+  PR545 hosted JS and quality PASS, 18/19, mirror only failure.
+- 111 passed, 2 skipped, 86 warnings in 9.55s; SQLite migration 114 history refusal,
+  cross-tenant, replay, profile/ref stale detection; additional focused synthetic
+  document version staleness test PASS. Ruff/diff PASS. Hosted JS pending. PR546 16
+  success, 1 running, 2 failures (Mirror repository, r8-acceptance-integration); logs
+  unavailable as run still active.
+- 111 passed, 2 skipped, 86 warnings in 10.15s; aggregate fixture 4 links, missing
+  copy, unsupported PDF, scoped pagination and stale review; Ruff/diff and workflow
+  YAML PASS. Hosted exact-head acceptance pending, local Node unavailable. PR547 amended
+  head observed 14 success,4 running, mirror only failure.
+- 47 focused tests passed in 0.12s, Ruff/diff PASS, actual Chromium offline synthetic
+  ZIP 131 bytes exact match and CRC, public probe B2B_AUTHORIZED_UI_OR_API_REQUIRED
+  and WORKSPACE_ENTITLEMENT_REQUIRED. SIBUR 823 originals/17785 embeddings synchronized
+  and OK. PR547 17 success,1 running,mirror failure; PR548 16 success,2 running,mirror
+  failure.
+- Authorized search UI and exact procurement card inspected; no downloaded bytes,
+  no automated bulk access, no new payment/consent/applications. CLI negative test
+  exit 2 before browser, Ruff/diff PASS.
+- 114 passed, 2 skipped, 87 warnings in 11.21s; standalone full JS cabinet fixture
+  PASS via isolated Playwright bundled Node v22.20.0; Ruff/diff PASS. PR548 and previous
+  PR549 head 18/19, mirror only. B2B checkpoint e7f55849 pushed.
+- Xcode 27.1 unsigned build-for-testing SUCCEEDED; new XCTest compiled, actual same
+  Swift decoder/matching assertions independently executed on macOS PASS. No simulator
+  boot or device install. git diff --check PASS.
+- 116 passed, 2 skipped, 93 warnings in 11.20s; SQLite migration 115 forward/replay/nonempty
+  rollback guard, scope, GO staleness, history/correction and metrics; Ruff/diff PASS.
+- 116 passed, 2 skipped, 93 warnings in 10.64s; extended actual JS cabinet fixture
+  PASS (isolated Playwright Node), Ruff/diff PASS. PR552 16 SUCCESS,2 IN_PROGRESS,mirror
+  FAILURE.
+- Actual Swift contract assertions executed independently on macOS PASS; Xcode unsigned
+  build-for-testing final PASS (new XCTest compiled; no simulator execution). git
+  diff --check PASS. PR553 observed 17 success,1 in progress, mirror failure.
+- 118 passed, 2 skipped, 99 warnings in 12.44s; sequential profile/document version
+  staleness, missing review, replay, rebind, cross-company, optional gate, SQLite
+  migration rollback guard; Ruff/diff PASS. New hosted CI pending.
+- 120 passed, 2 skipped, 105 warnings in 12.47s; additional focused viewer read-only
+  and owned download test PASS. Migration rollback guard, corruption rejection, scope,
+  limits and byte equality tested. Ruff/diff PASS. PR555 exact head 959c5899 18/19
+  success, Mirror repository failed.
+- 120 passed,2 skipped,105 warnings in 11.11s; extended actual JS fixture PASS including
+  binding and stale refusal, explicit file confirmation, SHA and corrupted download
+  rejection, valid download and clearing. Ruff/diff PASS. PR556 exact f6f7a705 18
+  success, mirror failure.
+- Final unsigned Xcode build-for-testing SUCCEEDED incl new XCTest compilation; actual
+  Swift contract scope/readiness/digest/limits executed on macOS PASS; diff PASS.
+  PR557 exact ec399596 18 success/1 pending. Simulator and real iPhone transfer not
+  run.
+- 150 passed, 2 skipped, 111 warnings in 11.16s including historical competitive protocol
+  regression, exact economics, role/scope, replay/version, stored result mismatch
+  and SQLite migration rollback guard. Ruff/diff PASS. New hosted CI pending.
+- 150 passed,2 skipped,111 warnings in 11.55s; extended actual JS fixture PASS for
+  preview/save, uncertain replay, changed input invalidation, disabled feature and
+  foreign scope. Ruff/diff PASS. PR559 exact ad906f54 CI 19/19.
+- Final Xcode unsigned build-for-testing PASS incl new XCTest compilation; macOS Swift
+  PRICE-01 server fixture contract PASS, git diff --check PASS. PR560 exact f36f2175
+  17 success, 2 in progress; no physical device/simulator XCTest or live network acceptance.
+- 151 passed,2 skipped,112 warnings in 12.50s; old JS cabinet PASS, actual Swift decoder
+  mixed itemized/aggregate server fixture PASS. Ruff/diff PASS; Alembic head unchanged
+  118. PR561 exact 4e1946a5 17 success,2 running.
+- 151 passed, 2 skipped, 112 warnings in 12.90s; actual extended JS fixture PASS with
+  server-generated itemized response, row editing, zero category refusal, amount verification,
+  retry, history, invalidation and tampered projection rejection. Ruff/diff PASS.
+  PR562 exact 93b21b60 17 success,2 running.
+- Actual macOS Swift server-generated itemized fixture contract PASS (rounding, tampering,
+  source changes, exact retry, legacy record, wire fields); final Xcode unsigned build-for-testing
+  PASS including new XCTest compilation. git diff --check PASS. PR563 exact 31f1e6e0
+  CI 19/19. No simulator XCTest, physical device or live E2E execution.
+- 153 passed,2 skipped,118 warnings in 13.20s; SQLite migration rollback protection,
+  version/line scope, role, quota, replay, invalid/oversize and corrupted binding/bytes
+  tested. Ruff/diff PASS. Alembic head 119. PR564 exact 1a48dae8 17 success,2 running.
+- 153 passed,2 skipped,118 warnings in 13.40s; actual JS fixture PASS with Python
+  canonical binding, consent, uncertain retry, changed digest, corrupted/oversized
+  download and valid file, version/session clearing. Ruff/diff PASS. PR565 exact 282ab08f
+  17 success/2 running.
+- Actual macOS Swift Python-generated cost evidence contract PASS including Unicode
+  canonical digest, scope/stale revision, false verification flag, malformed metadata,
+  corrupt bytes and oversize. Final unsigned Xcode build-for-testing PASS including
+  new XCTest compilation. git diff --check PASS. PR566 exact 2350aa9c 17 success/2
+  running. No simulator XCTest/physical iPhone/live API E2E.
+- 155 passed,2 skipped,124 warnings in 13.42s; actual cost partial/complete/zero/unplanned,
+  precision, scope/role, replay/stale/date, corruption and SQLite rollback guard tests.
+  Existing actual JS fixture PASS, Ruff/diff PASS; Alembic head 120_company_actual_costs.
+  PR567 exact 2ed5e958 17 success,2 running.
+- 155 passed,2 skipped,124 warnings in 13.82s; actual extended JS cabinet fixture
+  PASS using Python-generated actual-cost results, missing vs zero, unplanned precision,
+  replay, history, tamper and disabled gate. Ruff/diff PASS. PR568 exact 8d695d02
+  17 success/2 running.
+- Actual macOS Swift Python-generated partial/complete snapshot contract PASS (Unicode/null
+  baseline digest, zero/missing, rounding, tampered totals and verification flag,
+  exact replay and wire encoding). Initial SwiftUI State declaration compiler error
+  fixed; final Xcode unsigned build-for-testing PASS including new XCTest compilation.
+  git diff --check PASS. PR569 exact 09c73f8e 17 success/2 running. No simulator XCTest,
+  physical device or live API E2E.
+- 157 passed,2 skipped,130 warnings in 15.91s; actual evidence row namespaces, missing/zero,
+  baseline/snapshot/tenant/role scope, replay, quota, corruption and guarded migration
+  roundtrip tested. Existing JS fixture PASS; Ruff/diff PASS; Alembic head 121_company_actual_evidence.
+  PR570 exact 6bd87d80 CI 19/19 successful.
+- 157 passed,2 skipped,130 warnings in 15.48s; extended JS fixture PASS with Python
+  canonical binding and actual projection, missing/zero, planned/unplanned revision
+  isolation, consent, retry, corrupt/oversized downloads and false payment flag rejection.
+  Ruff/diff PASS. PR571 exact aa74d86c 17 success/2 running.
+- Actual standalone macOS Swift contract PASS against Python snapshot/digest/inspection
+  fixture, zero vs missing, planned/unplanned separation, cross case/stale revision,
+  corrupt bytes and false payment rejection. Xcode unsigned build-for-testing PASS
+  including XCTest compilation; git diff --check PASS. PR572 exact a6724300 CI 19/19
+  success. No physical device or simulator XCTest execution/live API E2E.
+- 163 focused tests pass, 2 skipped, 130 warnings in 15.50s. Six new tests including
+  shared threads, 105 attempts in three separate processes -> 60 allowed, staggered
+  sliding-window boundary, actual crash recovery and corrupted state, mock redirect/429
+  and real loopback HTTP redirect/archive/429. Ruff/diff PASS; old pilot refuses B2B
+  even with consent reference. PR574 exact 0386c159 17 success/2 running. No live
+  B2B requests.
+- 164 focused passed, 2 skipped, 130 warnings in 17.53s. Actual Chrome offline bridge
+  PASS with response sequence 302,200,200,200,307,200,429; direct refusal, blocked
+  unapproved route/POST, separate proxy CONNECT/cross-origin redirect tests. Ruff/diff
+  PASS. PR575 exact 87b903ef CI 19/19 success. No live requests.
+- 165 focused passed, 2 skipped, 130 warnings in 17.05s; actual Chrome TLS loopback
+  PASS, separate broker 401, invalid browser and upstream cert refusal, nonloopback/foreign
+  CONNECT rejected, Ruff/diff PASS. PR576 exact 22e2859c CI 19/19. No platform requests.
+- 169 focused tests passed,2 skipped,130 warnings in 14.42s; actual isolated Chrome
+  HTTPS fixture PASS 7/7 charged plus ZIP and negative network probe, no TLS interception/exception.
+  First sandbox launch denied Chrome UNIX bind; allowed UNIX bind only and reran PASS.
+  Session privacy/expiry/foreign domain, exact routes, IPC token/redirect rejection,
+  local preflight and exclusive state save tests PASS. Ruff/diff PASS. PR577 exact
+  b7368728 CI 19/19 successful.
+- 170 focused tests passed,2 skipped,130 warnings in 15.83s; persistent Chrome profile
+  launch/relaunch PASS on Mac mini via rejecting proxy; dedicated marker/symlink/permission
+  tests PASS; Ruff/diff PASS. PR578 exact 889506a7 CI 19/19. No MacBook EDS or live
+  B2B test yet.
+- 275 focused tests pass,2 skipped,130 warnings in 17.22s, including legacy source
+  parsers, Workspace/EIS paths and seven B2B direct refusals, supervisor timeout/lock/receipt.
+  Actual supervised offline Chrome fixture 7/7, exact ZIP 133B; Ruff/diff PASS. PR579
+  exact ae4cb0b4 CI 19/19. No live requests or deployment.
+- 275 focused tests passed,2 skipped,130 warnings in 16.52s; supervised offline Chrome
+  7/7 accounting PASS exact ZIP; Ruff/diff PASS. PR580 17 success/2 running at start.
+  Local login process/profile launched; actual account/session not verified.
+- 276 focused/source tests pass,2 skipped,130 warnings in 16.76s; actual isolated
+  Chrome synthetic one-card acceptance PASS (one charged GET, blocked extra resources,
+  card ID visible on fixture), existing HTTPS fixture 7/7 PASS; Ruff/diff PASS. Real
+  B2B request 1, HTTP200, durable pending=false. No relevant active launchctl labels
+  observed before bounded pilot; not distributed per-IP/production cutover proof.
+  PR581 17 success/2 running at start.
+- 284 focused passed,2 skipped,130 warnings in 17.18s; actual Chrome offline fixture
+  PASS with 2 charged static resources and blocked unreviewed fetch. Ruff/diff PASS.
+- 286 focused passed,2 skipped,130 warnings in 16.39s; actual Chrome offline fixture
+  PASS; Ruff/diff PASS. PR583/584 each 17 success/2 running at last check; PR582 19/19.
+  Real rendered UI hydration timeout remains after 23 static resources; unknown other-origin
+  POST and same-origin document GET denied.
+- 287 passed,2 skipped,130 warnings in 23.41s; Ruff/diff PASS. Actual Chrome offline
+  manual URL variant PASS. PR583/584/585 CI success; no new automated B2B traffic.
+- 288 focused tests passed, 2 skipped, 131 warnings, 18.39s; actual Node cabinet contract
+  fixture PASS, including stale/disabled API, duplicate selection, median rounding,
+  changed result and session clearing; Ruff/diff PASS.
+- Standalone Swift actual evidence/sample contract PASS; Xcode iOS Simulator build-for-testing
+  with updated XCTest assertions PASS; git diff check PASS. PR587 all 19 CI checks
+  successful. XCTest simulator execution and real device acceptance not performed.
+- 289 focused/regression tests pass, 2 skipped, 136 warnings, 16.58s; Ruff/diff PASS;
+  SQLite migration 122 upgrade/downgrade and retention guard PASS. PR588 CI 19/19.
+  No production PostgreSQL or migration execution.
+- 289 regression tests passed, 2 skipped, 136 warnings in 17.13s; Node company cabinet
+  flow PASS for preview edit invalidation, idempotent approval retry, withdrawal,
+  history, disabled feature, corrupt record and account clearing; Ruff/diff PASS.
+  PR589 17 success/2 running at latest check. No visual/browser production acceptance.
+- Standalone Swift actual evidence/sample/norm contract fixture PASS with independent
+  Python-generated canonical approval/withdrawal records; Xcode generic iOS Simulator
+  build-for-testing including new assertions PASS; git diff check PASS. PR590 CI 19/19.
+  Simulator UI execution/device/server-connected acceptance not performed.
+- 289 tests PASS, 2 skipped, 136 warnings in 18.03s; Ruff/diff PASS. Integrated binding,
+  exact amount/source, tenant separation, stale and withdrawn rejection, historical
+  replay/evidence/actual reads, corruption tests. PR591 CI 19/19. PostgreSQL concurrency
+  not run.
+- 289 focused tests passed, 2 skipped, 136 warnings in 18.94s; Node cabinet flow PASS
+  including bound Python projection/save, withdrawal and historical read; Ruff/diff
+  PASS. PR592 17 success/2 running. No real-browser acceptance.
+- Standalone Swift execution of independent Python bound estimate and legacy actual/evidence/norm
+  fixtures PASS, including row and baseline SHA256, rejected foreign/withdrawn selections
+  and duplicates. Xcode iOS Simulator build-for-testing PASS. Git diff check PASS;
+  PR593 CI 19/19. Native interactive acceptance not performed.
+- 315 tests passed, 2 skipped, 142 warnings in 18.66s; Ruff/diff PASS. Integrated
+  tenant/role, archive provenance/quantity limits and source corruption tests. PR594
+  17 success/2 running, no failures.
+- 315 tests pass, 2 skipped, 142 warnings in 18.92s; Node cabinet fixture with real
+  Python archive projections PASS, including disabled feature, duplicate/remove, changed
+  reference, wrong company and changed price with recomputed digest; Ruff/diff PASS.
+  PR595 18 success/1 running, no failures. Interactive browser acceptance not performed.
+- Standalone Swift Python-generated archive/preview fixture PASS, Xcode generic iOS
+  Simulator build-for-testing PASS, Web Node fixture PASS including re-sealed catalog
+  price corruption, 104 focused tests PASS/2 skipped/57 warnings in 11.61s, Ruff/diff
+  PASS. PR596 CI 17 success/2 running at check. Interactive browser/simulator/device
+  acceptance not performed.
+- 20 new tests PASS; 335 full focused tests PASS/2 skipped/142 warnings in 21.82s;
+  Ruff/diff PASS. Synthetic XML only, no independent authenticity or signature verification.
+  PR597 CI 17 success/2 running at latest check.
+- 337 regression tests PASS, 2 skipped, 144 warnings in 18.92s; Ruff/diff PASS. Synthetic
+  publication, withdrawal, replacement, duplicate and corruption rejection; read-only
+  catalog empty/nonempty, tenant/role and legacy archive tests. PR598 CI 19/19.
+- Node cabinet PASS; stand-alone Swift previous/new contract fixtures PASS; Xcode
+  build-for-testing PASS; actual XCTest AppStoreTests 24/24 PASS; Chrome offline fixture
+  smoke 1280/390px PASS after overflow fix; PostgreSQL 18.7 migration head122 and
+  race test 1 PASS, temporary cluster stopped and removed; Ruff/diff PASS; PR600 CI
+  19/19. Final broad regression 337 passed, 3 skipped (PG opt-in separately passed),
+  144 warnings in 18.57s; Node and Ruff/diff PASS.
+- Full local HTTPS run Web/macOS native/iOS Simulator 1 live XCTest PASS, exit 0;
+  Xcode build-for-testing PASS; targeted regression 116 PASS/3 skipped/139 warnings
+  in 36.41s; Node flow and Ruff/diff PASS; temporary server/data removed and simulator
+  shut down.
+resume_instruction: PRICE-01 real HTTPS local staging acceptance verified at 31af52c1.
+  Next review release/stacked PR integration and deployment readiness without production
+  changes; do not assert real contract evidence exists. Read PRICE01_STAGING_AND_RELEASE_GATE_2026-11-17.md.
+  Physical device/interactive SwiftUI and owner GO separate; B2B unresolved. No MacBook
+  or live procurement traffic.
+owner_priority: Product roadmap only in this chat; SIBUR handled separately. Gemma
+  paused; isolated engineering only.
+b2b_dependency:
+  status: approved_manual_observation_incomplete
+  support_ticket: PN-1356710-26
+  support_response: 'Operator written approval relayed by owner: Козырькова Валерия
+    Андреевна, 2026-11-16 14:51:30. Internal partial automation allowed subject to
+    submitted technical characteristics. Exact ambiguous phrase: «за исключением не
+    более 60 HTTP-запросов в минуту с одного IP-адреса». IP approval not required;
+    no separate download restrictions; own account or optional additional user. Earlier
+    response: no additional fee or alternative API for stated actions.'
+  owner_action: Owner completed Mac mini login; local candidate recovered with private
+    permissions. First real bounded GET returned HTTP200 but exact card and logged-in
+    status not proved. Next reviewed resource scope, no further platform calls in
+    this increment. No MacBook, secrets, submissions or production changes.
+sibur_readonly_observation_20261116:
+  status: exhausted
+  step: archive supported queue drained; oversized and PDF review remains
+  full_receipts: 849
+  archive_synced_count: 849
+  server:
+    documents: 849
+    chunks: 18975
+    embeddings: 18975
+  error: null

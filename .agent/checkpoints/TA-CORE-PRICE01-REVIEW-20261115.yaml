@@ -1,0 +1,28 @@
+task_id: TA-CORE-PRICE01-REVIEW-20261115
+status: in_progress
+goal: Reconcile PRICE01 PR478 on consolidated core without operating DB or runtime
+  changes.
+definition_of_done:
+- Isolated candidate preserves existing roadmap and original price evidence
+- Changed and combined offline tests plus JS and standard checks pass
+- Review-only branch published; no actual cost assertions or commercial action
+completed:
+- PR478 prior CI19/19; merge preflight conflicts documentation only
+- Merged PR478 into isolated review branch; resolved only shared documentation conflicts;
+  historical notes retained
+- 506 combined offline tests PASS; standard make check, changed-file Ruff, JS syntax
+  and git diff checks PASS
+current_stage: published_review_candidate
+remaining:
+- Review before merge; authenticated real operator E2E acceptance after shared runtime
+  approval
+last_verified_commit: 0f5ba2ba
+test_results:
+- 506 passed, 44 warnings, 9.80s; in-memory SQLite
+- make check PASS
+- changed-file Ruff PASS
+- node --check PASS
+- git diff --check PASS
+resume_instruction: After core PR529 is accepted, reconcile stacked PRICE01 candidate
+  and verify exact-head CI. Keep explicit user inputs, protected stateless calculator,
+  no real price inference or external commercial action.

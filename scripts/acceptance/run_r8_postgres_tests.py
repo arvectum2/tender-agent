@@ -11,7 +11,6 @@ import sys
 import tempfile
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 COMPOSE = ROOT / "tests/integration/compose.r8-postgres.yml"
 
@@ -39,6 +38,10 @@ def main() -> int:
             "RUN_R8_POSTGRES_INTEGRATION": "1",
             "AI_CORP_DATABASE_URL": f"postgresql+psycopg://r8_acceptance:{password}@127.0.0.1:{port}/r8_acceptance",
             "AI_CORP_ARVECTUM_DATA_DIR": str(temp_root / "data"),
+            # Disposable schema downgrade fixture must remain empty of
+            # canonical learning evidence. Production defaults ON, but
+            # this test specifically destroys/recreates migration 107.
+            "TENDER_LEARNING_CAPTURE_ENABLED": "0",
         }
     )
     (temp_root / "data").mkdir(mode=0o750)
