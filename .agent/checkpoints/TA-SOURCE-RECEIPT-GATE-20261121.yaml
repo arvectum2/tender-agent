@@ -1,5 +1,5 @@
 task_id: TA-SOURCE-RECEIPT-GATE-20261121
-status: in_progress
+status: completed
 goal: Add isolated source identity, typed receipt, exact source bytes and crash quarantine safety to current main without carrying diverged local recovery branches.
 definition_of_done:
   - Preserve exact source-scoped identity and verified byte receipt API.
@@ -15,15 +15,18 @@ completed_stages:
   - Reviewed exact StageReceipt membership, artifact digest/size, parent attempt, crash quarantine and SQLite stage queues. The implementation has NO live source worker, network import, scheduled collector or production DB changes.
   - PR #677 earlier exact source head b1410b384e9457781fa8e35562077377cc2890f8 passed 19/19 GitHub checks, current merge head requires its own CI. Owner plus AI technical review policy; no external GitHub reviewer.
   - Source original gap #679 and dual physical PITR seven-day issue #685 remain independent. Merge of dormant code must never imply source authorization.
-current_stage: exact_main_b75cd7_integrated_locally_waiting_final_pr_ci
-remaining_stages: [verify_exact_main_head_ci_and_normal_protected_merge]
+current_stage: exact_ci_19_of_19_success_and_protected_merge
+remaining_stages: []
 base_main: abcd8727326c398d870edbc4a2da793e090ac8eb
 source_local_checkpoint: /Users/master/ArvectumSafe/worktrees/ta-source-catalog-20261120/.agent/checkpoints/TA-SOURCE-CATALOG-20261120.yaml
 source_local_head: d9ec043867c84f9e16c3ac9e8b70d9494c1cad65
-last_verified_commit: 4ef569d6b27bc010ae59e2e80b77ae44396d2e7e
-last_checks: Original source head b1410b 19/19 hosted CI; merged main b75cd7 local 23 focused tests PASS/Ruff PASS, strict source receipt and crash quarantine, runtime imports NONE. Exact updated GitHub PR head CI must complete before merge.
-resume_instruction: PR677 source-catalog prototype is locally integrated into b75cd7 main, 23 tests/Ruff pass and no production consumer; code merge only after exact current PR CI succeeds. This does NOT authorize any real EIS/ETP/corporate source worker or background scheduler. Future source-specific original authenticity, admission, MI/PITR and resource bounds require separate owner review. Preserve protected MI and previous original source data.
+last_verified_commit: b646e4313c2d92339fc3d352525f11976672249f
+last_checks: PR677 source exact head e360696f5504e0a5c34e33be4b5332eba69ecc18 GitHub required and optional checks 19/19 SUCCESS; protected main merge b646e4313c2d92339fc3d352525f11976672249f. 23 focused PyTests PASS, Ruff PASS and zero live production imports of dormant source catalog and stage queue; no EIS/ETP fetch, producer or production activation.
+resume_instruction: Completed source-catalog source-only merge #677 into main b646e431. Do not repeat or activate real source workers: original first-party bytes/source rights, resource limits, MI/PITR safeguards, DTR originals #679 and continuous 7-day PITR #685 remain separate gates. Continue WSF07B host source snapshot PR637 only after exact CI, never reinstall working host scripts implicitly.
 pr673_roadmap_status: merged_completed
 external_source_workers_activated: false
 production_backend_modified_by_this_task: false
 source_original_authorization_inferred: false
+merged_pr: 677
+merged_main_commit: b646e4313c2d92339fc3d352525f11976672249f
+completed_at_utc: 2026-11-21T13:29:12Z
