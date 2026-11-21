@@ -28,6 +28,35 @@ from src.tender_research.repository import TenderRepository
 logger = logging.getLogger(__name__)
 
 
+def _missing_indexable_source_reason(
+    *, documents_total: int, documents_downloaded: int, extracted_texts_total: int,
+) -> str:
+    """Classify a blocked source stage without treating missing originals as an index fault.
+
+    Diagnostics only. Every outcome remains not-ready and requires original
+    provenance; this never triggers fetches, retries, or a reduced citation gate.
+    """
+    if documents_total == 0:
+        return (
+            "source_document_metadata_unavailable: no registered source attachment links; "
+            "verify notice revision and original EIS/SOAP document metadata"
+        )
+    if documents_downloaded == 0:
+        return (
+            "source_original_download_unavailable: attachment links exist but no "
+            "source original is recorded as downloaded"
+        )
+    if extracted_texts_total == 0:
+        return (
+            "source_text_extraction_unavailable: downloaded source attachments "
+            "have no extracted text"
+        )
+    return (
+        "data_platform_projection_empty: extracted source text exists but "
+        "no indexable document chunks were produced"
+    )
+
+
 class TenderPreparationStep:
     def __init__(self, name: str, status: str = "pending", message: str = "", details: str = ""):
         self.name = name
@@ -441,7 +470,13 @@ def prepare_tender_for_analysis(
             )
         elif final_chunks == 0:
             step.status = "failed"
-            step.message = "No chunks available for Data Platform indexing"
+            step.message = _missing_indexable_source_reason(
+                documents_total=len(tender.documents),
+                documents_downloaded=sum(
+                    doc.download_status == "downloaded" for doc in tender.documents
+                ),
+                extracted_texts_total=final_docs_with_text,
+            )
             errors.append(step.message)
         else:
             step.status = "failed"
