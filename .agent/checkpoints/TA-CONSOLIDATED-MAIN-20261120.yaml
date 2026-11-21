@@ -40,10 +40,13 @@ extension_candidate: 5ef2b43c21abd7a80f39157181512d125d73cd25
 workspace_candidate: 7bd3e0c7aae238305f2c83dc34a4e33105e34344
 dtr_diagnostic_candidate: 1bb655db0ab5ad5427d044bf275164290709f49f
 last_checks: PR674 exact head 1254e264 19/19 CI and mirror SUCCESS, dual GitHub quality workflows each 6683 PASS and 293 SKIP; 245 focused and Ruff PASS. PR merged main as 9b650a2b; post-merge push CI started. Production unchanged and remains pinned abcd8727.
-resume_instruction: PR674 CODE MERGE COMPLETED on main 9b650a2b. Do NOT repeat merge. Continue separate tasks only: verify post-merge push checks, safely reconcile branch dependencies; require new owner authorization and full runtime/dual PITR/DB migration rollback checks before production deploy, and exact source evidence before DTR retries per #679. Preserve original main recovery task blob and nine MI local commits.
+resume_instruction: "PR674 CODE MERGE completed main 9b650a2b; later owner-approved production deployment succeeded at exact SHA9b650a2b (DB127, 12 original-source records and 9 excluded), documented by completed TA-PROD-ROLLOUT-20261121 checkpoint. Do NOT repeat code merge or production rollout; next perform bounded source-original diagnosis issue #679, prove seven-day dual PITR history, then reconcile unrelated draft PRs under owner+AI review. Preserve old source admission, immutable backup and protected MI branch. No blind retries or external bidding."
 original_file_integrity_candidate: 3befa34bfc7a885ba99b635e335d95f72450488c
 original_file_integrity_combined_tests: 245_passed_30_warnings
 merged_pr: 674
 merged_main_commit: 9b650a2b818032389cfd6e13799acad33c72089b
 merged_at_utc: 2026-11-21T10:39:49Z
-production_deployed: false
+production_deployed: true
+production_release_commit: 9b650a2b818032389cfd6e13799acad33c72089b
+production_release_checkpoint: .agent/checkpoints/TA-PROD-ROLLOUT-20261121.yaml
+production_release_verified_at_utc: 2026-11-21T11:56:58Z
