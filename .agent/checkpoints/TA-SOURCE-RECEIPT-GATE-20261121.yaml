@@ -1,0 +1,21 @@
+task_id: TA-SOURCE-RECEIPT-GATE-20261121
+status: in_progress
+goal: Add isolated source identity, typed receipt, exact source bytes and crash quarantine safety to current main without carrying diverged local recovery branches.
+definition_of_done:
+  - Preserve exact source-scoped identity and verified byte receipt API.
+  - Refuse cross-source, cross-namespace, unlisted members and hash-only legacy outputs.
+  - Verify synthetic concurrency, crash quarantine, bounded pending and UTC timestamps.
+  - Pass focused and exact GitHub CI on current main; record independent live admission gates before merging.
+completed_stages:
+  - Extracted only six scoped code/doc/test files from local TA-SOURCE-CATALOG stage4 branch d9ec0438; no large historical source branch, writer or production process included.
+  - Isolated source stage3/4 tests: 43 targeted PASS and Ruff PASS in donor checkout.
+  - Extracted six source-only files to clean branch based exactly on main abcd8727 (local source branch 114 commits ahead/428 behind excluded); code commit cadde925 includes no active production import.
+  - Fresh-main focused source catalog + stage queue 23 tests PASS and Ruff PASS, no source calls or DB mutations.
+current_stage: exact_ci_and_independent_review
+remaining_stages: [exact_ci, source_originals_and_admission_review, owner_merge_decision]
+base_main: abcd8727326c398d870edbc4a2da793e090ac8eb
+source_local_checkpoint: /Users/master/ArvectumSafe/worktrees/ta-source-catalog-20261120/.agent/checkpoints/TA-SOURCE-CATALOG-20261120.yaml
+source_local_head: d9ec043867c84f9e16c3ac9e8b70d9494c1cad65
+last_verified_commit: cadde925afc78fe1604e5c17455615064f9a5a20
+last_checks: Source branch 43 focused PASS/Ruff PASS; clean current-main review branch 23 focused PASS, Ruff PASS, git diff check PASS; exact CI on PR branch still pending.
+resume_instruction: Verify exact PR head CI, keep draft until owner/source admission and AM4 gates; then advance only independently authorized reviews. Do not deploy adapters, enable ETP calls, issue tokens, mount a worker, replay stale jobs, modify production DB or touch the original 114-commit local source worktree or MI checkout.
