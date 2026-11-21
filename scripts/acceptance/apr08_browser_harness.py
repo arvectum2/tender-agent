@@ -21,6 +21,8 @@ def run_browser(app, run: str, password: str, screenshot_dir: Path, *, scenario:
                    f'{prefix}/workspace/runs/{run}/evidence'}
     allowed_post = {f'{prefix}/workspace/runs/{run}/evidence-{part}' for part in ('answer','search','question')}
     allowed_post.add(prefix+'/workspace/price-scenario/calculate')
+    if scenario=='application-review-synthetic':
+        allowed_post.add(f'{prefix}/workspace/runs/{run}/application-review')
     async def restricted(scope, receive, send):
         if scope['type'] != 'http' or scope['path'] not in (allowed_get if scope['method']=='GET' else allowed_post if scope['method']=='POST' else set()):
             await Response(status_code=403)(scope, receive, send)

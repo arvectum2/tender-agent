@@ -157,9 +157,11 @@ completed:
   - '2026-10-13 CZN EIS restored via direct RU HTTPS: intermittent pub01 146-byte nginx404 vs pub02 HTTP200; PR404 bounded 404-only retry implemented in two adapters, plus corrected operator UTC 07:00 vs official 10:00 MSK. Official current v4 EOK 12 Oct 22:24, deadline 23 Oct 10:00, 7 original UID. Real read-only getDocsIP PRIZ SOAP from int.zakupki.gov.ru returned archive ZIP 76759 bytes SHA256 dad574a4bd996a675645bdf538ed13201cc59983417d2c153467bb3f9d2d4908, original v4 XML SHA256 bd6a4261995882d42dfe37d3809a26c722ea771d782e5bac6be4b76675d5fb6c; exact 7/7 UID+name+size crosscheck against three archived SHA originals and four newly downloaded verified files. Four new files moved to restricted ArvectumSSD local evidence and three ZIP CRC PASS (2 nested DOCX, 1 PDF). Offline verifier/negative tests in draft PR404 head ac972df99: 168 pytest PASS, Ruff PASS, original offline source test PASS; exact PR/push CI queued. DIGITAL SIGNATURE, ZIP CONTENT EXPERT REVIEW AND HUMAN GOLD NOT COMPLETED.'
   - '2026-10-13 PR404 exact tested checkpoint a076c8c8: GitHub PR38401431113 and push38401426507/38401426493 all SUCCESS; local 168 APR06 tests PASS/Ruff PASS; child direct-EIS checkpoint completed. New CZN v4 semantic review PR405 source report/test head ff76cc3 independently reads original 95p OОЗ, v4 nested contract/PIK DOCX, unchanged 44-FZ application/evaluation DOCX and two NMCK PDFs; official primary NMCK 685000 chatbot + 315000 youth + 245000 trainings = 1245000 RUB, tender evaluation 70% completed 44-FZ/223-FZ contracts incl chatbot, 30% price. Custom PHP/JS/SQL, 2/7/10/15 December deadlines, no advance, 12-month warranty. Original source-linked private binary bytes stay on Mac mini. Mac mini 172 tests PASS/Ruff PASS/real v4 SOAP 7/7 UID PASS; draft PR405 CI pending. Provisional DEFER conditional on qualifying references, NOT human gold or legal acceptance.'
   - '2026-10-13 CZN v4 source assessment follow-up: draft PR405 checkpoint latest head a15c68e2937f2225fb0e57189f306fba5415c6b1, source report/code head ff76cc3; Mac mini 172 focused pytest PASS, Ruff PASS, original EIS v4 UID verifier PASS. GitHub PR38407699617 and push38407689429 quality job make test still in progress, fast push38407689203 SUCCESS, other 8 PR jobs SUCCESS. New roadmap issue #406 tracks future general source-bound qualification-weight competitive-risk feature; no code implemented for it. PR405 do not merge, human-gold unapproved.'
-current: "TA-R4-20-COMPETITIVE-SEMANTIC-20261014 PR432 verified source2c40b4bf Mac mini FULL 4119 PASS/242 SKIP, exact GitHub 3/3 SUCCESS, 96/96 selected archived EIS original attachment SHA and texts, fail-closed runtime missing appendix, 47 historical LLM quotes checked. Canonical child checkpoint02cfe021; technical foundation green, FULL human legally grounded semantics across96 original documents and current EIS/Owner signoff0/20 still in progress. Other APR03B/APR04-07/B2B roadmap gates remain."
+current: "2026-11-21: Production SHA 9b650a2b deployed and verified DB127 / 12 admitted records (9 excluded); PR681 merged, PR682 release/governance documents in review. Next official-original source gaps issue #679 and seven-day PITR evidence; no blind source retries."
 
 pending:
+  - '2026-11-21 P0: Resolve issue #679 three missing official originals under source permission, no blind EIS requests.'
+  - '2026-11-21 P0: Prove seven-day TA+DP PITR continuity and verify next production daily runner with rollback readiness.'
   - 'PR407: verify exact-head GitHub push and PR CI; repair verified failures and complete TA-QUALIFICATION-REFERENCE-LIST-20261013 child. Report UI automatic integration, authorized known Arvectum customer_id fact seeding and strict original EIS criterion hash crosscheck are separate remaining roadmap tasks; do not pretend done.'
   - 'APR-03B: obtain actual model report, full legal/source review and explicit owner visual/semantic acceptance; no unapproved external bid action.'
   - 'APR-03B: PR391 merged. Validate private 18083 preview using newly built image and rollback when Mac mini is reachable; perform current live revision/source-locked analysis and owner semantic acceptance without changing production.'
@@ -168,7 +170,7 @@ pending:
   - 'APR-06: original CZN 0348100024426000039 v4 SOAP XML/7 UID SHA binding and public status 23 Oct 10 MSK verified; PR404 bounded EIS cache retry, fixed timezone and exact-head CI SUCCESS. PR405 source-grounded AI-only doc review: official NMCK 685k/315k/245k, experience 70% and price 30%; if no qualifying completed 44/223 chatbot contracts, commercial win chance likely low; keep DEFER conditional, not legal denial. Need company reference confirmation, economic/security cost, owner KPI, actual human gold 20-30 independent cases, cryptographic signature if needed; PR254/PR255 do not merge.'
   - 'APR-07: exact-head PR+push CI green on draft stacked PR255; bounded reproducible offline snapshot tested but rolling production SLO and human procurement model comparison NOT_MEASURED, no promotion.'
   - 'B2B discovery: nine historically source-attested corporate IT/digital cards, NOT nine presently open: Workspace19004 terminal despite future printed deadline, official Workspace PRO needed for self-initiated bids. Bounded status-first library PR392 merged, discovery source connectivity and 15-20 qualified original-platform leads still open; no purchases or ETP submissions.'
-last_verified_commit: "PR464 code main d8d8ff0b63e2568aff91eec862566637340a92af; existing Mac mini 18082 source parity 1165, 4961 PASS/285 SKIP, CI green, six original source receipts 6/6; public legal status still UNKNOWN"
+last_verified_commit: "GitHub main 45e8c6ff4c939747ee91cdb168b3922ddd9bb93f after PR681, deployed production SHA 9b650a2b; docs PR682 pending"
 
 test_results:
   - "PR432 Mac mini FULL source780ebd11 4106 pytest PASS,242 SKIP,0 failed,329 warnings,149.74s; ten focused tests PASS, Ruff PASS, original 96/96 EIS archive attachment provenance checked and 47 quote classification reproducible."
@@ -255,7 +257,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-10-20: APR03B/07 child TA-GEMMA-CITED-FALLBACK-FIX-20261019 reviewed original Smolensk data. Prior final4 actual Gemma 3/4; separate evaltrace5 0/1 with unsupported invented 100% twice, while pinned original percentages are 20/30/70/80. PR500 draft has prompt rule forbidding inferred percentages and new exclusive criteria_only receipt variant; code/guards remain review-only and unmerged. Read-only one-section rerun blocked BEFORE model by Data Platform collection_stats HTTP401 (existing local client credentials not configured; service process exists). Child checkpoint status BLOCKED; do not bypass authentication or claim 4/4. Restore existing authorized Data Platform client configuration (no secrets in Git/Chat), reverify index 86/86/86 and start a single read-only criteria_only probe with original SHA; audit citations/numeric facts before declaring acceptance. While blocked, continue independent approved parent tasks APR04/05/06 and B2B qualification without bid/ETP/payment/deploy or changing benchmark gold. Single manual_override remains true."
+resume_instruction: "2026-11-21: Production release SHA 9b650a2b, DB127 and completed .agent/checkpoints/TA-PROD-ROLLOUT-20261121.yaml are authoritative. Do not repeat deployment, WSF source admission or expand 12 records. PR681 merged; PR682 records verified release and final owner+AI governance policy. Next issue #679 read-only source diagnosis then seven-day TA/DP PITR evidence and next scheduled daily preflight; preserve protected MI branch, old release and single watchdog."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -881,3 +883,20 @@ wsf07b_exact_bearer_20261117:
   checkpoint: .agent/checkpoints/TA-WSF07B-EXACT-BEARER-20261117.yaml
   branch: fix/ta-wsf07b-exact-bearer-20261117
   current_stage: strict_auth_and_private_provenance
+
+release_hygiene_2026_11_21:
+  task_id: TA-RELEASE-POSTMERGE-20261121
+  status: completed
+  baseline_main_verified: 45e8c6ff4c939747ee91cdb168b3922ddd9bb93f
+  deployed_source_sha: 9b650a2b818032389cfd6e13799acad33c72089b
+  deployed_db_revision: 127_private_review_link_corrections
+  allowed_source_deals: 12
+  excluded_source_deals: 9
+  release_checkpoint: .agent/checkpoints/TA-PROD-ROLLOUT-20261121.yaml
+  branch_governance_checkpoint: .agent/checkpoints/TA-MAIN-GOVERNANCE-20261121.yaml
+  pr681: merged
+  pr682: release_and_governance_evidence_recorded_here
+  pr680: superseded_by_pr682
+  next_priority_issue: 679
+  external_reviewer_required: false
+  automatic_source_replay_authorized: false

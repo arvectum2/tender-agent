@@ -2,6 +2,8 @@
 
 This is a read-only management audit, not production acceptance, procurement authorization or permission to delete worktrees. Scope: `arvectum2/tender-agent`, canonical main `abcd8727` (verified GitHub remote and successful CI/GitVerse).
 
+The historical 20-Nov/early 21-Nov counts and approval statuses below are retained as an audit snapshot, NOT current production state. The independently verified update is appended below.
+
 ## PR history and integration
 - Initial open PR count: 129. Exactly 81 open PRs whose pinned HEAD commits were already ancestors of main were retired dependency-safely, without deleting source branches or repositories. After creating review-only PR674: 49 open PRs observed.
 - PR673 documentation-only reconciliation: exact head `5905e3c1`, CI 20/20 PASS before this follow-up audit.
@@ -31,3 +33,10 @@ This is a read-only management audit, not production acceptance, procurement aut
 5. Explicit owner/AM4 gates for merges, runtime changes and first paid pilot. No human GO, bid, payment, migration, signing, private data publishing or production deployment implied.
 
 Canonical master roadmap and original Spec Kit source remain unchanged by this audit.
+
+## 21-Nov verified correction
+
+- PR #674 code merged as `9b650a2b`; PRs #681/#682 subsequently merged release/checkpoint proof. Owner separately approved production deployment, now live at backend SHA `9b650a2b` and DB revision 127. Daily `--preflight` PASS; health 8001/8094 HTTP 200. Main protected by PR and 10 strict CI checks, **no external GitHub reviewer required** (technical AI reviewer plus owner authority).
+- The source grant covers **12 old admitted records, 9 excluded**, not 21 allowed. Three missing-original cases remain `WAITING_HUMAN` [#679](https://github.com/arvectum2/tender-agent/issues/679). One official SOAP response returned archive metadata, later bounded requests timed out without ZIP; no fabricated originals.
+- Independent no-network and read-only-mounted DP-PITR physical restoration recovered **both** live-business-cluster DBs: `arvectum` pre-release schema 122/63 tender rows and `arvectum_data` with 72 collections. Separate TA-PITR protects another `arvectum_local` cluster, **not** a second copy of production. A physical post-schema127 restore and seven-day coverage remain NOT PROVEN [#685](https://github.com/arvectum2/tender-agent/issues/685).
+- The earlier 183 worktree and PR inventory is **historical**; no automatic archival or deletion is authorized. No new ETP, legal, paid, DB/write or production mutation by this management correction.

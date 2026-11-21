@@ -1,0 +1,41 @@
+task_id: TA-PROD-ROLLOUT-20261121
+status: completed
+goal: Safely activate merged Tender Agent main 9b650a2b while preserving the source-admitted 12-record workflow (9 excluded), PostgreSQL data, daily runner and recoverability.
+definition_of_done:
+  - Exact code and dependencies, hosted CI and local API canary verified.
+  - Production schema 122-to-127 verified on independent real-data clone with tested downgrade.
+  - New source admission expressly bound to exact target release, unchanged physical database and original 12 authorized records.
+  - Rollback and TA/DP PITR gates passed; production backend, DB and daily runner coordinated; functional smoke verified.
+  - Final actual deployed SHA and DB revision documented; never claim deployment from code merge alone.
+completed_stages:
+  - PR674 merged into protected main 9b650a2b; post-merge GitHub CI and GitVerse PASS.
+  - Production current SHA abcd8727 and DB122 confirmed, 8001/8094 health 200.
+  - Immutable detached target release staged with matching dependency lock, 118 API routes; canary /health 200, guarded docs 401, denied source read 503; canary stopped.
+  - Read-only live PG17 backup to private 0600 source SHA256 29fea54bfeb19973a314725a06da1b8c1df976e56210f999f721032f761ee6ec.
+  - Backup restored to isolated no-TCP PG17 clone; migrations 122->127, 127->122, 122->127 PASS; clone stopped.
+  - Exact old WSF-07B manifest valid only for old source release abcd8727, target fails closed with manifest mismatch; 12 original IDs must not be widened and 9 excluded.
+  - TA/DP PITR health PASS with active receivers, but 7-day history not independently proved; canonical SSD checkout is dirty unrelated branch and not reset.
+  - Owner approved exact release rebind 2026-11-21; actual original grant contained 12 IDs and excluded 9, not 21 permitted; scope and physical DB unchanged.
+  - Created privately pinned target SHA source manifest; verified 12/12 real PostgreSQL identities and unchanged source scope, expiry and credential hash.
+  - Fresh prewrite full dump 6397645 bytes SHA256 0996430c1bce223087411a18561b2d9e29cde7233f72e9fa656520c11bd61852; separate real DB clone 122->127->122->127 proven; TA/DP PITR PASS.
+  - Owner-authorized maintenance: stopped backend and daily, migrated live 122->127, atomically updated pinned launch scripts, restarted and verified backend, daily and 12-record source. Lock removed.
+  - Final live backend PID44717 SHA9b650a2b; DB127; 8001/8094 HTTP200; daily --preflight PASS; new tables7; default-off features unchanged; old release and backups retained.
+current_stage: production_live_verified
+remaining_stages: []
+last_verified_commit: 9b650a2b818032389cfd6e13799acad33c72089b
+last_checks: LIVE backend PID44717 at SHA9b650a2b; DB revision127 and 7 new tables; /health 8001/8094 HTTP200; daily --preflight PASS; 12/12 original scope confirmed on same physical DB; docs401 and invalid source403; original grant preserved; full clone migration+rollback PASS; fresh prewrite PG dump verified; current dual PITR restore proofs PASS.
+resume_instruction: RELEASE COMPLETED 2026-11-21T11:54:07Z. Do not redo rollout or rebind. Maintain old release for rollback and monitor dual PITR and daily preflight; separate source-document issue #679 unresolved. No live DTR retry, EIS/ETP fetch, bidding, signing or commercial activation.
+source_release_current: abcd8727326c398d870edbc4a2da793e090ac8eb
+source_release_target: 9b650a2b818032389cfd6e13799acad33c72089b
+source_grant_target_authorized: true
+clone_migration_final: 127_private_review_link_corrections
+clone_migration_downgrade_proven: true
+backup_sha256: 29fea54bfeb19973a314725a06da1b8c1df976e56210f999f721032f761ee6ec
+production_db_revision: 127_private_review_link_corrections
+production_deployed: true
+deployed_at_utc: 2026-11-21T11:54:07Z
+original_authorized_deals: 12
+excluded_deals: 9
+new_manifest_sha256: 80b4919188af1ba64b3ab66bd9fc914bf922c791d45dd46e2eedc0f5e9e68bf5
+prewrite_snapshot_sha256: 0996430c1bce223087411a18561b2d9e29cde7233f72e9fa656520c11bd61852
+backend_pid_verified: 44717

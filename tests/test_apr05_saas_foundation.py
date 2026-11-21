@@ -2827,3 +2827,97 @@ def test_price01_pilot_entitlement_and_nondestructive_rollback(client, session, 
     assert session.query(CompanyActualCostSnapshot).count() == 1
     assert session.query(CompanyCostNormVersion).count() == 1
     assert session.query(SaasPaymentEvidence).count() == 0
+
+
+def test_documentary_readiness_tenant_bound(client,session,monkeypatch,tmp_path):
+    import hashlib
+    from datetime import UTC, datetime
+
+    from src.modules.company_profile_store import application_checklist
+    from src.modules.company_profile_store.models import (
+        CompanyDocument,
+        CompanyDocumentVersion,
+        CompanyProfileFactVersion,
+    )
+    from src.modules.customer_registry.models import CustomerProfile
+    from src.modules.document_store.models import ArtifactVersion, DocumentArtifact
+    from src.modules.saas_foundation.models import SaasMember, SaasRun
+    from src.modules.tender_operator_agent_demo.ri223_application_source import (
+        SOURCE_PARAGRAPHS,
+    )
+
+    settings=Settings(_env_file=None,saas_foundation_enabled=True,arvectum_data_dir=str(tmp_path))
+    tenant,a=_seed(client,'Synthetic qualification A')
+    _,b=_seed(client,'Synthetic qualification B')
+    endpoint='/api/saas/profile/documentary-readiness'
+    assert client.get(endpoint).status_code==401
+    assert client.get(endpoint,headers=_auth(a)).status_code==428
+    _legal(client,a);_legal(client,b)
+    cid=tenant['customer_id']
+    cust=session.scalar(select(CustomerProfile).where(CustomerProfile.customer_id==cid))
+    cust.inn='1234567890'
+    owner=session.scalar(select(SaasMember).where(SaasMember.tenant_id==tenant['tenant_id']))
+    run='toa-run-20261118120000-123abc'
+    session.add(SaasRun(tenant_id=tenant['tenant_id'],run_id=run,created_by_member_id=owner.id))
+    root=tmp_path/'company-onboarding'/cid;root.mkdir(parents=True)
+    docfile=root/'fixture.pdf';docfile.write_bytes(b'%PDF-1.4\nSynthetic PDF fixture\n')
+    sha=hashlib.sha256(docfile.read_bytes()).hexdigest()
+    art=DocumentArtifact(artifact_ref='synthetic-readiness-artifact',artifact_type='OTHER',file_name=docfile.name,storage_uri=str(docfile),
+                         checksum_sha256=sha,current_version=1)
+    session.add(art);session.flush()
+    session.add(ArtifactVersion(artifact_ref=art.artifact_ref,version_no=1,storage_uri=str(docfile),checksum_sha256=sha))
+    doc=CompanyDocument(customer_id=cid,document_key='fixture',document_type='STATUTORY',display_name='Fixture',artifact_ref=art.artifact_ref)
+    session.add(doc);session.flush()
+    session.add(CompanyDocumentVersion(company_document_id=doc.id,version_no=1,artifact_version_no=1,source_type='CUSTOMER_UPLOADED',source_ref='fixture'))
+    now=datetime.now(UTC)
+    for code,group in [('sme_membership','OTHER'),('director_appointment','IDENTITY')]:
+        session.add(CompanyProfileFactVersion(customer_id=cid,fact_key='qualification_claim:'+code,
+            fact_group=group,version_no=1,source_type='OWNER_CONFIRMED',source_ref='synthetic-private-source',
+            expires_at=now+timedelta(days=7),value_json={'schema_version':'qualification-documentary-claim-v1',
+                'inn':cust.inn,'requirement_code':code,'observed_on':now.date().isoformat(),
+                'valid_through':(now.date()+timedelta(days=7)).isoformat(),'owner_confirmed':True,
+                'assertion':'PRESENT','document_key':'fixture','document_version':1,'sha256':sha}))
+    session.commit()
+    monkeypatch.setattr(saas,'get_settings',lambda:settings)
+    result=client.get(endpoint,headers=_auth(a))
+    assert result.status_code==200,result.text
+    p=result.json()
+    assert p['customer_id']==cid and p['documented_claim_count']==1
+    assert len(p['requirements'])==7 and not p['qualification_verified']
+    assert 'synthetic-private-source' not in result.text and str(docfile) not in result.text
+    assert client.get(endpoint,headers=_auth(b)).json()['documented_claim_count']==0
+    groups={h:{k:[{'quote':q,'original_sha256':h,'file_id':'FILE-01','chunk_id':k}] for k,q in g.items()} for h,g in SOURCE_PARAGRAPHS.items()}
+    calls=[]
+    def observe(run_id):
+        calls.append(run_id)
+        return {'procurement_number':'32616444788','status':'ARCHIVED_QUOTATION_CHECKLIST_REVIEW_ONLY','source_groups':groups}
+    monkeypatch.setattr(application_checklist,'observe_application',observe)
+    endpoint='/api/saas/runs/'+run+'/application-readiness'
+    assert client.post(endpoint,headers=_auth(b),json={}).status_code==404
+    assert client.post(endpoint,headers=_auth(a),json={'customer_id':'foreign'}).status_code==422
+    assert not calls
+    r=client.post(endpoint,headers=_auth(a),json={'signatory':'DIRECTOR','goods_used':False})
+    assert r.status_code==200,r.text
+    rows={x['code']:x for x in r.json()['rows']}
+    assert len(rows)==9 and rows['director_appointment']['state']=='CANDIDATE_REVIEW_REQUIRED'
+    assert rows['power_of_attorney']['state']=='NOT_TRIGGERED_IN_SCENARIO'
+    assert r.json()['recommendation']=='DEFER' and not r.json()['application_ready']
+    assert calls==[run]
+    docfile.write_bytes(b'%PDF-1.4\nChanged')
+    r=client.get('/api/saas/profile/documentary-readiness',headers=_auth(a)).json()
+    assert r['documented_claim_count']==0
+    assert next(x for x in r['requirements'] if x['requirement_code']=='sme_membership')['state']=='DOCUMENT_BYTES_MISMATCH'
+
+
+def test_documentary_readiness_viewer_and_revoked_access(client):
+    _,owner=_seed(client,'Synthetic documentary roles')
+    _legal(client,owner)
+    endpoint='/api/saas/profile/documentary-readiness'
+    for role in ('viewer','analyst'):
+        invite=client.post('/api/saas/invitations',headers=_auth(owner),json={'role':role}).json()
+        member=client.post('/api/saas/invitations/redeem',json={'invitation_code':invite['invitation_code'],'display_name':role}).json()
+        token=member['access_token']
+        _legal(client,token)
+        assert client.get(endpoint,headers=_auth(token)).status_code==(403 if role=='viewer' else 200)
+        assert client.post('/api/saas/members/'+member['member_id']+'/revoke',headers=_auth(owner)).status_code==200
+        assert client.get(endpoint,headers=_auth(token)).status_code==401

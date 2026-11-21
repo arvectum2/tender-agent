@@ -525,6 +525,8 @@ def append_files_to_demo_run(
     uploads: list[tuple[str, str, bytes]],
 ) -> TenderOperatorUploadedRunCreateResponse:
     """Compatibility facade: use current patched dependencies at call time."""
+    if _load_metadata(run_id).get("procurement_source") == "zakupki_gov_ru_ri223_getdocs_ip":
+        raise HTTPException(status_code=409, detail="RI223 archived evidence only; full analysis and document append are unsupported.")
     from src.modules.tender_operator_agent_demo.operator_append_files import (
         append_files_to_demo_run as _append_files,
     )
@@ -1587,6 +1589,8 @@ def _ensure_procurement_blocked_report_html(run_id: str) -> Path | None:
 
 def analyze_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunAnalyzeResponse:
     """Legacy facade: preserve live overrides and original product semantics."""
+    if _load_metadata(run_id).get("procurement_source") == "zakupki_gov_ru_ri223_getdocs_ip":
+        raise HTTPException(status_code=409, detail="RI223 archived evidence only; full analysis and document append are unsupported.")
     from src.modules.tender_operator_agent_demo.operator_analyze_run import (
         analyze_uploaded_demo_run as _analyze_run,
     )

@@ -251,7 +251,7 @@ def test_existing_ri223_analyzer_dispatch_populates_dossier_from_dp_hits():
     repo.get_tender_by_registry_number.return_value = tender
     repo.count_chunks_by_tender.return_value = 1
     client = MagicMock()
-    client.collection_stats.return_value = {"resources": 1, "embeddings": 1}
+    client.collection_stats.return_value = {"resources": 1, "documents": 1, "chunks": 1, "embeddings": 1}
     retriever = MagicMock()
     retriever.search_documents.return_value = [
         RagSearchHit(

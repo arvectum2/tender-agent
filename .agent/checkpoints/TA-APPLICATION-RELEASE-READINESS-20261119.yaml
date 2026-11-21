@@ -1,0 +1,24 @@
+task_id: TA-APPLICATION-RELEASE-READINESS-20261119
+status: blocked
+goal: Read-only scoped diagnosis of exact private application preview and independent original-form
+  review evidence.
+definition_of_done:
+- Recheck archive, source plan, facts, retained acknowledgement and explicit candidate links; show
+  blocking reasons without claiming release readiness.
+- Separate structural presence from legal, semantic, revision and operational gates; never permit
+  submission or export.
+- Default-off scoped API, targeted synthetic tests, documentation and draft publication.
+completed:
+- Recovered predecessor quality regression; Node cabinet and Chromium 4 scenarios passed.
+current_stage: implementation_tool_rejected
+remaining:
+- Diagnostic API, tests and UI not implemented; attempted module write rejected by safety systems,
+  verified file absent. Do not retry or circumvent rejected operation.
+- Predecessor independent form review CI rerun pending; verify exact fix head.
+last_verified_commit: ea771b717a3c595075f24115d1369d6cec4d951a
+test_results:
+- Existing company cabinet Node contract PASS; 4 Chromium synthetic scenarios PASS after regression
+  fix. No readiness module tests performed.
+resume_instruction: Verify predecessor CI on repaired branch. The attempted readiness implementation
+  was blocked by the tool, file absent; do not repeat or bypass the rejected operation. Keep release
+  disabled; reassess permissible independent work separately.

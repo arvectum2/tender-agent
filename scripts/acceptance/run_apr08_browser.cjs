@@ -14,7 +14,7 @@ assert.equal(target.hostname,'127.0.0.1');assert.equal(target.protocol,'http:');
   const l=id=>page.locator('#'+id);
   await page.goto(origin+'/pilot/tender-agent/workspace?run='+run);
   await l('copilot-panel').waitFor({state:'visible'});
-  if(process.env.APR08_BROWSER_SCENARIO==='pinned') assert(await l('report-panel').isHidden());
+  if(['pinned','ri223','ri223-multilot','ri223-attachments','ri223-container','ri223-zip','ri223-dossier','application-review-synthetic'].includes(process.env.APR08_BROWSER_SCENARIO)) assert(await l('report-panel').isHidden());
   else await l('report-panel').waitFor({state:'visible'});
   await page.getByText('Evidence Copilot — вопросы и расчёт по закупке',{exact:true}).click();
   const ask=async(question,pattern)=>{
@@ -24,6 +24,81 @@ assert.equal(target.hostname,'127.0.0.1');assert.equal(target.protocol,'http:');
     await page.waitForFunction(({id,text})=>document.getElementById(id).innerText.includes(text),{id:'copilot-answer-result',text:pattern});
     return await l('copilot-answer-result').innerText();
   };
+  if(process.env.APR08_BROWSER_SCENARIO==='application-review-synthetic') {
+    await page.getByText('Комплектность заявки — требования заказчика',{exact:true}).click();
+    const root=l('application-review-result');
+    await l('application-review-submit').click();
+    await root.getByText('Архивный чек-лист · 9 групп требований · DEFER. Профиль не проверен.').waitFor();
+    assert.equal(await root.locator('details').count(),9);
+    await root.getByText(/Доверенность представителя — Условие не определено/).click();
+    assert.match(await root.innerText(),/SHA-256 оригинала/);
+    await l('application-signatory').selectOption('DIRECTOR');
+    assert.equal(await root.innerText(),'');
+    await l('application-goods').selectOption('NO');
+    await l('application-review-submit').click();
+    await root.getByText(/Доверенность представителя — Не применяется/).waitFor();
+    assert.match(await root.innerText(),/Альтернативные документы; само право требуется/);
+    await l('refresh-run').click();
+    await page.waitForFunction(()=>document.getElementById('application-signatory').value==='UNKNOWN');
+    assert.equal(await root.innerText(),'');
+    assert.deepEqual(errors,[]);
+    console.log('APPLICATION_REVIEW_SYNTHETIC_BROWSER_PASS',process.env.APR08_BROWSER_NARROW==='1'?'390px':'desktop');return;
+  }
+  if(process.env.APR08_BROWSER_SCENARIO==='ri223-dossier') {
+    page.setDefaultTimeout(45000);
+    const observed=await ask('Составь архивное досье 223-ФЗ','решение: NOT_DECIDED');
+    assert.match(observed,/документы внутри контейнеров: 19/);
+    assert.match(observed,/Методика оценки: стоимостной 40%, нестоимостные 60%/);
+    assert.equal(await l('copilot-answer-result').locator('details').count(),9);
+    assert.match(observed,/SHA-256 контейнера/);
+    await l('copilot-answer-result').screenshot({path:process.env.APR08_SCREENSHOT_DIR+'/ri223-dossier.png'});
+    assert(await l('analyze-btn').isDisabled());assert.deepEqual(errors,[]);
+    console.log('APR03B_RI223_DOSSIER_BROWSER_PASS');return;
+  }
+  if(process.env.APR08_BROWSER_SCENARIO==='ri223-zip') {
+    await ask('Покажи архивные сведения 223-ФЗ','SYNTHETIC ZIP FIXTURE');
+    await l('copilot-search').fill('критерий оценки');await l('copilot-search-submit').click();
+    await page.waitForFunction(()=>document.getElementById('copilot-search-result').innerText.includes('synthetic.zip')&&document.getElementById('copilot-search-result').innerText.includes('SHA-256 контейнера'));
+    await l('copilot-search-result').screenshot({path:process.env.APR08_SCREENSHOT_DIR+'/ri223-zip-synthetic.png'});
+    assert(await l('analyze-btn').isDisabled());assert.deepEqual(errors,[]);
+    console.log('APR03B_RI223_ZIP_SYNTHETIC_BROWSER_PASS');return;
+  }
+  if(process.env.APR08_BROWSER_SCENARIO==='ri223-container') {
+    await ask('Покажи архивные сведения 223-ФЗ','Цена единственного лота: 1020000');
+    await l('copilot-search').fill('критерий оценки');await l('copilot-search-submit').click();
+    await page.waitForFunction(()=>document.getElementById('copilot-search-result').innerText.includes('SHA-256 контейнера'));
+    await l('copilot-search-result').screenshot({path:process.env.APR08_SCREENSHOT_DIR+'/ri223-container.png'});
+    assert(await l('analyze-btn').isDisabled());assert.deepEqual(errors,[]);
+    console.log('APR03B_RI223_CONTAINER_BROWSER_PASS');return;
+  }
+  if(process.env.APR08_BROWSER_SCENARIO==='ri223-attachments') {
+    await ask('Покажи архивные сведения 223-ФЗ','Цена единственного лота: 191352');
+    await l('copilot-search').fill('договор');await l('copilot-search-submit').click();
+    await page.waitForFunction(()=>document.getElementById('copilot-search-result').innerText.includes('SHA-256'));
+    await l('copilot-search-result').screenshot({path:process.env.APR08_SCREENSHOT_DIR+'/ri223-attachments.png'});
+    assert(await l('analyze-btn').isDisabled());assert.deepEqual(errors,[]);
+    console.log('APR03B_RI223_ATTACHMENT_BROWSER_PASS');return;
+  }
+  if(process.env.APR08_BROWSER_SCENARIO==='ri223-multilot') {
+    const observed=await ask('Покажи архивные сведения 223-ФЗ','Цена единственного лота: UNKNOWN');
+    assert.match(observed,/Конкурс в электронной форме/);assert.match(observed,/Редакция 3/);
+    assert.match(observed,/правовой статус закупки, обеспечение и победитель: UNKNOWN/);
+    await ask('Какова НМЦК?','UNKNOWN');assert(await l('analyze-btn').isDisabled());
+    assert.deepEqual(errors,[]);assert(await l('report-panel').isHidden());
+    console.log('APR03B_RI223_MULTILOT_BROWSER_PASS no aggregate price or analysis');return;
+  }
+  if(process.env.APR08_BROWSER_SCENARIO==='ri223') {
+    const observed=await ask('Покажи архивные сведения 223-ФЗ','Цена единственного лота: 191352');
+    assert.match(observed,/Запрос котировок/);assert.match(observed,/2026-10-15T10:00:00/);
+    assert.match(observed,/часовой пояс UNKNOWN/);assert.match(observed,/Валюта лота: RUB/);
+    assert.match(observed,/правовой статус закупки, обеспечение и победитель: UNKNOWN/);
+    assert.match(observed,/Архивный порядок подачи заявок:/);assert.match(observed,/Архивный порядок подведения итогов:/);assert.match(observed,/18\.6\./);
+    assert.equal(await l('copilot-answer-result').getByText('Проверенный оригинал XML ЕИС:',{exact:false}).count(),7);
+    await l('copilot-answer-result').screenshot({path:process.env.APR08_SCREENSHOT_DIR+'/ri223.png'});
+    await ask('Какова НМЦК?','UNKNOWN');await ask('Какой размер обеспечения заявки?','UNKNOWN');
+    assert.deepEqual(errors,[]);assert(await l('report-panel').isHidden());
+    console.log('APR03B_RI223_BROWSER_PASS seven cited fields, no 44-FZ fallback');return;
+  }
   if(process.env.APR08_BROWSER_SCENARIO==='pinned') {
     const fixed=async(question,pattern,percent)=>{
       await l('copilot-question').selectOption(question);

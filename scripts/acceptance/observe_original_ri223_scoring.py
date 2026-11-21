@@ -11,7 +11,7 @@ import subprocess
 from pathlib import Path
 
 from src.modules.company_profile_store.qualification_223_observer import (
-    observe_ri223_scoring_text,
+    observe_verified_pdf_layout,
     verify_ri223_originals,
 )
 
@@ -30,19 +30,6 @@ def _extract_original_pdf(rar_path: Path, member_name: str) -> bytes:
     return result.stdout
 
 
-def _pdf_text(original_pdf_bytes: bytes) -> str:
-    result = subprocess.run(
-        ["pdftotext", "-layout", "-", "-"],
-        input=original_pdf_bytes,
-        capture_output=True,
-        timeout=20,
-        check=True,
-    )
-    if len(result.stdout) > 1_000_000:
-        raise ValueError("Original PDF text too long for narrow scoring observer")
-    return result.stdout.decode("utf-8", errors="strict")
-
-
 def replay(*, soap_archive: Path, rar_archive: Path, receipt_file: Path) -> dict:
     receipt = json.loads(receipt_file.read_text(encoding="utf-8"))
     soap_bytes = soap_archive.read_bytes()
@@ -53,7 +40,7 @@ def replay(*, soap_archive: Path, rar_archive: Path, receipt_file: Path) -> dict
     trusted = verify_ri223_originals(
         soap_bytes, rar_bytes, original_pdf, receipt
     )
-    scoring = observe_ri223_scoring_text(_pdf_text(original_pdf))
+    scoring = observe_verified_pdf_layout(original_pdf)
     return {
         **trusted,
         **scoring,

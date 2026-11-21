@@ -51,7 +51,7 @@ def is_ri223_rar_document(document) -> bool:
 
 
 def _safe_member_path(value: str) -> PurePosixPath:
-    if not value or len(value) > 1024 or any(ord(c) < 32 for c in value):
+    if not value or len(value) > 1024 or any(ord(c) < 32 for c in value) or any(c in value for c in "*?[]\ufffd"):
         raise Ri223RarError("RAR contains invalid member name")
     if "\\" in value or "//" in value or "/./" in value or value.startswith("./") or re.match(r"^[A-Za-z]:", value):
         raise Ri223RarError("RAR contains unsafe Windows member path")
