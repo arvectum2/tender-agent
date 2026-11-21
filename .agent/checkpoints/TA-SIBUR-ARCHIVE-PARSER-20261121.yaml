@@ -1,29 +1,35 @@
 task_id: TA-SIBUR-ARCHIVE-PARSER-20261121
-status: in_progress
-goal: Extract and independently verify the pure source-specific SIBUR archive category/parser from giant DRAFT PR527 without importing any live runner or DB writer.
+status: completed
+goal: Extract and independently verify the pure source-specific SIBUR archive category/parser from giant DRAFT PR527 without importing any live runner or
+  DB writer.
 definition_of_done:
-  - Preserve original #527 history and separate its pure archive parser and tests from more than 7000 lines of legacy mixed source/DB/sales work.
-  - Test exact source category and page identity, bounded pagination, safe document-origin allowlist and privacy redaction.
-  - Prove behavior on existing SHA-pinned original archived category pages in private SSD, with no new network calls, source grants or writes.
-  - Verify Ruff and focused tests on protected main, after PR526 approval merge current main and run exact CI.
-  - Merge pure source parsing code only; leave PR527 original giant branch DRAFT for independent source authorization, MI/PITR and DP decisions.
+- Preserve original
+- Test exact source category and page identity, bounded pagination, safe document-origin allowlist and privacy redaction.
+- Prove behavior on existing SHA-pinned original archived category pages in private SSD, with no new network calls, source grants or writes.
+- Verify Ruff and focused tests on protected main, after PR526 approval merge current main and run exact CI.
+- Merge pure source parsing code only; leave PR527 original giant branch DRAFT for independent source authorization, MI/PITR and DP decisions.
 completed_stages:
-  - Classified PR527 original 62-file/7008-insertion delta, including DB writers and 1489 changed canonical task lines; not safe to bulk merge.
-  - Created fresh isolated review worktree from protected main, copied exactly the two source-only archive parser and test files for independent audit.
-  - Independently SHA-replayed actual archived page1 from all 9 source categories with source receipt URL, bytes, exact IDs and pagination: 9/9 pages, 108 original rows; private proof 0600 persisted. Historical full archive coverage not claimed.
-  - Added duplicate JSON-member rejection and negative tests for all categories, wrong page, out-of-origin attachment, URL bound/type; 15 focused pytest and Ruff PASS.
-  - Implemented reusable replay_archived_page read-only SHA+category+page+source URL+row-ID proof, file symlink/path guard, source receipt duplicate-key fail-closed; verified all nine actual page1 bytes and 108 rows. 32 focused tests and Ruff PASS.
-  - Verified ALL 4052 of 4052 original historical archived pages in 9 categories, 48536 total source observations, exact SHA+receipt+row ID+stable source pagination, zero missing/extra/invalid; private 0600 complete deterministic category digest proof persisted. No network/DB writes.
-  - Added read-only full archive corpus auditor, 5 corpus negative checks, 37 focused tests and Ruff PASS.
-  - Parent PR526 saved-doc source audit passed 19/19 GitHub CI and merged into protected main 7ea192b3; its checkpoint completed, issue #686 PPT ambiguity still open.
-current_stage: full_historical_archive_4052_pages_48536_rows_verified_waiting_exact_ci
-remaining_stages:
-  - Merge latest protected main 7ea192b3, rerun 37 focused tests/Ruff and source proof read-only receipt validation.
-  - Push bounded source-only branch and create PR with current main as base, require exact GitHub/GitVerse CI.
-  - Mark completed only after reviewed protected merge; all new live archive source, DB and DP activation stays separate.
-last_verified_commit: 6bf0a141108b32cfb34613ee291894aee7cec50f
-last_checks: Full 9-category primary-source archived corpus 4052/4052 SHA+receipt+member/pagination verified, 48536 row observations, zero errors; private complete 0600 aggregate category digest. 37 focused pytest and Ruff PASS, no HTTP or DB writes. Parent source PR526 merged 7ea192b3, no source-right expansion.
-resume_instruction: Complete source/archive task - full 4052/4052 historical original archive pages (48536 rows) SHA verified, no gaps, private 0600 receipt saved. Parent PR526 merged 7ea192b3. Finish merging latest protected main, run 37 focused tests/Ruff, publish small pure parser+full auditor PR, await exact CI and merge owner+AI; do not bulk merge old DRAFT #527 or activate live archive capture, index, ETP or DB.
+- Classified PR527 original 62-file/7008-insertion delta, including DB writers and 1489 changed canonical task lines; not safe to bulk merge.
+- Created fresh isolated review worktree from protected main, copied exactly the two source-only archive parser and test files for independent audit.
+- ? Independently SHA-replayed actual archived page1 from all 9 source categories with source receipt URL, bytes, exact IDs and pagination
+  : 9/9 pages, 108 original rows; private proof 0600 persisted. Historical full archive coverage not claimed.
+- Added duplicate JSON-member rejection and negative tests for all categories, wrong page, out-of-origin attachment, URL bound/type; 15 focused pytest and
+  Ruff PASS.
+- Implemented reusable replay_archived_page read-only SHA+category+page+source URL+row-ID proof, file symlink/path guard, source receipt duplicate-key fail-closed;
+  verified all nine actual page1 bytes and 108 rows. 32 focused tests and Ruff PASS.
+- Verified ALL 4052 of 4052 original historical archived pages in 9 categories, 48536 total source observations, exact SHA+receipt+row ID+stable source
+  pagination, zero missing/extra/invalid; private 0600 complete deterministic category digest proof persisted. No network/DB writes.
+- Added read-only full archive corpus auditor, 5 corpus negative checks, 37 focused tests and Ruff PASS.
+- Parent PR526 saved-doc source audit passed 19/19 GitHub CI and merged into protected main 7ea192b3; its checkpoint completed, issue
+- Exact source-only PR688 head 79fc1858e0e27c4bb42f4a165388fc817db336fe passed 19/19 GitHub/GitVerse CI and protected main merge 9abb04797547b9e75f4c19593b185a9dff3cf04b,
+  no production or DB change
+current_stage: complete_4052_sha_original_pages_48536_rows_ci19_of19_protected_merge
+remaining_stages: []
+last_verified_commit: 9abb04797547b9e75f4c19593b185a9dff3cf04b
+last_checks: Verified historic 4052/4052 SHA-bound original archived pages, 48536 observations across 9 categories, 62 focused tests/Ruff PASS, 19/19 CI
+  and protected merge PR688.
+resume_instruction: 'Completed: pure archive original-page and full source corpus audit merged PR688 main 9abb0479. Do not rerun fetch/import or activate
+  production; remaining historic DP provenance is handled by separate TA-SIBUR-DP-RECONCILE-20261121.'
 first_party_category_page_one_verified: 9
 first_party_archived_rows_verified: 108
 all_historical_archive_pages_verified: false
@@ -34,3 +40,6 @@ full_historical_archive_source_rows: 48536
 full_historical_archive_categories: 9
 private_full_corpus_proof: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/sibur-archive-corpus-proof-20261121.json
 continuous_current_source_status_verified: false
+merged_pr: 688
+merged_main_commit: 9abb04797547b9e75f4c19593b185a9dff3cf04b
+completed_at_utc: '2026-11-21T20:17:25Z'

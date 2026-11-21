@@ -1,0 +1,33 @@
+task_id: TA-SIBUR-DP-RECONCILE-20261121
+status: in_progress
+goal: Independently validate archived SHA-grounded SIBUR Data Platform resource and embeddings receipts offline without querying or altering the live Data
+  Platform.
+definition_of_done:
+- Validate existing historical DP evidence SHA and source original file bytes for each historical source resource.
+- Reject malformed prior/current embedding identity and contradictory source hashes; preserve historical manifests unchanged.
+- Add focused negative tests around exact historical source receipts; check Ruff and tests.
+- Keep all source-related operations read-only with no DP calls, indexing or production writes.
+- Integrate latest main after source parser PR688, publish narrowly scoped source-only PR with exact GitHub/GitVerse CI and owner+AI review if appropriate.
+completed_stages:
+- Original DRAFT PR527 contains a pure archival DP-readonly reconciliation helper; extracted only the source file into a standalone isolated review branch
+  from protected main.
+- Archived 7/7 XLSX SHA256/DP receipt confirmations and 958 historical chunk+embedding identities replayed without network or DB; only 4/7 URL-linked to
+  the inspected original registry, 3 not proven source originals
+- Added strict offline SHA evidence, source filename/path/size/symlink, duplicate JSON, prior proof and coverage guards; 13 tests and Ruff PASS
+- Historical 4052-page archive parent PR688 passed exact 19/19 CI and merged protected main 9abb04797547b9e75f4c19593b185a9dff3cf04b; independent private
+  0600 7-file evidence receipt saved
+current_stage: seven_historical_DP_files_958_chunks_verified_13_tests_pass_waiting_exact_CI
+remaining_stages:
+- Publish source-only evidence code PR on protected main and run exact GitHub/GitVerse CI
+- Merge after owner+AI review; complete checkpoint without active Data Platform calls or source promotion
+last_verified_commit: 9abb04797547b9e75f4c19593b185a9dff3cf04b
+last_checks: 7 XLSX source SHA and 958 archived DP chunk/embedding receipts exact, 4/7 linked to current registry URL receipts, 3 unresolved. 13 pytest/Ruff
+  PASS. No DB/network.
+resume_instruction: Finish small archived DP source-proof PR from branch review/ta-sibur-dp-evidence-20261121. Actual 7/958 historical SHA verified, source
+  URL only 4/7 from this snapshot; no live DP/DB indexing or current-source claim. Await exact CI then merge and mark completed.
+private_evidence_file: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/sibur-dp-seven-source-proof-20261121.json
+verified_saved_files: 7
+verified_matching_chunks_embeddings: 958
+direct_URL_source_receipts: 4
+unverified_source_URL_memberships: 3
+current_live_DP_verified: false
