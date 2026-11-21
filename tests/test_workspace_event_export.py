@@ -67,3 +67,19 @@ class WorkspaceExportTests(unittest.TestCase):
         self.assertEqual([r["aggregate_id"] for r in self.export()["rows"]],["left"])
         r=self.s.scalar(select(IntegrationOutboxEvent));r.aggregate_id="changed"
         with self.assertRaises(ExportDenied):self.export()
+
+    def test_export_is_not_mounted_as_an_api_route(self):
+        # This candidate is a source-only projection. It must not become a
+        # public endpoint just because it was merged into a review branch.
+        from src.main import app
+        paths = {getattr(route, "path", None) for route in app.routes}
+        self.assertNotIn("/api/saas/workspace/events", paths)
+        self.assertNotIn("/api/saas/workspace/events/", paths)
+
+    def test_non_owner_and_empty_project_scope_refused(self):
+        self.member.role = "admin"
+        with self.assertRaises(ExportDenied):
+            self.export()
+        self.member.role = "owner"
+        with self.assertRaises(ExportDenied):
+            self.export(scope=replace(self.scope, project_ids=frozenset()))

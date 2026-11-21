@@ -1,21 +1,32 @@
 task_id: TA-CONSOLIDATED-MAIN-20261120
 status: in_progress
-goal: Integrate PR657 and its PR662 extension with current main, preserving production fixes and source integrity.
+goal: Integrate exact development and read-only Workspace source candidates onto current main without changing production or approval boundaries.
 definition_of_done:
-  - Preserve main and exact development source ancestry and unrelated changes.
-  - Verify exact integrated CI, migrations, tenant isolation and relevant regression tests.
-  - Reconcile remaining unique PR roots; retain human review, production and commercial gates.
+  - Preserve exact main and source ancestry, resolve code overlaps, and avoid loss of unique changes.
+  - Verify exact integrated CI, authentication, retention, migrations, tenant isolation and default-off posture.
+  - Audit independent roots and record all remaining deployment and source-acceptance gates.
 completed_stages:
-  - Closed 81 already integrated PRs by exact ancestry and dependency order; 49 open after PR674.
-  - PR673 exact head 5905e3c1 CI 20/20 success; no merge authorized by queue.
-  - PR674 initial head 5cd24825 exact CI 19/19, quality 6569 passed and 288 skipped; both runtime services HTTP 200.
-  - PR662 exact head 5ef2b43c independently CI 19/19; 78 changed paths relative PR657; only overlap with initial PR674 is pinned master roadmap.
-  - PR618 WSF07B bounded SELECT-only export source inspected: standalone module plus six isolated scope/refusal tests and non-production documentation; no endpoint mounted, no authorization assumption, no background service. Exact source head and three blobs preserved as ancestry.
-  - Integrated 77 source blobs with exact modes, preserving 38 historical roadmap lines separately at docs/roadmap/TA_APPLICATION_REVIEW_CANDIDATE_HISTORY_2026-11-20.md; five migration revisions 123–127 form a linear chain and four new feature flags default false.
-current_stage: source_export_candidate_ci
-remaining_stages: [exact extended CI, regressions if any, review, independent runtime/source acceptance, other unique roots, protected local worktree cleanup]
-last_verified_commit: 0720f0793715978e45093be089d2b6c64d503737
+  - Verified main abcd8727; initial 129 PRs reduced by 81 exact-ancestor closings; 49 open after PR674.
+  - PR673 roadmaps and Spec Kit passed 20/20 and moved to GitHub ready-for-review, without merge.
+  - PR674 exact source heads 02bfe3a0 and 5ef2b43c integrated with merge ancestry and preserving recovery tests.
+  - Added 7bd3e0c7 source-only WSF07B projector as exact source ancestor; no endpoint, credentials or transport.
+  - PR674 head c0efa7e6 exact CI 19/19; 6655 tests passed and 293 skipped; GitVerse success, migrations and security jobs green.
+  - Inspected exact route and auth code: SaaS Bearer with tenant/role/legal gate; application review, customer draft, original form and retention operator each default-off; operator Basic authorization; append-only migration chain 123 through 127.
+  - PR599 distinct versioned-registry release schema, PR660 incompatible alternate review bundle, PR637 old runtime verifier; all left open and flagged for compatibility review.
+  - Live backend 8001 and DP 8094 returned HTTP 200, governor observed reducing batch 10 to 3 under GPU pressure and returning to 10; no runtime changes.
+  - DTR last log Nov 20 WAITING_HUMAN: 62 items; 17 MANAGER_READY, 22 DUPLICATE, 20 SCREENED_OUT, 3 FAILED. All 3 failed items have 'No chunks available for Data Platform indexing', source public_eis_html_44fz. Exit 20 reflects error_summary, not total outage; Nov 19 had 8 earlier failed incomplete index. No retry triggered.
+  - 183 clean MI worktrees (114 main ancestors, 69 distinct); 114 tentative archive candidates only, no deletion or cleanup; separate SSD dirty clone preserved.
+current_stage: focused_export_safety_regression_ci
+remaining_stages:
+  - Verify full exact CI for new route-absence and owner/scope tests.
+  - Record reviewed candidate and source remaining gaps; submit PR674 only through designated human/AM4 acceptance.
+  - Reconcile failed DTR source-only items, verify actual original availability and prewrite P I T R receipts before any retry.
+  - Reconcile legacy PR599/660 alternatives without overwriting live contracts, PR637 release guard, and remaining SIBUR/PQ/Gemma roots.
+  - Verify rollback, first live TA prewrite and continuous WAL before any retention cleanup; no deletion until reference safety.
+last_verified_commit: c0efa7e6e227b022f9b0a0e3f24f9bbf00ad2245
 source_candidate: 02bfe3a01a81aaa2cd8d769f37f391b1e2d7ccd0
 extension_candidate: 5ef2b43c21abd7a80f39157181512d125d73cd25
-last_checks: Extended integration exact CI 19/19, 6649 passed / 293 skipped; runtime and DP HTTP 200; Workspace export candidate source inspected and kept unmounted; next exact head needs CI.
-resume_instruction: Verify PR674 new exact head tests for unmouted WSF07B export candidate and source scope; inspect exact release guards before touching PR637. Then inspect PR660/599 behavior, independent evidence and human review. Inspect PR674 current exact head checks. If failures, fix only affected code or tests and reverify. Compare outstanding unique roots against exact main and review candidate; no automatic merge, production migration, feature activation, procurement action or deletion. PR673 separately review-gated.
+workspace_candidate: 7bd3e0c7aae238305f2c83dc34a4e33105e34344
+last_checks: c0efa7e6 exact CI 19/19 SUCCESS; 6655 PASS / 293 SKIP. New tests proposed in the next head require exact CI. Main and two health services unchanged.
+resume_instruction: Inspect PR674 current head CI and new tests (workspace API route absence, owner/scope fail-closed), fix only failures. Then review DTR missing chunk cases without blindly retrying; keep PR674 draft and do not merge or activate production pending human/AM4 and source gates. Keep PR673 ready-for-review but unmerged.
+limitations: Human review, commercial acceptance, original-source authorization and actual runtime PITR observations are not supplied by CI.
