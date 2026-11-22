@@ -11,7 +11,7 @@ import json
 import re
 from datetime import UTC, datetime, timedelta, timezone
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import parse_qs, urlsplit
 
 MOSCOW = timezone(timedelta(hours=3))
 SHA = re.compile(r"^[0-9a-f]{64}$")
@@ -134,6 +134,7 @@ def _classify(title: str, category: str) -> tuple[str, int] | None:
 def _item(
     source: str, row: dict, deadline: datetime, observed: datetime,
     as_of: datetime, *, is_new: bool, freshness: str, category: str,
+    evidence_status: str | None = None,
 ) -> dict | None:
     if deadline <= as_of:
         return None
@@ -152,6 +153,8 @@ def _item(
     kind = ("MARKET_RESEARCH_ONLY" if row["external_id"].startswith("price_request:")
             else "PUBLIC_LIST_CARD_RECHECK" if source == "GEH"
             else "STALE_SIBUR_SNAPSHOT_RECHECK")
+    if evidence_status is not None:
+        kind = evidence_status
     hours = (deadline - as_of).total_seconds() / 3600
     score = min(100, fit[1] + (7 if hours <= 48 else 0) + (3 if is_new else 0))
     # A price inquiry is market research, never a directly biddable tender.
@@ -337,14 +340,198 @@ def _sibur(watch: Path, as_of: datetime) -> tuple[list[dict], dict]:
                         "unexpired_relevant_requires_live_recheck": len(candidates)}
 
 
+
+
+def _sibur_current(
+    snapshot: Path, as_of: datetime, older_watch: Path,
+) -> tuple[list[dict], dict]:
+    """Verify every preserved public page and rank current LIST observations.
+
+    This snapshot is non-atomic; absence is not a closure/award fact and
+    PUBLIC_LIST status is not a credentialed SAP SRM participation guarantee.
+    """
+    receipt = _read_json(snapshot / "receipts.json")
+    normalized = _read_json(snapshot / "normalized.json")
+    if not isinstance(receipt, dict) or not isinstance(normalized, list):
+        raise EvidenceRejected("SIBUR fresh source shape invalid")
+    count = receipt.get("announced_pages")
+    if (receipt.get("source") != "sibur_public"
+            or receipt.get("verification") not in (
+                "PUBLIC_LIST_SNAPSHOT_NONATOMIC_RESUMED",
+                "PUBLIC_LIST_SNAPSHOT_NOT_HISTORICAL_COVERAGE",
+            ) or not isinstance(count, int) or not 1 <= count <= 40
+            or receipt.get("validated_pages") != count
+            or receipt.get("advertised_pages_traversed") is not True
+            or receipt.get("page_count_stable") is not True
+            or receipt.get("errors") != []
+            or not isinstance(receipt.get("pages"), list)
+            or len(receipt["pages"]) != count):
+        raise EvidenceRejected("SIBUR fresh public capture incomplete or unsafe")
+    hashes = {}
+    for page in receipt["pages"]:
+        if not isinstance(page, dict):
+            raise EvidenceRejected("SIBUR page receipt invalid")
+        number = page.get("page")
+        fingerprint = page.get("sha256")
+        if (not isinstance(number, int) or number not in range(1, count + 1)
+                or number in hashes or page.get("last_page") != count
+                or not _verified_sha(fingerprint)
+                or not isinstance(page.get("rows"), int)):
+            raise EvidenceRejected("SIBUR pagination or SHA receipt mismatch")
+        original = snapshot / f"page-{number:03d}.json"
+        if (not original.is_file() or original.stat().st_size > MAX_PAGE_BYTES
+                or original.stat().st_size != page.get("bytes")
+                or _sha(original) != fingerprint):
+            raise EvidenceRejected("SIBUR original public page changed")
+        hashes[number] = (fingerprint, _time(page["observed_at"]), page["rows"])
+    if set(hashes) != set(range(1, count + 1)):
+        raise EvidenceRejected("SIBUR captured page range incomplete")
+
+    previous = _read_json(older_watch)
+    if not isinstance(previous, dict) or not isinstance(previous.get("rows"), list):
+        raise EvidenceRejected("SIBUR previous curated comparison invalid")
+    previous_by_id = {}
+    for old in previous["rows"]:
+        if not isinstance(old, dict) or not isinstance(old.get("procedure_id"), str):
+            raise EvidenceRejected("SIBUR previous identity invalid")
+        if old["procedure_id"] in previous_by_id:
+            raise EvidenceRejected("SIBUR previous watch has duplicate IDs")
+        previous_by_id[old["procedure_id"]] = old
+    as_of_old = _time(previous.get("as_of"))
+    if as_of_old > max(time for _, time, _ in hashes.values()):
+        raise EvidenceRejected("SIBUR comparison older watch is newer than capture")
+
+    seen = set()
+    candidates = []
+    changed_deadlines = []
+    excluded_ambiguous = 0
+    excluded_nonaccepting = 0
+    date_only_review = 0
+    parsed_rows = 0
+    ids_in_public_list = set()
+    for identity in normalized:
+        if not isinstance(identity, dict):
+            raise EvidenceRejected("SIBUR normalized identity malformed")
+        rid = identity.get("external_id")
+        observations = identity.get("observations")
+        if (not isinstance(rid, str) or not rid or rid in seen
+                or not isinstance(observations, list) or not observations):
+            raise EvidenceRejected("SIBUR normalized source has duplicate or empty IDs")
+        seen.add(rid)
+        if len(observations) != 1:
+            excluded_ambiguous += 1
+        for row in observations:
+            if not isinstance(row, dict) or row.get("external_id") != rid:
+                raise EvidenceRejected("SIBUR row/source identity diverged")
+            if (row.get("source") != "sibur_public"
+                    or row.get("verification") != "PUBLIC_SNAPSHOT_ONLY"):
+                raise EvidenceRejected("SIBUR public observation marker missing")
+            url = _first_party_url(row.get("source_url"), provider="sibur")
+            qs = parse_qs(urlsplit(url).query)
+            page_string = qs.get("PAGEN_1", [None])[0]
+            if not isinstance(page_string, str) or not page_string.isdigit():
+                raise EvidenceRejected("SIBUR observation page not bound")
+            page_number = int(page_string)
+            if page_number not in hashes or row.get("source_sha256") != hashes[page_number][0]:
+                raise EvidenceRejected("SIBUR row original page hash mismatch")
+            parsed_rows += 1
+        if len(observations) != 1:
+            continue
+        row = observations[0]
+        ids_in_public_list.add(rid)
+        if row.get("status_raw") != "Прием предложений":
+            excluded_nonaccepting += 1
+            continue
+        raw_deadline = row.get("deadline_raw")
+        if not isinstance(raw_deadline, str):
+            raise EvidenceRejected("SIBUR deadline field absent")
+        date_only = False
+        try:
+            deadline = datetime.strptime(raw_deadline, "%d.%m.%Y %H:%M:%S").replace(
+                tzinfo=MOSCOW
+            ).astimezone(UTC)
+        except ValueError:
+            try:
+                deadline = datetime.strptime(raw_deadline, "%d.%m.%Y").replace(
+                    tzinfo=MOSCOW
+                ).astimezone(UTC)
+                date_only = True
+            except ValueError as exc:
+                raise EvidenceRejected("SIBUR public deadline cannot be verified") from exc
+        if date_only:
+            date_only_review += 1
+        if rid in previous_by_id:
+            old_deadline = _sibur_deadline(previous_by_id[rid].get("deadline_msk"))
+            if not date_only and old_deadline != deadline:
+                changed_deadlines.append({
+                    "external_id": rid,
+                    "prior_deadline_utc": old_deadline.isoformat(),
+                    "new_public_deadline_utc": deadline.isoformat(),
+                    "source_url": row["source_url"],
+                })
+        url_page = int(parse_qs(urlsplit(row["source_url"]).query)["PAGEN_1"][0])
+        observed = hashes[url_page][1]
+        item = _item(
+            "SIBUR", row, deadline, observed, as_of, is_new=False,
+            freshness="current_nonatomic_public_list_not_srm",
+            category=row.get("category") or "",
+            evidence_status=(
+                "CURRENT_SIBUR_PUBLIC_DATE_ONLY_RECHECK" if date_only
+                else "CURRENT_SIBUR_PUBLIC_LIST_CARD_RECHECK"
+            ),
+        )
+        if item is not None:
+            item["novelty"] = "observed_in_latest_public_capture"
+            item["previous_curated_watch"] = rid in previous_by_id
+            item["deadline_as_published"] = raw_deadline
+            item["deadline_precision"] = "date_only" if date_only else "exact_time"
+            if date_only:
+                item["deadline_utc"] = None
+                item["priority_score"] = min(item["priority_score"], 74)
+                item["next_action"] = (
+                    "Дата без времени; уточнить точный срок и действующий статус в SAP SRM"
+                )
+            candidates.append(item)
+    if (parsed_rows != receipt.get("raw_rows")
+            or len(seen) != receipt.get("unique_ids")
+            or excluded_ambiguous != receipt.get("repeated_ids")
+            or sum(rows for _, _, rows in hashes.values()) != parsed_rows):
+        raise EvidenceRejected("SIBUR original row count disagrees with verified capture")
+    latest_observed = max(time for _, time, _ in hashes.values())
+    return candidates, {
+        "snapshot_at_utc": latest_observed.isoformat(),
+        "pages_sha_verified": count,
+        "public_source_ids": len(seen),
+        "non_atomic": True,
+        "latest_stage_public_list_only": True,
+        "unexpired_relevant": len(candidates),
+        "review_due_date_only": date_only_review,
+        "excluded_ambiguous_source_id": excluded_ambiguous,
+        "excluded_cancelled_or_nonaccepting": excluded_nonaccepting,
+        "prior_curated_ids_seen_now": len(ids_in_public_list.intersection(previous_by_id)),
+        "old_curated_ids_not_seen_no_closure_claim": (
+            len(previous_by_id) - len(ids_in_public_list.intersection(previous_by_id))
+        ),
+        "changed_deadlines_from_older_curated_watch": sorted(
+            changed_deadlines, key=lambda row: row["external_id"]
+        ),
+    }
+
+
 def compile_watch(geh_snapshot: Path, sibur_watch: Path, as_of: datetime,
-                  *, limit_per_source: int = 10) -> dict:
+                  *, limit_per_source: int = 10,
+                  sibur_current_capture: Path | None = None) -> dict:
     if as_of.tzinfo is None or not 1 <= limit_per_source <= 30:
         raise EvidenceRejected("invalid observation cutoff or report size")
     as_of = as_of.astimezone(UTC)
     geh, geh_summary = _geh(geh_snapshot, as_of)
-    sibur, sibur_summary = _sibur(sibur_watch, as_of)
-    order = lambda c: (-c["priority_score"], c["deadline_utc"], c["external_id"])
+    if sibur_current_capture is None:
+        sibur, sibur_summary = _sibur(sibur_watch, as_of)
+    else:
+        sibur, sibur_summary = _sibur_current(sibur_current_capture, as_of, sibur_watch)
+    order = lambda c: (-c["priority_score"],
+                       c["deadline_utc"] or "9999-12-31T00:00:00+00:00",
+                       c["external_id"])
     geh_selected = sorted(geh, key=order)[:limit_per_source]
     # New verified observations must not disappear simply because their
     # technical category is less specific than older high-score procedures.
@@ -390,7 +577,7 @@ def render_markdown(data: dict) -> str:
             lines.extend([
                 f"{i}. **[{title}]({c['first_party_source_url']})** — {c['external_id']}",
                 (f"   Заказчик по публикации: {buyer}. Направление: {c['topic']}. "
-                 f"Дедлайн по наблюдению: {c['deadline_utc']} (UTC). "
+                 f"Дедлайн по наблюдению: {c['deadline_utc'] or c.get('deadline_as_published', 'неизвестен')} "
                  f"Приоритет: {c['priority_score']}/100."),
                 (f"   Доказательства: {c['novelty']}, {c['freshness']}, {c['evidence_status']}; "
                  f"SHA в наблюдении: {c['source_sha256'][:12]}…. Действие: {c['next_action']}"),
@@ -410,13 +597,18 @@ def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--geh-snapshot", type=Path, required=True)
     p.add_argument("--sibur-watch", type=Path, required=True)
+    p.add_argument("--sibur-current-capture", type=Path,
+                   help="Optional complete SHA-verified current public SIBUR page capture")
     p.add_argument("--as-of", default=datetime.now(UTC).isoformat())
     p.add_argument("--limit-per-source", type=int, default=10)
     p.add_argument("--format", choices=("markdown", "json"), default="markdown")
     args = p.parse_args()
     try:
-        value = compile_watch(args.geh_snapshot, args.sibur_watch, _time(args.as_of),
-                              limit_per_source=args.limit_per_source)
+        value = compile_watch(
+            args.geh_snapshot, args.sibur_watch, _time(args.as_of),
+            limit_per_source=args.limit_per_source,
+            sibur_current_capture=args.sibur_current_capture,
+        )
     except EvidenceRejected as exc:
         p.exit(2, f"Evidence rejected: {exc}\n")
     if args.format == "json":
