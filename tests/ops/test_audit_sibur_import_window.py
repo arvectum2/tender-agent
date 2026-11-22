@@ -27,11 +27,17 @@ def fixture_batches(tmp_path: Path, *, count=2):
         inp.write_bytes(raw)
         result = {
             "source_input_sha256": sha,
-            "result": {"inserted": 1, "older_rows_retained_privately": i},
-            "replay": {"exact_replay": 1},
+            "result": {
+                "inserted": 1, "exact_replay": 0, "existing_changed": 0,
+                "changed": [], "pages": [{}], "older_rows_retained_privately": i,
+            },
+            "replay": {
+                "inserted": 0, "exact_replay": 1, "existing_changed": 0,
+                "changed": [], "pages": [{}], "older_rows_retained_privately": i,
+            },
             "backup": {"saved": True},
         }
-        out = tmp_path / (hashlib.sha256(str(i).encode()).hexdigest() + ".result.json")
+        out = tmp_path / (sha + ".result.json")
         out.write_text(json.dumps(result))
         rows.append((inp, out, source, result))
     return rows
@@ -44,6 +50,9 @@ def test_readonly_pairing_counts_and_category_exclusion(tmp_path):
     assert result["batches_input_result"] == 2
     assert result["unique_selected_group_ids"] == 2
     assert result["pre2024_source_observations_retained_privately"] == 1
+    assert result["confirmed_original_inserted"] == 2
+    assert result["confirmed_idempotent_replay"] == 2
+    assert len(result["all_result_receipt_bytes_sha256"]) == 64
     assert result["excluded_support_category"] == "999_19"
     assert result["external_source_requests"] == result["database_mutations"] == 0
 
@@ -79,7 +88,7 @@ def test_older_rows_cannot_drift_from_receipt(tmp_path):
     result = rows[0][3]
     result["result"]["older_rows_retained_privately"] = 100
     path.write_text(json.dumps(result))
-    with pytest.raises(ImportWindowError, match="retention_inconsistent|excluded_import_result"):
+    with pytest.raises(ImportWindowError, match="retention_inconsistent|excluded_import_result|historic_import_or_idempotent_replay_drift"):
         audit_import_window(tmp_path, expected_batches=2)
 
 
@@ -121,3 +130,39 @@ def test_symlink_source_input_cannot_be_used(tmp_path):
     path.symlink_to(original)
     with pytest.raises(ImportWindowError, match="untrusted_manifest"):
         audit_import_window(tmp_path, expected_batches=2)
+
+
+
+def test_result_inserted_count_must_match_input_group_count(tmp_path):
+    rows = fixture_batches(tmp_path)
+    row = rows[0][3]
+    row["result"]["inserted"] = 0
+    rows[0][1].write_text(json.dumps(row))
+    with pytest.raises(ImportWindowError, match="historic_import_or_idempotent_replay_drift"):
+        audit_import_window(tmp_path, expected_batches=2)
+
+
+def test_idempotent_replay_must_match_selected_groups(tmp_path):
+    rows = fixture_batches(tmp_path)
+    row = rows[0][3]
+    row["replay"]["exact_replay"] = 0
+    rows[0][1].write_text(json.dumps(row))
+    with pytest.raises(ImportWindowError, match="historic_import_or_idempotent_replay_drift"):
+        audit_import_window(tmp_path, expected_batches=2)
+
+
+def test_result_filename_must_match_source_input_hash(tmp_path):
+    rows = fixture_batches(tmp_path)
+    moved = rows[0][1]
+    moved.rename(tmp_path / ("f" * 64 + ".result.json"))
+    with pytest.raises(ImportWindowError, match="result_filename_not_source_digest"):
+        audit_import_window(tmp_path, expected_batches=2)
+
+
+def test_result_receipt_digest_changes_with_nonsemantic_receipt_edit(tmp_path):
+    rows = fixture_batches(tmp_path)
+    previous = audit_import_window(tmp_path, expected_batches=2)
+    rows[0][1].write_text(rows[0][1].read_text() + " ")
+    updated = audit_import_window(tmp_path, expected_batches=2)
+    assert updated["status"] == previous["status"]
+    assert updated["all_result_receipt_bytes_sha256"] != previous["all_result_receipt_bytes_sha256"]

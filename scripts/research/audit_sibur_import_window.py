@@ -83,24 +83,57 @@ def audit_import_window(folder: Path, *, expected_batches: int = 166) -> dict:
             pages.add((cat, page))
             included_categories.add(cat)
     matched_result_keys = set()
+    result_hashes: dict[str, str] = {}
+    confirmed_inserted = confirmed_replay = 0
     for path in results:
-        _, doc = _read(path, 80_000)
+        result_bytes, doc = _read(path, 80_000)
+        result_hashes[path.name] = hashlib.sha256(result_bytes).hexdigest()
         source_hash = doc.get("source_input_sha256")
         if (not isinstance(source_hash, str) or HEX.fullmatch(source_hash) is None
                 or source_hash not in inputs or source_hash in matched_result_keys):
             raise ImportWindowError("result_not_linked_to_exact_input")
         matched_result_keys.add(source_hash)
         result = doc.get("result")
-        if not isinstance(result, dict) or not isinstance(doc.get("replay"), dict):
+        replay = doc.get("replay")
+        if path.name != source_hash + ".result.json":
+            raise ImportWindowError("result_filename_not_source_digest")
+        if not isinstance(result, dict) or not isinstance(replay, dict):
             raise ImportWindowError("historic_result_shape_invalid")
         _, input_doc = _read(inputs[source_hash], 1_000_000)
+        selected = len(input_doc["groups"])
+        page_count = len(input_doc["pages"])
         if (result.get("older_rows_retained_privately") != input_doc["older_rows"]
+                or replay.get("older_rows_retained_privately") != input_doc["older_rows"]
                 or type(result.get("inserted")) is not int
-                or result["inserted"] < 0):
-            raise ImportWindowError("historic_excluded_import_result_drift")
+                or result["inserted"] != selected
+                or result.get("exact_replay") != 0
+                or result.get("existing_changed") != 0
+                or result.get("changed") != []
+                or type(replay.get("inserted")) is not int
+                or replay["inserted"] != 0
+                or replay.get("exact_replay") != selected
+                or replay.get("existing_changed") != 0
+                or replay.get("changed") != []
+                or not isinstance(result.get("pages"), list)
+                or not isinstance(replay.get("pages"), list)
+                or len(result["pages"]) != page_count
+                or len(replay["pages"]) != page_count):
+            raise ImportWindowError("historic_import_or_idempotent_replay_drift")
         excluded += result["older_rows_retained_privately"]
-    if len(matched_result_keys) != len(inputs) or excluded != older_observations:
+        confirmed_inserted += result["inserted"]
+        confirmed_replay += replay["exact_replay"]
+    if (len(matched_result_keys) != len(inputs) or excluded != older_observations
+            or confirmed_inserted != imported or confirmed_replay != imported):
         raise ImportWindowError("input_result_historic_retention_inconsistent")
+    if expected_batches == 166 and (
+        len(pages) != 4047 or len(source_ids) != 30081
+        or older_observations != 18390 or excluded != 18390
+        or included_categories != set(CATEGORIES) - {"999_19"}
+    ):
+        raise ImportWindowError("saved_original_historical_baseline_changed")
+    manifest = hashlib.sha256()
+    for name, digest in sorted(result_hashes.items()):
+        manifest.update(name.encode() + b":" + digest.encode() + b"\n")
     return {
         "status": "PASS_HISTORICAL_IMPORT_SELECTION_ONLY",
         "batches_input_result": len(inputs),
@@ -111,6 +144,9 @@ def audit_import_window(folder: Path, *, expected_batches: int = 166) -> dict:
         "group_observations_in_manifests": imported,
         "pre2024_source_observations_retained_privately": older_observations,
         "excluded_result_receipts": excluded,
+        "confirmed_original_inserted": confirmed_inserted,
+        "confirmed_idempotent_replay": confirmed_replay,
+        "all_result_receipt_bytes_sha256": manifest.hexdigest(),
         "review_rows_in_inputs": reviewed,
         "source_ids_exported": False,
         "retention_authority_granted": False,

@@ -16,6 +16,15 @@ verified PG16 working ID-set. No new source fetch or database mutation.
   input digest; each result older_rows_retained_privately equals the
   corresponding input older_rows. No changed source IDs or duplicate
   imported group IDs.
+- All 166 result receipt filenames are named by their matching SOURCE INPUT SHA,
+  not by the SHA of their own content. An ordered manifest SHA256 of the
+  complete 166 saved result JSON bytes is now independently computed:
+  2e51b08c9e4c40d245a015a1317aa5cef600da07ca41d13c973b0a8617b220fc.
+  This pins the saved receipts for drift detection, not a publisher signature.
+- Each saved result proves original inserted count equals selected groups;
+  repeat replay inserts ZERO, reports all 30,081 groups as exact_replay,
+  and changes ZERO existing rows. Source page counts and privately retained
+  older-row counts match across input, result and replay.
 - These 166 manifests cover **4,047** original archived pages across
   categories 107, 108, 109, 112, 132, 999_08, 999_10, 999_11.
   They describe **30,081** distinct selected/imported group IDs,
