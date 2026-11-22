@@ -154,6 +154,9 @@ def _item(
             else "STALE_SIBUR_SNAPSHOT_RECHECK")
     hours = (deadline - as_of).total_seconds() / 3600
     score = min(100, fit[1] + (7 if hours <= 48 else 0) + (3 if is_new else 0))
+    # A price inquiry is market research, never a directly biddable tender.
+    if kind == "MARKET_RESEARCH_ONLY":
+        score = min(score, 74)
     return {
         "source": source,
         "external_id": row["external_id"],
@@ -360,7 +363,7 @@ def render_markdown(data: dict) -> str:
                  f"Дедлайн по наблюдению: {c['deadline_utc']} (UTC). "
                  f"Приоритет: {c['priority_score']}/100."),
                 (f"   Доказательства: {c['novelty']}, {c['freshness']}, {c['evidence_status']}; "
-                 f"SHA страницы: {c['source_sha256'][:12]}…. Действие: {c['next_action']}"),
+                 f"SHA в наблюдении: {c['source_sha256'][:12]}…. Действие: {c['next_action']}"),
             ])
         if not part["candidates"]:
             lines.append("Нет подтверждённых по этому срезу релевантных процедур с будущим дедлайном.")
