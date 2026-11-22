@@ -948,7 +948,7 @@ pitr127_restore_readonly_audit_2026_11_22:
 
 pitr_exact_wal_2026_11_22:
   task_id: TA-PITR-EXACT-WAL-20261122
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-PITR-EXACT-WAL-20261122.yaml
   linked_issue: 685
   scope: isolated_readonly_originals_network_none_clone_no_production_writes
@@ -956,3 +956,16 @@ pitr_exact_wal_2026_11_22:
   verified_code_commit: ff488e0d114df5e0be57edb916f68454b781d942
   local_checks: 32_pass_ruff_make_check_real_offline_preflight
   isolated_restore_executed: false
+  merged_main_commit: 6b49cbba4ffcbb62630fe78e1c118c2bfe96f2a1
+  proof_sha256: 8f0692b3f37cf94b76c04d3ce81795a0215f3c8ecea7d67146beb6fb83ad9b08
+  exact_postbase_target: proven
+  isolated_restore_executed: true
+
+pitr_seven_day_2026_11_22:
+  task_id: TA-PITR-SEVEN-DAY-20261122
+  status: blocked
+  checkpoint: .agent/checkpoints/TA-PITR-SEVEN-DAY-20261122.yaml
+  linked_issue: 685
+  blocked_on: insufficient_historical_base_age_and_independent_continuity_restore
+  earliest_age_candidate_utc: 2026-11-27T08:47:31Z
+  seven_day_pitr_proven: false
