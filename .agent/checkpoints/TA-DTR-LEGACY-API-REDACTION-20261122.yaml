@@ -1,5 +1,5 @@
 task_id: TA-DTR-LEGACY-API-REDACTION-20261122
-status: in_progress
+status: completed
 goal: 'Prevent historical DTR exception text already stored in the DB from leaking via read-only run/digest API responses.'
 definition_of_done:
   - 'Legacy raw item.error and post_decision_json.last_error are always redacted in API presentation, without mutating stored rows.'
@@ -10,8 +10,11 @@ completed:
   - Legacy raw item errors, run error_summary, and post-decision last_error masked only in API read model; persisted rows unchanged.
   - Regression tests prove signed URL absent from response and retained in stored fixture; current safe codes remain visible.
   - 37 focused pytest PASS, targeted Ruff PASS, make check PASS, git diff --check PASS.
-current_stage: ready_for_exact_ci_and_merge
-remaining: [exact_github_ci, merge_to_main]
+  - Exact PR #694 head CI 19/19 PASS, merged into protected main 75143cde6d8d98344803576fa8992d277ef5931b.
+current_stage: merged_verified_no_production_deploy
+remaining: []
 last_verified_commit: 4a0d6efd5f0686fac0ed4b7d1a87adf9e1e61e88
-test_results: "37 PASS / 21 existing warnings; Ruff and make check PASS; GitHub CI pending."
-resume_instruction: 'Review exact-head PR CI, then merge only to protected main if all required checks PASS. Do not deploy or retry original source issues in #679 without source/AM-4 approval.'
+test_results: "37 PASS / 21 warnings; Ruff and make check PASS; exact PR 19/19 PASS."
+resume_instruction: 'Completed: merged PR #694 75143cde into main. No production deploy. Continue separate TA-DTR679-OFFLINE-AUDIT-20261122 checkpoint; do not retry official EIS without AM-4 and source proof.'
+merged_main_commit: 75143cde6d8d98344803576fa8992d277ef5931b
+production_deployed: false
