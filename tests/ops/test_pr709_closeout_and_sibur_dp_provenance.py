@@ -26,7 +26,11 @@ def test_seven_sibur_original_proof_does_not_promote_live_dp_or_source():
     entry = current["sibur_dp_source_provenance_2026_11_22"]
     child = _read(entry["checkpoint"])
     assert child["task_id"] == entry["task_id"]
-    assert entry["status"] in ("in_progress", "completed")
+    assert entry["status"] == child["status"] == "completed"
+    assert child["remaining_stages"] == []
+    assert child["protected_merge_commit"] == "251db2e127952a8fc4cd1e04ac215f1f76c1feb1"
+    assert child["protected_exact_ci"] == "10_of_10_success"
+    assert child["production_deployed"] is False
     assert entry["production_mutations"] is False
     assert entry["live_dp_index_verified"] is False
     assert child["full_historical_DP_source_lineage_proven"] == 7
