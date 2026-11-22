@@ -1,0 +1,23 @@
+task_id: TA-SIBUR-HIST-GAP-READONLY-20261122
+status: in_progress
+goal: 'Independently replay saved original SIBUR 4052-page archive and compare every exact historic external ID with a separately verified repeatable-read read-only working PostgreSQL16 snapshot, without writing data.'
+definition_of_done:
+  - 'Reject incomplete or mutated original page receipts, mixed provenance, cross-category identity collisions and snapshot cluster drift.'
+  - 'Read full working source ID set through one PG16 REPEATABLE READ READ ONLY query only, with fixed existing private Docker container and actual system identifier.'
+  - 'Independently match saved archive and working ID-set SHA, record actual per-category overlap/missing/working-only counts and immutable sanitized proof.'
+  - 'Do not assert causes or authorize importing 18251 absent historical IDs without independently proven criteria; keep issue #692 open if cause unknown.'
+  - 'Tests, Ruff/make check and exact-head CI before protected main merge; source originals/production unchanged.'
+completed:
+  - Independently replayed 4052 previously saved exact SIBUR original first-party pages across nine archive categories, verifying raw SHA and page/category membership.
+  - Re-read exact 30632 working research database IDs on actual PG16 system 7694400479046774822 through REPEATABLE READ READ ONLY, matched entire archived ID-set SHA.
+  - Independently matched archived unique 48332, overlap 30081, missing historical 18251, working extra 551, all nine per-category counts and full missing-ID-set SHA.
+  - Created one immutable private 0600 proof, SHA256 4dae9e36df79dbbf678fab5264a4e60de378d71fd391e8b7d7e71280e39151a8; zero business, ETP or production writes.
+  - Eleven synthetic regressions PASS; historical missing-ID root cause remains UNKNOWN, no mass-import acceptance.
+  - 'Live ARC working PostgreSQL16 read-only 30632 exact ID set SHA independently matched 21-Nov receipt encoding (sorted external IDs newline-final); no changes or exposed IDs.'
+current_stage: exact_archive_db_diff_pass_private_proof_saved_ci_pending
+remaining: [exact_head_ci, protected_merge, child_checkpoint_closure]
+last_verified_commit: 879dcbc3321f3497e6131c99d5df040f6e7ac3ef
+test_results: '11 focused unit PASS; 4052 archived original SHA/revision replay PASS, 30632 working ID-set SHA and 18251 missing ID-set SHA PASS; private receipt mode0600; no DB write. CI pending.'
+resume_instruction: 'ARC ONLY, never RDC. Do not repeat completed exact source working diff. After #701 and #702 protected main merges, reconcile this separate worktree with main and run exact-head CI/protected merge; mark this bounded child completed, keep issue #692 OPEN for importer/retention root cause, permissioned dry-run and any Owner/MI/PITR authorization. Do not mass-import.'
+linked_issue: 692
+production_mutations: false
