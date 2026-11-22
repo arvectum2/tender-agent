@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 root=$(git rev-parse --show-toplevel)
+embedding_launcher="/Users/master/arvectum-ops/arv-075/scripts/embeddings-ssd-launch.sh"
+if [[ ! -f "$embedding_launcher" ]]; then
+  echo "Missing approved embedding launcher: $embedding_launcher" >&2
+  exit 1
+fi
+/bin/bash -n "$embedding_launcher"
 backend_target="$HOME/Library/LaunchAgents/com.arvectum.backend.plist"
 embeddings_target="$HOME/Library/LaunchAgents/com.arvectum.embeddings.plist"
 mkdir -p "$(dirname "$backend_target")" "$HOME/Library/Logs/Arvectum"
