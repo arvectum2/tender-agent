@@ -1,0 +1,17 @@
+task_id: TA-PITR-EXACT-WAL-20261122
+status: in_progress
+goal: 'Independently validate exact archived postbase WAL restore point for BOTH physical-cluster databases without touching production.'
+definition_of_done:
+  - 'Bind fixed postrelease PG17 base SHA/cluster and unique archived restore point to contiguous WAL segments and trusted local container image.'
+  - 'Prove exact WAL restore target in isolated PostgreSQL recovery server logs; read business schema127 and Data Platform in same restored snapshot; never infer success from receipts alone.'
+  - 'Source backup and WAL mounts read-only, no network, no exposed TCP, no production mutation; emit sanitized immutable proof without credentials or raw logs.'
+  - 'Regression and GitHub exact-head CI pass, merge protected main, mark completed while leaving seven-day PITR as NOT_PROVEN.'
+completed:
+  - Prepared fixed-source exact-WAL Docker runner for both databases with explicit execution flag and immutable private receipt writer.
+  - ARC-only real-source preflight PASS; 32 local tests PASS; no production source changes.
+  - 'Read-only ARC preflight 2026-11-22: fixed postrelease manifest SHA matches named-point receipt; four 16 MiB WAL files exist with sequential names and one retained target point.'
+current_stage: code_awaits_github_ci_operator_execution_gate
+remaining: [exact_ci, merge, owner_authorized_isolated_restore, proof]
+last_verified_commit: ff488e0d114df5e0be57edb916f68454b781d942
+test_results: '32 focused tests PASS, 2 inherited warnings; Ruff/make check and real-source preflight PASS. Live isolated clone NOT_EXECUTED.'
+resume_instruction: 'ARC ONLY, no RDC. Complete exact-head GitHub CI and merge prepared code, then obtain explicit owner approval for exact Docker command in docs/ops/TA_PITR_EXACT_WAL_TWO_DATABASES_GATE_20261122.md before running --execute-isolated. Exact WAL and seven-day PITR remain NOT_PROVEN until real evidence. No production changes.'
