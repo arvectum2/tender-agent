@@ -608,6 +608,30 @@ def test_dtr_safe_processing_error_never_uses_untrusted_text():
     assert secret not in _safe_processing_error("unknown", OSError(secret))
 
 
+
+def test_dtr_post_decision_failure_never_persists_signed_url(session, monkeypatch):
+    from src.modules.daily_tender_run import post_go
+
+    run, item = _create_post_go_run(
+        session, deal_id="test-post-go-secret-redaction", registry_number="0128200000126007559"
+    )
+    secret = "https://int.zakupki.gov.ru/archive.zip?token=do-not-persist"
+
+    def fail_post_decision(*args, **kwargs):
+        raise RuntimeError(secret)
+
+    monkeypatch.setattr(post_go, "_advance_item", fail_post_decision)
+    post_go.advance_post_decision_items(session, run)
+    session.expire_all()
+    saved = session.get(DailyTenderRunItem, item.id)
+    assert saved is not None
+    assert saved.status == "POST_DECISION_FAILED"
+    assert saved.error == "post_decision_failed:failure"
+    assert saved.post_decision_json["last_error"]["message"] == "post_decision_failed:failure"
+    assert saved.post_decision_json["last_error"]["type"] == "redacted"
+    assert secret not in str(saved.post_decision_json)
+
+
 def _create_post_go_run(
     session,
     *,
