@@ -1067,7 +1067,7 @@ postmerge_truth_2026_11_22:
 
 sibur_dp_source_provenance_2026_11_22:
   task_id: TA-SIBUR-DP-SOURCE-PROVENANCE-20261121
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-SIBUR-DP-SOURCE-PROVENANCE-20261121.yaml
   scope: seven_historical_first_party_sha_bound_DP_documents
   live_dp_index_verified: false

@@ -26,3 +26,19 @@ As part of PR #691, the prior merged PR #709 administrative checkpoint
 is closed with the exact protected merge faba2e775fde8d504e9d66d46434f2eccd10879d
 and 10/10 CI. The original EIS/PITR, current PPT source, and APR06 owner
 release are still independent blocked gates.
+
+## Protected closeout, 22-Nov 2026
+
+PR #691 merged to main after all 10 required exact-head CI checks
+SUCCESS, merge commit 251db2e127952a8fc4cd1e04ac215f1f76c1feb1.
+The bounded historical source-to-DP provenance task is completed;
+canonical parent/child checkpoints now agree. Seven first-party original
+XLSX SHA receipts (four registry and three archived category pages)
+match 958 historical saved Data Platform chunk/embedding identities;
+the verified offline aggregate remains deterministic. No live DP service
+read was made in this check, no contemporary notice status was asserted,
+and no new source HTTP, DB/DP write or production deployment occurred.
+
+Source-admitted production re-indexing, legal source rights, independent
+staging and PITR remain separate future decisions; this checkpoint
+does not authorize broader draft PR #527.
