@@ -31,3 +31,49 @@ def safe_processing_error(stage: str, exc: Exception) -> str:
     else:
         reason = "failure"
     return f"{phase}:{reason}"
+
+
+# Legacy failures may contain signed URLs or arbitrary network exception bodies.
+# The historical rows are preserved for audit; only read-model fields are masked.
+_VISIBLE_PHASES = {*_FAILURE_PHASES.values(), "processing_failed"}
+_VISIBLE_REASONS = {
+    "timeout", "connection_unavailable", "io_failure", "invalid_input", "failure",
+    "legacy_error_redacted",
+}
+
+
+def public_failure_code(value: object, *, post_decision: bool = False) -> str | None:
+    """Allow only our own exact stable codes in API-visible error fields."""
+    if value is None:
+        return None
+    if isinstance(value, str):
+        parts = value.split(":")
+        if (
+            len(parts) == 2
+            and parts[0] in _VISIBLE_PHASES
+            and parts[1] in _VISIBLE_REASONS
+        ):
+            return value
+    phase = "post_decision_failed" if post_decision else "processing_failed"
+    return f"{phase}:legacy_error_redacted"
+
+
+def public_post_decision_state(value: object) -> dict:
+    """Mask historical last_error without mutating SQLAlchemy's JSON value."""
+    if not isinstance(value, dict):
+        return {}
+    result = dict(value)
+    if "last_error" in result:
+        original = result["last_error"]
+        code = public_failure_code(
+            original.get("code") if isinstance(original, dict) else None,
+            post_decision=True,
+        ) or "post_decision_failed:legacy_error_redacted"
+        # The legacy record may contain a secret in type/message/other keys.
+        result["last_error"] = {"type": "redacted", "code": code, "message": code}
+    return result
+
+
+def public_discovery_error_summary(value: object) -> str | None:
+    """Old free-text discovery errors can expose search parameters; mask them."""
+    return "discovery_incomplete:details_redacted" if value else None

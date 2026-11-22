@@ -15,6 +15,11 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.orm import Session
 
 from src.modules.daily_tender_run.error_codes import (
+    public_discovery_error_summary,
+    public_failure_code,
+    public_post_decision_state,
+)
+from src.modules.daily_tender_run.error_codes import (
     safe_processing_error as _safe_processing_error,
 )
 from src.modules.daily_tender_run.fresh_priority import fresh_preparation_priority
@@ -1022,7 +1027,7 @@ def to_run_response(session: Session, run: DailyTenderRun) -> DailyTenderRunResp
         current_stage=run.current_stage,
         counts=dict(run.counts_json or {}),
         digest=run.digest_json,
-        error_summary=run.error_summary,
+        error_summary=public_discovery_error_summary(run.error_summary),
         started_at=run.started_at,
         completed_at=run.completed_at,
         created_at=run.created_at,
@@ -1056,8 +1061,10 @@ def to_run_response(session: Session, run: DailyTenderRun) -> DailyTenderRunResp
                 unknowns=list(item.unknowns_json or []),
                 human_decision=item.human_decision,
                 human_decision_id=item.human_decision_id,
-                post_decision=dict(item.post_decision_json or {}),
-                error=item.error,
+                post_decision=public_post_decision_state(item.post_decision_json),
+                error=public_failure_code(
+                    item.error, post_decision=item.status == "POST_DECISION_FAILED"
+                ),
                 created_at=item.created_at,
                 updated_at=item.updated_at,
             )
