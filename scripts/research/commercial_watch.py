@@ -119,9 +119,16 @@ def _sibur_deadline(raw: str) -> datetime:
 def _classify(title: str, category: str) -> tuple[str, int] | None:
     if not isinstance(title, str) or len(title) > 1000:
         raise EvidenceRejected("invalid procurement title")
-    haystack = title + " " + (category if isinstance(category, str) else "")
-    choices = [(name, score) for name, score, pattern in MATCHES if pattern.search(haystack)]
-    return max(choices, key=lambda x: x[1]) if choices else None
+    # A broad taxonomy ("automation/metrology/KIP") must not turn a generic
+    # "spare parts" title into a supposedly high-confidence ASU TP opportunity.
+    in_title = [(name, score) for name, score, pattern in MATCHES
+                if pattern.search(title)]
+    if in_title:
+        return max(in_title, key=lambda x: x[1])
+    in_category = [(f"Только категория: {name}", min(score - 30, 65))
+                   for name, score, pattern in MATCHES
+                   if isinstance(category, str) and pattern.search(category)]
+    return max(in_category, key=lambda x: x[1]) if in_category else None
 
 
 def _item(
@@ -236,26 +243,36 @@ def _geh(snapshot: Path, as_of: datetime) -> tuple[list[dict], dict]:
             raise EvidenceRejected("GEH duplicate or unknown identity")
         originals[rid] = entry
     found = set()
-    candidates = []
     for entry in newly:
         if not isinstance(entry, dict) or not isinstance(entry.get("observation"), dict):
             raise EvidenceRejected("GEH newly imported row invalid")
-        row = entry["observation"]
-        rid = row.get("external_id")
+        rid = entry["observation"].get("external_id")
         if rid in found or rid not in originals or entry != originals[rid]:
             raise EvidenceRejected("GEH newly inserted source cannot be matched to plan")
         found.add(rid)
+
+    # The 40 new identities are not the *only* commercial opportunities:
+    # include already-known records still appearing in the latest 18-page
+    # complete, hash-verified public list; label novelty accurately.
+    candidates = []
+    for entry in plan:
+        row = entry["observation"]
         observed = _time(entry["observed_at"])
         candidate = _item(
             "GEH", row, _geh_deadline(row.get("deadline_raw")), observed, as_of,
-            is_new=True, freshness="same_day" if as_of - observed <= timedelta(days=1) else "old_snapshot",
+            is_new=row["external_id"] in found,
+            freshness="same_day" if as_of - observed <= timedelta(days=1) else "old_snapshot",
             category="",
         )
         if candidate is not None:
             candidates.append(candidate)
+    newly_relevant = sum(c["novelty"] == "new_verified_ingest" for c in candidates)
     return candidates, {"pages": n, "captured": len(plan) + state.get("review", 0),
                         "accepted": len(plan), "review": state.get("review"),
-                        "actually_inserted": len(newly), "matching_unexpired": len(candidates),
+                        "actually_inserted": len(newly),
+                        "matching_unexpired": len(candidates),
+                        "new_relevant": newly_relevant,
+                        "already_known_relevant": len(candidates) - newly_relevant,
                         "capture_status": "verified_hash_and_database_replay"}
 
 
