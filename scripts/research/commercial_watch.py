@@ -164,8 +164,13 @@ def _item(
         "source": source,
         "external_id": row["external_id"],
         "title": title,
-        "buyer_as_published": row.get("customers_raw") if source == "GEH" else row.get("organizer"),
-        "organizer_as_published": row.get("organizer_raw") if source == "GEH" else None,
+        "buyer_as_published": row.get("customers_raw") if source == "GEH" else None,
+        "organizer_as_published": (
+            row.get("organizer_raw") if source == "GEH" else row.get("organizer")
+        ),
+        "price_as_published": row.get("price_raw") if source == "GEH" else None,
+        "procurement_number_as_published": row.get("number_raw") if source == "GEH" else None,
+        "deadline_msk": deadline.astimezone(MOSCOW).strftime("%d.%m.%Y %H:%M"),
         "topic": fit[0],
         "priority_score": score,
         "deadline_utc": deadline.isoformat(),
@@ -486,6 +491,7 @@ def _sibur_current(
             item["deadline_as_published"] = raw_deadline
             item["deadline_precision"] = "date_only" if date_only else "exact_time"
             if date_only:
+                item["deadline_msk"] = None
                 item["deadline_utc"] = None
                 item["priority_score"] = min(item["priority_score"], 74)
                 item["next_action"] = (
@@ -560,38 +566,60 @@ def compile_watch(geh_snapshot: Path, sibur_watch: Path, as_of: datetime,
 def render_markdown(data: dict) -> str:
     lines = [
         "# Коммерческая подборка Arvectum: СИБУР и ГЭХ",
-        f"Срез: {data['generated_for_utc']} (UTC). Только проверенные сохранённые публичные наблюдения; **не подтверждён доступ к участию**.",
+        (f"Срез: {data['generated_for_utc']} (UTC). Публичные source-bound наблюдения; "
+         "**доступ к участию, выигрыш и текущая стадия в закрытой SAP SRM не подтверждены**. "
+         "Баллы обозначают только совпадение предмета закупки, а не вероятность победы."),
         "",
     ]
     for source in ("geh", "sibur"):
         part = data[source]
         summary = part["summary"]
         lines += [
-            f"## {source.upper()}",
-            "Источник/состояние: " + ", ".join(f"{k}={v}" for k, v in summary.items()),
+            f"## {'ГЭХ / ЭТП ГПБ' if source == 'geh' else 'СИБУР'}",
+            "Проверка источника: " + ", ".join(
+                f"{k}={v}" for k, v in summary.items()
+                if isinstance(v, (str, int, float, bool, type(None)))
+            ),
             "",
         ]
+        if source == "sibur":
+            changes = summary.get("changed_deadlines_from_older_curated_watch", [])
+            if changes:
+                lines.append("**Изменения сроков относительно предыдущей подборки:**")
+                for change in changes:
+                    lines.append(
+                        f"- №{change['external_id']}: {change['prior_deadline_utc']} → "
+                        f"{change['new_public_deadline_utc']} UTC; "
+                        f"[первоисточник]({change['source_url']})"
+                    )
+                lines.append("")
         for i, c in enumerate(part["candidates"], 1):
             title = c["title"].replace("\n", " ").replace("]", r"\]")
-            buyer = (c["buyer_as_published"] or "не подтверждён").replace("\n", " ")
+            buyer = (c["buyer_as_published"] or "не установлен").replace("\n", " ")
+            organizer = (c["organizer_as_published"] or "не установлен").replace("\n", " ")
+            deadline = c["deadline_msk"] or (
+                str(c.get("deadline_as_published", "время неизвестно"))
+                + " (дата без точного времени)"
+            )
+            amount = c.get("price_as_published") or "не опубликована в проверенном наблюдении"
             lines.extend([
                 f"{i}. **[{title}]({c['first_party_source_url']})** — {c['external_id']}",
-                (f"   Заказчик по публикации: {buyer}. Направление: {c['topic']}. "
-                 f"Дедлайн по наблюдению: {c['deadline_utc'] or c.get('deadline_as_published', 'неизвестен')} "
-                 f"Приоритет: {c['priority_score']}/100."),
-                (f"   Доказательства: {c['novelty']}, {c['freshness']}, {c['evidence_status']}; "
-                 f"SHA в наблюдении: {c['source_sha256'][:12]}…. Действие: {c['next_action']}"),
+                (f"   Заказчик: {buyer}; организатор: {organizer}. "
+                 f"Направление: {c['topic']}. Дедлайн по публикации: {deadline} МСК. "
+                 f"Цена: {amount}. Приоритет по предмету: {c['priority_score']}/100."),
+                (f"   Доказательства: {c['novelty']}, {c['freshness']}, "
+                 f"{c['evidence_status']}; SHA источника: "
+                 f"{c['source_sha256'][:12]}…. Действие: {c['next_action']}"),
             ])
         if not part["candidates"]:
             lines.append("Нет подтверждённых по этому срезу релевантных процедур с будущим дедлайном.")
         lines.append("")
     lines.append(
-        "**Ограничение:** статус публичного списка не равен статусу официальной карточки, "
-        "подтверждённому допуску или текущему состоянию закрытой SAP SRM. "
-        "Запрос цен — не тендер; прошлые сроки исключены."
+        "**Ограничение:** открытый публичный список не подтверждает допуск, "
+        "содержание закрытой карточки или правовой статус. Снимки страниц неатомарны: "
+        "пропажа ID не доказывает закрытие. Запрос цен — не тендер; старые сроки исключены."
     )
     return "\n".join(lines)
-
 
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
