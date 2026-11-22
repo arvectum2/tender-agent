@@ -32,7 +32,7 @@ def test_runtime_switch_stays_blocked_on_owner_and_DP():
     assert gate["status"] == child["status"] == "blocked"
     assert gate["production_deployed"] is child["production_deployed"] is False
     assert "owner_exact_release_approval" in child["remaining"]
-    assert "live_DP_HTTP_and_SDK_reliability" in child["remaining"]
+    assert "sustained_DP_HTTP_SDK_reliability" in child["remaining"]
     assert "authorized_runtime_deploy" in child["remaining"]
 
 

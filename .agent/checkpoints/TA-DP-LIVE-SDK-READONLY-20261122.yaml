@@ -1,0 +1,26 @@
+task_id: TA-DP-LIVE-SDK-READONLY-20261122
+status: in_progress
+goal: 'Independently prove bounded local authenticated Data Platform HTTP/SDK consumer parity and keep separate owner release/long-running SLA gates.'
+definition_of_done:
+  - 'Reuse existing running Mac mini Data Platform 0.6.0 and installed TA SDK 0.4.0; no source fetch or public network.'
+  - 'Add fail-closed read-only locally loopback-bound probe for GET /health, GET /v1/contract and GET /v1/collections, plus anonymous GET /v1/collections authentication rejection.'
+  - 'Load already authorised 0600 local runtime key from a local file without logging, copying or storing credential; never print private collection IDs or data.'
+  - 'Verify bounded repeated responses, correct SDK major/expected version, HTTP auth, response shape, and redact failures; no health=product-complete claim.'
+  - 'Synthetic negative regression cases for invalid hosts, absent/unsafe secret, wrong SDK contract, malformed response, unauthorized and HTTP errors.'
+  - 'Private bounded proof once and offline CI; close only point-in-time scope while retaining separate Owner release and multi-hour DP reliability acceptance.'
+completed:
+  - "Added bounded no-proxy localhost-only authenticated SDK GET preflight, anonymous HTTP401 negative-control, private 0600 no-overwrite proof and synthetic cases."
+  - "Actual 22-Nov 3/3 consumer SDK0.4 rounds PASS with DP0.6.0, contract major1, 73 collection counts per round and anonymous HTTP401. No data or source writes."
+  - "Immutable private source-safe proof SHA256 55b7f94f50391eff7d4f920accbf07620a29ece913254826eff2cdf40ca9ac80; key and collection identifiers excluded."
+  - "19 synthetic SDK/HTTP tests PASS, 73 integrated SDK/RAG/knowledge and checkpoint regressions PASS, Ruff/make check PASS; two inherited warnings; protected CI pending."
+  - 'Read-only source inspection: existing DP /health 200 0.6.0, TA /health 200, deployed TA SDK 0.4.0 equals current main 0.4.0; previous SDK 0.3.0 mismatch is historical only.'
+  - 'Verified service GET /v1/collections cannot trigger usage recording middleware: usage_operation_name only maps POST search/answer/research/memory and DELETE memory; no DP mutation from bounded read-only GET.'
+current_stage: bounded_live_sdk_get_pass_ci_pending
+remaining: [protected_ci, merge, child_closeout]
+last_verified_commit: 93ca324ced2751ca348d5d6a6dae26b85ed0d8ad
+test_results: 'Actual 3/3 local SDK0.4 authenticated GET contract/collections PASS, 73 collections, anonymous401, private SHA 55b7f94f50391eff7d4f920accbf07620a29ece913254826eff2cdf40ca9ac80. 73 integrated tests PASS; Ruff/make check PASS. Exact-head CI pending.'
+resume_instruction: 'ARC ONLY never RDC. Immutable private 0600 SDK/HTTP short proof SHA256 55b7f94f50391eff7d4f920accbf07620a29ece913254826eff2cdf40ca9ac80 saved; do not repeat/overwrite. Finish checks, protected CI/merge and scoped child close. Keep sustained DP SLO, independent Gemma acceptance and Owner release BLOCKED. No source HTTP, production writes or runtime swap.'
+linked_parent: TA-CORE-RUNTIME-RELEASE-20261122
+production_writes: false
+external_http_requests: false
+deployment_authorized: false

@@ -1089,3 +1089,11 @@ core_runtime_release_2026_11_22:
   depends_on: [TA-CORE-CONSOLIDATION-001, TA-CORE-RUNTIME-PACKAGING-20261115]
   blocked_on: verified_live_DP_HTTP_reliability_and_owner_acceptance_of_runtime_switch
   production_deployed: false
+
+dp_live_sdk_readonly_2026_11_22:
+  task_id: TA-DP-LIVE-SDK-READONLY-20261122
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-DP-LIVE-SDK-READONLY-20261122.yaml
+  depends_on: [TA-CORE-RUNTIME-RELEASE-20261122]
+  scope: bounded_loopback_only_get_contract_and_collections
+  production_writes: false
