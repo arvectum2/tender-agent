@@ -1,0 +1,173 @@
+{
+  "as_of": "2026-11-22",
+  "authority": "public_and_previously_saved_read_only_inventory",
+  "authorized_srm_session": false,
+  "blocked_issues": [
+    {
+      "issue": 692,
+      "risk": "historic_missing_ids_cause_and_safe_dry_run_not_proven"
+    },
+    {
+      "issue": 686,
+      "risk": "one_ppt_url_vs_pptx_stored_original_format_unresolved"
+    },
+    {
+      "issue": 679,
+      "risk": "unrelated_missing_original_eis_docs"
+    },
+    {
+      "issue": 685,
+      "risk": "seven_day_historical_pitr_not_proven"
+    }
+  ],
+  "current_live_procurements_verified": false,
+  "forbidden": [
+    "current_open_claim_from_historical",
+    "infer_contract_parties",
+    "mass_import",
+    "db_writes",
+    "live_source_retry",
+    "authenticated_srm_crawl",
+    "bidding",
+    "supplier_messaging",
+    "payment"
+  ],
+  "new_db_mutations": 0,
+  "next_stage": "bounded_readonly_archive_to_working_diff_after_separate_source_and_retention_policy_review",
+  "reusable_modules": [
+    "src/modules/tender_connectors/sibur/parser.py",
+    "src/modules/tender_connectors/sibur/archive_parser.py",
+    "scripts/research/verify_sibur_public_snapshot.py",
+    "scripts/research/audit_sibur_archive_corpus.py",
+    "scripts/research/audit_sibur_saved_documents.py",
+    "scripts/research/reconciled_sibur_index.py",
+    "src/tender_research/corporate_procedure_identity.py",
+    "src/tender_research/ingest_checkpoint.py",
+    "scripts/procurement_llm/unified_source_pipeline.py"
+  ],
+  "saved_evidence": {
+    "data_platform_old_receipts": {
+      "archived_source_files_sha_verified": 7,
+      "direct_source_url_attested": 4,
+      "live_dp_current_verified": false,
+      "matching_chunk_and_embedding_identities": 958,
+      "unattested_from_this_registry": 3
+    },
+    "first_party_20261114": {
+      "observations": 314,
+      "pages": 27,
+      "unique_document_urls": 516,
+      "unique_exact_ids": 313
+    },
+    "historic_archive_20261121": {
+      "all_pages_sha_replayed": true,
+      "categories": 9,
+      "observations": 48536,
+      "pages": 4052,
+      "repeat_observations": 204,
+      "unique_ids": 48332
+    },
+    "historic_missing_by_category": {
+      "107": 2035,
+      "108": 4883,
+      "109": 1008,
+      "112": 3925,
+      "132": 3891,
+      "999_08": 653,
+      "999_10": 803,
+      "999_11": 994,
+      "999_19": 59
+    },
+    "original_documents_20261121": {
+      "ambiguous_ppt_vs_pptx": 1,
+      "byte_and_size_hash_verified": 516,
+      "saved_source_urls": 516,
+      "source_mismatch_issue": 686,
+      "url_extension_matches_saved_file": 515
+    },
+    "private_historical_receipt_sha256": {
+      "archive_corpus": "07c4ce310b28dec397aa927f9cbcbfaeb6d9374017038c03c2a59a0af25c7f0d",
+      "old_dp_provenance": "47fe7dffd0bff3c73fc71ab9ce2493a2cd65245a06d238c41d994ffa7821b8d9",
+      "saved_documents": "959c845b24e8fe0c911def07c5a4f2046cd141c625eabf9805b8cde012a975ea"
+    },
+    "working_db_20261121": {
+      "archive_missing_in_working": 18251,
+      "database": "arvectum_local",
+      "distinct_sibur_public_external_ids": 30632,
+      "not_production_db": true,
+      "overlap_with_archive": 30081,
+      "read_only_sql_historical_receipt": true,
+      "working_extra_to_archive": 551
+    }
+  },
+  "schema_version": 1,
+  "scope": "TA-SIBUR-SOURCE-DISCOVERY-001",
+  "sources": [
+    {
+      "access": "public_listing",
+      "evidence": "first_party_public_registry_and_saved_pagination_receipts",
+      "historical_coverage": "27_pinned_pages_314_observations_313_distinct_20261114",
+      "id": "sibur_public_current",
+      "live_legal_status": "NOT_VERIFIED",
+      "provider": "sibur.ru",
+      "role": "direct_organizer_field_observed_not_necessarily_contract_party",
+      "source_namespace": "sibur_public",
+      "url": "https://www.sibur.ru/ru/procurement/buy/"
+    },
+    {
+      "access": "public_listing_historical_archive",
+      "evidence": "4052_pinned_original_pages_9_categories",
+      "historical_coverage": "48536_observations_48332_unique_ids",
+      "id": "sibur_public_archive",
+      "live_legal_status": "HISTORICAL_ONLY",
+      "provider": "sibur.ru",
+      "role": "archived_organizer_field_not_contractor_proof",
+      "source_namespace": "sibur_public",
+      "url": "https://www.sibur.ru/ru/procurement/buy/archive/"
+    },
+    {
+      "access": "supplier_registration_and_qualification_required",
+      "evidence": "sibur.ru_first_party_supplier_guide",
+      "historical_coverage": "UNKNOWN",
+      "id": "sibur_srm_supplier_console",
+      "live_legal_status": "NOT_VERIFIED",
+      "provider": "sibur.ru",
+      "role": "primary_srm_procurement_platform_not_public_api_admission",
+      "source_namespace": "sibur_srm_authenticated_future",
+      "url": "https://srm.sibur.ru/"
+    },
+    {
+      "access": "public_company_listing_partial",
+      "evidence": "b2b_center_first_party_company_and_sale_card",
+      "historical_coverage": "UNKNOWN",
+      "id": "b2b_center_sibur",
+      "live_legal_status": "NOT_VERIFIED",
+      "provider": "b2b-center.ru",
+      "role": "distinct_legal_entity_seller_examples_not_direct_sibur_purchasing_or_contractor_evidence",
+      "source_namespace": "b2b_center_public",
+      "url": "https://www.b2b-center.ru/companies/tendery-ooo-sibur/"
+    },
+    {
+      "access": "public_index_partial_details_may_require_auth",
+      "evidence": "first_party_public_market_search",
+      "historical_coverage": "UNKNOWN",
+      "id": "b2b_center_market",
+      "live_legal_status": "NOT_VERIFIED",
+      "provider": "b2b-center.ru",
+      "role": "buyer_and_contractor_linkage_UNKNOWN_without_original_card",
+      "source_namespace": "b2b_center_public",
+      "url": "https://www.b2b-center.ru/app/next/market-search/"
+    },
+    {
+      "access": "qualified_supplier_portal",
+      "evidence": "sibur.ru_first_party_platforms_page",
+      "historical_coverage": "UNKNOWN",
+      "id": "sibur_logistics_7rights",
+      "live_legal_status": "NOT_VERIFIED",
+      "provider": "7rights.ru",
+      "role": "logistics_not_core_srm_or_b2b_inventory",
+      "source_namespace": "sibur_logistics_separate",
+      "url": "https://lk.7rights.ru/"
+    }
+  ]
+}
