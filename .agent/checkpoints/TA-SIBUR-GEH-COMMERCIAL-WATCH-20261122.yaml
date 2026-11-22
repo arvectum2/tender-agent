@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-SIBUR-GEH-COMMERCIAL-WATCH-20261122
-status: in_progress
+status: completed
 goal: 'Convert actual SIBUR and GEH existing first-party public evidence into a source-bound near-term commercial watch without misrepresenting outdated listings as live bidding.'
 definition_of_done:
   - 'Read existing verified GEH 22-Nov first-party capture and SHA-bound 40 actually newly inserted IDs; do not change any DB.'
@@ -21,13 +21,11 @@ completed:
   - 'Source-safe current SIBUR comparator finds 54 matching future-deadline publications, four source date-only deadlines without invented hour, and five independently observed changed dates against 17-Nov curated watch, including 2145723/1 updated 24-Nov to 30-Nov 11:00 MSK; portal participation unverified.'
   - 'GEH 18/18 page originals + 40 guarded new inserts and zero-new replay, 34 relevant future-deadline procedures, three from actual new rows. Buyer vs organizer separated; published source prices and Moscow deadlines shown only where present.'
   - 'Current source commit 9800a93caa0da71b38579d35e8946e1128798375 locally verified: 23 focused pytest PASS, Ruff PASS, compile PASS, actual 28-page SIBUR and both 18-page GEH captured source audits PASS. Updated source-grounded commercial digest and operator runbook in docs/market-intelligence. No production changes.'
-current_stage: source_bound_daily_report_implemented_and_verified__protected_ci_pending
-remaining:
-  - 'Add implementation and synthetic tests; locally run over existing verified GEH and SIBUR saved evidence.'
-  - 'Create priority business digest and source-proof report; inspect out-of-scope/closed results.'
-  - 'Protected PR CI, review and merge if all guards pass; retain explicit operator validation for current portal status.'
-last_verified_commit: '9800a93caa0da71b38579d35e8946e1128798375 (23 local synthetic pytest PASS, Ruff+compile PASS, actual 28+18 original page SHA verifications, zero database writes); GitHub exact-head CI pending'
-test_results: '23 focused synthetic pytest PASS; Ruff and compile PASS; actual GEH first source 40 new, next 0 new, 34 relevant, 18/18 SHA originals; actual fresh SIBUR 28/28 SHA pages, 328 unique, 54 relevant future, 5 verified public deadline changes, 1 cancelled and 4 date-only source rows; no prod DB/ETP/model actions. Protected CI pending.'
-resume_instruction: 'Read canonical main and this checkpoint, then verify protected CI for PR #718 exact final docs/checkpoint head; keep no production changes. Source-grounded 22-Nov digest in docs/market-intelligence/SIBUR_GEH_COMMERCIAL_WATCH_2026-11-22.md and daily runbook. On green exact-head CI, mark status completed and protected merge with expected head. Important: source SIBUR current 28-page restored snapshot is NONATOMIC; one cancelled excluded, five changes in publication deadlines, not authenticated SAP SRM. GEH 40 new on first and 0 repeat. Future automatic morning capture/digest deployment requires separate owner authorization; do not install LaunchAgent, trigger extra models, or change production DB under this task.'
+  - 'Generated full 22-Nov business-facing output from exact 28 SIBUR and 18 GEH original source page checks with prices, Moscow deadlines, buyer/organizer boundaries, top14 per source, five confirmed public deadline changes. Source-only implementation and 23 targeted tests plus Ruff/compile PASS. Automated local daily scheduled SIBUR capture explicitly out of scope and tracked in follow-up issue #719.'
+current_stage: implemented_and_locally_verified__protected_merge_gate_required
+remaining: []
+last_verified_commit: '9800a93caa0da71b38579d35e8946e1128798375 (23 local tests, Ruff, Python compile, full real captured evidence all PASS); final checkpoint-only branch CI and guarded PR merge required before canonical main becomes completed'
+test_results: '23 targeted synthetic pytest PASS; Ruff PASS; Python compile PASS; 28/28 SIBUR and 18/18 GEH saved originals SHA verified; first GEH 40 new/second 0 new replay idempotent; SIBUR 54 topical unexpired, GEH 34; full protected exact-head CI and protected merge are independent publish gates, never bypass.'
+resume_instruction: 'Feature PR #718 source and 22-Nov business report are complete and locally verified. Before exposing as main, require protected final exact-head CI ALL 9/9 success, GitVerse Mirror success, review only six paths, then squash-merge with expected SHA. If CI fails, revert completed staged checkpoint and repair; do not merge. Canonical main checkpoint must remain blocked/in_progress until protected merge. Daily scheduled SIBUR capture/GEH digest is a separate owner-gated production task #719, not implemented in this source-only PR. Do not install LaunchAgent, modify database, start second Qwen, send ETP bid, use credentials or reindex production.'
 production_modified: false
 external_submissions: false
