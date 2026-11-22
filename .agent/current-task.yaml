@@ -1017,6 +1017,15 @@ ai_trading_source_discovery_2026_11_22:
   real_etrading_authorized: false
   production_mutations: false
 
+sibur_ppt_source_forensic_2026_11_22:
+  task_id: TA-SIBUR-PPT-SOURCE-FORENSIC-20261122
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-SIBUR-PPT-SOURCE-FORENSIC-20261122.yaml
+  linked_issue: 686
+  scope: one_saved_original_url_and_binary_only
+  external_source_requests: false
+  production_mutations: false
+
 sibur_import_window_2026_11_22:
   task_id: TA-SIBUR-IMPORT-WINDOW-20261122
   status: in_progress
