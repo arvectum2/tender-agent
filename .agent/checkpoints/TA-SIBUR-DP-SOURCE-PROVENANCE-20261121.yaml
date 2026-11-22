@@ -24,13 +24,13 @@ completed_stages:
   and actual 7/7 archived original source lineage PASS; no runtime module imports
 - Parent original historical DP receipt PR689 passed 19/19 CI and merged main 8d53899, source-provenance child now includes complete protected main
   without conflicts.
-current_stage: parent_689_merged_source_proof_ready_for_exact_ci
+current_stage: PR691_updated_main_709_offline_source_7of7_verified_pending_exact_ci
 remaining_stages:
 - Run combined 66 provenance/DP/source tests, Ruff and exact original archived offline proof on current protected main
 - Push branch and open small standalone PR; await all 19 exact GitHub/GitVerse CI checks
 - Merge only after owner+AI source-only review, then mark completed; no live source/DB/DP activation
 last_verified_commit: 38dd3948fbd1fead79f46d2dc519e857b89ba29d
-last_checks: 66 combined pytest+Ruff PASS, real 7/7 first-party URL and page SHA original bytes, 958 historic DP embeddings, 4 registry plus 3 archives;
+last_checks: 22-Nov after PR709 main merge, 51 focused pytest PASS incl new canonical checkpoint QA, Ruff and make check PASS; independent exact source-only replay 7/7, 958 historical DP chunk embeddings, 4 first-party registry plus 3 archive categories, proof SHA 14a043aaf37fe99b935ac66f921cb7156f84851027df920fdbcc1aacc9060a48;
   original source code isolated with no network, live DB/DP or production writes.
 resume_instruction: Parent PR689 completed merge 8d53899; source provenance local review branch includes it. Revalidate 7/7 original archived page
   URL→row→content SHA plus 958 DP chunks and 66 tests. Push source-only branch/open PR, wait exact 19/19 CI, normal protected merge. No live source/DB/DP
