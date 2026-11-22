@@ -398,3 +398,43 @@ def test_buyer_vs_organizer_and_source_time_precision_are_not_conflated(tmp_path
                      if c["external_id"] == "9999/1")
     assert date_only["deadline_msk"] is None
     assert date_only["deadline_utc"] is None
+
+
+
+def test_daily_current_sibur_snapshot_cannot_silently_go_stale(tmp_path):
+    geh, watch = synthetic_inputs(tmp_path)
+    fresh = _fresh_sibur_capture(tmp_path)
+    receipt_path = fresh / "receipts.json"
+    rec = json.loads(receipt_path.read_text())
+    rec["pages"][0]["observed_at"] = "2026-11-18T18:00:00Z"
+    _dump(receipt_path, rec)
+    with pytest.raises(EvidenceRejected, match="SIBUR current public capture is stale"):
+        compile_watch(geh, watch, NOW, sibur_current_capture=fresh)
+
+
+def test_daily_geh_snapshot_cannot_silently_go_stale(tmp_path):
+    geh, watch = synthetic_inputs(tmp_path)
+    plan_path = geh / "verified-active-plan.json"
+    new_path = geh / "guarded-ingest" / "new-only.json"
+    state_path = geh / "guarded-ingest" / "state.json"
+    plan = json.loads(plan_path.read_text())
+    for entry in plan:
+        entry["observed_at"] = "2026-11-18T18:00:00Z"
+    plan_sha = _dump(plan_path, plan)
+    new_sha = _dump(new_path, {"accepted": plan[:2]})
+    state = json.loads(state_path.read_text())
+    state.update(plan_sha256=plan_sha, source_input_sha256=new_sha)
+    _dump(state_path, state)
+    with pytest.raises(EvidenceRejected, match="GEH public source capture is stale"):
+        compile_watch(geh, watch, NOW)
+
+
+def test_daily_current_sibur_snapshot_future_dated_is_rejected(tmp_path):
+    geh, watch = synthetic_inputs(tmp_path)
+    fresh = _fresh_sibur_capture(tmp_path)
+    receipt_path = fresh / "receipts.json"
+    rec = json.loads(receipt_path.read_text())
+    rec["pages"][0]["observed_at"] = "2026-11-23T18:00:00Z"
+    _dump(receipt_path, rec)
+    with pytest.raises(EvidenceRejected, match="future-dated"):
+        compile_watch(geh, watch, NOW, sibur_current_capture=fresh)
