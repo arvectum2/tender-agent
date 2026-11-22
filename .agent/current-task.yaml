@@ -1111,3 +1111,11 @@ dp_ingest_slo_p0_2026_11_22:
   no_second_Qwen_started: true
   production_modified: false
   next_step: verify_final_DP_draft_CI_then_measured_real_SLO_and_safe_model_admission_before_owner_release
+
+sibur_geh_commercial_watch_2026_11_22:
+  task_id: TA-SIBUR-GEH-COMMERCIAL-WATCH-20261122
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-SIBUR-GEH-COMMERCIAL-WATCH-20261122.yaml
+  scope: read_only_evidence_bound_business_shortlist_sibur_and_geh
+  production_mutations: false
+  current_stage: build_source_grounded_candidate_screening_and_verify_actual_new_geh_ingest
