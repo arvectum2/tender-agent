@@ -223,3 +223,14 @@ def test_category_only_sibur_match_has_limited_priority(tmp_path):
     assert candidate["priority_score"] <= 65
     assert candidate["topic"].startswith("Только категория:")
     assert candidate["freshness"] == "older_than_48h_requires_refresh"
+
+
+def test_price_inquiry_never_outranks_direct_etp_even_when_title_matches(tmp_path):
+    snap, watch = synthetic_inputs(tmp_path)
+    value = compile_watch(snap, watch, NOW)
+    direct = next(c for c in value["geh"]["candidates"] if c["external_id"] == "etp:123")
+    inquiry = next(c for c in value["geh"]["candidates"]
+                   if c["external_id"] == "price_request:124")
+    assert direct["priority_score"] > inquiry["priority_score"]
+    assert inquiry["priority_score"] <= 74
+    assert "не считать тендером" in inquiry["next_action"]
