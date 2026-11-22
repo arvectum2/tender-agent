@@ -120,7 +120,8 @@ class QualificationAssessment(APIModel):
         "QUALIFICATION_EVIDENCE_UNKNOWN",
         "QUALIFICATION_EVIDENCE_EXPIRED",
         "QUALIFICATION_EVIDENCE_PARTIAL",
-        "NO_GO_QUALIFICATION_COMPETITIVENESS",
+        "NO_GO_QUALIFICATION_COMPETITIVENESS",  # legacy v1 enum, not emitted for new high-weight zero evidence
+        "HIGH_COMPETITIVE_RISK",
         "COMPETITIVE_RISK_NOT_AUTOMATIC_NO_GO",
         "QUALIFYING_REFERENCES_PRESENT_REVIEW_SCORE",
     ]
@@ -206,10 +207,12 @@ def assess_references(
         verdict = "QUALIFYING_REFERENCES_PRESENT_REVIEW_SCORE"
         reason = "Completed matching signed contract references found; final scoring also depends on competitors and official formula."
     elif criterion.qualification_weight_percent >= 60:
-        verdict = "NO_GO_QUALIFICATION_COMPETITIVENESS"
+        verdict = "HIGH_COMPETITIVE_RISK"
         reason = (
-            "Zero qualifying completed contracts in owner-confirmed complete reference list; "
-            "qualification controls at least 60% of scoring. Commercial NO_GO, not legal ineligibility."
+            "Owner-confirmed complete list contains no qualifying signed completed contracts; "
+            "the original-source qualification weight is at least 60%. This is HIGH COMPETITIVE "
+            "RISK and warrants DEFER/low priority pending human review, not proof of legal "
+            "ineligibility, zero awarded score or a predictable win probability."
         )
     else:
         verdict = "COMPETITIVE_RISK_NOT_AUTOMATIC_NO_GO"

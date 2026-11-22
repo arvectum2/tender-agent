@@ -59,16 +59,20 @@ def _decision(client, customer_id, body):
     )
 
 
-def test_czn_zero_completed_contracts_wires_no_go_without_legal_disqualification(client):
+def test_czn_zero_signed_references_yields_defer_not_legal_no_go(client):
     cid = _customer(client, "Arvectum qualification")
     _post_zero(client, cid)
     resp = _decision(client, cid, _request())
     assert resp.status_code == 200, resp.text
     data = resp.json()
-    assert data["competitive_recommendation"] == "NO_GO"
-    assert data["assessment"]["recommendation"] == "NO_GO_QUALIFICATION_COMPETITIVENESS"
+    assert data["competitive_recommendation"] == "DEFER"
+    assert data["assessment"]["recommendation"] == "HIGH_COMPETITIVE_RISK"
     assert data["assessment"]["qualifying_contracts"] == 0
-    assert data["decision_core"]["decision"]["competitive_recommendation"] == "NO_GO"
+    assert data["decision_core"]["decision"]["competitive_recommendation"] == "DEFER"
+    assert data["decision_core"]["decision"]["qualification_priority"] == "LOW"
+    assert data["decision_core"]["decision"]["human_control_required"] is True
+    assert data["assessment"]["predicted_win_probability"] is None
+    assert data["assessment"]["source_document_sha256"] == SOURCE["czn_source_bound_criterion"]["source_document_sha256"]
     # The existing core still says review: no false hard legal blocker.
     assert data["decision_core"]["decision"]["status"] == "NEEDS_REVIEW"
     assert data["assessment"]["eligibility_status"] == "NOT_ASSESSED"
@@ -84,6 +88,9 @@ def test_other_tenant_without_reference_list_is_unknown_not_zero(client):
     assert result.status_code == 200
     assert result.json()["competitive_recommendation"] == "HUMAN_REVIEW_REQUIRED"
     assert result.json()["assessment"]["qualifying_contracts"] is None
+    assert result.json()["decision_core"]["decision"]["qualification_priority"] == "HUMAN_REVIEW"
+    assert result.json()["decision_core"]["decision"]["human_control_required"] is True
+    assert result.json()["assessment"]["recommendation"] == "QUALIFICATION_EVIDENCE_UNKNOWN"
 
 
 @pytest.mark.parametrize("changes", [
@@ -116,7 +123,7 @@ def test_mismatch_of_original_eis_revision_number_or_law_rejected(client, change
     assert response.status_code in (400, 422), response.text
 
 
-def test_competitive_no_go_does_not_overwrite_known_legal_hard_blocker(client):
+def test_competitive_defer_does_not_overwrite_known_legal_hard_blocker(client):
     cid = _customer(client, "Legally closed")
     _post_zero(client, cid)
     model = {
@@ -129,5 +136,7 @@ def test_competitive_no_go_does_not_overwrite_known_legal_hard_blocker(client):
     resp = _decision(client, cid, _request(procurement_model=model))
     assert resp.status_code == 200, resp.text
     assert resp.json()["decision_core"]["decision"]["status"] == "NO_GO"
-    assert resp.json()["competitive_recommendation"] == "NO_GO"
+    assert resp.json()["competitive_recommendation"] == "DEFER"
+    assert resp.json()["decision_core"]["decision"]["qualification_priority"] == "LOW"
+    assert resp.json()["decision_core"]["decision"]["external_action_allowed"] is False
     assert resp.json()["assessment"]["eligibility_status"] == "NOT_ASSESSED"
