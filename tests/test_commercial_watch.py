@@ -8,7 +8,11 @@ from pathlib import Path
 
 import pytest
 
-from scripts.research.commercial_watch import EvidenceRejected, compile_watch, render_markdown
+from scripts.research.commercial_watch import (
+    EvidenceRejected,
+    compile_watch,
+    render_markdown,
+)
 
 
 NOW = datetime(2026, 11, 22, 19, 20, tzinfo=UTC)
@@ -182,6 +186,7 @@ def test_missing_sibur_evidence_fails_closed(tmp_path):
 
 def test_no_live_network_or_database_imports():
     import inspect
+
     import scripts.research.commercial_watch as module
     source = inspect.getsource(module)
     for forbidden in ("requests.get(", "subprocess.run(", "create_engine(", "http.client", "urllib.request"):
