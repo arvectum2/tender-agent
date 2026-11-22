@@ -234,3 +234,19 @@ def test_price_inquiry_never_outranks_direct_etp_even_when_title_matches(tmp_pat
     assert direct["priority_score"] > inquiry["priority_score"]
     assert inquiry["priority_score"] <= 74
     assert "не считать тендером" in inquiry["next_action"]
+
+
+def test_newly_verified_geh_reserves_report_slots_vs_known_high_score(tmp_path):
+    snap, watch = synthetic_inputs(tmp_path)
+    plan_path = snap / "verified-active-plan.json"
+    plan = json.loads(plan_path.read_text())
+    plan[2]["observation"]["title"] = "АСУ ТП и автоматизация"
+    sha = _dump(plan_path, plan)
+    path = snap / "guarded-ingest" / "state.json"
+    state = json.loads(path.read_text())
+    state["plan_sha256"] = sha
+    _dump(path, state)
+    value = compile_watch(snap, watch, NOW, limit_per_source=2)
+    ids = {c["external_id"] for c in value["geh"]["candidates"]}
+    assert ids == {"etp:123", "price_request:124"}
+    assert len(value["geh"]["candidates"]) == 2
