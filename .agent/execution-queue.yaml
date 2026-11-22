@@ -1057,7 +1057,7 @@ items:
 - order: 1130
   task_id: TA-SIBUR-SOURCE-DISCOVERY-001
   title: SIBUR source and reuse inventory
-  status: ready
+  status: done
   authority: AUTO
   independent: true
   auto_merge: false
@@ -1070,7 +1070,7 @@ items:
 - order: 1140
   task_id: TA-GEH-SOURCE-DISCOVERY-001
   title: GEH source and reuse inventory
-  status: ready
+  status: done
   authority: AUTO
   independent: true
   auto_merge: false
@@ -1083,7 +1083,7 @@ items:
 - order: 1150
   task_id: TA-AI-TRADING-SOURCE-DISCOVERY-001
   title: Small procurement paper-trading source inventory
-  status: ready
+  status: done
   authority: AUTO
   independent: true
   auto_merge: false

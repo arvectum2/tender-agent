@@ -1,5 +1,5 @@
 task_id: TA-ROADMAP-RECONCILE-20261122
-status: in_progress
+status: completed
 goal: 'Reconcile canonical execution status, GitHub issue truth, and verified November 22 PITR/source outcomes before continuing next admitted AUTO roadmap task.'
 definition_of_done:
   - 'Read current protected main, active execution queue, authoritative issue state and child checkpoints.'
@@ -13,8 +13,13 @@ completed:
   - Added separate source-originals blocked child checkpoint; documented actual next ready queue order SIBUR then GEH then AI trading.
   - Four focused checkpoint tests PASS, Ruff and make check PASS.
   - 'Read main 951fcb87deec437857f53f5738b2862bcef473e5 and queue: 62/66 done, 3 ready discovery, 1 blocked REVIEW; issue #679 and #685 currently closed despite remaining original evidence and seven-day proof gates.'
-current_stage: exact_head_ci_and_protected_merge_pending
-remaining: [exact_head_ci, merge]
-last_verified_commit: 951fcb87deec437857f53f5738b2862bcef473e5
-test_results: '4 checkpoint focused tests PASS, 2 inherited warnings; Ruff/make check/diff PASS; issue #679 and #685 reopened with explicit unresolved evidence. GitHub CI pending.'
-resume_instruction: 'ARC ONLY. Confirm exact GitHub PR head and CI 19/19 before protected merge; then close reconciliation child checkpoint and start first queue AUTO SIBUR source inventory as separate child/worktree, no DB/ETP/EIS mutation. Keep #679/#685 open blocked, no new watchdog.'
+  - 'Protected PR #699 merged into main at 2026-11-22T10:28:09Z; 19 of 19 exact-head CI green; source inventory bounded done only, not source connector/production acceptance.'
+current_stage: completed_protected_pr_699_ci19_of19
+remaining: []
+last_verified_commit: 5f0986f456f040032c26ba9cec50f65718c216ac
+test_results: 'PR #699 exact head 19 of 19 CI SUCCESS; protected main merge 5f0986f456f040032c26ba9cec50f65718c216ac; source-only deliverable done, no production or source writes.'
+resume_instruction: 'Completed PR #699 merged protected main with 19/19 exact CI. Do NOT repeat this source-only inventory, import source history, activate paid ETP, submit bids or change production. Proceed only to next independent admitted task; preserve #679/#685/#686/#692 gates.'
+protected_merge_commit: 5f0986f456f040032c26ba9cec50f65718c216ac
+protected_exact_ci: 19_of_19_success
+production_deployed: false
+completed_at_utc: '2026-11-22T10:28:09Z'

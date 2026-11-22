@@ -1,0 +1,20 @@
+task_id: TA-SOURCE-INVENTORIES-CLOSEOUT-20261122
+status: in_progress
+goal: 'Mark the three separately admitted and now CI19/19 protected-merged AUTO source inventories completed in canonical execution queue and child checkpoints, while retaining separate source/PITR/production blockers.'
+definition_of_done:
+  - 'Verify exact GitHub PR #699, #700, #701 and #702 merged and all 19 exact-head CI green.'
+  - 'Change only three explicit AUTO source inventory items status ready to done, preserving original queue order, scopes and blocked REVIEW forecast.'
+  - 'Complete only child checkpoints already independently merged; preserve true production, access, legal and B2B limits.'
+  - 'Update canonical parent execution index and dated report; add tests against duplicate done claims, hard-stop gates and queue truth.'
+  - 'Run focused regression and full exact-head CI before protected main merge.'
+completed:
+  - 'Reconciled four independently protected merged child checkpoints with exact 19/19 CI, merge commit and completion flags; production_deployed false.'
+  - 'Moved exactly three admitted AUTO source inventory queue records from ready to done; queue now 65/66 done, one blocked REVIEW forecast unchanged.'
+  - 'Updated canonical parent index and added bounded QA on queue order, child merge evidence, and no ETP/production acceptance.'
+  - 'Verified PRs #699, #700, #701 and #702 protected main merges and 19/19 CI at their exact heads in previous stages.'
+current_stage: source_inventory_queue_closeout_pass_pending_exact_head_ci
+remaining: [exact_head_ci, protected_merge, checkpoint_closure]
+last_verified_commit: 4f13b1239b7951333236d03f2c30f63c27252795
+test_results: '22 focused roadmap+SIBUR+GEH+AI tests PASS, 2 inherited warnings; Ruff and make check PASS; full protected CI pending. Four earlier PRs 19/19 CI independently verified.'
+resume_instruction: 'ARC ONLY. Commit source-inventory closeout and PR; wait exact-head 19/19 GitHub CI and protected merge, then mark this child completed on next canonical change. Continue scoped #692 historical exact-ID read-only verification and #686 single PPT provenance, keeping both issues open. Do not import old SIBUR data, retry EIS, use private ETP, bid or change production.'
+production_mutations: false
