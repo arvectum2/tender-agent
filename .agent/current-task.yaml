@@ -925,10 +925,21 @@ dtr_legacy_api_redaction_2026_11_22:
 
 dtr_679_offline_evidence_2026_11_22:
   task_id: TA-DTR679-OFFLINE-AUDIT-20261122
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-DTR679-OFFLINE-AUDIT-20261122.yaml
   linked_issue: 679
   scope: archived_primary_html_sha_and_revision_checks_no_network_no_database
   source_safety: historical_only_current_revision_not_proven
   last_verified_code_commit: 88d788581c23c0a96529e0df6196d16f7109d698
   local_checks: 16_pass_ruff_make_check_archived_html_sha_pass
+
+pitr127_restore_readonly_audit_2026_11_22:
+  task_id: TA-PITR127-READONLY-VERIFICATION-20261122
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-PITR127-READONLY-VERIFICATION-20261122.yaml
+  linked_issue: 685
+  scope: receipt_and_version_matched_pg17_backup_integrity_only
+  production_writes: prohibited
+  seven_day_continuity_proven: false
+  verified_code_commit: c3aa2b4d0fc90d07e69fcf2796419c028e9fc87b
+  local_checks: 18_pass_ruff_make_check_pg17_postrelease_base_verified
