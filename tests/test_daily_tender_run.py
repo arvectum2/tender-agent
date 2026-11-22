@@ -550,6 +550,159 @@ def test_daily_tender_run_all_failures_complete_with_errors_and_retry(
     assert resumed_body["items"][0]["status"] == "MANAGER_READY"
 
 
+
+def test_dtr_original_source_timeout_never_persists_signed_url(client, session, monkeypatch):
+    from src.modules.daily_tender_run import service
+
+    registry_number = "0128200000126007558"
+    secret = "sensitive-eis-archive-token-should-never-leak"
+    monkeypatch.setattr(
+        service,
+        "search_public_44fz",
+        lambda **kwargs: {
+            "cards": [_search_card(registry_number)],
+            "outcome": "success_with_results",
+        },
+    )
+
+    def source_failure(self, number):
+        raise TimeoutError(
+            "official source expired: https://int.zakupki.gov.ru/archive.zip?token="
+            + secret
+        )
+
+    monkeypatch.setattr(
+        service.TenderResearchPipeline, "ingest_public_by_registry_number", source_failure
+    )
+    response = client.post(
+        "/api/daily-tender-runs",
+        json={"profile_id": "arvectum-it", "run_now": True},
+    )
+    assert response.status_code == 201
+    body = response.json()
+    assert body["counts"]["failed"] == 1
+    assert body["status"] == "COMPLETED_WITH_ERRORS"
+    assert body["items"][0]["error"] == "source_acquisition_failed:timeout"
+    assert secret not in str(body)
+    stored = session.query(DailyTenderRunItem).filter_by(run_id=body["run_id"]).one()
+    assert stored.error == "source_acquisition_failed:timeout"
+    assert secret not in stored.error
+
+
+def test_dtr_safe_processing_error_never_uses_untrusted_text():
+    from src.modules.daily_tender_run.service import _safe_processing_error
+
+    secret = "?X-Amz-Signature=must-not-be-persisted"
+    assert (
+        _safe_processing_error("INDEX_DATA_PLATFORM", RuntimeError(secret))
+        == "source_or_index_not_ready:failure"
+    )
+    assert (
+        _safe_processing_error("ANALYZE", ValueError(secret))
+        == "analysis_failed:invalid_input"
+    )
+    assert (
+        _safe_processing_error("SUMMARIZE", ConnectionError(secret))
+        == "manager_summary_failed:connection_unavailable"
+    )
+    assert secret not in _safe_processing_error("unknown", OSError(secret))
+
+
+
+def test_dtr_post_decision_failure_never_persists_signed_url(session, monkeypatch):
+    from src.modules.daily_tender_run import post_go
+
+    run, item = _create_post_go_run(
+        session, deal_id="test-post-go-secret-redaction", registry_number="0128200000126007559"
+    )
+    secret = "https://int.zakupki.gov.ru/archive.zip?token=do-not-persist"
+
+    def fail_post_decision(*args, **kwargs):
+        raise RuntimeError(secret)
+
+    monkeypatch.setattr(post_go, "_advance_item", fail_post_decision)
+    post_go.advance_post_decision_items(session, run)
+    session.expire_all()
+    saved = session.get(DailyTenderRunItem, item.id)
+    assert saved is not None
+    assert saved.status == "POST_DECISION_FAILED"
+    assert saved.error == "post_decision_failed:failure"
+    assert saved.post_decision_json["last_error"]["message"] == "post_decision_failed:failure"
+    assert saved.post_decision_json["last_error"]["type"] == "redacted"
+    assert secret not in str(saved.post_decision_json)
+
+
+
+def test_dtr_api_redacts_historical_raw_exception_without_mutating_db(client, session):
+    run, item = _create_post_go_run(
+        session, deal_id="test-legacy-redaction", registry_number="0128200000126007558"
+    )
+    secret = "https://int.zakupki.gov.ru/archive.zip?token=legacy-secret"
+    item.status = "POST_DECISION_FAILED"
+    item.error = "ReadTimeout: " + secret
+    item.post_decision_json = {
+        "readiness": {"status": "BLOCKED"},
+        "last_error": {
+            "type": "ReadTimeout",
+            "message": secret,
+            "debug": {"signed_url": secret},
+            "at": "2026-11-20T10:00:00+03:00",
+        },
+    }
+    run.error_summary = "original query: " + secret
+    session.commit()
+
+    response = client.get(f"/api/daily-tender-runs/{run.run_id}")
+    assert response.status_code == 200
+    result = response.json()
+    assert secret not in str(result)
+    assert result["error_summary"] == "discovery_incomplete:details_redacted"
+    public_item = result["items"][0]
+    assert public_item["error"] == "post_decision_failed:legacy_error_redacted"
+    assert public_item["post_decision"]["readiness"] == {"status": "BLOCKED"}
+    assert public_item["post_decision"]["last_error"] == {
+        "type": "redacted",
+        "code": "post_decision_failed:legacy_error_redacted",
+        "message": "post_decision_failed:legacy_error_redacted",
+    }
+
+    # No database migration/repair: legacy original remains intact for audit.
+    session.expire_all()
+    stored_item = session.get(DailyTenderRunItem, item.id)
+    assert stored_item.error == "ReadTimeout: " + secret
+    assert stored_item.post_decision_json["last_error"]["debug"]["signed_url"] == secret
+    stored_run = session.get(DailyTenderRun, run.id)
+    assert stored_run.error_summary == "original query: " + secret
+
+
+def test_dtr_api_preserves_current_safe_codes_and_omits_absent_errors(
+    client, session
+):
+    run, item = _create_post_go_run(
+        session, deal_id="test-safe-code", registry_number="0128200000126007559"
+    )
+    item.error = "source_acquisition_failed:timeout"
+    item.post_decision_json = {
+        "last_error": {
+            "type": "redacted",
+            "code": "post_decision_failed:connection_unavailable",
+            "message": "post_decision_failed:connection_unavailable",
+        },
+        "review": {"status": "WAITING_HUMAN"},
+    }
+    session.commit()
+    response = client.get(f"/api/daily-tender-runs/{run.run_id}")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["error_summary"] is None
+    public_item = data["items"][0]
+    assert public_item["error"] == "source_acquisition_failed:timeout"
+    assert public_item["post_decision"]["review"] == {"status": "WAITING_HUMAN"}
+    assert public_item["post_decision"]["last_error"]["code"] == (
+        "post_decision_failed:connection_unavailable"
+    )
+
+
 def _create_post_go_run(
     session,
     *,

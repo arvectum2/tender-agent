@@ -478,7 +478,8 @@ def test_saas_qualification_uses_signed_tenant_identity_and_zero_references(clie
     result = client.post(f"{base}/assess", headers=_auth(owner_a), json=criterion)
     assert result.status_code == 200, result.text
     assert result.json()["customer_id"] == a["customer_id"]
-    assert result.json()["recommendation"] == "NO_GO_QUALIFICATION_COMPETITIVENESS"
+    assert result.json()["recommendation"] == "HIGH_COMPETITIVE_RISK"
+    assert result.json()["predicted_win_probability"] is None
     assert result.json()["qualifying_contracts"] == 0
 
     # Different tenant is not affected by first tenant's confirmed zero.
@@ -504,7 +505,9 @@ def test_saas_qualification_uses_signed_tenant_identity_and_zero_references(clie
     }
     core = client.post(f"{base}/decision-core", headers=_auth(owner_a), json=core_payload)
     assert core.status_code == 200, core.text
-    assert core.json()["competitive_recommendation"] == "NO_GO"
+    assert core.json()["competitive_recommendation"] == "DEFER"
+    assert core.json()["decision_core"]["decision"]["qualification_priority"] == "LOW"
+    assert core.json()["decision_core"]["decision"]["human_control_required"] is True
     assert core.json()["decision_core"]["decision"]["status"] == "NEEDS_REVIEW"
     assert core.json()["external_action_allowed"] is False
 

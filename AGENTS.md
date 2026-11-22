@@ -23,6 +23,19 @@ Build and maintain the Arvectum procurement automation platform with small, revi
 6. Run targeted lint/tests first, then broaden verification only when the change justifies it.
 7. Report changed files, decisions, assumptions, commands run, results, and remaining risks.
 
+## Git worktree lifecycle and disk hygiene
+
+Mac mini Git worktrees share source history but consume real SSD space, especially ignored virtualenvs, node_modules, build outputs and locally generated artifacts. Treat the existing canonical checkout and current task worktree as the default; creating a new directory is not a prerequisite for investigation.
+
+- Read-only analysis, searches, status/CI/PR review: use git -C with an existing repo and existing files; **do not create a worktree or clone**.
+- Before an edit, reuse a clean, unassigned existing task worktree when safe. Create **at most one** new worktree only if isolation is necessary to avoid disturbing another branch, document its owner/task, and avoid nested worktrees or repeated backup copies.
+- On completion or PR merge/closure, reconcile GitHub PR state and HEAD, check full git status --porcelain --untracked-files=normal, review **ignored** files separately, and check running process/launchd references. Use normal git worktree remove only when safe; leave branch refs and Git history intact.
+- Never use git worktree remove --force, rm -rf, git clean -fdx, or broad prune commands to dispose of unverified files. Ignored .env, credentials, databases, dumps, private reports or customer artifacts may be the only copies.
+- Do not create precautionary dumps, backups of backups, ad hoc monitoring tasks, or a second dependency installation as a substitute for a proven canonical recovery path. Report unresolved retention blockers instead of deleting them.
+- Avoid copying node_modules, Python virtualenvs, models, Docker volumes or package caches into task worktrees. Prefer the existing governed environment and declared lockfiles.
+
+These are filesystem hygiene rules; they do not authorize deleting protected data or relaxing required CI, customer, production or owner-approval boundaries.
+
 ## Skill routing
 
 Use the most specific matching skill. Common routes:

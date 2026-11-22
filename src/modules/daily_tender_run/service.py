@@ -14,6 +14,14 @@ from sqlalchemy import select, text
 from sqlalchemy.engine import Connection
 from sqlalchemy.orm import Session
 
+from src.modules.daily_tender_run.error_codes import (
+    public_discovery_error_summary,
+    public_failure_code,
+    public_post_decision_state,
+)
+from src.modules.daily_tender_run.error_codes import (
+    safe_processing_error as _safe_processing_error,
+)
 from src.modules.daily_tender_run.fresh_priority import fresh_preparation_priority
 from src.modules.daily_tender_run.manager_synthesis import synthesize_manager_brief
 from src.modules.daily_tender_run.models import DailyTenderRun, DailyTenderRunItem
@@ -843,9 +851,10 @@ def _execute_daily_tender_run(
             session.rollback()
             failed_item = session.get(DailyTenderRunItem, item.id)
             if failed_item is not None:
+                failure_stage = failed_item.stage
                 failed_item.status = "FAILED"
                 failed_item.stage = "FAILED"
-                failed_item.error = f"{type(exc).__name__}: {exc}"[:4000]
+                failed_item.error = _safe_processing_error(failure_stage, exc)
                 failed_item.updated_at = utcnow()
                 session.add(failed_item)
                 session.commit()
@@ -1018,7 +1027,7 @@ def to_run_response(session: Session, run: DailyTenderRun) -> DailyTenderRunResp
         current_stage=run.current_stage,
         counts=dict(run.counts_json or {}),
         digest=run.digest_json,
-        error_summary=run.error_summary,
+        error_summary=public_discovery_error_summary(run.error_summary),
         started_at=run.started_at,
         completed_at=run.completed_at,
         created_at=run.created_at,
@@ -1052,8 +1061,10 @@ def to_run_response(session: Session, run: DailyTenderRun) -> DailyTenderRunResp
                 unknowns=list(item.unknowns_json or []),
                 human_decision=item.human_decision,
                 human_decision_id=item.human_decision_id,
-                post_decision=dict(item.post_decision_json or {}),
-                error=item.error,
+                post_decision=public_post_decision_state(item.post_decision_json),
+                error=public_failure_code(
+                    item.error, post_decision=item.status == "POST_DECISION_FAILED"
+                ),
                 created_at=item.created_at,
                 updated_at=item.updated_at,
             )

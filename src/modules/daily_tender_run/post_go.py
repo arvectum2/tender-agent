@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 from src.modules.bid_completeness.models import BidCompletenessSet
 from src.modules.bid_packages.models import BidPackageSet
 from src.modules.ceo_approval.models import CEOApprovalSet
+from src.modules.daily_tender_run.error_codes import safe_processing_error
 from src.modules.daily_tender_run.models import DailyTenderRun, DailyTenderRunItem
 from src.modules.event_log.models import DecisionRecord
 from src.modules.finance_memo.models import FinanceMemoSet
@@ -622,10 +623,12 @@ def advance_post_decision_items(
             fresh = session.get(DailyTenderRunItem, item.id)
             if fresh is None:
                 continue
+            code = safe_processing_error("POST_DECISION", exc)
             state = _item_state(fresh)
             state["last_error"] = {
-                "type": type(exc).__name__,
-                "message": str(exc)[:2000],
+                "type": "redacted",
+                "message": code,
+                "code": code,
                 "at": datetime.now().astimezone().isoformat(),
             }
             _persist_item(
@@ -634,5 +637,5 @@ def advance_post_decision_items(
                 stage=fresh.stage or "POST_DECISION",
                 status="POST_DECISION_FAILED",
                 state=state,
-                error=f"{type(exc).__name__}: {exc}"[:4000],
+                error=code,
             )

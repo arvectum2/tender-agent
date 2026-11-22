@@ -1,0 +1,21 @@
+task_id: TA-PITR-SEVEN-DAY-20261122
+status: blocked
+goal: 'Independently demonstrate continuous seven-day physical PITR for the real production PostgreSQL cluster containing arvectum and arvectum_data; preserve safe evidence.'
+definition_of_done:
+  - 'Verify physical cluster identity and an independently proven full base predating the precise trailing seven-day horizon.'
+  - 'Prove every archived WAL segment in that span is complete and integrity-checked, not merely present by filename.'
+  - 'Restore both production databases to an explicit seven-day historical target on an isolated network-none clone with original backup/WAL read-only.'
+  - 'Capture exact target PostgreSQL log evidence, independent business and DP SQL facts, verified receipt checksum and unchanged production.'
+  - 'Never assert seven-day continuity solely from backup age or current health status.'
+completed:
+  - '22-Nov exact postrelease 21-Nov WAL target replay of BOTH databases independently verified; that is not a seven-day historical proof.'
+  - 'Oldest independently receipted base observed from 2026-11-20 08:47:31 UTC; seven-day age condition cannot arise before 2026-11-27 08:47:31 UTC unless older verified physical backup is found.'
+  - 'ARC-only 22-Nov archived WAL scan found more than 1600 sequential 16-MiB files on a single timeline without filename gaps; neither complete WAL validity nor seven-day restorable continuity is proven by filenames.'
+current_stage: blocked_horizon_not_yet_spanned
+remaining: [age_condition, independent_wal_integrity, exact_seven_day_restore, final_acceptance]
+last_verified_commit: 6b49cbba4ffcbb62630fe78e1c118c2bfe96f2a1
+test_results: 'Postbase exact-point both-DB restore PASS; seven-day physical PITR NOT_PROVEN.'
+resume_instruction: 'ARC ONLY, never RDC. Do not rerun completed 21-Nov named point. Next verify base available at/before true trailing seven-day horizon, earliest age candidate 27-Nov 08:47Z from currently known 20-Nov base. Then verify full archived WAL integrity/continuity and restore BOTH DBs to an explicit historical target on a network-none clone. No production writes, no EIS retry, no new watchdog. Keep issue 685 open until proof.'
+existing_watchdog: Tender Agent Watchdog
+issue: 685
+production_deployed: false

@@ -1,0 +1,19 @@
+task_id: TA-DTR679-CURRENT-ORIGINALS-20261122
+status: blocked
+goal: 'Resolve missing original official EIS files and current revisions for notices 0173100007526000046, 0128200000126007559, 0128200000126007558 before any DTR replay.'
+definition_of_done:
+  - 'Identify explicitly admitted official-source acquisition route and exact current notice revisions.'
+  - 'Acquire and independently SHA256-verify each source ZIP/DOCX file and source provenance without inventing missing bytes.'
+  - 'Validate original attachment inventory and exact source-bound extraction; preserve UNKNOWN on failures.'
+  - 'Separately gate any actual DTR re-run or production DB mutation after independent evidence.'
+completed:
+  - 'Bounded archived HTML original audit PR695 merged into protected main, CI19/19 PASS, and retained issue #679 evidence.'
+  - 'For 0128200000126007558 one historical cached revision and four official attachment URLs recovered, zero original DOCX bytes; other two notices have no retained original files.'
+  - 'Reopened #679 22-Nov-2026 to reflect outstanding source originals and current official revision.'
+current_stage: blocked_unattested_current_source_binary
+remaining: [source_access_admission, original_archive_sha, revision_and_document_extraction, operator_approved_dtr_followup]
+last_verified_commit: 951fcb87deec437857f53f5738b2862bcef473e5
+test_results: 'PR695 19/19 green; historical archived HTML audit PASS; current source documents NOT_PROVEN.'
+resume_instruction: 'ARC only, NO RDC. No blind official EIS retries, no production writes. Request source/owner admission for explicitly bounded current-source calls; otherwise continue next admitted independent AUTO queue item. Do not re-run completed offline auditor.'
+linked_issue: 679
+production_writes: false

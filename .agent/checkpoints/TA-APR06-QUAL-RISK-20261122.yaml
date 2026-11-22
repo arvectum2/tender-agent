@@ -1,0 +1,27 @@
+task_id: TA-APR06-QUAL-RISK-20261122
+status: completed
+goal: 'Issue #406: separate source-bound competitive high qualification-weight risk from legal ineligibility and from unconditional commercial NO_GO for a confirmed empty owner-reference list.'
+definition_of_done:
+  - 'Use the existing exact EIS v4 70/30 saved original source-case with UID/SHA and explicit tenant-complete signed owner references; no fabricated winner odds or unsupported source editions.'
+  - 'When confirmed zero qualifying completed signed contracts with high qualification weight, return HIGH_COMPETITIVE_RISK and DEFER/low priority for human review, not automatic legal or commercial NO_GO.'
+  - 'Preserve UNKNOWN/EXPIRED/PARTIAL source-reference states and separate actual deadline/legal hard blockers unchanged; no automatic ETP or bid action.'
+  - 'Validate negative cases: wrong FZ, unfinished/missing chatbot/unsigned/out-of-date contract references, stale source version/document hash, low weight with no inferred probability.'
+  - 'Run focused and adjacent source/binding regression, Ruff/make check, then exact-head protected CI; no production deploy or changes to frozen APR06 human-gold KPIs.'
+completed:
+  - 'Changed source-bound confirmed-zero/high-weight 60-percent heuristic from competitive NO_GO to HIGH_COMPETITIVE_RISK with DEFER and LOW priority, retaining legal Decision Core result and bid hard-stop.'
+  - 'Existing UNKNOWN, EXPIRED, PARTIAL and qualifying-contract cases continue HUMAN_REVIEW_REQUIRED; predicted win probability stays None.'
+  - 'Original EIS notice v4/70-30 UID/hash and deadline source bindings, distinct 44/223 signed final acts and legal hard-blocker regressions preserved; frozen October human-gold snapshots untouched.'
+  - '88 adjacent qualification/source/historical-frozen tests PASS, eight skipped, Ruff and make check PASS; no production code deployment.'
+  - 'Read-only source and 81 existing relevant tests reviewed: source-bound 70/30 CZN case implemented but zero confirmed references maps to NO_GO_QUALIFICATION_COMPETITIVENESS and commercial NO_GO; issue #406 still open.'
+current_stage: protected_pr_707_merged_source_only_scope_complete
+remaining: []
+last_verified_commit: 2019c22506eb320f30977be34b920b1a39e5c1f0
+test_results: 'Protected PR #707 exact-head CI 19/19 SUCCESS and main merged 2019c22506eb320f30977be34b920b1a39e5c1f0. Bounded engineering task completed; remaining external acceptance tracked separately; no production deployed.'
+resume_instruction: 'Completed PR #707 on main with CI19/19. Do not rerun this bounded code/research task. Track separate #686 current official PPT authenticity, #406 owner/upstream approval, #679 originals, #685 seven-day PITR. Do not deploy or bid.'
+linked_issue: 406
+production_mutations: false
+new_source_requests: false
+external_actions: false
+protected_merge_commit: 2019c22506eb320f30977be34b920b1a39e5c1f0
+protected_exact_ci: 19_of_19_success
+production_deployed: false

@@ -1,0 +1,137 @@
+{
+  "as_of": "2026-11-22",
+  "authority": "public_first_party_metadata_and_existing_repository_only",
+  "candidate_integration_endpoints": [
+    {
+      "buyer_filter": "UNKNOWN",
+      "permissions": "UNKNOWN",
+      "source": "official_2026_tektorg_API_document_listing",
+      "status": "UNTESTED_NO_AUTHORITY",
+      "url": "https://api.tektorg.ru/procedures/wsdl"
+    },
+    {
+      "buyer_filter": "UNKNOWN",
+      "permissions": "UNKNOWN",
+      "source": "official_legacy_tektorg_223_commercial_integration_doc",
+      "status": "UNTESTED_NO_AUTHORITY",
+      "url": "https://zakupki.tektorg.ru/soap-integration/index/wsdl"
+    }
+  ],
+  "entity_candidate_labels": [
+    "ПАО Мосэнерго",
+    "ООО Газпром энергохолдинг",
+    "ПАО МОЭК",
+    "ПАО ОГК-2",
+    "ПАО ТГК-1"
+  ],
+  "entity_membership_verified_current": false,
+  "forbidden": [
+    "claim_24_36month_coverage",
+    "infer_geh_contractor_from_keyword",
+    "assume_etpgpb_is_tender_buyer",
+    "run_untested_soap",
+    "authenticated_etp",
+    "production_write",
+    "bid_submission",
+    "payment",
+    "supplier_outreach"
+  ],
+  "fresh_223fz_originals_downloaded": 0,
+  "historical_coverage": {
+    "actual_rows_independently_ingested": 0,
+    "buyer_to_organizer_mapping_verified": false,
+    "contractor_chain_verified": false,
+    "do_not_conflate_platform_organizer_and_contractor": true,
+    "months_24_36_reconciled": false,
+    "mosenergo_landing_declares_trailing_days": 99,
+    "mosenergo_public_results_old_years_example": [
+      2016,
+      2015
+    ],
+    "owner_qualifications_verified": false
+  },
+  "live_platform_api_verified": false,
+  "next_stage": "bounded_source_admitted_readonly_eis_ri223_to_mosenergo_etpgpb_identity_crosscheck_then_separate_tektorg_contractor_provenance",
+  "production_mutations": 0,
+  "real_geh_contractor_network_verified": false,
+  "reusable_modules": [
+    "src/tender_research/providers/ri223_soap_evidence.py",
+    "src/tender_research/providers/public_223fz_search.py",
+    "src/tender_research/registry_discovery.py",
+    "src/tender_research/dedupe.py",
+    "src/tender_research/ingest_checkpoint.py",
+    "src/tender_research/corporate_procedure_identity.py",
+    "scripts/research/source_catalog.py",
+    "scripts/procurement_llm/unified_source_pipeline.py"
+  ],
+  "schema_version": 1,
+  "scope": "TA-GEH-SOURCE-DISCOVERY-001",
+  "sources": [
+    {
+      "access": "public_company_procurement_landing",
+      "archive_24_36m": "NOT_MEASURED",
+      "current_live_coverage": "NOT_MEASURED",
+      "id": "mosenergo_tenders",
+      "namespace": "mosenergo_public",
+      "proof": "first_party_223fz_eis_etpgpb_99_day_display",
+      "provider": "mosenergo.ru",
+      "role": "direct_mosenergo_buyer_and_separate_organizer_fields",
+      "url": "https://www.mosenergo.ru/tenders/"
+    },
+    {
+      "access": "public_documents_subject_to_source_admission",
+      "archive_24_36m": "NOT_MEASURED",
+      "current_live_coverage": "NOT_MEASURED",
+      "id": "official_eis_ri223",
+      "namespace": "ri223_eis",
+      "proof": "mosenergo_first_party_claim_and_existing_ri223_adapter",
+      "provider": "zakupki.gov.ru",
+      "role": "official_223fz_notice_canonical_buyer_legal_identity",
+      "url": "https://zakupki.gov.ru/"
+    },
+    {
+      "access": "platform_registration_required_for_bidding",
+      "archive_24_36m": "NOT_MEASURED",
+      "current_live_coverage": "NOT_MEASURED",
+      "id": "etp_gpb_corporate",
+      "namespace": "etpgpb_corporate",
+      "proof": "mosenergo_first_party_tenders_page",
+      "provider": "etpgpb.ru",
+      "role": "mosenergo_electronic_venue_not_contract_buyer_proof",
+      "url": "https://etpgpb.ru/"
+    },
+    {
+      "access": "public_historic_results",
+      "archive_24_36m": "NOT_PROVEN",
+      "current_live_coverage": "HISTORICAL_ONLY",
+      "id": "mosenergo_results_history",
+      "namespace": "mosenergo_legacy_results",
+      "proof": "first_party_archive_index_shows_2016_and_older",
+      "provider": "mosenergo.ru",
+      "role": "result_buyer_and_organizer_separate_from_actual_winner",
+      "url": "https://www.mosenergo.ru/tenders/archive/"
+    },
+    {
+      "access": "public_rules_participation_requires_qualification",
+      "archive_24_36m": "NOT_APPLICABLE",
+      "current_live_coverage": "NOT_MEASURED",
+      "id": "mosenergo_prequalification",
+      "namespace": "mosenergo_qualification",
+      "proof": "first_party_prequalification_policy",
+      "provider": "mosenergo.ru",
+      "role": "qualified_candidate_is_not_award_or_contract",
+      "url": "https://www.mosenergo.ru/tenders/pre-qualification/"
+    },
+    {
+      "access": "public_section_supplier_cabinet_auth_may_apply",
+      "archive_24_36m": "NOT_MEASURED",
+      "current_live_coverage": "NOT_MEASURED",
+      "id": "tektorg_corporate",
+      "namespace": "tektorg_corporate",
+      "proof": "tektorg_first_party_supplier_and_cabinet_pages",
+      "provider": "tektorg.ru",
+      "role": "possible_third_party_contractor_tenders_not_attributed_to_geh_without_original_contract",
+      "url": "https://www.tektorg.ru/223-fz/procedures"
+    }
+  ]
+}
