@@ -187,11 +187,25 @@ def _geh(snapshot: Path, as_of: datetime) -> tuple[list[dict], dict]:
     plan_path = snapshot / "verified-active-plan.json"
     plan = _read_json(plan_path)
     new_path = snapshot / "guarded-ingest" / "new-only.json"
-    new_payload = _read_json(new_path)
-    if (not isinstance(receipts, list) or not isinstance(plan, list)
-            or not isinstance(new_payload, dict)
-            or not isinstance(new_payload.get("accepted"), list)):
+    if not isinstance(receipts, list) or not isinstance(plan, list):
         raise EvidenceRejected("invalid GEH source structure")
+    # A successful zero-new cycle is idempotent and does not emit new-only.json.
+    verified_new = state.get("stage") == "verified"
+    no_new = state.get("stage") == "no_new" and state.get("new") == 0
+    if not verified_new and not no_new:
+        raise EvidenceRejected("GEH ingest has no verified or zero-new final state")
+    if verified_new:
+        new_payload = _read_json(new_path)
+        if not isinstance(new_payload, dict) or not isinstance(new_payload.get("accepted"), list):
+            raise EvidenceRejected("invalid GEH new-only source structure")
+        newly = new_payload["accepted"]
+        if (not _verified_sha(state.get("source_input_sha256"))
+                or _sha(new_path) != state["source_input_sha256"]):
+            raise EvidenceRejected("GEH immutable new-only payload SHA mismatch")
+    else:
+        if new_path.exists():
+            raise EvidenceRejected("zero-new GEH cycle has unexpected new-only payload")
+        newly = []
     n = capture.get("expected_pages")
     if (capture.get("complete") is not True or not isinstance(n, int) or not 1 <= n <= 25
             or capture.get("verified_pages") != n or len(receipts) != n):
@@ -216,22 +230,24 @@ def _geh(snapshot: Path, as_of: datetime) -> tuple[list[dict], dict]:
         source_hashes.add(expected_sha)
     if len(pages) != n:
         raise EvidenceRejected("GEH page receipt missing")
-    if (state.get("status") != "completed" or state.get("stage") != "verified"
-            or state.get("inflight") is not False or
+    if (state.get("status") != "completed" or
+            state.get("inflight", False) is not False or
             state.get("old_rows_unchanged") is not True or
             state.get("replay_inserted") != 0 or
             not _verified_sha(state.get("plan_sha256")) or
-            _sha(plan_path) != state["plan_sha256"] or
-            not _verified_sha(state.get("source_input_sha256")) or
-            _sha(new_path) != state["source_input_sha256"]):
+            _sha(plan_path) != state["plan_sha256"]):
         raise EvidenceRejected("GEH immutable ingest/replay proof invalid")
-    newly = new_payload["accepted"]
     if (not isinstance(state.get("new"), int) or state["new"] < 0
             or len(newly) != state["new"] or
             state.get("inserted") != state["new"] or
-            state.get("after") != state.get("before", -1) + state["new"] or
+            not isinstance(state.get("before"), int) or
             state.get("valid") != len(plan)):
         raise EvidenceRejected("GEH inserted-count or immutable-history mismatch")
+    if verified_new:
+        if state.get("after") != state["before"] + state["new"]:
+            raise EvidenceRejected("GEH verified count delta mismatch")
+    elif state.get("after", state["before"]) != state["before"]:
+        raise EvidenceRejected("GEH no-new cycle unexpectedly changes count")
     originals = {}
     for entry in plan:
         if not isinstance(entry, dict) or not isinstance(entry.get("observation"), dict):
