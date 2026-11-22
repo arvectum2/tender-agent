@@ -1072,3 +1072,12 @@ sibur_dp_source_provenance_2026_11_22:
   scope: seven_historical_first_party_sha_bound_DP_documents
   live_dp_index_verified: false
   production_mutations: false
+
+pitr_wal_content_integrity_2026_11_22:
+  task_id: TA-PITR-WAL-CONTENT-INTEGRITY-20261122
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-PITR-WAL-CONTENT-INTEGRITY-20261122.yaml
+  linked_issue: 685
+  scope: read_only_pg17_archived_wal_content_preflight
+  seven_day_pitr_proven: false
+  production_mutations: false

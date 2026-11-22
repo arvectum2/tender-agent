@@ -1,0 +1,26 @@
+task_id: TA-PITR-WAL-CONTENT-INTEGRITY-20261122
+status: in_progress
+goal: 'Provide a deterministic offline PostgreSQL17 archived-WAL content-integrity preflight for the real production shared TA+DP physical cluster, without falsely asserting seven-day PITR.'
+definition_of_done:
+  - 'Validate exact PG17 cluster identity against original SHA-receipted physical base and WAL archive name; reject symlinked, truncated, duplicate, mixed timeline or gapped full WAL segments.'
+  - 'Never treat .partial or archive filename continuity as WAL record validity.'
+  - 'Explicit opt-in --verify-records uses local pin-identified PostgreSQL17 pg_waldump in network-none read-only cap-dropped container; no DB/production writes or network.'
+  - 'Emit fail-closed source-bound sanitized private 0600 evidence (counts, range digest, PG17 WAL decoder success); no raw original/WAL bytes in repository.'
+  - 'Keep seven_day_pitr_proven false until base older than actual horizon, full independent continuity plus network-isolated dual-db named historical restore; preserve issue #685 blocked.'
+  - 'Focused synthetic corruption/symlink/range/partial tests, actual bounded source-only run, Ruff/make check, exact protected CI and merge.'
+completed:
+  - "Implemented fail-closed source-receipted WAL archive inspector and locally pinned PG17 read-only decoder; 10 new adversarial synthetic tests."
+  - "Verified 1758 completed WAL segments (29,494,345,728 bytes) on one timeline, full pg_waldump17 decoder PASS; in-progress partial excluded."
+  - "Immutable private 0600 original proof SHA256 90213cb4b1cc98d0309e1f5a0a3743c7868359e30618f9b3557ed8ad790f3c38, no WAL bytes in Git and zero production modifications."
+  - "31 focused PITR/WAL tests PASS, Ruff and make check PASS, two inherited warnings. Seven-day PITR explicitly NOT_PROVEN."
+  - 'Read-only ARC inspection: production shared PG17 system_identifier 7692004809331994662; original base 2026-11-20 08:47:31Z verified; 1756 full 16MiB archive segments, 1 .partial, one timeline.'
+  - 'Three earliest WAL segments decoded successfully with pg_waldump 17 in --network none --read-only --cap-drop ALL source-readonly disposable Docker.'
+current_stage: verified_full_wal_record_decode_protected_ci_pending
+remaining: [full_ci, protected_merge, checkpoint_close]
+last_verified_commit: 0463a3bbd05de1a8696e0a828c5908a296ec0eaa
+test_results: '1758 complete WAL segments 29,494,345,728 bytes decoded in source-readonly Docker; 10 new +31 focused tests PASS; Ruff/make check PASS. Seven-day PITR NOT_PROVEN, exact historical restore remains gated. CI pending.'
+resume_instruction: 'ARC only. Do NOT repeat accepted immutable full WAL proof SHA256 90213cb4b1cc98d0309e1f5a0a3743c7868359e30618f9b3557ed8ad790f3c38. Merge only after exact-head CI, close scoped child checkpoint, keep #685 BLOCKED. After 27-Nov base age and complete continuous archive, independently prove historic both-DB restore; no production DB writes, no pruning, no new watchdog.'
+linked_issue: 685
+production_mutations: false
+network_requests: 0
+seven_day_pitr_proven: false
