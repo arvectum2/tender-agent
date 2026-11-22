@@ -275,3 +275,106 @@ def test_nonzero_missing_new_only_cannot_claim_ingest_success(tmp_path):
     (snap / "guarded-ingest" / "new-only.json").unlink()
     with pytest.raises(EvidenceRejected, match="missing or oversized"):
         compile_watch(snap, watch, NOW)
+
+
+
+def _fresh_sibur_capture(tmp_path):
+    capture = tmp_path / "fresh-sibur"
+    capture.mkdir()
+    page = capture / "page-001.json"
+    page.write_bytes(b'{"synthetic": "first-party page receipt"}')
+    sha = hashlib.sha256(page.read_bytes()).hexdigest()
+    item = {
+        "external_id": "12345/1", "title": "ПНР АСУ ТП на ТЭЦ",
+        "source": "sibur_public", "verification": "PUBLIC_SNAPSHOT_ONLY",
+        "source_sha256": sha, "source_url":
+            "https://www.sibur.ru/ru/procurement/buy/?PAGEN_1=1&count=12",
+        "organizer": "ПАО СИБУР", "status_raw": "Прием предложений",
+        "category": "Проектные работы",
+        "deadline_raw": "30.11.2026 11:00:00",
+    }
+    item_date_only = dict(
+        item, external_id="9999/1", title="Поставка электродвигателей",
+        deadline_raw="25.11.2026",
+    )
+    _dump(capture / "normalized.json", [
+        {"external_id": "12345/1", "observations": [item]},
+        {"external_id": "9999/1", "observations": [item_date_only]},
+    ])
+    _dump(capture / "receipts.json", {
+        "source": "sibur_public",
+        "verification": "PUBLIC_LIST_SNAPSHOT_NONATOMIC_RESUMED",
+        "announced_pages": 1, "validated_pages": 1,
+        "advertised_pages_traversed": True, "page_count_stable": True,
+        "errors": [], "raw_rows": 2, "unique_ids": 2, "repeated_ids": 0,
+        "pages": [{
+            "page": 1, "last_page": 1, "sha256": sha,
+            "bytes": page.stat().st_size, "rows": 2,
+            "observed_at": "2026-11-22T18:00:00Z",
+        }],
+    })
+    return capture
+
+
+def test_current_sibur_public_capture_replaces_stale_curated_status(tmp_path):
+    geh, watch = synthetic_inputs(tmp_path)
+    fresh = _fresh_sibur_capture(tmp_path)
+    result = compile_watch(geh, watch, NOW, sibur_current_capture=fresh)
+    summary = result["sibur"]["summary"]
+    assert summary["pages_sha_verified"] == 1
+    assert summary["public_source_ids"] == 2
+    assert summary["unexpired_relevant"] == 2
+    assert summary["prior_curated_ids_seen_now"] == 1
+    assert summary["non_atomic"] is True
+    changed = summary["changed_deadlines_from_older_curated_watch"]
+    assert changed[0]["external_id"] == "12345/1"
+    assert changed[0]["prior_deadline_utc"] == "2026-11-27T07:00:00+00:00"
+    assert changed[0]["new_public_deadline_utc"] == "2026-11-30T08:00:00+00:00"
+    current = next(c for c in result["sibur"]["candidates"]
+                   if c["external_id"] == "12345/1")
+    assert current["novelty"] == "observed_in_latest_public_capture"
+    assert current["evidence_status"] == "CURRENT_SIBUR_PUBLIC_LIST_CARD_RECHECK"
+    assert current["deadline_utc"] == "2026-11-30T08:00:00+00:00"
+    date_only = next(c for c in result["sibur"]["candidates"]
+                     if c["external_id"] == "9999/1")
+    assert date_only["deadline_utc"] is None
+    assert date_only["deadline_precision"] == "date_only"
+    assert date_only["priority_score"] <= 74
+    assert "точный срок" in date_only["next_action"]
+
+
+@pytest.mark.parametrize("kind", ["html_hash", "truncated_capture", "foreign_url", "invalid_rows"])
+def test_fresh_sibur_refuses_tampered_or_incomplete_source(tmp_path, kind):
+    geh, watch = synthetic_inputs(tmp_path)
+    fresh = _fresh_sibur_capture(tmp_path)
+    if kind == "html_hash":
+        (fresh / "page-001.json").write_bytes(b"tampered")
+    elif kind == "truncated_capture":
+        receipt = fresh / "receipts.json"
+        value = json.loads(receipt.read_text())
+        value["advertised_pages_traversed"] = False
+        _dump(receipt, value)
+    else:
+        path = fresh / "normalized.json"
+        value = json.loads(path.read_text())
+        if kind == "foreign_url":
+            value[0]["observations"][0]["source_url"] = (
+                "https://evil.example/ru/procurement/buy/?PAGEN_1=1"
+            )
+        else:
+            value[0]["observations"][0]["source_sha256"] = "b" * 64
+        _dump(path, value)
+    with pytest.raises(EvidenceRejected):
+        compile_watch(geh, watch, NOW, sibur_current_capture=fresh)
+
+
+def test_cancelled_sibur_source_is_not_in_commercial_funnel(tmp_path):
+    geh, watch = synthetic_inputs(tmp_path)
+    fresh = _fresh_sibur_capture(tmp_path)
+    path = fresh / "normalized.json"
+    rows = json.loads(path.read_text())
+    rows[1]["observations"][0]["status_raw"] = "Процедура отменена"
+    _dump(path, rows)
+    result = compile_watch(geh, watch, NOW, sibur_current_capture=fresh)
+    assert result["sibur"]["summary"]["excluded_cancelled_or_nonaccepting"] == 1
+    assert [c["external_id"] for c in result["sibur"]["candidates"]] == ["12345/1"]
