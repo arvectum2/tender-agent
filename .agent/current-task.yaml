@@ -1106,8 +1106,8 @@ dp_ingest_slo_p0_2026_11_22:
   upstream_issue: 133
   upstream_draft_pr: 134
   blocked_on: Mac_mini_governor_reduced_memory_pressure_swap_and_unproven_sustained_ingest_SLO
-  last_verified_external_head: a92780263b13e36f864968d43b5be378f690bc48
-  proof: source_safe_58_local_pytest_pass_Ruff_pass_live_readiness_red
+  last_verified_external_head: fdea7e3246bc25365f4f1336b755afca9fbf5741
+  proof: transaction_lifecycle_SQL_pool_risk_72_tests_5of5_PG_CI_pass_live_readiness_red
   no_second_Qwen_started: true
   production_modified: false
-  next_step: verify_exact_CI_then_wait_for_safe_host_admission_before_synthetic_isolated_Qwen
+  next_step: verify_final_DP_draft_CI_then_measured_real_SLO_and_safe_model_admission_before_owner_release
