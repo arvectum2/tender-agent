@@ -250,3 +250,28 @@ def test_newly_verified_geh_reserves_report_slots_vs_known_high_score(tmp_path):
     ids = {c["external_id"] for c in value["geh"]["candidates"]}
     assert ids == {"etp:123", "price_request:124"}
     assert len(value["geh"]["candidates"]) == 2
+
+
+def test_successful_zero_new_geh_daily_cycle_keeps_known_opportunities(tmp_path):
+    snap, watch = synthetic_inputs(tmp_path)
+    state_path = snap / "guarded-ingest" / "state.json"
+    payload_path = snap / "guarded-ingest" / "new-only.json"
+    state = json.loads(state_path.read_text())
+    state.update(stage="no_new", new=0, inserted=0)
+    state.pop("after")
+    state.pop("source_input_sha256")
+    state.pop("inflight")
+    payload_path.unlink()
+    _dump(state_path, state)
+    value = compile_watch(snap, watch, NOW)
+    assert value["geh"]["summary"]["actually_inserted"] == 0
+    assert value["geh"]["summary"]["already_known_relevant"] == 2
+    assert all(c["novelty"] == "previous_observation"
+               for c in value["geh"]["candidates"])
+
+
+def test_nonzero_missing_new_only_cannot_claim_ingest_success(tmp_path):
+    snap, watch = synthetic_inputs(tmp_path)
+    (snap / "guarded-ingest" / "new-only.json").unlink()
+    with pytest.raises(EvidenceRejected, match="missing or oversized"):
+        compile_watch(snap, watch, NOW)
