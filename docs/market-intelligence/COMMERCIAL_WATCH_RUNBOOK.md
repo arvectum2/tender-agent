@@ -19,7 +19,7 @@ CAPTURE="$SIBUR/current-commercial-$(date -u +%Y%m%dT%H%M%SZ)"
 python -m scripts.research.capture_sibur_public_snapshot --output "$CAPTURE" --max-pages 40
 ```
 
-Use the existing repository Python environment from the project root. The capture must have completed with `advertised_pages_traversed=true`, no `errors`, and actual SHA-verified page 1…N. A transport-interrupted 22-Nov capture was **manually repaired by inspecting all original page hashes**, then fetching only pages 27–28; this special recovery is **not** a normal unattended fallback. Never substitute a partial capture.
+Use the existing repository Python environment from the project root. The capture must have completed with `advertised_pages_traversed=true`, no `errors`, and actual SHA-verified page 1…N. The report additionally **fails closed** when any GEH or explicit current SIBUR source observation is older than **36 hours** (or future-dated by more than 5 minutes); an old saved folder cannot silently masquerade as today's shortlist. A transport-interrupted 22-Nov capture was **manually repaired by inspecting all original page hashes**, then fetching only pages 27–28; this special recovery is **not** a normal unattended fallback. Never substitute a partial capture.
 
 Compile and inspect using only the saved originals (no database, HTTP, API or model calls):
 
