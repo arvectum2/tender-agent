@@ -1097,3 +1097,17 @@ dp_live_sdk_readonly_2026_11_22:
   depends_on: [TA-CORE-RUNTIME-RELEASE-20261122]
   scope: bounded_loopback_only_get_contract_and_collections
   production_writes: false
+
+dp_ingest_slo_p0_2026_11_22:
+  task_id: TA-DP-INGEST-SLO-P0-20261122
+  status: blocked
+  checkpoint: .agent/checkpoints/TA-DP-INGEST-SLO-P0-20261122.yaml
+  upstream_repo: arvectum2/data-platform
+  upstream_issue: 133
+  upstream_draft_pr: 134
+  blocked_on: Mac_mini_governor_reduced_memory_pressure_swap_and_unproven_sustained_ingest_SLO
+  last_verified_external_head: a92780263b13e36f864968d43b5be378f690bc48
+  proof: source_safe_58_local_pytest_pass_Ruff_pass_live_readiness_red
+  no_second_Qwen_started: true
+  production_modified: false
+  next_step: verify_exact_CI_then_wait_for_safe_host_admission_before_synthetic_isolated_Qwen
