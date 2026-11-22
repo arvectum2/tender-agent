@@ -1,0 +1,18 @@
+task_id: TA-CORE-RUNTIME-RELEASE-20261122
+status: blocked
+goal: 'Independently accept and, only after Owner approval, deploy new consolidated Core/PRICE01 runtime to approved environment with rollback proof.'
+definition_of_done:
+  - 'Verify current live Data Platform HTTP/SDK consistency against correct physical cluster, without conflating SQL collection counts with healthy HTTP endpoints.'
+  - 'Run independent real source-grounded Gemma acceptance and explicit KPI/rollback plan, preserving citations and honest unknowns.'
+  - 'Obtain Owner authorization for exact candidate image, environment, maintenance window and rollback conditions before any production switch.'
+  - 'Stage candidate with no production mutation, test end-to-end, then separately execute authorized deployment and verify runtime receipt.'
+completed:
+  - 'Source-first Core PR529 and PRICE01 PR530 both protected merged 19/19 CI, no production deploy.'
+  - 'Bounded runtime package PR531 protected merged 19/19 CI, verified offline ARM64 image, seven receipts, compatible SDK, negative stale dependency guard and synthetic auth/evidence smoke.'
+current_stage: blocked_owner_runtime_and_DP_http_gates
+remaining: [live_DP_HTTP_and_SDK_reliability, independent_real_Gemma_acceptance, owner_exact_release_approval, staged_rollback_proof, authorized_runtime_deploy]
+last_verified_commit: 35c44a898b56c055bbcd50a8be25227459c08e58
+test_results: 'PR529, PR530 and PR531 19/19 CI each, 51 runtime packaging focused tests PASS. No authorized runtime switch.'
+resume_instruction: 'ARC only, no RDC. Do not deploy unapproved new Core/Gemma runtime. Verify live DP HTTP stability and independent real source-grounded acceptance read-only, then obtain exact Owner production release approval. This is separate from completed engineering consolidation and historical WAL/PITR proof.'
+production_deployed: false
+external_sources_activated: false
