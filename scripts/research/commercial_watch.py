@@ -329,6 +329,20 @@ def compile_watch(geh_snapshot: Path, sibur_watch: Path, as_of: datetime,
     geh, geh_summary = _geh(geh_snapshot, as_of)
     sibur, sibur_summary = _sibur(sibur_watch, as_of)
     order = lambda c: (-c["priority_score"], c["deadline_utc"], c["external_id"])
+    geh_selected = sorted(geh, key=order)[:limit_per_source]
+    # New verified observations must not disappear simply because their
+    # technical category is less specific than older high-score procedures.
+    for fresh in sorted((x for x in geh if x["novelty"] == "new_verified_ingest"),
+                        key=order)[:limit_per_source]:
+        if fresh in geh_selected:
+            continue
+        replaceable = next(
+            (i for i in range(len(geh_selected) - 1, -1, -1)
+             if geh_selected[i]["novelty"] != "new_verified_ingest"), None
+        )
+        if replaceable is not None:
+            geh_selected[replaceable] = fresh
+    geh_selected = sorted(geh_selected, key=order)
     return {
         "schema": "arvectum_commercial_watch_v1",
         "generated_for_utc": as_of.isoformat(),
@@ -336,7 +350,7 @@ def compile_watch(geh_snapshot: Path, sibur_watch: Path, as_of: datetime,
         "production_database_modified": False,
         "submissions_sent": False,
         "sibur": {"summary": sibur_summary, "candidates": sorted(sibur, key=order)[:limit_per_source]},
-        "geh": {"summary": geh_summary, "candidates": sorted(geh, key=order)[:limit_per_source]},
+        "geh": {"summary": geh_summary, "candidates": geh_selected},
     }
 
 
