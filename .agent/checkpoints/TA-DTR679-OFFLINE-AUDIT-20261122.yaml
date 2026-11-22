@@ -1,5 +1,5 @@
 task_id: TA-DTR679-OFFLINE-AUDIT-20261122
-status: in_progress
+status: completed
 goal: 'Re-run safe offline source-evidence checks for three DTR #679 cases; preserve historical SHA/revision proof and missing-original blockers without any live EIS or database action.'
 definition_of_done:
   - 'An auditable offline no-network/no-DB command verifies exact historical HTML SHA/size and original candidate file count for three fixed 44-FZ numbers.'
@@ -10,8 +10,10 @@ completed:
   - 'Read-only inspection 2026-11-22: both raw 7558 HTML sizes and SHA match 2026-11-20 receipts, one historic revision, four official links; 0 original DOCX; two other folders empty.'
   - 'Repeatable non-network/no-DB CLI and seven synthetic/offline regression tests implemented; local 16 tests, Ruff, make check, and actual archived-file read-only execution PASS.'
   - 'Dated historical-only evidence report filed with no owner GO, current EIS claim or production mutation.'
-current_stage: exact_github_ci_and_merge_pending
-remaining: [exact_github_ci, merge]
+current_stage: merged_verified_no_production_deployment
+remaining: []
 last_verified_commit: 88d788581c23c0a96529e0df6196d16f7109d698
-test_results: "16 focused PASS, 2 inherited warnings; Ruff PASS; make check PASS; local offline archives SHA PASS. GitHub CI pending."
-resume_instruction: 'Review PR exact SHA CI for TA-DTR679-OFFLINE-AUDIT-20261122, merge only if exact checks PASS; then mark checkpoint completed. Issue #679 remains BLOCKED on current EIS revision/original bytes/AM-4. No source retry, DB/DP write, ETP action, or new watchdog.'
+test_results: "16 focused PASS, 2 inherited warnings; Ruff PASS; make check PASS; local offline archives SHA PASS. GitHub PR #695 exact-head 19/19 PASS; merged main 4177857810c68a7981123af646d0cb68dfe561c2."
+resume_instruction: 'Completed: PR #695 merged into main 41778578 with 19/19 CI. Issue #679 remains blocked on current official revision and original bytes. Continue TA-PITR127-READONLY-VERIFICATION-20261122; no live source retry or production writes.'
+merged_main_commit: 4177857810c68a7981123af646d0cb68dfe561c2
+production_deployed: false
