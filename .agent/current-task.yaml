@@ -1114,8 +1114,10 @@ dp_ingest_slo_p0_2026_11_22:
 
 sibur_geh_commercial_watch_2026_11_22:
   task_id: TA-SIBUR-GEH-COMMERCIAL-WATCH-20261122
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-SIBUR-GEH-COMMERCIAL-WATCH-20261122.yaml
   scope: read_only_evidence_bound_business_shortlist_sibur_and_geh
   production_mutations: false
-  current_stage: build_source_grounded_candidate_screening_and_verify_actual_new_geh_ingest
+  current_stage: source_bound_business_digest_completed__protected_merge_gated
+  follow_up_issue: 719
+  automatic_daily_sibur_source_refresh_deployed: false
