@@ -40,6 +40,7 @@ MATCHES = (
 )
 MAX_INPUT_BYTES = 5_000_000
 MAX_PAGE_BYTES = 4_000_000
+MAX_FRESH_SNAPSHOT_AGE = timedelta(hours=36)
 
 
 class EvidenceRejected(ValueError):
@@ -268,6 +269,10 @@ def _geh(snapshot: Path, as_of: datetime) -> tuple[list[dict], dict]:
         rid = row.get("external_id")
         if rid in originals or not isinstance(rid, str) or not rid.startswith(("etp:", "price_request:")):
             raise EvidenceRejected("GEH duplicate or unknown identity")
+        observed = _time(entry["observed_at"])
+        if (observed > as_of + timedelta(minutes=5)
+                or as_of - observed > MAX_FRESH_SNAPSHOT_AGE):
+            raise EvidenceRejected("GEH public source capture is stale or future-dated")
         originals[rid] = entry
     found = set()
     for entry in newly:
@@ -391,6 +396,12 @@ def _sibur_current(
         hashes[number] = (fingerprint, _time(page["observed_at"]), page["rows"])
     if set(hashes) != set(range(1, count + 1)):
         raise EvidenceRejected("SIBUR captured page range incomplete")
+    if any(
+        observed > as_of + timedelta(minutes=5)
+        or as_of - observed > MAX_FRESH_SNAPSHOT_AGE
+        for _, observed, _ in hashes.values()
+    ):
+        raise EvidenceRejected("SIBUR current public capture is stale or future-dated")
 
     previous = _read_json(older_watch)
     if not isinstance(previous, dict) or not isinstance(previous.get("rows"), list):
