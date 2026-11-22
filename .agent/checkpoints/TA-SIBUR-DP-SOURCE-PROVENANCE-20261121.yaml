@@ -1,0 +1,45 @@
+task_id: TA-SIBUR-DP-SOURCE-PROVENANCE-20261121
+status: completed
+goal: Reproduce verified historical first-party SIBUR URL→source row→archived document bytes→saved Data Platform identity for seven XLSX without live
+  network or database access.
+definition_of_done:
+- Preserve exact seven SHA-grounded existing DP files and historical 958 embeddings, and source provenance across verified full registry and separate
+  archived categories.
+- Implement offline deterministic source proof in repo with strict URL/doc/path/receipt/source page SHA checks and negative tests.
+- Pass focused tests/Ruff and actual seven-source archived reproduction; no new network, DB/DP writes, production activation or claims of current legal
+  status.
+- Integrate protected main after PR689, publish small standalone PR and pass exact CI/GitVerse; complete checkpoint only after protected merge.
+completed_stages:
+- Independent original 14-Nov registry source exact 4/7 and separate historical archive category page source exact 3/7, all seven SHA/row/url/DP lineage
+  verified in private 0600 proof.
+- Closed narrow missing source URL issue
+- Created isolated worktree on existing PR689 source-auditor head without touching production or DB.
+- Replayed all 7 saved source SHA using verified 4 first-party registry URL receipts and 3 separate original archive category/page/row SHA+external
+  IDs; historical DP 958 matching chunk/embeddings, private 0600 proof
+- Added standalone no-network reproducible first-party source lineage verifier using pinned registry, original archive and saved DP attestations; actual
+  7/7 exact source proof output verified
+- Added nine adversarial/focused tests for missing URL, wrong source row/page SHA, unsafe URL, duplicated receipt, altered XLSX and linked file; nine
+  pytest and Ruff PASS
+- Committed standalone pure source-provenance verifier and tests at 38dd3948fbd1fead79f46d2dc519e857b89ba29d, 66 combined focused pytest + Ruff PASS
+  and actual 7/7 archived original source lineage PASS; no runtime module imports
+- Parent original historical DP receipt PR689 passed 19/19 CI and merged main 8d53899, source-provenance child now includes complete protected main
+  without conflicts.
+current_stage: protected_pr691_merged_10_ci_pass_historical_source_only
+remaining_stages: []
+last_verified_commit: 251db2e127952a8fc4cd1e04ac215f1f76c1feb1
+last_checks: 22-Nov after PR709 main merge, 51 focused pytest PASS incl new canonical checkpoint QA, Ruff and make check PASS; independent exact source-only replay 7/7, 958 historical DP chunk embeddings, 4 first-party registry plus 3 archive categories, proof SHA 14a043aaf37fe99b935ac66f921cb7156f84851027df920fdbcc1aacc9060a48;
+  original source code isolated with no network, live DB/DP or production writes.
+resume_instruction: 'Completed source-only PR691 10/10 exact-head CI, protected merge 251db2e127952a8fc4cd1e04ac215f1f76c1feb1. Do not repeat 7/7 historical source replay, redownload files, enable DP writers or claim live index/current procurement status. Any live indexing requires owner/data permissions, independent staging and PITR release gating.'
+protected_merge_commit: 251db2e127952a8fc4cd1e04ac215f1f76c1feb1
+protected_exact_ci: 10_of_10_success
+production_deployed: false
+network_requests: 0
+db_mutations: 0
+full_historical_DP_source_lineage_proven: 7
+primary_registry_source_docs: 4
+archive_category_source_docs: 3
+archived_DP_chunk_embedding_matches: 958
+private_original_url_proof: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/sibur-dp-seven-original-url-proof-20261121.json
+source_current_status_verified: false
+live_DP_state_verified: false
+closed_at_utc: '2026-11-22T14:05:13Z'
