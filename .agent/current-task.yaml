@@ -916,9 +916,19 @@ dtr_safe_source_errors_2026_11_22:
 
 dtr_legacy_api_redaction_2026_11_22:
   task_id: TA-DTR-LEGACY-API-REDACTION-20261122
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-DTR-LEGACY-API-REDACTION-20261122.yaml
   linked_issue: 679
   scope: api_presentation_only_no_db_changes
   verified_code_sha: 4a0d6efd5f0686fac0ed4b7d1a87adf9e1e61e88
   local_tests: 37_pass_make_check_pass
+
+dtr_679_offline_evidence_2026_11_22:
+  task_id: TA-DTR679-OFFLINE-AUDIT-20261122
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-DTR679-OFFLINE-AUDIT-20261122.yaml
+  linked_issue: 679
+  scope: archived_primary_html_sha_and_revision_checks_no_network_no_database
+  source_safety: historical_only_current_revision_not_proven
+  last_verified_code_commit: 88d788581c23c0a96529e0df6196d16f7109d698
+  local_checks: 16_pass_ruff_make_check_archived_html_sha_pass
