@@ -911,3 +911,14 @@ dtr_safe_source_errors_2026_11_22:
   local_tests: 35_pass_make_check_pass
   deployment: not_performed
   review_pr: 693
+  merged_main_sha: e269d322f0277e231a944dee9e2cb460647d4e74
+  exact_pr_ci: 19_of_19_success
+
+dtr_legacy_api_redaction_2026_11_22:
+  task_id: TA-DTR-LEGACY-API-REDACTION-20261122
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-DTR-LEGACY-API-REDACTION-20261122.yaml
+  linked_issue: 679
+  scope: api_presentation_only_no_db_changes
+  verified_code_sha: 4a0d6efd5f0686fac0ed4b7d1a87adf9e1e61e88
+  local_tests: 37_pass_make_check_pass
