@@ -1,0 +1,25 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-SIBUR-GEH-COMMERCIAL-WATCH-20261122
+status: in_progress
+goal: 'Convert actual SIBUR and GEH existing first-party public evidence into a source-bound near-term commercial watch without misrepresenting outdated listings as live bidding.'
+definition_of_done:
+  - 'Read existing verified GEH 22-Nov first-party capture and SHA-bound 40 actually newly inserted IDs; do not change any DB.'
+  - 'Read curated SIBUR Nov17 observation separately and classify stale / deadline elapsed, never assert current SRM eligibility.'
+  - 'Present priority, buyer, exact source URL, deadline, buyer-vs-organizer, freshness and next review action; distinguish 223FZ ETP tender from price inquiry.'
+  - 'Fail closed for absent/tampered captures, mismatched replay counts, non-first-party URLs, bad dates, empty or ambiguous provenance.'
+  - 'Run focused tests/Ruff/check, exact protected CI and create reviewed PR; no ETP/production writes, bids or app restarts.'
+completed:
+  - '22-Nov read-only GEH ingest replay: guarded-ingest at 10:28UTC verified 40 new of 257 eligible, DB 28883->28923, replay_inserted=0, old_rows_unchanged=true. Second 10:34UTC cycle 0 additional, stage=no_new; this is idempotence, not an ingest outage.'
+  - '22-Nov read-only source captures: 18/18 GEH pages, 342 rows, 257 accepted, 85 review stage/date mismatches; 25 loose lexical matches require business-quality filtering.'
+  - '22-Nov SIBUR technical evidence 12179 linked originals, current-member indexing running; curated 26-row commercial watch only as-of 17 Nov and must not imply current open status.'
+current_stage: implement_fail_closed_read_only_commercial_watch
+remaining:
+  - 'Add implementation and synthetic tests; locally run over existing verified GEH and SIBUR saved evidence.'
+  - 'Create priority business digest and source-proof report; inspect out-of-scope/closed results.'
+  - 'Protected PR CI, review and merge if all guards pass; retain explicit operator validation for current portal status.'
+last_verified_commit: null
+test_results: not_run
+resume_instruction: 'Continue isolated branch feature/ta-sibur-geh-commercial-watch-20261122. Use only exact existing source snapshot files; preserve main other task pointer. Do not auto-apply to production DB or call authenticated ETP. Work on read-only digest with immutable SHA evidence; never report stale SIBUR as active. Check exact CI before merge.'
+production_modified: false
+external_submissions: false
