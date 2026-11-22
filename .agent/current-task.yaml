@@ -907,6 +907,7 @@ dtr_safe_source_errors_2026_11_22:
   checkpoint: .agent/checkpoints/TA-DTR-SAFE-SOURCE-ERRORS-20261122.yaml
   scope: safe_error_codes_and_regression_no_live_source_retries
   linked_issue: 679
-  last_verified_code_commit: c7bbeacec43493abc735ec1a09f175850635c3f2
-  local_tests: 34_pass_make_check_pass
+  last_verified_code_commit: d4df9dfcc5944d86b3499a20350016d7c800d6ba
+  local_tests: 35_pass_make_check_pass
   deployment: not_performed
+  review_pr: 693

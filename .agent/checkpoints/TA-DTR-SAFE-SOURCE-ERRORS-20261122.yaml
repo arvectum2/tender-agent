@@ -7,9 +7,10 @@ definition_of_done:
   - 'Focused and relevant CI or local tests pass; PR prepared without triggering a source retry, DB mutation or production release.'
 completed:
   - Safe source/DP/analysis/summary phase codes replace third-party exception text in DTR persisted/API errors.
-  - Tests cover secret-bearing EIS timeout and stable code taxonomy; no live EIS/DB actions.
-current_stage: local_verification_complete_review_pr_pending
+  - Tests cover secret-bearing EIS timeout, post-decision failure, and stable code taxonomy; no live EIS/DB actions.
+  - Shared safe-code module protects both initial and post-decision DTR paths, including JSON last_error fields.
+current_stage: extended_local_verification_complete_pr693_ci_pending
 remaining: []
-last_verified_commit: c7bbeacec43493abc735ec1a09f175850635c3f2
-test_results: "34 relevant tests PASS (18 inherited warnings); make check PASS; targeted Ruff PASS; git diff --check PASS. Full GitHub CI pending review PR."
-resume_instruction: 'Safe diagnostics stage locally complete. Review PR/CI and reconcile without production deployment. Issue #679 official originals/current revision remains blocked; do not trigger live retries without owner/AM-4 authorization.'
+last_verified_commit: d4df9dfcc5944d86b3499a20350016d7c800d6ba
+test_results: "35 relevant tests PASS (19 inherited warnings); make check PASS; targeted Ruff PASS; git diff --check PASS. Full GitHub CI pending review PR."
+resume_instruction: 'Safe diagnostics stage locally complete. Review PR #693 exact-head CI and reconcile without production deployment. Issue #679 official originals/current revision remains blocked; do not trigger live retries without owner/AM-4 authorization.'
