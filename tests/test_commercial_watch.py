@@ -14,7 +14,6 @@ from scripts.research.commercial_watch import (
     render_markdown,
 )
 
-
 NOW = datetime(2026, 11, 22, 19, 20, tzinfo=UTC)
 
 
