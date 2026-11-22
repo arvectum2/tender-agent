@@ -176,7 +176,7 @@ def test_missing_sibur_evidence_fails_closed(tmp_path):
     data = json.loads(watch.read_text())
     data["rows"][0]["observation"]["source_sha256"] = ""
     _dump(watch, data)
-    with pytest.raises(EvidenceRejected, match="source SHA"):
+    with pytest.raises(EvidenceRejected, match="page SHA"):
         compile_watch(snap, watch, NOW)
 
 
