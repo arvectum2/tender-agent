@@ -1025,3 +1025,11 @@ sibur_ppt_source_forensic_2026_11_22:
   scope: one_saved_original_url_and_binary_only
   external_source_requests: false
   production_mutations: false
+
+sibur_import_window_2026_11_22:
+  task_id: TA-SIBUR-IMPORT-WINDOW-20261122
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-SIBUR-IMPORT-WINDOW-20261122.yaml
+  linked_issue: 692
+  scope: source_only_verified_historic_import_window
+  production_mutations: false
