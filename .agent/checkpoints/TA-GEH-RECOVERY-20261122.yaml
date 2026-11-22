@@ -1,0 +1,25 @@
+task_id: TA-GEH-RECOVERY-20261122
+status: in_progress
+goal: 'Continuous source-proven GEH/GPB public procurement capture and technical document enrichment without history mutation.'
+definition_of_done:
+  - First-party active GEH inventory repeatable with immutable SHA receipts
+  - Append-only new identity import after MI gate and TA backups with replay zero
+  - Periodic refresh installed and canary verified
+  - Original procurement detail and attachment enrichment, with access limitations correctly retained
+  - Unresolved source review and technical document backlog triaged or objectively blocked
+completed:
+  - 'Original GPB lane 2026-11-15 prior decision conflicts is preserved blocked for audit; isolated GPB recovery finished with 726 verified protocol decisions and zero pending.'
+  - '2026-11-22 official GEH active public source: 18/18 pages, 342 observations, 257 valid, 85 source stage/date reviews; source captured with SHA and no page failures.'
+  - 'Exactly 40 new etp_gpb identifiers appended, count 28883 to 28923; 217 known immutable entries unchanged, 0 replay inserts, MI and TA verified backups.'
+  - 'Daily-cycle canary 2026-11-22: 18 pages, 342 observations, 257 accepted, 85 review; inserted 0 and no mutation.'
+  - '6 new project/construction procurement details captured, 26 attachment refs found. All 26 links represent RAR/ZIP (25 RAR incl. multipart, 1 ZIP); four standalone archive retrieval attempts yielded 1 ValueError and 3 RemoteDisconnected, no originals claimed or repeated.'
+  - 'Daily launchd com.arvectum.tender-agent-geh-fresh-cycle registered, 07:35 MSK, RunAtLoad false. Manual canary full capture/import 0 new PASS, 10 tests PASS, Ruff PASS. This is a single source worker; existing hourly Tender Agent Watchdog unchanged.'
+current_stage: public_metadata_pipeline_complete_archive_evidence_access_review
+remaining:
+  - 'Review archived document URLs: first-party GPB presents 26 RAR/ZIP links; 0/4 standalone download checks succeeded; do not blindly retry 3 RemoteDisconnected or bypass access.'
+  - Reconcile 85 public accepting/list deadline mismatches as review, never present as accepting GO
+  - Feed source-grounded technical scope and buyer attribution into qualified commercial queue
+last_verified_commit: ea30e0a72e8e5601e5b2e206cca70f46e5648eb7
+source_git_branch: feat/gpb-public-discovery-20261114
+test_results: '10 focused tests passed; lint fixed; insert 40 verified with replay zero; canary zero new.'
+resume_instruction: 'Check latest daily GEH cycle-status and guarded-ingest; distinguish original parent blocked historic event from recovered worker. Only source-scoped GPB mutations after MI acceptance and TA backups. Review RAR/ZIP inaccessible archive links; DO NOT blindly retry RemoteDisconnected or bypass authenticated source requirements. Process source-bound technical docs and 85 stage/date reviews.'

@@ -727,3 +727,9 @@ freshness_priority_2026_11_19:
   checkpoint: .agent/checkpoints/TA-FRESHNESS-PRIORITY-20261119.yaml
   status: in_progress
   resume: Recover four committed receipts, prioritize verified new procurement imports, keep all backup and linkage gates.
+
+geh_fresh_recovery_20261122:
+  task_id: TA-GEH-RECOVERY-20261122
+  status: in_progress
+  checkpoint: /Users/master/ArvectumSafe/worktrees/ta-gpb-discovery-20261114/.agent/checkpoints/TA-GEH-RECOVERY-20261122.yaml
+  resume_instruction: Review daily GEH cycle receipts and blocked archive originals; no duplicate import or authentication bypass.
