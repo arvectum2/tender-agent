@@ -1019,7 +1019,7 @@ ai_trading_source_discovery_2026_11_22:
 
 sibur_ppt_source_forensic_2026_11_22:
   task_id: TA-SIBUR-PPT-SOURCE-FORENSIC-20261122
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-SIBUR-PPT-SOURCE-FORENSIC-20261122.yaml
   linked_issue: 686
   scope: one_saved_original_url_and_binary_only
@@ -1028,7 +1028,7 @@ sibur_ppt_source_forensic_2026_11_22:
 
 sibur_import_window_2026_11_22:
   task_id: TA-SIBUR-IMPORT-WINDOW-20261122
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-SIBUR-IMPORT-WINDOW-20261122.yaml
   linked_issue: 692
   scope: source_only_verified_historic_import_window
@@ -1036,9 +1036,31 @@ sibur_import_window_2026_11_22:
 
 apr06_qualification_risk_2026_11_22:
   task_id: TA-APR06-QUAL-RISK-20261122
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR06-QUAL-RISK-20261122.yaml
   linked_issue: 406
   scope: read_only_competitive_risk_semantics
   production_deployment: false
   external_source_requests: false
+
+sibur_ppt_current_source_2026_11_22:
+  task_id: TA-SIBUR-PPT-CURRENT-SOURCE-20261122
+  status: blocked
+  checkpoint: .agent/checkpoints/TA-SIBUR-PPT-CURRENT-SOURCE-20261122.yaml
+  linked_issue: 686
+  blocked_on: current_original_first_party_bytes_and_revision_not_independently_verified
+  production_mutations: false
+
+apr06_qualification_release_2026_11_22:
+  task_id: TA-APR06-QUAL-RELEASE-20261122
+  status: blocked
+  checkpoint: .agent/checkpoints/TA-APR06-QUAL-RELEASE-20261122.yaml
+  linked_issue: 406
+  blocked_on: independent_upstream_source_attestation_and_owner_release_acceptance
+  production_deployed: false
+
+postmerge_truth_2026_11_22:
+  task_id: TA-POSTMERGE-TRUTH-20261122
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-POSTMERGE-TRUTH-20261122.yaml
+  production_mutations: false

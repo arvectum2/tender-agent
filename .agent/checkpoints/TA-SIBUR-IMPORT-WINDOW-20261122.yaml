@@ -1,5 +1,5 @@
 task_id: TA-SIBUR-IMPORT-WINDOW-20261122
-status: in_progress
+status: completed
 goal: 'Prove 18,251 SIBUR historic archive IDs absent from working DB are explained by saved source import-window/category receipts; inventory historical-only business consequences, do not import or mutate.'
 definition_of_done:
   - 'Replay and hash-verify all 166 historic input and 166 corresponding result receipts, with strict source schema and no file mutation.'
@@ -15,11 +15,14 @@ completed:
   - 'Published separately sanitised report and updated issue #692 evidence, 19 focused tests PASS plus Ruff/make check; original source and DB untouched.'
   - 'Hardened input-bound result receipts: result filenames match source input SHA, full result byte-set ordered digest 2e51b08c9e4c40d245a015a1317aa5cef600da07ca41d13c973b0a8617b220fc, 30081 original inserts and 30081 idempotent replays with zero changed rows verified.'
   - 'Read-only discovery: 166 input+result archival pairs, 4,047 included pages, 30,081 selected unique source groups, 18,390 pre-2024 retained observations, SHA matched all input file names; 59 excluded 999_19 IDs, 551 working-only from separate Nov14+Nov19 source batches.'
-current_stage: rootcause_proven_source_only_ci_pending
-remaining: [exact_head_ci, protected_merge, scope_checkpoint_closure]
-last_verified_commit: 212466c4c37b692881a089ad6546c03d1cd3211a
-test_results: '166 source SHA inputs and 166 input-bound result receipts with ordered result-byte SHA256, 30081 inserts/30081 exact idempotent replays, zero changed, 4047 original pages; 12 focused import tests, Ruff PASS, no DB/network writes. CI pending.'
-resume_instruction: 'ARC ONLY. Wait for protected #705 CI+merge, then update rootcause branch from exact current main, retest source-only, create PR and merge only exact-head 19/19 CI. Issue #692 rootcause explained by eight-category pre-2024 cutoff and excluded 999_19; rootcause research can close after evidence protected, but mass import requires separate owner+MI/PITR and staging. Do not fetch, change DB, enable trading or expose original IDs.'
+current_stage: protected_pr_706_merged_source_only_scope_complete
+remaining: []
+last_verified_commit: 755a56a4059a91e77b84059fbc7ed286ef48c49d
+test_results: 'Protected PR #706 exact-head CI 19/19 SUCCESS and main merged 755a56a4059a91e77b84059fbc7ed286ef48c49d. Bounded engineering task completed; remaining external acceptance tracked separately; no production deployed.'
+resume_instruction: 'Completed PR #706 on main with CI19/19. Do not rerun this bounded code/research task. Track separate #686 current official PPT authenticity, #406 owner/upstream approval, #679 originals, #685 seven-day PITR. Do not deploy or bid.'
 linked_issue: 692
 production_mutations: false
 external_source_requests: false
+protected_merge_commit: 755a56a4059a91e77b84059fbc7ed286ef48c49d
+protected_exact_ci: 19_of_19_success
+production_deployed: false

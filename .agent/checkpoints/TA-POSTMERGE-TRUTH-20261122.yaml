@@ -1,0 +1,20 @@
+task_id: TA-POSTMERGE-TRUTH-20261122
+status: in_progress
+goal: 'Sync 22-Nov protected CI-merged PR #705 #706 #707 with canonical child statuses and preserve separate blocked original/owner acceptance.'
+definition_of_done:
+  - 'Confirm 705/706/707 19/19 CI success and exact protected merge SHA.'
+  - 'Mark bounded PPT saved-forensic, SIBUR import-window audit and qualification risk code as completed, no repeated development.'
+  - 'Keep original PPT issue #686 OPEN, qualification release issue #406 OPEN, official EIS originals #679 and seven-day PITR #685 blocked.'
+  - 'Add regression checks for canonical index/child consistency and no false commercial/production acceptance.'
+  - 'Run focused tests and protected exact-head CI, merge and record outcome.'
+completed:
+  - "Reconciled protected #705/#706/#707 to completed bounded child checkpoints, exact protected main merges and 19/19 CI each; no production deploy."
+  - "Separated still-blocked #686 original and #406 upstream source/Owner release, preserved #679 and #685 blockers."
+  - "Added dated source-safe report and 3 new checkpoint tests; 27 focused PASS, Ruff/make check PASS."
+  - 'Read-only verified PR #705 #706 #707 each 19/19 CI and protected main merges. Issue #692 closed after historical receipt root cause, without mass import.'
+current_stage: focused_tests_pass_exact_head_ci_pending
+remaining: [exact_head_ci, protected_merge, reconciliation_closure]
+last_verified_commit: c215843502ff9be53b598e0189ae6d23e5b2d84f
+test_results: '27 focused tests PASS, two inherited warnings; Ruff/make check/diff PASS. Protected PR CI pending.'
+resume_instruction: 'ARC only, no RDC. In existing isolated checkout ta-postmerge-truth-20261122 validate exact merge SHA and statuses; add tests, CI and protected merge. Do not operate production or access restricted first-party source.'
+production_mutations: false

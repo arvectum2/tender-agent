@@ -1,0 +1,16 @@
+task_id: TA-SIBUR-PPT-CURRENT-SOURCE-20261122
+status: blocked
+goal: 'Independently obtain and attest current first-party SIBUR source edition and original bytes for one .ppt URL / stored OOXML slideshow discrepancy; do not mislabel a cached OOXML as original legacy PPT.'
+definition_of_done:
+  - 'Separately admit one bounded first-party original read and verify source URL, version, HTTP provenance, MIME and source binary SHA.'
+  - 'Reconcile current official source-file identity with historical .ppt URL/.pptx OOXML saved checksum and original notice revision.'
+  - 'Only after independent first-party byte verification decide source original format; preserve NEEDS_REVIEW and UNKNOWN otherwise.'
+completed:
+  - 'PR #705 protected main merge 664e3283aed9dabafdda9de4d0f8405f085ffa6e with 19/19 CI verifies one saved historical source link and OOXML slideshow format. Does not prove official current original.'
+current_stage: blocked_first_party_current_original_not_attested
+remaining: [source_access_admission, official_current_original_bytes_and_revision, independent_sha_mime_comparison, source_original_acceptance]
+last_verified_commit: 664e3283aed9dabafdda9de4d0f8405f085ffa6e
+test_results: 'Saved-file OOXML forensic proven; one source item stays NEEDS_REVIEW; no current original/source retried.'
+resume_instruction: 'ARC only. Require separately authorized bounded first-party original source retrieval before any new HTTP; no automatic import, rename or source original promotion. Issue #686 OPEN.'
+linked_issue: 686
+production_mutations: false
