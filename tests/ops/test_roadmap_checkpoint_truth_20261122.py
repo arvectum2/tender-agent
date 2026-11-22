@@ -48,14 +48,20 @@ def test_independent_unmet_gates_are_blocked():
         assert proof["remaining"]
 
 
-def test_ready_queue_order_and_review_gate_unchanged():
+def test_discovery_tasks_complete_only_blocked_review_gate_remains():
     queue = yaml.safe_load(QUEUE.read_text(encoding="utf8"))
-    open_items = [item for item in queue["items"] if item["status"] != "done"]
-    assert [(item["task_id"], item["status"]) for item in open_items] == [
-        ("COMMERCIAL-WORKFLOW-ARV-069-001", "blocked"),
-        ("TA-SIBUR-SOURCE-DISCOVERY-001", "ready"),
-        ("TA-GEH-SOURCE-DISCOVERY-001", "ready"),
-        ("TA-AI-TRADING-SOURCE-DISCOVERY-001", "ready"),
+    items = queue["items"]
+    assert len(items) == 66
+    assert sum(item["status"] == "done" for item in items) == 65
+    open_items = [item for item in items if item["status"] != "done"]
+    assert [(item["task_id"], item["status"], item["authority"])
+            for item in open_items] == [
+        ("COMMERCIAL-WORKFLOW-ARV-069-001", "blocked", "REVIEW"),
     ]
-    assert open_items[0]["authority"] == "REVIEW"
-    assert all(item["authority"] == "AUTO" for item in open_items[1:])
+    expected = {
+        "TA-SIBUR-SOURCE-DISCOVERY-001",
+        "TA-GEH-SOURCE-DISCOVERY-001",
+        "TA-AI-TRADING-SOURCE-DISCOVERY-001",
+    }
+    assert all(item["status"] == "done" for item in items
+               if item["task_id"] in expected)

@@ -1,5 +1,5 @@
 task_id: TA-SIBUR-HIST-GAP-READONLY-20261122
-status: in_progress
+status: completed
 goal: 'Independently replay saved original SIBUR 4052-page archive and compare every exact historic external ID with a separately verified repeatable-read read-only working PostgreSQL16 snapshot, without writing data.'
 definition_of_done:
   - 'Reject incomplete or mutated original page receipts, mixed provenance, cross-category identity collisions and snapshot cluster drift.'
@@ -15,10 +15,14 @@ completed:
   - Eleven synthetic regressions PASS; historical missing-ID root cause remains UNKNOWN, no mass-import acceptance.
   - Independent historical original publication-year replay: 18222 of 18251 missing IDs are from 2019-2023; just 29 are 2024-2026. Working PG16 read-only year/day grouped counts and earliest publication 2024-01-03 confirmed; explicit retention/import cause remains UNKNOWN.
   - 'Live ARC working PostgreSQL16 read-only 30632 exact ID set SHA independently matched 21-Nov receipt encoding (sorted external IDs newline-final); no changes or exposed IDs.'
-current_stage: exact_archive_db_diff_pass_private_proof_saved_ci_pending
-remaining: [exact_head_ci, protected_merge, child_checkpoint_closure]
+current_stage: bounded_task_verified_and_protected_merged
+remaining: []
 last_verified_commit: 879dcbc3321f3497e6131c99d5df040f6e7ac3ef
 test_results: '11 focused unit PASS; 4052 archived original SHA/revision replay PASS, 30632 working ID-set SHA and 18251 missing ID-set SHA PASS; private receipt mode0600; no DB write. CI pending.'
 resume_instruction: 'ARC ONLY, never RDC. Do not repeat completed exact source working diff. After #701 and #702 protected main merges, reconcile this separate worktree with main and run exact-head CI/protected merge; mark this bounded child completed, keep issue #692 OPEN for importer/retention root cause, permissioned dry-run and any Owner/MI/PITR authorization. Do not mass-import.'
 linked_issue: 692
 production_mutations: false
+private_exact_working_gap_sha256: 4dae9e36df79dbbf678fab5264a4e60de378d71fd391e8b7d7e71280e39151a8
+issue_692_root_cause: UNKNOWN
+historic_mass_import_authorized: false
+production_deployed: false

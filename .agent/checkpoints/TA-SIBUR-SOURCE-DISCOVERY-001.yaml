@@ -1,5 +1,5 @@
 task_id: TA-SIBUR-SOURCE-DISCOVERY-001
-status: in_progress
+status: completed
 goal: 'Document source-reuse inventory for SIBUR SAP SRM and B2B-Center, including direct buyer/contractor attribution, historical availability, existing modules and exact evidence gaps, without any live DB or restricted access.'
 definition_of_done:
   - 'Inspect existing source adapter and historical SIBUR archive evidence from repository and already preserved read-only manifests.'
@@ -14,11 +14,14 @@ completed:
   - Independently verified three saved private historical source/document/DP receipt SHA256 files; document format issue686 remains needs_review.
   - Added six source/access typed matrix, source evidence JSON, reusable module table and bounded follow-up proposal; six targeted tests PASS, Ruff and make check PASS.
   - 'Task admitted as first ready AUTO source inventory in existing explicit execution queue, order 1130.'
-current_stage: source_inventory_and_tests_complete_pending_exact_github_ci
-remaining: [exact_ci, merge, queue_and_checkpoint_closure]
+current_stage: bounded_task_verified_and_protected_merged
+remaining: []
 last_verified_commit: 593a19c0990d4db49c6ba722f5426c7511d6a1d9
 test_results: '6 focused offline tests PASS, 2 inherited warnings; Ruff, make check and git diff --check PASS; 3 private receipt hashes rechecked, no new live source or DB writes. Full GitHub CI pending.'
 resume_instruction: 'ARC ONLY. Wait for #699 CI protected merge before SIBUR PR to main; safely rebase SIBUR branch onto merged main then finalize #699 child checkpoint. Run exact-head SIBUR CI, protected merge, and mark SIBUR queue done. Next ready task GEH source inventory. Do not execute #692 historic import or #686 source re-download; no DB/ETP mutation.'
 linked_issues: [692, 686]
 production_mutations: false
 external_submission: false
+protected_merge_commit: 879dcbc3321f3497e6131c99d5df040f6e7ac3ef
+protected_exact_ci: 19_of_19_success
+production_deployed: false
