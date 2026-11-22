@@ -7,13 +7,16 @@ definition_of_done:
   - 'Obtain Owner authorization for exact candidate image, environment, maintenance window and rollback conditions before any production switch.'
   - 'Stage candidate with no production mutation, test end-to-end, then separately execute authorized deployment and verify runtime receipt.'
 completed:
+  - "Independent 22-Nov GET-only /v1/support/readiness returned overall RED: ingest recent 256 sample p95 18,887ms vs SLO 10,000ms, 7,989 total ingest requests and zero reported errors; search and process green. Private 0600 source-safe evidence SHA 1b3fedc89a25e348e6bdfb0c7f47567e447f20687ec0336c746728911284310d, upstream issue arvectum2/data-platform#133. No root cause or release acceptance inferred."
   - "22-Nov bounded local SDK0.4 authenticated Data Platform GET contract succeeded 3/3 with 73 collections and anonymous 401. Private safe proof SHA256 55b7f94f50391eff7d4f920accbf07620a29ece913254826eff2cdf40ca9ac80. Point-in-time only; no sustained SLO or runtime cutover."
   - 'Source-first Core PR529 and PRICE01 PR530 both protected merged 19/19 CI, no production deploy.'
   - 'Bounded runtime package PR531 protected merged 19/19 CI, verified offline ARM64 image, seven receipts, compatible SDK, negative stale dependency guard and synthetic auth/evidence smoke.'
-current_stage: bounded_DP_sdk_pass_sustained_SLO_and_owner_gates_blocked
-remaining: [sustained_DP_HTTP_SDK_reliability, independent_real_Gemma_acceptance, owner_exact_release_approval, staged_rollback_proof, authorized_runtime_deploy]
+current_stage: DP_ingest_SLO_red_owner_and_Gemma_release_gates_blocked
+remaining: [DP_ingest_p95_at_most_10000ms_representative_samples, sustained_DP_HTTP_SDK_reliability, independent_real_Gemma_acceptance, owner_exact_release_approval, staged_rollback_proof, authorized_runtime_deploy]
 last_verified_commit: 35c44a898b56c055bbcd50a8be25227459c08e58
-test_results: 'PR529/530/531 each 19/19 CI, 51 runtime packaging focused PASS; 22-Nov short read-only SDK0.4 live GET3/3 PASS, 73 collections, anonymous401. Sustained SLO and Owner release unaccepted; no runtime switch.'
+test_results: 'PR529/530/531 each CI19/19, PR714 CI10/10 and 73 integrated SDK checks PASS. Actual DP support readiness RED because ingest recent p95 18887ms above 10000ms; other operations may lack samples. Sustained SLO and Owner production approval not accepted.'
 resume_instruction: 'ARC only, no RDC. Do not deploy unapproved new Core/Gemma runtime. Verify live DP HTTP stability and independent real source-grounded acceptance read-only, then obtain exact Owner production release approval. This is separate from completed engineering consolidation and historical WAL/PITR proof.'
 production_deployed: false
 external_sources_activated: false
+upstream_dp_ingest_slo_issue: arvectum2/data-platform#133
+dp_readiness_private_sha256: 1b3fedc89a25e348e6bdfb0c7f47567e447f20687ec0336c746728911284310d

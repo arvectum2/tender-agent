@@ -1,5 +1,5 @@
 task_id: TA-DP-LIVE-SDK-READONLY-20261122
-status: in_progress
+status: completed
 goal: 'Independently prove bounded local authenticated Data Platform HTTP/SDK consumer parity and keep separate owner release/long-running SLA gates.'
 definition_of_done:
   - 'Reuse existing running Mac mini Data Platform 0.6.0 and installed TA SDK 0.4.0; no source fetch or public network.'
@@ -15,12 +15,16 @@ completed:
   - "19 synthetic SDK/HTTP tests PASS, 73 integrated SDK/RAG/knowledge and checkpoint regressions PASS, Ruff/make check PASS; two inherited warnings; protected CI pending."
   - 'Read-only source inspection: existing DP /health 200 0.6.0, TA /health 200, deployed TA SDK 0.4.0 equals current main 0.4.0; previous SDK 0.3.0 mismatch is historical only.'
   - 'Verified service GET /v1/collections cannot trigger usage recording middleware: usage_operation_name only maps POST search/answer/research/memory and DELETE memory; no DP mutation from bounded read-only GET.'
-current_stage: bounded_live_sdk_get_pass_ci_pending
-remaining: [protected_ci, merge, child_closeout]
-last_verified_commit: 93ca324ced2751ca348d5d6a6dae26b85ed0d8ad
-test_results: 'Actual 3/3 local SDK0.4 authenticated GET contract/collections PASS, 73 collections, anonymous401, private SHA 55b7f94f50391eff7d4f920accbf07620a29ece913254826eff2cdf40ca9ac80. 73 integrated tests PASS; Ruff/make check PASS. Exact-head CI pending.'
-resume_instruction: 'ARC ONLY never RDC. Immutable private 0600 SDK/HTTP short proof SHA256 55b7f94f50391eff7d4f920accbf07620a29ece913254826eff2cdf40ca9ac80 saved; do not repeat/overwrite. Finish checks, protected CI/merge and scoped child close. Keep sustained DP SLO, independent Gemma acceptance and Owner release BLOCKED. No source HTTP, production writes or runtime swap.'
+current_stage: protected_pr714_merged_10_ci_pass
+remaining: []
+last_verified_commit: d1de9c398d30fff738e89be1513c7caa4db319f6
+test_results: '3/3 real SDK0.4 authenticated local read PASS, 73 collections, anonymous 401; immutable proof SHA 55b7f94f50391eff7d4f920accbf07620a29ece913254826eff2cdf40ca9ac80. 73 integrated tests, Ruff/make check PASS; protected PR714 CI 10/10 SUCCESS, merged d1de9c398d30fff738e89be1513c7caa4db319f6.'
+resume_instruction: 'Completed bounded live SDK GET proof PR714 10/10 CI, protected main d1de9c398d30fff738e89be1513c7caa4db319f6. Do not rerun immutable receipt. Separate DP issue arvectum2/data-platform#133 documents RED ingest p95 18.887s vs target 10s; long SLO and Owner Core release remain blocked. No production writes, reindex or runtime switch.'
 linked_parent: TA-CORE-RUNTIME-RELEASE-20261122
 production_writes: false
 external_http_requests: false
 deployment_authorized: false
+merged_pr: 714
+protected_merge_commit: d1de9c398d30fff738e89be1513c7caa4db319f6
+protected_exact_ci: 10_of_10_success
+production_deployed: false
