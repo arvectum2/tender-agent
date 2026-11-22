@@ -1,5 +1,5 @@
 task_id: TA-CORE-CONSOLIDATION-001
-status: in_progress
+status: completed
 goal: Consolidate existing Tender Agent engine PRs independently of live market research.
 definition_of_done:
 - Inventory exact PR heads and dependency graph; classify conflicts and review gates.
@@ -9,6 +9,7 @@ definition_of_done:
 - Prepare reviewable integration; do not deploy or mutate production DB without separate
   approval.
 completed:
+- PR529/530/531 independently confirmed protected MERGED on 15-Nov, 19/19 CI each; scoped engineering complete, real runtime switch remains separate blocked gate.
 - main 0d2b35a2 verified against remote; historical PR chain identified.
 - Dedicated worktree created; no research worktree modified.
 - Exact PR refs fetched; merge-tree found only checkpoint/roadmap conflicts.
@@ -24,14 +25,9 @@ completed:
 - 'Runtime packaging child: stale overlay dependency guard and seven runtime receipts
   fixed; 51 tests, negative stale-base build, offline ARM64 image and auth/evidence
   smoke PASS. Candidate 03cb55f1; no deployment.'
-current_stage: review_ready_runtime_candidate_dp_http_blocked
-remaining:
-- Review and authorize merge of PR529, PR530 and packaging follow-up; rebuild exact
-  accepted SHA.
-- 'Intermittent Data Platform HTTP availability: underlying collection SQL counts
-  verified; SDK probe still failed even after health returned 200.'
-- Separate real Gemma acceptance and authorized runtime switch after rollback gates.
-last_verified_commit: 03cb55f1774cc1a4b07dc1a276c13f45ca5d2e1b
+current_stage: code_consolidation_pr529_530_531_merged_scope_complete
+remaining: []
+last_verified_commit: 35c44a898b56c055bbcd50a8be25227459c08e58
 test_results:
 - 378 passed, 44 warnings, twice; final 8.30s; in-memory SQLite
 - make check PASS
@@ -39,7 +35,11 @@ test_results:
 - git diff --check PASS
 - PR529/530 19/19 CI PASS each
 - Runtime packaging 51 focused PASS; offline image and auth/evidence smoke PASS
-resume_instruction: Use runtime packaging branch checkpoint TA-CORE-RUNTIME-PACKAGING-20261115.yaml
-  and review runbook; check exact-head follow-up CI, preserve REVIEW gates. DP SQL
-  index verified but HTTP instability remains; avoid repeating source counts or changing
-  live services. No deployment without separate approval.
+resume_instruction: 'Core source-first code consolidation/PRICE01/runtime packaging is COMPLETED on protected main by PR529,530,531, each 19/19 required CI. Do not repeat original integration or rebuild accepted image without new evidence. Separate real Gemma and DP HTTP stability, authorized runtime switch and rollback/owner staging are BLOCKED under TA-CORE-RUNTIME-RELEASE-20261122; never auto-deploy.'
+pr529_merge_sha: 78be86422aab7cc7b5a869f45d431847c5551a61
+pr530_merge_sha: 4e801b8f5e1710caac8fbf703596383aa3ba389d
+pr531_merge_sha: 35c44a898b56c055bbcd50a8be25227459c08e58
+pr529_ci: 19_of_19_success
+pr530_ci: 19_of_19_success
+pr531_ci: 19_of_19_success
+production_deployed: false

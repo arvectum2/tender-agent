@@ -658,7 +658,7 @@ source_discovery_2026_11_14:
 # Parallel owner-approved engineering track; preserve existing roadmap history.
 parallel_core_consolidation:
   task_id: TA-CORE-CONSOLIDATION-001
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-CORE-CONSOLIDATION-001.yaml
 
 parallel_dtr_product:
@@ -1075,9 +1075,17 @@ sibur_dp_source_provenance_2026_11_22:
 
 pitr_wal_content_integrity_2026_11_22:
   task_id: TA-PITR-WAL-CONTENT-INTEGRITY-20261122
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-PITR-WAL-CONTENT-INTEGRITY-20261122.yaml
   linked_issue: 685
   scope: read_only_pg17_archived_wal_content_preflight
   seven_day_pitr_proven: false
   production_mutations: false
+
+core_runtime_release_2026_11_22:
+  task_id: TA-CORE-RUNTIME-RELEASE-20261122
+  status: blocked
+  checkpoint: .agent/checkpoints/TA-CORE-RUNTIME-RELEASE-20261122.yaml
+  depends_on: [TA-CORE-CONSOLIDATION-001, TA-CORE-RUNTIME-PACKAGING-20261115]
+  blocked_on: verified_live_DP_HTTP_reliability_and_owner_acceptance_of_runtime_switch
+  production_deployed: false
