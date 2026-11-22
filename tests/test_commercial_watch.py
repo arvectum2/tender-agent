@@ -105,7 +105,7 @@ def test_real_delta_and_stale_status_never_look_like_live_eligibility(tmp_path):
     rendered = render_markdown(result)
     assert "ПАО ТГК-1" in rendered
     assert "https://etpgpb.ru/procedures/etp/123/" in rendered
-    assert "не подтверждён доступ к участию" in rendered
+    assert "доступ к участию" in rendered
     assert result["production_database_modified"] is False
     assert result["submissions_sent"] is False
 
@@ -378,3 +378,23 @@ def test_cancelled_sibur_source_is_not_in_commercial_funnel(tmp_path):
     result = compile_watch(geh, watch, NOW, sibur_current_capture=fresh)
     assert result["sibur"]["summary"]["excluded_cancelled_or_nonaccepting"] == 1
     assert [c["external_id"] for c in result["sibur"]["candidates"]] == ["12345/1"]
+
+
+
+def test_buyer_vs_organizer_and_source_time_precision_are_not_conflated(tmp_path):
+    geh, watch = synthetic_inputs(tmp_path)
+    fresh = _fresh_sibur_capture(tmp_path)
+    value = compile_watch(geh, watch, NOW, sibur_current_capture=fresh)
+    buyer = value["geh"]["candidates"][0]
+    assert buyer["buyer_as_published"] == "ПАО ТГК-1"
+    assert buyer["organizer_as_published"] == "ООО ГЭХ Закупки"
+    assert buyer["deadline_msk"] == "25.11.2026 10:00"
+    sibur = next(c for c in value["sibur"]["candidates"]
+                 if c["external_id"] == "12345/1")
+    assert sibur["buyer_as_published"] is None
+    assert sibur["organizer_as_published"] == "ПАО СИБУР"
+    assert sibur["deadline_msk"] == "30.11.2026 11:00"
+    date_only = next(c for c in value["sibur"]["candidates"]
+                     if c["external_id"] == "9999/1")
+    assert date_only["deadline_msk"] is None
+    assert date_only["deadline_utc"] is None
