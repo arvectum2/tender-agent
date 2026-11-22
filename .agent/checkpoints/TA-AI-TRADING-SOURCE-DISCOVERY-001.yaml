@@ -1,0 +1,23 @@
+task_id: TA-AI-TRADING-SOURCE-DISCOVERY-001
+status: in_progress
+goal: 'Inventory permitted publicly visible small-value electronic shop data and existing offline exact-SKU/economics modules for PAPER trading only, with source/contract/payment/admissibility hard gates.'
+definition_of_done:
+  - 'Distinguish Moscow Supplier Portal, EAT Berezka, RTS-market, Sber A electronic shop and GPB low-volume trading portal, naming official access and restrictions.'
+  - 'Inventory public price/time/order/outcome provenance and authorized API/data access UNKNOWN separately for each; no new platform login/crawl.'
+  - 'Reuse existing Tender Agent market/price, exact procurement position and cost/cashflow modules, preserving deterministic provenance.'
+  - 'Propose measured offline paper simulation with realistic costs, observed outcome vs hypothetical win and no real submission, delivery, funding or paid access.'
+  - 'Publish sanitized source and reuse evidence with focused tests, exact CI, protected merge. No production or ETP mutation.'
+completed:
+  - Public source metadata matrix for Moscow Supplier Portal, EAT Berezka, RTS Market, Sber-A and ETP GPB low-volume: zero authenticated calls, no current open procedure claim.
+  - Source time-correct original SHA and exact SKU/delivery/cost/fees/cashflow eligibility schema, observed vs hypothetical outcome and no look-ahead bias.
+  - Reused existing Price01, historical comparable price, actual bid protocol, SKU matching, normalized costs and source checkpoints; no custom trading bot built.
+  - Five new offline source hard-stop tests PASS; combined 20 targeted roadmap/SIBUR/GEH/AI tests and Ruff/make check PASS.
+  - 'Third explicit ready AUTO queue task, order 1150, owner approved as separate paper-only research track.'
+current_stage: paper_only_inventory_tests_complete_exact_ci_pending
+remaining: [exact_head_ci, protected_merge, checkpoint_and_queue_closure]
+last_verified_commit: 8aca56a08de84be57efde2393460988aa1dc07a2
+test_results: '20 focused PASS combined, 2 inherited warnings, Ruff and make check PASS; no live ETP calls, no paper bids executed, no real trades.'
+resume_instruction: 'ARC only. After sequential SIBUR #700 and GEH protected merges, reconcile AI branch with exact main, complete pending GEH child and queue, then AI PR exact-head CI and protected merge. Never place actual bids, catalog offers, supplier messages or payments. No 99% automation claim; only source/reuse inventory completed.'
+queue_order: 1150
+real_trading_authorized: false
+production_mutations: false

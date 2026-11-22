@@ -1000,3 +1000,19 @@ sibur_gap_readonly_2026_11_22:
   linked_issue: 692
   scope: read_only_archived_source_vs_working_snapshot_identity
   production_writes: false
+geh_source_discovery_2026_11_22:
+  task_id: TA-GEH-SOURCE-DISCOVERY-001
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-GEH-SOURCE-DISCOVERY-001.yaml
+  queue_order: 1140
+  source_access: public_or_authorized_readonly_only
+  production_mutations: false
+
+ai_trading_source_discovery_2026_11_22:
+  task_id: TA-AI-TRADING-SOURCE-DISCOVERY-001
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-AI-TRADING-SOURCE-DISCOVERY-001.yaml
+  queue_order: 1150
+  mode: paper_trading_only
+  real_etrading_authorized: false
+  production_mutations: false
