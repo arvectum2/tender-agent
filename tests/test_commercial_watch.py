@@ -190,3 +190,36 @@ def test_no_live_network_or_database_imports():
     source = inspect.getsource(module)
     for forbidden in ("requests.get(", "subprocess.run(", "create_engine(", "http.client", "urllib.request"):
         assert forbidden not in source
+
+
+def test_known_geh_in_current_verified_pages_remains_a_business_lead(tmp_path):
+    snap, watch = synthetic_inputs(tmp_path)
+    plan_path = snap / "verified-active-plan.json"
+    plan = json.loads(plan_path.read_text())
+    plan[2]["observation"]["title"] = "Монтаж КИПиА и ПНР"
+    sha = _dump(plan_path, plan)
+    state_path = snap / "guarded-ingest" / "state.json"
+    state = json.loads(state_path.read_text())
+    state["plan_sha256"] = sha
+    _dump(state_path, state)
+    value = compile_watch(snap, watch, NOW)
+    known = next(c for c in value["geh"]["candidates"] if c["external_id"] == "etp:125")
+    assert known["novelty"] == "previous_observation"
+    assert value["geh"]["summary"]["actually_inserted"] == 2
+    assert value["geh"]["summary"]["matching_unexpired"] == 3
+    assert value["geh"]["summary"]["new_relevant"] == 2
+    assert value["geh"]["summary"]["already_known_relevant"] == 1
+
+
+def test_category_only_sibur_match_has_limited_priority(tmp_path):
+    snap, watch = synthetic_inputs(tmp_path)
+    d = json.loads(watch.read_text())
+    row = d["rows"][0]["observation"]
+    row["title"] = "NB ИМПОРТ комплектующие КОС"
+    row["category"] = "Системы и средства автоматизации, метрологии и КИП"
+    _dump(watch, d)
+    value = compile_watch(snap, watch, NOW)
+    candidate = value["sibur"]["candidates"][0]
+    assert candidate["priority_score"] <= 65
+    assert candidate["topic"].startswith("Только категория:")
+    assert candidate["freshness"] == "older_than_48h_requires_refresh"
