@@ -1,5 +1,5 @@
 task_id: TA-GEH-SOURCE-DISCOVERY-001
-status: in_progress
+status: completed
 goal: 'Inventory source access/reuse for Gazprom Energoholding and Mosenergo direct 223-FZ procedures, ETP GPB, potential TEK-Torg general-contractor demand, with independently proven corporate attribution and no authenticated source access.'
 definition_of_done:
   - 'Verify first-party Mosenergo/Gazprom Energoholding acquisition route and exact direct buyer vs organizer vs contractor differences.'
@@ -14,10 +14,13 @@ completed:
   - Produced six-source sanitized JSON plus separate source/access and buyer/organizer/contractor matrix with explicit missing 24-36 month denominator.
   - Five new offline tests PASS, Ruff and make check PASS, no authenticated platform or production mutations.
   - 'Task explicitly admitted AUTO as second ready source discovery, queue order 1140.'
-current_stage: bounded_matrix_and_tests_complete_waiting_exact_ci
-remaining: [exact_head_ci, protected_merge, child_and_queue_closure]
+current_stage: bounded_task_verified_and_protected_merged
+remaining: []
 last_verified_commit: c38b3fb0eb143536f95ec351e3643930e088d4d9
 test_results: '5 source inventory tests PASS, 2 inherited warnings, Ruff/make check/diff PASS; first-party public evidence only, no ETP API use and no new corpus capture.'
 resume_instruction: 'ARC only. Confirm parent #699 and SIBUR #700 protected merges; reconcile GEH branch with exact current main, checkpoint completed children and mark queue SIBUR done before GEH PR. Run exact-head GEH CI and protected merge. Then next admitted AI paper-trading source inventory. No authenticated ETP, DB or bidding effects.'
 source_access: public_read_only
 production_mutations: false
+protected_merge_commit: 3c1e0eb1a7ee8071b9d494f8e5b84580d0c53dc4
+protected_exact_ci: 19_of_19_success
+production_deployed: false
