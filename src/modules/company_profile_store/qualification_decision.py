@@ -66,12 +66,18 @@ def build_qualification_aware_decision(
     # Keep legal compliance separate. No qualification-weight shortcut may make
     # a legally eligible bidder ineligible or override an actual hard blocker.
     core["competitive_qualification"] = qualification.model_dump(mode="json")
+    # Competition can be high risk without being legally ineligible. In
+    # particular, confirmed zero signed completed references never justifies
+    # overriding independent legal hard blockers or predicting a win score.
     commercial = (
-        "NO_GO"
-        if qualification.recommendation == "NO_GO_QUALIFICATION_COMPETITIVENESS"
+        "DEFER"
+        if qualification.recommendation == "HIGH_COMPETITIVE_RISK"
         else "HUMAN_REVIEW_REQUIRED"
     )
     core["decision"]["competitive_recommendation"] = commercial
+    core["decision"]["qualification_priority"] = (
+        "LOW" if commercial == "DEFER" else "HUMAN_REVIEW"
+    )
     core["decision"]["qualification_reference_list_state"] = qualification.reference_list_state
     core["decision"]["human_control_required"] = True
     core["decision"]["external_action_allowed"] = False

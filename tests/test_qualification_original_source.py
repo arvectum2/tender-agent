@@ -138,7 +138,7 @@ def test_actual_table_semantics_are_extracted_without_user_entered_weights():
         owner_confirmed=True, completeness="COMPLETE", contracts=[],
     )
     assessment = assess_references(customer_id="tenant-a", criterion=criterion, snapshot=owner)
-    assert assessment.recommendation == "NO_GO_QUALIFICATION_COMPETITIVENESS"
+    assert assessment.recommendation == "HIGH_COMPETITIVE_RISK"
     assert assessment.eligibility_status == "NOT_ASSESSED"
     assert assessment.external_action_allowed is False
 

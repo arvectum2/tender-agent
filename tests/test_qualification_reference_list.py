@@ -1,4 +1,4 @@
-"""Versioned user reference-list and source-bound competitive NO_GO regression."""
+"""Versioned owner reference-list and source-bound high competitive risk checks."""
 from __future__ import annotations
 
 import json
@@ -45,7 +45,7 @@ def _contract(*, law="44fz", subject="website", chatbot=True, completed=True,
     }
 
 
-def test_owner_confirmed_zero_references_gives_czn_competitive_no_go_not_legal_denial():
+def test_owner_confirmed_zero_references_gives_high_risk_not_legal_denial():
     result = assess_references(
         customer_id="arvectum-tenant", criterion=_criterion(),
         snapshot=_snapshot(),
@@ -54,7 +54,9 @@ def test_owner_confirmed_zero_references_gives_czn_competitive_no_go_not_legal_d
     )
     assert result.reference_list_state == "CONFIRMED_COMPLETE"
     assert result.qualifying_contracts == 0
-    assert result.recommendation == "NO_GO_QUALIFICATION_COMPETITIVENESS"
+    assert result.recommendation == "HIGH_COMPETITIVE_RISK"
+    assert "DEFER" in result.reasons[0]
+    assert "win probability" in result.reasons[0]
     assert result.eligibility_status == "NOT_ASSESSED"
     assert result.technical_feasibility_status == "NOT_ASSESSED"
     assert result.predicted_win_probability is None
@@ -106,7 +108,7 @@ def test_unrelated_or_unfinished_work_does_not_count(contract):
         snapshot=_snapshot([contract]),
     )
     assert result.qualifying_contracts == 0
-    assert result.recommendation == "NO_GO_QUALIFICATION_COMPETITIVENESS"
+    assert result.recommendation == "HIGH_COMPETITIVE_RISK"
 
 
 def test_unsigned_or_forged_complete_contract_rejected():
@@ -210,7 +212,7 @@ def test_api_reads_latest_version_qualified_empty_and_tenant_isolated(client):
     data = assessed.json()
     assert data["customer_id"] == tenant_a
     assert data["reference_fact_version"] == 1
-    assert data["recommendation"] == "NO_GO_QUALIFICATION_COMPETITIVENESS"
+    assert data["recommendation"] == "HIGH_COMPETITIVE_RISK"
     assert data["external_action_allowed"] is False
     other = _assess(client, tenant_b)
     assert other.status_code == 200
@@ -242,7 +244,7 @@ def test_api_expired_snapshot_not_promoted_to_zero(client):
     assert out.json()["qualifying_contracts"] is None
 
 
-def test_api_disallows_unverified_source_to_justify_competitive_no_go(client):
+def test_api_disallows_unverified_source_to_justify_competitive_risk(client):
     cid = _customer(client, "AI guessed")
     saved = client.post(
         f"/api/company-profile/customers/{cid}/facts/completed_contract_reference_list/versions",
@@ -257,3 +259,30 @@ def test_api_disallows_unverified_source_to_justify_competitive_no_go(client):
     result = _assess(client, cid)
     assert result.status_code == 200
     assert result.json()["recommendation"] == "QUALIFICATION_EVIDENCE_UNKNOWN"
+
+
+
+@pytest.mark.parametrize(("qualification_weight", "expected"), [
+    (59, "COMPETITIVE_RISK_NOT_AUTOMATIC_NO_GO"),
+    (60, "HIGH_COMPETITIVE_RISK"),
+    (70, "HIGH_COMPETITIVE_RISK"),
+])
+def test_high_weight_zero_evidence_is_defer_risk_not_automatic_no_go(
+    qualification_weight, expected,
+):
+    result = assess_references(
+        customer_id="tenant-1",
+        criterion=_criterion(
+            qualification_weight_percent=qualification_weight,
+            price_weight_percent=100 - qualification_weight,
+        ),
+        snapshot=_snapshot(),
+    )
+    assert result.recommendation == expected
+    assert result.reference_list_state == "CONFIRMED_COMPLETE"
+    assert result.qualifying_contracts == 0
+    assert result.eligibility_status == "NOT_ASSESSED"
+    assert result.technical_feasibility_status == "NOT_ASSESSED"
+    assert result.predicted_win_probability is None
+    assert result.human_gold is False
+    assert result.external_action_allowed is False
