@@ -8,13 +8,15 @@ definition_of_done:
   - 'Maintain parent roadmap in_progress, issue #679 current EIS originals blocked, #685 full seven-day PITR blocked, queue 65/66 done and blocked REVIEW forecast.'
   - 'Run targeted QA, exact-head CI, protected merge and mark final child completed.'
 completed:
+  - "PR #706 merged into protected main 755a56a4059a91e77b84059fbc7ed286ef48c49d with 19 of 19 CI PASS; audited 166 batches and bounded import-window explanation."
+  - "Marked separately protected-merged saved PPT forensic #705 and historical import-window #706 child checkpoints completed with exact merge SHAs; original-source issue #686 stays open."
   - 'PR #705 exact head bd269f606c21b0c5ba17a9bd4bf908f68966b987, 19/19 successful CI, merged main 664e3283aed9dabafdda9de4d0f8405f085ffa6e; source format historical bounded evidence complete but #686 original source unverified.'
   - 'PR #703 merged protected main as 212466c4c37b692881a089ad6546c03d1cd3211a, full exact-head 19/19 success; SIBUR historic saved ID gap is independent source-only completed child.'
   - 'PR #705 private source-only proof SHA256 cf3f16c5cde02cde9589cd3c4b41ca02c5cec39140743005c9b2a39617c1dc3c already verified mode0600; exact original PPT remains unverified and issue #686 open.'
-current_stage: pr705_exact_19_ci_merged_waiting_pr706_then_child_closeout
-remaining: [pr706_exact_ci_and_merge, child_status_sync, tests, final_pr_merge]
-last_verified_commit: 212466c4c37b692881a089ad6546c03d1cd3211a
+current_stage: sources_705_706_completed_pending_707_and_final_ci
+remaining: [pr707_exact_head_merge, apr06_release_blocker_sync, focused_tests, final_protected_merge]
+last_verified_commit: 755a56a4059a91e77b84059fbc7ed286ef48c49d
 test_results: 'PR #703 and #705 both 19/19 CI merged; #705 8 synthetic and 23 combined local tests, Ruff/make check PASS. PR #706 original import-window independent audit in GitHub CI.'
-resume_instruction: 'ARC ONLY: PR #705 already merged 19/19 to main 664e3283. Wait for #706 exact-head 19/19 protected merge (independent source-only rootcause) before refreshing main in isolated worktree; then mark children #686 bounded forensic and #692 bounded read-only import research completed. Keep original-source #686 OPEN/NEEDS_REVIEW, #679 original EIS OPEN and #685 seven-day PITR OPEN. No DB writes/source recrawls or live bids. Run QA then protected closure PR.'
+resume_instruction: 'ARC ONLY. PR #705/#706 both merged 19/19. Finalizer source children already marked completed in this branch, NOT yet protected merged. Wait PR #707 exact-head 19/19 and merge; then refresh origin/main into finalizer worktree, mark APR06 code complete but Owner release/source attestation BLOCKED, run focused QA and protected finalizer PR. Issue #692 may close after finalizer for read-only research, #686/#406/#679/#685 remain open. No DB/ETP/source writes or bids.'
 linked_issue: 686
 production_mutations: false
