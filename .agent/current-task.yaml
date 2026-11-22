@@ -984,3 +984,11 @@ dtr679_current_originals_2026_11_22:
   blocked_on: current_official_revision_and_original_binary_bytes_not_verified
   no_blind_eis_retry: true
   bounded_offline_audit_completed: true
+
+sibur_source_discovery_2026_11_22:
+  task_id: TA-SIBUR-SOURCE-DISCOVERY-001
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-SIBUR-SOURCE-DISCOVERY-001.yaml
+  queue_order: 1130
+  source_access: public_or_authorized_readonly_only
+  production_mutations: false
