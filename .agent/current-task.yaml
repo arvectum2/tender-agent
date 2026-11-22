@@ -935,7 +935,7 @@ dtr_679_offline_evidence_2026_11_22:
 
 pitr127_restore_readonly_audit_2026_11_22:
   task_id: TA-PITR127-READONLY-VERIFICATION-20261122
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-PITR127-READONLY-VERIFICATION-20261122.yaml
   linked_issue: 685
   scope: receipt_and_version_matched_pg17_backup_integrity_only
@@ -943,3 +943,16 @@ pitr127_restore_readonly_audit_2026_11_22:
   seven_day_continuity_proven: false
   verified_code_commit: c3aa2b4d0fc90d07e69fcf2796419c028e9fc87b
   local_checks: 18_pass_ruff_make_check_pg17_postrelease_base_verified
+  merged_main_commit: 14369525ff98a8176347da5f1f776cde98604836
+  exact_pr_ci: 19_of_19_success
+
+pitr_exact_wal_2026_11_22:
+  task_id: TA-PITR-EXACT-WAL-20261122
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-PITR-EXACT-WAL-20261122.yaml
+  linked_issue: 685
+  scope: isolated_readonly_originals_network_none_clone_no_production_writes
+  seven_day_continuity_proven: false
+  verified_code_commit: ff488e0d114df5e0be57edb916f68454b781d942
+  local_checks: 32_pass_ruff_make_check_real_offline_preflight
+  isolated_restore_executed: false
