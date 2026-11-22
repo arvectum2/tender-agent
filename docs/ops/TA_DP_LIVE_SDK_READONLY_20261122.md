@@ -56,3 +56,33 @@ independent Gemma acceptance, Owner approval of exact staging/image
 and a separately authorized production cutover/rollback. The upstream
 no-EIS-blind-retry and seven-day-PITR gates stay separate; no owner release
 authorization is inferred from this inspection.
+
+## Protected main completion and independent DP SLO blocker
+
+PR #714 exact head 55c1268230513e62acc3cca9b5cfdd804107c423
+passed 10/10 protected GitHub CI and merged as
+d1de9c398d30fff738e89be1513c7caa4db319f6.
+The bounded SDK read-only source/contract task is COMPLETED; no production
+release was performed or authorized.
+
+A separate authenticated local-only GET to /v1/support/readiness revealed
+the actual DP v0.6.0 operational gate: overall RED. The last 256 ingest
+latency observations have p95 18,887 ms versus the explicit server
+OPERATION_SLOS ingest threshold 10,000 ms (7,989 ingest requests since
+process start, zero reported errors). Search and process statuses were
+GREEN at that observation; five other operation types lacked enough
+samples for independent quality claims.
+
+Immutable private 0600 source-safe readiness receipt SHA256:
+1b3fedc89a25e348e6bdfb0c7f47567e447f20687ec0336c746728911284310d.
+No raw document texts, collection identities, secrets or production
+payloads entered the repository. This establishes an actual latency
+readiness failure, but does not identify its root cause. The separate
+Data Platform issue arvectum2/data-platform#133 contains a synthetic,
+source-preserving investigation plan and a possible event-loop blocking
+hypothesis requiring measurement.
+
+Do not equate three successful read-only SDK requests with production
+readiness. The Core runtime release remains BLOCKED on representative
+ingest p95 <=10s, sustained DP quality, independently accepted real
+Gemma source evidence and an exact Owner release/rollback decision.
