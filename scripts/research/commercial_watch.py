@@ -24,19 +24,19 @@ MONTHS_RU = {
 # Narrow, business-relevant evidence, NOT LLM judgement of eligibility.
 MATCHES = (
     ("АСУ ТП / автоматизация", 100, re.compile(
-        r"асу\s*тп|асутп|автоматизац|систем[аы] управления производством|диспетчер", re.I)),
+        r"асу\s*тп|асутп|автоматизац|систем[аы] управления производством|диспетчер", re.IGNORECASE)),
     ("ПНР / электромонтаж", 95, re.compile(
-        r"пусконалад|\bпнр\b|\bппнр\b|электромонтаж", re.I)),
+        r"пусконалад|\bпнр\b|\bппнр\b|электромонтаж", re.IGNORECASE)),
     ("Электротехника / приводы", 90, re.compile(
         r"электродвигател|электропривод|электрооборудован|электротехнич|"
         r"трансформатор|релейн|рза\b|частотн|тиристор|"
-        r"\bктп\b|коммутац", re.I)),
+        r"\bктп\b|коммутац", re.IGNORECASE)),
     ("КИПиА / измерение", 87, re.compile(
         r"\bкип\b|кипи[а-я]?|расходомер|датчик|сенсор|"
-        r"метролог|анализатор|вибропреобразоват", re.I)),
+        r"метролог|анализатор|вибропреобразоват", re.IGNORECASE)),
     ("Инженерные работы", 68, re.compile(
         r"проектно.изыскательск|проектирован|техническ[а-я ]*перевооруж|"
-        r"модернизац", re.I)),
+        r"модернизац", re.IGNORECASE)),
 )
 MAX_INPUT_BYTES = 5_000_000
 MAX_PAGE_BYTES = 4_000_000
@@ -84,7 +84,7 @@ def _time(raw: str) -> datetime:
     if not isinstance(raw, str):
         raise EvidenceRejected("missing timestamp")
     try:
-        value = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        value = datetime.fromisoformat(raw)
     except ValueError as exc:
         raise EvidenceRejected("invalid timestamp") from exc
     if value.tzinfo is None:
@@ -339,11 +339,11 @@ def render_markdown(data: dict) -> str:
             buyer = (c["buyer_as_published"] or "не подтверждён").replace("\n", " ")
             lines.extend([
                 f"{i}. **[{title}]({c['first_party_source_url']})** — {c['external_id']}",
-                f"   Заказчик по публикации: {buyer}. Направление: {c['topic']}. "
-                f"Дедлайн по наблюдению: {c['deadline_utc']} (UTC). "
-                f"Приоритет: {c['priority_score']}/100.",
-                f"   Доказательства: {c['novelty']}, {c['freshness']}, {c['evidence_status']}; "
-                f"SHA страницы: {c['source_sha256'][:12]}…. Действие: {c['next_action']}",
+                (f"   Заказчик по публикации: {buyer}. Направление: {c['topic']}. "
+                 f"Дедлайн по наблюдению: {c['deadline_utc']} (UTC). "
+                 f"Приоритет: {c['priority_score']}/100."),
+                (f"   Доказательства: {c['novelty']}, {c['freshness']}, {c['evidence_status']}; "
+                 f"SHA страницы: {c['source_sha256'][:12]}…. Действие: {c['next_action']}"),
             ])
         if not part["candidates"]:
             lines.append("Нет подтверждённых по этому срезу релевантных процедур с будущим дедлайном.")
