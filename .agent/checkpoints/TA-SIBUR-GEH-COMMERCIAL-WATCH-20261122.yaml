@@ -13,13 +13,17 @@ completed:
   - '22-Nov read-only GEH ingest replay: guarded-ingest at 10:28UTC verified 40 new of 257 eligible, DB 28883->28923, replay_inserted=0, old_rows_unchanged=true. Second 10:34UTC cycle 0 additional, stage=no_new; this is idempotence, not an ingest outage.'
   - '22-Nov read-only source captures: 18/18 GEH pages, 342 rows, 257 accepted, 85 review stage/date mismatches; 25 loose lexical matches require business-quality filtering.'
   - '22-Nov SIBUR technical evidence 12179 linked originals, current-member indexing running; curated 26-row commercial watch only as-of 17 Nov and must not imply current open status.'
-current_stage: implement_fail_closed_read_only_commercial_watch
+  - '22-Nov source-safe standalone CLI scripts/research/commercial_watch.py: verified GEH capture 18/18 pages and SHA256, new-only immutable proof and no-new idempotent path; SIBUR dated public watch treated as stale; no external network, DB or production writes.'
+  - 'Actual first GEH guarded snapshot source: 342 rows, 257 accepted, 85 status/date review, 40 new DB source IDs with unchanged old rows; 34 relevant unexpired (3 newly inserted). Second snapshot no-new: 34 relevant, zero added, no false failure.'
+  - 'Actual SIBUR source reviewed: saved as-of 17-Nov-2026, 26 previously curated, 19 deadlines elapsed, 6 relevant with later dates but current portal stage unverified. Never count as live GO.'
+  - 'Focused synthetic 16 pytest PASS, Ruff PASS; initial as-of 22-Nov business digest generated from exact preserved originals at docs/market-intelligence/SIBUR_GEH_COMMERCIAL_WATCH_2026-11-22.md; production unchanged.'
+current_stage: protected_pr_ci_pending__next_live_sibur_current_capture_separate
 remaining:
   - 'Add implementation and synthetic tests; locally run over existing verified GEH and SIBUR saved evidence.'
   - 'Create priority business digest and source-proof report; inspect out-of-scope/closed results.'
   - 'Protected PR CI, review and merge if all guards pass; retain explicit operator validation for current portal status.'
-last_verified_commit: null
-test_results: not_run
-resume_instruction: 'Continue isolated branch feature/ta-sibur-geh-commercial-watch-20261122. Use only exact existing source snapshot files; preserve main other task pointer. Do not auto-apply to production DB or call authenticated ETP. Work on read-only digest with immutable SHA evidence; never report stale SIBUR as active. Check exact CI before merge.'
+last_verified_commit: '669dc7265bcfe32c3657a956db8d15504bbae92c (16 focused local tests PASS, Ruff PASS, two actual GEH snapshots proven; report generator source unchanged in subsequent docs commits)'
+test_results: '16 synthetic focused PASS, Ruff PASS, exact GEH 18/18 preserved original SHA receipts pass, 40-new vs no-new replay, 34 actual GEH relevant and 6 stale SIBUR follow-up candidates.'
+resume_instruction: 'Protected PR CI and guarded merge on branch feature/ta-sibur-geh-commercial-watch-20261122. Initial document source-snapshot 22-Nov in docs/market-intelligence. No production DB, model, ETP or launchctl actions. Priority successor: daily current public SIBUR capture/source-proof, then automate scheduled report with explicit deployment safety gate and source-status verification. Avoid claiming 17-Nov SIBUR watch is fresh, or GEH requests for quotation are tenders.'
 production_modified: false
 external_submissions: false
