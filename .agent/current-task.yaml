@@ -1016,3 +1016,11 @@ ai_trading_source_discovery_2026_11_22:
   mode: paper_trading_only
   real_etrading_authorized: false
   production_mutations: false
+
+sibur_forensic_finalize_2026_11_22:
+  task_id: TA-SIBUR-FORENSIC-FINALIZE-20261122
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-SIBUR-FORENSIC-FINALIZE-20261122.yaml
+  linked_issue: 686
+  close_source_issue_automatically: false
+  production_mutations: false
