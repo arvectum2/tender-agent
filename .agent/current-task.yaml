@@ -992,3 +992,11 @@ sibur_source_discovery_2026_11_22:
   queue_order: 1130
   source_access: public_or_authorized_readonly_only
   production_mutations: false
+
+geh_source_discovery_2026_11_22:
+  task_id: TA-GEH-SOURCE-DISCOVERY-001
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-GEH-SOURCE-DISCOVERY-001.yaml
+  queue_order: 1140
+  source_access: public_or_authorized_readonly_only
+  production_mutations: false
