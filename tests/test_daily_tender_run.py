@@ -550,6 +550,88 @@ def test_daily_tender_run_all_failures_complete_with_errors_and_retry(
     assert resumed_body["items"][0]["status"] == "MANAGER_READY"
 
 
+
+def test_dtr_original_source_timeout_never_persists_signed_url(client, session, monkeypatch):
+    from src.modules.daily_tender_run import service
+
+    registry_number = "0128200000126007558"
+    secret = "sensitive-eis-archive-token-should-never-leak"
+    monkeypatch.setattr(
+        service,
+        "search_public_44fz",
+        lambda **kwargs: {
+            "cards": [_search_card(registry_number)],
+            "outcome": "success_with_results",
+        },
+    )
+
+    def source_failure(self, number):
+        raise TimeoutError(
+            "official source expired: https://int.zakupki.gov.ru/archive.zip?token="
+            + secret
+        )
+
+    monkeypatch.setattr(
+        service.TenderResearchPipeline, "ingest_public_by_registry_number", source_failure
+    )
+    response = client.post(
+        "/api/daily-tender-runs",
+        json={"profile_id": "arvectum-it", "run_now": True},
+    )
+    assert response.status_code == 201
+    body = response.json()
+    assert body["counts"]["failed"] == 1
+    assert body["status"] == "COMPLETED_WITH_ERRORS"
+    assert body["items"][0]["error"] == "source_acquisition_failed:timeout"
+    assert secret not in str(body)
+    stored = session.query(DailyTenderRunItem).filter_by(run_id=body["run_id"]).one()
+    assert stored.error == "source_acquisition_failed:timeout"
+    assert secret not in stored.error
+
+
+def test_dtr_safe_processing_error_never_uses_untrusted_text():
+    from src.modules.daily_tender_run.service import _safe_processing_error
+
+    secret = "?X-Amz-Signature=must-not-be-persisted"
+    assert (
+        _safe_processing_error("INDEX_DATA_PLATFORM", RuntimeError(secret))
+        == "source_or_index_not_ready:failure"
+    )
+    assert (
+        _safe_processing_error("ANALYZE", ValueError(secret))
+        == "analysis_failed:invalid_input"
+    )
+    assert (
+        _safe_processing_error("SUMMARIZE", ConnectionError(secret))
+        == "manager_summary_failed:connection_unavailable"
+    )
+    assert secret not in _safe_processing_error("unknown", OSError(secret))
+
+
+
+def test_dtr_post_decision_failure_never_persists_signed_url(session, monkeypatch):
+    from src.modules.daily_tender_run import post_go
+
+    run, item = _create_post_go_run(
+        session, deal_id="test-post-go-secret-redaction", registry_number="0128200000126007559"
+    )
+    secret = "https://int.zakupki.gov.ru/archive.zip?token=do-not-persist"
+
+    def fail_post_decision(*args, **kwargs):
+        raise RuntimeError(secret)
+
+    monkeypatch.setattr(post_go, "_advance_item", fail_post_decision)
+    post_go.advance_post_decision_items(session, run)
+    session.expire_all()
+    saved = session.get(DailyTenderRunItem, item.id)
+    assert saved is not None
+    assert saved.status == "POST_DECISION_FAILED"
+    assert saved.error == "post_decision_failed:failure"
+    assert saved.post_decision_json["last_error"]["message"] == "post_decision_failed:failure"
+    assert saved.post_decision_json["last_error"]["type"] == "redacted"
+    assert secret not in str(saved.post_decision_json)
+
+
 def _create_post_go_run(
     session,
     *,

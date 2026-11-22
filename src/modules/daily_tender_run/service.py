@@ -14,6 +14,9 @@ from sqlalchemy import select, text
 from sqlalchemy.engine import Connection
 from sqlalchemy.orm import Session
 
+from src.modules.daily_tender_run.error_codes import (
+    safe_processing_error as _safe_processing_error,
+)
 from src.modules.daily_tender_run.fresh_priority import fresh_preparation_priority
 from src.modules.daily_tender_run.manager_synthesis import synthesize_manager_brief
 from src.modules.daily_tender_run.models import DailyTenderRun, DailyTenderRunItem
@@ -843,9 +846,10 @@ def _execute_daily_tender_run(
             session.rollback()
             failed_item = session.get(DailyTenderRunItem, item.id)
             if failed_item is not None:
+                failure_stage = failed_item.stage
                 failed_item.status = "FAILED"
                 failed_item.stage = "FAILED"
-                failed_item.error = f"{type(exc).__name__}: {exc}"[:4000]
+                failed_item.error = _safe_processing_error(failure_stage, exc)
                 failed_item.updated_at = utcnow()
                 session.add(failed_item)
                 session.commit()
