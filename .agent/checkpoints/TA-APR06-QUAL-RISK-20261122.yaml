@@ -1,5 +1,5 @@
 task_id: TA-APR06-QUAL-RISK-20261122
-status: in_progress
+status: completed
 goal: 'Issue #406: separate source-bound competitive high qualification-weight risk from legal ineligibility and from unconditional commercial NO_GO for a confirmed empty owner-reference list.'
 definition_of_done:
   - 'Use the existing exact EIS v4 70/30 saved original source-case with UID/SHA and explicit tenant-complete signed owner references; no fabricated winner odds or unsupported source editions.'
@@ -13,12 +13,15 @@ completed:
   - 'Original EIS notice v4/70-30 UID/hash and deadline source bindings, distinct 44/223 signed final acts and legal hard-blocker regressions preserved; frozen October human-gold snapshots untouched.'
   - '88 adjacent qualification/source/historical-frozen tests PASS, eight skipped, Ruff and make check PASS; no production code deployment.'
   - 'Read-only source and 81 existing relevant tests reviewed: source-bound 70/30 CZN case implemented but zero confirmed references maps to NO_GO_QUALIFICATION_COMPETITIVENESS and commercial NO_GO; issue #406 still open.'
-current_stage: semantics_implemented_local_tests_pass_pending_protected_ci
-remaining: [exact_head_ci, protected_merge, independent_upstream_source_attestation, owner_release_acceptance]
-last_verified_commit: 664e3283aed9dabafdda9de4d0f8405f085ffa6e
-test_results: '88 related source/qualification/historical-frozen tests PASS, eight pre-existing skips; Ruff/make check/diff PASS. Upstream trusted-source attestation and owner production release approval still required.'
-resume_instruction: 'ARC ONLY, never RDC. Product code branch ta-apr06-qual-risk-20261122 passes 88 local tests. CI/PR protected merge is required; branch should include PR706 parent after merge. Do NOT change production, original documents or frozen human-gold KPIs. Trusted current original source attestation and Owner approval gate commercial release, so keep #406 open after code merge.'
+current_stage: protected_pr_707_merged_source_only_scope_complete
+remaining: []
+last_verified_commit: 2019c22506eb320f30977be34b920b1a39e5c1f0
+test_results: 'Protected PR #707 exact-head CI 19/19 SUCCESS and main merged 2019c22506eb320f30977be34b920b1a39e5c1f0. Bounded engineering task completed; remaining external acceptance tracked separately; no production deployed.'
+resume_instruction: 'Completed PR #707 on main with CI19/19. Do not rerun this bounded code/research task. Track separate #686 current official PPT authenticity, #406 owner/upstream approval, #679 originals, #685 seven-day PITR. Do not deploy or bid.'
 linked_issue: 406
 production_mutations: false
 new_source_requests: false
 external_actions: false
+protected_merge_commit: 2019c22506eb320f30977be34b920b1a39e5c1f0
+protected_exact_ci: 19_of_19_success
+production_deployed: false
