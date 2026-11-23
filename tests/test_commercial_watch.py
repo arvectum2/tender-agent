@@ -1,0 +1,440 @@
+"""Synthetic-only tests for commercial watch. No network, production DB or original files."""
+from __future__ import annotations
+
+import hashlib
+import json
+from datetime import UTC, datetime
+from pathlib import Path
+
+import pytest
+
+from scripts.research.commercial_watch import (
+    EvidenceRejected,
+    compile_watch,
+    render_markdown,
+)
+
+NOW = datetime(2026, 11, 22, 19, 20, tzinfo=UTC)
+
+
+def _dump(path: Path, data):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def synthetic_inputs(tmp_path: Path):
+    snap = tmp_path / "geh"
+    original = snap / "geh_active_p1.html"
+    original.parent.mkdir(parents=True, exist_ok=True)
+    original.write_text("<html>Synthetic public source listing</html>")
+    sha = hashlib.sha256(original.read_bytes()).hexdigest()
+    base = {
+        "source": "etp_gpb", "verification": "PUBLIC_LIST_OBSERVATION_ONLY",
+        "source_sha256": sha,
+        "source_url": "https://etpgpb.ru/procedures/?page=1",
+        "customers_raw": "ПАО ТГК-1", "organizer_raw": "ООО ГЭХ Закупки",
+        "deadline_raw": "25 ноября 2026, 07:00 Z",
+    }
+    first = {"observation": dict(base, external_id="etp:123",
+        title="Пусконаладочные работы АСУ ТП",
+        detail_url="https://etpgpb.ru/procedures/etp/123/"),
+        "observed_at": "2026-11-22T10:00:00Z"}
+    second = {"observation": dict(base, external_id="price_request:124",
+        title="Поставка электродвигателя",
+        detail_url="https://etpgpb.ru/procedures/price_request/124/"),
+        "observed_at": "2026-11-22T10:00:00Z"}
+    other = {"observation": dict(base, external_id="etp:125",
+        title="Топливные карты",
+        detail_url="https://etpgpb.ru/procedures/etp/125/"),
+        "observed_at": "2026-11-22T10:00:00Z"}
+    _dump(snap / "capture-status.json", {"complete": True, "expected_pages": 1, "verified_pages": 1})
+    _dump(snap / "gpb-geh-section-receipts.json", [
+        {"name": "geh_active_p1", "sha256": sha, "current_page": 1,
+         "advertised_last_page": 1}
+    ])
+    plan = [first, second, other]
+    plan_sha = _dump(snap / "verified-active-plan.json", plan)
+    new_sha = _dump(snap / "guarded-ingest" / "new-only.json", {"accepted": [first, second]})
+    _dump(snap / "guarded-ingest" / "state.json", {
+        "status": "completed", "stage": "verified", "inflight": False,
+        "old_rows_unchanged": True, "replay_inserted": 0, "new": 2,
+        "inserted": 2, "before": 10, "after": 12, "valid": 3,
+        "review": 0, "source_input_sha256": new_sha, "plan_sha256": plan_sha,
+    })
+    sibur_path = tmp_path / "sibur.json"
+    _dump(sibur_path, {"as_of": "2026-11-17T09:29:11Z",
+        "snapshot_receipts_sha256": "a" * 64,
+        "rows": [{
+            "procedure_id": "12345/1", "deadline_msk": "2026-11-27 10:00",
+            "priority": "P0", "commercial_kind": "commissioning",
+            "observation": {
+                "external_id": "12345/1", "source": "sibur_public",
+                "source_sha256": "a" * 64, "verification": "PUBLIC_SNAPSHOT_ONLY",
+                "title": "ПНР электрооборудования", "organizer": "ПАО СИБУР",
+                "category": "Электрооборудование",
+                "source_url": "https://www.sibur.ru/ru/procurement/buy/?PAGEN_1=1",
+            },
+        }, {
+            "procedure_id": "12345/2", "deadline_msk": "2026-11-20 10:00",
+            "observation": {
+                "external_id": "12345/2", "source": "sibur_public",
+                "source_sha256": "a" * 64, "verification": "PUBLIC_SNAPSHOT_ONLY",
+                "title": "Поставка электрооборудования", "organizer": "ПАО СИБУР",
+                "category": "Электрооборудование",
+                "source_url": "https://www.sibur.ru/ru/procurement/buy/?PAGEN_1=2",
+            },
+        }],
+    })
+    return snap, sibur_path
+
+
+def test_real_delta_and_stale_status_never_look_like_live_eligibility(tmp_path):
+    snap, watch = synthetic_inputs(tmp_path)
+    result = compile_watch(snap, watch, NOW)
+    assert result["geh"]["summary"]["actually_inserted"] == 2
+    assert len(result["geh"]["candidates"]) == 2
+    assert result["geh"]["candidates"][0]["external_id"] == "etp:123"
+    assert {x["evidence_status"] for x in result["geh"]["candidates"]} == {
+        "MARKET_RESEARCH_ONLY", "PUBLIC_LIST_CARD_RECHECK",
+    }
+    assert result["sibur"]["summary"]["expired_observed_deadlines"] == 1
+    assert result["sibur"]["summary"]["freshness"] == "stale"
+    assert len(result["sibur"]["candidates"]) == 1
+    assert result["sibur"]["candidates"][0]["evidence_status"] == "STALE_SIBUR_SNAPSHOT_RECHECK"
+    rendered = render_markdown(result)
+    assert "ПАО ТГК-1" in rendered
+    assert "https://etpgpb.ru/procedures/etp/123/" in rendered
+    assert "доступ к участию" in rendered
+    assert result["production_database_modified"] is False
+    assert result["submissions_sent"] is False
+
+
+def test_expired_gehs_excluded_and_no_false_fuel_keywords(tmp_path):
+    snap, watch = synthetic_inputs(tmp_path)
+    path = snap / "guarded-ingest" / "new-only.json"
+    state = snap / "guarded-ingest" / "state.json"
+    d = json.loads(path.read_text())
+    d["accepted"][0]["observation"]["deadline_raw"] = "21 ноября 2026, 07:00 Z"
+    new_sha = _dump(path, d)
+    s = json.loads(state.read_text()); s["source_input_sha256"] = new_sha
+    _dump(state, s)
+    # Plan proof must still match this known change; no unverified state accepted.
+    plan_path = snap / "verified-active-plan.json"
+    plan = json.loads(plan_path.read_text())
+    plan[0] = d["accepted"][0]
+    plan_sha = _dump(plan_path, plan)
+    s["plan_sha256"] = plan_sha
+    _dump(state, s)
+    value = compile_watch(snap, watch, NOW)
+    assert [c["external_id"] for c in value["geh"]["candidates"]] == ["price_request:124"]
+
+
+@pytest.mark.parametrize("target", [
+    "html", "plan", "state", "new_only", "capture",
+])
+def test_gehs_reject_tampering_before_business_claims(tmp_path, target):
+    snap, watch = synthetic_inputs(tmp_path)
+    paths = {
+        "html": snap / "geh_active_p1.html",
+        "plan": snap / "verified-active-plan.json",
+        "state": snap / "guarded-ingest" / "state.json",
+        "new_only": snap / "guarded-ingest" / "new-only.json",
+        "capture": snap / "capture-status.json",
+    }
+    path = paths[target]
+    if target == "html":
+        path.write_bytes(b"unverified mutation")
+    elif target == "capture":
+        data = json.loads(path.read_text());data["complete"] = False;_dump(path, data)
+    elif target == "state":
+        data = json.loads(path.read_text());data["inserted"] = 300;_dump(path, data)
+    elif target == "new_only":
+        data = json.loads(path.read_text());data["accepted"] = [];_dump(path, data)
+    else:
+        data = json.loads(path.read_text());data[0]["observation"]["title"] = "MUTATED";_dump(path, data)
+    with pytest.raises(EvidenceRejected):
+        compile_watch(snap, watch, NOW)
+
+
+def test_nonfirstparty_detail_and_missing_source_sha_rejected(tmp_path):
+    snap, watch = synthetic_inputs(tmp_path)
+    plan_path = snap / "verified-active-plan.json"
+    new_path = snap / "guarded-ingest" / "new-only.json"
+    state_path = snap / "guarded-ingest" / "state.json"
+    entries = json.loads(plan_path.read_text())
+    entries[0]["observation"]["detail_url"] = "https://evil.example/procedures/etp/123"
+    new = {"accepted": entries[:2]}
+    plan_sha = _dump(plan_path, entries)
+    new_sha = _dump(new_path, new)
+    state = json.loads(state_path.read_text())
+    state.update(plan_sha256=plan_sha, source_input_sha256=new_sha)
+    _dump(state_path, state)
+    with pytest.raises(EvidenceRejected, match="non-first-party"):
+        compile_watch(snap, watch, NOW)
+
+
+def test_missing_sibur_evidence_fails_closed(tmp_path):
+    snap, watch = synthetic_inputs(tmp_path)
+    data = json.loads(watch.read_text())
+    data["rows"][0]["observation"]["source_sha256"] = ""
+    _dump(watch, data)
+    with pytest.raises(EvidenceRejected, match="page SHA"):
+        compile_watch(snap, watch, NOW)
+
+
+def test_no_live_network_or_database_imports():
+    import inspect
+
+    import scripts.research.commercial_watch as module
+    source = inspect.getsource(module)
+    for forbidden in ("requests.get(", "subprocess.run(", "create_engine(", "http.client", "urllib.request"):
+        assert forbidden not in source
+
+
+def test_known_geh_in_current_verified_pages_remains_a_business_lead(tmp_path):
+    snap, watch = synthetic_inputs(tmp_path)
+    plan_path = snap / "verified-active-plan.json"
+    plan = json.loads(plan_path.read_text())
+    plan[2]["observation"]["title"] = "Монтаж КИПиА и ПНР"
+    sha = _dump(plan_path, plan)
+    state_path = snap / "guarded-ingest" / "state.json"
+    state = json.loads(state_path.read_text())
+    state["plan_sha256"] = sha
+    _dump(state_path, state)
+    value = compile_watch(snap, watch, NOW)
+    known = next(c for c in value["geh"]["candidates"] if c["external_id"] == "etp:125")
+    assert known["novelty"] == "previous_observation"
+    assert value["geh"]["summary"]["actually_inserted"] == 2
+    assert value["geh"]["summary"]["matching_unexpired"] == 3
+    assert value["geh"]["summary"]["new_relevant"] == 2
+    assert value["geh"]["summary"]["already_known_relevant"] == 1
+
+
+def test_category_only_sibur_match_has_limited_priority(tmp_path):
+    snap, watch = synthetic_inputs(tmp_path)
+    d = json.loads(watch.read_text())
+    row = d["rows"][0]["observation"]
+    row["title"] = "NB ИМПОРТ комплектующие КОС"
+    row["category"] = "Системы и средства автоматизации, метрологии и КИП"
+    _dump(watch, d)
+    value = compile_watch(snap, watch, NOW)
+    candidate = value["sibur"]["candidates"][0]
+    assert candidate["priority_score"] <= 65
+    assert candidate["topic"].startswith("Только категория:")
+    assert candidate["freshness"] == "older_than_48h_requires_refresh"
+
+
+def test_price_inquiry_never_outranks_direct_etp_even_when_title_matches(tmp_path):
+    snap, watch = synthetic_inputs(tmp_path)
+    value = compile_watch(snap, watch, NOW)
+    direct = next(c for c in value["geh"]["candidates"] if c["external_id"] == "etp:123")
+    inquiry = next(c for c in value["geh"]["candidates"]
+                   if c["external_id"] == "price_request:124")
+    assert direct["priority_score"] > inquiry["priority_score"]
+    assert inquiry["priority_score"] <= 74
+    assert "не считать тендером" in inquiry["next_action"]
+
+
+def test_newly_verified_geh_reserves_report_slots_vs_known_high_score(tmp_path):
+    snap, watch = synthetic_inputs(tmp_path)
+    plan_path = snap / "verified-active-plan.json"
+    plan = json.loads(plan_path.read_text())
+    plan[2]["observation"]["title"] = "АСУ ТП и автоматизация"
+    sha = _dump(plan_path, plan)
+    path = snap / "guarded-ingest" / "state.json"
+    state = json.loads(path.read_text())
+    state["plan_sha256"] = sha
+    _dump(path, state)
+    value = compile_watch(snap, watch, NOW, limit_per_source=2)
+    ids = {c["external_id"] for c in value["geh"]["candidates"]}
+    assert ids == {"etp:123", "price_request:124"}
+    assert len(value["geh"]["candidates"]) == 2
+
+
+def test_successful_zero_new_geh_daily_cycle_keeps_known_opportunities(tmp_path):
+    snap, watch = synthetic_inputs(tmp_path)
+    state_path = snap / "guarded-ingest" / "state.json"
+    payload_path = snap / "guarded-ingest" / "new-only.json"
+    state = json.loads(state_path.read_text())
+    state.update(stage="no_new", new=0, inserted=0)
+    state.pop("after")
+    state.pop("source_input_sha256")
+    state.pop("inflight")
+    payload_path.unlink()
+    _dump(state_path, state)
+    value = compile_watch(snap, watch, NOW)
+    assert value["geh"]["summary"]["actually_inserted"] == 0
+    assert value["geh"]["summary"]["already_known_relevant"] == 2
+    assert all(c["novelty"] == "previous_observation"
+               for c in value["geh"]["candidates"])
+
+
+def test_nonzero_missing_new_only_cannot_claim_ingest_success(tmp_path):
+    snap, watch = synthetic_inputs(tmp_path)
+    (snap / "guarded-ingest" / "new-only.json").unlink()
+    with pytest.raises(EvidenceRejected, match="missing or oversized"):
+        compile_watch(snap, watch, NOW)
+
+
+
+def _fresh_sibur_capture(tmp_path):
+    capture = tmp_path / "fresh-sibur"
+    capture.mkdir()
+    page = capture / "page-001.json"
+    page.write_bytes(b'{"synthetic": "first-party page receipt"}')
+    sha = hashlib.sha256(page.read_bytes()).hexdigest()
+    item = {
+        "external_id": "12345/1", "title": "ПНР АСУ ТП на ТЭЦ",
+        "source": "sibur_public", "verification": "PUBLIC_SNAPSHOT_ONLY",
+        "source_sha256": sha, "source_url":
+            "https://www.sibur.ru/ru/procurement/buy/?PAGEN_1=1&count=12",
+        "organizer": "ПАО СИБУР", "status_raw": "Прием предложений",
+        "category": "Проектные работы",
+        "deadline_raw": "30.11.2026 11:00:00",
+    }
+    item_date_only = dict(
+        item, external_id="9999/1", title="Поставка электродвигателей",
+        deadline_raw="25.11.2026",
+    )
+    _dump(capture / "normalized.json", [
+        {"external_id": "12345/1", "observations": [item]},
+        {"external_id": "9999/1", "observations": [item_date_only]},
+    ])
+    _dump(capture / "receipts.json", {
+        "source": "sibur_public",
+        "verification": "PUBLIC_LIST_SNAPSHOT_NONATOMIC_RESUMED",
+        "announced_pages": 1, "validated_pages": 1,
+        "advertised_pages_traversed": True, "page_count_stable": True,
+        "errors": [], "raw_rows": 2, "unique_ids": 2, "repeated_ids": 0,
+        "pages": [{
+            "page": 1, "last_page": 1, "sha256": sha,
+            "bytes": page.stat().st_size, "rows": 2,
+            "observed_at": "2026-11-22T18:00:00Z",
+        }],
+    })
+    return capture
+
+
+def test_current_sibur_public_capture_replaces_stale_curated_status(tmp_path):
+    geh, watch = synthetic_inputs(tmp_path)
+    fresh = _fresh_sibur_capture(tmp_path)
+    result = compile_watch(geh, watch, NOW, sibur_current_capture=fresh)
+    summary = result["sibur"]["summary"]
+    assert summary["pages_sha_verified"] == 1
+    assert summary["public_source_ids"] == 2
+    assert summary["unexpired_relevant"] == 2
+    assert summary["prior_curated_ids_seen_now"] == 1
+    assert summary["non_atomic"] is True
+    changed = summary["changed_deadlines_from_older_curated_watch"]
+    assert changed[0]["external_id"] == "12345/1"
+    assert changed[0]["prior_deadline_utc"] == "2026-11-27T07:00:00+00:00"
+    assert changed[0]["new_public_deadline_utc"] == "2026-11-30T08:00:00+00:00"
+    current = next(c for c in result["sibur"]["candidates"]
+                   if c["external_id"] == "12345/1")
+    assert current["novelty"] == "observed_in_latest_public_capture"
+    assert current["evidence_status"] == "CURRENT_SIBUR_PUBLIC_LIST_CARD_RECHECK"
+    assert current["deadline_utc"] == "2026-11-30T08:00:00+00:00"
+    date_only = next(c for c in result["sibur"]["candidates"]
+                     if c["external_id"] == "9999/1")
+    assert date_only["deadline_utc"] is None
+    assert date_only["deadline_precision"] == "date_only"
+    assert date_only["priority_score"] <= 74
+    assert "точный срок" in date_only["next_action"]
+
+
+@pytest.mark.parametrize("kind", ["html_hash", "truncated_capture", "foreign_url", "invalid_rows"])
+def test_fresh_sibur_refuses_tampered_or_incomplete_source(tmp_path, kind):
+    geh, watch = synthetic_inputs(tmp_path)
+    fresh = _fresh_sibur_capture(tmp_path)
+    if kind == "html_hash":
+        (fresh / "page-001.json").write_bytes(b"tampered")
+    elif kind == "truncated_capture":
+        receipt = fresh / "receipts.json"
+        value = json.loads(receipt.read_text())
+        value["advertised_pages_traversed"] = False
+        _dump(receipt, value)
+    else:
+        path = fresh / "normalized.json"
+        value = json.loads(path.read_text())
+        if kind == "foreign_url":
+            value[0]["observations"][0]["source_url"] = (
+                "https://evil.example/ru/procurement/buy/?PAGEN_1=1"
+            )
+        else:
+            value[0]["observations"][0]["source_sha256"] = "b" * 64
+        _dump(path, value)
+    with pytest.raises(EvidenceRejected):
+        compile_watch(geh, watch, NOW, sibur_current_capture=fresh)
+
+
+def test_cancelled_sibur_source_is_not_in_commercial_funnel(tmp_path):
+    geh, watch = synthetic_inputs(tmp_path)
+    fresh = _fresh_sibur_capture(tmp_path)
+    path = fresh / "normalized.json"
+    rows = json.loads(path.read_text())
+    rows[1]["observations"][0]["status_raw"] = "Процедура отменена"
+    _dump(path, rows)
+    result = compile_watch(geh, watch, NOW, sibur_current_capture=fresh)
+    assert result["sibur"]["summary"]["excluded_cancelled_or_nonaccepting"] == 1
+    assert [c["external_id"] for c in result["sibur"]["candidates"]] == ["12345/1"]
+
+
+
+def test_buyer_vs_organizer_and_source_time_precision_are_not_conflated(tmp_path):
+    geh, watch = synthetic_inputs(tmp_path)
+    fresh = _fresh_sibur_capture(tmp_path)
+    value = compile_watch(geh, watch, NOW, sibur_current_capture=fresh)
+    buyer = value["geh"]["candidates"][0]
+    assert buyer["buyer_as_published"] == "ПАО ТГК-1"
+    assert buyer["organizer_as_published"] == "ООО ГЭХ Закупки"
+    assert buyer["deadline_msk"] == "25.11.2026 10:00"
+    sibur = next(c for c in value["sibur"]["candidates"]
+                 if c["external_id"] == "12345/1")
+    assert sibur["buyer_as_published"] is None
+    assert sibur["organizer_as_published"] == "ПАО СИБУР"
+    assert sibur["deadline_msk"] == "30.11.2026 11:00"
+    date_only = next(c for c in value["sibur"]["candidates"]
+                     if c["external_id"] == "9999/1")
+    assert date_only["deadline_msk"] is None
+    assert date_only["deadline_utc"] is None
+
+
+
+def test_daily_current_sibur_snapshot_cannot_silently_go_stale(tmp_path):
+    geh, watch = synthetic_inputs(tmp_path)
+    fresh = _fresh_sibur_capture(tmp_path)
+    receipt_path = fresh / "receipts.json"
+    rec = json.loads(receipt_path.read_text())
+    rec["pages"][0]["observed_at"] = "2026-11-18T18:00:00Z"
+    _dump(receipt_path, rec)
+    with pytest.raises(EvidenceRejected, match="SIBUR current public capture is stale"):
+        compile_watch(geh, watch, NOW, sibur_current_capture=fresh)
+
+
+def test_daily_geh_snapshot_cannot_silently_go_stale(tmp_path):
+    geh, watch = synthetic_inputs(tmp_path)
+    plan_path = geh / "verified-active-plan.json"
+    new_path = geh / "guarded-ingest" / "new-only.json"
+    state_path = geh / "guarded-ingest" / "state.json"
+    plan = json.loads(plan_path.read_text())
+    for entry in plan:
+        entry["observed_at"] = "2026-11-18T18:00:00Z"
+    plan_sha = _dump(plan_path, plan)
+    new_sha = _dump(new_path, {"accepted": plan[:2]})
+    state = json.loads(state_path.read_text())
+    state.update(plan_sha256=plan_sha, source_input_sha256=new_sha)
+    _dump(state_path, state)
+    with pytest.raises(EvidenceRejected, match="GEH public source capture is stale"):
+        compile_watch(geh, watch, NOW)
+
+
+def test_daily_current_sibur_snapshot_future_dated_is_rejected(tmp_path):
+    geh, watch = synthetic_inputs(tmp_path)
+    fresh = _fresh_sibur_capture(tmp_path)
+    receipt_path = fresh / "receipts.json"
+    rec = json.loads(receipt_path.read_text())
+    rec["pages"][0]["observed_at"] = "2026-11-23T18:00:00Z"
+    _dump(receipt_path, rec)
+    with pytest.raises(EvidenceRejected, match="future-dated"):
+        compile_watch(geh, watch, NOW, sibur_current_capture=fresh)
