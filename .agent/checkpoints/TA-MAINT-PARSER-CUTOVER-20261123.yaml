@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-MAINT-PARSER-CUTOVER-20261123
-status: in_progress
+status: blocked
 related_issue: 721
 goal: "Prepare coordinated Mac mini maintenance for temporary ALL-LLM stop, controlled restart of PostgreSQL and safe deploy of a new Daily Tender EIS deadline parser, with traceable rollback and service-independent verification."
 owner_request: "2026-11-23: user is preparing planned maintenance, temporary shutdown of all LLM, PostgreSQL restart and wants updated parser launched. Preparation authorized; DO NOT begin outage or restart PG before explicit maintenance-start instruction."
@@ -23,15 +23,17 @@ completed:
   - "Parser-only hotfix based on ACTUALLY DEPLOYED old commit 9b650a2b818032389cfd6e13799acad33c72089b, not blocked full-Core main: branch release/ta-eis-exact-clock-pinned-20261123 SHA 6ab4ae08f4309b6ad9fc10bf884c5f1744cb26dd, only 4 changes; 54 pinned-base tests and Ruff PASS; GitVerse mirror success and protected CI running."
   - "Pinned SSD candidate checkout + isolated Python3.12 venv built OFFLINE and 54 tests PASS. Proposed paired backend and Daily Tender wrappers, private unmodified-scope source-release admission and 0700 EIS original archive staged only, no live swap. Staged receipt SHA256 e997635f535b97617597881abde4902f28a3aaed5e9257faf69c5f322ff09b3f."
   - "Read-only controls confirm PG17 and Gemma still running, isolated restore container removed, live Tender Agent backend SHA unchanged and no LLM shutdown or PG restart performed."
-current_stage: protected_exact_head_ci_and_owner_maintenance_window_gate
+  - "23-Nov source-only PR #726 merged main at c75a9356221e91a98b6c8cecf95536247c944855 after exact-head CI 9/9 SUCCESS and GitVerse mirror SUCCESS."
+  - "Pinned exact old-base hotfix 6ab4ae08f4309b6ad9fc10bf884c5f1744cb26dd has standalone CI 9/9 SUCCESS and GitVerse mirror SUCCESS; all 55 identical live package versions, original requirements.lock hash unchanged."
+  - "After source-only merge, live PG17 readiness, backend GET /health and old backend marker 9b650a2b... independently rechecked at 2026-11-23 11:27 MSK. No disruption."
+current_stage: blocked_waiting_for_explicit_owner_maintenance_start
 remaining:
-  - "Confirm exact protected 9/9 CI on both PR #726 and pinned-backport SHA 6ab4ae08, GitVerse mirror; merge source-only PR #726"
   - "Obtain exact Owner maintenance-start signal and outage window for all LLM and shared PG17; do not restart PG16"
   - "Only then safely quiesce consumers, stop LLM, restart PG17 without volume/image replacement, promote paired parser-only backend/runner release, independent postcheck, rollback if needed"
   - "Check first full scheduled morning digest 07:00 and Daily Tender 08:00; then checkpoint completed"
-last_verified_commit: '6ab4ae08f4309b6ad9fc10bf884c5f1744cb26dd (pinned hotfix stage) / a9f0f90bdac97e8fb544125a23e00ce1e628e3a7 (source-only runbook branch)'
-test_results: '59 main-derived focused PASS + 196/196 real EIS HTML acceptance; pinned base 54 focused PASS Ruff PASS offline new venv; no-prune 5 DB backup SHA verified, isolated FULL PG17 dual-DB restore PASS; protected CI in progress, live cutover NOT started'
-resume_instruction: 'Continue only source-only CI check: PR #726 exact head and pinned hotfix 6ab4ae08f4309b6ad9fc10bf884c5f1744cb26dd both CI 9/9 + mirror; merge source-only PR after acceptance. PRIVATE no-prune backup in /Users/master/.local/state/arvectum-recovery/maintenance-20261123 and complete airgapped restore already proven, do not re-run. Staged cutover wrappers and manifest exist only under /Volumes/ArvectumSSD/Arvectum/releases/tender-agent-6ab4ae08f4309b6ad9fc10bf884c5f1744cb26dd/staged-cutover. DO NOT stop LLM or PG17, change production wrappers/manifest/marker, reboot or deploy candidate until user declares window started and approves downtime. Main full Core release still independently BLOCKED. Preserve 07:00/08:00 schedules, no new watchdog.'
+last_verified_commit: 'c75a9356221e91a98b6c8cecf95536247c944855 (PR #726 main) / 6ab4ae08f4309b6ad9fc10bf884c5f1744cb26dd (standalone pinned hotfix)'
+test_results: '59 main-derived focused PASS + 196/196 real EIS HTML acceptance; pinned base 54 focused PASS Ruff PASS offline new venv; no-prune 5 DB backup SHA verified, isolated FULL PG17 dual-DB restore PASS; both CI 9/9 and mirrors SUCCESS, live cutover NOT started'
+resume_instruction: 'BLOCKED by owner maintenance-window start. Source-only new EIS parser is MERGED in main PR726 c75a9356, standalone immutable old-base hotfix 6ab4ae08... has exact protected CI 9/9 and GitVerse pass, offline venv, staged wrappers/manifest. Fresh independent 5 DB logical no-prune backup with isolated airgapped dual PG17 full restore accepted and saved private receipt. Do NOT rerun backups/restore without need, do NOT stop LLM, restart PG17 or promote parser without user explicitly stating START OF DOWNTIME / exact window. Once explicitly authorized, recheck safety: in-flight queues/clients, WAL receivers, valid backup, exact live marker, resources. Stop and drain affected consumers then LLM servers using launchd (KeepAlive), restart same PG17 container and volume (not PG16), verify DB/receiver, apply staged paired wrappers + new WSF admission, resume models/workers and smoke with rollback. Never promote broad current main Core runtime. Keep one watchdog and 07:00/08:00 schedules. Leave status blocked until approval.'
 production_modified: false
 downtime_started: false
 postgres_restarted: false
