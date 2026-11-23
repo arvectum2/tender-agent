@@ -1,5 +1,7 @@
 # Tender Agent — Current Roadmap
 
+> **Актуальная полная дорожная карта на 23.11.2026:** [PRODUCT_STATUS_2026-11-23](../roadmap/PRODUCT_STATUS_2026-11-23.md). Разделы ниже — историческая диагностика сентября, не текущий live-статус.
+
 Updated: 2026-09-10
 Canonical repository: `arvectum2/tender-agent`
 Current canonical main at this status update follows the migration-doc sequence after product baseline `81f77d5f97ae92733f5887136aa0c1f67ceb22ae`.

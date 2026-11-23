@@ -3993,3 +3993,32 @@ release_evidence_snapshot_2026_11_21:
   active_execution_queue_automatically_changed: false
   external_etp_submission_authorized: false
   legal_go_acceptance_from_this_snapshot: false
+
+product_status_snapshot_2026_11_23:
+  role: dated_management_overlay_not_executor_authority
+  status_document: docs/roadmap/PRODUCT_STATUS_2026-11-23.md
+  reviewed_main: 023d3670adcbf6d9ae8a318f4433615fa94b680c
+  backend_health: http_200
+  data_platform_health: http_200
+  release_equals_reviewed_main: unverified
+  execution_queue: {done: 65, ready: 0, blocked_review: 1, total: 66}
+  queue_progress_is_not_product_completion: true
+  parent_status: in_progress
+  apr:
+    APR_01: bounded_done
+    APR_02: bounded_done
+    APR_03: internal_runtime_production_gate_open
+    APR_03B: development_accepted_live_gate_open
+    APR_04: partial
+    APR_05: partial_paid_public_off
+    APR_06: development_commercial_human_gold_open
+    APR_07: partial_data_platform_ingest_slo_red
+    APR_08: development_accepted_production_gate_open
+    APR_09: trigger_gated_supplier
+    APR_10: trigger_gated_feedback
+  mobile: mob_1_to_4_merged_real_device_open
+  source_gap_issue: 679
+  seven_day_pitr_issue: 685
+  single_watchdog_unchanged: true
+  execution_queue_unchanged: true
+  external_actions_authorized: false
