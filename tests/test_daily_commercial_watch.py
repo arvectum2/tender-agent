@@ -133,6 +133,8 @@ def test_successful_execute_is_atomic_private_and_sha_bound(tmp_path, monkeypatc
     markdown = Path(receipt["report_markdown"]).read_bytes()
     assert hashlib.sha256(content).hexdigest() == receipt["report_json_sha256"]
     assert hashlib.sha256(markdown).hexdigest() == receipt["report_markdown_sha256"]
+    assert "Изменения относительно предыдущей коммерческой подборки" in markdown.decode()
+    assert "Первый отчёт" in markdown.decode()
     assert json.loads(content)["sibur"]["candidates"][0]["external_id"] == "123/1"
     assert json.loads((out / "last_success.json").read_text()) == receipt
     assert json.loads((out / "last_attempt.json").read_text()) == receipt
@@ -161,7 +163,7 @@ def test_fail_preserves_last_success_and_blocks_last_attempt(tmp_path, monkeypat
 
 def test_lock_prevents_overlapping_report_even_for_dry_existing_capture(tmp_path, monkeypatch):
     geh, sibur, watch, capture, out = _prepared(tmp_path, monkeypatch)
-    out.mkdir()
+    out.mkdir(mode=0o700)
     lock = out / ".source-watch.lock"
     with lock.open("w") as fh:
         fcntl.flock(fh, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -221,7 +223,7 @@ def test_report_delta_is_about_shortlist_not_source_closure():
 
 def test_invalid_previous_success_receipt_refuses_new_publication(tmp_path, monkeypatch):
     geh, sibur, watch, capture, out = _prepared(tmp_path, monkeypatch)
-    out.mkdir()
+    out.mkdir(mode=0o700)
     (out / "last_success.json").write_text('{"status":"in_progress"}')
     with pytest.raises(EvidenceRejected, match="invalid"):
         _execute(geh, sibur, watch, capture, out)
@@ -254,3 +256,46 @@ def test_source_proof_requires_real_readable_files(tmp_path):
     sibur.mkdir()
     with pytest.raises(EvidenceRejected, match="source proof unavailable"):
         daily._source_proof(geh, sibur)
+
+
+
+def test_source_capture_lock_rejects_second_caller_even_with_another_report_root(
+    tmp_path,
+):
+    root = tmp_path / "sibur-source"
+    root.mkdir()
+    lock = root / ".daily-public-capture.lock"
+    with lock.open("w") as fh:
+        fcntl.flock(fh, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        with pytest.raises(EvidenceRejected, match="another SIBUR"):
+            daily._run_capture(root, "20261123T060001000000Z")
+    assert not list(root.glob("daily-commercial-*"))
+
+
+def test_report_private_root_does_not_change_existing_shared_permissions(
+    tmp_path, monkeypatch,
+):
+    geh, sibur, watch, capture, out = _prepared(tmp_path, monkeypatch)
+    out.mkdir(mode=0o755)
+    out.chmod(0o755)
+    with pytest.raises(EvidenceRejected, match="unsafe group/other"):
+        _execute(geh, sibur, watch, capture, out)
+    assert out.stat().st_mode & 0o777 == 0o755
+    assert list(out.iterdir()) == []
+
+
+def test_second_success_reports_only_actual_shortlist_change(tmp_path, monkeypatch):
+    geh, sibur, watch, capture, out = _prepared(tmp_path, monkeypatch)
+    first = _execute(geh, sibur, watch, capture, out)
+    assert first["shortlist_delta"]["baseline"] == "first_run_no_prior_commercial_shortlist"
+    next_data = _sample()
+    next_data["sibur"]["candidates"][0]["deadline_utc"] = "2026-11-28T09:00:00+00:00"
+    monkeypatch.setattr(daily, "_compile", lambda **_: (next_data, geh / "geh-active-refresh-20261123T050000Z"))
+    second = _execute(geh, sibur, watch, capture, out, now=NOW.replace(minute=12))
+    assert second["shortlist_delta"]["shortlist_added"] == []
+    assert second["shortlist_delta"]["shortlist_changed"] == ["sibur:123/1"]
+    markdown = Path(second["report_markdown"]).read_text()
+    assert "Изменились срок" in markdown
+    assert "sibur:123/1" in markdown
+    assert Path(first["report_json"]).is_file()
+    assert second["status"] == "completed"
