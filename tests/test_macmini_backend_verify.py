@@ -94,7 +94,8 @@ def _admission_fixture(tmp_path, monkeypatch):
     import hashlib
     from datetime import UTC, datetime, timedelta
 
-    base=tmp_path/'admission';base.mkdir()
+    base=tmp_path/'admission'
+    base.mkdir()
     now=datetime(2026,11,18,tzinfo=UTC)
     end=(now+timedelta(days=1)).isoformat()
     release='a'*40
@@ -106,12 +107,17 @@ def _admission_fixture(tmp_path, monkeypatch):
        'source_product':'Tender Agent / Procurement Portfolio','status':'approved-exact-set-pending-product-and-workspace-activation',
        'owner_approval_reference':'fixture-approval','excluded_count':9}
     def write(name,d):
-        p=base/name;p.write_text(json.dumps(d));p.chmod(0o600);return hashlib.sha256(p.read_bytes()).hexdigest()
-    pin=write('source-access.json',m);write('owner-admission.json',o)
+        p=base/name
+        p.write_text(json.dumps(d))
+        p.chmod(0o600)
+        return hashlib.sha256(p.read_bytes()).hexdigest()
+    pin=write('source-access.json',m)
+    write('owner-admission.json',o)
     a={'status':'source-and-workspace-read-verified','source_manifest_sha256':pin,'source_release':release,
        'owner_approval_reference':'fixture-approval','expiry':end,'admitted_count':12,'excluded_count':9}
     write('activation-evidence.json',a)
-    launcher=tmp_path/'launcher';launcher.write_text(f'export ARVECTUM_WORKSPACE_PROCUREMENT_MANIFEST="{base}/source-access.json"\nexport ARVECTUM_WORKSPACE_PROCUREMENT_MANIFEST_SHA256="{pin}"\nexport ARVECTUM_WORKSPACE_PROCUREMENT_SOURCE_RELEASE="$SHA"\n')
+    launcher=tmp_path/'launcher'
+    launcher.write_text(f'export ARVECTUM_WORKSPACE_PROCUREMENT_MANIFEST="{base}/source-access.json"\nexport ARVECTUM_WORKSPACE_PROCUREMENT_MANIFEST_SHA256="{pin}"\nexport ARVECTUM_WORKSPACE_PROCUREMENT_SOURCE_RELEASE="$SHA"\n')
     class Clock:
         fromisoformat=staticmethod(datetime.fromisoformat)
         @staticmethod
@@ -133,9 +139,11 @@ def test_current_admission_exact_receipt(tmp_path, monkeypatch):
 def test_tampered_receipts_and_denial(tmp_path, monkeypatch):
     release,base,launcher,m,o,a,write=_admission_fixture(tmp_path,monkeypatch)
     marker={'workspace_admitted':True}
-    o['deal_ids']=['DL-other']+o['deal_ids'][1:];write('owner-admission.json',o)
+    o['deal_ids']=['DL-other']+o['deal_ids'][1:]
+    write('owner-admission.json',o)
     assert not verify.workspace_state_matches(marker,release)
-    o['deal_ids']=m['deal_ids'];write('owner-admission.json',o)
+    o['deal_ids']=m['deal_ids']
+    write('owner-admission.json',o)
     monkeypatch.setattr(verify,'anonymous_reference_status',lambda:200)
     assert not verify.workspace_state_matches(marker,release)
     monkeypatch.setattr(verify,'anonymous_reference_status',lambda:403)
@@ -224,3 +232,14 @@ def test_docs_only_newer_main_is_acceptable_but_code_drift_is_not(monkeypatch):
     compare([])
     assert not verify.release_code_parity(None, production, newer)
     assert verify.release_code_parity(None, production, production)
+
+def test_release_revision_matches_exact_candidate_source(tmp_path):
+    """Daily preflight must not accept the old DB schema after a new release."""
+    root = tmp_path / "source"
+    folder = root / "migrations/versions"
+    folder.mkdir(parents=True)
+    assert verify.expected_release_revision(root) == "127_private_review_link_corrections"
+    (folder / "128_add_tender_async_index_receipts.py").write_text(
+        "revision = '128_add_tender_async_index_receipts'\\n"
+    )
+    assert verify.expected_release_revision(root) == "128_add_tender_async_index_receipts"

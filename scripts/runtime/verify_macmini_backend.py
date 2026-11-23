@@ -184,6 +184,20 @@ def release_code_parity(source, commit, main_sha):
         return False
 
 
+def expected_release_revision(source: pathlib.Path) -> str:
+    """Require the migration head associated with this exact release source.
+
+    Keep historical releases verifiable during rollback. Never claim a new
+    database revision merely because an unmerged developer tree contains it.
+    """
+    migration = source / "migrations/versions/128_add_tender_async_index_receipts.py"
+    return (
+        "128_add_tender_async_index_receipts"
+        if migration.is_file()
+        else "127_private_review_link_corrections"
+    )
+
+
 def check_release(active: dict) -> dict:
     """Check immutable release rather than a mutable developer checkout."""
     checks: dict[str, bool] = {}
@@ -220,7 +234,7 @@ def check_release(active: dict) -> dict:
         checks["backend_and_daily_release_pins"] = (
             re.findall(r"(?m)^SHA=([a-f0-9]{40})$", backend_launcher) == [commit]
             and re.findall(r'(?m)^SHA = "([a-f0-9]{40})"$', daily_launcher) == [commit]
-            and 'REVISION = "127_private_review_link_corrections"' in daily_launcher
+            and f'REVISION = "{expected_release_revision(source)}"' in daily_launcher
         )
     except (OSError, ValueError):
         checks["backend_and_daily_release_pins"] = False
