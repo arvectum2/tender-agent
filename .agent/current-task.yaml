@@ -1249,6 +1249,9 @@ ta_sibur_geh_closure_2026_11_23:
   geh_review_resolved_and_imported: 4
   geh_review_source_anomalies_quarantined: 2
   geh_source_pr: 731
+  geh_source_pr_merged: true
+  geh_source_merge_commit: 6fd845998d672e0deb290da63b9a756459a2e010
+  geh_source_ci_9_of_9_pass: true
   geh_research_pg16_rows_before: 29182
   geh_research_pg16_rows_after: 29186
   sibur_worker_running: true
