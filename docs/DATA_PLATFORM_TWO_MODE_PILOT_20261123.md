@@ -142,3 +142,30 @@ Final scoped candidate validation after merging current main: **125 tests PASS**
 Ruff PASS, disposable two-PostgreSQL E2E PASS (9 accepted/9 complete/9
 provenance-mapped retrieval hits; pending blocked). The full GitHub CI on the
 current head remains the release authority. This pilot is draft and default-off.
+
+## R9 backup/restore CI acceptance: PostgreSQL client version resolution
+
+A reproducible unrelated full-CI blocker was traced to the R9 disposable
+backup/restore acceptance test: the test uses **PostgreSQL 16 + pgvector** but
+its host may have PostgreSQL **18** client utilities. The PG18 `pg_restore`
+sends `SET transaction_timeout`, which PG16 rejects. The matrix failed with
+`pg_restore failed with exit code 1` before testing later scenarios.
+
+The change is strictly limited to the *test harness* at
+`scripts/acceptance/run_r9_backup_restore.py` and its new guarded native-PG16
+CLI adapter `r9_pg_container_client.py`: after the owned disposable compose
+service starts, it verifies the exact Compose project label and PG16 client
+version, and temporarily selects `pg_dump`/`pg_restore` executing inside that
+same PG16 server container. The adapter rejects non-loopback targets and wrong
+ports, streams archive bytes through explicit stdin/stdout, never logs
+credentials or restores to an arbitrary server, and removes/clears its
+scratch PATH and environment in the cleanup block.
+
+**The production `scripts/ops/r9_recovery.py` code is unchanged**; it still
+requires an empty restore target, performs a single atomic transaction,
+checks exit codes, redacts underlying database errors, and rejects inconsistent
+DB/filesystem/tenant snapshots. The full original disposable R9 restore matrix
+was rerun and returned **PASS** (1 test), plus targeted tests of proxy
+fail-closed behavior and unchanged restore/error-redaction contracts. The
+exact latest-head GitHub CI is still the release gate; neither a local test
+pass nor draft PR authorizes production migration/deployment.
