@@ -1,0 +1,25 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-EIS-298-DEADLINE-AUDIT-20261123
+related_issue: 721
+status: in_progress
+goal: "Independent read-only source-based audit of all 298 remaining Daily Tender EIS records whose stored submission clock is 00:00 Moscow after the verified one-row correction."
+definition_of_done:
+  - "Read exact 298 production record identities with read-only transaction and verify DB identity, base snapshot hash and existing confirmed correction is untouched."
+  - "For each unique official EIS notice fetch verified detail source evidence or record explicit unavailable/ambiguous outcome; control request rate and host impact."
+  - "Classify each row: official exact same midnight, official different exact time, date-only/unknown, official inaccessible, invalid source or other."
+  - "Create full per-record private source-backed audit with reproducible evidence hashes, discrepancy counts and prioritized actionable manager list."
+  - "Validate independent recount, leave source records and production DB unchanged, summarize in issue #721 and canonical checkpoint."
+completed:
+  - "Prior single officially verified row #0845500000526000021 corrected to 30 Nov 09:00 MSK, with immutable source proof; the remaining 298 midnight rows were intentionally untouched."
+  - "Official EIS main public detail HTML contains exact deadline while public list may contain only date."
+current_stage: establish_guarded_readonly_production_snapshot
+remaining:
+  - "Validate actual production database and enumerate 298 in source-only JSON outside git."
+  - "Source-verification per distinct official notice with bounded GET, SHA and exact-field extraction."
+  - "Independent classify/recount and publish sanitized summary and canonical checkpoint."
+last_verified_commit: "839de593aa1aae10cca77fa81c5da91239842b2a"
+test_results: "not_started"
+resume_instruction: "Audit only, no bulk database UPDATE, no ETP submissions or launchctl changes. Read production data read-only using pinned runtime identity and source-provenance guards, back up source evidence privately and record all unavailable sources. Scope exactly remaining 298, report verified counts and unresolved with full per-record evidence. Keep new checkpoint current until completed."
+production_mutations: false
+external_submissions: false
