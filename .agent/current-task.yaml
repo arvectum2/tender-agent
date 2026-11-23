@@ -1209,8 +1209,13 @@ ta_maintenance_parser_cutover_2026_11_23:
   status: in_progress
   checkpoint: .agent/checkpoints/TA-MAINT-PARSER-CUTOVER-20261123.yaml
   related_issue: 721
-  current_stage: maintenance_preflight_and_source_only_parser_staging
+  current_stage: exact_head_CI_and_owner_maintenance_window_gate
   outage_authorized: false
   postgres_restarted: false
   llm_stopped: false
   parser_live_deployed: false
+  pinned_hotfix_sha: 6ab4ae08f4309b6ad9fc10bf884c5f1744cb26dd
+  source_pr: 726
+  fresh_backup_done: true
+  independent_pg17_dual_db_restore_verified: true
+  seven_day_pitr_proven: false
