@@ -1222,11 +1222,20 @@ ta_maintenance_parser_cutover_2026_11_23:
 
 ta_sibur_geh_recent_2026_11_23:
   task_id: TA-SIBUR-GEH-RECENT-20261123
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-SIBUR-GEH-RECENT-20261123.yaml
-  current_stage: newest_verified_geh_month_pilot
+  current_stage: recovery_and_recent_first_24_month_verified
   sibur_worker_running: true
-  geh_scope: 2024-11_through_2026-11
+  sibur_second_worker_started: false
+  sibur_indexed_members: 7146
+  sibur_current_eligible: 7827
+  sibur_remaining_dynamic: 681
+  geh_scope: 2024-11_through_2026-10
+  geh_source_months_covered: 24
+  geh_new_research_rows_inserted: 259
+  geh_normalization_review: 6
+  research_database_after: 29182
   recent_month_priority: newest_first
+  report: docs/market-intelligence/SIBUR_GEH_RECENT_FIRST_2026-11-23.md
   production_services_modified: false
   maintenance_outage_started: false
