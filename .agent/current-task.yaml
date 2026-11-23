@@ -1219,3 +1219,14 @@ ta_maintenance_parser_cutover_2026_11_23:
   fresh_backup_done: true
   independent_pg17_dual_db_restore_verified: true
   seven_day_pitr_proven: false
+
+ta_sibur_geh_recent_2026_11_23:
+  task_id: TA-SIBUR-GEH-RECENT-20261123
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-SIBUR-GEH-RECENT-20261123.yaml
+  current_stage: newest_verified_geh_month_pilot
+  sibur_worker_running: true
+  geh_scope: 2024-11_through_2026-11
+  recent_month_priority: newest_first
+  production_services_modified: false
+  maintenance_outage_started: false
