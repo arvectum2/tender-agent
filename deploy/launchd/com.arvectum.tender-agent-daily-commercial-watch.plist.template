@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.arvectum.tender-agent-daily-commercial-watch</string>
+    <key>WorkingDirectory</key>
+    <string>@PINNED_RELEASE_CHECKOUT@</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/master/ArvectumSafe/.venvs/tender-agent-mi/bin/python</string>
+        <string>-u</string>
+        <string>-m</string>
+        <string>scripts.research.daily_commercial_watch</string>
+        <string>--execute</string>
+        <string>--capture-sibur</string>
+        <string>--geh-root</string>
+        <string>/Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources</string>
+        <string>--sibur-root</string>
+        <string>/Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/sibur-sales-map-20261115</string>
+        <string>--sibur-watch</string>
+        <string>/Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/sibur-sales-map-20261115/sibur-current-commercial-watch-v18.json</string>
+        <string>--out-root</string>
+        <string>/Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/commercial-watch-daily</string>
+        <string>--limit-per-source</string>
+        <string>14</string>
+    </array>
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>8</integer>
+        <key>Minute</key>
+        <integer>35</integer>
+    </dict>
+    <key>RunAtLoad</key>
+    <false/>
+    <key>KeepAlive</key>
+    <false/>
+    <key>ThrottleInterval</key>
+    <integer>1800</integer>
+    <key>StandardOutPath</key>
+    <string>/Users/master/ArvectumSafe/launchlogs/tender-agent/com.arvectum.tender-agent-daily-commercial-watch.stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/master/ArvectumSafe/launchlogs/tender-agent/com.arvectum.tender-agent-daily-commercial-watch.stderr.log</string>
+</dict>
+</plist>
