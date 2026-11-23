@@ -299,3 +299,33 @@ def test_second_success_reports_only_actual_shortlist_change(tmp_path, monkeypat
     assert "sibur:123/1" in markdown
     assert Path(first["report_json"]).is_file()
     assert second["status"] == "completed"
+
+
+
+def test_previous_report_tampering_is_blocked_before_delta_publication(
+    tmp_path, monkeypatch,
+):
+    geh, sibur, watch, capture, out = _prepared(tmp_path, monkeypatch)
+    good = _execute(geh, sibur, watch, capture, out)
+    prior = Path(good["report_json"])
+    prior.write_text(prior.read_text() + "unverified corruption")
+    with pytest.raises(EvidenceRejected, match="receipt SHA"):
+        _execute(geh, sibur, watch, capture, out, now=NOW.replace(minute=11))
+    assert json.loads((out / "last_attempt.json").read_text())["status"] == "blocked"
+    assert json.loads((out / "last_success.json").read_text())["run_id"] == good["run_id"]
+
+
+def test_previous_report_pointer_outside_private_runs_is_rejected(
+    tmp_path, monkeypatch,
+):
+    geh, sibur, watch, capture, out = _prepared(tmp_path, monkeypatch)
+    _execute(geh, sibur, watch, capture, out)
+    receipt_path = out / "last_success.json"
+    receipt = json.loads(receipt_path.read_text())
+    other = tmp_path / "other.txt"
+    other.write_text("other")
+    receipt["report_json"] = str(other)
+    receipt["report_json_sha256"] = hashlib.sha256(other.read_bytes()).hexdigest()
+    receipt_path.write_text(json.dumps(receipt))
+    with pytest.raises(EvidenceRejected, match="SHA is inconsistent"):
+        _execute(geh, sibur, watch, capture, out, now=NOW.replace(minute=11))
