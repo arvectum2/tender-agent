@@ -1,0 +1,29 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-EIS-298-DEADLINE-AUDIT-20261123
+related_issue: 721
+status: completed
+goal: "Independent read-only source-based audit of all 298 remaining Daily Tender EIS records whose stored submission clock is 00:00 Moscow after the verified one-row correction."
+definition_of_done:
+  - "Read exact 298 production record identities with read-only transaction and verify DB identity, base snapshot hash and existing confirmed correction is untouched."
+  - "For each unique official EIS notice fetch verified detail source evidence or record explicit unavailable/ambiguous outcome; control request rate and host impact."
+  - "Classify each row: official exact same midnight, official different exact time, date-only/unknown, official inaccessible, invalid source or other."
+  - "Create full per-record private source-backed audit with reproducible evidence hashes, discrepancy counts and prioritized actionable manager list."
+  - "Validate independent recount, leave source records and production DB unchanged, summarize in issue #721 and canonical checkpoint."
+completed:
+  - "Prior single officially verified row #0845500000526000021 corrected to 30 Nov 09:00 MSK, with immutable source proof; the remaining 298 midnight rows were intentionally untouched."
+  - "Official EIS main public detail HTML contains exact deadline while public list may contain only date."
+  - "Pinned production database identity verified (arvectum/arvectum/127_private_review_link_corrections), REPEATABLE READ READ ONLY: 299 total, one earlier officially corrected MAX notice, remaining exactly 298 midnight rows and 196 distinct 44-FZ EIS source registry numbers."
+  - "Immutable private snapshot created at /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/eis-midnight-audit-20261123/snapshot.json, SHA-256 47cae7aea67ded3c39af1cc0fd2808d9abf2af441fa3233605780d2ab28a1d27."
+  - "All 196 first-party official GET notice originals validated, strict TLS/no redirects/allowlisted page and record number, exact detailed field date/time/МСК regional zone converted to UTC. Initial 191 accepted + 5 recovered with original failure receipts retained."
+  - "Full independent recheck of source HTML SHA and receipt source metadata 196/196; per-record 298/298 CSV comparison: 288 same Moscow date but different clock, 7 different Moscow date, 3 exact genuine midnight. Official later in 293 rows, earlier in 2, exact 3. No unresolved."
+  - "Manager-ready 45 rows, of which 37 with future official deadlines; all future rows 225 at 23-Nov snapshot. Only 196 unique notices, 298 DB rows including repeat sightings."
+  - "Outputs in private directory EIS_298_REPORT.md, EIS_298_ALL_VERIFIED.csv, EIS_298_SUMMARY.json. CSV SHA-256 c36168601f6b7b949002287d78363ad40bcfa3103cdd587466838e25353e2d3a, 231592 bytes. Sanitized report, full table and stats published to private GitHub audit branch."
+  - "17 synthetic pytest PASS, Ruff PASS, compile PASS; independent original source rehash and all counts rechecked; production database was not modified, no bids/services touched."
+current_stage: completed_readonly_all_298_source_verified
+remaining: []
+last_verified_commit: '12b1cdc8169c02a67a744fecc9dc044920b87e58 (17 synthetic pytest, Ruff, compile, independent report generator verified 196 HTML originals and 298 row CSV)'
+test_results: '17 focused tests PASS, Ruff and compile PASS; production 298 read-only snapshot SHA; 196/196 exact official GET HTML receipts SHA-verified, 5 transient read errors recovered, 0 unresolved; 295 current-source mismatches and 3 exact midnight, CSV 298 rows & SHA-256 verified.'
+resume_instruction: 'Audit completed. Protected CI/PR publish from audit/ta-eis-298-deadlines-20261123 for scripts/tests/docs CSV/JSON after verifying exact head. Historical storage has NOT been changed: #721 remains open for carefully approved source-verified correction, no mass UPDATE. Distinguish current official EIS deadline from archived version at historical discovery; two rows official deadline earlier than stored (one unique registry), three records midnight legitimately. Private full original evidence under /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/eis-midnight-audit-20261123, no confidential source upload. Source-only test and report done.'
+production_mutations: false
+external_submissions: false

@@ -1172,3 +1172,18 @@ dtr_one_row_deadline_correction_2026_11_23:
   production_rows_changed: 1
   other_midnight_rows_not_reconciled: 298
   source_pinned_runtime_deployed: false
+
+eis_298_deadline_audit_2026_11_23:
+  task_id: TA-EIS-298-DEADLINE-AUDIT-20261123
+  status: completed
+  checkpoint: .agent/checkpoints/TA-EIS-298-DEADLINE-AUDIT-20261123.yaml
+  related_issue: 721
+  scope: read_only_all_remaining_midnight_eis_deadline_rows
+  production_mutations: false
+  full_records_audited: 298
+  distinct_official_notices: 196
+  current_source_mismatches: 295
+  genuine_midnight_records: 3
+  unverified: 0
+  private_originals_verified: 196
+  github_audit_issue: 721

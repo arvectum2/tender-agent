@@ -1,0 +1,39 @@
+{
+  "all_future_rows": 225,
+  "audited_at_utc": "2026-11-23T06:39:54.920608+00:00",
+  "categories": {
+    "DIFFERENT_MSK_DATE": 7,
+    "EXACT_MATCH": 3,
+    "SAME_MSK_DATE_WRONG_CLOCK": 288
+  },
+  "csv_sha256": "c36168601f6b7b949002287d78363ad40bcfa3103cdd587466838e25353e2d3a",
+  "csv_size_bytes": 231592,
+  "first_pass_recovered": 5,
+  "manager_ready": 45,
+  "manager_ready_future": 37,
+  "official_source_timezones": {
+    "МСК": 134,
+    "МСК+1": 8,
+    "МСК+2": 20,
+    "МСК+3": 3,
+    "МСК+4": 20,
+    "МСК+5": 1,
+    "МСК+6": 4,
+    "МСК+7": 3,
+    "МСК+8": 1,
+    "МСК-1": 2
+  },
+  "official_vs_stored": {
+    "EARLIER": 2,
+    "LATER": 293,
+    "SAME": 3
+  },
+  "original_html_reverified": 196,
+  "production_database_modified": false,
+  "production_snapshot_sha256": "47cae7aea67ded3c39af1cc0fd2808d9abf2af441fa3233605780d2ab28a1d27",
+  "report_sha256": "c8926b4fd9af513cf0ac2a3746b679d173daecd5b8adcb6a3a449f4b30ef799e",
+  "rows": 298,
+  "submissions_sent": false,
+  "unique_eis_notices": 196,
+  "unresolved": 0
+}
