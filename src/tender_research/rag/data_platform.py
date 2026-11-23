@@ -737,14 +737,25 @@ class DataPlatformRagRetriever:
         if not self._async_gate_enabled:
             return
         from src.tender_research.rag.durable_async import (
+            AsyncTenderIndexPending,
             require_existing_background_ready,
         )
 
+        chunks = self._repo.list_chunks_by_tender(tender_id)
+        if len(chunks) < self._async_minimum_chunks:
+            return
+        collection_id = build_tender_collection_id(self._repo, tender_id)
+        if collection_id is None:
+            raise DataPlatformError("Tender index revision unavailable")
+        stats = self._client.collection_stats(collection_id)
+        if not complete_index_counts(stats, len(chunks)):
+            raise AsyncTenderIndexPending("Data Platform full collection index is incomplete")
         require_existing_background_ready(
             self._repo,
             tender_id,
             enabled=True,
             minimum_async_chunks=self._async_minimum_chunks,
+            collection_stats=stats,
         )
 
     def close(self) -> None:

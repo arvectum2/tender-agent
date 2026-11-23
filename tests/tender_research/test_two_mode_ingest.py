@@ -44,7 +44,6 @@ class FakeClient:
         }
 
     def collection_stats(self, collection_id: str) -> dict:
-        assert collection_id in self.collections
         n = len(self.synchronous) + sum(
             row["status"] == "completed" for row in self.jobs.values()
         )

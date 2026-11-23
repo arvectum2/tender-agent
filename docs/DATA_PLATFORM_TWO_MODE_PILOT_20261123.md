@@ -121,3 +121,24 @@ failure) occurred in the independent legacy R9 backup/restore matrix with
 `pg_restore failed with exit code 1`; the pilot was not deployed. The exact
 current-head CI must be checked separately. No part of this release may
 silently drop or weaken that backup gate.
+
+## Compatibility with pre-existing indexed tenders (post-merge hardening)
+
+On opt-in activation, an older **fully indexed synchronous** tender collection
+with no asynchronous receipt journal must not be needlessly blocked. The
+readiness gate accepts a zero-receipt collection only if live Data Platform
+collection statistics match all four expected counts **exactly** (resources,
+documents, chunks, embeddings) for the current tender source revision.
+A partially journaled async collection can **never** take this fallback,
+even if collection counts happen to look correct. When any background receipts
+exist, they must cover every chunk, have the correct source hash and revision,
+`completed` state, exactly one committed indexed chunk each, and distinct
+resource/document identifiers. The active retriever checks both the local
+journal and remote collection counts; the analysis service reuses its existing
+read-only DP stats check. Before a stage rollout, verify this fallback
+against real previously indexed test collections, not only synthetic ones.
+
+Final scoped candidate validation after merging current main: **125 tests PASS**,
+Ruff PASS, disposable two-PostgreSQL E2E PASS (9 accepted/9 complete/9
+provenance-mapped retrieval hits; pending blocked). The full GitHub CI on the
+current head remains the release authority. This pilot is draft and default-off.

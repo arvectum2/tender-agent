@@ -179,3 +179,57 @@ def test_opt_in_retriever_refuses_partially_indexed_tender_even_if_dp_has_hits()
         retriever.search_documents("кабель", tender_id=tender_id)
     with pytest.raises(AsyncTenderIndexPending):
         retriever.search_all_documents("кабель")
+
+
+def test_opt_in_accepts_verified_prior_synchronous_collection_without_receipts() -> (
+    None
+):
+    """Activation must not invalidate all already-indexed legacy tender dossiers."""
+    repo, tender_id = seeded_repo(9)
+    client = FakeClient()
+    chunks = repo.list_chunks_by_tender(tender_id)
+    from src.tender_research.rag.data_platform import build_tender_collection_id
+
+    collection_id = build_tender_collection_id(repo, tender_id)
+    client.ensure_collection(collection_id=collection_id)
+    for chunk in chunks:
+        client.ingest_chunk(collection_id=collection_id, chunk_id=chunk.id)
+    stats = client.collection_stats(collection_id)
+    assert stats["embeddings"] == len(chunks)
+    require_existing_background_ready(
+        repo, tender_id, enabled=True, collection_stats=stats
+    )
+    DataPlatformRagRetriever(
+        repo, client, async_gate_enabled=True
+    )._require_current_index(tender_id)
+
+
+def test_partial_background_receipts_cannot_use_legacy_stats_fallback() -> None:
+    repo, tender_id = seeded_repo(9)
+    client = FakeClient()
+    driver = DurableTenderAsyncIndex(repo, client)
+    driver.advance(tender_id)
+    valid_looking_counts = {
+        name: 9 for name in ("resources", "documents", "chunks", "embeddings")
+    }
+    with pytest.raises(AsyncTenderIndexPending):
+        require_existing_background_ready(
+            repo, tender_id, enabled=True, collection_stats=valid_looking_counts
+        )
+
+
+def test_duplicate_remote_resource_identity_never_qualifies_as_complete() -> None:
+    repo, tender_id = seeded_repo(9)
+    client = FakeClient()
+    driver = DurableTenderAsyncIndex(repo, client)
+    driver.advance(tender_id)
+    client.complete_all()
+    driver.advance(tender_id)
+    client.complete_all()
+    rows = list(client.jobs.values())
+    rows[-1]["result"]["resource_id"] = rows[0]["result"]["resource_id"]
+    assert driver.poll(tender_id).ready is False
+    with pytest.raises(AsyncTenderIndexPending):
+        driver.require_ready(tender_id)
+    with pytest.raises(AsyncTenderIndexPending):
+        require_existing_background_ready(repo, tender_id, enabled=True)

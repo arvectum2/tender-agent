@@ -207,6 +207,14 @@ class DurableTenderAsyncIndex:
             and row.indexed_chunks == 1
             for row in rows
         )
+        # A repeated resource/document id for different source chunks is not
+        # proof that all distinct chunks were persisted (even if counts lie).
+        unique_sources = (
+            len({row.resource_id for row in rows if row.status == "completed"})
+            == complete
+            and len({row.document_id for row in rows if row.status == "completed"})
+            == complete
+        )
         running = sum(row.status in {"queued", "running"} for row in rows)
         failed = sum(row.status in _TERMINAL_BAD for row in rows)
         return TenderAsyncIndexProgress(
@@ -218,7 +226,10 @@ class DurableTenderAsyncIndex:
             running=running,
             failed=failed,
             next_offset=len(rows) if len(rows) < total else None,
-            ready=complete == total and failed == 0 and len(rows) == total,
+            ready=complete == total
+            and unique_sources
+            and failed == 0
+            and len(rows) == total,
         )
 
     def advance(self, tender_id: str) -> TenderAsyncIndexProgress:
@@ -267,6 +278,7 @@ def require_existing_background_ready(
     *,
     enabled: bool | None = None,
     minimum_async_chunks: int | None = None,
+    collection_stats: dict | None = None,
 ) -> None:
     """Read-only gate for active retrieval paths: no network, no status mutation.
 
@@ -298,6 +310,14 @@ def require_existing_background_ready(
             )
         )
     )
+    # Explicitly allow a fully verified *legacy synchronous* index when the
+    # opt-in switch is enabled after it was already built. Never bypass a
+    # partially journaled background batch or an incomplete DP collection.
+    if not rows and collection_stats is not None:
+        from src.tender_research.rag.data_platform import complete_index_counts
+
+        if complete_index_counts(collection_stats, len(chunks)):
+            return
     if len(rows) != len(chunks):
         raise AsyncTenderIndexPending("Pending background tender indexing")
     hashes = {

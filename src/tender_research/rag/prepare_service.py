@@ -662,6 +662,7 @@ def check_preparation_status(
                         require_existing_background_ready(
                             repo, tender.id, enabled=True,
                             minimum_async_chunks=config.rag_async_ingest_min_chunks,
+                            collection_stats=stats,
                         )
                     except AsyncTenderIndexPending:
                         platform_ready = False
