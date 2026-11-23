@@ -1190,10 +1190,16 @@ eis_298_deadline_audit_2026_11_23:
 
 eis_manager_deadline_reconcile_2026_11_23:
   task_id: TA-EIS-MANAGER-DEADLINES-20261123
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-EIS-MANAGER-DEADLINES-20261123.yaml
   related_issue: 721
-  current_stage: source_and_database_preflight
+  current_stage: 35_conditional_source_verified_updates_complete
   owner_authorized: true
-  proposed_rows_to_update: 35
-  production_modified: false
+  official_notices_rechecked: 37
+  production_rows_changed: 35
+  genuine_midnight_rows_untouched: 2
+  other_original_audit_rows_unchanged: 263
+  database_total_verified: 299
+  production_modified: true
+  external_submissions: false
+  official_detail_enrichment_live_deployed: false
