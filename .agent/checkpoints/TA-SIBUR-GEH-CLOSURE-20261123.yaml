@@ -15,18 +15,17 @@ completed:
   - "Private immutable six-source audit plan under .../geh-deadline-archive/review-closure-20261123/plan.json SHA256 5165b3c27d8a5f3151e25a42c2e8eb8db63819d4a3871039c9b74ec903f1e2fd, payload SHA256 12906296f6a47523c73fc27836bd0759f93080307a4b16c12b38cd467cdf34de. Four exactly scoped IDs accepted and two quarantined. Source plan created read-only, research PG16 commit awaits existing SIBUR shared mutation lock; do not create duplicate operation or bypass gate."
   - "Owner-directed exact-four research PG16 transaction completed after shared mutation lock released; fresh MI backup/acceptance pass, PG16 dump SHA256 d8fff85abc9e9998bc65be1e8b734ea4bfe3232fddd845a78b2c79fe9b99bb44 TOC checked native PG16 and host PG18."
   - "Independent read-only before/after: arvectum_local etp_gpb 29182 -> 29186, exact 4 new ID rows, price values 301.6 / 6435.5 / 9727.6 / 84182720.76, etp:1123151 purchase_number NULL. Two date-invalid source IDs absent. Replay exactly 0 inserts. Private verified.json SHA256 da407d06a6a758a738156173f351a36d3490ad2048579d8d12ba56e45cde59b7."
-  - "The two impossible-date originals confirmed as source conflicts, explicitly retained in quarantined source JSON without rewriting clock dates or inventing revision history. Four resolved IDs restored. Source PR #731 to separate feat/gpb-public-discovery-20261114 with 19 focused tests and first-party full-page replay passing, protected CI 8/9 pending."
+  - "The two impossible-date originals confirmed as source conflicts, explicitly retained in quarantined source JSON without rewriting clock dates or inventing revision history. Four resolved IDs restored. Source PR #731 source-only changes MERGED to research feature branch feat/gpb-public-discovery-20261114 as 6fd845998d672e0deb290da63b9a756459a2e010, protected exact-head CI 9/9 PASS and GitVerse mirror SUCCESS."
   - "SIBUR existing single process PID 59010 still running; latest 2026-11-23 13:02 UTC 7175 indexed / 7798 eligible, 623 outstanding (92.011%), Data Platform 9344 documents /107273 chunks and embeddings, verified_pitr active; resource governor reduced batch 3 under memory pressure. Preserve rate/thermal safety; no second worker."
   - "Draft report docs/market-intelligence/SIBUR_GEH_SIX_REVIEW_CLOSURE_2026-11-23.md prepared in main PR branch. No LLM/PG17 shutdown, restart or tender submissions."
 current_stage: geh_four_recovered_two_source_anomalies_quarantined__sibur_current_queue_unfinished
 remaining:
   - "Track SIBUR ongoing single source-scoped autonomous worker to verified 0 remaining eligible files or explicit honest reviewed/deferred outcome; currently 623 eligible backlog, no duplicate or unsafe acceleration."
-  - "Await protected exact-head CI (9/9) on research PR #731, verify GitVerse mirror and guarded merge to research feature branch."
   - "Publish research closure report/main checkpoint via protected PR and mirror; independent final read-only DB and service check, no production downtime."
   - "For 2 chronologically impossible official GPB cards, require publication/revision history or official correction; leave quarantined until evidence."
 last_verified_commit: 'main after PR #730 merge b9f92bf3323f8e97c91296c3bbe81214df99d136'
-test_results: '19 synthetic focused tests PASS; Ruff+compile PASS; six original SHA/ID/page proofs PASS; full 20/20 June source page verified, 4/4 scoped imports PASS, zero replay duplicate, native PG16 and host PG18 backup TOC PASS, MI acceptance PASS, read-only SQL exact 29182 to 29186, 2 quarantined. Protected feature PR #731 CI 8/9 in progress.'
-resume_instruction: 'GEH 4-row research PG16 import ALREADY completed, DO NOT REPLAY. Protected feature PR #731 source SHA 3515542a must pass exact-head CI 9/9 and mirror then merge to feat/gpb-public-discovery-20261114; report/main checkpoint pending protected PR. Two official publication-after-deadline anomalies remain quarantined requiring genuine revision history. SIBUR single PID 59010 is already RUNNING with 623 dynamic eligible remaining, resource governor reduced 3 and verified_pitr; use live state/queue reads and allow existing worker to finish, do not restart or spawn another. Never claim completed before actual verified queue drain. Owner-paused LLM+PG17 maintenance and pinned EIS parser cutover must remain untouched.'
+test_results: '19 synthetic focused tests PASS; Ruff+compile PASS; six original SHA/ID/page proofs PASS; full 20/20 June source page verified, 4/4 scoped imports PASS, zero replay duplicate, native PG16 and host PG18 backup TOC PASS, MI acceptance PASS, read-only SQL exact 29182 to 29186, 2 quarantined. Protected feature PR #731 exact-head CI 9/9 PASS, GitVerse mirror SUCCESS, source merged as 6fd845998d672e0deb290da63b9a756459a2e010.'
+resume_instruction: 'GEH 4-row research PG16 import ALREADY completed, DO NOT REPLAY. Research source PR #731 ALREADY merged as 6fd845998d672e0deb290da63b9a756459a2e010 after exact-head 9/9 CI and GitVerse mirror; do not repeat merge or re-run 4-row research PG16 operation. Report/main checkpoint pending protected PR. Two official publication-after-deadline anomalies remain quarantined requiring genuine revision history. SIBUR single PID 59010 is already RUNNING with 623 dynamic eligible remaining, resource governor reduced 3 and verified_pitr; use live state/queue reads and allow existing worker to finish, do not restart or spawn another. Never claim completed before actual verified queue drain. Owner-paused LLM+PG17 maintenance and pinned EIS parser cutover must remain untouched.'
 research_pg16_modified: true
 research_pg16_etp_gpb_before: 29182
 research_pg16_etp_gpb_after: 29186
@@ -36,6 +35,9 @@ geH_source_review_resolved: 4
 geH_source_review_quarantined: 2
 geh_review_source_pr: 731
 geh_review_source_sha: 3515542ad0a8e97084b73e153d1711a411be2cae
+geh_review_source_merged_commit: 6fd845998d672e0deb290da63b9a756459a2e010
+geh_review_ci_9_of_9_pass: true
+geh_review_gitverse_mirror_success: true
 geh_review_report: docs/market-intelligence/SIBUR_GEH_SIX_REVIEW_CLOSURE_2026-11-23.md
 sibur_indexed_members_verified: 7175
 sibur_current_eligible: 7798
