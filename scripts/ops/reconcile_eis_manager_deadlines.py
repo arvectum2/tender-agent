@@ -13,7 +13,6 @@ import hashlib
 import importlib.util
 import json
 import os
-import ssl
 import threading
 import time
 import urllib.error
@@ -402,7 +401,7 @@ def transact(root: Path, expected_sha: str, *, commit: bool) -> dict:
 
 
 def verify_postcommit(root: Path, expected_sha: str) -> dict:
-    from sqlalchemy import bindparam, text
+    from sqlalchemy import text
 
     plan = _load_prepared(root, expected_sha, require_fresh=False)
     audit_root = root.parent / "eis-midnight-audit-20261123"
