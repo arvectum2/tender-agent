@@ -1244,7 +1244,7 @@ ta_sibur_geh_closure_2026_11_23:
   task_id: TA-SIBUR-GEH-CLOSURE-20261123
   status: in_progress
   checkpoint: .agent/checkpoints/TA-SIBUR-GEH-CLOSURE-20261123.yaml
-  current_stage: geh_review_reconciled_local_parser_updated_sibur_618_pending
+  current_stage: geh_4_reconciled_2_quarantined__dp_pitr_restored__sibur_dynamic_pending
   geh_review_items: 6
   geh_review_resolved_and_imported: 4
   geh_review_source_anomalies_quarantined: 2
@@ -1258,9 +1258,13 @@ ta_sibur_geh_closure_2026_11_23:
   geh_research_pg16_rows_after: 29186
   sibur_worker_running: true
   sibur_second_worker_started: false
-  sibur_indexed_members_verified: 7178
-  sibur_eligible_queue: 7796
-  sibur_pending_dynamic: 618
+  sibur_indexed_members_verified: 7183
+  sibur_eligible_queue: 7790
+  sibur_pending_dynamic: 607
+  dp_pitr_restore_verified: true
+  dp_pitr_source_local_commit: 14e56ca2bc5ef79a1a6e2bee822b152142cbdc52
+  dp_pitr_health_latest: pass
+  dp_pitr_restore_target: arvectum_pitr_check_20261123T133641212040Z
   postgres_restarted: false
   llm_stopped: false
   maintenance_outage_started: false
