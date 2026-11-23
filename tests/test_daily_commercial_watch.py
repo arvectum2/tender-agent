@@ -110,7 +110,7 @@ def test_newest_geh_symlink_rejected(tmp_path):
 
 
 def test_offline_report_has_no_writes_or_capture(tmp_path, monkeypatch):
-    geh, sibur, watch, capture, out = _prepared(tmp_path, monkeypatch)
+    geh, _sibur, watch, capture, out = _prepared(tmp_path, monkeypatch)
     monkeypatch.setattr(
         daily, "_run_capture",
         lambda *_: pytest.fail("offline replay unexpectedly attempted network"),
@@ -171,7 +171,7 @@ def test_lock_prevents_overlapping_report_even_for_dry_existing_capture(tmp_path
 
 
 def test_partial_capture_is_blocked_and_never_promoted(tmp_path, monkeypatch):
-    geh, sibur, watch, capture, out = _prepared(tmp_path, monkeypatch)
+    geh, sibur, watch, _capture, out = _prepared(tmp_path, monkeypatch)
     monkeypatch.setattr(
         daily, "_run_capture",
         lambda *_: (_ for _ in ()).throw(EvidenceRejected("incomplete SIBUR public listing")),
