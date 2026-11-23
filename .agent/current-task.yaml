@@ -1136,8 +1136,11 @@ mi_daily_commercial_watch_2026_11_23:
 
 dtr_deadline_precision_2026_11_23:
   task_id: TA-DTR-DEADLINE-PRECISION-20261123
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-DTR-DEADLINE-PRECISION-20261123.yaml
   issue: 721
-  current_stage: prevent_false_midnight_from_date_only
+  current_stage: source_guard_completed_protected_merge_gated
   production_modified: false
+  legacy_rows_reconciled: false
+  official_clock_time_verified: false
+  verified_focused_tests: 36
