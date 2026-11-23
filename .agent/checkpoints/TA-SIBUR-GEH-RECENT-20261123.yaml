@@ -1,0 +1,27 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-SIBUR-GEH-RECENT-20261123
+status: in_progress
+goal: "Resume SIBUR source indexing safely and expand GEH procurement coverage newest-to-oldest over rolling 12-24 months, without touching scheduled maintenance or shutting down models/PostgreSQL."
+owner_instruction: "2026-11-23 user: давай восстановим процесс и продолжим по СИБУРу. а ГЭХ можно расширять поэтапное, от самых новых закупок к старым. весь архив избыточен, а вот за последние год-два можно собрать"
+definition_of_done:
+  - "Establish verified, current SIBUR worker state, source queue baseline, recovery-gate evidence and confirmed growth without launching a duplicate process."
+  - "Classify real GEH 2024-11..2026-11 monthly first-party source receipts, prioritizing rolling last 12 months before 24; distinguish verified, review, partially captured current month."
+  - "Safely import a newest fully verified GEH historical month into intended research database with existing shared lock, independent backup, MI acceptance gate, exact source SHA, append-only replay and read-only postcheck; preserve invalid rows for review."
+  - "Record missing months, dedupe / repair strategy and explicit recent-first queue; avoid full historical archive sweep."
+  - "Document actual executed operations, before/after row counts, unresolved source and PITR blockers; preserve maintenance checkpoint and production services."
+completed:
+  - "2026-11-23 14:44 MSK: existing SIBUR worker PID 59010 already running and recovering on own, source-scoped lock; no duplicate started. Latest 7137 member receipts, 9306 DP docs with matching chunks/embeddings, later 9307 DP documents; read-only live state shows PITR prewrite PASS, no file/DB manual replay."
+  - "GEH archive month snapshots 2024-11..2026-10 largely already SHA captured: 2025-11 month repaired and imported 759; 2025-06 repaired 29/30 days only; 2026-08 and 2026-06 duplicate source identities; 2026-11 current month provisional 1/19 pages, active monitoring separate."
+  - "Verified archived 2026-10 complete 34/34 pages, 673 distinct source IDs and 673 accepted normalized entries with 0 review; 2026-09 complete 35/35 pages, 700 IDs but 698 accepted plus 2 review; do not silently discard 2."
+current_stage: source_verified_recent_month_import_guarded_pilot
+remaining:
+  - "Run one 2026-10 source-backed bounded import safely using existing verified archive importer components and independent gate/backup; check replay and exact source identity, quarantine uncertainty."
+  - "Verify new SIBUR document/index growth and absence of duplicate worker or blocked PITR."
+  - "Prepare ranked GEH 12/24-month monthly queue with sources reviewed and separate repairs; avoid speculative all-time 60k denominator."
+  - "Publish verifiable report and checkpoint through protected PR."
+last_verified_commit: "main after PR #726 merge; source-only checkpoint under this branch"
+test_results: "GEH 2026-10 source exact replay 673/673, no review; 2026-09 normalized 698 accepted + 2 review; SIBUR gate PITR prewrite PASS and incremental processing observed, no restart"
+resume_instruction: "Check actual SIBUR state & guards before any change. Finish newest 2026-10 GEH month import only under shared mutation lock and verified backup with immutable source hashes, then bounded next monthly work newest-to-oldest. Do not re-import a completed month without independent identity reconciliation. Keep window-maintenance checkpoint separate; no LLM shutdown or PostgreSQL restart. Never bypass PITR/MI gates."
+production_services_modified: false
+maintenance_outage_started: false
