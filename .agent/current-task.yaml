@@ -1224,11 +1224,23 @@ ta_sibur_recover_geh_24_month_archive_2026_11_23:
   task_id: TA-SIBUR-RECOVER-GEH-24M-20261123
   status: in_progress
   checkpoint: .agent/checkpoints/TA-SIBUR-RECOVER-GEH-24M-20261123.yaml
-  current_stage: backup_tool_and_exact_9_278_receipt_reconciliation
+  current_stage: resumed_live_queue_pitr_verified_recent_geh_monthly_capture
   owner_requested: true
   sibur_prior_member_indexed: 7108
+  sibur_indexed_members_last_verified: 7117
   sibur_eligible_members: 7865
-  sibur_dp_document_count: 9278
-  sibur_runner_blocked: true
+  sibur_dp_document_count_last_verified: 9286
+  sibur_runner_blocked: false
+  sibur_runner_live: true
+  recovered_one_unlinked_record_without_reingestion: true
+  ta_pitr_backup_maintenance_verified: true
+  geh_2026_10_verified: 673
+  geh_2026_09_verified: 700
+  geh_2026_08_status: review_source_duplicate_identifiers
+  geh_2026_07_verified: 685
+  geh_2026_06_status: review_source_duplicate_identifier
+  geh_2026_05_verified: 750
+  geh_2026_04_verified: 862
+  geh_2026_11_provisional_unique: 367
   geh_archive_horizon: "2024-11..2026-11, newest first, bounded"
   maintenance_outage_unchanged: true
