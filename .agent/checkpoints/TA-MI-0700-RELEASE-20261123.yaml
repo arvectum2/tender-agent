@@ -1,0 +1,28 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-MI-0700-RELEASE-20261123
+issue: 719
+status: in_progress
+goal: "Owner-authorized operational roll-out of 07:00 Europe/Moscow business digest, with freshly captured SIBUR/GEH source evidence and scheduled ChatGPT delivery"
+owner_authorization: "2026-11-23: user explicitly approved installation and instructed digest time 07:00 Moscow. Do not confuse internal source capture vs delivery time."
+definition_of_done:
+  - "Schedule existing GEH capture sufficiently before 07:00 Moscow; no overlap with existing core 08:00 or other critical jobs; record previous plist backup"
+  - "Deploy protected pinned source-only commercial-watch runner to isolated checkout and schedule upstream local output before 07:00; preserve source locks, governor and fail-closed"
+  - "Create exactly one daily ChatGPT business-digest delivery automation at 07:00 Europe/Moscow reading completed same-day validated local receipt; report blocked if unavailable"
+  - "Run bounded smoke/canary with actual public source or original backed source; verify SHA-receipt and last_success; no bids, service restarts or unrelated DB mutations"
+  - "Verify launchctl schedule, job enabled, no accidental extra Mac models/DB writes, and rollback/diagnostics"
+completed:
+  - "PR #718 and #720 source-only commercial analyzer + guarded daily runner merged in main with protected 9/9 tests and mirrored"
+  - "23-Nov host: GEH at 07:35 -> actual started 08:01 and completed 08:05; impossible to include same-day GEH at a 07:00 digest without moving GEH earlier"
+  - "Existing Daily Tender 08:00 left unchanged; governor status pass/mode reduced, SSD 1TiB available"
+current_stage: prepare_pinned_read_only_deployment_and_source_schedule
+remaining:
+  - "Select safe 05:15 GEH, 06:35 source/report execution, 07:00 message delivery schedule based on actual source runtime"
+  - "Create/pin isolated exact main sha checkout, tests and permissions, launchd plists with backup/rollback"
+  - "Run supervised actual-source safe canary, verify output proof and status"
+  - "Create/read back automation; update issue #719 and checkpoint"
+last_verified_commit: "71b28f550559a45c47056e7b1b0adb1d5eb51bdc"
+test_results: "Source-only PR #720 46 focused tests, 9/9 protected and GitVerse SUCCESS; deployment unverified"
+resume_instruction: "Continue safe user-authorized 07:00 MSK rollout. Fresh GEH must run before 07:00; schedule 05:15 GEH and 06:35 SIBUR report, 07:00 ChatGPT automation; if any host or source gate blocks, preserve last success and report blocker. Do not restart whole host, run second Qwen or touch Tender Agent production DB. Source rollout rollback affects only GEH job schedule and dedicated commercial-watch job."
+production_modified: false
+external_submissions: false
