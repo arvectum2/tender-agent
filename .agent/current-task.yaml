@@ -1203,3 +1203,14 @@ eis_manager_deadline_reconcile_2026_11_23:
   production_modified: true
   external_submissions: false
   official_detail_enrichment_live_deployed: false
+
+ta_maintenance_parser_cutover_2026_11_23:
+  task_id: TA-MAINT-PARSER-CUTOVER-20261123
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-MAINT-PARSER-CUTOVER-20261123.yaml
+  related_issue: 721
+  current_stage: maintenance_preflight_and_source_only_parser_staging
+  outage_authorized: false
+  postgres_restarted: false
+  llm_stopped: false
+  parser_live_deployed: false
