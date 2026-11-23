@@ -19,8 +19,8 @@ anyio==4.16.0 \
     #   fastapi
     #   httpx
     #   starlette
-arvectum-data-client @ https://github.com/arvectum2/data-platform/releases/download/consumer-sdk-v0.4.0/arvectum_data_client-0.4.0-py3-none-any.whl \
-    --hash=sha256:51906ad978023c9acdefd48eb68c658012d17c28dc31acb476c9cd1b2f835b67
+arvectum-data-client @ https://github.com/arvectum2/data-platform/releases/download/consumer-sdk-v0.4.1/arvectum_data_client-0.4.1-py3-none-any.whl \
+    --hash=sha256:5822888ab9be9081b74317953fb7a53197c3efaabe472277d1013558cd9956e3
     # via ai-corporation (pyproject.toml)
 async-timeout==5.0.1 ; python_full_version < '3.11.3' \
     --hash=sha256:39e3809566ff85354557ec2398b55e096c8364bacac9405a7a1fa429e77fe76c \
