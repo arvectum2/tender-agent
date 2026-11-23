@@ -95,7 +95,7 @@ def test_expired_attestation_refuses_write(tmp_path, monkeypatch):
 
 
 def test_unexpected_postgres_system_hash_refused(tmp_path, monkeypatch):
-    root, sha = _fixture(tmp_path, monkeypatch)
+    root, _sha = _fixture(tmp_path, monkeypatch)
     obj = json.loads((root / "plan.json").read_text())
     obj["expected_db_system_sha256"] = "b" * 64
     (root / "plan.json").unlink()
