@@ -1133,3 +1133,11 @@ mi_daily_commercial_watch_2026_11_23:
   live_source_credentials_used: false
   verified_focused_tests: 46
   follow_up: owner_gated_launchd_installation_and_next_live_cycle
+
+dtr_deadline_precision_2026_11_23:
+  task_id: TA-DTR-DEADLINE-PRECISION-20261123
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-DTR-DEADLINE-PRECISION-20261123.yaml
+  issue: 721
+  current_stage: prevent_false_midnight_from_date_only
+  production_modified: false
