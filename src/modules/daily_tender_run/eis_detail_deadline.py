@@ -135,9 +135,23 @@ def _save_original(
         "bytes": len(raw),
         "checked_at_utc": proof.checked_at_utc.isoformat(),
     }
+    original_path = folder / f"{registry_number}.html"
+    receipt_path = folder / f"{registry_number}.json"
+    if receipt_path.exists() and not receipt_path.is_symlink():
+        try:
+            prior = json.loads(receipt_path.read_text())
+        except (OSError, ValueError) as exc:
+            raise EISProofError("archived receipt cannot be verified") from exc
+        # Idempotent retry of the *same* original must not falsely report a
+        # change just because the new HTTP GET has a later checked_at value.
+        expected = {key: value for key, value in receipt.items() if key != "checked_at_utc"}
+        observed = {key: value for key, value in prior.items() if key != "checked_at_utc"}
+        if observed != expected:
+            raise EISProofError("archived official source changed within the same run")
+        receipt = prior
     for file, content in (
-        (folder / f"{registry_number}.html", raw),
-        (folder / f"{registry_number}.json",
+        (original_path, raw),
+        (receipt_path,
          (json.dumps(receipt, sort_keys=True, ensure_ascii=False) + "\n").encode()),
     ):
         if file.is_symlink():
