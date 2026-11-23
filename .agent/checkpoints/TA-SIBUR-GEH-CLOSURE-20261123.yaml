@@ -1,0 +1,58 @@
+task_id: TA-SIBUR-GEH-CLOSURE-20261123
+status: in_progress
+goal: "Resolve six ETP GPB GEH source review exceptions using first-party evidence; complete or safely sustain verified SIBUR indexing of the remaining eligible queue without disruption."
+definition_of_done:
+  - "Revalidate official source bytes and DB state for all five ID-bearing GEH review cases plus the missing-identity June-2025 card; only accept normalization fixes proven by source and strict tests."
+  - "Reconcile every safely recoverable GEH observation with existing source hash receipts and guarded MI+Postgres backups/replay; quarantine irreducible discrepancies without fabrication."
+  - "Verify SIBUR single runner, active PITR, latest queue, index and DP growth; safely resolve recurring blockers where demonstrably needed, leave in-flight worker alone."
+  - "Publish precise before/after metrics, source review statuses, rollback artefacts, test receipts, safe continuation instructions."
+  - "Protected CI exact-head and mirror gate passed, documentation merged; retain owner-paused PG17/LLM maintenance and pinned old EIS parser."
+completed:
+  - "Initial 2026-11-23 12:46Z ARC read-only: SIBUR worker PID 59010 running, PITR verified_pitr, DP 9333 docs and 107208 chunks/embeddings, current queue 7814 eligible/7159 already indexed, 655 dynamic remainder; earlier checkpoint 7154/7820."
+  - "Five source-ID reviews identified: three single-decimal source prices (301,6; 6435,5; 9727,6 RUB), two official listing published timestamps after their submission deadlines (IDs 991644 and 973837). Sixth review is source card ordinal 20 for 2025-06-04 missing verified title/ID. No fixes yet."
+  - "Pinned research source HEAD 3515542ad0a8e97084b73e153d1711a411be2cae (PR #731 to feat/gpb-public-discovery-20261114) modifies only GPB parser opt-in numberless ETP identity and strict 1–2 fractional RUB digit normalization, with 19/19 focused pytest PASS, Ruff PASS, pycompile PASS, and full 2025-06-04 original 20/20 card replay."
+  - "All six original first-party ETP GPB receipts re-hashed and matched archived source ID, page, ordinal, URL and visible fields. Official details all six return HTTP 200 and stable ID/title. 3 single-decimal price records plus etp:1123151 with number_raw '-' / purchase_number null normalize exactly; two contradictory publication>deadline IDs (price_request:991644 and price_request:973837) remain rejected by source chronology guards."
+  - "Private immutable six-source audit plan under .../geh-deadline-archive/review-closure-20261123/plan.json SHA256 5165b3c27d8a5f3151e25a42c2e8eb8db63819d4a3871039c9b74ec903f1e2fd, payload SHA256 12906296f6a47523c73fc27836bd0759f93080307a4b16c12b38cd467cdf34de. Four exactly scoped IDs accepted and two quarantined. Source plan created read-only, research PG16 commit awaits existing SIBUR shared mutation lock; do not create duplicate operation or bypass gate."
+  - "Owner-directed exact-four research PG16 transaction completed after shared mutation lock released; fresh MI backup/acceptance pass, PG16 dump SHA256 d8fff85abc9e9998bc65be1e8b734ea4bfe3232fddd845a78b2c79fe9b99bb44 TOC checked native PG16 and host PG18."
+  - "Independent read-only before/after: arvectum_local etp_gpb 29182 -> 29186, exact 4 new ID rows, price values 301.6 / 6435.5 / 9727.6 / 84182720.76, etp:1123151 purchase_number NULL. Two date-invalid source IDs absent. Replay exactly 0 inserts. Private verified.json SHA256 da407d06a6a758a738156173f351a36d3490ad2048579d8d12ba56e45cde59b7."
+  - "The two impossible-date originals confirmed as source conflicts, explicitly retained in quarantined source JSON without rewriting clock dates or inventing revision history. Four resolved IDs restored. Source PR #731 source-only changes MERGED to research feature branch feat/gpb-public-discovery-20261114 as 6fd845998d672e0deb290da63b9a756459a2e010, protected exact-head CI 9/9 PASS and GitVerse mirror SUCCESS."
+  - "SIBUR existing single process PID 59010 still running; latest 2026-11-23 13:02 UTC 7175 indexed / 7798 eligible, 623 outstanding (92.011%), Data Platform 9344 documents /107273 chunks and embeddings, verified_pitr active; resource governor reduced batch 3 under memory pressure. Preserve rate/thermal safety; no second worker."
+  - "Draft report docs/market-intelligence/SIBUR_GEH_SIX_REVIEW_CLOSURE_2026-11-23.md prepared in main PR branch. No LLM/PG17 shutdown, restart or tender submissions."
+  - "Research LOCAL checkout had 21 local unpublished commits diverged from remote feature branch; NO blind pull/reset was performed. Standalone compatibility worktree from fa8cc86422b97d48ce7a890eeb3fa2e718ac8798 selectively cherry-picked upstream protected source fix 6fd845998d672e0deb290da63b9a756459a2e010 into local commit 13e27f64b8521acfab4f3c9a81dfe2b185ce3200. All 51 GPB/GEH focused regression tests and Ruff PASS. Source-only 4-file ff update of clean local worktree from fa8cc864 to 13e27f64 completed after checking no active GPB research process. Rollback ref backup/gpb-research-pre-verified-parser-20261123. Local private history preserved; NO force push or core deploy."
+  - "SIBUR independent latest 2026-11-23 13:11:57 UTC: 7178 member files indexed out of 7796 eligible, 618 remain (92.07%), Data Platform 9347 documents, 107334 chunks/embeddings, resource_mode reduced batch 3, verified_pitr PASS, one PID 59010 running, no new worker."
+current_stage: geh_four_recovered_source_parser_local_tested__sibur_indexing_continues
+remaining:
+  - "Track existing SIBUR source-scoped runner to verified 0 remaining eligible members or source-backed reviewed/deferred outcome; currently 618 dynamic queue remaining, no duplicate, no governor override, no unsafe acceleration."
+  - "Publish research closure report/main checkpoint via protected PR and mirror; independent final read-only DB and service check, no production downtime."
+  - "For 2 chronologically impossible official GPB cards, require publication/revision history or official correction; leave quarantined until evidence."
+last_verified_commit: 'Source PR #731 merge 6fd845998d672e0deb290da63b9a756459a2e010 CI 9/9 + mirror PASS; locally compatible research candidate 13e27f64b8521acfab4f3c9a81dfe2b185ce3200 51 regression tests + Ruff PASS; protected main docs PR #732 pending'
+test_results: '19 synthetic source focused tests PASS, 51 local merged history GPB/GEH regression tests PASS; Ruff+compile PASS; six original SHA/ID/page proofs PASS; full 20/20 June source page verified, 4/4 scoped imports PASS, zero replay duplicate, native PG16 and host PG18 backup TOC PASS, MI acceptance PASS, read-only SQL exact 29182 to 29186, 2 quarantined. Protected feature PR #731 exact-head CI 9/9 PASS, GitVerse mirror SUCCESS, source merged as 6fd845998d672e0deb290da63b9a756459a2e010.'
+resume_instruction: 'GEH 4-row research PG16 import ALREADY completed, DO NOT REPLAY. Research source PR #731 ALREADY merged as 6fd845998d672e0deb290da63b9a756459a2e010 after exact-head 9/9 CI and GitVerse mirror; do not repeat merge or re-run 4-row research PG16 operation. Report/main checkpoint pending protected PR. Two official publication-after-deadline anomalies remain quarantined requiring genuine revision history. SIBUR single PID 59010 is RUNNING with 618 dynamic eligible remaining at 2026-11-23 13:11 UTC, resource governor reduced 3 and verified_pitr; research local GPB parser already selectively ff-deployed as 13e27f64 with rollback backup/gpb-research-pre-verified-parser-20261123; do not re-apply or force-reset local 21 unpublished commits; use live state/queue reads and allow existing worker to finish, do not restart or spawn another. Never claim completed before actual verified queue drain. Owner-paused LLM+PG17 maintenance and pinned EIS parser cutover must remain untouched.'
+research_pg16_modified: true
+research_pg16_etp_gpb_before: 29182
+research_pg16_etp_gpb_after: 29186
+research_pg16_rows_added: 4
+research_pg16_replayed_rows_added: 0
+geH_source_review_resolved: 4
+geH_source_review_quarantined: 2
+geh_review_source_pr: 731
+geh_review_source_sha: 3515542ad0a8e97084b73e153d1711a411be2cae
+geh_review_source_merged_commit: 6fd845998d672e0deb290da63b9a756459a2e010
+geh_review_ci_9_of_9_pass: true
+geh_review_gitverse_mirror_success: true
+geh_review_report: docs/market-intelligence/SIBUR_GEH_SIX_REVIEW_CLOSURE_2026-11-23.md
+sibur_indexed_members_verified: 7178
+sibur_current_eligible: 7796
+sibur_current_remaining: 618
+sibur_dp_documents: 9347
+sibur_resource_mode: reduced
+sibur_verified_pitr: true
+production_tender_modified: false
+service_restart: false
+owner_maintenance_window_authorized: false
+research_local_checkout_head: 13e27f64b8521acfab4f3c9a81dfe2b185ce3200
+research_local_previous_head: fa8cc86422b97d48ce7a890eeb3fa2e718ac8798
+research_local_rollback_branch: backup/gpb-research-pre-verified-parser-20261123
+research_local_full_gpb_geh_tests: 51
+research_local_unpublished_commits_preserved: 21
+research_local_parser_updated: true
