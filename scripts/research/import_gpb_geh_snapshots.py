@@ -40,7 +40,7 @@ def stage_for(url):
 def price_for(value):
     if value == "Цена не указана":
         return None
-    if not re.fullmatch(r"[\d \xa0]+(?:,\d{2})? ₽", value):
+    if not re.fullmatch(r"[\d \xa0]+(?:,\d{1,2})? ₽", value):
         raise ValueError("unexpected price")
     return Decimal(value[:-1].replace(" ", "").replace("\xa0", "").replace(",", "."))
 
@@ -94,7 +94,7 @@ def normalize(entry):
             "initial_price_decimal": str(price) if price is not None else None}
     digest = hashlib.sha256(json.dumps(meta, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
     return {"source": SOURCE, "external_id": row["external_id"],
-            "purchase_number": row["number_raw"].removeprefix("№").strip(),
+            "purchase_number": (None if row["number_raw"] == "-" else row["number_raw"].removeprefix("№").strip()),
             "title": row["title"], "customer_name": row.get("customers_raw"),
             "region": row.get("regions_raw"), "platform_name": "ЭТП ГПБ",
             "platform_url": row["detail_url"], "publication_date": published,

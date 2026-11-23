@@ -38,3 +38,29 @@ def test_update_date_is_separate_from_publication():
     row = parse_list(raw, "https://etpgpb.ru/procedures/")[0]
     assert row["published_raw"] == "10 ноября 2026, 10:00 Z"
     assert row["updated_raw"] == "13 ноября 2026, 12:00 Z"
+
+
+def test_numberless_native_etp_requires_audited_opt_in():
+    # The source has an unambiguous pair of matching ETP numeric links, title,
+    # and '-' instead of the formally published purchase-number label.
+    raw = sample().replace("№ 123".encode(), b"-")
+    with pytest.raises(ValueError, match="missing source identity"):
+        parse_list(raw, "https://etpgpb.ru/procedures/")
+    row = parse_list(raw, "https://etpgpb.ru/procedures/", allow_numberless_etp=True)[0]
+    assert row["external_id"] == "etp:123"
+    assert row["number_raw"] == "-"
+    assert row["title"] == "Test"
+
+
+def test_numberless_non_native_or_ambiguous_identity_rejected_even_with_opt_in():
+    price_request = sample().replace("№ 123".encode(), b"-").replace(
+        b"/procedures/etp/123-test/", b"/procedures/price_request/123-test/"
+    )
+    with pytest.raises(ValueError, match="missing source identity"):
+        parse_list(price_request, "https://etpgpb.ru/procedures/", allow_numberless_etp=True)
+    conflicting = sample().replace("№ 123".encode(), b"-").replace(
+        b'<a href="/procedures/etp/123-test/">Test</a>',
+        b'<a href="/procedures/etp/456-test/">Test</a>'
+    )
+    with pytest.raises(ValueError, match="ambiguous card identity"):
+        parse_list(conflicting, "https://etpgpb.ru/procedures/", allow_numberless_etp=True)
