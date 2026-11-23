@@ -10,12 +10,13 @@ definition_of_done:
   - Do not change DB, production, executor policy, ETP or customer data.
 completed:
   - Confirmed protected main 023d3670 and live TA/DP HTTP 200.
-  - Authored full dated roadmap overlay and source-linked master entries.
+  - Authored full dated roadmap overlay and links from current product roadmap and roadmap index.
   - Ruby YAML parse PASS on 3 files; APR 11/11, queue math and links PASS; git diff --check PASS.
-current_stage: commit_and_protected_pr
+  - Spec Kit criterion gate rejected edits to SHA-pinned MASTER_ROADMAP; reverted master-only edit; structural pinned-source check now PASS, with current overlay in separate README.
+current_stage: exact_ci_and_protected_pr
 remaining:
   - Commit docs, protected PR and exact-head CI; mark checkpoint completed.
 last_verified_commit: 023d3670adcbf6d9ae8a318f4433615fa94b680c
 tests:
   doc_validation: pass
-resume_instruction: Validate doc-only worktree, commit; create protected PR; after exact CI and merge update this checkpoint to completed without changing TA-ROADMAP-EXEC.
+resume_instruction: Keep immutable MASTER_ROADMAP unchanged. Validate doc overlay and source criterion gate on new PR head, require exact CI, then merge protected PR and close child checkpoint without changing parent TA-ROADMAP-EXEC.

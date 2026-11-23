@@ -2,10 +2,6 @@
 
 > Canonical scope/history source for `arvectum2/tender-agent`. The executor queue is only a filtered executable projection and is **not** the complete roadmap.
 
-## Актуальная сводка — 23.11.2026
-
-**[Полная актуальная дорожная карта, 11 APR-gates, iOS, DTR, SaaS, SIBUR, ГЭХ и следующий критический путь](PRODUCT_STATUS_2026-11-23.md).** Датированный проверенный срез. Прежняя история сохранена; новый scope для production, заявок или платежей не предоставлен.
-
 ## 17.11.2026 — PRICE-01 integrated; APR-05 release rehearsal
 
 - PRICE-01 engineering integration **completed**: Owner-approved PR #603 merged as `b843f92ca129dcf9a57bd7935fb53ec31c1372dc`; exact candidate CI 19/19, both quality jobs 5987 passed / 288 skipped / 0 failed. Local HTTPS Web/Swift/iOS Simulator acceptance and offline local image registry loader verified. This supersedes earlier draft-only statements in historical snapshots below.
