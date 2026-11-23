@@ -49,8 +49,8 @@ def _safe_dir(path: Path, *, create: bool) -> Path:
         path.mkdir(mode=0o700, parents=True, exist_ok=False)
     if not path.is_dir() or path.is_symlink():
         raise EvidenceRejected(f"missing or unsafe private directory: {path.name}")
-    if create:
-        path.chmod(0o700)
+    if create and path.stat().st_mode & 0o077:
+        raise EvidenceRejected("existing private directory has unsafe group/other access")
     return path
 
 
@@ -110,8 +110,8 @@ def _source_proof(geh: Path, sibur: Path) -> dict:
 
 
 def _run_capture(sibur_root: Path, name: str) -> Path:
-    # The only network-bearing path in this program; requires --execute
-    # together with the separate --capture-sibur flag.
+    # The only network-bearing path; requires --execute AND --capture-sibur.
+    # Cross-report shared source lock prevents two live fetches at once.
     from scripts.research.capture_sibur_public_snapshot import collect
     from src.modules.tender_connectors.sibur.parser import page_url
 
@@ -121,15 +121,26 @@ def _run_capture(sibur_root: Path, name: str) -> Path:
             or not u.path.startswith("/ru/procurement/buy/")):
         raise EvidenceRejected("SIBUR public collector target allowlist mismatch")
     _safe_dir(sibur_root, create=False)
-    capture = sibur_root / f"daily-commercial-{name}"
-    if capture.exists() or capture.is_symlink():
-        raise EvidenceRejected("SIBUR capture name already exists")
-    receipt = collect(capture, CAPTURE_MAX_PAGES)
-    if (receipt.get("advertised_pages_traversed") is not True
-            or receipt.get("errors") != []
-            or receipt.get("validated_pages") != receipt.get("announced_pages")):
-        raise EvidenceRejected("SIBUR public capture was incomplete")
-    return capture
+    lock_path = sibur_root / ".daily-public-capture.lock"
+    if lock_path.is_symlink():
+        raise EvidenceRejected("SIBUR source lock is a symlink")
+    lock_fd = os.open(str(lock_path), os.O_CREAT | os.O_RDWR, 0o600)
+    try:
+        try:
+            fcntl.flock(lock_fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError as exc:
+            raise EvidenceRejected("another SIBUR daily source capture is running") from exc
+        capture = sibur_root / f"daily-commercial-{name}"
+        if capture.exists() or capture.is_symlink():
+            raise EvidenceRejected("SIBUR capture name already exists")
+        receipt = collect(capture, CAPTURE_MAX_PAGES)
+        if (receipt.get("advertised_pages_traversed") is not True
+                or receipt.get("errors") != []
+                or receipt.get("validated_pages") != receipt.get("announced_pages")):
+            raise EvidenceRejected("SIBUR public capture was incomplete")
+        return capture
+    finally:
+        os.close(lock_fd)
 
 
 def _run_stamp(now: datetime) -> str:
@@ -184,6 +195,28 @@ def _report_delta(data: dict, previous: dict | None) -> dict:
         "shortlist_not_recommended_now_not_closure": sorted(k for k in old if k not in current),
         "shortlist_size": len(current),
     }
+
+
+def _render_delta(delta: dict) -> str:
+    lines = [
+        "",
+        "## Изменения относительно предыдущей коммерческой подборки",
+        "Изменения касаются **только выбранных карточек**, а не полного состава закупок.",
+    ]
+    if delta["baseline"] == "first_run_no_prior_commercial_shortlist":
+        lines.append("Первый отчёт: подтверждённого предыдущего сравнения пока нет.")
+    else:
+        groups = (
+            ("Впервые в предыдущем сравнении отобранных карточек", "shortlist_added"),
+            ("Изменились срок, название или опубликованная сумма", "shortlist_changed"),
+            ("Больше не попали в отобранные карточки — это не означает закрытие", 
+             "shortlist_not_recommended_now_not_closure"),
+        )
+        for label, key in groups:
+            entries = delta[key]
+            lines.append(f"- {label}: {len(entries)}"
+                         + (f" ({', '.join(entries[:15])})" if entries else ""))
+    return "\n".join(lines) + "\n"
 
 
 def _signature(data: dict) -> dict:
@@ -264,7 +297,9 @@ def execute(
             _safe_dir(report_dir.parent, create=True)
             _safe_dir(report_dir, create=True)
             data_bytes = (json.dumps(data, ensure_ascii=False, indent=2) + "\n").encode()
-            text_bytes = (render_markdown(data) + "\n").encode()
+            text_bytes = (
+                render_markdown(data) + "\n" + _render_delta(delta)
+            ).encode()
             json_sha = _new_private_file(report_dir / "commercial-watch.json", data_bytes)
             md_sha = _new_private_file(report_dir / "commercial-watch.md", text_bytes)
             receipt = {
