@@ -1,0 +1,31 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-SIBUR-RECOVER-GEH-24M-20261123
+status: in_progress
+goal: "Restore SIBUR source-proven member indexing safely from a blocked post-ingest TA backup step, and incrementally collect the GEH/GPB completed-tender archive newest-to-oldest for the last 12-24 months instead of the entire historical archive."
+scope:
+  sibur: "Safe no-downtime queue reconciliation, backup-client repair, authenticated preflight, bounded proof of index progress"
+  geh: "Read-only receipt-bound monthly capture of completed GPB/GEH tender notices from Nov 2026 backward to Nov 2024, stage-by-stage; preserve existing archived months, keep review exclusions"
+  excluded: "Do not touch PostgreSQL service restarts, stop LLMs, mass DB rewrite, live parser deployment or unapproved main Core release"
+definition_of_done:
+  - "Diagnose and fix missing PostgreSQL client binary without weakening backup/restore guards, with regression tests."
+  - "Back up production-relevant prestate, reconcile one post-ingest SIBUR DP receipt and TA linkage with exact identities, resume bounded member queue; verify DB+receipt counts increase without duplicates or business corruption."
+  - "Restrict GEH historical discovery to 24 months or less, descending months by official submission-deadline date; capture at least newest month with exact first-party HTML+SHA receipts and zero blind imports."
+  - "Document factual progress and unresolved source coverage, update checkpoints, protected CI where source changes are committed."
+completed:
+  - "23 Nov 13:35 MSK: SIBUR last observed 7,108 indexed eligible members of 7,865 eligible, raw DP 9,278 docs/106,644 embeddings. Runner blocked at TA verified backup, index_inflight true; one verified extra DP receipt (9,278 vs state baseline 9,277)."
+  - "Root cause: old hardcoded Homebrew PostgreSQL@16 pg_restore and pg_verifybackup binaries absent; installed PG18 client and original PG16 Docker image both available. DP endpoint healthy and count matches 9,278 locally preserved receipts."
+  - "GEH active list 17/17 pages completed, historical generic 400-page listing capped and unrepresentative; archive already contains verified months from 2024-01 through 2025-11, some marked review. User requested recent 1-2 years, not full 60k archive."
+current_stage: source_backup_tool_repair_and_sibur_exact_reconciliation_preflight
+remaining:
+  - "Verify source/backup state, repair missing PG16 tool references safely and test."
+  - "Recover SIBUR in-flight receipt by exact proof and resume with measured progress."
+  - "Capture GEH latest 2026 months in bounded batches and verify archive hashes and cutoff."
+  - "Publish findings, protected CI or checked commits and update completion checkpoint."
+last_verified_commit: "initial existing runner d632b81d269ac4f999dcaaf1e58cf8d1046693b1; latest project main at task begin (see GitHub)"
+test_results: "no changes performed; prior SIBUR gate passed, latest live endpoint counts independently read at 23 Nov 13:40 MSK"
+resume_instruction: "Use only ARC. First reconcile SIBUR lane index_inflight=true after backup-tool repair; NEVER reset flag blindly and never reingest the last source sha. Preserve 9,278 receipts and DB 9,278 matching. Existing maintenance checkpoint remains separate and its no-outage owner gate must not be modified. GEH partition deadline filters confirmed; no full archive sweep or irrelevant historical DB imports."
+service_restart_authorized: false
+postgres_restarted: false
+llm_stopped: false
+bidding: false
