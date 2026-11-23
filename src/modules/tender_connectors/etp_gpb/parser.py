@@ -44,7 +44,7 @@ class Card(HTMLParser):
                 self.anchor[1].append(value)
 
 
-def parse_list(raw: bytes, source_url: str):
+def parse_list(raw: bytes, source_url: str, *, allow_numberless_etp: bool = False):
     u = urlsplit(source_url)
     if u.scheme != "https" or u.netloc != "etpgpb.ru" or u.path != "/procedures/":
         raise ValueError("unsupported source")
@@ -70,7 +70,11 @@ def parse_list(raw: bytes, source_url: str):
             raise ValueError("ambiguous card identity")
         link, (section, native_id), number = valid[0]
         title = valid[1][2]
-        if not number.startswith("№") or not title:
+        # Some official native ETP cards publish "-" instead of a display number.
+        # Only an explicit, source-audited caller may accept the stable native
+        # numeric link identity, and only when both link targets agree.
+        numberless_native = allow_numberless_etp and section == "etp" and number == "-"
+        if (not number.startswith("№") and not numberless_native) or not title:
             raise ValueError("missing source identity or title")
         row = {"source": "etp_gpb", "external_id": section + ":" + native_id,
                "number_raw": number, "title": title, "detail_url": link,
