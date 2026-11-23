@@ -1275,3 +1275,11 @@ roadmap_sync_2026_11_23:
   status: in_progress
   reviewed_main: 023d3670adcbf6d9ae8a318f4433615fa94b680c
   scope: additive_roadmap_documentation_only_parent_in_progress
+
+dtr_exit20_observability_2026_11_23:
+  task_id: TA-DTR-EXIT20-OBSERVABILITY-20261123
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-DTR-EXIT20-OBSERVABILITY-20261123.yaml
+  current_stage: safe_diagnostic_development
+  baseline_main: 023d3670adcbf6d9ae8a318f4433615fa94b680c
+  parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
