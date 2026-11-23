@@ -1,0 +1,47 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-SIBUR-GEH-RECENT-20261123
+status: completed
+goal: "Resume SIBUR source indexing safely and expand GEH procurement coverage newest-to-oldest over rolling 12-24 months, without touching scheduled maintenance or shutting down models/PostgreSQL."
+owner_instruction: "2026-11-23 user: давай восстановим процесс и продолжим по СИБУРу. а ГЭХ можно расширять поэтапное, от самых новых закупок к старым. весь архив избыточен, а вот за последние год-два можно собрать"
+definition_of_done:
+  - "Establish verified, current SIBUR worker state, source queue baseline, recovery-gate evidence and confirmed growth without launching a duplicate process."
+  - "Classify real GEH 2024-11..2026-11 monthly first-party source receipts, prioritizing rolling last 12 months before 24; distinguish verified, review, partially captured current month."
+  - "Safely import a newest fully verified GEH historical month into intended research database with existing shared lock, independent backup, MI acceptance gate, exact source SHA, append-only replay and read-only postcheck; preserve invalid rows for review."
+  - "Record missing months, dedupe / repair strategy and explicit recent-first queue; avoid full historical archive sweep."
+  - "Document actual executed operations, before/after row counts, unresolved source and PITR blockers; preserve maintenance checkpoint and production services."
+completed:
+  - "2026-11-23 14:44 MSK: existing SIBUR worker PID 59010 already running and recovering on own, source-scoped lock; no duplicate started. Latest 7137 member receipts, 9306 DP docs with matching chunks/embeddings, later 9307 DP documents; read-only live state shows PITR prewrite PASS, no file/DB manual replay."
+  - "GEH archive month snapshots 2024-11..2026-10 largely already SHA captured: 2025-11 month repaired and imported 759; 2025-06 repaired 29/30 days only; 2026-08 and 2026-06 duplicate source identities; 2026-11 current month provisional 1/19 pages, active monitoring separate."
+  - "Verified archived 2026-10 complete 34/34 pages, 673 distinct source IDs and 673 accepted normalized entries with 0 review; 2026-09 complete 35/35 pages, 700 IDs but 698 accepted plus 2 review; do not silently discard 2."
+  - "Repaired original 2026-08 duplicate ID source pages 12/13 into immutable audited-mixed original: 711/711 distinct observations, all normalized."
+  - "Repaired 2026-06 original recurring duplicate ID via two non-overlapping official date slices: 30/30 calendar days, 686/686 distinct observations; source-only SHA 35a565cbcac2c754cc0fb54126aa36c4164c1bb9b2bf53d2e448c8098a5323c3."
+  - "Captured 2025-06-04 previously missing day, 3/3 pages, 56 source cards: 55 normalizable and one lacking a stable source title/identity; one quarantined with SHA evidence, 55 pre-existing IDs in research DB, no overwrite."
+  - "Seven source-backed guarded import stages across 11 completed months Dec-2025..Oct-2026 plus 2025-06-04: 8008 original cards, 8002 accepted, six quarantine; 259 new etp_gpb research rows inserted, zero new rows on every repeat/replay, all existing changed-hash observations preserved."
+  - "Independent read-only local-e2e PostgreSQL16 arvectum_local table ProcurementTender count WHERE source=etp_gpb: 28923 BEFORE, 29182 AFTER. Fresh stage-specific PG16 dumps SHA and TOC cross-checked both native container PG16 and host PG18, MI runtime gate PASS, shared mutation locks; no production Core/TA mutations or outside submissions."
+  - "SIBUR last read-only 2026-11-23 12:20:31 UTC: single running worker, ta_recovery_policy=verified_pitr, 7146 indexed members of changing 7827 eligible (681 outstanding, 91.30%); DP 9315 docs, 107068 chunks/embeddings, in progress and resource_mode reduced. Recovery succeeded without launching duplicate or bypassing backup gates."
+  - "Maintenance remained out of scope: Docker PG17 healthy, Ollama/Gemma/Qwen model servers still running, Tender Agent original parser release marker pinned 9b650a2b818032389cfd6e13799acad33c72089b, no downtime/restart."
+  - "Full source-backed month and receipt report: docs/market-intelligence/SIBUR_GEH_RECENT_FIRST_2026-11-23.md."
+current_stage: source_verified_24month_GEH_scope_completed_with_six_reviews__sibur_worker_continues
+remaining: []
+last_verified_commit: 'cab543292f16647e5be7680240de8d5b381b85fa (source report branch as of latest verified GitHub creation); protected PR CI pending exact-head verification'
+test_results: 'Independently source-verified 24 completed months in scope with 6 new per-card exceptions; 7/7 staged PG16 imports + idempotent same-payload replays PASS, stage backups and MI gate PASS; independent read-only SQL etp_gpb count 29182, before 28923, plus 259; SIBUR single worker running PITR pass, active member-index 7146 and DP doc 9315.'
+resume_instruction: 'Operational recovery/scope-stage is COMPLETED: do not re-run or re-import any of seven verified GEH stages and do not spawn duplicate SIBUR worker. Existing source-scoped SIBUR runner continues autonomously; monitor its accepted/indexed counts and verified PITR gate, and treat current 681-member backlog as dynamic follow-up. GEH source 24 monthly intervals Nov-2024 to Oct-2026 collected; only six newly quarantined malformed observations need independent source remediation, no invented fields or forced updates. 2026-11 is live-month active capture only. Publish this checkpoint/report after protected exact-head CI 9/9 and GitVerse mirror; do not begin owner-paused PG17/LLM maintenance or EIS parser cutover. All raw evidence/backups remain private.'
+production_services_modified: false
+research_pg16_etp_gpb_rows_added: 259
+research_pg16_etp_gpb_before: 28923
+research_pg16_etp_gpb_after: 29182
+sibur_worker_duplicate_started: false
+sibur_worker_status: running
+sibur_current_indexed_member_files: 7146
+sibur_current_eligible: 7827
+sibur_current_remaining: 681
+sibur_current_dp_documents: 9315
+geh_completed_source_months: 24
+geh_latest_month_provisional: '2026-11'
+geh_review_quarantined_in_this_run: 6
+geh_original_capture_total_checked: 8008
+geh_source_accepted_total_checked: 8002
+geh_receipt_root: '/Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/parallel-sources/geh-deadline-archive/recent-first-import-20261123'
+github_report: docs/market-intelligence/SIBUR_GEH_RECENT_FIRST_2026-11-23.md
+maintenance_outage_started: false
