@@ -1244,10 +1244,18 @@ ta_sibur_geh_closure_2026_11_23:
   task_id: TA-SIBUR-GEH-CLOSURE-20261123
   status: in_progress
   checkpoint: .agent/checkpoints/TA-SIBUR-GEH-CLOSURE-20261123.yaml
-  current_stage: source_proof_and_index_completion
+  current_stage: geh_4_reconciled_2_quarantined__sibur_623_pending
   geh_review_items: 6
+  geh_review_resolved_and_imported: 4
+  geh_review_source_anomalies_quarantined: 2
+  geh_source_pr: 731
+  geh_research_pg16_rows_before: 29182
+  geh_research_pg16_rows_after: 29186
   sibur_worker_running: true
   sibur_second_worker_started: false
+  sibur_indexed_members_verified: 7175
+  sibur_eligible_queue: 7798
+  sibur_pending_dynamic: 623
   postgres_restarted: false
   llm_stopped: false
   maintenance_outage_started: false
