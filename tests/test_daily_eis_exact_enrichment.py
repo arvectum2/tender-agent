@@ -7,14 +7,13 @@ from __future__ import annotations
 import io
 import json
 from datetime import UTC, datetime, timedelta
-from pathlib import Path
 
 import pytest
 
 from src.modules.daily_tender_run import eis_detail_deadline as eis
+from src.modules.daily_tender_run import service
 from src.modules.daily_tender_run.models import DailyTenderRun, DailyTenderRunItem
 from src.modules.daily_tender_run.schemas import DailyTenderProfile
-from src.modules.daily_tender_run import service
 
 REG = "0845500000526000021"
 URL = (

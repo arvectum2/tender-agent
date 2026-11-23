@@ -15,7 +15,9 @@ from sqlalchemy import select, text
 from sqlalchemy.engine import Connection
 from sqlalchemy.orm import Session
 
-from src.modules.daily_tender_run.eis_detail_deadline import verify_official_eis_deadline
+from src.modules.daily_tender_run.eis_detail_deadline import (
+    verify_official_eis_deadline,
+)
 from src.modules.daily_tender_run.error_codes import (
     public_discovery_error_summary,
     public_failure_code,
