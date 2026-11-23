@@ -21,13 +21,13 @@ from src.tender_research.rag.data_platform import (
     retrieval_backend_name,
 )
 from src.tender_research.rag.history_service import record_analysis_run
-from src.tender_research.rag.ri223_document_dossier import (
-    build_ri223_document_dossier,
-    render_ri223_document_dossier,
-)
 from src.tender_research.rag.llm import (
     LocalChatLlmClient,
     build_source_citations,
+)
+from src.tender_research.rag.ri223_document_dossier import (
+    build_ri223_document_dossier,
+    render_ri223_document_dossier,
 )
 from src.tender_research.rag.ri223_source_facts import (
     derive_ri223_review_flags,
@@ -481,6 +481,28 @@ def analyze_tender(
         retrieval_model = "hybrid"
         platform_client = build_data_platform_client(config)
         collection_id = build_tender_collection_id(repo, tender.id)
+        if config.rag_async_ingest_enabled:
+            from src.tender_research.rag.durable_async import (
+                AsyncTenderIndexPending,
+                require_existing_background_ready,
+            )
+
+            try:
+                require_existing_background_ready(
+                    repo, tender.id, enabled=True,
+                    minimum_async_chunks=config.rag_async_ingest_min_chunks,
+                )
+            except AsyncTenderIndexPending:
+                result = TenderAnalysisResult(
+                    status="no_context", registry_number=registry_number,
+                    sections=[], sections_count=0, sources_count=0,
+                    analysis_mode=analysis_mode,
+                    errors=["Data Platform background indexing is still pending; analysis blocked."],
+                    retrieval_provider="data_platform", retrieval_model="hybrid",
+                )
+                if record_history:
+                    _record_history(result, session, duration_seconds=0.0, source=history_source)
+                return result
         platform_index_ready = False
         platform_index_check_error: str | None = None
         if collection_id is not None:
@@ -542,7 +564,14 @@ def analyze_tender(
                     source=history_source,
                 )
             return result
-        retriever = DataPlatformRagRetriever(repo, platform_client)
+        if config.rag_async_ingest_enabled:
+            retriever = DataPlatformRagRetriever(
+                repo, platform_client,
+                async_gate_enabled=True,
+                async_minimum_chunks=config.rag_async_ingest_min_chunks,
+            )
+        else:
+            retriever = DataPlatformRagRetriever(repo, platform_client)
 
         llm_client: LocalChatLlmClient | None = None
         if use_llm:

@@ -11,6 +11,7 @@ from src.tender_research.models import (
     ProcurementCustomer,
     ProcurementDocumentChunk,
     ProcurementDocumentEmbedding,
+    TenderAsyncIndexReceipt,
     ProcurementRawArtifact,
     ProcurementTender,
     ProcurementTenderDocument,

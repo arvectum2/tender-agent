@@ -208,7 +208,7 @@ def prepare_tender_for_analysis(
                         steps=steps,
                         errors=errors,
                     )
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001 - preserve existing EIS error boundary
                 logger.error("Failed to ingest tender %s: %s", registry_number, e)
                 step.status = "failed"
                 step.message = f"Ingestion failed: {e}"
@@ -253,7 +253,7 @@ def prepare_tender_for_analysis(
                 step.status = "completed"
                 step.message = "Documents already downloaded"
             emit_progress(40, "download_documents", step.message)
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001 - preserve existing download error boundary
             logger.error("Document download failed for %s: %s", registry_number, e)
             step.status = "failed"
             step.message = f"Download failed: {e}"
@@ -346,6 +346,7 @@ def prepare_tender_for_analysis(
         chunks_count = repo.count_chunks_by_tender(tender.id)
         embeddings_created_count = 0
         indexed_chunks_count = 0
+        background_progress = None
 
         step = TenderPreparationStep(
             "build_embeddings",
@@ -361,34 +362,67 @@ def prepare_tender_for_analysis(
         else:
             try:
                 with build_data_platform_client(config) as platform_client:
-                    platform_result = DataPlatformTenderIndexer(
-                        repo,
-                        platform_client,
-                    ).build_for_tender(tender.id)
-                indexed_chunks_count = platform_result.chunks_indexed
-                embeddings_created_count = platform_result.embeddings_created
-                if (
-                    indexed_chunks_count == chunks_count
-                    and embeddings_created_count > 0
-                ):
-                    step.status = "completed"
+                    if (
+                        config.rag_async_ingest_enabled
+                        and chunks_count >= config.rag_async_ingest_min_chunks
+                    ):
+                        from src.tender_research.rag.durable_async import (
+                            DurableTenderAsyncIndex,
+                        )
+
+                        background_progress = DurableTenderAsyncIndex(
+                            repo, platform_client,
+                            minimum_async_chunks=config.rag_async_ingest_min_chunks,
+                            batch_size=config.rag_async_ingest_batch_size,
+                        ).advance(tender.id)
+                        indexed_chunks_count = background_progress.completed
+                        embeddings_created_count = background_progress.completed
+                    else:
+                        platform_result = DataPlatformTenderIndexer(
+                            repo, platform_client,
+                        ).build_for_tender(tender.id)
+                        indexed_chunks_count = platform_result.chunks_indexed
+                        embeddings_created_count = platform_result.embeddings_created
+                if background_progress is not None and not background_progress.ready:
+                    step.status = "pending"
                     step.message = (
-                        "Indexed "
-                        f"{indexed_chunks_count} tender chunk(s) in Data Platform"
+                        "Data Platform background indexing pending: "
+                        f"completed={background_progress.completed}/{background_progress.expected}, "
+                        f"queued_or_running={background_progress.running}"
                     )
                     step.details = (
-                        f"collection={platform_result.collection_id}; "
-                        f"platform_chunks={platform_result.platform_chunks_created}; "
-                        f"embeddings={embeddings_created_count}"
-                    )
-                else:
-                    step.status = "failed"
-                    step.message = (
-                        "Data Platform indexing incomplete: "
-                        f"indexed={indexed_chunks_count}/{chunks_count}, "
-                        f"embeddings={embeddings_created_count}"
+                        f"collection={background_progress.collection_id}; "
+                        f"submitted={background_progress.submitted}; "
+                        f"next_offset={background_progress.next_offset}"
                     )
                     warnings.append(step.message)
+                elif background_progress is not None:
+                    step.status = "completed"
+                    step.message = f"Background index verified ({background_progress.completed} chunks)"
+                    step.details = f"collection={background_progress.collection_id}"
+                else:
+                    if (
+                        indexed_chunks_count == chunks_count
+                        and embeddings_created_count > 0
+                    ):
+                        step.status = "completed"
+                        step.message = (
+                            "Indexed "
+                            f"{indexed_chunks_count} tender chunk(s) in Data Platform"
+                        )
+                        step.details = (
+                            f"collection={platform_result.collection_id}; "
+                            f"platform_chunks={platform_result.platform_chunks_created}; "
+                            f"embeddings={embeddings_created_count}"
+                        )
+                    else:
+                        step.status = "failed"
+                        step.message = (
+                            "Data Platform indexing incomplete: "
+                            f"indexed={indexed_chunks_count}/{chunks_count}, "
+                            f"embeddings={embeddings_created_count}"
+                        )
+                        warnings.append(step.message)
             except (DataPlatformError, ValueError) as e:
                 logger.error(
                     "Data Platform indexing failed for %s: %s",
@@ -421,6 +455,12 @@ def prepare_tender_for_analysis(
             step.message = (
                 "Ready for analysis via Data Platform "
                 f"(chunks={final_chunks}, embeddings={final_embeddings})"
+            )
+        elif background_progress is not None and not background_progress.ready:
+            step.status = "pending"
+            step.message = (
+                "Data Platform background index is not yet searchable "
+                f"({background_progress.completed}/{final_chunks} chunks complete)"
             )
         elif final_chunks == 0:
             step.status = "failed"
@@ -524,6 +564,20 @@ def check_preparation_status(
                     resources_indexed == chunks_total
                     and embeddings_total >= chunks_total
                 )
+                if config.rag_async_ingest_enabled:
+                    from src.tender_research.rag.durable_async import (
+                        AsyncTenderIndexPending,
+                        require_existing_background_ready,
+                    )
+
+                    try:
+                        require_existing_background_ready(
+                            repo, tender.id, enabled=True,
+                            minimum_async_chunks=config.rag_async_ingest_min_chunks,
+                        )
+                    except AsyncTenderIndexPending:
+                        platform_ready = False
+                        platform_error = "async_index_pending"
             except (DataPlatformError, ValueError) as exc:
                 platform_ready = False
                 platform_error = type(exc).__name__

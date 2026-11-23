@@ -75,7 +75,11 @@ def _build_runtime(*, retrieval_only: bool = False):
     config = load_config()
     _apply_runtime_overrides(config, _RUNTIME_ARGS)
     retrieval_backend_name(config)
-    retriever = DataPlatformRagRetriever(repo, build_data_platform_client(config))
+    retriever = DataPlatformRagRetriever(
+        repo, build_data_platform_client(config),
+        async_gate_enabled=config.rag_async_ingest_enabled,
+        async_minimum_chunks=config.rag_async_ingest_min_chunks,
+    )
     return session, repo, config, None, None, retriever
 
 

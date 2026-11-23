@@ -14,6 +14,7 @@ import os
 import secrets
 import socket
 import subprocess
+import sys
 import tempfile
 import time
 import uuid
@@ -27,9 +28,9 @@ from src.shared.data_platform import DataPlatformClient
 from src.shared.db import models as _models  # noqa: F401 - ORM registry/foreign-key targets
 from src.shared.db.base import Base
 from src.tender_research.rag.data_platform import DataPlatformRagRetriever
-from src.tender_research.rag.two_mode_ingest import (
+from src.tender_research.rag.durable_async import (
     AsyncTenderIndexPending,
-    TwoModeTenderIndexer,
+    DurableTenderAsyncIndex,
 )
 from src.tender_research.repository import TenderRepository
 
@@ -60,8 +61,8 @@ def free_port() -> int:
         return int(sock.getsockname()[1])
 
 
-def seed_repo() -> tuple[TenderRepository, str, set[str]]:
-    engine = create_engine("sqlite+pysqlite:///:memory:")
+def seed_repo(db_url: str) -> tuple[TenderRepository, str, set[str]]:
+    engine = create_engine(db_url)
     Base.metadata.create_all(engine)
     repo = TenderRepository(sessionmaker(bind=engine)())
     tender = repo.upsert_tender(
@@ -227,20 +228,53 @@ def main() -> None:
                     time.sleep(0.2)
                 else:
                     raise AssertionError("disposable API did not become healthy")
-            repo, tender_id, expected_chunks = seed_repo()
+            # A second DATABASE inside the same owned PG17 container provides
+            # real durable Tender Agent migrations without touching DP's DB.
+            ta_db_name = "ta_receipts_" + uuid.uuid4().hex[:10]
+            admin_engine = create_engine(dsn, isolation_level="AUTOCOMMIT")
+            try:
+                with admin_engine.connect() as connection:
+                    connection.exec_driver_sql(f'CREATE DATABASE "{ta_db_name}"')
+            finally:
+                admin_engine.dispose()
+            ta_db = dsn.rsplit("/", 1)[0] + "/" + ta_db_name
+            ta_env = dict(
+                env,
+                AI_CORP_DATABASE_URL=ta_db,
+                AI_CORP_ARVECTUM_DATA_DIR=str(Path(scratch) / "ta-files"),
+            )
+            checked(
+                sys.executable,
+                "-m",
+                "alembic",
+                "-c",
+                str(Path(__file__).resolve().parents[1] / "alembic.ini"),
+                "upgrade",
+                "head",
+                cwd=Path(__file__).resolve().parents[1],
+                env=ta_env,
+            )
+            repo, tender_id, expected_chunks = seed_repo(ta_db)
             with DataPlatformClient(base_url=api, api_key=env["E2E_KEY"]) as client:
-                plan = TwoModeTenderIndexer(repo, client, async_enabled=True)
-                assert plan.mode(tender_id) == "background"
-                first = plan.start(tender_id)
-                assert first.next_offset == 8
-                second = plan.start(tender_id, offset=first.next_offset)
-                assert second.next_offset is None
+                plan = DurableTenderAsyncIndex(repo, client)
+                first = plan.advance(tender_id)
+                assert first.submitted == 8 and first.next_offset == 8
+                assert plan.advance(tender_id).submitted == 8
+                search = DataPlatformRagRetriever(repo, client, async_gate_enabled=True)
                 try:
-                    plan.require_ready(tender_id, [first, second])
+                    search.search_documents("кабель", tender_id=tender_id)
                 except AsyncTenderIndexPending:
                     pass
                 else:
-                    raise AssertionError("TA accepted incomplete async index")
+                    raise AssertionError("TA allowed search before durable completion")
+                # Real new database connection and ORM identity-map boundary.
+                repo._session.close()
+                from sqlalchemy.orm import Session
+
+                reopened_engine = create_engine(ta_db)
+                repo = TenderRepository(Session(reopened_engine))
+                plan = DurableTenderAsyncIndex(repo, client)
+                assert plan.poll(tender_id).submitted == 8
                 # A single explicit, finite worker process against disposable DB.
                 script = (
                     "from arvectum_data.api.config import Settings;"
@@ -249,24 +283,67 @@ def main() -> None:
                     "service=DataPlatformService(Settings(_env_file=None));"
                     "n=0\n"
                     "while run_one(service):\n n+=1\n"
-                    "assert n==9,n"
+                    "assert n==8,n"
                 )
                 checked(str(dp_python), "-c", script, cwd=dp, env=worker_env)
-                assert (
-                    plan.require_ready(tender_id, [first, second])
-                    == first.collection_id
+                second = plan.advance(tender_id)
+                assert second.submitted == 9 and second.completed == 8
+                assert second.next_offset is None
+                checked(
+                    str(dp_python),
+                    "-c",
+                    script.replace("n==8", "n==1"),
+                    cwd=dp,
+                    env=worker_env,
                 )
-                retriever = DataPlatformRagRetriever(repo, client)
-                hits = plan.search_when_ready(
-                    tender_id,
-                    [first, second],
-                    retriever,
-                    query="кабель",
-                    limit=9,
+                assert plan.require_ready(tender_id) == first.collection_id
+                retriever = DataPlatformRagRetriever(
+                    repo, client, async_gate_enabled=True
                 )
+                hits = retriever.search_documents(
+                    "кабель", tender_id=tender_id, limit=9
+                )
+                repo._session.close()
+                reopened_engine.dispose()
                 if not hits or not {hit.chunk_id for hit in hits} <= expected_chunks:
                     raise AssertionError(
                         "TA failed source-faithful RAG after background indexing"
+                    )
+                # A downgrade is NOT an excuse to delete in-flight/audit receipts.
+                # Exercise fail-closed behavior only against owned ephemeral TA DB.
+                downgrade = subprocess.run(
+                    [
+                        sys.executable,
+                        "-m",
+                        "alembic",
+                        "-c",
+                        str(Path(__file__).resolve().parents[1] / "alembic.ini"),
+                        "downgrade",
+                        "107_add_procurement_learning_observations",
+                    ],
+                    cwd=Path(__file__).resolve().parents[1],
+                    env=ta_env,
+                    capture_output=True,
+                    text=True,
+                    timeout=35,
+                    check=False,
+                )
+                if (
+                    downgrade.returncode == 0
+                    or "refusing populated tender async receipt downgrade"
+                    not in downgrade.stderr
+                ):
+                    raise AssertionError(
+                        "TA migration allowed destructive receipt downgrade"
+                    )
+                with create_engine(ta_db).connect() as dbconn:
+                    from sqlalchemy import text
+
+                    assert (
+                        dbconn.execute(
+                            text("SELECT count(*) FROM tender_async_index_receipts")
+                        ).scalar_one()
+                        == 9
                     )
                 print(
                     json.dumps(
@@ -277,6 +354,8 @@ def main() -> None:
                             "completed_jobs": 9,
                             "verified_tender_search_hits": len(hits),
                             "pending_search_blocked": True,
+                            "ta_receipt_database_reopened": True,
+                            "ta_receipt_database": "independent disposable PostgreSQL17",
                             "production_mutation": False,
                         },
                         ensure_ascii=False,

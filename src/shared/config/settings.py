@@ -91,6 +91,10 @@ class Settings(BaseSettings):
     rag_data_platform_base_url: str = "http://127.0.0.1:8094"
     rag_data_platform_api_key: str = ""
     rag_data_platform_timeout_seconds: int = 30
+    # Candidate two-mode RAG: opt-in, no changes to production by default.
+    rag_async_ingest_enabled: bool = False
+    rag_async_ingest_min_chunks: int = Field(default=9, ge=2, le=1000)
+    rag_async_ingest_batch_size: int = Field(default=8, ge=1, le=8)
     rag_use_llm: bool = False
     local_llm_base_url: str = "http://127.0.0.1:8088/v1"
     local_llm_model: str = "qwen2.5-14b"

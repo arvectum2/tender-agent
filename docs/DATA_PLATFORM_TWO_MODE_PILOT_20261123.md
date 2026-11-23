@@ -36,3 +36,69 @@ PYTHONPATH=<DP_CANDIDATE>/sdk/python/src:<TA_CANDIDATE> \
 5. Only then request explicit production deployment authorization. Do not merge/deploy from this pilot automatically.
 
 **Pilot demonstrated; full runtime integration not yet released.** DP Issue #133 remains OPEN, production HOLD.
+
+## Durable Tender Agent controller — completed candidate extension
+
+The earlier `TwoModeTenderIndexer` remains a standalone, default-off SDK bridge for
+compatibility. **New** `DurableTenderAsyncIndex` in
+`src/tender_research/rag/durable_async.py` provides production-oriented metadata
+persistence and bounded continuation. Alembic **108** adds
+`tender_async_index_receipts` to Tender Agent's database. Each committed
+receipt stores only its tender/collection/chunk IDs, SHA-256 content digest,
+expected revision chunk count, DP job ID, status and committed result IDs;
+**no source text, idempotency secret, provider credential or raw request** is
+persisted in this table. Concurrent/retried submissions use the same stable
+collection/chunk/content-derived DP idempotency key. A conflicting local
+receipt blocks release rather than trusting a different job ID or changed
+source.
+
+The `rag_async_ingest_enabled` setting defaults to **false** (optional
+`rag_async_ingest_min_chunks=9` and `rag_async_ingest_batch_size=8`). Only
+when enabled and a tender has >=9 chunks does the existing preparation
+service submit the next bounded background wave. It returns
+`ready_for_analysis=false` and a pending readiness step until all chunk jobs
+are fully completed; the existing <9-chunk and default-disabled synchronous
+paths are unchanged. The status endpoint and Tender Agent analysis service
+add a fail-closed **current-revision receipt** check, in addition to the
+existing DP collection resource/embedding count. CLI per-tender and
+all-tender searches also apply this gate when enabled, so incomplete sources
+cannot silently become Decision Core context.
+
+`python -m src.tender_research.rag.async_index_pump --allow-worker --once`
+reconciles a bounded set of unfinished receipts and submits the next batch
+when previous jobs complete; `--loop` repeats at a 5-second interval. A
+**separately deployed DP worker** executes the queued embeddings. The TA pump
+requires the opt-in flag, an installed candidate-compatible SDK and an
+already-migrated DB. It never installs itself into launchd, starts Qwen or
+changes production config. It reports counts only and fails closed on errors;
+there is no automatic production daemon until separately approved.
+
+### Additional verification
+
+- 7 new candidate unit tests: metadata persisted across new SQL sessions,
+  bounded batches, no extra jobs until prior wave completes, stale/changed
+  revisions and failed job refusal, unindexed RAG search denial, preparation
+  returns pending rather than ready, and pump excludes already completed jobs.
+- Full cross-product isolated E2E now uses **two separate PostgreSQL 17
+  databases** inside its owned disposable container: DP database with
+  Alembic 0014 and Tender Agent database with Alembic 108. An independent
+  SQLAlchemy engine/session is reopened mid-run to prove durability. Nine
+  source-faithful chunks pass through both systems with 9/9 completed and 9
+  mapped RAG hits; pending search remains blocked. TA migration 108 is also
+  verified to refuse downgrade with a populated receipt journal. No active
+  infrastructure, database or Qwen is modified.
+
+### Remaining deployment dependencies
+
+- Both candidate PRs require CI and review. No released SDK version or
+  Tender Agent production pin has been changed yet.
+- At staging rollout, deliberately apply **both** additive DB migrations,
+  configure the enabled flags in the staging environment and run both
+  opt-in workers with independent resource limits/monitoring. Never enable
+  a background producer before the consumer/worker is demonstrably live.
+- Follow `docs/QWEN_ASYNC_AB_WINDOW_PROTOCOL_20261123.md` in DP PR #135
+  before adopting background completion SLOs. Shared Qwen on Mac mini has
+  high swap pressure; no uncoordinated 160-case inference load is permitted.
+- Existing DP synchronous ingest SLO <=10s remains active. Issue #133 stays
+  OPEN; production release HOLD until numeric criteria, resource budget,
+  rollback/backup and explicit owner deployment decision are verified.
