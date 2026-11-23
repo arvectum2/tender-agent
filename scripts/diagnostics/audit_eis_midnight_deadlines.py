@@ -267,7 +267,7 @@ def audit_batch(snapshot: Path, expected_sha: str, root: Path, limit: int) -> di
                         parsed = extract_exact_eis_deadline(raw.decode("utf8", "replace"), registry)
                         result.update(parsed)
                         official = datetime.fromisoformat(parsed["official_utc"])
-                        stored = [datetime.fromisoformat(x) for x in result["stored_deadline_utc"]]
+                        stored = [datetime.fromisoformat(x["deadline_at"]) for x in rows]
                         matches = [t == official for t in stored]
                         result["exactly_matching_rows"] = sum(matches)
                         result["mismatching_rows"] = len(stored) - sum(matches)
