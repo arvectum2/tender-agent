@@ -15,6 +15,9 @@ from sqlalchemy import select, text
 from sqlalchemy.engine import Connection
 from sqlalchemy.orm import Session
 
+from src.modules.daily_tender_run.eis_detail_deadline import (
+    verify_official_eis_deadline,
+)
 from src.modules.daily_tender_run.error_codes import (
     public_discovery_error_summary,
     public_failure_code,
@@ -501,6 +504,65 @@ def _screen(session: Session, run: DailyTenderRun, profile: DailyTenderProfile) 
         0,
         profile.max_deep_analysis - len(reserved_ids),
     )
+    shortlisted = list(
+        session.scalars(
+            select(DailyTenderRunItem)
+            .where(
+                DailyTenderRunItem.run_id == run.run_id,
+                DailyTenderRunItem.status == "SHORTLISTED",
+            )
+            .order_by(
+                DailyTenderRunItem.screening_score.desc(),
+                DailyTenderRunItem.created_at.asc(),
+            )
+        )
+    )
+    # Only a bounded, high-scoring public-EIS shortlist is enriched; never
+    # request every discovered notice. The original official detail must be
+    # archived privately before the precise clock may enter the DB.
+    max_source_checks = min(12, available_shortlist_slots * 3)
+    checked = 0
+    for item in shortlisted:
+        if checked >= max_source_checks:
+            break
+        if item.source != "public_eis_html_44fz" or item.deadline_at is not None:
+            continue
+        checked += 1
+        proof, proof_status = verify_official_eis_deadline(
+            item.source_url, item.registry_number, run.run_id
+        )
+        if proof is None:
+            item.screening_reasons_json = [
+                *(item.screening_reasons_json or []),
+                proof_status,
+            ]
+        else:
+            item.deadline_at = proof.deadline_utc
+            exact_status, exact_score, exact_reasons = _screen_card(
+                profile,
+                {
+                    "title": item.title,
+                    "customer_name": item.customer_name,
+                    "initial_price": item.nmck_amount,
+                    "deadline": proof.deadline_utc.isoformat(),
+                    "status": None,
+                },
+            )
+            item.screening_status = exact_status
+            item.screening_score = exact_score
+            item.screening_reasons_json = [
+                *exact_reasons,
+                proof_status,
+                f"deadline_eis_source_timezone:{proof.official_timezone}",
+                f"deadline_eis_original_sha256:{proof.original_sha256}",
+            ]
+            item.status = "SHORTLISTED" if exact_status == "IN" else "SCREENED_OUT"
+        item.updated_at = utcnow()
+        session.add(item)
+
+    # A date-only listing can be expired after resolving its official clock.
+    # Recompute the shortlist before assigning the deep-analysis limit.
+    session.flush()
     shortlisted = list(
         session.scalars(
             select(DailyTenderRunItem)
