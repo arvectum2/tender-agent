@@ -1,4 +1,5 @@
 """Acceptance contract for R9 backup and restore hardening."""
+
 from __future__ import annotations
 
 import json
@@ -13,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 RUNNER = ROOT / "scripts/acceptance/run_r9_backup_restore.py"
 RECOVERY_CLI = ROOT / "scripts/ops/r9_recovery.py"
 sys.path.insert(0, str(ROOT / "scripts" / "ops"))
-import r9_recovery  # noqa: E402
+import r9_recovery
 
 FILES = {
     "backup-restore-result.json",
@@ -206,8 +207,7 @@ def test_restore_cli_failure_diagnostics_redact_connection_uri(
         lambda *args, **kwargs: SimpleNamespace(
             returncode=1,
             stderr=(
-                f"pg_restore: error at {secret_uri}: "
-                "unsupported transaction_timeout"
+                f"pg_restore: error at {secret_uri}: unsupported transaction_timeout"
             ),
         ),
     )
@@ -216,3 +216,51 @@ def test_restore_cli_failure_diagnostics_redact_connection_uri(
     message = str(exc.value)
     assert message == "pg_restore failed with exit code 1"
     assert "secret" not in message
+
+
+def test_disposable_pg_client_proxy_rejects_remote_or_unowned_database(
+    tmp_path,
+) -> None:
+    """The test-only Docker PG16 shim must never reach a real service URI."""
+    import os
+    import shutil
+
+    adapter = ROOT / "scripts/acceptance/r9_pg_container_client.py"
+    target = tmp_path / "pg_restore"
+    shutil.copyfile(adapter, target)
+    target.chmod(0o700)
+    dump = tmp_path / "synthetic.dump"
+    dump.write_bytes(b"not a real archive")
+    env = {
+        **os.environ,
+        "R9_PG_TEST_CONTAINER": "synthetic-owned-identifier",
+        "R9_PG_TEST_PORT": "6543",
+        "PGPASSWORD": "synthetic-only-password",
+    }
+    remote = subprocess.run(
+        [
+            str(target),
+            "--dbname",
+            "postgresql://test@remote.example.invalid:6543/prod",
+            str(dump),
+        ],
+        env=env,
+        capture_output=True,
+        text=True,
+        check=False,
+        timeout=5,
+    )
+    assert remote.returncode != 0
+    assert "refusing non-disposable database URI" in remote.stderr
+    assert "synthetic-only-password" not in remote.stderr
+    env.pop("R9_PG_TEST_CONTAINER")
+    unowned = subprocess.run(
+        [str(target), "--dbname", "postgresql://test@127.0.0.1:6543/test", str(dump)],
+        env=env,
+        capture_output=True,
+        text=True,
+        check=False,
+        timeout=5,
+    )
+    assert unowned.returncode != 0
+    assert "not established" in unowned.stderr
