@@ -196,7 +196,7 @@ def audit_batch(snapshot: Path, expected_sha: str, root: Path, limit: int) -> di
     if not 1 <= limit <= 45:
         raise ProofFailure("request limit outside safe bounds")
     _safe_private_dir(root, False)
-    data, groups = _read_snapshot(snapshot, expected_sha)
+    _data, groups = _read_snapshot(snapshot, expected_sha)
     for sub in ("html", "receipts"):
         _safe_private_dir(root / sub, True)
     lock_path = root / ".source-audit.lock"
