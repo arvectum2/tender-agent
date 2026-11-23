@@ -347,7 +347,7 @@ def transact(root: Path, expected_sha: str, *, commit: bool) -> dict:
                         continue
                     statement = text(
                         "UPDATE daily_tender_run_items SET deadline_at = :new_deadline, "
-                        "updated_at = NOW() WHERE id = CAST(:id AS uuid) "
+                        "updated_at = NOW() WHERE id = :id "
                         "AND registry_number = :registry AND run_id = :run_id "
                         "AND status = 'MANAGER_READY' "
                         "AND source = 'public_eis_html_44fz' "
