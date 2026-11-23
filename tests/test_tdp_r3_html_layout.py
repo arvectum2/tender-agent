@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import ast
+
+from tests.ast_golden_compat import stable_ast_dump
 import hashlib
 from pathlib import Path
 
@@ -14,5 +16,5 @@ def test_original_fstring_interpolation_ast_is_preserved():
     function = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == "render_operator_html_layout")
     result = next(n for n in function.body if isinstance(n, ast.Return))
     assert isinstance(result.value, ast.JoinedStr)
-    sha = hashlib.sha256(ast.dump(result.value, include_attributes=False).encode()).hexdigest()
+    sha = hashlib.sha256(stable_ast_dump(result.value, include_attributes=False).encode()).hexdigest()
     assert sha == ORIGINAL_AST_SHA256

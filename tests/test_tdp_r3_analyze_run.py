@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import ast
+
+from tests.ast_golden_compat import stable_ast_dump
 import hashlib
 from pathlib import Path
 
@@ -16,7 +18,7 @@ MODULE = Path(__file__).resolve().parents[1] / "src/modules/tender_operator_agen
 
 def test_original_analysis_body_ast_identical():
     f = next(n for n in ast.parse(MODULE.read_text()).body if isinstance(n, ast.FunctionDef) and n.name == "analyze_uploaded_demo_run")
-    current = hashlib.sha256(ast.dump(ast.Module(body=f.body, type_ignores=[]), include_attributes=False).encode()).hexdigest()
+    current = hashlib.sha256(stable_ast_dump(ast.Module(body=f.body, type_ignores=[]), include_attributes=False).encode()).hexdigest()
     assert current == ORIGINAL_AST_SHA256
 
 

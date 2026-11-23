@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import ast
+
+from tests.ast_golden_compat import stable_ast_dump
 import hashlib
 from pathlib import Path
 from types import SimpleNamespace
@@ -32,7 +34,7 @@ def test_original_three_assignments_have_identical_ast():
     ]
     assert [n.targets[0].id for n in original_assignments] == list(names)
     sha = hashlib.sha256(
-        ast.dump(ast.Module(body=original_assignments, type_ignores=[]), include_attributes=False).encode()
+        stable_ast_dump(ast.Module(body=original_assignments, type_ignores=[]), include_attributes=False).encode()
     ).hexdigest()
     assert sha == ORIGINAL_THREE_ASSIGNMENTS_SHA256
 

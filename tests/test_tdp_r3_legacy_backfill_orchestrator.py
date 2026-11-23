@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import ast
+
+from tests.ast_golden_compat import stable_ast_dump
 import hashlib
 from pathlib import Path
 
@@ -22,6 +24,6 @@ def test_remaining_immutable_backfill_body_ast_matches_approved_split():
         if isinstance(n, ast.FunctionDef) and n.name == "run_immutable_backfill"
     )
     actual = hashlib.sha256(
-        ast.dump(ast.Module(body=fn.body, type_ignores=[]), include_attributes=False).encode()
+        stable_ast_dump(ast.Module(body=fn.body, type_ignores=[]), include_attributes=False).encode()
     ).hexdigest()
     assert actual == EXPECTED_BODY_AST_SHA256

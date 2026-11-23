@@ -21,7 +21,7 @@ dependencies = [
   "pydantic-settings>=2.3,<3.0",
   "PyYAML>=6.0,<7.0",
   "psycopg[binary]>=3.1,<4.0",
-  "redis>=5.0,<6.0",
+  "redis>=7.0,<8.0",
   "reportlab>=4.2,<5.0",
   "sqlalchemy>=2.0.30,<3.0",
   "truststore>=0.10,<1.0",
@@ -32,7 +32,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
   "jsonschema>=4.23,<5.0",
-  "pytest>=8.2,<9.0",
+  "pytest>=9.0,<10.0",
   "ruff>=0.8,<1.0",
 ]
 

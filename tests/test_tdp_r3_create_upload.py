@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import ast
+
+from tests.ast_golden_compat import stable_ast_dump
 import hashlib
 from pathlib import Path
 
@@ -26,7 +28,7 @@ def _kwargs(**override):
 def test_original_create_body_ast_identical():
     tree = ast.parse(MODULE.read_text())
     f = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == "create_uploaded_demo_run")
-    sha = hashlib.sha256(ast.dump(ast.Module(body=f.body, type_ignores=[]), include_attributes=False).encode()).hexdigest()
+    sha = hashlib.sha256(stable_ast_dump(ast.Module(body=f.body, type_ignores=[]), include_attributes=False).encode()).hexdigest()
     assert sha == EXPECTED_SHA256
 
 
