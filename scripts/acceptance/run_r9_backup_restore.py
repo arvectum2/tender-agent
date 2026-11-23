@@ -23,9 +23,8 @@ ROOT = Path(__file__).resolve().parents[2]
 COMPOSE = ROOT / "tests/integration/compose.r8-postgres.yml"
 sys.path.insert(0, str(ROOT / "scripts" / "acceptance"))
 sys.path.insert(0, str(ROOT / "scripts" / "ops"))
-from r8_acceptance.runtime import http  # noqa: E402
-from run_r9_db_filesystem_mismatch import bootstrap, port, run, start, stop, write  # noqa: E402
-from r9_recovery import (  # noqa: E402
+from r8_acceptance.runtime import http
+from r9_recovery import (
     RecoveryError,
     create_backup,
     restore_backup,
@@ -33,6 +32,7 @@ from r9_recovery import (  # noqa: E402
     restore_filesystem,
     verify_backup,
 )
+from run_r9_db_filesystem_mismatch import bootstrap, port, run, start, stop, write
 
 CUSTOMER = "R9-RECOVERY"
 STATUS = "R9_P2_BACKUP_RESTORE_FAIL_CLOSED"
@@ -141,7 +141,7 @@ def request(method: str, url: str, body: dict[str, Any] | None = None, headers: 
         except json.JSONDecodeError:
             parsed = {"body_present": bool(raw)}
         return {"status_code": status, "body": parsed}
-    except Exception as exc:
+    except Exception as exc:  # noqa: BLE001 - synthetic HTTP acceptance error boundary
         return {"exception_type": type(exc).__name__, "message": str(exc)[:200]}
 
 
@@ -188,6 +188,7 @@ def main() -> int:
     dbport = port()
     compose_project = "r9br" + secrets.token_hex(4)
     source_url = f"postgresql+psycopg://r8_acceptance:{password}@127.0.0.1:{dbport}/r8_acceptance"
+    original_path = os.environ.get("PATH")
     env = os.environ.copy()
     env.update(
         R8_POSTGRES_PASSWORD=password,
@@ -206,6 +207,38 @@ def main() -> int:
     try:
         compose = ["docker", "compose", "-p", compose_project, "-f", str(COMPOSE)]
         run(compose + ["up", "-d", "--wait"], env, commands)
+        # The disposable server is PG16. Use its native pg_dump/pg_restore
+        # instead of incompatible host binaries (e.g. Homebrew PG18). Do not
+        # alter the production recovery implementation or test atomicity.
+        result = subprocess.run(
+            compose + ["ps", "-q", "postgres"], cwd=ROOT, env=env,
+            capture_output=True, text=True, check=True, timeout=12,
+        )
+        container_id = result.stdout.strip()
+        if not container_id:
+            raise RuntimeError("R9 disposable PostgreSQL container unavailable")
+        owner = subprocess.run(
+            ["docker", "inspect", "-f", '{{index .Config.Labels "com.docker.compose.project"}}', container_id],
+            capture_output=True, text=True, check=True, timeout=12,
+        ).stdout.strip()
+        if owner != compose_project:
+            raise RuntimeError("R9 PostgreSQL container ownership mismatch")
+        native_client = subprocess.run(
+            ["docker", "exec", container_id, "pg_restore", "--version"],
+            capture_output=True, text=True, check=True, timeout=12,
+        ).stdout.strip()
+        if "PostgreSQL) 16." not in native_client:
+            raise RuntimeError("R9 acceptance requires matching PostgreSQL 16 clients")
+        bin_dir = temp / "pg-client-bin"
+        bin_dir.mkdir(mode=0o700)
+        adapter = ROOT / "scripts" / "acceptance" / "r9_pg_container_client.py"
+        for program in ("pg_dump", "pg_restore"):
+            target = bin_dir / program
+            shutil.copyfile(adapter, target)
+            target.chmod(0o700)
+        os.environ["PATH"] = f"{bin_dir}{os.pathsep}{original_path or ''}"
+        os.environ["R9_PG_TEST_CONTAINER"] = container_id
+        os.environ["R9_PG_TEST_PORT"] = str(dbport)
         run([sys.executable, "-m", "alembic", "upgrade", "head"], env, commands)
         seed = '''import os,sys
 sys.path.insert(0,"scripts/acceptance")
@@ -349,22 +382,30 @@ with Session(create_engine(os.environ["AI_CORP_DATABASE_URL"])) as s:
         if process:
             try:
                 stop(process)
-            except Exception as exc:
+            except Exception as exc:  # noqa: BLE001 - cleanup must always continue
                 cleanup["errors"].append(type(exc).__name__)
         cleanup["compose_down_returncode"] = subprocess.run(
             ["docker", "compose", "-p", compose_project, "-f", str(COMPOSE), "down", "--volumes", "--remove-orphans"],
             cwd=ROOT,
             env=env,
             capture_output=True,
+            check=False,
         ).returncode
         for name, command in {
             "containers": ["docker", "ps", "-aq", "--filter", f"label=com.docker.compose.project={compose_project}"],
             "networks": ["docker", "network", "ls", "-q", "--filter", f"name={compose_project}"],
             "volumes": ["docker", "volume", "ls", "-q", "--filter", f"name={compose_project}"],
         }.items():
-            value = subprocess.run(command, text=True, capture_output=True)
+            value = subprocess.run(command, text=True, capture_output=True, check=False)
             cleanup[f"{name}_check_returncode"] = value.returncode
             cleanup[name] = value.stdout.split()
+        # Never leak temporary pg tool selection to other tests or jobs.
+        if original_path is None:
+            os.environ.pop("PATH", None)
+        else:
+            os.environ["PATH"] = original_path
+        os.environ.pop("R9_PG_TEST_CONTAINER", None)
+        os.environ.pop("R9_PG_TEST_PORT", None)
         shutil.rmtree(temp, ignore_errors=True)
         cleanup["temporary_root_removed"] = not temp.exists()
         cleanup["cleanup_complete"] = not cleanup["errors"] and cleanup["compose_down_returncode"] == 0 and all(cleanup[f"{name}_check_returncode"] == 0 and not cleanup[name] for name in ("containers", "networks", "volumes")) and cleanup["temporary_root_removed"]

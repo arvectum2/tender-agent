@@ -562,7 +562,37 @@ def analyze_tender(
                     source=history_source,
                 )
             return result
-        retriever = DataPlatformRagRetriever(repo, platform_client)
+        if config.rag_async_ingest_enabled:
+            from src.tender_research.rag.durable_async import (
+                AsyncTenderIndexPending,
+                require_existing_background_ready,
+            )
+
+            try:
+                require_existing_background_ready(
+                    repo, tender.id, enabled=True,
+                    minimum_async_chunks=config.rag_async_ingest_min_chunks,
+                    collection_stats=stats,
+                )
+            except AsyncTenderIndexPending:
+                result = TenderAnalysisResult(
+                    status="no_context", registry_number=registry_number,
+                    sections=[], sections_count=0, sources_count=0,
+                    analysis_mode=analysis_mode,
+                    errors=["Data Platform background indexing is still pending; analysis blocked."],
+                    retrieval_provider="data_platform", retrieval_model="hybrid",
+                )
+                if record_history:
+                    _record_history(result, session, duration_seconds=0.0, source=history_source)
+                return result
+        if config.rag_async_ingest_enabled:
+            retriever = DataPlatformRagRetriever(
+                repo, platform_client,
+                async_gate_enabled=True,
+                async_minimum_chunks=config.rag_async_ingest_min_chunks,
+            )
+        else:
+            retriever = DataPlatformRagRetriever(repo, platform_client)
 
         llm_client: LocalChatLlmClient | None = None
         if use_llm:

@@ -724,9 +724,39 @@ class DataPlatformRagRetriever:
         self,
         repo: TenderRepository,
         client: DataPlatformClient,
+        *,
+        async_gate_enabled: bool = False,
+        async_minimum_chunks: int = 9,
     ) -> None:
         self._repo = repo
         self._client = client
+        self._async_gate_enabled = async_gate_enabled
+        self._async_minimum_chunks = async_minimum_chunks
+
+    def _require_current_index(self, tender_id: str) -> None:
+        if not self._async_gate_enabled:
+            return
+        from src.tender_research.rag.durable_async import (
+            AsyncTenderIndexPending,
+            require_existing_background_ready,
+        )
+
+        chunks = self._repo.list_chunks_by_tender(tender_id)
+        if len(chunks) < self._async_minimum_chunks:
+            return
+        collection_id = build_tender_collection_id(self._repo, tender_id)
+        if collection_id is None:
+            raise DataPlatformError("Tender index revision unavailable")
+        stats = self._client.collection_stats(collection_id)
+        if not complete_index_counts(stats, len(chunks)):
+            raise AsyncTenderIndexPending("Data Platform full collection index is incomplete")
+        require_existing_background_ready(
+            self._repo,
+            tender_id,
+            enabled=True,
+            minimum_async_chunks=self._async_minimum_chunks,
+            collection_stats=stats,
+        )
 
     def close(self) -> None:
         self._client.close()
@@ -757,6 +787,7 @@ class DataPlatformRagRetriever:
             if customer_name.casefold() not in actual:
                 return []
 
+        self._require_current_index(tender_id)
         collection_id = resolve_tender_collection_id(
             self._repo, self._client, tender_id
         )
@@ -772,9 +803,12 @@ class DataPlatformRagRetriever:
     ) -> list[RagSearchHit]:
         if not query.strip():
             return []
+        tender_ids = self._repo.list_tender_ids_with_chunks()
+        for tender_id in tender_ids:
+            self._require_current_index(tender_id)
         collections = [
             collection_id
-            for tender_id in self._repo.list_tender_ids_with_chunks()
+            for tender_id in tender_ids
             if (
                 collection_id := resolve_tender_collection_id(
                     self._repo, self._client, tender_id

@@ -2,10 +2,21 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Index, Integer, JSON, String, Text, UniqueConstraint
+from sqlalchemy import (
+    JSON,
+    Boolean,
+    DateTime,
+    Float,
+    ForeignKey,
+    Index,
+    Integer,
+    String,
+    Text,
+    UniqueConstraint,
+)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from src.shared.db.base import UUIDPrimaryKeyMixin, Base, utcnow
+from src.shared.db.base import Base, UUIDPrimaryKeyMixin, utcnow
 
 
 class ProcurementTender(UUIDPrimaryKeyMixin, Base):
@@ -128,6 +139,31 @@ class ProcurementDocumentChunk(UUIDPrimaryKeyMixin, Base):
         UniqueConstraint("document_id", "chunk_index"),
         UniqueConstraint("document_id", "text_hash"),
         Index("ix_procurement_document_chunks_text_hash", "text_hash"),
+    )
+
+
+class TenderAsyncIndexReceipt(UUIDPrimaryKeyMixin, Base):
+    """Durable DP job receipts (metadata only; never source content or API secrets)."""
+
+    __tablename__ = "tender_async_index_receipts"
+
+    tender_id: Mapped[str] = mapped_column(String(36), ForeignKey("procurement_tenders.id"), nullable=False)
+    collection_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    chunk_id: Mapped[str] = mapped_column(String(36), nullable=False)
+    source_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+    expected_chunks: Mapped[int] = mapped_column(Integer, nullable=False)
+    job_id: Mapped[str] = mapped_column(String(36), nullable=False)
+    status: Mapped[str] = mapped_column(String(24), nullable=False, default="queued")
+    resource_id: Mapped[str | None] = mapped_column(String(128), nullable=True)
+    document_id: Mapped[str | None] = mapped_column(String(128), nullable=True)
+    indexed_chunks: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utcnow)
+
+    __table_args__ = (
+        UniqueConstraint("collection_id", "chunk_id", name="uq_tender_async_receipt_source"),
+        UniqueConstraint("collection_id", "job_id", name="uq_tender_async_receipt_job"),
+        Index("ix_tender_async_receipt_tender_collection", "tender_id", "collection_id"),
     )
 
 
