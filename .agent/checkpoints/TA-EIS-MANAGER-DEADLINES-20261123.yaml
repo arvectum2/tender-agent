@@ -1,0 +1,27 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-EIS-MANAGER-DEADLINES-20261123
+related_issue: 721
+status: in_progress
+goal: "Owner-authorized, source-evidence-bound reconciliation of future MANAGER_READY EIS deadline values after comprehensive 298-row audit; preserve actual official midnights, original rows and rollback."
+owner_authorization: "2026-11-23 user replied 'делай' to proposal of correcting current source-verified MANAGER_READY rows, with focus on 37 future deadline entries."
+definition_of_done:
+  - "Verify exact source audit snapshot SHA and 37 unique future MANAGER_READY rows; identify 35 mismatches versus 2 correct official midnights."
+  - "Repeat bounded read-only official EIS detailed-field checks for those 37 notices, no login, redirects, source substitution or invented time."
+  - "Create private 0700/0600 backup, per-row provenance, SHA-bound revert plan; apply 35 conditional one-transaction production UPDATEs only after independently verifying DB pin and row identities/status/old deadline."
+  - "Verify exactly 35 target rows now match current EIS exact instants, two verified exact midnight untouched, all other 262 original snapshot records unchanged, earlier corrected MAX unchanged; no new DB or service changes."
+  - "Add synthetic rollback and source-hash tests; document official-current-vs-historical caveat and complete protected GitHub CI if committing tools."
+completed:
+  - "298 historical EIS midnight rows across 196 official notices independently audited in PR #724 merged 61397812810236911e36181615065665169b971f; 288 same date wrong clock, 7 different date, 3 genuine midnight."
+  - "37 unique MANAGER_READY with future EIS deadlines at 23-Nov 06:39 UTC; 33 same date clock mismatch, 2 different Moscow date (one official earlier), 2 exact true midnight; therefore 35 expected conditional updates."
+current_stage: independent_readonly_source_refresh_and_production_snapshot_guard
+remaining:
+  - "Develop and test strict source recheck and exact row-backed transaction script."
+  - "Run preflight, save rollback and original HTML, then guarded transaction for exactly 35 rows, zero collateral updates."
+  - "Read-only full 299 row postcheck and private result receipt, update issue #721 and checkpoint."
+  - "Source-only review, protected CI and merge without runtime service restart."
+last_verified_commit: "61397812810236911e36181615065665169b971f"
+test_results: "pre-mutation audit source original proof 196/196, 17 synthetic tests + protected CI 9/9 in PR #724"
+resume_instruction: "Continue from read-only source refresh; do not update if remote official fields changed or source proof/DB pin fail. Use specific 35 expected row IDs, strict row_status=MANAGER_READY, source/public URL/old instant predicates, one transaction with no writes to other rows. Archive backups under private runtime with 0700 dir/0600 files; no ETP actions, service restart, mass 298 update."
+production_modified: false
+external_submissions: false
