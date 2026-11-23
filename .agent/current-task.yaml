@@ -1239,3 +1239,15 @@ ta_sibur_geh_recent_2026_11_23:
   report: docs/market-intelligence/SIBUR_GEH_RECENT_FIRST_2026-11-23.md
   production_services_modified: false
   maintenance_outage_started: false
+
+ta_sibur_geh_closure_2026_11_23:
+  task_id: TA-SIBUR-GEH-CLOSURE-20261123
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-SIBUR-GEH-CLOSURE-20261123.yaml
+  current_stage: source_proof_and_index_completion
+  geh_review_items: 6
+  sibur_worker_running: true
+  sibur_second_worker_started: false
+  postgres_restarted: false
+  llm_stopped: false
+  maintenance_outage_started: false
