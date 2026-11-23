@@ -79,7 +79,7 @@ def _load_source(audit_root: Path, now: datetime) -> tuple[list[dict], object]:
     snapshot = audit_root / "snapshot.json"
     if not snapshot.is_file() or _hash(snapshot.read_bytes()) != SNAPSHOT_SHA:
         raise SourceMismatch("the immutable original 298-row DB snapshot SHA changed")
-    _, groups = audit._read_snapshot(snapshot, SNAPSHOT_SHA)
+    data, groups = audit._read_snapshot(snapshot, SNAPSHOT_SHA)
     csv_path = audit_root / "EIS_298_ALL_VERIFIED.csv"
     if not csv_path.is_file() or _hash(csv_path.read_bytes()) != CSV_SHA:
         raise SourceMismatch("the immutable 298-row source comparison CSV SHA changed")
@@ -137,13 +137,14 @@ def _load_source(audit_root: Path, now: datetime) -> tuple[list[dict], object]:
                 or receipt.get("status") != "official_exact_verified"
                 or receipt.get("official_utc") != r["new_deadline_utc"]):
             raise SourceMismatch("original official evidence no longer proves target deadline")
-    return sorted(candidates, key=lambda x: x["registry_number"]), audit
+    return (sorted(candidates, key=lambda x: x["registry_number"]), audit,
+            data["metadata"]["db_system_id_sha256"])
 
 
 def prepare(audit_root: Path, root: Path, now: datetime) -> dict:
     if root.exists() or root.is_symlink():
         raise SourceMismatch("new private reconciliation root already exists")
-    rows, audit = _load_source(audit_root, now)
+    rows, audit, system_hash = _load_source(audit_root, now)
     _private_dir(root, True)
     html_dir = root / "official-recheck-html"
     _private_dir(html_dir, True)
@@ -198,6 +199,7 @@ def prepare(audit_root: Path, root: Path, now: datetime) -> dict:
             "original_audit_snapshot_sha256": SNAPSHOT_SHA,
             "original_audit_csv_sha256": CSV_SHA,
             "expected_db": list(DB_IDENTITY),
+            "expected_db_system_sha256": system_hash,
             "rows": rows,
             "fresh_eis_rechecks": evidence,
             "rows_checked": 37,
@@ -213,7 +215,7 @@ def prepare(audit_root: Path, root: Path, now: datetime) -> dict:
         os.close(fd)
 
 
-def _load_prepared(root: Path, expected_sha: str) -> dict:
+def _load_prepared(root: Path, expected_sha: str, *, require_fresh: bool = True) -> dict:
     _private_dir(root)
     p = root / "plan.json"
     if p.is_symlink() or not p.is_file() or _hash(p.read_bytes()) != expected_sha:
@@ -229,7 +231,14 @@ def _load_prepared(root: Path, expected_sha: str) -> dict:
             or plan.get("rows_already_exact") != 2
             or len(plan.get("rows", [])) != 37):
         raise SourceMismatch("invalid prepared manifest identity/scope")
-    if (datetime.now(UTC) - datetime.fromisoformat(plan["created_at_utc"])
+    orig_snap = root.parent / "eis-midnight-audit-20261123" / "snapshot.json"
+    if not orig_snap.is_file() or _hash(orig_snap.read_bytes()) != SNAPSHOT_SHA:
+        raise SourceMismatch("original production snapshot was replaced")
+    original_sys = json.loads(orig_snap.read_text())["metadata"]["db_system_id_sha256"]
+    if (plan.get("expected_db_system_sha256") != original_sys
+            or len(original_sys) != 64):
+        raise SourceMismatch("prepared PostgreSQL system identity does not match original")
+    if (require_fresh and datetime.now(UTC) - datetime.fromisoformat(plan["created_at_utc"])
             > MAX_SOURCE_AGE):
         raise SourceMismatch("fresh source attestation expired")
     audit = _audit()
@@ -269,9 +278,7 @@ def _check_db_rows(connection, plan: dict, lock: bool) -> list[dict]:
     if tuple(identity[:3]) != DB_IDENTITY:
         raise SourceMismatch("production DB identity mismatch")
     system_sha = _hash(identity[3].encode())
-    expected_snapshot_system_sha = (
-        "7f6c9e5ac08da908c3efa8404fb4be791a2dd96409db4aa5429e8b68ab195f44"
-    )
+    expected_snapshot_system_sha = plan["expected_db_system_sha256"]
     # Source identity hash is verified against the canonical original snapshot,
     # not a guessed database name or temporary Docker/test database.
     if system_sha != expected_snapshot_system_sha:
@@ -397,7 +404,7 @@ def transact(root: Path, expected_sha: str, *, commit: bool) -> dict:
 def verify_postcommit(root: Path, expected_sha: str) -> dict:
     from sqlalchemy import bindparam, text
 
-    plan = _load_prepared(root, expected_sha)
+    plan = _load_prepared(root, expected_sha, require_fresh=False)
     audit_root = root.parent / "eis-midnight-audit-20261123"
     audit = _audit()
     _, grouped = audit._read_snapshot(audit_root / "snapshot.json", SNAPSHOT_SHA)
