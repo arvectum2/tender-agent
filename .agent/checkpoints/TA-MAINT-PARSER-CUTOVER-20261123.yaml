@@ -1,0 +1,33 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-MAINT-PARSER-CUTOVER-20261123
+status: in_progress
+related_issue: 721
+goal: "Prepare coordinated Mac mini maintenance for temporary ALL-LLM stop, controlled restart of PostgreSQL and safe deploy of a new Daily Tender EIS deadline parser, with traceable rollback and service-independent verification."
+owner_request: "2026-11-23: user is preparing planned maintenance, temporary shutdown of all LLM, PostgreSQL restart and wants updated parser launched. Preparation authorized; DO NOT begin outage or restart PG before explicit maintenance-start instruction."
+definition_of_done:
+  - "Inventory actually active LLM servers, PG17 and PG16 containers, backend dependencies, launchd schedulers, backup/PITR and available safe rollback"
+  - "Validate PostgreSQL recovery/backup prerequisites, WAL receiver states, PITR proof status and DB integration health; list hard blockers before reboot"
+  - "Implement EIS detailed official exact submission time with timezone source proof for future Daily Tender run while preserving date-only as null and preventing fail-open expiry"
+  - "Add synthetic and isolated integration tests, protected CI and exact-head GitVerse mirror, stage immutable pinned candidate release with no live cutover"
+  - "Document ordered drain, bounded LLM stop and bringup, PG restart, rollback and smoke checks, receipt templates; specify go/no-go"
+  - "At separately authorized maintenance window, stop LLM/PG and deploy new pinned parser; full live smoke, rollback, checkpoint completed"
+completed:
+  - "Previous PR #722 date-only guard merged; PR #725 exactly 35 historic MANAGER_READY deadlines source-verified and corrected; live Daily Tender still pinned to older code."
+  - "23-Nov 10:48 Moscow read-only: PG17 arvectum-postgres healthy, PG16 local-e2e-db healthy, two WAL receiver containers; shared PG17 volume Docker named; active Gemma llama-server 8081, Qwen3 embedding llama-server, Ollama service and OpenCode services."
+  - "Read Arvectum Skills arc-operations, incident-response, project-roadmap: diagnostics scope readonly, no runtime authority granted by skills."
+current_stage: verify_backup_recovery_and_daily_parser_integration
+remaining:
+  - "Gather bounded inventory and exact backup/PITR restore proof; inspect existing runbook and service dependencies"
+  - "Implement and test source-only official detail enrichment with strict source validation/timeout/size cap, no invented time"
+  - "Protected CI and stage immutable candidate release and rollback sequence"
+  - "Explicit owner confirmation to BEGIN outage; only then stop LLM and restart PG, cut over parser with guards"
+last_verified_commit: "893efed902dbfea8a94da6175b7e54394f1629b3"
+test_results: "No new parser deployment/test yet; historic date-only parser 36 tests PASS; 35 historic source-proven deadline corrections confirmed independently"
+resume_instruction: "Read this checkpoint and actual main/host, inspect focused dependencies and backup/PITR before changing anything. Continue source-only parser staging, protected PR, candidate immutable release; never stop all LLM, restart PostgreSQL, alter existing live services or release until owner states maintenance window has begun. Do not rerun completed 35-row DB correction. Preserve active TA Watchdog."
+production_modified: false
+downtime_started: false
+postgres_restarted: false
+llm_stopped: false
+parser_new_release_deployed: false
+external_submissions: false
