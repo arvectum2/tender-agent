@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from collections.abc import Iterator
 from contextlib import contextmanager
 from datetime import UTC, datetime, timedelta
@@ -48,6 +49,9 @@ from src.tender_research.rag.prepare_service import prepare_tender_for_analysis
 _TERMINAL_REUSE_STATUSES = {"MANAGER_READY", "SCREENED_OUT", "DUPLICATE"}
 _PROCESSABLE_STATUSES = {"SHORTLISTED", "PROCESSING"}
 _MOSCOW = ZoneInfo("Europe/Moscow")
+# Public EIS list cards can supply only the calendar date, not the exact
+# application cutoff clock time. Never synthesize 00:00 MSK from such text.
+_DATE_ONLY_DEADLINE_RE = re.compile(r"(?:\d{2}\.\d{2}\.\d{4}|\d{4}-\d{2}-\d{2})")
 _LOCAL_RUN_LOCK = Lock()
 _LOCAL_RUNNING: set[str] = set()
 
@@ -122,12 +126,14 @@ def _parse_deadline(value: Any) -> datetime | None:
     text = str(value or "").strip()
     if not text:
         return None
+    if _DATE_ONLY_DEADLINE_RE.fullmatch(text):
+        # Unknown clock time, NOT midnight. Downstream management and
+        # notification contracts already accept deadline_at=None.
+        return None
     candidates = (
         "%d.%m.%Y %H:%M",
         "%d.%m.%Y %H:%M:%S",
-        "%d.%m.%Y",
         "%Y-%m-%dT%H:%M:%S",
-        "%Y-%m-%d",
     )
     for fmt in candidates:
         try:
@@ -297,6 +303,8 @@ def _screen_card(
             score += 4
     else:
         reasons.append("deadline_unknown")
+        if _DATE_ONLY_DEADLINE_RE.fullmatch(str(card.get("deadline") or "").strip()):
+            reasons.append("deadline_date_only_time_unverified")
         score -= 5
 
     if nmck is not None:
