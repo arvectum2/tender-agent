@@ -1121,3 +1121,12 @@ sibur_geh_commercial_watch_2026_11_22:
   current_stage: source_bound_business_digest_completed__protected_merge_gated
   follow_up_issue: 719
   automatic_daily_sibur_source_refresh_deployed: false
+
+mi_daily_commercial_watch_2026_11_23:
+  task_id: TA-MI-DAILY-WATCH-20261123
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-MI-DAILY-WATCH-20261123.yaml
+  issue: 719
+  current_stage: safe_runner_implementation_and_synthetic_tests
+  production_installed: false
+  live_source_credentials_used: false
