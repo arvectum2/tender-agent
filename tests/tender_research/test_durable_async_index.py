@@ -233,3 +233,24 @@ def test_duplicate_remote_resource_identity_never_qualifies_as_complete() -> Non
         driver.require_ready(tender_id)
     with pytest.raises(AsyncTenderIndexPending):
         require_existing_background_ready(repo, tender_id, enabled=True)
+
+
+def test_failed_pump_cycle_rolls_back_session_and_remains_fail_closed() -> None:
+    from src.shared.data_platform import DataPlatformError
+    from src.tender_research.rag.async_index_pump import run_one_cycle
+
+    repo, tender_id = seeded_repo(9)
+    client = FakeClient()
+    DurableTenderAsyncIndex(repo, client).advance(tender_id)
+
+    class BrokenRemote(FakeClient):
+        def __init__(self):
+            self.jobs = client.jobs
+
+        def get_ingest_job(self, **_kwargs):
+            raise DataPlatformError("synthetic outage")
+
+    summary = run_one_cycle(repo, BrokenRemote())
+    assert summary["failed"] == 1 and summary["ready"] == 0
+    assert not repo._session.in_transaction()
+    assert DurableTenderAsyncIndex(repo, client).poll(tender_id).submitted == 8

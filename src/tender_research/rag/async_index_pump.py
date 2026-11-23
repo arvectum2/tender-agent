@@ -69,6 +69,9 @@ def run_one_cycle(
             ).advance(tender_id)
             stats["ready" if progress.ready else "waiting"] += 1
         except (DataPlatformError, ValueError):
+            # A failed SQL flush or remote exception must not leave an aborted
+            # transaction poisoning subsequent independent tender cycles.
+            repo._session.rollback()
             stats["failed"] += 1
             logger.warning(
                 "Background Tender Agent index cycle failed (type-only reason)"
@@ -97,17 +100,20 @@ def main() -> None:
     if TenderAsyncIndexReceipt.__tablename__ not in Base.metadata.tables:
         parser.error("durable receipt registry unavailable")
     try:
-        with Session(engine) as session, build_data_platform_client(config) as client:
-            repo = TenderRepository(session)
+        with build_data_platform_client(config) as client:
             if not callable(getattr(client, "enqueue_ingest_document_bytes", None)):
                 parser.error("updated Data Platform SDK not installed")
             while True:
-                result = run_one_cycle(
-                    repo,
-                    client,
-                    batch_size=config.rag_async_ingest_batch_size,
-                    minimum_async_chunks=config.rag_async_ingest_min_chunks,
-                )
+                # Never sleep with an open SQLAlchemy transaction or stale
+                # identity map; release it after EACH reconciliation cycle.
+                with Session(engine) as session:
+                    repo = TenderRepository(session)
+                    result = run_one_cycle(
+                        repo,
+                        client,
+                        batch_size=config.rag_async_ingest_batch_size,
+                        minimum_async_chunks=config.rag_async_ingest_min_chunks,
+                    )
                 print(
                     "tenders_seen={tenders_seen} ready={ready} waiting={waiting} "
                     "failed={failed}".format(**result),

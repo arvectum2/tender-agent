@@ -169,3 +169,14 @@ was rerun and returned **PASS** (1 test), plus targeted tests of proxy
 fail-closed behavior and unchanged restore/error-redaction contracts. The
 exact latest-head GitHub CI is still the release gate; neither a local test
 pass nor draft PR authorizes production migration/deployment.
+
+## Long-lived TA worker session lifetime (final hardening)
+
+The explicit `async_index_pump --loop` now opens a **fresh SQLAlchemy Session
+per reconciliation cycle** and closes it before the 5-second idle interval.
+This prevents idle-in-transaction sessions and stale cached source state in
+a long-running process. A handled remote/status error rolls back the current
+session before continuing with other tenders; failed cycles remain visible
+in the numeric worker summary and do not become false completions. Regression
+tests cover post-error rollback and recovery. No permanent worker has been
+installed or enabled on Mac mini.
