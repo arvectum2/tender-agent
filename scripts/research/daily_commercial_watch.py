@@ -240,6 +240,23 @@ def _previous_status(out_root: Path) -> dict | None:
     value = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(value, dict) or value.get("status") != "completed":
         raise EvidenceRejected("previous success receipt invalid")
+    # Last successful report is a comparison input: verify the prior immutable
+    # output before trusting its candidate signatures and deadline changes.
+    runs_root = out_root / "runs"
+    for key, digest_key in (
+        ("report_json", "report_json_sha256"),
+        ("report_markdown", "report_markdown_sha256"),
+    ):
+        raw_path = value.get(key)
+        expected = value.get(digest_key)
+        if not isinstance(raw_path, str) or not isinstance(expected, str):
+            raise EvidenceRejected("previous report receipt missing hash identity")
+        target = Path(raw_path)
+        if (target.is_symlink() or not target.is_file()
+                or not target.resolve().is_relative_to(runs_root.resolve())
+                or target.stat().st_size > 5_000_000
+                or _sha(target) != expected):
+            raise EvidenceRejected("previous report file/receipt SHA is inconsistent")
     return value
 
 
