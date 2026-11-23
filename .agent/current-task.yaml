@@ -1144,3 +1144,12 @@ dtr_deadline_precision_2026_11_23:
   legacy_rows_reconciled: false
   official_clock_time_verified: false
   verified_focused_tests: 36
+
+mi_0700_commercial_release_2026_11_23:
+  task_id: TA-MI-0700-RELEASE-20261123
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-MI-0700-RELEASE-20261123.yaml
+  issue: 719
+  owner_authorized: true
+  target_delivery_time: '07:00 Europe/Moscow'
+  current_stage: production_schedule_and_delivery_setup
