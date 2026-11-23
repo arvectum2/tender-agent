@@ -1,0 +1,25 @@
+task_id: TA-SIBUR-GEH-CLOSURE-20261123
+status: in_progress
+goal: "Resolve six ETP GPB GEH source review exceptions using first-party evidence; complete or safely sustain verified SIBUR indexing of the remaining eligible queue without disruption."
+definition_of_done:
+  - "Revalidate official source bytes and DB state for all five ID-bearing GEH review cases plus the missing-identity June-2025 card; only accept normalization fixes proven by source and strict tests."
+  - "Reconcile every safely recoverable GEH observation with existing source hash receipts and guarded MI+Postgres backups/replay; quarantine irreducible discrepancies without fabrication."
+  - "Verify SIBUR single runner, active PITR, latest queue, index and DP growth; safely resolve recurring blockers where demonstrably needed, leave in-flight worker alone."
+  - "Publish precise before/after metrics, source review statuses, rollback artefacts, test receipts, safe continuation instructions."
+  - "Protected CI exact-head and mirror gate passed, documentation merged; retain owner-paused PG17/LLM maintenance and pinned old EIS parser."
+completed:
+  - "Initial 2026-11-23 12:46Z ARC read-only: SIBUR worker PID 59010 running, PITR verified_pitr, DP 9333 docs and 107208 chunks/embeddings, current queue 7814 eligible/7159 already indexed, 655 dynamic remainder; earlier checkpoint 7154/7820."
+  - "Five source-ID reviews identified: three single-decimal source prices (301,6; 6435,5; 9727,6 RUB), two official listing published timestamps after their submission deadlines (IDs 991644 and 973837). Sixth review is source card ordinal 20 for 2025-06-04 missing verified title/ID. No fixes yet."
+current_stage: prove_individual_source_and_strict_price_exception
+remaining:
+  - "Read exact raw source cards and current official detail for five IDs and the missing identity, compare DB, do not infer unknown data."
+  - "Prepare and test minimal source-safe price parsing extension; independently review historical date discrepancies and missing source title; selectively gated import only after evidence."
+  - "Inspect SIBUR runner batching/resource governor and read-only completion trend, avoid duplicate runners or unsafe fast forward."
+  - "Recheck independent DB results and source SHA evidence, update checkpoint and merge protected report."
+last_verified_commit: 'main after PR #730 merge b9f92bf3323f8e97c91296c3bbe81214df99d136'
+test_results: 'Initial read-only checks only, no new mutations under this task yet'
+resume_instruction: 'Read latest GEH six source reviews, verify exact official HTML and existing DB row state; permit only provenance-verified safe normalization. Do not blindly fix publication>deadline. SIBUR worker already active, do not start duplicate or disable PITR. Follow protected source+test workflow. Maintenance window not started, do not restart/stop models or PG17.'
+research_pg16_modified: false
+production_tender_modified: false
+service_restart: false
+owner_maintenance_window_authorized: false
