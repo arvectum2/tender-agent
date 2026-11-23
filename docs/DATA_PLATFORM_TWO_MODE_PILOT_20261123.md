@@ -42,7 +42,7 @@ PYTHONPATH=<DP_CANDIDATE>/sdk/python/src:<TA_CANDIDATE> \
 The earlier `TwoModeTenderIndexer` remains a standalone, default-off SDK bridge for
 compatibility. **New** `DurableTenderAsyncIndex` in
 `src/tender_research/rag/durable_async.py` provides production-oriented metadata
-persistence and bounded continuation. Alembic **108** adds
+persistence and bounded continuation. Alembic **128** adds
 `tender_async_index_receipts` to Tender Agent's database. Each committed
 receipt stores only its tender/collection/chunk IDs, SHA-256 content digest,
 expected revision chunk count, DP job ID, status and committed result IDs;
@@ -81,10 +81,10 @@ there is no automatic production daemon until separately approved.
   returns pending rather than ready, and pump excludes already completed jobs.
 - Full cross-product isolated E2E now uses **two separate PostgreSQL 17
   databases** inside its owned disposable container: DP database with
-  Alembic 0014 and Tender Agent database with Alembic 108. An independent
+  Alembic 0014 and Tender Agent database with Alembic 128. An independent
   SQLAlchemy engine/session is reopened mid-run to prove durability. Nine
   source-faithful chunks pass through both systems with 9/9 completed and 9
-  mapped RAG hits; pending search remains blocked. TA migration 108 is also
+  mapped RAG hits; pending search remains blocked. TA migration 128 is also
   verified to refuse downgrade with a populated receipt journal. No active
   infrastructure, database or Qwen is modified.
 

@@ -1,7 +1,7 @@
 """Store durable provenance-bound background ingest receipts (opt-in, metadata only).
 
-Revision ID: 108_add_tender_async_index_receipts
-Revises: 107_add_procurement_learning_observations
+Revision ID: 128_add_tender_async_index_receipts
+Revises: 127_private_review_link_corrections
 """
 
 from collections.abc import Sequence
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 from alembic import op
 
-revision: str = "108_add_tender_async_index_receipts"
-down_revision: str | Sequence[str] | None = "107_add_procurement_learning_observations"
+revision: str = "128_add_tender_async_index_receipts"
+down_revision: str | Sequence[str] | None = "127_private_review_link_corrections"
 branch_labels = None
 depends_on = None
 

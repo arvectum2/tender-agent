@@ -319,7 +319,7 @@ def main() -> None:
                         "-c",
                         str(Path(__file__).resolve().parents[1] / "alembic.ini"),
                         "downgrade",
-                        "107_add_procurement_learning_observations",
+                        "127_private_review_link_corrections",
                     ],
                     cwd=Path(__file__).resolve().parents[1],
                     env=ta_env,
