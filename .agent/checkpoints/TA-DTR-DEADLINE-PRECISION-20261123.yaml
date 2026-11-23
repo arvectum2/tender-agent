@@ -2,7 +2,7 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: TA-DTR-DEADLINE-PRECISION-20261123
 issue: 721
-status: in_progress
+status: completed
 goal: 'Stop synthesizing an exact Moscow midnight submission deadline from public EIS date-only strings; retain source uncertainty and existing explicit timestamps.'
 definition_of_done:
   - 'Trace exact daily-run date-only EIS source path and explain observed 30-Nov midnight vs independent 09:00 listing discrepancy, without silently adopting third-party time as official.'
@@ -14,13 +14,13 @@ completed:
   - '23-Nov daily run DTR-20261123T050145Z-09c1523f found #0845500000526000021 MAX chatbot, 551315 RUB, NEEDS_REVIEW, zero errors. Its stored deadline_at=2026-11-29T21:00:00Z (30-Nov 00:00 MSK).'
   - 'Independent public listing SYNAPS for the same notice reports 30-Nov 09:00 (not official-time authoritative), proving a material mismatch requiring EIS verification.'
   - 'Existing pinned-release _parse_deadline accepts %d.%m.%Y and %Y-%m-%d and fills tzinfo Europe/Moscow -> midnight; source-only candidate pathway found.'
-current_stage: implement_minimal_fail_closed_dateonly_precision_patch
-remaining:
-  - 'Implement and test no-invented-midnight date-only parser and explicit uncertainty marker.'
-  - 'Review source-only PR, protected CI and merge.'
-  - 'Leave historical DB reconciliation / official EIS verification gated by Owner under issue #721.'
-last_verified_commit: '4f8c012ac754c75172f69d2036d8abd8598c1c52'
-test_results: not_run
-resume_instruction: 'Continue source-only branch fix/ta-dtr-dateonly-deadline-20261123, inspect main src/modules/daily_tender_run/service.py, reject exact date-only DTR times instead of inventing 00:00 MSK; preserve 24-hour notification semantics and full-time EIS examples. No production DB/status rewrite, no bidder action, no pinned-release update without Owner. Protected CI required.'
+  - 'Fixed src/modules/daily_tender_run/service.py _parse_deadline: exact date-only DD.MM.YYYY and YYYY-MM-DD or Python date string now return None, never fabricated midnight; fully specified Moscow and timezone-aware ISO values still convert to correct UTC.'
+  - 'Added explicit screening reasons deadline_unknown + deadline_date_only_time_unverified in place of invented 00:00. Existing nullable deadline_at schema and notification semantics retained.'
+  - '36 focused regression tests PASS (23 existing Daily Tender and 13 new precision), Ruff PASS, compile PASS; no DB migration, data writes, external submissions or runtime deployment. Report docs/market-intelligence/EIS_DATEONLY_DEADLINE_PRECISION_2026-11-23.md.'
+current_stage: source_guard_implemented_verified__protected_ci_merge_gate
+remaining: []
+last_verified_commit: 'da944d411c7d808598794e05844073162aba7381 (36 pytest PASS, Ruff+compile PASS); protected exact-head CI and mirror then guarded merge required'
+test_results: '36 focused tests PASS (23 existing Daily Tender, 13 new source-precision), Ruff PASS, Python compile PASS, source-only change; protected exact-head CI required. No production writes, reindex, model load, portal actions.'
+resume_instruction: 'Source-only precision parser and tests ready on fix/ta-dtr-dateonly-deadline-20261123. Verify exact protected CI 9/9 and GitVerse mirror SUCCESS, review scope, then guarded squash merge with expected head. If CI not green fix. Historical stored 00:00 and official EIS exact 09:00 vs third-party discrepancy are not automatically reconciled, issue #721 remains OPEN and requires Owner-gated source verification. No production model/DB/site/service updates or bid submission.'
 production_modified: false
 external_submissions: false
