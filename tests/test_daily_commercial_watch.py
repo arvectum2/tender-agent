@@ -329,3 +329,54 @@ def test_previous_report_pointer_outside_private_runs_is_rejected(
     receipt_path.write_text(json.dumps(receipt))
     with pytest.raises(EvidenceRejected, match="SHA is inconsistent"):
         _execute(geh, sibur, watch, capture, out, now=NOW.replace(minute=11))
+
+
+
+def test_live_capture_adapter_only_calls_bounded_first_party_collector(
+    tmp_path, monkeypatch,
+):
+    from scripts.research import capture_sibur_public_snapshot as capture_module
+
+    sibur = tmp_path / "sibur"
+    sibur.mkdir()
+    called = []
+
+    def synthetic_collector(destination, max_pages):
+        called.append((destination, max_pages))
+        destination.mkdir(mode=0o700)
+        (destination / "receipts.json").write_text('{"synthetic": true}')
+        return {
+            "advertised_pages_traversed": True, "errors": [],
+            "validated_pages": 2, "announced_pages": 2,
+        }
+
+    monkeypatch.setattr(capture_module, "collect", synthetic_collector)
+    name = "20261123T053300000000Z"
+    output = daily._run_capture(sibur, name)
+    assert called == [(output, 40)]
+    assert output.name == "daily-commercial-" + name
+    assert output.is_dir()
+    assert (sibur / ".daily-public-capture.lock").is_file()
+
+
+def test_bounded_capture_incomplete_pagination_fails_without_success(
+    tmp_path, monkeypatch,
+):
+    from scripts.research import capture_sibur_public_snapshot as capture_module
+
+    sibur = tmp_path / "sibur"
+    sibur.mkdir()
+
+    def synthetic_partial(destination, max_pages):
+        assert max_pages == 40
+        destination.mkdir(mode=0o700)
+        return {
+            "advertised_pages_traversed": False, "errors": [],
+            "validated_pages": 1, "announced_pages": 28,
+        }
+
+    monkeypatch.setattr(capture_module, "collect", synthetic_partial)
+    with pytest.raises(EvidenceRejected, match="incomplete"):
+        daily._run_capture(sibur, "20261123T053400000000Z")
+    assert (sibur / "daily-commercial-20261123T053400000000Z").is_dir()
+    assert not (sibur / "daily-commercial-20261123T053400000000Z" / "normalized.json").exists()
