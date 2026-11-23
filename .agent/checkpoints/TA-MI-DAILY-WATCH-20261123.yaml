@@ -2,7 +2,7 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: TA-MI-DAILY-WATCH-20261123
 issue: 719
-status: in_progress
+status: completed
 goal: 'Implement a production-safe, offline-testable, source-scoped daily business digest runner using existing GEH public snapshots and fresh public SIBUR HTTPS pages.'
 definition_of_done:
   - 'Safe self-contained read-only reporting runner with guarded optional first-party public SIBUR capture, no login, bids, production DB, model inference or restarts.'
@@ -13,14 +13,15 @@ definition_of_done:
 completed:
   - 'Previous source-verified commercial watch PR #718 merged 013237f4cd1e52298d1940888f70fa27cbdaaba6; 9/9 protected CI success, GitVerse mirror success.'
   - '23-Nov GEH LaunchAgent runs at 07:35 MSK; 08:01 MSK snapshot was at admission/in_progress on inspection. Existing SIBUR public capture script supports 40 pages and source GET without login.'
-current_stage: implement_safe_daily_runner_and_synthetic_tests
-remaining:
-  - 'Build daily runner and focused synthetic tests on isolated branch.'
-  - 'Verify against actual unchanged preserved source snapshots, bounded failures and source age, without production database actions.'
-  - 'Review exact PR diff, protected CI; merge source-only if green.'
-  - 'Leave explicit owner-gated installation and next scheduled cycle acceptance tracked in issue #719.'
-last_verified_commit: '013237f4cd1e52298d1940888f70fa27cbdaaba6'
-test_results: not_run
-resume_instruction: 'Continue on feature/ta-mi-daily-watch-safe-runner-20261123. Build safe offline-testable runner, preserve existing GEH 07:35 and existing 08:00 daily run, no launchctl install, no production writes/reindex or model load. Source-only code and tests can merge once protected exact CI green. Physical schedule deployment requires separate explicit Owner decision under issue #719.'
+  - '23-Nov source-only runner scripts/research/daily_commercial_watch.py: newest verified GEH + strictly bounded opt-in SIBUR first-party public GET; no login, bid, DB, app restarts or model calls. Fail-closed on newest in-flight GEH, source age, incomplete SIBUR, bad SHA, unsafe output directory, low disk, unexpected source URL and concurrent source lock.'
+  - 'Private SHA-bound JSON/Markdown and receipt, atomic last_attempt and last_success; blocked attempt preserves historic proof without fake delivery. Shortlist-only delta names not claims of source closure; prior report hashes rechecked.'
+  - 'Optional launchd template 08:35 MSK (after existing 07:35 GEH and 08:00 Tender Agent), not installed, clean pinned release checkout required and Owner gating recorded in issue #719.'
+  - '46 targeted synthetic tests PASS (26 commercial source + 20 daily runner), Ruff PASS, Python compile PASS, YAML and LaunchAgent plist parsing PASS at 8a893f4709512fea4a7144ad1cded64f33a69aa3.'
+  - 'Actual read-only 23-Nov source replay: 17/17 GEH verified pages, 329 rows, 244 accepted, 34 relevant; existing 22-Nov SIBUR 28/28 SHA pages, 328 IDs, 54 relevant. Ephemeral private-output end-to-end success (report and source hashes, last_attempt/last_success equal) without any production DB, source GET or scheduled install.'
+current_stage: source_only_runner_complete__protected_publish_gate
+remaining: []
+last_verified_commit: '8a893f4709512fea4a7144ad1cded64f33a69aa3 (46 focused tests PASS, Ruff/compile/YAML/plist PASS, real offline source replay and temp private-output PASS); final protected exact-head CI and merge required'
+test_results: '46 focused pytest PASS (26 core commercial source and 20 daily synthetic), Ruff PASS, Python compile PASS, YAML and launchd plist parse PASS; actual 23-Nov GEH 17/17 and 22-Nov SIBUR 28/28 source proofs; output receipt SHA atomic private PASS. No production changes. Full protected CI and GitVerse mirror must pass before merge.'
+resume_instruction: 'Verify protected exact-head CI for source-only PR on feature/ta-mi-daily-watch-safe-runner-20261123: 9/9 SUCCESS + GitVerse mirror SUCCESS, check only checkpoint/pointer/script/tests/docs/launchd TEMPLATE changed, then squash-merge with expected SHA. If not green repair code and revalidate. No physical launchctl schedule installed: actual daily delivery and Owner approval remain open issue #719. Do not write user LaunchAgents, change database, start models, submit bids, edit other services or use supplier credentials.'
 production_modified: false
 external_submissions: false
