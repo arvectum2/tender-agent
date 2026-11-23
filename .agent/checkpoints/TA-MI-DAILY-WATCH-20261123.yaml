@@ -1,0 +1,26 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-MI-DAILY-WATCH-20261123
+issue: 719
+status: in_progress
+goal: 'Implement a production-safe, offline-testable, source-scoped daily business digest runner using existing GEH public snapshots and fresh public SIBUR HTTPS pages.'
+definition_of_done:
+  - 'Safe self-contained read-only reporting runner with guarded optional first-party public SIBUR capture, no login, bids, production DB, model inference or restarts.'
+  - 'Fail closed when most recent GEH source is incomplete, older than 36h or unverified, when SIBUR source capture is incomplete/hash-invalid, or when output directory is unsafe.'
+  - 'Atomic private publication with per-run SHA256 receipt and reliable last-attempt success/blocked state; no stale fallback; source lock prevents overlapping runs.'
+  - 'Focused synthetic/integration tests for dry run, success, concurrent lock, incomplete capture, stale source and preserved prior success; Ruff/compile tests.'
+  - 'Protected exact-head CI and documentation; merge source-only if green; production scheduled installation remains separate explicit Owner gate.'
+completed:
+  - 'Previous source-verified commercial watch PR #718 merged 013237f4cd1e52298d1940888f70fa27cbdaaba6; 9/9 protected CI success, GitVerse mirror success.'
+  - '23-Nov GEH LaunchAgent runs at 07:35 MSK; 08:01 MSK snapshot was at admission/in_progress on inspection. Existing SIBUR public capture script supports 40 pages and source GET without login.'
+current_stage: implement_safe_daily_runner_and_synthetic_tests
+remaining:
+  - 'Build daily runner and focused synthetic tests on isolated branch.'
+  - 'Verify against actual unchanged preserved source snapshots, bounded failures and source age, without production database actions.'
+  - 'Review exact PR diff, protected CI; merge source-only if green.'
+  - 'Leave explicit owner-gated installation and next scheduled cycle acceptance tracked in issue #719.'
+last_verified_commit: '013237f4cd1e52298d1940888f70fa27cbdaaba6'
+test_results: not_run
+resume_instruction: 'Continue on feature/ta-mi-daily-watch-safe-runner-20261123. Build safe offline-testable runner, preserve existing GEH 07:35 and existing 08:00 daily run, no launchctl install, no production writes/reindex or model load. Source-only code and tests can merge once protected exact CI green. Physical schedule deployment requires separate explicit Owner decision under issue #719.'
+production_modified: false
+external_submissions: false
