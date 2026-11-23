@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import ast
+
+from tests.ast_golden_compat import stable_ast_dump
 import hashlib
 from datetime import UTC, datetime
 from pathlib import Path
@@ -46,7 +48,7 @@ def test_projected_body_matches_original_ast():
     tree = ast.parse(EXTRACTED_MODULE.read_text())
     fn = next(x for x in tree.body if isinstance(x, ast.FunctionDef) and x.name == "project_uploaded_run")
     digest = hashlib.sha256(
-        ast.dump(ast.Module(body=fn.body, type_ignores=[]), include_attributes=False).encode()
+        stable_ast_dump(ast.Module(body=fn.body, type_ignores=[]), include_attributes=False).encode()
     ).hexdigest()
     assert digest == EXPECTED_BODY_SHA256
 

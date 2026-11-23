@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import ast
+
+from tests.ast_golden_compat import stable_ast_dump
 import hashlib
 from pathlib import Path
 from types import SimpleNamespace
@@ -17,7 +19,7 @@ SRC = Path(__file__).resolve().parents[1] / "src/modules/tender_operator_agent_d
 def test_original_projection_body_ast_remains_identical():
     tree = ast.parse(SRC.read_text())
     fn = next(node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == "build_item_rows")
-    actual = hashlib.sha256(ast.dump(ast.Module(body=fn.body, type_ignores=[]), include_attributes=False).encode()).hexdigest()
+    actual = hashlib.sha256(stable_ast_dump(ast.Module(body=fn.body, type_ignores=[]), include_attributes=False).encode()).hexdigest()
     assert actual == EXPECTED_SOURCE_AST_SHA256
 
 

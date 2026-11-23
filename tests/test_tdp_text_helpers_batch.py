@@ -1,6 +1,8 @@
 """Deterministic legacy-facade behavior and extraction body parity."""
 
 import ast
+
+from tests.ast_golden_compat import stable_ast_dump
 import hashlib
 from pathlib import Path
 
@@ -66,7 +68,7 @@ def test_ast_original_body_hashes_stable():
             for n in tree.body
             if isinstance(n, ast.FunctionDef) and n.name == "project" + old
         )
-        signature = ast.dump(
+        signature = stable_ast_dump(
             ast.Module(body=fn.body, type_ignores=[]), include_attributes=False
         )
         assert hashlib.sha256(signature.encode()).hexdigest() == expected[old]

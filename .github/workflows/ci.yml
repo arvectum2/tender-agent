@@ -12,11 +12,12 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: '3.11'}
       - name: Install pinned uv for lock verification
-        run: python -m pip install 'uv==0.12.8'
-      - name: Verify requirements.lock matches pyproject.toml
+        run: python -m pip install 'uv==0.13.9'
+      - name: Verify hashed development and production locks
         run: |
           uv pip compile pyproject.toml --extra dev --python-version 3.11 --universal --generate-hashes --output-file requirements.lock
-          git diff --exit-code -- requirements.lock
+          uv pip compile pyproject.toml --python-version 3.11 --universal --generate-hashes --output-file requirements-runtime.lock
+          git diff --exit-code -- requirements.lock requirements-runtime.lock
 
   docker-build:
     runs-on: ubuntu-latest
@@ -54,12 +55,17 @@ jobs:
           ARVECTUM_LANDING_PUBLIC_DIR="$PWD" docker compose -f docker-compose.site-pilot.yml config >/dev/null
 
   quality:
-    # Ubuntu 26.04 (ubuntu-latest) no longer ships the PG16 client.
+    # Keep Ubuntu 24.04 to restore disposable PostgreSQL 16 with PG16 client.
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: {python-version: '3.11'}
+        with: {python-version: '3.15'}
+      - name: Pin verified Rust toolchain for Python 3.15 pydantic-core build
+        run: |
+          rustup toolchain install 1.100.0 --profile minimal
+          rustup default 1.100.0
+          rustc --version
       # PDF assertions use pdftotext; R9 recovery acceptance uses pg_dump/pg_restore.
       # The disposable recovery target is PostgreSQL 16. Newer pg_restore
       # emits SET transaction_timeout, unsupported by PG16.
@@ -73,7 +79,10 @@ jobs:
           pg_dump --version | grep -E 'PostgreSQL\) 16\.'
           pg_restore --version | grep -E 'PostgreSQL\) 16\.'
       - name: Install locked Python dependencies
-        run: python -m pip install --require-hashes -r requirements.lock
+        run: |
+          python -m pip install 'pip==26.3'
+          python -m pip install --require-hashes -r requirements.lock
+          python -m pip check
       - run: make check
       - name: Require hosted Node for company cabinet contract
         run: |

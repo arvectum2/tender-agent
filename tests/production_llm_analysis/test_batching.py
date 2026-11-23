@@ -1,5 +1,7 @@
 import io
 import json
+import shlex
+import sys
 from dataclasses import replace
 
 import pytest
@@ -104,7 +106,7 @@ def test_command_token_counter_caches_exact_inputs():
     from src.modules.production_llm_analysis.batching import CommandTokenCounter
 
     counter = CommandTokenCounter(
-        "python -c 'print(\"Total number of tokens: 7\")'", identity="test"
+        f"{shlex.quote(sys.executable)} -c 'print(\"Total number of tokens: 7\")'", identity="test"
     )
     assert counter("same") == 7
     assert counter("same") == 7

@@ -1,6 +1,8 @@
 """Backward compatible delegation and immutable behavior of RFQ projections."""
 
 import ast
+
+from tests.ast_golden_compat import stable_ast_dump
 import hashlib
 
 import pytest
@@ -78,7 +80,7 @@ def test_extracted_function_bodies_match_prechange():
                 else old_name.lstrip("_")
             )
         )
-        payload = ast.dump(
+        payload = stable_ast_dump(
             ast.Module(body=node.body, type_ignores=[]), include_attributes=False
         )
         assert hashlib.sha256(payload.encode()).hexdigest() == expected

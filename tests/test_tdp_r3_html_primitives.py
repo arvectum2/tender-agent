@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import ast
+
+from tests.ast_golden_compat import stable_ast_dump
 import hashlib
 from pathlib import Path
 
@@ -22,7 +24,7 @@ def test_all_original_nested_function_bodies_ast_identical():
     assert by_name.keys() == ORIGINAL_HASHES.keys()
     for name, expected in ORIGINAL_HASHES.items():
         actual = hashlib.sha256(
-            ast.dump(ast.Module(body=by_name[name].body, type_ignores=[]), include_attributes=False).encode()
+            stable_ast_dump(ast.Module(body=by_name[name].body, type_ignores=[]), include_attributes=False).encode()
         ).hexdigest()
         assert actual == expected, name
 

@@ -1,6 +1,8 @@
 """Compatibility and deterministic behavior for extracted notice and goods fields."""
 
 import ast
+
+from tests.ast_golden_compat import stable_ast_dump
 import hashlib
 
 import pytest
@@ -84,7 +86,7 @@ def test_extracted_bodies_equal_original():
             if isinstance(node, ast.FunctionDef) and node.name == extracted_name
         )
         digest = hashlib.sha256(
-            ast.dump(
+            stable_ast_dump(
                 ast.Module(body=extracted.body, type_ignores=[]),
                 include_attributes=False,
             ).encode()
