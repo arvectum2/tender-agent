@@ -1144,3 +1144,31 @@ dtr_deadline_precision_2026_11_23:
   legacy_rows_reconciled: false
   official_clock_time_verified: false
   verified_focused_tests: 36
+
+mi_0700_commercial_release_2026_11_23:
+  task_id: TA-MI-0700-RELEASE-20261123
+  status: blocked
+  checkpoint: .agent/checkpoints/TA-MI-0700-RELEASE-20261123.yaml
+  issue: 719
+  owner_authorized: true
+  target_delivery_time: '07:00 Europe/Moscow'
+  current_stage: installed_manual_canary_verified_waiting_24nov_first_scheduled
+  github_issue: 719
+  gehrun_msk: '05:15'
+  source_and_report_msk: '06:20'
+  chatgpt_delivery_msk: '07:00'
+  automation_id: 6b03d6bd374c8191a4ef19cd4a5fcd17
+  pinned_source_commit: 71b28f550559a45c47056e7b1b0adb1d5eb51bdc
+  host_schedule_installed: true
+  first_real_scheduled_day_verified: false
+
+dtr_one_row_deadline_correction_2026_11_23:
+  task_id: TA-DTR-ONE-ROW-CORRECTION-20261123
+  status: completed
+  checkpoint: .agent/checkpoints/TA-DTR-ONE-ROW-CORRECTION-20261123.yaml
+  issue: 721
+  exact_registry_number: '0845500000526000021'
+  corrected_deadline_utc: '2026-11-30T06:00:00Z'
+  production_rows_changed: 1
+  other_midnight_rows_not_reconciled: 298
+  source_pinned_runtime_deployed: false

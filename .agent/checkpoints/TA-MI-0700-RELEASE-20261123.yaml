@@ -1,0 +1,31 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-MI-0700-RELEASE-20261123
+issue: 719
+status: blocked
+goal: "Owner-authorized operational roll-out of 07:00 Europe/Moscow business digest, with freshly captured SIBUR/GEH source evidence and scheduled ChatGPT delivery"
+owner_authorization: "2026-11-23: user explicitly approved installation and instructed digest time 07:00 Moscow. Do not confuse internal source capture vs delivery time."
+definition_of_done:
+  - "Schedule existing GEH capture sufficiently before 07:00 Moscow; no overlap with existing core 08:00 or other critical jobs; record previous plist backup"
+  - "Deploy protected pinned source-only commercial-watch runner to isolated checkout and schedule upstream local output before 07:00; preserve source locks, governor and fail-closed"
+  - "Create exactly one daily ChatGPT business-digest delivery automation at 07:00 Europe/Moscow reading completed same-day validated local receipt; report blocked if unavailable"
+  - "Run bounded smoke/canary with actual public source or original backed source; verify SHA-receipt and last_success; no bids, service restarts or unrelated DB mutations"
+  - "Verify launchctl schedule, job enabled, no accidental extra Mac models/DB writes, and rollback/diagnostics"
+completed:
+  - "PR #718 and #720 source-only commercial analyzer + guarded daily runner merged in main with protected 9/9 tests and mirrored"
+  - "23-Nov host: GEH at 07:35 -> actual started 08:01 and completed 08:05; impossible to include same-day GEH at a 07:00 digest without moving GEH earlier"
+  - "Existing Daily Tender 08:00 left unchanged; governor status pass/mode reduced, SSD 1TiB available"
+  - 'Created clean owner-only source checkout /Users/master/ArvectumSafe/releases/mi-commercial-watch-71b28f550559 at exactly protected main SHA 71b28f550559a45c47056e7b1b0adb1d5eb51bdc. Tested 46 focused pytest PASS + Ruff PASS; pinned source status clean.'
+  - 'Owner authorized host rollout: original GEH source LaunchAgent 07:35 moved to 05:15 MSK with original backed up SHA256 97923c9d47dfa16b1722020c1f78ce1664b87dd4cd287c543913a1027b1473c7, new dedicated commercial source-watch job bootstrapped 06:20 MSK, existing Daily Tender 08:00 unchanged.'
+  - 'One-time supervised dedicated launchctl kickstart produced fresh SIBUR 28/28 pages and 54 topical future leads, latest GEH 34; private output 0700, both last_success and last_attempt complete run 20261123T060100011405Z, JSON/Markdown SHA and five source receipts verified, launchd exit 0, no second Qwen or extra production DB updates.'
+  - 'ChatGPT automation 6b03d6bd374c8191a4ef19cd4a5fcd17 created and peek-read back as enabled, Europe/Moscow exact 07:00 DAILY, next run 2026-11-24T07:00:00+03:00. Fail-closed same-day proof, never deliver stale prior success.'
+  - 'Updated tracked launchd template and daily source-runbook for 05:15/06:20/07:00 chain, pinned source, rollback and 24-Nov scheduled acceptance.'
+current_stage: installed_and_supervised_canary_verified__await_first_true_20261124_schedule
+remaining:
+  - "On/after 24-Nov 07:05 MSK confirm real scheduled GEH 05:15 and source report 06:20 completed with same-day source SHA, and ChatGPT 07:00 actually delivered (or explicit blocked alert); do not mistake manual 23-Nov canary for scheduled delivery"
+  - "Confirm longer-term retention / missed-run alerts, then close issue #719 and mark checkpoint completed"
+last_verified_commit: '71b28f550559a45c47056e7b1b0adb1d5eb51bdc (pinned installed source); ops branch docs/checkpoint PR pending exact CI'
+test_results: '46 focused pytest PASS and Ruff PASS pinned; 23-Nov real bounded manual public SIBUR 28/28 capture, local business report 54 SIBUR/34 GEH, SHA receipts verified; both launchd jobs loaded and 05:15/06:20 configured, 08:00 original preserved; 07:00 automation enabled 24-Nov next. First real scheduled day NOT YET VERIFIED.'
+resume_instruction: 'On 24-Nov 2026 at/after 07:05 Europe/Moscow, read this checkpoint and issue #719: verify new real GEH cycle after 05:15, SIBUR source capture and report after 06:20, last_attempt=last_success=completed with fresh same-day source hashes, actual 07:00 ChatGPT delivery or explicit blocked alert. Do NOT restart core, launch second Qwen, update production DB or submit. If nightly failed, diagnose fail-closed and report to user; preserve backups. Source is pinned main SHA 71b28f550559. Only mark checkpoint completed and close #719 after true scheduled run verified. Separate one-row EIS correction checkpoint is completed but bulk 298 uncertain date-only records remain issue #721.'
+production_modified: true
+external_submissions: false

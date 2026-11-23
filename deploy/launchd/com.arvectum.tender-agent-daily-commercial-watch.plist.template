@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Source capture+local output 06:20 MSK, separate ChatGPT digest delivery 07:00 MSK. -->
 <plist version="1.0">
 <dict>
     <key>Label</key>
@@ -28,9 +29,9 @@
     <key>StartCalendarInterval</key>
     <dict>
         <key>Hour</key>
-        <integer>8</integer>
+        <integer>6</integer>
         <key>Minute</key>
-        <integer>35</integer>
+        <integer>20</integer>
     </dict>
     <key>RunAtLoad</key>
     <false/>
