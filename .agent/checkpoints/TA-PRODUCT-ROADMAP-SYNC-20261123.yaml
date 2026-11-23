@@ -1,0 +1,21 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-PRODUCT-ROADMAP-SYNC-20261123
+status: in_progress
+goal: Reconcile full product roadmap against Nov 23 actual code, live health and separate APR acceptance.
+definition_of_done:
+  - Dated full APR/product/research overview preserves prior scope and identifiers.
+  - Link canonical master, current product roadmap and machine-readable management overlay.
+  - Validate source paths, YAML and touched-file checks; commit and verify protected PR.
+  - Do not change DB, production, executor policy, ETP or customer data.
+completed:
+  - Confirmed protected main 023d3670 and live TA/DP HTTP 200.
+  - Authored full dated roadmap overlay and source-linked master entries.
+  - Ruby YAML parse PASS on 3 files; APR 11/11, queue math and links PASS; git diff --check PASS.
+current_stage: commit_and_protected_pr
+remaining:
+  - Commit docs, protected PR and exact-head CI; mark checkpoint completed.
+last_verified_commit: 023d3670adcbf6d9ae8a318f4433615fa94b680c
+tests:
+  doc_validation: pass
+resume_instruction: Validate doc-only worktree, commit; create protected PR; after exact CI and merge update this checkpoint to completed without changing TA-ROADMAP-EXEC.
