@@ -143,6 +143,17 @@ am4_owner_renewal_2026_10_08_r2:
     pr: 230
     merge_commit: 44cc5d93ac18260bca5998eaa2d040daabf86891
 
+am4_owner_renewal_2026_11_14:
+  status: approved_company_main
+  company_decision: docs/governance/decisions/DECISION-2026-11-14-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
+  company_merge_commit: 6af75d5a18ba21a34515eeaa323892685db26be1
+  cycle: "0/10"
+  mandatory_review_deadline: "2026-12-14"
+  preserves_prior_evidence: true
+  eligible_only_with_canonical_queue_auto_merge_true_and_full_ci: true
+  review_required_for_non_auto_tasks: true
+  explicit_owner_merges_excluded: [522, 523]
+
 revocation: Owner may revoke or supersede this directive at any time.
 
 owner_delegated_ai_e2e_acceptance_2026_10_15:

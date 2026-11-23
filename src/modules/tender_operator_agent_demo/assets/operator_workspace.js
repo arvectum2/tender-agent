@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const api = '/api/demo/tender-agent';
-  const state = { runId: null, poll: null, busy: false, registryOffset: 0, registryTotal: 0, registryQuery: '', runReady: false, searchParams: null, searchCursor: null, seenNumbers: [], quoteFileKey: null };
+  const state = { runId: null, poll: null, busy: false, registryOffset: 0, registryTotal: 0, registryQuery: '', runReady: false, searchParams: null, searchCursor: null, seenNumbers: [], quoteFileKey: null, copilotEpoch: 0, copilotSearchEpoch: 0, copilotAnswerEpoch: 0, applicationReviewEpoch: 0, costEpoch: 0 };
   const $ = id => document.getElementById(id);
   const node = (tag, cls = '', content = null) => {
     const el = document.createElement(tag);
@@ -52,9 +52,13 @@
     $('search-next').disabled = value;
     $('append-files-button').disabled = value;
     $('quote-verify-button').disabled = value;
+    $('copilot-submit').disabled = value;
+    $('copilot-search-submit').disabled = value;
+    $('copilot-answer-submit').disabled = value;
+    $('application-review-submit').disabled = value;
   }
   function tab(name) {
-    const labels = {new:'Новый анализ',history:'История анализов',registry:'База закупок'};
+    const labels = {new:'Новый анализ',history:'История анализов',registry:'База закупок',prices:'Цены и протоколы'};
     if (!(name in labels)) return;
     for (const key of Object.keys(labels)) show('pane-' + key, key === name);
     for (const button of document.querySelectorAll('.nav-btn')) {
@@ -234,7 +238,15 @@
   async function loadRun() {
     if (!state.runId) return;
     const id = encodeURIComponent(state.runId);
+    show('copilot-panel',false);
+    show('application-review-panel',false);
+    state.applicationReviewEpoch++;wipe($('application-review-result'));
+    $('application-signatory').value='UNKNOWN';$('application-goods').value='UNKNOWN';
+    state.copilotEpoch++;wipe($('copilot-result'));$('copilot-percent').value='';
+    state.copilotSearchEpoch++;wipe($('copilot-search-result'));$('copilot-search').value='';
+    state.copilotAnswerEpoch++;wipe($('copilot-answer-result'));$('copilot-answer-question').value='';
     const run = await json(api + '/runs/' + id);
+    if (encodeURIComponent(state.runId)!==id) return;
     show('run-empty', false);
     show('run-section', true);
     $('run-status').textContent = run.status || 'неизвестен';
@@ -258,6 +270,8 @@
     wipe($('run-warnings'));
     for (const warning of [...(run.warnings || []),...(run.limitations || [])].slice(0,8)) paragraph($('run-warnings'), '⚠ ' + warning);
     renderFiles(run);
+    show('copilot-panel',Array.isArray(run.files) && run.files.length>0);
+    show('application-review-panel',Array.isArray(run.files) && run.files.length>0);
     await loadEvents();
     await loadReport(run);
     return run;
@@ -294,6 +308,212 @@
       root.append(item);
     }
   }
+  function applicationCitations(root, citations) {
+    for(const c of citations) {
+      paragraph(root,c.group+' · '+c.file_id+' · чанк '+c.chunk_id+' · SHA-256 оригинала '+c.original_sha256,'citation');
+      paragraph(root,c.quote);
+    }
+  }
+  function validApplicationCitation(c) {
+    return c && typeof c.group==='string' && typeof c.file_id==='string' && typeof c.chunk_id==='string' &&
+      typeof c.quote==='string' && /^[a-f0-9]{64}$/.test(c.original_sha256);
+  }
+  async function reviewApplication(event) {
+    event.preventDefault();
+    if(!state.runId || state.busy) return;
+    const runId=state.runId,epoch=++state.applicationReviewEpoch,root=$('application-review-result');
+    const choice=$('application-goods').value;
+    const body={signatory:$('application-signatory').value,goods_used:choice==='UNKNOWN'?null:choice==='YES'};
+    wipe(root);setBusy(true);
+    try {
+      const data=await json(api+'/workspace/runs/'+encodeURIComponent(runId)+'/application-review',
+        {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+      if(state.runId!==runId || epoch!==state.applicationReviewEpoch) return;
+      if(data.contract!=='archived_application_review_v1'||data.run_id!==runId||data.signatory!==body.signatory||
+         data.goods_used!==body.goods_used||data.application_ready!==false||data.company_profile_checked!==false||
+         data.external_action_allowed!==false||data.recommendation!=='DEFER') throw new Error('Unexpected review response');
+      if(data.status==='ARCHIVED_NOTIFICATION_NOT_APPLICATION' && Array.isArray(data.notification_sources) &&
+        data.notification_sources.length && data.notification_sources.every(validApplicationCitation)) {
+        paragraph(root,'Архивное извещение носит уведомительный характер. Заявка по нему не формируется.','unknown');
+        applicationCitations(root,data.notification_sources);return;
+      }
+      if(data.status!=='ARCHIVED_QUOTATION_CHECKLIST_REVIEW_ONLY'||!Array.isArray(data.rows)||data.rows.length!==9||
+        new Set(data.rows.map(r=>r.code)).size!==9||!data.rows.every(r=>Array.isArray(r.citations)&&r.citations.length&&r.citations.every(validApplicationCitation))) {
+        paragraph(root,'UNKNOWN · Проверенный чек-лист требований недоступен.','unknown');return;
+      }
+      const labels={REQUIRED:'Обязательно по изученному образцу',REQUIRED_IN_SCENARIO:'Требуется в сценарии',
+        NOT_TRIGGERED_IN_SCENARIO:'Не применяется в выбранном сценарии',CONDITIONAL_UNKNOWN:'Условие не определено',
+        OPTIONAL_EVIDENCE_NOT_OPTIONAL_RIGHTS:'Альтернативные документы; само право требуется',REVIEW_REQUIRED:'Требуется дополнительная проверка'};
+      paragraph(root,'Архивный чек-лист · '+data.rows.length+' групп требований · DEFER. Профиль не проверен.','unknown');
+      for(const r of data.rows) {
+        const item=node('details','evidence-item');
+        item.append(node('summary','',r.title+' — '+(labels[r.applicability]||'UNKNOWN')));
+        applicationCitations(item,r.citations);root.append(item);
+      }
+      paragraph(root,'Актуальная редакция, полнота требований и готовность заявки не подтверждены.','help-text');
+    }catch(error){if(state.runId===runId&&epoch===state.applicationReviewEpoch){wipe(root);paragraph(root,'UNKNOWN · Проверка не выполнена.','unknown');}}
+    finally{setBusy(false);}
+  }
+
+  async function answerEvidenceQuestion(event) {
+    event.preventDefault();
+    if (!state.runId || state.busy) return;
+    const runId=state.runId, epoch=++state.copilotEpoch, question=$('copilot-question').value;
+    const body={question};
+    if(question==='nmck_percent') body.percent=$('copilot-percent').value.trim().replace(',','.');
+    const root=$('copilot-result');wipe(root);setBusy(true);
+    try {
+      const data=await json(api+'/workspace/runs/'+encodeURIComponent(runId)+'/evidence-question',
+        {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+      if(state.runId!==runId || epoch!==state.copilotEpoch) return;
+      if(data.run_id!==runId || data.question!==question || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION'].includes(data.status) || !validCitations(data.citations).length) {
+        paragraph(root,'UNKNOWN · Ответ не подтверждён исходным документом.','unknown');return;
+      }
+      paragraph(root,data.status==='HYPOTHETICAL_CALCULATION'?'Сценарная сумма ('+body.percent+'% НМЦК): '+data.answer+' (единицы исходной НМЦК; валюта не подтверждена). Не установленное обеспечение.':String(data.answer));
+      renderCitations(root,data.citations,{originalVerified:true});
+      paragraph(root,'Архивная редакция. Актуальность и право участия не подтверждены.','help-text');
+    }catch(error){if(state.runId===runId && epoch===state.copilotEpoch)paragraph(root,'UNKNOWN · Проверка не выполнена.','unknown');}
+    finally{setBusy(false);}
+  }
+
+  async function answerGroundedQuestion(event) {
+    event.preventDefault();
+    if (!state.runId || state.busy) return;
+    const runId=state.runId, epoch=++state.copilotAnswerEpoch, question=$('copilot-answer-question').value.trim();
+    const root=$('copilot-answer-result');wipe(root);setBusy(true);
+    try {
+      const data=await json(api+'/workspace/runs/'+encodeURIComponent(runId)+'/evidence-answer',
+        {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question})});
+      if(state.runId!==runId || epoch!==state.copilotAnswerEpoch) return;
+      if(data.run_id===runId && data.intent==='ri223_review_dossier') {
+        const d=data.observation;
+        if(!d || data.status!=='RI223_ARCHIVED_REVIEW_ONLY' || !Array.isArray(d.domains) || d.domains.length!==9) {
+          paragraph(root,'UNKNOWN · Полный проверенный архивный комплект не подтверждён.','unknown');
+        } else {
+          paragraph(root,data.answer,'help-text');
+          paragraph(root,'Оригиналы: '+d.inventory.originals_verified+' из '+d.inventory.expected_originals+'; документы внутри контейнеров: '+d.inventory.members_verified+'; непрочитанные контейнеры: '+d.inventory.opaque_containers);
+          paragraph(root,'Разделы с цитатами: '+d.source_backed_domains+' из 9. Это не оценка полноты требований.','help-text');
+          renderSingleGroundedAnswer(root,{run_id:runId,status:d.notice.status,citation_kind:'RI223_ARCHIVED_XML',observation:d.notice,citations:d.notice.citations,answer:'Архивное извещение.'},runId);
+          for(const domain of d.domains) {
+            const section=document.createElement('details');section.className='quote-review';section.open=true;
+            const heading=document.createElement('summary');heading.textContent=domain.title;section.append(heading);
+            renderSingleGroundedAnswer(section,{run_id:runId,status:domain.citations.length?'TOPIC_EXCERPTS_ONLY':'UNKNOWN',citation_kind:'ORIGINAL_DP_CHUNK',citations:domain.citations,answer:'Буквальные фрагменты, условия и применимость к лоту не подтверждены.'},runId);
+            root.append(section);
+          }
+          const sc=d.scoring;
+          if(sc?.status==='PINNED_SCORING_OBSERVATION_ONLY') {
+            paragraph(root,'Методика оценки: стоимостной '+sc.price_weight_percent+'%, нестоимостные '+sc.nonprice_weight_percent+'%.');
+            paragraph(root,'Условный формуляр нестоимостной группы: деловая репутация '+sc.candidate_nonprice_subweights.business_reputation+'%, финансовое состояние '+sc.candidate_nonprice_subweights.financial_condition+'%, квалификация '+sc.candidate_nonprice_subweights.qualification+'%. Применение к лоту не подтверждено.');
+            paragraph(root,sc.source_lineage.member_path+' · SHA-256 PDF '+sc.original_pdf_sha256+' · SHA-256 RAR '+sc.original_rar_sha256,'help-text');
+          } else paragraph(root,'Структурированные веса методики: UNKNOWN.','unknown');
+          paragraph(root,'Соответствие участника: UNKNOWN; затраты: UNKNOWN; риски договора: NOT_ASSESSED; решение: NOT_DECIDED.','unknown');
+        }
+      } else if(data.run_id===runId && data.intent==='composed_evidence'  && ['COMPOSED_EVIDENCE_ONLY','UNKNOWN'].includes(data.status) && Array.isArray(data.components) && data.components.length<=9) {
+        paragraph(root,data.answer,'help-text');
+        paragraph(root,'Разделы с источниками: '+data.source_backed_component_count+' из '+data.components.length);
+        for(const section of data.components) {
+          const detail=document.createElement('details');detail.className='quote-review';detail.open=true;
+          const summary=document.createElement('summary');summary.textContent=section.label;detail.append(summary);
+          renderSingleGroundedAnswer(detail,section.evidence,runId);root.append(detail);
+        }
+        paragraph(root,'Действующая редакция законодательства, фактическая прибыль и потребность в средствах: UNKNOWN.','help-text');
+      } else renderSingleGroundedAnswer(root,data,runId);
+    }catch(error){if(state.runId===runId && epoch===state.copilotAnswerEpoch)paragraph(root,'UNKNOWN · Проверка не выполнена.','unknown');}
+    finally{setBusy(false);}
+  }
+
+  function renderSingleGroundedAnswer(root,data,runId) {
+      if(data.run_id!==runId || !['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION','TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','ARCHIVED_SECURITY_FIELDS','LITERAL_PERFORMANCE_OBSERVATIONS','CUSTOMER_TERMS_LEGAL_REFERENCES','HISTORICAL_STATUTE_SNAPSHOT_EXCERPT','SECONDARY_AMENDMENT_TIMING_ONLY','GOVERNMENT_COPY_LIST_COMPARISON','PINNED_RI223_ARCHIVED_NOTICE'].includes(data.status) || !Array.isArray(data.citations) || !data.citations.length) {
+        paragraph(root,'UNKNOWN · Вопрос не поддерживается или доказательство не найдено.','unknown');return;
+      }
+      if(data.status==='PINNED_RI223_ARCHIVED_NOTICE' && data.citation_kind==='RI223_ARCHIVED_XML' && data.observation?.regime==='223fz') {
+        paragraph(root,data.answer,'help-text');
+        const o=data.observation;
+        for(const [key,label] of [['subject','Предмет'],['method','Способ закупки'],['archived_submission_deadline','Архивный срок подачи (часовой пояс UNKNOWN)'],['single_lot_initial_sum','Цена единственного лота'],['single_lot_currency','Валюта лота']]) paragraph(root,label+': '+(o.fields[key]??'UNKNOWN'));
+        for(const [key,label] of [['archived_submission_order','Архивный порядок подачи заявок'],['archived_summingup_order','Архивный порядок подведения итогов']]) if(o.fields[key]) paragraph(root,label+': '+o.fields[key]);
+        renderCitations(root,data.citations,{originalVerified:true});
+        paragraph(root,'SHA-256 XML: '+data.citations[0].source_sha256+' · ZIP: '+data.citations[0].archive_sha256,'help-text');
+        paragraph(root,'Редакция '+o.observed_version+'; правовой статус закупки, обеспечение и победитель: UNKNOWN.','help-text');
+      } else if(['TOPIC_EXCERPTS_ONLY','LITERAL_PAYMENT_OBSERVATION','LITERAL_PERFORMANCE_OBSERVATIONS'].includes(data.status) && data.citation_kind==='ORIGINAL_DP_CHUNK') {
+        paragraph(root,data.answer,'help-text');
+        if(data.status==='LITERAL_PAYMENT_OBSERVATION' && data.observation) {
+          const o=data.observation;
+          paragraph(root,'Указано в фрагменте: '+o.mentioned_days+(o.day_unit==='WORKING_DAYS'?' рабочих дней':' календарных дней')+'. Применимый срок не установлен.');
+        }
+        if(data.status==='LITERAL_PERFORMANCE_OBSERVATIONS' && data.observation) {
+          const displayed=new Set();
+          for(const o of data.observation.mentions || []) {
+            const term=String(o.term_literal || '');const key=term.toLocaleLowerCase('ru-RU');
+            if(term && !displayed.has(key)){displayed.add(key);paragraph(root,'Указано в источнике: '+term);}
+          }
+          if(data.observation.distinct_literal_terms>1) paragraph(root,'Найдены разные формулировки; требуется сопоставление.','unknown');
+        }
+        for(const c of data.citations.slice(0,2)) {
+          paragraph(root,c.quote,'citation');
+          paragraph(root,c.file_id+' · чанк '+c.chunk_id+' · SHA-256 оригинала '+c.original_sha256,'help-text');
+          if(c.ri223_container) paragraph(root,'Контейнер '+c.ri223_container.parent_name+' · '+c.ri223_container.member_path+' · SHA-256 контейнера '+c.ri223_container.parent_sha256,'help-text');
+        }
+      } else if(data.status==='SECONDARY_AMENDMENT_TIMING_ONLY' && data.citation_kind==='SECONDARY_LEGAL_REFERENCE' && data.observation?.secondary_copies_agree===true) {
+        paragraph(root,data.answer,'help-text');
+        for(const g of data.observation.groups) paragraph(root,g.scope+' · '+g.stated_start_date+' · '+(g.calendar_relation==='DATE_REACHED'?'Дата наступила':'Будущая дата')+(g.date_basis==='SECONDARY_REPORTED_PUBLICATION_DATE'?' (дата публикации по справочному источнику)':''));
+        for(const c of data.citations) {paragraph(root,c.excerpt,'citation');paragraph(root,c.source_url+' · '+c.locator+' · SHA-256 '+c.source_sha256,'help-text');}
+        paragraph(root,'Юридический статус нормы на выбранную дату: UNKNOWN.','help-text');
+      } else if(data.status==='GOVERNMENT_COPY_LIST_COMPARISON' && data.citation_kind==='GOVERNMENT_REPRODUCTION' && data.observation) {
+        paragraph(root,data.answer,'help-text');
+        paragraph(root,'Более ранняя копия: '+data.observation.dates[0]+'; более новая: '+data.observation.dates[1]);
+        for(const o of data.observation.observations) paragraph(root,o.amendment+' · в раннем фрагменте: '+(o.listed_in_older_excerpt?'указан':'не указан')+'; в позднем: '+(o.listed_in_newer_excerpt?'указан':'не указан'));
+        for(const c of data.citations) {paragraph(root,c.document+' · '+c.excerpt,'citation');paragraph(root,c.source_url+' · '+c.locator+' · SHA-256 '+c.source_sha256,'help-text');}
+        paragraph(root,'Сопоставление перечней, не подтверждение полноты изменений или действующей редакции.','help-text');
+      } else if(data.status==='HISTORICAL_STATUTE_SNAPSHOT_EXCERPT' && data.citation_kind==='GOVERNMENT_REPRODUCTION' && data.observation?.snapshot_bytes_verified===true) {
+        paragraph(root,data.answer,'help-text');
+        for(const c of data.citations) {
+          paragraph(root,c.document+' · '+c.locator,'help-text');
+          paragraph(root,c.excerpt,'citation');
+          paragraph(root,c.source_url+' · SHA-256 '+c.source_sha256+(c.projection_sha256?' · SHA-256 текстовой проекции '+c.projection_sha256:''),'help-text');
+        }
+        paragraph(root,'Неполный исторический фрагмент. Действующая редакция и юридическая применимость: UNKNOWN.','help-text');
+      } else if(data.status==='CUSTOMER_TERMS_LEGAL_REFERENCES' && data.citation_kind==='ARCHIVED_XML' && data.observation) {
+        paragraph(root,data.answer,'help-text');
+        renderCitations(root,data.citations,{originalVerified:true});
+        paragraph(root,'Ссылки заказчика на нормы — содержание законодательства не проверено.');
+        for(const ref of data.observation.references || []) paragraph(root,ref.literal,'citation');
+        if(!(data.observation.references || []).length) paragraph(root,'UNKNOWN · Явные ссылки в поддерживаемом формате не найдены.','unknown');
+        summaryList(root,data.observation.review_questions);
+      } else if(data.status==='ARCHIVED_SECURITY_FIELDS' && data.citation_kind==='ARCHIVED_XML' && data.observation) {
+        paragraph(root,data.answer,'help-text');
+        const o=data.observation;
+        paragraph(root,'Сумма в XML: '+(o.amount===null?'UNKNOWN':o.amount)+'; валюта не подтверждена.');
+        paragraph(root,'Процент в XML: '+(o.percent===null?'UNKNOWN':o.percent+'%')+'; база не подтверждена.');
+        renderCitations(root,data.citations,{originalVerified:true});
+      } else if(['ARCHIVED_SOURCE_FACT','HYPOTHETICAL_CALCULATION'].includes(data.status) && data.citation_kind==='ARCHIVED_XML') {
+        paragraph(root,data.status==='HYPOTHETICAL_CALCULATION'?'Сценарная сумма: '+data.answer+' (валюта и фактическое обеспечение не подтверждены).':String(data.answer));
+        renderCitations(root,data.citations,{originalVerified:true});
+      } else {paragraph(root,'UNKNOWN · Неизвестный вид доказательства.','unknown');return;}
+      paragraph(root,'Исторические материалы. Полнота, актуальность и право участия не подтверждены.','help-text');
+  }
+
+  async function searchEvidenceDocuments(event) {
+    event.preventDefault();
+    if (!state.runId || state.busy) return;
+    const runId=state.runId, epoch=++state.copilotSearchEpoch, query=$('copilot-search').value.trim();
+    const root=$('copilot-search-result');wipe(root);setBusy(true);
+    try {
+      const data=await json(api+'/workspace/runs/'+encodeURIComponent(runId)+'/evidence-search',
+        {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({query})});
+      if(state.runId!==runId || epoch!==state.copilotSearchEpoch) return;
+      if(data.run_id!==runId || data.status!=='VERIFIED_EXCERPTS_ONLY' || !Array.isArray(data.citations) || !data.citations.length) {
+        paragraph(root,'UNKNOWN · Подтверждённых совпадений в ограниченной выборке нет. Это не доказывает отсутствие требования.','unknown');return;
+      }
+      for(const c of data.citations.slice(0,2)) {
+        paragraph(root,c.quote,'citation');
+        paragraph(root,c.file_id+' · чанк '+c.chunk_id+' · SHA-256 оригинала '+c.original_sha256,'help-text');
+          if(c.ri223_container) paragraph(root,'Контейнер '+c.ri223_container.parent_name+' · '+c.ri223_container.member_path+' · SHA-256 контейнера '+c.ri223_container.parent_sha256,'help-text');
+      }
+      paragraph(root,'Буквальные фрагменты, не юридический вывод. Поиск не исчерпывающий.','help-text');
+    }catch(error){if(state.runId===runId && epoch===state.copilotSearchEpoch)paragraph(root,'UNKNOWN · Проверка не выполнена.','unknown');}
+    finally{setBusy(false);}
+  }
+
   async function verifyQuote(event) {
     event.preventDefault();
     if (!state.runId || state.busy) return;
@@ -315,6 +535,7 @@
       $('quote-check-result').textContent = result?.status === 'literal_quote_found_in_extracted_original_only' && evidence?.chunk_id
         ? 'Буквальное совпадение с извлечённым оригиналом: '+fileId+' · чанк '+evidence.chunk_id+
           ' · символы '+evidence.quote_char_start_in_chunk+'–'+evidence.quote_char_end_in_chunk+
+          (evidence.ri223_container ? ' · Контейнер '+evidence.ri223_container.parent_name+' · '+evidence.ri223_container.member_path+' · SHA-256 контейнера '+evidence.ri223_container.parent_sha256 : '')+
           '. Юридический и коммерческий смысл не подтверждён автоматически.'
         : 'UNKNOWN · Буквальное совпадение с подтверждённым оригиналом не установлено. Проверьте текст цитаты, исходник и доступность Data Platform.';
     } catch(error) {
@@ -625,8 +846,305 @@
         root.append(line);
       }
       if (!data.documents?.length) paragraph(root,'Документы не сохранены в канонической базе.','empty-state');
+      if (/^\d{19}$/.test(data.registry_number||'')) {
+        const button=node('button','button button-secondary','Ценовой контекст ↗');
+        button.type='button';
+        button.addEventListener('click',()=>{
+          $('price-registry').value=data.registry_number;
+          tab('prices');
+          void loadCompetitivePrice();
+        });
+        root.append(button);
+      }
       $('registry-detail-panel').scrollIntoView({behavior:'smooth',block:'start'});
     } catch(error) {msg('Не удалось открыть запись: '+error.message);}
+  }
+  function validatePriceRegistry() {
+    const value = $('price-registry').value.trim();
+    if (!/^\d{19}$/.test(value)) throw new Error('Введите реестровый номер 44-ФЗ из 19 цифр.');
+    return value;
+  }
+  async function loadCompetitivePrice(event) {
+    if (event) event.preventDefault();
+    const target = $('price-evidence');
+    wipe(target);
+    let registry;
+    try { registry = validatePriceRegistry(); }
+    catch (error) { paragraph(target,error.message,'empty-state');return; }
+    paragraph(target,'Проверяем исторический доказательный агрегат…','empty-state');
+    try {
+      const data = await json(api+'/workspace/competitive-prices/'+encodeURIComponent(registry));
+      wipe(target);
+      if(data.state!=='VERIFIED_ARCHIVED_SINGLE_PROCEDURE'||data.registry_number!==registry
+          ||data.forecast_or_bid_recommendation!==false||data.company_go!==false
+          ||data.cross_procurement_comparison_state!=='INSUFFICIENT_EVIDENCE'
+          ||data.cost_scenarios!==null) {
+        throw new Error('Неполное доказательство протокола: проверка человеком обязательна.');
+      }
+      target.append(node('h3','','Протокол от '+data.protocol_date+' · №'+registry));
+      paragraph(target,'Проверенный архив одного конкурса: не предложение цены и не прогноз победителя.','help-text');
+      const facts=node('div','facts');
+      for(const [title,value] of [
+        ['НМЦК (не выигравшая ставка)',money(data.nmck_rub)],
+        ['Допущено',data.admitted_count],
+        ['Отклонено',data.rejected_count],
+        ['Минимальная допущенная цена',money(data.admitted_only_prices_rub.min)],
+        ['Квартиль 25% (по порядку)',money(data.admitted_only_prices_rub.q1_nearest_rank)],
+        ['Медиана допущенных',money(data.admitted_only_prices_rub.median)],
+        ['Квартиль 75% (по порядку)',money(data.admitted_only_prices_rub.q3_nearest_rank)],
+        ['Максимальная допущенная цена',money(data.admitted_only_prices_rub.max)],
+        ['Цена победителя',money(data.winner_price_rub)],
+        ['Предложение Арвектум (историческое)',money(data.company_price_rub)],
+        ['Место нашей допущенной заявки',data.company_rank_admitted]]) appendFact(facts,title,value);
+      target.append(facts);
+      const causes=node('section','report-section');
+      causes.append(node('h3','','Отклонённые заявки · отдельный риск допуска'));
+      paragraph(causes,'Нет документа реестра ПО / старая редакция: '
+        +data.rejected_reason_counts.missing_software_registry_document_old_notice
+        +'; неприменимая запись в реестре: '
+        +data.rejected_reason_counts.inapplicable_software_registry_entry+'.');
+      target.append(causes);
+      const evidence=node('section','report-section');
+      evidence.append(node('h3','','Контрольные суммы оригиналов'));
+      paragraph(evidence,'Оригинальный ZIP ЕИС: '+data.evidence.eis_original_zip_sha256);
+      paragraph(evidence,'Итоговый XML ЕИС: '+data.evidence.eis_original_xml_sha256);
+      paragraph(evidence,'Сверено строк с первоисточником: '+data.evidence.bid_rows_crosschecked_with_original);
+      paragraph(evidence,'Достаточность сопоставимых закупок: НЕТ · всего одна. '
+        +'Себестоимость: НЕ ПРЕДОСТАВЛЕНА; ставка к подаче: НЕ РЕКОМЕНДУЕТСЯ.','help-text');
+      target.append(evidence);
+    } catch(error) {wipe(target);paragraph(target,'Проверенные ставки недоступны: '+error.message,'empty-state');}
+  }
+  async function loadWebsiteCohort() {
+    const target = $('price-cohort');
+    wipe(target);
+    paragraph(target,'Проверяем первичные доказательства независимых исторических сайтов…','empty-state');
+    try {
+      const data=await json(api+'/workspace/website-price-cohort');
+      if(data.state!=='INDEPENDENT_HISTORICAL_WEBSITE_CASES_NOT_POOLED'
+          ||data.verified_original_procedures!==6
+          ||data.same_basket_procurements_as_aksay!==1
+          ||data.additional_equivalent_procurements!==0
+          ||data.market_aggregated_price_rub!==null
+          ||data.forecast_or_bid_recommendation!==false
+          ||data.owner_commercial_go!==false
+          ||!Array.isArray(data.cases)||data.cases.length!==6) {
+        throw new Error('Нельзя объединять неподтверждённо сопоставимые цены сайтов.');
+      }
+      wipe(target);
+      paragraph(target,'6 отдельных официальных протоколов. Общей медианы нет: сопоставимость объёма и затрат ещё не доказана.','help-text');
+      for(const c of data.cases) {
+        const section=node('section','report-section');
+        section.append(node('h3','',c.original_notice_subject));
+        paragraph(section,'ЕИС №'+c.registry_number+' · заявок '+c.total
+          +' · допущено '+c.admitted+' · отклонено '+c.rejected+'.');
+        if(c.admitted_price_status==='VERIFIED_ADMITTED_FINAL_PRICE') {
+          const facts=node('div','facts');
+          const rubExact=value => value===null ? 'НЕИЗВЕСТНО' : String(value).replace('.',',')+' ₽';
+          for(const [label,value] of [
+            ['Мин. допущенная цена',rubExact(c.admitted_price_low_rub)],
+            ['Медиана по одной процедуре',rubExact(c.admitted_price_median_rub)],
+            ['Макс. допущенная цена',rubExact(c.admitted_price_high_rub)]]) appendFact(facts,label,value);
+          section.append(facts);
+          if(c.sub_ruble_source_bid_observed===true) {
+            paragraph(section,'Источниковая аномалия: ставка менее 1 ₽. Это не стоимость исполнения и не рекомендуемая ставка.','help-text');
+          }
+        } else {
+          paragraph(section,'В этом официальном итоговом протоколе нет конечных цен допущенных. НМЦК не подставляется.','empty-state');
+        }
+        paragraph(section,'Сопоставимость: '+c.original_scope_comparison_state);
+        paragraph(section,c.original_scope_comparison_reason,'help-text');
+        paragraph(section,'Основания в ТЗ: '+(c.scope_original_anchors||[]).join('; ')+'.','help-text');
+        const proof=node('details','');
+        proof.append(node('summary','','SHA-256 исходных документов'));
+        paragraph(proof,'ЕИС ZIP: '+c.eis_original_zip_sha256);
+        paragraph(proof,'Итоговый XML: '+c.original_final_xml_sha256);
+        paragraph(proof,'Оригинальное ТЗ DOCX: '+c.original_tz_docx_sha256);
+        section.append(proof);
+        target.append(section);
+      }
+    } catch(error) {wipe(target);paragraph(target,'Проверенные архивы сайтов недоступны: '+error.message,'empty-state');}
+  }
+  async function loadWorkloadNormalization() {
+    const target=$('price-workload');
+    wipe(target);
+    paragraph(target,'Проверяем контрольные суммы исходных технических заданий…','empty-state');
+    try {
+      const data=await json(api+'/workspace/website-workload-normalization');
+      if(data.state!=='ATTESTED_CONTRACT_WORKLOAD_NOT_PRICE_NORMALIZATION'
+          ||data.source_cases_count!==3||data.comparable_basket_procurements_count!==1
+          ||data.additional_equivalent_projects!==0||data.work_unit_rate_rub!==null
+          ||data.cross_tender_normalized_price_rub!==null
+          ||data.estimated_company_labor_hours!==null
+          ||data.bid_recommendation!==false||data.owner_approved!==false
+          ||!Array.isArray(data.cases)||data.cases.length!==3) {
+        throw new Error('Нет доказательств для пересчёта стоимости между разными ТЗ.');
+      }
+      const captions={
+        AKSAY:'Аксай — Молодёжный центр',
+        KRASNOYARSK:'Красноярск — государственное юрбюро',
+        CHEMAL:'«Чемал» — санаторий',
+      };
+      const dimensions={
+        delivery_working_days:'Срок по контракту',
+        cms_platform:'CMS и лицензирование',
+        design_basis:'Источник дизайна и макеты',
+        initial_content_origin:'Источник контента',
+        initial_content_pages_max:'Максимум наполнения',
+        postacceptance_obligation:'Гарантия или сопровождение',
+        support_critical_reaction_hours:'SLA критических инцидентов',
+        hosting_payment:'Хостинг и домен',
+        knowledge_transfer:'Обучение и передача знаний',
+        site_purpose:'Функции и назначение',
+        feedback_form:'Форма обратной связи',
+        speech_accessibility:'Озвучивание и доступность',
+      };
+      wipe(target);
+      paragraph(target,'Три проверенных договора, одна базовая закупка. Неизвестные величины оставлены неизвестными; пересчёта конкурентных цен нет.','help-text');
+      const order=['AKSAY','KRASNOYARSK','CHEMAL'];
+      for(const key of order) {
+        const c=data.cases.find(x=>x.case_key===key);
+        if(!c||!Array.isArray(c.verified_dimensions)||!c.original_technical_scope_docx_sha256
+            ||c.costs_or_labor_hours_known!==false||c.actual_content_pages_known!==false) {
+          throw new Error('Неполное документальное подтверждение одного из ТЗ.');
+        }
+        const section=node('section','report-section');
+        section.append(node('h3','',captions[key]));
+        paragraph(section,'Официальная закупка №'+c.registry_number+'. Лицензии и человеко-часы неизвестны.','help-text');
+        const facts=node('div','facts');
+        for(const d of c.verified_dimensions) {
+          const label=dimensions[d.dimension]||'Проверенное обязательство';
+          const numeric=(typeof d.source_value==='number')
+            ? ' — '+d.source_value+' '+(d.unit==='working_days'?'раб. дней':d.unit==='text_pages'?'стр.':'часов')
+            : '';
+          appendFact(facts,label+numeric,d.reviewed_interpretation);
+        }
+        if(c.initial_content_pages_cap===null) {
+          appendFact(facts,'Количество страниц','НЕ УСТАНОВЛЕНО В ПРОВЕРЕННОМ ТЗ');
+        } else {
+          appendFact(facts,'Число страниц','Не более '+c.initial_content_pages_cap+' по договору; фактическое неизвестно');
+        }
+        section.append(facts);
+        const original=node('details','');
+        original.append(node('summary','','Первоисточники и фрагменты требований'));
+        paragraph(original,'Исходный DOCX SHA-256: '+c.original_technical_scope_docx_sha256);
+        for(const d of c.verified_dimensions) {
+          paragraph(original,(dimensions[d.dimension]||d.dimension)+': «'+d.source_quote
+            +'» · позиция '+d.source_line_ordinal+' · SHA строки '+d.source_line_sha256+'.');
+        }
+        section.append(original);
+        target.append(section);
+      }
+      paragraph(target,'Нормализация рублёвой цены НЕ ВЫПОЛНЕНА. Требуются подтверждённые человеко-часы, затраты лицензий/домена/хостинга, расходы на сопровождение и объём фактического контента.','help-text');
+    } catch(error) {
+      wipe(target);
+      paragraph(target,'Проверенная матрица ТЗ недоступна: '+error.message,'empty-state');
+    }
+  }
+  async function calculateExplicitPriceCostScenario(event) {
+    event.preventDefault();
+    const epoch=++state.costEpoch;
+    const target=$('price-cost-result');
+    wipe(target);
+    const monetary=/^\d{1,12}(?:[.,]\d{1,2})?$/;
+    const percentage=/^\d{1,3}(?:[.,]\d{1,4})?$/;
+    const fields=[
+      ['external_direct_rub','cost-external',monetary],
+      ['labor_rub','cost-labor',monetary],
+      ['reserve_rub','cost-reserve',monetary],
+      ['fixed_platform_fees_rub','cost-fixed',monetary],
+      ['revenue_tax_percent','cost-tax',percentage],
+      ['variable_platform_fee_percent','cost-variable',percentage],
+      ['target_profit_rub','cost-target',monetary],
+    ];
+    const payload={accept_hypothetical_assumptions_only:$('cost-scenario-confirm').checked};
+    if(payload.accept_hypothetical_assumptions_only!==true) {
+      paragraph(target,'Подтвердите, что это гипотетический расчёт, а не ставка для торгов.','empty-state');
+      return;
+    }
+    for(const [field,id,pattern] of fields) {
+      const entered=$(id).value.trim();
+      if(!pattern.test(entered)) {
+        paragraph(target,'Каждая сумма и процент должны быть явно введены и иметь допустимую точность: '+id+'.','empty-state');
+        return;
+      }
+      payload[field]=entered.replace(',','.');
+    }
+    if($('cost-offer-enabled').checked) {
+      payload.offer_scenario={};
+      for(const [field,id] of [['offer_price_rub','cost-offer-price'],['nonrefundable_guarantee_fees_rub','cost-guarantee-fees'],['refundable_bid_cash_rub','cost-bid-cash'],['refundable_contract_cash_rub','cost-contract-cash']]) {
+        const entered=$(id).value.trim();
+        if(!monetary.test(entered)) {paragraph(target,'Введите все четыре дополнительные суммы, включая нули.','empty-state');return;}
+        payload.offer_scenario[field]=entered.replace(',','.');
+      }
+    }
+    paragraph(target,'Вычисляем сценарные значения…','empty-state');
+    try {
+      const result=await json(api+'/workspace/price-scenario/calculate',{
+        method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),
+      });
+      if(epoch!==state.costEpoch) return;
+      if(result.state!=='EXPLICIT_USER_ASSUMPTION_BREAK_EVEN_ONLY'
+          ||result.inputs_stored!==false||result.assumptions_independently_verified!==false
+          ||result.is_procurement_bid_recommendation!==false
+          ||result.probability_of_winning_estimated!==false||result.commercial_owner_go!==false
+          ||result.automatic_submission_or_payment!==false) {
+        throw new Error('Расчёт не прошёл защитные проверки и не может быть использован.');
+      }
+      wipe(target);
+      const facts=node('div','facts');
+      for(const [label,value] of [
+        ['Денежный порог безубыточности',result.cash_break_even_rub],
+        ['Полный порог с учётом труда',result.full_economic_break_even_rub],
+        ['Порог с отдельно желаемой прибылью',result.full_cost_plus_explicit_target_rub],
+      ]) {
+        if(typeof value!=='string'||!/^\d{1,22}\.\d{2}$/.test(value)) {
+          throw new Error('Нет валидных денежных порогов.');
+        }
+        appendFact(facts,label,value.replace('.',',')+' ₽');
+      }
+      if(payload.offer_scenario) {
+        const o=result.offer_scenario;
+        if(!o||o.kind!=='EXPLICIT_OFFER_AND_PRE_RECEIPT_STRESS_ONLY'||o.actual_peak_working_capital_rub!==null||o.actual_security_requirement_rub!==null||o.labor_treated_as_non_cash!==true||o.collateral_treated_as_fully_refundable!==true) throw new Error('Дополнительный сценарий не прошёл проверку.');
+        for(const [label,key,suffix] of [['Налог по вводным','modeled_revenue_tax_rub',' ₽'],['Переменная комиссия','modeled_variable_fee_rub',' ₽'],['Полная экономическая себестоимость','economic_cost_rub',' ₽'],['Сценарная прибыль','economic_profit_rub',' ₽'],['Маржа от выручки','economic_margin_percent','%'],['Денежные затраты','cash_cost_rub',' ₽'],['Возвратные обеспечения (не расход)','refundable_cash_collateral_rub',' ₽'],['Стресс-потребность до поступления','pre_receipt_stress_cash_rub',' ₽']]) {
+          if(typeof o[key]!=='string'||! /^-?\d{1,22}\.\d{2}$/.test(o[key])) throw new Error('Некорректные значения сценария.');
+          appendFact(facts,label,o[key].replace('.',',')+suffix);
+        }
+        paragraph(target,'Фактический кассовый разрыв и обязательный размер обеспечения: UNKNOWN. Все денежные расходы и оба возвратных обеспечения условно совпадают до первого поступления; собственный труд не денежный расход. Суммы округлены для отображения отдельно.','help-text');
+      }
+      target.append(facts);
+      paragraph(target,'Это сценарные минимальные пороги при ваших вводных. Фактические расходы, налоговые обязательства, конкурентная цена и вероятность выигрыша не проверены. Автоматической подачи нет.','help-text');
+    } catch(error) {
+      if(epoch!==state.costEpoch) return;
+      wipe(target);
+      paragraph(target,'Не удалось рассчитать сценарий: '+error.message,'empty-state');
+    }
+  }
+  async function loadHistoricalPrice() {
+    const target=$('price-historical');
+    wipe(target);
+    let registry;
+    try { registry=validatePriceRegistry(); }
+    catch(error) {paragraph(target,error.message,'empty-state');return;}
+    paragraph(target,'Запрашиваем исторические НМЦК отдельно от итоговых ставок…','empty-state');
+    try {
+      const data=await json('/api/tender-research/historical-prices/'+encodeURIComponent(registry));
+      wipe(target);
+      target.append(node('h3','','ARV-057 · '+(data.state||'UNKNOWN')));
+      if(data.state!=='AVAILABLE'||!data.range) {
+        paragraph(target,'Сопоставимая источниковая выборка не подтверждена: недостаточно независимых наблюдений. Не использовать цену Аксая вместо аналога.','empty-state');
+        return;
+      }
+      const facts=node('div','facts');
+      for(const [title,value] of [
+        ['Сопоставимых наблюдений',data.range.sample_count],
+        ['Диапазон исторических НМЦК — минимум',money(data.range.minimum,data.range.currency)],
+        ['Медиана исторических НМЦК',money(data.range.median,data.range.currency)],
+        ['Максимум исторических НМЦК',money(data.range.maximum,data.range.currency)],
+        ['База нормализации',data.range.basis],
+        ['Единица',data.range.unit||'корзина']]) appendFact(facts,title,value);
+      target.append(facts);
+      paragraph(target,'ARV-057 проверяет предмет/объём/валюту/хронологию и сообщает НМЦК, НЕ допущенные конечные предложения. Никакой вероятности победы или автоматической цены.','help-text');
+    } catch(error) {wipe(target);paragraph(target,'Исторический диапазон недоступен: '+error.message,'empty-state');}
   }
   document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>tab(b.dataset.tab)));
   $('import-form').addEventListener('submit',importRequest);
@@ -639,17 +1157,33 @@
   });
   $('search-next').addEventListener('click',()=>{if(state.searchCursor)void loadSearchPage(state.searchCursor);});
   $('append-files-form').addEventListener('submit',appendMissingFiles);
+  for(const id of ['application-signatory','application-goods']) $(id).addEventListener('change',()=>{state.applicationReviewEpoch++;wipe($('application-review-result'));});
+  $('application-review-form').addEventListener('submit',event=>void reviewApplication(event));
+  $('copilot-question').addEventListener('change',()=>{show('copilot-percent-label',$('copilot-question').value==='nmck_percent');wipe($('copilot-result'));state.copilotEpoch++;});
+  $('copilot-percent').addEventListener('input',()=>{wipe($('copilot-result'));state.copilotEpoch++;});
+  $('copilot-form').addEventListener('submit',event=>void answerEvidenceQuestion(event));
+  $('copilot-search').addEventListener('input',()=>{wipe($('copilot-search-result'));state.copilotSearchEpoch++;});
+  $('copilot-search-form').addEventListener('submit',event=>void searchEvidenceDocuments(event));
+  $('copilot-answer-question').addEventListener('input',()=>{wipe($('copilot-answer-result'));state.copilotAnswerEpoch++;});
+  $('copilot-answer-form').addEventListener('submit',event=>void answerGroundedQuestion(event));
   $('quote-verify-form').addEventListener('submit',event=>void verifyQuote(event));
   $('download-pdf').addEventListener('click', event=>void downloadReport(event, 'pdf'));
   $('download-docx').addEventListener('click', event=>void downloadReport(event, 'docx'));
   $('analyze-btn').addEventListener('click',()=>void analyze());
   $('refresh-run').addEventListener('click',()=>void loadRun().catch(e=>msg(e.message)));
   $('refresh-history').addEventListener('click',()=>void loadHistory());
+  $('price-form').addEventListener('submit',event=>void loadCompetitivePrice(event));
+  $('price-historical-btn').addEventListener('click',()=>void loadHistoricalPrice());
+  $('price-cohort-btn').addEventListener('click',()=>void loadWebsiteCohort());
+  $('price-workload-btn').addEventListener('click',()=>void loadWorkloadNormalization());
+  $('price-cost-form').addEventListener('submit',event=>void calculateExplicitPriceCostScenario(event));
+  $('price-cost-form').addEventListener('input',()=>{state.costEpoch++;wipe($('price-cost-result'));show('cost-offer-fields',$('cost-offer-enabled').checked);});
+  $('cost-clear-btn').addEventListener('click',()=>{ state.costEpoch++;$('price-cost-form').reset();show('cost-offer-fields',false);wipe($('price-cost-result'));paragraph($('price-cost-result'),'Данные очищены в форме, на сервере ничего не сохранялось.','empty-state'); });
   $('registry-form').addEventListener('submit',event=>{ event.preventDefault();state.registryOffset=0;state.registryQuery=$('registry-search').value.trim();void loadRegistry(); });
   $('prev-registry').addEventListener('click',()=>{state.registryOffset=Math.max(0,state.registryOffset-25);void loadRegistry();});
   $('next-registry').addEventListener('click',()=>{ if (state.registryOffset+25<state.registryTotal) { state.registryOffset+=25;void loadRegistry();}});
   const hash=location.hash.replace('#','');
-  if (hash==='history'||hash==='registry') tab(hash);
+  if (hash==='history'||hash==='registry'||hash==='prices') tab(hash);
   const urlRun=new URLSearchParams(location.search).get('run');
   if(urlRun && /^[a-zA-Z0-9-]{1,64}$/.test(urlRun)){state.runId=urlRun;tab('new');void loadRun().catch(e=>msg(e.message));}
 })();

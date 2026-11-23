@@ -1,0 +1,33 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-PRICE01-SOURCE-COMPARABILITY-20261018
+status: completed
+goal: Check whether the independently verified second official final protocol (Aksioma) can serve as a comparable procurement for Aksay web-site pricing using first-party original notice subject, without treating different IT sectors as identical.
+definition_of_done:
+  - Verify both archived original EIS ZIP SHA and extract exact current/latest notice subject from each pinned ZIP without external write.
+  - Identify Aksay website creation vs Aksioma GIS legal/forest-parcel module scope as noncomparable for Aksay website benchmark, preserve source member SHA.
+  - Keep Aksay price sample 1 cross-procurement, excluded candidate not counted as price evidence; no fabricated comparable prices.
+  - Publish machine+human source report and backlog note; unit tests fail closed on changed source and same-subject hypothetical.
+  - Commit to PR478, rerun relevant checks, status completed with accurate CI and resume.
+completed:
+  - Both local exact archived official ZIPs exist and have previously verified SHA. First-party notification XML shows distinct procurement objects in purchaseObjectInfo: website vs land-parcel forest boundaries GIS module.
+current: Complete read-only original-notice comparison and documented exclusion of Aksioma GIS module from Aksay website prices.
+pending: []
+last_verified_commit: bc579cef3742d6766f4ec2da9a88bc1de4f4f127
+test_results:
+  - Source original ZIP Aksay d25187191599e705427676cc9de64ce665029381efa2490607d65ff237837bb8 and Aksioma 39fef1af482907b2c2382518d339d932e09197c2e36e68a6134fc5910ff7dd18 independently final-protocol checked.
+  - First-party latest notice purchaseObjectInfo titles source-hash-pinned, Aksay = website, Aksioma = forestry/GIS land parcel module.
+  - Aksioma candidate excluded, not included in Aksay 45 admitted bid prices; comparable independent procedure count remains 1.
+  - Relevant 101 pytest PASS, 10 SKIP, 6 previous warnings, Ruff and Node JS syntax clean.
+  - Code committed bc579cef3742d6766f4ec2da9a88bc1de4f4f127, exact-head CI pending after push.
+  - No commercial/ETP/privacy/production mutations.
+resume_instruction: >-
+  Child TA-PRICE01-SOURCE-COMPARABILITY-20261018 completed on bc579cef.
+  The second verified original Aksioma forestry GIS module is NOT comparable
+  to Aksay website work; exclude it. Parent TA-ROADMAP-EXEC-20261012
+  in_progress. Continue source-grounded discovery of genuinely comparable
+  *completed* website procurements, review actual notice appendices and bids
+  with EIS original hashes and distinct procurement IDs. Until found,
+  PRICE-01 one-protocol comparison remains insufficient and Owner cost
+  inputs/actual commercial GO still unknown. Exact-head CI and review of
+  draft PR478 required, do not merge or bid autonomously.

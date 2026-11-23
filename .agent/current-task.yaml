@@ -157,9 +157,11 @@ completed:
   - '2026-10-13 CZN EIS restored via direct RU HTTPS: intermittent pub01 146-byte nginx404 vs pub02 HTTP200; PR404 bounded 404-only retry implemented in two adapters, plus corrected operator UTC 07:00 vs official 10:00 MSK. Official current v4 EOK 12 Oct 22:24, deadline 23 Oct 10:00, 7 original UID. Real read-only getDocsIP PRIZ SOAP from int.zakupki.gov.ru returned archive ZIP 76759 bytes SHA256 dad574a4bd996a675645bdf538ed13201cc59983417d2c153467bb3f9d2d4908, original v4 XML SHA256 bd6a4261995882d42dfe37d3809a26c722ea771d782e5bac6be4b76675d5fb6c; exact 7/7 UID+name+size crosscheck against three archived SHA originals and four newly downloaded verified files. Four new files moved to restricted ArvectumSSD local evidence and three ZIP CRC PASS (2 nested DOCX, 1 PDF). Offline verifier/negative tests in draft PR404 head ac972df99: 168 pytest PASS, Ruff PASS, original offline source test PASS; exact PR/push CI queued. DIGITAL SIGNATURE, ZIP CONTENT EXPERT REVIEW AND HUMAN GOLD NOT COMPLETED.'
   - '2026-10-13 PR404 exact tested checkpoint a076c8c8: GitHub PR38401431113 and push38401426507/38401426493 all SUCCESS; local 168 APR06 tests PASS/Ruff PASS; child direct-EIS checkpoint completed. New CZN v4 semantic review PR405 source report/test head ff76cc3 independently reads original 95p OОЗ, v4 nested contract/PIK DOCX, unchanged 44-FZ application/evaluation DOCX and two NMCK PDFs; official primary NMCK 685000 chatbot + 315000 youth + 245000 trainings = 1245000 RUB, tender evaluation 70% completed 44-FZ/223-FZ contracts incl chatbot, 30% price. Custom PHP/JS/SQL, 2/7/10/15 December deadlines, no advance, 12-month warranty. Original source-linked private binary bytes stay on Mac mini. Mac mini 172 tests PASS/Ruff PASS/real v4 SOAP 7/7 UID PASS; draft PR405 CI pending. Provisional DEFER conditional on qualifying references, NOT human gold or legal acceptance.'
   - '2026-10-13 CZN v4 source assessment follow-up: draft PR405 checkpoint latest head a15c68e2937f2225fb0e57189f306fba5415c6b1, source report/code head ff76cc3; Mac mini 172 focused pytest PASS, Ruff PASS, original EIS v4 UID verifier PASS. GitHub PR38407699617 and push38407689429 quality job make test still in progress, fast push38407689203 SUCCESS, other 8 PR jobs SUCCESS. New roadmap issue #406 tracks future general source-bound qualification-weight competitive-risk feature; no code implemented for it. PR405 do not merge, human-gold unapproved.'
-current: "TA-R4-20-COMPETITIVE-SEMANTIC-20261014 PR432 verified source2c40b4bf Mac mini FULL 4119 PASS/242 SKIP, exact GitHub 3/3 SUCCESS, 96/96 selected archived EIS original attachment SHA and texts, fail-closed runtime missing appendix, 47 historical LLM quotes checked. Canonical child checkpoint02cfe021; technical foundation green, FULL human legally grounded semantics across96 original documents and current EIS/Owner signoff0/20 still in progress. Other APR03B/APR04-07/B2B roadmap gates remain."
+current: "2026-11-22: First three explicit public source-discovery AUTO queue tasks SIBUR, GEH/Mosenergo and AI paper-trading were verified and protected-merged. Exact 4052-page SIBUR archived/PG16 historical 18251-ID gap reproduced read-only; issue #692 still open for root cause. Issue #679 blocked on three original EIS files, #685 blocked on independent seven-day PITR history, #686 original PPT format unknown. Production PG17 not changed; no real trading."
 
 pending:
+  - '2026-11-22 P0: Issue #679 OPEN/BLOCKED on current official source revision and three original DOCX/ZIP SHA. PR695 historical offline audit DONE; no blind EIS request.'
+  - '2026-11-22 P0: Issue #685 OPEN/BLOCKED on 7-day WAL integrity and BOTH DB historical target restore; PR697/698 one-point postbase WAL DONE. Daily runner follow-up separately requires read-only check and release gates.'
   - 'PR407: verify exact-head GitHub push and PR CI; repair verified failures and complete TA-QUALIFICATION-REFERENCE-LIST-20261013 child. Report UI automatic integration, authorized known Arvectum customer_id fact seeding and strict original EIS criterion hash crosscheck are separate remaining roadmap tasks; do not pretend done.'
   - 'APR-03B: obtain actual model report, full legal/source review and explicit owner visual/semantic acceptance; no unapproved external bid action.'
   - 'APR-03B: PR391 merged. Validate private 18083 preview using newly built image and rollback when Mac mini is reachable; perform current live revision/source-locked analysis and owner semantic acceptance without changing production.'
@@ -168,7 +170,7 @@ pending:
   - 'APR-06: original CZN 0348100024426000039 v4 SOAP XML/7 UID SHA binding and public status 23 Oct 10 MSK verified; PR404 bounded EIS cache retry, fixed timezone and exact-head CI SUCCESS. PR405 source-grounded AI-only doc review: official NMCK 685k/315k/245k, experience 70% and price 30%; if no qualifying completed 44/223 chatbot contracts, commercial win chance likely low; keep DEFER conditional, not legal denial. Need company reference confirmation, economic/security cost, owner KPI, actual human gold 20-30 independent cases, cryptographic signature if needed; PR254/PR255 do not merge.'
   - 'APR-07: exact-head PR+push CI green on draft stacked PR255; bounded reproducible offline snapshot tested but rolling production SLO and human procurement model comparison NOT_MEASURED, no promotion.'
   - 'B2B discovery: nine historically source-attested corporate IT/digital cards, NOT nine presently open: Workspace19004 terminal despite future printed deadline, official Workspace PRO needed for self-initiated bids. Bounded status-first library PR392 merged, discovery source connectivity and 15-20 qualified original-platform leads still open; no purchases or ETP submissions.'
-last_verified_commit: "PR464 code main d8d8ff0b63e2568aff91eec862566637340a92af; existing Mac mini 18082 source parity 1165, 4961 PASS/285 SKIP, CI green, six original source receipts 6/6; public legal status still UNKNOWN"
+last_verified_commit: "GitHub protected main 4f13b1239b7951333236d03f2c30f63c27252795 after protected PR702 (all source inventory PR699-702 CI19/19); production deployed source remains 9b650a2b and DB127 unchanged"
 
 test_results:
   - "PR432 Mac mini FULL source780ebd11 4106 pytest PASS,242 SKIP,0 failed,329 warnings,149.74s; ten focused tests PASS, Ruff PASS, original 96/96 EIS archive attachment provenance checked and 47 quote classification reproducible."
@@ -255,7 +257,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-10-20: APR03B/07 child TA-GEMMA-CITED-FALLBACK-FIX-20261019 reviewed original Smolensk data. Prior final4 actual Gemma 3/4; separate evaltrace5 0/1 with unsupported invented 100% twice, while pinned original percentages are 20/30/70/80. PR500 draft has prompt rule forbidding inferred percentages and new exclusive criteria_only receipt variant; code/guards remain review-only and unmerged. Read-only one-section rerun blocked BEFORE model by Data Platform collection_stats HTTP401 (existing local client credentials not configured; service process exists). Child checkpoint status BLOCKED; do not bypass authentication or claim 4/4. Restore existing authorized Data Platform client configuration (no secrets in Git/Chat), reverify index 86/86/86 and start a single read-only criteria_only probe with original SHA; audit citations/numeric facts before declaring acceptance. While blocked, continue independent approved parent tasks APR04/05/06 and B2B qualification without bid/ETP/payment/deploy or changing benchmark gold. Single manual_override remains true."
+resume_instruction: "2026-11-22 ARC ONLY. Admitted 3/3 source-discovery items completed, execution queue 65 DONE / 1 REVIEW-BLOCKED forecast trigger. Do not repeat completed source inventories or SIBUR historical exact ID-set gap replay. Next independently admissible task requires explicit queue/Owner gate: issue #692 ingest/retention root cause only under read-only provenance, #679 current official original EIS source authorization, #685 seven-day date+WAL, #686 original format. No ETP bids, production mutation, account access or second watchdog."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -625,3 +627,595 @@ gemma_eval_criteria_oct20:
   criterion_single_section_rerun: not_started_due_to_http401
   main_code_changed: false
   owner_legal_bid_go: false
+
+owner_expansion_2026_11_14:
+  child_checkpoint: .agent/checkpoints/TA-ROADMAP-TRACKS-20261114.yaml
+  scope: [TA-SIBUR-INTELLIGENCE, TA-GEH-INTELLIGENCE, TA-AI-TRADING]
+  roadmap: docs/roadmap/master-roadmap.yaml#owner_business_tracks_2026_11_14
+  preserve_parent_resume_and_existing_pq_work: true
+  next_bounded_tasks: [TA-SIBUR-SOURCE-DISCOVERY-001, TA-GEH-SOURCE-DISCOVERY-001, TA-AI-TRADING-SOURCE-DISCOVERY-001]
+  live_trade_authorized: false
+
+am4_renewal_sync_2026_11_14:
+  child_checkpoint: .agent/checkpoints/AM4-RENEWAL-20261114.yaml
+  company_decision_merged: true
+  company_merge_commit: 6af75d5a18ba21a34515eeaa323892685db26be1
+  parent_resume_preserved: true
+  cycle: "0/10"
+
+ci_mirror_recovery_2026_11_14:
+  child_checkpoint: .agent/checkpoints/TA-CI-MIRROR-20261114.yaml
+  parent_resume_preserved: true
+  scope: isolated_ci_recovery_and_mirror_verification
+
+source_discovery_2026_11_14:
+  child_checkpoint: .agent/checkpoints/TA-SOURCE-DISCOVERY-20261114.yaml
+  parent_resume_preserved: true
+  stage: sibur_public_snapshot_verified
+  remaining: [document_acquisition, historical_coverage, dp_integration, geh_and_zmo_sources]
+  no_live_trading_or_db_mutation: true
+
+# Parallel owner-approved engineering track; preserve existing roadmap history.
+parallel_core_consolidation:
+  task_id: TA-CORE-CONSOLIDATION-001
+  status: completed
+  checkpoint: .agent/checkpoints/TA-CORE-CONSOLIDATION-001.yaml
+
+parallel_dtr_product:
+  task_id: TA-DTR-PRODUCT-20261115
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-DTR-PRODUCT-20261115.yaml
+  current_stage: apr07_rolling_observability
+  branch: feat/ta-apr07-rolling-observability-20261117
+  owner_priority: Product development only in this chat; research separate; Gemma paused
+
+price01_integration_20261117:
+  task_id: TA-PRICE01-INTEGRATION-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-PRICE01-INTEGRATION-20261117.yaml
+  last_verified_commit: b843f92ca129dcf9a57bd7935fb53ec31c1372dc
+  pr: 603
+  current_stage: merged_without_deployment
+
+apr05_release_rehearsal_20261117:
+  task_id: TA-APR05-RELEASE-REHEARSAL-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR05-RELEASE-REHEARSAL-20261117.yaml
+  branch: feat/ta-apr05-release-rehearsal-20261117
+  current_stage: merged_verified_no_deployment
+  last_verified_commit: 380bbdb0bb50ec0557eb40ebf14100da5ed0ff1b
+  pr: 604
+
+apr06_review_readiness_20261117:
+  task_id: TA-APR06-REVIEW-READINESS-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR06-REVIEW-READINESS-20261117.yaml
+  branch: feat/ta-apr06-review-readiness-20261117
+  current_stage: merged_engineering_completed_commercial_blocked
+  last_verified_commit: 66e664c41453f609ed6fd393b332439fae6cf560
+  pr: 605
+
+apr07_rolling_observability_20261117:
+  task_id: TA-APR07-ROLLING-OBSERVABILITY-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR07-ROLLING-OBSERVABILITY-20261117.yaml
+  branch: feat/ta-apr07-rolling-observability-20261117
+  current_stage: merged_engineering_completed_slo_unmeasured
+  last_verified_commit: a7dba514f05ce13d1dd50daf2e5a22ddce1ac479
+  pr: 606
+
+apr04_disposable_replay_20261117:
+  task_id: TA-APR04-DISPOSABLE-REPLAY-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR04-DISPOSABLE-REPLAY-20261117.yaml
+  branch: feat/ta-apr04-disposable-replay-20261117
+  current_stage: merged_engineering_completed_owner_gate_open
+  last_verified_commit: 337b1c58cdd7e69c2250a65b7b49a3b825a12a77
+  pr: 607
+
+apr_integration_20261117:
+  task_id: TA-APR-INTEGRATION-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR-INTEGRATION-20261117.yaml
+  branch: checkpoint/ta-apr-integration-20261117
+  current_stage: merged_verified_no_deployment
+  last_verified_commit: a08a34a1d9d51ff6df15f2cf174e000d149209e3
+
+apr07_role_hardening_20261117:
+  task_id: TA-APR07-ROLE-HARDENING-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR07-ROLE-HARDENING-20261117.yaml
+  branch: feat/ta-apr07-operator-role-hardening-20261117
+  current_stage: merged_verified_no_deployment
+  last_verified_commit: 21c56ca72a6bff94ec5831bff5f1cfd7d31a9e93
+  pr: 608
+
+apr03b_multiple_source_claims_20261117:
+  task_id: TA-APR03B-MULTIPLE-SOURCE-CLAIMS-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR03B-MULTIPLE-SOURCE-CLAIMS-20261117.yaml
+  branch: feat/ta-apr03b-multiple-source-claims-20261117
+  current_stage: merged_verified_no_deployment
+  last_verified_commit: a1686d85baf139b7a01b0f29ae8283a266938482
+  pr: 609
+
+apr08_evidence_copilot_20261117:
+  task_id: TA-APR08-EVIDENCE-COPILOT-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-EVIDENCE-COPILOT-20261117.yaml
+  branch: feat/ta-apr08-evidence-copilot-20261117
+  current_stage: integrated_bounded_development_complete
+  last_verified_commit: 17e64db3a6133f6a8ab1d372be031c72c4c8bd2d
+
+apr08_document_retrieval_20261117:
+  task_id: TA-APR08-DOCUMENT-RETRIEVAL-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-DOCUMENT-RETRIEVAL-20261117.yaml
+  branch: feat/ta-apr08-document-retrieval-20261117
+  current_stage: verified_pending_merge
+  replay_branch: feat/ta-apr08-real-dp-replay-20261117
+  last_verified_commit: a0261f8c82a0195f7a9b08b879dd0b69d1384766
+
+apr08_grounded_questions_20261117:
+  task_id: TA-APR08-GROUNDED-QUESTIONS-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-GROUNDED-QUESTIONS-20261117.yaml
+  branch: feat/ta-apr08-grounded-questions-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: f0d1e152938c95c1f9d5b847fb70d1acb8549906
+
+apr08_typed_payment_20261117:
+  task_id: TA-APR08-TYPED-PAYMENT-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-TYPED-PAYMENT-20261117.yaml
+  branch: feat/ta-apr08-typed-payment-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: f2de139559bfa8f3fa2d10d01dddbfc52c1d21f5
+
+apr08_security_xml_20261117:
+  task_id: TA-APR08-SECURITY-XML-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-SECURITY-XML-20261117.yaml
+  branch: feat/ta-apr08-security-xml-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: 80d8533ba73ddfe8735cf5d1ff4629045a834b84
+
+apr08_delivery_20261117:
+  task_id: TA-APR08-DELIVERY-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-DELIVERY-20261117.yaml
+  branch: feat/ta-apr08-delivery-observation-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: b31b27872ae2907d64f80f7a07299864ff81d1b9
+
+apr08_legal_reference_20261117:
+  task_id: TA-APR08-LEGAL-REFERENCE-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-LEGAL-REFERENCE-20261117.yaml
+  branch: feat/ta-apr08-legal-reference-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: 379f7252f7cead8a02bc42dcbff13c61b03426a9
+
+apr08_commercial_scenario_20261117:
+  task_id: TA-APR08-COMMERCIAL-SCENARIO-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-COMMERCIAL-SCENARIO-20261117.yaml
+  branch: feat/ta-apr08-commercial-scenario-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: e19d79174cc2727dcbfbd6a869577458de853144
+
+apr08_browser_acceptance_20261117:
+  task_id: TA-APR08-BROWSER-ACCEPTANCE-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-BROWSER-ACCEPTANCE-20261117.yaml
+  branch: feat/ta-apr08-browser-acceptance-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: f1e1cdf6c2ae39a7d55bfa6932853994c179e793
+
+apr08_pinned_browser_20261117:
+  task_id: TA-APR08-PINNED-BROWSER-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-PINNED-BROWSER-20261117.yaml
+  branch: feat/ta-apr08-pinned-browser-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: efdaa8b3c9b451b2ae71a90456a27673fb4c4fdd
+
+apr08_statute_corpus_20261117:
+  task_id: TA-APR08-STATUTE-CORPUS-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-STATUTE-CORPUS-20261117.yaml
+  branch: feat/ta-apr08-statute-corpus-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: 38c6ee3e43f481aad5b0e4e1aa92b6c6984ba3ed
+
+apr08_effective_date_20261117:
+  task_id: TA-APR08-EFFECTIVE-DATE-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-EFFECTIVE-DATE-20261117.yaml
+  branch: feat/ta-apr08-effective-date-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: c7ad209d2c867281a5ea3043631b9fbf0fc43748
+
+apr08_multiedition_corpus_20261117:
+  task_id: TA-APR08-MULTIEDITION-CORPUS-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-MULTIEDITION-CORPUS-20261117.yaml
+  branch: feat/ta-apr08-multiedition-corpus-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: a763aaf8cf78b9c4b7f0ba16a23c77eba15caf7a
+
+apr08_composed_evidence_20261117:
+  task_id: TA-APR08-COMPOSED-EVIDENCE-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-COMPOSED-EVIDENCE-20261117.yaml
+  branch: feat/ta-apr08-composed-evidence-20261117
+  current_stage: verified_pending_merge
+  last_verified_commit: 5c606bcae85d0e5822d803e07a5f287b97509f02
+
+apr08_integrated_acceptance_20261117:
+  task_id: TA-APR08-INTEGRATED-ACCEPTANCE-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-INTEGRATED-ACCEPTANCE-20261117.yaml
+  branch: feat/ta-apr08-integrated-acceptance-20261117
+  current_stage: integrated_bounded_development_complete
+  last_verified_commit: 17e64db3a6133f6a8ab1d372be031c72c4c8bd2d
+
+apr08_integration_20261117:
+  task_id: TA-APR08-INTEGRATION-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR08-INTEGRATION-20261117.yaml
+  branch: feat/ta-apr08-integration-receipt-20261117
+  current_stage: code_integrated_and_main_ci_verified
+  last_verified_commit: cac4cd4a69f2494bff582b94aec80a5ee4d4af4c
+  merge_commit: cac4cd4a69f2494bff582b94aec80a5ee4d4af4c
+
+wsf07b_production_20261117:
+  task_id: TA-WSF07B-PRODUCTION-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-WSF07B-PRODUCTION-20261117.yaml
+  branch: ops/ta-wsf07b-production-20261117
+  current_stage: production_cutover_and_verification_completed
+  last_verified_commit: 28e874b65d8aeab5a13e3c2453632810c14140be
+
+wsf07b_exact_bearer_20261117:
+  task_id: TA-WSF07B-EXACT-BEARER-20261117
+  status: completed
+  checkpoint: .agent/checkpoints/TA-WSF07B-EXACT-BEARER-20261117.yaml
+  branch: fix/ta-wsf07b-exact-bearer-20261117
+  current_stage: deployed_verified_completed
+
+release_hygiene_2026_11_21:
+  task_id: TA-RELEASE-POSTMERGE-20261121
+  status: completed
+  baseline_main_verified: 45e8c6ff4c939747ee91cdb168b3922ddd9bb93f
+  deployed_source_sha: 9b650a2b818032389cfd6e13799acad33c72089b
+  deployed_db_revision: 127_private_review_link_corrections
+  allowed_source_deals: 12
+  excluded_source_deals: 9
+  release_checkpoint: .agent/checkpoints/TA-PROD-ROLLOUT-20261121.yaml
+  branch_governance_checkpoint: .agent/checkpoints/TA-MAIN-GOVERNANCE-20261121.yaml
+  pr681: merged
+  pr682: release_and_governance_evidence_recorded_here
+  pr680: superseded_by_pr682
+  next_priority_issue: 679
+  external_reviewer_required: false
+  automatic_source_replay_authorized: false
+
+dtr_safe_source_errors_2026_11_22:
+  task_id: TA-DTR-SAFE-SOURCE-ERRORS-20261122
+  status: completed
+  checkpoint: .agent/checkpoints/TA-DTR-SAFE-SOURCE-ERRORS-20261122.yaml
+  scope: safe_error_codes_and_regression_no_live_source_retries
+  linked_issue: 679
+  last_verified_code_commit: d4df9dfcc5944d86b3499a20350016d7c800d6ba
+  local_tests: 35_pass_make_check_pass
+  deployment: not_performed
+  review_pr: 693
+  merged_main_sha: e269d322f0277e231a944dee9e2cb460647d4e74
+  exact_pr_ci: 19_of_19_success
+
+dtr_legacy_api_redaction_2026_11_22:
+  task_id: TA-DTR-LEGACY-API-REDACTION-20261122
+  status: completed
+  checkpoint: .agent/checkpoints/TA-DTR-LEGACY-API-REDACTION-20261122.yaml
+  linked_issue: 679
+  scope: api_presentation_only_no_db_changes
+  verified_code_sha: 4a0d6efd5f0686fac0ed4b7d1a87adf9e1e61e88
+  local_tests: 37_pass_make_check_pass
+
+dtr_679_offline_evidence_2026_11_22:
+  task_id: TA-DTR679-OFFLINE-AUDIT-20261122
+  status: completed
+  checkpoint: .agent/checkpoints/TA-DTR679-OFFLINE-AUDIT-20261122.yaml
+  linked_issue: 679
+  scope: archived_primary_html_sha_and_revision_checks_no_network_no_database
+  source_safety: historical_only_current_revision_not_proven
+  last_verified_code_commit: 88d788581c23c0a96529e0df6196d16f7109d698
+  local_checks: 16_pass_ruff_make_check_archived_html_sha_pass
+
+pitr127_restore_readonly_audit_2026_11_22:
+  task_id: TA-PITR127-READONLY-VERIFICATION-20261122
+  status: completed
+  checkpoint: .agent/checkpoints/TA-PITR127-READONLY-VERIFICATION-20261122.yaml
+  linked_issue: 685
+  scope: receipt_and_version_matched_pg17_backup_integrity_only
+  production_writes: prohibited
+  seven_day_continuity_proven: false
+  verified_code_commit: c3aa2b4d0fc90d07e69fcf2796419c028e9fc87b
+  local_checks: 18_pass_ruff_make_check_pg17_postrelease_base_verified
+  merged_main_commit: 14369525ff98a8176347da5f1f776cde98604836
+  exact_pr_ci: 19_of_19_success
+
+pitr_exact_wal_2026_11_22:
+  task_id: TA-PITR-EXACT-WAL-20261122
+  status: completed
+  checkpoint: .agent/checkpoints/TA-PITR-EXACT-WAL-20261122.yaml
+  linked_issue: 685
+  scope: isolated_readonly_originals_network_none_clone_no_production_writes
+  seven_day_continuity_proven: false
+  verified_code_commit: ff488e0d114df5e0be57edb916f68454b781d942
+  local_checks: 32_pass_ruff_make_check_real_offline_preflight
+  merged_main_commit: 6b49cbba4ffcbb62630fe78e1c118c2bfe96f2a1
+  proof_sha256: 8f0692b3f37cf94b76c04d3ce81795a0215f3c8ecea7d67146beb6fb83ad9b08
+  exact_postbase_target: proven
+  isolated_restore_executed: true
+
+pitr_seven_day_2026_11_22:
+  task_id: TA-PITR-SEVEN-DAY-20261122
+  status: blocked
+  checkpoint: .agent/checkpoints/TA-PITR-SEVEN-DAY-20261122.yaml
+  linked_issue: 685
+  blocked_on: insufficient_historical_base_age_and_independent_continuity_restore
+  earliest_age_candidate_utc: 2026-11-27T08:47:31Z
+  seven_day_pitr_proven: false
+roadmap_reconciliation_2026_11_22:
+  task_id: TA-ROADMAP-RECONCILE-20261122
+  status: completed
+  checkpoint: .agent/checkpoints/TA-ROADMAP-RECONCILE-20261122.yaml
+  scope: issue_truth_679_685_and_child_checkpoint_sync
+  base_main: 951fcb87deec437857f53f5738b2862bcef473e5
+  production_writes: false
+
+dtr679_current_originals_2026_11_22:
+  task_id: TA-DTR679-CURRENT-ORIGINALS-20261122
+  status: blocked
+  checkpoint: .agent/checkpoints/TA-DTR679-CURRENT-ORIGINALS-20261122.yaml
+  linked_issue: 679
+  blocked_on: current_official_revision_and_original_binary_bytes_not_verified
+  no_blind_eis_retry: true
+  bounded_offline_audit_completed: true
+
+sibur_source_discovery_2026_11_22:
+  task_id: TA-SIBUR-SOURCE-DISCOVERY-001
+  status: completed
+  checkpoint: .agent/checkpoints/TA-SIBUR-SOURCE-DISCOVERY-001.yaml
+  queue_order: 1130
+  source_access: public_or_authorized_readonly_only
+  production_mutations: false
+
+sibur_gap_readonly_2026_11_22:
+  task_id: TA-SIBUR-HIST-GAP-READONLY-20261122
+  status: completed
+  checkpoint: .agent/checkpoints/TA-SIBUR-HIST-GAP-READONLY-20261122.yaml
+  linked_issue: 692
+  scope: read_only_archived_source_vs_working_snapshot_identity
+  production_writes: false
+geh_source_discovery_2026_11_22:
+  task_id: TA-GEH-SOURCE-DISCOVERY-001
+  status: completed
+  checkpoint: .agent/checkpoints/TA-GEH-SOURCE-DISCOVERY-001.yaml
+  queue_order: 1140
+  source_access: public_or_authorized_readonly_only
+  production_mutations: false
+
+ai_trading_source_discovery_2026_11_22:
+  task_id: TA-AI-TRADING-SOURCE-DISCOVERY-001
+  status: completed
+  checkpoint: .agent/checkpoints/TA-AI-TRADING-SOURCE-DISCOVERY-001.yaml
+  queue_order: 1150
+  mode: paper_trading_only
+  real_etrading_authorized: false
+  production_mutations: false
+
+sibur_ppt_source_forensic_2026_11_22:
+  task_id: TA-SIBUR-PPT-SOURCE-FORENSIC-20261122
+  status: completed
+  checkpoint: .agent/checkpoints/TA-SIBUR-PPT-SOURCE-FORENSIC-20261122.yaml
+  linked_issue: 686
+  scope: one_saved_original_url_and_binary_only
+  external_source_requests: false
+  production_mutations: false
+
+sibur_import_window_2026_11_22:
+  task_id: TA-SIBUR-IMPORT-WINDOW-20261122
+  status: completed
+  checkpoint: .agent/checkpoints/TA-SIBUR-IMPORT-WINDOW-20261122.yaml
+  linked_issue: 692
+  scope: source_only_verified_historic_import_window
+  production_mutations: false
+
+apr06_qualification_risk_2026_11_22:
+  task_id: TA-APR06-QUAL-RISK-20261122
+  status: completed
+  checkpoint: .agent/checkpoints/TA-APR06-QUAL-RISK-20261122.yaml
+  linked_issue: 406
+  scope: read_only_competitive_risk_semantics
+  production_deployment: false
+  external_source_requests: false
+
+sibur_ppt_current_source_2026_11_22:
+  task_id: TA-SIBUR-PPT-CURRENT-SOURCE-20261122
+  status: blocked
+  checkpoint: .agent/checkpoints/TA-SIBUR-PPT-CURRENT-SOURCE-20261122.yaml
+  linked_issue: 686
+  blocked_on: current_original_first_party_bytes_and_revision_not_independently_verified
+  production_mutations: false
+
+apr06_qualification_release_2026_11_22:
+  task_id: TA-APR06-QUAL-RELEASE-20261122
+  status: blocked
+  checkpoint: .agent/checkpoints/TA-APR06-QUAL-RELEASE-20261122.yaml
+  linked_issue: 406
+  blocked_on: independent_upstream_source_attestation_and_owner_release_acceptance
+  production_deployed: false
+
+postmerge_truth_2026_11_22:
+  task_id: TA-POSTMERGE-TRUTH-20261122
+  status: completed
+  checkpoint: .agent/checkpoints/TA-POSTMERGE-TRUTH-20261122.yaml
+  production_mutations: false
+
+sibur_dp_source_provenance_2026_11_22:
+  task_id: TA-SIBUR-DP-SOURCE-PROVENANCE-20261121
+  status: completed
+  checkpoint: .agent/checkpoints/TA-SIBUR-DP-SOURCE-PROVENANCE-20261121.yaml
+  scope: seven_historical_first_party_sha_bound_DP_documents
+  live_dp_index_verified: false
+  production_mutations: false
+
+pitr_wal_content_integrity_2026_11_22:
+  task_id: TA-PITR-WAL-CONTENT-INTEGRITY-20261122
+  status: completed
+  checkpoint: .agent/checkpoints/TA-PITR-WAL-CONTENT-INTEGRITY-20261122.yaml
+  linked_issue: 685
+  scope: read_only_pg17_archived_wal_content_preflight
+  seven_day_pitr_proven: false
+  production_mutations: false
+
+core_runtime_release_2026_11_22:
+  task_id: TA-CORE-RUNTIME-RELEASE-20261122
+  status: blocked
+  checkpoint: .agent/checkpoints/TA-CORE-RUNTIME-RELEASE-20261122.yaml
+  depends_on: [TA-CORE-CONSOLIDATION-001, TA-CORE-RUNTIME-PACKAGING-20261115]
+  blocked_on: DP_ingest_p95_red_sustained_reliability_unproven_and_owner_release_blocked
+  production_deployed: false
+
+dp_live_sdk_readonly_2026_11_22:
+  task_id: TA-DP-LIVE-SDK-READONLY-20261122
+  status: completed
+  checkpoint: .agent/checkpoints/TA-DP-LIVE-SDK-READONLY-20261122.yaml
+  depends_on: [TA-CORE-RUNTIME-RELEASE-20261122]
+  scope: bounded_loopback_only_get_contract_and_collections
+  production_writes: false
+
+dp_ingest_slo_p0_2026_11_22:
+  task_id: TA-DP-INGEST-SLO-P0-20261122
+  status: blocked
+  checkpoint: .agent/checkpoints/TA-DP-INGEST-SLO-P0-20261122.yaml
+  upstream_repo: arvectum2/data-platform
+  upstream_issue: 133
+  upstream_draft_pr: 134
+  blocked_on: Mac_mini_governor_reduced_memory_pressure_swap_and_unproven_sustained_ingest_SLO
+  last_verified_external_head: fdea7e3246bc25365f4f1336b755afca9fbf5741
+  proof: transaction_lifecycle_SQL_pool_risk_72_tests_5of5_PG_CI_pass_live_readiness_red
+  no_second_Qwen_started: true
+  production_modified: false
+  next_step: verify_final_DP_draft_CI_then_measured_real_SLO_and_safe_model_admission_before_owner_release
+
+sibur_geh_commercial_watch_2026_11_22:
+  task_id: TA-SIBUR-GEH-COMMERCIAL-WATCH-20261122
+  status: completed
+  checkpoint: .agent/checkpoints/TA-SIBUR-GEH-COMMERCIAL-WATCH-20261122.yaml
+  scope: read_only_evidence_bound_business_shortlist_sibur_and_geh
+  production_mutations: false
+  current_stage: source_bound_business_digest_completed__protected_merge_gated
+  follow_up_issue: 719
+  automatic_daily_sibur_source_refresh_deployed: false
+
+mi_daily_commercial_watch_2026_11_23:
+  task_id: TA-MI-DAILY-WATCH-20261123
+  status: completed
+  checkpoint: .agent/checkpoints/TA-MI-DAILY-WATCH-20261123.yaml
+  issue: 719
+  current_stage: source_only_daily_runner_implemented_ci_merge_gated
+  production_installed: false
+  production_approval_required: true
+  live_source_credentials_used: false
+  verified_focused_tests: 46
+  follow_up: owner_gated_launchd_installation_and_next_live_cycle
+
+dtr_deadline_precision_2026_11_23:
+  task_id: TA-DTR-DEADLINE-PRECISION-20261123
+  status: completed
+  checkpoint: .agent/checkpoints/TA-DTR-DEADLINE-PRECISION-20261123.yaml
+  issue: 721
+  current_stage: source_guard_completed_protected_merge_gated
+  production_modified: false
+  legacy_rows_reconciled: false
+  official_clock_time_verified: false
+  verified_focused_tests: 36
+
+mi_0700_commercial_release_2026_11_23:
+  task_id: TA-MI-0700-RELEASE-20261123
+  status: blocked
+  checkpoint: .agent/checkpoints/TA-MI-0700-RELEASE-20261123.yaml
+  issue: 719
+  owner_authorized: true
+  target_delivery_time: '07:00 Europe/Moscow'
+  current_stage: installed_manual_canary_verified_waiting_24nov_first_scheduled
+  github_issue: 719
+  gehrun_msk: '05:15'
+  source_and_report_msk: '06:20'
+  chatgpt_delivery_msk: '07:00'
+  automation_id: 6b03d6bd374c8191a4ef19cd4a5fcd17
+  pinned_source_commit: 71b28f550559a45c47056e7b1b0adb1d5eb51bdc
+  host_schedule_installed: true
+  first_real_scheduled_day_verified: false
+
+dtr_one_row_deadline_correction_2026_11_23:
+  task_id: TA-DTR-ONE-ROW-CORRECTION-20261123
+  status: completed
+  checkpoint: .agent/checkpoints/TA-DTR-ONE-ROW-CORRECTION-20261123.yaml
+  issue: 721
+  exact_registry_number: '0845500000526000021'
+  corrected_deadline_utc: '2026-11-30T06:00:00Z'
+  production_rows_changed: 1
+  other_midnight_rows_not_reconciled: 298
+  source_pinned_runtime_deployed: false
+
+eis_298_deadline_audit_2026_11_23:
+  task_id: TA-EIS-298-DEADLINE-AUDIT-20261123
+  status: completed
+  checkpoint: .agent/checkpoints/TA-EIS-298-DEADLINE-AUDIT-20261123.yaml
+  related_issue: 721
+  scope: read_only_all_remaining_midnight_eis_deadline_rows
+  production_mutations: false
+  full_records_audited: 298
+  distinct_official_notices: 196
+  current_source_mismatches: 295
+  genuine_midnight_records: 3
+  unverified: 0
+  private_originals_verified: 196
+  github_audit_issue: 721
+
+eis_manager_deadline_reconcile_2026_11_23:
+  task_id: TA-EIS-MANAGER-DEADLINES-20261123
+  status: completed
+  checkpoint: .agent/checkpoints/TA-EIS-MANAGER-DEADLINES-20261123.yaml
+  related_issue: 721
+  current_stage: 35_conditional_source_verified_updates_complete
+  owner_authorized: true
+  official_notices_rechecked: 37
+  production_rows_changed: 35
+  genuine_midnight_rows_untouched: 2
+  other_original_audit_rows_unchanged: 263
+  database_total_verified: 299
+  production_modified: true
+  external_submissions: false
+  official_detail_enrichment_live_deployed: false
+
+ta_maintenance_parser_cutover_2026_11_23:
+  task_id: TA-MAINT-PARSER-CUTOVER-20261123
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-MAINT-PARSER-CUTOVER-20261123.yaml
+  related_issue: 721
+  current_stage: exact_head_CI_and_owner_maintenance_window_gate
+  outage_authorized: false
+  postgres_restarted: false
+  llm_stopped: false
+  parser_live_deployed: false
+  pinned_hotfix_sha: 6ab4ae08f4309b6ad9fc10bf884c5f1744cb26dd
+  source_pr: 726
+  fresh_backup_done: true
+  independent_pg17_dual_db_restore_verified: true
+  seven_day_pitr_proven: false

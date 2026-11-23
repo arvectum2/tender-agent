@@ -1,0 +1,28 @@
+task_id: TA-SIBUR-IMPORT-WINDOW-20261122
+status: completed
+goal: 'Prove 18,251 SIBUR historic archive IDs absent from working DB are explained by saved source import-window/category receipts; inventory historical-only business consequences, do not import or mutate.'
+definition_of_done:
+  - 'Replay and hash-verify all 166 historic input and 166 corresponding result receipts, with strict source schema and no file mutation.'
+  - 'Reconcile 4,047 included pages, 30,081 imported distinct ID groups and 18,390 historically retained observations, distinguishing 204 repeated observations across categories.'
+  - 'Independently account for five omitted support-services category pages/59 IDs and external-current 313+238 working-only rows via source original and read-only DB receipts.'
+  - 'Publish source-safe aggregate cause report, exact offline regression checks, no current legal/active tender inference.'
+  - 'Post source-backed issue #692 conclusion without enabling historical import, and close only research task when protected CI green; any mass import needs separate owner, MI/PITR/staging and retention decision.'
+completed:
+  - 'Re-hashed 166/166 exact input SHA-named historical 15-Nov import manifests; 166/166 matching result receipts and retained older-row counts, no changed existing rows.'
+  - 'Eight SIBUR archive categories covered 4,047 original pages, 30,081 selected/imported unique IDs and 18,390 older observations privately retained. Six newer duplicate observations collapsed.'
+  - 'Ninth category 999_19 was not selected: 5 original pages, 59 IDs, 30 pre-2024 and 29 in 2024-2026. Across all nine categories 18,222 distinct pre-2024 and 29 newer IDs explain all 18,251 historical missing.'
+  - '551 working-only IDs proven separate public registry created batches Nov14=313 and Nov19=238, vs Nov15 archived 30,081 overlap; no full current source legal status claimed.'
+  - 'Published separately sanitised report and updated issue #692 evidence, 19 focused tests PASS plus Ruff/make check; original source and DB untouched.'
+  - 'Hardened input-bound result receipts: result filenames match source input SHA, full result byte-set ordered digest 2e51b08c9e4c40d245a015a1317aa5cef600da07ca41d13c973b0a8617b220fc, 30081 original inserts and 30081 idempotent replays with zero changed rows verified.'
+  - 'Read-only discovery: 166 input+result archival pairs, 4,047 included pages, 30,081 selected unique source groups, 18,390 pre-2024 retained observations, SHA matched all input file names; 59 excluded 999_19 IDs, 551 working-only from separate Nov14+Nov19 source batches.'
+current_stage: protected_pr_706_merged_source_only_scope_complete
+remaining: []
+last_verified_commit: 755a56a4059a91e77b84059fbc7ed286ef48c49d
+test_results: 'Protected PR #706 exact-head CI 19/19 SUCCESS and main merged 755a56a4059a91e77b84059fbc7ed286ef48c49d. Bounded engineering task completed; remaining external acceptance tracked separately; no production deployed.'
+resume_instruction: 'Completed PR #706 on main with CI19/19. Do not rerun this bounded code/research task. Track separate #686 current official PPT authenticity, #406 owner/upstream approval, #679 originals, #685 seven-day PITR. Do not deploy or bid.'
+linked_issue: 692
+production_mutations: false
+external_source_requests: false
+protected_merge_commit: 755a56a4059a91e77b84059fbc7ed286ef48c49d
+protected_exact_ci: 19_of_19_success
+production_deployed: false

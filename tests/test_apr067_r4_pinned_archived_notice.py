@@ -29,7 +29,9 @@ def archive(tmp_path, monkeypatch):
             f"<purchaseObjectInfo>Предмет версии {version}</purchaseObjectInfo>"
             f"<endDT>2026-10-{version + 10:02d}T11:00:00+03:00</endDT>"
             f"<maxPrice>{100000 * version}.00</maxPrice>"
-            f"</commonInfo></epNotificationEF2020></export>"
+            f"</commonInfo><notificationInfo><customerRequirementsInfo><customerRequirementInfo><applicationGuarantee><amount>{1000 * version}.00</amount><part>1.0</part></applicationGuarantee>"
+            f"<contractGuarantee><part>{version * 5}.0</part><procedureInfo>Исполнение контракта обеспечивается в соответствии со статьей 45 Федерального закона № 44-ФЗ. Исключения предусмотрены статьей 96 Закона № 44-ФЗ.</procedureInfo></contractGuarantee></customerRequirementInfo></customerRequirementsInfo></notificationInfo>"
+            f"</epNotificationEF2020></export>"
         ).encode()
 
     files = []
@@ -175,3 +177,159 @@ def test_forged_pinned_archive_cannot_create_html_evidence(archive, tmp_path):
     report.write_text(before)
     assert append_official_eis_citations(report_path=report, run_id="run", metadata=meta) == 0
     assert report.read_text() == before
+
+
+@pytest.mark.parametrize(('question','answer','locator'), [('subject','Предмет версии 4','XML:purchaseObjectInfo'), ('nmck','400000.00','XML:maxPrice'), ('deadline','2026-10-14T11:00:00+03:00','XML:endDT')])
+def test_copilot_answers_from_pinned_original_only(archive, question, answer, locator):
+    from src.modules.tender_operator_agent_demo.evidence_copilot import (
+        EvidenceQuestion,
+        answer_question,
+    )
+
+    result = answer_question('run', EvidenceQuestion(question=question))
+    assert result['status'] == 'ARCHIVED_SOURCE_FACT' and result['answer'] == answer
+    assert result['citations'][0]['locator'] == locator
+    assert result['citations'][0]['file_id'] == 'FILE-02'
+    assert result['requires_human_review'] and not result['bid_ready'] and not result['current_revision_attested']
+
+
+def test_copilot_percentage_and_tamper_abstention(archive):
+    from src.modules.tender_operator_agent_demo.evidence_copilot import (
+        EvidenceQuestion,
+        answer_question,
+    )
+
+    request = EvidenceQuestion(question='nmck_percent', percent='5.125')
+    result = answer_question('run', request)
+    assert result['answer'] == '20500.00' and result['status'] == 'HYPOTHETICAL_CALCULATION'
+    assert result['calculation']['actual_security_requirement'] is None and result['calculation']['currency'] is None
+    assert not result['legal_requirement_attested']
+    for invalid in (EvidenceQuestion(question='nmck_percent'), EvidenceQuestion(question='legal_go'), EvidenceQuestion(question='nmck', percent='4')):
+        assert answer_question('run', invalid)['status'] == 'UNKNOWN'
+    directory, _, _ = archive
+    target = next((directory / 'extracted').glob(f'epNotificationEF2020_{NUMBER}_4_*.xml'))
+    target.write_bytes(target.read_bytes() + b'changed')
+    result = answer_question('run', request)
+    assert result['status'] == 'UNKNOWN' and result['answer'] is None and result['citations'] == []
+
+
+@pytest.mark.parametrize(('question','intent','answer','status'), [
+    ('Что закупается?', 'subject', 'Предмет версии 4', 'ARCHIVED_SOURCE_FACT'),
+    ('Какова НМЦК?', 'nmck', '400000.00', 'ARCHIVED_SOURCE_FACT'),
+    ('Какой срок подачи заявок?', 'deadline', '2026-10-14T11:00:00+03:00', 'ARCHIVED_SOURCE_FACT'),
+    ('Сколько составляет 5,125% от НМЦК?', 'nmck_percent', '20500.00', 'HYPOTHETICAL_CALCULATION'),
+])
+def test_grounded_question_routes_to_actual_pinned_xml(archive, monkeypatch, question, intent, answer, status):
+    from src.modules.tender_operator_agent_demo import evidence_grounded_questions as qa
+
+    monkeypatch.setattr(qa, 'checked_search_run', lambda _id: (archive[0], archive[1]))
+    result = qa.answer_grounded_question('run', qa.GroundedQuestion(question=question))
+    assert (result['status'], result['intent'], result['answer']) == (status, intent, answer)
+    assert result['citation_kind'] == 'ARCHIVED_XML' and result['citations'][0]['file_id'] == 'FILE-02'
+    assert result['requires_human_review'] and not result['bid_ready'] and not result['current_revision_attested']
+
+
+def test_archived_security_scopes_latest_revision_without_inferred_amount(archive, monkeypatch):
+    from src.modules.tender_operator_agent_demo import evidence_grounded_questions as qa
+
+    monkeypatch.setattr(qa, 'checked_search_run', lambda _id: (archive[0], archive[1]))
+    for text, expected, amount, part in [
+        ('Какой размер обеспечения заявки?', 'bid_security', '4000.00', '1.0'),
+        ('Какой размер обеспечения исполнения контракта?', 'contract_security', None, '20.0'),
+    ]:
+        result = qa.answer_grounded_question('run', qa.GroundedQuestion(question=text))
+        assert result['status'] == 'ARCHIVED_SECURITY_FIELDS' and result['intent'] == expected
+        obs = result['observation']
+        assert obs['amount'] == amount and obs['percent'] == part and obs['archived_version'] == 4
+        assert obs['currency'] is None and obs['calculated_amount'] is None
+        assert all(c['file_id'] == 'FILE-02' for c in obs['citations'])
+        assert all(('applicationGuarantee/' if expected == 'bid_security' else 'contractGuarantee/') in c['locator'] for c in obs['citations'])
+        assert not result['bid_ready'] and not result['legal_requirement_attested'] and not result['current_revision_attested']
+
+
+def test_archived_security_tampered_source_fails_closed(archive):
+    from src.modules.tender_operator_agent_demo.evidence_security_observation import (
+        archived_security_observation,
+    )
+
+    directory, _, _ = archive
+    target = next((directory / 'extracted').glob(f'epNotificationEF2020_{NUMBER}_4_*.xml'))
+    target.write_bytes(target.read_bytes().replace(b'<amount>4000.00</amount>', b'<amount>1</amount>'))
+    result = archived_security_observation('run', 'bid_security')
+    assert result['status'] == 'UNKNOWN' and result['citations'] == []
+
+
+@pytest.mark.parametrize(('replacement','kind','status','amount','percent'), [
+    ('<amount>4000.00</amount><amount>4000.00</amount><part>1.0</part>', 'bid_security', 'ARCHIVED_SECURITY_FIELDS', None, '1.0'),
+    ('<amount>-1</amount><part>101</part>', 'bid_security', 'UNKNOWN', None, None),
+    ('<amount>4000.00</amount><part>1.0</part></applicationGuarantee><applicationGuarantee><part>2</part>', 'bid_security', 'UNKNOWN', None, None),
+    ('<amount>4000.00</amount><part>1.0</part></applicationGuarantee></customerRequirementInfo><customerRequirementInfo><applicationGuarantee><amount>1</amount>', 'bid_security', 'UNKNOWN', None, None),
+])
+def test_archived_security_duplicate_scope_and_invalid_fields(archive, replacement, kind, status, amount, percent):
+    from src.modules.tender_operator_agent_demo.evidence_security_observation import (
+        archived_security_observation,
+    )
+
+    directory, meta, original = archive
+    target = next((directory / 'extracted').glob(f'epNotificationEF2020_{NUMBER}_4_*.xml'))
+    changed = target.read_text().replace('<amount>4000.00</amount><part>1.0</part>', replacement).encode()
+    with zipfile.ZipFile(original) as z:
+        members = {name:z.read(name) for name in z.namelist()}
+    members[target.name] = changed
+    with zipfile.ZipFile(original,'w') as z:
+        for name, raw in members.items():
+            z.writestr(name,raw)
+    target.write_bytes(changed)
+    meta['official_eis_procedure'] = classify_official_eis_archive(original, NUMBER)
+    result = archived_security_observation('run', kind)
+    assert (result['status'],result['amount'],result['percent']) == (status,amount,percent)
+    assert result['calculated_amount'] is None
+
+
+def test_customer_legal_references_are_not_verified_statutes(archive, monkeypatch):
+    from src.modules.tender_operator_agent_demo import evidence_grounded_questions as qa
+
+    monkeypatch.setattr(qa, 'checked_search_run', lambda _id: (archive[0], archive[1]))
+    result = qa.answer_grounded_question('run', qa.GroundedQuestion(question='Поясни требования к обеспечению исполнения контракта'))
+    assert result['status'] == 'CUSTOMER_TERMS_LEGAL_REFERENCES'
+    obs = result['observation']
+    assert obs['customer_text_verified'] and not obs['statute_text_verified'] and not obs['current_law_verified']
+    assert obs['legal_conclusion'] is None and not obs['references_complete']
+    assert [r['article'] for r in obs['references']] == ['45','96']
+    quote = result['citations'][0]['excerpt']
+    assert result['citations'][0]['file_id'] == 'FILE-02'
+    assert result['citations'][0]['locator'].endswith('contractGuarantee/procedureInfo')
+    for ref in obs['references']:
+        assert quote[ref['char_start_in_excerpt']:ref['char_end_in_excerpt']] == ref['literal']
+        assert not ref['statute_text_verified'] and not ref['applicability_verified']
+    assert not result['bid_ready'] and not result['legal_requirement_attested']
+    missing = qa.answer_grounded_question('run', qa.GroundedQuestion(question='Поясни требования к обеспечению заявки'))
+    assert missing['status'] == 'UNKNOWN' and not missing['citations']
+
+
+def test_customer_legal_references_tampered_original_abstains(archive):
+    from src.modules.tender_operator_agent_demo.evidence_legal_reference import (
+        legal_reference_observation,
+    )
+
+    directory, _, _ = archive
+    target = next((directory / 'extracted').glob(f'epNotificationEF2020_{NUMBER}_4_*.xml'))
+    target.write_bytes(target.read_bytes() + b' ')
+    result = legal_reference_observation('run', 'contract_security')
+    assert result['status'] == 'UNKNOWN' and not result['citations']
+
+
+def test_composed_brief_keeps_archive_and_scenario_separate(archive, monkeypatch):
+    from src.modules.tender_operator_agent_demo import evidence_grounded_questions as qa
+
+    monkeypatch.setattr(qa, 'checked_search_run', lambda _id: (archive[0], archive[1]))
+    monkeypatch.setattr(qa, 'search_run_documents', lambda *args, **kwargs: {'status':'UNKNOWN','citations':[]})
+    r=qa.answer_grounded_question('run',qa.GroundedQuestion(question='Составь сводку условий закупки услуг с расчётом 5% НМЦК'))
+    assert r['status']=='COMPOSED_EVIDENCE_ONLY' and len(r['components'])==9
+    parts=[c['evidence'] for c in r['components']]
+    assert parts[1]['answer']=='400000.00' and parts[8]['answer']=='20000.00'
+    assert parts[8]['status']=='HYPOTHETICAL_CALCULATION'
+    assert parts[5]['status']==parts[6]['status']=='UNKNOWN'
+    assert parts[4]['observation']['amount'] is None
+    assert not r['citations'] and not r['legal_requirement_attested'] and not r['semantic_answer_verified']
+    assert not r['bid_ready'] and not r['external_action_allowed'] and r['actual_profit_and_liquidity_status']=='UNKNOWN'

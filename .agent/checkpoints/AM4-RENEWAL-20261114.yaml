@@ -1,0 +1,10 @@
+task_id: AM4-RENEWAL-20261114
+status: in_progress
+goal: Synchronize owner-approved AM-4 renewal after canonical main mirror repair.
+definition_of_done: [company decision merged, main mirror parity verified, TA policy synchronized, exact-head CI green and TA sync merged]
+completed: [company PR 13 merged 6af75d5a, main mirror matches, no master alias, policy pointers updated]
+current_stage: product_policy_ci
+remaining: [exact-head CI, merge product sync, check main mirror]
+last_verified_commit: 44ff2d1b3fca8d336be5b2854a937f76414807ee
+latest_tests: company 2/2 success; all normal refs verified before merge; main parity after merge
+resume_instruction: Verify exact-head CI on AM-4 sync PR, merge only if green under explicit Owner instruction; preserve unchanged hard stops and historical evidence.

@@ -1,6 +1,8 @@
 # Tender Agent ↔ Data Platform: two-mode ingest pilot
 
-Date: 2026-11-23. Review-only branch `chore/ta-dp-dual-ingest-pilot-20261123` based on `origin/main` at `e92c948c`. **No live Tender Agent, Qwen, scheduler, production PostgreSQL or deployed SDK has been modified.** The canonical Tender Agent checkout contains separate, pre-existing uncommitted work and was not edited.
+Date: 2026-11-23. Review-only branch `chore/ta-dp-dual-ingest-pilot-20261123` originally based on `origin/main` at `e92c948c`; merged current
+`origin/main` at `c75a9356` on 23 Nov to include stricter source/receipt gates. The new
+TA migration follows the upstream migration chain at revision **128**. **No live Tender Agent, Qwen, scheduler, production PostgreSQL or deployed SDK has been modified.** The canonical Tender Agent checkout contains separate, pre-existing uncommitted work and was not edited.
 
 ## Existing stable behavior
 
@@ -102,3 +104,20 @@ there is no automatic production daemon until separately approved.
 - Existing DP synchronous ingest SLO <=10s remains active. Issue #133 stays
   OPEN; production release HOLD until numeric criteria, resource budget,
   rollback/backup and explicit owner deployment decision are verified.
+
+## Upstream main integration and strengthened acceptance
+
+The TA candidate has been reconciled with upstream main through revision 127;
+our new metadata-only migration is **128**, not competing with the upstream
+108--127 series. Existing upstream `complete_index_counts` requires exact
+resources/documents/chunks/embeddings counts. The pilot now requires exactly
+one indexed chunk per submitted tender chunk, unique resource and document IDs,
+and exact source/receipt hashes and current revision, not merely nonzero counts.
+The original synchronous path continues to respect upstream's stricter gates.
+Updated disposable two-PostgreSQL E2E passed after the merge resolution.
+
+The old CI quality failure on the pre-merge candidate (5387 tests PASS, one
+failure) occurred in the independent legacy R9 backup/restore matrix with
+`pg_restore failed with exit code 1`; the pilot was not deployed. The exact
+current-head CI must be checked separately. No part of this release may
+silently drop or weaken that backup gate.

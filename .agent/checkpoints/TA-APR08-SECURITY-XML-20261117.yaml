@@ -1,0 +1,19 @@
+task_id: TA-APR08-SECURITY-XML-20261117
+status: completed
+goal: Separate archived bid and contract security fields from pinned EIS XML, preserve amount/part as explicit source values, no inferred amount or legal obligation.
+definition_of_done:
+  - Unique exact scoped XML fields and citations, verified archived revision only, missing/duplicate/malformed fields UNKNOWN.
+  - Natural language question route and existing UI, no latest legal/GO claim.
+  - Tests and real SHA-pinned archive replay, publish draft and verify exact CI.
+completed:
+  - PR614 exact f2de1395 CI 19/19 SUCCESS. PR610-614 not merged.
+  - Implemented exact unique customer XML path, separate application/contract groups, explicit amount/part values and individual citations. No amount derivation, currency inference or legal obligation.
+  - Three original archives and six questions replayed with independent existing ZIP/XML SHA receipts; five source observations and one expected UNKNOWN, originals unchanged.
+  - Exact reviewed head 80d8533ba73ddfe8735cf5d1ff4629045a834b84 CI 19/19 SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
+last_verified_commit: 80d8533ba73ddfe8735cf5d1ff4629045a834b84
+test_results:
+  - 146 focused PASS; Ruff, diff, Node syntax and UI simulation PASS.
+  - APR08_SECURITY_ARCHIVE_REPLAY_PASS 3 archives 6 questions originals unchanged.
+resume_instruction: Use existing pinned archive selector, no new live data, models, working DB or deployment. Do not derive amount from part or infer currency/legal duty.

@@ -1,0 +1,165 @@
+{
+  "account_or_paid_access_used": false,
+  "as_of": "2026-11-22",
+  "evidence_contract": {
+    "classify_independent_observed_vs_hypothetical": true,
+    "include_only_information_public_at_simulation_time": true,
+    "missing_original_demand_mark_UNKNOWN": true,
+    "missing_supplier_stock_mark_UNKNOWN": true,
+    "no_backfilling_future_winning_price_into_past_decision": true,
+    "required_for_each_paper_case": [
+      "platform",
+      "source_notice_id",
+      "source_url",
+      "source_publication_timestamp",
+      "observation_timestamp",
+      "original_document_sha256",
+      "item_name",
+      "unit_of_measure",
+      "requested_quantity",
+      "delivery_location",
+      "deadline",
+      "buyer_legal_identity",
+      "gross_offer_price",
+      "tax_regime_assumptions",
+      "landed_purchase_cost",
+      "delivery_cost",
+      "platform_fee",
+      "tax",
+      "working_capital_peak",
+      "lead_time",
+      "observed_result_if_any"
+    ],
+    "simulate_no_external_effects": true,
+    "time_correct_replay": true
+  },
+  "forbidden": [
+    "real_bid",
+    "real_order",
+    "supplier_message",
+    "account_registration",
+    "catalog_posting",
+    "payment",
+    "credential_use",
+    "etp_private_crawl",
+    "production_write",
+    "claim_simulated_wins_are_real"
+  ],
+  "live_api_discovered": false,
+  "mode": "PAPER_SIMULATION_ONLY",
+  "open_gates": [
+    "official_readonly_source_admission",
+    "original_notice_evidence",
+    "exact_sku_catalog_and_stock",
+    "time_correct_cost_contract",
+    "observed_outcome_ground_truth",
+    "offline_backtest_and_operator_review",
+    "separate_owner_approval_for_any_live_procurement"
+  ],
+  "production_mutations": 0,
+  "real_bid_allowed": false,
+  "real_order_allowed": false,
+  "reusable_modules": [
+    "src/tender_research/historical_prices.py",
+    "src/tender_research/competitive_bid_protocol.py",
+    "src/modules/price_normalization/normalize.py",
+    "src/modules/cost_model/service.py",
+    "src/modules/quote_comparison/comparison_ready_offer_set.py",
+    "src/modules/supplier_search/position_offer_discovery.py",
+    "src/tender_research/ingest_checkpoint.py",
+    "scripts/ops/b2b_prebid_cost_scenarios.py",
+    "scripts/price01/audit_aksay_baseline.py",
+    "scripts/procurement_llm/unified_source_pipeline.py"
+  ],
+  "sample_proof": {
+    "automation_percent_measured": false,
+    "original_cases_pinned_for_this_task": 0,
+    "real_observed_wins": 0,
+    "real_purchases": 0,
+    "simulated_bids_run": 0
+  },
+  "schema_version": 1,
+  "scope": "TA-AI-TRADING-SOURCE-DISCOVERY-001",
+  "sources": [
+    {
+      "api_access": "NOT_VERIFIED",
+      "id": "moscow_supplier_portal",
+      "official_root": "https://zakupki.mos.ru/",
+      "open_now_proven": false,
+      "outcome_provenance": "NOT_VERIFIED",
+      "participation": "supplier_registration_and_e_signature_apply",
+      "public_data_access": "partial_public_information",
+      "public_evidence": "mos_ru_government_and_moszakupki_official_portal",
+      "purchase_methods": [
+        "quotation_session",
+        "direct_purchase"
+      ],
+      "source_id": "mos_supplier_portal",
+      "source_kind": "regional_small_purchase_e_shop"
+    },
+    {
+      "api_access": "NOT_VERIFIED",
+      "id": "eat_berezka",
+      "official_root": "https://agregatoreat.ru/",
+      "open_now_proven": false,
+      "outcome_provenance": "NOTICE_SPECIFIC_ONLY",
+      "participation": "registration_and_security_or_platform_terms_need_review",
+      "public_data_access": "some_individual_purchase_original_pages_public",
+      "public_evidence": "first_party_2026_11_purchase_announcements",
+      "purchase_methods": [
+        "purchase_session",
+        "customer_direct_order"
+      ],
+      "source_id": "eat_purchase_sessions",
+      "source_kind": "unified_low_volume_aggregation"
+    },
+    {
+      "api_access": "NOT_VERIFIED",
+      "id": "rts_market",
+      "official_root": "https://www.rts-tender.ru/",
+      "open_now_proven": false,
+      "outcome_provenance": "NOT_VERIFIED",
+      "participation": "registration_and_purchase_eligibility_unknown",
+      "public_data_access": "NOT_VERIFIED_PER_STORE",
+      "public_evidence": "RTS_tender_and_public_market_descriptions",
+      "purchase_methods": [
+        "low_volume_marketplace"
+      ],
+      "source_id": "rts_market_shop",
+      "source_kind": "separate_low_volume_storefront"
+    },
+    {
+      "api_access": "NOT_VERIFIED",
+      "id": "sber_a_shop",
+      "official_root": "https://utp.sberbank-ast.ru/",
+      "open_now_proven": false,
+      "outcome_provenance": "NOT_VERIFIED",
+      "participation": "registration_tariff_and_commission_specific",
+      "public_data_access": "selected_public_cards_only",
+      "public_evidence": "Sberbank_AST_first_party_public_purchase_cards",
+      "purchase_methods": [
+        "electronic_shop",
+        "223fz_sme_shop_specific"
+      ],
+      "source_id": "sber_ast_e_shop",
+      "source_kind": "corporate_supplier_e_shop_separate_from_federal_etp"
+    },
+    {
+      "api_access": "NOT_VERIFIED",
+      "id": "gpb_clickmarket",
+      "official_root": "https://etpgpb.ru/",
+      "open_now_proven": false,
+      "outcome_provenance": "NOT_VERIFIED",
+      "participation": "registered_supplier_price_listing_may_be_required",
+      "public_data_access": "NOT_VERIFIED_CURRENT",
+      "public_evidence": "GPB_group_low_volume_shop_descriptions_and_first_party_etp",
+      "purchase_methods": [
+        "price_catalog_direct_order",
+        "low_volume_request"
+      ],
+      "source_id": "gpb_market_low_volume",
+      "source_kind": "low_volume_marketplace_separate_from_large_corporate_223fz"
+    }
+  ],
+  "supplier_messages_allowed": false
+}

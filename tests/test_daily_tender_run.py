@@ -413,7 +413,7 @@ def test_daily_tender_run_item_failure_isolated_from_other_procurements(
     monkeypatch.setattr(
         service,
         "search_public_44fz",
-        lambda **kwargs: {"cards": [dict(card) for card in cards]},
+        lambda **kwargs: {"cards": [dict(card) for card in cards], "outcome": "success_with_results"},
     )
     monkeypatch.setattr(
         service.TenderResearchPipeline,
@@ -486,7 +486,7 @@ def test_daily_tender_run_all_failures_complete_with_errors_and_retry(
     monkeypatch.setattr(
         service,
         "search_public_44fz",
-        lambda **kwargs: {"cards": [dict(card)]},
+        lambda **kwargs: {"cards": [dict(card)], "outcome": "success_with_results"},
     )
     monkeypatch.setattr(
         service.TenderResearchPipeline,
@@ -548,6 +548,159 @@ def test_daily_tender_run_all_failures_complete_with_errors_and_retry(
     assert resumed_body["counts"]["failed"] == 0
     assert resumed_body["counts"]["needs_manager"] == 1
     assert resumed_body["items"][0]["status"] == "MANAGER_READY"
+
+
+
+def test_dtr_original_source_timeout_never_persists_signed_url(client, session, monkeypatch):
+    from src.modules.daily_tender_run import service
+
+    registry_number = "0128200000126007558"
+    secret = "sensitive-eis-archive-token-should-never-leak"
+    monkeypatch.setattr(
+        service,
+        "search_public_44fz",
+        lambda **kwargs: {
+            "cards": [_search_card(registry_number)],
+            "outcome": "success_with_results",
+        },
+    )
+
+    def source_failure(self, number):
+        raise TimeoutError(
+            "official source expired: https://int.zakupki.gov.ru/archive.zip?token="
+            + secret
+        )
+
+    monkeypatch.setattr(
+        service.TenderResearchPipeline, "ingest_public_by_registry_number", source_failure
+    )
+    response = client.post(
+        "/api/daily-tender-runs",
+        json={"profile_id": "arvectum-it", "run_now": True},
+    )
+    assert response.status_code == 201
+    body = response.json()
+    assert body["counts"]["failed"] == 1
+    assert body["status"] == "COMPLETED_WITH_ERRORS"
+    assert body["items"][0]["error"] == "source_acquisition_failed:timeout"
+    assert secret not in str(body)
+    stored = session.query(DailyTenderRunItem).filter_by(run_id=body["run_id"]).one()
+    assert stored.error == "source_acquisition_failed:timeout"
+    assert secret not in stored.error
+
+
+def test_dtr_safe_processing_error_never_uses_untrusted_text():
+    from src.modules.daily_tender_run.service import _safe_processing_error
+
+    secret = "?X-Amz-Signature=must-not-be-persisted"
+    assert (
+        _safe_processing_error("INDEX_DATA_PLATFORM", RuntimeError(secret))
+        == "source_or_index_not_ready:failure"
+    )
+    assert (
+        _safe_processing_error("ANALYZE", ValueError(secret))
+        == "analysis_failed:invalid_input"
+    )
+    assert (
+        _safe_processing_error("SUMMARIZE", ConnectionError(secret))
+        == "manager_summary_failed:connection_unavailable"
+    )
+    assert secret not in _safe_processing_error("unknown", OSError(secret))
+
+
+
+def test_dtr_post_decision_failure_never_persists_signed_url(session, monkeypatch):
+    from src.modules.daily_tender_run import post_go
+
+    run, item = _create_post_go_run(
+        session, deal_id="test-post-go-secret-redaction", registry_number="0128200000126007559"
+    )
+    secret = "https://int.zakupki.gov.ru/archive.zip?token=do-not-persist"
+
+    def fail_post_decision(*args, **kwargs):
+        raise RuntimeError(secret)
+
+    monkeypatch.setattr(post_go, "_advance_item", fail_post_decision)
+    post_go.advance_post_decision_items(session, run)
+    session.expire_all()
+    saved = session.get(DailyTenderRunItem, item.id)
+    assert saved is not None
+    assert saved.status == "POST_DECISION_FAILED"
+    assert saved.error == "post_decision_failed:failure"
+    assert saved.post_decision_json["last_error"]["message"] == "post_decision_failed:failure"
+    assert saved.post_decision_json["last_error"]["type"] == "redacted"
+    assert secret not in str(saved.post_decision_json)
+
+
+
+def test_dtr_api_redacts_historical_raw_exception_without_mutating_db(client, session):
+    run, item = _create_post_go_run(
+        session, deal_id="test-legacy-redaction", registry_number="0128200000126007558"
+    )
+    secret = "https://int.zakupki.gov.ru/archive.zip?token=legacy-secret"
+    item.status = "POST_DECISION_FAILED"
+    item.error = "ReadTimeout: " + secret
+    item.post_decision_json = {
+        "readiness": {"status": "BLOCKED"},
+        "last_error": {
+            "type": "ReadTimeout",
+            "message": secret,
+            "debug": {"signed_url": secret},
+            "at": "2026-11-20T10:00:00+03:00",
+        },
+    }
+    run.error_summary = "original query: " + secret
+    session.commit()
+
+    response = client.get(f"/api/daily-tender-runs/{run.run_id}")
+    assert response.status_code == 200
+    result = response.json()
+    assert secret not in str(result)
+    assert result["error_summary"] == "discovery_incomplete:details_redacted"
+    public_item = result["items"][0]
+    assert public_item["error"] == "post_decision_failed:legacy_error_redacted"
+    assert public_item["post_decision"]["readiness"] == {"status": "BLOCKED"}
+    assert public_item["post_decision"]["last_error"] == {
+        "type": "redacted",
+        "code": "post_decision_failed:legacy_error_redacted",
+        "message": "post_decision_failed:legacy_error_redacted",
+    }
+
+    # No database migration/repair: legacy original remains intact for audit.
+    session.expire_all()
+    stored_item = session.get(DailyTenderRunItem, item.id)
+    assert stored_item.error == "ReadTimeout: " + secret
+    assert stored_item.post_decision_json["last_error"]["debug"]["signed_url"] == secret
+    stored_run = session.get(DailyTenderRun, run.id)
+    assert stored_run.error_summary == "original query: " + secret
+
+
+def test_dtr_api_preserves_current_safe_codes_and_omits_absent_errors(
+    client, session
+):
+    run, item = _create_post_go_run(
+        session, deal_id="test-safe-code", registry_number="0128200000126007559"
+    )
+    item.error = "source_acquisition_failed:timeout"
+    item.post_decision_json = {
+        "last_error": {
+            "type": "redacted",
+            "code": "post_decision_failed:connection_unavailable",
+            "message": "post_decision_failed:connection_unavailable",
+        },
+        "review": {"status": "WAITING_HUMAN"},
+    }
+    session.commit()
+    response = client.get(f"/api/daily-tender-runs/{run.run_id}")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["error_summary"] is None
+    public_item = data["items"][0]
+    assert public_item["error"] == "source_acquisition_failed:timeout"
+    assert public_item["post_decision"]["review"] == {"status": "WAITING_HUMAN"}
+    assert public_item["post_decision"]["last_error"]["code"] == (
+        "post_decision_failed:connection_unavailable"
+    )
 
 
 def _create_post_go_run(
@@ -903,3 +1056,119 @@ def test_dtr3_post_go_tracks_only_verified_submission_and_grounded_outcome(
         session.query(PostSubmissionTrackerSet).filter_by(deal_id=deal_id).count()
         == trackers_before
     )
+
+
+def test_dtr_source_error_is_not_successful_empty_and_retries_same_window(client, monkeypatch):
+    from src.modules.daily_tender_run import service
+
+    search = Mock(return_value={"cards": [], "outcome": "source_unavailable"})
+    monkeypatch.setattr(service, "search_public_44fz", search)
+    created = client.post("/api/daily-tender-runs", json={"run_now": True}).json()
+    assert created["status"] == "COMPLETED_WITH_ERRORS"
+    assert created["counts"]["discovery_incomplete"] == 1
+    assert created["digest"]["discovery_incomplete"] is True
+    assert created["error_summary"]
+    app.dependency_overrides[require_mobile_bearer] = lambda: "device-dtr-discovery"
+    digest = client.get("/mobile/v1/digest/latest").json()
+    assert digest["run_status"] == "COMPLETED_WITH_ERRORS"
+    assert digest["discovery_incomplete"] is True
+    window = (search.call_args.kwargs["date_from"], search.call_args.kwargs["date_to"])
+    search.return_value = {"cards": [], "outcome": "success_empty"}
+    resumed = client.post(f"/api/daily-tender-runs/{created['run_id']}/resume?retry_failed=true").json()
+    assert resumed["status"] == "COMPLETED"
+    assert resumed["counts"]["discovery_incomplete"] == 0
+    assert resumed["error_summary"] is None
+    assert (search.call_args.kwargs["date_from"], search.call_args.kwargs["date_to"]) == window
+
+
+def test_dtr_recovery_includes_pending_and_interrupted_runs(session, monkeypatch):
+    from src.modules.daily_tender_run import service
+    from src.modules.daily_tender_run.schemas import StartDailyTenderRunRequest
+
+    search = Mock(return_value={"cards": [], "outcome": "success_empty"})
+    monkeypatch.setattr(service, "search_public_44fz", search)
+    pending = service.create_daily_tender_run(session, StartDailyTenderRunRequest(run_now=False))
+    interrupted = service.create_daily_tender_run(session, StartDailyTenderRunRequest(run_now=False))
+    interrupted.status = "RUNNING"
+    session.commit()
+    resumed = service.resume_pending_daily_tender_runs(session, profile_id="arvectum-it")
+    assert {r.run_id for r in resumed} == {pending.run_id, interrupted.run_id}
+    assert all(r.status == "COMPLETED" for r in resumed)
+    assert search.call_count == 2 * len(load_daily_tender_profile("arvectum-it").queries)
+
+
+def test_dtr_same_run_execution_guard_rejects_overlap_and_releases(session, monkeypatch):
+    import pytest
+
+    from src.modules.daily_tender_run import service
+    from src.modules.daily_tender_run.schemas import StartDailyTenderRunRequest
+    from src.shared.errors import ConflictError
+
+    monkeypatch.setattr(service, "search_public_44fz", lambda **kw: {"cards": [], "outcome": "success_empty"})
+    run = service.create_daily_tender_run(session, StartDailyTenderRunRequest(run_now=False))
+    with service._run_execution_guard(session, run.run_id), pytest.raises(ConflictError):
+        service.execute_daily_tender_run(session, run.run_id)
+    assert service.execute_daily_tender_run(session, run.run_id).status == "COMPLETED"
+
+
+def test_dtr_profile_revision_change_invalidates_unchanged_card_reuse(client, monkeypatch):
+    from src.modules.daily_tender_run import service
+
+    analyze = _install_happy_path(monkeypatch)
+    first = client.post("/api/daily-tender-runs", json={"run_now": True}).json()
+    assert first["counts"]["deep_analyzed"] == 1
+    profile = load_daily_tender_profile("arvectum-it").model_copy(update={"version": "test-new-version"})
+    monkeypatch.setattr(service, "load_daily_tender_profile", lambda _: profile)
+    second = client.post("/api/daily-tender-runs", json={"run_now": True}).json()
+    assert second["counts"]["duplicates"] == 0
+    assert second["counts"]["deep_analyzed"] == 1
+    assert analyze.call_count == 2
+
+
+def test_dtr_invalid_profile_and_runtime_packaging(client):
+    from pathlib import Path
+
+    response = client.post("/api/daily-tender-runs", json={"profile_id": "../arvectum-it"})
+    assert response.status_code == 422
+    root = Path(__file__).resolve().parents[1]
+    for dockerfile in ("Dockerfile", "deploy/local/Dockerfile", "deploy/pilot/Dockerfile"):
+        assert "COPY " in (root / dockerfile).read_text()
+        assert "config/daily_tender_profiles" in (root / dockerfile).read_text()
+
+
+def test_dtr_partial_discovery_failure_keeps_ready_items_and_retry_does_not_reanalyze(client, monkeypatch):
+    from src.modules.daily_tender_run import service
+
+    analyze = _install_happy_path(monkeypatch)
+    profile = load_daily_tender_profile("arvectum-it").model_copy(update={"queries": ["good", "failed"]})
+    monkeypatch.setattr(service, "load_daily_tender_profile", lambda _: profile)
+    state = {"failed": True}
+
+    def search(**kwargs):
+        if kwargs["query"] == "failed" and state["failed"]:
+            return {"cards": [], "outcome": "source_error"}
+        return {"cards": [_search_card()], "outcome": "success_with_results"}
+
+    monkeypatch.setattr(service, "search_public_44fz", search)
+    created = client.post("/api/daily-tender-runs", json={"run_now": True}).json()
+    assert created["status"] == "WAITING_HUMAN"
+    assert created["counts"]["needs_manager"] == 1
+    assert created["counts"]["discovery_incomplete"] == 1
+    state["failed"] = False
+    resumed = client.post(f"/api/daily-tender-runs/{created['run_id']}/resume?retry_failed=true").json()
+    assert resumed["counts"]["discovery_incomplete"] == 0
+    assert resumed["items"][0]["query_hits"] == ["good", "failed"]
+    assert analyze.call_count == 1
+
+
+def test_mobile_digest_distinguishes_pending_run_from_no_run(client):
+    app.dependency_overrides[require_mobile_bearer] = lambda: "device-dtr-pending"
+    empty = client.get("/mobile/v1/digest/latest").json()
+    assert empty["run_id"] is None
+    assert empty["discovery_incomplete"] is None
+    pending = client.post("/api/daily-tender-runs", json={"run_now": False}).json()
+    digest = client.get("/mobile/v1/digest/latest").json()
+    assert digest["run_id"] == pending["run_id"]
+    assert digest["run_status"] == "PENDING"
+    assert digest["current_stage"] == "DISCOVER"
+    assert digest["discovery_incomplete"] is None

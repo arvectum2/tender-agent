@@ -1,0 +1,53 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-DP-INGEST-SLO-P0-20261122
+status: blocked
+goal: >-
+  Resume Tender Agent Core runtime readiness only after independently fixing
+  the Data Platform ingest SLO breach; conduct actual-model testing safely.
+definition_of_done:
+  - 'Evidence-bound reproducible stage and real model/HTTP ingest latency attribution, without leakage of source documents, credentials or private rows.'
+  - 'When host is admitted, validate an isolated synthetic Qwen3-Embedding-4B control and explicitly distinguish its CPU backend from production GPU.'
+  - 'Fix a measured root cause with source and tenant integrity preserved, regression tests and exact protected CI.'
+  - 'Independently demonstrate representative sustained live Data Platform ingest P95 <=10000ms, error <=1%, minimum qualified sample and observed duration.'
+  - 'Retain separate independent source-grounded Gemma acceptance and Owner release/deployment/rollback authorization before production switch.'
+completed:
+  - '2026-11-22: Data Platform issue arvectum2/data-platform#133: real authenticated GET-only ingest P95 20152ms/256 latest samples, status RED, 8032 cumulative requests and 0 reported errors. No production ingestion was performed for this check.'
+  - 'Earlier 2 isolated PostgreSQL17/hash-embedding synthetic runs complete 80/80 each, zero errors, corrected baseline P95 33ms on a disposable local container; isolated results not comparable to deployed Qwen3 model.'
+  - 'Running Data Platform process read-only environment whitelist: llama_cpp Qwen3-Embedding-4B, local endpoint8090/v1, batch8; live llama-server parallel1.'
+  - 'Mac mini resource governor pass/reduced, free memory about34%, pressure2 and used swap >6GiB; MacBook Air 16GiB RAM, used swap >6GiB, model absent. Starting second Qwen not safe.'
+  - 'Data Platform draft PR134 adds fail-closed resource admission (localhost18190, CPU-only, max420s), bounded Qwen synthetic profile harness, runtime safety monitor, clean shutdown, mocked response schema and negative guards.'
+  - '2026-11-22 Mac mini 58 focused pytest PASS and Ruff PASS on Data Platform source head a92780263b13e36f864968d43b5be378f690bc48. Real --execute denied with resource_admission_blocked exit2, zero launch and no DB writes; live service health 8094/8090/8001 HTTP200.'
+  - '2026-11-22: independent mock QueuePool(1) proved Data Platform _persist_and_index held DB connection during model inference; scoped draft refactor shortens read-only lookup and makes inference outside any transaction, then rechecks contract/embeddings and atomically persists results.'
+  - 'Upstream source commit fdea7e3246bc25365f4f1336b755afca9fbf5741: 72 focused local pytest PASS, Ruff/compile PASS, protected GitHub Python3.11/3.12/3.13, PostgreSQL integration and JS SDK CI 5/5 SUCCESS, mirror SUCCESS. No live deployment or P95 improvement demonstrated.'
+current_stage: confirmed_connection_pool_occupancy_risk_mitigated_in_draft_only__real_p95_and_resource_gates_blocked
+remaining:
+  - 'Verify exact protected CI on current Data Platform draft PR134 head and this checkpoint-only Tender Agent PR.'
+  - 'Do not load second 4GiB Qwen or transfer model to MacBook while resource governor is reduced or swap/free-memory gate fails; no restarts of production.'
+  - 'Only after a fresh all-green admission, consider bounded isolated Qwen synthetic stage; independently distinguish client wall, server wait and inference; CPU-only stage is not production SLO evidence.'
+  - 'Correlate representative actual read-only DP SLO evidence with measured stage bottleneck, introduce bounded code fix only when causal issue is independently demonstrated.'
+  - 'Review source-safe short-session patch and independent Postgres CI proof; do not deploy solely because connection occupancy risk was reproduced in synthetic tests.'
+  - 'Confirm sustained production ingest SLO and independent Gemma/Owner release gates; remain blocked on commercial pilot/deploy otherwise.'
+last_verified_commit: 'Data Platform source fdea7e3246bc25365f4f1336b755afca9fbf5741 (72 focused local PASS, Ruff, protected PostgreSQL CI 5/5 SUCCESS, mirror SUCCESS). Current draft PR134 latest docs/checkpoint 9ac17527 final CI pending. Tender Agent canonical checkpoint PR merge pending.'
+test_results: 'Draft Data Platform transaction refactor 72 local pytest PASS + Ruff/compile PASS; protected CI Python3.11/3.12/3.13, PG and JS 5/5 SUCCESS on fdea7e32, mirror SUCCESS. Independent SQLite QueuePool confirms idle SQL connection is released during embedding; failure/concurrent race checks PASS. No production model launch or changes; real live ingest P95 20152ms, RED, does not meet SLO.'
+resume_instruction: >-
+  Read this scoped checkpoint and canonical .agent/current-task.yaml, verify actual
+  main. Follow Data Platform issue #133 and draft PR #134 on
+  diagnostics/ingest-slo-staging-analysis-20261122. Never repeat the two verified
+  hashing controls. Check protected CI and read-only resource governor first. If
+  reduced, memory below 50 percent, nonzero pressure or swap above 2GiB: remain
+  blocked and continue independent approved P0 work; DO NOT start a second Qwen,
+  restart any running model/service or transfer 4GiB GGUF to MacBook.
+  Only after capacity admission run bounded separate CPU-only Qwen stage with
+  generated synthetic bytes and independent cleanup; it cannot certify production
+  GPU timings or queue wait. No production reindex, DB mutation, VPS release,
+  real bid/ETP, money, signing or additional scheduled watchdog. Owner remains
+  release authority; Core runtime release stays blocked until measured proof.
+upstream_repo: arvectum2/data-platform
+upstream_issue: 133
+upstream_pr: 134
+upstream_branch: diagnostics/ingest-slo-staging-analysis-20261122
+production_deployed: false
+real_model_stage_ran: false
+resource_admission: blocked
+owner_release_approved: false

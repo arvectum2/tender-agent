@@ -77,6 +77,16 @@ def classify_public_search_response(html_content: str) -> str:
     ):
         return PublicSearchStatus.JS_HEAVY
     classified = _classify_search_html(html_content)
+    # The current EIS layout reports a zero count, an empty registry block,
+    # and a noRecords marker. Do not confuse this with an unknown layout,
+    # a blocked page, or a blank transport response.
+    if classified != "captcha_or_blocked" and (
+        extract_public_search_total_count(html_content) == 0
+        and re.search(r'<div\s+class="search-results__total">\s*0\s+записей\s*</div>', html_content, re.IGNORECASE)
+        and re.search(r'<div\s+class="search-registry-entrys-block">\s*</div>', html_content, re.IGNORECASE)
+        and re.search(r'<p\s+class="noRecords">\s*Поиск не дал результатов\s*</p>', html_content, re.IGNORECASE)
+    ):
+        return PublicSearchStatus.EMPTY_RESULTS
     if classified == "empty_results":
         return PublicSearchStatus.EMPTY_RESULTS
     if classified == "captcha_or_blocked":
@@ -104,6 +114,10 @@ def fetch_public_44fz_search_page(url: str) -> dict:
         return {
             "status": classification,
             "html": html_content if classification == PublicSearchStatus.PARSED else None,
+            # A blank HTTP body can be labelled EMPTY_RESULTS by the legacy parser.
+            # Only an actual zero count on a nonblank result page is coverage evidence.
+            "explicit_zero_count": bool(html_content and extract_public_search_total_count(html_content) == 0
+                                        and classification in {PublicSearchStatus.PARSED, PublicSearchStatus.EMPTY_RESULTS}),
             "error": None,
         }
     return {

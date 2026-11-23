@@ -1,0 +1,143 @@
+{
+  "case": "32616445795",
+  "identical_dossier": true,
+  "members": 19,
+  "domains": 9,
+  "measurements": [
+    {
+      "mode": "without_reuse",
+      "seconds": 22.164,
+      "full_projections": 21
+    },
+    {
+      "mode": "with_reuse",
+      "seconds": 6.5,
+      "full_projections": 1
+    }
+  ],
+  "production_slo": false,
+  "schema": "arvectum.tender.apr067.projection-reuse/1",
+  "implementation_commit": "9e07a92f5dab9e4281e4ed3d03c2c78981c4e73f",
+  "observed_on": "2026-11-18",
+  "frozen_baseline_sha256": "850f7b0f9a77661d8fa9800c2fc8f568d239dcc807dfbb9efaf69831125a1e37",
+  "replay_log_sha256": "6f6a2934bf350bf7346a439adf9dd0b07a3e8344922f156d9f231054562c5711",
+  "coverage_replay": {
+    "scope": "ARCHIVED_LEXICAL_ORIGINAL_QUOTE_COVERAGE_ONLY",
+    "complete_cases": 5,
+    "incomplete_cases_refused": 1,
+    "probe_count": 45,
+    "probes_with_citations": 29,
+    "domain_cases_with_citations": {
+      "technical_scope": 3,
+      "qualification": 3,
+      "application": 3,
+      "evaluation": 1,
+      "contract": 4,
+      "participation": 4,
+      "schedule": 4,
+      "payment": 3,
+      "security": 4
+    },
+    "citation_occurrences": 42,
+    "cases": [
+      {
+        "case": "32616444788",
+        "counts": {
+          "technical_scope": 1,
+          "qualification": 1,
+          "application": 2,
+          "evaluation": 0,
+          "contract": 1,
+          "participation": 1,
+          "schedule": 2,
+          "payment": 2,
+          "security": 2
+        },
+        "elapsed_seconds": 3.967,
+        "originals": 4,
+        "members": 0,
+        "searchable_candidates": 4
+      },
+      {
+        "case": "32616445632",
+        "counts": {
+          "technical_scope": 2,
+          "qualification": 1,
+          "application": 1,
+          "evaluation": 0,
+          "contract": 1,
+          "participation": 2,
+          "schedule": 1,
+          "payment": 2,
+          "security": 2
+        },
+        "elapsed_seconds": 1.463,
+        "originals": 2,
+        "members": 0,
+        "searchable_candidates": 2
+      },
+      {
+        "case": "32616445795",
+        "counts": {
+          "technical_scope": 2,
+          "qualification": 2,
+          "application": 1,
+          "evaluation": 1,
+          "contract": 2,
+          "participation": 2,
+          "schedule": 2,
+          "payment": 1,
+          "security": 1
+        },
+        "elapsed_seconds": 6.715,
+        "originals": 1,
+        "members": 19,
+        "searchable_candidates": 19
+      },
+      {
+        "case": "32616445866",
+        "counts": {
+          "technical_scope": 0,
+          "qualification": 0,
+          "application": 0,
+          "evaluation": 0,
+          "contract": 1,
+          "participation": 1,
+          "schedule": 0,
+          "payment": 0,
+          "security": 0
+        },
+        "elapsed_seconds": 0.649,
+        "originals": 1,
+        "members": 0,
+        "searchable_candidates": 1
+      },
+      {
+        "case": "32616447910",
+        "counts": {
+          "technical_scope": 0,
+          "qualification": 0,
+          "application": 0,
+          "evaluation": 0,
+          "contract": 0,
+          "participation": 0,
+          "schedule": 1,
+          "payment": 0,
+          "security": 1
+        },
+        "elapsed_seconds": 0.243,
+        "originals": 1,
+        "members": 0,
+        "searchable_candidates": 1
+      }
+    ],
+    "semantic_precision": null,
+    "semantic_recall": null,
+    "current_source_accuracy": null,
+    "human_gold": null,
+    "commercial_acceptance": false,
+    "rolling_slo": false
+  },
+  "source_originals_unchanged": true,
+  "isolated_dp_removed": true
+}

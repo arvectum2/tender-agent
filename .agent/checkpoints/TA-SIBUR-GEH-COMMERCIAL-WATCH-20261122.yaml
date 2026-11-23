@@ -1,0 +1,32 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-SIBUR-GEH-COMMERCIAL-WATCH-20261122
+status: completed
+goal: 'Convert actual SIBUR and GEH existing first-party public evidence into a source-bound near-term commercial watch without misrepresenting outdated listings as live bidding.'
+definition_of_done:
+  - 'Read existing verified GEH 22-Nov first-party capture and SHA-bound 40 actually newly inserted IDs; do not change any DB.'
+  - 'Read curated SIBUR Nov17 observation separately and classify stale / deadline elapsed, never assert current SRM eligibility.'
+  - 'Present priority, buyer, exact source URL, deadline, buyer-vs-organizer, freshness and next review action; distinguish 223FZ ETP tender from price inquiry.'
+  - 'Fail closed for absent/tampered captures, mismatched replay counts, non-first-party URLs, bad dates, empty or ambiguous provenance.'
+  - 'Run focused tests/Ruff/check, exact protected CI and create reviewed PR; no ETP/production writes, bids or app restarts.'
+completed:
+  - '22-Nov read-only GEH ingest replay: guarded-ingest at 10:28UTC verified 40 new of 257 eligible, DB 28883->28923, replay_inserted=0, old_rows_unchanged=true. Second 10:34UTC cycle 0 additional, stage=no_new; this is idempotence, not an ingest outage.'
+  - '22-Nov read-only source captures: 18/18 GEH pages, 342 rows, 257 accepted, 85 review stage/date mismatches; 25 loose lexical matches require business-quality filtering.'
+  - '22-Nov SIBUR technical evidence 12179 linked originals, current-member indexing running; curated 26-row commercial watch only as-of 17 Nov and must not imply current open status.'
+  - '22-Nov source-safe standalone CLI scripts/research/commercial_watch.py: verified GEH capture 18/18 pages and SHA256, new-only immutable proof and no-new idempotent path; SIBUR dated public watch treated as stale; no external network, DB or production writes.'
+  - 'Actual first GEH guarded snapshot source: 342 rows, 257 accepted, 85 status/date review, 40 new DB source IDs with unchanged old rows; 34 relevant unexpired (3 newly inserted). Second snapshot no-new: 34 relevant, zero added, no false failure.'
+  - 'Actual SIBUR source reviewed: saved as-of 17-Nov-2026, 26 previously curated, 19 deadlines elapsed, 6 relevant with later dates but current portal stage unverified. Never count as live GO.'
+  - 'Focused synthetic 16 pytest PASS, Ruff PASS; initial as-of 22-Nov business digest generated from exact preserved originals at docs/market-intelligence/SIBUR_GEH_COMMERCIAL_WATCH_2026-11-22.md; production unchanged.'
+  - '22-Nov public SIBUR fresh current snapshot captured without credentials/production: 28/28 original page SHA256 verified, 328 unique identities, 0 duplicates, 327 public accepting notices, one publicly cancelled excluded. Transport interruption after 26 pages was recovered by verifying every preserved SHA and capturing only pages 27-28; no claim of atomic closure. Read-only source capture only.'
+  - 'Source-safe current SIBUR comparator finds 54 matching future-deadline publications, four source date-only deadlines without invented hour, and five independently observed changed dates against 17-Nov curated watch, including 2145723/1 updated 24-Nov to 30-Nov 11:00 MSK; portal participation unverified.'
+  - 'GEH 18/18 page originals + 40 guarded new inserts and zero-new replay, 34 relevant future-deadline procedures, three from actual new rows. Buyer vs organizer separated; published source prices and Moscow deadlines shown only where present.'
+  - 'Current source commit 9800a93caa0da71b38579d35e8946e1128798375 locally verified: 23 focused pytest PASS, Ruff PASS, compile PASS, actual 28-page SIBUR and both 18-page GEH captured source audits PASS. Updated source-grounded commercial digest and operator runbook in docs/market-intelligence. No production changes.'
+  - 'Generated full 22-Nov business-facing output from exact 28 SIBUR and 18 GEH original source page checks with prices, Moscow deadlines, buyer/organizer boundaries, top14 per source, five confirmed public deadline changes. Source-only implementation and 23 targeted tests plus Ruff/compile PASS. Automated local daily scheduled SIBUR capture explicitly out of scope and tracked in follow-up issue #719.'
+  - 'Safety review identified missing freshness fail-closed guard: both GEH complete public capture and current SIBUR public source now reject any source observation older than 36 hours or future-dated more than five minutes; 3 additional positive/negative synthetic regressions. Local total 26 focused pytest PASS, Ruff/compile PASS at 276c7cfb603dace11f085bd8daa2c4296e1132a3; real 18/28 source snapshots replay 34 GEH and 54 SIBUR candidates and five changes unchanged.'
+current_stage: implemented_and_locally_verified__protected_merge_gate_required
+remaining: []
+last_verified_commit: '276c7cfb603dace11f085bd8daa2c4296e1132a3 (26 local tests PASS, Ruff+compile PASS and full current first-party evidence reproduction); exact full protected CI on final docs/checkpoint head required before merge'
+test_results: '26 targeted synthetic pytest PASS (including missing/tampered source, 36h source freshness/future date, 0-new GEH, cancellation, price-inquiry, date-only), Ruff and compile PASS; actual 28/28 SIBUR and 18/18 GEH source snapshots verify, 54/34 source-relevant future candidates, 5 source deadline changes. Protected GH exact-head 9/9 and GitVerse Mirror required before merge; no production DB/model/bids.'
+resume_instruction: 'Feature PR #718 source and 22-Nov business report are complete and locally verified. Before exposing as main, require protected final exact-head CI ALL 9/9 success, GitVerse Mirror success, review only six paths, then squash-merge with expected SHA. If CI fails, revert completed staged checkpoint and repair; do not merge. Canonical main checkpoint must remain blocked/in_progress until protected merge. Daily scheduled SIBUR capture/GEH digest is a separate owner-gated production task #719, not implemented in this source-only PR. Do not install LaunchAgent, modify database, start second Qwen, send ETP bid, use credentials or reindex production.'
+production_modified: false
+external_submissions: false

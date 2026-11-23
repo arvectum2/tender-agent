@@ -1,0 +1,26 @@
+task_id: TA-SIBUR-PPT-SOURCE-FORENSIC-20261122
+status: completed
+goal: 'Independently inspect exactly one existing saved SIBUR .ppt URL versus .pptx binary provenance discrepancy under issue #686, without any new source requests, downloads, rewrites or unsafe promotion to a verified original PPT.'
+definition_of_done:
+  - 'Find the exact previously SHA-verified source URL/reference/receipt for the single discrepancy, without exposing raw original document bytes, private paths or personal data in the repository.'
+  - 'Inspect only saved original bytes and metadata to classify true binary format, verify URL/receipt/binary SHA and determine whether an actual signed original .ppt is proven.'
+  - 'Keep ambiguity flagged as NEEDS_REVIEW unless independent first-party source record proves file-format authenticity; never rename a PPTX blob to PPT.'
+  - 'Produce sanitized historical evidence, narrow regression guards and a separately admitted source-acquisition proposal if needed.'
+  - 'Run focused tests, exact-head CI and protected merge after earlier tasks. No source/DB/DP/ETP or production mutations.'
+completed:
+  - 'Replayed all 27 saved original first-party registry pages and verified 516 source document URLs; exactly one legacy .ppt URL saved with .pptx suffix and two authenticated source row references.'
+  - 'Verified exact archived receipt SHA and binary length 695809, source MIME application/vnd.ms-powerpoint, actual binary ZIP/OOXML, slideshow main ContentType and eight slide XML members; not legacy OLE2 PPT.'
+  - 'Retained original source .ppt authenticity as NOT_PROVEN and cause UNKNOWN. No source requests or source/blob renaming.'
+  - 'Saved immutable private 0600 forensic proof SHA256 cf3f16c5cde02cde9589cd3c4b41ca02c5cec39140743005c9b2a39617c1dc3c, without original source content or raw URL in public report.'
+  - 'Added source-only one-file fail-closed verifier, 8 synthetic regressions and dated sanitized forensic report.'
+current_stage: protected_pr_705_merged_source_only_scope_complete
+remaining: []
+last_verified_commit: 664e3283aed9dabafdda9de4d0f8405f085ffa6e
+test_results: 'Protected PR #705 exact-head CI 19/19 SUCCESS and main merged 664e3283aed9dabafdda9de4d0f8405f085ffa6e. Bounded engineering task completed; remaining external acceptance tracked separately; no production deployed.'
+resume_instruction: 'Completed PR #705 on main with CI19/19. Do not rerun this bounded code/research task. Track separate #686 current official PPT authenticity, #406 owner/upstream approval, #679 originals, #685 seven-day PITR. Do not deploy or bid.'
+linked_issue: 686
+external_network_queries: false
+production_mutations: false
+protected_merge_commit: 664e3283aed9dabafdda9de4d0f8405f085ffa6e
+protected_exact_ci: 19_of_19_success
+production_deployed: false

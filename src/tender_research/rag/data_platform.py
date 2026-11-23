@@ -14,6 +14,7 @@ from src.tender_research.rag.presets import (
     tender_recovery_processing_collection_id,
 )
 from src.tender_research.rag.search_types import RagSearchHit
+from src.tender_research.rag.signed_zip import DOCX_MIME, unwrap_signed_docx
 from src.tender_research.repository import TenderRepository
 
 _CHUNK_URI_PREFIX = "tender-chunk://"
@@ -129,6 +130,23 @@ def _processing_collection_id(tender_id: str) -> str:
 
 def _document_uri(document_id: str) -> str:
     return f"tender-document://{document_id}"
+
+
+def _processing_source(document, source_path: Path, *, recovery=False):
+    filename = document.file_name or source_path.name
+    uri = _document_uri(str(document.id))
+    if filename.lower().endswith(".docx.zip"):
+        content, evidence = unwrap_signed_docx(source_path, str(document.sha256 or ""))
+        return {"content": content, "filename": filename[:-4], "content_type": DOCX_MIME,
+                "canonical_uri": uri + "/member/" + evidence["member_sha256"]}, evidence
+    return {"content": source_path.read_bytes(), "filename": filename,
+            "content_type": "application/octet-stream" if recovery else (document.content_type or "application/octet-stream"),
+            "canonical_uri": uri}, None
+
+
+def _preserve_zip_evidence(document, evidence):
+    if evidence is not None:
+        document.raw_meta = {**(document.raw_meta or {}), "signed_zip": evidence}
 
 
 def _tender_collection_revision(
@@ -268,9 +286,17 @@ class DataPlatformDocumentProjector:
         tender,
         *,
         rebuild: bool = False,
+        document_ids: set[str] | None = None,
     ) -> DataPlatformProjectionSummary:
+        documents = list(tender.documents)
+        if document_ids is not None:
+            documents = [doc for doc in documents if doc.id in document_ids]
+            if len(documents) != len(document_ids) or not documents:
+                raise ValueError("projection document scope mismatch")
+            if any(is_ri223_rar_document(doc) for doc in documents):
+                raise ValueError("RAR inventory requires full projection scope")
         seen = processed = skipped = failed = extracted = projected = pruned = 0
-        for document in list(tender.documents):
+        for document in documents:
             # Source-bound RAR is an opaque container; only verified inner documents
             # are eligible for Data Platform text/OCR/chunk extraction.
             if is_ri223_rar_document(document):
@@ -304,13 +330,11 @@ class DataPlatformDocumentProjector:
                 continue
 
             try:
+                source, zip_evidence = _processing_source(document, local_path)
                 payload = self._client.process_document(
                     collection_id=_processing_collection_id(str(tender.id)),
-                    canonical_uri=_document_uri(str(document.id)),
                     title=document.file_name or str(document.id),
-                    content=local_path.read_bytes(),
-                    filename=document.file_name or local_path.name,
-                    content_type=document.content_type or "application/octet-stream",
+                    **source,
                     chunk_size_chars=self._config.rag_chunk_size_chars,
                     overlap_chars=self._config.rag_chunk_overlap_chars,
                     min_chunk_chars=self._config.rag_min_chunk_chars,
@@ -334,6 +358,7 @@ class DataPlatformDocumentProjector:
                 continue
             processed += 1
             _project_processing_evidence(document, payload)
+            _preserve_zip_evidence(document, zip_evidence)
             status = str(payload.get("extraction_status") or "failed")
             text = str(payload.get("text") or "")
             document.text_extraction_status = status
@@ -390,7 +415,7 @@ class DataPlatformDocumentProjector:
                 document.id,
                 keep_chunk_ids=keep_ids,
             )
-        for parent in list(tender.documents):
+        for parent in documents:
             if not is_ri223_rar_document(parent):
                 continue
             meta = parent.raw_meta if isinstance(parent.raw_meta, dict) else {}
@@ -453,20 +478,19 @@ def extract_document_with_data_platform(
             f"recovery document {document.id} source file is unavailable"
         )
     factory = client_factory or build_data_platform_client
+    source, zip_evidence = _processing_source(document, source_path, recovery=True)
     with factory(config) as client:
         payload = client.process_document(
             collection_id=tender_recovery_processing_collection_id(),
-            canonical_uri=_document_uri(str(document.id)),
             title=document.file_name or str(document.id),
-            content=source_path.read_bytes(),
-            filename=document.file_name or source_path.name,
-            content_type="application/octet-stream",
+            **source,
             chunk_size_chars=config.rag_chunk_size_chars,
             overlap_chars=config.rag_chunk_overlap_chars,
             min_chunk_chars=config.rag_min_chunk_chars,
             max_chars=config.document_extract_max_chars,
         )
     _project_processing_evidence(document, payload)
+    _preserve_zip_evidence(document, zip_evidence)
     status = str(payload.get("extraction_status") or "failed")
     text = str(payload.get("text") or "")
     document.text_extraction_status = status
@@ -519,19 +543,18 @@ class DataPlatformRecoveryChunkIndexer:
                         f"recovery document {document.id} is missing source or extracted text"
                     )
                 expected_text = text_path.read_text(encoding="utf-8")
+                source, zip_evidence = _processing_source(document, source_path)
                 payload = client.process_document(
                     collection_id=_processing_collection_id(str(tender_id)),
-                    canonical_uri=_document_uri(str(document.id)),
                     title=document.file_name or str(document.id),
-                    content=source_path.read_bytes(),
-                    filename=document.file_name or source_path.name,
-                    content_type=document.content_type or "application/octet-stream",
+                    **source,
                     chunk_size_chars=self._config.rag_chunk_size_chars,
                     overlap_chars=self._config.rag_chunk_overlap_chars,
                     min_chunk_chars=self._config.rag_min_chunk_chars,
                     max_chars=self._config.document_extract_max_chars,
                 )
                 _project_processing_evidence(document, payload)
+                _preserve_zip_evidence(document, zip_evidence)
                 if (
                     str(payload.get("extraction_status") or "") != "extracted"
                     or str(payload.get("text") or "") != expected_text
@@ -616,6 +639,24 @@ def build_recovery_chunk_indexer(
     return DataPlatformRecoveryChunkIndexer(repo, config)
 
 
+def complete_index_counts(stats: dict, expected: int) -> bool:
+    """Each tender resource is one pre-chunked document and one embedding."""
+    return expected > 0 and all(type(stats.get(k)) is int and stats[k] == expected
+                                for k in ("resources", "documents", "chunks", "embeddings"))
+
+
+def validate_chunk_ingest_receipt(result: dict, collection_id: str, chunk_id: str) -> tuple[str, str]:
+    """Never count a partial or foreign receipt as an indexed local chunk."""
+    if (not isinstance(result, dict)
+            or result.get("collection_id") != collection_id
+            or result.get("canonical_uri") != _chunk_uri(chunk_id)
+            or result.get("extraction_status") != "extracted"
+            or any(type(result.get(k)) is not int or result[k] != 1 for k in ("chunks", "embeddings"))
+            or any(not isinstance(result.get(k), str) or not result[k].strip() for k in ("resource_id", "document_id"))):
+        raise DataPlatformError("Incomplete or mismatched Data Platform chunk receipt")
+    return result["resource_id"], result["document_id"]
+
+
 class DataPlatformTenderIndexer:
     def __init__(
         self,
@@ -649,6 +690,8 @@ class DataPlatformTenderIndexer:
         indexed = 0
         platform_chunks = 0
         embeddings = 0
+        resource_ids: set[str] = set()
+        document_ids: set[str] = set()
         for chunk in chunks:
             result = self._client.ingest_chunk(
                 collection_id=collection_id,
@@ -656,9 +699,16 @@ class DataPlatformTenderIndexer:
                 file_name=chunk.source_file_name or f"{chunk.document_id}.txt",
                 text=chunk.text,
             )
+            resource_id, document_id = validate_chunk_ingest_receipt(result, collection_id, chunk.id)
+            if resource_id in resource_ids or document_id in document_ids:
+                raise DataPlatformError("Duplicate Data Platform identity across tender chunks")
+            resource_ids.add(resource_id)
+            document_ids.add(document_id)
             indexed += 1
-            platform_chunks += int(result.get("chunks", 0) or 0)
-            embeddings += int(result.get("embeddings", 0) or 0)
+            platform_chunks += result["chunks"]
+            embeddings += result["embeddings"]
+        if not complete_index_counts(self._client.collection_stats(collection_id), len(chunks)):
+            raise DataPlatformError("Data Platform collection count mismatch after indexing")
 
         return DataPlatformIndexSummary(
             collection_id=collection_id,

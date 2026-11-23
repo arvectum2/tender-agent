@@ -1,0 +1,23 @@
+task_id: TA-POSTMERGE-TRUTH-20261122
+status: completed
+goal: 'Sync 22-Nov protected CI-merged PR #705 #706 #707 with canonical child statuses and preserve separate blocked original/owner acceptance.'
+definition_of_done:
+  - 'Confirm 705/706/707 19/19 CI success and exact protected merge SHA.'
+  - 'Mark bounded PPT saved-forensic, SIBUR import-window audit and qualification risk code as completed, no repeated development.'
+  - 'Keep original PPT issue #686 OPEN, qualification release issue #406 OPEN, official EIS originals #679 and seven-day PITR #685 blocked.'
+  - 'Add regression checks for canonical index/child consistency and no false commercial/production acceptance.'
+  - 'Run focused tests and protected exact-head CI, merge and record outcome.'
+completed:
+  - "Reconciled protected #705/#706/#707 to completed bounded child checkpoints, exact protected main merges and 19/19 CI each; no production deploy."
+  - "Separated still-blocked #686 original and #406 upstream source/Owner release, preserved #679 and #685 blockers."
+  - "Added dated source-safe report and 3 new checkpoint tests; 27 focused PASS, Ruff/make check PASS."
+  - 'Read-only verified PR #705 #706 #707 each 19/19 CI and protected main merges. Issue #692 closed after historical receipt root cause, without mass import.'
+current_stage: protected_pr709_merged_10_ci_success
+remaining: []
+last_verified_commit: faba2e775fde8d504e9d66d46434f2eccd10879d
+test_results: '27 focused tests PASS; Ruff and make check PASS, 2 inherited warnings; PR #709 exact head passed 10/10 protected CI and merged main faba2e775fde8d504e9d66d46434f2eccd10879d.'
+resume_instruction: 'Completed PR709 and CI10/10. Do NOT redo 705/706/707 work. Keep #686 current first-party original, #406 owner release, #679 primary EIS and #685 7day PITR as independent blocked gates. Next admitted source-only issue #691 seven historic SIBUR-to-DP source links, no live data or writes.'
+production_mutations: false
+protected_merge_commit: faba2e775fde8d504e9d66d46434f2eccd10879d
+protected_exact_ci: 10_of_10_success
+production_mutations: false

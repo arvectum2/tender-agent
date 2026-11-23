@@ -1,0 +1,29 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-EIS-MANAGER-DEADLINES-20261123
+related_issue: 721
+status: completed
+goal: "Owner-authorized, source-evidence-bound reconciliation of future MANAGER_READY EIS deadline values after comprehensive 298-row audit; preserve actual official midnights, original rows and rollback."
+owner_authorization: "2026-11-23 user replied 'делай' to proposal of correcting current source-verified MANAGER_READY rows, with focus on 37 future deadline entries."
+definition_of_done:
+  - "Verify exact source audit snapshot SHA and 37 unique future MANAGER_READY rows; identify 35 mismatches versus 2 correct official midnights."
+  - "Repeat bounded read-only official EIS detailed-field checks for those 37 notices, no login, redirects, source substitution or invented time."
+  - "Create private 0700/0600 backup, per-row provenance, SHA-bound revert plan; apply 35 conditional one-transaction production UPDATEs only after independently verifying DB pin and row identities/status/old deadline."
+  - "Verify exactly 35 target rows now match current EIS exact instants, two verified exact midnight untouched, all other 263 original snapshot records unchanged, earlier corrected MAX unchanged; no new DB or service changes."
+  - "Add synthetic exclusive rollback-backup and source-hash tests; document official-current-vs-historical caveat and complete protected GitHub CI if committing tools."
+completed:
+  - "298 historical EIS midnight rows across 196 official notices independently audited in PR #724 merged 61397812810236911e36181615065665169b971f; 288 same date wrong clock, 7 different date, 3 genuine midnight."
+  - "37 unique MANAGER_READY with future EIS deadlines at 23-Nov 06:39 UTC; 33 same date clock mismatch, 2 different Moscow date (one official earlier), 2 exact true midnight; therefore 35 expected conditional updates."
+  - "Targeted strict first-party HTTPS recheck succeeded for 37/37 unique EIS notices with detailed clock and regional МСК±N; 35 source mismatches and 2 genuine 00:00 MSK no-op records. Source plan SHA256 948efab46cad8c99eafc5c6593efdfa4f2bb5fc275dddfa92af89256e47afbbf."
+  - "25 focused pytest PASS, Ruff PASS, Python compile PASS on pinned isolated source HEAD e496c972f43f81cfa427eef67d859ba67a13ecfc; read-only DB preflight verified identity and zero user triggers. First dry-run caught VARCHAR-vs-UUID cast and rolled back; code repaired; second production dry-run 35 conditional UPDATE succeeded then ROLLBACK."
+  - "Owner-authorized one-transaction production COMMIT succeeded on 2026-11-23T07:09:44Z: exactly 35 conditionally guarded MANAGER_READY deadlines updated; 2 official midnight manager rows untouched. Row guards included IDs, status, run, original deadline, updated_at, URL, fingerprint."
+  - "Full post-commit independent read-only check on production at 2026-11-23T07:10:15Z: 299 total, exactly 35 updated to current EIS instants, 263 other audited rows unchanged, previously corrected MAX #0845500000526000021 untouched."
+  - "Private evidence at /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/eis-manager-reconcile-20261123 (0700): 37 fresh HTML originals, plan.json 0600 SHA 948efab46cad8c99eafc5c6593efdfa4f2bb5fc275dddfa92af89256e47afbbf, db-before.json 0600 SHA ae6347e72cbd23f119960e3ab9a168ab718dd8e01b0ae6919b251149eb89520c, commit intent and verified receipt; no bids or service restarts."
+  - "Evidence-backed 37-line status report at docs/market-intelligence/EIS_MANAGER_READY_37_DEADLINE_RECONCILIATION_2026-11-23.md. Runtime pinned Daily Tender remains older parser; separate official EIS detail enrichment and cautious historical backlog are still open issue #721."
+current_stage: owner_approved_35_updates_completed_and_independently_verified
+remaining: []
+last_verified_commit: 'c8a29c01362f24d917925b374ce84105363dcf12 (source branch exact checked; 25 local tests, Ruff/compile PASS, production dry-run and commit proof; protected CI PR gate pending)'
+test_results: '25 isolated tests PASS; Ruff+compile PASS; 37 official source fresh GET SHA proof; 35 SQL updates tested under rollback, then COMMIT exactly 35; second independent read-only verification 299 rows = 35 target new, 263 others unchanged, MAX record intact; source first-pass readonly audit 196 original HTML proven.'
+resume_instruction: 'Reconciliation goal achieved and verified. Finish source-only PR protected CI 9/9 and GitVerse mirror (or repair then redo), then merge guarded exact head. DO NOT repeat 35 DB updates; rollback evidence private db-before.json and commit-intent.json. Issue #721 stays open only for legacy 260 other current-source discrepancies and future official detail enrichment. No additional production DB operations, bidding, restart or pinned runtime deploy under this task.'
+production_modified: true
+external_submissions: false

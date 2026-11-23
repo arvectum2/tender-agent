@@ -116,6 +116,39 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
         owner_legal_go:false
       } : null
     };
+    else if(route.endsWith('/workspace/price-scenario/calculate') && method==='POST') {
+      const request=JSON.parse(opts.body);
+      assert.deepEqual(request.offer_scenario,{offer_price_rub:'500',nonrefundable_guarantee_fees_rub:'10',refundable_bid_cash_rub:'30',refundable_contract_cash_rub:'40'});
+      await new Promise(resolve=>setTimeout(resolve,5));
+      value={state:'EXPLICIT_USER_ASSUMPTION_BREAK_EVEN_ONLY',inputs_stored:false,assumptions_independently_verified:false,is_procurement_bid_recommendation:false,probability_of_winning_estimated:false,commercial_owner_go:false,automatic_submission_or_payment:false,cash_break_even_rub:'146.74',full_economic_break_even_rub:'364.14',full_cost_plus_explicit_target_rub:'418.48',offer_scenario:{kind:'EXPLICIT_OFFER_AND_PRE_RECEIPT_STRESS_ONLY',actual_peak_working_capital_rub:null,actual_security_requirement_rub:null,labor_treated_as_non_cash:true,collateral_treated_as_fully_refundable:true,modeled_revenue_tax_rub:'30.00',modeled_variable_fee_rub:'10.00',economic_cost_rub:'375.00',economic_profit_rub:'125.00',economic_margin_percent:'25.00',cash_cost_rub:'175.00',refundable_cash_collateral_rub:'70.00',pre_receipt_stress_cash_rub:'245.00'}};
+    }
+    else if(route.endsWith('/workspace/runs/run-1/evidence-answer') && method==='POST') {
+      const request=JSON.parse(opts.body);
+      if(request.question==='Поясни требования к обеспечению исполнения контракта') {
+        return {ok:true,json:async()=>({run_id:'run-1',status:'CUSTOMER_TERMS_LEGAL_REFERENCES',citation_kind:'ARCHIVED_XML',answer:'Текст заказчика проверен по архивному XML.',observation:{references:[{literal:'статьи 45 Федерального закона № 44-ФЗ'}],review_questions:['Сверить официальную редакцию.']},citations:[{file_id:'FILE-01',source_ref:'eis-xml:FILE-01:contractGuarantee/procedureInfo',document:'notice.xml',locator:'XML:contractGuarantee/procedureInfo',excerpt:'Исполнение контракта обеспечивается в соответствии со статьей 45 Федерального закона № 44-ФЗ.'}]})};
+      }
+      if(request.question==='Какой срок оказания услуг?') {
+        return {ok:true,json:async()=>({run_id:'run-1',status:'LITERAL_PERFORMANCE_OBSERVATIONS',citation_kind:'ORIGINAL_DP_CHUNK',answer:'Явные сроки из проверенных фрагментов.',observation:{mentions:[{term_literal:'с момента заключения Контракта по 07.12.2026 г. (включительно).'}],distinct_literal_terms:1,effective_due_date:null},citations:[{file_id:'FILE-01',chunk_id:'chunk-1',original_sha256:'a'.repeat(64),quote:'Срок оказания услуг: с момента заключения Контракта по 07.12.2026 г. (включительно).'}]})};
+      }
+      if(request.question==='Какой размер обеспечения исполнения контракта?') {
+        return {ok:true,json:async()=>({run_id:'run-1',status:'ARCHIVED_SECURITY_FIELDS',citation_kind:'ARCHIVED_XML',answer:'Явные поля архивного извещения.',observation:{amount:null,percent:'30.0'},citations:[{file_id:'FILE-01',source_ref:'eis-xml:FILE-01:contractGuarantee/part',document:'notice.xml',locator:'XML:contractGuarantee/part',excerpt:'30.0'}]})};
+      }
+      if(request.question==='Какой срок оплаты услуг?') {
+        return {ok:true,json:async()=>({run_id:'run-1',status:'LITERAL_PAYMENT_OBSERVATION',citation_kind:'ORIGINAL_DP_CHUNK',answer:'Срок в источнике, не применимый дедлайн.',observation:{mentioned_days:7,day_unit:'WORKING_DAYS'},citations:[{file_id:'FILE-01',chunk_id:'chunk-1',original_sha256:'a'.repeat(64),quote:'Оплата услуг производится в течение 7 рабочих дней с даты приемки.'}]})};
+      }
+      assert.deepEqual(request,{question:'Какие условия оплаты работ?'});
+      value={run_id:'run-1',status:'TOPIC_EXCERPTS_ONLY',citation_kind:'ORIGINAL_DP_CHUNK',answer:'Условия оплаты: найдены проверенные фрагменты.',citations:[{file_id:'FILE-01',chunk_id:'chunk-1',original_sha256:'a'.repeat(64),quote:'Оплата выполненных работ в течение семи рабочих дней.'}]};
+    }
+    else if(route.endsWith('/workspace/runs/run-1/evidence-search') && method==='POST') {
+      const request=JSON.parse(opts.body);
+      assert.deepEqual(request,{query:'оплата работ'});
+      value={run_id:'run-1',status:'VERIFIED_EXCERPTS_ONLY',citations:[{file_id:'FILE-01',chunk_id:'chunk-1',original_sha256:'a'.repeat(64),quote:'Оплата выполненных работ в течение семи рабочих дней.'}]};
+    }
+    else if(route.endsWith('/workspace/runs/run-1/evidence-question') && method==='POST') {
+      const request=JSON.parse(opts.body);
+      assert.deepEqual(request,{question:'nmck_percent',percent:'5.125'});
+      value={run_id:'run-1',question:'nmck_percent',status:'HYPOTHETICAL_CALCULATION',answer:'5125.00',citations:[{source_ref:'eis-xml:FILE-01:maxPrice',document:'original.xml',locator:'XML:maxPrice',excerpt:'100000.00'}]};
+    }
     else if(route.endsWith('/workspace/runs/run-1/verify-quote') && method==='POST') {
       const body=JSON.parse(opts.body);
       assert.equal(body.file_id,'FILE-01');
@@ -233,6 +266,7 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
     }
 
     assert.equal(get('document-count').textContent,'1');
+    assert.equal(get('copilot-panel').hidden,false,'Copilot available with source files');
     assert.equal(get('quote-check').hidden,false,'Proof-check UI visible only for saved original files');
     get('quote-file').value='FILE-01';
     get('quote-text').value='Оплата производится в течение семи рабочих дней.';
@@ -245,10 +279,68 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
     }
     assert(calls.includes('POST /api/demo/tender-agent/workspace/runs/run-1/verify-quote'));
     assert(get('quote-check-result').textContent.includes('dp-real-chunk-01'));
+    get('copilot-question').value='nmck_percent';get('copilot-question').events.change();
+    assert.equal(get('copilot-percent-label').hidden,false);
+    get('copilot-percent').value='5,125';get('copilot-form').events.submit({preventDefault(){}});
+    for(let i=0;i<50 && !get('copilot-result').children.length;i++) await new Promise(resolve=>setTimeout(resolve,3));
+    assert(get('copilot-result').children.some(c=>c.textContent.includes('5125.00') && c.textContent.includes('Не установленное обеспечение')));
+    assert(get('copilot-result').children.some(c=>c.textContent.includes('XML:maxPrice')));
+    get('copilot-question').value='subject';get('copilot-question').events.change();
+    assert.equal(get('copilot-result').children.length,0);
+    get('copilot-search').value='оплата работ';get('copilot-search-form').events.submit({preventDefault(){}});
+    for(let i=0;i<50 && !get('copilot-search-result').children.length;i++) await new Promise(resolve=>setTimeout(resolve,3));
+    assert(get('copilot-search-result').children.some(c=>c.textContent.includes('Оплата выполненных работ')));
+    assert(get('copilot-search-result').children.some(c=>c.textContent.includes('SHA-256 оригинала')));
+    get('copilot-search').value='иная тема';get('copilot-search').events.input();
+    assert.equal(get('copilot-search-result').children.length,0);
+    get('copilot-answer-question').value='Какие условия оплаты работ?';get('copilot-answer-form').events.submit({preventDefault(){}});
+    for(let i=0;i<50 && !get('copilot-answer-result').children.length;i++) await new Promise(resolve=>setTimeout(resolve,3));
+    assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('Оплата выполненных работ')));
+    assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('SHA-256 оригинала')));
+    get('copilot-answer-question').value='другой вопрос';get('copilot-answer-question').events.input();
+    assert.equal(get('copilot-answer-result').children.length,0);
+    get('copilot-answer-question').value='Какой срок оплаты услуг?';get('copilot-answer-form').events.submit({preventDefault(){}});
+    for(let i=0;i<50 && !get('copilot-answer-result').children.length;i++) await new Promise(resolve=>setTimeout(resolve,3));
+    assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('7 рабочих дней') && c.textContent.includes('Применимый срок не установлен')));
+    get('copilot-answer-question').value='Какой размер обеспечения исполнения контракта?';get('copilot-answer-question').events.input();get('copilot-answer-form').events.submit({preventDefault(){}});
+    for(let i=0;i<50 && !get('copilot-answer-result').children.length;i++) await new Promise(resolve=>setTimeout(resolve,3));
+    assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('Сумма в XML: UNKNOWN')));
+    assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('30.0%') && c.textContent.includes('база не подтверждена')));
+    get('copilot-answer-question').value='Какой срок оказания услуг?';get('copilot-answer-question').events.input();get('copilot-answer-form').events.submit({preventDefault(){}});
+    for(let i=0;i<50 && !get('copilot-answer-result').children.length;i++) await new Promise(resolve=>setTimeout(resolve,3));
+    assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('Указано в источнике:') && c.textContent.includes('07.12.2026') && c.textContent.includes('включительно')));
+    assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('SHA-256 оригинала')));
+    get('copilot-answer-question').value='Поясни требования к обеспечению исполнения контракта';get('copilot-answer-question').events.input();get('copilot-answer-form').events.submit({preventDefault(){}});
+    for(let i=0;i<50 && !get('copilot-answer-result').children.some(c=>c.textContent.includes('Ссылки заказчика на нормы'));i++) await new Promise(resolve=>setTimeout(resolve,3));
+    assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('содержание законодательства не проверено')));
+    assert(get('copilot-answer-result').children.some(c=>c.textContent.includes('статьи 45 Федерального закона')));
+    for(const [id,val] of Object.entries({'cost-external':'100','cost-labor':'200','cost-reserve':'20','cost-fixed':'5','cost-tax':'6','cost-variable':'2','cost-target':'50','cost-offer-price':'500','cost-guarantee-fees':'10','cost-bid-cash':'30','cost-contract-cash':'40'})) get(id).value=val;
+    get('cost-offer-enabled').checked=true;get('cost-scenario-confirm').checked=true;get('price-cost-form').events.input();
+    assert.equal(get('cost-offer-fields').hidden,false);
+    const flatten=el=>[el.textContent,...el.children.flatMap(flatten)].join(' ');
+    get('price-cost-form').events.submit({preventDefault(){}});
+    for(let i=0;i<50&&!flatten(get('price-cost-result')).includes('245,00');i++) await new Promise(resolve=>setTimeout(resolve,3));
+    assert(flatten(get('price-cost-result')).includes('245,00'));
+    assert(flatten(get('price-cost-result')).includes('125,00'));
+    assert(flatten(get('price-cost-result')).includes('Возвратные обеспечения (не расход)'));
+    get('price-cost-form').events.submit({preventDefault(){}});
+    get('price-cost-form').events.input();
+    await new Promise(resolve=>setTimeout(resolve,15));
+    assert.equal(get('price-cost-result').children.length,0,'Stale scenario must not reappear');
+
+
+
+
+
+
+
+
+
   }else{
     assert(!calls.some(c=>c.includes('/runs/run-1/analyze')),'Never analyze a file-less EIS manifest');
     assert.equal(get('append-files-form').hidden,false,'Show manual document recovery');
     assert.equal(get('document-count').textContent,'0');
+    assert.equal(get('copilot-panel').hidden,true,'No Copilot on a file-less run');
     assert.equal(get('quote-check').hidden,true,'Proof-check UI must be hidden when no original file exists');
     assert.equal(get('analyze-btn').disabled,true,'Never enable invalid analyze button');
   }

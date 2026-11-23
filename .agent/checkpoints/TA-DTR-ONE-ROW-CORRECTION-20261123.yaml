@@ -1,0 +1,26 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-DTR-ONE-ROW-CORRECTION-20261123
+status: completed
+issue: 721
+goal: "Owner-authorized one-record correction to exact EIS-published MAX chatbot bid deadline, with read-only identity proof, backup and independent DB verification"
+owner_authorization: "2026-11-23 user: Разрешаю; only specific official-source verified procurement record"
+definition_of_done:
+  - "Verify EIS exact source notice, original HTML SHA and local private source proof"
+  - "Verify current production PostgreSQL identity and one expected old row using existing pinned daily wrapper preflight"
+  - "Save exact pre-update row, source receipt and rollback proof privately; apply strictly guarded single-row SQL transaction"
+  - "Independent read-only recheck corrected UTC value, untouched 298 other potentially imputed midnight records"
+completed:
+  - "Official GET https://zakupki.gov.ru/epz/order/notice/zk20/view/common-info.html?regNumber=0845500000526000021 gave exact detailed 30.11.2026 09:00 MSK = 2026-11-30T06:00:00Z; raw HTML SHA256 aeeffcf045093b0606565310ba6f18b5f8acd35f1c468e06f33cb3dd0f464691; privately preserved on Mac mini"
+  - "Trusted pinned daily runner preflight matched active backend and production PG identity arvectum/arvectum/alembic 127_private_review_link_corrections"
+  - "Pre-mutation unique row id 089a5153-ae9a-4cd7-9505-1eb6cf62b873, run DTR-20261123T050145Z-09c1523f source public_eis_html_44fz, old timestamp 2026-11-29T21:00:00Z, MANAGER_READY"
+  - "Backed up before JSON + original EIS HTML under 0700 /Users/master/ArvectumSafe/runtime/ta-source-discovery-20261114/eis-deadline-correction-20261123; 0600 evidence"
+  - "Atomic transaction with source, id, run, old timestamp and PG identity guards updated EXACTLY 1 row, deadline_at 2026-11-30T06:00:00Z, updated_at 2026-11-23T06:05:21Z, receipt persisted"
+  - "Independent READ ONLY production PostgreSQL query verified targeted deadline 2026-11-30 06:00:00+00:00, status MANAGER_READY, total 299 Daily Tender rows, 298 still show 00:00 MSK and are NOT bulk corrected"
+current_stage: completed_source_verified_one_row_correction
+remaining: []
+last_verified_commit: "71b28f550559a45c47056e7b1b0adb1d5eb51bdc (source-only deadline parser fix already in main; pinned running Daily Tender binary remains prior SHA 9b650a2b818032389cfd6e13799acad33c72089b)"
+test_results: "targeted guarded SQL committed 1 row; independent DB read-only 1 corrected / 298 unverified other midnight observations, private SHA original proof reverified"
+resume_instruction: "Task completed. Issue #721 remains OPEN for independent audit of remaining 298 midnight-valued source rows, official EIS detail enrichment and owner-gated runtime parser deploy; DO NOT mass rewrite or assume all 298 are wrong. Existing pinned runtime not updated under this task."
+production_modified: true
+external_submissions: false

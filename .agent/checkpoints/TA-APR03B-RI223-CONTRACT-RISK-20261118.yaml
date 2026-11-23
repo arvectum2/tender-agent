@@ -1,0 +1,22 @@
+task_id: TA-APR03B-RI223-CONTRACT-RISK-20261118
+status: completed
+goal: Contract risk review on exact archived original; separate literal clause, interpretation, conditional alternatives and explicit scenario.
+definition_of_done:
+  - Independently revalidate original contract and source lineage, bounded exact attestation for risk clauses, unknown on unsupported clauses.
+  - Reuse explicit price scenario for conditional exposure, distinguish unknown final contract and liability cap, no decision.
+  - Actual case DP replay, regression, checkpoint and draft PR.
+completed:
+  - PR636 exact CI 19/19. Mac outage recovery audit and candidate verifier in separate PR637. Source code/DB/admission unchanged.
+  - Implemented 14 reviewed original contract clause observations, conditional subcontract variants and separate synthetic exposures.
+  - Actual DP replay 14/14 PASS, 900/9000/180000 scenario only; missing member UNKNOWN and source originals unchanged.
+  - 416 passed, 10 skipped, 6 warnings; Ruff/diff PASS.
+current_stage: verified_pending_merge
+remaining:
+  - Verify exact CI; then consolidate source-backed decision review and resolve actual profile/cost/independent gold gates. Recovery PR637 separately.
+last_verified_commit: 9b704d0c593c51f61289f22b8743a2ef3e508b6e
+test_results:
+  - 416 passed, 10 skipped, 6 warnings.
+  - RI223_CONTRACT_RISK_ACTUAL 14/14, RI223_OWNER_ACTUAL_SOURCE_PASS, originals unchanged, isolated DP removed; exit 0.
+resume_instruction: No live participation, no production or Workspace changes.
+
+exact_ci: 19/19 SUCCESS, head 75dfa5ff06acfcd283626917b2737221bbba38c4

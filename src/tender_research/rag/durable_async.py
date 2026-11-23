@@ -149,7 +149,8 @@ class DurableTenderAsyncIndex:
                 existing is None
                 or existing.job_id != job_id
                 or existing.source_sha256 != self._sha(chunk)
-                or existing.expected_chunks != len(self.repo.list_chunks_by_tender(tender_id))
+                or existing.expected_chunks
+                != len(self.repo.list_chunks_by_tender(tender_id))
             ):
                 raise DataPlatformError(
                     "Concurrent background enqueue conflict"
@@ -186,7 +187,7 @@ class DurableTenderAsyncIndex:
                     or not result.get("resource_id")
                     or not result.get("document_id")
                     or type(result.get("chunks")) is not int
-                    or result["chunks"] < 1
+                    or result["chunks"] != 1
                 ):
                     raise DataPlatformError(
                         "Background completion has no indexed evidence"
@@ -203,7 +204,7 @@ class DurableTenderAsyncIndex:
             and row.resource_id is not None
             and row.document_id is not None
             and row.indexed_chunks is not None
-            and row.indexed_chunks >= 1
+            and row.indexed_chunks == 1
             for row in rows
         )
         running = sum(row.status in {"queued", "running"} for row in rows)
@@ -248,6 +249,14 @@ class DurableTenderAsyncIndex:
         if not progress.ready:
             raise AsyncTenderIndexPending(
                 f"Tender background index not complete: {progress.completed}/{progress.expected}"
+            )
+        from src.tender_research.rag.data_platform import complete_index_counts
+
+        if not complete_index_counts(
+            self.client.collection_stats(progress.collection_id), progress.expected
+        ):
+            raise AsyncTenderIndexPending(
+                "Background collection counts are not fully indexed"
             )
         return progress.collection_id
 
@@ -295,6 +304,10 @@ def require_existing_background_ready(
         chunk.id: hashlib.sha256(chunk.text.encode("utf-8")).hexdigest()
         for chunk in chunks
     }
+    if len({r.resource_id for r in rows}) != len(rows) or len(
+        {r.document_id for r in rows}
+    ) != len(rows):
+        raise AsyncTenderIndexPending("Background indexed identities are not unique")
     if {r.chunk_id for r in rows} != set(hashes) or any(
         r.source_sha256 != hashes[r.chunk_id]
         or r.expected_chunks != len(chunks)
@@ -302,7 +315,7 @@ def require_existing_background_ready(
         or not r.resource_id
         or not r.document_id
         or r.indexed_chunks is None
-        or r.indexed_chunks < 1
+        or r.indexed_chunks != 1
         for r in rows
     ):
         raise AsyncTenderIndexPending("Background indexing not verified")

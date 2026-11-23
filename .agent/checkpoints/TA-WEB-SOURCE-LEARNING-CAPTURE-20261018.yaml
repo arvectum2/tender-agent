@@ -1,0 +1,33 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-WEB-SOURCE-LEARNING-CAPTURE-20261018
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Integrate existing TenderResearchPipeline fetched public source evidence into existing canonical PostgreSQL procurement learning corpus, transactionally and without mixing untrusted web hits into human/legal-gold.
+definition_of_done:
+  - Read parent and prior checkpoint; verify exact PR #489 review CI and existing PostgreSQL rows without re-importing completed 31 observations.
+  - Implement safe bounded metadata-only capture for successfully fetched public web pages in existing TenderResearchPipeline, same transaction as fetched page; preserve page fetch and evidence identity.
+  - Fail closed for insecure/sensitive URLs, ambiguous/non-200/empty pages; persist only original hash/host/status/source ref, no raw page/chat/content, with explicit unreviewed/source-not-verified indicators.
+  - Unit/integration tests prove capture+rollback atomicity, idempotence and new-content versioning; verify no second DB and preserved existing test behavior.
+  - Update roadmap, canonical parent and completed child checkpoint, push stacked review PR; do not merge/deploy without release authority.
+completed:
+  - "Previous child TA-LLM-31-IMPORT-DUAL-REVIEW-20261018 completed, exact PR489 code checkpoint head 423289c46e86e4b6d0532c8bf6d8b5fd4bc751b5."
+  - "Previously completed full private backup and owner-authorized 31-record canonical DB import: current 108 learning observations, 45/45 Tender Agent runs captured."
+current: "Bounded internal fetched-public-HTML source learning capture completed as review-only code, no production runtime deployment."
+remaining: []
+last_verified_commit: 20bdea4f5b3fcc3c2ccaee5c397fa7e0142160e4
+test_results:
+  - "2026-10-18 26 targeted adversarial and transaction tests PASS; 712 Tender Research + procurement_learning_corpus + Customer Pilot tests PASS, 2 SKIP, Ruff on newly added source/test code PASS, git diff check PASS."
+  - "Prior owner-authorized canonical live DB remains 108, research rows 31; no live DB writes in this task."
+  - "Upstream PR489 exact-head 19/19 GitHub CI PASS, 0 fail, open review-only (not merged or deployed). Applied bounded source capture to new stacked branch, CI review pending."
+resume_instruction: "Public fetched-page capture code/tests complete. Check this stacked PR exact-head CI; merge/deploy only under Company AM-4 authority. Next integrate structured original provider collectors for EIS SOAP, Workspace/B2B-Center and each external ChatGPT research result into the same existing PostgreSQL (not second DB), then test production end-to-end and postacceptance dual independent review with human adjudication. Never claim arbitrary external ChatGPT chats automatically captured before proof."
+code_commit: 20bdea4f5b3fcc3c2ccaee5c397fa7e0142160e4
+report: docs/roadmap/PROCUREMENT_LLM_AUTO_PUBLIC_WEB_CAPTURE_2026-10-18.md
+source_capture_code: src/modules/procurement_learning_corpus/web_source_capture.py
+source_pipeline_hook: src/tender_research/pipeline.py
+source_code_deployed: false
+source_capture_real_production_new_rows: 0
+prior_canonical_learning_rows: 108
+external_chatgpt_all_chats_auto_capture: false
+owner_paid_outreach_or_bid_actions: false
+review_gate: stacked_pr_exact_head_ci_and_am4_release_authority_pending

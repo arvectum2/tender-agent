@@ -1,0 +1,33 @@
+task_id: TA-SIBUR-SEED-REVIEW-20261121
+status: completed
+goal: Reconcile historical SIBUR public-source seed code with protected main without changing either production or already seeded working DB.
+definition_of_done:
+  - Preserve the original 313-record working database seed and all historical observations without re-import or new source requests.
+  - Preserve source namespace sibur_public independent of EIS, GPB and the dormant generalized source_catalog's source identity.
+  - Review code and tests for exact original-byte/source receipt checks, idempotent import, immutable existing rows, and production DB separation.
+  - Remove outdated canonical current-task conflict when merging current main and preserve the original PR524 history and #526/#527 dependencies.
+  - Pass scoped tests and current exact GitHub CI; no external live writer or collection automation.
+completed_stages:
+  - Identified PR524 historic 313 distinct public procedures/314 observations with owner-approved working-DB-only seed; PR526/PR527 depend on its head.
+  - Created fresh review-only isolated worktree from old PR524 head without changing old source branches or production.
+  - Merged protected main b646e431 safely, preserving its canonical current-task and original PR524 history; no service or worker changed.
+  - Found first SIBUR snapshot partial (6/27 pages, 72 procedures, parser error); rejected. Independently SHA-replayed complete corrected v2 (27/27 pages, 314 observations, 313 unique procedures) read-only with latest parser.
+  - Verified exact 15-field historical normalized projection; latest parser derives only documentation_urls and unverified_document_links from original raw pages, with no original archive mutation.
+  - Added fail-closed verify_sibur_public_snapshot helper and read-only CLI; no arbitrary stdin write path. 24 focused pytest and Ruff PASS. Historical working DB seed unchanged.
+  - Real current read-only PostgreSQL cluster split verified: arvectum_local PG16 cluster has 30632 sibur_public rows, all 313/313 from original 14-Nov archive present; production arvectum PG17 cluster has 64 tenders and zero sibur_public rows. No DB mutation.
+  - Integrated protected main b73dae89 after PR637 host runtime source code passed 19/19 CI, no merge conflicts, SIBUR original PR524 head remains ancestor and stacked PR526/527 unchanged.
+  - Completed host source-snapshot task checkpoint #637 on exact main merge, preserving installed host and GitHub/GitVerse checks.
+current_stage: exact_pr524_ci_19_of_19_passed_and_source_only_merged
+remaining_stages: []
+last_verified_commit: 0af718499498f398a3a339dfa8c714c96e8b28af
+last_checks: Reviewed original PR524 exact head 36837f9a29a82c5f44bb691905e2e22ff579bdb2 passed 19/19 GitHub required CI including GitVerse, normal protected merge 0af718499498f398a3a339dfa8c714c96e8b28af. 24 local tests/Ruff PASS, 27/27 original SHA, 314 observations/313 IDs, 313/313 still in working separate cluster; no database mutation.
+resume_instruction: PR524 first-party original SIBUR registry replay is COMPLETED and merged into main 0af71849. Do not reimport the historic 313 IDs, activate source worker or change database. Continue the independently gated PR526 archived documents; one mismatched PPT filename remains quarantined issue #686, EIS issue #679 and seven-day PITR issue #685 remain open.
+production_modified: false
+working_db_modified: false
+private_source_replay_receipt: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/sibur-original-replay-20261121.json
+original_historical_15_field_projection_sha_verified: true
+original_source_page_count_verified: 27
+local_review_commit: a709a50b080dfc9241995caa23b0ff99678141d4
+merged_pr: 524
+merged_main_commit: 0af718499498f398a3a339dfa8c714c96e8b28af
+completed_at_utc: 2026-11-21T13:57:08Z

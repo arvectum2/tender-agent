@@ -1,0 +1,19 @@
+task_id: TA-APR08-GROUNDED-QUESTIONS-20261117
+status: completed
+goal: Natural-language procurement question routing to pinned source facts and original verified contractual excerpts; no unsupported legal decisions or model call.
+definition_of_done:
+  - Explicit supported Russian question forms, fail closed for ambiguous, multi-intent, legal approval and unsupported questions; run-local scope.
+  - Return archived fact or contextual evidence excerpt, distinct epistemic status, source references, no authoritative interpretation.
+  - Private API and existing UI; tests, real isolated DP replay, publish draft PR and verify exact CI.
+completed:
+  - PR610/611 exact CI green; PR612 real replay PASS, 17/19 CI in progress.
+  - Implemented full-match Russian intent routing, archived facts and explicit percentage, separate clause topics (payment, delivery, security), nonsemantic excerpt status, unsupported/compound/legal unknown, run validation, private HTTP/UI.
+  - Actual isolated DP and operator HTTP replay: verified payment excerpt, unsupported signature question UNKNOWN, anonymous 401, original inventory unchanged, temporary instance removed.
+  - Exact reviewed head f0d1e152938c95c1f9d5b847fb70d1acb8549906 CI 19/19 SUCCESS.
+current_stage: verified_pending_merge
+remaining: []
+last_verified_commit: f0d1e152938c95c1f9d5b847fb70d1acb8549906
+test_results:
+  - 118 focused PASS, Ruff/diff/Node simulation PASS.
+  - APR08_REAL_GROUNDED_QUESTION_PASS, APR08_REAL_DP_REPLAY_PASS, APR08_ISOLATED_DP_REMOVED; no model or browser visual test.
+resume_instruction: Bounded increment verified; merge requires separate authorization. Continue parent APR08.

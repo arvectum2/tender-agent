@@ -1,0 +1,21 @@
+task_id: TA-PITR127-READONLY-VERIFICATION-20261122
+status: completed
+goal: 'Verify evidence of postrelease schema127 physical backup restoration with matching PostgreSQL major version; do not conflate this with an exact WAL target or seven-day PITR continuity.'
+definition_of_done:
+  - 'Read-only auditor validates saved physical backup receipt, isolated clone receipt, source cluster ID, schema127 and Data Platform identity and matching pg_verifybackup major.'
+  - 'Tests enforce fail closed for PG18 vs PG17, drift, wrong source ID and missing data; no live database access.'
+  - 'Independent Mac mini matching PostgreSQL 17 pg_verifybackup passes on existing post-release physical base; record dated evidence.'
+  - 'Original #685 remains open for exact WAL target and seven-day window; exact-head GitHub CI and protected-main merge before marking this child completed.'
+completed:
+  - 'Matching-major receipt audit implemented; seven synthetic negative/positive tests, local 18 focused PASS, Ruff and make check PASS.'
+  - 'Real Mac mini postrelease PG17 base verified with pg_verifybackup 17.12; clone receipts for schema127/DP73 cross-checked.'
+  - 'Public dated #685 evidence report distinguishes exact WAL target and seven-day continuity as NOT_PROVEN.'
+  - '2026-11-22 saved physical receipt cross-checked with raw base manifest and source receipt: actual production business schema127, DP 73 collections, one original PG17 cluster.'
+  - 'Generic pg_verifybackup (PG18.7) reported pg_control CRC mismatch because backup format PG17; matching pg_verifybackup 17.12 passed full archive file checks. No source/DB writes.'
+current_stage: merged_verified_no_production_deploy
+remaining: []
+last_verified_commit: c3aa2b4d0fc90d07e69fcf2796419c028e9fc87b
+test_results: '18 focused PASS, 2 inherited warnings; Ruff/make check PASS; real PG17 postrelease base checksum verification PASS; exact PR #696 CI 19/19 PASS; merged main 14369525ff98a8176347da5f1f776cde98604836.'
+resume_instruction: 'Completed PR #696, merged main 14369525ff98a8176347da5f1f776cde98604836, 19/19 CI. Continue exact postbase WAL recovery task; seven-day PITR NOT_PROVEN and issue #685 remains open.'
+merged_main_commit: 14369525ff98a8176347da5f1f776cde98604836
+production_deployed: false

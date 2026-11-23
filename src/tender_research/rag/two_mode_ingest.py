@@ -192,6 +192,8 @@ class TwoModeTenderIndexer:
             raise AsyncTenderIndexPending(
                 "Tender background index is incomplete or has a changed source revision"
             )
+        resource_ids: set[str] = set()
+        document_ids: set[str] = set()
         for item in jobs:
             receipt = self._validate_receipt(
                 getter(collection_id=collection_id, job_id=item.job_id),
@@ -213,11 +215,20 @@ class TwoModeTenderIndexer:
                 or not result.get("resource_id")
                 or not result.get("document_id")
                 or type(result.get("chunks")) is not int
-                or result["chunks"] < 1
+                or result["chunks"] != 1
             ):
                 raise DataPlatformError(
                     "Background completion is missing committed searchable evidence"
                 )
+            if (
+                result["resource_id"] in resource_ids
+                or result["document_id"] in document_ids
+            ):
+                raise DataPlatformError(
+                    "Background completion duplicated source identity"
+                )
+            resource_ids.add(result["resource_id"])
+            document_ids.add(result["document_id"])
         return collection_id
 
     def search_when_ready(

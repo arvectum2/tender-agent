@@ -1,0 +1,21 @@
+task_id: TA-ROADMAP-PR673-REVIEW-20261121
+status: completed
+goal: Reconcile outdated November 20 management roadmap appendix while preserving strict Spec Kit source criterion guard.
+definition_of_done:
+  - Keep original pinned criterion source and all exact Spec Kit task mappings unchanged.
+  - Distinguish historical November 20 snapshot from actual November 21 production release and owner+AI governance.
+  - Preserve protected MI and unrelated existing roadmap sections; no runtime changes.
+  - Verify exact checker, YAML parse and latest GitHub/GitVerse CI, then merge normal protected PR.
+completed_stages:
+  - Original PR673 exact 20/20 CI green; checker passed on the integrated current-main tree.
+  - Isolated current-main merge was conflict-free and source original criterion text unchanged.
+  - Corrected stale Nov20 label, appended dated Nov21 production/source/PITR/owner+AI record; original criterion sources and hashes unchanged.
+  - Regenerated only strict expected management appendix literal; strict source-criterion checker, Ruff, structured YAML and diff checks pass locally.
+current_stage: exact_ci_20_of_20_success_and_merged_to_main
+remaining_stages: []
+last_verified_commit: b75cd7fedb59ac9841ab17c711271bac891ab7c9
+last_checks: PR673 final reviewed head bc74202b0c0188edc7004c5515f64a8ea723d327 exact GitHub CI 20/20 SUCCESS including GitVerse and criterion review; protected merge created b75cd7fedb59ac9841ab17c711271bac891ab7c9. Local original source tampering negative tests, checker, YAML and Ruff PASS. Production left on prior pinned 9b650a2b.
+resume_instruction: PR673 roadmap update is COMPLETED, merged to main b75cd7fe. Do not repeat merge or reinterpret dated historical status as current. Continue issue #679 original source and #685 physical PITR seven-day, and separately review PR677 dormant catalog; preserve protected original MI, source access 12/9 and existing Watchdog.
+completed_at_utc: 2026-11-21T13:15:50Z
+merged_pr: 673
+merged_main_commit: b75cd7fedb59ac9841ab17c711271bac891ab7c9

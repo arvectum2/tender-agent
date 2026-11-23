@@ -2,14 +2,31 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
+from collections.abc import Iterator
+from contextlib import contextmanager
 from datetime import UTC, datetime, timedelta
+from threading import Lock
 from typing import Any
 from uuid import uuid4
 from zoneinfo import ZoneInfo
 
-from sqlalchemy import select
+from sqlalchemy import select, text
+from sqlalchemy.engine import Connection
 from sqlalchemy.orm import Session
 
+from src.modules.daily_tender_run.eis_detail_deadline import (
+    verify_official_eis_deadline,
+)
+from src.modules.daily_tender_run.error_codes import (
+    public_discovery_error_summary,
+    public_failure_code,
+    public_post_decision_state,
+)
+from src.modules.daily_tender_run.error_codes import (
+    safe_processing_error as _safe_processing_error,
+)
+from src.modules.daily_tender_run.fresh_priority import fresh_preparation_priority
 from src.modules.daily_tender_run.manager_synthesis import synthesize_manager_brief
 from src.modules.daily_tender_run.models import DailyTenderRun, DailyTenderRunItem
 from src.modules.daily_tender_run.post_go import advance_post_decision_items
@@ -27,7 +44,7 @@ from src.modules.tender_operator_agent_demo.procurement_discovery import (
 )
 from src.shared.db.base import utcnow
 from src.shared.enums import DirectionType, InitialSourceType, TenderSourceType
-from src.shared.errors import NotFoundError
+from src.shared.errors import ConflictError, NotFoundError, ValidationError
 from src.tender_research.pipeline import TenderResearchPipeline
 from src.tender_research.rag.analysis_service import analyze_tender
 from src.tender_research.rag.prepare_service import prepare_tender_for_analysis
@@ -35,6 +52,49 @@ from src.tender_research.rag.prepare_service import prepare_tender_for_analysis
 _TERMINAL_REUSE_STATUSES = {"MANAGER_READY", "SCREENED_OUT", "DUPLICATE"}
 _PROCESSABLE_STATUSES = {"SHORTLISTED", "PROCESSING"}
 _MOSCOW = ZoneInfo("Europe/Moscow")
+# Public EIS list cards can supply only the calendar date, not the exact
+# application cutoff clock time. Never synthesize 00:00 MSK from such text.
+_DATE_ONLY_DEADLINE_RE = re.compile(r"(?:\d{2}\.\d{2}\.\d{4}|\d{4}-\d{2}-\d{2})")
+_LOCAL_RUN_LOCK = Lock()
+_LOCAL_RUNNING: set[str] = set()
+
+
+@contextmanager
+def _run_execution_guard(session: Session, run_id: str) -> Iterator[None]:
+    """Session-level PostgreSQL lock survives intermediate stage commits.
+
+    SQLite is supported for isolated single-process development only.
+    """
+    bind = session.get_bind()
+    if bind.dialect.name == "postgresql":
+        engine = bind.engine if isinstance(bind, Connection) else bind
+        key = int.from_bytes(hashlib.sha256(("daily-tender-run:" + run_id).encode()).digest()[:8], "big", signed=True)
+        with engine.connect() as lock_conn:
+            acquired = lock_conn.scalar(text("SELECT pg_try_advisory_lock(:key)"), {"key": key})
+            lock_conn.commit()
+            if not acquired:
+                raise ConflictError("Daily Tender Run is already executing")
+            try:
+                yield
+            finally:
+                try:
+                    lock_conn.execute(text("SELECT pg_advisory_unlock(:key)"), {"key": key})
+                    lock_conn.commit()
+                except BaseException:
+                    lock_conn.invalidate()
+                    raise
+        return
+    if bind.dialect.name != "sqlite":
+        raise RuntimeError("Unsupported Daily Tender Run locking backend")
+    with _LOCAL_RUN_LOCK:
+        if run_id in _LOCAL_RUNNING:
+            raise ConflictError("Daily Tender Run is already executing")
+        _LOCAL_RUNNING.add(run_id)
+    try:
+        yield
+    finally:
+        with _LOCAL_RUN_LOCK:
+            _LOCAL_RUNNING.discard(run_id)
 
 
 def _new_run_id() -> str:
@@ -69,12 +129,14 @@ def _parse_deadline(value: Any) -> datetime | None:
     text = str(value or "").strip()
     if not text:
         return None
+    if _DATE_ONLY_DEADLINE_RE.fullmatch(text):
+        # Unknown clock time, NOT midnight. Downstream management and
+        # notification contracts already accept deadline_at=None.
+        return None
     candidates = (
         "%d.%m.%Y %H:%M",
         "%d.%m.%Y %H:%M:%S",
-        "%d.%m.%Y",
         "%Y-%m-%dT%H:%M:%S",
-        "%Y-%m-%d",
     )
     for fmt in candidates:
         try:
@@ -244,6 +306,8 @@ def _screen_card(
             score += 4
     else:
         reasons.append("deadline_unknown")
+        if _DATE_ONLY_DEADLINE_RE.fullmatch(str(card.get("deadline") or "").strip()):
+            reasons.append("deadline_date_only_time_unverified")
         score -= 5
 
     if nmck is not None:
@@ -276,7 +340,7 @@ def _discover(
     run: DailyTenderRun,
     profile: DailyTenderProfile,
 ) -> list[str]:
-    today = datetime.now(UTC).date()
+    today = _as_utc(run.started_at).date()
     date_from = (today - timedelta(days=profile.lookback_days)).isoformat()
     date_to = today.isoformat()
     discovered: dict[str, dict[str, Any]] = {}
@@ -297,8 +361,15 @@ def _discover(
         except Exception as exc:  # noqa: BLE001 - isolate one public-search failure
             query_errors.append(f"{query}: {type(exc).__name__}")
             continue
-        cards = payload.get("cards") if isinstance(payload, dict) else []
-        if not isinstance(cards, list):
+        if not isinstance(payload, dict):
+            query_errors.append(f"{query}: invalid_search_payload")
+            continue
+        outcome = payload.get("outcome")
+        if not isinstance(outcome, str) or outcome not in {"success_with_results", "success_empty"}:
+            query_errors.append(f"{query}: {outcome if isinstance(outcome, str) and outcome in {'source_unavailable', 'source_not_configured', 'source_error', 'unsupported_search_mode', 'validation_error'} else 'invalid_search_outcome'}")
+            continue
+        cards = payload.get("cards")
+        if not isinstance(cards, list) or (outcome == "success_empty" and cards) or (outcome == "success_with_results" and not cards):
             query_errors.append(f"{query}: invalid_search_payload")
             continue
         for card in cards:
@@ -342,8 +413,11 @@ def _discover(
             current_run_id=run.run_id,
             registry_number=registry,
         )
+        previous_run = session.scalar(select(DailyTenderRun).where(DailyTenderRun.run_id == previous.run_id)) if previous else None
         unchanged = (
-            previous is not None
+            previous_run is not None
+            and previous_run.profile_snapshot_json == run.profile_snapshot_json
+            and previous is not None
             and previous.source_fingerprint == fingerprint
             and (
                 previous.status in _TERMINAL_REUSE_STATUSES
@@ -423,13 +497,72 @@ def _screen(session: Session, run: DailyTenderRun, profile: DailyTenderProfile) 
     reserved_ids = {
         item.id
         for item in run_items
-        if item.status in {"PROCESSING", "MANAGER_READY"}
+        if item.status in {"PROCESSING", "MANAGER_READY", "FAILED"}
         or item.analysis_run_id is not None
     }
     available_shortlist_slots = max(
         0,
         profile.max_deep_analysis - len(reserved_ids),
     )
+    shortlisted = list(
+        session.scalars(
+            select(DailyTenderRunItem)
+            .where(
+                DailyTenderRunItem.run_id == run.run_id,
+                DailyTenderRunItem.status == "SHORTLISTED",
+            )
+            .order_by(
+                DailyTenderRunItem.screening_score.desc(),
+                DailyTenderRunItem.created_at.asc(),
+            )
+        )
+    )
+    # Only a bounded, high-scoring public-EIS shortlist is enriched; never
+    # request every discovered notice. The original official detail must be
+    # archived privately before the precise clock may enter the DB.
+    max_source_checks = min(12, available_shortlist_slots * 3)
+    checked = 0
+    for item in shortlisted:
+        if checked >= max_source_checks:
+            break
+        if item.source != "public_eis_html_44fz" or item.deadline_at is not None:
+            continue
+        checked += 1
+        proof, proof_status = verify_official_eis_deadline(
+            item.source_url, item.registry_number, run.run_id
+        )
+        if proof is None:
+            item.screening_reasons_json = [
+                *(item.screening_reasons_json or []),
+                proof_status,
+            ]
+        else:
+            item.deadline_at = proof.deadline_utc
+            exact_status, exact_score, exact_reasons = _screen_card(
+                profile,
+                {
+                    "title": item.title,
+                    "customer_name": item.customer_name,
+                    "initial_price": item.nmck_amount,
+                    "deadline": proof.deadline_utc.isoformat(),
+                    "status": None,
+                },
+            )
+            item.screening_status = exact_status
+            item.screening_score = exact_score
+            item.screening_reasons_json = [
+                *exact_reasons,
+                proof_status,
+                f"deadline_eis_source_timezone:{proof.official_timezone}",
+                f"deadline_eis_original_sha256:{proof.original_sha256}",
+            ]
+            item.status = "SHORTLISTED" if exact_status == "IN" else "SCREENED_OUT"
+        item.updated_at = utcnow()
+        session.add(item)
+
+    # A date-only listing can be expired after resolving its official clock.
+    # Recompute the shortlist before assigning the deep-analysis limit.
+    session.flush()
     shortlisted = list(
         session.scalars(
             select(DailyTenderRunItem)
@@ -536,10 +669,12 @@ def _process_item(
     _set_run_stage(session, run, "INDEX_DATA_PLATFORM")
     session.add(item)
     session.commit()
-    prepared = prepare_tender_for_analysis(
-        registry_number=item.registry_number,
-        session=session,
-    )
+    with fresh_preparation_priority():
+        prepared = prepare_tender_for_analysis(
+            registry_number=item.registry_number,
+            session=session,
+            data_platform_timeout_seconds=180,
+        )
     if not prepared.ready_for_analysis:
         details = "; ".join(prepared.errors or prepared.warnings or ["data_platform_not_ready"])
         raise RuntimeError(f"Data Platform preparation is not ready: {details}")
@@ -639,6 +774,7 @@ def _counts(items: list[DailyTenderRunItem]) -> dict[str, int]:
 
 def _digest(run: DailyTenderRun, items: list[DailyTenderRunItem]) -> dict[str, Any]:
     counts = _counts(items)
+    counts["discovery_incomplete"] = int(bool(run.error_summary))
     actionable = []
     for item in items:
         if item.status != "MANAGER_READY":
@@ -674,6 +810,7 @@ def _digest(run: DailyTenderRun, items: list[DailyTenderRunItem]) -> dict[str, A
         "profile_id": run.profile_id,
         "profile_version": run.profile_version,
         "counts": counts,
+        "discovery_incomplete": bool(run.error_summary),
         "actionable": actionable,
         "human_control": {
             "decision_required": True,
@@ -687,7 +824,10 @@ def create_daily_tender_run(
     session: Session,
     payload: StartDailyTenderRunRequest,
 ) -> DailyTenderRun:
-    profile = load_daily_tender_profile(payload.profile_id)
+    try:
+        profile = load_daily_tender_profile(payload.profile_id)
+    except ValueError as exc:
+        raise ValidationError(str(exc)) from exc
     run = DailyTenderRun(
         run_id=_new_run_id(),
         profile_id=profile.profile_id,
@@ -715,25 +855,28 @@ def execute_daily_tender_run(
     *,
     retry_failed: bool = False,
 ) -> DailyTenderRun:
-    run = session.scalar(select(DailyTenderRun).where(DailyTenderRun.run_id == run_id))
+    with _run_execution_guard(session, run_id):
+        return _execute_daily_tender_run(session, run_id, retry_failed=retry_failed)
+
+
+def _execute_daily_tender_run(
+    session: Session, run_id: str, *, retry_failed: bool = False
+) -> DailyTenderRun:
+    run = session.scalar(select(DailyTenderRun).where(DailyTenderRun.run_id == run_id).execution_options(populate_existing=True))
     if run is None:
         raise NotFoundError(f"Daily Tender Run '{run_id}' was not found")
     profile = DailyTenderProfile.model_validate(run.profile_snapshot_json)
     if run.status == "COMPLETED" and not retry_failed:
         return run
 
+    discover_needed = run.current_stage == "DISCOVER" or (retry_failed and bool(run.error_summary))
     run.status = "RUNNING"
     run.completed_at = None
     run.updated_at = utcnow()
     session.add(run)
     session.commit()
 
-    items = list(
-        session.scalars(
-            select(DailyTenderRunItem).where(DailyTenderRunItem.run_id == run.run_id)
-        )
-    )
-    if not items:
+    if discover_needed:
         run.current_stage = "DISCOVER"
         session.add(run)
         session.commit()
@@ -778,9 +921,10 @@ def execute_daily_tender_run(
             session.rollback()
             failed_item = session.get(DailyTenderRunItem, item.id)
             if failed_item is not None:
+                failure_stage = failed_item.stage
                 failed_item.status = "FAILED"
                 failed_item.stage = "FAILED"
-                failed_item.error = f"{type(exc).__name__}: {exc}"[:4000]
+                failed_item.error = _safe_processing_error(failure_stage, exc)
                 failed_item.updated_at = utcnow()
                 session.add(failed_item)
                 session.commit()
@@ -797,7 +941,7 @@ def execute_daily_tender_run(
     run = session.scalar(select(DailyTenderRun).where(DailyTenderRun.run_id == run_id))
     if run is None:
         raise NotFoundError(f"Daily Tender Run '{run_id}' was not found")
-    run.counts_json = _counts(items)
+    run.counts_json = {**_counts(items), "discovery_incomplete": int(bool(run.error_summary))}
     run.digest_json = _digest(run, items)
     if run.counts_json["needs_manager"] or run.counts_json["deferred"]:
         run.current_stage = "WAIT_HUMAN"
@@ -811,7 +955,7 @@ def execute_daily_tender_run(
     elif run.counts_json["awaiting_outcome"]:
         run.current_stage = "TRACK_OUTCOME"
         run.status = "WAITING_OUTCOME"
-    elif run.counts_json["failed"]:
+    elif run.counts_json["failed"] or run.error_summary:
         run.current_stage = "DONE"
         run.status = "COMPLETED_WITH_ERRORS"
     else:
@@ -899,6 +1043,8 @@ def resume_pending_daily_tender_runs(
     retry_failed: bool = False,
 ) -> list[DailyTenderRun]:
     resumable_statuses = {
+        "PENDING",
+        "RUNNING",
         "WAITING_HUMAN",
         "WAITING_READINESS",
         "WAITING_SUBMISSION",
@@ -951,7 +1097,7 @@ def to_run_response(session: Session, run: DailyTenderRun) -> DailyTenderRunResp
         current_stage=run.current_stage,
         counts=dict(run.counts_json or {}),
         digest=run.digest_json,
-        error_summary=run.error_summary,
+        error_summary=public_discovery_error_summary(run.error_summary),
         started_at=run.started_at,
         completed_at=run.completed_at,
         created_at=run.created_at,
@@ -985,8 +1131,10 @@ def to_run_response(session: Session, run: DailyTenderRun) -> DailyTenderRunResp
                 unknowns=list(item.unknowns_json or []),
                 human_decision=item.human_decision,
                 human_decision_id=item.human_decision_id,
-                post_decision=dict(item.post_decision_json or {}),
-                error=item.error,
+                post_decision=public_post_decision_state(item.post_decision_json),
+                error=public_failure_code(
+                    item.error, post_decision=item.status == "POST_DECISION_FAILED"
+                ),
                 created_at=item.created_at,
                 updated_at=item.updated_at,
             )

@@ -33,7 +33,22 @@ class FakeClient:
 
     def ingest_chunk(self, *, collection_id: str, chunk_id: str, **kwargs) -> dict:
         self.synchronous.append(chunk_id)
-        return {"chunks": 1, "embeddings": 1}
+        return {
+            "collection_id": collection_id,
+            "canonical_uri": f"tender-chunk://{chunk_id}",
+            "extraction_status": "extracted",
+            "resource_id": f"resource-{chunk_id}",
+            "document_id": f"document-{chunk_id}",
+            "chunks": 1,
+            "embeddings": 1,
+        }
+
+    def collection_stats(self, collection_id: str) -> dict:
+        assert collection_id in self.collections
+        n = len(self.synchronous) + sum(
+            row["status"] == "completed" for row in self.jobs.values()
+        )
+        return {"resources": n, "documents": n, "chunks": n, "embeddings": n}
 
     def enqueue_ingest_document_bytes(self, **kwargs) -> dict:
         self.queued.append(kwargs)

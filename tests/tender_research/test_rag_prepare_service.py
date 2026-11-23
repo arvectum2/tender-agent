@@ -7,6 +7,7 @@ import pytest
 from src.tender_research.rag.prepare_service import (
     TenderPreparationResult,
     TenderPreparationStep,
+    _missing_indexable_source_reason,
     check_preparation_status,
     prepare_tender_for_analysis,
 )
@@ -246,3 +247,70 @@ def test_status_without_tender_is_not_ready() -> None:
         status = check_preparation_status("missing", session=MagicMock())
     assert status["tender_found"] is False
     assert status["ready_for_analysis"] is False
+
+@pytest.mark.parametrize(
+    ("docs", "downloaded", "extracted", "code"),
+    [
+        (0, 0, 0, "source_document_metadata_unavailable"),
+        (4, 0, 0, "source_original_download_unavailable"),
+        (4, 2, 0, "source_text_extraction_unavailable"),
+        (4, 2, 1, "data_platform_projection_empty"),
+    ],
+)
+def test_no_chunks_diagnoses_source_stage_without_implicit_retry(
+    docs: int, downloaded: int, extracted: int, code: str,
+) -> None:
+    message = _missing_indexable_source_reason(
+        documents_total=docs,
+        documents_downloaded=downloaded,
+        extracted_texts_total=extracted,
+    )
+    assert message.startswith(code + ":")
+    assert "ready" not in message.lower()
+
+
+@pytest.mark.parametrize(
+    ("document_count", "expected_code"),
+    [
+        (0, "source_document_metadata_unavailable"),
+        (4, "source_original_download_unavailable"),
+    ],
+)
+def test_prepare_missing_originals_keeps_fail_closed(
+    mock_tender, document_count: int, expected_code: str,
+) -> None:
+    from src.tender_research.config import TenderResearchConfig
+
+    repo = MagicMock()
+    repo.get_tender_by_registry_number.return_value = mock_tender
+    repo.count_chunks_by_tender.return_value = 0
+    repo.count_extracted_documents_by_tender.return_value = 0
+    mock_tender.documents = [
+        MagicMock(
+            download_status="pending",
+            text_extraction_status="pending",
+            extracted_text_path=None,
+            raw_meta={},
+        )
+        for _ in range(document_count)
+    ]
+    client = MagicMock()
+    client.__enter__.return_value = client
+    client.__exit__.return_value = None
+
+    with (
+        patch("src.tender_research.rag.prepare_service.TenderRepository", return_value=repo),
+        patch("src.tender_research.rag.prepare_service.load_config",
+              return_value=TenderResearchConfig(rag_retrieval_backend="data_platform")),
+        patch("src.tender_research.rag.prepare_service.download_tender_documents",
+              return_value={"downloaded": 0, "failed": document_count}),
+        patch("src.tender_research.rag.prepare_service.build_data_platform_client",
+              return_value=client),
+        patch("src.tender_research.rag.prepare_service.DataPlatformDocumentProjector"),
+    ):
+        result = prepare_tender_for_analysis(mock_tender.registry_number, session=MagicMock())
+
+    assert result.status == "failed"
+    assert result.ready_for_analysis is False
+    assert any(error.startswith(expected_code + ":") for error in result.errors)
+    assert result.steps[-1].status == "failed"

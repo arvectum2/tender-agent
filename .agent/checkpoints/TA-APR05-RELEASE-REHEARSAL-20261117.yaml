@@ -1,0 +1,26 @@
+task_id: TA-APR05-RELEASE-REHEARSAL-20261117
+status: completed
+goal: Prove safe pilot activation, entitlement denial and non-destructive feature rollback with saved PRICE-01 history.
+definition_of_done:
+  - Exercise saved estimate, actual snapshot and norm through actual API in isolated fixtures.
+  - Deny protected reads and writes when pilot expires, tenant is suspended or global price gate is disabled.
+  - Restore gates, verify exact unchanged prior history and foreign tenant isolation.
+  - Rehearse R9 backup and restore of migrated synthetic tenant and PRICE-01 records into a distinct database.
+  - Verify the exact pilot Dockerfile image with network disabled and default-off flags.
+  - Run affected regression tests, preserve checkpoint and publish review PR; no live deployment.
+completed:
+  - PRICE-01 code merged with explicit Owner approval at b843f92c.
+  - Non-destructive rollback and tenant entitlement regression implemented and verified.
+  - Migrated disposable PostgreSQL R9 recovery verified, including restart kill switch.
+  - Pilot Dockerfile build and offline archive/registry/default-off smoke added to CI; existing local overlay smoke passed.
+current_stage: completed
+remaining: []
+last_verified_commit: 380bbdb0bb50ec0557eb40ebf14100da5ed0ff1b
+test_results:
+  - Synthetic API release rehearsal PASS; eight read routes and seven valid write/preview requests denied under both master flags, expired trial and suspension.
+  - Per-member legal hold 428; unchanged histories and idempotent replays; foreign isolation; no payment evidence.
+  - APR05, migration, packaging and Node UI regression 79 passed, 2 skipped, 140 warnings; focused rerun 1 PASS; Ruff/diff PASS.
+  - Disposable PostgreSQL migration 122 and R9 backup/restore PASS; seven exact API histories, two byte-exact document downloads, foreign tenant denial, wrong-scope/corrupt-copy rejection, restart kill switch.
+  - Existing local PRICE-01 overlay image offline smoke PASS; default-off gates, six historical archive entries, pinned reviewed registry, non-root. Exact fresh pilot Dockerfile build and network-none smoke PASS in CI.
+  - PR604 exact-head CI 19/19 SUCCESS; quality 5988 passed / 288 skipped / 0 failed, docker-build run 44037220523 explicitly printed PILOT_IMAGE_PRICE01_OFFLINE_PASS.
+resume_instruction: Bounded engineering rehearsal complete; PR604 remains draft awaiting applicable merge approval (not production acceptance). Continue independent APR06 review readiness on successor branch; preserve exact green candidate.

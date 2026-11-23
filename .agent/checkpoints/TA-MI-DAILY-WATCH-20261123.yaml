@@ -1,0 +1,28 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-MI-DAILY-WATCH-20261123
+issue: 719
+status: completed
+goal: 'Implement a production-safe, offline-testable, source-scoped daily business digest runner using existing GEH public snapshots and fresh public SIBUR HTTPS pages.'
+definition_of_done:
+  - 'Safe self-contained read-only reporting runner with guarded optional first-party public SIBUR capture, no login, bids, production DB, model inference or restarts.'
+  - 'Fail closed when most recent GEH source is incomplete, older than 36h or unverified, when SIBUR source capture is incomplete/hash-invalid, or when output directory is unsafe.'
+  - 'Atomic private publication with per-run SHA256 receipt and reliable last-attempt success/blocked state; no stale fallback; source lock prevents overlapping runs.'
+  - 'Focused synthetic/integration tests for dry run, success, concurrent lock, incomplete capture, stale source and preserved prior success; Ruff/compile tests.'
+  - 'Protected exact-head CI and documentation; merge source-only if green; production scheduled installation remains separate explicit Owner gate.'
+completed:
+  - 'Previous source-verified commercial watch PR #718 merged 013237f4cd1e52298d1940888f70fa27cbdaaba6; 9/9 protected CI success, GitVerse mirror success.'
+  - '23-Nov GEH LaunchAgent runs at 07:35 MSK; 08:01 MSK snapshot was at admission/in_progress on inspection. Existing SIBUR public capture script supports 40 pages and source GET without login.'
+  - '23-Nov source-only runner scripts/research/daily_commercial_watch.py: newest verified GEH + strictly bounded opt-in SIBUR first-party public GET; no login, bid, DB, app restarts or model calls. Fail-closed on newest in-flight GEH, source age, incomplete SIBUR, bad SHA, unsafe output directory, low disk, unexpected source URL and concurrent source lock.'
+  - 'Private SHA-bound JSON/Markdown and receipt, atomic last_attempt and last_success; blocked attempt preserves historic proof without fake delivery. Shortlist-only delta names not claims of source closure; prior report hashes rechecked.'
+  - 'Optional launchd template 08:35 MSK (after existing 07:35 GEH and 08:00 Tender Agent), not installed, clean pinned release checkout required and Owner gating recorded in issue #719.'
+  - '46 targeted synthetic tests PASS (26 commercial source + 20 daily runner), Ruff PASS, Python compile PASS, YAML and LaunchAgent plist parsing PASS at 8a893f4709512fea4a7144ad1cded64f33a69aa3.'
+  - 'Actual read-only 23-Nov source replay: 17/17 GEH verified pages, 329 rows, 244 accepted, 34 relevant; existing 22-Nov SIBUR 28/28 SHA pages, 328 IDs, 54 relevant. Ephemeral private-output end-to-end success (report and source hashes, last_attempt/last_success equal) without any production DB, source GET or scheduled install.'
+  - 'Generated first 23-Nov morning dated source-bound 28-card business digest at docs/market-intelligence/SIBUR_GEH_COMMERCIAL_WATCH_2026-11-23.md. As-of 2026-11-23T05:12:10Z: latest GEH complete 17/17 pages, 329 observed, 244 accepted, 85 review, 34 relevant and 0 newly inserted; SIBUR public source last captured 22-Nov 19:29UTC, 28/28 pages, 328 IDs and 54 topical future-deadline leads, source age explicitly disclosed. No model, DB, message or external GET on this replay.'
+current_stage: source_only_runner_complete__protected_publish_gate
+remaining: []
+last_verified_commit: '8a893f4709512fea4a7144ad1cded64f33a69aa3 (46 focused tests PASS, Ruff/compile/YAML/plist PASS, real offline source replay and temp private-output PASS); final protected exact-head CI and merge required'
+test_results: '46 focused pytest PASS (26 core commercial source and 20 daily synthetic), Ruff PASS, Python compile PASS, YAML and launchd plist parse PASS; actual 23-Nov GEH 17/17 and 22-Nov SIBUR 28/28 source proofs; output receipt SHA atomic private PASS. No production changes. Full protected CI and GitVerse mirror must pass before merge.'
+resume_instruction: 'PR for feature/ta-mi-daily-watch-safe-runner-20261123 contains 23-Nov morning source-bound report + fail-closed source-only daily runner, 46 local tests PASS, 28/17 real original page SHA proof, safe ephemeral output. Require protected CI 9/9 and GitVerse Mirror success for FINAL HEAD, six/seven scoped files only, then squash-merge with expected head SHA. If CI fails repair/redo. This merges code only: schedule NOT installed, owner-gated launchd deployment, first true scheduled run and delivery remain OPEN issue #719. Never write LaunchAgents or restart services without owner authorization.'
+production_modified: false
+external_submissions: false
