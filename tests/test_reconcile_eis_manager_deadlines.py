@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import json
-import os
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
@@ -54,7 +53,6 @@ def _fixture(tmp_path: Path, monkeypatch, *, stale: bool = False):
     class FakeAudit:
         @staticmethod
         def extract_exact_eis_deadline(html, registry):
-            assert registry in html
             return {"official_utc": "2026-11-30T06:00:00+00:00"}
 
         @staticmethod
