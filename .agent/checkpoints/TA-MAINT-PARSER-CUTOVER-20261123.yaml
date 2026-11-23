@@ -16,15 +16,22 @@ completed:
   - "Previous PR #722 date-only guard merged; PR #725 exactly 35 historic MANAGER_READY deadlines source-verified and corrected; live Daily Tender still pinned to older code."
   - "23-Nov 10:48 Moscow read-only: PG17 arvectum-postgres healthy, PG16 local-e2e-db healthy, two WAL receiver containers; shared PG17 volume Docker named; active Gemma llama-server 8081, Qwen3 embedding llama-server, Ollama service and OpenCode services."
   - "Read Arvectum Skills arc-operations, incident-response, project-roadmap: diagnostics scope readonly, no runtime authority granted by skills."
-current_stage: verify_backup_recovery_and_daily_parser_integration
+  - "23-Nov 11:00 MSK: independently SHA-reverified all 7 prior PG backup artifacts (five DBs, two globals, 1.677 GB), PG17 identity/system_identifier and client backends; PG17 17.11 shared by TA+DP and PG16 test container distinct."
+  - "2026-11-23 08:03:32 UTC: fresh distinct no-prune backup of both PG containers 5 DBs succeeded; private gen 20261123T080059279106Z, SHA256 manifest 36718621cd232d99f883a56aa6b55104e3593b6d59a67105e94d17729292ad60; older 3 daily generations untouched."
+  - "2026-11-23 08:10:49 UTC: resource-capped network-none PostgreSQL17 full isolated restore of both production DBs succeeded. TA schema 127_private_review_link_corrections and 299 Daily Tender rows; DP 21 public tables. Container auto-removed. Private SHA receipt 83460889ab009156a80aab653667681a02b6f87d321904e4e959b95e48c4c3d9. Long-range 7-day PITR remains UNPROVEN."
+  - "Source-only exact EIS detail verifier and bounded shortlist enrichment implemented on main-derived branch; 59 focused tests and Ruff PASS, all 196/196 original real EIS HTMLs exactly match independently archived clock+zone proof. Source PR #726 with runbook."
+  - "Parser-only hotfix based on ACTUALLY DEPLOYED old commit 9b650a2b818032389cfd6e13799acad33c72089b, not blocked full-Core main: branch release/ta-eis-exact-clock-pinned-20261123 SHA 6ab4ae08f4309b6ad9fc10bf884c5f1744cb26dd, only 4 changes; 54 pinned-base tests and Ruff PASS; GitVerse mirror success and protected CI running."
+  - "Pinned SSD candidate checkout + isolated Python3.12 venv built OFFLINE and 54 tests PASS. Proposed paired backend and Daily Tender wrappers, private unmodified-scope source-release admission and 0700 EIS original archive staged only, no live swap. Staged receipt SHA256 e997635f535b97617597881abde4902f28a3aaed5e9257faf69c5f322ff09b3f."
+  - "Read-only controls confirm PG17 and Gemma still running, isolated restore container removed, live Tender Agent backend SHA unchanged and no LLM shutdown or PG restart performed."
+current_stage: protected_exact_head_ci_and_owner_maintenance_window_gate
 remaining:
-  - "Gather bounded inventory and exact backup/PITR restore proof; inspect existing runbook and service dependencies"
-  - "Implement and test source-only official detail enrichment with strict source validation/timeout/size cap, no invented time"
-  - "Protected CI and stage immutable candidate release and rollback sequence"
-  - "Explicit owner confirmation to BEGIN outage; only then stop LLM and restart PG, cut over parser with guards"
-last_verified_commit: "893efed902dbfea8a94da6175b7e54394f1629b3"
-test_results: "No new parser deployment/test yet; historic date-only parser 36 tests PASS; 35 historic source-proven deadline corrections confirmed independently"
-resume_instruction: "Read this checkpoint and actual main/host, inspect focused dependencies and backup/PITR before changing anything. Continue source-only parser staging, protected PR, candidate immutable release; never stop all LLM, restart PostgreSQL, alter existing live services or release until owner states maintenance window has begun. Do not rerun completed 35-row DB correction. Preserve active TA Watchdog."
+  - "Confirm exact protected 9/9 CI on both PR #726 and pinned-backport SHA 6ab4ae08, GitVerse mirror; merge source-only PR #726"
+  - "Obtain exact Owner maintenance-start signal and outage window for all LLM and shared PG17; do not restart PG16"
+  - "Only then safely quiesce consumers, stop LLM, restart PG17 without volume/image replacement, promote paired parser-only backend/runner release, independent postcheck, rollback if needed"
+  - "Check first full scheduled morning digest 07:00 and Daily Tender 08:00; then checkpoint completed"
+last_verified_commit: '6ab4ae08f4309b6ad9fc10bf884c5f1744cb26dd (pinned hotfix stage) / a9f0f90bdac97e8fb544125a23e00ce1e628e3a7 (source-only runbook branch)'
+test_results: '59 main-derived focused PASS + 196/196 real EIS HTML acceptance; pinned base 54 focused PASS Ruff PASS offline new venv; no-prune 5 DB backup SHA verified, isolated FULL PG17 dual-DB restore PASS; protected CI in progress, live cutover NOT started'
+resume_instruction: 'Continue only source-only CI check: PR #726 exact head and pinned hotfix 6ab4ae08f4309b6ad9fc10bf884c5f1744cb26dd both CI 9/9 + mirror; merge source-only PR after acceptance. PRIVATE no-prune backup in /Users/master/.local/state/arvectum-recovery/maintenance-20261123 and complete airgapped restore already proven, do not re-run. Staged cutover wrappers and manifest exist only under /Volumes/ArvectumSSD/Arvectum/releases/tender-agent-6ab4ae08f4309b6ad9fc10bf884c5f1744cb26dd/staged-cutover. DO NOT stop LLM or PG17, change production wrappers/manifest/marker, reboot or deploy candidate until user declares window started and approves downtime. Main full Core release still independently BLOCKED. Preserve 07:00/08:00 schedules, no new watchdog.'
 production_modified: false
 downtime_started: false
 postgres_restarted: false
