@@ -198,6 +198,32 @@ def expected_release_revision(source: pathlib.Path) -> str:
     )
 
 
+def process_uses_release_venv(args: list[str], pid: str, venv: pathlib.Path) -> bool:
+    """Verify real interpreter and loaded extension from this exact venv.
+
+    macOS framework Python 3.15 rewrites ps argv[0] to Python.app even when
+    launchd execs venv/bin/python. Checking argv[0] alone is a false negative.
+    Preserve the legacy direct path test; require OS-level lsof evidence for
+    framework Python rather than accepting an interpreter name by itself.
+    """
+    expected_tail = ["-m", "uvicorn", "src.main:app", "--host", "127.0.0.1", "--port", "8001"]
+    if len(args) != 1 + len(expected_tail) or args[1:] != expected_tail:
+        return False
+    if args[0] == str(venv / "bin/python"):
+        return True
+    binary = (venv / "bin/python").resolve()
+    app = binary.parent.parent / "Resources/Python.app/Contents/MacOS/Python"
+    if not app.is_file() or args[0] != str(app):
+        return False
+    proofs = tuple((venv / "lib").glob("python*/site-packages/pydantic_core/_pydantic_core*.so"))
+    if len(proofs) != 1:
+        return False
+    code, files = run("lsof", "-nP", "-p", pid)
+    if code != 0:
+        return False
+    return str(proofs[0]) in {line.rsplit(None, 1)[-1] for line in files.splitlines() if line.strip()}
+
+
 def check_release(active: dict) -> dict:
     """Check immutable release rather than a mutable developer checkout."""
     checks: dict[str, bool] = {}
@@ -256,9 +282,7 @@ def check_release(active: dict) -> dict:
         args = shlex.split(command)
     except ValueError:
         args = []
-    checks["process_uses_release_venv"] = code == 0 and args == [
-        str(venv / "bin/python"), "-m", "uvicorn", "src.main:app", "--host", "127.0.0.1", "--port", "8001",
-    ]
+    checks["process_uses_release_venv"] = code == 0 and process_uses_release_venv(args, pid, venv)
     checks["workspace_admission_receipt_and_anonymous_denial"] = workspace_state_matches(active, commit)
     checks["maintenance_lock_released"] = not LOCK.exists()
     try:

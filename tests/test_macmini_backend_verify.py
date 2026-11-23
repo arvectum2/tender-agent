@@ -243,3 +243,28 @@ def test_release_revision_matches_exact_candidate_source(tmp_path):
         "revision = '128_add_tender_async_index_receipts'\\n"
     )
     assert verify.expected_release_revision(root) == "128_add_tender_async_index_receipts"
+
+def test_framework_python_app_process_requires_exact_release_extension(tmp_path, monkeypatch):
+
+    venv = tmp_path / "release" / "venv"
+    binary = tmp_path / "framework" / "Versions" / "3.15" / "bin" / "python3.15"
+    binary.parent.mkdir(parents=True)
+    binary.write_bytes(b"fake-synthetic")
+    app = binary.parent.parent / "Resources/Python.app/Contents/MacOS/Python"
+    app.parent.mkdir(parents=True)
+    app.write_bytes(b"fake-synthetic")
+    (venv / "bin").mkdir(parents=True)
+    (venv / "bin/python").symlink_to(binary)
+    extension = venv / "lib/python3.15/site-packages/pydantic_core/_pydantic_core.cpython-315-darwin.so"
+    extension.parent.mkdir(parents=True)
+    extension.write_bytes(b"fake-synthetic")
+    tail = ["-m", "uvicorn", "src.main:app", "--host", "127.0.0.1", "--port", "8001"]
+    def fake(*_args):
+        return 0, "Python 42 master txt REG 1,28 2 42 " + str(extension) + chr(10)
+    monkeypatch.setattr(verify, "run", fake)
+    assert verify.process_uses_release_venv([str(app), *tail], "42", venv)
+    assert not verify.process_uses_release_venv(["/unknown/python", *tail], "42", venv)
+    assert not verify.process_uses_release_venv([str(app), *tail[:-1], "9999"], "42", venv)
+    monkeypatch.setattr(verify, "run", lambda *a: (0, "unrelated binary"))
+    assert not verify.process_uses_release_venv([str(app), *tail], "42", venv)
+    assert verify.process_uses_release_venv([str(venv / "bin/python"), *tail], "42", venv)
