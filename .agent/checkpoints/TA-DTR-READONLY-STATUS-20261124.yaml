@@ -1,0 +1,25 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-DTR-READONLY-STATUS-20261124
+status: in_progress
+goal: Provide a bounded read-only aggregate status CLI for running daily workflow progress without launching/retrying work or exposing procurement/customer/source data.
+definition_of_done:
+  - Postgres-only read-only repeatable-read transaction, scoped latest ar-vectum-it DTR run and item-status aggregate.
+  - Strict allowlist of output keys/status codes; no customer IDs, source URL, titles, documents, raw error text, secrets, or external side effects.
+  - Synthetic positive, incomplete, empty, unsafe-content and fail-closed negative tests, plus an actual read-only production smoke.
+  - Focused regression, lint, pinned source check and protected exact-head CI; record merge and checkpoint completed.
+completed:
+  - 'New protected main 674814ab (PR740 CI 9/9 success); closed APR0405 synthetic checkpoint.'
+  - '24-Nov production DTR at 09:05 MSK RUNNING/ANALYZE; snapshot shows 3 manager-ready, 1 processing, 4 shortlisted, 21 screened-out and 4 duplicate, no re-run initiated.'
+  - 'Existing operator latest API returns full run and items; safe numeric-only CLI was absent.'
+  - 'Implemented read-only status CLI with fixed profile, DB and role identity, bounded whitelist output, and transactional rollback.'
+  - '24-Nov production GET-equivalent SELECT-only smoke passed, RUNNING / ANALYZE, 33 items; no automation or production mutations.'
+  - 'Affected DTR suite 51 PASS including 16 new negative/positive cases; Ruff, compile, Spec Kit and diff check PASS.'
+current_stage: protected_pr_ci
+remaining:
+  - Complete protected PR and exact-head checks; close checkpoint after merge.
+last_verified_commit: 674814ab25758f33279ed5d6efc2994f7159d128
+tests: {local: 51_passed, new: 16_passed, ruff: pass, compile: pass, live_read_only_smoke: pass, protected_ci: pending}
+resume_instruction: Verify exact protected CI on this source-only branch; merge only if green, then close checkpoint. Never schedule/start/resume DTR or mutate production data, source/DP/LLM, ETP or watchdog. Parent stays in_progress.
+production_modified: false
+external_actions_authorized: false
