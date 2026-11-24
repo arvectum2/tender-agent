@@ -1,0 +1,26 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-DTR-EIGHT-REVIEW-20261124
+status: in_progress
+goal: Source-grounded read-only management decision packet for all eight 24-Nov Daily Tender Run MANAGER_READY notices, preserving the no-bid and no-unverified-rights constraints.
+definition_of_done:
+  - Independently match eight exact registry numbers against immutable saved EIS HTML and original tender document snapshots.
+  - Capture archived dates, NMCK and bid/performance security separately from expenses; screen legal/software/hardware/site risks.
+  - Calculate conditional revenue tax only with stated assumptions, and do not invent vendor quotes, personnel or cash costs.
+  - Deliver a reproducible human GO/CONDITIONAL/NO-GO decision with source paths and SHA256, date caveats, and no ETP/DB mutations.
+  - Record safe product-backlog issue for deadline evidence wiring without bypassing source admission.
+  - Validate documentation/checkpoints, protected CI and source-only merge; parent roadmap remains in_progress.
+completed:
+  - '24-Nov: latest DTR WAITING_HUMAN and 8 MANAGER_READY, all low confidence NEEDS_REVIEW; DB READ ONLY.'
+  - 'Read eight stored EIS original HTML notices, extracted archived MSK deadlines for all eight; all DTR deadline_at values NULL.'
+  - 'Checked all eight archived original attachment directories, source reports, and initial independent source constraints; source gap tracked in GitHub issue746.'
+  - 'Produced dated 8-row source-grounded review with eight original-HTML SHA256 and eight original-TZ SHA256, archived deadlines crosschecked, 0 unconditional GO, 2 conditional/no-bid, 6 NO-GO, financial floor unproven without vendor prices.'
+current_stage: protected_source_review_pr
+remaining:
+  - Verify protected exact-head CI, merge source-only report and close child checkpoint.
+last_verified_commit: 45174590adf91d50dc111d9cc32453bf05d15789
+tests: {source_read_only: pass, source_hash_coverage: 8_of_8_pass, deadline_parse: 8_of_8_pass, protected_ci: pending}
+resume_instruction: Read saved originals only; complete eight row matrix with no invented costs or rights, source SHA and dates; no bids, original EIS retries, production database writes, service/model restarts. Merge source-only after green exact CI; parent roadmap remains in_progress.
+production_modified: false
+external_actions_authorized: false
+linked_issue_deadline_provenance: 746
