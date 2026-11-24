@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-DTR-EIGHT-REVIEW-20261124
-status: in_progress
+status: completed
 goal: Source-grounded read-only management decision packet for all eight 24-Nov Daily Tender Run MANAGER_READY notices, preserving the no-bid and no-unverified-rights constraints.
 definition_of_done:
   - Independently match eight exact registry numbers against immutable saved EIS HTML and original tender document snapshots.
@@ -15,12 +15,12 @@ completed:
   - 'Read eight stored EIS original HTML notices, extracted archived MSK deadlines for all eight; all DTR deadline_at values NULL.'
   - 'Checked all eight archived original attachment directories, source reports, and initial independent source constraints; source gap tracked in GitHub issue746.'
   - 'Produced dated 8-row source-grounded review with eight original-HTML SHA256 and eight original-TZ SHA256, archived deadlines crosschecked, 0 unconditional GO, 2 conditional/no-bid, 6 NO-GO, financial floor unproven without vendor prices.'
-current_stage: protected_source_review_pr
-remaining:
-  - Verify protected exact-head CI, merge source-only report and close child checkpoint.
-last_verified_commit: 45174590adf91d50dc111d9cc32453bf05d15789
-tests: {source_read_only: pass, source_hash_coverage: 8_of_8_pass, deadline_parse: 8_of_8_pass, protected_ci: pending}
-resume_instruction: Read saved originals only; complete eight row matrix with no invented costs or rights, source SHA and dates; no bids, original EIS retries, production database writes, service/model restarts. Merge source-only after green exact CI; parent roadmap remains in_progress.
+  - '24-Nov PR747 exact source head 64993136f02a4e8005db24bfbf8bf139d57ef02e CI run 45377052981 passed 9/9; protected merge commit 974044ac3d3ebe2f00280d82e5f3fb3dea1981bd, no production/ETP/source requests.'
+current_stage: completed_source_only
+remaining: []
+last_verified_commit: 974044ac3d3ebe2f00280d82e5f3fb3dea1981bd
+tests: {source_read_only: pass, source_hash_coverage: 8_of_8_pass, deadline_parse: 8_of_8_pass, protected_ci: success_9_of_9}
+resume_instruction: Completed source-only eight-notice review in protected main PR747, exact head 64993136 and CI 9/9; source report docs/reviews/2026-11-24_dtr_eight_procurement_triage.md. Parent roadmap stays in_progress. Next independent P0 is source admission/evidence deadline issue746; never auto-bid, make new EIS requests or production DB changes.
 production_modified: false
 external_actions_authorized: false
 linked_issue_deadline_provenance: 746
