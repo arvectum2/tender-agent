@@ -2,7 +2,7 @@ version: 1
 repository: arvectum2/tender-agent
 upstream_repository: arvectum2/data-platform
 task_id: TA-DP-EMBEDDING-RETRY-20261124
-status: in_progress
+status: completed
 goal: Distinguish embedding batch count from actual retry attempts using passive numeric-only ingest telemetry without changing vectors, batching, source/tenant semantics or production.
 definition_of_done:
   - Preserve existing bounded 32-text/32768-char batch semantics, atomic ingest, model and provider contract.
@@ -16,11 +16,11 @@ completed:
   - 'No model calls, live ingest, service restarts or DB mutations performed.'
   - 'Added distinct numeric embedding_batches and embedding_retries context-local metrics without changing existing batching or vector semantics.'
   - '24 synthetic/API/ingest focused tests PASS, Ruff PASS; success/retry/final failure, legacy samples, authorization and no private error data validated.'
-current_stage: source_review_pr
-remaining:
-  - Protected exact-head DP CI plus source-only merge; update canonical checkpoint and preserve operational DP issues.
+  - '24-Nov PR140 exact head 7177db52911d5e229e02f0b0701e64e1f77f263e protected DP CI12/12 and mirror1/1 SUCCESS; source-only main merge ec6cac92fa42897df8a908f4b7c3d5a3d292febe.'
+current_stage: completed_upstream_source_only
+remaining: []
 last_verified_commit: 255b65c3e5739f1ae88455b8420954c4698f4b5a
-tests: {synthetic: 24_pass, ruff: pass, protected_ci: pending, production_slo: red}
-resume_instruction: Verify exact-head protected CI for feat/dp-ingest-batch-retry-telemetry-20261124, source-only merge after green, update canonical child status; parent roadmap in_progress. No live ingest/model call, deploy, DB mutation or SLO change.
+tests: {synthetic: 24_pass, ruff: pass, protected_ci: dp_ci_12_of_12_and_gitverse_1_of_1_success, production_slo: red}
+resume_instruction: This source-only child is completed upstream DP PR140 exact head 7177db52911d5e229e02f0b0701e64e1f77f263e, CI12/12 and GitVerse1/1 passed; merged upstream DP main ec6cac92fa42897df8a908f4b7c3d5a3d292febe. Running production not updated, issues133/137 OPEN. Resume under parent TA roadmap, not this child; no automatic deploy or model calls.
 production_modified: false
 related_issues: [133, 137]
