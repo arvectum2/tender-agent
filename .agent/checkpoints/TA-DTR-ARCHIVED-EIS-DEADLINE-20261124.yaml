@@ -14,12 +14,12 @@ completed:
   - 'Existing parse_official_detail returned exact archive UTC and timezone for 8/8 real originals without any source download.'
   - 'Built trusted DB-artefact to local archive verifier and read-only operator CLI, with READ ONLY transaction, no network, never writing live DTR deadlines and explicit current_revision_verified=false.'
   - 'Source candidate tested against eight actual 24-Nov saved EIS artifacts: 8/8 historical UTC deadlines verified, matching hash/length/source metadata and DB deadline_at remains NULL.'
-  - '50 focused synthetic + prior EIS exact-source regressions PASS, Ruff and compile PASS.'
+  - '52 focused synthetic + prior EIS exact-source regressions PASS, Ruff and compile PASS.'
 current_stage: source_ci_pr
 remaining:
   - Verify protected exact-head CI, merge source-only PR, and close child checkpoint; leave issue746 open for current-revision/live-DTR proof.
 last_verified_commit: 974044ac3d3ebe2f00280d82e5f3fb3dea1981bd
-tests: {live_evidence_8_of_8: pass, source_synthetic: 50_passed, ruff: pass, compile: pass, protected_ci: pending}
+tests: {live_evidence_8_of_8: pass, source_synthetic: 52_passed, ruff: pass, compile: pass, protected_ci: pending}
 resume_instruction: Verify protected exact-head CI for source-only PR on feat/ta-dtr-archived-eis-deadline-20261124, merge after 9/9 SUCCESS and close child checkpoint. Do not deploy, fetch EIS, mutate DB or bid. Keep issue746 open for active EIS revision proof.
 source_issue: 746
 production_modified: false

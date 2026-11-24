@@ -177,3 +177,83 @@ def test_no_network_access_in_archive_mode(tmp_path, monkeypatch):
     )
     root, row = snapshot(tmp_path)
     assert build_archived_evidence(RUN, [row], root, now=NOW)["source_network_requests"] == 0
+
+
+def test_operator_transaction_explicit_read_only_and_single_select(tmp_path, monkeypatch, capsys):
+    import json
+
+    from scripts.ops import read_dtr_archived_eis_deadlines as operator
+
+    root, row = snapshot(tmp_path)
+
+    class Result:
+        def mappings(self):
+            return [row]
+
+    class ReadOnlyConnection:
+        def __init__(self):
+            self.commands = []
+            self.rolled_back = False
+
+        def execute(self, query, params=None):
+            cmd = str(query).strip()
+            self.commands.append(cmd)
+            if len(self.commands) == 1:
+                assert cmd == "SET TRANSACTION READ ONLY"
+                assert params is None
+                return None
+            assert len(self.commands) == 2
+            assert cmd.lstrip().startswith("SELECT ")
+            assert "JOIN procurement_raw_artifacts" in cmd
+            assert params == {
+                "run_id": RUN,
+                "item_status": "MANAGER_READY",
+                "artifact_type": "public_detail_common_info",
+            }
+            return Result()
+
+        def rollback(self):
+            self.rolled_back = True
+
+    class Engine:
+        def __init__(self):
+            self.conn = ReadOnlyConnection()
+
+        def connect(self):
+            class Context:
+                def __enter__(inner):
+                    return self.conn
+
+                def __exit__(inner, *_args):
+                    return None
+            return Context()
+
+    engine = Engine()
+    monkeypatch.setattr(operator, "engine", engine)
+    rc = operator.main(["--run-id", RUN, "--archive-root", str(root)])
+    output = capsys.readouterr()
+    assert rc == 0 and not output.err
+    report = json.loads(output.out)
+    assert report["read_only"] is True
+    assert report["database_mutations"] == report["source_network_requests"] == 0
+    assert engine.conn.rolled_back
+    assert len(engine.conn.commands) == 2
+
+
+def test_operator_database_failure_no_secret_leak(tmp_path, monkeypatch, capsys):
+    from sqlalchemy.exc import OperationalError
+
+    from scripts.ops import read_dtr_archived_eis_deadlines as operator
+
+    root, _ = snapshot(tmp_path)
+
+    class Engine:
+        def connect(self):
+            raise OperationalError("SELECT secret_source", params=None, orig=Exception("SECRET_TOKEN"))
+
+    monkeypatch.setattr(operator, "engine", Engine())
+    rc = operator.main(["--run-id", RUN, "--archive-root", str(root)])
+    out = capsys.readouterr()
+    assert rc == 2
+    assert out.out == ""
+    assert out.err.strip() == "ARCHIVED_EIS_UNVERIFIED"

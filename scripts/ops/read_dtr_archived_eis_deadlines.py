@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Any
 
 from sqlalchemy import text
+from sqlalchemy.exc import SQLAlchemyError
 
 from src.modules.daily_tender_run.eis_archived_deadline import (
     ArchivedDeadlineError,
@@ -47,11 +48,13 @@ def build_archived_evidence(
     *,
     now: datetime | None = None,
 ) -> dict[str, Any]:
-    if (not RUN_ID_RE.fullmatch(run_id)
+    if (not isinstance(run_id, str) or not RUN_ID_RE.fullmatch(run_id)
             or not 0 < len(rows) <= MAX_ROWS):
         raise ArchivedDeadlineError("archive_unverified")
-    registries = [row["registry_number"] for row in rows]
-    if any(count != 1 for count in Counter(registries).values()):
+    registries = [row.get("registry_number") for row in rows]
+    if any(not isinstance(value, str) for value in registries) or any(
+        count != 1 for count in Counter(registries).values()
+    ):
         raise ArchivedDeadlineError("archive_unverified")
     records = []
     for row in rows:
@@ -106,7 +109,7 @@ def main(argv: list[str] | None = None) -> int:
             connection.rollback()
         print(json.dumps(evidence, ensure_ascii=False, sort_keys=True))
         return 0
-    except (OSError, ValueError, KeyError, TypeError, RuntimeError):
+    except (OSError, ValueError, KeyError, TypeError, RuntimeError, SQLAlchemyError):
         print("ARCHIVED_EIS_UNVERIFIED", file=sys.stderr)
         return 2
 
