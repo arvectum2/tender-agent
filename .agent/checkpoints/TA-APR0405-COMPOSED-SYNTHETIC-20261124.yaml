@@ -1,0 +1,24 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR0405-COMPOSED-SYNTHETIC-20261124
+status: in_progress
+goal: Validate a composed synthetic APR-03B preanalysis-to-APR-04 onboarding-to-APR-05 SaaS/portfolio human-decision boundary on current main without production effects.
+definition_of_done:
+  - Use one isolated synthetic SQLite/TestClient flow with two tenants and no external network or live model.
+  - Preserve source UNKNOWN/unverified status, absence of operator-selected business limits, legal 428 and tenant isolation.
+  - Verify both isolated synthetic member acceptance and human DEFER do not permit ETP submission or payment.
+  - Run focused regressions and protected exact-head CI, record traceable result and merge only within approved development scope.
+completed:
+  - 'Checked prior APR04/05 isolated rehearsals and source-backed acceptances; do not rerun private original-company staging or misrepresent archived source.'
+  - 'Current protected main 61cf6c92 with prior DTR PR739 CI9/9 verified and merged; DTR child closed in this branch.'
+  - 'Synthetic composed 2-tenant API test verifies UNKNOWN price, test-only legal 428, tenant 404 read/write, DEFER, zero payment and Deal; no network or live DB.'
+  - 'Full affected regression with portfolio UI: 126 PASS, 2 SKIP, 0 failures; Ruff PASS, Spec Kit structural PASS, diff check PASS.'
+current_stage: protected_pr_ci
+remaining:
+  - Create protected review PR, obtain exact-head CI and merge, then close child; real owner acceptance stays open.
+last_verified_commit: 61cf6c92f62673391ff5bba8050c725d90c750cd
+tests: {composed: passed, affected_regression: 126_passed_2_skipped, ruff: pass, spec_criterion: pass, protected_ci: pending}
+resume_instruction: Open PR from this isolated branch; require exact-head CI 9/9 and review no production changes. Merge protected, close child and retain real-source, Owner/legal and physical-iPhone gates open.
+production_modified: false
+live_originals_used: false
+external_actions_authorized: false
