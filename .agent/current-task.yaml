@@ -1286,8 +1286,16 @@ dtr_exit20_observability_2026_11_23:
 
 apr0405_composed_synthetic_2026_11_24:
   task_id: TA-APR0405-COMPOSED-SYNTHETIC-20261124
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-APR0405-COMPOSED-SYNTHETIC-20261124.yaml
-  current_stage: protected_pr_ci
+  current_stage: completed_merged
   base_main: 61cf6c92f62673391ff5bba8050c725d90c750cd
+  parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
+
+dtr_readonly_status_2026_11_24:
+  task_id: TA-DTR-READONLY-STATUS-20261124
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-DTR-READONLY-STATUS-20261124.yaml
+  current_stage: protected_pr_ci
+  base_main: 674814ab25758f33279ed5d6efc2994f7159d128
   parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
