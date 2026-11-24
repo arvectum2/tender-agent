@@ -1,0 +1,25 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-DTR-ARCHIVED-EIS-DEADLINE-20261124
+status: in_progress
+goal: Add safe read-only archive-bound exact deadline evidence for stored EIS snapshots without claiming current official revision or updating live DTR deadlines.
+definition_of_done:
+  - Fail-closed verify exact procurement identity/law/source URL, artifact metadata, owner-controlled regular file bounds, SHA256 and original clock/timezone.
+  - Return explicit archival-only deadline and capture receipt time, current_revision_verified false; never mutate DTR or touch network.
+  - Demonstrate eight real archived source records in strict PostgreSQL READ ONLY and offline filesystem mode.
+  - Synthetic negative and positive regressions and focused static/test gates pass.
+  - Protected source-only CI and merge with exact head, then canonical checkpoint closure. Parent roadmap in_progress.
+completed:
+  - 'Read-only independent 8/8 original HTML plus procurement_raw_artifacts SHA256/size/registry/source binding passed, archive artifact creation times present.'
+  - 'Existing parse_official_detail returned exact archive UTC and timezone for 8/8 real originals without any source download.'
+  - 'Built trusted DB-artefact to local archive verifier and read-only operator CLI, with READ ONLY transaction, no network, never writing live DTR deadlines and explicit current_revision_verified=false.'
+  - 'Source candidate tested against eight actual 24-Nov saved EIS artifacts: 8/8 historical UTC deadlines verified, matching hash/length/source metadata and DB deadline_at remains NULL.'
+  - '52 focused synthetic + prior EIS exact-source regressions PASS, Ruff and compile PASS.'
+current_stage: source_ci_pr
+remaining:
+  - Verify protected exact-head CI, merge source-only PR, and close child checkpoint; leave issue746 open for current-revision/live-DTR proof.
+last_verified_commit: 6e1c58a980a255e55481dec11f40110342cb1a14
+tests: {live_evidence_8_of_8: pass, source_synthetic: 52_passed, ruff: pass, compile: pass, protected_ci: pending}
+resume_instruction: Verify protected exact-head CI for source-only PR on feat/ta-dtr-archived-eis-deadline-20261124, merge after 9/9 SUCCESS and close child checkpoint. Do not deploy, fetch EIS, mutate DB or bid. Keep issue746 open for active EIS revision proof.
+source_issue: 746
+production_modified: false
