@@ -16,8 +16,8 @@ from pathlib import Path
 
 BASE = Path("/Volumes/ArvectumSSD/Arvectum")
 HOME = Path("/Users/master")
-SHA = "9b650a2b818032389cfd6e13799acad33c72089b"
-REVISION = "127_private_review_link_corrections"
+SHA = "023d3670adcbf6d9ae8a318f4433615fa94b680c"
+REVISION = "128_add_tender_async_index_receipts"
 RELEASE = BASE / "releases" / ("tender-agent-" + SHA)
 MARKER = BASE / "runtime/tender-agent/backend-active.json"
 DEPLOY_LOCK = BASE / "runtime/tender-agent/deploy.lock"
@@ -38,7 +38,7 @@ with Session(engine) as s:
     row=s.execute(text('''SELECT current_database(),current_user,
           (SELECT oid::text FROM pg_database WHERE datname=current_database()),
           system_identifier::text FROM pg_control_system()''')).one()
-    if row[0]!='arvectum' or row[1]!='arvectum' or s.execute(text('select version_num from alembic_version')).scalar_one()!='127_private_review_link_corrections':
+    if row[0]!='arvectum' or row[1]!='arvectum' or s.execute(text('select version_num from alembic_version')).scalar_one()!='128_add_tender_async_index_receipts':
         raise RuntimeError('unexpected DB identity')
     if s.execute(text('select pg_is_in_recovery()')).scalar_one():
         raise RuntimeError('standby not permitted')

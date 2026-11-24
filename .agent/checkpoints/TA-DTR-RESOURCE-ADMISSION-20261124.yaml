@@ -14,13 +14,17 @@ completed:
   - 'Current pinned daily launcher verifies deploy lock, health, source pin and DB binding but not resource governor admission before fresh full DTR.'
   - '24-Nov 10:35 MSK live DTR completed automation to WAITING_HUMAN: 8 manager-ready, 21 screened-out, 4 duplicates, no current error; 19/20-Nov historical error flags explain possible exit20.'
   - 'Source-only new full-DTR launch gate reads trusted owner resource governor; normal + batch_limit10 + fresh 100s required; reduced/paused/stale/insecure denied before DB probe.'
-  - '24-Nov real read-only governor probe denied new full DTR; 37 focused regression PASS, Ruff/compile/diff PASS; live process and database not modified.'
+  - '24-Nov real read-only governor probe denied new full DTR; focused suite PASS; live process and database not modified.'
+  - 'Verified actual launchd entrypoint: Python launcher named daily-tender-ssd.sh, installed SHA023d3670 and migration128, while repo template had SHA9b650 and migration127. Exact installed-to-main diff is only those three pin literals.'
+  - 'Reconciled source template pin with actual installed SHA023d3670 and revision128 without writing installed file; added no-downgrade pin regression; 38 focused pytest PASS, Ruff/compile PASS.'
 current_stage: protected_pr_ci
 remaining:
   - Verify exact protected CI and source-only merge; close child checkpoint.
 last_verified_commit: c1cb3eac82aeaba2e6a0bdff2738803a4c9757dc
-tests: {focused: 37_passed, ruff: pass, compile: pass, actual_governor_read_only: denied, protected_ci: pending}
+tests: {focused: 38_passed, ruff: pass, compile: pass, actual_governor_read_only: denied, protected_ci: pending}
 resume_instruction: Verify exact protected CI for source-only PR on feat/ta-dtr-resource-admission-20261124, merge only if 9/9, then close child checkpoint. Do not deploy, restart or re-run DTR without separately authorized change.
 production_modified: false
 governor_mode_observed: paused
 production_approved: false
+linked_issue: 744
+installed_launcher_untouched: true

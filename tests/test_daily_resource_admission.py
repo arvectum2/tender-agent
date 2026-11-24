@@ -113,3 +113,12 @@ def test_denied_fresh_job_never_executes_and_does_not_hold_lock(
     assert output.err.strip() == "DAILY_PREFLIGHT_BLOCKED RuntimeError"
     fd = daily.acquire_daily_lock()
     os.close(fd)
+
+def test_repository_template_pin_matches_owner_installed_128_revision():
+    # The canonical live launcher diff was verified under ARC 24-Nov; a
+    # source-only guard must never silently downgrade a production pin.
+    assert daily.SHA == "023d3670adcbf6d9ae8a318f4433615fa94b680c"
+    assert daily.REVISION == "128_add_tender_async_index_receipts"
+    assert daily.REVISION in daily.PROBE
+    assert "127_private_review_link_corrections" not in daily.PROBE
+    assert daily.RELEASE.name.endswith(daily.SHA)
