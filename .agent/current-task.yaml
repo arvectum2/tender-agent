@@ -1324,3 +1324,11 @@ dtr_eight_review_2026_11_24:
   current_stage: completed_source_only
   base_main: 45174590adf91d50dc111d9cc32453bf05d15789
   parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
+
+dtr_archived_eis_deadline_2026_11_24:
+  task_id: TA-DTR-ARCHIVED-EIS-DEADLINE-20261124
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-DTR-ARCHIVED-EIS-DEADLINE-20261124.yaml
+  current_stage: source_ci_pr
+  base_main: 974044ac3d3ebe2f00280d82e5f3fb3dea1981bd
+  parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
