@@ -1,0 +1,33 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-DP-SEARCH-PHASE-20261124
+status: completed
+goal: Attribute current Data Platform search SLO RED to safe numeric execution stages from existing requests only, without generating search/model load.
+definition_of_done:
+  - In upstream arvectum2/data-platform source, store max 256 source-free numeric search stage samples from existing successful search requests.
+  - Expose numeric p95/count per trusted stage in existing authenticated support readiness, separate from HTTP search SLO and error rate.
+  - No raw query, identifiers, collection, source title, metadata, provider, credentials, or model text in saved telemetry.
+  - Test positive, absent and malicious/invalid phase events, limits, endpoint contract and current behavior with focused pytest and exact protected CI.
+  - Preserve production deployment/provider/LLM/DB/ETP unchanged; record exact PR and acceptance boundaries.
+completed:
+  - '24-Nov authorised aggregate GET: search RED p95 10086ms/40 against 1500ms, 0 errors; ingest currently GREEN p95 1213ms/256 but independent sustained acceptance remains open.'
+  - 'Data Platform issue #137 created, linked to earlier #133 ingest SLO.'
+  - 'Source review: SearchStageDiagnostic already has numeric duration stage names, but readiness currently aggregates ingest phases only.'
+  - 'Mac mini swap >25GiB and 31% free memory: do not run a second Qwen, staging model or restart.'
+  - 'Upstream DP source PR138 head a28829702ac52228b5626488ee85becc124bb1aa adds bounded 256-only numeric successful-search phases from SearchStageDiagnostic with strict stage whitelist.'
+  - 'HTTP GET readiness remains authoritative and gains separately counted phase p95; no source/query/tenant/provider metadata, no replay or extra model requests.'
+  - '50 focused API/search/supportability tests PASS, Ruff and Python compile PASS, git diff check PASS; no live production deployment.'
+  - 'DP PR138 exact head a28829702ac52228b5626488ee85becc124bb1aa protected data-platform-ci run45340032275 12/12 SUCCESS, GitVerse Mirror Health run45340032278 SUCCESS.'
+  - 'Protected DP main merge 361f3b27a701b949b94c1adb74eae8586cc801f7 confirmed. Issue #137 remains OPEN for real production SLO proof.'
+current_stage: completed_upstream_source_only
+remaining: []
+last_verified_commit: 'DP protected main 361f3b27a701b949b94c1adb74eae8586cc801f7 / TA baseline 674814ab25758f33279ed5d6efc2994f7159d128'
+tests: {local: 50_passed, ruff: pass, compile: pass, upstream_ci: success_12_of_12, gitverse_mirror_health: success}
+resume_instruction: This source-only DP search phase instrumentation child is completed via PR138. Issue #137 remains OPEN/RED: only after owner-approved deployment, real model capacity admission and independent representative search p95 should production acceptance be considered. Parent TA-ROADMAP-EXEC remains in_progress.
+upstream_repo: arvectum2/data-platform
+upstream_issue: 137
+upstream_branch: feat/dp-search-phase-observability-20261124
+upstream_pr: 138
+production_modified: false
+models_restarted: false
+owner_release_approved: false
