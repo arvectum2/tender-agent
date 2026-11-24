@@ -1,0 +1,25 @@
+version: 1
+repository: arvectum2/tender-agent
+upstream_repository: arvectum2/data-platform
+task_id: TA-DP-SEARCH-AGGREGATE-20261124
+status: completed
+goal: Source-only privacy-preserving search-phase MODE/FEATURE cohorts in existing PR138 search-phase readiness, no duplicate instrumentation or production deployment.
+definition_of_done:
+  - Reuse existing PR138 bounded stage metrics, extending only fixed search-mode and feature cohorts without texts, URLs, collection IDs, provider or model identity.
+  - Show exact stage-level p95 and count and diagnostic cohort coverage without inferring current root cause, relaxing thresholds or changing search result semantics.
+  - Add negative and contract tests for missing/malformed stage data, authorization, cap, mode separation and lack of confidential content.
+  - Verify focused tests in isolated source worktree; protected CI and reviewed source-only PR in Data Platform.
+  - Preserve parent roadmap in_progress and exact tracked commits; production SLO remains RED until separately proven.
+completed:
+  - '24-Nov source PR138 already merged search_phases aggregate, but running production lacks that field; avoid needless duplicate implementation.'
+  - 'Live 24-Nov read-only support readiness RED search p95 11468ms/80, ingest p95 29673ms/256 (later 34275ms/256), unknown phase root cause.'
+  - 'Added fixed mode lexical/vector/hybrid/unknown and rerank/expansion yes/no cohorts to existing stage p95; no SLO or search semantics change.'
+  - '36 focused source tests PASS: synthetic mode/feature cohorts, authenticated readiness GET, invalid mode, privacy and bounded window, with no production search POST.'
+  - 'Protected exact-head DP PR139 CI 12/12 and GitVerse mirror 1/1 SUCCESS, merged upstream main cdf922cf80f7bd11a2e1d305b9d453d8e14d296a; no production deployment.'
+current_stage: completed_upstream_source_only
+remaining: []
+last_verified_commit: e685c6378640e94da3384cc4b92b760f2a022ce2
+tests: {synthetic: 36_pass, ruff: pass, protected_ci: dp_ci_12_of_12_and_gitverse_1_of_1_success, production_slo: red}
+resume_instruction: Source-only PR139 merged upstream DP main cdf922cf80f7bd11a2e1d305b9d453d8e14d296a; exact-head b4f0fabf4b1e0faa826572a0911f518cbc2d6635 passed DP CI 12/12 and mirror 1/1. Active production is not updated; search SLO remains RED and owner-gated. Parent roadmap still in_progress.
+production_modified: false
+related_issues: [137, 133]

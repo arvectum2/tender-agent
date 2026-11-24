@@ -1332,3 +1332,19 @@ dtr_archived_eis_deadline_2026_11_24:
   current_stage: completed_source_only
   base_main: 6e1c58a980a255e55481dec11f40110342cb1a14
   parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
+
+dp_search_aggregate_2026_11_24:
+  task_id: TA-DP-SEARCH-AGGREGATE-20261124
+  status: completed
+  checkpoint: .agent/checkpoints/TA-DP-SEARCH-AGGREGATE-20261124.yaml
+  current_stage: completed_upstream_source_only
+  parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
+  upstream_repository: arvectum2/data-platform
+
+dp_embedding_retry_metrics_2026_11_24:
+  task_id: TA-DP-EMBEDDING-RETRY-20261124
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-DP-EMBEDDING-RETRY-20261124.yaml
+  current_stage: source_review_pr
+  parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
+  upstream_repository: arvectum2/data-platform
