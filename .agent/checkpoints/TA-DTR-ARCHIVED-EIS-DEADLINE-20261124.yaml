@@ -18,7 +18,7 @@ completed:
 current_stage: source_ci_pr
 remaining:
   - Verify protected exact-head CI, merge source-only PR, and close child checkpoint; leave issue746 open for current-revision/live-DTR proof.
-last_verified_commit: 974044ac3d3ebe2f00280d82e5f3fb3dea1981bd
+last_verified_commit: 6e1c58a980a255e55481dec11f40110342cb1a14
 tests: {live_evidence_8_of_8: pass, source_synthetic: 52_passed, ruff: pass, compile: pass, protected_ci: pending}
 resume_instruction: Verify protected exact-head CI for source-only PR on feat/ta-dtr-archived-eis-deadline-20261124, merge after 9/9 SUCCESS and close child checkpoint. Do not deploy, fetch EIS, mutate DB or bid. Keep issue746 open for active EIS revision proof.
 source_issue: 746
