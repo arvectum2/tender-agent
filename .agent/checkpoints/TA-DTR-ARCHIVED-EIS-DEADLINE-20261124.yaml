@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-DTR-ARCHIVED-EIS-DEADLINE-20261124
-status: in_progress
+status: completed
 goal: Add safe read-only archive-bound exact deadline evidence for stored EIS snapshots without claiming current official revision or updating live DTR deadlines.
 definition_of_done:
   - Fail-closed verify exact procurement identity/law/source URL, artifact metadata, owner-controlled regular file bounds, SHA256 and original clock/timezone.
@@ -15,11 +15,11 @@ completed:
   - 'Built trusted DB-artefact to local archive verifier and read-only operator CLI, with READ ONLY transaction, no network, never writing live DTR deadlines and explicit current_revision_verified=false.'
   - 'Source candidate tested against eight actual 24-Nov saved EIS artifacts: 8/8 historical UTC deadlines verified, matching hash/length/source metadata and DB deadline_at remains NULL.'
   - '52 focused synthetic + prior EIS exact-source regressions PASS, Ruff and compile PASS.'
-current_stage: source_ci_pr
-remaining:
-  - Verify protected exact-head CI, merge source-only PR, and close child checkpoint; leave issue746 open for current-revision/live-DTR proof.
-last_verified_commit: 6e1c58a980a255e55481dec11f40110342cb1a14
-tests: {live_evidence_8_of_8: pass, source_synthetic: 52_passed, ruff: pass, compile: pass, protected_ci: pending}
-resume_instruction: Verify protected exact-head CI for source-only PR on feat/ta-dtr-archived-eis-deadline-20261124, merge after 9/9 SUCCESS and close child checkpoint. Do not deploy, fetch EIS, mutate DB or bid. Keep issue746 open for active EIS revision proof.
+  - '24-Nov PR749 source head d79e7669fc00faa928b35aed09d5426272bb2810, protected run45391238377 9/9 SUCCESS, source-only merged main e685c6378640e94da3384cc4b92b760f2a022ce2. No production deployment.'
+current_stage: completed_source_only
+remaining: []
+last_verified_commit: e685c6378640e94da3384cc4b92b760f2a022ce2
+tests: {live_evidence_8_of_8: pass, source_synthetic: 52_passed, ruff: pass, compile: pass, protected_ci: 9_of_9_success}
+resume_instruction: 'This source-only child is complete: PR749 exact head d79e7669fc00faa928b35aed09d5426272bb2810, protected CI run45391238377 9/9 SUCCESS, merged into main e685c6378640e94da3384cc4b92b760f2a022ce2. The source tool is not deployed. Keep issue746 OPEN for current EIS revision proof; parent roadmap stays in_progress. No live EIS fetch/DB writes/ETP/deploy.'
 source_issue: 746
 production_modified: false
