@@ -1308,3 +1308,11 @@ dp_search_phase_2026_11_24:
   upstream_repo: arvectum2/data-platform
   upstream_issue: 137
   parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
+
+dtr_resource_admission_2026_11_24:
+  task_id: TA-DTR-RESOURCE-ADMISSION-20261124
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-DTR-RESOURCE-ADMISSION-20261124.yaml
+  current_stage: protected_pr_ci
+  base_main: c1cb3eac82aeaba2e6a0bdff2738803a4c9757dc
+  parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress

@@ -1,0 +1,26 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-DTR-RESOURCE-ADMISSION-20261124
+status: in_progress
+goal: Fail closed before scheduling a new full Daily Tender Run if fresh trusted host resource governor evidence is not normal, without interfering with a run already active.
+definition_of_done:
+  - Use existing host governor health.json, only valid fresh owner-controlled telemetry and normal/full capacity mode for unrestricted daily launch.
+  - Check before expensive release/DB preflight and before new workflow exec; no stop, retry, restart, mutating DB or changes to ongoing jobs.
+  - Reject missing, malformed, stale, symlink, inconsistent batch limit, paused and reduced admissions, with no path/secret/error leakage.
+  - Synthetic unit tests for successful and negative cases; focused regressions, lint, compile, source checks and protected exact-head CI.
+  - Merge source-only under protected CI; never deploy or modify scheduled launchd without separate Owner approval.
+completed:
+  - '24-Nov 10:30 MSK live host observed swap used approx 82GiB and resource governor health.json status pass but mode paused, batch_limit 0.'
+  - 'Current pinned daily launcher verifies deploy lock, health, source pin and DB binding but not resource governor admission before fresh full DTR.'
+  - '24-Nov 10:35 MSK live DTR completed automation to WAITING_HUMAN: 8 manager-ready, 21 screened-out, 4 duplicates, no current error; 19/20-Nov historical error flags explain possible exit20.'
+  - 'Source-only new full-DTR launch gate reads trusted owner resource governor; normal + batch_limit10 + fresh 100s required; reduced/paused/stale/insecure denied before DB probe.'
+  - '24-Nov real read-only governor probe denied new full DTR; 37 focused regression PASS, Ruff/compile/diff PASS; live process and database not modified.'
+current_stage: protected_pr_ci
+remaining:
+  - Verify exact protected CI and source-only merge; close child checkpoint.
+last_verified_commit: c1cb3eac82aeaba2e6a0bdff2738803a4c9757dc
+tests: {focused: 37_passed, ruff: pass, compile: pass, actual_governor_read_only: denied, protected_ci: pending}
+resume_instruction: Verify exact protected CI for source-only PR on feat/ta-dtr-resource-admission-20261124, merge only if 9/9, then close child checkpoint. Do not deploy, restart or re-run DTR without separately authorized change.
+production_modified: false
+governor_mode_observed: paused
+production_approved: false

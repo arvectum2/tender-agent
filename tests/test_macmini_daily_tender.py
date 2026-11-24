@@ -51,6 +51,7 @@ def test_dirty_or_stale_release_rejected(tmp_path,monkeypatch):
     monkeypatch.setattr(daily,"no_maintenance",lambda:None)
     monkeypatch.setattr(daily,"private_file",lambda _:None)
     monkeypatch.setattr(daily,"check_lock_paths",lambda:None)
+    monkeypatch.setattr(daily,"require_full_resource_admission",lambda:None)
     monkeypatch.setattr(daily,"RELEASE",Path(home))
     with pytest.raises(RuntimeError,match="pin"):
         daily.preflight()

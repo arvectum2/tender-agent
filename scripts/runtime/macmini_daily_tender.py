@@ -11,6 +11,7 @@ import stat
 import subprocess
 import sys
 import urllib.request
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 BASE = Path("/Volumes/ArvectumSSD/Arvectum")
@@ -21,6 +22,7 @@ RELEASE = BASE / "releases" / ("tender-agent-" + SHA)
 MARKER = BASE / "runtime/tender-agent/backend-active.json"
 DEPLOY_LOCK = BASE / "runtime/tender-agent/deploy.lock"
 LOCK_ROOT = HOME / "Library/Application Support/Arvectum/daily-locks"
+RESOURCE_HEALTH = HOME / "ArvectumSafe/runtime/ta-resource-governor/health.json"
 DAILY_ENV = HOME / "Library/Application Support/Arvectum/daily-tender-runtime.env"
 BACKEND_ENV = HOME / "Library/Application Support/Arvectum/tender-agent/runtime.env"
 PATH = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
@@ -93,9 +95,59 @@ def check_lock_paths():
         private_file(path)
 
 
+
+def require_full_resource_admission(path: Path = RESOURCE_HEALTH, *, now: datetime | None = None) -> None:
+    """Reject a new *full* DTR unless current trusted host admission is normal.
+
+    Reduced (batch limit 3) does not admit a full daily run. This never
+    interrupts an existing daily process or changes resource governor state.
+    """
+    fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+    try:
+        meta = os.fstat(fd)
+        if (
+            not stat.S_ISREG(meta.st_mode)
+            or meta.st_uid != os.getuid()
+            or meta.st_nlink != 1
+            or meta.st_mode & 0o022
+            or not 0 < meta.st_size <= 4096
+        ):
+            raise RuntimeError("Resource admission unavailable")
+        raw = os.read(fd, 4097)
+        if len(raw) > 4096:
+            raise RuntimeError("Resource admission unavailable")
+    finally:
+        os.close(fd)
+    try:
+        data = json.loads(raw)
+        if not isinstance(data, dict):
+            raise TypeError("not a JSON object")
+        stamp = data.get("checked_at_utc")
+        if not isinstance(stamp, str):
+            raise TypeError("invalid timestamp")
+        observed = datetime.fromisoformat(stamp)
+        current = now if now is not None else datetime.now(UTC)
+        if observed.tzinfo is None or current.tzinfo is None:
+            raise ValueError("timestamp without timezone")
+        age = current.astimezone(UTC) - observed.astimezone(UTC)
+        if not (
+            type(data.get("schema")) is int
+            and data["schema"] == 1
+            and data.get("status") == "pass"
+            and data.get("mode") == "normal"
+            and type(data.get("batch_limit")) is int
+            and data["batch_limit"] == 10
+            and timedelta(0) <= age <= timedelta(seconds=100)
+        ):
+            raise ValueError("resource admission not normal")
+    except (KeyError, TypeError, ValueError) as exc:
+        raise RuntimeError("Resource admission unavailable") from exc
+
+
 def preflight():
     no_maintenance()
     check_lock_paths()
+    require_full_resource_admission()
     private_file(MARKER)
     marker=json.loads(MARKER.read_text())
     source=RELEASE/"source"
