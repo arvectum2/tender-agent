@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-DTR-READONLY-STATUS-20261124
-status: in_progress
+status: completed
 goal: Provide a bounded read-only aggregate status CLI for running daily workflow progress without launching/retrying work or exposing procurement/customer/source data.
 definition_of_done:
   - Postgres-only read-only repeatable-read transaction, scoped latest ar-vectum-it DTR run and item-status aggregate.
@@ -16,11 +16,11 @@ completed:
   - '24-Nov production GET-equivalent SELECT-only smoke passed, RUNNING / ANALYZE, 33 items; no automation or production mutations.'
   - 'Affected DTR suite 60 PASS including 25 new negative/positive cases; Ruff, compile, Spec Kit and diff check PASS.'
   - '24-Nov real read-only smoke at 09:15 MSK: RUNNING/INDEX_DATA_PLATFORM, 4 MANAGER_READY, 1 PROCESSING, 3 SHORTLISTED; added INDEX_DATA_PLATFORM and SUMMARIZE with source-derived stage-coverage regression.'
-current_stage: protected_pr_ci
-remaining:
-  - Complete protected PR and exact-head checks; close checkpoint after merge.
-last_verified_commit: 674814ab25758f33279ed5d6efc2994f7159d128
-tests: {local: 60_passed, new: 25_passed, ruff: pass, compile: pass, live_read_only_smoke: pass, protected_ci: pending}
-resume_instruction: Verify exact protected CI on this source-only branch; merge only if green, then close checkpoint. Never schedule/start/resume DTR or mutate production data, source/DP/LLM, ETP or watchdog. Parent stays in_progress.
+  - 'TA PR741 exact-head c2ad44c2e1f50f39c7457d67a2d0c3f16ba25685 protected CI run45339097009 9/9 SUCCESS and protected main merge 37d1c896dab9a6218df490ab7e72d9c76f242418.'
+current_stage: completed_merged
+remaining: []
+last_verified_commit: 37d1c896dab9a6218df490ab7e72d9c76f242418
+tests: {local: 60_passed, new: 25_passed, ruff: pass, compile: pass, live_read_only_smoke: pass, protected_ci: success_9_of_9}
+resume_instruction: Source-only read-only DTR probe completed via PR741 in protected main. Do not repeat historical runs, deploy unapproved, restart model or mutate production DB. Parent roadmap remains in_progress.
 production_modified: false
 external_actions_authorized: false

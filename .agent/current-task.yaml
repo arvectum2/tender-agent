@@ -1294,9 +1294,9 @@ apr0405_composed_synthetic_2026_11_24:
 
 dtr_readonly_status_2026_11_24:
   task_id: TA-DTR-READONLY-STATUS-20261124
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-DTR-READONLY-STATUS-20261124.yaml
-  current_stage: protected_pr_ci
+  current_stage: completed_merged
   base_main: 674814ab25758f33279ed5d6efc2994f7159d128
   parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
 
