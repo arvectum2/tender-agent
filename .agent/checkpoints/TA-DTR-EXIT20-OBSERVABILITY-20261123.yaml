@@ -1,0 +1,21 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-DTR-EXIT20-OBSERVABILITY-20261123
+status: in_progress
+goal: Keep DTR exit=20 fail-closed but attribute current-vs-resumed historical errors without logging private content.
+definition_of_done:
+  - Source-reconcile Nov 23 clean DTR vs past unresolved runs and explain exit20 accurately.
+  - Emit bounded redacted diagnostics on exit20; never output source text, raw errors, secrets or customer data.
+  - Preserve zero and nonzero exit semantics, no retry or external actions.
+  - Focused tests, Ruff, exact-head protected CI; record verified hash and checkout state.
+completed:
+  - '23-Nov read-only pinned release 023d3670 verifier 15/15 OK; DTR preflight read-only PASS.'
+  - 'Read-only log: Nov23 4 discovered, 1 MANAGER_READY, 3 SCREENED_OUT, 0 failed, zero run error; Nov19 8 source/DP failures, Nov20 3 source originals; runner checks resumed historical runs and uses exit20 for any unresolved error.'
+  - 'Implemented bounded redacted DTR_EXIT20 cause classification, preserving all prior exit semantics and explicitly no retries.'
+  - '35 focused plus existing daily-run tests PASS, Ruff and compile PASS; protected PR #739 in review.'
+current_stage: protected_pr_ci
+remaining:
+  - Protected exact-head CI and merge according to branch policy.
+last_verified_commit: 329d80f4
+tests: {focused_and_existing: 35_passed, ruff: pass, compile: pass, protected_ci: pending}
+resume_instruction: Review bounded DTR_EXIT20 diagnostic in isolated branch, complete exact-head protected CI and merge if green; keep live DTR/DP unchanged, and do not retry historical failed source runs.
