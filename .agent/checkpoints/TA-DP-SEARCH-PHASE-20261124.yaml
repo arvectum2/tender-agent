@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-DP-SEARCH-PHASE-20261124
-status: in_progress
+status: completed
 goal: Attribute current Data Platform search SLO RED to safe numeric execution stages from existing requests only, without generating search/model load.
 definition_of_done:
   - In upstream arvectum2/data-platform source, store max 256 source-free numeric search stage samples from existing successful search requests.
@@ -17,13 +17,13 @@ completed:
   - 'Upstream DP source PR138 head a28829702ac52228b5626488ee85becc124bb1aa adds bounded 256-only numeric successful-search phases from SearchStageDiagnostic with strict stage whitelist.'
   - 'HTTP GET readiness remains authoritative and gains separately counted phase p95; no source/query/tenant/provider metadata, no replay or extra model requests.'
   - '50 focused API/search/supportability tests PASS, Ruff and Python compile PASS, git diff check PASS; no live production deployment.'
-current_stage: upstream_protected_ci
-remaining:
-  - Verify upstream protected exact-head CI and GitVerse mirror, merge only if green; close child when merged.
-  - Keep actual production search SLO RED until independently proven after owner-approved deployment.
-last_verified_commit: 'DP main e4fdda34067dfd341e22a5ed53ea7d22f3d372f0; TA main 674814ab25758f33279ed5d6efc2994f7159d128'
-tests: {local: 50_passed, ruff: pass, compile: pass, upstream_ci: pending}
-resume_instruction: Check protected exact-head DP PR138 at a28829702ac52228b5626488ee85becc124bb1aa and GitVerse mirror; merge source-only if green. Then update TA checkpoint after PR741 merge and complete protected sync. No live model, reindex, schema changes or service deployment.
+  - 'DP PR138 exact head a28829702ac52228b5626488ee85becc124bb1aa protected data-platform-ci run45340032275 12/12 SUCCESS, GitVerse Mirror Health run45340032278 SUCCESS.'
+  - 'Protected DP main merge 361f3b27a701b949b94c1adb74eae8586cc801f7 confirmed. Issue #137 remains OPEN for real production SLO proof.'
+current_stage: completed_upstream_source_only
+remaining: []
+last_verified_commit: 'DP protected main 361f3b27a701b949b94c1adb74eae8586cc801f7 / TA baseline 674814ab25758f33279ed5d6efc2994f7159d128'
+tests: {local: 50_passed, ruff: pass, compile: pass, upstream_ci: success_12_of_12, gitverse_mirror_health: success}
+resume_instruction: This source-only DP search phase instrumentation child is completed via PR138. Issue #137 remains OPEN/RED: only after owner-approved deployment, real model capacity admission and independent representative search p95 should production acceptance be considered. Parent TA-ROADMAP-EXEC remains in_progress.
 upstream_repo: arvectum2/data-platform
 upstream_issue: 137
 upstream_branch: feat/dp-search-phase-observability-20261124

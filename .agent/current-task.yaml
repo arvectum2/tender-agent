@@ -1302,9 +1302,9 @@ dtr_readonly_status_2026_11_24:
 
 dp_search_phase_2026_11_24:
   task_id: TA-DP-SEARCH-PHASE-20261124
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-DP-SEARCH-PHASE-20261124.yaml
-  current_stage: upstream_protected_ci
+  current_stage: completed_upstream_source_only
   upstream_repo: arvectum2/data-platform
   upstream_issue: 137
   parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
