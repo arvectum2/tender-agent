@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-DTR-RESOURCE-ADMISSION-20261124
-status: in_progress
+status: completed
 goal: Fail closed before scheduling a new full Daily Tender Run if fresh trusted host resource governor evidence is not normal, without interfering with a run already active.
 definition_of_done:
   - Use existing host governor health.json, only valid fresh owner-controlled telemetry and normal/full capacity mode for unrestricted daily launch.
@@ -17,12 +17,12 @@ completed:
   - '24-Nov real read-only governor probe denied new full DTR; focused suite PASS; live process and database not modified.'
   - 'Verified actual launchd entrypoint: Python launcher named daily-tender-ssd.sh, installed SHA023d3670 and migration128, while repo template had SHA9b650 and migration127. Exact installed-to-main diff is only those three pin literals.'
   - 'Reconciled source template pin with actual installed SHA023d3670 and revision128 without writing installed file; added no-downgrade pin regression; 38 focused pytest PASS, Ruff/compile PASS.'
-current_stage: protected_pr_ci
-remaining:
-  - Verify exact protected CI and source-only merge; close child checkpoint.
-last_verified_commit: c1cb3eac82aeaba2e6a0bdff2738803a4c9757dc
-tests: {focused: 38_passed, ruff: pass, compile: pass, actual_governor_read_only: denied, protected_ci: pending}
-resume_instruction: Verify exact protected CI for source-only PR on feat/ta-dtr-resource-admission-20261124, merge only if 9/9, then close child checkpoint. Do not deploy, restart or re-run DTR without separately authorized change.
+  - 'PR743 exact source head 86b5328a0fe8b317afe499aada0a29d661886a11, protected CI run 45350286373 9/9 SUCCESS; merged protected main 45174590adf91d50dc111d9cc32453bf05d15789. Installed launcher remains unchanged.'
+current_stage: completed_source_only
+remaining: []
+last_verified_commit: 45174590adf91d50dc111d9cc32453bf05d15789
+tests: {focused: 38_passed, ruff: pass, compile: pass, actual_governor_read_only: denied, protected_ci: success_9_of_9}
+resume_instruction: This source-only engineering child is completed in protected main via PR743, CI9/9 on exact head 86b5328a. Live launchd/production launcher unchanged; do not deploy, restart or re-run DTR without separately approved change. Parent roadmap stays in_progress; operations incident issue744 stays open.
 production_modified: false
 governor_mode_observed: paused
 production_approved: false

@@ -10,6 +10,7 @@ Dated progress delta to [the 23-Nov full product roadmap](PRODUCT_STATUS_2026-11
 | Daily runner error attribution | TA PR #739 merged, main 61cf6c92; protected CI 9/9 | Code only; production runner remains pinned |
 | APR03B/04/05 two-tenant synthetic API | TA PR #740 merged, main 674814ab; protected CI 9/9; local 126 PASS / 2 optional SKIP | Synthetic API only, no legal real-company acceptance or ETP |
 | Read-only DTR status | TA PR #741 merged, main 37d1c896; protected CI 9/9, local DTR 60 PASS | Source-only, protected production runner stays pinned |
+| New full-DTR resource admission | [TA PR #743](https://github.com/arvectum2/tender-agent/pull/743) merged protected main 45174590, exact-head CI 9/9, 38 focused PASS | Code only, live pinned launcher still unchanged; operations #744 OPEN |
 | Search phase timing | [DP PR #138](https://github.com/arvectum2/data-platform/pull/138) merged, main 361f3b27; protected DP CI 12/12 and mirror success; local 50 PASS | Numeric-only code, not deployed; live search SLO still RED |
 
 ## Actual operations and blockers
@@ -20,6 +21,13 @@ Dated progress delta to [the 23-Nov full product roadmap](PRODUCT_STATUS_2026-11
 - Mac mini used over 25GiB swap; second Qwen, staging inference, iPhone simulator and service restarts remain resource-blocked.
 - Official current EIS originals [#679](https://github.com/arvectum2/tender-agent/issues/679) and one SIBUR PPT original [#686](https://github.com/arvectum2/tender-agent/issues/686) require separately approved current primary-source proof; no blind fetch or fabricated authenticity.
 - Seven-day physical PITR [#685](https://github.com/arvectum2/tender-agent/issues/685) remains unproven. Earliest independently receipted full base 20-Nov 08:47 UTC, first possible seven-day age 27-Nov 08:47 UTC, further WAL continuity and exact restore still required.
+
+## Additional 24-Nov verified operations
+
+- At 10:35 MSK, the 24-Nov DTR reached WAITING_HUMAN: 8 manager-ready, 21 screened-out, 4 duplicates, zero processing, no error on that run. Historical 19/20-Nov records still had error flags, explaining possible CLI exit 20; no blind retry or DB edit.
+- [Capacity incident #744](https://github.com/arvectum2/tender-agent/issues/744) remains OPEN: swap had exceeded 90 GiB by 10:46 MSK, with no proven root cause. At 13:23 MSK swap was 17.4 GiB and the governor still reduced/3, not normal/10. No model/service restart or threshold change was performed.
+- Read-only 10:40 MSK Data Platform support readiness: search p95 11,468ms/80 samples vs 1,500ms target (RED), ingest p95 1,220ms/256; new per-search phase counters were not on the live deployment. Issue [DP #137](https://github.com/arvectum2/data-platform/issues/137) remains OPEN.
+- Real installed daily launchd Python script is pinned to release 023d3670/migration128. PR #743 matches that baseline, adding 52 lines and removing zero installed baseline lines. Source merge is not live launcher installation.
 
 ## Next release gates
 
