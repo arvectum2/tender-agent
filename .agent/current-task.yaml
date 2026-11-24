@@ -1278,8 +1278,16 @@ roadmap_sync_2026_11_23:
 
 dtr_exit20_observability_2026_11_23:
   task_id: TA-DTR-EXIT20-OBSERVABILITY-20261123
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-DTR-EXIT20-OBSERVABILITY-20261123.yaml
   current_stage: safe_diagnostic_development
   baseline_main: 023d3670adcbf6d9ae8a318f4433615fa94b680c
+  parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
+
+apr0405_composed_synthetic_2026_11_24:
+  task_id: TA-APR0405-COMPOSED-SYNTHETIC-20261124
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-APR0405-COMPOSED-SYNTHETIC-20261124.yaml
+  current_stage: protected_pr_ci
+  base_main: 61cf6c92f62673391ff5bba8050c725d90c750cd
   parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
