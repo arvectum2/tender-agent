@@ -14,12 +14,13 @@ completed:
   - 'Existing operator latest API returns full run and items; safe numeric-only CLI was absent.'
   - 'Implemented read-only status CLI with fixed profile, DB and role identity, bounded whitelist output, and transactional rollback.'
   - '24-Nov production GET-equivalent SELECT-only smoke passed, RUNNING / ANALYZE, 33 items; no automation or production mutations.'
-  - 'Affected DTR suite 51 PASS including 16 new negative/positive cases; Ruff, compile, Spec Kit and diff check PASS.'
+  - 'Affected DTR suite 60 PASS including 25 new negative/positive cases; Ruff, compile, Spec Kit and diff check PASS.'
+  - '24-Nov real read-only smoke at 09:15 MSK: RUNNING/INDEX_DATA_PLATFORM, 4 MANAGER_READY, 1 PROCESSING, 3 SHORTLISTED; added INDEX_DATA_PLATFORM and SUMMARIZE with source-derived stage-coverage regression.'
 current_stage: protected_pr_ci
 remaining:
   - Complete protected PR and exact-head checks; close checkpoint after merge.
 last_verified_commit: 674814ab25758f33279ed5d6efc2994f7159d128
-tests: {local: 51_passed, new: 16_passed, ruff: pass, compile: pass, live_read_only_smoke: pass, protected_ci: pending}
+tests: {local: 60_passed, new: 25_passed, ruff: pass, compile: pass, live_read_only_smoke: pass, protected_ci: pending}
 resume_instruction: Verify exact protected CI on this source-only branch; merge only if green, then close checkpoint. Never schedule/start/resume DTR or mutate production data, source/DP/LLM, ETP or watchdog. Parent stays in_progress.
 production_modified: false
 external_actions_authorized: false

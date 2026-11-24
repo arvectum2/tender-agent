@@ -18,9 +18,10 @@ JSON contains only allowlisted status/stage codes, structurally valid run ID, UT
 
 ## Verified scope
 
-- 24-Nov synthetic regressions: 16 PASS, including SQL transaction order, parameter binding, empty history, unrecognised statuses, invalid counts, wrong database/user and secret-safe failure handling.
-- Affected DTR suite: 51 PASS (including new 16), Ruff/compile PASS, pinned Spec Kit structural check PASS.
+- 24-Nov synthetic regressions: 25 PASS, including SQL transaction order, parameter binding, empty history, unrecognised statuses, invalid counts, wrong database/user and secret-safe failure handling.
+- Affected DTR suite: 60 PASS (including new 16), Ruff/compile PASS, pinned Spec Kit structural check PASS.
 - Real production read-only smoke 24-Nov approximately 09:08 MSK: DTR-20261124T050008Z-87f721ac in RUNNING/ANALYZE; aggregate 33 items: 3 MANAGER_READY, 1 PROCESSING, 4 SHORTLISTED, 21 SCREENED_OUT, 4 DUPLICATE; no run summary error at snapshot time. This is not a final/HEALTHY verdict.
+- At 09:15 MSK another authorised read-only smoke confirmed the previously missing valid stage INDEX_DATA_PLATFORM, with 4 MANAGER_READY, 1 PROCESSING and 3 SHORTLISTED. Source-verified stage allowlist now includes all run stage assignments, with an automatic regression to detect drift.
 - No service, schedule, production schema, original EIS, billing, model, ETP or database rows changed.
 
 ## Remaining gates

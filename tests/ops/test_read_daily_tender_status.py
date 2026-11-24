@@ -1,5 +1,7 @@
 """Fake/fixture-only regressions for aggregate DTR operator status."""
+import re
 from datetime import UTC, datetime, timedelta
+from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
@@ -188,3 +190,33 @@ def test_wrong_database_identity_rejected_before_reading_rows(name, user):
         status.read_snapshot(FakeEngine(conn), now=NOW)
     assert len(conn.commands) == 2
     assert conn.rolled_back
+
+@pytest.mark.parametrize(
+    "stage",
+    ("ACQUIRE_DOCS", "INDEX_DATA_PLATFORM", "ANALYZE", "SUMMARIZE",
+     "POST_DECISION", "TRACK_SUBMISSION", "TRACK_OUTCOME"),
+)
+def test_existing_production_stages_remain_visible_without_raw_source(stage):
+    snapshot = status.make_snapshot(run(current_stage=stage), [], now=NOW)
+    assert snapshot["stage"] == stage
+    assert "PRIVATE" not in str(snapshot)
+
+
+def test_post_decision_item_keeps_its_aggregate_category():
+    snapshot = status.make_snapshot(
+        run(current_stage="POST_DECISION"),
+        [group("POST_DECISION", 2, 3)],
+        now=NOW,
+    )
+    assert snapshot["item_counts"] == {"POST_DECISION": 2}
+
+def test_all_source_declared_run_stages_are_in_safe_allowlist():
+    source = (
+        Path(__file__).resolve().parents[2]
+        / "src/modules/daily_tender_run/service.py"
+    ).read_text()
+    declared = set(re.findall(r'_set_run_stage\(session, run, "([A-Z_]+)"\)', source))
+    declared.update(re.findall(r'run\.current_stage\s*=\s*"([A-Z_]+)"', source))
+    declared.update(re.findall(r'current_stage\s*=\s*"([A-Z_]+)"', source))
+    assert declared
+    assert declared <= status._STAGES
