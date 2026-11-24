@@ -1,0 +1,33 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-DP-SEARCH-PHASE-20261124
+status: in_progress
+goal: Attribute current Data Platform search SLO RED to safe numeric execution stages from existing requests only, without generating search/model load.
+definition_of_done:
+  - In upstream arvectum2/data-platform source, store max 256 source-free numeric search stage samples from existing successful search requests.
+  - Expose numeric p95/count per trusted stage in existing authenticated support readiness, separate from HTTP search SLO and error rate.
+  - No raw query, identifiers, collection, source title, metadata, provider, credentials, or model text in saved telemetry.
+  - Test positive, absent and malicious/invalid phase events, limits, endpoint contract and current behavior with focused pytest and exact protected CI.
+  - Preserve production deployment/provider/LLM/DB/ETP unchanged; record exact PR and acceptance boundaries.
+completed:
+  - '24-Nov authorised aggregate GET: search RED p95 10086ms/40 against 1500ms, 0 errors; ingest currently GREEN p95 1213ms/256 but independent sustained acceptance remains open.'
+  - 'Data Platform issue #137 created, linked to earlier #133 ingest SLO.'
+  - 'Source review: SearchStageDiagnostic already has numeric duration stage names, but readiness currently aggregates ingest phases only.'
+  - 'Mac mini swap >25GiB and 31% free memory: do not run a second Qwen, staging model or restart.'
+  - 'Upstream DP source PR138 head a28829702ac52228b5626488ee85becc124bb1aa adds bounded 256-only numeric successful-search phases from SearchStageDiagnostic with strict stage whitelist.'
+  - 'HTTP GET readiness remains authoritative and gains separately counted phase p95; no source/query/tenant/provider metadata, no replay or extra model requests.'
+  - '50 focused API/search/supportability tests PASS, Ruff and Python compile PASS, git diff check PASS; no live production deployment.'
+current_stage: upstream_protected_ci
+remaining:
+  - Verify upstream protected exact-head CI and GitVerse mirror, merge only if green; close child when merged.
+  - Keep actual production search SLO RED until independently proven after owner-approved deployment.
+last_verified_commit: 'DP main e4fdda34067dfd341e22a5ed53ea7d22f3d372f0; TA main 674814ab25758f33279ed5d6efc2994f7159d128'
+tests: {local: 50_passed, ruff: pass, compile: pass, upstream_ci: pending}
+resume_instruction: Check protected exact-head DP PR138 at a28829702ac52228b5626488ee85becc124bb1aa and GitVerse mirror; merge source-only if green. Then update TA checkpoint after PR741 merge and complete protected sync. No live model, reindex, schema changes or service deployment.
+upstream_repo: arvectum2/data-platform
+upstream_issue: 137
+upstream_branch: feat/dp-search-phase-observability-20261124
+upstream_pr: 138
+production_modified: false
+models_restarted: false
+owner_release_approved: false
