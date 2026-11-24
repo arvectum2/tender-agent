@@ -1316,3 +1316,11 @@ dtr_resource_admission_2026_11_24:
   current_stage: completed_source_only
   base_main: c1cb3eac82aeaba2e6a0bdff2738803a4c9757dc
   parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
+
+dtr_eight_review_2026_11_24:
+  task_id: TA-DTR-EIGHT-REVIEW-20261124
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-DTR-EIGHT-REVIEW-20261124.yaml
+  current_stage: protected_source_review_pr
+  base_main: 45174590adf91d50dc111d9cc32453bf05d15789
+  parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
