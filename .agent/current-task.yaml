@@ -1382,5 +1382,5 @@ ta_dp_coordinated_release_2026_11_25:
   task_id: TA-DP-COORDINATED-RELEASE-20261125
   status: in_progress
   checkpoint: .agent/checkpoints/TA-DP-COORDINATED-RELEASE-20261125.yaml
-  current_stage: production_releases_verified_pending_source_recovery
+  current_stage: target_current_source_verified_pending_bounded_projection
   parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
