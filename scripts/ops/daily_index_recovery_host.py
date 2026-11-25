@@ -21,8 +21,11 @@ from pathlib import Path
 HOME = Path("/Users/master")
 SAFE = HOME / "ArvectumSafe"
 MI = SAFE / "worktrees/tender-agent-mi"
-RESEARCH = SAFE / "worktrees/ta-fresh-compute-turn-20261120"
 RESEARCH_SHA = "d632b81d269ac4f999dcaaf1e58cf8d1046693b1"
+# Dedicated detached verifier, not the concurrently evolving archive checkout.
+# Host provisioning must install this exact approved revision; missing or
+# changed source still fails closed in checked_head.
+RESEARCH = SAFE / f"worktrees/ta-dtr-prewrite-verifier-{RESEARCH_SHA[:8]}"
 PYTHON = SAFE / ".venvs/tender-agent-mi/bin/python"
 RESOURCE = SAFE / "runtime/ta-resource-governor"
 RUNTIME = SAFE / "runtime/ta-source-discovery-20261114/autonomous-runner"
@@ -149,6 +152,7 @@ def verified_prewrite():
         proof.get(k) for k in ("point", "lsn", "base_manifest_sha256", "restore_proof")
     ):
         raise RuntimeError("mandatory PITR prewrite proof incomplete")
+    checked_head(RESEARCH, RESEARCH_SHA)
     return {
         "mi_head": mi_head,
         "backup_sha256": expected["sha256"],

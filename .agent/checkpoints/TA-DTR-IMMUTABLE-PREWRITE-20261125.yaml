@@ -1,0 +1,21 @@
+task_id: TA-DTR-IMMUTABLE-PREWRITE-20261125
+status: in_progress
+goal: Separate exact reviewed prewrite verifier from evolving historical archive worktree without weakening any admission.
+definition_of_done:
+  - Independently diagnose first failed target attempt and confirm no document mutation.
+  - Provision clean detached exact d632b81d verifier; leave research archive checkout unchanged.
+  - Use dedicated pin in recovery code, verify source before and after proof; test fail-closed drift and existing locks.
+  - Protected CI9/9 and exact merge; separately admitted successor release and rebind before actual recovery.
+completed:
+  - 'Active TA c4e38b86 and DP ec6cac92. Current EIS revision/inventory dry-run PASS for 0187200001726001774; identity 75a743a0505505b5b0f031fd54d0580f529d17253e979877d615cf190f5ca994, five existing attachments.'
+  - 'One authorized apply attempt job e1629b1e-0525-48f9-8e82-7801de02dccb exited1, no journal, zero chunks, same first document. Resource limit3 pass; verified_prewrite rejected host verification revision changed. Expected d632b81d, actual fffad00d; three legitimate archive commits.'
+  - 'Provisioned /Users/master/ArvectumSafe/worktrees/ta-dtr-prewrite-verifier-d632b81d exact detached d632b81d269ac4f999dcaaf1e58cf8d1046693b1, clean. Original worktree remains fffad00d366636621594f7ea31da38bc0dc3b969. Verifier imports and recent archived backup policy check pass. No new live PITR restore point during candidate source-only test.'
+  - 'Source uses dedicated exact verifier path, rechecks after proof; three new regression tests, 36 focused tests PASS with eight inherited warnings, Ruff and diff check PASS.'
+current_stage: focused_tests_pass_protected_ci_pending
+remaining:
+  - Protected CI and merge exact head.
+  - Stage exact successor TA release, obtain necessary exact release WSF07B approval, verify runtime; fresh source/host/prewrite gates before recovery.
+last_verified_commit: c4e38b86dcc7721cf6d4f366b2cfab890f1df8ac
+tests: {focused: 36_pass, ruff: pass, protected_ci: pending, target_chunks_after_failed_apply: 0, verifier_checkout: exact_clean}
+resume_instruction: 'ARC only. Do not repeat failed old-runtime apply. Verify dedicated checkout and exact protected CI; preserve archive worktree. No bypass of MI/PITR, no live patch or full DTR replay. Follow coordinated release checkpoint and obtain exact successor release admission before deployment.'
+production_modified: false
