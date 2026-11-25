@@ -12,6 +12,7 @@ completed:
   - '22-Nov exact postrelease 21-Nov WAL target replay of BOTH databases independently verified; that is not a seven-day historical proof.'
   - 'Oldest independently receipted base observed from 2026-11-20 08:47:31 UTC; seven-day age condition cannot arise before 2026-11-27 08:47:31 UTC unless older verified physical backup is found.'
   - 'ARC-only 22-Nov archived WAL scan found more than 1600 sequential 16-MiB files on a single timeline without filename gaps; neither complete WAL validity nor seven-day restorable continuity is proven by filenames.'
+  - '25-Nov post-reboot retention audit: age5.12921 days; first segment matches base manifest Start-LSN, 3444 full segments contiguous names and lengths, partial excluded, fresh base manifest and PITR guard PASS; new record integrity and seven-day restore NOT proven. Evidence issue685 comment7161652756.'
 current_stage: blocked_horizon_not_yet_spanned
 remaining: [age_condition, integrity_for_actual_seven_day_window, exact_seven_day_restore, final_acceptance]
 last_verified_commit: 6b49cbba4ffcbb62630fe78e1c118c2bfe96f2a1
