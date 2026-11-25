@@ -38,3 +38,37 @@ Dated progress delta to [the 23-Nov full product roadmap](PRODUCT_STATUS_2026-11
 5. Complete real legal/company qualification, independent human gold and physical iPhone/APNs acceptance before commercial SaaS/ETP/signatures.
 
 No new executor admission, watchdog, service, database, customer, source, bid, payment or external permission is granted by this record.
+
+## Later 24-Nov engineering: read-only DP P0 localization (19:03 MSK)
+
+- The original DP search source-only stage diagnostics PR #138 were already
+  included in upstream main, but the live DP process still lacked the
+  search_phases field in authenticated support readiness.
+- Source-only [Data Platform PR #139](https://github.com/arvectum2/data-platform/pull/139)
+  added privacy-preserving fixed search-mode and rerank/expansion feature
+  cohorts to the existing stage timing, with 36 focused tests PASS.
+  Protected DP CI 12/12 and GitVerse mirror 1/1 SUCCESS. Merged upstream
+  main cdf922cf80f7bd11a2e1d305b9d453d8e14d296a.
+- Live read-only DP readiness: ingest p95 34,275ms/256 vs 10,000ms target,
+  embedding-phase p95 34,085ms, prepare63ms, lookup12ms, persist231ms.
+  1–3 chunk requests p95 5,734ms (92), 4–8 8,386ms (67), 9–16 21,557ms
+  (34), 17+ 55,188ms (63). Search p95 11,468ms/80 vs target1,500ms.
+  Zero reported operation errors. These are observed p95 figures, not additive
+  or independent proof of a specific model/queueing failure.
+- Existing actual provider llama_cpp Qwen3-Embedding-4B (dimension2560),
+  source batch count up to32 texts/32768 characters, bounded retry max3.
+  Existing embedding_attempts counters mixed normal batches with retry
+  attempts and could not separate their share.
+- Source-only [DP PR #140](https://github.com/arvectum2/data-platform/pull/140)
+  adds distinct numeric-only batch/retry counters to existing authenticated
+  ingest phase readiness, including a failed last batch. 24 focused tests,
+  Ruff and protected DP CI 12/12 plus mirror1/1 SUCCESS. Merged upstream
+  main ec6cac92fa42897df8a908f4b7c3d5a3d292febe.
+- **Hard boundary:** Neither upstream source merge updates the production
+  model/DP service. Live ingestion/search SLO issues
+  [#133](https://github.com/arvectum2/data-platform/issues/133) and
+  [#137](https://github.com/arvectum2/data-platform/issues/137) remain open.
+  A pinned, rollback-capable owner-approved rollout followed by real
+  time-window metrics and isolated synthetic root-cause experiments is
+  needed before claiming restored performance. No model POST, live ingest,
+  reindexing, database update, threshold change or service restart was done.
