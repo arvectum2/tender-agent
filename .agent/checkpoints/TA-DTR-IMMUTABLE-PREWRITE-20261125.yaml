@@ -1,5 +1,5 @@
 task_id: TA-DTR-IMMUTABLE-PREWRITE-20261125
-status: in_progress
+status: blocked
 goal: Separate exact reviewed prewrite verifier from evolving historical archive worktree without weakening any admission.
 definition_of_done:
   - Independently diagnose first failed target attempt and confirm no document mutation.
@@ -11,11 +11,13 @@ completed:
   - 'One authorized apply attempt job e1629b1e-0525-48f9-8e82-7801de02dccb exited1, no journal, zero chunks, same first document. Resource limit3 pass; verified_prewrite rejected host verification revision changed. Expected d632b81d, actual fffad00d; three legitimate archive commits.'
   - 'Provisioned /Users/master/ArvectumSafe/worktrees/ta-dtr-prewrite-verifier-d632b81d exact detached d632b81d269ac4f999dcaaf1e58cf8d1046693b1, clean. Original worktree remains fffad00d366636621594f7ea31da38bc0dc3b969. Verifier imports and recent archived backup policy check pass. No new live PITR restore point during candidate source-only test.'
   - 'Source uses dedicated exact verifier path, rechecks after proof; three new regression tests, 36 focused tests PASS with eight inherited warnings, Ruff and diff check PASS.'
-current_stage: focused_tests_pass_protected_ci_pending
+  - 'PR760 exact head 6f034ac2 CI9/9 PASS, retargeted to main with byte-identical base tree, merged 90170bb3b95d779b41fc2d35d19b028659fc743e; exact merged tree equals tested head. Only runtime change vs c4e38b86 is recovery verifier path/recheck. No dependency/schema diff.'
+  - 'Successor source detached clean and APFS-cloned venv staged on SSD, exact interpreter/source/import and dedicated prewrite checkout pin PASS, resource limit10. Two rollback launchers exact, daily candidate syntax PASS, backend INERT until exact owner-approved rebind. Private package ta-dtr-prewrite-release-20261125-90170bb3. Production remains c4e38b86 and DP ec6cac92.'
+current_stage: successor_staged_pending_exact_rebind
 remaining:
-  - Protected CI and merge exact head.
-  - Stage exact successor TA release, obtain necessary exact release WSF07B approval, verify runtime; fresh source/host/prewrite gates before recovery.
-last_verified_commit: c4e38b86dcc7721cf6d4f366b2cfab890f1df8ac
-tests: {focused: 36_pass, ruff: pass, protected_ci: pending, target_chunks_after_failed_apply: 0, verifier_checkout: exact_clean}
-resume_instruction: 'ARC only. Do not repeat failed old-runtime apply. Verify dedicated checkout and exact protected CI; preserve archive worktree. No bypass of MI/PITR, no live patch or full DTR replay. Follow coordinated release checkpoint and obtain exact successor release admission before deployment.'
+  - Obtain exact unchanged WSF07B rebind approval for 90170bb3, finalize staged launcher, activate TA only with approved replacement policy and verify runtime.
+  - Fresh source/host/prewrite gates before recovery; never reuse old release plan digest.
+last_verified_commit: 90170bb3b95d779b41fc2d35d19b028659fc743e
+tests: {focused: 36_pass, ruff: pass, protected_ci: 9_of_9_pass, successor_stage: pass, target_chunks_after_failed_apply: 0, verifier_checkout: exact_clean}
+resume_instruction: 'ARC only. PR760 merged 90170bb3, exact release staged. Read private stage-manifest.json at ta-dtr-prewrite-release-20261125-90170bb3. Await explicit exact WSF07B rebind approval preserving original 12 IDs, nine excluded, token/DB/validity. Do not install inert template or patch active release. On approval use prior verified rebind and replacement rollout procedure; preserve DP and other workloads. Fresh exact active-release source plan before target apply.'
 production_modified: false
