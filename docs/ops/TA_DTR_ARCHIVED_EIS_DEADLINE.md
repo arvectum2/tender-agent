@@ -23,9 +23,14 @@ the exact HTTP fetch timestamp or current official EIS state. The explicit
 current_revision_verified: false flag is mandatory; no consumer may
 silently promote this result into deadline_at or active screening.
 
-The tool executes one bounded SELECT joining the existing run's
-MANAGER_READY items to stored procurement_raw_artifacts, inside
-SET TRANSACTION READ ONLY. The original file is read from the
+The tool requires PostgreSQL, the production database and role arvectum,
+and the arvectum-it profile. Inside REPEATABLE READ READ ONLY it checks
+database identity and executes one bounded source SELECT with LEFT JOINs
+from every MANAGER_READY item, including items with missing tender or
+artifact rows. A missing item-law, wrong 44-FZ law, missing original,
+duplicate, or more than 12 joined rows rejects the whole batch; no item
+can disappear because it lacks a source. The transaction always rolls
+back before a report is emitted. The original file is read from the
 expected eis/<registry>/raw/public_detail_common_info.html path
 and is bounded by the existing 6 MiB EIS HTML limit.
 
@@ -58,3 +63,26 @@ Issue #746 remains OPEN: current revision verification and
 safe integration into live DTR still need separate admission.
 Human approval, original-rights/financial gates and ETP actions
 remain completely separate.
+
+## 25-Nov source-only completeness and scope hardening
+
+The previous inner join could silently omit a MANAGER_READY item with
+no corresponding tender or common-info artifact. This is a false-success
+risk; no observed missing source is implied for the 24-Nov eight records.
+The revised bounded query keeps missing-source rows so the existing
+fail-closed verifier rejects the whole report. Tests execute the actual
+SQL against disposable in-memory tables, including absent tender/incorrect
+artifact and foreign-profile cases; no production writes.
+
+86 focused tests PASS (42 archived-deadline tests plus the adjacent
+read-only status, deadline-precision and exit20 regressions); Ruff PASS.
+Read-only smoke on existing pinned Python using isolated source:
+24-Nov run DTR-20261124T050008Z-87f721ac, 8/8 archived records;
+25-Nov run DTR-20261125T050005Z-cd0a5087, 3/3 archived records.
+All 11 stored DTR deadlines absent; current_revision_verified false,
+zero external source requests, zero database mutations.
+25-Nov latest actual DTR WAITING_HUMAN: 47 items, 23 duplicate,
+20 screened out, 3 manager-ready and 1 failed. No failure recovery or
+decision was made by the archive tool.
+Issue #746 remains OPEN for current revision verification and approved
+production integration. No deployed runtime or resource gate changed.
