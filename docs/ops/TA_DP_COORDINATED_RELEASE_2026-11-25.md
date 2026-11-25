@@ -60,3 +60,19 @@ execution not tested.
 
 No production file, DB row, grant, process, model setting or EIS source
 changed. Keep blocked until explicit owner decisions and gates pass.
+
+## Maintenance disposition, 14:46 MSK
+
+Owner explicitly approved exact unchanged WSF07B rebind and controlled
+Mac mini reboot. New private manifest and final staged backend validated;
+old grant/launcher unchanged. MI acceptance and existing PITR guard PASS
+before reboot (not seven-day PITR proof). Reboot confirmed 14:34; direct
+ARC recovered 14:39 via independent MacBook SSH route. Restored all 13
+original running container identities, including six AWM containers
+with original persistent volumes; all three MariaDB healthy and web
+HTTP200. TA/DP/embedding endpoints HTTP200. Gemma paused with owner
+approval after idle checks; actual old PID/listener gone, plist unchanged.
+Resource free81%, swap4027.75MiB; strict gate still blocks on pressure
+and swap. No deployment. Owner requests parallel workloads continue;
+do not stop others or reboot again merely to reach capacity. Staged
+candidate and rollback hashes reverified. Private receipts updated.
