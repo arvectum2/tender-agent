@@ -19,13 +19,18 @@ completed:
   - '25-Nov staged immutable candidate exact DP source ec6cac92, 78MiB with cloned pinned Python3.15.2 venv. 42 offline focused tests and exact runtime imports PASS.'
   - 'Old pinned launcher SHA256 1dea946debe5478ff5a08e9f2efe9e1d69942f9f532e934f39126d4a62c9c809 backed up; candidate 4 replacements SHA256 4e9bd3ab2553ca4e457f08871c51e1390805c7a257aed10b96e591d81a015beb; bash syntax PASS, live unchanged.'
   - '25-Nov at 07:54:54 MSK official model-stage check-only exit2 BLOCKED: memory_headroom_low, memory_pressure_high_or_unknown, swap_used_too_high_or_unknown.'
+  - '25-Nov owner expressly approved maintenance; protected TA PR752 CI9/9 SUCCESS and main merge 7e15bc275c7f9fface80382c2b15257fe20f020d.'
+  - '25-Nov 09:09 MSK free65%, governor normal10 but memory pressure1 and swap~16707MiB; strict capacity gate blocked.'
+  - 'Read-only vmmap: idle 8081 Gemma process approx8.0GiB swapped; Docker VM approx5.5GiB swapped. Docker hosts production PostgreSQL, both WAL receivers and test workloads, so no arbitrary VM stop.'
+  - 'FileVault ON and macOS autoLoginUser not configured: remote reboot could require physical unlock before ARC/DP/TA start. No unattended reboot or process stop.'
+  - 'DP GET-only 09:09: search p95 11014ms/110 RED, ingest p95 1144ms/256 GREEN but all 256 recent ingests single chunk: do not claim large-document throughput recovery.'
   - 'Rollback and admission runbook docs/ops/TA_DP_PINNED_RELEASE_STAGING_2026-11-25.md prepared; zero Qwen launch, service restart or DB modification.'
-current_stage: blocked_on_strict_resource_admission
+current_stage: blocked_on_swap_and_filevault_unlock_coordination
 remaining:
   - 'Owner-admitted release only once the exact strict host gate is all green and live maintenance window/rollback are independently checked.'
   - 'Then switch pinned launcher with rollback, authenticated post-restart checks, and independently observe representative sustained SLO.'
 last_verified_commit: d520d58bb75cfae1519db69887843638df16f762
 tests: {candidate_source: 42_pass, runtime_import: pass, rollback_sha: pass, launcher_syntax: pass, strict_admission: blocked_exit2, live_search_slo: red, live_ingest_slo: red}
-resume_instruction: 'BLOCKED: 25-Nov swap15640MiB>2048MiB, memory pressure1 and free below50. Do not restart services or run Qwen. Candidate and exact rollback preserved in /Users/master/ArvectumSafe/runtime-releases/data-platform-20261125-ec6cac92. Read docs/ops/TA_DP_PINNED_RELEASE_STAGING_2026-11-25.md. Recheck read-only admission and active launcher hash; only fresh all-green gate permits owner-maintained switch and rollback. Parent roadmap stays in_progress.'
+resume_instruction: 'RESOURCE AND UNATTENDED REBOOT BLOCK: 25-Nov governor normal10/free65 but pressure1 and swap~16707MiB>2048MiB. FileVault ON with no auto login; confirm physical Mac mini unlock availability before coordinated reboot. Docker VM hosts production PostgreSQL/WAL and must not be stopped just to reduce swap. Source candidate ec6cac92 and exact rollback staged only, active release e4fdda34 unchanged. Read docs/ops/TA_DP_PINNED_RELEASE_STAGING_2026-11-25.md. Once physical access, DB backups/recovery and strict capacity admission verified, owner-authorized reversible DP rollout; otherwise remain blocked. Parent TA roadmap in_progress.'
 production_modified: false
 related_issues: [744, 133, 137]

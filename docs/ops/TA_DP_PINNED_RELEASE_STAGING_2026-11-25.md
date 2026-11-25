@@ -69,3 +69,52 @@ cohort, adequate observation duration, <=1% error rate, and
 unchanged search<=1500ms/ingest<=10000ms SLO. Stage timings
 are not causal proof or evidence of recovered HTTP performance.
 No automatic deployment or Qwen load is authorized by this runbook.
+
+## Owner-approved maintenance re-evaluation, 25-Nov 09:05–09:10 MSK
+
+Owner expressly approved host maintenance after PR #752. PR #752 passed
+protected CI 9/9 and merged main at
+7e15bc275c7f9fface80382c2b15257fe20f020d.
+
+Read-only host measurements: free memory65%, pressure1, swap
+approximately 16.7GiB; governor normal/10. Exact strict offline
+check-only exit2: memory_pressure_high_or_unknown and
+swap_used_too_high_or_unknown. No isolated model test was started.
+
+Read-only vmmap showed approximately 8.0GiB swapped in idle
+local.llama-server-8081 (zero established clients), and 5.5GiB
+swapped in the Docker Desktop VirtualMachine process. These are
+process-level estimates, not exact individually reclaimable swap.
+Docker hosts production PostgreSQL, both WAL receivers and isolated
+test infrastructure; all named containers had unless-stopped restart
+policy, but this does not certify backup/PITR recovery or client
+continuity. The Data Platform PostgreSQL reported two idle client
+sessions. Therefore stopping Docker just to decrease swap is not a
+low-risk automatic action. GEMMA on 8081 remains running and may be
+needed for Tender Agent; it was not stopped merely because idle.
+
+Independent reboot recovery blocker: macOS FileVault is ON, no
+autoLoginUser configured. A full reboot can require interactive
+FileVault unlock before user LaunchAgents, Docker/DP and ARC recover.
+Do not reboot this remotely without the owner confirming someone
+physically present to unlock, and independently checking actual
+database backup/recovery and service continuity first.
+
+Live authenticated GET-only DP readiness 09:09: overall RED:
+search p95 11014ms / 110 observed samples (target1500),
+ingest p95 1144ms / 256 recent (target10000), embedding-stage
+p95 1089ms. Crucially all last 256 ingests had exactly ONE chunk
+and one reported embedding attempt; green ingest here is due to
+the selected small-document window, not proof large-document p95
+has recovered. Search phase metrics remain absent from the
+existing pinned old production build. Qwen embedding server
+health GET200; GET /metrics unavailable; no live inference POST.
+
+No reboot, Docker stop/restart, model stop/restart, live Data Platform
+restart, SQL write, source replay or safety-gate override was done.
+Continue with owner coordination for FileVault unlock, not a blind
+service outage. Once confirmed, prepare a bounded coordinated reboot
+with real pre/post PostgreSQL, WAL receiver, Tailscale and DP/TA checks,
+then re-run strict capacity admission before releasing the pinned
+diagnostics build. If owner cannot unlock locally, remain blocked
+and use source-only or read-only work rather than disabling safety.
