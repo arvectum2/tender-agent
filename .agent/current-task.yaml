@@ -1380,13 +1380,13 @@ dtr_targeted_office_recovery_2026_11_25:
 
 ta_dp_coordinated_release_2026_11_25:
   task_id: TA-DP-COORDINATED-RELEASE-20261125
-  status: in_progress
+  status: blocked
   checkpoint: .agent/checkpoints/TA-DP-COORDINATED-RELEASE-20261125.yaml
-  current_stage: target_recovery_fix_prewrite_pin_pending_protected_ci
+  current_stage: successor_staged_pending_exact_rebind
   parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
 
 dtr_immutable_prewrite_2026_11_25:
   task_id: TA-DTR-IMMUTABLE-PREWRITE-20261125
-  status: in_progress
+  status: blocked
   checkpoint: .agent/checkpoints/TA-DTR-IMMUTABLE-PREWRITE-20261125.yaml
-  current_stage: focused_tests_pass_protected_ci_pending
+  current_stage: successor_staged_pending_exact_rebind

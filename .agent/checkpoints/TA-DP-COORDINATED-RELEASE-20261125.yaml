@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-DP-COORDINATED-RELEASE-20261125
-status: in_progress
+status: blocked
 goal: Coordinate pinned TA/DP release, safe maintenance and targeted recovery, then resume roadmap.
 definition_of_done:
   - PR756 protected CI9/9, exact merge tree and source recovery proof.
@@ -25,12 +25,13 @@ completed:
   - '25-Nov 15:02–15:04 MSK owner-approved replacement gate PASS (governor reduced, free40%, pressure2, thermal0, disk205+GiB). DP ec6cac92 activated PID8896; exact source/pin, health200, auth readiness200, anonymous401, search_phases and embedding batch/retry counters present; no samples yet. TA c4e38b86 activated PID9612, backend and daily pins synchronized; exact DB/schema128 and 12/12 admitted identities read-only, receipt verifier and anonymous403, docs/openapi401, daily preflight PASS. Independent TA verifier 15/15 OK. All 13 original containers running; three candidate launcher hashes exact and three rollback copies unchanged. No DB migration, model load, other project restart or live EIS request. Rollback not required, not exercised. Authenticated workspace HTTP and representative SLO still open.'
   - '25-Nov 15:06 MSK actual active-release read-only recovery dry-run: current EIS active revision and exact five stored downloaded attachment identities verified, project_document plan identity 75a743a0505505b5b0f031fd54d0580f529d17253e979877d615cf190f5ca994. Private receipt saved. Live OCR configured tesseract rus+eng 220 DPI timeout45s, vision disabled. No apply yet.'
   - 'First exact bounded apply attempt exited1 before document journal creation; independent active-release read-only DB check confirms first document unchanged, chunks0, same project_document stage. Host resource limit3 PASS, prewrite fails host verification revision changed: expected d632b81d, actual archive worktree fffad00d with 3 subsequent SIBUR/GEH commits. Separate pinned verifier checkout d632b81d created and clean; research worktree untouched. Source fix and 36 focused tests PASS, Ruff PASS. No target mutation; do not retry old runtime.'
-current_stage: target_recovery_fix_prewrite_pin_pending_protected_ci
+  - 'PR759 policy CI9/9 merged 0f50fcc9; PR760 CI9/9 merged 90170bb3b95d779b41fc2d35d19b028659fc743e, tree exact. Successor staged on SSD, resource limit10, prior TA launcher rollback copies exact; backend inert pending exact unchanged WSF07B approval. DP remains active; no production changes this continuation.'
+current_stage: successor_staged_pending_exact_rebind
 remaining:
   - Restore Gemma before dependent analysis only after normal operation admission; temporary pause remains, no additional model launch.
   - Observe representative DP SLO and verify authenticated workspace endpoint using existing admitted client; do not claim either from HTTP200.
   - Current EIS revision proof and targeted recovery, then roadmap. No full DTR replay.
 last_verified_commit: c4e38b86dcc7721cf6d4f366b2cfab890f1df8ac
 tests: {pr756_ci: 9_of_9_pass, ta_stage_pin: pass, dp_blobs: 622_of_622, rollback_bytes: 3_of_3, launcher_syntax: pass, schema: 128, ta_health: 200, dp_health: 200, resource_gate: replacement_pass_reduced, reboot: confirmed, containers_restored: 13_of_13, awm_http: 3_of_3_200, gemma_pause: verified, live_rollback_test: not_required_not_exercised, ta_runtime_verifier: 15_of_15, dp_metrics_contract: pass, daily_preflight: pass, production_releases: activated_verified}
-resume_instruction: 'ARC only. Both TA/DP releases are active; exact target EIS source verified, first apply blocked by mutable research checkout pin before journal, zero projected chunks. Follow child TA-DTR-IMMUTABLE-PREWRITE-20261125. Preserve research worktree fffad00d, dedicated verifier d632b81d. Merge fix only after exact protected CI; require exact approved active release and WSF07B rebind for successor, then fresh target plan/MI/PITR and one document at a time. No full DTR replay or blind retry.'
+resume_instruction: 'ARC only. Follow TA-DTR-IMMUTABLE-PREWRITE-20261125 staged successor; no need to re-stage or restart DP. Exact successor WSF07B approval required. After TA activation verify runtime, fresh source plan and all prewrite/host gates; one document per operation. Gemma paused until dependent analysis. No full DTR replay.'
 production_modified: true
