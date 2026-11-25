@@ -1380,7 +1380,7 @@ dtr_targeted_office_recovery_2026_11_25:
 
 ta_dp_coordinated_release_2026_11_25:
   task_id: TA-DP-COORDINATED-RELEASE-20261125
-  status: blocked
+  status: in_progress
   checkpoint: .agent/checkpoints/TA-DP-COORDINATED-RELEASE-20261125.yaml
-  current_stage: staged_blocked_maintenance_and_exact_workspace_rebind
+  current_stage: pre_reboot_admitted_pending_command
   parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
