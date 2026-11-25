@@ -1,5 +1,7 @@
 # Coordinated TA/DP release — 25 Nov 2026
 
+**Superseding owner-approved policy (25-Nov 15:00 MSK):** [operation-specific resource admission](TA_RESOURCE_ADMISSION_POLICY_2026-11-25.md). Earlier strict Qwen thresholds below describe historical decisions, not the current replacement-only rollout gate. No additional model launch or DTR admission is changed.
+
 STAGED ONLY / BLOCKED. PR756 exact protected CI9/9; merge tree equals
 tested head. Target TA c4e38b86dcc7721cf6d4f366b2cfab890f1df8ac,
 DP ec6cac92fa42897df8a908f4b7c3d5a3d292febe. Production TA
