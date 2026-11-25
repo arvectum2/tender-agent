@@ -1353,6 +1353,6 @@ dp_pinned_runtime_roll_2026_11_25:
   task_id: TA-DP-PINNED-RUNTIME-ROLL-20261125
   status: blocked
   checkpoint: .agent/checkpoints/TA-DP-PINNED-RUNTIME-ROLL-20261125.yaml
-  current_stage: blocked_on_strict_resource_admission
+  current_stage: blocked_on_swap_and_filevault_unlock_coordination
   parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
   upstream_repository: arvectum2/data-platform
