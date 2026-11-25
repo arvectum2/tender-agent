@@ -1,4 +1,4 @@
-"""Narrow recovery evidence for existing public EIS 44-FZ DOCX inventories."""
+"""Narrow recovery evidence for public EIS 44-FZ DOCX and stored signed office ZIPs."""
 
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ from urllib.request import (
 
 from src.shared.network.http_client import create_urllib_context
 from src.tender_research.rag.missing_attachments import _official_url
-from src.tender_research.rag.signed_zip import MAX_ENVELOPE, unwrap_signed_docx
+from src.tender_research.rag.signed_zip import MAX_ENVELOPE, unwrap_signed_office
 
 
 def digest(content):
@@ -26,8 +26,15 @@ def digest(content):
 
 
 def validate_docx(content):
+    _validate_office(content, ".docx")
+
+
+def _validate_office(content, extension):
+    required = {".docx": "word/document.xml", ".xlsx": "xl/workbook.xml"}
+    if extension not in required:
+        raise ValueError("unsupported office member")
     if not 0 < len(content) <= MAX_ENVELOPE:
-        raise ValueError("DOCX source outside bounded size")
+        raise ValueError("office source outside bounded size")
     try:
         with zipfile.ZipFile(io.BytesIO(content)) as package:
             entries = package.infolist()
@@ -35,10 +42,10 @@ def validate_docx(content):
             if (
                 len(entries) > 2048
                 or len(names) != len(entries)
-                or not {"[Content_Types].xml", "word/document.xml"} <= names
+                or not {"[Content_Types].xml", required[extension]} <= names
                 or sum(x.file_size for x in entries) > 100 * 1024**2
             ):
-                raise ValueError("invalid DOCX package")
+                raise ValueError("invalid office package")
             for x in entries:
                 p = Path(x.filename)
                 if (
@@ -50,9 +57,9 @@ def validate_docx(content):
                     or stat.S_IFMT(x.external_attr >> 16)
                     not in {0, stat.S_IFREG, stat.S_IFDIR}
                 ):
-                    raise ValueError("unsafe DOCX member")
+                    raise ValueError("unsafe office member")
     except zipfile.BadZipFile as exc:
-        raise ValueError("not a DOCX package") from exc
+        raise ValueError("not an office package") from exc
 
 
 class OfficialRedirect(HTTPRedirectHandler):
@@ -82,7 +89,11 @@ def fetch_docx(url, config):
     return content
 
 
-def verified_original(document, folder):
+def _signed_extension(name):
+    return next((ext for ext in (".docx", ".xlsx") if name.lower().endswith(ext + ".zip")), None)
+
+
+def _verified_original_evidence(document, folder):
     if not document.local_path or not document.sha256:
         raise ValueError("missing original evidence")
     path = Path(document.local_path)
@@ -97,12 +108,18 @@ def verified_original(document, folder):
         content = stream.read(MAX_ENVELOPE + 1)
     if len(content) != document.size_bytes or digest(content) != document.sha256:
         raise ValueError("original bytes disagree with registered evidence")
-    if document.file_name.lower().endswith(".docx.zip"):
-        member, _ = unwrap_signed_docx(path, document.sha256)
-        validate_docx(member)
+    extension = _signed_extension(document.file_name)
+    evidence = None
+    if extension:
+        member, evidence, _ = unwrap_signed_office(path, document.sha256, extension=extension)
+        _validate_office(member, extension)
     else:
         validate_docx(content)
-    return path
+    return path, evidence
+
+
+def verified_original(document, folder):
+    return _verified_original_evidence(document, folder)[0]
 
 
 def save_original(folder, document, content):
@@ -163,13 +180,25 @@ def source_inventory(tender, detail):
         name = link.file_name or link.title
         if (
             not name
-            or not name.lower().endswith((".docx", ".docx.zip"))
+            or not name.lower().endswith((".docx", ".docx.zip", ".xlsx.zip"))
             or not _official_url(link.url)
         ):
             raise ValueError("unsupported recovery original")
-        links.append(
-            (str((link.raw or {}).get("uid") or link.url).casefold(), link.url, name)
-        )
+        identity = (str((link.raw or {}).get("uid") or link.url).casefold(), link.url, name)
+        if _signed_extension(name):
+            stored = [
+                doc for doc in tender.documents
+                if doc.source_document_id
+                and (doc.source_document_id.casefold(), doc.file_url, doc.file_name) == identity
+            ]
+            if (
+                len(stored) != 1 or stored[0].download_status != "downloaded"
+                or not stored[0].local_path or not stored[0].sha256
+                or type(stored[0].size_bytes) is not int
+                or not 0 < stored[0].size_bytes <= MAX_ENVELOPE
+            ):
+                raise ValueError("signed ZIP recovery requires an existing downloaded original")
+        links.append(identity)
     if len({x[0] for x in links}) != len(links):
         raise ValueError("duplicate source attachment ID")
     revision_identity = (
@@ -201,6 +230,73 @@ def source_inventory(tender, detail):
     return {"revision": list(revision_identity), "links": sorted(links)}
 
 
+
+def _verify_companion_projection(document, evidence, chunks, text):
+    """Reject legacy single-member or inconsistent companion projections."""
+    raw = document.raw_meta or {}
+    if raw.get("signed_zip") != evidence:
+        raise ValueError("signed ZIP projection evidence mismatch")
+    expected = {
+        evidence["member_sha256"]: (
+            evidence["member_name"],
+            f"tender-document://{document.id}/member/{evidence['member_sha256']}",
+        ),
+        evidence["pdf_companion"]["member_sha256"]: (
+            evidence["pdf_companion"]["member_name"],
+            f"tender-document://{document.id}/pdf-companion/{evidence['pdf_companion']['member_sha256']}",
+        ),
+    }
+    receipts = (raw.get("data_platform_processing") or {}).get("metadata", {}).get("signed_office_members")
+    if not isinstance(receipts, list) or len(receipts) != 2:
+        raise ValueError("signed ZIP member receipts missing")
+    indexed = {}
+    for receipt in receipts:
+        if not isinstance(receipt, dict):
+            raise TypeError("signed ZIP member receipt mismatch")
+        sha = receipt.get("member_sha256")
+        if (
+            sha not in expected or sha in indexed
+            or (receipt.get("member_name"), receipt.get("canonical_uri")) != expected[sha]
+            or any(not isinstance(receipt.get(k), str) or not receipt[k]
+                   for k in ("resource_id", "document_id"))
+        ):
+            raise ValueError("signed ZIP member receipt mismatch")
+        indexed[sha] = receipt
+    if any(len({r[key] for r in receipts}) != 2 for key in ("resource_id", "document_id")):
+        raise ValueError("signed ZIP member receipt collision")
+    seen = set()
+    for chunk in chunks:
+        if (
+            type(chunk.char_start) is not int or type(chunk.char_end) is not int
+            or not 0 <= chunk.char_start < chunk.char_end <= len(text)
+            or text[chunk.char_start:chunk.char_end].strip() != chunk.text
+        ):
+            raise ValueError("signed ZIP projection span mismatch")
+        platform = chunk.raw_meta["data_platform"]
+        refs = platform.get("archive_members")
+        if not isinstance(refs, list) or not refs:
+            raise ValueError("signed ZIP member references missing")
+        for ref in refs:
+            if not isinstance(ref, dict):
+                raise TypeError("signed ZIP member reference mismatch")
+            sha = ref.get("member_sha256")
+            if (
+                sha not in indexed
+                or any(ref.get(k) != v for k, v in indexed[sha].items())
+                or not isinstance(ref.get("chunk_id"), str) or not ref["chunk_id"]
+                or ref.get("coordinate_space") != "normalized_member_text"
+                or type(ref.get("char_start")) is not int
+                or type(ref.get("char_end")) is not int
+                or not 0 <= ref["char_start"] < ref["char_end"]
+            ):
+                raise ValueError("signed ZIP member reference mismatch")
+            seen.add(sha)
+        if any(platform.get(k) != refs[0].get(k) for k in ("resource_id", "document_id", "canonical_uri", "chunk_id")):
+            raise ValueError("signed ZIP primary projection mismatch")
+    if seen != set(expected):
+        raise ValueError("signed ZIP member coverage incomplete")
+
+
 def next_document_stage(repo, tender, folder):
     """Check all persisted originals; pick one deterministic incomplete document."""
     if not tender.documents:
@@ -224,7 +320,7 @@ def next_document_stage(repo, tender, folder):
                 raise ValueError("unreconciled original destination")
             stage = "download_document"
         else:
-            original = verified_original(d, folder)
+            original, signed_evidence = _verified_original_evidence(d, folder)
             if d.text_extraction_status == "extracted":
                 if not d.extracted_text_path or not chunks:
                     raise ValueError("incomplete extracted document")
@@ -252,6 +348,8 @@ def next_document_stage(repo, tender, folder):
                         or digest(c.text.encode()) != c.text_hash
                     ):
                         raise ValueError("projection chunk evidence mismatch")
+                if signed_evidence is not None and signed_evidence.get("pdf_companion"):
+                    _verify_companion_projection(d, signed_evidence, chunks, text)
                 stage = "complete"
             else:
                 if (

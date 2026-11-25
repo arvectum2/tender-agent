@@ -1,0 +1,24 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-DTR-TARGETED-OFFICE-RECOVERY-20261125
+status: in_progress
+goal: Prepare bounded one-item recovery for the five verified stored signed office envelopes, without live replay or broader source acquisition permission.
+definition_of_done:
+  - Verify exact target identity and PDF coverage offline; preserve originals and uncertainty about signature and current revision.
+  - Allow only already registered downloaded bounded office ZIP envelopes in targeted recovery; raw DOCX download policy unchanged, fail closed on missing, changed or ambiguous originals and incomplete member evidence.
+  - Test exact recovery stage and source inventory using synthetic evidence; protected CI and merge before any deployment.
+  - Live recovery only after independently admitted current source, exact approved release, host and prewrite gates; no DTR replay or human decision.
+completed:
+  - 'PR755 exact protected CI9/9 merged 261d5c65c1d312ef58a9f40f7aeb878f9f7e6104.'
+  - '25-Nov native pypdf and Poppler returned zero chars on page 2 of XLSX companion PDF. Render nonwhite at 72/220dpi; one bounded installed Tesseract rus+eng 220dpi pass, 201 chars, mean confidence93.85, 21 regions, 384ms; no unresolved/skipped pages or truncation, zero VLM calls; original unchanged. This is not independent OCR word-level accuracy or signature verification.'
+  - 'Exact read-only plan_target returned candidate_for_reviewed_recovery for registry 0187200001726001774, 5 documents, 0 missing, 0 chunks, no collection. Strict host gate still blocked pressure and swap; no live recovery attempted.'
+  - 'Source-only stored DOCX/XLSX ZIP compatibility implemented, new download stays DOCX-only, exact existing source inventory retained; companion projections require both distinct member receipts and source spans.'
+  - '86 focused tests PASS, Ruff PASS; actual read-only next_document_stage project_document with 5/5 verified originals, 5/5 saved revision metadata, zero chunks, no collection, no EIS network or DB mutations.'
+current_stage: protected_ci_pending_targeted_recovery
+remaining:
+  - Verify protected CI and merge exact head; record resulting commit.
+  - Live recovery blocked pending exact active release, current EIS source revision, host and prewrite admission.
+last_verified_commit: 261d5c65c1d312ef58a9f40f7aeb878f9f7e6104
+tests: {focused: 86_pass, ruff: pass, offline_ocr: pass, archived_stage: project_document, verified_originals: 5_of_5, stored_revision_metadata: 5_of_5, protected_ci: pending}
+resume_instruction: 'ARC only. Verify exact protected CI on fix/ta-dtr-targeted-office-recovery-20261125; merge only after 9/9 pass and unchanged base. Source-only compatibility complete locally. Live recovery requires separately admitted current EIS revision, exact approved release and prewrite/host gates. Do not invoke recovery CLI even dry-run without live-source admission; no DTR replay, production DB mutation, service restart or model load.'
+production_modified: false
