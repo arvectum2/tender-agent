@@ -1356,3 +1356,10 @@ dp_pinned_runtime_roll_2026_11_25:
   current_stage: blocked_on_swap_and_filevault_unlock_coordination
   parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
   upstream_repository: arvectum2/data-platform
+
+dtr_archive_completeness_2026_11_25:
+  task_id: TA-DTR-ARCHIVE-COMPLETENESS-20261125
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-DTR-ARCHIVE-COMPLETENESS-20261125.yaml
+  current_stage: protected_ci_and_merge_pending
+  parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
