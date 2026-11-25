@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-DTR-ARCHIVE-COMPLETENESS-20261125
-status: in_progress
+status: completed
 goal: Prevent the archived EIS deadline report from silently omitting MANAGER_READY items lacking archive/tender rows, and enforce the intended read-only database/profile scope.
 definition_of_done:
   - Preserve each bounded MANAGER_READY item through the source join; missing, duplicate or wrong-law evidence fails the entire report without disclosing secrets.
@@ -14,11 +14,11 @@ completed:
   - 'Preserve every MANAGER_READY item with bounded LEFT JOIN and item law check; PostgreSQL exact database/role and profile restriction, repeatable-read read-only and rollback even on SQL failure.'
   - '86 focused tests PASS including 42 archive tests, actual isolated SQL missing-source/foreign-profile cases and generic CLI failure rollback. Ruff and diff checks PASS.'
   - 'Read-only source smoke: 24-Nov 8/8 and 25-Nov 3/3 archived-only, all stored deadlines absent and current revision not verified. No source network or DB mutations.'
-current_stage: protected_ci_and_merge_pending
+current_stage: source_only_complete
 remaining:
-  - Verify protected exact-head CI and merge if all checks pass; record final commit. No production release.
-last_verified_commit: aa8a805e5827994df055a37854f1b7fcc79cb9e3
-tests: {focused: 86_pass, archived: 42_pass, ruff: pass, read_only_archive_24_nov: 8_of_8, read_only_archive_25_nov: 3_of_3, protected_ci: pending}
-resume_instruction: Read exact main and the branch fix/ta-dtr-archive-completeness-20261125; source implementation and local tests complete. Verify protected CI on exact PR head, merge when 9/9 successful and base unchanged. No deployment, model load, EIS request or production DB write. Keep #746 open until current-source verification; parent roadmap in_progress.
+  - None for source-only scope; current EIS verification and deployment remain separate.
+last_verified_commit: 007416f4b838dcb58fa10768c64d2dd7558a0883
+tests: {focused: 86_pass, archived: 42_pass, ruff: pass, read_only_archive_24_nov: 8_of_8, read_only_archive_25_nov: 3_of_3, protected_ci: 9_of_9_pass}
+resume_instruction: Source-only complete. PR754 protected CI9/9 merged 007416f4b838dcb58fa10768c64d2dd7558a0883. Keep #746 open; no production or current EIS claim.
 related_issue: 746
 production_modified: false

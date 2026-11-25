@@ -314,3 +314,37 @@ def test_prepare_missing_originals_keeps_fail_closed(
     assert result.ready_for_analysis is False
     assert any(error.startswith(expected_code + ":") for error in result.errors)
     assert result.steps[-1].status == "failed"
+
+
+def test_projection_failure_never_indexes_stale_chunks(mock_tender) -> None:
+    from src.tender_research.config import TenderResearchConfig
+
+    repo = MagicMock()
+    repo.get_tender_by_registry_number.return_value = mock_tender
+    repo.count_chunks_by_tender.return_value = 7
+    repo.count_extracted_documents_by_tender.return_value = 1
+    mock_tender.documents = [MagicMock(download_status="downloaded")]
+    client = MagicMock()
+    client.__enter__.return_value = client
+    client.__exit__.return_value = None
+    session = MagicMock()
+
+    with (
+        patch("src.tender_research.rag.prepare_service.TenderRepository", return_value=repo),
+        patch("src.tender_research.rag.prepare_service.load_config",
+              return_value=TenderResearchConfig(rag_retrieval_backend="data_platform")),
+        patch("src.tender_research.rag.prepare_service.download_tender_documents",
+              return_value={"downloaded": 0, "failed": 0}),
+        patch("src.tender_research.rag.prepare_service.build_data_platform_client",
+              return_value=client),
+        patch("src.tender_research.rag.prepare_service.DataPlatformDocumentProjector") as projector,
+        patch("src.tender_research.rag.prepare_service.DataPlatformTenderIndexer") as indexer,
+    ):
+        projector.return_value.build_for_tender.side_effect = ValueError("incomplete archive")
+        result = prepare_tender_for_analysis(mock_tender.registry_number, session=session)
+
+    assert result.status == "failed"
+    assert result.ready_for_analysis is False
+    assert result.errors == ["source_document_projection_failed"]
+    session.rollback.assert_called_once()
+    indexer.assert_not_called()

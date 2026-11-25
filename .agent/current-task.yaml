@@ -1359,7 +1359,14 @@ dp_pinned_runtime_roll_2026_11_25:
 
 dtr_archive_completeness_2026_11_25:
   task_id: TA-DTR-ARCHIVE-COMPLETENESS-20261125
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-DTR-ARCHIVE-COMPLETENESS-20261125.yaml
-  current_stage: protected_ci_and_merge_pending
+  current_stage: source_only_complete
+  parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
+
+dtr_signed_office_envelope_2026_11_25:
+  task_id: TA-DTR-SIGNED-OFFICE-ENVELOPE-20261125
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-DTR-SIGNED-OFFICE-ENVELOPE-20261125.yaml
+  current_stage: protected_ci_pending_source_fix
   parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
