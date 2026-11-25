@@ -1,0 +1,31 @@
+version: 1
+repository: arvectum2/tender-agent
+upstream_repository: arvectum2/data-platform
+task_id: TA-DP-PINNED-RUNTIME-ROLL-20261125
+status: blocked
+goal: Owner-authorized staged, pinned, reversible Data Platform diagnostics release from exact ec6cac92; deploy only when host admission, rollback and live service continuity are independently checked. No claim of SLO recovery until observed.
+definition_of_done:
+  - Confirm protected DP PR138/139/140 source head and exact deployed old build; preserve rollback before any live change.
+  - Preflight fresh actual host capacity with explicit authorization and no active ingest/jobs; stop if no stability.
+  - Stage immutable isolated candidate from DP source SHA ec6cac92 and cloned compatible venv, prove focus tests, packaging and no schema/dependency diffs.
+  - Perform owner-authorized pinned atomic launcher update and restart only if all operational admission gates pass; health/auth/readiness and fallback tested, rollback on any failure.
+  - Record observed production SLO phase/cohort readiness separately from source CI; never declare RED resolved without >=20 relevant cohort samples and sustained window.
+  - Canonical checkpoint updated with exact source/production commit and test results. Parent TA-ROADMAP-EXEC remains in_progress.
+completed:
+  - '25-Nov prior Tender Agent checkpoint PR751 exact CI9/9 merged main d520d58bb75cfae1519db69887843638df16f762.'
+  - '25-Nov confirmed existing DP source release pinned e4fdda34067dfd341e22a5ed53ea7d22f3d372f0, new merged source ec6cac92fa42897df8a908f4b7c3d5a3d292febe, no DB migration or dependency changes.'
+  - '25-Nov 07:52 runtime 0.6.0 healthy HTTP but RED search p95 11468ms/80, ingest 37608ms/256, embedding phase 37330ms; source-only CI does not fix SLO.'
+  - '25-Nov governor normal/10, free49-50%, memory pressure1, swap15640MiB. Strict 2GiB safety gate is blocked.'
+  - '25-Nov staged immutable candidate exact DP source ec6cac92, 78MiB with cloned pinned Python3.15.2 venv. 42 offline focused tests and exact runtime imports PASS.'
+  - 'Old pinned launcher SHA256 1dea946debe5478ff5a08e9f2efe9e1d69942f9f532e934f39126d4a62c9c809 backed up; candidate 4 replacements SHA256 4e9bd3ab2553ca4e457f08871c51e1390805c7a257aed10b96e591d81a015beb; bash syntax PASS, live unchanged.'
+  - '25-Nov at 07:54:54 MSK official model-stage check-only exit2 BLOCKED: memory_headroom_low, memory_pressure_high_or_unknown, swap_used_too_high_or_unknown.'
+  - 'Rollback and admission runbook docs/ops/TA_DP_PINNED_RELEASE_STAGING_2026-11-25.md prepared; zero Qwen launch, service restart or DB modification.'
+current_stage: blocked_on_strict_resource_admission
+remaining:
+  - 'Owner-admitted release only once the exact strict host gate is all green and live maintenance window/rollback are independently checked.'
+  - 'Then switch pinned launcher with rollback, authenticated post-restart checks, and independently observe representative sustained SLO.'
+last_verified_commit: d520d58bb75cfae1519db69887843638df16f762
+tests: {candidate_source: 42_pass, runtime_import: pass, rollback_sha: pass, launcher_syntax: pass, strict_admission: blocked_exit2, live_search_slo: red, live_ingest_slo: red}
+resume_instruction: 'BLOCKED: 25-Nov swap15640MiB>2048MiB, memory pressure1 and free below50. Do not restart services or run Qwen. Candidate and exact rollback preserved in /Users/master/ArvectumSafe/runtime-releases/data-platform-20261125-ec6cac92. Read docs/ops/TA_DP_PINNED_RELEASE_STAGING_2026-11-25.md. Recheck read-only admission and active launcher hash; only fresh all-green gate permits owner-maintained switch and rollback. Parent roadmap stays in_progress.'
+production_modified: false
+related_issues: [744, 133, 137]
