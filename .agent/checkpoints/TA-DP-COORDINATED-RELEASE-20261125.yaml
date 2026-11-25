@@ -1,0 +1,27 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-DP-COORDINATED-RELEASE-20261125
+status: blocked
+goal: Coordinate pinned TA/DP release, safe maintenance and targeted recovery, then resume roadmap.
+definition_of_done:
+  - PR756 protected CI9/9, exact merge tree and source recovery proof.
+  - Stage exact TA/DP source/runtime, three exact launcher rollback copies, no schema/dependency change.
+  - Owner approves exact unchanged WSF07B release rebind and maintenance window with physical unlock.
+  - Verify backup/recovery, jobs, strict host/prewrite gates, then deploy with rollback.
+  - Verify exact production pins, health/auth, original workspace scope, daily preflight, representative SLO.
+  - Admit current source, recover one document per operation, index and analyze once, human decision retained.
+completed:
+  - 'PR756 protected CI9/9 merged c4e38b86dcc7721cf6d4f366b2cfab890f1df8ac, merge tree equals tested head. Offline recovery 5/5 archives, 10 receipts, 235 chunks, zero unresolved pages.'
+  - 'TA exact clean detached source on ArvectumSSD with cloned Python3.15.2 venv, interpreter/source pin PASS. DP ec6cac92 staged and 622 blobs reverified, zero mismatch. No dependency/schema diff.'
+  - 'Three live launchers copied byte-for-byte; live checksums unchanged, syntax PASS. DP/daily staged; backend inert template pending exact owner-approved rebind. Live rollback not executed.'
+  - '14:29 MSK schema128, zero active other clients at sample, PG healthy, both WAL receivers running, TA/DP HTTP200. Strict gate blocked governor_not_normal, memory_headroom_low, memory_pressure_high_or_unknown, swap_used_too_high_or_unknown. Free35%, swap24395.75MiB.'
+current_stage: staged_blocked_maintenance_and_exact_workspace_rebind
+remaining:
+  - Owner approves existing 12 IDs only, 9 excluded, unchanged token hash/database/scope/validity; no new grant or expiry extension.
+  - Confirm maintenance window and physical FileVault unlock; verify backup/recovery and workloads; reboot only if admitted.
+  - Recheck strict resource gate, protected release evidence and mandatory prewrite gate; finalize launchers and deploy only if admitted.
+  - Current EIS revision proof and targeted recovery, then roadmap. No full DTR replay.
+last_verified_commit: c4e38b86dcc7721cf6d4f366b2cfab890f1df8ac
+tests: {pr756_ci: 9_of_9_pass, ta_stage_pin: pass, dp_blobs: 622_of_622, rollback_bytes: 3_of_3, launcher_syntax: pass, schema: 128, ta_health: 200, dp_health: 200, resource_gate: blocked, live_rollback_test: not_performed}
+resume_instruction: 'ARC only. Read docs/ops/TA_DP_COORDINATED_RELEASE_2026-11-25.md and private stage-manifest.json. No reboot without current window confirmation or rebind without exact owner approval. Never use inert backend template. Finish gates, then ordered rollout; no DTR replay or speculative changes.'
+production_modified: false

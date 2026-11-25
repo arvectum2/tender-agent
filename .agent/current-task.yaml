@@ -1353,7 +1353,7 @@ dp_pinned_runtime_roll_2026_11_25:
   task_id: TA-DP-PINNED-RUNTIME-ROLL-20261125
   status: blocked
   checkpoint: .agent/checkpoints/TA-DP-PINNED-RUNTIME-ROLL-20261125.yaml
-  current_stage: blocked_on_swap_and_filevault_unlock_coordination
+  current_stage: coordinated_release_blocked_on_host_and_owner_admission
   parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
   upstream_repository: arvectum2/data-platform
 
@@ -1373,7 +1373,14 @@ dtr_signed_office_envelope_2026_11_25:
 
 dtr_targeted_office_recovery_2026_11_25:
   task_id: TA-DTR-TARGETED-OFFICE-RECOVERY-20261125
-  status: in_progress
+  status: completed
   checkpoint: .agent/checkpoints/TA-DTR-TARGETED-OFFICE-RECOVERY-20261125.yaml
-  current_stage: protected_ci_pending_targeted_recovery
+  current_stage: source_only_complete
+  parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
+
+ta_dp_coordinated_release_2026_11_25:
+  task_id: TA-DP-COORDINATED-RELEASE-20261125
+  status: blocked
+  checkpoint: .agent/checkpoints/TA-DP-COORDINATED-RELEASE-20261125.yaml
+  current_stage: staged_blocked_maintenance_and_exact_workspace_rebind
   parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress

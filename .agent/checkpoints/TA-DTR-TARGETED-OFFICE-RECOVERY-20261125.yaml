@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-DTR-TARGETED-OFFICE-RECOVERY-20261125
-status: in_progress
+status: completed
 goal: Prepare bounded one-item recovery for the five verified stored signed office envelopes, without live replay or broader source acquisition permission.
 definition_of_done:
   - Verify exact target identity and PDF coverage offline; preserve originals and uncertainty about signature and current revision.
@@ -14,11 +14,11 @@ completed:
   - 'Exact read-only plan_target returned candidate_for_reviewed_recovery for registry 0187200001726001774, 5 documents, 0 missing, 0 chunks, no collection. Strict host gate still blocked pressure and swap; no live recovery attempted.'
   - 'Source-only stored DOCX/XLSX ZIP compatibility implemented, new download stays DOCX-only, exact existing source inventory retained; companion projections require both distinct member receipts and source spans.'
   - '86 focused tests PASS, Ruff PASS; actual read-only next_document_stage project_document with 5/5 verified originals, 5/5 saved revision metadata, zero chunks, no collection, no EIS network or DB mutations.'
-current_stage: protected_ci_pending_targeted_recovery
+  - 'PR756 protected CI9/9 merged c4e38b86; integrated offline rehearsal five archives, ten receipts, 235 chunks, zero unresolved pages, ensure_collection. Noncanonical fixture path refused; corrected fixture PASS.'
+current_stage: source_only_complete
 remaining:
-  - Verify protected CI and merge exact head; record resulting commit.
-  - Live recovery blocked pending exact active release, current EIS source revision, host and prewrite admission.
-last_verified_commit: 261d5c65c1d312ef58a9f40f7aeb878f9f7e6104
-tests: {focused: 86_pass, ruff: pass, offline_ocr: pass, archived_stage: project_document, verified_originals: 5_of_5, stored_revision_metadata: 5_of_5, protected_ci: pending}
-resume_instruction: 'ARC only. Verify exact protected CI on fix/ta-dtr-targeted-office-recovery-20261125; merge only after 9/9 pass and unchanged base. Source-only compatibility complete locally. Live recovery requires separately admitted current EIS revision, exact approved release and prewrite/host gates. Do not invoke recovery CLI even dry-run without live-source admission; no DTR replay, production DB mutation, service restart or model load.'
+  - None for source-only compatibility; live recovery separate.
+last_verified_commit: c4e38b86dcc7721cf6d4f366b2cfab890f1df8ac
+tests: {focused: 86_pass, ruff: pass, offline_ocr: pass, archived_stage: project_document, verified_originals: 5_of_5, stored_revision_metadata: 5_of_5, protected_ci: 9_of_9_pass, offline_integrated_projection: 5_of_5_pass, offline_member_receipts: 10_of_10, projected_chunks: 235}
+resume_instruction: 'Source-only complete. Follow TA-DP-COORDINATED-RELEASE-20261125; live recovery requires exact release and independent current EIS/host/prewrite admission.'
 production_modified: false
