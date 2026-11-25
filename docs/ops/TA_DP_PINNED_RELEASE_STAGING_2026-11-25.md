@@ -1,5 +1,7 @@
 # Pinned Data Platform release staging — 25 November 2026
 
+**Superseding owner-approved policy (25-Nov 15:00 MSK):** [operation-specific resource admission](TA_RESOURCE_ADMISSION_POLICY_2026-11-25.md). Earlier strict Qwen thresholds below describe historical decisions, not the current replacement-only rollout gate. No additional model launch or DTR admission is changed.
+
 Status: RELEASE STAGED, RESOURCE ADMISSION BLOCKED. Nothing live changed.
 
 ## Exact source and rollback
