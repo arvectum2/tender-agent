@@ -357,7 +357,26 @@ def prepare_tender_for_analysis(
                 registry_number,
                 e,
             )
-            warnings.append(f"Data Platform document processing failed: {e}")
+            # A partial projection must never be promoted by stale chunks.
+            session.rollback()
+            reason = "source_document_projection_failed"
+            steps.append(TenderPreparationStep("extract_text", "failed", reason))
+            errors.append(reason)
+            emit_progress(100, "extract_text", reason)
+            return TenderPreparationResult(
+                status="failed",
+                registry_number=registry_number,
+                ready_for_analysis=False,
+                steps=steps,
+                tender_found=True,
+                documents_total=len(tender.documents),
+                documents_downloaded=sum(
+                    doc.download_status == "downloaded" for doc in tender.documents
+                ),
+                warnings=warnings,
+                errors=errors,
+                tender_id=tender.id,
+            )
 
         step = TenderPreparationStep("extract_text", "in_progress", "Checking extracted text...")
         steps.append(step)

@@ -1,0 +1,26 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-DTR-SIGNED-OFFICE-ENVELOPE-20261125
+status: in_progress
+goal: Correct today's verified EIS signed-office envelope rejection without misrepresenting PDF companion evidence or touching live DTR.
+definition_of_done:
+  - Prove exact failure and registered original integrity on one failed item.
+  - Add bounded DOCX/XLSX plus explicitly named PDF companion support, retain hashes and signature-not-verified boundary, reject unknown/unsafe content.
+  - Process or explicitly fail closed on incomplete companion evidence; no partial source readiness or silent equivalence.
+  - Isolated regression tests, real archived byte-only smoke, protected CI and merge.
+  - No production mutation or new source fetch; any targeted live repair requires separately admitted source and host gate.
+completed:
+  - 'PR754 protected CI9/9 merged 007416f4b838dcb58fa10768c64d2dd7558a0883.'
+  - '25-Nov DTR one FAILED registry 0187200001726001774; safe persisted source_or_index_not_ready:failure, no analysis, 5 downloaded ZIP originals SHA/size verified, pending extraction and zero chunks.'
+  - 'Exact local runner error: unexpected content in signed DOCX ZIP. Each envelope contains one office member, its associated SIG, and PDF named office filename plus .pdf; 4 DOCX and 1 XLSX. No encrypted entries; no source network requests or DB mutation.'
+  - 'Implemented bounded signed DOCX/XLSX plus named PDF handling, separate member receipts and normalized chunk spans, dedupe with retained provenance, incomplete-coverage rejection and rollback before stale indexing.'
+  - '130 affected tests PASS and Ruff PASS; actual registered originals 5/5 SHA/size and format verified, unchanged.'
+  - 'Offline installed DP extraction code, no OCR/vision/API/model/DB: 10/10 member text/chunk extraction; each chunk hash and normalized span verified, 235 chunks before dedupe. One XLSX companion PDF page flagged unresolved. No full-coverage or production claim.'
+current_stage: protected_ci_pending_source_fix
+remaining:
+  - Verify protected CI and merge exact head; record merge commit.
+  - Live recovery separately blocked: verify current source revision, full PDF extraction (one unresolved page), host admission and source/index/analysis receipts.
+last_verified_commit: 007416f4b838dcb58fa10768c64d2dd7558a0883
+tests: {focused: 130_pass, ruff: pass, original_envelopes: 5_of_5, offline_member_extractions: 10_of_10, native_unresolved_pdf_pages: 1, protected_ci: pending}
+resume_instruction: ARC only. Verify exact protected CI on fix/ta-dtr-signed-office-envelope-20261125 and merge if 9/9 pass and base unchanged. Source fix and local tests ready; do not perform live recovery until current original revision and full PDF page coverage are proven and host/source gates independently admitted. No live DTR replay or DB changes.
+production_modified: false

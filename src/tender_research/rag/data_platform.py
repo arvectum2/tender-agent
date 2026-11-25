@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -14,7 +15,11 @@ from src.tender_research.rag.presets import (
     tender_recovery_processing_collection_id,
 )
 from src.tender_research.rag.search_types import RagSearchHit
-from src.tender_research.rag.signed_zip import DOCX_MIME, unwrap_signed_docx
+from src.tender_research.rag.signed_zip import (
+    DOCX_MIME,
+    XLSX_MIME,
+    unwrap_signed_office,
+)
 from src.tender_research.repository import TenderRepository
 
 _CHUNK_URI_PREFIX = "tender-chunk://"
@@ -91,6 +96,9 @@ def _ocr_review_projection(metadata: dict | None) -> dict:
 def _project_processing_evidence(document, payload: dict) -> dict:
     metadata = _processing_metadata(payload)
     review = _ocr_review_projection(metadata)
+    companion_reviews = payload.get("_signed_member_ocr_reviews")
+    if isinstance(companion_reviews, list):
+        review = next((r for r in companion_reviews if r["requires_review"]), review)
     raw_meta = dict(getattr(document, "raw_meta", None) or {})
     raw_meta["data_platform_processing"] = {
         "resource_id": payload.get("resource_id"),
@@ -135,13 +143,168 @@ def _document_uri(document_id: str) -> str:
 def _processing_source(document, source_path: Path, *, recovery=False):
     filename = document.file_name or source_path.name
     uri = _document_uri(str(document.id))
-    if filename.lower().endswith(".docx.zip"):
-        content, evidence = unwrap_signed_docx(source_path, str(document.sha256 or ""))
-        return {"content": content, "filename": filename[:-4], "content_type": DOCX_MIME,
-                "canonical_uri": uri + "/member/" + evidence["member_sha256"]}, evidence
-    return {"content": source_path.read_bytes(), "filename": filename,
-            "content_type": "application/octet-stream" if recovery else (document.content_type or "application/octet-stream"),
-            "canonical_uri": uri}, None
+    extension = next((ext for ext in (".docx", ".xlsx")
+                      if filename.lower().endswith(ext + ".zip")), None)
+    if extension:
+        content, evidence, pdf = unwrap_signed_office(
+            source_path, str(document.sha256 or ""), extension=extension,
+        )
+        primary = {
+            "content": content, "filename": evidence["member_name"],
+            "content_type": DOCX_MIME if extension == ".docx" else XLSX_MIME,
+            "canonical_uri": uri + "/member/" + evidence["member_sha256"],
+        }
+        if pdf is None:
+            return primary, evidence, None
+        companion = evidence["pdf_companion"]
+        return primary, evidence, {
+            "content": pdf, "filename": companion["member_name"],
+            "content_type": "application/pdf",
+            "canonical_uri": uri + "/pdf-companion/" + companion["member_sha256"],
+        }
+    return {
+        "content": source_path.read_bytes(), "filename": filename,
+        "content_type": "application/octet-stream" if recovery else (
+            document.content_type or "application/octet-stream"
+        ),
+        "canonical_uri": uri,
+    }, None, None
+
+
+def _member_processing_receipt(payload, source, collection_id):
+    if (
+        not isinstance(payload, dict)
+        or payload.get("collection_id") != collection_id
+        or payload.get("canonical_uri") != source["canonical_uri"]
+        or payload.get("extraction_status") != "extracted"
+        or not isinstance(payload.get("text"), str)
+        or not payload["text"].strip()
+        or not isinstance(payload.get("chunks"), list)
+        or not payload["chunks"]
+        or any(not isinstance(payload.get(k), str) or not payload[k].strip()
+               for k in ("resource_id", "document_id"))
+    ):
+        raise DataPlatformError("Incomplete signed ZIP member processing receipt")
+    metadata = _processing_metadata(payload) or {}
+    ocr = metadata.get("ocr")
+    if (
+        metadata.get("text_truncated") is True
+        or (isinstance(ocr, dict) and ocr.get("unresolved_page_numbers"))
+    ):
+        raise DataPlatformError("Signed ZIP member extraction coverage incomplete")
+    return {
+        "resource_id": payload["resource_id"],
+        "document_id": payload["document_id"],
+        "canonical_uri": payload["canonical_uri"],
+        "member_name": source["filename"],
+        "member_sha256": hashlib.sha256(source["content"]).hexdigest(),
+    }
+
+
+def _process_document_members(client, *, collection_id, title, source, companion, config):
+    """Keep both member sources; deduplicate only identical chunk text.
+
+    No claim of signature authenticity or semantic equivalence. The companion
+    must yield its own successful extraction before the parent can be projected.
+    """
+    def process(member):
+        return client.process_document(
+            collection_id=collection_id, title=title, **member,
+            chunk_size_chars=config.rag_chunk_size_chars,
+            overlap_chars=config.rag_chunk_overlap_chars,
+            min_chunk_chars=config.rag_min_chunk_chars,
+            max_chars=config.document_extract_max_chars,
+        )
+
+    first = process(source)
+    if companion is None:
+        return first
+    primary_receipt = _member_processing_receipt(first, source, collection_id)
+    second = process(companion)
+    pdf_receipt = _member_processing_receipt(second, companion, collection_id)
+    if (primary_receipt["resource_id"] == pdf_receipt["resource_id"]
+            or primary_receipt["document_id"] == pdf_receipt["document_id"]):
+        raise DataPlatformError("Signed ZIP member receipt identity collision")
+    # DP chunk offsets refer to its normalized text, not raw extractor text.
+    # Keep the combined projection in exactly that coordinate space.
+    if len(first["text"]) + len(second["text"]) + 2 > config.document_extract_max_chars:
+        raise DataPlatformError("Signed ZIP combined extracted text exceeds limit")
+    normalized = [re.sub(r"\s+", " ", p["text"]).strip() for p in (first, second)]
+    combined = " ".join(normalized)
+    chunks = []
+    by_hash = {}
+    offset = 0
+    for payload, receipt, member_text in (
+        (first, primary_receipt, normalized[0]),
+        (second, pdf_receipt, normalized[1]),
+    ):
+        for item in payload["chunks"]:
+            if not isinstance(item, dict):
+                raise DataPlatformError("Invalid signed ZIP member chunk")
+            text = item.get("text")
+            digest = item.get("content_hash")
+            start, end = item.get("char_start"), item.get("char_end")
+            if (
+                not isinstance(text, str) or not text.strip()
+                or digest != hashlib.sha256(text.encode("utf-8")).hexdigest()
+                or type(start) is not int or type(end) is not int
+                or not 0 <= start < end <= len(member_text)
+                or member_text[start:end].strip() != text
+                or not isinstance(item.get("chunk_id"), str) or not item["chunk_id"]
+            ):
+                raise DataPlatformError("Invalid signed ZIP member chunk evidence")
+            member = {
+                **receipt, "chunk_id": item["chunk_id"],
+                "char_start": start, "char_end": end,
+                "coordinate_space": "normalized_member_text",
+            }
+            if digest in by_hash:
+                existing = by_hash[digest]
+                if existing["text"] != text:
+                    raise DataPlatformError("Signed ZIP chunk hash collision")
+                existing["_member_refs"].append(member)
+                continue
+            projected = {
+                **item, "ordinal": len(chunks),
+                "char_start": offset + start, "char_end": offset + end,
+                "_member_refs": [member],
+            }
+            by_hash[digest] = projected
+            chunks.append(projected)
+        offset += len(member_text) + 1
+    return {
+        **first, "text": combined, "chunks": chunks,
+        "metadata": {
+            **(_processing_metadata(first) or {}),
+            "signed_office_members": [primary_receipt, pdf_receipt],
+            "pdf_companion_metadata": _processing_metadata(second),
+            "semantic_equivalence": "not_verified",
+        },
+        "_signed_member_ocr_reviews": [
+            _ocr_review_projection(_processing_metadata(p)) for p in (first, second)
+        ],
+    }
+
+
+def _projected_chunk_evidence(payload, item):
+    refs = item.get("_member_refs")
+    if isinstance(refs, list) and refs:
+        primary = refs[0]
+        return {
+            "resource_id": primary["resource_id"],
+            "document_id": primary["document_id"],
+            "chunk_id": primary["chunk_id"],
+            "canonical_uri": primary["canonical_uri"],
+            "content_hash": item.get("content_hash"),
+            "archive_members": refs,
+        }
+    return {
+        "resource_id": payload.get("resource_id"),
+        "document_id": payload.get("document_id"),
+        "chunk_id": item.get("chunk_id"),
+        "canonical_uri": payload.get("canonical_uri"),
+        "content_hash": item.get("content_hash"),
+    }
 
 
 def _preserve_zip_evidence(document, evidence):
@@ -330,15 +493,11 @@ class DataPlatformDocumentProjector:
                 continue
 
             try:
-                source, zip_evidence = _processing_source(document, local_path)
-                payload = self._client.process_document(
-                    collection_id=_processing_collection_id(str(tender.id)),
+                source, zip_evidence, companion = _processing_source(document, local_path)
+                payload = _process_document_members(
+                    self._client, collection_id=_processing_collection_id(str(tender.id)),
                     title=document.file_name or str(document.id),
-                    **source,
-                    chunk_size_chars=self._config.rag_chunk_size_chars,
-                    overlap_chars=self._config.rag_chunk_overlap_chars,
-                    min_chunk_chars=self._config.rag_min_chunk_chars,
-                    max_chars=self._config.document_extract_max_chars,
+                    source=source, companion=companion, config=self._config,
                 )
             except (DataPlatformError, OSError, ValueError):
                 meta = document.raw_meta if isinstance(document.raw_meta, dict) else {}
@@ -399,13 +558,7 @@ class DataPlatformDocumentProjector:
                         "source_text_path": document.extracted_text_path,
                         "raw_meta": {
                             "source": "data_platform_projection",
-                            "data_platform": {
-                                "resource_id": payload.get("resource_id"),
-                                "document_id": payload.get("document_id"),
-                                "chunk_id": item.get("chunk_id"),
-                                "canonical_uri": payload.get("canonical_uri"),
-                                "content_hash": item.get("content_hash"),
-                            },
+                            "data_platform": _projected_chunk_evidence(payload, item),
                         },
                     }
                 )
@@ -478,16 +631,12 @@ def extract_document_with_data_platform(
             f"recovery document {document.id} source file is unavailable"
         )
     factory = client_factory or build_data_platform_client
-    source, zip_evidence = _processing_source(document, source_path, recovery=True)
+    source, zip_evidence, companion = _processing_source(document, source_path, recovery=True)
     with factory(config) as client:
-        payload = client.process_document(
-            collection_id=tender_recovery_processing_collection_id(),
+        payload = _process_document_members(
+            client, collection_id=tender_recovery_processing_collection_id(),
             title=document.file_name or str(document.id),
-            **source,
-            chunk_size_chars=config.rag_chunk_size_chars,
-            overlap_chars=config.rag_chunk_overlap_chars,
-            min_chunk_chars=config.rag_min_chunk_chars,
-            max_chars=config.document_extract_max_chars,
+            source=source, companion=companion, config=config,
         )
     _project_processing_evidence(document, payload)
     _preserve_zip_evidence(document, zip_evidence)
@@ -543,15 +692,11 @@ class DataPlatformRecoveryChunkIndexer:
                         f"recovery document {document.id} is missing source or extracted text"
                     )
                 expected_text = text_path.read_text(encoding="utf-8")
-                source, zip_evidence = _processing_source(document, source_path)
-                payload = client.process_document(
-                    collection_id=_processing_collection_id(str(tender_id)),
+                source, zip_evidence, companion = _processing_source(document, source_path)
+                payload = _process_document_members(
+                    client, collection_id=_processing_collection_id(str(tender_id)),
                     title=document.file_name or str(document.id),
-                    **source,
-                    chunk_size_chars=self._config.rag_chunk_size_chars,
-                    overlap_chars=self._config.rag_chunk_overlap_chars,
-                    min_chunk_chars=self._config.rag_min_chunk_chars,
-                    max_chars=self._config.document_extract_max_chars,
+                    source=source, companion=companion, config=self._config,
                 )
                 _project_processing_evidence(document, payload)
                 _preserve_zip_evidence(document, zip_evidence)
@@ -605,13 +750,7 @@ class DataPlatformRecoveryChunkIndexer:
                             "source_text_path": document.extracted_text_path,
                             "raw_meta": {
                                 "source": "data_platform_recovery_projection",
-                                "data_platform": {
-                                    "resource_id": payload.get("resource_id"),
-                                    "document_id": payload.get("document_id"),
-                                    "chunk_id": item.get("chunk_id"),
-                                    "canonical_uri": payload.get("canonical_uri"),
-                                    "content_hash": content_hash,
-                                },
+                                "data_platform": _projected_chunk_evidence(payload, item),
                             },
                         }
                     )

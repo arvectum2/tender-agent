@@ -1004,3 +1004,82 @@ def test_indexer_rejects_extra_or_missing_vectors_after_ingest():
     client.collection_stats = lambda _cid: {"resources": 1, "documents": 1, "chunks": 1, "embeddings": 2}
     with pytest.raises(DataPlatformError, match="count mismatch"):
         DataPlatformTenderIndexer(repo, client).build_for_tender(tender.id)
+
+
+@pytest.mark.parametrize("mode", ["different", "identical", "incomplete", "foreign", "bad_hash", "truncated", "unresolved", "bad_offset"])
+def test_signed_office_pdf_projection_keeps_members_and_fails_closed(tmp_path, mode):
+    import hashlib
+    import io
+    import zipfile
+    from pathlib import Path
+
+    from src.tender_research.config import TenderResearchConfig
+
+    inner = io.BytesIO()
+    with zipfile.ZipFile(inner, "w") as archive:
+        archive.writestr("[Content_Types].xml", "<Types/>")
+        archive.writestr("xl/workbook.xml", "<workbook/>")
+    parent = tmp_path / "originals"
+    parent.mkdir()
+    source = parent / "contract.xlsx.zip"
+    with zipfile.ZipFile(source, "w") as archive:
+        archive.writestr("contract.xlsx", inner.getvalue())
+        archive.writestr("contract.xlsx.sig", b"signature")
+        archive.writestr("contract.xlsx.pdf", b"%PDF-1.7\nsynthetic")
+    digest = hashlib.sha256(source.read_bytes()).hexdigest()
+    repo = _repo()
+    tender = repo.upsert_tender({"source": "eis", "external_id": "office", "title": "Office envelope"})
+    doc = repo.upsert_document({
+        "tender_id": tender.id, "file_name": source.name, "local_path": str(source),
+        "sha256": digest, "download_status": "downloaded",
+    })
+    repo._session.commit()
+    client = FakeDataPlatformClient()
+    original = client.process_document
+
+    def process(**kwargs):
+        is_pdf = kwargs["filename"].endswith(".pdf")
+        client.process_text = "Office text" if not is_pdf or mode == "identical" else "PDF extra terms"
+        payload = original(**kwargs)
+        suffix = "pdf" if is_pdf else "office"
+        payload["resource_id"] = suffix + "-resource"
+        payload["document_id"] = suffix + "-document"
+        for item in payload["chunks"]:
+            item["content_hash"] = hashlib.sha256(item["text"].encode()).hexdigest()
+        if is_pdf and mode == "incomplete":
+            payload["extraction_status"] = "failed"
+        if is_pdf and mode == "foreign":
+            payload["canonical_uri"] = "unbound"
+        if is_pdf and mode == "bad_hash":
+            payload["chunks"][0]["content_hash"] = "unbound"
+        if is_pdf and mode == "truncated":
+            payload["metadata"]["text_truncated"] = True
+        if is_pdf and mode == "unresolved":
+            payload["metadata"]["ocr"] = {"unresolved_page_numbers": [2]}
+        if is_pdf and mode == "bad_offset":
+            payload["chunks"][0]["char_start"] = 1
+        return payload
+
+    client.process_document = process
+    projector = DataPlatformDocumentProjector(repo, client, TenderResearchConfig(data_dir=str(tmp_path)))
+    if mode in {"incomplete", "foreign", "bad_hash", "truncated", "unresolved", "bad_offset"}:
+        with pytest.raises(DataPlatformError):
+            projector.build_for_tender(tender)
+        assert repo.list_document_chunks(doc.id) == []
+        assert doc.text_extraction_status == "pending"
+    else:
+        result = projector.build_for_tender(tender)
+        assert result.extracted_documents == 1
+        chunks = repo.list_document_chunks(doc.id)
+        assert len(chunks) == (1 if mode == "identical" else 2)
+        refs = [r for c in chunks for r in c.raw_meta["data_platform"]["archive_members"]]
+        assert {r["member_name"] for r in refs} == {"contract.xlsx", "contract.xlsx.pdf"}
+        assert {r["resource_id"] for r in refs} == {"office-resource", "pdf-resource"}
+        assert doc.raw_meta["signed_zip"]["pdf_companion"]["semantic_equivalence"] == "not_verified"
+        assert doc.raw_meta["signed_zip"]["signature_verification"] == "not_performed"
+        text = Path(doc.extracted_text_path).read_text()
+        for chunk in chunks:
+            assert text[chunk.char_start:chunk.char_end] == chunk.text
+        assert projector.build_for_tender(tender).documents_skipped_existing == 1
+    assert len(client.ingested) == 2
+    assert hashlib.sha256(source.read_bytes()).hexdigest() == digest
