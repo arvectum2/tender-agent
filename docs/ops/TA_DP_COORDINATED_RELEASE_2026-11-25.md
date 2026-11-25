@@ -78,3 +78,23 @@ Resource free81%, swap4027.75MiB; strict gate still blocks on pressure
 and swap. No deployment. Owner requests parallel workloads continue;
 do not stop others or reboot again merely to reach capacity. Staged
 candidate and rollback hashes reverified. Private receipts updated.
+
+## Actual production activation — 25 Nov 15:02–15:04 MSK
+
+Owner-approved replacement-only policy applies; isolated Qwen gate
+was incorrectly applied to deployment. Both service replacements passed
+fresh reduced governor, free40%, pressure2, thermal0, disk205+GiB.
+MI and fresh PITR guards passed beforehand. DP ec6cac92 PID8896:
+health200, authenticated readiness200, anonymous401, search_phases
+and embedding batch/retry counters present, insufficient samples.
+TA c4e38b86 PID9612: backend and daily pins exact, actual schema128,
+12/12 existing approved identities verified in read-only SQL; rebind
+receipt and anonymous403, docs/openapi401, daily preflight PASS.
+Independent exact-runtime verifier 15/15 OK, code parity with main
+39a7055b confirmed. Authenticated workspace HTTP not exercised.
+All 13 previously running containers remain running; three exact
+candidate launcher checksums and three original rollback checksums
+verified. No migrations, extra model loads, unrelated restarts, EIS
+fetch or DTR replay. Rollback not required or live-exercised.
+Gemma remains temporarily paused; restore before dependent analysis
+with appropriate host admission. SLO and current EIS target remain open.

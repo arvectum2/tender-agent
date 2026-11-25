@@ -2,7 +2,7 @@ version: 1
 repository: arvectum2/tender-agent
 upstream_repository: arvectum2/data-platform
 task_id: TA-DP-PINNED-RUNTIME-ROLL-20261125
-status: blocked
+status: completed
 goal: Owner-authorized staged, pinned, reversible Data Platform diagnostics release from exact ec6cac92; deploy only when host admission, rollback and live service continuity are independently checked. No claim of SLO recovery until observed.
 definition_of_done:
   - Confirm protected DP PR138/139/140 source head and exact deployed old build; preserve rollback before any live change.
@@ -25,12 +25,11 @@ completed:
   - 'FileVault ON and macOS autoLoginUser not configured: remote reboot could require physical unlock before ARC/DP/TA start. No unattended reboot or process stop.'
   - 'DP GET-only 09:09: search p95 11014ms/110 RED, ingest p95 1144ms/256 GREEN but all 256 recent ingests single chunk: do not claim large-document throughput recovery.'
   - 'Rollback and admission runbook docs/ops/TA_DP_PINNED_RELEASE_STAGING_2026-11-25.md prepared; zero Qwen launch, service restart or DB modification.'
-current_stage: coordinated_release_blocked_on_host_and_owner_admission
-remaining:
-  - 'Owner-admitted release only once the exact strict host gate is all green and live maintenance window/rollback are independently checked.'
-  - 'Then switch pinned launcher with rollback, authenticated post-restart checks, and independently observe representative sustained SLO.'
+  - '25-Nov 15:02 owner-approved operation-specific rollout completed: DP ec6cac92 exact activated PID8896, health200/auth readiness200/anonymous401, new search and embedding batch/retry metric contract verified; old launcher rollback retained unchanged. Insufficient data for SLO acceptance; issues133/137 remain open.'
+current_stage: activated_verified_slo_separate
+remaining: []
 last_verified_commit: d520d58bb75cfae1519db69887843638df16f762
 tests: {candidate_source: 42_pass, runtime_import: pass, rollback_sha: pass, launcher_syntax: pass, strict_admission: blocked_exit2, live_search_slo: red, live_ingest_slo: red}
-resume_instruction: 'Follow TA-DP-COORDINATED-RELEASE-20261125. Physical unlock possible, reboot deferred. 14:29 strict gate blocked free35%, swap24395.75MiB. No reboot without confirmed maintenance window or activation without host, backup and exact release admission.'
-production_modified: false
+resume_instruction: 'Scoped deployment complete. Do not redeploy. Follow TA-DP-COORDINATED-RELEASE-20261125 for target recovery and observe representative SLO; #133/#137 open.'
+production_modified: true
 related_issues: [744, 133, 137]

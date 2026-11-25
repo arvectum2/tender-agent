@@ -232,3 +232,107 @@ def test_compute_wait_does_not_block_historical_commit(tmp_path, monkeypatch):
         host.admit_analysis_compute(wait_seconds=0),
     ):
         pytest.fail("busy heavy slot should refuse without waiting")
+
+
+def test_prewrite_uses_dedicated_exact_verifier_not_archive_checkout(monkeypatch):
+    from scripts.ops import daily_index_recovery_host as host
+
+    assert host.RESEARCH.name == f"ta-dtr-prewrite-verifier-{host.RESEARCH_SHA[:8]}"
+    seen = []
+    backup = {"manifest": "private", "sha256": "hash", "bytes": 123}
+
+    def head(path, expected=None):
+        seen.append(("head", path, expected))
+        return expected or "mi-head"
+
+    def command(args, cwd):
+        seen.append(("command", cwd, tuple(args)))
+        if cwd == host.MI:
+            return json.dumps(
+                {
+                    "status": "pass",
+                    "git_head": "mi-head",
+                    "postgresql_mutated_by_preflight": False,
+                    "backup": backup,
+                }
+            )
+        assert cwd == host.RESEARCH
+        if "scripts.research.dp_pitr_guard" in args:
+            return json.dumps(
+                {
+                    "status": "pass",
+                    "point": "point",
+                    "lsn": "lsn",
+                    "base_manifest_sha256": "base",
+                    "restore_proof": "proof",
+                }
+            )
+        assert "recent_archived_backup" in args[-1]
+        return json.dumps(backup)
+
+    monkeypatch.setattr(host, "checked_head", head)
+    monkeypatch.setattr(host, "checked_output", command)
+    result = host.verified_prewrite()
+    assert result["mi_head"] == "mi-head"
+    assert result["backup_sha256"] == "hash"
+    assert result["restore_point"] == "point"
+    assert seen[0] == ("head", host.RESEARCH, host.RESEARCH_SHA)
+    assert seen[-1] == ("head", host.RESEARCH, host.RESEARCH_SHA)
+    assert sum(x[0] == "command" and x[1] == host.RESEARCH for x in seen) == 2
+
+
+def test_prewrite_refuses_changed_verifier_before_running_any_gate(monkeypatch):
+    from scripts.ops import daily_index_recovery_host as host
+
+    def reject(path, expected=None):
+        assert path == host.RESEARCH and expected == host.RESEARCH_SHA
+        raise RuntimeError("host verification revision changed")
+
+    monkeypatch.setattr(host, "checked_head", reject)
+    monkeypatch.setattr(
+        host, "checked_output", lambda *_: pytest.fail("unverified source executed")
+    )
+    with pytest.raises(RuntimeError, match="revision changed"):
+        host.verified_prewrite()
+
+
+def test_prewrite_refuses_verifier_drift_during_proof(monkeypatch):
+    from scripts.ops import daily_index_recovery_host as host
+
+    backup = {"manifest": "private", "sha256": "hash", "bytes": 123}
+    checks = []
+
+    def head(path, expected=None):
+        if path == host.RESEARCH:
+            checks.append(expected)
+            if len(checks) == 2:
+                raise RuntimeError("host verification revision changed")
+        return expected or "mi-head"
+
+    def command(args, cwd):
+        if cwd == host.MI:
+            return json.dumps(
+                {
+                    "status": "pass",
+                    "git_head": "mi-head",
+                    "postgresql_mutated_by_preflight": False,
+                    "backup": backup,
+                }
+            )
+        if "scripts.research.dp_pitr_guard" in args:
+            return json.dumps(
+                {
+                    "status": "pass",
+                    "point": "point",
+                    "lsn": "lsn",
+                    "base_manifest_sha256": "base",
+                    "restore_proof": "proof",
+                }
+            )
+        return json.dumps(backup)
+
+    monkeypatch.setattr(host, "checked_head", head)
+    monkeypatch.setattr(host, "checked_output", command)
+    with pytest.raises(RuntimeError, match="revision changed"):
+        host.verified_prewrite()
+    assert checks == [host.RESEARCH_SHA, host.RESEARCH_SHA]
