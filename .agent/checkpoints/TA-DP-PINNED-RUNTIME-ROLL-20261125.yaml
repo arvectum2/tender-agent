@@ -25,12 +25,12 @@ completed:
   - 'FileVault ON and macOS autoLoginUser not configured: remote reboot could require physical unlock before ARC/DP/TA start. No unattended reboot or process stop.'
   - 'DP GET-only 09:09: search p95 11014ms/110 RED, ingest p95 1144ms/256 GREEN but all 256 recent ingests single chunk: do not claim large-document throughput recovery.'
   - 'Rollback and admission runbook docs/ops/TA_DP_PINNED_RELEASE_STAGING_2026-11-25.md prepared; zero Qwen launch, service restart or DB modification.'
-current_stage: blocked_on_swap_and_filevault_unlock_coordination
+current_stage: coordinated_release_blocked_on_host_and_owner_admission
 remaining:
   - 'Owner-admitted release only once the exact strict host gate is all green and live maintenance window/rollback are independently checked.'
   - 'Then switch pinned launcher with rollback, authenticated post-restart checks, and independently observe representative sustained SLO.'
 last_verified_commit: d520d58bb75cfae1519db69887843638df16f762
 tests: {candidate_source: 42_pass, runtime_import: pass, rollback_sha: pass, launcher_syntax: pass, strict_admission: blocked_exit2, live_search_slo: red, live_ingest_slo: red}
-resume_instruction: 'RESOURCE AND UNATTENDED REBOOT BLOCK: 25-Nov governor normal10/free65 but pressure1 and swap~16707MiB>2048MiB. FileVault ON with no auto login; confirm physical Mac mini unlock availability before coordinated reboot. Docker VM hosts production PostgreSQL/WAL and must not be stopped just to reduce swap. Source candidate ec6cac92 and exact rollback staged only, active release e4fdda34 unchanged. Read docs/ops/TA_DP_PINNED_RELEASE_STAGING_2026-11-25.md. Once physical access, DB backups/recovery and strict capacity admission verified, owner-authorized reversible DP rollout; otherwise remain blocked. Parent TA roadmap in_progress.'
+resume_instruction: 'Follow TA-DP-COORDINATED-RELEASE-20261125. Physical unlock possible, reboot deferred. 14:29 strict gate blocked free35%, swap24395.75MiB. No reboot without confirmed maintenance window or activation without host, backup and exact release admission.'
 production_modified: false
 related_issues: [744, 133, 137]
