@@ -1351,9 +1351,9 @@ dp_embedding_retry_metrics_2026_11_24:
 
 dp_pinned_runtime_roll_2026_11_25:
   task_id: TA-DP-PINNED-RUNTIME-ROLL-20261125
-  status: blocked
+  status: completed
   checkpoint: .agent/checkpoints/TA-DP-PINNED-RUNTIME-ROLL-20261125.yaml
-  current_stage: coordinated_release_blocked_on_host_and_owner_admission
+  current_stage: activated_verified_slo_separate
   parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
   upstream_repository: arvectum2/data-platform
 
@@ -1382,5 +1382,5 @@ ta_dp_coordinated_release_2026_11_25:
   task_id: TA-DP-COORDINATED-RELEASE-20261125
   status: in_progress
   checkpoint: .agent/checkpoints/TA-DP-COORDINATED-RELEASE-20261125.yaml
-  current_stage: approved_replacement_rollout_preflight
+  current_stage: production_releases_verified_pending_source_recovery
   parent_scope: TA-ROADMAP-EXEC-20261012_stays_in_progress
