@@ -1,5 +1,5 @@
 task_id: TA-EIS-COVERAGE-20261127
-status: in_progress
+status: blocked
 goal: Correct daily discovery coverage for remote site support, 223-FZ and browser fallback without disrupting active release.
 definition_of_done:
 - Verify live PRIZ and RI223 archive-link and browser access.
@@ -13,14 +13,17 @@ completed:
 - Deployed Python 3.15 cannot use prior cp312 package; provisioned isolated Python 3.12 worker, hashed dependency lock, real Chrome fallback retrieved same 223 card after simulated primary timeout.
 - 112 relevant pytest PASS; new files and changed DTR modules Ruff PASS; existing parser and pipeline legacy lint counts unchanged; git diff check PASS.
 - Existing three historic unresolved runs remain under prior targeted recovery gates; no replay or live mutation.
-current: source candidate tested; protected CI and coordinated release admission pending
+- PR762 exact CI 9/9 and mirror PASS; merged 0ef564b5577b170037683c4aefc2710febae3e9a, exact tested tree 408a2db68117723437e3802c020498fae819f5c3.
+- Detached exact SSD release staged, cloned existing venv Python3.15.2, source/interpreter pin and both profiles verified; no schema or main dependencies changed.
+- Private package ta-eis-coverage-20261127-0ef564b5 contains daily candidate with both profiles and independent browser worker, inert backend template, and two SHA-identical rollback launchers; syntax and worker dependency checks PASS.
+- Read-only live checks TA/DP HTTP200, daily preflight PASS on 90170bb3, WSF07B 12 unchanged admitted identities, nine excluded, existing validity through 17 Dec. Governor normal, memory74%, pressure1, thermal0 at sample. No target manifest, no production mutation.
+current: staged exact release; blocked pending separate owner approval of unchanged WSF07B rebind and bounded replacement maintenance
 remaining:
-- Verify exact-head protected CI, review and merge source candidate without overwriting concurrent roadmap.
 - Obtain exact release admission; deploy safe release and one existing daily schedule with companion profile plus browser interpreter; verify runtime and resource budget.
 - Keep historical recovery under existing checkpoints; do not auto-retry or change current DB.
-last_verified_commit: 9f2bd0adf4516276d143fc79f1bf4fae6cdacb33
+last_verified_commit: 0ef564b5577b170037683c4aefc2710febae3e9a
 test_results:
 - 112 targeted pass, 24 inherited warnings; Ruff scoped pass; diff check pass.
 - Real SOAP archive-link 2/2, real public 223 exact lookup and isolated browser fallback pass.
-resume_instruction: Resume branch fix/ta-eis-coverage-20261127; read docs/operations/EIS_DAILY_COVERAGE_2026-11-27.md, verify exact PR and CI; follow existing coordinated release gates, no production mutation without exact admission.
+resume_instruction: Do not rebuild or repeat PR762. Exact target 0ef564b5577b170037683c4aefc2710febae3e9a staged; obtain separate explicit unchanged 12-ID WSF07B rebind and bounded replacement approval. Use private stage-manifest under /Users/master/ArvectumSafe/runtime-releases/ta-eis-coverage-20261127-0ef564b5. Recheck fresh resource, backup/PITR, clients/jobs/locks and current pins. Finalize backend only after approval; atomically replace TA backend and daily together with rollback; verify exact runtime and both profiles. No DP restart or historical replay.
 production_modified: false
