@@ -40,3 +40,22 @@ def test_bad_member_size_is_partial(tmp_path):
     p=tmp_path/'input.7z';raw=b'7z\xbc\xaf\x27\x1c'+b'x'*100;p.write_bytes(raw)
     with patch.object(m,'archive_stream',side_effect=[b'a.docx\n',b'-rw-r--r-- 0 0 0 5 Nov 27 12:00 a.docx\n',b'abc']):
         assert list(m.external_archive_members(p,raw,'.7z'))==[('a.docx',None,'archive member size mismatch')]
+
+@pytest.mark.parametrize('ext,real_ext', [('.doc','.docx'),('.xls','.xlsx')])
+def test_mislabeled_ooxml_uses_internal_format(ext,real_ext):
+    raw=b'PK\x03\x04fixture'
+    with patch.object(m,'office_parts',return_value=iter([('part','text')])) as parser:
+        assert list(m.document_parts(raw,ext))==[('part','text')]
+    parser.assert_called_once_with(raw,real_ext)
+
+@pytest.mark.parametrize('ext', ['.doc','.xls','.pdf'])
+def test_invalid_legacy_signature_rejected(ext):
+    with pytest.raises(ValueError):list(m.document_parts(b'<html>not original</html>',ext))
+
+
+def test_unavailable_backend_is_review(tmp_path):
+    from scripts.research.run_technical_evidence import review_extract
+    p=tmp_path/'doc.doc';p.write_bytes(bytes.fromhex('d0cf11e0a1b11ae1')+b'fake')
+    with patch.object(m,'archive_stream',side_effect=FileNotFoundError('backend')):
+        r=review_extract(p,hashlib.sha256(p.read_bytes()).hexdigest())
+    assert r['status']=='review' and not r['parts']

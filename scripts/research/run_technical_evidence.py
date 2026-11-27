@@ -22,8 +22,8 @@ from scripts.research.acquire_gpb_documents import capture, references
 from scripts.research.capture_gpb_history_partitions import atomic
 from scripts.research.technical_document_evidence import extract
 
-SUPPORTED={".rar",".7z",".zip",".docx",".xlsx",".pptx",".pdf"}
-GPB_SUPPORTED={".rar",".7z",".zip",".docx",".xlsx",".pdf"}
+SUPPORTED={".doc",".xls",".rar",".7z",".zip",".docx",".xlsx",".pptx",".pdf"}
+GPB_SUPPORTED={".doc",".xls",".rar",".7z",".zip",".docx",".xlsx",".pdf"}
 
 
 def read(p):
@@ -38,7 +38,7 @@ def checksum(path):
 def review_extract(original,sha):
     try:
         return extract(original,sha)
-    except (ValueError,KeyError,ET.ParseError,zipfile.BadZipFile,subprocess.SubprocessError,NotImplementedError) as exc:
+    except (ValueError,KeyError,OSError,ET.ParseError,zipfile.BadZipFile,subprocess.SubprocessError,NotImplementedError) as exc:
         return {"schema":"technical_document_evidence_v1","source_sha256":sha,"status":"review",
                 "parts":[],"review":[{"reason":type(exc).__name__+": "+str(exc)[:150]}]}
 
