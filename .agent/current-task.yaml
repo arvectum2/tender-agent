@@ -1391,4 +1391,9 @@ dtr_immutable_prewrite_2026_11_25:
   checkpoint: .agent/checkpoints/TA-DTR-IMMUTABLE-PREWRITE-20261125.yaml
   current_stage: focused_tests_pass_protected_ci_pending
 
-# Owner-requested child: .agent/checkpoints/TA-EIS-COVERAGE-20261127.yaml
+eis_coverage_2026_11_27:
+  task_id: TA-EIS-COVERAGE-20261127
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-EIS-COVERAGE-20261127.yaml
+  current_stage: active_release_verified_first_scheduled_run_pending
+  last_verified_commit: 0ef564b5577b170037683c4aefc2710febae3e9a
