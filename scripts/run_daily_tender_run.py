@@ -33,6 +33,7 @@ from src.shared.db.session import SessionLocal
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run Daily Tender discovery and analysis")
     parser.add_argument("--profile", default="arvectum-it")
+    parser.add_argument("--include-profile", action="append", default=[], help="Run an additional independent profile after the primary profile")
     parser.add_argument("--retry-failed", action="store_true")
     parser.add_argument("--company-schedule-tick", action="store_true", help="Run only one bounded opt-in company discovery tick")
     return parser
@@ -104,24 +105,33 @@ def main() -> int:
         with SessionLocal() as session:
             print(json.dumps(tick(session, get_settings()), ensure_ascii=False))
         return 0
-    with SessionLocal() as session:
-        resumed = resume_pending_daily_tender_runs(
-            session,
-            profile_id=args.profile,
-            retry_failed=args.retry_failed,
-        )
-        run = create_daily_tender_run(
-            session,
-            StartDailyTenderRunRequest(
-                profile_id=args.profile,
-                run_now=True,
-                retry_failed=args.retry_failed,
-            ),
-        )
-        response = to_run_response(session, run)
-        print(response.model_dump_json(indent=2))
+    return _run_profiles([args.profile, *args.include_profile], retry_failed=args.retry_failed)
 
-        return _exit_code_with_diagnostic(resumed, response)
+
+def _run_profiles(profile_ids: list[str], *, retry_failed: bool = False) -> int:
+    """Independent sessions: an unresolved earlier profile must not skip the next."""
+    from src.modules.daily_tender_run.profiles import load_daily_tender_profile
+
+    ordered = list(dict.fromkeys(profile_ids))
+    for profile_id in ordered:
+        load_daily_tender_profile(profile_id)
+    exit_code = 0
+    for profile_id in ordered:
+        try:
+            with SessionLocal() as session:
+                resumed = resume_pending_daily_tender_runs(
+                    session, profile_id=profile_id, retry_failed=retry_failed,
+                )
+                run = create_daily_tender_run(session, StartDailyTenderRunRequest(
+                    profile_id=profile_id, run_now=True, retry_failed=retry_failed,
+                ))
+                response = to_run_response(session, run)
+                print(response.model_dump_json(indent=2))
+                exit_code = max(exit_code, _exit_code_with_diagnostic(resumed, response))
+        except Exception:  # noqa: BLE001 - isolate profiles and never echo raw exceptions
+            print(json.dumps({"event": "DTR_PROFILE_FAILED", "profile_id": profile_id}), file=sys.stderr)
+            exit_code = max(exit_code, 20)
+    return exit_code
 
 
 if __name__ == "__main__":

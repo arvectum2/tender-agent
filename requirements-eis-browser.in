@@ -1,0 +1,5 @@
+# Separate Python 3.12 worker; do not add to the main Python 3.15 environment.
+playwright==1.56.0
+greenlet==3.5.6
+pyee==13.0.1
+typing-extensions==4.16.0

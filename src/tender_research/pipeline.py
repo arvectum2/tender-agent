@@ -347,13 +347,20 @@ class TenderResearchPipeline:
             "errors": [],
         }
 
-    def ingest_public_by_registry_number(self, registry_number: str) -> tuple[Any, dict[str, int]]:
+    def ingest_public_by_registry_number(
+        self, registry_number: str, *, law_type: str | None = None
+    ) -> tuple[Any, dict[str, int]]:
         """Ingest or refresh one public EIS procurement by registry number."""
         normalized = str(registry_number or "").strip()
         if not normalized:
             raise ValueError("registry_number is required")
         existing = self._repo.get_tender_by_registry_number(normalized)
-        discovered = self._lookup_public_discovered_item(normalized, existing)
+        if law_type not in (None, "44fz", "223fz"):
+            raise ValueError("Unsupported public procurement law")
+        if law_type == "223fz":
+            discovered = self._lookup_public_discovered_item(normalized, existing, law_type="223fz")
+        else:
+            discovered = self._lookup_public_discovered_item(normalized, existing)
         tender, summary = self._ingest_discovered_tender(discovered)
         self._session.commit()
         return tender, summary
@@ -543,14 +550,20 @@ class TenderResearchPipeline:
             logger.warning("EIS registry fetch failed for %s: %s", registry_number, exc)
             return None, "error"
 
-    def _lookup_public_discovered_item(self, registry_number: str, existing_tender=None) -> DiscoveredRegistryNumber:
-        page = self._public_provider.search(query=registry_number, page_size=10)
+    def _lookup_public_discovered_item(
+        self, registry_number: str, existing_tender=None, *, law_type: str | None = None
+    ) -> DiscoveredRegistryNumber:
+        regime = law_type or getattr(existing_tender, "law_type", None) or "44fz"
+        is_223 = regime == "223fz"
+        provider = self._public_223fz_provider if is_223 else self._public_provider
+        source_type = SourceType.EXTERNAL_PUBLIC_223FZ if is_223 else SourceType.EXTERNAL_PUBLIC_44FZ
+        page = provider.search(query=registry_number, page_size=10)
         for item in page.items:
             if item.registry_number == registry_number:
                 return DiscoveredRegistryNumber(
                     registry_number=item.registry_number,
-                    source="external_public_44fz",
-                    source_type="external_public_44fz",
+                    source=source_type,
+                    source_type=source_type,
                     tender_title=item.title,
                     purchase_number=item.purchase_number,
                     customer_name=item.customer_name,
@@ -559,15 +572,15 @@ class TenderResearchPipeline:
                     publication_date=item.publication_date,
                     application_deadline=item.application_deadline,
                     nmck_amount=float(item.nmck_amount) if item.nmck_amount is not None else None,
-                    law_type=item.law_type,
+                    law_type=regime,
                     source_url=item.source_url,
                     card_url=item.card_url,
                     raw=item.raw,
                 )
         return DiscoveredRegistryNumber(
             registry_number=registry_number,
-            source="external_public_44fz",
-            source_type="external_public_44fz",
+            source=source_type,
+            source_type=source_type,
             tender_title=getattr(existing_tender, "title", None),
             purchase_number=getattr(existing_tender, "purchase_number", None),
             customer_name=getattr(existing_tender, "customer_name", None),
@@ -576,7 +589,7 @@ class TenderResearchPipeline:
             publication_date=getattr(existing_tender, "publication_date", None),
             application_deadline=getattr(existing_tender, "application_deadline", None),
             nmck_amount=getattr(existing_tender, "nmck_amount", None),
-            law_type=getattr(existing_tender, "law_type", None) or "44fz",
+            law_type=regime,
             source_url=getattr(existing_tender, "platform_url", None),
             card_url=getattr(existing_tender, "eis_url", None),
             raw={"lookup_status": page.status, "lookup_error": page.error},
