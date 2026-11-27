@@ -232,6 +232,11 @@ def _screen_card(
         if keyword.casefold() in title_text
     ]
 
+    remote_support_candidate = bool(support_matches and any(
+        keyword.casefold() in title_text
+        for keyword in profile.remote_support_subject_keywords
+    ))
+
     score += min(len(matches), 6) * 6.0
     score += min(len(custom_matches), 4) * 16.0
 
@@ -240,7 +245,7 @@ def _screen_card(
             "license_or_hardware_supply_without_custom_development",
             *[f"supply_signal:{keyword}" for keyword in license_supply_matches[:4]],
         ]
-    if support_matches and not strong_custom_matches:
+    if support_matches and not strong_custom_matches and not remote_support_candidate:
         return "OUT", score, [
             "support_only_without_custom_development",
             *[f"support_signal:{keyword}" for keyword in support_matches[:4]],
@@ -256,6 +261,7 @@ def _screen_card(
         profile.require_custom_work_keyword
         and profile.custom_work_keywords
         and not custom_matches
+        and not remote_support_candidate
     ):
         return "OUT", score, ["no_custom_work_signal"]
 
@@ -263,6 +269,9 @@ def _screen_card(
         reasons.append("profile_keywords:" + ",".join(matches[:6]))
     if custom_matches:
         reasons.append("custom_work:" + ",".join(custom_matches[:4]))
+    if remote_support_candidate:
+        reasons.append("remote_support_candidate_requires_scope_review")
+        score += 16
     if license_supply_matches and strong_custom_matches:
         reasons.append("license_supply_requires_deep_review")
         score -= 8
@@ -428,7 +437,7 @@ def _discover(
             run_id=run.run_id,
             registry_number=registry,
             law=profile.law,
-            source=str(card.get("source") or "public_eis_html_44fz"),
+            source=str(card.get("source") or ("public_eis_html_223fz" if profile.law == "223fz" else "public_eis_html_44fz")),
             source_url=str(card.get("source_url") or "") or None,
             title=str(card.get("title") or f"Закупка {registry}"),
             customer_name=str(card.get("customer_name") or "") or None,
@@ -662,7 +671,11 @@ def _process_item(
     _set_run_stage(session, run, "ACQUIRE_DOCS")
     session.add(item)
     session.commit()
-    TenderResearchPipeline(session).ingest_public_by_registry_number(item.registry_number)
+    pipeline = TenderResearchPipeline(session)
+    if item.law == "223fz":
+        pipeline.ingest_public_by_registry_number(item.registry_number, law_type="223fz")
+    else:
+        pipeline.ingest_public_by_registry_number(item.registry_number)
 
     item.stage = "INDEX_DATA_PLATFORM"
     item.updated_at = utcnow()

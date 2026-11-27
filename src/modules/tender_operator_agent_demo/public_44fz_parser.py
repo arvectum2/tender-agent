@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import os
 import re
+
+from src.tender_research.browser.eis_playwright_worker import fetch_eis_browser
 
 from src.tender_research.providers.public_44fz_search import (
     MAX_RESPONSE_BYTES,
@@ -104,24 +107,37 @@ def _get_provider() -> Public44FzSearchProvider:
     return _default_provider
 
 
-def fetch_public_44fz_search_page(url: str) -> dict:
-    provider = _get_provider()
-    result = provider._fetch_page(url)
-    status = result.get("status")
-    if status == PublicSearchStatus.SUCCESS:
-        html_content = result.get("html")
-        classification = classify_public_search_response(html_content or "")
-        return {
-            "status": classification,
-            "html": html_content if classification == PublicSearchStatus.PARSED else None,
-            # A blank HTTP body can be labelled EMPTY_RESULTS by the legacy parser.
-            # Only an actual zero count on a nonblank result page is coverage evidence.
-            "explicit_zero_count": bool(html_content and extract_public_search_total_count(html_content) == 0
-                                        and classification in {PublicSearchStatus.PARSED, PublicSearchStatus.EMPTY_RESULTS}),
-            "error": None,
-        }
+def _classify_fetched_html(html_content: str | None) -> dict:
+    classification = classify_public_search_response(html_content or "")
     return {
+        "status": classification,
+        "html": html_content if classification == PublicSearchStatus.PARSED else None,
+        "explicit_zero_count": bool(html_content and extract_public_search_total_count(html_content) == 0
+                                    and classification in {PublicSearchStatus.PARSED, PublicSearchStatus.EMPTY_RESULTS}),
+        "error": None,
+    }
+
+
+def fetch_public_44fz_search_page(url: str) -> dict:
+    result = _get_provider()._fetch_page(url)
+    status = result.get("status")
+    primary = (_classify_fetched_html(result.get("html")) if status == PublicSearchStatus.SUCCESS else {
         "status": status or PublicSearchStatus.NETWORK_ERROR,
         "html": None,
         "error": result.get("error"),
-    }
+    })
+    worker = os.environ.get("ARVECTUM_EIS_PLAYWRIGHT_PYTHON", "").strip()
+    eligible = primary["status"] in {
+        PublicSearchStatus.TIMEOUT, PublicSearchStatus.BAD_GATEWAY,
+        PublicSearchStatus.PARSE_ERROR, PublicSearchStatus.UNSUPPORTED_LAYOUT,
+        PublicSearchStatus.JS_HEAVY,
+    } or (primary["status"] == PublicSearchStatus.EMPTY_RESULTS and not primary.get("explicit_zero_count"))
+    # Never retry explicit blocking, CAPTCHA, certificate failures or valid empty results.
+    if not worker or not eligible:
+        return primary
+    browser = fetch_eis_browser(url, worker)
+    if browser.get("status") == "ok":
+        fallback = _classify_fetched_html(browser.get("html"))
+        if fallback["status"] == PublicSearchStatus.PARSED or fallback.get("explicit_zero_count"):
+            return {**fallback, "fetcher": "playwright", "primary_status": primary["status"]}
+    return {**primary, "fallback_status": "unavailable_or_unverified"}

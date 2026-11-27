@@ -34,6 +34,7 @@ class DailyTenderProfile(APIModel):
     strong_custom_work_keywords: list[str] = Field(default_factory=list)
     license_supply_keywords: list[str] = Field(default_factory=list)
     support_only_keywords: list[str] = Field(default_factory=list)
+    remote_support_subject_keywords: list[str] = Field(default_factory=list)
     security_infra_keywords: list[str] = Field(default_factory=list)
     preferred_max_nmck: float | None = Field(default=None, ge=0)
     decision_policy: DailyTenderDecisionPolicy = Field(
