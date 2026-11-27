@@ -1,0 +1,161 @@
+{
+  "schema_version": "pq-watchdog-44fz-contract-evidence/1",
+  "as_of": "2026-10-28",
+  "v29_candidate_corpus_unchanged": 101,
+  "source_request_operations_explicit": 91,
+  "new_calendar_scoped_queries": 42,
+  "months_with_new_query_variants": [
+    "2024-08",
+    "2024-11",
+    "2024-12",
+    "2025-02",
+    "2025-03",
+    "2025-06",
+    "2025-07",
+    "2025-09",
+    "2026-02",
+    "2026-03",
+    "2026-05",
+    "2026-08"
+  ],
+  "exhaustive_months_proven": 0,
+  "metadata_candidate_rows_unverified": 77,
+  "original_first_party_html_pages_sha_verified": 20,
+  "original_binary_attachments_verified": 0,
+  "new_notice_ids": 3,
+  "registered_contract_suppliers_verified": 3,
+  "executed_paid_amounts_verified": 2,
+  "signed_original_contract_files_verified": 0,
+  "new_confirmed_6_35kv_equipment_sales": 0,
+  "new_arc_reviews": 3,
+  "v29_primary_gaps_unchanged": 54,
+  "data_platform_pending_unchanged": 15,
+  "source_journal_sha256": "9f9b7762a40b25946e921201505bbb2d20248e356e4712974df79f305ed93dbd",
+  "private_facts_sha256": "2d55925db1c7c64543272992e8741cffc4de9b097bfd8f55ef6e583506efd583",
+  "records": [
+    {
+      "notice_id": "0318100033125000016",
+      "law": "44fz",
+      "contract_register_number": "1231101491625000018",
+      "registered_supplier_name": "БОГОМАЗОВА ЕКАТЕРИНА ЮРЬЕВНА",
+      "registered_supplier_verified": true,
+      "contract_registry_price_rub": "7329515.94",
+      "registered_contract_status": "Исполнение завершено",
+      "executed_obligations_rub": "7329515.94",
+      "paid_amount_rub": "7329515.94",
+      "signed_contract_original_file_verified": false,
+      "pq_6_35kv_equipment_voltage_verified": false,
+      "market_scope": "unknown_voltage_active_harmonic_filter",
+      "evidence": [
+        {
+          "original_sha256": "7f2e5964be5126ac5d8e1d4e1d83389afd4b51508c14791308fb449796f9ace5",
+          "verbatim_quote": "БОГОМАЗОВА ЕКАТЕРИНА ЮРЬЕВНА",
+          "source_file": "supplier-results-source.html"
+        },
+        {
+          "original_sha256": "3d8147e34d2b69e3d64a1c795e976ecee05ae1b490b81bd2406313f6f37dd931",
+          "verbatim_quote": "Исполнение завершено",
+          "source_file": "contract-register-common.html"
+        },
+        {
+          "original_sha256": "17e599c0165be7f7eb5c53660a504f814278ff492535c518cc679f4f53f0994b",
+          "verbatim_quote": "Цена контракта, ₽ 7 329 515,94",
+          "source_file": "contract-execution-source.html"
+        },
+        {
+          "original_sha256": "17e599c0165be7f7eb5c53660a504f814278ff492535c518cc679f4f53f0994b",
+          "verbatim_quote": "Фактически оплачено, ₽ 7 329 515,94",
+          "source_file": "contract-execution-source.html"
+        }
+      ],
+      "official_urls": {
+        "supplier_results": "https://zakupki.gov.ru/epz/order/notice/ea20/view/supplier-results.html?regNumber=0318100033125000016",
+        "contract_register": "https://zakupki.gov.ru/epz/contract/contractCard/common-info.html?reestrNumber=1231101491625000018",
+        "execution": "https://zakupki.gov.ru/epz/contract/contractCard/process-info.html?reestrNumber=1231101491625000018&contractInfoId=103313854"
+      }
+    },
+    {
+      "notice_id": "0372100005626000037",
+      "law": "44fz",
+      "contract_register_number": "1783000241626000046",
+      "registered_supplier_name": "АКЭЛ",
+      "registered_supplier_verified": true,
+      "contract_registry_price_rub": "9767773.68",
+      "registered_contract_status": "Исполнение завершено",
+      "executed_obligations_rub": "9767773.68",
+      "paid_amount_rub": "9767773.68",
+      "signed_contract_original_file_verified": false,
+      "pq_6_35kv_equipment_voltage_verified": false,
+      "market_scope": "mixed_electrical_equipment_unknown_pq_allocation",
+      "evidence": [
+        {
+          "original_sha256": "3c2b4ef02da90111bcd4c12de87bd2bc116e383bf13a8c51ca59e6be80b1e430",
+          "verbatim_quote": "АКЭЛ",
+          "source_file": "supplier-results-source.html"
+        },
+        {
+          "original_sha256": "9c9c342d7e5993f175e576b622dddeef1e224cea18978c52a959e4117b76977d",
+          "verbatim_quote": "Исполнение завершено",
+          "source_file": "contract-register-common.html"
+        },
+        {
+          "original_sha256": "94b0bdb217e5e9989bc1ac3bbb577c71be92ebc38bdf599d3365a186f67eac2b",
+          "verbatim_quote": "Цена контракта, ₽ 9 767 773,68",
+          "source_file": "contract-execution-source.html"
+        },
+        {
+          "original_sha256": "94b0bdb217e5e9989bc1ac3bbb577c71be92ebc38bdf599d3365a186f67eac2b",
+          "verbatim_quote": "Фактически оплачено, ₽ 9 767 773,68",
+          "source_file": "contract-execution-source.html"
+        }
+      ],
+      "official_urls": {
+        "supplier_results": "https://zakupki.gov.ru/epz/order/notice/ea20/view/supplier-results.html?regNumber=0372100005626000037",
+        "contract_register": "https://zakupki.gov.ru/epz/contract/contractCard/common-info.html?reestrNumber=1783000241626000046",
+        "execution": "https://zakupki.gov.ru/epz/contract/contractCard/process-info.html?reestrNumber=1783000241626000046&contractInfoId=112262462"
+      }
+    },
+    {
+      "notice_id": "0372200000125000162",
+      "law": "44fz",
+      "contract_register_number": "2780804622425000232",
+      "registered_supplier_name": "ФИЛИППОВ НИКИТА КИРИЛЛОВИЧ",
+      "registered_supplier_verified": true,
+      "contract_registry_price_rub": "188444.00",
+      "registered_contract_status": "Исполнение прекращено",
+      "executed_obligations_rub": null,
+      "paid_amount_rub": null,
+      "signed_contract_original_file_verified": false,
+      "pq_6_35kv_equipment_voltage_verified": false,
+      "market_scope": "existing_ukrm_inspection_service_not_new_equipment_sale",
+      "evidence": [
+        {
+          "original_sha256": "fc20fde1f0656e3e20202c5ab29c46bb5123aa4d73a53818fabba0e744c172cd",
+          "verbatim_quote": "ФИЛИППОВ НИКИТА КИРИЛЛОВИЧ",
+          "source_file": "supplier-results-source.html"
+        },
+        {
+          "original_sha256": "8568e79bca6512b5a47b392fc1d6601521121053a30b982d89a754d718e012af",
+          "verbatim_quote": "Исполнение прекращено",
+          "source_file": "contract-register-common.html"
+        },
+        {
+          "original_sha256": "22c4287c7f367f240dcc328068127bf30d67d401e21299daffa9a86ba79a62b5",
+          "verbatim_quote": "Цена контракта, ₽ 188 444,00",
+          "source_file": "contract-execution-source.html"
+        }
+      ],
+      "official_urls": {
+        "supplier_results": "https://zakupki.gov.ru/epz/order/notice/zk20/view/supplier-results.html?regNumber=0372200000125000162",
+        "contract_register": "https://zakupki.gov.ru/epz/contract/contractCard/common-info.html?reestrNumber=2780804622425000232",
+        "execution": "https://zakupki.gov.ru/epz/contract/contractCard/process-info.html?reestrNumber=2780804622425000232&contractInfoId=98855848"
+      }
+    }
+  ],
+  "limitations": [
+    "Unknown voltage and PQ-only allocation: no inclusion in 6-35kV market turnover.",
+    "Original signed contract PDFs unavailable; official registry and execution pages independently verified.",
+    "One inspection service contract terminated, with no paid value established.",
+    "Search first pages not exhaustive."
+  ]
+}

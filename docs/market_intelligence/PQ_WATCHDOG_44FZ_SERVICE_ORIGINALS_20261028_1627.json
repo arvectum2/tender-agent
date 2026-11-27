@@ -1,0 +1,62 @@
+{
+  "schema_version": "pq-watchdog-44fz-second-primary/1",
+  "time_moscow": "2026-10-28T16:42:34.371666+03:00",
+  "run_start_comment_id": 6470248715,
+  "dataset": "v29-101-unchanged",
+  "number": "0373200087824000460",
+  "exact_number_search": {
+    "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.03.2024&publishDateTo=31.03.2024&pageNumber=1&recordsPerPage=10&searchString=0373200087824000460",
+    "status": "success",
+    "matches": 1,
+    "query": "0373200087824000460",
+    "period": "2024-03"
+  },
+  "official_common_url": "https://zakupki.gov.ru/epz/order/notice/ea20/view/common-info.html?regNumber=0373200087824000460",
+  "official_common_sha256": "db56e32550662946a9d9d5826e0b86713681f83223b0b615a5e92125e626f3ae",
+  "official_documents_url": "https://zakupki.gov.ru/epz/order/notice/ea20/view/documents.html?regNumber=0373200087824000460",
+  "official_documents_sha256": "7ffd4a4c5e47d560eff0a5a5967c406cc2fa002afd296c1e9d677072f5699f2f",
+  "source_originals": [
+    {
+      "name": "Проект_контракта_16222507-1.pdf",
+      "stored_name": "01-16222507-1.pdf",
+      "sha256": "8fdb62cf8770279e13cf1e9a43a49152ad3973c60cc46eefd6f9e2a7cdb822aa",
+      "size_bytes": 101113,
+      "source_url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=12E805321EA9B31DE06362548D0A680B"
+    },
+    {
+      "name": "Техническое_задание_16246966-1.pdf",
+      "stored_name": "02-16246966-1.pdf",
+      "sha256": "55cb279a14eed58f60d707d3d1cd8190fe8120cf51fe52caf0d14141f4d88008",
+      "size_bytes": 141611,
+      "source_url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=12E805321EA7B31DE06362548D0A680B"
+    },
+    {
+      "name": "смета.xlsx",
+      "stored_name": "03-attachment-3.xlsx",
+      "sha256": "6d669982fd5af1192f95f6c9b7d0a2a065238769a1da39b9186b7fa6007c680f",
+      "size_bytes": 38016,
+      "source_url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=12E906B925BECAB0E06362548D0A6F7E"
+    },
+    {
+      "name": "укрм 6к.xls",
+      "stored_name": "04-6.xls",
+      "sha256": "2514279a128ad260a67e836c58155b07c9f4f81d08dae0859989e73bfd8d6689",
+      "size_bytes": 58880,
+      "source_url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=12E805321EABB31DE06362548D0A680B"
+    }
+  ],
+  "originals_count": 4,
+  "review_queue_id": "0373200087824000460-d4847cbad25cb034667478d6",
+  "review_classification": "uncertain",
+  "technical_quote": "Совместная закупка на оказание услуг по обслуживанию существующих установок компенсации",
+  "technical_sha256": "55cb279a14eed58f60d707d3d1cd8190fe8120cf51fe52caf0d14141f4d88008",
+  "draft_quote": "Гражданско-правовой договор бюджетного учреждения № ____________________",
+  "draft_sha256": "8fdb62cf8770279e13cf1e9a43a49152ad3973c60cc46eefd6f9e2a7cdb822aa",
+  "service_only": true,
+  "new_equipment_supply": false,
+  "voltage_verified": false,
+  "signed_supplier_verified": false,
+  "executed_price_verified": false,
+  "numeric_http_status_note": "provider success, downloader saved; numeric HTTP not exposed",
+  "private_source_root": "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live/watchdog-20261028-1627/originals-0373200087824000460"
+}

@@ -1,0 +1,16 @@
+{
+  "schema_version": "pq-commercial-primary-source/1",
+  "baseline_lots": 106,
+  "canonical_id": "commercial:4158439:lot1",
+  "primary_url": "https://www.b2b-center.ru/market/modernizatsiia-ustanovki-kompensatsii-reaktivnoi-moshchnosti-ukrm/tender-4158439/",
+  "primary_source_sha256": "00a163169f78b3dd30556f1bf43a5968e886e1a877f8729a77339dec74bd5615",
+  "private_source_relative": "manual-20261029-new-leads/b2b4158439.html",
+  "procedure_date": "2025-09-04",
+  "buyer": "ООО «ЭЛЬБРУС ДРИЛЛИНГ»",
+  "result_date": "2025-09-18",
+  "result": "unsuccessful_no_bids",
+  "bids_count": 0,
+  "voltage_kv": null,
+  "technical_spec_original_verified": false,
+  "signed_supplier_verified": false
+}

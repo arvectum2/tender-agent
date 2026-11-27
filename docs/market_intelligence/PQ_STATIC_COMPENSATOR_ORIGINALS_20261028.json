@@ -1,0 +1,82 @@
+{
+  "schema_version": "pq-static-compensator-evidence/1",
+  "review_timestamp_moscow": "2026-10-28T08:35:12+03:00",
+  "cases": [
+    {
+      "registry_number": "32414141662",
+      "source_tier": "verified_public_eis_notice_page_not_soap_xml",
+      "notice_page_sha256": "10c12061cb6c84d922131e8400a67a125f97cbaeb501c28708213fcd2779c02a",
+      "files_saved": 4,
+      "original_sha256": [
+        "a068a5cd3d2718dfc8f59100085f54e5919ec1870f341145239a683734ed7985",
+        "a068a5cd3d2718dfc8f59100085f54e5919ec1870f341145239a683734ed7985",
+        "b227dcdac62d580c7c5af13603ae3465518a95dbe4945319d5364acfc9f63a27",
+        "0e34fe9b429ed789ff6cdba990b08e44e5a6ef0edc08f14f3460271d6dc904ce"
+      ],
+      "classification": "irrelevant",
+      "equipment_voltage_kv": "110",
+      "nmck_rub_ex_vat": "235000000.00",
+      "signed_contract_verified": false,
+      "contractual_supplier_verified": false,
+      "executed_price_verified": false
+    },
+    {
+      "registry_number": "32515257631",
+      "source_tier": "verified_public_eis_notice_page_not_soap_xml",
+      "notice_page_sha256": "b5431ce64dee9ea6c1df504b3d3d5a1514a9cefed49b1b8eb7806b54e910eb61",
+      "files_saved": 8,
+      "original_sha256": [
+        "9984574a8bcfa9eb7dadaafb65826e59e1a1e7479d65f79136907ce6da339d9f",
+        "fb1a502844010679794a0092e4e8febbba23b292cd0800d5a442c473692219fc",
+        "a07bb2c7afd15e46ea50de11bcba8ecfb3f65edb9ed9a5fcd32e3c8846ac069c",
+        "a07bb2c7afd15e46ea50de11bcba8ecfb3f65edb9ed9a5fcd32e3c8846ac069c",
+        "ac608d6b1001e487e18b5e75f539e4fe15dd618c2b9d31a84488f42e74f22420",
+        "640218e5221a5843e9841dc21c99ba720cff1c736d00fb9023acb6c45c71401a",
+        "343c89f466415f772370a0b922b31f430282d8ce873591b9f63bf0c1ee4e93db",
+        "0740e1848dd0c4eb251b95011763f4e24ba9e7a603b735d7fed5dd69e919e08e"
+      ],
+      "classification": "uncertain",
+      "equipment_voltage_kv": null,
+      "nmck_rub_ex_vat": "412500000.00",
+      "signed_contract_verified": false,
+      "contractual_supplier_verified": false,
+      "executed_price_verified": false
+    },
+    {
+      "registry_number": "32413297739",
+      "source_tier": "verified_public_eis_notice_page_not_soap_xml",
+      "notice_page_sha256": "113ca5e455f6abbdaa1a5c6ac36018c4c5c1b7d7fe83551349da252bb4700521",
+      "files_saved": 8,
+      "original_sha256": [
+        "1ddde3de360eb26cad961b39842b1684af39f537de8cca0fbb0ce74bc7b4911a",
+        "55b0aa328e70b9c3bcac6fdf170c82df1c24b136accb606fdcb3931fca111333",
+        "c06de3959be0b8cbb13f0c1a287f541bea7c17efff377b39fab799496d84f6dc",
+        "ea0769efbb5aa85ad5e9625b95cca1d4062ad5e015649655131cc71da45d63f7",
+        "9fac555b7fb5ac1b4ba4ccd56e4d4d2dcb0e361f92e7a6c3ca40c0f2367472b3",
+        "24d0cd32c27c13b3aaf15ea07c70531be6c34ae48016945b7be08d87f8093983",
+        "79d23b4665c3220ac71638af13ace894397daed5a5c1eabe01d9c2aa41184cdd",
+        "1af735ba39221c640d43ed6794f1f5791f3fb787b2d69c7a7878d8ec8bc82dd4"
+      ],
+      "classification": "pending_source_review",
+      "equipment_voltage_kv": null,
+      "nmck_rub_ex_vat": null,
+      "signed_contract_verified": false,
+      "contractual_supplier_verified": false,
+      "executed_price_verified": false
+    }
+  ],
+  "accepted_review_ids": [
+    "32414141662-2d09867b4914193699132374",
+    "32515257631-0567deccaa159c4f730e5321"
+  ],
+  "new_signed_contracts": 0,
+  "new_verified_suppliers": 0,
+  "new_executed_prices": 0,
+  "runtime_journals": [
+    "eis-new-ontology-search-20261028-0827.json",
+    "eis-new-ontology-search-20261028-0830.json",
+    "eis-new-cases-20261028-0832.json",
+    "eis-new-cases-20261028-0834.json",
+    "eis-supplement-attempts-20261028.json"
+  ]
+}

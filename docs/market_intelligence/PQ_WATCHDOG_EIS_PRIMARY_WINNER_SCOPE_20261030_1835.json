@@ -1,0 +1,284 @@
+{
+  "schema_version": "pq-watchdog-eis-primary/1",
+  "run_id": "20261030T1829-MSK",
+  "as_of_moscow": "2026-10-30T18:37:15.970859+03:00",
+  "issue_comment_id": 6526559923,
+  "pr": 521,
+  "parent_head": "183f6d3df6a0683176905b556573f72e3e953464",
+  "db": {
+    "unique_lots_before": 117,
+    "unique_lots_after": 117,
+    "procedures": 106,
+    "eis223_notices": 40,
+    "new_unique_lots": 0,
+    "new_projects": 0,
+    "new_signed_suppliers": 0,
+    "new_executed_sales": 0,
+    "mutation": false,
+    "client_html_regenerated": false
+  },
+  "requests": {
+    "case_soap_posts": 4,
+    "case_soap_archive_gets": 3,
+    "case_http_gets_200": 11,
+    "calendar_soap_posts": 5,
+    "calendar_archive_gets": 19,
+    "total": 42,
+    "errors": 0
+  },
+  "originals": {
+    "case_http": [
+      {
+        "case_id": "223fz:32615684088:lot1",
+        "source_url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=108798317",
+        "relative_file": "captures/223fz_32615684088_lot1/20261030T153214061364Z-8503a8b4-c5588993c7110fd1.bin",
+        "sha256": "c5588993c7110fd1d8bfd6f5f68a69ec4eeb05aeae827149889c9ab089e1c30a",
+        "bytes": 200704
+      },
+      {
+        "case_id": "223fz:32615684088:lot1",
+        "source_url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=108455489",
+        "relative_file": "captures/223fz_32615684088_lot1/20261030T153220213756Z-65eff11a-c0ddf0854e3e2022.bin",
+        "sha256": "c0ddf0854e3e20226d78c570516d4a4636ecae85d1928144e887d110936f4445",
+        "bytes": 1859155
+      },
+      {
+        "case_id": "223fz:32615684088:lot1",
+        "source_url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=108710376",
+        "relative_file": "captures/223fz_32615684088_lot1/20261030T153220575478Z-7777a3a5-2c8be06a3b600aec.bin",
+        "sha256": "2c8be06a3b600aeceb90acb60bf82c8e7e07a9368c4b1d70239b3c8170fa684b",
+        "bytes": 157696
+      },
+      {
+        "case_id": "223fz:32615684088:lot1",
+        "source_url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=108710832",
+        "relative_file": "captures/223fz_32615684088_lot1/20261030T153220888822Z-71b3f504-2154b5e2072987de.bin",
+        "sha256": "2154b5e2072987de01b4b6b9975a703bcef2722659bd6fbfbc523ca46eaac2a6",
+        "bytes": 159232
+      },
+      {
+        "case_id": "223fz:32615684088:lot1",
+        "source_url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=108756546",
+        "relative_file": "captures/223fz_32615684088_lot1/20261030T153221207432Z-6ed2bfc0-2a7f1869771c0251.bin",
+        "sha256": "2a7f1869771c025100c31e146757bad8df2022e6d35087a00aca23869ebf346d",
+        "bytes": 140800
+      },
+      {
+        "case_id": "223fz:32615700251:lot1",
+        "source_url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=108847792",
+        "relative_file": "captures/223fz_32615700251_lot1/20261030T153313829505Z-434880cd-e60f5f871bd232d6.bin",
+        "sha256": "e60f5f871bd232d623c27c6a57bc1953159e4582f30a69bdbf8d7189bb325bed",
+        "bytes": 97280
+      },
+      {
+        "case_id": "223fz:32615700251:lot1",
+        "source_url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=108847793",
+        "relative_file": "captures/223fz_32615700251_lot1/20261030T153314288234Z-16bd4e76-ac823586804deef5.bin",
+        "sha256": "ac823586804deef52185712e63d63636539c572a8c419268211a71bbf2006664",
+        "bytes": 761091
+      },
+      {
+        "case_id": "223fz:32615700251:lot1",
+        "source_url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=108561365",
+        "relative_file": "captures/223fz_32615700251_lot1/20261030T153314715145Z-40e195bd-e3c25800acd62800.bin",
+        "sha256": "e3c25800acd6280072c733b5c3cddf2d0e47ebeb496a4e458d05d7d7a8164473",
+        "bytes": 34502
+      },
+      {
+        "case_id": "223fz:32615700251:lot1",
+        "source_url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=108561360",
+        "relative_file": "captures/223fz_32615700251_lot1/20261030T153315033008Z-bb65f0fc-6e2778598ce2c807.bin",
+        "sha256": "6e2778598ce2c8076ee2e7a759c87de2e2c38175e6b3175070f642ae48341b68",
+        "bytes": 171520
+      },
+      {
+        "case_id": "223fz:32616523441:lot1",
+        "source_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=56AEE1CBF6714A39B37DBCA10964192A",
+        "relative_file": "captures/223fz_32616523441_lot1/20261030T153331201713Z-908095bb-95b80c81f833fe3e.bin",
+        "sha256": "95b80c81f833fe3ea9a38f7835af78ac0932eafb5bb1729785a3db2b7e1b5eb0",
+        "bytes": 60164
+      },
+      {
+        "case_id": "223fz:32616523441:lot1",
+        "source_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=4BBB2B0840FE439CA7483F2A00793D88",
+        "relative_file": "captures/223fz_32616523441_lot1/20261030T153332084990Z-a34c2fe8-1b1ca3d1caae6fbe.bin",
+        "sha256": "1b1ca3d1caae6fbe62bd2efab6e392abbdfd713ed2038b629818c06604cc4fab",
+        "bytes": 4050942
+      }
+    ],
+    "case_soap_zip": [
+      {
+        "notice": "32615684088",
+        "sha256": "1e90e115d8389527492e1234eac6e19c13f95a7448b9c613da23bb088971a2cd",
+        "relative_file": "eis-soap-case-recovery/32615684088/20261030T153144295990Z-f5a3647b/documentation-archive.zip",
+        "xml_count": 5
+      },
+      {
+        "notice": "32615700251",
+        "sha256": "1e81b2699ac97d679f983ac5db8764570c02ca77960a2c169ea4535e12da693c",
+        "relative_file": "eis-soap-case-recovery/32615700251/20261030T153304693252Z-1f993974/documentation-archive.zip",
+        "xml_count": 2
+      },
+      {
+        "notice": "32616523441",
+        "sha256": "75705b4f4349ff043d39105442998d78fa5f2df1b8d29875159a47b2d0cbf4cb",
+        "relative_file": "eis-soap-case-recovery/32616523441/20261030T153305574156Z-d9d37b3f/documentation-archive.zip",
+        "xml_count": 1
+      }
+    ],
+    "calendar_zip_sha256": [
+      "8e669bb261d0cec9deace5c1c4fcc8817ab1f9b08996ad942e3fb78c449b6ddd",
+      "f604a878085eb222a661c7e90dfea61ed1bb2ef8eaa42558e45470a41cd1075a",
+      "25be56a6d19804af4a8999703e4de683af295ccfd57f29418e6fc7ef0bc1482c",
+      "30414fecc9754224df8dd4de310307733353b0492f801ee346a571c200b3004e",
+      "3f8210db2f614339759a38718853bdb63d1b33e5a98376fb0fb4857dba7d8c19",
+      "3150105c13391213b33cea25e87a23c90483f703bb60266cac14c5711ff63e77",
+      "2bf82809f040eed163031c59bbf9c681144012eab0f0af0eb4cd4970e60ca917",
+      "01a5b6aff48c45f3c0e44b2710ed22f3dc9afec1dad53a8d6785c8f27fb9f87b",
+      "e153e5ed2efffc4d3eddd8574dc94038477113fbe707fd65b9f489d548a531da",
+      "49b651e8c8f3404a8b98b65fe92e68b100fb920089497d0da58e7bd698475bd7",
+      "072ed583f9cadaf1b882de6ec330716cc4d99b7a84f363b6ad189ec6e03df31c",
+      "5bfd37cc22376601397d826c2776c8a3000fa85bee49d009de74ebd3290239f9",
+      "6931fd7d868b29300cfdcb6e1c51d5daed3c9c9bc254d5b999d906e889792899",
+      "b89df82e7ff31663607dee82dea279284b92b86b3f51d7f9b10fb0756f7b1d52",
+      "7b33a42eab349894174aca5cecddcdc8a6ba4c94d5133931b28d0ab237e82199",
+      "7ffa623810c63051ee101b9332ad7984a5f55db003d2e0f216bcf5fbe811126f",
+      "c1d59b72e54e36074553d3be21924c3ca9a4233565b8b622d00848b2ec9fbcfc",
+      "ac6c0720af9d015b752bf19d42b06fc2f1e2b8eb3ad8fff7f567fd06235c5304",
+      "77535d6d8a5eaef7a2f864fd9c648d5012ea1fd7797a66e4cfd0299eada85345"
+    ],
+    "total_new_sha_verified_binary": 33,
+    "distinct_sha256": 33,
+    "extracted_sha256": {
+      "tech_bsk": "ca6946dde8ebb76cf646d61ec7a9a7492ec099c1efc237c786ca600c86d29b80",
+      "cost_bsk": "5347e85eb873d6a6c6340a4f2bca65848b2132fbd12167f8672b13506105cd55",
+      "tech_dgr": "ebf77848583e35777e905d0eae695bf21131499138ef694255c4947f081b9e41"
+    }
+  },
+  "cases": [
+    {
+      "notice": "32615684088",
+      "role": "mixed EPC, one BSK 10kV 1Mvar, not pure supply",
+      "buyer": "ПАО Россети Центр / Воронежэнерго",
+      "winner": "ООО РСО-ЭНЕРГО",
+      "winner_inn": "3661054875",
+      "named_winner_original_sha256": "c5588993c7110fd1d8bfd6f5f68a69ec4eeb05aeae827149889c9ab089e1c30a",
+      "winner_quote": "По результатам ранжировки заявок признать Победителем запроса цен: ООО «РСО-ЭНЕРГО»",
+      "four_bids": true,
+      "offer_rub_incl_vat": "37818258.18",
+      "offer_rub_ex_vat": "30998572.28",
+      "nmc_epc_rub_incl_vat": "37828258.18",
+      "tech_sha256": "ca6946dde8ebb76cf646d61ec7a9a7492ec099c1efc237c786ca600c86d29b80",
+      "tech_quote": "Проектирование и установка БСК 10 кВ открытого исполнения с монтажом ТН 35 кВ (уточнить при проектировании) мощностью 1 МВАр",
+      "cost_source_sha256": "5347e85eb873d6a6c6340a4f2bca65848b2132fbd12167f8672b13506105cd55",
+      "estimate_year": 2025,
+      "estimate_bsk_total_rub_ex_vat": "7460669",
+      "estimate_bsk_equipment_rub_ex_vat": "3035357",
+      "estimate_bsk_design_rub_ex_vat": "134790",
+      "estimate_bsk_construction_rub_ex_vat": "3501244",
+      "estimate_bsk_commissioning_rub_ex_vat": "789278",
+      "note": "Analog preliminary cost estimate, NOT actual equipment sale. EIS XML contractSigned flag is not signed contract proof; contract index secondary.",
+      "signed_supplier": null,
+      "executed_price": null
+    },
+    {
+      "notice": "32615700251",
+      "role": "10kV switchgear modernization; PQ equipment sale unverified",
+      "buyer": "ООО Томские электрические сети",
+      "tech_original_sha256": "e3c25800acd6280072c733b5c3cddf2d0e47ebeb496a4e458d05d7d7a8164473",
+      "protocol_original_sha256": "e60f5f871bd232d623c27c6a57bc1953159e4582f30a69bdbf8d7189bb325bed",
+      "tech_quote": "16.10 Количество ячеек - 5шт",
+      "protocol_quote": "Договор заключается с участником закупки с порядковым (регистрационным) номером 1.",
+      "one_bid_rub": "11244111.77",
+      "failed_competition": true,
+      "named_bidder": null,
+      "signed_supplier": null
+    },
+    {
+      "notice": "32616523441",
+      "role": "EXCLUDED from PQ reactive-power: 10kV arc-suppression reactors ДГР",
+      "buyer": "ПАО Россети, МЭС Северо-Запада",
+      "tech_sha256": "ebf77848583e35777e905d0eae695bf21131499138ef694255c4947f081b9e41",
+      "original_7z_sha256": "1b1ca3d1caae6fbe62bd2efab6e392abbdfd713ed2038b629818c06604cc4fab",
+      "tech_quote": "замене ДГР-1-10, ДГР-7-10 10 кВ",
+      "nmck_mixed_epc_rub": "29384480.00",
+      "bid_deadline": "2026-11-05",
+      "named_winner": null
+    }
+  ],
+  "calendar": {
+    "cells": [
+      {
+        "subsystem": "PRIZ",
+        "date": "2025-05-15",
+        "region": "77",
+        "archives": 7,
+        "xml": 681,
+        "candidate_ids": [],
+        "status": "complete_with_archive_scan"
+      },
+      {
+        "subsystem": "RI223",
+        "date": "2024-10-15",
+        "region": "77",
+        "archives": 5,
+        "xml": 406,
+        "candidate_ids": [],
+        "status": "complete_with_archive_scan"
+      },
+      {
+        "subsystem": "RI223",
+        "date": "2025-05-15",
+        "region": "77",
+        "archives": 4,
+        "xml": 382,
+        "candidate_ids": [],
+        "status": "complete_with_archive_scan"
+      },
+      {
+        "subsystem": "RI223",
+        "date": "2026-10-29",
+        "region": "02",
+        "archives": 1,
+        "xml": 79,
+        "candidate_ids": [],
+        "status": "complete_with_archive_scan"
+      },
+      {
+        "subsystem": "RI223",
+        "date": "2026-10-29",
+        "region": "66",
+        "archives": 2,
+        "xml": 118,
+        "candidate_ids": [],
+        "status": "complete_with_archive_scan"
+      }
+    ],
+    "full_months_covered": 0,
+    "xml_scanned": 1666,
+    "note": "Five exact date/region cells only; zero lexical candidates does not imply zero market."
+  },
+  "next": [
+    {
+      "case": "РН61003961",
+      "retry_moscow": "2026-10-30 20:00",
+      "goal": "official TEK-Torg outcome 6kV"
+    },
+    {
+      "case": "ГП630876",
+      "retry_moscow": "2026-10-30 23:40",
+      "goal": "GPB technical original and dedup"
+    },
+    {
+      "case": "32615684088",
+      "retry_moscow": "2026-10-31 09:00 or new signed contract original",
+      "goal": "verify signed supplier and actual contract price"
+    }
+  ],
+  "safety": {
+    "gate": "pass",
+    "v29_unchanged": 101,
+    "no_auto_merge": true,
+    "no_db_write": true
+  }
+}

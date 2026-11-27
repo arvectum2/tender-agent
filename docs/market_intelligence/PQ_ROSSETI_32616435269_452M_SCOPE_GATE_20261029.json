@@ -1,0 +1,53 @@
+{
+  "schema_version": "pq-large-value-primary-spec-gate/1",
+  "date": "2026-10-29",
+  "case_id": "223fz:32616435269:lot1",
+  "notice_number": "32616435269",
+  "buyer": "ПАО «Россети Сибирь» / «Кузбассэнерго-РЭС»",
+  "buyer_inn": "2460069527",
+  "subject": "Конкурс №26-1174, поставка батарей статических конденсаторов",
+  "procurement_regime": "223-FZ",
+  "announcement_date": "2026-10-05",
+  "last_secondary_updated_at": "2026-10-27",
+  "deadline_date_last_secondary": "2026-11-05",
+  "reported_nmck_rub": "452016000.01",
+  "reported_nmck_scope": "entire_notice_2_goods_items_not_6_35kv_equipment_only",
+  "classification": "possible_PQ_equipment_nominal_voltage_unverified",
+  "eis_public_notice_url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616435269",
+  "etp": "АО «ЕЭТП» / Росэлторг",
+  "mirror_source_url": "https://kontendus.ru/tender/32616435269",
+  "other_secondary_sources": [
+    "https://zakupki.kontur.ru/32616435269",
+    "https://energybase.ru/tender/01a130e4-75f3-7201-a146-d8b2f33f8259"
+  ],
+  "documents": [
+    {
+      "filename": "Документация_о_закупке_26-1174.7z",
+      "mirrored_document_url": "https://cdn.kontendus.ru/documents/32616435269/da0fadde-1019-5aef-85fd-9343c3928a35/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F_%D0%BE_%D0%B7%D0%B0%D0%BA%D1%83%D0%BF%D0%BA%D0%B5_26-1174.7z",
+      "file_original_sha_verified": false,
+      "source_grade": "secondary_mirror_binary_unverified"
+    }
+  ],
+  "public_notice_items": [
+    {
+      "okpd2": "27.12.31.000",
+      "name": "Панели и прочие комплекты электрической аппаратуры коммутации или защиты на напряжение не более 1 кВ",
+      "quantity": "1"
+    },
+    {
+      "okpd2": "27.90.51.000",
+      "name": "Конденсаторы постоянной ёмкости для цепей 50/60 Гц на реактивную мощность не менее 0,5 кВар",
+      "quantity": "1"
+    }
+  ],
+  "rated_compensator_voltage_kv": null,
+  "new_verified_core_6_35kV_bsk_lots": 0,
+  "signed_contract_verified": false,
+  "winning_supplier_verified": false,
+  "executed_payment_verified": false,
+  "equipment_sales_rub_verified": null,
+  "db_present_status": "UNVERIFIED; inspect current PostgreSQL before append",
+  "db_inserted_this_run": false,
+  "noninference_note": "No conversion of 452,016,000.01 RUB from NMCK to 6-35kV equipment sales. Item 'panels up to 1 kV' may indicate off-scope components. Need original 7z technical annex to classify voltage and item-level prices.",
+  "next_action": "Compare canonical ID to PostgreSQL, inspect source original archive's technology voltage, supplier evidence and itemized price. Append to owner collection only after full backup and exact source SHA; if not 6-35kV place in adjacent pool, not core."
+}

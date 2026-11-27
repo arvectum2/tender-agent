@@ -1,0 +1,104 @@
+{
+  "schema_version": "pq-watchdog-20261029/1",
+  "moscow": "2026-10-29T14:40:26.508254+03:00",
+  "issue_comment_id": 6495524226,
+  "canonical_pr": 521,
+  "code_commit_tested": "1cf091255967223b6a7f4ca9b9543523c1260fd7",
+  "db_before": {
+    "unique_lots": 109,
+    "distinct_procedure_tokens": 98,
+    "eis_223_notices": 37
+  },
+  "db_after": {
+    "unique_lots": 111,
+    "distinct_procedure_tokens": 100,
+    "eis_223_notices": 37
+  },
+  "new_unique_lots": 2,
+  "new_distinct_procedures": 2,
+  "new_verified_strict_6_35kv_lots": 0,
+  "new_deduplicated_verified_projects": 0,
+  "new_signed_suppliers": 0,
+  "new_original_winner_protocols": 0,
+  "new_executed_prices": 0,
+  "new_verified_equipment_sales_rub": 0,
+  "new_month_source_coverage": 0,
+  "source_requests_observed": {
+    "total": 18,
+    "http_200": 8,
+    "http_404": 4,
+    "http_403": 1,
+    "transport_errors_or_timeout": 5,
+    "explanation": "Includes exact primary URLs and bounded diagnostic HEAD/GET, not 18 unique procurements"
+  },
+  "fresh_primary_sha_verified_originals": 4,
+  "originals": [
+    {
+      "case_id": "commercial:COM20082600016:lot1",
+      "source_url": "https://www.roseltorg.ru/procedure/COM20082600016",
+      "sha256": "c1454e1eff82f3105d6d38b7adbed88f89480bd122b28fe9830b3e0c46097522",
+      "bytes": 228469,
+      "result": "Official Roseltorg card, 1 UKRM kit, Lukoil West Siberia, voltage unknown on card"
+    },
+    {
+      "case_id": "commercial:COM20082600016:lot1",
+      "source_url": "https://com.roseltorg.ru/file/get/t/LotDocuments/id/4476617/name/%D0%9E%D0%9B.3_%D0%A3%D0%9A%D0%A0%D0%9C.doc",
+      "sha256": "af40e3c84465429e37b36106a2c5114230d92b68eaff2dd8520efb2307d39738",
+      "bytes": 601600,
+      "result": "Original Word technical questionnaire: 0.4kV, 450kvar, excluded from core 6–35kV",
+      "quotes": [
+        "Номинальное напряжение установки, кВ (напряжение сети):",
+        "0,4",
+        "50 кВАр. Общая мощность 450 кВАр"
+      ]
+    },
+    {
+      "case_id": "commercial:4617521:lot1",
+      "source_url": "https://www.b2b-center.ru/app/market-next/vybor-ispolnitelia-na-postavku-montazh-i-pnr-ustanovok-kompensatsii/tender-4617521/",
+      "sha256": "02d956e85a58cd254b9e1503a892acc94bddb38849bf20f0b1ca721a679dc50f",
+      "bytes": 341908,
+      "result": "Original Tander UKRM supply+installation+commissioning; live retender 29 Oct; voltage, bidder identities and prices unverified"
+    },
+    {
+      "case_id": "commercial:4657777:lot1",
+      "source_url": "https://www.b2b-center.ru/market/postavka-blokov-kondensatornykh-dlia-nuzhd-po-btses-po-kes-ooo/tender-4657777/",
+      "sha256": "a2b6ea5931172eebda42c3876dacce7a4dae95b6b8df38d8798c60b3d3c183ea",
+      "bytes": 74321,
+      "result": "Official Bashkirenergo 6 capacitor blocks, listed initial 208419.30 RUB ex VAT, not contract; voltage unknown"
+    }
+  ],
+  "secondary_only_not_imported": [
+    {
+      "id": "223fz:32615684088:lot1",
+      "source": "https://synapsenet.ru/zakupki/fz223/32615684088%231--voronezhskaya-obl-vipolnenie-rabot-pod-klyuch-po",
+      "first_party": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32615684088",
+      "first_party_result": "HEAD 404; Python TLS error; secondary claims EPC with BSK, signed supplier unverified; not imported"
+    }
+  ],
+  "db_receipt_private": "/Users/master/ArvectumSafe/runtime/market-intelligence/pq-agent-pilot-live/pq-commercial-delta-20261029T1139.receipt.json",
+  "backup_sha256": "4abe39451decbb905698c9048b7989a7da306e4a0ab5bfa42f7daf0d5c70fb29",
+  "backup_pg_restore_list_verified": true,
+  "acceptance_gate": "pass_after_commit",
+  "changed_code_tests": "5 focused passed, Ruff pass, git diff check pass",
+  "next_targets": [
+    {
+      "case": "commercial:4617521:lot1",
+      "goal": "Retender outcome, voltage from public technical original if available",
+      "retry_eligible": "2026-10-29 15:15 Europe/Moscow, after auto-extension may change"
+    },
+    {
+      "case": "223fz:32615684088:lot1",
+      "goal": "Original RAD/EIS docs, protocol and signed contract identity, BSK voltage",
+      "retry_eligible": "2026-10-30 14:40 Europe/Moscow, or earlier independent official RAD endpoint"
+    },
+    {
+      "case": "commercial:106044-TT:lot1",
+      "goal": "Official STATCOM 6.3kV procurement result and signed supplier",
+      "retry_eligible": "2026-10-30 Europe/Moscow or newly available official result"
+    }
+  ],
+  "v29_101_row_corpus_unchanged": true,
+  "auto_merge": false,
+  "db_collection": "arvectum_data.arvectum-market-pq-6-35kv",
+  "source_scope_warning": "111 candidates are not 111 verified 6–35kV equipment sales or market census"
+}

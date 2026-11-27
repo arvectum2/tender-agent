@@ -1,0 +1,507 @@
+{
+  "schema_version": "pq-watchdog-month-delta/1",
+  "additional_queries": 8,
+  "status_counts": {
+    "empty": 3,
+    "success": 5
+  },
+  "metadata_rows_unverified": 41,
+  "not_exhaustive": true,
+  "attempts": [
+    {
+      "timestamp": "2026-10-28T11:51:21.083735+00:00",
+      "law": "223fz",
+      "month": "2024-12",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "empty",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.12.2024&publishDateTo=31.12.2024&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:51:21.083735+00:00",
+      "law": "223fz",
+      "month": "2024-12",
+      "query": "БСК",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "success",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.12.2024&publishDateTo=31.12.2024&searchString=%D0%91%D0%A1%D0%9A",
+      "date_bounds_verified": true,
+      "candidates": [
+        {
+          "number_unverified": "32414289878",
+          "title_unverified": "Выполнение работ по ремонту зданий и сооружений (антенно-мачтовых) в филиалах \"Восточные электрические сети\", \"Новосибирские городские электрические сети\", Прио бск",
+          "customer_unverified": "05.12.2024",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32414362824",
+          "title_unverified": "Поставка трубопроводной арматуры",
+          "customer_unverified": "20.12.2024",
+          "publication": null,
+          "query_in_visible_title": false,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32414394591",
+          "title_unverified": "Добровольное медицинское страхование ООО \"Башкирэнерго\", ООО \" БСК",
+          "customer_unverified": "",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32414392877",
+          "title_unverified": "право заключения договора на выполнение РД, СМР, ПНР, поставки оборудования (7.1 этап) по титулу «Строительство ВЛ 220 кВ Шушенская-опорная – Туран ориентировочной протяженностью 230 км, реконструкция ВЛ 220 кВ Ергаки – Туран и ВЛ 220 кВ Туран – Кызылская (Д-47) с образованием ВЛ 220 кВ Ергаки – Кыз",
+          "customer_unverified": "27.12.2024",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32414283893",
+          "title_unverified": "Выполнение работ по ремонту зданий и сооружений в филиалах \"Прио бск",
+          "customer_unverified": "04.12.2024",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32414388873",
+          "title_unverified": "Поставка стоек вибрированных (СВ) для нужд филиала \"Прио бск",
+          "customer_unverified": "27.12.2024",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32414395240",
+          "title_unverified": "Поставка флокулянта",
+          "customer_unverified": "28.12.2024",
+          "publication": null,
+          "query_in_visible_title": false,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32414395471",
+          "title_unverified": "Услуги по ремонту и техническому обслуживанию ГПМ ООО \"Башкирэнерго\", ООО \" БСК",
+          "customer_unverified": "",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32414394467",
+          "title_unverified": "Поставка редукторов для нужд БСК",
+          "customer_unverified": "28.12.2024",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32414382640",
+          "title_unverified": "Гидроизоляция защитного сооружения № 142",
+          "customer_unverified": "26.12.2024",
+          "publication": null,
+          "query_in_visible_title": false,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        }
+      ],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:51:21.083735+00:00",
+      "law": "223fz",
+      "month": "2025-10",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "empty",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.10.2025&publishDateTo=31.10.2025&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:51:21.083735+00:00",
+      "law": "223fz",
+      "month": "2025-10",
+      "query": "БСК",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "success",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.10.2025&publishDateTo=31.10.2025&searchString=%D0%91%D0%A1%D0%9A",
+      "date_bounds_verified": true,
+      "candidates": [
+        {
+          "number_unverified": "32515362665",
+          "title_unverified": "Оказание услуг по транспортной доставке персонала ПС-220 кВ «Сердо бск",
+          "customer_unverified": "31.10.2025",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515358780",
+          "title_unverified": "Поставка спецодежды для ООО \"Башкирэнерго\", ООО \" БСК",
+          "customer_unverified": "",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515285414",
+          "title_unverified": "ПИР Реконструкция ПС 110/35/10 кВ Тяжинская с заменой БСК",
+          "customer_unverified": "09.10.2025",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515315095",
+          "title_unverified": "26-002937 Расчистка трасс ВЛ 220 кВ на территории города Уфы ООО \" БСК",
+          "customer_unverified": "20.10.2025",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515315116",
+          "title_unverified": "26-002619 Расширение просек ВЛ 500 кВ ООО \" БСК",
+          "customer_unverified": "20.10.2025",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515349674",
+          "title_unverified": "Поставка репеллентов, средств индивидуальной защиты для рук (защитные, восстанавливающие и регенерирующие крема, пасты) для ООО \"Башкирэнерго\", ООО \" БСК",
+          "customer_unverified": "",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515342213",
+          "title_unverified": "Выполнение строительно-монтажных работ по реконструкции ВЛ-0,4 кВ от КТП-59 по адресу: УР, Балезинский район, п. Балезино, мкр. Аэродром, ул. Весенняя, ул. Верещагина, ул. Северная, ул. Степная; реконструкции ВЛ-0,4 кВ от КТП-72 по адресу: УР, Балезинский район, п. Балезино, ул. Колхозная, ул. Пихто",
+          "customer_unverified": "27.10.2025",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515336531",
+          "title_unverified": "Добровольное страхование имущества ООО \"Башкирэнерго\", ООО \" БСК",
+          "customer_unverified": "",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515361854",
+          "title_unverified": "Поставка лестниц стеклопластиковых, стремянок для ООО Башкирэнерго, ООО \" БСК",
+          "customer_unverified": "",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515361846",
+          "title_unverified": "Поставка лицензии на программное обеспечение \"Kaspersky Endpoint Security\" для ООО \" БСК",
+          "customer_unverified": "31.10.2025",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        }
+      ],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:51:21.083735+00:00",
+      "law": "223fz",
+      "month": "2025-11",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "empty",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.11.2025&publishDateTo=30.11.2025&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:51:21.083735+00:00",
+      "law": "223fz",
+      "month": "2025-11",
+      "query": "БСК",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "success",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.11.2025&publishDateTo=30.11.2025&searchString=%D0%91%D0%A1%D0%9A",
+      "date_bounds_verified": true,
+      "candidates": [
+        {
+          "number_unverified": "32515462783",
+          "title_unverified": "Поставка трансформаторов тока 110-220 кВ для ООО \" БСК",
+          "customer_unverified": "28.11.2025",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515426606",
+          "title_unverified": "Поставка модульных автоматических выключателей до 63А для нужд СУЭЭ(М) ООО \"Башкирэнерго\", ООО \"БЭСК Инжиниринг\", ООО \" БСК",
+          "customer_unverified": "",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515462852",
+          "title_unverified": "Поставка автомобиля (пикап)",
+          "customer_unverified": "28.11.2025",
+          "publication": null,
+          "query_in_visible_title": false,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515467531",
+          "title_unverified": "Лот №26-000455 Поставка оргтехники для ООО \"Башкирэнерго\", ООО \" БСК",
+          "customer_unverified": "",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515462778",
+          "title_unverified": "Поставка ОПН 110 кВ для ООО \" БСК",
+          "customer_unverified": "28.11.2025",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515437773",
+          "title_unverified": "Поставка посуды и приборов для химических лабораторий (по списку) для нужд ООО \"Башкирэнерго\" и ООО \" БСК",
+          "customer_unverified": "",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515455535",
+          "title_unverified": "Поставка офисной мебели по единичным расценкам",
+          "customer_unverified": "27.11.2025",
+          "publication": null,
+          "query_in_visible_title": false,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515464987",
+          "title_unverified": "Поставка выключателей 110 кВ для ООО \" БСК",
+          "customer_unverified": "28.11.2025",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515463630",
+          "title_unverified": "Оказание услуг по техническому и аварийному обслуживанию прачечного оборудования",
+          "customer_unverified": "28.11.2025",
+          "publication": null,
+          "query_in_visible_title": false,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515452806",
+          "title_unverified": "Поставка холодильников компактных DEXP, 70 Вт, общ. объем 65 л, цвет белый для нужд ПВР в ОГАПОУ \" БСК",
+          "customer_unverified": "26.11.2025",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        }
+      ],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:51:21.083735+00:00",
+      "law": "223fz",
+      "month": "2025-12",
+      "query": "УКРМ",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "success",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.12.2025&publishDateTo=31.12.2025&searchString=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "date_bounds_verified": true,
+      "candidates": [
+        {
+          "number_unverified": "32515582393",
+          "title_unverified": "Поставка установки конденсаторной УКРМ",
+          "customer_unverified": "26.12.2025",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        }
+      ],
+      "first_page_has_next": false
+    },
+    {
+      "timestamp": "2026-10-28T11:51:21.083735+00:00",
+      "law": "223fz",
+      "month": "2025-12",
+      "query": "БСК",
+      "page": 1,
+      "query_scoped_not_exhaustive": true,
+      "original_documents_verified": false,
+      "signed_contract_verified": false,
+      "status": "success",
+      "source_url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.12.2025&publishDateTo=31.12.2025&searchString=%D0%91%D0%A1%D0%9A",
+      "date_bounds_verified": true,
+      "candidates": [
+        {
+          "number_unverified": "32515508062",
+          "title_unverified": "Поставка трансформатора тока 500 кВ для ООО \" БСК",
+          "customer_unverified": "09.12.2025",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515478588",
+          "title_unverified": "Поставка автогидроподъемника на шасси грузового полноприводного автомобиля 6х6 для ООО \" БСК",
+          "customer_unverified": "02.12.2025",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515499571",
+          "title_unverified": "Добровольное медицинское страхование ООО \"Башкирэнерго\", ООО \" БСК",
+          "customer_unverified": "",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515583400",
+          "title_unverified": "Поставка оборудования ОПС для ООО \"Башкирэнерго\", ООО \" БСК",
+          "customer_unverified": "",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515568089",
+          "title_unverified": "ПОСТАВКА ТРУБ И МУФТ",
+          "customer_unverified": "24.12.2025",
+          "publication": null,
+          "query_in_visible_title": false,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515557517",
+          "title_unverified": "Поставка хозяйственных и канцелярских товаров",
+          "customer_unverified": "22.12.2025",
+          "publication": null,
+          "query_in_visible_title": false,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515595418",
+          "title_unverified": "Реконструкция системы водоснабжения с установкой станции водоподготовки ул. Троицкий Бор п. Борисогле бск",
+          "customer_unverified": "30.12.2025",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515595016",
+          "title_unverified": "Оказание услуг по адаптации и сопровождению экземпляров Систем КонсультантПлюс на основе специального лицензионного программного обеспечения, обеспечивающего совместимость с уже установленными системами",
+          "customer_unverified": "30.12.2025",
+          "publication": null,
+          "query_in_visible_title": false,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515594401",
+          "title_unverified": "Оказание услуг по изготовлению информационной продукции",
+          "customer_unverified": "30.12.2025",
+          "publication": null,
+          "query_in_visible_title": false,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        },
+        {
+          "number_unverified": "32515592989",
+          "title_unverified": "оказание услуг по охране зданий и имущества, обеспечение внутриобъектового порядка и безопасности МАУ ФКиС БСК",
+          "customer_unverified": "30.12.2025",
+          "publication": null,
+          "query_in_visible_title": true,
+          "pq_relevance_verified": false,
+          "date_in_window": false
+        }
+      ],
+      "first_page_has_next": false
+    }
+  ],
+  "full_journal_sha256": "76f5bdd3858d85824e0675c28bc55d657a17c6a334a678b231ec68eec1784693"
+}

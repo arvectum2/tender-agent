@@ -1,0 +1,37 @@
+{
+  "case": "commercial:РН61004155:lot1",
+  "before": {
+    "rows": 118,
+    "owner": "tender-agent",
+    "unique": 118,
+    "records": 118
+  },
+  "after": {
+    "rows": 118,
+    "owner": "tender-agent",
+    "unique": 118,
+    "records": 118
+  },
+  "new_verified_fields": 2,
+  "fields": {
+    "voltage_kv": "6",
+    "power": "450 кВАр (3×150) / 900 кВАр (450+2×225); исполнения, не сумма поставки"
+  },
+  "old_hash": "194f8257393b718f4b58099973adaaef3fc287956f4347c9887fc21fa0fb6505",
+  "new_hash": "06f76498d552671d976a170a364dc3e5b7bcd5b9f4056efcf2868c31951d85f6",
+  "proof": {
+    "card_url": "https://www.tektorg.ru/rosneft/procedures/20068407",
+    "card_sha256": "76c7de4a9bbaec9feeefdfa9158732faa1d64df033f2a6812f998531ed3ec359",
+    "archive_sha256": "8d534d2a2de2339f0c3e495b0d81accf4d285b3d58a405dc9cabef10f03c368b",
+    "archive_receipt": "captures/commercial___61004155_lot1/20261031T123808837025Z-43d86e35-8d534d2a2de2339f.bin.json",
+    "members": {
+      "Блок 7. Техническое задание/26073435 УКРМ-6-1-А450-3х150-Л0Н2Х6/ЕТТ УКРМ.docx": "6d37139ab89e13db77dd75b38a67d88f4609e54b4d36795d1ec0fdc0c6fd8b40",
+      "Блок 7. Техническое задание/26088135 УКРМ-6-1-Р900-450+2х225-Л0Н2Х6/BP4-06-03_ETT-0151_IZM1.docx": "39444936857bf82aa9392fc536d785267dc62676513e7255d34629c9fbcc6156"
+    },
+    "quantity_verified": false,
+    "winner_verified": false,
+    "supplier_verified": false,
+    "payment_verified": false
+  },
+  "backup_sha256": "80f9172e8059542617fb1f2bcd7df2c2518a0f1acebc3ff36360fc1f1e93664f"
+}

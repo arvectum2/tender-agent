@@ -1,0 +1,32 @@
+{
+  "schema_version": "pq-sibur-primary-incremental/1",
+  "base_db_expected_records": 111,
+  "cases": [
+    {
+      "canonical_id": "commercial:2103585-2:lot1",
+      "procedure_id": "2103585/2",
+      "source_receipts": [
+        "captures/commercial_2103585-2_lot1/20261029T123933611881Z-4d7e4396-5ac6859c2bb55915.bin.json",
+        "captures/commercial_2103585-2_lot1/20261029T124009053533Z-ebab7093-d78513d78cd67f6f.bin.json",
+        "captures/commercial_2103585-2_lot1/20261029T124009226688Z-ab02a28b-f9b03374773634f3.bin.json"
+      ],
+      "exact_source_quotes": [
+        "2103585/2",
+        "Установка компенсации реактивной мощности 10 кВ",
+        "ООО \"ЗапСибНефтехим\"",
+        "Прием предложений завершен"
+      ],
+      "technical_voltage_kv": 10,
+      "scope": "10kv_compensation_equipment_or_works_unspecified",
+      "market_scope": "10kv_primary_title_only_no_sale",
+      "status": "bids_closed_outcome_unknown",
+      "related_predecessor_procedure": "2103585/1",
+      "project_reference": "PDH2.15383-4015-7.7.6-RFQ-0003",
+      "publication_date": "2025-04-07",
+      "buyer": "ООО «ЗапСибНефтехим»",
+      "description": "Установка компенсации реактивной мощности 10 кВ для ДГП-2; повторная редакция /2, предыдущая /1; архивы не оценены как подтверждение поставки",
+      "signed_supplier_verified": false,
+      "paid_verified": false
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": "mi-branch-archive/1",
+  "as_of": "2026-10-29",
+  "single_active_research_pr": 521,
+  "main_integrated_spec_kit_pr": 520,
+  "records": [
+    {
+      "pr": 514,
+      "original_head_sha": "e1efe5bebcbe6c7818a5d6932b3c5b096cdc4d73",
+      "archive_tag": "archive/mi-pr-514-20261029",
+      "category": "historical-primary-leads",
+      "disposition": "Older source-bounded five-procurement delta; historical only, not promoted to v29 without original SHA and dedup",
+      "preserved_full_git_history": true,
+      "promoted_to_current_v29": false
+    },
+    {
+      "pr": 515,
+      "original_head_sha": "1e2e24725226e4bb8b64230b04baf3415c5053da",
+      "archive_tag": "archive/mi-pr-515-20261029",
+      "category": "historical-v20-v40",
+      "disposition": "unmerged historical corpus/scripts/tests; review SHA and dedup before importing to v29",
+      "preserved_full_git_history": true,
+      "promoted_to_current_v29": false
+    },
+    {
+      "pr": 516,
+      "original_head_sha": "603abe2c90f6f8f8ff10a23e4fdcef5deb36e7ba",
+      "archive_tag": "archive/mi-pr-516-20261029",
+      "category": "recovery-cycle",
+      "disposition": "current main/#521 takes precedence; archived legacy implementation",
+      "preserved_full_git_history": true,
+      "promoted_to_current_v29": false
+    },
+    {
+      "pr": 517,
+      "original_head_sha": "037a51a71ac95928a52e50467c080551f01d423c",
+      "archive_tag": "archive/mi-pr-517-20261029",
+      "category": "source-manifest",
+      "disposition": "legacy manifest regression; compare semantics against current pipeline",
+      "preserved_full_git_history": true,
+      "promoted_to_current_v29": false
+    },
+    {
+      "pr": 518,
+      "original_head_sha": "0a2a2d5f1b9c0a1ce0787ba647aebc8bffb52ec6",
+      "archive_tag": "archive/mi-pr-518-20261029",
+      "category": "public-223-zip",
+      "disposition": "legacy bounded ZIP regression; compare against current pipeline",
+      "preserved_full_git_history": true,
+      "promoted_to_current_v29": false
+    },
+    {
+      "pr": 519,
+      "original_head_sha": "89d24393cfa777885458f63e234222225e3fdda3",
+      "archive_tag": "archive/mi-pr-519-20261029",
+      "category": "etp-7z-protocols",
+      "disposition": "safe 7z, ETP source queue, gap inventory and 11 evidence files ported to #521; remaining overlays/tests still archived, not automatically current evidence",
+      "preserved_full_git_history": true,
+      "promoted_to_current_v29": false
+    }
+  ],
+  "caution": "Archive tags preserve full historical Git commits; not proof that all code/data has been merged. Historical provenance must be explicitly reconciled prior to promotion."
+}

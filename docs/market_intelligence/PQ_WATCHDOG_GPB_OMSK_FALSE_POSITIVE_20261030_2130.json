@@ -1,0 +1,129 @@
+{
+  "schema_version": "pq-watchdog-gpb-original-triage/1",
+  "run_id": "20261030T212915+0300",
+  "as_of_moscow": "2026-10-30T21:35:50.039707+03:00",
+  "issue_comment_id": 6530496430,
+  "canonical_pr": 521,
+  "parent_head": "c53392d9e99bf380f9d7a1cdef6bc7b307228c56",
+  "db": {
+    "unique_lots_before": 117,
+    "unique_lots_after": 117,
+    "distinct_procedures": 106,
+    "eis_223_notices": 40,
+    "new_unique_lots": 0,
+    "new_core_6_35kv_lots": 0,
+    "new_underlying_projects": 0,
+    "new_named_winner_protocols": 0,
+    "new_verified_signed_suppliers": 0,
+    "new_executed_sales": 0,
+    "mutation": false,
+    "client_html_regenerated": false,
+    "canonical_v29_rows_unchanged": 101
+  },
+  "case": {
+    "id": "commercial:GP646069:lot1",
+    "procedure": "ГП646069",
+    "buyer": "АО Омский Каучук",
+    "buyer_inn": "5501023216",
+    "source_platform": "ЭТП ГПБ",
+    "published_moscow": "2026-10-22 13:43",
+    "bid_deadline_moscow": "2026-10-30 11:00",
+    "planned_results_moscow": "2026-11-30 14:00",
+    "source_grade": "A_original_documents",
+    "scope": "excluded_from_confirmed_PQ_6_35kv",
+    "scope_reason": "The term конденсаторы поз.124/1,2 is not evidence of electrical power-factor correction. The first-party electrical equipment schedule specifies trace-heating terminal boxes and 660 V cables, not UKRM/BSK/SVG or 6–35 kV reactive compensation. Classified as lexical false positive for PQ until contrary first-party technical evidence.",
+    "technical_evidence": {
+      "original_pdf_sha256": "1338d5b66b9b5a22fb5dc7d90e39dd1377a7141e16f7850c3473431b525a8052",
+      "document": "Спецификация.pdf, 23637-ЭОБ.С, page 1, equipment/cable schedule",
+      "observed_terms": [
+        "Коробка клеммная ККВ-А2222У",
+        "Кабель силовой с медными жилами на напряжение 660 В",
+        "Саморегулирующийся кабель"
+      ],
+      "not_PQ_voltage": "660 V cable is auxiliary heat tracing, not 6–35 kV PQ equipment"
+    },
+    "official_docx": {
+      "sha256": "2bad0b4b206ed9acb596c8abe4ace240b9d9148a87915e22d2bbc427c40e501c",
+      "quote": "Предельная общая стоимость выполнения работ - ЛСР №28535 1 380 032,24руб. (без учета НДС 22%), из них СМР – 211 709,27 руб., Материалы – 974 035,25 руб., Оборудование – 194 287,72 руб.",
+      "nmck_ex_vat_rub": 1380032.24,
+      "nmck_in_vat_rub": 1683639.33,
+      "equipment_in_general_work_budget_ex_vat_rub": 194287.72,
+      "pq_only_equipment_price_rub": null,
+      "signed_contract_rub": null,
+      "winner": null
+    }
+  },
+  "source_research": {
+    "new_primary_get_200": 5,
+    "fresh_sha_verified_originals": 5,
+    "originals": [
+      {
+        "url": "https://etp.gpb.ru/file/get/t/LotDocuments/id/7081646/name/6ad9e8af0957f3.99690708",
+        "sha256": "1338d5b66b9b5a22fb5dc7d90e39dd1377a7141e16f7850c3473431b525a8052",
+        "bytes": 274007,
+        "content_type": "application/pdf",
+        "private_receipt_relative": "captures/commercial_GP646069_lot1/20261030T183207010408Z-3230b4e4-1338d5b66b9b5a22.bin.json"
+      },
+      {
+        "url": "https://etp.gpb.ru/file/get/t/LotDocuments/id/7081642/name/6ad9e8aeb80ed0.31230043",
+        "sha256": "987cba86cb55d119299b394f16c54f2bfc1e339d671944eb83011e045e47ce3a",
+        "bytes": 417830,
+        "content_type": "application/pdf",
+        "private_receipt_relative": "captures/commercial_GP646069_lot1/20261030T183230897691Z-09936281-987cba86cb55d119.bin.json"
+      },
+      {
+        "url": "https://etp.gpb.ru/file/get/t/LotDocuments/id/7081644/name/6ad9e8aedd9497.80340594",
+        "sha256": "05f13ce184464a990d2481980cf643fa23a0c947eb1a3d7569951c39b42468fc",
+        "bytes": 646334,
+        "content_type": "application/pdf",
+        "private_receipt_relative": "captures/commercial_GP646069_lot1/20261030T183259004257Z-7caff411-05f13ce184464a99.bin.json"
+      },
+      {
+        "url": "https://etp.gpb.ru/file/get/t/LotDocuments/id/7081641/name/6ad9e8aea81855.45937045",
+        "sha256": "2bad0b4b206ed9acb596c8abe4ace240b9d9148a87915e22d2bbc427c40e501c",
+        "bytes": 16338,
+        "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "private_receipt_relative": "captures/commercial_GP646069_lot1/20261030T183319089317Z-f01d4445-2bad0b4b206ed9ac.bin.json"
+      },
+      {
+        "url": "https://etp.gpb.ru/file/get/t/LotDocuments/id/7081647/name/6ad9e8af2c0df9.51362265",
+        "sha256": "59fa8a4a1617c4fbc0e2c730d3d086a30ed065376cff058b63b818319beb538c",
+        "bytes": 5495057,
+        "content_type": "application/pdf",
+        "private_receipt_relative": "captures/commercial_GP646069_lot1/20261030T183335059979Z-90b117c7-59fa8a4a1617c4fb.bin.json"
+      }
+    ],
+    "known_failed_get_attempts": 5,
+    "failed_details": "Exact GPB document URLs: curl exit 52 / native RemoteDisconnected on initial attempts; 7081645 spreadsheet remains inaccessible; others succeeded on bounded retry.",
+    "head_probes": {
+      "direct_http_200": 1,
+      "default_route_empty_reply": 1
+    },
+    "new_full_months_covered": 0,
+    "calendar_bound_searches_newly_covered": 0,
+    "web_discovery": "Searches 2024-2026 for UKRM/BSK/STATCOM and first-party GPB; secondary aggregator only used to discover official document URLs; no winner inferred."
+  },
+  "engineering": {
+    "change": "Narrowly allowlist official etp.gpb.ru public LotDocuments URLs with exact path and no query, tests reject redirects to untrusted hosts",
+    "targeted_tests": "13 passed",
+    "ruff": "pass"
+  },
+  "next_ranked_targets": [
+    {
+      "case": "commercial:ГП630876:lot1",
+      "retry_after_moscow": "2026-10-30 23:40",
+      "goal": "first-party GPB technical original and outcome; compare canceled ГП628666"
+    },
+    {
+      "case": "223fz:32615684088:lot1",
+      "retry_after_moscow": "2026-10-31 09:00",
+      "goal": "signed contract and named supplier independent of commission winner"
+    },
+    {
+      "case": "commercial:RN61003961:lot1",
+      "retry_after_moscow": "2026-10-31 10:00",
+      "goal": "first-party outcome/protocol after earlier generic TEK-Torg response"
+    }
+  ],
+  "notes": "This is not a market census. New official source documents exclude a misleading lexical candidate; no new core equipment, signed supplier or executed price established."
+}

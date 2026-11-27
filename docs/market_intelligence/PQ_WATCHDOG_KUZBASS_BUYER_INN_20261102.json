@@ -1,0 +1,189 @@
+{
+  "schema_version": "pq-watchdog-source-evidence/1",
+  "completed_moscow": "2026-11-02T00:35:42.625927+03:00",
+  "issue_comment_id": 6564153264,
+  "canonical_pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "latest_tested_code_commit": "1248013faa93ebf01bf6e5bf950ad7b0cee77d19",
+  "acceptance_status": "pass",
+  "postgres_before": {
+    "unique_lots": 120,
+    "distinct_procedures": 109,
+    "eis_223_notices": 43
+  },
+  "postgres_after": {
+    "unique_lots": 120,
+    "distinct_procedures": 109,
+    "eis_223_notices": 43
+  },
+  "new_unique_lots": 0,
+  "new_core_6_35kv_lots": 0,
+  "new_distinct_projects": 0,
+  "new_verified_fields_persisted": 2,
+  "fields": [
+    "customer.inn",
+    "source_urls"
+  ],
+  "client_report_coverage": {
+    "buyer_inn_before": 77,
+    "buyer_inn_after": 78,
+    "source_grades_unchanged": true
+  },
+  "case_enriched": "223fz:32615852898:lot1",
+  "verified_buyer_inn": "2460069527",
+  "original_url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32615852898",
+  "original_sha256": "e7af1bc268c0e24361e2f1d79eaaa8fafe88f5b7a1eaf24c5c27744654833ce0",
+  "original_reused_from_20261101": true,
+  "db_receipt": "/Users/master/ArvectumSafe/runtime/market-intelligence/pq-agent-pilot-live/receipts/20261102T0033-kuzbass-buyer-inn.json",
+  "full_backup_sha256": "6a08497ebf28ae97046e03ff3252c18ac0561ffd9aa55d7a7810035589db21fc",
+  "full_backup_pg_restore_verified": true,
+  "first_party_new_requests": 17,
+  "first_party_attempts": [
+    {
+      "case_id": "223fz:32616506708:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616506708",
+      "transport": "httpx",
+      "result": "TLS certificate verification failed; no HTTP response"
+    },
+    {
+      "case_id": "223fz:32616506708:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616506708",
+      "transport": "httpx",
+      "result": "TLS certificate verification failed; no HTTP response"
+    },
+    {
+      "case_id": "223fz:32616506708:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616506708",
+      "transport": "httpx",
+      "result": "TLS certificate verification failed; no HTTP response"
+    },
+    {
+      "case_id": "223fz:32515584863:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32515584863",
+      "transport": "httpx",
+      "result": "TLS certificate verification failed; no HTTP response"
+    },
+    {
+      "case_id": "223fz:32515584863:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32515584863",
+      "transport": "httpx",
+      "result": "TLS certificate verification failed; no HTTP response"
+    },
+    {
+      "case_id": "223fz:32515584863:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32515584863",
+      "transport": "httpx",
+      "result": "TLS certificate verification failed; no HTTP response"
+    },
+    {
+      "case_id": "223fz:32615937898:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32615937898",
+      "transport": "httpx",
+      "result": "TLS certificate verification failed; no HTTP response"
+    },
+    {
+      "case_id": "223fz:32615937898:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32615937898",
+      "transport": "httpx",
+      "result": "TLS certificate verification failed; no HTTP response"
+    },
+    {
+      "case_id": "223fz:32615937898:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32615937898",
+      "transport": "httpx",
+      "result": "TLS certificate verification failed; no HTTP response"
+    },
+    {
+      "case_id": "223fz:32616506708:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616506708",
+      "transport": "native-trust",
+      "result": "Response rejected by immutable original size/identity gate; no source saved; HTTP code not established"
+    },
+    {
+      "case_id": "223fz:32515584863:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32515584863",
+      "transport": "native-trust",
+      "result": "Response rejected by immutable original size/identity gate; no source saved; HTTP code not established"
+    },
+    {
+      "case_id": "223fz:32615937898:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32615937898",
+      "transport": "native-trust",
+      "result": "Response rejected by immutable original size/identity gate; no source saved; HTTP code not established"
+    },
+    {
+      "case_id": "223fz:32616506708:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616506708",
+      "transport": "curl-direct",
+      "result": "HTTP 404"
+    },
+    {
+      "case_id": "223fz:32515584863:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32515584863",
+      "transport": "curl-direct",
+      "result": "Response rejected by immutable original size/identity gate"
+    },
+    {
+      "case_id": "223fz:32616506708:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?purchaseNoticeNumber=32616506708",
+      "transport": "native-trust",
+      "result": "HTTP 404"
+    },
+    {
+      "case_id": "223fz:32515584863:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?purchaseNoticeNumber=32515584863",
+      "transport": "native-trust",
+      "result": "HTTP 404"
+    },
+    {
+      "case_id": "223fz:32615937898:lot1",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?purchaseNoticeNumber=32615937898",
+      "transport": "native-trust",
+      "result": "HTTP 404"
+    }
+  ],
+  "new_sha_verified_originals": 0,
+  "new_original_protocols": 0,
+  "new_named_winners": 0,
+  "new_signed_suppliers": 0,
+  "new_paid_equipment_sales": 0,
+  "new_exhaustive_month_source_searches": 0,
+  "observed_blockers": "EIS direct HTTP 404 or invalid short source responses; httpx TLS chain untrusted. No unauthorized TLS bypass or original promotion.",
+  "secondary_research": "32616506708 is 220kV design; 32515584863 is 220kV SCRM design; 32615937898 is 110kV SCRM design. Secondary titles are not original technical verification; none promoted to core.",
+  "next_targets": [
+    {
+      "case": "223fz:32616474682:lot1",
+      "eligible_moscow": "2026-11-02T06:30:00+03:00",
+      "goal": "original outcome and signed contract"
+    },
+    {
+      "case": "223fz:32616433248:lot1",
+      "eligible_moscow": "2026-11-02T09:00:00+03:00",
+      "goal": "35kV UKRM EPC contract"
+    },
+    {
+      "case": "223fz:32616497692:lot1",
+      "eligible_moscow": "2026-11-02T16:30:00+03:00",
+      "goal": "10kV UKRM EPC outcome"
+    }
+  ],
+  "client_artifacts": {
+    "ARVECTUM_FGI_PQ_FULL_RU_20261102_V40.pdf": {
+      "sha256": "548c02c80149511bc9e52f88891d306bd2fc5299f706fc8cd778938afd20048b",
+      "bytes": 6867847
+    },
+    "ARVECTUM_FGI_PQ_FULL_EN_20261102_V40.pdf": {
+      "sha256": "eb35bb73bb9d72e868de7fce5fc6fe1462e1c5cb34f105f85584b2d10b4bbdba",
+      "bytes": 6829753
+    },
+    "ARVECTUM_FGI_PQ_FIELD_AUDIT_20261102_v40.json": {
+      "sha256": "4a4bc49342f3e42c61e11618aa8ea91c1d52408f159b64279cc1c78ab8602447",
+      "bytes": 166177
+    }
+  },
+  "report_snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261102_v40.json",
+  "pdf_pages_each": 262,
+  "tests": "2 targeted primary-gap tests and 3 report renderer tests passed; Ruff passed; PDF 262 pages RU/EN, buyer INN extracted from both",
+  "auto_merge": false,
+  "task_status": "in_progress"
+}

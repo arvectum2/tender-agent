@@ -1,0 +1,101 @@
+{
+  "schema_version": "pq-watchdog-source-retry/1",
+  "run_id": "20261030-0032",
+  "completed_moscow": "2026-10-30T00:35:58+03:00",
+  "issue_comment_id": 6508832618,
+  "pr": 521,
+  "parent_head": "d48353fa28ecc9cd400d9b67b5bb83fcfd33249f",
+  "status": "in_progress_review",
+  "internal_apfs_acceptance": "pass",
+  "db_before_after": {
+    "unique_lots": 113,
+    "distinct_procedures": 102,
+    "numeric_eis223_notices": 37
+  },
+  "db_mutation": false,
+  "new_unique_lots": 0,
+  "new_distinct_projects": 0,
+  "new_named_winner_protocols": 0,
+  "new_signed_suppliers": 0,
+  "new_executed_pq_sales": 0,
+  "new_month_source_coverage": 0,
+  "canonical_v29_unchanged": 101,
+  "client_html_regenerated": false,
+  "new_sha_verified_primary_captures": [
+    {
+      "case_id": "commercial:4617521:lot1",
+      "source_url": "https://www.b2b-center.ru/app/market-next/vybor-ispolnitelia-na-postavku-montazh-i-pnr-ustanovok-kompensatsii/tender-4617521/",
+      "http": 200,
+      "sha256": "d322a5c5390a07a4bab22d35c5c3684534f642b02e0aa37efd264735bdf3d6a3",
+      "bytes": 326210,
+      "relative_file": "captures/commercial_4617521_lot1/20261029T213432982532Z-40013dcb-d322a5c5390a07a4.bin",
+      "finding": "Three applications; review stage, participant names and prices hidden; no new outcome"
+    },
+    {
+      "case_id": "commercial:2103585-2:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?procedure=2103585%2F2",
+      "http": 200,
+      "sha256": "5f9140618d675f3c012c9da67fd43ed995ccf82faf4e255651e9ef7c8d4e599e",
+      "bytes": 181920,
+      "relative_file": "captures/commercial_2103585-2_lot1/20261029T213434114254Z-e1bc9d5d-5f9140618d675f3c.bin",
+      "finding": "10kV UKRM, status proposal acceptance ended; no signed supplier or price"
+    }
+  ],
+  "source_attempts": [
+    {
+      "case": "32615684088",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32615684088",
+      "httpx": "TLS certificate chain error",
+      "strict_tls_curl": "HTTP 404"
+    },
+    {
+      "case": "32615684088",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32615684088",
+      "httpx": "TLS certificate chain error",
+      "strict_tls_curl": "HTTP 404"
+    },
+    {
+      "case": "32615684088",
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32615684088",
+      "httpx": "TLS certificate chain error",
+      "strict_tls_curl": "HTTP 404"
+    },
+    {
+      "case": "106044-TT",
+      "url": "https://etp.metal-it.ru/trades/431640997/info",
+      "result": "capture rejected by official allowlist, no request; retry after 09:00 Moscow"
+    }
+  ],
+  "web_discovery": "Targeted 2024-2026 searches checked EIS/RAD 32615684088, already source-reviewed 32616433248 and 32616354211; no new independently first-party verified procurement. Secondary results were not promoted.",
+  "request_metrics": {
+    "first_party_actual_requests": 8,
+    "successful_http_200": 2,
+    "http_404": 3,
+    "httpx_tls_errors": 3,
+    "preflight_rejected_no_request": 1,
+    "new_first_party_sha_verified_files": 2,
+    "new_case_specific_documents_or_protocols": 0
+  },
+  "retry_ranked": [
+    {
+      "case": "commercial:106044-TT:lot1",
+      "eligible_after": "2026-10-30T09:00:00+03:00",
+      "goal": "official Metal-IT STATCOM 6.3kV result/protocol"
+    },
+    {
+      "case": "223fz:32615684088:lot1",
+      "eligible_after": "2026-10-30T14:40:00+03:00",
+      "goal": "official EIS/RAD original and 10kV BSK scope/contract; avoid 404 repeats before eligible"
+    },
+    {
+      "case": "commercial:2103585-2:lot1",
+      "eligible_after": "new official outcome/contract event",
+      "goal": "SIBUR 10kV UKRM signed supplier and contract price"
+    }
+  ],
+  "notes": [
+    "No verified new lot INSERT; no full backup required and no client report refresh permitted.",
+    "Dynamic HTML SHA is not proof of new outcome.",
+    "Do not infer equipment sale from EPC or secondary contract listings."
+  ]
+}

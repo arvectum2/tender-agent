@@ -1,0 +1,151 @@
+{
+  "schema_version": "pq-watchdog-named-bid-protocol/1",
+  "run_id": "20261030-0233",
+  "completed_moscow": "2026-10-30T02:36:55+03:00",
+  "issue_comment_id": 6511026396,
+  "canonical_pr": 521,
+  "parent_head": "0b5fa55480efe6189aa859fc81c7bab964878565",
+  "status": "in_progress_review",
+  "gate": {
+    "status": "pass",
+    "verified_utc": "2026-10-29T23:33:50.591836+00:00",
+    "internal_apfs": true,
+    "git_clean_at_start": true
+  },
+  "postgresql_before_after": {
+    "unique_lots": 113,
+    "distinct_procedures": 102,
+    "eis_223_notices": 37
+  },
+  "new_unique_db_lots": 0,
+  "new_verified_core_6_35kv_lots": 0,
+  "db_mutation": false,
+  "client_html_regenerated": false,
+  "canonical_v29_rows_unchanged": 101,
+  "primary_source_requests": {
+    "total": 2,
+    "http_200": 2,
+    "http_non_200": 0,
+    "new_sha_verified_captures": 2,
+    "new_case_specific_protocols": 1,
+    "other_html_shells": 1,
+    "new_month_source_coverage": 0
+  },
+  "new_source_receipts": [
+    {
+      "case_id": "223fz:32616474682:lot1",
+      "source_url": "https://www.b2b-center.ru/market/auction_protocol.html?id=4642507&type=participants_protocol",
+      "http_status": 200,
+      "captured_utc": "2026-10-29T23:35:12.279375+00:00",
+      "relative_file": "captures/223fz_32616474682_lot1/20261029T233512276238Z-3a93dee5-54a3d55c59d51433.bin",
+      "bytes": 20718,
+      "sha256": "54a3d55c59d514332d6ca23d82962011496b18f938056e7fb1db8db4b7b0b9d3",
+      "receipt_relative_path": "captures/223fz_32616474682_lot1/20261029T233512276238Z-3a93dee5-54a3d55c59d51433.bin.json"
+    },
+    {
+      "case_id": "commercial:4617521:lot1",
+      "source_url": "https://www.b2b-center.ru/app/market-next/vybor-ispolnitelia-na-postavku-montazh-i-pnr-ustanovok-kompensatsii/tender-4617521/offers",
+      "http_status": 200,
+      "captured_utc": "2026-10-29T23:35:45.982911+00:00",
+      "relative_file": "captures/commercial_4617521_lot1/20261029T233545980067Z-5105eb21-5634052321102c55.bin",
+      "bytes": 171097,
+      "sha256": "5634052321102c55e3947fc14588a792fbb281ea9440c50e1cdc7e81e7a62652",
+      "receipt_relative_path": "captures/commercial_4617521_lot1/20261029T233545980067Z-5105eb21-5634052321102c55.bin.json"
+    }
+  ],
+  "first_party_protocol": {
+    "notice": "32616474682",
+    "procedure": "4642507",
+    "protocol_number": "2027.ЗК-000201/01",
+    "protocol_date": "2026-10-28",
+    "document_type": "Протокол заседания комиссии по вскрытию конвертов",
+    "source_sha256": "54a3d55c59d514332d6ca23d82962011496b18f938056e7fb1db8db4b7b0b9d3",
+    "exact_quote": "Протокол заседания комиссии по вскрытию конвертов, поступивших на запрос цен № 4642507",
+    "buyer": "АО Башкирская электросетевая компания",
+    "lots": [
+      "223fz:32616474682:lot1",
+      "223fz:32616474682:lot2"
+    ],
+    "bids_total": 4,
+    "bid_price_type": "предложение участника, без НДС, НЕ цена подписанного договора",
+    "named_bidders": [
+      {
+        "name": "ООО «УК КОНДЕНСАТОР»",
+        "offer_rub_ex_vat": "2362900.00",
+        "participant_number": 1,
+        "bid_submitted": "2026-10-27 10:17:09"
+      },
+      {
+        "name": "ООО «АСПЕКТ»",
+        "offer_rub_ex_vat": "2377049.18",
+        "participant_number": 4,
+        "bid_submitted": "2026-10-27 09:58:41"
+      },
+      {
+        "name": "ООО «РЗА»",
+        "offer_rub_ex_vat": "2422650.00",
+        "participant_number": 3,
+        "bid_submitted": "2026-10-27 09:34:58"
+      },
+      {
+        "name": "ООО «ТД «СибЭнерго»»",
+        "offer_rub_ex_vat": "2449000.00",
+        "participant_number": 2,
+        "bid_submitted": "2026-10-26 11:16:03"
+      }
+    ],
+    "winner": null,
+    "signed_supplier": null,
+    "signed_contract_price_rub": null,
+    "executed_price_rub": null,
+    "scope": "компоненты КЭП; напряжение не установлено; вне подтверждённого 6–35 кВ",
+    "finding": "Первичный протокол раскрывает 4 наименования и 4 ценовых предложения, ранее отмеченные как анонимные; это вскрытие заявок, не решение о победителе.",
+    "review": "ChatGPT source-grounded manual textual review; SHA verified; not gold without independent expert review"
+  },
+  "second_source": {
+    "case_id": "commercial:4617521:lot1",
+    "url": "https://www.b2b-center.ru/app/market-next/vybor-ispolnitelia-na-postavku-montazh-i-pnr-ustanovok-kompensatsii/tender-4617521/offers",
+    "observed": "HTTP 200 returns generic market-next app shell, no bidder names or prices",
+    "winner": null
+  },
+  "new_named_bidder_protocols": 1,
+  "new_named_bidders": 4,
+  "new_winner_protocols": 0,
+  "new_signed_suppliers": 0,
+  "new_executed_pq_equipment_sales": 0,
+  "dedup": {
+    "new_procurement_ids": 0,
+    "new_project_ids": 0,
+    "known_notice": "32616474682",
+    "known_two_lots_no_duplicate_insert": true
+  },
+  "gaps": [
+    "KEP rated voltage not disclosed by primary public documents",
+    "BESK award/signed contract not yet published; planned outcome 2026-12-03 10:00 MSK",
+    "4617521 public offers route returns only application shell",
+    "32616435269 Roseltorg technical 7z still unavailable"
+  ],
+  "retry_ranked": [
+    {
+      "case": "commercial:106044-TT:lot1",
+      "eligible_after": "2026-10-30 09:00 MSK",
+      "goal": "first-party STATCOM 6.3kV results and winner protocol"
+    },
+    {
+      "case": "223fz:32616435269:lot1",
+      "eligible_after": "new native Roseltorg 26-1174 technical original becomes publicly accessible",
+      "goal": "verify nominal voltage and scope"
+    },
+    {
+      "case": "223fz:32616474682:lot1,lot2",
+      "eligible_after": "2026-12-03 10:00 MSK for result; earlier if technical docs public",
+      "goal": "verify KEP voltage and signed supplier; do not treat 4 bids as sales"
+    }
+  ],
+  "safety": {
+    "no_auto_merge": true,
+    "no_other_production_mutations": true,
+    "no_client_report_churn": true,
+    "no_auth_bypass": true
+  }
+}

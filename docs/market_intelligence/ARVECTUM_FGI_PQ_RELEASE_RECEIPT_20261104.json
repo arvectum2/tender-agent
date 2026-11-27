@@ -1,0 +1,63 @@
+{
+  "schema": "arvectum-fgi-client-release/20261104",
+  "as_of": "2026-11-04",
+  "snapshot_utc": "2026-11-04T14:25:05.604875+00:00",
+  "snapshot_file": "data/market_intelligence/power_quality/fgi_full_corpus_20261104.v1.json",
+  "snapshot_sha256": "bd2878b3b024ba90db4b6250b3d7be6263ca1c7211b7035fe8ce1f27c7cbb8d8",
+  "unique_lots": 123,
+  "procedures": 112,
+  "eis_223_lots": 46,
+  "eis_223_notices": 45,
+  "lot_level_provenance_counts": {
+    "A": 43,
+    "B": 26,
+    "C": 54
+  },
+  "source_url_count": 294,
+  "source_notice": "Source tiers are evidence hints, not field-by-field verification.",
+  "confirmed_paid_revenues": 0,
+  "verified_signed_supplier_names": 0,
+  "analytical_pages": 21,
+  "index_pages": 8,
+  "base_dossier_pages": 369,
+  "protocol_appendix_pages": 6,
+  "cover_pages": 1,
+  "conclusion_pages": 1,
+  "pdfs": {
+    "RU": {
+      "path": "docs/market_intelligence/ARVECTUM_FGI_PQ_EXHAUSTIVE_RU_20261104.pdf",
+      "bytes": 9754732,
+      "sha256": "e4a75c8ffc3e3449380249aaaefbf73eebdd16a8b2578791726fd917d67502af",
+      "pages": 406,
+      "individual_case_pages": 369,
+      "extra_original_protocol_pages": 6,
+      "data_presence_verification": "123/123 original case IDs on each of 3 dossier pages",
+      "page_text_bounds_overflow": 0,
+      "dom_overflows": 0,
+      "fonts": "PT Sans Regular/Bold; JetBrains Mono embedded"
+    },
+    "EN": {
+      "path": "docs/market_intelligence/ARVECTUM_FGI_PQ_EXHAUSTIVE_EN_20261104.pdf",
+      "bytes": 9619926,
+      "sha256": "b130629a80c6628b5aefa37faed7556dcd2151bf7b37f9382e8644d78ebc468f",
+      "pages": 406,
+      "individual_case_pages": 369,
+      "extra_original_protocol_pages": 6,
+      "data_presence_verification": "123/123 original case IDs on each of 3 dossier pages",
+      "page_text_bounds_overflow": 0,
+      "dom_overflows": 0,
+      "fonts": "PT Sans Regular/Bold; JetBrains Mono embedded"
+    }
+  },
+  "official_logo_path": "src/modules/tender_operator_agent_demo/assets/arvectum-logo-block.svg",
+  "official_logo_sha256": "361f792b58d6d3a53e151f62596a6cb761837518f771dd49f887590f11e55c2d",
+  "validation": {
+    "focused_tests": "4 passed",
+    "ruff": "PASS",
+    "chrome_layout_overflows_ru": 0,
+    "chrome_layout_overflows_en": 0,
+    "pdf_page_count_both": 406,
+    "pdf_lot_id_checks": 738,
+    "off_page_text_blocks": 0
+  }
+}

@@ -1,0 +1,175 @@
+{
+  "schema_version": "pq-watchdog-original-technical-sources/1",
+  "task_id": "TA-MI-AUTONOMY-20261027",
+  "issue_run_start_comment_id": 6487198366,
+  "date_moscow": "2026-10-29",
+  "canonical_pr": 521,
+  "canonical_branch": "feature/pq-etp-provenance-ledger-20261028",
+  "canonical_v29_rows_unchanged": 101,
+  "notice_id": "106044-ТТ",
+  "notice_known_in_v29": true,
+  "buyer": "АО «УК «Кузбассразрезуголь»",
+  "procurement_type": "commercial_first_party_technical_specifications",
+  "technology": "STATCOM/SVG",
+  "scope": "equipment_supply_with_supplier_delivery_and_support_requirements",
+  "number_of_distinct_notices_added": 0,
+  "site_specific_demand_nodes_verified": 2,
+  "device_quantity_total": 3,
+  "total_specified_nominal_mvar": 3.7,
+  "economic_outcome": "unverified_no_winner_no_signed_contract_no_executed_price",
+  "docs": [
+    {
+      "site": "taldinsky",
+      "original_url": "https://etp.metal-it.ru/files/get/uxBWLyp3PC9CaTP7rWhr8ayBSnswL1WDxRd5q1qFsSjsXAHxkUWu51BMtwNqpvNTg/%D0%A2%D0%97%20%D0%A1%D0%A2%D0%90%D0%A2%D0%9A%D0%9E%D0%9C%20%D0%B4%D0%BB%D1%8F%20%D1%84%D0%B8%D0%BB%D0%B8%D0%B0%D0%BB%D0%B0%20_%D0%A2%D0%B0%D0%BB%D0%B4%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%80%D0%B0%D0%B7%D1%80%D0%B5%D0%B7_.pdf",
+      "original_sha256": "95309477a4f3121406b2d4bca4efb7693e225e7b7f791a7409d74ec23cf9b143",
+      "bytes": 1042499,
+      "retrieved_at_utc": "2026-10-29T03:41:31.107240+00:00",
+      "http": 200,
+      "source_tier": "original_first_party_technical_pdf",
+      "pdf_native_text": "scanned_no_native_text",
+      "manual_visual_review": {
+        "page_1_png_sha256": "440d26c5fb571b10e3762e0dca9454e21932ce124d6f886324db543795cc7c15",
+        "quotes": [
+          {
+            "page": 1,
+            "quote": "на поставку статического генератора реактивной мощности (СТАТКОМ)",
+            "field": "supply_scope"
+          },
+          {
+            "page": 1,
+            "quote": "для филиала «Талдинский угольный разрез»",
+            "field": "site"
+          },
+          {
+            "page": 1,
+            "quote": "6,3 кВ ±10%",
+            "field": "voltage"
+          },
+          {
+            "page": 1,
+            "quote": "2 МВар",
+            "field": "unit_rating"
+          },
+          {
+            "page": 1,
+            "quote": "С 1 по 31",
+            "field": "harmonics"
+          },
+          {
+            "page": 1,
+            "quote": "До 30 мс",
+            "field": "response_time"
+          },
+          {
+            "page": 4,
+            "quote": "Гарантийный срок не менее 24 месяцев с даты ввода в эксплуатацию.",
+            "field": "warranty"
+          },
+          {
+            "page": 4,
+            "quote": "Поставка продукции осуществляется силами поставщика.",
+            "field": "supplier_delivery"
+          },
+          {
+            "page": 4,
+            "quote": "с опытом работы на территории РФ и СНГ со СТАТКОМ в течении 5 лет (предоставить подтверждение).",
+            "field": "supplier_local_references"
+          }
+        ]
+      },
+      "unit_quantity": 1,
+      "unit_voltage_kv": 6.3,
+      "unit_rating_mvar": 2.0,
+      "unit_current_a_as_printed": 160,
+      "project_site_key": "metal-it:106044-TT:taldinsky",
+      "signed_supplier_verified": false,
+      "winner_verified": false,
+      "contract_price_verified": false,
+      "executed_payment_verified": false
+    },
+    {
+      "site": "kaltansky",
+      "original_url": "https://etp.metal-it.ru/files/get/uxBWLyp3PC9CaTP7rWhr8ayBSnswL1WDxRd5q1qFsZxd7wwGdsZP6oQN8YGYsZU7R/%D0%A2%D0%97%20%D0%A1%D0%A2%D0%90%D0%A2%D0%9A%D0%9E%D0%9C%20%D0%B4%D0%BB%D1%8F%20%D1%84%D0%B8%D0%BB%D0%B8%D0%B0%D0%BB%D0%B0%20_%D0%9A%D0%B0%D0%BB%D1%82%D0%B0%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%80%D0%B0%D0%B7%D1%80%D0%B5%D0%B7_.pdf",
+      "original_sha256": "f0cd282e903690e5f564ab2faa7aa18cbff6c66417415e5f9c7389bee8c43e18",
+      "bytes": 972743,
+      "retrieved_at_utc": "2026-10-29T03:41:53.363214+00:00",
+      "http": 200,
+      "source_tier": "original_first_party_technical_pdf",
+      "pdf_native_text": "scanned_no_native_text",
+      "manual_visual_review": {
+        "page_1_png_sha256": "a2331259b36d9a2baff31ff979cab76bf27d83cf46abb8554bedbce673598f77",
+        "quotes": [
+          {
+            "page": 1,
+            "quote": "на поставку статического генератора реактивной мощности (СТАТКОМ)",
+            "field": "supply_scope"
+          },
+          {
+            "page": 1,
+            "quote": "в количестве 2 штук",
+            "field": "quantity"
+          },
+          {
+            "page": 1,
+            "quote": "для филиала «Калтанский угольный разрез»",
+            "field": "site"
+          },
+          {
+            "page": 1,
+            "quote": "6,3 кВ ±10%",
+            "field": "voltage"
+          },
+          {
+            "page": 1,
+            "quote": "0,85 МВар",
+            "field": "unit_rating"
+          },
+          {
+            "page": 1,
+            "quote": "С 1 по 31",
+            "field": "harmonics"
+          },
+          {
+            "page": 1,
+            "quote": "До 30 мс",
+            "field": "response_time"
+          },
+          {
+            "page": 3,
+            "quote": "Гарантийный срок не менее 24 месяцев с даты ввода в эксплуатацию.",
+            "field": "warranty"
+          },
+          {
+            "page": 3,
+            "quote": "Поставка продукции осуществляется силами поставщика.",
+            "field": "supplier_delivery"
+          },
+          {
+            "page": 3,
+            "quote": "с опытом работы на территории РФ и СНГ со СТАТКОМ в течении 5 лет (предоставить подтверждение).",
+            "field": "supplier_local_references"
+          }
+        ]
+      },
+      "unit_quantity": 2,
+      "unit_voltage_kv": 6.3,
+      "unit_rating_mvar": 0.85,
+      "unit_current_a_as_printed": 500,
+      "project_site_key": "metal-it:106044-TT:kaltansky",
+      "signed_supplier_verified": false,
+      "winner_verified": false,
+      "contract_price_verified": false,
+      "executed_payment_verified": false
+    }
+  ],
+  "dedup_rule": "one notice with two site scopes; do not count as two separate procurement notices or three signed deliveries",
+  "limitations": [
+    "No official first-party outcome/protocol or signed contract was found",
+    "Source is a scanned technical requirement, visually checked by ChatGPT; not OCR gold",
+    "Supplier price, manufacturer and equipment-only sale are unknown",
+    "0.85 Mvar/500 A line and 2 Mvar/160 A line should be technically clarified, not silently corrected"
+  ],
+  "review_method": "manual ChatGPT visual inspection of four-page scanned PDFs, with exact SHA and page 1 render receipts",
+  "private_originals_retained": true,
+  "market_entry_note": "Commercial qualification requires documented five-year STATCOM experience in Russia/CIS, local technical/service competencies, and supplier delivery; source describes requirements, not awarded supplier."
+}

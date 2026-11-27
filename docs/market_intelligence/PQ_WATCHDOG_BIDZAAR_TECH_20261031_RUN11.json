@@ -1,0 +1,168 @@
+{
+  "schema": "pq-watchdog-primary-research-run/1",
+  "moscow_finished": "2026-10-31T17:38:03.857799+03:00",
+  "issue_comment_id": 6544724869,
+  "pr": 521,
+  "source_checkout_head": "b40e8631122a15acbdab8c99299152ee6de939fd",
+  "acceptance": "pass",
+  "postgres_before": {
+    "unique_lots": 118,
+    "distinct_procedures": 107,
+    "eis_223_notices": 41
+  },
+  "postgres_after": {
+    "unique_lots": 118,
+    "distinct_procedures": 107,
+    "eis_223_notices": 41
+  },
+  "new_unique_lots": 0,
+  "new_distinct_projects": 0,
+  "new_verified_db_fields": 0,
+  "new_signed_suppliers": 0,
+  "new_registered_contracts": 0,
+  "new_executed_prices": 0,
+  "new_paid_sales": 0,
+  "new_original_final_protocols": 0,
+  "new_months_exhaustively_covered": 0,
+  "first_party_request_attempts": 36,
+  "first_party_unique_target_urls": 21,
+  "http_observations": {
+    "200_sha_verified": 10,
+    "200_invalid_identity": 3,
+    "302_filename_redirect": 18,
+    "404_HEAD_only": 2,
+    "TLS_before_HTTP": 3
+  },
+  "fresh_sha_verified_originals": [
+    {
+      "case_id": "commercial:351-062:lot1",
+      "source_url": "https://bidzaar.com/app/process/light/019f415c-8a7a-7c91-bb3f-68da7b9413ea",
+      "relative_file": "captures/commercial_351-062_lot1/20261031T143251617646Z-b428ec83-097d69a3e4aaff20.bin",
+      "sha256": "097d69a3e4aaff20b38fbe6c5e1ef83263fc2ab567b9004ceb869e7ff2e27894",
+      "bytes": 291213,
+      "captured_utc": "2026-10-31T14:32:51.620634+00:00"
+    },
+    {
+      "case_id": "commercial:351-062:lot1",
+      "source_url": "https://bidzaar.com/api/filestorage/files/download/19864dc9-085e-4bbc-a104-bd8205dffe45/%D0%9E%D0%9B%20%D0%A3%D0%9A%D0%A0%D0%9C%206%20%D0%BA%D0%92.doc",
+      "relative_file": "captures/commercial_351-062_lot1/20261031T143542412287Z-40651843-e7927732264deb30.bin",
+      "sha256": "e7927732264deb30813bcf967740763cfb032f5710ca78156f76646f8cc0d831",
+      "bytes": 641024,
+      "captured_utc": "2026-10-31T14:35:42.414340+00:00"
+    },
+    {
+      "case_id": "commercial:351-062:lot1",
+      "source_url": "https://bidzaar.com/api/filestorage/files/download/6b83bcd1-b7a6-4347-8277-3afab3c7c35a/300240128.docx",
+      "relative_file": "captures/commercial_351-062_lot1/20261031T143542740162Z-984d258a-e53a74ef8a4fda14.bin",
+      "sha256": "e53a74ef8a4fda14aedce7254488013187aba3bba7780b5a9c6443e4d0caacaf",
+      "bytes": 15087,
+      "captured_utc": "2026-10-31T14:35:42.740799+00:00"
+    },
+    {
+      "case_id": "commercial:358-830:lot1",
+      "source_url": "https://bidzaar.com/app/process/light/019fb323-f23b-7872-845e-ba2cb6b43355",
+      "relative_file": "captures/commercial_358-830_lot1/20261031T143252008673Z-faf457d2-7298889629f073dd.bin",
+      "sha256": "7298889629f073dd0ef3546096c478fc0ba85908eb7b8b42e1d6b9b005c5ca84",
+      "bytes": 272372,
+      "captured_utc": "2026-10-31T14:32:52.011784+00:00"
+    },
+    {
+      "case_id": "commercial:358-830:lot1",
+      "source_url": "https://bidzaar.com/api/filestorage/files/download/76321904-b03f-419c-98a0-8f76958742bb/%D0%94%D0%BE%D0%B3%D0%BE%D0%B2%D0%BE%D1%80%20%D0%BF%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B8_%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD.docx",
+      "relative_file": "captures/commercial_358-830_lot1/20261031T143543050518Z-c2ab4561-cef8b14111e6954b.bin",
+      "sha256": "cef8b14111e6954bb90d218a263510e92b3eab69ac8ecfb9ee59e1b6f06cc9c2",
+      "bytes": 74694,
+      "captured_utc": "2026-10-31T14:35:43.051165+00:00"
+    },
+    {
+      "case_id": "commercial:358-830:lot1",
+      "source_url": "https://bidzaar.com/api/filestorage/files/download/7cfd1f1c-02a1-44f2-a404-4e46ab7e458a/%D0%9F%D1%80%D0%B8%D0%B3%D0%BB%D1%88%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%BA%20%D1%83%D1%87%D0%B0%D1%81%D1%82%D0%B8%D1%8E%20%D0%B2%20%D1%82%D0%B5%D0%BD%D0%B5%D0%B4%D0%B5%D1%80%D0%B5.docx",
+      "relative_file": "captures/commercial_358-830_lot1/20261031T143543359476Z-a2d21839-b198801f593e47a7.bin",
+      "sha256": "b198801f593e47a7a3f6b247b1fb48dc369731c4cb5046beee0dc55809d4af45",
+      "bytes": 42423,
+      "captured_utc": "2026-10-31T14:35:43.360002+00:00"
+    },
+    {
+      "case_id": "commercial:358-830:lot1",
+      "source_url": "https://bidzaar.com/api/filestorage/files/download/87c39909-2f04-4c06-92b8-918bbf8327ae/%D0%A2%D0%97%20%D0%BF%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0%20%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%B2.docx",
+      "relative_file": "captures/commercial_358-830_lot1/20261031T143543684514Z-1b33267c-c4b55d0c467f43a2.bin",
+      "sha256": "c4b55d0c467f43a2f502f7f1b7affc3c29d456b1a40a73d5a9f1bd68100ef71e",
+      "bytes": 40757,
+      "captured_utc": "2026-10-31T14:35:43.685495+00:00"
+    },
+    {
+      "case_id": "commercial:358-830:lot1",
+      "source_url": "https://bidzaar.com/api/filestorage/files/download/b9fa2ffd-9dee-4547-b4e7-6a80d81cb03f/%D0%9F%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5%20%E2%84%961%20%D0%BA%20%D0%A2%D0%97.xlsx",
+      "relative_file": "captures/commercial_358-830_lot1/20261031T143543996082Z-d7da0e8d-d81da613e56cbc5f.bin",
+      "sha256": "d81da613e56cbc5f7f08a4a1632f7fedb37dd9a8cf78f9affbce16d0927ed2b2",
+      "bytes": 11198,
+      "captured_utc": "2026-10-31T14:35:43.996680+00:00"
+    },
+    {
+      "case_id": "commercial:4617521:lot1",
+      "source_url": "https://www.b2b-center.ru/app/market-next/vybor-ispolnitelia-na-postavku-montazh-i-pnr-ustanovok-kompensatsii/tender-4617521/",
+      "relative_file": "captures/commercial_4617521_lot1/20261031T143253355381Z-7dd71a2e-f33a786c7909e776.bin",
+      "sha256": "f33a786c7909e776cf467bc2705bf0c32c9e715ea095435a8de941c128208184",
+      "bytes": 324549,
+      "captured_utc": "2026-10-31T14:32:53.359025+00:00"
+    },
+    {
+      "case_id": "commercial:4657777:lot1",
+      "source_url": "https://www.b2b-center.ru/market/postavka-blokov-kondensatornykh-dlia-nuzhd-po-btses-po-kes-ooo/tender-4657777/",
+      "relative_file": "captures/commercial_4657777_lot1/20261031T143253999135Z-1cfd7c59-70a024ca86340615.bin",
+      "sha256": "70a024ca863406154303d7e99cd457c8d7981bf582a2e465e2110cc50b2ad6ef",
+      "bytes": 74321,
+      "captured_utc": "2026-10-31T14:32:54.000766+00:00"
+    }
+  ],
+  "cases": [
+    {
+      "id": "commercial:351-062:lot1",
+      "docx_sha": "e53a74ef8a4fda14aedce7254488013187aba3bba7780b5a9c6443e4d0caacaf",
+      "doc_sha": "e7927732264deb30813bcf967740763cfb032f5710ca78156f76646f8cc0d831",
+      "quotes": [
+        "УКРМ на 3000 кВАр , должен быть отдельно стоящий.",
+        "Проект: ПС 35/6 кВ \"ПОСКО\""
+      ],
+      "finding": "Elga PS 35/6kV, project 300240128, standalone UKRM 3000 kvar. Public tender says 2 units, but 3000 kvar per-unit vs total not proven. No signed supplier/price."
+    },
+    {
+      "id": "commercial:358-830:lot1",
+      "tech_sha": "c4b55d0c467f43a2f502f7f1b7affc3c29d456b1a40a73d5a9f1bd68100ef71e",
+      "appendix_sha": "d81da613e56cbc5f7f08a4a1632f7fedb37dd9a8cf78f9affbce16d0927ed2b2",
+      "quotes": [
+        "Номинальное напряжение 400 В",
+        "Активные фильтры гармоник 3 шт."
+      ],
+      "finding": "Three 400V active harmonic filters for LED lighting. Exclude from 6-35kV core. Contract template unsigned and supplier blank; no sale proof."
+    },
+    {
+      "id": "commercial:4657777:lot1",
+      "card_sha": "70a024ca863406154303d7e99cd457c8d7981bf582a2e465e2110cc50b2ad6ef",
+      "finding": "Six capacitor blocks; first-party indicative total 208419.30 RUB excluding VAT, 34736.55 per unit; zero visible bids, results planned 15 Dec 2026. Not signed price or sale; voltage unknown."
+    },
+    {
+      "id": "commercial:4617521:lot1",
+      "card_sha": "f33a786c7909e776cf467bc2705bf0c32c9e715ea095435a8de941c128208184",
+      "finding": "Retender 29 Oct 2026, three applications visible; names and prices hidden, no signed supplier; voltage unknown."
+    }
+  ],
+  "limitations": [
+    "Eight Bidzaar download URLs returned HTTP302; six relevant same-host filename destinations were captured by observed Location, no auth bypass.",
+    "Three EIS exact-number searches: httpx TLS chain error; native-trust HTTP200 generic identity failed, no archive.",
+    "No DB mutation, no client HTML/PDF regeneration. No exhaustive month coverage.",
+    "118 candidate lots do not prove national market or paid sales."
+  ],
+  "next_three": [
+    "351-062 verify questionnaire nominal-voltage checkbox and 3000 kvar allocation, guarded P2 CAS only after new backup",
+    "358-830 reviewed 400V exclusion, do not overwrite conflicting market_scope",
+    "32514947144 official EIS signed contract/supplier; commission winner not signed contractor"
+  ],
+  "later_retry": [
+    "32616400421 2026-11-01 07:30 MSK",
+    "106044-TT 2026-11-01 09:00 MSK",
+    "RN61004155 2026-11-03 12:00 MSK"
+  ],
+  "task_status": "in_progress",
+  "auto_merge": false
+}

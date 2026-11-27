@@ -1,0 +1,234 @@
+{
+  "schema": "pq-watchdog-tomsk-eis/1",
+  "completed_moscow": "2026-11-02T02:37:15+03:00",
+  "issue_comment_id": 6565541941,
+  "pr": 521,
+  "parent_commit": "76b28028c145ca677e3fccfc7992ba4599dbd2ae",
+  "gate": "pass",
+  "db_before_after": {
+    "unique_lots": 120,
+    "procedures": 109,
+    "eis_223_notices": 43,
+    "new_lots": 0,
+    "new_fields": 0,
+    "new_signed_suppliers": 0,
+    "new_paid_sales": 0
+  },
+  "research": {
+    "first_party_requests": 21,
+    "http200_sha_captures": 19,
+    "http404": 2,
+    "new_distinct_source_sha": 16,
+    "new_case_identities": 0,
+    "new_registered_contract_originals": 1,
+    "new_original_award_protocols": 0,
+    "exhaustive_month_searches": 0,
+    "captures": [
+      {
+        "case_id": "223fz:32615700251:lot1",
+        "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32615700251",
+        "http_status": 200,
+        "sha256": "01483ce85df17d3635c033387bb217308d7c6fe497cb3af67cee4446a82e527f",
+        "bytes": 133202,
+        "relative_file": "captures/223fz_32615700251_lot1/20261101T233406705274Z-81984e2e-01483ce85df17d36.bin"
+      },
+      {
+        "case_id": "223fz:32615700251:lot1",
+        "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32615700251",
+        "http_status": 200,
+        "sha256": "022fa62839b28058b8111b0eb78bfd68386cc4165cc750cab1d381df716bac38",
+        "bytes": 132792,
+        "relative_file": "captures/223fz_32615700251_lot1/20261101T233407109121Z-7bbe58ff-022fa62839b28058.bin"
+      },
+      {
+        "case_id": "223fz:32615700251:lot1",
+        "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/event-log.html?reestrNumber=57017380970260000030000",
+        "http_status": 200,
+        "sha256": "4252b6c1fd176bb5ca1a44d7af651e50e6e27f26833f149772f2334f0ebf1a6b",
+        "bytes": 127268,
+        "relative_file": "captures/223fz_32615700251_lot1/20261101T233521856129Z-3ec9ce4e-4252b6c1fd176bb5.bin"
+      },
+      {
+        "case_id": "223fz:32615700251:lot1",
+        "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32615700251",
+        "http_status": 200,
+        "sha256": "881848bd2db647710718922bb7b8d76a494b784f4bbd216d7971637ca74f5a78",
+        "bytes": 146884,
+        "relative_file": "captures/223fz_32615700251_lot1/20261101T233330033922Z-d15600ac-881848bd2db64771.bin"
+      },
+      {
+        "case_id": "223fz:32615700251:lot1",
+        "source_url": "https://zakupki.gov.ru/epz/order/notice/protocol223/protocol-common-info.html?protocolGuid=80e245ff-7079-447d-b8ba-aab5c9b64a9b&purchaseNoticeNumber=32615700251",
+        "http_status": 200,
+        "sha256": "4bc53316fe97d3f30747b09fb58182f4e8e57bca403da133f1ce321ad3d35847",
+        "bytes": 134860,
+        "relative_file": "captures/223fz_32615700251_lot1/20261101T233425319148Z-d571025c-4bc53316fe97d3f3.bin"
+      },
+      {
+        "case_id": "223fz:32615700251:lot1",
+        "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=57017380970260000030000",
+        "http_status": 200,
+        "sha256": "0a01e02d741a7992cb4b8ca5cae3cc80e63d918cd87a241556a241f970342dac",
+        "bytes": 134674,
+        "relative_file": "captures/223fz_32615700251_lot1/20261101T233425030908Z-fc854f3f-0a01e02d741a7992.bin"
+      },
+      {
+        "case_id": "223fz:32615700251:lot1",
+        "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-subject.html?reestrNumber=57017380970260000030000",
+        "http_status": 200,
+        "sha256": "819ccdb3b992ecf8b9dd33caf5ac534d5e4e8294b8c6c38b98d48c043f4293d6",
+        "bytes": 142640,
+        "relative_file": "captures/223fz_32615700251_lot1/20261101T233521156613Z-c70e10f7-819ccdb3b992ecf8.bin"
+      },
+      {
+        "case_id": "223fz:32615700251:lot1",
+        "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/lot-list.html?purchaseNoticeNumber=32615700251&noticeGuid=4ccf7113-6d6c-4591-bb61-2981d69d565c",
+        "http_status": 200,
+        "sha256": "1ce146b1cabb155c0e755d241a924fcac89416de4c522d2e81c32f436b8b1ea1",
+        "bytes": 135026,
+        "relative_file": "captures/223fz_32615700251_lot1/20261101T233406291751Z-25aea4c7-1ce146b1cabb155c.bin"
+      },
+      {
+        "case_id": "223fz:32615700251:lot1",
+        "source_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=AE36D701BAAF4713BC4B05B8BAD41919",
+        "http_status": 200,
+        "sha256": "e3c25800acd6280072c733b5c3cddf2d0e47ebeb496a4e458d05d7d7a8164473",
+        "bytes": 34502,
+        "relative_file": "captures/223fz_32615700251_lot1/20261101T233425966654Z-0fb3eb46-e3c25800acd62800.bin"
+      },
+      {
+        "case_id": "223fz:32615700251:lot1",
+        "source_url": "https://zakupki.gov.ru/epz/order/notice/protocol223/protocol-results-info.html?protocolGuid=80e245ff-7079-447d-b8ba-aab5c9b64a9b&purchaseNoticeNumber=32615700251",
+        "http_status": 200,
+        "sha256": "d6f75c52bee46b376aee58704471e7ab3b3864dceb3cc20be25cf4b3eb37c84e",
+        "bytes": 134446,
+        "relative_file": "captures/223fz_32615700251_lot1/20261101T233522533889Z-01ff1139-d6f75c52bee46b37.bin"
+      },
+      {
+        "case_id": "223fz:32615700251:lot1",
+        "source_url": "https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=57017380970260000030000",
+        "http_status": 200,
+        "sha256": "406729d820e748cf2aaea185d64e40bc869b6a45ec12d35cbfeaf67b75b8f06a",
+        "bytes": 10192,
+        "relative_file": "captures/223fz_32615700251_lot1/20261101T233521540281Z-a5477216-406729d820e748cf.bin"
+      },
+      {
+        "case_id": "223fz:32615700251:lot1",
+        "source_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=527C4E33DEF946439B3577D1077A943D",
+        "http_status": 200,
+        "sha256": "ac823586804deef52185712e63d63636539c572a8c419268211a71bbf2006664",
+        "bytes": 761091,
+        "relative_file": "captures/223fz_32615700251_lot1/20261101T233425699053Z-a5ab1a8e-ac823586804deef5.bin"
+      },
+      {
+        "case_id": "223fz:32615700251:lot1",
+        "source_url": "https://zakupki.gov.ru/epz/order/notice/protocol223/protocol-bid-info.html?protocolGuid=80e245ff-7079-447d-b8ba-aab5c9b64a9b&purchaseNoticeNumber=32615700251",
+        "http_status": 200,
+        "sha256": "84d88af7b8b292c634904336f146b13bf87e091f087bfaa521355f57f982a079",
+        "bytes": 133951,
+        "relative_file": "captures/223fz_32615700251_lot1/20261101T233522170198Z-14d97ad0-84d88af7b8b292c6.bin"
+      },
+      {
+        "case_id": "223fz:32615700251:lot1",
+        "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32615700251&noticeGuid=4ccf7113-6d6c-4591-bb61-2981d69d565c",
+        "http_status": 200,
+        "sha256": "3e246a99447ec3971c5f0ad445e15e9dfa8c1c175609ed1ab1a629d6992a49a3",
+        "bytes": 161742,
+        "relative_file": "captures/223fz_32615700251_lot1/20261101T233405883488Z-de5d00f4-3e246a99447ec397.bin"
+      },
+      {
+        "case_id": "223fz:32616523441:lot1",
+        "source_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=56AEE1CBF6714A39B37DBCA10964192A",
+        "http_status": 200,
+        "sha256": "95b80c81f833fe3ea9a38f7835af78ac0932eafb5bb1729785a3db2b7e1b5eb0",
+        "bytes": 60164,
+        "relative_file": "captures/223fz_32616523441_lot1/20261101T233426196247Z-0b2b5c99-95b80c81f833fe3e.bin"
+      },
+      {
+        "case_id": "223fz:32616523441:lot1",
+        "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/lot-list.html?purchaseNoticeNumber=32616523441&noticeGuid=14edebfc-85af-45fb-a538-541e84aeba68",
+        "http_status": 200,
+        "sha256": "9de601193dca3bfa285e48dc9500f477be062c449efd77c414f7809eb9d802d6",
+        "bytes": 135820,
+        "relative_file": "captures/223fz_32616523441_lot1/20261101T233403263271Z-8b37d975-9de601193dca3bfa.bin"
+      },
+      {
+        "case_id": "223fz:32616523441:lot1",
+        "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616523441",
+        "http_status": 200,
+        "sha256": "fc6b94906267371469f21eda3d092b8d30f52f4ac4a8305378660ce28d6b2d5b",
+        "bytes": 152381,
+        "relative_file": "captures/223fz_32616523441_lot1/20261101T233329429732Z-9e7144df-fc6b949062673714.bin"
+      },
+      {
+        "case_id": "223fz:32616523441:lot1",
+        "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616523441",
+        "http_status": 200,
+        "sha256": "fb6a1c39cf7fa8a793924db3cffa53b3ed014be5abb3a60357c84fa275b92049",
+        "bytes": 138664,
+        "relative_file": "captures/223fz_32616523441_lot1/20261101T233407608919Z-2fbb941c-fb6a1c39cf7fa8a7.bin"
+      },
+      {
+        "case_id": "223fz:32616523441:lot1",
+        "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616523441&noticeGuid=14edebfc-85af-45fb-a538-541e84aeba68",
+        "http_status": 200,
+        "sha256": "6cc7df05a2781b3021e230c4bbc0970f222db823f981bdc98c46a5540486cec0",
+        "bytes": 145394,
+        "relative_file": "captures/223fz_32616523441_lot1/20261101T233402858661Z-74fd9cc4-6cc7df05a2781b30.bin"
+      }
+    ],
+    "http404_urls": [
+      "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616523441",
+      "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32615700251"
+    ],
+    "404_resolution": "Exact EIS noticeGuid links returned HTTP200; no false no-market conclusion."
+  },
+  "cases": [
+    {
+      "id": "223fz:32615700251:lot1",
+      "buyer": "ООО Томские электрические сети",
+      "buyer_inn": "7017380970",
+      "scope": "adjacent 10kV switchgear-cell modernization, NOT verified PQ equipment sale",
+      "technical_sha": "e3c25800acd6280072c733b5c3cddf2d0e47ebeb496a4e458d05d7d7a8164473",
+      "technical_quote": "15.1 Замена ячеек КРУН-10, в соответствии с проектом - КЭПС-10-12-2024.",
+      "protocol_no": "32615700251-01",
+      "protocol_status": "unsuccessful competition: one application",
+      "bid_rub": 11244111.77,
+      "contract_register_no": "57017380970260000030000",
+      "contract_no": "2026.43775",
+      "contract_date": "2026-03-10",
+      "registered_contract_total_rub": 11244111.77,
+      "contract_status": "Исполнение",
+      "official_contract_sha": "0a01e02d741a7992cb4b8ca5cae3cc80e63d918cd87a241556a241f970342dac",
+      "supplier": null,
+      "pq_only_price": null,
+      "paid_amount": null,
+      "note": "Official registered mixed-work contract, not paid equipment revenue."
+    },
+    {
+      "id": "223fz:32616523441:lot1",
+      "buyer": "ПАО Россети / МЭС Северо-Запада",
+      "scope": "EXCLUDED: 10kV DGR arc-suppression reactors, not reactive-power compensation",
+      "technical_quote": "замене ДГР-1-10, ДГР-7-10 10 кВ",
+      "technical_sha": "ebf77848583e35777e905d0eae695bf21131499138ef694255c4947f081b9e41",
+      "official_notice_sha": "fc6b94906267371469f21eda3d092b8d30f52f4ac4a8305378660ce28d6b2d5b",
+      "mixed_epc_nmck_rub": 29384480,
+      "deadline": "2026-11-05",
+      "supplier": null
+    }
+  ],
+  "secondary_only": {
+    "case": "139419-ТТ",
+    "buyer": "ПАО Надеждинский металлургический завод",
+    "url": "https://energybase.ru/tender/01a0cd4a-b237-7222-a7ef-00ce94268317",
+    "official_link": "login required",
+    "promoted": false
+  },
+  "next": [
+    "32616474682 after 2026-11-02 06:30 MSK",
+    "32616433248 after 2026-11-02 09:00 MSK",
+    "32616497692 after 2026-11-02 16:30 MSK"
+  ],
+  "reports_regenerated": false,
+  "status": "in_progress"
+}

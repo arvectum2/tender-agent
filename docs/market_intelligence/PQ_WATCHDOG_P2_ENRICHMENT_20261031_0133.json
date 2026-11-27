@@ -1,0 +1,109 @@
+{
+  "schema_version": "pq-watchdog-p2-source-bound-enrichment/1",
+  "as_of_moscow": "2026-10-31T01:33:01.792764+03:00",
+  "issue_comment_id": 6534825764,
+  "canonical_pr": 521,
+  "tested_code_commit": "5d2b0f96edd9e509a977ba63613eb7647bf9aafc",
+  "acceptance": "pass; internal APFS; git clean after code commit; PG readback",
+  "db": {
+    "unique_lots_before": 117,
+    "unique_lots_after": 117,
+    "distinct_procedures": 106,
+    "numeric_eis_223_notices": 40,
+    "new_unique_lots": 0,
+    "new_verified_core_6_35kv_lots": 0,
+    "new_verified_fields": 3,
+    "other_collections_untouched": true
+  },
+  "enrichment": {
+    "canonical_id": "223fz:32616266007:lot1",
+    "field_values": {
+      "quantity": 5,
+      "voltage_kv": "8.3",
+      "power": "592 кВАр"
+    },
+    "source_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=DD2EF2DFD9884AF09E52D886FC48357E",
+    "archive_sha256": "c64bf98c8cfc3f67ecb30911ce5ccf269fcbe7b02740ecad8317734b0789261a",
+    "contained_docx_sha256": "d34c50e9f74f05597345f17461dc92d4cc44f62f79c6f533328449475d553a48",
+    "old_content_hash": "4d5f6f7e24184efcd887ff02a78619a518a789239d8d06e0c1702469359f24b7",
+    "new_content_hash": "cd694352ad4b80ca3d4addd28cf455685379cfeb668b16e839f8625b6cdc7539",
+    "backup_sha256": "b96494c44981e9b87431d903e6d383b306cf19c37c107e61943ded7fe2983f5e",
+    "db_receipt": "receipts/pq-docx-enrichment-32616266007-20261031T0131.json",
+    "write_safety": "fresh pg_restore-verified full backup; source+member SHA; 3 exact quotes; owner/identity/CAS null-only atomic transaction; readback",
+    "scope": "five individual 8.3kV 592kvar capacitor spares for 500kV substation; adjacent component, NOT new 6-35kV PQ system sale"
+  },
+  "field_coverage_before": {
+    "quantity": 45,
+    "voltage_kv": 17,
+    "power": 2
+  },
+  "field_coverage_after": {
+    "quantity": 46,
+    "voltage_kv": 18,
+    "power": 3
+  },
+  "new_primary_source_requests": [
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32515208744",
+      "transport": "httpx",
+      "result": "TLS certificate verification failure"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32515584863",
+      "transport": "httpx",
+      "result": "TLS certificate verification failure"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32515208744",
+      "transport": "native-trust",
+      "result": "HTTP 404"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32515584863",
+      "transport": "native-trust",
+      "result": "HTTP 404"
+    }
+  ],
+  "fresh_sha_verified_primary_originals": 0,
+  "existing_primary_original_reverified": 1,
+  "new_original_protocols_with_named_winner": 0,
+  "new_verified_signed_suppliers": 0,
+  "new_verified_executed_sales": 0,
+  "new_full_month_source_searches": 0,
+  "source_limitations": "Exact-number EIS document URL returned 404 for two older cases; not evidence of absent procurements. No fresh originals. Existing immutable EIS RAR/DOCX supplied 3 verified fields.",
+  "client_report": {
+    "version": "V4",
+    "snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261031_v4.json",
+    "audit": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261031_v4.json",
+    "backlog": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_BACKLOG_20261031_v4.md",
+    "pdfs": [
+      "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_RU_20261031_V4.pdf",
+      "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_EN_20261031_V4.pdf"
+    ],
+    "legacy_html_regenerated": false,
+    "frozen_v2_v3_unchanged": true
+  },
+  "tests": {
+    "focused": "9 passed",
+    "ruff": "pass",
+    "pr": "OPEN / UNSTABLE; no merge"
+  },
+  "next_three": [
+    {
+      "case": "32615684088",
+      "retry_after_moscow": "2026-10-31 09:00",
+      "goal": "official signed contract and supplier identity"
+    },
+    {
+      "case": "106044-ТТ",
+      "retry_after_moscow": "2026-10-31 09:00",
+      "goal": "source-native STATCOM award or protocol"
+    },
+    {
+      "case": "РН61003961",
+      "retry_after_moscow": "2026-10-31 10:00",
+      "goal": "post-deadline original outcome and price"
+    }
+  ],
+  "canonical_v29_materialized_rows_unchanged": 101
+}

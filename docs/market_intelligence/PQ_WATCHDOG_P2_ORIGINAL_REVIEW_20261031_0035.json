@@ -1,0 +1,121 @@
+{
+  "schema_version": "pq-watchdog-original-review/1",
+  "as_of_moscow": "2026-10-31T00:39:47.474489+03:00",
+  "issue_comment_id": 6533952449,
+  "canonical_pr": 521,
+  "tested_parent_commit": "bc7e8c8cb8c6035caea360701196c698d1f83fce",
+  "preflight": "pass; git clean; internal APFS; existing backup SHA checked; PG read-only",
+  "db_before_after": {
+    "unique_lots_before": 117,
+    "unique_lots_after": 117,
+    "distinct_procedures": 106,
+    "eis_223_notices": 40,
+    "new_lots": 0,
+    "db_mutated": false
+  },
+  "fresh_first_party_captures": {
+    "commercial_4643332_lot1": {
+      "source_url": "https://www.b2b-center.ru/market/808-kondensator-kep3-10-5-150-3u2/tender-4643332/",
+      "sha256": "8a5fa6225501b095aec352c1cebe7e1148bfab9372e55872f7d83d74c237dc7c",
+      "http_status": 200,
+      "bytes": 70248,
+      "relative_file": "captures/commercial_4643332_lot1/20261030T213611748641Z-fb773c19-8a5fa6225501b095.bin"
+    },
+    "commercial_4158439_lot1": {
+      "source_url": "https://www.b2b-center.ru/market/modernizatsiia-ustanovki-kompensatsii-reaktivnoi-moshchnosti-ukrm/tender-4158439/",
+      "sha256": "3e14e8c01a2ccdde8181dfcad9a6b3904e63e8bd7e11c50fcb4ed66536f8abbd",
+      "http_status": 200,
+      "bytes": 70407,
+      "relative_file": "captures/commercial_4158439_lot1/20261030T213614587225Z-146c67aa-3e14e8c01a2ccdde.bin"
+    },
+    "commercial_4617521_lot1": {
+      "source_url": "https://www.b2b-center.ru/app/market-next/vybor-ispolnitelia-na-postavku-montazh-i-pnr-ustanovok-kompensatsii/tender-4617521/",
+      "sha256": "aef3248ff53a6cd7c3ebe9df15102c9d898a365e01e796580609d6048f70e2c2",
+      "http_status": 200,
+      "bytes": 324549,
+      "relative_file": "captures/commercial_4617521_lot1/20261030T213617102749Z-38fb1665-aef3248ff53a6cd7.bin"
+    }
+  },
+  "reviewed_original": {
+    "case_id": "223fz:32616266007:lot1",
+    "source_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=DD2EF2DFD9884AF09E52D886FC48357E",
+    "archive_sha256": "c64bf98c8cfc3f67ecb30911ce5ccf269fcbe7b02740ecad8317734b0789261a",
+    "archive_relative": "captures/223fz_32616266007_lot1/20261030T104202110911Z-4752ef30-c64bf98c8cfc3f67.bin",
+    "member": "ТЧКД Конденсаторы БСК _5 шт. с эскизом_правка.docx",
+    "member_sha256": "d34c50e9f74f05597345f17461dc92d4cc44f62f79c6f533328449475d553a48",
+    "source_verified_missing_fields": {
+      "quantity": {
+        "value": 5,
+        "unit": "шт",
+        "quote": "Количество: 5 шт.."
+      },
+      "voltage_kv": {
+        "value": "8.3",
+        "quote": "Напряжение номинальное, кВ / 8,3"
+      },
+      "power": {
+        "value": "592",
+        "unit": "кВАр",
+        "quote": "Номинальная мощность, кВАр / 592"
+      }
+    },
+    "old_fields_in_postgres": {
+      "quantity": null,
+      "voltage_kv": null,
+      "power": null
+    },
+    "source_grade": "first_party_EIS_original_RAR_contained_DOCX_SHA_verified",
+    "market_scope": "individual 8.3 kV capacitors as emergency spares for 500 kV substation; adjacent component, NOT standalone 6-35 kV PQ system sale",
+    "source_review_verified_fields": 3,
+    "db_fields_gained": 0,
+    "writer_blocker": "Existing guarded writer only handles raw HTML quantity; it does not validate RAR-contained DOCX or voltage/power. No DB write without separately tested source-bound CAS writer."
+  },
+  "additional_first_party_observations": [
+    {
+      "case_id": "commercial:4617521:lot1",
+      "observed": "Завершена; Заявки • 3; participants names/prices hidden; original public card; no signed supplier",
+      "new_signed_supplier": false
+    },
+    {
+      "case_id": "commercial:4158439:lot1",
+      "observed": "Поступившие заявки - 0; original card; one modernization lot position not proven 6-35 kV equipment unit",
+      "new_signed_supplier": false
+    },
+    {
+      "case_id": "commercial:4643332:lot1",
+      "observed": "Original card confirms one КЭП3-10,5-150-3У2 capacitor; nameplate 10.5 kV/150 kvar not independently specified in technical document",
+      "new_signed_supplier": false
+    }
+  ],
+  "metrics": {
+    "new_first_party_requests": 3,
+    "http_200": 3,
+    "fresh_sha_verified_original_versions": 3,
+    "new_case_specific_originals": 0,
+    "new_named_winners": 0,
+    "new_signed_suppliers": 0,
+    "new_paid_sales": 0,
+    "new_full_month_searches": 0,
+    "new_source_verified_p2_facts_pending_db": 3,
+    "db_field_gains": 0
+  },
+  "next_three": [
+    {
+      "case": "223fz:32616266007:lot1",
+      "retry": "after guarded RAR/DOCX field writer + focused tests + clean-HEAD acceptance + fresh validated backup",
+      "goal": "CAS-fill 3 null technical fields, then V4 reports"
+    },
+    {
+      "case": "32615684088",
+      "retry_after_moscow": "2026-10-31 09:00",
+      "goal": "signed supplier/contract in official registry"
+    },
+    {
+      "case": "РН61003961",
+      "retry_after_moscow": "2026-10-31 10:00",
+      "goal": "post-deadline outcome and source-native protocol"
+    }
+  ],
+  "client_reports": "No new DB lot or field; existing V2/V3 and legacy HTML remain untouched.",
+  "canonical_v29_rows_unchanged": 101
+}

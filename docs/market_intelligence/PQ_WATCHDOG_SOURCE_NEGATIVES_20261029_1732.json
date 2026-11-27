@@ -1,0 +1,213 @@
+{
+  "schema_version": "pq-watchdog-source-exclusion-20261029/1",
+  "completed_moscow": "2026-10-29T17:40:11.117131+03:00",
+  "issue_comment_id": 6499517202,
+  "canonical_pr": 521,
+  "parent_head": "ebe1c09c10ed40292689c956cc754091e832ea74",
+  "postgres_before": {
+    "unique_lots": 113,
+    "procedures": 102,
+    "eis_223_notices": 37
+  },
+  "postgres_after": {
+    "unique_lots": 113,
+    "procedures": 102,
+    "eis_223_notices": 37
+  },
+  "db_mutation": false,
+  "canonical_v29_unchanged": 101,
+  "metrics": {
+    "new_db_lots": 0,
+    "new_strict_6_35kv_equipment_lots": 0,
+    "new_signed_suppliers": 0,
+    "new_named_winner_protocols": 0,
+    "new_executed_contract_prices": 0,
+    "new_month_coverage": 0,
+    "successful_primary_captures": 13,
+    "unique_sha_in_run": 12,
+    "sha_not_in_previous_reports": 11,
+    "httpx_tls_error": 1
+  },
+  "first_party_captures": [
+    {
+      "case_id": "commercial:4617521:lot1",
+      "source_url": "https://www.b2b-center.ru/app/market-next/vybor-ispolnitelia-na-postavku-montazh-i-pnr-ustanovok-kompensatsii/tender-4617521/",
+      "http_status": 200,
+      "sha256": "916e32ca7943cb8b17bff6f02e30fad74e93ac948a6705b1d15351c4ba8feb94",
+      "bytes": 326210,
+      "captured_utc": "2026-10-29T14:33:19.698345+00:00"
+    },
+    {
+      "case_id": "commercial:4617521:lot1",
+      "source_url": "https://www.b2b-center.ru/app/market-next/vybor-ispolnitelia-na-postavku-montazh-i-pnr-ustanovok-kompensatsii/tender-4617521/offers",
+      "http_status": 200,
+      "sha256": "c5996873ba316b73667b0ae88bee0ffc939a4e84611222750d1ba04513a31bd9",
+      "bytes": 171097,
+      "captured_utc": "2026-10-29T14:35:04.993850+00:00"
+    },
+    {
+      "case_id": "commercial:4617521:lot1",
+      "source_url": "https://www.b2b-center.ru/app/market-next/vybor-ispolnitelia-na-postavku-montazh-i-pnr-ustanovok-kompensatsii/tender-4617521/positions/",
+      "http_status": 200,
+      "sha256": "a8fdf42f4c99c0bb1983e8c3dcfb8cee499bb2d59e4e69bf6850374a44a2ccc1",
+      "bytes": 320423,
+      "captured_utc": "2026-10-29T14:35:35.195419+00:00"
+    },
+    {
+      "case_id": "commercial:4617521:lot1",
+      "source_url": "https://www.b2b-center.ru/app/market-next/vybor-ispolnitelia-na-postavku-montazh-i-pnr-ustanovok-kompensatsii/tender-4617521/changes",
+      "http_status": 200,
+      "sha256": "c5996873ba316b73667b0ae88bee0ffc939a4e84611222750d1ba04513a31bd9",
+      "bytes": 171097,
+      "captured_utc": "2026-10-29T14:35:36.170638+00:00"
+    },
+    {
+      "case_id": "commercial:sibur-search-statcom-20261029:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%A1%D0%A2%D0%90%D0%A2%D0%9A%D0%9E%D0%9C",
+      "http_status": 200,
+      "sha256": "546f7045d2e3ee050089629a66453b779191c0f6be8fae020fe8b258e04583b9",
+      "bytes": 173852,
+      "captured_utc": "2026-10-29T14:35:54.988911+00:00"
+    },
+    {
+      "case_id": "commercial:sibur-search-filter-harmonics-20261029:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%20%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D0%BD%D0%B8%D0%BA",
+      "http_status": 200,
+      "sha256": "4a6b1c13861238e77bf294e9bed417de6926620238042a53de676ce45a79d589",
+      "bytes": 182244,
+      "captured_utc": "2026-10-29T14:35:56.413666+00:00"
+    },
+    {
+      "case_id": "commercial:2101170-1:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?procedure=2101170%2F1",
+      "http_status": 200,
+      "sha256": "58d1b7b9cfbf281384c8018cb045621b2c3cce3428b3d966c30d8ec82fa8798d",
+      "bytes": 182244,
+      "captured_utc": "2026-10-29T14:36:30.567513+00:00"
+    },
+    {
+      "case_id": "commercial:sibur-search-ukrm-undated-20261029:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%A3%D0%9A%D0%A0%D0%9C",
+      "http_status": 200,
+      "sha256": "7642b12187118995f099ac951a2db62d72ae21b2ee14b9e496a91c3d64f4889b",
+      "bytes": 241199,
+      "captured_utc": "2026-10-29T14:36:43.370659+00:00"
+    },
+    {
+      "case_id": "commercial:sibur-search-reactive-power-undated-20261029:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%86%D0%B8%D0%B8%20%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9",
+      "http_status": 200,
+      "sha256": "90861647f77f78e3eacaf53f388abe8305ae175c7e4583752583463378de06ba",
+      "bytes": 258460,
+      "captured_utc": "2026-10-29T14:36:44.948438+00:00"
+    },
+    {
+      "case_id": "commercial:2129455-1:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?procedure=2129455%2F1",
+      "http_status": 200,
+      "sha256": "162c6550b53dd9f5ae95a3cad5f66d40ba760d28a137773551c64048e2cdc1c3",
+      "bytes": 178414,
+      "captured_utc": "2026-10-29T14:37:21.250577+00:00"
+    },
+    {
+      "case_id": "commercial:2135147-1:lot1",
+      "source_url": "https://sibur.ru/ru/procurement/buy/archive/?procedure=2135147%2F1",
+      "http_status": 200,
+      "sha256": "c51e9aff5cec8b9ffa7adf7725de251c213edcacc4147cdee1d21240e9ce6f28",
+      "bytes": 178519,
+      "captured_utc": "2026-10-29T14:37:22.461220+00:00"
+    },
+    {
+      "case_id": "commercial:2129455-1:lot1",
+      "source_url": "https://sibur.ru/upload/tmp/example/059/ertqwdz1aab5ypg6e9i2rweyrd0215y6.docx",
+      "http_status": 200,
+      "sha256": "1bce6965399c46e0c8cf180b8fb817adb3e0b7bd8ff7e4c00f42fb77713684dd",
+      "bytes": 132657,
+      "captured_utc": "2026-10-29T14:37:45.138894+00:00"
+    },
+    {
+      "case_id": "commercial:2135147-1:lot1",
+      "source_url": "https://sibur.ru/upload/tmp/example/b22/ai14cnj9n8mqmkttaxswg6lf2flpapoj.docx",
+      "http_status": 200,
+      "sha256": "2f797dc91dc7e1999c0ac35940aee5356de0a14f9e476d3cd148eda2ec6eac89",
+      "bytes": 100797,
+      "captured_utc": "2026-10-29T14:37:45.262749+00:00"
+    }
+  ],
+  "findings": [
+    {
+      "case": "4617521",
+      "source": "B2B-Center",
+      "observed": "3 offers, deadline 2026-10-29 15:51 MSK; offers/changes generic shell; positions says UKRM supply without voltage; no public winner or contract; positions countdown stale"
+    },
+    {
+      "case": "2101170/1",
+      "source": "SIBUR official archive",
+      "observed": "2025-02-21 Amur GHK mixed filters, VEDA VEDAHF-05-055-400-50-20 (BHE10004) harmonic filter; manufacturer catalog 3x400V; newly discovered adjacent low voltage, not core",
+      "manufacturer_reference": "https://drives.ru/3426/",
+      "manufacturer_sha_verified": false
+    },
+    {
+      "case": "2129455/1",
+      "source": "SIBUR",
+      "observed": "Known 2026 NKNH UKRM, bids closed; DOCX unsigned contract template; voltage and winner unknown; DOCX SHA already known"
+    },
+    {
+      "case": "2135147/1",
+      "source": "SIBUR",
+      "observed": "Known 2026 ZSNH compensation procurement cancelled; DOCX unsigned contract template, no sale"
+    },
+    {
+      "case": "2103585/2",
+      "source": "SIBUR",
+      "observed": "Previously captured two 7z archives inspected: commercial forms and unsigned contract templates; technical specification and signed contract not identified; 10kV title verified"
+    }
+  ],
+  "searches": [
+    {
+      "source": "SIBUR",
+      "query": "СТАТКОМ",
+      "observed_first_page_procedures": 0
+    },
+    {
+      "source": "SIBUR",
+      "query": "фильтр гармоник",
+      "observed_first_page_procedures": 1,
+      "new_adjacent_case": "2101170/1"
+    },
+    {
+      "source": "SIBUR",
+      "query": "УКРМ",
+      "observed_first_page_procedures": 12,
+      "repeated_known_search": true
+    },
+    {
+      "source": "SIBUR",
+      "query": "компенсации реактивной",
+      "observed_first_page_procedures": 10
+    }
+  ],
+  "limitations": [
+    "No 44/223 month exhaustive coverage",
+    "No signed supplier or executed sale",
+    "Dynamic HTML SHA versions preserved, not overwritten",
+    "No insert because only new case is 400V and other cases known or unverified"
+  ],
+  "next_targets": [
+    {
+      "case": "2103585/2",
+      "retry": "immediately via independent legal original, not archived 7z",
+      "goal": "10kV signed supplier/technical specification"
+    },
+    {
+      "case": "4617521",
+      "retry": "2026-10-30 12:00 MSK or organizer public event",
+      "goal": "retender award and voltage"
+    },
+    {
+      "case": "106044-TT",
+      "retry": "2026-10-30 09:00 MSK",
+      "goal": "STATCOM 6.3kV award/contract"
+    }
+  ]
+}

@@ -1,0 +1,342 @@
+{
+  "schema_version": "pq-watchdog-44fz-source-ledger/1",
+  "time_moscow": "2026-10-28T16:40:13.304344+03:00",
+  "issue_comment_id": 6470248715,
+  "dataset": "v29-101-unchanged",
+  "searches": [
+    {
+      "month": "2024-07",
+      "law": "223fz",
+      "query": "УКРМ 10 кВ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.07.2024&publishDateTo=31.07.2024&searchString=%D0%A3%D0%9A%D0%A0%D0%9C+10+%D0%BA%D0%92",
+      "status": "empty",
+      "page": 1,
+      "candidate_ids": [],
+      "exhaustive": false
+    },
+    {
+      "month": "2024-07",
+      "law": "223fz",
+      "query": "тиристорный компенсатор",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.07.2024&publishDateTo=31.07.2024&searchString=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "status": "empty",
+      "page": 1,
+      "candidate_ids": [],
+      "exhaustive": false
+    },
+    {
+      "month": "2024-07",
+      "law": "44fz",
+      "query": "УКРМ 10 кВ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.07.2024&publishDateTo=31.07.2024&pageNumber=1&recordsPerPage=30&searchString=%D0%A3%D0%9A%D0%A0%D0%9C+10+%D0%BA%D0%92",
+      "status": "empty",
+      "page": 1,
+      "candidate_ids": [],
+      "exhaustive": false
+    },
+    {
+      "month": "2024-07",
+      "law": "44fz",
+      "query": "тиристорный компенсатор",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.07.2024&publishDateTo=31.07.2024&pageNumber=1&recordsPerPage=30&searchString=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "status": "success",
+      "page": 1,
+      "candidate_ids": [
+        "0373100015824000385"
+      ],
+      "exhaustive": false
+    },
+    {
+      "month": "2024-11",
+      "law": "223fz",
+      "query": "УКРМ 10 кВ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.11.2024&publishDateTo=30.11.2024&searchString=%D0%A3%D0%9A%D0%A0%D0%9C+10+%D0%BA%D0%92",
+      "status": "empty",
+      "page": 1,
+      "candidate_ids": [],
+      "exhaustive": false
+    },
+    {
+      "month": "2024-11",
+      "law": "223fz",
+      "query": "тиристорный компенсатор",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.11.2024&publishDateTo=30.11.2024&searchString=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "status": "empty",
+      "page": 1,
+      "candidate_ids": [],
+      "exhaustive": false
+    },
+    {
+      "month": "2024-11",
+      "law": "44fz",
+      "query": "УКРМ 10 кВ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.11.2024&publishDateTo=30.11.2024&pageNumber=1&recordsPerPage=30&searchString=%D0%A3%D0%9A%D0%A0%D0%9C+10+%D0%BA%D0%92",
+      "status": "empty",
+      "page": 1,
+      "candidate_ids": [],
+      "exhaustive": false
+    },
+    {
+      "month": "2024-11",
+      "law": "44fz",
+      "query": "тиристорный компенсатор",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.11.2024&publishDateTo=30.11.2024&pageNumber=1&recordsPerPage=30&searchString=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "status": "empty",
+      "page": 1,
+      "candidate_ids": [],
+      "exhaustive": false
+    },
+    {
+      "month": "2025-05",
+      "law": "223fz",
+      "query": "УКРМ 10 кВ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.05.2025&publishDateTo=31.05.2025&searchString=%D0%A3%D0%9A%D0%A0%D0%9C+10+%D0%BA%D0%92",
+      "status": "empty",
+      "page": 1,
+      "candidate_ids": [],
+      "exhaustive": false
+    },
+    {
+      "month": "2025-05",
+      "law": "223fz",
+      "query": "тиристорный компенсатор",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.05.2025&publishDateTo=31.05.2025&searchString=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "status": "empty",
+      "page": 1,
+      "candidate_ids": [],
+      "exhaustive": false
+    },
+    {
+      "month": "2025-05",
+      "law": "44fz",
+      "query": "УКРМ 10 кВ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.05.2025&publishDateTo=31.05.2025&pageNumber=1&recordsPerPage=30&searchString=%D0%A3%D0%9A%D0%A0%D0%9C+10+%D0%BA%D0%92",
+      "status": "empty",
+      "page": 1,
+      "candidate_ids": [],
+      "exhaustive": false
+    },
+    {
+      "month": "2025-05",
+      "law": "44fz",
+      "query": "тиристорный компенсатор",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.05.2025&publishDateTo=31.05.2025&pageNumber=1&recordsPerPage=30&searchString=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80",
+      "status": "empty",
+      "page": 1,
+      "candidate_ids": [],
+      "exhaustive": false
+    },
+    {
+      "month": "2025-02",
+      "law": "223fz",
+      "query": "фильтрокомпенсирующая установка",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.02.2025&publishDateTo=28.02.2025&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B0%D1%8F+%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0",
+      "status": "empty",
+      "page": 1,
+      "candidate_ids": [],
+      "exhaustive": false
+    },
+    {
+      "month": "2025-02",
+      "law": "223fz",
+      "query": "компенсатор реактивной мощности 35 кВ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.02.2025&publishDateTo=28.02.2025&searchString=%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80+%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9+%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8+35+%D0%BA%D0%92",
+      "status": "empty",
+      "page": 1,
+      "candidate_ids": [],
+      "exhaustive": false
+    },
+    {
+      "month": "2025-02",
+      "law": "44fz",
+      "query": "фильтрокомпенсирующая установка",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.02.2025&publishDateTo=28.02.2025&pageNumber=1&recordsPerPage=30&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B0%D1%8F+%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0",
+      "status": "empty",
+      "page": 1,
+      "candidate_ids": [],
+      "exhaustive": false
+    },
+    {
+      "month": "2025-02",
+      "law": "44fz",
+      "query": "компенсатор реактивной мощности 35 кВ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.02.2025&publishDateTo=28.02.2025&pageNumber=1&recordsPerPage=30&searchString=%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80+%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9+%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8+35+%D0%BA%D0%92",
+      "status": "success",
+      "page": 1,
+      "candidate_ids": [
+        "0127100006025000005",
+        "0375600004025000004",
+        "0131100014725000002",
+        "0306500000325000094",
+        "0321500002025000054",
+        "0321500002025000041"
+      ],
+      "exhaustive": false
+    },
+    {
+      "month": "2025-06",
+      "law": "223fz",
+      "query": "фильтрокомпенсирующая установка",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.06.2025&publishDateTo=30.06.2025&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B0%D1%8F+%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0",
+      "status": "empty",
+      "page": 1,
+      "candidate_ids": [],
+      "exhaustive": false
+    },
+    {
+      "month": "2025-06",
+      "law": "223fz",
+      "query": "компенсатор реактивной мощности 35 кВ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.06.2025&publishDateTo=30.06.2025&searchString=%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80+%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9+%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8+35+%D0%BA%D0%92",
+      "status": "empty",
+      "page": 1,
+      "candidate_ids": [],
+      "exhaustive": false
+    },
+    {
+      "month": "2025-06",
+      "law": "44fz",
+      "query": "фильтрокомпенсирующая установка",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.06.2025&publishDateTo=30.06.2025&pageNumber=1&recordsPerPage=30&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B0%D1%8F+%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0",
+      "status": "empty",
+      "page": 1,
+      "candidate_ids": [],
+      "exhaustive": false
+    },
+    {
+      "month": "2025-06",
+      "law": "44fz",
+      "query": "компенсатор реактивной мощности 35 кВ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.06.2025&publishDateTo=30.06.2025&pageNumber=1&recordsPerPage=30&searchString=%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80+%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9+%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8+35+%D0%BA%D0%92",
+      "status": "success",
+      "page": 1,
+      "candidate_ids": [
+        "0161100002925000069",
+        "0318100036825000047",
+        "0348100004525000059"
+      ],
+      "exhaustive": false
+    },
+    {
+      "month": "2026-01",
+      "law": "223fz",
+      "query": "фильтрокомпенсирующая установка",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.01.2026&publishDateTo=31.01.2026&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B0%D1%8F+%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0",
+      "status": "empty",
+      "page": 1,
+      "candidate_ids": [],
+      "exhaustive": false
+    },
+    {
+      "month": "2026-01",
+      "law": "223fz",
+      "query": "компенсатор реактивной мощности 35 кВ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.01.2026&publishDateTo=31.01.2026&searchString=%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80+%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9+%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8+35+%D0%BA%D0%92",
+      "status": "empty",
+      "page": 1,
+      "candidate_ids": [],
+      "exhaustive": false
+    },
+    {
+      "month": "2026-01",
+      "law": "44fz",
+      "query": "фильтрокомпенсирующая установка",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.01.2026&publishDateTo=31.01.2026&pageNumber=1&recordsPerPage=30&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B0%D1%8F+%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0",
+      "status": "empty",
+      "page": 1,
+      "candidate_ids": [],
+      "exhaustive": false
+    },
+    {
+      "month": "2026-01",
+      "law": "44fz",
+      "query": "компенсатор реактивной мощности 35 кВ",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.01.2026&publishDateTo=31.01.2026&pageNumber=1&recordsPerPage=30&searchString=%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80+%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9+%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8+35+%D0%BA%D0%92",
+      "status": "success",
+      "page": 1,
+      "candidate_ids": [
+        "0321500002026000027",
+        "0131100014726000002",
+        "0560300000626000006"
+      ],
+      "exhaustive": false
+    }
+  ],
+  "source_requests": {
+    "calendar_searches": 24,
+    "first_page_success": 4,
+    "first_page_empty": 20,
+    "metadata_rows_unverified": 13,
+    "detail_page_requests": 2,
+    "file_downloads": 4,
+    "numeric_http_status": "not surfaced by adapter; success is not a numeric HTTP code"
+  },
+  "official_44": {
+    "notice": "0372100049624002318",
+    "common_url": "https://zakupki.gov.ru/epz/order/notice/zk20/view/common-info.html?regNumber=0372100049624002318",
+    "common_sha256": "5d5aec75a99f542a745e838fb7ccd9aef20d7dc25fe30e65e68bf3ce57412dd1",
+    "documents_url": "https://zakupki.gov.ru/epz/order/notice/zk20/view/documents.html?regNumber=0372100049624002318",
+    "documents_sha256": "ff056f2c6386518f9820c8d7040ede8d789832b25471f16667d28764de92046e",
+    "files": [
+      {
+        "name": "Приложение №1_Обоснование НМЦК.xls",
+        "stored_name": "01-1.xls",
+        "sha256": "60982f35c0288852b554ac17ceeeb05dba1e2823f5aee38af154dec8c958bef1",
+        "bytes": 1051136,
+        "source_url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=FB686C03E4C0495D86B5268638CFAEA9"
+      },
+      {
+        "name": "Приложение №3_Проект контракта_.doc",
+        "stored_name": "02-3.doc",
+        "sha256": "607299cd948329cd01acd7f675b822a43497dec23736ac424897e70f4c66e6b5",
+        "bytes": 282112,
+        "source_url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=56912D0418664935B982AC7F7D498E05"
+      },
+      {
+        "name": "Приложение_№_2_Техническое_задание_конденсаторы.doc",
+        "stored_name": "03-2.doc",
+        "sha256": "e48b448806ca46797b4c94376577db1e1eb895bc82700a0cf59e8cc64259ae5a",
+        "bytes": 57856,
+        "source_url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=0C58B48475DE4A0A80D5DCD54CB89C03"
+      },
+      {
+        "name": "Приложение №4_Требования к содержанию заявки, инструкция по заполнению_.docx",
+        "stored_name": "04-4.docx",
+        "sha256": "d190493a29a5e643e08d7d07bb88d82ba8beadacbd43b59c7bba6f2c5def5bef",
+        "bytes": 472278,
+        "source_url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=148702BF79C54B8682ACC31D29F9CD10"
+      }
+    ],
+    "classification": "uncertain",
+    "reason": "Original capacitor supply, nominal voltage not in TЗ; draft contract price blank; signed supplier/price unknown",
+    "technical_quote": "Поставка конденсаторов для установки компенсации реактивной мощности в Лечебно-реабилитационном комплексе",
+    "technical_sha256": "e48b448806ca46797b4c94376577db1e1eb895bc82700a0cf59e8cc64259ae5a",
+    "draft_quote": "Цена Контракта  составляет _______________",
+    "draft_sha256": "607299cd948329cd01acd7f675b822a43497dec23736ac424897e70f4c66e6b5",
+    "arc_review_id": "0372100049624002318-3aa6af7cfe6fcf9c8f940269"
+  },
+  "metrics": {
+    "new_originals": 4,
+    "new_notice": 1,
+    "new_confirmed_6_35_kv_projects": 0,
+    "new_named_winners": 0,
+    "new_signed_suppliers": 0,
+    "new_executed_prices": 0,
+    "months_touched": [
+      "2024-07",
+      "2024-11",
+      "2025-02",
+      "2025-05",
+      "2025-06",
+      "2026-01"
+    ],
+    "exhaustive_months": 0,
+    "v29_rows": 101,
+    "v29_prior_originals": 47,
+    "v29_prior_gaps": 54
+  },
+  "search_journal_sha256": "496cbb3ab8fe10e512271d7039c07c6d729ab2fc4e3346a48700a19a65000e96",
+  "receipt_sha256": "26e993ecb24d45f794d42c5aff1cc68e72bd4c7777c80ccadbb6f3f26db70d9a",
+  "private_original_root": "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live/watchdog-20261028-1627/originals-0372100049624002318",
+  "retry_not_before_moscow": "2026-10-29T04:35:00+03:00"
+}

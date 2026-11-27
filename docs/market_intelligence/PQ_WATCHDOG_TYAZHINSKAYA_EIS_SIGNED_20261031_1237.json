@@ -1,0 +1,125 @@
+{
+  "schema_version": "pq-watchdog-source-bound-field-enrichment/1",
+  "completed_moscow": "2026-10-31T12:38:13+03:00",
+  "issue_comment_id": 6541754912,
+  "canonical_pr": 521,
+  "run_start_moscow": "2026-10-31T12:34:42+03:00",
+  "db": {
+    "unique_lots_before": 118,
+    "unique_lots_after": 118,
+    "distinct_procedures": 107,
+    "eis_223_notices": 41,
+    "new_unique_lots": 0,
+    "new_distinct_projects": 0,
+    "new_verified_research_fields": 5,
+    "new_client_visible_fields": 1
+  },
+  "verified_existing_case": {
+    "id": "223fz:32616354211:lot1",
+    "registry": "65501231424260000440000",
+    "contract": "14-СБП/2026",
+    "date": "2026-09-23",
+    "registered_price_rub": "7406851.40",
+    "scope": "design/survey Tyazhinskaya 110/35/10 kV; BSK-110 -> SKRM 52 Mvar",
+    "signed_supplier_verified": false,
+    "payment_verified": false,
+    "pq_equipment_only_price_verified": false,
+    "source_sha256": [
+      {
+        "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=65501231424260000440000",
+        "sha256": "a3df999a678442b7b2050702d97141326464b3a493c47cdcae853bb880b7453f"
+      },
+      {
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract/printForm/viewXml.html?contractRegistrationNumber=65501231424260000440001",
+        "sha256": "2815d451811c14e869a2d25fad8a0d2a888950dbb7d6baa1bc5f5c4853bdfb49"
+      }
+    ]
+  },
+  "source_attempts": {
+    "total_attempts": 21,
+    "httpx_tls_errors_before_http": 6,
+    "native_trust_attempts_rejected_by_source_validation": 6,
+    "curl_direct_attempts": 3,
+    "strict_tls_http_diagnostic_requests": 6,
+    "diagnostic_urls": [
+      {
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616435269",
+        "diagnostic_http": 404,
+        "result": "HTTP 404"
+      },
+      {
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616435269",
+        "diagnostic_http": 200,
+        "result": "HTTP 200 generic page; exact notice identity rejected by capture"
+      },
+      {
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32514565977",
+        "diagnostic_http": 200,
+        "result": "HTTP 200 generic page; exact notice identity rejected by capture"
+      },
+      {
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32514565977",
+        "diagnostic_http": 200,
+        "result": "HTTP 200 generic page; exact notice identity rejected by capture"
+      },
+      {
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616474682",
+        "diagnostic_http": 404,
+        "result": "HTTP 404"
+      },
+      {
+        "url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616474682",
+        "diagnostic_http": 200,
+        "result": "HTTP 200 generic page; exact notice identity rejected by capture"
+      }
+    ],
+    "new_immutable_originals": 0,
+    "previously_captured_originals_sha_reverified": 2,
+    "new_original_protocols_with_named_winner": 0,
+    "new_signed_supplier_names": 0,
+    "new_executed_payments": 0,
+    "new_calendar_month_source_searches": 0,
+    "zero_new_original_reason": "EIS exact notice pages either HTTP404 or HTTP200 generic HTML lacking requested notice identity; strict capture rejected; no unsafe promotion"
+  },
+  "backup_sha256": "13c5d6e64b23dcc4ad5ea466d146ecded7d30339573d9f9859c0d53c97fd0567",
+  "db_postwrite_hash": "c559a4f97383cbd4ff71ae1e98fa648cd21cdbf227ce9d50b81077716aad9bc9",
+  "db_receipt": "receipts/tyazhinskaya_eis_enrichment_20261031T1236_MSK.json",
+  "client_report": {
+    "version": "V13",
+    "snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261031_v13.json",
+    "audit": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261031_v13.json",
+    "ru_pages": 258,
+    "en_pages": 258,
+    "legacy_html_regenerated": false,
+    "frozen_v2_through_v12_unchanged": true
+  },
+  "tests": {
+    "targeted_pytest": "9 passed, 1 inherited Starlette warning",
+    "ruff": "pass",
+    "pdf": "258 pages RU and EN, 960x540pt"
+  },
+  "next_three": [
+    {
+      "case": "223fz:32616400421:lot1",
+      "retry_after_moscow": "2026-11-01 07:30",
+      "goal": "EIS technical original; exact voltage/scope"
+    },
+    {
+      "case": "commercial:106044-ТТ:lot1",
+      "retry_after_moscow": "2026-11-01 09:00",
+      "goal": "Metal-IT STATCOM 6.3 kV protocol; allowlist before capture"
+    },
+    {
+      "case": "commercial:РН61003961:lot1",
+      "retry_after_moscow": "2026-11-01 10:00",
+      "goal": "Rosneft first-party technical specification and outcome"
+    }
+  ],
+  "limitations": [
+    "118 evidence candidates not market census or sales",
+    "No signed supplier name/OEM/payment/PQ-only price",
+    "The 7.4m RUB is design/survey contract not equipment supply",
+    "No v29 overwrite",
+    "No auto-merge"
+  ]
+}

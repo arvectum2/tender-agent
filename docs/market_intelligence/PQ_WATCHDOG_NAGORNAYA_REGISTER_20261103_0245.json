@@ -1,0 +1,230 @@
+{
+  "schema": "pq-watchdog-nagornaya-registered-contract/1",
+  "run_start_moscow": "2026-11-03T02:35:17+03:00",
+  "run_end_moscow": "2026-11-03T02:43:02.964631+03:00",
+  "issue_comment_id": 6591244516,
+  "canonical_pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "gate": {
+    "status": "pass",
+    "pre_mutation_head": "ab90e9f42f034ac13b9bf5c5b51264e90651ad6c",
+    "internal_apfs": true
+  },
+  "postgres_before_after": {
+    "unique_lots": [
+      123,
+      123
+    ],
+    "distinct_procedures": [
+      112,
+      112
+    ],
+    "eis_223_notices": [
+      45,
+      45
+    ]
+  },
+  "new_unique_lots": 0,
+  "new_deduplicated_projects": 0,
+  "new_verified_db_fields": 6,
+  "new_named_winners": 0,
+  "new_signed_suppliers": 0,
+  "new_verified_paid_pq_sales": 0,
+  "new_exhaustive_months": 0,
+  "source_requests": 46,
+  "http_200_sha_captures": 37,
+  "http_404_attempts": 9,
+  "new_distinct_original_sha": 13,
+  "new_original_protocol_printforms": 4,
+  "new_original_contract_printforms": 2,
+  "new_original_contract_registry_card": 1,
+  "new_source_originals": [
+    {
+      "case_id": "223fz:32615614821:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32615614821",
+      "sha256": "015645fcceb2a7716f7a9d4f8f66f910bebf12a9bb17bbabf4ac2d70b25b6f97",
+      "bytes": 151251
+    },
+    {
+      "case_id": "223fz:32615614821:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32615614821",
+      "sha256": "0fd45758f5535c8c4a8a044c8d6b7bf1cd49c5c0851e875adc602de82985d008",
+      "bytes": 132930
+    },
+    {
+      "case_id": "223fz:32615614821:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=50277071467260002650000",
+      "sha256": "20b8ca2b294ec52c92f4c9650e49bcbafeb3dd8632e4f2070e61eb25bbfabc8c",
+      "bytes": 136296
+    },
+    {
+      "case_id": "223fz:32616065155:lot7",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract-info.html?purchaseNoticeNumber=32616065155",
+      "sha256": "420bb7c96633e9e546dafa263d6c81118c0ccd42546f01575226dfab730ed098",
+      "bytes": 139990
+    },
+    {
+      "case_id": "223fz:32616065155:lot7",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?regNumber=32616065155",
+      "sha256": "71fe5c9955494e12ecb636f54c3edf9cdf59104454df418f17af1960d9387ed0",
+      "bytes": 146718
+    },
+    {
+      "case_id": "223fz:32615614821:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=c4b74db8-a941-4b17-816d-701a879d214e&purchaseNoticeNumber=32615614821",
+      "sha256": "76eeeec03ccad3b0224ce4d7305c3913d5b3a5c5ef870d838e0e2d3c9a68dfb9",
+      "bytes": 9032
+    },
+    {
+      "case_id": "223fz:32615614821:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32615614821",
+      "sha256": "7bbccc067abda3474a5924289dd182ab735787f7e56d670780694eb512f65101",
+      "bytes": 147859
+    },
+    {
+      "case_id": "223fz:32615614821:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/contractfz223/printForm/view.html?reestrNumber=50277071467260002650000",
+      "sha256": "89b892ef744837b8d9b48bce710f73e8e62bd52074b8980d4d7169dc0512c263",
+      "bytes": 10544
+    },
+    {
+      "case_id": "223fz:32616065155:lot7",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616065155",
+      "sha256": "8a1c3219dc095d2a78bde50abaa83cbd17b17b7bcfa7f5a67c8e6d78ce46ef23",
+      "bytes": 132750
+    },
+    {
+      "case_id": "223fz:32615614821:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/contract/printForm/viewXml.html?contractRegistrationNumber=50277071467260002650003",
+      "sha256": "afea7b5c3a601a6f3c0c493e52f2a07e5245793769d71584f3131e4e21005e1c",
+      "bytes": 10587
+    },
+    {
+      "case_id": "223fz:32615614821:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=69fa23e4-12ae-468a-8a72-545193165fc4&purchaseNoticeNumber=32615614821",
+      "sha256": "bf32935c6e5b4f99ef21f1f23a2532ae89a3ac4e889fdfac713e54701a5895c4",
+      "bytes": 9733
+    },
+    {
+      "case_id": "223fz:32616103025:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=d3ce370f-9c04-4d9d-8293-4efd46ef69bf&purchaseNoticeNumber=32616103025",
+      "sha256": "eb32cb430b39f4397389f4c1f04d7006ff54a047af04ee715e3348b0682a5218",
+      "bytes": 8023
+    },
+    {
+      "case_id": "223fz:32615614821:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=7d0860b0-bdc0-4076-8ef1-d9109442f03d&purchaseNoticeNumber=32615614821",
+      "sha256": "fa5f3be4125079035f5f5a2a42614eb459743f150a5f3acc67a894156841b54b",
+      "bytes": 9504
+    }
+  ],
+  "failed_urls_http404": [
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32615614821",
+      "reason": "bare-number document endpoint returns HTTP404; no conclusion about existence of documents"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616103025",
+      "reason": "bare-number document endpoint returns HTTP404; no conclusion about existence of documents"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616065155",
+      "reason": "bare-number document endpoint returns HTTP404; no conclusion about existence of documents"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=54716016979230054970001",
+      "reason": "HTTP404 for 2023 STATCOM maintenance registry card; alternative official printform HTTP200"
+    }
+  ],
+  "source_findings": [
+    {
+      "case_id": "223fz:32615614821:lot1",
+      "core_scope": "6kV UKRM 200 kvar in mixed reconstruction of 110kV Nagornaya substation; not standalone equipment sale",
+      "protocol_sha256": "bf32935c6e5b4f99ef21f1f23a2532ae89a3ac4e889fdfac713e54701a5895c4",
+      "contract_print_sha256": "afea7b5c3a601a6f3c0c493e52f2a07e5245793769d71584f3131e4e21005e1c",
+      "registry_card_sha256": "20b8ca2b294ec52c92f4c9650e49bcbafeb3dd8632e4f2070e61eb25bbfabc8c",
+      "contract_registry_number": "50277071467260002650000",
+      "contract_number": "РЭС-1.16.7/Д-01325",
+      "signed_date": "2026-04-14",
+      "nmck_rub": "1432983.66",
+      "anonymous_offer_rub": "1833358.30",
+      "registered_contract_price_rub": "1833358.30",
+      "contract_registry_status": "Исполнение завершено",
+      "registry_card_updated": "2026-11-02",
+      "source_quote": "Цена договора 1 833 358,30 ₽",
+      "named_signed_supplier_verified": false,
+      "paid_amount_verified": false,
+      "pq_equipment_only_price_verified": false,
+      "new_null_only_fields": 6,
+      "db_cas_readback": "passed"
+    },
+    {
+      "case_id": "223fz:32616103025:lot1",
+      "scope": "design for 10kV UKRM at 35kV Pioneer substation",
+      "protocol_sha256": "eb32cb430b39f4397389f4c1f04d7006ff54a047af04ee715e3348b0682a5218",
+      "outcome": "no applications at first-parts protocol, no contract registry",
+      "new_lots": 0
+    },
+    {
+      "case_id": "223fz:32616065155:lot7",
+      "scope": "capacitor installations are one of 11 lots in Tatneft ETP notice",
+      "new_notice_level_sha": 3,
+      "lot_specific_contract_link_verified": false,
+      "warning": "Notice-level pages first captured under lot1 but recaptured with canonical lot7; never promote as a new lot1 or infer a contract from other lots."
+    },
+    {
+      "project": "Лопча–Юктали / Антрацит / Хани / Лопча СКРМ 128+154 Мвар",
+      "notice_ids": [
+        "32515208744",
+        "32515584863",
+        "32615760238"
+      ],
+      "scope": "220kV adjacent; EPC and two separate design tenders, same underlying project",
+      "observed_outcomes": "2025 first-parts bid rejected; January 2026 design no bids; April 2026 two bids rejected",
+      "new_project_count": 0,
+      "named_signed_supplier_verified": false
+    },
+    {
+      "case_id": "223fz:32313008364:lot1",
+      "scope": "STATCOM cooling service at 220kV Mogocha, adjacent",
+      "official_contract_print_sha256": "0af01e761d1a862189d879a313477918708d1778e6b4a3e76e2a2f372f9903e6",
+      "registered_contract_price_rub": "6795960.00",
+      "named_supplier_verified": false,
+      "new_sha": false
+    }
+  ],
+  "backup": {
+    "manifest": "/Users/master/ArvectumSafe/backups/data-platform/data-platform-arvectum_data-20261102T234036Z-91866.dump.manifest.json",
+    "sha256": "885e00b3c8b98ffbaa5170908fa36563ca0c51537c3eb89fb50f4a7f0b941d89",
+    "pg_restore_list_verified": true
+  },
+  "db_receipt": "receipts/pq-nagornaya-contract-20261103T0241.json",
+  "client_report": {
+    "version": "V59",
+    "snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261103_v59.json",
+    "audit": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261103_v59.json",
+    "bilingual_pdf_pages_each": 268,
+    "frozen_V58_unchanged": true,
+    "legacy_client_html_unchanged": true
+  },
+  "tests": "12 targeted passed; Ruff clean; PDF 268/268 pages; guarded CAS and SHA readback",
+  "next_three": [
+    {
+      "case_id": "223fz:32616497692:lot1",
+      "eligible_after": "2026-11-03 09:00 MSK",
+      "target": "10kV UKRM final protocol and signed supplier"
+    },
+    {
+      "case_id": "223fz:32616433248:lot1",
+      "eligible_after": "2026-11-03 09:00 MSK",
+      "target": "35kV UKRM signed contract registry"
+    },
+    {
+      "case_id": "223fz:32616506708:lot1",
+      "eligible_after": "2026-11-06 09:00 MSK",
+      "target": "commission final protocol and equipment specification"
+    }
+  ],
+  "no_auto_merge": true,
+  "no_other_collection_modified": true
+}

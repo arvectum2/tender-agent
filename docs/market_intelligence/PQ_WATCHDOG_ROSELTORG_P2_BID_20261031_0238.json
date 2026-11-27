@@ -1,0 +1,145 @@
+{
+  "schema_version": "pq-watchdog-roseltorg-p2-bid-enrichment/1",
+  "as_of_moscow": "2026-10-31T02:37:02.997051+03:00",
+  "issue_comment_id": 6535688042,
+  "canonical_pr": 521,
+  "tested_code_commit": "2d032eefd14d1b8e1a8dcf32e0d8fa63e8537ef2",
+  "db": {
+    "unique_lots_before": 117,
+    "unique_lots_after": 117,
+    "distinct_procedures": 106,
+    "eis_223_notices": 40,
+    "new_unique_lots": 0,
+    "new_core_6_35kv_lots": 0,
+    "new_verified_fields": 3,
+    "field_coverage_before": {
+      "voltage_kv": 18,
+      "power": 3,
+      "bid": 4
+    },
+    "field_coverage_after": {
+      "voltage_kv": 19,
+      "power": 4,
+      "bid": 5
+    },
+    "collection": "arvectum_data.arvectum-market-pq-6-35kv",
+    "other_collections_untouched": true
+  },
+  "verified_case": {
+    "id": "223fz:32616497692:lot1",
+    "buyer": "ПАО Россети Северо-Запад",
+    "scope": "mixed EPC: 10 kV capacitor installation plus 35 kV substation reconstruction",
+    "voltage_kv": "10.5",
+    "power": "3150 кВАр",
+    "bid": "79101498.40",
+    "bid_kind": "participant EPC offer, NOT signed contract or PQ equipment price",
+    "participant": "ООО Промышленная компания ВТОРАЛЮМИНПРОДУКТ (source spelling)",
+    "participant_role": "bidder only, not named winner; INN unverified",
+    "final_protocol_due_moscow": "2026-11-02T16:00:00+03:00"
+  },
+  "sources": [
+    {
+      "case": "32616497692",
+      "type": "first-party Roseltorg HTML case card",
+      "url": "https://www.roseltorg.ru/procedure/32616497692",
+      "http": 200,
+      "sha256": "fc2e2f735f636822a2ee2bc92495c9184b69fd7eff477ca27d235caba76eca6e"
+    },
+    {
+      "case": "32616433248",
+      "type": "first-party Roseltorg HTML case card",
+      "url": "https://www.roseltorg.ru/procedure/32616433248",
+      "http": 200,
+      "sha256": "79ea25ed224da7eede7238d1a6d509f96b51aa9853101d7cd8f05a6950edc895"
+    },
+    {
+      "case": "32616497692",
+      "type": "first-party RTF retrading record; newly named bidder and unchanged EPC offer",
+      "url": "https://rosseti.roseltorg.ru/file/get/t/ProtocolFiles/id/299452/user/-1/name/HappenedRetrade_32616497692.rtf",
+      "http": 200,
+      "sha256": "c6fb6317471d1bc0fff40d641152df09cacd734e188a4f12eb73153898eddbbb"
+    },
+    {
+      "case": "32616433248",
+      "type": "first-party final committee protocol ZIP; one anonymous bidder; proposal to negotiate, no signed deal",
+      "url": "https://rosseti.roseltorg.ru/file/get/t/ProtocolFiles/id/298084/user/-1/name/%D0%9F%D1%80%D0%BE%D1%82%D0%BE%D0%BA%D0%BE%D0%BB_3_%D0%B8%D1%82%D0%BE%D0%B3%D0%B8_5147.zip",
+      "http": 200,
+      "sha256": "98062c8f6bb47d177c7630374a8f57193dcf4177e7fd37f3204cf140de05de4e"
+    }
+  ],
+  "existing_source_reused": {
+    "case": "32616497692",
+    "type": "first-party ZIP containing nested original technical DOCX",
+    "source_sha256": "66f2dec7487352c6bba4e7f5f182a3e2a614c7310dfec9ac2b9e82ed87d7c834",
+    "docx_sha256": "28982223fc3f30dba1eefbfd0cf2c23200a192621b0b11b3d4f2e2fbf3ff272a"
+  },
+  "new_first_party_http_200_captures": 4,
+  "fresh_sha_verified_originals": 4,
+  "fresh_original_protocols": 2,
+  "new_named_participants": 1,
+  "new_named_winners": 0,
+  "new_verified_signed_suppliers": 0,
+  "new_executed_sales": 0,
+  "new_month_source_searches": 0,
+  "failed_attempts": [
+    {
+      "url": "https://rosseti.roseltorg.ru/file/get/t/ProtocolFiles/id/298084/user/-1/name/Протокол_3_итоги_5147.zip",
+      "result": "UnicodeEncodeError before HTTP; retried URL percent-encoded successfully"
+    }
+  ],
+  "safety": {
+    "acceptance": "pass after code commit",
+    "backup_sha256": "0dfabc6bf0690e6de8209292ab3ac58a636319ccd6a42cbaa4a637443e6b0f9c",
+    "backup_pg_restore_verified": true,
+    "atomic_null_only_CAS": true,
+    "postwrite_readback": true,
+    "db_receipt": "receipts/pq-roseltorg-32616497692-20261031T0235.json",
+    "no_auto_merge": true
+  },
+  "client_report": {
+    "version": "V5",
+    "snapshot": "data/market_intelligence/power_quality/fgi_client_deck_snapshot_20261031_v5.json",
+    "audit": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_AUDIT_20261031_v5.json",
+    "backlog": "docs/market_intelligence/ARVECTUM_FGI_PQ_FIELD_BACKLOG_20261031_v5.md",
+    "pdfs": [
+      "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_RU_20261031_V5.pdf",
+      "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_EN_20261031_V5.pdf"
+    ],
+    "pages_each": 256,
+    "embedded_fonts": [
+      "PTSans-Regular",
+      "PTSans-Bold",
+      "JetBrainsMono-Bold"
+    ],
+    "legacy_html_regenerated": false,
+    "frozen_v2_v3_v4_unchanged": true
+  },
+  "tests": {
+    "focused": "9 passed, 1 Starlette deprecation warning",
+    "ruff": "pass",
+    "pdf_page_count": "256 RU / 256 EN"
+  },
+  "next_three": [
+    {
+      "case": "32615684088",
+      "retry_after_moscow": "2026-10-31 09:00",
+      "goal": "official signed contract/supplier"
+    },
+    {
+      "case": "106044-ТТ",
+      "retry_after_moscow": "2026-10-31 09:00",
+      "goal": "STATCOM source-native protocol/outcome"
+    },
+    {
+      "case": "РН61003961",
+      "retry_after_moscow": "2026-10-31 10:00",
+      "goal": "TEK-Torg post-deadline award/price"
+    }
+  ],
+  "additional_retry": {
+    "case": "32616497692",
+    "retry_after_moscow": "2026-11-02 16:00",
+    "goal": "final protocol, winner vs signed supplier; do not retry before due"
+  },
+  "canonical_v29_materialized_rows_unchanged": 101
+}

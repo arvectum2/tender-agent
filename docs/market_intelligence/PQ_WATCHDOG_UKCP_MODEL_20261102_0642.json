@@ -1,0 +1,135 @@
+{
+  "schema": "pq-watchdog-ukcp-model-20261102/1",
+  "moscow_completed": "2026-11-02T06:41:11.095701+03:00",
+  "issue_comment_id": 6568416882,
+  "canonical_pr": 521,
+  "code_commit": "d11703485a1bc0b8e338159462ca0715a0df53cc",
+  "postgres_before": {
+    "unique_lots": 121,
+    "procedures": 110,
+    "eis_223_notices": 43
+  },
+  "postgres_after": {
+    "unique_lots": 121,
+    "procedures": 110,
+    "eis_223_notices": 43
+  },
+  "new_unique_lots": 0,
+  "new_underlying_projects": 0,
+  "new_verified_fields": 2,
+  "case_id": "commercial:4643332:lot1",
+  "new_fields": {
+    "equipment_voltage_kv": "10.5",
+    "power": "150 кВАр (номинал модели; закупка не состоялась)"
+  },
+  "source_requests": {
+    "capture_attempts": 8,
+    "capture_http200": 5,
+    "capture_failures": 3,
+    "independent_strict_curl_head_http200": 1,
+    "new_month_source_exhaustive_searches": 0
+  },
+  "sha_verified_first_party_captures": [
+    {
+      "case_id": "223fz:32616474682:lot1",
+      "source_url": "https://www.b2b-center.ru/market/auction_protocol.html?id=4642507&type=participants_protocol",
+      "http_status": 200,
+      "sha256": "c0f337b9fa50638a7b1c6f92d9df1a4ae3afc93c308106eefb8d252fd6cef9f3",
+      "bytes": 20718,
+      "relative_file": "captures/223fz_32616474682_lot1/20261102T033535293762Z-7b5c439a-c0f337b9fa50638a.bin"
+    },
+    {
+      "case_id": "commercial:4643332:lot1",
+      "source_url": "https://www.b2b-center.ru/market/808-kondensator-kep3-10-5-150-3u2/tender-4643332/",
+      "http_status": 200,
+      "sha256": "c3ab1826443946f46da208fa412b5c344f3b13e05733298eebc511191dfcd57e",
+      "bytes": 70248,
+      "relative_file": "captures/commercial_4643332_lot1/20261102T033535474057Z-3612f78b-c3ab1826443946f4.bin"
+    },
+    {
+      "case_id": "223fz:32616474682:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616474682",
+      "http_status": 200,
+      "sha256": "fdd19b1c3c15faee794e1c09be6bd3c98f13caa0ff1bb1e40c3d2ffc0a3242b8",
+      "bytes": 133057,
+      "relative_file": "captures/223fz_32616474682_lot1/20261102T033545331394Z-3ff33e3e-fdd19b1c3c15faee.bin"
+    },
+    {
+      "case_id": "223fz:32616474682:lot1",
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=a9898519-2507-0004-0000-6ae1bbb456ef&purchaseNoticeNumber=32616474682",
+      "http_status": 200,
+      "sha256": "e25d50deb7c172ee55df04caecdf5306c2429e2c4c68b9cffb04a6325e4dda65",
+      "bytes": 25360,
+      "relative_file": "captures/223fz_32616474682_lot1/20261102T033545342463Z-493e53f4-e25d50deb7c172ee.bin"
+    },
+    {
+      "case_id": "commercial:4643332:lot1",
+      "source_url": "https://ukkz.com/en/catalog/capacitors/power-factor-correction-capacitors/high-voltage-power-factor-correction-capacitors.html",
+      "http_status": 200,
+      "sha256": "cffe971868056da009187f9fc0fb721627fd62181449788cd0722735c8854f73",
+      "bytes": 150730,
+      "relative_file": "captures/commercial_4643332_lot1/20261102T033743214743Z-4e22b19d-cffe971868056da0.bin"
+    }
+  ],
+  "distinct_new_sha_versions": 3,
+  "first_time_case_specific_oem_model_catalogue_originals": 1,
+  "eis_case_recheck": "32616474682 official protocols page and existing opening protocol unchanged SHA; no final award/contract",
+  "blocked_attempts": [
+    {
+      "url": "https://www.roseltorg.ru/procedure/32616474682",
+      "result": "network read timeout; no original captured"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/notice223/protocols.html?purchaseNoticeNumber=32616474682",
+      "result": "httpx TLS chain failure; native-trust HTTP200 SHA same as previous"
+    },
+    {
+      "url": "https://zakupki.gov.ru/epz/order/notice/protocol223/printForm/view.html?protocolGuid=a9898519-2507-0004-0000-6ae1bbb456ef&purchaseNoticeNumber=32616474682",
+      "result": "httpx TLS chain failure; native-trust HTTP200 SHA same as previous"
+    }
+  ],
+  "original_commission_protocols_new": 0,
+  "new_named_winners": 0,
+  "new_signed_suppliers": 0,
+  "new_executed_equipment_sales": 0,
+  "strict_core_new_lots": 0,
+  "manufacturer_model_reference_caution": "UKCP public technical catalogue independently defines KEP3-10,5-150-3U2 rated voltage 10.5 kV and rated power 150 kvar; not evidence that UKCP supplied this tender, which ended with zero bids.",
+  "backup_sha256": "1d202fe6a08d9fc1fd9018f5c2991c339f8047a08e1a5c35ff9052ab82454b6f",
+  "cas_receipt": "receipts/pq-ukcp-model-20261102-0640.json",
+  "client_report_version": "V44",
+  "bilingual_pdfs": {
+    "RU": {
+      "path": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_RU_20261102_V44.pdf",
+      "bytes": 6919515,
+      "sha256": "a7ae3c9d99f1b9c0471e9a47274f8fcfad881c0cbe8daf201f4b15ec97242479",
+      "pages": 264
+    },
+    "EN": {
+      "path": "docs/market_intelligence/ARVECTUM_FGI_PQ_FULL_EN_20261102_V44.pdf",
+      "bytes": 6880630,
+      "sha256": "ca443cf9a123072b7416982300a860f549f8359c9bad42208406fdb6b6d6f56b",
+      "pages": 264
+    }
+  },
+  "targeted_tests": "18 passed; Ruff clean; two 264-page PDFs checked",
+  "client_html_refreshed": false,
+  "next_targets": [
+    {
+      "id": "223fz:32616433248:lot1",
+      "eligible": "2026-11-02 09:00 Europe/Moscow",
+      "action": "official final protocol and contract-register readback"
+    },
+    {
+      "id": "223fz:32616497692:lot1",
+      "eligible": "2026-11-02 16:30 Europe/Moscow",
+      "action": "official protocol and signed outcome"
+    },
+    {
+      "id": "223fz:32616474682:lot1/lot2",
+      "eligible": "2026-12-03 10:00 Europe/Moscow",
+      "action": "B2B final award and EIS contract, not opening protocol"
+    }
+  ],
+  "task_status": "in_progress",
+  "merge": "PR521 REVIEW; no auto-merge"
+}

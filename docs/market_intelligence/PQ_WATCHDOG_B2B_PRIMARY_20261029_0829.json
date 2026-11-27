@@ -1,0 +1,604 @@
+{
+  "schema_version": "pq-watchdog-primary-source-ledger/1",
+  "recorded_at_moscow": "2026-10-29T08:33:25+03:00",
+  "task_id": "TA-MI-AUTONOMY-20261027",
+  "issue_comment_id": 6488810725,
+  "pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "canonical_v29_rows_unchanged": 101,
+  "actual_source_requests": 24,
+  "http_200": 16,
+  "http_404": 8,
+  "new_sha_verified_first_party_html_cards_all": 16,
+  "new_sha_verified_first_party_html_relevant": 15,
+  "first_party_relevant_distinct_cases": 5,
+  "new_notices_promoted": 0,
+  "new_lots_promoted": 0,
+  "new_projects_promoted": 0,
+  "new_original_protocols_named_winner": 0,
+  "new_signed_suppliers_verified": 0,
+  "new_executed_payment_prices_verified": 0,
+  "new_equipment_only_signed_sales": 0,
+  "new_month_source_query_attempts": 6,
+  "new_month_source_successful_first_pages": 0,
+  "new_months_exhaustively_covered": 0,
+  "reviewed_cases": [
+    {
+      "case_id": "commercial:4256170:lot1",
+      "b2b_id": "4256170",
+      "role": "supply",
+      "voltage_kv": 10,
+      "unit_count_title_only": 2,
+      "project": "progasstroy-ukrm10-2025",
+      "outcome": "archived_one_bid_no_public_award",
+      "quotes_verified": [
+        {
+          "source_kind": "card",
+          "original_sha256": "d27f8a3ea0ea8955cf44e4faf474a27eebd821e1eff012127e5e5ef3a4652ecb",
+          "verbatim_normalized_html_quote": "УКРМ-10 кВ 1600 кВА в кол-ве 1 ед;"
+        },
+        {
+          "source_kind": "card",
+          "original_sha256": "d27f8a3ea0ea8955cf44e4faf474a27eebd821e1eff012127e5e5ef3a4652ecb",
+          "verbatim_normalized_html_quote": "УКРМ-10 кВ 50 кВА"
+        },
+        {
+          "source_kind": "card",
+          "original_sha256": "d27f8a3ea0ea8955cf44e4faf474a27eebd821e1eff012127e5e5ef3a4652ecb",
+          "verbatim_normalized_html_quote": "Организатор: ООО \"ПРОГАЗ\""
+        },
+        {
+          "source_kind": "card",
+          "original_sha256": "d27f8a3ea0ea8955cf44e4faf474a27eebd821e1eff012127e5e5ef3a4652ecb",
+          "verbatim_normalized_html_quote": "Заказчики: ООО \"ПРОГАЗСТРОЙ\""
+        },
+        {
+          "source_kind": "card",
+          "original_sha256": "d27f8a3ea0ea8955cf44e4faf474a27eebd821e1eff012127e5e5ef3a4652ecb",
+          "verbatim_normalized_html_quote": "Всего заявок: 1."
+        }
+      ],
+      "signed_supplier_verified": false,
+      "executed_payment_verified": false,
+      "bid_price_verified": false,
+      "contract_register_price_verified": false
+    },
+    {
+      "case_id": "commercial:4561228:lot1",
+      "b2b_id": "4561228",
+      "role": "supply",
+      "voltage_kv": 10,
+      "unit_count_position": 2,
+      "project": "mgbzh-uk1-uk2",
+      "outcome": "organizer_hidden",
+      "quotes_verified": [
+        {
+          "source_kind": "card",
+          "original_sha256": "ff0b164d3488c3dc93a6d6bc65a2ec36d96fdb647b69fef216981ef8bb9ffbec",
+          "verbatim_normalized_html_quote": "АУКРМ (УК1, УК2 ) для МГБЖ"
+        },
+        {
+          "source_kind": "card",
+          "original_sha256": "ff0b164d3488c3dc93a6d6bc65a2ec36d96fdb647b69fef216981ef8bb9ffbec",
+          "verbatim_normalized_html_quote": "Всего заявок: 4."
+        },
+        {
+          "source_kind": "card",
+          "original_sha256": "ff0b164d3488c3dc93a6d6bc65a2ec36d96fdb647b69fef216981ef8bb9ffbec",
+          "verbatim_normalized_html_quote": "Результаты процедуры скрыты по решению ее организатора."
+        },
+        {
+          "source_kind": "positions",
+          "original_sha256": "23c033af88cfae05e9fc050fa8c844afb7efb732a5eb07337ef8d72d2a5c9795",
+          "verbatim_normalized_html_quote": "2 ШТ"
+        }
+      ],
+      "signed_supplier_verified": false,
+      "executed_payment_verified": false,
+      "bid_price_verified": false,
+      "contract_register_price_verified": false
+    },
+    {
+      "case_id": "commercial:4561243:lot1",
+      "b2b_id": "4561243",
+      "role": "supply",
+      "voltage_kv": 10,
+      "unit_count_position": 2,
+      "project": "mgbzh-uk3-uk4",
+      "outcome": "organizer_hidden",
+      "quotes_verified": [
+        {
+          "source_kind": "card",
+          "original_sha256": "abfd7f0a44572c394e8ea48563abf8f48bbeda49a679e5af3dda3eb68f0eec18",
+          "verbatim_normalized_html_quote": "АУКРМ (УК3, УК4) для МГБЖ"
+        },
+        {
+          "source_kind": "card",
+          "original_sha256": "abfd7f0a44572c394e8ea48563abf8f48bbeda49a679e5af3dda3eb68f0eec18",
+          "verbatim_normalized_html_quote": "Всего заявок: 6."
+        },
+        {
+          "source_kind": "card",
+          "original_sha256": "abfd7f0a44572c394e8ea48563abf8f48bbeda49a679e5af3dda3eb68f0eec18",
+          "verbatim_normalized_html_quote": "Результаты процедуры скрыты по решению ее организатора."
+        },
+        {
+          "source_kind": "positions",
+          "original_sha256": "a8f94d2101952ba6759c18308ef9678e9ad797c834fe7926623ba7b36edeb687",
+          "verbatim_normalized_html_quote": "2 ШТ"
+        }
+      ],
+      "signed_supplier_verified": false,
+      "executed_payment_verified": false,
+      "bid_price_verified": false,
+      "contract_register_price_verified": false
+    },
+    {
+      "case_id": "commercial:4526968:lot1",
+      "b2b_id": "4526968",
+      "role": "supply_manufacture",
+      "voltage_kv": null,
+      "unit_count_title_only": 4,
+      "project": "rzhev-rzk-ukrm",
+      "outcome": "archived_no_public_award",
+      "quotes_verified": [
+        {
+          "source_kind": "card",
+          "original_sha256": "aa43501e21c0ae435f26141ba9e5cba0ef0c3824921f954bfebc868be1277dc6",
+          "verbatim_normalized_html_quote": "Работы по изготовлению и поставке УКРМ (в кол-ве 4 шт.)"
+        },
+        {
+          "source_kind": "card",
+          "original_sha256": "aa43501e21c0ae435f26141ba9e5cba0ef0c3824921f954bfebc868be1277dc6",
+          "verbatim_normalized_html_quote": "Организатор: ООО \"МЕЛЬКОМБИНАТ\""
+        },
+        {
+          "source_kind": "card",
+          "original_sha256": "aa43501e21c0ae435f26141ba9e5cba0ef0c3824921f954bfebc868be1277dc6",
+          "verbatim_normalized_html_quote": "Всего заявок: 6."
+        }
+      ],
+      "signed_supplier_verified": false,
+      "executed_payment_verified": false,
+      "bid_price_verified": false,
+      "contract_register_price_verified": false
+    },
+    {
+      "case_id": "commercial:4302914:lot1",
+      "b2b_id": "4302914",
+      "role": "service_maintenance",
+      "voltage_kv": 6.3,
+      "unit_count": null,
+      "project": "lebedinsky-gok-svg-maintenance",
+      "outcome": "organizer_hidden_service_not_new_equipment",
+      "quotes_verified": [
+        {
+          "source_kind": "card",
+          "original_sha256": "519a7d0b4c80e899d3e703c3e0f42d4a7c0d521d821c71ac4cf1d795649dd196",
+          "verbatim_normalized_html_quote": "СТАТКОМ RU-DRIVE SVG 6,3/5-3 МВар"
+        },
+        {
+          "source_kind": "card",
+          "original_sha256": "519a7d0b4c80e899d3e703c3e0f42d4a7c0d521d821c71ac4cf1d795649dd196",
+          "verbatim_normalized_html_quote": "Заказчики: АО \"ЛЕБЕДИНСКИЙ ГОК\""
+        },
+        {
+          "source_kind": "card",
+          "original_sha256": "519a7d0b4c80e899d3e703c3e0f42d4a7c0d521d821c71ac4cf1d795649dd196",
+          "verbatim_normalized_html_quote": "Результаты процедуры скрыты по решению ее организатора."
+        },
+        {
+          "source_kind": "card",
+          "original_sha256": "519a7d0b4c80e899d3e703c3e0f42d4a7c0d521d821c71ac4cf1d795649dd196",
+          "verbatim_normalized_html_quote": "Всего заявок: 1"
+        }
+      ],
+      "signed_supplier_verified": false,
+      "executed_payment_verified": false,
+      "bid_price_verified": false,
+      "contract_register_price_verified": false
+    }
+  ],
+  "cross_notice_project_caution": "4561228 and 4565274 both UK1/UK2 MGBZH; no exact-original explicit identity proof between them, keep separate notices and potential project link. 4561243 is UK3/UK4 distinct equipment set within same site umbrella. 4538400 cancelled and 4565274 explicitly successor from earlier source ledger.",
+  "exclusions": [
+    {
+      "id": "1190793",
+      "reason": "B2B numeric ID resolves to 2019 dosimeter tender, not current PQ case"
+    },
+    {
+      "id": "4559984",
+      "reason": "B2B exact-number endpoint HTTP404"
+    },
+    {
+      "id": "4304120",
+      "reason": "B2B exact-number endpoint HTTP404"
+    }
+  ],
+  "blockers": [
+    "EIS six new unique month/223fz searches returned identical 146-byte HTTP404; not market absence",
+    "B2B offers/clarification/change pages request login to reveal participant names, bid prices, documents; no bypass",
+    "No public original protocol, signed supplier or executed payment in new five B2B cases",
+    "4526968 voltage unknown, cannot classify into 6-35kV equipment core",
+    "15 Data Platform files still blocked pending approved SDK credentials"
+  ],
+  "requests": [
+    {
+      "source": "B2B-Center",
+      "case_id": "4256170",
+      "month": null,
+      "law": null,
+      "query": null,
+      "action": "card",
+      "url": "https://www.b2b-center.ru/market/view.html?id=4256170",
+      "http": "200",
+      "bytes": 69910,
+      "sha256": "d27f8a3ea0ea8955cf44e4faf474a27eebd821e1eff012127e5e5ef3a4652ecb",
+      "private_file": "b2b-4256170.html",
+      "error": "",
+      "source_grade": "first_party_html"
+    },
+    {
+      "source": "B2B-Center",
+      "case_id": "4561228",
+      "month": null,
+      "law": null,
+      "query": null,
+      "action": "card",
+      "url": "https://www.b2b-center.ru/market/view.html?id=4561228",
+      "http": "200",
+      "bytes": 75677,
+      "sha256": "ff0b164d3488c3dc93a6d6bc65a2ec36d96fdb647b69fef216981ef8bb9ffbec",
+      "private_file": "b2b-4561228.html",
+      "error": "",
+      "source_grade": "first_party_html"
+    },
+    {
+      "source": "B2B-Center",
+      "case_id": "4561243",
+      "month": null,
+      "law": null,
+      "query": null,
+      "action": "card",
+      "url": "https://www.b2b-center.ru/market/view.html?id=4561243",
+      "http": "200",
+      "bytes": 75670,
+      "sha256": "abfd7f0a44572c394e8ea48563abf8f48bbeda49a679e5af3dda3eb68f0eec18",
+      "private_file": "b2b-4561243.html",
+      "error": "",
+      "source_grade": "first_party_html"
+    },
+    {
+      "source": "B2B-Center",
+      "case_id": "4526968",
+      "month": null,
+      "law": null,
+      "query": null,
+      "action": "card",
+      "url": "https://www.b2b-center.ru/market/view.html?id=4526968",
+      "http": "200",
+      "bytes": 71133,
+      "sha256": "aa43501e21c0ae435f26141ba9e5cba0ef0c3824921f954bfebc868be1277dc6",
+      "private_file": "b2b-4526968.html",
+      "error": "",
+      "source_grade": "first_party_html"
+    },
+    {
+      "source": "B2B-Center",
+      "case_id": "4302914",
+      "month": null,
+      "law": null,
+      "query": null,
+      "action": "card",
+      "url": "https://www.b2b-center.ru/market/view.html?id=4302914",
+      "http": "200",
+      "bytes": 76611,
+      "sha256": "519a7d0b4c80e899d3e703c3e0f42d4a7c0d521d821c71ac4cf1d795649dd196",
+      "private_file": "b2b-4302914.html",
+      "error": "",
+      "source_grade": "first_party_html"
+    },
+    {
+      "source": "B2B-Center",
+      "case_id": "4559984",
+      "month": null,
+      "law": null,
+      "query": null,
+      "action": "card",
+      "url": "https://www.b2b-center.ru/market/view.html?id=4559984",
+      "http": "404",
+      "bytes": 13222,
+      "sha256": "2c78d9ede6ffdae0178358c402c6330f6a35e9cf74eef3942951fd8032ce0a84",
+      "private_file": "b2b-4559984.html",
+      "error": "",
+      "source_grade": "blocked_or_not_found"
+    },
+    {
+      "source": "B2B-Center",
+      "case_id": "4304120",
+      "month": null,
+      "law": null,
+      "query": null,
+      "action": "card",
+      "url": "https://www.b2b-center.ru/market/view.html?id=4304120",
+      "http": "404",
+      "bytes": 13222,
+      "sha256": "3ab71a50aa04bd0c07316e85ac64e71a4c1ee9e0ab11a3237d39a64c58cc6d62",
+      "private_file": "b2b-4304120.html",
+      "error": "",
+      "source_grade": "blocked_or_not_found"
+    },
+    {
+      "source": "B2B-Center",
+      "case_id": "1190793",
+      "month": null,
+      "law": null,
+      "query": null,
+      "action": "card",
+      "url": "https://www.b2b-center.ru/market/view.html?id=1190793",
+      "http": "200",
+      "bytes": 70886,
+      "sha256": "8bf1f837bd1c10c00844844f3af6f09e5612332ad8cc7630645b28d03b58acbd",
+      "private_file": "b2b-1190793.html",
+      "error": "",
+      "source_grade": "first_party_html"
+    },
+    {
+      "source": "B2B-Center",
+      "case_id": "4256170",
+      "month": null,
+      "law": null,
+      "query": null,
+      "action": "offers",
+      "url": "https://www.b2b-center.ru/market/postavka-kondensatornykh-ustanovok-ukrm-10-kv-1600-kva-v-kol-ve-1/tender-4256170/?action=offers",
+      "http": "200",
+      "bytes": 61994,
+      "sha256": "0db675956402c5b989a1707aabf6bbb0b0e8427ede07662bd17ffc3a20bca7be",
+      "private_file": "b2b-4256170-offers.html",
+      "error": "",
+      "source_grade": "first_party_html"
+    },
+    {
+      "source": "B2B-Center",
+      "case_id": "4561228",
+      "month": null,
+      "law": null,
+      "query": null,
+      "action": "offers",
+      "url": "https://www.b2b-center.ru/market/zakupka-kondensatornykh-ustanovok-10-kv-aukrm-uk1-uk2-dlia-mgbzh/tender-4561228/?action=offers",
+      "http": "200",
+      "bytes": 65469,
+      "sha256": "13206ceb13def55b49738f4d6332f5bad09526ffc377b33d91ec95daa6361f39",
+      "private_file": "b2b-4561228-offers.html",
+      "error": "",
+      "source_grade": "first_party_html"
+    },
+    {
+      "source": "B2B-Center",
+      "case_id": "4561243",
+      "month": null,
+      "law": null,
+      "query": null,
+      "action": "offers",
+      "url": "https://www.b2b-center.ru/market/zakupka-kondensatornykh-ustanovok-10-kv-aukrm-uk3-uk4-dlia-mgbzh/tender-4561243/?action=offers",
+      "http": "200",
+      "bytes": 65463,
+      "sha256": "14cc959819ca7b6cd19a5327fec7ea1f111b58e2fe367fe8953d6cdd2f76aab1",
+      "private_file": "b2b-4561243-offers.html",
+      "error": "",
+      "source_grade": "first_party_html"
+    },
+    {
+      "source": "B2B-Center",
+      "case_id": "4526968",
+      "month": null,
+      "law": null,
+      "query": null,
+      "action": "offers",
+      "url": "https://www.b2b-center.ru/market/raboty-po-izgotovleniiu-i-postavke-ukrm-v-kol-ve-4-sht-dlia-ooo-rzk/tender-4526968/?action=offers",
+      "http": "200",
+      "bytes": 62385,
+      "sha256": "07137b2b313a69d154177106877fec321545f1e33b02e89ac8a38d74024a889e",
+      "private_file": "b2b-4526968-offers.html",
+      "error": "",
+      "source_grade": "first_party_html"
+    },
+    {
+      "source": "B2B-Center",
+      "case_id": "4561228",
+      "month": null,
+      "law": null,
+      "query": null,
+      "action": "positions",
+      "url": "https://www.b2b-center.ru/market/zakupka-kondensatornykh-ustanovok-10-kv-aukrm-uk1-uk2-dlia-mgbzh/tender-4561228/?action=positions",
+      "http": "200",
+      "bytes": 57031,
+      "sha256": "23c033af88cfae05e9fc050fa8c844afb7efb732a5eb07337ef8d72d2a5c9795",
+      "private_file": "b2b-4561228-positions.html",
+      "error": "",
+      "source_grade": "first_party_html"
+    },
+    {
+      "source": "B2B-Center",
+      "case_id": "4561243",
+      "month": null,
+      "law": null,
+      "query": null,
+      "action": "positions",
+      "url": "https://www.b2b-center.ru/market/zakupka-kondensatornykh-ustanovok-10-kv-aukrm-uk3-uk4-dlia-mgbzh/tender-4561243/?action=positions",
+      "http": "200",
+      "bytes": 56952,
+      "sha256": "a8f94d2101952ba6759c18308ef9678e9ad797c834fe7926623ba7b36edeb687",
+      "private_file": "b2b-4561243-positions.html",
+      "error": "",
+      "source_grade": "first_party_html"
+    },
+    {
+      "source": "B2B-Center",
+      "case_id": "4561228",
+      "month": null,
+      "law": null,
+      "query": null,
+      "action": "changes",
+      "url": "https://www.b2b-center.ru/market/zakupka-kondensatornykh-ustanovok-10-kv-aukrm-uk1-uk2-dlia-mgbzh/tender-4561228/?action=changes",
+      "http": "200",
+      "bytes": 62108,
+      "sha256": "5ff5b5e2fdea697a3686d95b0ea7c25d394e270f051fa6d4fbd9a87e48dc103f",
+      "private_file": "b2b-4561228-changes.html",
+      "error": null,
+      "source_grade": "first_party_html"
+    },
+    {
+      "source": "B2B-Center",
+      "case_id": "4561243",
+      "month": null,
+      "law": null,
+      "query": null,
+      "action": "changes",
+      "url": "https://www.b2b-center.ru/market/zakupka-kondensatornykh-ustanovok-10-kv-aukrm-uk3-uk4-dlia-mgbzh/tender-4561243/?action=changes",
+      "http": "200",
+      "bytes": 62104,
+      "sha256": "cbde3a3813f0f1b5917484afd60ad07d057048f8e7796a12e5c11bb69d41c26f",
+      "private_file": "b2b-4561243-changes.html",
+      "error": null,
+      "source_grade": "first_party_html"
+    },
+    {
+      "source": "B2B-Center",
+      "case_id": "4256170",
+      "month": null,
+      "law": null,
+      "query": null,
+      "action": "explanation",
+      "url": "https://www.b2b-center.ru/market/postavka-kondensatornykh-ustanovok-ukrm-10-kv-1600-kva-v-kol-ve-1/tender-4256170/?action=explanation",
+      "http": "200",
+      "bytes": 61723,
+      "sha256": "7e8bd697956a1aeae96ab584e28eed08f25842b065599b9c1a1857a1aa0368a9",
+      "private_file": "b2b-4256170-explanation.html",
+      "error": null,
+      "source_grade": "first_party_html"
+    },
+    {
+      "source": "B2B-Center",
+      "case_id": "4526968",
+      "month": null,
+      "law": null,
+      "query": null,
+      "action": "explanation",
+      "url": "https://www.b2b-center.ru/market/raboty-po-izgotovleniiu-i-postavke-ukrm-v-kol-ve-4-sht-dlia-ooo-rzk/tender-4526968/?action=explanation",
+      "http": "200",
+      "bytes": 62045,
+      "sha256": "be9b4968cd89e72e70028a35e64ad3c1b509b8aeaf51c108c48f8e25d39c084f",
+      "private_file": "b2b-4526968-explanation.html",
+      "error": null,
+      "source_grade": "first_party_html"
+    },
+    {
+      "source": "EIS",
+      "case_id": null,
+      "month": "2026-07",
+      "law": "223fz",
+      "query": "БСК",
+      "action": "search",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.07.2026&publishDateTo=31.07.2026&searchString=%D0%91%D0%A1%D0%9A",
+      "http": "404",
+      "bytes": 146,
+      "sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0",
+      "private_file": "2026-07-223fz-715e7927.html",
+      "error": "",
+      "source_grade": "blocked_or_not_found"
+    },
+    {
+      "source": "EIS",
+      "case_id": null,
+      "month": "2026-09",
+      "law": "223fz",
+      "query": "БСК",
+      "action": "search",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.09.2026&publishDateTo=30.09.2026&searchString=%D0%91%D0%A1%D0%9A",
+      "http": "404",
+      "bytes": 146,
+      "sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0",
+      "private_file": "2026-09-223fz-715e7927.html",
+      "error": "",
+      "source_grade": "blocked_or_not_found"
+    },
+    {
+      "source": "EIS",
+      "case_id": null,
+      "month": "2026-10",
+      "law": "223fz",
+      "query": "БСК",
+      "action": "search",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.10.2026&publishDateTo=31.10.2026&searchString=%D0%91%D0%A1%D0%9A",
+      "http": "404",
+      "bytes": 146,
+      "sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0",
+      "private_file": "2026-10-223fz-715e7927.html",
+      "error": "",
+      "source_grade": "blocked_or_not_found"
+    },
+    {
+      "source": "EIS",
+      "case_id": null,
+      "month": "2025-04",
+      "law": "223fz",
+      "query": "БСК",
+      "action": "search",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.04.2025&publishDateTo=30.04.2025&searchString=%D0%91%D0%A1%D0%9A",
+      "http": "404",
+      "bytes": 146,
+      "sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0",
+      "private_file": "2025-04-223fz-715e7927.html",
+      "error": "",
+      "source_grade": "blocked_or_not_found"
+    },
+    {
+      "source": "EIS",
+      "case_id": null,
+      "month": "2024-05",
+      "law": "223fz",
+      "query": "фильтр гармоник",
+      "action": "search",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.05.2024&publishDateTo=31.05.2024&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80+%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D0%BD%D0%B8%D0%BA",
+      "http": "404",
+      "bytes": 146,
+      "sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0",
+      "private_file": "2024-05-223fz-72ef22c8.html",
+      "error": "",
+      "source_grade": "blocked_or_not_found"
+    },
+    {
+      "source": "EIS",
+      "case_id": null,
+      "month": "2026-10",
+      "law": "223fz",
+      "query": "фильтр гармоник",
+      "action": "search",
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=30&publishDateFrom=01.10.2026&publishDateTo=31.10.2026&searchString=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80+%D0%B3%D0%B0%D1%80%D0%BC%D0%BE%D0%BD%D0%B8%D0%BA",
+      "http": "404",
+      "bytes": 146,
+      "sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0",
+      "private_file": "2026-10-223fz-72ef22c8.html",
+      "error": "",
+      "source_grade": "blocked_or_not_found"
+    }
+  ],
+  "private_review_packet": "watchdog-20261029-0829-primary/chatgpt-arc-review.json",
+  "next_three": [
+    {
+      "case": "32616433248",
+      "target": "signed contractor and contract register after one-bid negotiations",
+      "retry_eligible_moscow": "2026-10-29T18:48:00+03:00 or new official event"
+    },
+    {
+      "case": "32515582393",
+      "target": "signed supplier identity and executed price for UKRM 6kV",
+      "retry_eligible_moscow": "2026-10-30T06:46:00+03:00 or new official event"
+    },
+    {
+      "case": "106044-ТТ",
+      "target": "Metal-IT native outcome/protocol for 3 STATCOM 6.3kV",
+      "retry_eligible_moscow": "immediately on newly discovered exact first-party URL; generic root not before 2026-10-30T06:42:00+03:00"
+    }
+  ]
+}

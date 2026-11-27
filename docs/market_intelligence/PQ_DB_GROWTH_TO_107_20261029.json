@@ -1,0 +1,28 @@
+{
+  "schema_version": "pq-market-corpus-source-receipt/1",
+  "as_of_moscow": "2026-10-29",
+  "collection": "arvectum_data/arvectum-market-pq-6-35kv",
+  "before_unique_lots": 106,
+  "after_unique_lots": 107,
+  "new_unique_lots": 1,
+  "after_unique_procedure_tokens": 96,
+  "new_strict_6_35kv_confirmed_lots": 0,
+  "readback": [
+    {
+      "id": "commercial:4158439:lot1",
+      "hash": "cdb5c6cdcb2fc9e93583dacc069b7f27f0e2374313e5b3a9cb5bf23f5a279bc3",
+      "review": "unreviewed",
+      "status": "staged_unreviewed",
+      "revision": 1
+    }
+  ],
+  "original_source_url": "https://www.b2b-center.ru/market/modernizatsiia-ustanovki-kompensatsii-reaktivnoi-moshchnosti-ukrm/tender-4158439/",
+  "original_html_sha256": "00a163169f78b3dd30556f1bf43a5968e886e1a877f8729a77339dec74bd5615",
+  "backup_sha256": "1657c16b62bf42096369aa1c875f264581a2aa217fddff17d658c6c0959db0c6",
+  "source_manifest_sha256": "a1020728a617c7bec3a3cc38eeb1dc5c486da8ce55a98ffb658fa6d005aeadaf",
+  "outcome": "unsuccessful_no_bids",
+  "voltage_status": "unknown",
+  "new_named_supplier": false,
+  "new_verified_sale": false,
+  "caveat": "One first-party unsuccessful 2025 procedure, not a signed 6–35kV equipment sale."
+}

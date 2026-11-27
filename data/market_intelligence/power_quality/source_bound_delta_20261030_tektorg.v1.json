@@ -1,0 +1,104 @@
+{
+  "schema_version": "mi-pq-source-bound-incremental/1",
+  "date": "2026-10-30",
+  "base_db_expected_records": 113,
+  "source": "official_TEKTORG_public_cards_and_technical_documents",
+  "corpus": "power_quality_russia",
+  "new_cases": [
+    {
+      "source_record": {
+        "canonical_id": "commercial:РН61003961:lot1",
+        "procedure_id": "РН61003961",
+        "family": "ukrm",
+        "scope": "equipment_supply_new",
+        "market_scope": "core_6kv_equipment_supply_notice",
+        "procurement_regime": "commercial",
+        "platform": "ТЭК-Торг (Роснефть)",
+        "publication_date": "2026-10-16",
+        "date_basis": "official_public_search_and_detail",
+        "deadline_moscow": "2026-10-30T19:59:00+03:00",
+        "customer": {
+          "name": "АО «АНПЗ ВНК»",
+          "inn": "2443000518"
+        },
+        "status": "accepting_bids_as_of_2026_10_30_0637_msk",
+        "description": "Установки конденсаторные, лот 2600124554. Оригинальная таблица критериев указывает четыре внутренние установки на 6 кВ: две по 300 квар и две по 450 квар (суммарно 1500 квар); ценовые предложения и поставщик неизвестны.",
+        "technical": {
+          "voltage_kv": 6,
+          "unit_count": 4,
+          "power_kvar_each": [
+            300,
+            300,
+            450,
+            450
+          ],
+          "total_power_kvar": 1500,
+          "installation": "indoor"
+        },
+        "project_key": "ANPZ-VNK:2600124554",
+        "related_procedures": [
+          "РН60405071"
+        ],
+        "project_relation": "same buyer and underlying lot 2600124554 as earlier price monitoring; separate procedure, do not count second distinct project without contract evidence",
+        "nmck_rub": null,
+        "commission_bid_rub": null,
+        "contract_registered_price_rub": null,
+        "supplier_verified": false,
+        "signed_supplier_verified": false,
+        "paid_verified": false,
+        "realized_equipment_revenue_rub": null,
+        "market_population_complete": false,
+        "evidence": [
+          {
+            "url": "https://www.tektorg.ru/rosneft/procedures?name=%D0%A0%D0%9D61003961",
+            "source_tier": "first_party_TEKTORG_public_search_card",
+            "sha256": "1a13305a2d7482ad0b99f40dde3aab6befebcab055a329142b23d2a51222c001"
+          },
+          {
+            "url": "https://www.tektorg.ru/rosneft/procedures/20065463",
+            "source_tier": "first_party_TEKTORG_public_procedure_card",
+            "sha256": "9a9fa6fc6f3fd01b17ad80f3fd9ef4cdaf134d32cebd1004c54b451d1bf5588c"
+          },
+          {
+            "url": "https://www.tektorg.ru/rosneft/procedures/20065463",
+            "source_tier": "first_party_TEKTORG_technical_document_linked_from_card",
+            "sha256": "397ece2fa5086b7b89d14c4249b94291f7617fb39684142df8750e3ee22e5380"
+          },
+          {
+            "url": "https://www.tektorg.ru/rosneft/procedures/20065463",
+            "source_tier": "first_party_TEKTORG_technical_criteria_xlsx_linked_from_card",
+            "sha256": "f1b7d3f95e1768c6757d65e469cc25f62ad79d31883839d37173958fc072f886"
+          }
+        ]
+      },
+      "verified_originals": [
+        {
+          "role": "listing",
+          "private_relative": "captures/commercial_RN61003961_lot1/20261030T033730207400Z-90b902a6-1a13305a2d7482ad.bin",
+          "sha256": "1a13305a2d7482ad0b99f40dde3aab6befebcab055a329142b23d2a51222c001",
+          "bytes": 287589
+        },
+        {
+          "role": "detail",
+          "private_relative": "captures/commercial_RN61003961_lot1/20261030T033744745519Z-a90dcb19-9a9fa6fc6f3fd01b.bin",
+          "sha256": "9a9fa6fc6f3fd01b17ad80f3fd9ef4cdaf134d32cebd1004c54b451d1bf5588c",
+          "bytes": 305148
+        },
+        {
+          "role": "technical_docx",
+          "private_relative": "captures/commercial_RN61003961_lot1/20261030T033918572929Z-d9b8e47d-397ece2fa5086b7b.bin",
+          "sha256": "397ece2fa5086b7b89d14c4249b94291f7617fb39684142df8750e3ee22e5380",
+          "bytes": 119279
+        },
+        {
+          "role": "criteria_xlsx",
+          "private_relative": "captures/commercial_RN61003961_lot1/20261030T033933090110Z-a14b61f0-f1b7d3f95e1768c6.bin",
+          "sha256": "f1b7d3f95e1768c6757d65e469cc25f62ad79d31883839d37173958fc072f886",
+          "bytes": 17906
+        }
+      ],
+      "original_verification": "internal_APFS_sha256_byte_exact",
+      "review_scope": "source_bound_6kv_procurement_candidate_not_signed_sale"
+    }
+  ]
+}

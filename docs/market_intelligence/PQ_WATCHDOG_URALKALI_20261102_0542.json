@@ -1,0 +1,137 @@
+{
+  "schema": "pq-watchdog-uralkali-20261102/1",
+  "moscow_completed": "2026-11-02T05:45:18.064169+03:00",
+  "run_id": "TA-MI-2026-11-02T02-37-01-254Z",
+  "issue_comment_id": 6567716868,
+  "canonical_pr": 521,
+  "before_unique_lots": 120,
+  "after_unique_lots": 121,
+  "distinct_procedures_after": 110,
+  "eis_223_notices_after": 43,
+  "new_unique_lots": 1,
+  "new_strict_6_35kv_equipment_supply_leads": 1,
+  "new_proven_underlying_projects": 0,
+  "provisional_project_key": "uralkali-berezniki-10kv-200kvar-2026",
+  "new_verified_case_fields": {
+    "commercial:4263966:lot1": {
+      "voltage_kv": "10",
+      "power": "200 кВАр",
+      "quantity": "1"
+    }
+  },
+  "first_party_requests": 6,
+  "first_party_http200_captures": 4,
+  "first_party_http403": 2,
+  "new_distinct_capture_sha": 3,
+  "first_party_relevant_original_pages": 2,
+  "source_captures": [
+    {
+      "source_url": "https://www.b2b-center.ru/app/market-next/2744415-ustanovka-reguliruemaia-dlia-kompensatsii-reaktivnoi/tender-4263966/",
+      "http_status": 200,
+      "sha256": "dd4d50a4b48b06f60b832f9fbe460885bb7bcc024a583dd2c79540767e376b40",
+      "bytes": 371314,
+      "relative_file": "captures/commercial_4263966_lot1/20261102T023828916457Z-4a588a43-dd4d50a4b48b06f6.bin"
+    },
+    {
+      "source_url": "https://www.b2b-center.ru/app/market-next/2744415-ustanovka-reguliruemaia-dlia-kompensatsii-reaktivnoi/tender-4263966/positions/",
+      "http_status": 200,
+      "sha256": "2ca8246e7792a51d9c754df4aa417b7abda87f8a029744d0b025374aab700993",
+      "bytes": 358989,
+      "relative_file": "captures/commercial_4263966_lot1/20261102T023943699979Z-dab8f333-2ca8246e7792a51d.bin"
+    },
+    {
+      "source_url": "https://www.b2b-center.ru/app/market-next/2744415-ustanovka-reguliruemaia-dlia-kompensatsii-reaktivnoi/tender-4263966/offers",
+      "http_status": 200,
+      "sha256": "b32ba39f23a6b55929fbfd901ed15932d26da3eab81530ec801e60face9cabea",
+      "bytes": 171119,
+      "relative_file": "captures/commercial_4263966_lot1/20261102T023943957579Z-41d31a1d-b32ba39f23a6b559.bin"
+    },
+    {
+      "source_url": "https://www.b2b-center.ru/app/market-next/2744415-ustanovka-reguliruemaia-dlia-kompensatsii-reaktivnoi/tender-4263966/changes",
+      "http_status": 200,
+      "sha256": "b32ba39f23a6b55929fbfd901ed15932d26da3eab81530ec801e60face9cabea",
+      "bytes": 171119,
+      "relative_file": "captures/commercial_4263966_lot1/20261102T023944170061Z-51c5d2eb-b32ba39f23a6b559.bin"
+    }
+  ],
+  "blocked_source_attempts": [
+    {
+      "url": "https://www.b2b-center.ru/firms/ooo-bashkirenergo/49070/",
+      "method": "GET httpx",
+      "observed": "HTTP 403"
+    },
+    {
+      "url": "https://www.b2b-center.ru/firms/ooo-bashkirenergo/49070/",
+      "method": "GET strict TLS curl-direct",
+      "observed": "HTTP 403"
+    },
+    {
+      "url": "https://www.b2b-center.ru/app/market-next/2744415-ustanovka-reguliruemaia-dlia-kompensatsii-reaktivnoi/tender-4263966/offers",
+      "observed": "HTTP 200 generic access shell, no public participant/winner"
+    },
+    {
+      "url": "https://www.b2b-center.ru/app/market-next/2744415-ustanovka-reguliruemaia-dlia-kompensatsii-reaktivnoi/tender-4263966/changes",
+      "observed": "HTTP 200 same SHA as generic offers shell; not separate outcome evidence"
+    }
+  ],
+  "original_commission_protocols": 0,
+  "named_winners": 0,
+  "verified_signed_suppliers": 0,
+  "verified_signed_contract_prices": 0,
+  "verified_paid_equipment_sales": 0,
+  "new_exhaustive_month_source_searches": 0,
+  "limitations": "Only an original B2B 2025-12 supply notice and 2026-02 outcome-hidden card, not exhaustive market coverage; manufacturer, winner, contract and paid sales unverified. B2B firm profile HTTP403 is access restriction, not negative market evidence.",
+  "backup_sha256": "17b6c6c036d989cfef03a6ba96438c9b2cb5978f42a1f0fbbce28dedb6b29c9a",
+  "db_readback_hash": "d7deb6ed8ca743d6a35f46fd69e18e81829a98cc726f7753f0847dfe9b5a0627",
+  "client_preview_unique_lots": 121,
+  "client_version": "V43",
+  "pdf_pages_each": 264,
+  "field_coverage_after": {
+    "bid": 13,
+    "buyer": 120,
+    "buyer_inn": 79,
+    "contract_date": 26,
+    "contract_no": 24,
+    "contract_price": 25,
+    "date": 116,
+    "description": 121,
+    "equipment_only_price": 4,
+    "family": 121,
+    "id": 121,
+    "nmck": 47,
+    "platform": 119,
+    "power": 10,
+    "procedure": 104,
+    "quantity": 51,
+    "regime": 121,
+    "scope": 121,
+    "source_urls": 113,
+    "status": 121,
+    "voltage_kv": 32,
+    "winner": 6
+  },
+  "tests": "14 targeted passed; Ruff clean; 264-page RU/EN PDFs checked; source-bound 200 kvar present",
+  "next_ranked_targets": [
+    {
+      "id": "commercial:4643332:lot1",
+      "eligible": "now",
+      "action": "check 10.5 kV nominal model and guarded P2 null-field enrichment, backup before CAS"
+    },
+    {
+      "id": "223fz:32616474682:lot1/lot2",
+      "eligible": "2026-11-02 06:30 Europe/Moscow",
+      "action": "official notice and protocol/contract recheck"
+    },
+    {
+      "id": "223fz:32616433248:lot1",
+      "eligible": "2026-11-02 09:00 Europe/Moscow",
+      "action": "official protocol and contract recheck"
+    }
+  ],
+  "additional_retry": {
+    "id": "223fz:32616497692:lot1",
+    "eligible": "2026-11-02 16:30 Europe/Moscow"
+  },
+  "repo_code_commit": "659536d458576c2215d5909e847db9f95f8d2847",
+  "no_auto_merge": true
+}

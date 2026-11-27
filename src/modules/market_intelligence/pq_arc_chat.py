@@ -19,13 +19,31 @@ def next_packet(*, queue_dir: Path, max_chars: int = MAX_DISPLAY_CHARS) -> dict:
     if not 1000 <= max_chars <= MAX_DISPLAY_CHARS or queue_dir.is_symlink():
         raise ValueError("Invalid ARC handoff budget")
     unreadable = 0
+    duplicates = 0
+    records = []
+    reviewed = {}
     for path in sorted(queue_dir.glob("*.json")):
         if path.is_symlink():
             continue
         item = json.loads(path.read_text(encoding="utf-8"))
-        if item.get("schema_version") != "pq-review-queue/1" or item.get("state") != "pending_review":
+        if item.get("schema_version") != "pq-review-queue/1":
+            continue
+        records.append(item)
+        if item.get("state") == "reviewed" and item.get("review"):
+            packet = item.get("packet") or {}
+            key = str(packet.get("registry_number") or "")
+            shas = {d.get("sha256") for d in packet.get("documents", [])}
+            if key and shas and None not in shas:
+                reviewed.setdefault(key, []).append(shas)
+    for item in records:
+        if item.get("state") != "pending_review":
             continue
         packet = item["packet"]
+        sha_set = {d.get("sha256") for d in packet["documents"]}
+        if sha_set and None not in sha_set and any(
+                sha_set <= old for old in reviewed.get(packet["registry_number"], [])):
+            duplicates += 1
+            continue
         if not any(len(" ".join(d.get("text", "").split())) >= 12 for d in packet["documents"]):
             unreadable += 1
             continue
@@ -58,7 +76,8 @@ def next_packet(*, queue_dir: Path, max_chars: int = MAX_DISPLAY_CHARS) -> dict:
             "reviewer": "current_chatgpt_conversation_via_arc",
         }
     return {"status": "empty", "reviewer": "current_chatgpt_conversation_via_arc",
-            "pending_unreadable": unreadable}
+            "pending_unreadable": unreadable,
+            "pending_exact_sha_duplicates_skipped": duplicates}
 
 
 def main() -> None:

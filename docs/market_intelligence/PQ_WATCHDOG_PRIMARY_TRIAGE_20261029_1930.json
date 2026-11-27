@@ -1,0 +1,199 @@
+{
+  "schema_version": "pq-watchdog-primary-triage-20261029/1",
+  "completed_moscow": "2026-10-29T19:32:47+03:00",
+  "issue_comment_id": 6502392581,
+  "canonical_pr": 521,
+  "branch": "feature/pq-etp-provenance-ledger-20261028",
+  "parent_head": "f6a3c9d07a19e032942b62697f519b581c2975f0",
+  "status": "in_progress",
+  "db_mutation": false,
+  "canonical_v29_rows_unchanged": 101,
+  "postgres_before": {
+    "unique_lots": 113,
+    "distinct_procedures": 102,
+    "eis_223_notices": 37
+  },
+  "postgres_after": {
+    "unique_lots": 113,
+    "distinct_procedures": 102,
+    "eis_223_notices": 37
+  },
+  "metrics": {
+    "direct_primary_http_attempts": 12,
+    "http_200": 8,
+    "tls_errors": 4,
+    "allowlist_blocked_before_http": 1,
+    "new_sha_verified_first_party_pages": 5,
+    "new_first_party_technical_files": 0,
+    "new_unique_lots": 0,
+    "new_distinct_procedures": 0,
+    "new_projects": 0,
+    "new_named_winner_protocols": 0,
+    "new_signed_suppliers": 0,
+    "new_executed_sales": 0,
+    "new_verified_core_6_35kv_equipment_sales": 0,
+    "new_month_source_coverage": 0
+  },
+  "sources": [
+    {
+      "case_id": "commercial:sibur-search-fku-20261029:lot1",
+      "query": "ФКУ",
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%A4%D0%9A%D0%A3",
+      "http": 200,
+      "sha256": "77d577807976d2ef0129ab2b5c975d92e211d33ccfa36f69fbfb38559d868f49",
+      "bytes": 178471,
+      "receipt_relative": "captures/commercial_sibur-search-fku-20261029_lot1/20261029T163016076177Z-85d382da-77d577807976d2ef.bin.json",
+      "first_page_rows": 1,
+      "strict_relevant_pq": 0,
+      "assessment": "false_positive_road_FKU"
+    },
+    {
+      "case_id": "commercial:sibur-search-filtercomp-20261029:lot1",
+      "query": "фильтрокомпенсирующая",
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B0%D1%8F",
+      "http": 200,
+      "sha256": "1c6e826eca245d95815ed674f8ec1b9a24c192c247bf872d30993d76f34950b5",
+      "bytes": 173852,
+      "receipt_relative": "captures/commercial_sibur-search-filtercomp-20261029_lot1/20261029T163017574869Z-e287d55f-1c6e826eca245d95.bin.json",
+      "first_page_rows": 0,
+      "strict_relevant_pq": 0,
+      "assessment": "no_results_on_first_page"
+    },
+    {
+      "case_id": "commercial:sibur-search-thyristor-20261029:lot1",
+      "query": "тиристорный",
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9",
+      "http": 200,
+      "sha256": "48e4a07153b08e7aad3e0b45cb4ca73e0442ab2bd2973ba3c58e8c87dad4a0a9",
+      "bytes": 238467,
+      "receipt_relative": "captures/commercial_sibur-search-thyristor-20261029_lot1/20261029T163019104636Z-0164f032-48e4a07153b08e7a.bin.json",
+      "first_page_rows": 3,
+      "strict_relevant_pq": 0,
+      "assessment": "industrial_thyristor_controllers_not_PQ"
+    },
+    {
+      "case_id": "commercial:sibur-search-capacitorbank-20261029:lot1",
+      "query": "конденсаторная батарея",
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%BA%D0%BE%D0%BD%D0%B4%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80%D0%BD%D0%B0%D1%8F+%D0%B1%D0%B0%D1%82%D0%B0%D1%80%D0%B5%D1%8F",
+      "http": 200,
+      "sha256": "438e9eab5be62d7a97fbdaff4670e0eed4edb946f69303fa46d078a01b5c821f",
+      "bytes": 173852,
+      "receipt_relative": "captures/commercial_sibur-search-capacitorbank-20261029_lot1/20261029T163020525470Z-9ac192f9-438e9eab5be62d7a.bin.json",
+      "first_page_rows": 0,
+      "strict_relevant_pq": 0,
+      "assessment": "no_results_on_first_page"
+    },
+    {
+      "case_id": "commercial:4617521:lot1",
+      "query": "exact_4617521",
+      "url": "https://www.b2b-center.ru/app/market-next/vybor-ispolnitelia-na-postavku-montazh-i-pnr-ustanovok-kompensatsii/tender-4617521/",
+      "http": 200,
+      "sha256": "e90e3392bc11781d3f7aba9e5e186429efabad65a1eda6b71cbfec0df9da6add",
+      "bytes": 326210,
+      "receipt_relative": "captures/commercial_4617521_lot1/20261029T163007639306Z-603e022c-e90e3392bc11781d.bin.json",
+      "first_page_rows": 1,
+      "strict_relevant_pq": 1,
+      "assessment": "3_offers_under_review_no_winner_or_voltage"
+    }
+  ],
+  "source_attempts": [
+    {
+      "source": "SIBUR",
+      "method": "capture_primary_source httpx",
+      "urls": [
+        "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%A4%D0%9A%D0%A3",
+        "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B0%D1%8F",
+        "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9",
+        "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%BA%D0%BE%D0%BD%D0%B4%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80%D0%BD%D0%B0%D1%8F+%D0%B1%D0%B0%D1%82%D0%B0%D1%80%D0%B5%D1%8F"
+      ],
+      "result": "four strict TLS chain errors; four successful curl-direct strict certificate verification retries, all HTTP200"
+    },
+    {
+      "source": "B2B-Center",
+      "url": "https://www.b2b-center.ru/app/market-next/vybor-ispolnitelia-na-postavku-montazh-i-pnr-ustanovok-kompensatsii/tender-4617521/",
+      "result": "HTTP200, three bids, review stage, no public winner"
+    },
+    {
+      "source": "Metal-IT",
+      "url": "https://etp.metal-it.ru/trades/475802614/info",
+      "case": "commercial:111098-ТТ:lot1",
+      "capture": "allowlist rejected before HTTP",
+      "independent_read_only_curl": "HTTP200 JS shell, no case-specific visible text; not a verified source card",
+      "existing_pg_lot": "commercial:111098-ТТ:lot1"
+    }
+  ],
+  "searches": [
+    {
+      "source": "SIBUR official archive",
+      "term": "ФКУ",
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%A4%D0%9A%D0%A3",
+      "http": 200,
+      "returned_first_page_rows": 1,
+      "cursor": null,
+      "window": "not enforced by source; first page only",
+      "exhaustive": false,
+      "assessment": "false_positive_road_FKU"
+    },
+    {
+      "source": "SIBUR official archive",
+      "term": "фильтрокомпенсирующая",
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%BE%D0%BA%D0%BE%D0%BC%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B0%D1%8F",
+      "http": 200,
+      "returned_first_page_rows": 0,
+      "cursor": null,
+      "window": "not enforced by source; first page only",
+      "exhaustive": false,
+      "assessment": "no_results_on_first_page"
+    },
+    {
+      "source": "SIBUR official archive",
+      "term": "тиристорный",
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D1%82%D0%B8%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9",
+      "http": 200,
+      "returned_first_page_rows": 3,
+      "cursor": null,
+      "window": "not enforced by source; first page only",
+      "exhaustive": false,
+      "assessment": "industrial_thyristor_controllers_not_PQ"
+    },
+    {
+      "source": "SIBUR official archive",
+      "term": "конденсаторная батарея",
+      "url": "https://sibur.ru/ru/procurement/buy/archive/?purchase=%D0%BA%D0%BE%D0%BD%D0%B4%D0%B5%D0%BD%D1%81%D0%B0%D1%82%D0%BE%D1%80%D0%BD%D0%B0%D1%8F+%D0%B1%D0%B0%D1%82%D0%B0%D1%80%D0%B5%D1%8F",
+      "http": 200,
+      "returned_first_page_rows": 0,
+      "cursor": null,
+      "window": "not enforced by source; first page only",
+      "exhaustive": false,
+      "assessment": "no_results_on_first_page"
+    }
+  ],
+  "new_case_dedup": {
+    "111098-ТТ": "already exists in PG as commercial:111098-ТТ:lot1; 2 x UKRM 6kV in secondary listing, no primary outcome; not imported"
+  },
+  "limitations": [
+    "No source-grade winner/contract from any of these pages",
+    "SIBUR query terms have lexical false positives; one search page is not exhaustive coverage",
+    "Metal-IT public HTML only JS shell, no case-specific award or contract",
+    "No new verified 6-35kV sale; original Tander voltage still unknown",
+    "No 44/223 calendar month verified"
+  ],
+  "next_targets": [
+    {
+      "case": "111098-ТТ",
+      "eligibility": "immediate if first-party Metal-IT card/API becomes publicly readable",
+      "goal": "original technical file, named award, signed supplier for 2 UKRM 6kV; existing PG lot, no duplicate"
+    },
+    {
+      "case": "2103585/2",
+      "eligibility": "immediate via independent legal official source, not repeat archived 7z",
+      "goal": "10kV supplier/award/contract"
+    },
+    {
+      "case": "106044-ТТ",
+      "eligibility": "2026-10-30 09:00 MSK",
+      "goal": "STATCOM 6.3kV result/protocol"
+    }
+  ],
+  "safety": "single PR #521, no DB insert, no backup required for nonmutating run, no auto merge"
+}
