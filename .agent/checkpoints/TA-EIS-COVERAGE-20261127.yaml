@@ -1,0 +1,26 @@
+task_id: TA-EIS-COVERAGE-20261127
+status: in_progress
+goal: Correct daily discovery coverage for remote site support, 223-FZ and browser fallback without disrupting active release.
+definition_of_done:
+- Verify live PRIZ and RI223 archive-link and browser access.
+- Prepare tested website support and 223-FZ discovery profiles and law-correct intake.
+- Verify independent bounded browser reserve and dual-profile runner; preserve errors and owner gates.
+- Protected CI, reviewed release and one daily job configured for both profiles, verify live bounded results.
+completed:
+- SOAP PRIZ 0187300017826000089 and RI223 32616614845 completed with archive links.
+- Public live search 44fz explicit zero and 223fz one actual card 32616630657; exact 223 lookup title and URL present.
+- Profile v3 accepts bounded website support; independent 223 profile v1 max five deep analyses; CLI supports include-profile without hiding previous failure.
+- Deployed Python 3.15 cannot use prior cp312 package; provisioned isolated Python 3.12 worker, hashed dependency lock, real Chrome fallback retrieved same 223 card after simulated primary timeout.
+- 112 relevant pytest PASS; new files and changed DTR modules Ruff PASS; existing parser and pipeline legacy lint counts unchanged; git diff check PASS.
+- Existing three historic unresolved runs remain under prior targeted recovery gates; no replay or live mutation.
+current: source candidate tested; protected CI and coordinated release admission pending
+remaining:
+- Verify exact-head protected CI, review and merge source candidate without overwriting concurrent roadmap.
+- Obtain exact release admission; deploy safe release and one existing daily schedule with companion profile plus browser interpreter; verify runtime and resource budget.
+- Keep historical recovery under existing checkpoints; do not auto-retry or change current DB.
+last_verified_commit: 9f2bd0adf4516276d143fc79f1bf4fae6cdacb33
+test_results:
+- 112 targeted pass, 24 inherited warnings; Ruff scoped pass; diff check pass.
+- Real SOAP archive-link 2/2, real public 223 exact lookup and isolated browser fallback pass.
+resume_instruction: Resume branch fix/ta-eis-coverage-20261127; read docs/operations/EIS_DAILY_COVERAGE_2026-11-27.md, verify exact PR and CI; follow existing coordinated release gates, no production mutation without exact admission.
+production_modified: false
