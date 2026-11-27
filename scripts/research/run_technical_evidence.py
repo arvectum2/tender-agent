@@ -22,8 +22,8 @@ from scripts.research.acquire_gpb_documents import capture, references
 from scripts.research.capture_gpb_history_partitions import atomic
 from scripts.research.technical_document_evidence import extract
 
-SUPPORTED={".zip",".docx",".xlsx",".pptx",".pdf"}
-GPB_SUPPORTED={".zip",".docx",".xlsx",".pdf"}
+SUPPORTED={".rar",".7z",".zip",".docx",".xlsx",".pptx",".pdf"}
+GPB_SUPPORTED={".rar",".7z",".zip",".docx",".xlsx",".pdf"}
 
 
 def read(p):
@@ -49,7 +49,7 @@ def gpb_tasks(details):
               and Path(r["original_filename"]).suffix.lower() in GPB_SUPPORTED]
     # Direct office files, then source package names; no repeated URL per procedure.
     unique={(r["external_id"],r["document_url"]):r for r in selected}
-    return sorted(unique.values(),key=lambda r:(Path(r["original_filename"]).suffix.lower()==".zip",
+    return sorted(unique.values(),key=lambda r:(Path(r["original_filename"]).suffix.lower() in {".zip",".rar",".7z"},
                                                 r["external_id"],r["document_url"])),len(refs)
 
 

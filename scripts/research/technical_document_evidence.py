@@ -3,6 +3,10 @@ from __future__ import annotations
 
 import hashlib
 import io
+import os
+import select
+import time
+import unicodedata
 import re
 import subprocess
 import zipfile
@@ -112,6 +116,69 @@ def matches(text):
     return result
 
 
+def archive_stream(args, limit, timeout=25):
+    # Read only stdout with a byte cap; never unpack on disk or execute members.
+    env=dict(os.environ, LC_ALL="en_US.UTF-8")
+    proc=subprocess.Popen(args, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
+                          stderr=subprocess.DEVNULL, env=env, close_fds=True)
+    out=bytearray(); deadline=time.monotonic()+timeout
+    try:
+        while True:
+            wait=deadline-time.monotonic()
+            if wait<=0 or not select.select([proc.stdout],[],[],wait)[0]:
+                raise ValueError("archive read timeout")
+            chunk=os.read(proc.stdout.fileno(),65536)
+            if not chunk:break
+            out.extend(chunk)
+            if len(out)>limit:raise ValueError("archive stream size bound")
+        if proc.wait(timeout=max(.1,deadline-time.monotonic())):
+            raise ValueError("archive read failed")
+        return bytes(out)
+    finally:
+        if proc.poll() is None:proc.kill();proc.wait(timeout=5)
+        proc.stdout.close()
+
+
+def safe_archive_name(name):
+    return (bool(name) and len(name)<=1024 and not name.startswith(("/","-"))
+            and not any(ord(c)<32 or c in "\\:*?[]" for c in name)
+            and all(p not in ("",".","..") for p in name.rstrip("/").split("/")))
+
+
+def external_archive_members(path, raw, ext):
+    if ext==".rar" and not raw.startswith((b"Rar!\x1a\x07\x00",b"Rar!\x1a\x07\x01\x00")):
+        raise ValueError("RAR signature mismatch")
+    if ext==".7z" and not raw.startswith(b"7z\xbc\xaf\x27\x1c"):
+        raise ValueError("7z signature mismatch")
+    tool="/usr/bin/bsdtar"
+    names=archive_stream([tool,"-tf",str(path)],256000).decode("utf-8").splitlines()
+    verbose=archive_stream([tool,"-tvf",str(path)],512000).decode("utf-8").splitlines()
+    if not names or len(names)!=len(verbose) or len(names)>3000:
+        raise ValueError("archive listing mismatch")
+    entries=[];seen=set();total=0
+    for name,line in zip(names,verbose,strict=True):
+        key=unicodedata.normalize("NFC",name.rstrip("/")).casefold()
+        if not safe_archive_name(name) or key in seen:raise ValueError("unsafe or duplicate archive member")
+        seen.add(key)
+        if line.startswith("d"):continue
+        fields=line.split(maxsplit=5)
+        if not line.startswith("-") or len(fields)<6 or not fields[4].isdigit():
+            raise ValueError("special member or unknown size")
+        size=int(fields[4]);total+=size
+        if total>MAX_ARCHIVE or total>len(raw)*200:raise ValueError("archive expansion bound")
+        entries.append((name,size))
+    for name,size in entries:
+        suffix=Path(name).suffix.lower()
+        if suffix not in OFFICE or size>25*1024**2:
+            yield name,None,"unsupported or oversized member";continue
+        try:
+            data=archive_stream([tool,"-xOf",str(path),"--",name],size)
+            if len(data)!=size:raise ValueError("archive member size mismatch")
+            yield name,data,None
+        except (ValueError,OSError,subprocess.SubprocessError) as exc:
+            yield name,None,str(exc)[:130]
+
+
 def extract(path,expected_sha):
     if path.is_symlink() or path.stat().st_size>25*1024**2:
         raise ValueError("original bounds")
@@ -146,6 +213,15 @@ def extract(path,expected_sha):
                                    "compression_method":info.compress_type})
                 except (ValueError,KeyError,ET.ParseError,zipfile.BadZipFile) as exc:
                     review.append({"member":info.filename,"reason":str(exc)[:130]})
+    elif ext in {".rar",".7z"}:
+        for name,data,error in external_archive_members(path,raw,ext):
+            if error:
+                review.append({"member":name,"reason":error});continue
+            try:
+                for part,text in office_parts(data,Path(name).suffix.lower()):
+                    add(name,digest(data),part,text)
+            except (ValueError,KeyError,ET.ParseError,zipfile.BadZipFile,NotImplementedError) as exc:
+                review.append({"member":name,"reason":str(exc)[:130]})
     elif ext==".pdf":
         if not raw.startswith(b"%PDF-") or b"%%EOF" not in raw[-4096:]:
             raise ValueError("invalid PDF")
