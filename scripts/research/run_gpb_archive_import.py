@@ -52,6 +52,22 @@ def command(args, cwd=None, timeout=180, data=None):
     return proc.stdout
 
 
+def verify_ta_archive(partial):
+    """Use the actual source PG16 container's client, without DB access."""
+    if partial.is_symlink() or not partial.is_file() or not partial.stat().st_size:
+        raise ValueError("invalid backup archive")
+    identity = command(["docker", "exec", DB, "psql", "-XqAt", "-U", "arvectum",
+                        "-d", "arvectum_local", "-v", "ON_ERROR_STOP=1", "-c",
+                        "SELECT system_identifier FROM pg_control_system()"], timeout=15)
+    if identity.strip() != b"7694400479046774822":
+        raise RuntimeError("TA source database identity mismatch")
+    with partial.open("rb") as archive:
+        result = subprocess.run(["docker", "exec", "-i", DB, "pg_restore", "--list"],
+                                stdin=archive, capture_output=True, timeout=60, check=False)
+    if result.returncode or b"TABLE DATA" not in result.stdout:
+        raise RuntimeError("TA backup archive listing verification failed")
+
+
 def backup_ta(folder):
     dest = folder / ("archive-ta-" + datetime.now(UTC).strftime("%Y%m%dT%H%M%S%f") + ".dump")
     partial = dest.with_suffix(".partial")
@@ -63,7 +79,7 @@ def backup_ta(folder):
         os.fsync(f.fileno())
     if not partial.stat().st_size:
         raise ValueError("empty DB backup")
-    command(["/opt/homebrew/opt/postgresql@16/bin/pg_restore", "-l", str(partial)], timeout=60)
+    verify_ta_archive(partial)
     partial.replace(dest)
     with dest.open("rb") as f:
         sha = hashlib.file_digest(f, "sha256").hexdigest()
