@@ -3,6 +3,8 @@ from __future__ import annotations
 from types import SimpleNamespace
 from unittest.mock import Mock
 
+import pytest
+
 from src.main import app
 from src.modules.daily_tender_run.manager_synthesis import ManagerSynthesis
 from src.modules.daily_tender_run.models import DailyTenderRun, DailyTenderRunItem
@@ -424,7 +426,9 @@ def test_daily_tender_run_item_failure_isolated_from_other_procurements(
     def prepare(*, registry_number: str, **kwargs):
         return SimpleNamespace(
             ready_for_analysis=registry_number.endswith("8"),
-            errors=[] if registry_number.endswith("8") else ["document_set_incomplete"],
+            errors=[] if registry_number.endswith("8") else ["private_signed_url_DO_NOT_EXPOSE"],
+            steps=[SimpleNamespace(name="readiness_check", status="failed")],
+            documents_total=2, documents_downloaded=0, extracted_texts_total=0, chunks_total=0,
             warnings=[],
         )
 
@@ -472,6 +476,9 @@ def test_daily_tender_run_item_failure_isolated_from_other_procurements(
     statuses = {item["registry_number"]: item["status"] for item in body["items"]}
     assert statuses["0123456789012345678"] == "MANAGER_READY"
     assert statuses["0123456789012345679"] == "FAILED"
+    failed = next(item for item in body["items"] if item["status"] == "FAILED")
+    assert failed["error"] == "source_or_index_not_ready:originals_missing"
+    assert "private_signed_url_DO_NOT_EXPOSE" not in response.text
 
 
 
@@ -1172,3 +1179,79 @@ def test_mobile_digest_distinguishes_pending_run_from_no_run(client):
     assert digest["run_status"] == "PENDING"
     assert digest["current_stage"] == "DISCOVER"
     assert digest["discovery_incomplete"] is None
+
+
+@pytest.mark.parametrize(("status", "steps", "counts", "reason"), [
+    ("no_tender", [], (0, 0, 0, 0), "tender_missing"),
+    ("failed", [("verify_originals", "failed")], (2, 1, 0, 0), "original_verification_failed"),
+    ("failed", [("extract_text", "failed")], (2, 2, 0, 0), "projection_failed"),
+    ("failed", [("readiness_check", "failed")], (0, 0, 0, 0), "metadata_missing"),
+    ("failed", [("readiness_check", "failed")], (2, 0, 0, 0), "originals_missing"),
+    ("failed", [("readiness_check", "failed")], (2, 2, 0, 0), "text_missing"),
+    ("failed", [("readiness_check", "failed")], (2, 2, 1, 0), "projection_empty"),
+    ("completed_with_warnings", [("build_embeddings", "pending")], (2, 2, 1, 8), "index_pending"),
+    ("completed_with_warnings", [("readiness_check", "pending")], (2, 2, 1, 8), "index_pending"),
+    ("failed", [("readiness_check", "failed")], (2, 2, 1, 8), "index_incomplete"),
+    ("failed", [("readiness_check", "failed")], (True, 0, 0, 0), "failure"),
+    ("failed", [], (0, 0, 0, 0), "failure"),
+])
+def test_preparation_diagnostic_uses_only_structured_fields(status, steps, counts, reason):
+    from src.modules.daily_tender_run.error_codes import (
+        PreparationNotReady,
+        public_failure_code,
+        safe_processing_error,
+    )
+
+    secret = "https://example.test/private?token=DO_NOT_STORE"
+    prepared = SimpleNamespace(
+        status=status,
+        steps=[SimpleNamespace(name=name, status=state, message=secret) for name, state in steps],
+        documents_total=counts[0], documents_downloaded=counts[1],
+        extracted_texts_total=counts[2], chunks_total=counts[3], errors=[secret], warnings=[secret],
+    )
+    exc = PreparationNotReady(prepared)
+    code = safe_processing_error("INDEX_DATA_PLATFORM", exc)
+    assert code == f"source_or_index_not_ready:{reason}"
+    assert public_failure_code(code) == code
+    assert secret not in str(exc)
+    if reason != "failure":
+        assert public_failure_code(f"analysis_failed:{reason}") == "processing_failed:legacy_error_redacted"
+
+
+def test_preparation_reason_rejects_arbitrary_values():
+    from src.modules.daily_tender_run.error_codes import (
+        PreparationNotReady,
+        public_failure_code,
+        safe_processing_error,
+    )
+
+    exc = PreparationNotReady(SimpleNamespace(steps=[SimpleNamespace(name=[], status={})]))
+    exc.reason = "signed-url-secret"
+    assert safe_processing_error("INDEX_DATA_PLATFORM", exc) == "source_or_index_not_ready:failure"
+    assert public_failure_code("source_or_index_not_ready:signed-url-secret") == "processing_failed:legacy_error_redacted"
+
+
+def test_223_public_revision_unverified_is_never_a_hard_recommendation(client, monkeypatch):
+    from src.modules.daily_tender_run import service
+
+    number = "12345678901"
+    card = _search_card(number)
+    card["source"] = "public_eis_html_223fz"
+    card["title"] = "Оказание услуг по сопровождению сайта"
+    _install_happy_path(monkeypatch, registry_number=number)
+    monkeypatch.setattr(service, "search_public_44fz", lambda **kwargs: {
+        "cards": [card], "outcome": "success_with_results",
+    })
+    tender = SimpleNamespace(id="research-tender", documents=[SimpleNamespace(
+        raw_meta={"raw": {"revision_review_required": True}},
+    )])
+    monkeypatch.setattr(service.TenderResearchPipeline, "ingest_public_by_registry_number", lambda self, registry_number, **kw: (tender, {}))
+    synthesis = Mock(side_effect=AssertionError("unverified revision cannot produce hard recommendation"))
+    monkeypatch.setattr(service, "synthesize_manager_brief", synthesis)
+    response = client.post("/api/daily-tender-runs", json={"profile_id": "arvectum-it-223", "run_now": True})
+    assert response.status_code == 201
+    item = response.json()["items"][0]
+    assert item["status"] == "MANAGER_READY"
+    assert item["agent_recommendation"] == "NEEDS_REVIEW"
+    assert "223fz_public_notice_revision_unverified" in item["unknowns"]
+    synthesis.assert_not_called()

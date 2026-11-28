@@ -19,6 +19,7 @@ from src.modules.daily_tender_run.eis_detail_deadline import (
     verify_official_eis_deadline,
 )
 from src.modules.daily_tender_run.error_codes import (
+    PreparationNotReady,
     public_discovery_error_summary,
     public_failure_code,
     public_post_decision_state,
@@ -27,7 +28,10 @@ from src.modules.daily_tender_run.error_codes import (
     safe_processing_error as _safe_processing_error,
 )
 from src.modules.daily_tender_run.fresh_priority import fresh_preparation_priority
-from src.modules.daily_tender_run.manager_synthesis import synthesize_manager_brief
+from src.modules.daily_tender_run.manager_synthesis import (
+    ManagerSynthesis,
+    synthesize_manager_brief,
+)
 from src.modules.daily_tender_run.models import DailyTenderRun, DailyTenderRunItem
 from src.modules.daily_tender_run.post_go import advance_post_decision_items
 from src.modules.daily_tender_run.profiles import load_daily_tender_profile
@@ -673,7 +677,7 @@ def _process_item(
     session.commit()
     pipeline = TenderResearchPipeline(session)
     if item.law == "223fz":
-        pipeline.ingest_public_by_registry_number(item.registry_number, law_type="223fz")
+        research_tender, _ = pipeline.ingest_public_by_registry_number(item.registry_number, law_type="223fz")
     else:
         pipeline.ingest_public_by_registry_number(item.registry_number)
 
@@ -689,8 +693,7 @@ def _process_item(
             data_platform_timeout_seconds=180,
         )
     if not prepared.ready_for_analysis:
-        details = "; ".join(prepared.errors or prepared.warnings or ["data_platform_not_ready"])
-        raise RuntimeError(f"Data Platform preparation is not ready: {details}")
+        raise PreparationNotReady(prepared)
 
     item.stage = "ANALYZE"
     item.updated_at = utcnow()
@@ -722,16 +725,31 @@ def _process_item(
     _set_run_stage(session, run, "SUMMARIZE")
     session.add(item)
     session.commit()
-    synthesis = synthesize_manager_brief(
-        analysis,
-        registry_number=item.registry_number,
-        title=item.title,
-        customer_name=item.customer_name,
-        nmck_amount=item.nmck_amount,
-        deadline_text=item.deadline_at.isoformat() if item.deadline_at else None,
-        selection_policy=profile.decision_policy.model_dump(mode="json"),
-        use_llm=profile.synthesis_use_llm,
-    )
+    # Public GUID-bound links do not establish the active notice revision.
+    # Preserve the uncertainty even if all files were indexed successfully.
+    if item.law == "223fz" and any(
+        isinstance(getattr(doc, "raw_meta", None), dict)
+        and isinstance(doc.raw_meta.get("raw"), dict)
+        and doc.raw_meta["raw"].get("revision_review_required") is True
+        for doc in getattr(research_tender, "documents", ())
+    ):
+        synthesis = ManagerSynthesis(
+            recommendation="NEEDS_REVIEW",
+            rationale="Документы доступны, но действующая редакция извещения 223-ФЗ не подтверждена.",
+            unknowns=["223fz_public_notice_revision_unverified"],
+            next_actions=["Сверить действующую редакцию извещения и комплект документов в ЕИС."],
+        )
+    else:
+        synthesis = synthesize_manager_brief(
+            analysis,
+            registry_number=item.registry_number,
+            title=item.title,
+            customer_name=item.customer_name,
+            nmck_amount=item.nmck_amount,
+            deadline_text=item.deadline_at.isoformat() if item.deadline_at else None,
+            selection_policy=profile.decision_policy.model_dump(mode="json"),
+            use_llm=profile.synthesis_use_llm,
+        )
     item.agent_recommendation = synthesis.recommendation
     item.agent_confidence = synthesis.confidence
     item.agent_rationale = synthesis.rationale

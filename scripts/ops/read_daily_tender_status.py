@@ -5,6 +5,7 @@ The production PostgreSQL transaction is explicitly REPEATABLE READ READ ONLY.
 """
 from __future__ import annotations
 
+import argparse
 import json
 import re
 import sys
@@ -15,6 +16,7 @@ from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
 _PROFILE = "arvectum-it"
+_PROFILES = (_PROFILE, "arvectum-it-223")
 _RUN_ID = re.compile(r"DTR-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}\Z")
 _RUN_STATUSES = frozenset({
     "PENDING", "RUNNING", "WAITING_HUMAN", "WAITING_READINESS",
@@ -48,10 +50,12 @@ def _label(value: object, allowed: frozenset[str]) -> str:
     return value if isinstance(value, str) and value in allowed else "OTHER"
 
 
-def make_snapshot(run: dict | None, items: list[dict], *, now: datetime | None = None) -> dict:
+def make_snapshot(run: dict | None, items: list[dict], *, now: datetime | None = None, profile: str = _PROFILE) -> dict:
     """Project strictly approved structured fields; never include source payloads."""
+    if profile not in _PROFILES:
+        raise ValueError("Unsupported profile")
     if run is None:
-        return {"scope": _PROFILE, "status": "NO_RUN", "item_counts": {}}
+        return {"scope": profile, "status": "NO_RUN", "item_counts": {}}
     now = now or datetime.now(UTC)
     if now.tzinfo is None:
         raise ValueError("Timezone-aware reference required")
@@ -74,20 +78,25 @@ def make_snapshot(run: dict | None, items: list[dict], *, now: datetime | None =
         age = max(0, int((now.astimezone(UTC) - event).total_seconds() // 60))
     run_id = run.get("run_id")
     return {
-        "scope": _PROFILE,
+        "scope": profile,
         "run_id": run_id if isinstance(run_id, str) and _RUN_ID.fullmatch(run_id) else "REDACTED",
         "status": _label(run.get("status"), _RUN_STATUSES),
         "stage": _label(run.get("current_stage"), _STAGES),
         "run_started_utc": _utc(run.get("started_at")),
         "last_record_change_utc": _utc(last_change),
         "minutes_since_last_record_change": age,
-        "error_present": bool(run.get("has_error")),
+        "error_present": bool(
+            run.get("has_error") or run.get("status") == "COMPLETED_WITH_ERRORS"
+            or status_counts.get("FAILED", 0) or status_counts.get("POST_DECISION_FAILED", 0)
+        ),
         "item_counts": dict(sorted(status_counts.items())),
         "items_total": sum(status_counts.values()),
     }
 
 
-def read_snapshot(engine, *, now: datetime | None = None) -> dict:
+def read_snapshot(engine, *, now: datetime | None = None, profile: str = _PROFILE) -> dict:
+    if profile not in _PROFILES:
+        raise ValueError("Unsupported profile")
     if engine.dialect.name != "postgresql":
         raise RuntimeError("Production read-only status requires PostgreSQL")
     with engine.connect() as connection:
@@ -104,7 +113,7 @@ def read_snapshot(engine, *, now: datetime | None = None) -> dict:
                   FROM daily_tender_runs
                  WHERE profile_id = :profile
               ORDER BY created_at DESC, id DESC LIMIT 1
-            """), {"profile": _PROFILE})
+            """), {"profile": profile})
             run = run_result.mappings().first()
             items: list[dict] = []
             if run:
@@ -116,16 +125,19 @@ def read_snapshot(engine, *, now: datetime | None = None) -> dict:
                   GROUP BY status
                 """), {"run_id": run["run_id"]})
                 items = list(items_result.mappings().all())
-            return make_snapshot(run, items, now=now)
+            return make_snapshot(run, items, now=now, profile=profile)
         finally:
             connection.rollback()
 
 
-def main() -> int:
+def main(argv: tuple[str, ...] | list[str] = ()) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--profile", choices=_PROFILES, default=_PROFILE)
+    args = parser.parse_args(argv)
     try:
         from src.shared.db.session import engine
 
-        report = read_snapshot(engine)
+        report = read_snapshot(engine, profile=args.profile)
     except (OSError, RuntimeError, ValueError, TypeError, SQLAlchemyError):
         # No traceback, DB URL, SQL, source URL or private error text in CLI output.
         print("DTR_READONLY_STATUS_UNAVAILABLE", file=sys.stderr)
@@ -135,4 +147,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(main(sys.argv[1:]))

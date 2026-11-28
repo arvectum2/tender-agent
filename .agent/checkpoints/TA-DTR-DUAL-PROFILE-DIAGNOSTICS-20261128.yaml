@@ -1,0 +1,30 @@
+task_id: TA-DTR-DUAL-PROFILE-DIAGNOSTICS-20261128
+status: in_progress
+goal: Verify normal DTR and GEH cycles and expose bounded preparation failure reasons and profile-specific status without production changes.
+definition_of_done:
+- Verify both actual scheduled DTR runs and normal GEH admission.
+- Keep raw errors private; expose only allowlisted preparation reasons and support explicit 223 profile monitoring.
+- Run focused regression and lint; preserve exact candidate commit and outstanding gates.
+completed:
+- Main fe936c81 confirmed remotely; historical dirty worktree left untouched.
+- DTR 44fz 52 discovered, 12 manager-ready, 40 screened out, no current item failures; 223fz 13 discovered, eight screened out, five generic readiness failures.
+- GEH normal cycle 388 rows, 306 accepted, 82 review, 225 inserted, 29186 to 29411, old rows unchanged.
+- Implemented explicit read-only 44/223 profile selector, item-aware error indicator and allowlisted readiness reasons with private message suppression.
+- Verified 77 focused tests, including API failure isolation and diagnostic redaction; Ruff and git diff check PASS.
+- Read-only production DB evidence: all five failed 223fz items have correct law, SOAP not_found, public detail parse_error, zero documents/downloads/text/chunks; all five selected official signature-modal URLs carry the exact number and GUID.
+- Shared source-bound 223 documents URL resolver; strict official host/path, exact identity, GUID, duplicate aliases and file URL allowlist; ambiguous revisions refuse links. Public GUID-bound documents preserve review marker; DTR uses deterministic NEEDS_REVIEW, not hard GO/NO_GO.
+- Actual read-only EIS candidate probes returned success for all five prior failed numbers: 32616626565 seven links, 32616625021 two, 32616630166 three, 32616627352 one, 32616630657 one; 14 total references, all require revision review. No original binaries downloaded or indexed, no live replay or DB mutation.
+- Draft PR765 created; predecessor head 505c25e7 had nine checks successful, quality still running when inspected. Successor exact CI not yet verified.
+- GEH technical worker receipt unchanged since 25 Nov: 750 attempted / 104 captured / 2475 eligible; 2 extracted, 102 partial review. LaunchAgent RunAtLoad true, no StartInterval or StartCalendarInterval, KeepAlive false; no new normal technical receipt. No schedule change or restart.
+- Successor 113 focused tests PASS, Ruff PASS on all changed modules, diff check PASS.
+- Exact ad8aad66 criterion-review failed because the dated note modified pinned master roadmap bytes. Restore exact canonical source and move note to independent dated progress file; never weaken source criterion gate.
+- Restored canonical master roadmap exactly; dated progress separated. Structural criterion check and 8 tests PASS.
+- Isolated real DOC 32616630657 downloaded 438272 bytes SHA256 8ab9dee31bc8415a0cd6bbd44ad0e8bc3eea2d89fd36caa9514e35b858b3fb3b; local DP extractor 38322fd5 extracted 77738 chars. Temporary original removed; other binaries and live index untested.
+- Additional 51 RAG tests PASS. Existing hourly Watchdog confirmed; no duplicate.
+current: criterion gate repaired and one real original extracted; successor CI and full processing pending
+remaining: [protected_ci_and_review, authorized_successor_release_and_full_223_document_processing, verify_geh_technical_worker_after_separately_admitted_execution]
+last_verified_commit: 6cff8e9c94d8a4e8eb23a4a66759959244d12e11
+test_results: 113_focused_pass_51_additional_rag_pass_8_criterion_pass_ruff_pass_diff_check_pass
+real_public_probe: {cases: 5, successful: 5, links: 14, requires_review: 5, isolated_downloaded: 1, isolated_extracted: 1, live_indexed: 0}
+review_pr: 765
+resume_instruction: Resume PR765 exact successor; verify protected CI and review. Routing root cause and five public page probes already verified. Do not repeat those probes without a new reason. One isolated DOC downloaded and extracted; do not repeat. Remaining original processing and live index unverified. Before a separately approved release, preserve production gates; full document download, DP indexing and actual DTR acceptance remain unverified. GEH technical worker lacks recurrence; separately decide its execution/schedule, no blind restart or historical replay.

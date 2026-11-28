@@ -20,9 +20,11 @@ completed:
 - Owner explicitly approved exact unchanged WSF07B rebind and bounded replacement on 27 Nov. Fresh MI, archived compatibility backup, TA and DP PITR guard PASS.
 - Activated 0ef564b5577b170037683c4aefc2710febae3e9a at 09:52:37 UTC; PID13149; normal governor, 73 percent free memory, pressure1, thermal0. Exact DB/schema128, 12/12 original admitted IDs; receipt verified; HTTP health200, docs/openapi401, workspace anonymous403, daily preflight PASS, DP health200 and PID8896 unchanged. Rollback not required or exercised.
 - Independent live runtime verifier 15/15 PASS. Actual daily launcher now passes both profiles and isolated browser interpreter. Bounded read-only public search using actual daily preflight environment returned 44fz success_empty/0, 223fz success_with_results/1 (32616630657, screen IN), both exit0. No complete market coverage or GO implied.
-current: live release activated and read-only dual-profile probe passed; await evidence of first full scheduled run
+- First normal scheduled dual-profile run observed 28 Nov: 44fz 52 discovered / 12 manager-ready / 40 screened / 0 failed; 223fz 13 discovered / 8 screened / 5 readiness failures. Separate profile results confirmed; no claim of complete source readiness.
+- 28 Nov read-only root cause: all five 223 cases selected signature modal, SOAP not_found, zero originals/chunks; isolated successor 6cff8e9c94d8a4e8eb23a4a66759959244d12e11 returned 5/5 public documents pages and 14 references. Original binaries and active revision remain unverified; no live replay.
+current: first scheduled run observed; 223 routing candidate verified, full document processing and resource receipt remain open
 remaining:
-- Verify first normal scheduled dual-profile run has separate 44fz/223fz receipts, bounded resource usage and honest error statuses. Do not manually replay historic jobs. Authenticated workspace HTTP not exercised; unchanged read-only DB scope and anonymous denial verified.
+- Verify bounded resource receipt and authorized full processing after successor review; 223 routing defect identified and candidate 5/5 public-page verified. Do not manually replay historic jobs. Authenticated workspace HTTP not exercised; unchanged read-only DB scope and anonymous denial verified.
 - Keep historical recovery under existing checkpoints; do not auto-retry or change current DB.
 last_verified_commit: 0ef564b5577b170037683c4aefc2710febae3e9a
 test_results:
