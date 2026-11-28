@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+from unittest.mock import Mock
+
+import pytest
+
 from src.tender_research.providers.public_44fz_search import PublicSearchStatus
 from src.tender_research.providers.public_223fz_search import (
     Public223FzSearchProvider,
@@ -82,3 +86,76 @@ def test_223fz_file_anchor_plain_text_fallback_without_tooltip():
     )
     detail = parse_223fz_detail(html, "https://zakupki.gov.ru/notice/1", "32313008364")
     assert [ref.file_name for ref in detail.document_links] == ["Документ.pdf"]
+
+
+_NUMBER = "12345678901"
+_GUID = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
+_MODAL = ("https://zakupki.gov.ru/epz/order/notice/notice223/signview/listModal.html"
+          f"?purchaseNoticeGuid={_GUID}&purchaseNoticeNumber={_NUMBER}")
+_DOCS = ("https://zakupki.gov.ru/epz/order/notice/notice223/documents.html"
+         f"?purchaseNoticeNumber={_NUMBER}&noticeGuid={_GUID}")
+_FILE = "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=" + "a" * 32
+
+
+def test_signature_modal_is_resolved_to_number_guid_bound_documents(monkeypatch):
+    body = f"<div class='data-block__value'>{_NUMBER}</div>" + _pair("Заказчик", "АО Тест") + f'<a href="{_FILE}">ТЗ.pdf</a>'
+    provider = Public223FzSearchProvider()
+    fetch = Mock(return_value={"status": PublicSearchStatus.SUCCESS, "html": body})
+    monkeypatch.setattr(provider, "_fetch_page", fetch)
+    detail = provider.fetch_detail(card_url=_MODAL, registry_number=_NUMBER)
+    fetch.assert_called_once_with(_DOCS)
+    assert detail.network_status == PublicSearchStatus.SUCCESS
+    assert detail.registry_number == _NUMBER
+    assert detail.card_url == _DOCS
+    assert detail.raw["requires_review"] is True
+    assert len(detail.document_links) == 1
+    assert detail.document_links[0].raw["revision_review_required"] is True
+
+
+@pytest.mark.parametrize("url", [
+    _MODAL.replace(_NUMBER, "12345678902"),
+    _MODAL.replace(_GUID, "unknown"),
+    _MODAL.replace("zakupki.gov.ru", "evil.example"),
+    _MODAL.replace("https://", "http://"),
+    _MODAL.replace("zakupki.gov.ru", "zakupki.gov.ru:bad"),
+    _MODAL + "&noticeGuid=" + _GUID,
+    _MODAL + "&purchaseNoticeNumber=",
+    _MODAL + "&regNumber=" + _NUMBER,
+])
+def test_signature_modal_unbound_rejected_before_network(monkeypatch, url):
+    provider = Public223FzSearchProvider()
+    fetch = Mock()
+    monkeypatch.setattr(provider, "_fetch_page", fetch)
+    detail = provider.fetch_detail(card_url=url, registry_number=_NUMBER)
+    fetch.assert_not_called()
+    assert detail.network_status == PublicSearchStatus.UNSUPPORTED_LAYOUT
+    assert detail.document_links == []
+
+
+def test_signature_modal_wrong_page_identity_rejected(monkeypatch):
+    provider = Public223FzSearchProvider()
+    fetch = Mock(return_value={"status": PublicSearchStatus.SUCCESS, "html": f'<a href="{_FILE}">ТЗ.pdf</a>'})
+    monkeypatch.setattr(provider, "_fetch_page", fetch)
+    detail = provider.fetch_detail(card_url=_MODAL, registry_number=_NUMBER)
+    assert detail.network_status == PublicSearchStatus.UNSUPPORTED_LAYOUT
+    assert detail.document_links == []
+
+
+def test_223_search_preserves_literal_notice_guid_query():
+    url = _MODAL.replace("purchaseNoticeGuid", "noticeGuid")
+    fragment = f'<div class="registry-entry">Реестровый номер {_NUMBER}<a href="{url}">Подпись</a></div>'
+    assert parse_223fz_search_results(fragment)[0].card_url == url
+
+
+def test_bound_documents_filter_unofficial_and_ambiguous_links(monkeypatch):
+    provider = Public223FzSearchProvider()
+    body = _pair("Заказчик", "АО Тест") + _NUMBER + f'<a href="{_FILE}">ТЗ.pdf</a>'
+    body += f'<a href="{_FILE.replace("zakupki.gov.ru", "evil.example")}">Подмена.pdf</a>'
+    body += '<a href="https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=' + 'a' * 32 + '">44.pdf</a>'
+    fetch = Mock(return_value={"status": PublicSearchStatus.SUCCESS, "html": body})
+    monkeypatch.setattr(provider, "_fetch_page", fetch)
+    detail = provider.fetch_detail(card_url=_DOCS, registry_number=_NUMBER)
+    assert [link.url for link in detail.document_links] == [_FILE]
+    assert detail.raw["requires_review"] is True
+    fetch.return_value["html"] += " Редакция 1 Редакция 2"
+    assert provider.fetch_detail(card_url=_MODAL, registry_number=_NUMBER).document_links == []

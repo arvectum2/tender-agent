@@ -12,11 +12,9 @@ import json
 import os
 import re
 import tempfile
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from urllib.parse import parse_qs, urlencode, urlsplit
 
-from .eis_attachment_manifest import _public_filestore_digest
 from src.modules.tender_operator_agent_demo.attachment_downloader import (
     download_procurement_attachments,
 )
@@ -25,12 +23,10 @@ from src.modules.tender_operator_agent_demo.procurement_schemas import (
 )
 from src.tender_research.providers.public_223fz_search import (
     Public223FzSearchProvider,
+    source_bound_223_documents_url,
 )
 
-UUID = re.compile(
-    r"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-"
-    r"[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
-)
+from .eis_attachment_manifest import _public_filestore_digest
 
 
 def _atomic(path: Path, payload: dict) -> None:
@@ -65,23 +61,7 @@ def _attachment_priority(name: str) -> int:
 
 
 def _source_documents_url(card_url: str, number: str) -> str | None:
-    """Only a real EIS source card's exact notice number and GUID authorize this URL."""
-    parts = urlsplit(card_url)
-    if (parts.scheme != "https" or parts.hostname != "zakupki.gov.ru"
-            or parts.username or parts.password or parts.fragment
-            or parts.port not in (None, 443)
-            or not parts.path.startswith("/epz/order/notice/notice223/")):
-        return None
-    query = parse_qs(parts.query)
-    num = query.get("purchaseNoticeNumber", [])
-    guids = query.get("purchaseNoticeGuid", []) or query.get("noticeGuid", [])
-    if len(num) != 1 or num[0] != number or len(guids) != 1:
-        return None
-    guid = guids[0]
-    if not UUID.fullmatch(guid):
-        return None
-    params = urlencode({"purchaseNoticeNumber": number, "noticeGuid": guid})
-    return f"https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?{params}"
+    return source_bound_223_documents_url(card_url, number)
 
 
 def acquire(*, registry_number: str, target_root: Path,
@@ -187,7 +167,7 @@ def batch(*, gaps: Path, target_root: Path, journal: Path,
     tried = {str(x["registry_number"]) for x in state["attempts"]
              if x.get("status") in ("public_page_files_downloaded", "existing_receipt")}
     latest = {str(x.get("registry_number")): x for x in state["attempts"]}
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     new = []
     for case in cases:
         if len(new) >= max_cases:

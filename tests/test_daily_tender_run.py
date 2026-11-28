@@ -1229,3 +1229,29 @@ def test_preparation_reason_rejects_arbitrary_values():
     exc.reason = "signed-url-secret"
     assert safe_processing_error("INDEX_DATA_PLATFORM", exc) == "source_or_index_not_ready:failure"
     assert public_failure_code("source_or_index_not_ready:signed-url-secret") == "processing_failed:legacy_error_redacted"
+
+
+def test_223_public_revision_unverified_is_never_a_hard_recommendation(client, monkeypatch):
+    from src.modules.daily_tender_run import service
+
+    number = "12345678901"
+    card = _search_card(number)
+    card["source"] = "public_eis_html_223fz"
+    card["title"] = "Оказание услуг по сопровождению сайта"
+    _install_happy_path(monkeypatch, registry_number=number)
+    monkeypatch.setattr(service, "search_public_44fz", lambda **kwargs: {
+        "cards": [card], "outcome": "success_with_results",
+    })
+    tender = SimpleNamespace(id="research-tender", documents=[SimpleNamespace(
+        raw_meta={"raw": {"revision_review_required": True}},
+    )])
+    monkeypatch.setattr(service.TenderResearchPipeline, "ingest_public_by_registry_number", lambda self, registry_number, **kw: (tender, {}))
+    synthesis = Mock(side_effect=AssertionError("unverified revision cannot produce hard recommendation"))
+    monkeypatch.setattr(service, "synthesize_manager_brief", synthesis)
+    response = client.post("/api/daily-tender-runs", json={"profile_id": "arvectum-it-223", "run_now": True})
+    assert response.status_code == 201
+    item = response.json()["items"][0]
+    assert item["status"] == "MANAGER_READY"
+    assert item["agent_recommendation"] == "NEEDS_REVIEW"
+    assert "223fz_public_notice_revision_unverified" in item["unknowns"]
+    synthesis.assert_not_called()

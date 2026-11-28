@@ -5,7 +5,7 @@ import re
 from datetime import date
 from decimal import Decimal
 from html.parser import HTMLParser
-from urllib.parse import urlencode, urljoin
+from urllib.parse import parse_qs, urlencode, urljoin, urlsplit
 
 from src.tender_research.providers.public_44fz_search import (
     DEFAULT_PAGE_SIZE,
@@ -20,6 +20,53 @@ from src.tender_research.providers.public_44fz_search import (
 )
 
 EIS_223FZ_SEARCH_PATH = "/epz/order/extendedsearch/results.html"
+
+
+_NOTICE_PREFIX = "/epz/order/notice/notice223/"
+_SIGNATURE_PATH = _NOTICE_PREFIX + "signview/listModal.html"
+_GUID = re.compile(r"[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}")
+
+
+def source_bound_223_documents_url(card_url: str, number: str) -> str | None:
+    """Resolve a public notice GUID, never infer it from a registry number."""
+    try:
+        parts = urlsplit(card_url)
+        if (parts.scheme != "https" or parts.hostname != "zakupki.gov.ru"
+                or parts.username is not None or parts.password is not None
+                or parts.fragment or parts.port not in (None, 443)
+                or parts.path not in {_SIGNATURE_PATH, _NOTICE_PREFIX + "common-info.html",
+                                      _NOTICE_PREFIX + "documents.html"}):
+            return None
+        query = parse_qs(parts.query, keep_blank_values=True)
+    except ValueError:
+        return None
+    numbers = query.get("purchaseNoticeNumber", []) + query.get("regNumber", [])
+    guids = query.get("purchaseNoticeGuid", []) + query.get("noticeGuid", [])
+    if (not re.fullmatch(r"[0-9]{11}", number) or numbers != [number]
+            or len(guids) != 1 or not _GUID.fullmatch(guids[0])):
+        return None
+    params = urlencode({"purchaseNoticeNumber": number, "noticeGuid": guids[0]})
+    return f"https://zakupki.gov.ru{_NOTICE_PREFIX}documents.html?{params}"
+
+
+def _official_223_file_url(url: str) -> bool:
+    """Only the observed 223-FZ file endpoints, never arbitrary link targets."""
+    try:
+        parts = urlsplit(url)
+        if (parts.scheme != "https" or parts.hostname != "zakupki.gov.ru"
+                or parts.username is not None or parts.password is not None
+                or parts.fragment or parts.port not in (None, 443)):
+            return False
+        query = parse_qs(parts.query, keep_blank_values=True, strict_parsing=True)
+    except ValueError:
+        return False
+    if parts.path == "/223/filestore/public/1.0/download/fz223/file.html":
+        key, pattern = "uid", r"[0-9a-fA-F]{32}"
+    elif parts.path == "/223/purchase/public/download/download.html":
+        key, pattern = "id", r"[0-9]{1,12}"
+    else:
+        return False
+    return set(query) == {key} and len(query[key]) == 1 and bool(re.fullmatch(pattern, query[key][0]))
 
 
 def _clean_text(value: str | None) -> str | None:
@@ -66,7 +113,7 @@ def _extract_number(fragment: str) -> str | None:
 
 def _extract_card_url(fragment: str, registry_number: str | None) -> str | None:
     for match in re.finditer(r'href=["\']([^"\']+)["\']', fragment, re.IGNORECASE):
-        href = html.unescape(match.group(1))
+        href = re.sub(r"&(?:amp;|#38;|#x26;)", "&", match.group(1), flags=re.IGNORECASE)
         lowered = href.lower()
         if "purchase" in lowered or "notice" in lowered or "regnumber=" in lowered:
             return urljoin("https://zakupki.gov.ru", href)
@@ -263,7 +310,45 @@ class Public223FzSearchProvider(Public44FzSearchProvider):
         resolved_registry = registry_number or (item.registry_number if item else None)
         if not resolved_url:
             return PublicTenderDetail(registry_number=resolved_registry, law_type="223fz", network_status=PublicSearchStatus.UNSUPPORTED_LAYOUT, error_message="223-FZ detail URL unavailable; no 44-FZ fallback permitted", raw={"source_regime": "223fz", "requires_review": True, "review_reasons": ["detail_url_unavailable"]})
+        # EIS search results may expose a signature modal before the actual card.
+        # It is not a detail page, but its exact source number/GUID can authorize
+        # the documented public attachment route (not an active-revision proof).
+        try:
+            path = urlsplit(resolved_url).path
+            modal = path == _SIGNATURE_PATH or (
+                path == _NOTICE_PREFIX + "documents.html" and resolved_registry is not None
+            )
+        except ValueError:
+            modal = True
+        if modal:
+            documents_url = source_bound_223_documents_url(resolved_url, resolved_registry or "")
+            if documents_url is None:
+                return PublicTenderDetail(
+                    registry_number=resolved_registry, law_type="223fz",
+                    network_status=PublicSearchStatus.UNSUPPORTED_LAYOUT,
+                    error_message="223-FZ source notice identity unavailable",
+                    raw={"source_regime": "223fz", "requires_review": True},
+                )
+            resolved_url = documents_url
         fetched = self._fetch_page(resolved_url)
         if fetched.get("status") != PublicSearchStatus.SUCCESS or fetched.get("html") is None:
             return PublicTenderDetail(registry_number=resolved_registry, law_type="223fz", card_url=resolved_url, source_url=resolved_url, network_status=fetched.get("status") or PublicSearchStatus.NETWORK_ERROR, error_message=fetched.get("error"), raw={"source_regime": "223fz", "requires_review": True})
-        return parse_223fz_detail(fetched["html"], resolved_url, resolved_registry)
+        if modal and not re.search(r"(?<![0-9])" + re.escape(resolved_registry or "") + r"(?![0-9])", fetched["html"]):
+            return PublicTenderDetail(
+                registry_number=resolved_registry, law_type="223fz",
+                network_status=PublicSearchStatus.UNSUPPORTED_LAYOUT,
+                error_message="223-FZ documents page identity not confirmed",
+                raw={"source_regime": "223fz", "requires_review": True},
+            )
+        detail = parse_223fz_detail(fetched["html"], resolved_url, resolved_registry)
+        if modal:
+            detail.raw["requires_review"] = True
+            detail.raw["review_reasons"].append("public_notice_revision_unverified")
+            detail.error_message = "; ".join(detail.raw["review_reasons"])
+            detail.document_links = [link for link in detail.document_links if _official_223_file_url(link.url)]
+            if detail.raw.get("revision_status") == "ambiguous":
+                detail.document_links = []
+            for link in detail.document_links:
+                link.raw["revision_review_required"] = True
+                link.raw["source_level"] = "public_notice_guid_bound_not_active_revision_proof"
+        return detail
