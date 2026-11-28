@@ -13,8 +13,9 @@ completed:
   - Recovered third archive, 20 text-bearing members; one PDF no text; four source downloads remain disconnected. No DB mutation or protected backend update.
   - Next normal GEH admission observed 28 Nov: 388 rows, 306 accepted, 82 review, 225 inserted; 29186 to 29411, old rows unchanged.
   - 28 Nov technical worker still has last 25 Nov receipt (750 attempted, 104 captured, 2475 eligible, 2 extracted / 102 partial review). LaunchAgent RunAtLoad only, no recurring interval/calendar, KeepAlive false. No new normal worker receipt and no schedule mutation.
-current_stage: normal_admission_verified_technical_worker_execution_pending
+  - Source-only recurrence contract in docs/ops/TA_GEH_TECHNICAL_RECURRENCE_CANDIDATE_20261128.md; proposed 10 new references/day, admission and no historical replay. No installed schedule.
+current_stage: normal_admission_verified_recurrence_candidate_owner_gate
 remaining: [separately_admit_technical_worker_execution_or_schedule, verify_technical_receipt, reconcile_historical_blocked_jobs_separately]
 last_verified_commit: e7a7679c
 results: 34_focused_tests_pass_real_archive_verification_pass
-resume_instruction: Check actual active research worktree /Users/master/ArvectumSafe/worktrees/ta-gpb-discovery-20261114 and next normal GEH cycle receipts; do not deploy candidate branch wholesale or replay blocked historical state. Preserve source proof and no unauthorized writes.
+resume_instruction: Review recurrence candidate and obtain explicit approval before activation/first batch. Check actual active research worktree /Users/master/ArvectumSafe/worktrees/ta-gpb-discovery-20261114 and next normal GEH cycle receipts; do not deploy candidate branch wholesale or replay blocked historical state. Preserve source proof and no unauthorized writes.
