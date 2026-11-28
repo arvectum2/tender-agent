@@ -11,8 +11,9 @@ completed:
   - Candidate 9d700a9f and previous commits on fix/geh-backup-verifier-20261127; 34 focused tests PASS.
   - Active research worktree e7a7679c, exact candidate file parity, locks held during activation, system Python actual archives 40 and 5 members PASS.
   - Recovered third archive, 20 text-bearing members; one PDF no text; four source downloads remain disconnected. No DB mutation or protected backend update.
-current_stage: active_research_fix_verified_next_normal_job_pending
-remaining: [verify_next_normal_geh_admission, verify_technical_receipt, reconcile_historical_blocked_jobs_separately]
+  - Next normal GEH admission observed 28 Nov: 388 rows, 306 accepted, 82 review, 225 inserted; 29186 to 29411, old rows unchanged.
+current_stage: normal_admission_verified_technical_receipt_pending
+remaining: [verify_technical_receipt, reconcile_historical_blocked_jobs_separately]
 last_verified_commit: e7a7679c
 results: 34_focused_tests_pass_real_archive_verification_pass
 resume_instruction: Check actual active research worktree /Users/master/ArvectumSafe/worktrees/ta-gpb-discovery-20261114 and next normal GEH cycle receipts; do not deploy candidate branch wholesale or replay blocked historical state. Preserve source proof and no unauthorized writes.

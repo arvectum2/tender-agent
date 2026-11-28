@@ -1395,12 +1395,20 @@ eis_coverage_2026_11_27:
   task_id: TA-EIS-COVERAGE-20261127
   status: in_progress
   checkpoint: .agent/checkpoints/TA-EIS-COVERAGE-20261127.yaml
-  current_stage: active_release_verified_first_scheduled_run_pending
+  current_stage: first_scheduled_run_observed_223_readiness_investigation_open
   last_verified_commit: 0ef564b5577b170037683c4aefc2710febae3e9a
 
 geh_importer_repair_2026_11_27:
   task_id: TA-GEH-IMPORTER-REPAIR-20261127
   status: in_progress
   checkpoint: .agent/checkpoints/TA-GEH-IMPORTER-REPAIR-20261127.yaml
-  current_stage: active_research_fix_verified_next_normal_job_pending
+  current_stage: normal_admission_verified_technical_receipt_pending
   last_verified_commit: e7a7679c
+
+
+dtr_dual_profile_diagnostics_2026_11_28:
+  task_id: TA-DTR-DUAL-PROFILE-DIAGNOSTICS-20261128
+  status: in_progress
+  checkpoint: .agent/checkpoints/TA-DTR-DUAL-PROFILE-DIAGNOSTICS-20261128.yaml
+  current_stage: tested_candidate_committed_ci_and_root_cause_pending
+  last_verified_commit: cc71e66842a8e810dac78aa2c534ba9bdd328dbc

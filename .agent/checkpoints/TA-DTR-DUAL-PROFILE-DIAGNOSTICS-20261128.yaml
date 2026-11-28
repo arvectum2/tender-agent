@@ -1,0 +1,18 @@
+task_id: TA-DTR-DUAL-PROFILE-DIAGNOSTICS-20261128
+status: in_progress
+goal: Verify normal DTR and GEH cycles and expose bounded preparation failure reasons and profile-specific status without production changes.
+definition_of_done:
+- Verify both actual scheduled DTR runs and normal GEH admission.
+- Keep raw errors private; expose only allowlisted preparation reasons and support explicit 223 profile monitoring.
+- Run focused regression and lint; preserve exact candidate commit and outstanding gates.
+completed:
+- Main fe936c81 confirmed remotely; historical dirty worktree left untouched.
+- DTR 44fz 52 discovered, 12 manager-ready, 40 screened out, no current item failures; 223fz 13 discovered, eight screened out, five generic readiness failures.
+- GEH normal cycle 388 rows, 306 accepted, 82 review, 225 inserted, 29186 to 29411, old rows unchanged.
+- Implemented explicit read-only 44/223 profile selector, item-aware error indicator and allowlisted readiness reasons with private message suppression.
+- Verified 77 focused tests, including API failure isolation and diagnostic redaction; Ruff and git diff check PASS.
+current: tested candidate committed; protected CI and independent failure investigation pending
+remaining: [protected_ci_and_review, independent_root_cause_of_five_223_failures, next_normal_geh_technical_receipt]
+last_verified_commit: cc71e66842a8e810dac78aa2c534ba9bdd328dbc
+test_results: 77_focused_pass_21_inherited_warnings_ruff_pass_diff_check_pass
+resume_instruction: Resume candidate branch fix/ta-dtr-dual-profile-diagnostics-20261128 from tested implementation cc71e66842a8e810dac78aa2c534ba9bdd328dbc; verify protected CI/review, investigate five 223 failures from retained read-only evidence, verify next GEH technical worker receipt. Do not replay historic or live jobs, deploy or merge protected main.
