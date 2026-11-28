@@ -2,6 +2,12 @@
 
 > Canonical scope/history source for `arvectum2/tender-agent`. The executor queue is only a filtered executable projection and is **not** the complete roadmap.
 
+## 28.11.2026 — DTR dual-profile and 223-FZ source routing (candidate)
+
+- First scheduled DTR after dual-profile activation: 44-FZ 52 candidates / 12 manager-ready / 40 screened / 0 current failures; 223-FZ 13 / 8 screened / 5 failures. Read-only DB confirmed all five failed at zero attachments and selected signature-modal pages; SOAP not_found. Candidate PR #765 resolves exact official number/GUID to the documents route, keeps explicit revision review, rejects unsafe links and ambiguous revisions, and prevents hard recommendations on review-only evidence.
+- Actual candidate read-only public EIS verification: 5/5 pages, 14 document references, all five require revision review. No binary acquisition/indexing, no historical replay, no production change. Local targeted 113 PASS, Ruff PASS; exact successor protected CI/review pending. Checkpoint `TA-DTR-DUAL-PROFILE-DIAGNOSTICS-20261128`.
+- GEH normal admission passed 388 source rows / 225 inserts, total 29411; technical worker last receipt still 25 Nov (104 captured, 2 extracted / 102 partial review). No recurring LaunchAgent trigger observed; separate execution/schedule and new receipt remain open. No auto-activation.
+
 ## 17.11.2026 — PRICE-01 integrated; APR-05 release rehearsal
 
 - PRICE-01 engineering integration **completed**: Owner-approved PR #603 merged as `b843f92ca129dcf9a57bd7935fb53ec31c1372dc`; exact candidate CI 19/19, both quality jobs 5987 passed / 288 skipped / 0 failed. Local HTTPS Web/Swift/iOS Simulator acceptance and offline local image registry loader verified. This supersedes earlier draft-only statements in historical snapshots below.

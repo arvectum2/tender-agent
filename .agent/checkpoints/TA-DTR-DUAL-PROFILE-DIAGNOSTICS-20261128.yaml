@@ -11,8 +11,16 @@ completed:
 - GEH normal cycle 388 rows, 306 accepted, 82 review, 225 inserted, 29186 to 29411, old rows unchanged.
 - Implemented explicit read-only 44/223 profile selector, item-aware error indicator and allowlisted readiness reasons with private message suppression.
 - Verified 77 focused tests, including API failure isolation and diagnostic redaction; Ruff and git diff check PASS.
-current: tested candidate committed; protected CI and independent failure investigation pending
-remaining: [protected_ci_and_review, independent_root_cause_of_five_223_failures, next_normal_geh_technical_receipt]
-last_verified_commit: cc71e66842a8e810dac78aa2c534ba9bdd328dbc
-test_results: 77_focused_pass_21_inherited_warnings_ruff_pass_diff_check_pass
-resume_instruction: Resume candidate branch fix/ta-dtr-dual-profile-diagnostics-20261128 from tested implementation cc71e66842a8e810dac78aa2c534ba9bdd328dbc; verify protected CI/review, investigate five 223 failures from retained read-only evidence, verify next GEH technical worker receipt. Do not replay historic or live jobs, deploy or merge protected main.
+- Read-only production DB evidence: all five failed 223fz items have correct law, SOAP not_found, public detail parse_error, zero documents/downloads/text/chunks; all five selected official signature-modal URLs carry the exact number and GUID.
+- Shared source-bound 223 documents URL resolver; strict official host/path, exact identity, GUID, duplicate aliases and file URL allowlist; ambiguous revisions refuse links. Public GUID-bound documents preserve review marker; DTR uses deterministic NEEDS_REVIEW, not hard GO/NO_GO.
+- Actual read-only EIS candidate probes returned success for all five prior failed numbers: 32616626565 seven links, 32616625021 two, 32616630166 three, 32616627352 one, 32616630657 one; 14 total references, all require revision review. No original binaries downloaded or indexed, no live replay or DB mutation.
+- Draft PR765 created; predecessor head 505c25e7 had nine checks successful, quality still running when inspected. Successor exact CI not yet verified.
+- GEH technical worker receipt unchanged since 25 Nov: 750 attempted / 104 captured / 2475 eligible; 2 extracted, 102 partial review. LaunchAgent RunAtLoad true, no StartInterval or StartCalendarInterval, KeepAlive false; no new normal technical receipt. No schedule change or restart.
+- Successor 113 focused tests PASS, Ruff PASS on all changed modules, diff check PASS.
+current: tested source-routing successor and real public page recovery verified; protected CI/review and full document processing still pending
+remaining: [protected_ci_and_review, authorized_successor_release_and_full_223_document_processing, verify_geh_technical_worker_after_separately_admitted_execution]
+last_verified_commit: 6cff8e9c94d8a4e8eb23a4a66759959244d12e11
+test_results: 113_focused_pass_22_inherited_warnings_ruff_pass_diff_check_pass
+real_public_probe: {cases: 5, successful: 5, links: 14, requires_review: 5, downloaded: 0, indexed: 0}
+review_pr: 765
+resume_instruction: Resume PR765 exact successor; verify protected CI and review. Routing root cause and five public page probes already verified. Do not repeat those probes without a new reason. Before a separately approved release, preserve production gates; full document download, DP indexing and actual DTR acceptance remain unverified. GEH technical worker lacks recurrence; separately decide its execution/schedule, no blind restart or historical replay.
