@@ -19,6 +19,7 @@ from src.modules.daily_tender_run.eis_detail_deadline import (
     verify_official_eis_deadline,
 )
 from src.modules.daily_tender_run.error_codes import (
+    PreparationNotReady,
     public_discovery_error_summary,
     public_failure_code,
     public_post_decision_state,
@@ -689,8 +690,7 @@ def _process_item(
             data_platform_timeout_seconds=180,
         )
     if not prepared.ready_for_analysis:
-        details = "; ".join(prepared.errors or prepared.warnings or ["data_platform_not_ready"])
-        raise RuntimeError(f"Data Platform preparation is not ready: {details}")
+        raise PreparationNotReady(prepared)
 
     item.stage = "ANALYZE"
     item.updated_at = utcnow()

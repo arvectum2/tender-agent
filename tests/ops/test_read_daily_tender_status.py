@@ -220,3 +220,34 @@ def test_all_source_declared_run_stages_are_in_safe_allowlist():
     declared.update(re.findall(r'current_stage\s*=\s*"([A-Z_]+)"', source))
     assert declared
     assert declared <= status._STAGES
+
+
+def test_223_profile_reports_failed_items_even_without_run_error_summary():
+    conn = FakeConnection(run(status="COMPLETED_WITH_ERRORS", has_error=False), [group("FAILED", 5, 1)])
+    report = status.read_snapshot(FakeEngine(conn), now=NOW, profile="arvectum-it-223")
+    assert report["scope"] == "arvectum-it-223"
+    assert report["item_counts"] == {"FAILED": 5}
+    assert report["error_present"] is True
+    assert conn.commands[2][1] == {"profile": "arvectum-it-223"}
+    assert conn.rolled_back
+
+
+def test_223_profile_empty_history_does_not_fall_back_to_44():
+    conn = FakeConnection(None, [])
+    assert status.read_snapshot(FakeEngine(conn), now=NOW, profile="arvectum-it-223") == {
+        "scope": "arvectum-it-223", "status": "NO_RUN", "item_counts": {},
+    }
+    assert conn.commands[2][1] == {"profile": "arvectum-it-223"}
+    assert conn.rolled_back
+
+
+def test_invalid_profile_rejected_before_database_access():
+    conn = FakeConnection(None, [])
+    with pytest.raises(ValueError, match="Unsupported profile"):
+        status.read_snapshot(FakeEngine(conn), now=NOW, profile="foreign-profile")
+    assert conn.commands == []
+
+
+def test_waiting_human_with_failed_item_is_not_healthy():
+    report = status.make_snapshot(run(status="WAITING_HUMAN", has_error=False), [group("FAILED", 1, 2)], now=NOW)
+    assert report["error_present"] is True
